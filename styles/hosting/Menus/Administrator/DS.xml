@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Заказы</Text>
+  <Prompt>Все заказы клиентов на аренду серверов</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/DSOrders$</UniqID>
+  </Paths>
+  <Href>/Administrator/DSOrders</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Тарифы</Text>
+  <Prompt>Тарифные планы</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/DSSchemes$</UniqID>
+  </Paths>
+  <Href>/Administrator/DSSchemes</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Ценовые политики</Text>
+  <Prompt>Правила назначения бонусов при оплате заказов на различные периоды</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/DSPolitics$</UniqID>
+  </Paths>
+  <Href>/Administrator/DSPolitics</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Доменные политики</Text>
+  <Prompt>Правила назначения бонусов на домены при оплате заказов на различные периоды</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/DSDomainsPolitics$</UniqID>
+  </Paths>
+  <Href>/Administrator/DSDomainsPolitics</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Бонусы</Text>
+  <Prompt>Назначенные скидки клиентам на определённые периоды</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/DSBonuses$</UniqID>
+  </Paths>
+  <Href>/Administrator/DSBonuses</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Группы серверов</Text>
+  <Prompt>Характеристики объединения серверов</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/DSServersGroups$</UniqID>
+  </Paths>
+  <Href>/Administrator/DSServersGroups</Href>
+ </ListElement>
+<!-- <ListElement>
+  <Text>Серверы</Text>
+  <Prompt>Места размещения клиентов</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/DSServers$</UniqID>
+  </Paths>
+  <Href>/Administrator/DSServers</Href>
+ </ListElement>-->
+</Items>
+<!-- *********************************************************************** -->
+</XML>

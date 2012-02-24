@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Comp>Menus/Administrator/Services</Comp>
+<Items>
+ <ID900>
+  <Text>Настройка услуг</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/(ServicesGroups|Services)$</UniqID>
+  </Paths>
+  <Level>1</Level>
+  <Href>/Administrator/Services</Href>
+  <Pick />
+ </ID900>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

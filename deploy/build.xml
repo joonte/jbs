@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Joonte Billing System" description="Deploy of JBS" default="deploy" >
+    <property name="versionPrefix" value="v" />
+    <property name="version" value="2.5.1" />
+    <property name="versionPostfix" value="-release" />
+
+    <property name="tmpDir" value="/tmp/joonte" />
+    <property name="releaseName" value="joonte-${version}" />
+    <property name="releasePath" value="${tmpDir}/${releaseName}" />
+
+    <property name="releaseServer" value="91.227.18.14" />
+    <property name="releaseDownloadPath" value="/home/joonte/data/jbs/tmp/joonte/public" />
+
+    <property name="joonteDir" value="/home/joonte/data/www/joonte.com" />
+    <!--<property name="joonteDir" value="/home/joonte/data/jbs_" />-->
+
+
+    <property name="projectName" value="joonte" />
+    <property name="projectDir" value="/home/joonte/data/www/joonte.com" />
+    <property name="projectHosts" value="billing,hosting,joonte,license,root" />
+
+    <patternset id="jbs-common-files" description="Common billing hosts.">
+        <include name="core/**" />
+        <include name="*/billing/**" />
+        <include name="*/hosting/**" />
+        <include name="*/root/**" />
+        <include name=".htaccess" />
+        <include name="index.php" />
+    </patternset>
+
+    <patternset id="jbs-common-dirs" description="Common billing hosts.">
+        <include name="core/**" />
+        <include name="*/billing/**" />
+        <include name="*/hosting/**" />
+        <include name="*/root/**" />
+        <include name=".htaccess" />
+        <include name="index.php" />
+    </patternset>
+
+    <patternset id="joonte-files" description="Joonte site billing hosts.">
+        <include name="*/joonte/**" />
+        <include name="*/license/**" />
+    </patternset>
+
+    <!-- ============================================  -->
+    <!-- Target: update from repo                      -->
+    <!-- ============================================  -->
+    <target name="svn-update">
+        <echo msg="Update project from SVN." />
+        <exec command="pwd" outputproperty="pwd"/>
+        <svnupdate todir="${pwd}/../.." username="vvelikodny" password="Joonte@Svn" />
+    </target>
+
+    <target name="clean">
+        <available file="${releasePath}" type="dir" property="release-path-exists" />
+        <if>
+         <equals arg1="${release-path-exists}" arg2="true" />
+         <then>
+           <delete dir="${releasePath}" includeemptydirs="true" failonerror="true" />
+         </then>
+        </if>
+
+        <available file="${tmpDir}/${releaseName}.zip" property="release-file-exists" />
+        <if>
+         <equals arg1="${release-file-exists}" arg2="true" />
+         <then>
+           <delete file="${tmpDir}/${releaseName}.zip" />
+         </then>
+        </if>
+    </target>
+
+    <target name="copy-jbs-files" depends="clean">
+        <mkdir dir="${releasePath}" description="Create release path." />
+
+        <exec command="date +%Y" outputproperty="currentYear"/>
+
+        <copy todir="${releasePath}" description="Copy release files to release path.">
+            <filterchain description="Replace tokens.">
+                <replacetokens begintoken="##" endtoken="##">
+                    <token key="CURR_YEAR" value="${currentYear}" />
+                    <token key="VERSION" value="${versionPrefix}${version}" />
+                </replacetokens>
+            </filterchain>
+
+            <fileset dir="..">
+                <patternset refid="jbs-common-files" />
+            </fileset>
+        </copy>
+        <touch file="${releasePath}/INSTALL" />
+    </target>
+
+    <target name="copy-project-files" depends="clean">
+        <mkdir dir="${releasePath}" description="Create release path." />
+
+        <exec command="date +%Y" outputproperty="currentYear"/>
+
+        <copy todir="${releasePath}" description="Copy release files to release path.">
+            <filterchain description="Replace tokens.">
+                <replacetokens begintoken="##" endtoken="##">
+                    <token key="CURR_YEAR" value="${currentYear}" />
+                    <token key="VERSION" value="${versionPrefix}${version}" />
+                </replacetokens>
+            </filterchain>
+
+            <fileset dir="..">
+                <patternset refid="jbs-common-files" />
+                <patternset refid="${projectName}-files" />
+            </fileset>
+        </copy>
+        <mkdir dir="${releasePath}" description="Create release path." />
+    </target>
+
+    <!--
+        Creates ZIP release archive to publish.
+    -->
+    <target name="create-archive">
+        <echo msg="Creating release archive." />
+        <zip basedir="${releasePath}" destfile="${tmpDir}/${releaseName}.zip" />
+        <echo msg="Release archive has been created." />
+    </target>
+
+    <!--
+        Publish release archive to download directory.
+    -->
+    <target name="publish-release-archive">
+        <echo msg="Publish release ${releaseName}.zip to server ${releaseServer}:${releaseDownloadPath}" />
+        <exec command="scp ${releaseName}.zip joonte@${releaseServer}:${releaseDownloadPath}" dir="${tmpDir}" escape="false" />
+        <echo msg="Release has been published." />
+    </target>
+
+    <!--
+        Publish project hosts to server.
+    -->
+    <target name="publish-project-hosts">
+        <echo msg="rsync -rc --delete --exclude='.LastPatchFiles' ${releasePath}/hosts/${host} joonte@${releaseServer}:${projectDir}/hosts" />
+        <exec command="rsync -rcv --delete --exclude='.LastPatchFiles' ${releasePath}/hosts/${host} joonte@${releaseServer}:${projectDir}/hosts" dir="${tmpDir}" escape="false" checkreturn="true" outputProperty="out" />
+        <echo msg="${out}"/>
+    </target>
+
+    <!--
+        Publish project to server.
+    -->
+    <target name="publish-project">
+        <echo msg="Publish ${projectName} to server ${releaseServer}:${projectDir}" />
+
+        <!-- Publish hosts. -->
+        <foreach param="host" list="${projectHosts}" target="publish-project-hosts" />
+
+        <!-- Publish others. -->
+        <echo msg="rsync -rcv --delete --exclude='.LastPatchFiles' --exclude='hosts' ${releasePath}/* joonte@${releaseServer}:${projectDir}" />
+        <exec command="rsync -rc --delete --exclude='.LastPatchFiles' --exclude='hosts' ${releasePath}/* joonte@${releaseServer}:${projectDir}" dir="${tmpDir}" escape="false" checkreturn="true" outputProperty="out" />
+        <echo msg="${out}"/>
+
+        <echo msg="rsync -c ${releasePath}/.htaccess joonte@${releaseServer}:${projectDir}" />
+        <exec command="rsync -c ${releasePath}/.htaccess joonte@${releaseServer}:${projectDir}" checkreturn="true" outputProperty="out" />
+        <echo msg="${out}"/>
+
+        <echo msg="Project ${projectName} has been published." />
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: deploy xI1Qa2br                               -->
+    <!-- ============================================  -->
+    <target name="deploy" depends="copy-jbs-files,create-archive,publish-release-archive">
+        <echo msg="Project has been successfully deployed." />
+    </target>
+
+    <!--
+        Deploy project.
+    -->
+    <target name="project-deploy" depends="copy-project-files,publish-project">
+        <echo msg="Project ${projectName} has been successfully deployed." />
+    </target>
+</project>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<!--
+<Appearance>
+ <Row>
+  <Comp>HostingOrders/Color</Comp>
+  <Args>
+   <ListElement>%StatusID%</ListElement>
+  </Args>
+ </Row>
+</Appearance>
+-->
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>RequestLog</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>CreateDate</ListElement>
+  <ListElement>UserID</ListElement>
+  <ListElement>REMOTE_ADDR</ListElement>
+  <ListElement>REQUEST_URI</ListElement>
+  <ListElement>HTTP_REFERER</ListElement>
+  <ListElement>HTTP_USER_AGENT</ListElement>
+  <ListElement>WORK_TIME</ListElement>
+  <ListElement>TIME_MYSQL</ListElement>
+  <ListElement>COUNTER_MYSQL</ListElement>
+  <ListElement>COUNTER_COMPS</ListElement>
+<!--
+  <ListElement>(SELECT `UserNotice` FROM `Orders` WHERE `HostingOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `UserNotice`</ListElement>
+  <ListElement>(SELECT `AdminNotice` FROM `Orders` WHERE `HostingOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `AdminNotice`</ListElement>
+-->
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Запросов к биллингу не было (это ненормально, если вы видите это сообщение)</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <Before>
+  <DateSelect>
+   <Comp>Tables/Forms/DateSelect</Comp>
+   <Args>
+    <ListElement>CreateDate</ListElement>
+   </Args>
+   <NoBlock />
+  </DateSelect>
+  <!-- ********************************************************************* -->
+  <PatternOut>
+   <Args>
+    <Patterns>
+     <LastHour>
+      <Name>Запросы за последний час</Name>
+      <Where>`CreateDate` &gt; UNIX_TIMESTAMP() - 3600</Where>
+     </LastHour>
+     <!-- ****************************************************************** -->
+     <Today>
+      <Name>Запросы за сегодня</Name>
+      <Where>`CreateDate` &gt; BEGIN_DAY()</Where>
+     </Today>
+     <!-- ****************************************************************** -->
+     <Yesterday>
+      <Name>Запросы за вчера</Name>
+      <Where>`CreateDate` &gt; BEGIN_DAY() - 86400</Where>
+     </Yesterday>
+     <!-- ****************************************************************** -->
+     <!-- ****************************************************************** -->
+     <!-- ****************************************************************** -->
+    </Patterns>
+    <ActiveID>LastHour</ActiveID>
+   </Args>
+  </PatternOut>
+  <!-- ********************************************************************* -->
+  <Search>
+   <Args>
+    <ColumnsIDs>
+     <ListElement>REMOTE_ADDR</ListElement>
+     <ListElement>REQUEST_URI</ListElement>
+     <ListElement>HTTP_REFERER</ListElement>
+     <ListElement>HTTP_USER_AGENT</ListElement>
+     <ListElement>UserID</ListElement>
+<!--
+     <ListElement>Login</ListElement>
+     <ListElement>(SELECT `Name` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`)</ListElement>
+     <ListElement>Domain</ListElement>
+     <ListElement>Parked</ListElement>
+-->
+    </ColumnsIDs>
+   </Args>
+  </Search>
+  <!-- ********************************************************************* -->
+<!--
+  <HostingSearch>
+   <Comp>HostingOrders/Search</Comp>
+   <Args type="array" />
+   <NoBlock />
+  </HostingSearch>
+-->
+ </Before>
+ <!-- ********************************************************************** -->
+ <After>
+  <Delete>
+   <Args>
+    <Comment>Выбранные заказы</Comment>
+    <Send>
+     <TableID>RequestLog</TableID>
+    </Send>
+   </Args>
+  </Delete>
+  <!-- ********************************************************************* -->
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>CreateDate</SortOn>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+ <SelectID>
+  <Args>
+   <TableID>RequestLog</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <REMOTE_ADDR>
+  <Head>IP</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%REMOTE_ADDR%</ListElement>
+   <Length>15</Length>
+  </Args>
+ </REMOTE_ADDR>
+ <!-- ********************************************************************** -->
+ <REQUEST_URI>
+  <Head>URL</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%REQUEST_URI%</ListElement>
+   <Length>55</Length>
+  </Args>
+ </REQUEST_URI>
+ <!-- ********************************************************************** -->
+ <CreateDate>
+  <Head>Дата</Head>
+  <Comp>Formats/Date/SQL</Comp>
+  <Args>
+   <ListElement>%CreateDate%</ListElement>
+  </Args>
+ </CreateDate>
+ <!-- ********************************************************************** -->
+ <!-- ********************************************************************** -->
+</Columns>
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>CreateDate</ListElement>
+ <ListElement>Owner</ListElement>
+ <ListElement>REMOTE_ADDR</ListElement>
+ <ListElement>REQUEST_URI</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

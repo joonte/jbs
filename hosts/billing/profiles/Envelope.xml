@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<ProfileName>%pRecipient%</ProfileName>
+<!-- *********************************************************************** -->
+<Attribs>
+ <pIndex>
+  <Check>/^[A-Za-z0-9\s]{3,10}$/u</Check>
+  <Comment>Почтовый индекс</Comment>
+  <Example>101000</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>7</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </pIndex>
+ <!-- ********************************************************************** -->
+ <pCity>
+  <Check>/^[А-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Comment>Город / населенный пункт</Comment>
+  <Example>Москва</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </pCity>
+ <!-- ********************************************************************** -->
+ <pAddress>
+  <Check>Char</Check>
+  <Comment>Улица, дом, квартира</Comment>
+  <Example>ул. Ленина, д.51, кв.7</Example>
+  <Type>TextArea</Type>
+  <Attribs>
+   <rows>3</rows>
+   <cols>20</cols>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value>ул. </Value>
+ </pAddress>
+ <!-- ********************************************************************** -->
+ <pRecipient>
+  <Check>/^[a-zA-Zа-яА-ЯёЁ\s\"]+$/u</Check>
+  <Comment>Получатель</Comment>
+  <Example>Иванову Петру Викторовичу</Example>
+  <Type>TextArea</Type>
+  <Attribs>
+   <rows>3</rows>
+   <cols>20</cols>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </pRecipient>
+</Attribs>
+<!-- *********************************************************************** -->
+</XML>

@@ -1,0 +1,1 @@
+ALTER TABLE `Registrators` ADD `Ns3Name` char(50) default '' AFTER `Ns2Name`;

@@ -1,0 +1,1 @@
+ALTER TABLE `DomainsOrders` ADD CONSTRAINT `DomainsOrdersRegistratorContractID` FOREIGN KEY (`RegistratorContractID`) REFERENCES `RegistratorsContracts` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE;

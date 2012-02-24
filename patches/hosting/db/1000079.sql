@@ -1,0 +1,1 @@
+DELETE FROM `HostingConsider` WHERE `DaysReserved` < 0 OR `DaysRemainded` < 0;

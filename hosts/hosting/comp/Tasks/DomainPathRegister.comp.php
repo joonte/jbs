@@ -1,0 +1,110 @@
+<?php
+
+
+#-------------------------------------------------------------------------------
+/** @author Великодный В.В. (Joonte Ltd.) */
+/******************************************************************************/
+/******************************************************************************/
+$__args_list = Array('Task','DomainOrderID');
+/******************************************************************************/
+Eval(COMP_INIT);
+/******************************************************************************/
+/******************************************************************************/
+$Columns = Array('ID','UserID','DomainName','ProfileID','PersonID','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `RegistratorID`');
+#-------------------------------------------------------------------------------
+$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
+#-------------------------------------------------------------------------------
+switch(ValueOf($DomainOrder)){
+  case 'error':
+    return ERROR | @Trigger_Error(500);
+  case 'exception':
+    return ERROR | @Trigger_Error(400);
+  case 'array':
+    #---------------------------------------------------------------------------
+    $GLOBALS['TaskReturnInfo'] = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']);
+    #---------------------------------------------------------------------------
+    $IsDefined = ($DomainOrder['ProfileID'] || $DomainOrder['PersonID']);
+    #---------------------------------------------------------------------------
+    if(!$IsDefined){
+      #-------------------------------------------------------------------------
+      if(Time() - $Task['CreateDate'] > 86400){
+        # add ticket to user, about it's exception
+	$Clause = DB_Select('Clauses','*',Array('UNIQ','Where'=>"`Partition`='CreateTicket/DOMAIN_OWNER_NOT_DEFINED'"));
+	switch(ValueOf($Clause)){
+	case 'array':
+		$CompParameters = Array('Theme'		=> SPrintF('%s %s.%s',$Clause['Title'],$DomainOrder['DomainName'],$DomainOrder['DomainZone']),
+					'TargetGroupID'	=> 3100000,
+					'TargetUserID'	=> 100,
+					'PriorityID'	=> 'Low',
+					'Message'	=> trim(Strip_Tags($Clause['Text'])),
+					'UserID'	=> $DomainOrder['UserID'],
+					'Flags'		=> 'CloseOnSee'
+					);
+		# set variable, for post-executing task
+		$GLOBALS['TaskReturnArray'] = Array('CompName' => 'www/API/TicketEdit', 'CompParameters' => $CompParameters);
+	}
+	#Debug("[comp/Tasks/DomainPathRegister]: " . print_r($GLOBALS['TaskReturnArray'],true));
+	#-------------------------------------------------------------------------
+        #return new gException('DOMAIN_OWNER_NOT_DEFINED','Владелец домена не определён более 24 часов');
+	$Event = Array(
+			'UserID'        => $DomainOrder['UserID'],
+			'PriorityID'    => 'Warning',
+			'Text'          => SPrintF('Владелец для заказа домена (%s.%s) не определён более 24 часов. Ожидание перед повтором проверки 31 сутки',$DomainOrder['DomainName'],$DomainOrder['DomainZone'])
+			);
+	$Event = Comp_Load('Events/EventInsert',$Event);
+	if(!$Event)
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------
+	# откладываем на месяц, через 30 дней будет событие администратору - на ручной разбор
+	return 31 * 24 * 3600;
+      }
+      #-------------------------------------------------------------------------
+      $Event = Array(
+      			'UserID'	=> $DomainOrder['UserID'],
+			'PriorityID'	=> 'Warning',
+			'Text'		=> SPrintF('Владелец для заказа домена (%s.%s) не определён. Ожидание перед повтором проверки 6 часов',$DomainOrder['DomainName'],$DomainOrder['DomainZone'])
+                    );
+      $Event = Comp_Load('Events/EventInsert',$Event);
+      if(!$Event)
+        return ERROR | @Trigger_Error(500);
+      #-------------------------------------------------------------------------
+      #-------------------------------------------------------------------------
+      return 6 * 3600;
+    }
+    #---------------------------------------------------------------------------
+    $Registrator = DB_Select('Registrators','TypeID',Array('UNIQ','ID'=>$DomainOrder['RegistratorID']));
+    #---------------------------------------------------------------------------
+    switch(ValueOf($Registrator)){
+      case 'error':
+        return ERROR | @Trigger_Error(500);
+      case 'exception':
+        return ERROR | @Trigger_Error(400);
+      case 'array':
+        #-----------------------------------------------------------------------
+        $Config = Config();
+        #-----------------------------------------------------------------------
+        $Registrator = $Config['Domains']['Registrators'][$Registrator['TypeID']];
+        #-----------------------------------------------------------------------
+        $StatusID = ($Registrator['IsSupportContracts'] && $Registrator['UseContractRegister'] && $DomainOrder['ProfileID']?'ForContractRegister':'ForRegister');
+        #-----------------------------------------------------------------------
+        $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>$StatusID,'RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Алгоритм регистрации доменного имени выбран'));
+        #-----------------------------------------------------------------------
+        switch(ValueOf($Comp)){
+          case 'error':
+            return ERROR | @Trigger_Error(500);
+          case 'exception':
+            return ERROR | @Trigger_Error(400);
+          case 'array':
+            return TRUE;
+          default:
+            return ERROR | @Trigger_Error(101);
+        }
+      default:
+        return ERROR | @Trigger_Error(101);
+    }
+  default:
+    return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+
+?>

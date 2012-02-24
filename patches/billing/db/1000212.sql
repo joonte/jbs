@@ -1,0 +1,1 @@
+ALTER TABLE `Users` ADD `Comment` char(255) default '' AFTER `IsProtected`;

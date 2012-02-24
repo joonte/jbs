@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD `SortID` int(11) default '10' AFTER `MaxDaysPay`;

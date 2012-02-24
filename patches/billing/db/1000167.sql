@@ -1,0 +1,1 @@
+ALTER TABLE `Services` ADD `IsShow` enum('no','yes') default 'yes' AFTER `Measure`;

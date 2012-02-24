@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <UniqID>
+  <Text>Заказы на хостинг</Text>
+  <Href>/Administrator/HostingOrders?Search=%Email%&amp;PatternOutID=Default</Href>
+  <Icon>ListMenuItem.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Заказы на домены</Text>
+  <Href>/Administrator/DomainOrders?Search=%Email%&amp;PatternOutID=Default</Href>
+  <Icon>ListMenuItem.gif</Icon>
+ </UniqID>
+ <UniqID>
+   <Text>Все заказанные услуги</Text>
+   <Href>/Administrator/ServicesOrders?Search=%Email%&amp;PatternOutID=Default</Href>
+   <Icon>ListMenuItem.gif</Icon>
+ </UniqID>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

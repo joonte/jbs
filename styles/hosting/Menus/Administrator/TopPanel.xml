@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ID600>
+  <Paths>
+   <UniqID>^\/Administrator\/(HostingOrders|HostingSchemes|HostingPolitics|HostingBonuses|HostingServersGroups|HostingServers|DomainOrders|DomainSchemes|DomainBonuses|DomainRegistrators|VPSOrders|VPSSchemes|VPSPolitics|VPSDomainsPolitics|VPSBonuses|VPSServersGroups|VPSServers|DSOrders|DSSchemes|DSPolitics|DSDomainsPolitics|DSBonuses|DSServersGroups|ExtraIPOrders|ExtraIPSchemes|ExtraIPPolitics|ExtraIPBonuses|ISPswOrders|ISPswSchemes|ISPswGroups|ISPswProducerEdit|ISPswLicenses|ISPswPolitics|ISPswBonuses)$</UniqID>
+  </Paths>
+ </ID600>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

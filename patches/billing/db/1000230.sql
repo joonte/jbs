@@ -1,0 +1,1 @@
+UPDATE `Contracts` SET `StatusID` = 'Complite',`StatusDate` = `CreateDate`,`Customer` = (SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `Contracts`.`UserID`) WHERE `TypeID` = 'Default';

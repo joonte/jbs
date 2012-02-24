@@ -1,0 +1,1 @@
+UPDATE `Invoices` SET `PaymentSystemID` = 'ROBOKASSA' WHERE `PaymentSystemID` = 'RoboxChange';

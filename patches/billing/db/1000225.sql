@@ -1,0 +1,1 @@
+UPDATE `MotionDocuments` SET `Link` = REPLACE(`Link`,'WorksCompliteActDownload','WorksCompliteReportDownload');

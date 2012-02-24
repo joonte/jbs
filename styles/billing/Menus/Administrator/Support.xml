@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Запросы в поддержку</Text>
+  <Prompt>Запросы клиентов в поддержку</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/Tickets$</UniqID>
+  </Paths>
+  <Href>/Administrator/Tickets</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Внутренние запросы</Text>
+  <Prompt>Запросы среди сотрудников</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/Internal$</UniqID>
+  </Paths>
+  <Href>/Administrator/Internal</Href>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

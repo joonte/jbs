@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<RootID>ISPswSchemes</RootID>
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+  <After>
+   <Delete />
+  </After>
+ </Comps>
+ <Sequence />
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <Conditions>
+  <Where>
+   <UniqID>(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH)) AND `IsActive` = 'yes'</UniqID>
+  </Where>
+  <Message>Для Вас не определены тарифы на ПО ISpsystem.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>Info</ListElement>
+ <ListElement>Name</ListElement>
+ <ListElement>CostMonth</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

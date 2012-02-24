@@ -1,0 +1,1 @@
+UPDATE `Tasks` SET `TypeID` = 'Logs' WHERE `TypeID` = 'LogsRotate';

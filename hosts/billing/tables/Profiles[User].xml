@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<RootID>Profiles</RootID>
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+  <After>
+   <StatusSet />
+  </After>
+ </Comps>
+ <Sequence />
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <Conditions>
+  <Where>
+   <UniqID>`UserID` = @local.__USER_ID</UniqID>
+  </Where>
+ </Conditions>
+ <Message>У Вас нет зарегистрированных профилей.</Message>
+</Source>
+<!-- *********************************************************************** -->
+<Columns>
+ <Info>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/ProfileInfo</ListElement>
+   <ListElement>
+    <ProfileID>%ID%</ProfileID>
+   </ListElement>
+   <ListElement>Дополнительная информация</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Info>
+ <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/ProfileEdit</ListElement>
+   <ListElement>
+    <ProfileID>%ID%</ProfileID>
+   </ListElement>
+   <ListElement>Редактировать</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+</Columns>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>Info</ListElement>
+ <ListElement>Edit</ListElement>
+ <ListElement>Number</ListElement>
+ <ListElement>Name</ListElement>
+ <ListElement>Template</ListElement>
+ <ListElement>Status</ListElement>
+ <ListElement>StatusOver</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

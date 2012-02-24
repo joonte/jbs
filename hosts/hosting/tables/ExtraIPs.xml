@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+ </Comps>
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>ExtraIPs</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>Address</ListElement>
+  <ListElement>Port</ListElement>
+  <ListElement>IP</ListElement>
+  <ListElement>IsDefault</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Серверов не обнаружено.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <After>
+  <Delete>
+   <Args>
+    <Comment>Выбранные сервера</Comment>
+    <Send>
+     <TableID>ExtraIPs</TableID>
+    </Send>
+   </Args>
+  </Delete>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>Address</SortOn>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+  <SelectID>
+  <Args>
+   <TableID>ExtraIPs</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/Administrator/ExtraIPServerEdit</ListElement>
+   <ListElement>
+    <ExtraIPServerID>%ID%</ExtraIPServerID>
+   </ListElement>
+   <ListElement>Редактировать сервер</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+ <!-- ********************************************************************** -->
+ <System>
+  <Head>Сист. упр.</Head>
+  <Prompt>Система управления используемая на сервере</Prompt>
+  <Comp>Formats/System/ExtraIPType</Comp>
+  <Args>
+   <ListElement>%System%</ListElement>
+  </Args>
+  <Alias>SystemID</Alias>
+ </System>
+ <!-- ********************************************************************** -->
+ <ExtraIPGroup>
+  <Head>Группа серверов</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%ExtraIPGroup%</ListElement>
+   <Length>40</Length>
+  </Args>
+  <Alias>(SELECT `Name` FROM `ExtraIPsGroups` WHERE `ExtraIPsGroups`.`ID` = `ExtraIPs`.`sGroupID`)</Alias>
+ </ExtraIPGroup>
+ <!-- ********************************************************************** -->
+ <Address>
+  <Head>Адрес</Head>
+ </Address>
+ <!-- ********************************************************************** -->
+ <IP>
+  <Head>IP адрес</Head>
+ </IP>
+ <!-- ********************************************************************** -->
+ <IsDefault>
+  <Head>Осн. в гр.</Head>
+  <Prompt>В группе серверов создавать новые аккаунты на данном сервере</Prompt>
+  <Comp>Formats/Logic</Comp>
+  <Args>
+   <ListElement>%IsDefault%</ListElement>
+  </Args>
+ </IsDefault>
+</Columns>
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>Edit</ListElement>
+ <ListElement>System</ListElement>
+ <ListElement>ExtraIPGroup</ListElement>
+ <ListElement>Address</ListElement>
+ <ListElement>IP</ListElement>
+ <ListElement>IsDefault</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

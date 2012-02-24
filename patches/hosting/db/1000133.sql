@@ -1,0 +1,1 @@
+ALTER TABLE `HostingServers` ADD `Services` text AFTER `Ns3Name`;

@@ -1,0 +1,1 @@
+UPDATE `Users` SET `OwnerID` = NULL WHERE `OwnerID` = 100 OR `ID` <= 200;

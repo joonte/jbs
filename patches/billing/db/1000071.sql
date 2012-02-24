@@ -1,0 +1,1 @@
+UPDATE `Postings` SET `TypeID` = 2000 WHERE `TypeID` = 'BalanceDown';

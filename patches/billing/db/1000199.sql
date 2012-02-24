@@ -1,0 +1,1 @@
+ALTER TABLE `EdesksMessages` CHANGE `FileData` `FileData` mediumblob;

@@ -1,0 +1,1 @@
+UPDATE `Clauses` SET `Text` = REPLACE(`Text`,'ArrowLeft.png','ArrowLeft.gif');

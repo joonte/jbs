@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Мои данные</Text>
+  <Paths>
+   <UniqID>^\/UserPersonalDataChange$</UniqID>
+  </Paths>
+  <Href>javascript:ShowWindow('/UserPersonalDataChange');</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Смена пароля</Text>
+  <Paths>
+   <UniqID>^\/UserPasswordChange$</UniqID>
+  </Paths>
+  <Href>javascript:ShowWindow('/UserPasswordChange');</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Уведомления</Text>
+  <Paths>
+   <UniqID>^\/UserNotifiesSet$</UniqID>
+  </Paths>
+  <Href>javascript:ShowWindow('/UserNotifiesSet');</Href>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

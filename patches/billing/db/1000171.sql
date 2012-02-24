@@ -1,0 +1,1 @@
+ALTER TABLE `WorksComplite` ADD `UniqID` char(255) default '' AFTER `Discont`;

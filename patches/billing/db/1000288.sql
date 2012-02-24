@@ -1,0 +1,46 @@
+
+ALTER TABLE `Invoices` CHANGE `Summ` `Summ` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `InvoicesItems` CHANGE `Summ` `Summ` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `Contracts` CHANGE `Balance` `Balance` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `Postings` CHANGE `Before` `Before` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `Postings` CHANGE `After` `After` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `Users` CHANGE `LayPayMaxSumm` `LayPayMaxSumm` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `Users` CHANGE `LayPayThreshold` `LayPayThreshold` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `WorksComplite` CHANGE `Cost` `Cost` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `WorksComplite` CHANGE `Discont` `Discont` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `Basket` CHANGE `Summ` `Summ` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `Services` CHANGE `CostOn` `CostOn` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `Services` CHANGE `Cost` `Cost` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `HostingSchemes` CHANGE `CostDay` `CostDay` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `HostingSchemes` CHANGE `CostMonth` `CostMonth` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `HostingConsider` CHANGE `Cost` `Cost` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `HostingBonuses` CHANGE `Discont` `Discont` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `HostingConsider` CHANGE `Discont` `Discont` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `HostingPolitics` CHANGE `Discont` `Discont` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `DomainsBonuses` CHANGE `Discont` `Discont` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `HostingDomainsPolitics` CHANGE `Discont` `Discont` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `DomainsConsider` CHANGE `Cost` `Cost` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+-- SEPARATOR
+ALTER TABLE `DomainsConsider` CHANGE `Discont` `Discont` FLOAT( 11, 2 ) NULL DEFAULT '0.00';
+
+

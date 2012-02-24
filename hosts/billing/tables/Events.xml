@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Appearance>
+ <Row>
+  <Comp>Events/Color</Comp>
+  <Args>
+   <ListElement>%PriorityID%</ListElement>
+   <ListElement>%IsReaded%</ListElement>
+  </Args>
+ </Row>
+</Appearance>
+<!-- *********************************************************************** -->
+<Cut>
+ <Comps>
+  <After>
+   <Delete />
+  </After>
+ </Comps>
+</Cut>
+<!-- *********************************************************************** -->
+<!-- <Column>
+ <Cut>
+  <Attribs>
+   <class />
+  </Attribs>
+ </Cut>
+</Column> -->
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>Events</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>CreateDate</ListElement>
+  <ListElement>UserID</ListElement>
+  <ListElement>Text</ListElement>
+  <ListElement>PriorityID</ListElement>
+  <ListElement>IsReaded</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Событий не обнаружено.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <Before>
+  <PatternOut>
+   <Args>
+    <Patterns>
+     <NeedReaded>
+      <Name>Необходимые для прочтения</Name>
+      <Where>`IsReaded` != 'yes'</Where>
+     </NeedReaded>
+     <!-- ****************************************************************** -->
+     <Yesterday>
+      <Name>События за вчера</Name>
+      <Where>`CreateDate` &gt; BEGIN_DAY() - 86400</Where>
+     </Yesterday>
+     <!-- ****************************************************************** -->
+     <Today>
+      <Name>События за сегодня</Name>
+      <Where>`CreateDate` &gt; BEGIN_DAY()</Where>
+     </Today>
+     <!-- ****************************************************************** -->
+     <Week>
+      <Name>События за текущую неделю</Name>
+      <Where>`CreateDate` &gt; BEGIN_WEEK()</Where>
+     </Week>
+     <!-- ****************************************************************** -->
+     <Month>
+      <Name>События за текущий месяц</Name>
+      <Where>`CreateDate` &gt; BEGIN_MONTH()</Where>
+     </Month>
+     <!-- ****************************************************************** -->
+     <ErrorPriority>
+      <Name>Ошибки</Name>
+      <Where>`PriorityID` = 'Error'</Where>
+     </ErrorPriority>
+     <!-- ****************************************************************** -->
+     <NoticePriority>
+      <Name>Уведомления</Name>
+      <Where>`PriorityID` = 'Notice'</Where>
+     </NoticePriority>
+     <!-- ****************************************************************** -->
+     <WarningPriority>
+      <Name>Требующие внимания</Name>
+      <Where>`PriorityID` = 'Warning'</Where>
+     </WarningPriority>
+     <!-- ****************************************************************** -->
+     <BillingPriority>
+      <Name>События биллинга</Name>
+      <Where>`PriorityID` = 'Billing'</Where>
+     </BillingPriority>
+     <!-- ****************************************************************** -->
+     <HostingPriority>
+      <Name>События хостинга</Name>
+      <Where>`PriorityID` = 'Hosting'</Where>
+     </HostingPriority>
+     <!-- ****************************************************************** -->
+     <SystemPriority>
+      <Name>События системы</Name>
+      <Where>`PriorityID` = 'System'</Where>
+     </SystemPriority>
+     <!-- ****************************************************************** -->
+    </Patterns>
+    <ActiveID>NeedReaded</ActiveID>
+   </Args>
+  </PatternOut>
+  <!-- ********************************************************************* -->
+  <!-- ********************************************************************* -->
+  <Search>
+   <Args>
+    <ColumnsIDs>
+     <ListElement>ID</ListElement>
+     <ListElement>UserID</ListElement>
+     <ListElement>Text</ListElement>
+    </ColumnsIDs>
+   </Args>
+  </Search>
+ </Before>
+ <!-- ********************************************************************** -->
+ <After>
+  <Readed>
+   <Comp>Events/Readed</Comp>
+   <Args type="array" />
+  </Readed>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>ID</SortOn>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+ <SelectID>
+  <Args>
+   <TableID>Events</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <CreateDate>
+  <Head>Дата созд.</Head>
+  <Comp>Formats/Date/Extended</Comp>
+  <Args>
+   <ListElement>%CreateDate%</ListElement>
+  </Args>
+ </CreateDate>
+ <!-- ********************************************************************** -->
+<!-- <Event>
+  <Comp>Events/Event</Comp>
+  <Args>
+   <ListElement>%CreateDate%</ListElement>
+   <ListElement>%UserID%</ListElement>
+   <ListElement>%Text%</ListElement>
+   <ListElement>%PriorityID%</ListElement>
+   <ListElement>%IsReaded%</ListElement>
+  </Args>
+ </Event> -->
+ <Event>
+  <Head>Подробное описание произошедшего события</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Text%</ListElement>
+   <Length>60</Length>
+  </Args>
+ </Event>
+</Columns>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>CreateDate</ListElement>
+ <ListElement>Owner</ListElement>
+ <ListElement>Event</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

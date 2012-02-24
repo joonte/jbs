@@ -1,0 +1,1 @@
+ALTER TABLE `Orders` ADD `IsPayed` enum('no','yes') default 'no' AFTER `ServiceID`;

@@ -1,0 +1,1 @@
+ALTER TABLE `RegistratorsContracts` CHANGE `RegistratorID` `RegistratorID` int(11) NOT NULL;

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<RootID>VPSBonuses</RootID>
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+  <After>
+   <Delete />
+  </After>
+ </Comps>
+ <Sequence />
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <Conditions>
+  <Where>
+   <UniqID>`UserID` = @local.__USER_ID</UniqID>
+  </Where>
+  <Message>У Вас нет бонусов на VPS.</Message>
+ </Conditions>
+ <Adding>
+  <Message>Для данного договора бонусы не были назначены.</Message>
+ </Adding>
+</Source>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>CreateDate</ListElement>
+ <ListElement>Scheme</ListElement>
+ <ListElement>DaysReserved</ListElement>
+ <ListElement>DaysRemainded</ListElement>
+ <ListElement>Discont</ListElement>
+ <ListElement>Comment</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

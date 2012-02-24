@@ -1,0 +1,1 @@
+UPDATE `WorksComplite` SET `TypeID` = 20000 WHERE `TypeID` = 'DomainOrder' OR `TypeID` = 'DomainProlong';

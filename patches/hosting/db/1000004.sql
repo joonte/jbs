@@ -1,0 +1,1 @@
+ALTER TABLE `HostingOrders` ADD `Domain` char(100) default NULL AFTER `ServerID`;

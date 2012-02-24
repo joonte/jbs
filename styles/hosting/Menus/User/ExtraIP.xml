@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Мои заказы</Text>
+  <Paths>
+   <UniqID>^\/ExtraIPOrders$</UniqID>
+  </Paths>
+  <Href>/ExtraIPOrders</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Мои тарифы</Text>
+  <Paths>
+   <UniqID>^\/ExtraIPSchemes$</UniqID>
+  </Paths>
+  <Href>/ExtraIPSchemes</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Мои бонусы</Text>
+  <Paths>
+   <UniqID>^\/ExtraIPBonuses$</UniqID>
+  </Paths>
+  <Href>/ExtraIPBonuses</Href>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

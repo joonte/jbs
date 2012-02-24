@@ -1,0 +1,1 @@
+ALTER TABLE `HostingServers` CHANGE `Password` `Password` char(255) NOT NULL;

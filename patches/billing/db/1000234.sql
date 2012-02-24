@@ -1,0 +1,1 @@
+ALTER TABLE `Invoices` CHANGE `IsPayed` `IsPosted` enum('no','yes') NOT NULL;

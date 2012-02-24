@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>DSSchemes</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>Name</ListElement>
+  <ListElement>CostMonth</ListElement>
+  <ListElement>NumServers</ListElement>
+  <ListElement>RemainServers</ListElement>
+  <ListElement>cputype</ListElement>
+  <ListElement>numcpu</ListElement>
+  <ListElement>numcores</ListElement>
+  <ListElement>cpufreq</ListElement>
+  <ListElement>ram</ListElement>
+  <ListElement>raid</ListElement>
+  <ListElement>disk1</ListElement>
+  <ListElement>disk2</ListElement>
+  <ListElement>SortID</ListElement>
+  <ListElement>IsActive</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Тарифов на аренду серверов не обнаружено.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <Before>
+  <PatternOut>
+   <Args>
+    <Patterns>
+     <ListElement>
+      <Name>Индивидуальные тарифы</Name>
+      <Where>`UserID` != 1</Where>
+     </ListElement>
+    </Patterns>
+    <ActiveID>Default</ActiveID>
+   </Args>
+  </PatternOut>
+  <!-- ********************************************************************* -->
+  <Search>
+   <Args>
+    <ColumnsIDs>
+     <ListElement>UserID</ListElement>
+     <ListElement>GroupID</ListElement>
+     <ListElement>Name</ListElement>
+    </ColumnsIDs>
+   </Args>
+  </Search>
+ </Before>
+ <!-- ********************************************************************** -->
+ <After>
+  <Delete>
+   <Args>
+    <Comment>Выбранные тарифы</Comment>
+    <Send>
+     <TableID>DSSchemes</TableID>
+    </Send>
+   </Args>
+  </Delete>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>SortID</SortOn>
+ <IsDesc>0</IsDesc>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+ <SelectID>
+  <Args>
+   <TableID>DSSchemes</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <Info>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/DSSchemeInfo</ListElement>
+   <ListElement>
+    <DSSchemeID>%ID%</DSSchemeID>
+   </ListElement>
+   <ListElement>Дополнительная информация</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Info>
+ <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/Administrator/DSSchemeEdit</ListElement>
+   <ListElement>
+    <DSSchemeID>%ID%</DSSchemeID>
+   </ListElement>
+   <ListElement>Редактировать тариф</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+ <!-- ********************************************************************** -->
+ <Name>
+  <Head>Тариф</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Name%</ListElement>
+   <Length>7</Length>
+  </Args>
+ </Name>
+ <!-- ********************************************************************** -->
+ <Group>
+  <Head>Группа</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Group%</ListElement>
+   <Length>7</Length>
+  </Args>
+  <Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `GroupID`)</Alias>
+ </Group>
+ <!-- ********************************************************************** -->
+ <User>
+  <Head>Польз.</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%User%</ListElement>
+   <Length>7</Length>
+  </Args>
+  <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `UserID`)</Alias>
+ </User>
+ <!-- ********************************************************************** -->
+ <CostMonth>
+  <Head>Цена</Head>
+  <Prompt>Цена в рублях за 1 месяц</Prompt>
+  <Comp>Formats/Currency</Comp>
+  <Args>
+   <ListElement>%CostMonth%</ListElement>
+  </Args>
+  <Attribs>
+   <style>text-align:center;</style>
+  </Attribs>
+ </CostMonth>
+ <!-- ********************************************************************** -->
+ <NumServers>
+ <Head>Вс.</Head>
+ <Prompt>Общее число таких серверов</Prompt>
+ <Attribs>
+  <style>text-align:right;</style>
+ </Attribs>
+ </NumServers>
+ <!-- ********************************************************************** -->
+ <RemainServers>
+ <Head>Ост.</Head>
+  <Prompt>Сколько серверов осталось</Prompt>
+  <Attribs>
+   <style>text-align:right;</style>
+  </Attribs>
+ </RemainServers>
+ <!-- ********************************************************************** -->
+ <ServersGroup>
+  <Head>Гр. серв.</Head>
+  <Prompt>Датацентр</Prompt>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%ServersGroup%</ListElement>
+   <Length>10</Length>
+  </Args>
+  <Alias>(SELECT `Name` FROM `DSServersGroups` WHERE `DSServersGroups`.`ID` = `ServersGroupID`)</Alias>
+ </ServersGroup>
+ <!-- ********************************************************************** -->
+ <OrderLink>
+  <Head>Ссылка</Head>
+  <Prompt>Ссылка на заказ этого тарифа, для сайта</Prompt>
+  <Comp>Formats/Order/OrderLink</Comp>
+  <Args>
+   <SchemeID>%ID%</SchemeID>
+   <Code>DS</Code>
+  </Args>
+ </OrderLink>
+ <!-- ********************************************************************** -->
+ <raid>
+ <Head>RAID</Head>
+ <Prompt>Тип установленого RAID контроллера, производитель, модель, поддерживаемые уровни RAID, кэш-память</Prompt>
+ <Comp>Formats/String</Comp>
+ <Args>
+  <ListElement>%raid%</ListElement>
+  <Length>7</Length>
+ </Args>
+ </raid>
+ <!-- ********************************************************************** -->
+ <disk1>
+  <Head>HDD1</Head>
+  <Prompt>Установленный жёсткий диск, размер</Prompt>
+  <Attribs>
+   <style>text-align:right;</style>
+  </Attribs>
+ </disk1>
+ <!-- ********************************************************************** -->
+ <disk2>
+  <Head>HDD2</Head>
+  <Prompt>Установленный жёсткий диск, размер</Prompt>
+  <Attribs>
+   <style>text-align:right;</style>
+  </Attribs>
+ </disk2>
+ <!-- ********************************************************************** -->
+ <ncpu>
+   <Head># CPU</Head>
+   <Prompt>Количество процессоров</Prompt>
+   <Attribs>
+     <style>text-align:right;</style>
+   </Attribs>
+ </ncpu>
+ <!-- ********************************************************************** -->
+ <cputype>
+  <Head>CPU</Head>
+  <Prompt>Тип установленного в сервер процесора</Prompt>
+  <Comp>Formats/DSOrder/CPUType</Comp>
+  <Args>
+   <ListElement>%cputype%</ListElement>
+   <Length>5</Length>
+  </Args>
+ </cputype>
+ <!-- ********************************************************************** -->
+ <ram>
+  <Head>RAM</Head>
+  <Prompt>Оперативная памяти, Mb</Prompt>
+  <Attribs>
+   <style>text-align:center;</style>
+  </Attribs>
+ </ram>
+ <!-- ********************************************************************** -->
+ <numcpu>
+  <Head>Проц.</Head>
+  <Prompt>Число установленных процессоров</Prompt>
+  <Attribs>
+   <style>text-align:center;</style>
+  </Attribs>
+ </numcpu>
+ <!-- ********************************************************************** -->
+ <numcores>
+  <Head>Ядер</Head>
+  <Prompt>Число ядер в каждом процессоре</Prompt>
+  <Attribs>
+   <style>text-align:center;</style>
+  </Attribs>
+ </numcores>
+ <!-- ********************************************************************** -->
+ <cpufreq>
+  <Head>Частота</Head>
+  <Prompt>Частота установленных процессоров</Prompt>
+  <Attribs>
+   <style>text-align:center;</style>
+  </Attribs>
+ </cpufreq>
+ <!-- ********************************************************************** -->
+ <IsActive>
+  <Head>Актив.</Head>
+  <Prompt>Тариф активен?</Prompt>
+  <Comp>Formats/Logic</Comp>
+  <Args>
+   <ListElement>%IsActive%</ListElement>
+  </Args>
+ </IsActive>
+ <!-- ********************************************************************** -->
+ <SortID>
+  <Args>
+   <TableID>DSSchemes</TableID>
+  </Args>
+ </SortID>
+</Columns>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>Info</ListElement>
+ <ListElement>Edit</ListElement>
+ <ListElement>Name</ListElement>
+ <ListElement>Group</ListElement>
+ <ListElement>User</ListElement>
+ <ListElement>ServersGroup</ListElement>
+ <ListElement>CostMonth</ListElement>
+ <ListElement>cputype</ListElement>
+ <ListElement>ram</ListElement>
+ <ListElement>raid</ListElement>
+ <ListElement>disk1</ListElement>
+ <ListElement>disk2</ListElement>
+ <ListElement>IsActive</ListElement>
+ <ListElement>NumServers</ListElement>
+ <ListElement>RemainServers</ListElement>
+ <ListElement>OrderLink</ListElement>
+ <ListElement>SortID</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

@@ -1,0 +1,1 @@
+SELECT TRUE/*ALTER TABLE `WorksComplite` CHANGE `TypeID` `ServiceID` int(11) NOT NULL;*/

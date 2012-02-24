@@ -1,0 +1,1 @@
+DELETE FROM `Permissions` WHERE `Name` LIKE '%/DB/%';

@@ -1,0 +1,1 @@
+UPDATE `Orders` SET `IsPayed` = 'yes' WHERE (SELECT `StatusID` FROM `HostingOrders` WHERE `HostingOrders`.`OrderID` = `Orders`.`ID`) != 'Waiting';

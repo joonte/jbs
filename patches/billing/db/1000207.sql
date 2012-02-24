@@ -1,0 +1,1 @@
+UPDATE `Clauses` SET `Text` = REPLACE(`Text`,'/Styles/','/styles/');

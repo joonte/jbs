@@ -1,0 +1,1 @@
+ALTER TABLE `DomainsOrders` ADD `UpdateDate` int(11) default '0' AFTER `Ns3IP`;

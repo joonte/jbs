@@ -1,0 +1,1 @@
+UPDATE `HostingSchemes` SET `CostMonth` = ROUND(`CostDay`*30);

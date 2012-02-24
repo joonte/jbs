@@ -1,0 +1,1 @@
+UPDATE `Postings` SET `TypeID` = 3000 WHERE `TypeID` = 'Return';

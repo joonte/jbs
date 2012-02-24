@@ -1,0 +1,1 @@
+UPDATE `Groups` SET `IsDepartment` = 'yes' WHERE `ID` IN(3100000,3200000,3300000);

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <UniqID>
+  <Text>Дополнительная информация</Text>
+  <Href>javascript:ShowWindow("/InvoiceInfo",{InvoiceID:%Replace%});</Href>
+  <Icon>Info.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Просмотреть (оплатить)</Text>
+  <Href>javascript:ShowWindow("/InvoiceDocument",{InvoiceID:%Replace%});</Href>
+  <Icon>Dollar.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Изменить счет</Text>
+  <Href>javascript:ShowWindow("/InvoiceEdit",{InvoiceID:%Replace%});</Href>
+  <Icon>Edit.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Загрузить оригинал счета</Text>
+  <Href>/InvoiceDownload?InvoiceID=%Replace%</Href>
+  <Icon>PDF.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Загрузить счет в PDF</Text>
+  <Href>/InvoiceDownload?InvoiceID=%Replace%&amp;IsStamp=yes</Href>
+  <Icon>PDF.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Загрузить счет в TIFF</Text>
+  <Href>/InvoiceDownload?InvoiceID=%Replace%&amp;IsTIFF=yes&amp;IsStamp=yes</Href>
+  <Icon>Image.gif</Icon>
+ </UniqID>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

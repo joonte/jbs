@@ -1,0 +1,1 @@
+ALTER TABLE `InvoicesItems` DROP FOREIGN KEY `InvoicesItemsOrderID`;

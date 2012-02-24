@@ -1,0 +1,1 @@
+ALTER TABLE `Interrogation` CHANGE `Count` `Count` int(11) default '1';

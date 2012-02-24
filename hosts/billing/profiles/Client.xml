@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<ProfileName>%Name%</ProfileName>
+<!-- *********************************************************************** -->
+<Attribs>
+ <Name>
+  <Check>Char</Check>
+  <Comment>Имя</Comment>
+  <Example>Joonte</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>15</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </Name>
+ <!-- ********************************************************************** -->
+ <SiteURL>
+  <Check>Url</Check>
+  <Comment>Адрес Вашего сайта</Comment>
+  <Example>http://www.joonte.com</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>35</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </SiteURL>
+ <!-- ********************************************************************** -->
+ <IconURL>
+  <Check>Url</Check>
+  <Comment>Адрес Вашей иконки (200x150)</Comment>
+  <Example>http://www.joonte.com/Icon.png</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>35</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </IconURL>
+ <!-- ********************************************************************** -->
+ <Comment>
+  <Check>Text</Check>
+  <Comment>Краткое описание деятельности компании (до 1000 символов)</Comment>
+  <Example>Сфера деятельности, отличительные особенности ...</Example>
+  <Type>TextArea</Type>
+  <Attribs>
+   <rows>5</rows>
+   <cols>35</cols>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </Comment>
+</Attribs>
+<!-- *********************************************************************** -->
+</XML>

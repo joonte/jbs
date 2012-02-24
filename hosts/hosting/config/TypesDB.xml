@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<!-- HostingSchemes -->
+<IsReselling>Logic</IsReselling>
+<IsSchemeChangeable>Logic</IsSchemeChangeable>
+<IsSchemeChange>Logic</IsSchemeChange>
+<IsShellAccess>Logic</IsShellAccess>
+<IsSSLAccess>Logic</IsSSLAccess>
+<IsCGIAccess>Logic</IsCGIAccess>
+<IsSSIAccess>Logic</IsSSIAccess>
+<IsDnsControll>Logic</IsDnsControll>
+<IsCreateDomains>Logic</IsCreateDomains>
+<IsManageHosting>Logic</IsManageHosting>
+<IsManageQuota>Logic</IsManageQuota>
+<IsManageSubdomains>Logic</IsManageSubdomains>
+<IsChangeLimits>Logic</IsChangeLimits>
+<IsManageLog>Logic</IsManageLog>
+<IsManageCrontab>Logic</IsManageCrontab>
+<IsManageAnonFtp>Logic</IsManageAnonFtp>
+<IsManageWebapps>Logic</IsManageWebapps>
+<IsManageMaillists>Logic</IsManageMaillists>
+<IsManageDrWeb>Logic</IsManageDrWeb>
+<IsMakeDumps>Logic</IsMakeDumps>
+<IsSiteBuilder>Logic</IsSiteBuilder>
+<IsRemoteInterface>Logic</IsRemoteInterface>
+<IsManagePerformance>Logic</IsManagePerformance>
+<IsCpAccess>Logic</IsCpAccess>
+<IsManageDomainAliases>Logic</IsManageDomainAliases>
+<IsManageIISAppPool>Logic</IsManageIISAppPool>
+<IsDashBoard>Logic</IsDashBoard>
+<IsStdGIU>Logic</IsStdGIU>
+<IsManageDashboard>Logic</IsManageDashboard>
+<IsManageSubFtp>Logic</IsManageSubFtp>
+<ISManageSpamFilter>Logic</ISManageSpamFilter>
+<IsLocalBackups>Logic</IsLocalBackups>
+<IsFtpBackups>Logic</IsFtpBackups>
+<IsPHPModAccess>Logic</IsPHPModAccess>
+<IsAnonimousFTP>Logic</IsAnonimousFTP>
+<IsPHPCGIAccess>Logic</IsPHPCGIAccess>
+<IsPHPFastCGIAccess>Logic</IsPHPFastCGIAccess>
+<IsPHPAccess>Logic</IsPHPAccess>
+<IsPHPSafeMode>Logic</IsPHPSafeMode>
+<IsSpamAssasing>Logic</IsSpamAssasing>
+<IsCatchAll>Logic</IsCatchAll>
+<IsSystemInfo>Logic</IsSystemInfo>
+<!-- *********************************************************************** -->
+<!-- HostingSchemes, DomainsSchemes -->
+<IsActive>Logic</IsActive>
+<IsProlong>Logic</IsProlong>
+<!-- *********************************************************************** -->
+<!-- HostingOrders -->
+<Password>Crypt</Password>
+<!-- *********************************************************************** -->
+<!-- DomainsOrders -->
+<IsPrivateWhoIs>Logic</IsPrivateWhoIs>
+<!-- *********************************************************************** -->
+<!-- HostingServers -->
+<IsDefault>Logic</IsDefault>
+<NoRestartCreate>Logic</NoRestartCreate>
+<NoRestartActive>Logic</NoRestartActive>
+<NoRestartSuspend>Logic</NoRestartSuspend>
+<NoRestartDelete>Logic</NoRestartDelete>
+<NoRestartSchemeChange>Logic</NoRestartSchemeChange>
+<Password>Crypt</Password>
+<!-- *********************************************************************** -->
+<!-- Registrators -->
+<Password>Crypt</Password>
+<!-- HostingServers -->
+<IsOK>Logic</IsOK>
+<!-- *********************************************************************** -->
+<!-- added by lissyara, 2011-07-05 in 09:48 MSK -->
+<IsCalculateNumServers>Logic</IsCalculateNumServers>
+<!-- added by lissyara, 2011-08-04 in 17:07 MSK -->
+<!--
+commented by lissyara, see http://jira.joonte.com/browse/JBS-171
+<IsAutomatic>Logic</IsAutomatic>
+-->
+<!-- added by lissyara, 2011-09-09 in 10:41 MSK -->
+<IsInternal>Logic</IsInternal>
+<IsTimeManage>Logic</IsTimeManage>
+<IsUsed>Logic</IsUsed>
+<!-- added by lissyara 2011-10-06 in 12:20 MSK
+     see http://jira.joonte.com/browse/JBS-179	-->
+<IsAutoBalancing>Logic</IsAutoBalancing>
+<!-- added by lissyara 2012-01-11 in 10:37 MSK
+     see http://jira.joonte.com/browse/JBS-269	-->
+<IsAutoProlong>Logic</IsAutoProlong>
+
+</XML>

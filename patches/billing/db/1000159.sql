@@ -1,0 +1,1 @@
+UPDATE `Edesks` SET `TargetGroupID` = 3100000 WHERE `TargetGroupID` = 3000000;

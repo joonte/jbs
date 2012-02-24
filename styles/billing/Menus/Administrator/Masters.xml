@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ID100>
+  <Text>Внешний вид</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/Appearanse$</UniqID>
+  </Paths>
+  <Href>/Administrator/Appearanse</Href>
+  <Level>1</Level>
+ </ID100>
+ <ID200>
+  <Text>Базовый шаблон</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/BaseEdit</UniqID>
+  </Paths>
+  <Href>/Administrator/BaseEdit</Href>
+  <Level>1</Level>
+ </ID200>
+ <ID300>
+  <Text>Конфигурация</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/Config$</UniqID>
+  </Paths>
+  <Href>/Administrator/Config</Href>
+  <Level>1</Level>
+ </ID300>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

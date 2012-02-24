@@ -1,0 +1,1 @@
+ALTER TABLE `HostingOrders` ADD `Parked` text AFTER `Domain`;

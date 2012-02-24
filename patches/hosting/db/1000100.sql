@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD `IsPHPAccess` enum('no','yes') default 'no' AFTER `QuotaAnonimousFTP`;

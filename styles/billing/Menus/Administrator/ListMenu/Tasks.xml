@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <UniqID>
+  <Text>Дополнительная информация</Text>
+  <Href>javascript:ShowWindow("/TaskInfo",{TaskID:%Replace%});</Href>
+  <Icon>Info.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Выполнить задание</Text>
+  <Href>javascript:TasksExecute(%Replace%);</Href>
+  <Icon>TaskExecute.gif</Icon>
+  <JavaScript>Tasks.js</JavaScript>
+ </UniqID>
+ <UniqID>
+  <Text>Активировать задание</Text>
+  <Href>javascript:TasksSetActive(%Replace%);</Href>
+  <Icon>TaskSetActive.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Результат выполнения</Text>
+  <Href>javascript:ShowWindow("/Administrator/TaskResultInfo",{TaskID:%Replace%});</Href>
+  <Icon>TaskResultInfo.gif</Icon>
+ </UniqID>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS `Spider`;
+-- SEPARATOR
+DROP TRIGGER IF EXISTS `SpiderOnInsert`;
+-- SEPARATOR
+DELETE FROM `Tasks` WHERE `TypeID` = 'Spider';

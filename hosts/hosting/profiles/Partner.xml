@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Attribs>
+ <Type>
+  <Options>
+   <DomainsRegistrator>Регистратор доменов</DomainsRegistrator>
+   <ControlSystem>Система управления</ControlSystem>
+   <SaleServers>Поставщик серверов</SaleServers>
+   <HostingProvider>Хостинг-провайдер</HostingProvider>
+   <DataCenter>Дата-центр</DataCenter>
+  </Options>
+ </Type>
+</Attribs>
+<!-- *********************************************************************** -->
+</XML>

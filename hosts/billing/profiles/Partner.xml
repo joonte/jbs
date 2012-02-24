@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<ProfileName>%Name%</ProfileName>
+<!-- *********************************************************************** -->
+<Attribs>
+ <Name>
+  <Check>/^[а-яА-ЯёЁa-zA-Z\-\"\s\.]{1,50}$/u</Check>
+  <Comment>Имя как партнера</Comment>
+  <Example>Креативная группа "ТриТон"</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>35</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </Name>
+ <!-- ********************************************************************** -->
+ <Type>
+  <Comment>Вид деятельности</Comment>
+  <Type>Select</Type>
+  <Options>
+   <DisignStudio>Дизайнерская студия</DisignStudio>
+   <None>Не указан</None>
+  </Options>
+  <Attribs type="array" />
+  <IsDuty>1</IsDuty>
+  <Value>DisignStudio</Value>
+ </Type>
+ <!-- ********************************************************************** -->
+ <SiteURL>
+  <Check>Url</Check>
+  <Comment>Адрес Вашего сайта</Comment>
+  <Example>http://www.triton-studio.ru</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>35</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </SiteURL>
+ <!-- ********************************************************************** -->
+ <LogoURL>
+  <Check>Url</Check>
+  <Comment>Адрес Вашей иконки (200x150)</Comment>
+  <Example>http://www.joonte.com/Logo.png</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>35</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </LogoURL>
+ <!-- ********************************************************************** -->
+ <City>
+  <Check>/^[А-ЯёЁа-я\.\-\s]{1,100}$/u</Check>
+  <Comment>Город / населенный пункт</Comment>
+  <Example>г. Иваново</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value>г. </Value>
+ </City>
+ <!-- ********************************************************************** -->
+ <Phone>
+  <Check>Phone</Check>
+  <Comment>Телефон</Comment>
+  <Example>+7 495 7558899</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </Phone>
+ <!-- ********************************************************************** -->
+ <Comment>
+  <Check>Text</Check>
+  <Comment>Краткое описание деятельности компании (до 1000 символов)</Comment>
+  <Example>Сфера деятельности, отличительные особенности ...</Example>
+  <Type>TextArea</Type>
+  <Attribs>
+   <rows>5</rows>
+   <cols>35</cols>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </Comment>
+</Attribs>
+<!-- *********************************************************************** -->
+</XML>

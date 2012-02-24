@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+  <After>
+   <Indexes1 />
+   <Indexes2 />
+  </After>
+ </Comps>
+</Cut>
+<!-- *********************************************************************** -->
+<Appearance>
+ <IsDataMode>0</IsDataMode>
+</Appearance>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>DomainsSchemesGroupsItems</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Тарифы в группе тарифов на домены не определены.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <After>
+  <Delete>
+   <Args>
+    <Comment>Выбранные тарифы</Comment>
+    <Send>
+     <TableID>DomainsSchemesGroupsItems</TableID>
+    </Send>
+   </Args>
+  </Delete>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>Scheme</SortOn>
+ <IsDesc>0</IsDesc>
+ <InPage>9999</InPage>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+ <SelectID>
+  <Args>
+   <TableID>DomainsSchemesGroupsItems</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Standard</Comp>
+  <Args>
+   <ListElement>
+    <onclick>GetURL('/Administrator/DomainsSchemesGroupItemEdit?DomainsSchemesGroupItemID=%ID%');</onclick>
+   </ListElement>
+   <ListElement>Редактировать тариф группы тарифов</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+ <!-- ********************************************************************** -->
+ <Scheme>
+  <Head>Тариф</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Scheme%</ListElement>
+   <Length>25</Length>
+  </Args>
+  <Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `Registrators` WHERE `Registrators`.`ID` = `DomainsSchemes`.`RegistratorID`),')') FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsSchemesGroupsItems`.`SchemeID`)</Alias>
+ </Scheme>
+</Columns>
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>Edit</ListElement>
+ <ListElement>Scheme</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

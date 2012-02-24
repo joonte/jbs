@@ -1,0 +1,1 @@
+ALTER TABLE `HostingOrders` ADD `DaysRemainded` int(11) default '0' AFTER `Password`;

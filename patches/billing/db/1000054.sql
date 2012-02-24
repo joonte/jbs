@@ -1,0 +1,1 @@
+ALTER TABLE `Users` ADD `UniqID` char(32) default 'no' AFTER `Password`;

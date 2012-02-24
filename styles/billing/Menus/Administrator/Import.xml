@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Импорт данных</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/DataImport</UniqID>
+  </Paths>
+  <Href>/Administrator/DataImport</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Средства миграции</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/Migration</UniqID>
+  </Paths>
+  <Href>/Administrator/Migration</Href>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

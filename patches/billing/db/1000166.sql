@@ -1,0 +1,1 @@
+ALTER TABLE `Users` CHANGE `Name` `Name` char(100) NOT NULL;

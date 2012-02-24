@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<RootID>TopPanel</RootID>
+<!-- *********************************************************************** -->
+<Items>
+ <ID200>
+   <Text>Дом</Text>
+   <Prompt>Перейти на домашнюю страницу</Prompt>
+   <Paths>
+    <UniqID>\/Home$</UniqID>
+   </Paths>
+   <Href>/Home</Href>
+ </ID200>
+ <ID300>
+   <Text>Мой офис</Text>
+   <Prompt>Управление профилями, договорами, счетами на оплату и т.д.</Prompt>
+   <Paths>
+    <UniqID>\/(Profiles|Contracts|ContractsEnclosures|Invoices|WorksComplite|WorksCompliteReports|MotionDocuments|Postings|Tasks|DependUsers|DependUsersStatistic)$</UniqID>
+   </Paths>
+   <Href>/Profiles</Href>
+ </ID300>
+ <ID400>
+   <Text>Услуги</Text>
+   <Prompt>Управление услугами, заказ новых услуг</Prompt>
+   <Paths>
+    <UniqID>\/ServicesOrders\?ServiceID=[0-9]+$</UniqID>
+   </Paths>
+   <Href>/ServicesOrders</Href>
+   <Pick />
+ </ID400>
+ <ID500>
+   <Text>Корзина заказов</Text>
+   <Prompt>Список текущих заявок на оплату услуг</Prompt>
+   <Paths>
+    <UniqID>\/Basket$</UniqID>
+   </Paths>
+   <Href>/Basket</Href>
+   <Comp>Basket/Icon</Comp>
+ </ID500>
+ <ID600>
+   <Text>Центр поддержки</Text>
+   <Prompt>Обратиться к специалистам за помощью</Prompt>
+   <Paths>
+    <UniqID>\/Tickets$</UniqID>
+   </Paths>
+   <Href>/Tickets</Href>
+   <Comp>Tickets/Icons/User</Comp>
+   <Pick />
+ </ID600>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

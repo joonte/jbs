@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Главная</Text>
+  <Paths>
+   <UniqID>^\/Index$</UniqID>
+  </Paths>
+  <Href>/Index</Href>
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Новости</Text>
+  <Prompt>Важные события в жизни комании</Prompt>
+  <Paths>
+   <UniqID>^\/News$</UniqID>
+  </Paths>
+  <Href>/News</Href>
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Шаблоны документов</Text>
+  <Prompt>Договора о оказании услуг и приложения к ним</Prompt>
+  <Paths>
+   <UniqID>^\/Documents</UniqID>
+  </Paths>
+  <Href>/Documents</Href>
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Биллинговая система</Text>
+  <Prompt>Восстановление пароля от биллинговой системы, регистрация новых пользователей, вход в систему</Prompt>
+  <Paths>
+   <UniqID>^NULL$</UniqID>
+  </Paths>
+  <Href />
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Вход в систему</Text>
+  <Prompt>Вход в биллинговую панель</Prompt>
+  <Paths>
+   <UniqID>^\/Logon$</UniqID>
+  </Paths>
+  <Href>/Logon</Href>
+  <Level>2</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Восстановление пароля</Text>
+  <Prompt>Восстановление забытого пароля от биллинговой системы</Prompt>
+  <Paths>
+   <UniqID>^\/UserPasswordRestore$</UniqID>
+  </Paths>
+  <Href>/UserPasswordRestore</Href>
+  <Level>2</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Регистрация</Text>
+  <Prompt>Регистрация нового пользователя в биллинговой системе</Prompt>
+  <Paths>
+   <UniqID>^\/UserRegister$</UniqID>
+  </Paths>
+  <Href>/UserRegister</Href>
+  <Level>2</Level>
+  <Pick />
+ </ListElement>
+ <ListElement>
+  <Text>Наши клиенты</Text>
+  <Prompt>Список наших клиентов, пожелавших чтобы они были опубликованы в данном разделе</Prompt>
+  <Paths>
+   <UniqID>^\/Clients$</UniqID>
+  </Paths>
+  <Href>/Clients</Href>
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Наши партнеры</Text>
+  <Prompt>Список наших партнёров, пожелавших чтобы они были опубликованы в данном разделе</Prompt>
+  <Paths>
+   <UniqID>^\/Partners$</UniqID>
+  </Paths>
+  <Href>/Partners</Href>
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Поддержка</Text>
+  <Paths>
+   <UniqID>^NULL$</UniqID>
+  </Paths>
+  <Href />
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Обсуждения</Text>
+  <Paths>
+   <UniqID>^\/(Edesks|EdeskMessages)$</UniqID>
+  </Paths>
+  <Href>/Edesks</Href>
+  <Level>2</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Контакты</Text>
+  <Prompt>Контактные данные администрации</Prompt>
+  <Paths>
+   <UniqID>^\/Contacts$</UniqID>
+  </Paths>
+  <Href>/Contacts</Href>
+  <Level>2</Level>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

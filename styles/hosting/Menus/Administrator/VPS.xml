@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Заказы</Text>
+  <Prompt>Все заказы клиентов на виртуальные сервера</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/VPSOrders$</UniqID>
+  </Paths>
+  <Href>/Administrator/VPSOrders</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Тарифы</Text>
+  <Prompt>Тарифные планы</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/VPSSchemes$</UniqID>
+  </Paths>
+  <Href>/Administrator/VPSSchemes</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Ценовые политики</Text>
+  <Prompt>Правила назначения бонусов при оплате заказов на различные периоды</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/VPSPolitics$</UniqID>
+  </Paths>
+  <Href>/Administrator/VPSPolitics</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Доменные политики</Text>
+  <Prompt>Правила назначения бонусов на домены при оплате заказов на различные периоды</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/VPSDomainsPolitics$</UniqID>
+  </Paths>
+  <Href>/Administrator/VPSDomainsPolitics</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Бонусы</Text>
+  <Prompt>Назначенные скидки клиентам на определённые периоды</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/VPSBonuses$</UniqID>
+  </Paths>
+  <Href>/Administrator/VPSBonuses</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Группы серверов</Text>
+  <Prompt>Характеристики объединения серверов</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/VPSServersGroups$</UniqID>
+  </Paths>
+  <Href>/Administrator/VPSServersGroups</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Серверы</Text>
+  <Prompt>Места размещения клиентов</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/VPSServers$</UniqID>
+  </Paths>
+  <Href>/Administrator/VPSServers</Href>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

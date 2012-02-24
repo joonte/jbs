@@ -1,0 +1,1 @@
+ALTER TABLE `HostingServersGroups` ADD `FunctionID` char(30) NOT NULL AFTER `Name`;

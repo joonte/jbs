@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Заказы</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/DomainOrders$</UniqID>
+  </Paths>
+  <Href>/Administrator/DomainOrders</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Тарифы</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/DomainSchemes$</UniqID>
+  </Paths>
+  <Href>/Administrator/DomainSchemes</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Группы тарифов</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/DomainSchemesGroups$</UniqID>
+  </Paths>
+  <Href>/Administrator/DomainSchemesGroups</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Бонусы</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/DomainBonuses$</UniqID>
+  </Paths>
+  <Href>/Administrator/DomainBonuses</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Регистраторы</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/DomainRegistrators$</UniqID>
+  </Paths>
+  <Href>/Administrator/DomainRegistrators</Href>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

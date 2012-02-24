@@ -1,0 +1,1 @@
+ALTER TABLE `InvoicesItems` ADD `Summ` float(7,2) NOT NULL AFTER `Amount`;

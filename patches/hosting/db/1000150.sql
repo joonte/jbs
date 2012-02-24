@@ -1,0 +1,1 @@
+UPDATE `Tasks` SET `Errors` = 0,`IsActive` = 'yes',`Result` = '' WHERE `TypeID` = 'HostingForDelete';

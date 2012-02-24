@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<ID01>
+ <Name>Ангел</Name>
+ <Pattern>O:-)</Pattern>
+</ID01>
+<ID02>
+ <Name>Радость</Name>
+ <Pattern>:-)</Pattern>
+</ID02>
+<ID03>
+ <Name>Грусть</Name>
+ <Pattern>:-(</Pattern>
+</ID03>
+<ID04>
+ <Name>Уважение</Name>
+ <Pattern>;-)</Pattern>
+</ID04>
+<ID05>
+ <Name>Дразнить</Name>
+ <Pattern>:-P</Pattern>
+</ID05>
+<ID06>
+ <Name>В танке</Name>
+ <Pattern>8-)</Pattern>
+</ID06>
+<ID07>
+ <Name>Хохот</Name>
+ <Pattern>:-D</Pattern>
+</ID07>
+<ID08>
+ <Name>Смущение</Name>
+ <Pattern>:-[</Pattern>
+</ID08>
+<ID09>
+ <Name>Удивление</Name>
+ <Pattern>=-O</Pattern>
+</ID09>
+<ID10>
+ <Name>Поцелуй</Name>
+ <Pattern>:-*</Pattern>
+</ID10>
+<ID11>
+ <Name>Слезы</Name>
+ <Pattern>:'(</Pattern>
+</ID11>
+<ID12>
+ <Name>Не знаю</Name>
+ <Pattern>:-X</Pattern>
+</ID12>
+<ID13>
+ <Name>Прошу прощения</Name>
+ <Pattern>&gt;:o</Pattern>
+</ID13>
+<ID14>
+ <Name>Сума сошел</Name>
+ <Pattern>:-|</Pattern>
+</ID14>
+<ID15>
+ <Name>Гордость</Name>
+ <Pattern>:-\</Pattern>
+</ID15>
+<ID16>
+ <Name>Заигрывание</Name>
+ <Pattern>*JOKINGLY*</Pattern>
+</ID16>
+<ID17>
+ <Name>Дьявол</Name>
+ <Pattern>]:-]</Pattern>
+</ID17>
+<ID18>
+ <Name>Веселье</Name>
+ <Pattern>[:-}</Pattern>
+</ID18>
+<ID19>
+ <Name>Зацелованный</Name>
+ <Pattern>*KISSED*</Pattern>
+</ID19>
+<ID20>
+ <Name>Гадость</Name>
+ <Pattern>:-!</Pattern>
+</ID20>
+<ID21>
+ <Name>Усталый</Name>
+ <Pattern>*TIRED*</Pattern>
+</ID21>
+<ID22>
+ <Name>Стоп!</Name>
+ <Pattern>*STOP*</Pattern>
+</ID22>
+<ID23>
+ <Name>Целую</Name>
+ <Pattern>*KISSING*</Pattern>
+</ID23>
+<ID24>
+ <Name>Роза</Name>
+ <Pattern>@}-]--</Pattern>
+</ID24>
+<ID25>
+ <Name>Молодец!</Name>
+ <Pattern>*THUMBS UP*</Pattern>
+</ID25>
+<ID26>
+ <Name>Застолье</Name>
+ <Pattern>*DRINK*</Pattern>
+</ID26>
+<ID27>
+ <Name>Сердце</Name>
+ <Pattern>*IN LOVE*</Pattern>
+</ID27>
+<ID28>
+ <Name>Бомба</Name>
+ <Pattern>@=</Pattern>
+</ID28>
+<ID29>
+ <Name>СОС!</Name>
+ <Pattern>*HELP*</Pattern>
+</ID29>
+<ID30>
+ <Name>Понты</Name>
+ <Pattern>\m/</Pattern>
+</ID30>
+<ID31>
+ <Name>Сумасшествие</Name>
+ <Pattern>%)</Pattern>
+</ID31>
+<ID32>
+ <Name>ОК!</Name>
+ <Pattern>*OK*</Pattern>
+</ID32>
+<ID33>
+ <Name>Людоед</Name>
+ <Pattern>*SUP*</Pattern>
+</ID33>
+<ID34>
+ <Name>Извиняюсь</Name>
+ <Pattern>*SORRY*</Pattern>
+</ID34>
+<ID35>
+ <Name>Браво</Name>
+ <Pattern>*BRAVO*</Pattern>
+</ID35>
+<ID36>
+ <Name>Об стену</Name>
+ <Pattern>*WALL*</Pattern>
+</ID36>
+<ID37>
+ <Name>БУ!</Name>
+ <Pattern>*BU*</Pattern>
+</ID37>
+<!-- *********************************************************************** -->
+</XML>

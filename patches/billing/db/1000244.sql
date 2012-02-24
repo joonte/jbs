@@ -1,0 +1,1 @@
+ALTER TABLE `Clauses` ADD `IsProtected` enum('no','yes') default 'no' AFTER `Title`;

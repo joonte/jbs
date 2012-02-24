@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<!-- Groups -->
+<IsDefault>Logic</IsDefault>
+<IsDepartment>Logic</IsDepartment>
+<!-- *********************************************************************** -->
+<!-- Users -->
+<IsInheritGroup>Logic</IsInheritGroup>
+<!-- *********************************************************************** -->
+<!-- Users, Services, Clauses -->
+<IsManaged>Logic</IsManaged>
+<IsActive>Logic</IsActive>
+<IsNotifies>Logic</IsNotifies>
+<IsHidden>Logic</IsHidden>
+<IsProtected>Logic</IsProtected>
+<!-- *********************************************************************** -->
+<!-- Profiles -->
+<Attribs>JSON</Attribs>
+<IsDefault>Logic</IsDefault>
+<!-- *********************************************************************** -->
+<!-- Contracts -->
+<IsUponConsider>Logic</IsUponConsider>
+<!-- Contracts, ContractsEnclosures, Invoices -->
+<Document>Gz</Document>
+<!-- *********************************************************************** -->
+<!-- Orders -->
+<IsPayed>Logic</IsPayed>
+<!-- *********************************************************************** -->
+<!-- Invoices -->
+<IsPosted>Logic</IsPosted>
+<!-- *********************************************************************** -->
+<!-- Tasks -->
+<Params>JSON</Params>
+<IsExecuted>Logic</IsExecuted>
+<!-- *********************************************************************** -->
+<!-- Edesks -->
+<FileData>Gz</FileData>
+<!-- *********************************************************************** -->
+<!-- Permissions -->
+<IsAccess>Logic</IsAccess>
+<!-- *********************************************************************** -->
+<!-- Clauses -->
+<IsXML>Logic</IsXML>
+<IsDOM>Logic</IsDOM>
+<IsPublish>Logic</IsPublish>
+<!-- *********************************************************************** -->
+<!-- Services -->
+<IsShow>Logic</IsShow>
+<IsProlong>Logic</IsProlong>
+<!-- *********************************************************************** -->
+<!-- MotionDocuments -->
+<AjaxCall>JSON</AjaxCall>
+<!-- *********************************************************************** -->
+<!-- ServicesFields -->
+<IsDuty>Logic</IsDuty>
+<IsKey>Logic</IsKey>
+<!-- *********************************************************************** -->
+<!-- Events -->
+<IsReaded>Logic</IsReaded>
+<!-- Menus -->
+<IsVisible>Logic</IsVisible>
+<IsPick>Logic</IsPick>
+<!-- *********************************************************************** -->
+<!-- Jabber -->
+<UseSSL>Logic</UseSSL>
+<!-- *********************************************************************** -->
+<!-- дополнительная задача -->
+<AdditionalTaskExecuted>Logic</AdditionalTaskExecuted>
+
+</XML>

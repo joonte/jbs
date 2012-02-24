@@ -1,0 +1,1 @@
+ALTER TABLE `Clauses` CHANGE `Text` `Text` longtext NOT NULL;

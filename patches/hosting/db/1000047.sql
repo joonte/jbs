@@ -1,0 +1,1 @@
+ALTER TABLE `DomainsOrders` ADD `IsPrivateWhoIs` enum('no','yes') default 'no' AFTER `RegistratorContractID`;

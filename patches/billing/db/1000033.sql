@@ -1,0 +1,1 @@
+ALTER TABLE `Groups` CHANGE `ID` `ID` int(11) NOT NULL auto_increment;

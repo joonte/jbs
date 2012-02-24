@@ -1,0 +1,1 @@
+UPDATE `Users` SET `Email` = CONCAT(`ID`,'@','jbs.com') WHERE `Email` = '';

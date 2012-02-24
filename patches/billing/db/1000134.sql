@@ -1,0 +1,1 @@
+UPDATE `Clauses` SET `Partition` = 'UserPanel' WHERE `Partition` = 'UserHomeRightPanel';

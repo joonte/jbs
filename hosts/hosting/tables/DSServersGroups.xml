@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+ </Comps>
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>DSServersGroups</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>Name</ListElement>
+  <ListElement>Comment</ListElement>
+  <ListElement>SortID</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Групп серверов не обнаружено.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <After>
+  <Delete>
+   <Args>
+    <Comment>Выбранные группы</Comment>
+    <Send>
+     <TableID>DSServersGroups</TableID>
+    </Send>
+   </Args>
+  </Delete>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>SortID</SortOn>
+ <IsDesc>0</IsDesc>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+  <SelectID>
+  <Args>
+   <TableID>DSServersGroups</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/Administrator/DSServersGroupEdit</ListElement>
+   <ListElement>
+    <DSServersGroupID>%ID%</DSServersGroupID>
+   </ListElement>
+   <ListElement>Редактировать группу серверов</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+ <!-- ********************************************************************** -->
+ <Name>
+  <Head>Название</Head>
+ </Name>
+ <!-- ********************************************************************** -->
+ <Comment>
+  <Head>Комментарий</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Comment%</ListElement>
+   <Length>40</Length>
+  </Args>
+ </Comment>
+ <!-- ********************************************************************** -->
+ <NumServers>
+  <Head>Кол. серв.</Head>
+  <Prompt>Кол-во серверов в группе</Prompt>
+  <Alias>(SELECT SUM(`NumServers`) FROM `DSSchemes` WHERE `DSSchemes`.`ServersGroupID` = `DSServersGroups`.`ID`)</Alias>
+  <Attribs>
+   <style>text-align:right;</style>
+  </Attribs>
+ </NumServers>
+ <!-- ********************************************************************** -->
+ <RemainServers>
+  <Head>Осталось серв.</Head>
+  <Prompt>Сколько серверов свободно в этой группе</Prompt>
+  <Alias>(SELECT SUM(`RemainServers`) FROM `DSSchemes` WHERE `DSSchemes`.`ServersGroupID` = `DSServersGroups`.`ID`)</Alias>
+  <Attribs>
+   <style>text-align:right;</style>
+  </Attribs>
+ </RemainServers>
+ <!-- ********************************************************************** -->
+ <System>
+  <Head>Сист. упр.</Head>
+  <Prompt>Система управления используемая на сервере</Prompt>
+  <Comp>Formats/System/Type</Comp>
+   <Args>
+    <ListElement>%System%</ListElement>
+   </Args>
+   <Alias>SystemID</Alias>
+ </System>
+ <!-- ********************************************************************** -->
+ <SortID>
+  <Args>
+   <TableID>DSServersGroups</TableID>
+  </Args>
+ </SortID>
+</Columns>
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>Edit</ListElement>
+ <ListElement>Name</ListElement>
+ <ListElement>Comment</ListElement>
+ <ListElement>NumServers</ListElement>
+ <ListElement>RemainServers</ListElement>
+ <ListElement>System</ListElement>
+ <ListElement>SortID</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

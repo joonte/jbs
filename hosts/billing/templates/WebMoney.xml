@@ -1,0 +1,12 @@
+<!--WebMoney TOP-->
+<SCRIPT language="JavaScript">
+<!--
+document.write('<a href="http://top.owebmoney.ru" target=_blank>'+'<img src="http://top.owebmoney.ru/counter.php?site_id=933&from='+escape(document.referrer)+'&host='+location.hostname+'&rand='+Math.random()+'" alt="WebMoney TOP" '+'border=0 width=88 height=31></a>')
+//-->
+</SCRIPT>
+<NOSCRIPT>
+ <A href="http://top.owebmoney.ru" target="_blank">
+  <IMG src="http://top.owebmoney.ru/counter.php?site_id=933" width="88" height="31" alt="WebMoney TOP" border="0" />
+ </A>
+</NOSCRIPT>
+<!--/WebMoney TOP-->

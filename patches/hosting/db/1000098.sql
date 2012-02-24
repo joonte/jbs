@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD `QuotaEmailForwards` int(3) default '0' AFTER `QuotaWebApp`;

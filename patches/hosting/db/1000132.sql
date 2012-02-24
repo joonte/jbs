@@ -1,0 +1,1 @@
+ALTER TABLE `DomainsOrders` ADD `DomainID` int(11) default 0 AFTER `PersonID`;

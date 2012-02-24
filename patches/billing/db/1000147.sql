@@ -1,0 +1,1 @@
+UPDATE `Config` SET `Param` = 'Copyright' WHERE `Param` = 'BaseFootText';

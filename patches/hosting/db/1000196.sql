@@ -1,0 +1,3 @@
+
+ALTER TABLE `VPSSchemes` ADD `extns` VARCHAR(32) NOT NULL;
+

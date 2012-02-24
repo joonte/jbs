@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD `IsSpamAssasing` enum('no','yes') default 'no' AFTER `IsPHPAccess`;

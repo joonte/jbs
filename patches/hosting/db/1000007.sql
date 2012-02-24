@@ -1,0 +1,1 @@
+UPDATE `Config` SET `HostID`='hosting' WHERE `HostID`='~hosting';

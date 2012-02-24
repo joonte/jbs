@@ -1,0 +1,1 @@
+UPDATE `Tasks` SET `TypeID` = 'ICQ' WHERE `TypeID` = 'ICQSend';

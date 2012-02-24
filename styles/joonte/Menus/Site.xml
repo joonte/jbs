@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML recursive="no">
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Главная</Text>
+  <Paths>
+   <UniqID>^\/Index</UniqID>
+  </Paths>
+  <Href>/Index</Href>
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Новости</Text>
+  <Paths>
+   <UniqID>^\/News</UniqID>
+  </Paths>
+  <Href>/News</Href>
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Шаблоны документов</Text>
+  <Paths>
+   <UniqID>^\/Documents</UniqID>
+  </Paths>
+  <Href>/Documents</Href>
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Наши партнеры</Text>
+  <Paths>
+   <UniqID>^\/Partners</UniqID>
+  </Paths>
+  <Href>/Partners</Href>
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Биллинговая система</Text>
+  <Paths>
+   <UniqID>^NULL$</UniqID>
+  </Paths>
+  <Href />
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Основные возможности</Text>
+  <Paths>
+   <UniqID>^\/Capabilities</UniqID>
+  </Paths>
+  <Href>/Capabilities</Href>
+  <Level>2</Level>
+  <Pick />
+ </ListElement>
+ <ListElement>
+  <Text>Демо версия</Text>
+  <Paths>
+   <UniqID>^\/Demo</UniqID>
+  </Paths>
+  <Href>/Demo</Href>
+  <Level>2</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Версии и изменения</Text>
+  <Paths>
+   <UniqID>^\/(Versions|Features)</UniqID>
+  </Paths>
+  <Href>/Versions</Href>
+  <Level>2</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Требования</Text>
+  <Paths>
+   <UniqID>^\/Tech</UniqID>
+  </Paths>
+  <Href>/Tech</Href>
+  <Level>2</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Загрузить</Text>
+  <Paths>
+   <UniqID>^\/Download</UniqID>
+  </Paths>
+  <Href>/Download</Href>
+  <Level>2</Level>
+  <Pick />
+ </ListElement>
+ <ListElement>
+  <Text>Цены на услуги</Text>
+  <Paths>
+   <UniqID>^\/Prices</UniqID>
+  </Paths>
+  <Href>/Prices</Href>
+  <Level>2</Level>
+ </ListElement>
+ <ListElement>
+  <Text>База знаний</Text>
+  <Paths>
+   <UniqID>^NULL$</UniqID>
+  </Paths>
+  <Href>http://wiki.joonte.com</Href>
+  <Level>2</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Поддержка биллинга</Text>
+  <Paths>
+   <UniqID>^NULL$</UniqID>
+  </Paths>
+  <Href />
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>[ Платная подписка ]</Text>
+  <Paths>
+   <UniqID>^\/UserRegister</UniqID>
+  </Paths>
+  <Href>/UserRegister</Href>
+  <Level>2</Level>
+  <Pick />
+ </ListElement>
+ <ListElement>
+  <Text>Форум (обсуждения)</Text>
+  <Paths>
+   <UniqID>^NULL$</UniqID>
+  </Paths>
+  <Href>http://forum.joonte.com</Href>
+  <Level>2</Level>
+  <Pick />
+ </ListElement>
+ <ListElement>
+  <Text>Контакты</Text>
+  <Paths>
+   <UniqID>^\/Contacts</UniqID>
+  </Paths>
+  <Href>/Contacts</Href>
+  <Level>2</Level>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

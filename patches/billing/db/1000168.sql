@@ -1,0 +1,1 @@
+UPDATE `Services` SET `IsShow` = 'no' WHERE `ID` IN (1000,2000,3000);

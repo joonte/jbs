@@ -1,0 +1,1 @@
+ALTER TABLE `DomainsBonuses` DROP FOREIGN KEY `DomainsBonusesContractID`;

@@ -1,0 +1,1 @@
+UPDATE `DomainsOrders` SET `IsOrdered` = 'yes' WHERE `StatusID` = 'Active';

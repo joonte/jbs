@@ -1,0 +1,1 @@
+UPDATE `Groups` SET `Name` = 'Менеджеры' WHERE `ID` = 3300000;

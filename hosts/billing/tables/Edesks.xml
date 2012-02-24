@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Appearance>
+ <Css>
+  <UniqID>Edesk</UniqID>
+ </Css>
+ <IsHead>0</IsHead>
+ <IsDataMode>0</IsDataMode>
+</Appearance>
+<!-- *********************************************************************** -->
+<Cut>
+ <Comps>
+  <After>
+   <Delete />
+  </After>
+ </Comps>
+</Cut>
+<!-- *********************************************************************** -->
+<Comps>
+ <Before>
+  <PatternOut>
+   <Args>
+    <Patterns>
+     <Urgent>
+      <Name>Актуальные обсуждения</Name>
+      <Where>UNIX_TIMESTAMP() - `UpdateDate` &lt;= 1209600</Where>
+     </Urgent>
+     <!-- ****************************************************************** -->
+     <Archive>
+      <Name>Архивные обсуждения</Name>
+      <Where>UNIX_TIMESTAMP() - `UpdateDate` &gt; 1209600</Where>
+     </Archive>
+    </Patterns>
+    <ActiveID>Urgent</ActiveID>
+   </Args>
+  </PatternOut>
+  <!-- ********************************************************************* -->
+  <Search>
+   <Args>
+    <ColumnsIDs>
+     <ListElement>ID</ListElement>
+     <ListElement>UserID</ListElement>
+     <ListElement>Theme</ListElement>
+    </ColumnsIDs>
+   </Args>
+  </Search>
+ </Before>
+</Comps>
+<!-- *********************************************************************** -->
+<Column>
+ <Cut>
+  <Attribs>
+   <class />
+  </Attribs>
+ </Cut>
+</Column>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>Edesks</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>CreateDate</ListElement>
+  <ListElement>UserID</ListElement>
+  <ListElement>Theme</ListElement>
+  <ListElement>UpdateDate</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Where>
+   <UniqID>(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = `Edesks`.`TargetGroupID`) = 'no'</UniqID>
+  </Where>
+  <Message>Обсуждений не найдено. Для того, чтобы начать новое обсуждение нажмите на кнопку [Новое обсуждение].</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>UpdateDate</SortOn>
+ <InPage>5</InPage>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+ <Edesk>
+  <Comp>Edesks/Edesk</Comp>
+  <Args>
+   <ListElement>%ID%</ListElement>
+   <ListElement>%CreateDate%</ListElement>
+   <ListElement>%UserID%</ListElement>
+   <ListElement>%Theme%</ListElement>
+  </Args>
+ </Edesk>
+</Columns>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>Edesk</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

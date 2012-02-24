@@ -1,0 +1,1 @@
+ALTER TABLE `DomainsSchemes` DROP `ExpirationDate`;

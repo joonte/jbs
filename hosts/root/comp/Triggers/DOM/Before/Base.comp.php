@@ -1,0 +1,88 @@
+<?php
+
+
+#-------------------------------------------------------------------------------
+/** @author Великодный В.В. (Joonte Ltd.) */
+/******************************************************************************/
+/******************************************************************************/
+$__args_list = Array('LinkID');
+/******************************************************************************/
+/******************************************************************************/
+/******************************************************************************/
+Eval(COMP_INIT);
+/******************************************************************************/
+/******************************************************************************/
+$Links = &Links();
+# Коллекция ссылок
+$DOM = &$Links[$LinkID];
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Css',Array('Standard','TableSuper'));
+if(Is_Error($Comp))
+  return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+foreach($Comp as $Css)
+  $DOM->AddChild('Head',$Css);
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+//$Comp = Comp_Load('Css',Array(BROWSER_ID));
+//if(!Is_Error($Comp)){
+//  #---------------------------------------------------------------------------
+//  foreach($Comp as $Css)
+//    $DOM->AddChild('Head',$Css);
+//}
+#-------------------------------------------------------------------------------
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Standard.js}')));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/DOM.js}')));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/HTTP.js}')));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Ajax/Window.js}')));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Ajax/AutoComplite.js}')));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{others/jQuery/core.js}')));
+$DOM->AddChild('Head',new Tag('LINK',Array('rel'=>'stylesheet','type'=>'text/css','href'=>'SRC:{others/jQuery/smoothness/jquery-ui-custom.css}')));
+#-------------------------------------------------------------------------------
+$Parse = <<<EOD
+<TABLE id="Window" style="display:none;position:absolute;left:-1000;top:-1000;" cellspacing="0" cellpadding="0">
+ <TR>
+  <TD>
+   <TABLE class="WindowHeader" width="100%%" cellspacing="0" cellpadding="0">
+    <TR>
+     <TD class="WindowTitle" id="WindowTitle" />
+     <TD width="20">
+      <BUTTON class="Transparent" title="Закрыть окно" onclick="HideWindow();">
+       <IMG src="SRC:{Images/Icons/Close.gif}" width="15" height="15" alt="Закрыть" border="0" />
+      </BUTTON>
+     </TD>
+    </TR>
+   </TABLE>
+  </TD>
+ </TR>
+ <TR>
+  <TD id="WindowBody" style="padding:5px;" />
+ </TR>
+</TABLE>
+EOD;
+#-------------------------------------------------------------------------------
+$DOM->AddHTML('Floating',$Parse);
+#-------------------------------------------------------------------------------
+$Parse = <<<EOD
+<DIV id="AutoComplite" style="display:none;position:absolute;top:-1000;left:-1000;">
+ <SELECT id="AutoCompliteSelect" size="4">
+  <OPTION value="NoResult">Default</OPTION>
+ </SELECT>
+</DIV>
+EOD;
+#-------------------------------------------------------------------------------
+$DOM->AddHTML('Floating',$Parse);
+#-------------------------------------------------------------------------------
+if(IsSet($_COOKIE['Eval'])){
+  #-----------------------------------------------------------------------------
+  $Eval = $_COOKIE['Eval'];
+  #-----------------------------------------------------------------------------
+  $DOM->AddAttribs('Body',Array('onload'=>$Eval));
+  #-----------------------------------------------------------------------------
+  if(!SetCookie('Eval',$Eval,Time() - 86400,'/'))
+    return ERROR | @Trigger_Error(500);
+}
+#-------------------------------------------------------------------------------
+
+?>

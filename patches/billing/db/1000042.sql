@@ -1,0 +1,1 @@
+ALTER TABLE `Users` CHANGE `CreditThreshold` `LayPayThreshold` float(7,2) default '0.00';

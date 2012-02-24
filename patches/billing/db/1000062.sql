@@ -1,0 +1,1 @@
+UPDATE `Tasks` SET `TypeID` = 'Sessions' WHERE `TypeID` = 'SessionsClear';

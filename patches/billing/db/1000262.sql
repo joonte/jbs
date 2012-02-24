@@ -1,0 +1,1 @@
+UPDATE `Tasks` SET `TypeID` = 'OrdersForSuspend' WHERE `TypeID` = 'ServicesForSuspend';

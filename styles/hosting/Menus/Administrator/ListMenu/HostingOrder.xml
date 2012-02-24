@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <UniqID>
+  <Text>Дополнительная информация</Text>
+  <Href>javascript:ShowWindow("/HostingOrderInfo",{HostingOrderID:"%Replace%"});</Href>
+  <Icon>Info.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Сменить тарифный план</Text>
+  <Href>javascript:ShowWindow("/HostingOrderSchemeChange",{HostingOrderID:%Replace%});</Href>
+  <Icon>Edit.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Компенсировать время</Text>
+  <Href>javascript:ShowWindow("/Administrator/HostingCompensation",{HostingOrderID:%Replace%});</Href>
+  <Icon>Add.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Управлять заказом хостинга</Text>
+  <Href>javascript:HostingManage(%Replace%);</Href>
+  <Icon>HostingManage.gif</Icon>
+  <JavaScript>HostingManage.js</JavaScript>
+ </UniqID>
+ <UniqID>
+  <Text>Сменить пароль от аккаунта</Text>
+  <Href>javascript:ShowWindow("/HostingPasswordChange",{HostingOrderID:%Replace%});</Href>
+  <Icon>Password.gif</Icon>
+ </UniqID>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

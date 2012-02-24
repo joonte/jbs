@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD `QuotaMEM` int(4) default '0' AFTER `QuotaCPU`;

@@ -1,0 +1,1 @@
+ALTER TABLE `Postings` CHANGE `BalanceBefore` `Before` float(7,2) NOT NULL;

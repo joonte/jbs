@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<TABLE id="ToBase" cellspacing="0" cellpadding="0" width="100%">
+ <TR>
+  <TD align="right" valign="top" width="180">
+   <COMP path="Menus/Left" args="Site" />
+  </TD>
+  <TD valign="top">
+   <DIV class="Title" id="Title" />
+   <TABLE width="100%" cellspacing="5" cellpadding="0">
+    <TR>
+     <TD id="Into" />
+    </TR>
+   </TABLE>
+  </TD>
+ </TR>
+</TABLE>

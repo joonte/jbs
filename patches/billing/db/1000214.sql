@@ -1,0 +1,1 @@
+UPDATE `Clauses` SET `IsDOM` = 'yes';

@@ -1,0 +1,1 @@
+ALTER TABLE `Registrators` CHANGE `Password` `Password` char(255) NOT NULL;

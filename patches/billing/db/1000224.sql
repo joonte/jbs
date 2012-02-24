@@ -1,0 +1,1 @@
+UPDATE `MotionDocuments` SET `TypeID` = 'WorksCompliteReport' WHERE `TypeID` = 'WorksCompliteAct';

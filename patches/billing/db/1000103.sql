@@ -1,0 +1,1 @@
+UPDATE `Tasks` SET `TypeID` = 'TicketsMessages' WHERE `TypeID` = 'TicketsNewMessages';

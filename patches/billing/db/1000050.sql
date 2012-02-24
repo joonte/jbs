@@ -1,0 +1,1 @@
+UPDATE `Users` SET `IsActive` = 'no' WHERE `ID` IN (1,50,100);

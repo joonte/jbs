@@ -1,0 +1,1 @@
+ALTER TABLE `Invoices` CHANGE `Document` `Document` mediumblob;

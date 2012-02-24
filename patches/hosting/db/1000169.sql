@@ -1,0 +1,1 @@
+UPDATE `HostingSchemes` SET `QuotaTraffic` = 0 WHERE `QuotaTraffic` < 0;

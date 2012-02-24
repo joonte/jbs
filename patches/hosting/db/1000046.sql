@@ -1,0 +1,1 @@
+ALTER TABLE `DomainsOrders` ADD `RegistratorContractID` int(11) default NULL AFTER `ProfileID`;

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<RootID>WorksCompliteReports</RootID>
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+  <After>
+   <Delete />
+   <StatusSet />
+  </After>
+ </Comps>
+ <Sequence />
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <Conditions>
+  <Where>
+   <UniqID>`UserID` = @local.__USER_ID</UniqID>
+  </Where>
+  <Message>Актов выполненных работ не обнаружено.</Message>
+ </Conditions>
+ <Adding>
+  <Message>По данному договору акты выполненных работ не найдены.</Message>
+ </Adding>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <Before>
+  <UniqID>
+   <Comp>Contracts/SelectFilter</Comp>
+   <Args type="array" />
+  </UniqID>
+ </Before>
+</Comps>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>Download</ListElement>
+ <ListElement>Month</ListElement>
+ <ListElement>Number</ListElement>
+ <ListElement>Customer</ListElement>
+ <ListElement>WorksCount</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

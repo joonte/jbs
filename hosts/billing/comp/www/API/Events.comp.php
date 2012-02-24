@@ -1,0 +1,102 @@
+<?php
+
+
+#-------------------------------------------------------------------------------
+/** @author Великодный В.В. (Joonte Ltd.) */
+/******************************************************************************/
+/******************************************************************************/
+Eval(COMP_INIT);
+/******************************************************************************/
+/******************************************************************************/
+# cache and other functions added 2011-12-30 in 19:41, by lissyara, as part of JBS-237
+if(!IsSet($GLOBALS['__USER'])){
+	#Debug("[comp/www/API/Events]: юзер не авторизован");
+	return ERROR | @Trigger_Error(700);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$OutCacheID = Md5($__FILE__ . $GLOBALS['__USER']['ID']);
+$TimeCacheID = Md5($__FILE__ . $GLOBALS['__USER']['ID'] . 'time');
+$LastIDCacheID = Md5($__FILE__ . $GLOBALS['__USER']['ID'] . 'ID');
+#-------------------------------------------------------------------------------
+$TimeResult = MemoryCache_Get($TimeCacheID);
+if(!Is_Error($TimeResult)){
+	# проверяем не истекло ли время кэша
+	if($TimeResult > Time() - 10){
+		# проверяем, есть ли выхлоп в кэше
+		$Out = MemoryCache_Get($OutCacheID);
+		if(!Is_Error($Out)){
+			# отдаём кэш
+			Debug("[comp/www/API/Events]: UserID: " . $GLOBALS['__USER']['ID'] . ", результат найден в кэше");
+			Return($Out);
+		}
+	}
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
+  return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Entrance = Tree_Entrance('Groups',3000000);
+#-------------------------------------------------------------------------------
+switch(ValueOf($Entrance)){
+  case 'error':
+    return ERROR | @Trigger_Error(500);
+  case 'exception':
+    return ERROR | @Trigger_Error(400);
+  case 'array':
+    #---------------------------------------------------------------------------
+    $Where = Array('UNIX_TIMESTAMP() - 10 <= `CreateDate`');
+    #---------------------------------------------------------------------------
+    $LastID = MemoryCache_Get($LastIDCacheID);
+    if(!Is_Error($LastID)){
+      Debug("[comp/www/API/Events]: last selected ID, from cache = " . $LastID . "; user = " . $GLOBALS['__USER']['ID']);
+      $Where[] = SPrintF('`ID` > %u',$LastID);
+    }
+    #---------------------------------------------------------------------------
+    $__USER = $GLOBALS['__USER'];
+    #---------------------------------------------------------------------------
+    if(!In_Array($__USER['GroupID'],$Entrance))
+      $Where[] = SPrintF('`UserID` = %u',$__USER['ID']);
+    #---------------------------------------------------------------------------
+    $Events = DB_Select('Events',Array('ID','Text',"(SELECT CONCAT(FROM_UNIXTIME(`CreateDate`,'%Y-%m-%d / %H:%i:%s / '),`Name`,' [',`Email`,']') FROM `Users` WHERE `Users`.`ID` = `Events`.`UserID`) as `UserInfo`",'PriorityID'),Array('SortOn'=>'ID','Where'=>$Where));
+    #---------------------------------------------------------------------------
+    switch(ValueOf($Events)){
+      case 'error':
+        return ERROR | @Trigger_Error(500);
+      case 'exception':
+        $Out = Array('Status'=>'Empty');
+	break;
+      case 'array':
+        #-----------------------------------------------------------------------
+        $Result = Array();
+        #-----------------------------------------------------------------------
+        foreach($Events as $Event){
+          $Result[] = $Event;
+	  $LastID = $Event['ID'];
+	  #Debug("[comp/www/API/Events]: last selected ID = " . $LastID);
+	}
+        #-----------------------------------------------------------------------
+	MemoryCache_Add($LastIDCacheID,$LastID,24 * 3600); /* на сутки в кэш */
+	#-----------------------------------------------------------------------
+        $Out = Array('Status'=>'Ok','Events'=>$Result);
+	break;
+      default:
+        return ERROR | @Trigger_Error(101);
+    }
+    #---------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
+    MemoryCache_Add($TimeCacheID,Time(),10);
+    MemoryCache_Add($OutCacheID,$Out,10);
+    #Debug("[comp/www/API/Events]: результат добавлен в кэш");
+    #---------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
+    return $Out;
+    #---------------------------------------------------------------------------
+  default:
+    return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+
+
+?>

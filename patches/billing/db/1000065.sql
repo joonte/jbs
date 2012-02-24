@@ -1,0 +1,1 @@
+ALTER TABLE `Users` ADD `IsConfirmed` enum('no','yes') default 'yes' AFTER `IsProtected`;

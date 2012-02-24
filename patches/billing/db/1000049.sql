@@ -1,0 +1,1 @@
+UPDATE `Profiles` SET `Attribs` = REPLACE(`Attribs`,'</Inn>',"</Inn>\n <Kpp />") WHERE `TemplateID` = 'Individual';

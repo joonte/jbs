@@ -1,0 +1,1 @@
+ALTER TABLE `Edesks` CHANGE `Theme` `Theme` text;

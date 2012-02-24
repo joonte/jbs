@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<RootID>Users</RootID>
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+  <After>
+   <Delete />
+  </After>
+ </Comps>
+ <Sequence />
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <Conditions>
+  <Where>
+   <UniqID>`OwnerID` = @local.__USER_ID AND `OwnerID` != `ID`</UniqID>
+  </Where>
+  <Message>У Вас нет зарегистрированных пользователей.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Columns>
+ <Info>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/UserInfo</ListElement>
+   <ListElement>
+    <UserID>%ID%</UserID>
+   </ListElement>
+   <ListElement>Дополнительная информация</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Info>
+ <!-- ********************************************************************** -->
+ <Name>
+  <Head>Имя</Head>
+ </Name>
+ <!-- ********************************************************************** -->
+ <UserSwitch>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Standard</Comp>
+  <Args>
+   <ListElement>
+    <onclick>UserSwitch(%ID%);</onclick>
+   </ListElement>
+   <ListElement>Войти от имени</ListElement>
+   <ListElement>Logon.gif</ListElement>
+   <ListElement>UserSwitch.js</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </UserSwitch>
+ <!-- ********************************************************************** -->
+ <aInvoices>
+  <Head>Всего</Head>
+  <Prompt>Общая сумма оплаченных счетов за всё время</Prompt>
+  <Comp>Formats/Currency</Comp>
+  <Args>
+   <ListElement>%aInvoices%</ListElement>
+  </Args>
+  <Alias>(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID` = `Users`.`ID` AND `InvoicesOwners`.`StatusID` = 'Payed')</Alias>
+ </aInvoices>
+ <!-- ********************************************************************** -->
+ <pInvoices>
+  <Head>Пред. мес.</Head>
+  <Prompt>Общая сумма оплаченных счетов за предыдущий месяц</Prompt>
+  <Comp>Formats/Currency</Comp>
+  <Args>
+   <ListElement>%pInvoices%</ListElement>
+  </Args>
+  <Alias>(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID` = `Users`.`ID` AND `InvoicesOwners`.`StatusID` = 'Payed' AND BEGIN_MONTH() > `InvoicesOwners`.`StatusDate` AND `InvoicesOwners`.`StatusDate` >= BEGIN_PREVIOS_MONTH())</Alias>
+ </pInvoices>
+ <!-- ********************************************************************** -->
+ <cInvoices>
+  <Head>Тек. мес.</Head>
+  <Prompt>Общая сумма оплаченных счетов за текущий месяц</Prompt>
+  <Comp>Formats/Currency</Comp>
+  <Args>
+   <ListElement>%cInvoices%</ListElement>
+  </Args>
+  <Alias>(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID` = `Users`.`ID` AND `InvoicesOwners`.`StatusID` = 'Payed' AND `InvoicesOwners`.`StatusDate` >= BEGIN_MONTH())</Alias>
+ </cInvoices>
+ <!-- ********************************************************************** -->
+</Columns>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>Info</ListElement>
+ <ListElement>UserSwitch</ListElement>
+ <ListElement>RegisterDate</ListElement>
+ <ListElement>Name</ListElement>
+ <ListElement>EnterDate</ListElement>
+ <ListElement>aInvoices</ListElement>
+ <ListElement>pInvoices</ListElement>
+ <ListElement>cInvoices</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

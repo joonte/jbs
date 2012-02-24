@@ -1,0 +1,1 @@
+ALTER TABLE `DomainsConsider` ADD `Cost` float(5,2) default '0.00' AFTER `YearsRemainded`;

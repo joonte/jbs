@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<RootID>ContractsEnclosures</RootID>
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+  <After>
+   <Delete />
+   <StatusSet />
+  </After>
+ </Comps>
+ <Sequence />
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <Conditions>
+  <Where>
+   <UniqID>`UserID` = @local.__USER_ID</UniqID>
+  </Where>
+  <Message>У Вас нет ни одного приложения ни к одному договору.</Message>
+ </Conditions>
+ <Adding>
+  <Message>По данному договору приложений не было сформировано.</Message>
+ </Adding>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <Before>
+  <UniqID>
+   <Comp>Contracts/SelectFilter</Comp>
+   <Args type="array" />
+  </UniqID>
+ </Before>
+</Comps>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>ContractEnclosureDownload</ListElement>
+ <ListElement>CreateDate</ListElement>
+ <ListElement>Customer</ListElement>
+ <ListElement>Type</ListElement>
+ <ListElement>Status</ListElement>
+ <ListElement>StatusOver</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

@@ -1,0 +1,1 @@
+ALTER TABLE `ClausesRating` ADD `IP` char(15) default '127.0.0.1' AFTER `ClauseID`;

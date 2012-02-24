@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <UniqID>
+  <Text>Дополнительная информация</Text>
+  <Href>javascript:ShowWindow("/DomainsOrderInfo",{DomainOrderID:%Replace%});</Href>
+  <Icon>Info.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Сменить именные сервера</Text>
+  <Href>javascript:ShowWindow("/DomainOrderNsChange",{DomainOrderID:%Replace%});</Href>
+  <Icon>Edit.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Обновить данные WhoIs</Text>
+  <Href>javascript:DomainOrderWhoIsUpdate(%Replace%);</Href>
+  <Icon>Edit.gif</Icon>
+  <JavaScript>DomainOrderWhoIsUpdate.js</JavaScript>
+ </UniqID>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

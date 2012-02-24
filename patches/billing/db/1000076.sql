@@ -1,0 +1,1 @@
+ALTER TABLE `Orders` ADD `ServiceID` int(11) NOT NULL AFTER `ContractID`;

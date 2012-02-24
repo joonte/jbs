@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<RootID>TopPanel</RootID>
+<!-- *********************************************************************** -->
+<Items>
+ <ID200>
+   <Text>Дом</Text>
+   <Paths>
+    <UniqID>^\/Administrator\/Home$</UniqID>
+   </Paths>
+   <Href>/Administrator/Home</Href>
+ </ID200>
+ <ID300>
+   <Text>Группы</Text>
+   <Prompt>Список групп пользователей, создание новой группы</Prompt>
+   <Paths>
+    <UniqID>^\/Administrator\/Groups$</UniqID>
+   </Paths>
+   <Href>/Administrator/Groups</Href>
+ </ID300>
+ <ID400>
+   <Text>Пользователи</Text>
+   <Prompt>Список пользователей, создание нового пользователя</Prompt>
+   <Paths>
+    <UniqID>^\/Administrator\/Users$</UniqID>
+   </Paths>
+   <Href>/Administrator/Users</Href>
+ </ID400>
+ <ID500>
+   <Text>Офис</Text>
+   <Prompt>Управление профилями, договорами, счетами, история операций, задачи системы и т.д.</Prompt>
+   <Paths>
+    <UniqID>^\/Administrator\/(Profiles|Contracts|Invoices|WorksComplite|WorksCompliteReports|ContractsEnclosures|MotionDocuments|Postings|Tasks|Events)$</UniqID>
+   </Paths>
+   <Href>/Administrator/Invoices</Href>
+ </ID500>
+ <ID600>
+  <Text>Услуги</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/(ServicesGroups|Services|ServicesOrders|ServicesOrders\?ServiceID=[0-9]+)$</UniqID>
+  </Paths>
+  <Href>/Administrator/ServicesOrders</Href>
+  <Pick />
+ </ID600>
+ <ID700>
+   <Text>Центр поддержки</Text>
+   <Prompt>Поддержка клиентов (тикет система)</Prompt>
+   <Paths>
+    <UniqID>^\/Administrator\/(Tickets|Internal)$</UniqID>
+   </Paths>
+   <Href>/Administrator/Tickets</Href>
+   <Comp>Tickets/Icons/Administrator</Comp>
+   <Pick />
+ </ID700>
+ <ID800>
+   <Text>Дополнения</Text>
+   <Prompt>Рассылка сообщений, функции CMS, настройка системы, обновление системы</Prompt>
+   <Paths>
+    <UniqID>^\/Administrator\/(Dispatch|Statistics|PaymentsSystemsStatistics|PersonalStatistics|Clauses|ClauseEdit|Config|Appearanse|DataImport|Migration|Logs|UsersLogs|Update|JBsLicense|BillingVersions)</UniqID>
+   </Paths>
+   <Href>/Administrator/PersonalStatistics</Href>
+ </ID800>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

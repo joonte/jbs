@@ -1,0 +1,1 @@
+ALTER TABLE `MotionDocuments` DROP `ReporterName`;

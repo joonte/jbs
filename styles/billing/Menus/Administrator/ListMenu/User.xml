@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <UniqID>
+  <Text>Войти от имени</Text>
+  <Href>javascript:UserSwitch(%ID%);</Href>
+  <Icon>Logon.gif</Icon>
+  <JavaScript>UserSwitch.js</JavaScript>
+ </UniqID>
+ <UniqID>
+  <Text>Информация</Text>
+  <Href>javascript:ShowWindow("/UserInfo?UserID=%ID%");</Href>
+  <Icon>Info.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Добавить запрос</Text>
+  <Href>javascript:ShowWindow("/TicketEdit?UserID=%ID%");</Href>
+  <Icon>Add.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Отправить сообщение</Text>
+  <Href>/Administrator/Dispatch?UsersIDs[]=%ID%</Href>
+  <Icon>Dispatch.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Тикеты</Text>
+  <Href>/Administrator/Tickets?Search=%Email%&amp;PatternOutID=Default</Href>
+  <Icon>TicketRead.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Профили</Text>
+  <Href>/Administrator/Profiles?Search=%Email%&amp;PatternOutID=Default</Href>
+  <Icon>Profiles.png</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Договоры</Text>
+  <Href>/Administrator/Contracts?Search=%Email%&amp;PatternOutID=Default</Href>
+  <Icon>TextQuote.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Счета на оплату</Text>
+  <Href>/Administrator/Invoices?Search=%Email%&amp;PatternOutID=Default</Href>
+  <Icon>Money.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Выполненные работы</Text>
+  <Href>/Administrator/WorksComplite?Search=%Email%&amp;PatternOutID=Default</Href>
+  <Icon>Works.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Документооборот</Text>
+  <Href>/Administrator/MotionDocuments?Search=%Email%&amp;PatternOutID=Default</Href>
+  <Icon>ListMenuItem.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>История операций</Text>
+  <Href>/Administrator/Postings?Search=%Email%&amp;PatternOutID=Default</Href>
+  <Icon>ListMenuItem.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Задачи системы</Text>
+  <Href>/Administrator/Tasks?Search=%Email%&amp;PatternOutID=Default</Href>
+  <Icon>TaskExecute.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>События системы</Text>
+  <Href>/Administrator/Events?Search=%Email%&amp;PatternOutID=Default</Href>
+  <Icon>Hidden.gif</Icon>
+ </UniqID>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

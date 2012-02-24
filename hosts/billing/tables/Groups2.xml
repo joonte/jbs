@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+ </Comps>
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>Groups</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>Name</ListElement>
+  <ListElement>IsDepartment</ListElement>
+  <ListElement>Comment</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Группы не определены.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>ParentName</SortOn>
+ <IsDesc>0</IsDesc>
+</Query>
+<!-- *********************************************************************** -->
+<Comps>
+ <After>
+  <Delete>
+   <Args>
+    <Comment>Выбранные группы</Comment>
+    <Send>
+     <TableID>Groups</TableID>
+    </Send>
+   </Args>
+  </Delete>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Columns>
+ <SelectID>
+  <Args>
+   <TableID>Groups</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/Administrator/GroupEdit2</ListElement>
+   <ListElement>
+    <GroupID>%ID%</GroupID>
+   </ListElement>
+   <ListElement>Редактировать группу</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+ <!-- ********************************************************************** -->
+ <Name>
+  <Head>Название группы</Head>
+  <Alias>IF(`IsDefault` != 'yes',`Name`,CONCAT('*',`Name`))</Alias>
+ </Name>
+ <!-- ********************************************************************** -->
+ <ParentName>
+  <Head>Группа родитель</Head>
+  <Alias>(SELECT `Name` FROM `Groups` `Table` WHERE `Groups`.`ParentID` = `Table`.`ID`)</Alias>
+ </ParentName>
+ <!-- ********************************************************************** -->
+ <IsDepartment>
+  <Head>Отдел</Head>
+  <Comp>Formats/Logic</Comp>
+  <Args>
+   <ListElement>%IsDepartment%</ListElement>
+  </Args>
+ </IsDepartment>
+ <!-- ********************************************************************** -->
+ <Comment>
+  <Head>Комментарий</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <UserID>%Comment%</UserID>
+   <Length>25</Length>
+  </Args>
+ </Comment>
+</Columns>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>Edit</ListElement>
+ <ListElement>Name</ListElement>
+ <ListElement>ParentName</ListElement>
+ <ListElement>IsDepartment</ListElement>
+ <ListElement>Comment</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

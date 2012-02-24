@@ -1,0 +1,1 @@
+UPDATE `HostingServers` SET `Ns1Name` = CONCAT('ns1.',`Address`);

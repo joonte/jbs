@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<HTML xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+ <HEAD id="Head">
+  <TITLE>Акт выполненных работ</TITLE>
+ </HEAD>
+ <BODY id="Body">
+  <P id="Agreement" />
+  <FONT size="1">
+   <TABLE border="1" width="100%" cellpadding="5">
+    <TR bgcolor="#DCDCDC">
+     <TD align="center">№</TD>
+     <TD align="center">Тип работы</TD>
+     <TD align="center">Комментарий</TD>
+     <TD align="center">Ед. изм.</TD>
+     <TD align="center">Кол-во</TD>
+     <TD align="center">Цена</TD>
+     <TD align="center">Скидка</TD>
+     <TD align="center">Сумма</TD>
+    </TR>
+    <NOBODY id="WorksComplite">
+     <TR id="WorkComplite">
+      <TD align="right">%Number%</TD>
+      <TD>%Service.Name%</TD>
+      <TD>%Comment%</TD>
+      <TD>%Service.Measure%</TD>
+      <TD align="right">%Amount%</TD>
+      <TD align="right">%Cost%</TD>
+      <TD align="right">%Discont%</TD>
+      <TD align="right">%Summ%</TD>
+     </TR>
+    </NOBODY>
+   </TABLE>
+  </FONT>
+  <P>
+   <SPAN>Оказанно услуг на сумму: </SPAN>
+   <B id="Report.Wizard">-</B>
+  </P>
+  <P>Вышеперечисленные услуги выполнены полностью и в срок. Заказчик претензий по объему, качеству и срокам оказания услуг не имеет.</P>
+  <NOBODY id="Footer" />
+ </BODY>
+</HTML>

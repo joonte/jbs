@@ -1,0 +1,1 @@
+ALTER TABLE `DomainsSchemes` ADD `DaysToProlong` int(11) default '31' AFTER `MaxActionYears`;

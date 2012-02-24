@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ID400>
+  <Paths>
+   <UniqID>^\/(HostingOrders|HostingSchemes|HostingBonuses|DomainOrders|DomainSchemes|DomainBonuses|DomainWhoIs|VPSOrders|VPSSchemes|VPSBonuses|DSOrders|DSSchemes|DSBonuses|ExtraIPOrders|ExtraIPSchemes|ExtraIPBonuses|ISPswOrders|ISPswSchemes|ISPswBonuses)$</UniqID>
+  </Paths>
+ </ID400>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

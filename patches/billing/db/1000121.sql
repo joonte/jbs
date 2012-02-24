@@ -1,0 +1,1 @@
+ALTER TABLE `Basket` CHANGE `Comment` `Comment` char(255) default '';

@@ -1,0 +1,1 @@
+UPDATE `Contracts` SET `CustomerName` = 'Публичная оферта' WHERE `TypeID` = 'Public';

@@ -1,0 +1,1 @@
+ALTER TABLE `Users` ADD `IsHidden` enum('no','yes') default 'no' AFTER `IsActive`;

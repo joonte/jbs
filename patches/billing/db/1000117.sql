@@ -1,0 +1,1 @@
+ALTER TABLE `InvoicesItems` ADD `ServiceID` int(11) NOT NULL AFTER `InvoiceID`;

@@ -1,0 +1,1 @@
+UPDATE `Postings` SET `TypeID` = 'BalanceDown' WHERE `TypeID` = 'Credit%';

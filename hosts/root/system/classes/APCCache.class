@@ -1,0 +1,69 @@
+<?php
+/**
+ * APC cache implementation.
+ *
+ * @author vvelikodny
+ */
+class APCCache implements Cache {
+    /** APC cache singleton instance. */
+    protected static $instance;
+
+    /** Constructor. */
+    private function __construct() {}
+
+    /** */
+    private function __clone() {}
+
+    /**
+     * Gets APC instance if exists, otherwise creates a new instance.
+     *
+     * @return APC cache instance.
+     */
+    public static function getInstance() {
+        Debug("Initializing APC system...");
+
+        if (self::$instance === null) {
+            self::$instance = new self;
+        }
+
+        return self::$instance;
+    }
+
+    public function add($key, $value, $ttl = 0) {
+        // Checks args.
+        $__args_types = Array('string', 'boolean,integer,string,array,object','integer');
+        $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+
+
+        $result = apc_store($key, $value, $ttl);
+
+        if (!$result) {
+            return ERROR | @Trigger_Error(SPrintF('[APCCache::add]: не удалось закештровать объект [key=%s]', $key));
+        }
+
+        return TRUE;
+    }
+
+    public function flush() {
+        return apc_clear_cache();
+    }
+
+    public function get($key) {
+        // Check args.
+        $__args_types = Array('string');
+        $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+
+        $result = apc_fetch($key);
+
+        if ($result === FALSE) {
+            return ERROR | @Trigger_Error(SPrintF('[APCCache::get]: не удалось извлечь объект [key=%s]', $key));
+        }
+
+        return $result;
+    }
+
+    public function getStatistic() {
+
+    }
+}
+?>

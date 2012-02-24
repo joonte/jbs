@@ -1,0 +1,1 @@
+ALTER TABLE `MotionDocuments` CHANGE `Link` `AjaxCall` char(255) default '';

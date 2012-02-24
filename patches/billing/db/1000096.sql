@@ -1,0 +1,1 @@
+UPDATE `Services` SET `Measure` = 'год' WHERE `ID` = 20000;

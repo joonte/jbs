@@ -1,0 +1,1 @@
+ALTER TABLE `HostingServers` ADD `Ns3Name` char(30) default '' AFTER `Ns2Name`;

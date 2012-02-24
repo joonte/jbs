@@ -1,0 +1,1 @@
+ALTER TABLE `HostingOrders` ADD `OldSchemeID` int(11) default NULL AFTER `SchemeID`;

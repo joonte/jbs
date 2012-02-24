@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<RootID>Tasks</RootID>
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+  <After>
+   <Executed />
+   <Delete />
+  </After>
+ </Comps>
+ <Sequence />
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <Conditions>
+  <Where>
+   <UniqID>`UserID` = @local.__USER_ID</UniqID>
+  </Where>
+  <Message>От Вас не поступало задач для системы.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Columns>
+ <Info>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/TaskInfo</ListElement>
+   <ListElement>
+    <TaskID>%ID%</TaskID>
+   </ListElement>
+   <ListElement>Дополнительная информация</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Info>
+</Columns>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>Info</ListElement>
+ <ListElement>Number</ListElement>
+ <ListElement>ExecuteDate</ListElement>
+ <ListElement>Type</ListElement>
+ <ListElement>Errors</ListElement>
+ <ListElement>IsExecuted</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

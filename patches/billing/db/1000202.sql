@@ -1,0 +1,1 @@
+ALTER TABLE `Users` CHANGE `Foto` `Foto` mediumblob;

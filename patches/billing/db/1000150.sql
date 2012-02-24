@@ -1,0 +1,1 @@
+DELETE FROM `Config` WHERE `Param` = 'BaseFootText';

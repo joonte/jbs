@@ -1,0 +1,1 @@
+DELETE FROM `Clauses` WHERE `Partition` = 'Start';

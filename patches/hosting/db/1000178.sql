@@ -1,0 +1,1 @@
+UPDATE `Services` SET `Code` = 'Domain' WHERE `Code` = 'Domains';

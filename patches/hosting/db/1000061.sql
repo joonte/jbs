@@ -1,0 +1,1 @@
+UPDATE `Postings` SET `TypeID` = 20000 WHERE `TypeID` = 'DomainOrderPay';

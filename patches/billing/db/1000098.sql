@@ -1,0 +1,1 @@
+ALTER TABLE `Profiles` CHANGE `Attribs` `Attribs` varchar(20000) default '[]';

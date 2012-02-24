@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ID100>
+   <Paths>
+    <UniqID>^\/(Capabilities|Demo|Versions|Features|Tech|Prices|Order|Contacts)</UniqID>
+   </Paths>
+ </ID100>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

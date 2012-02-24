@@ -1,0 +1,1 @@
+ALTER TABLE `RegistratorsContracts` ADD FOREIGN KEY (`RegistratorID`) REFERENCES `Registrators` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;

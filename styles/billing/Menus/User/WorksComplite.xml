@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Выполненные работы</Text>
+  <Paths>
+   <UniqID>^\/WorksComplite$</UniqID>
+  </Paths>
+  <Href>/WorksComplite</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Акты выполненных работ</Text>
+  <Paths>
+   <UniqID>^\/WorksCompliteReports$</UniqID>
+  </Paths>
+  <Href>/WorksCompliteReports</Href>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

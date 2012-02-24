@@ -1,0 +1,1 @@
+ALTER TABLE `ContractsEnclosures` CHANGE `Document` `Document` mediumblob;

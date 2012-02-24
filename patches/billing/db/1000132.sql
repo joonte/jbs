@@ -1,0 +1,1 @@
+DELETE FROM `MotionDocuments` WHERE (SELECT `TypeID` FROM `Contracts` WHERE `Contracts`.`ID` = `MotionDocuments`.`ContractID`) = 'Public';

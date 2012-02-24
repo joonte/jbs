@@ -1,0 +1,1 @@
+ALTER TABLE `Users` CHANGE `Email` `Email` char(255) NOT NULL;

@@ -1,0 +1,1 @@
+ALTER TABLE `HostingConsider` CHANGE `Amount` `Discont` float(5,2) default '0.00';

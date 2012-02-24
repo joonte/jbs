@@ -1,0 +1,37 @@
+table.TableSuperData {
+    width: 100%;
+}
+/* ------------------------- */
+td.EdeskInfo {
+    border:           1px solid #EAEAEA;
+    background-color: #F8F8F8;
+    background-Image: url(../../root/Images/CaptionBg.png);
+    padding:          5px;
+    text-align:       right;
+}
+td.EdeskTheme {
+    background-color: #FFFFFF;
+    border:           1px solid #DCDCDC;
+    padding:          5px;
+}
+/* ------------------------- */
+table.Edesk {
+    border-bottom:    1px solid #DCDCDC;
+}
+/* ------------------------- */
+td.EdeskMessageInfo {
+    border:           1px solid #EAEAEA;
+    background-color: #F8F8F8;
+    background-Image: url(../../root/Images/CaptionBg.png);
+    padding:          5px;
+    text-align:       right;
+}
+td.EdeskMessageContent {
+    background-color: #FFFFFF;
+    border:           1px solid #DCDCDC;
+    padding:          5px;
+}
+/* ------------------------- */
+table.EdeskMessage {
+    border-bottom:    1px solid #DCDCDC;
+}

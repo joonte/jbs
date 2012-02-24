@@ -1,0 +1,1 @@
+UPDATE `Clauses` SET `Partition` = REPLACE(`Partition`,'/Help.Services.Paying','/Help/Services/Paying');

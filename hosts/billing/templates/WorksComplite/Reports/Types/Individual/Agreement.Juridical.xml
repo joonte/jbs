@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<NOBODY>
+ <NOBODY id="Executor.dSourname">-</NOBODY>
+ <NOBODY> </NOBODY>
+ <NOBODY id="Executor.dName">-</NOBODY>
+ <NOBODY> </NOBODY>
+ <NOBODY id="Executor.dLastname">-</NOBODY>
+ <NOBODY> от имени </NOBODY>
+ <NOBODY id="Executor.CompanyForm">-</NOBODY>
+ <NOBODY> "</NOBODY>
+ <NOBODY id="Executor.CompanyName">-</NOBODY>
+ <NOBODY>", именуемое в дальнейшем "Исполнитель", действующий(ая) на основании </NOBODY>
+ <NOBODY id="Executor.Basis">-</NOBODY>
+ <NOBODY> и, Индивидуальный предприниматель "</NOBODY>
+ <NOBODY id="Customer.CompanyName">-</NOBODY>
+ <NOBODY>", именуемый(ая) в дальнейшем "Заказчик", действующий(ая) на основании Свидетельства </NOBODY>
+ <NOBODY id="Customer.SvLine">-</NOBODY>
+ <NOBODY> №</NOBODY>
+ <NOBODY id="Customer.SvNumber">-</NOBODY>
+ <NOBODY> от </NOBODY>
+ <NOBODY id="Customer.SvDate">-</NOBODY>
+ <NOBODY>, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с другой стороны составили настоящий Акт о том, что в соответствии с договором №</NOBODY>
+ <NOBODY id="Contract.Number">-</NOBODY>
+ <NOBODY> от </NOBODY>
+ <NOBODY id="Contract.CreateDate">-</NOBODY>
+ <NOBODY> Исполнитель выполнил, а Заказчик принял работы согласно следующего перечня:</NOBODY>
+</NOBODY>

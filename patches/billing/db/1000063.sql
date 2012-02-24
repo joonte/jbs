@@ -1,0 +1,1 @@
+UPDATE `Tasks` SET `TypeID` = 'Uploads' WHERE `TypeID` = 'UploadsClear';

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<ProfileName>%Sourname% %Name%</ProfileName>
+<!-- *********************************************************************** -->
+<Attribs>
+ <Sourname>
+  <Title>Общая информация</Title>
+  <Check>/^[А-ЯЁ]{1}[а-яё\-\w]{1,50}$/u</Check>
+  <Comment>Фамилия</Comment>
+  <Example>Алибаба</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>15</size>
+   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </Sourname>
+ <!-- ********************************************************************** -->
+ <Name>
+  <Check>/^[А-ЯЁ]{1}[а-яё\-\s]{1,50}$/u</Check>
+  <Comment>Имя</Comment>
+  <Example>Василий</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>10</size>
+   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </Name>
+ <!-- ********************************************************************** -->
+ <Lastname>
+  <Check>/^[А-ЯЁ]{1}[а-яё\-\s]{1,50}$/u</Check>
+  <Comment>Отчество</Comment>
+  <Example>Алибабаевич</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>15</size>
+   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </Lastname>
+ <!-- ********************************************************************** -->
+ <BornDate>
+  <Check>/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/u</Check>
+  <Comment>Дата рождения</Comment>
+  <Example>18.03.1986</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>10</size>
+   <onblur>value = value.charAt(0).toUpperCase() + value.substring(1).toLowerCase();</onblur>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </BornDate>
+ <!-- ********************************************************************** -->
+ <Phone>
+  <Check>Phone</Check>
+  <Comment>Телефон</Comment>
+  <Example>+7 495 7558899</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </Phone>
+ <!-- ********************************************************************** -->
+ <Email>
+  <Check>Email</Check>
+  <Comment>Электронный адрес</Comment>
+  <Example>alexander@yandex.ru</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>25</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value>%Email%</Value>
+ </Email>
+ <!-- ********************************************************************** -->
+ <!-- ********************************************************************** -->
+ <pCountry>
+  <Title>Почтовый адрес</Title>
+  <Check>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Comment>Страна почтового адреса</Comment>
+  <Example>Россия</Example>
+  <Type>Select</Type>
+  <Options>
+   <AZ>Азербайджан</AZ>
+   <BY>Беларусь</BY>
+   <BG>Болгария</BG>
+   <UK>Великобритания</UK>
+   <DE>Германия</DE>
+   <GE>Грузия</GE>
+   <IL>Израиль</IL>
+   <KZ>Казахстан</KZ>
+   <KG>Киргизия</KG>
+   <CA>Канада</CA>
+   <CC>Кокосовые острова</CC>
+   <LV>Латвия</LV>
+   <LT>Литва</LT>
+   <MT>Мальта</MT>
+   <MD>Молдова</MD>
+   <NL>Нидерланды</NL>
+   <NO>Норвегия</NO>
+   <PL>Польша</PL>
+   <RU>Россия</RU>
+   <US>США</US>
+   <UZ>Узбекистан</UZ>
+   <UA>Украина</UA>
+   <FI>Финляндия</FI>
+   <CZ>Чехия</CZ>
+   <EE>Эстония</EE>
+  </Options>
+  <Attribs>
+   <size>1</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value>RU</Value>
+ </pCountry>
+ <!-- ********************************************************************** -->
+ <pState>
+  <Check>/^[А-ЯёЁа-я\.\-\s\)\(]{1,60}$/u</Check>
+  <Comment>Область / край почтового адреса</Comment>
+  <Example>Московская обл.</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </pState>
+ <!-- ********************************************************************** -->
+ <pCity>
+  <Check>/^[А-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Comment>Город почтового адреса</Comment>
+  <Example>Москва</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </pCity>
+ <!-- ********************************************************************** -->
+ <pDistrict>
+  <Check>/^[А-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Comment>Район почтового адреса</Comment>
+  <Example>Ивановский</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </pDistrict>
+ <!-- ********************************************************************** -->
+ <pIndex>
+  <Check>/^[A-Za-z0-9\s]{3,10}$/u</Check>
+  <Comment>Почтовый индекс почтового адреса</Comment>
+  <Example>101000</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>7</size>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </pIndex>
+ <!-- ********************************************************************** -->
+ <pType>
+  <Check>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Comment>Тип почтового адреса</Comment>
+  <Example>Улица</Example>
+  <Type>Select</Type>
+  <Options>
+   <Street>улица</Street>
+   <Alleyway>переулок</Alleyway>
+   <Area>площадь</Area>
+   <Thoroughfare>проезд</Thoroughfare>
+   <Alley>аллея</Alley>
+   <Avenue>проспект</Avenue>
+   <Boulevard>бульвар</Boulevard>
+   <Wharf>набережная</Wharf>
+   <Highway>шоссе</Highway>
+   <Pobox>а/я</Pobox>
+   <Deadend>тупик</Deadend>
+   <Block>квартал</Block>
+   <No>n/a</No>
+  </Options>
+  <Attribs>
+   <size>1</size>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value>Street</Value>
+ </pType>
+ <!-- ********************************************************************** -->
+ <pAddress>
+  <Check>/^.{1,150}$/u</Check>
+  <Comment>Улица, дом почтового адреса</Comment>
+  <Example>Ленина, д. 51, кв. 7</Example>
+  <Type>TextArea</Type>
+  <Attribs>
+   <rows>3</rows>
+   <cols>30</cols>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </pAddress>
+ <!-- ********************************************************************** -->
+ <WebmoneyNumber>
+  <Title>Номер R кошелька WebMoney</Title>
+  <Check>/^R[0-9]{12}$/u</Check>
+  <Comment>Номер кошелька</Comment>
+  <Example>R824672857673</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </WebmoneyNumber>
+ <!-- ********************************************************************** -->
+ <BankName>
+  <Title>Банковские реквизиты</Title>
+  <Check>/^.{1,100}$/u</Check>
+  <Comment>Наименование банка</Comment>
+  <Example>ООО "КБ Легион"</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </BankName>
+ <!-- ********************************************************************** -->
+ <Bik>
+  <Check>Bik</Check>
+  <Comment>БИК</Comment>
+  <Example>544959119</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>10</size>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </Bik>
+ <!-- ********************************************************************** -->
+ <BankAccount>
+  <Check>BankAccount</Check>
+  <Comment>Номер расчетного счета</Comment>
+  <Example>40701256800030000589</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>25</size>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </BankAccount>
+ <!-- ********************************************************************** -->
+ <Kor>
+  <Check>Kor</Check>
+  <Comment>Корреспондентский счет</Comment>
+  <Example>30101810500000000444</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>25</size>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </Kor>
+</Attribs>
+<!-- *********************************************************************** -->
+</XML>

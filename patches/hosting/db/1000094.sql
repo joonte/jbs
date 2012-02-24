@@ -1,0 +1,1 @@
+ALTER TABLE `DomainsBonuses` DROP `ContractID`;

@@ -1,0 +1,1 @@
+UPDATE `Interrogation` SET `Service` = 'SMTP' WHERE `Service` = 'STMP';

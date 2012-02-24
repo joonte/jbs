@@ -1,0 +1,30 @@
+#
+
+AddDefaultCharset UTF-8
+RewriteEngine On
+
+# tmp, for debug
+RedirectPermanent      /API/Events     http://www.ya.ru/
+
+
+RewriteCond %{REQUEST_URI} (.*)
+RewriteRule (public|styles|index.php|favicon.ico) - [L]
+#RewriteCond %{HTTPS} !=on
+#RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
+RewriteRule (.*) /index.php
+Options -Indexes
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js|png)$">
+        Header set Cache-Control "max-age=600, proxy-revalidate"
+    </FilesMatch>
+</IfModule>
+
+# added by lissyara 2011-09-13 in 13:37 MSK
+<IfModule mod_php5.c>
+	php_flag magic_quotes_gpc	Off
+	php_flag short_open_tag		Off
+	php_flag output_buffering	Off
+</IfModule>
+
+

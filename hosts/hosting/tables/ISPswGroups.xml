@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+ </Comps>
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>ISPswGroups</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>Name</ListElement>
+  <ListElement>Comment</ListElement>
+  <ListElement>SortID</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Групп ПО ISPsystem не обнаружено</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <After>
+  <Delete>
+   <Args>
+    <Comment>Выбранные группы ПО</Comment>
+    <Send>
+     <TableID>ISPswGroups</TableID>
+    </Send>
+   </Args>
+  </Delete>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<Columns>
+ <SelectID>
+  <Args>
+   <TableID>ISPswGroups</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/Administrator/ISPswGroupEdit</ListElement>
+   <ListElement>
+    <ISPswGroupID>%ID%</ISPswGroupID>
+   </ListElement>
+   <ListElement>Редактировать группу ПО</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+ <!-- ********************************************************************** -->
+ <!-- ********************************************************************** -->
+ <Name>
+  <Head>Группа ПО</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Name%</ListElement>
+   <Length>20</Length>
+  </Args>
+ </Name>
+ <!-- ********************************************************************** -->
+ <SortID>
+  <Args>
+   <TableID>ISPswGroups</TableID>
+  </Args>
+  <Attribs>
+   <style>width:22px;</style>
+  </Attribs>
+ </SortID>
+ <!-- ********************************************************************** -->
+ <Comment>
+  <Head>Комментарий</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Comment%</ListElement>
+   <Length>40</Length>
+  </Args>
+ </Comment>
+ <!-- ********************************************************************** -->
+</Columns>
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>Edit</ListElement>
+ <ListElement>Name</ListElement>
+ <ListElement>Comment</ListElement>
+ <ListElement>SortID</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

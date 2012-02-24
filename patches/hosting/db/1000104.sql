@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD `IsDnsControll` enum('no','yes') default 'no' AFTER `IsSystemInfo`;

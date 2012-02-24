@@ -1,0 +1,1 @@
+ALTER TABLE `HostingOrders` ADD `ConsiderDay` int(11) default '0' AFTER `DaysRemainded`;

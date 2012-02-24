@@ -1,0 +1,116 @@
+<?php
+
+
+#-------------------------------------------------------------------------------
+/** @author Великодный В.В. (Joonte Ltd.) */
+/******************************************************************************/
+/******************************************************************************/
+$__args_list = Array('Task','DomainOrderID');
+/******************************************************************************/
+Eval(COMP_INIT);
+/******************************************************************************/
+/******************************************************************************/
+if(Is_Error(System_Load('classes/Registrator.class')))
+  return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Columns = Array('DomainName','PersonID','DomainID','StatusID','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrders`.`SchemeID`) as `DomainZone`','(SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrders`.`SchemeID`) as `RegistratorID`','(SELECT SUM(`YearsRemainded`) FROM `DomainsConsider` WHERE `DomainsConsider`.`DomainOrderID` = `DomainsOrders`.`ID`) as `YearsRemainded`');
+#-------------------------------------------------------------------------------
+$DomainOrder = DB_Select('DomainsOrders',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
+#-------------------------------------------------------------------------------
+switch(ValueOf($DomainOrder)){
+  case 'error':
+    return ERROR | @Trigger_Error(500);
+  case 'exception':
+    return ERROR | @Trigger_Error(400);
+  case 'array':
+    #---------------------------------------------------------------------------
+    $Registrator = new Registrator();
+    #---------------------------------------------------------------------------
+    $IsSelected = $Registrator->Select((integer)$DomainOrder['RegistratorID']);
+    #---------------------------------------------------------------------------
+    switch(ValueOf($IsSelected)){
+      case 'error':
+        return ERROR | @Trigger_Error(500);
+      case 'exception':
+        return new gException('TRANSFER_TO_OPERATOR','Задание не может быть выполнено автоматически и передано оператору');
+      case 'true':
+        #-----------------------------------------------------------------------
+        $GLOBALS['TaskReturnInfo'] = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']);
+        #-----------------------------------------------------------------------
+        switch($DomainOrder['StatusID']){
+          case 'ForProlong':
+            #-------------------------------------------------------------------
+            $IsProlong = $Registrator->DomainProlong($DomainOrder['DomainName'],$DomainOrder['DomainZone'],(integer)$DomainOrder['YearsRemainded'],$DomainOrder['PersonID'],$DomainOrder['DomainID']);
+            #-------------------------------------------------------------------
+            switch(ValueOf($IsProlong)){
+              case 'error':
+                return ERROR | @Trigger_Error(500);
+              case 'exception':
+                return new gException('TRANSFER_TO_OPERATOR','Задание не может быть выполнено автоматически и передано оператору');
+              case 'false':
+                return 300;
+              case 'array':
+                #---------------------------------------------------------------
+                $Task['Params']['TicketID'] = $IsProlong['TicketID'];
+                #---------------------------------------------------------------
+                $IsUpdate = DB_Update('Tasks',Array('Params'=>$Task['Params']),Array('ID'=>$Task['ID']));
+                if(Is_Error($IsUpdate))
+                  return ERROR | @Trigger_Error(500);
+                #---------------------------------------------------------------
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'OnProlong','RowsIDs'=>$DomainOrderID,'Comment'=>'Регистратор принял заявку на продление доменного имени'));
+                #---------------------------------------------------------------
+                switch(ValueOf($Comp)){
+                  case 'error':
+                    return ERROR | @Trigger_Error(500);
+                  case 'exception':
+                    return ERROR | @Trigger_Error(400);
+                  case 'array':
+                    return 300;
+                  default:
+                    return ERROR | @Trigger_Error(101);
+                }
+              default:
+                return ERROR | @Trigger_Error(101);
+            }
+          case 'OnProlong':
+            #-------------------------------------------------------------------
+            $TicketID = $Task['Params']['TicketID'];
+            #-------------------------------------------------------------------
+            $IsDomainProlong = $Registrator->CheckTask($TicketID);
+            #-------------------------------------------------------------------
+            switch(ValueOf($IsDomainProlong)){
+              case 'error':
+                return ERROR | @Trigger_Error(500);
+              case 'exception':
+                return new gException('TRANSFER_TO_OPERATOR','Задание не может быть выполнено автоматически и передано оператору');
+              case 'false':
+                return 300;
+              case 'array':
+                #---------------------------------------------------------------
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Active','RowsIDs'=>$DomainOrderID,'Comment'=>'Доменное имя успешно продлено'));
+                #---------------------------------------------------------------
+                switch(ValueOf($Comp)){
+                  case 'error':
+                    return ERROR | @Trigger_Error(500);
+                  case 'exception':
+                    return ERROR | @Trigger_Error(400);
+                  case 'array':
+                    return TRUE;
+                  default:
+                    return ERROR | @Trigger_Error(101);
+                }
+              default:
+                return ERROR | @Trigger_Error(101);
+            }
+          default:
+            return new gException('WRONG_STATUS','Задание не может быть в данном статусе');
+        }
+      default:
+        return ERROR | @Trigger_Error(101);
+    }
+  default:
+    return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+
+?>

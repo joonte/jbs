@@ -1,0 +1,1 @@
+UPDATE `HostingServers` SET `Services` = "HTTP=80\nFTP=21\nMySQL=3306\nSTMP=25\nPOP=110\nIMAP=143";

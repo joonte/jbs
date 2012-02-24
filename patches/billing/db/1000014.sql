@@ -1,0 +1,1 @@
+UPDATE `Permissions` SET `HostID`='billing' WHERE `HostID`='.billing';

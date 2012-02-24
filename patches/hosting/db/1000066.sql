@@ -1,0 +1,1 @@
+ALTER TABLE `HostingDisconts` RENAME TO `HostingConsider`;

@@ -1,0 +1,1 @@
+ALTER TABLE `MotionDocuments` CHANGE `Comment` `UniqID` char(255) default '';

@@ -1,0 +1,1145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<Contracts>
+ <Enclosures>
+  <Types>
+   <HostingRules>
+    <Name>Регламент на услуги хостинга</Name>
+    <IsActive>1</IsActive>
+   </HostingRules>
+   <!-- ******************************************************************** -->
+   <VPSRules>
+    <Name>Регламент на услуги виртуальных серверов</Name>
+    <IsActive>1</IsActive>
+   </VPSRules>
+   <!-- ******************************************************************** -->
+   <DSRules>
+    <Name>Регламент на услуги аренды серверов</Name>
+    <IsActive>1</IsActive>
+   </DSRules>
+   <!-- ******************************************************************** -->
+   <DomainRules>
+    <Name>Регламент на услуги регистрации и продления доменов</Name>
+    <IsActive>1</IsActive>
+   </DomainRules>
+   <!-- ******************************************************************** -->
+   <ExtraIPRules>
+    <Name>Регламент на услуги аренды IP адресов</Name>
+    <IsActive>1</IsActive>
+   </ExtraIPRules>
+   <!-- ******************************************************************** -->
+   <ISPswRules>
+    <Name>Регламент на покупку софта ISPsystem</Name>
+    <IsActive>1</IsActive>
+   </ISPswRules>
+  </Types>
+ </Enclosures>
+</Contracts>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<Hosting>
+ <Systems>
+  <NullSystem>
+   <Name>Ручное управление</Name>
+   <Settings>
+    <Port>1000</Port>
+    <Protocol>tcp</Protocol>
+   </Settings>
+  </NullSystem>
+  <!-- ********************************************************************* -->
+  <Cpanel>
+   <Name>cPanel</Name>
+   <Settings>
+    <Port>2087</Port>
+    <Protocol>ssl</Protocol>
+    <Theme>x3</Theme>
+    <Language>default</Language>
+   </Settings>
+  </Cpanel>
+  <!-- ********************************************************************* -->
+  <IspManager>
+   <Name>ISPmanager</Name>
+   <Settings>
+    <Port>443</Port>
+    <Protocol>ssl</Protocol>
+    <Theme>sirius</Theme>
+    <Language>ru</Language>
+   </Settings>
+  </IspManager>
+  <!-- ********************************************************************* -->
+  <Plesk>
+   <Name>Plesk</Name>
+   <Settings>
+    <Port>8443</Port>
+    <Protocol>ssl</Protocol>
+    <Theme>default</Theme>
+    <Language>default</Language>
+   </Settings>
+  </Plesk>
+  <!-- ********************************************************************* -->
+  <DirectAdmin>
+   <Name>DirectAdmin</Name>
+   <Settings>
+    <Port>2222</Port>
+    <Protocol>tcp</Protocol>
+    <Theme>default</Theme>
+    <Language>default</Language>
+   </Settings>
+  </DirectAdmin>
+ </Systems>
+ <!-- ********************************************************************** -->
+ <IsNoDomain>1</IsNoDomain>
+ <!-- ********************************************************************** -->
+ <Balancing>
+  <Functions>
+   <NotDefined>
+    <Name>Без балансировки</Name>
+   </NotDefined>
+   <ByAllCapacity>
+    <Name>Активные и блокированные аккаунты</Name>
+   </ByAllCapacity>
+   <ByActiveCapacity>
+    <Name>Только по активным аккаунтам</Name>
+   </ByActiveCapacity>
+   <ByRandom>
+    <Name>Случайным образом</Name>
+   </ByRandom>
+  </Functions>
+ </Balancing>
+</Hosting>
+<!-- ********************************************************************** -->
+<VPS>
+ <Systems>
+  <NullSystem>
+   <Name>Ручное управление</Name>
+   <Settings>
+    <Port>1000</Port>
+    <Protocol>tcp</Protocol>
+   </Settings>
+  </NullSystem>
+  <!-- ********************************************************************* -->
+  <VdsManager>
+   <Name>VDSmanager</Name>
+    <Settings>
+    <Port>443</Port>
+    <Protocol>ssl</Protocol>
+    <Theme>sirius</Theme>
+    <Language>ru</Language>
+   </Settings>
+  </VdsManager>
+ </Systems>
+ <!-- ********************************************************************** -->
+ <IsNoDomain>1</IsNoDomain>
+ <!-- ********************************************************************** -->
+ <Balancing>
+  <Functions>
+   <NotDefined>
+    <Name>Не определена</Name>
+   </NotDefined>
+   <ByCapacity>
+    <Name>По загрузке</Name>
+   </ByCapacity>
+  </Functions>
+ </Balancing>
+</VPS>
+<!-- ********************************************************************** -->
+<DS>
+ <Systems>
+  <NullSystem>
+   <Name>Ручное управление</Name>
+   <Settings>
+    <Port>1000</Port>
+    <Protocol>tcp</Protocol>
+   </Settings>
+  </NullSystem>
+ </Systems>
+ <!-- ********************************************************************** -->
+ <IsNoDomain>1</IsNoDomain>
+ <!-- ********************************************************************** -->
+ <Balancing>
+  <Functions>
+   <NotDefined>
+    <Name>Не определена</Name>
+   </NotDefined>
+   <ByCapacity>
+    <Name>По загрузке</Name>
+   </ByCapacity>
+  </Functions>
+ </Balancing>
+</DS>
+<!-- *********************************************************************** -->
+<IspSoft>
+ <Name>IspSystems</Name>
+ <Settings>
+  <VisibleName>ЗАО "ИСПсистем"</VisibleName>
+  <Address>my.ispsystem.com</Address>
+  <Port>443</Port>
+  <Protocol>ssl</Protocol>
+  <PrefixAPI>/manager/billmgr</PrefixAPI>
+  <Login />
+  <Password />
+ </Settings>
+</IspSoft>
+<!-- *********************************************************************** -->
+<Domains>
+ <Registrators>
+  <NullRegistrator>
+   <Name>Ручная регистрация</Name>
+   <Settings>
+    <Address>www.isp.su</Address>
+    <Port>80</Port>
+    <Protocol>tcp</Protocol>
+    <PrefixAPI />
+    <PrefixNic />
+    <JurName />
+   </Settings>
+   <PersonID />
+   <UseContractRegister>0</UseContractRegister>
+   <IsSupportContracts>0</IsSupportContracts>
+   <IsSupportPrivateWhoIs>0</IsSupportPrivateWhoIs>
+  </NullRegistrator>
+  <!-- ********************************************************************* -->
+  <WebNames>
+   <Name>WebNames</Name>
+   <Settings>
+    <Address>www.webnames.ru</Address>
+    <Port>81</Port>
+    <Protocol>ssl</Protocol>
+    <PrefixAPI />
+    <PrefixNic>REGTIME</PrefixNic>
+    <JurName>ООО "Регтайм"</JurName>
+   </Settings>
+   <PersonID />
+   <UseContractRegister>0</UseContractRegister>
+   <IsSupportContracts>0</IsSupportContracts>
+   <IsSupportPrivateWhoIs>0</IsSupportPrivateWhoIs>
+  </WebNames>
+  <!-- ********************************************************************* -->
+  <NauNet>
+   <Name>NauNet</Name>
+   <Settings>
+    <Address>ssbase.naunet.ru</Address>
+    <Port>443</Port>
+    <Protocol>ssl</Protocol>
+    <PrefixAPI />
+    <PrefixNic>NAUNET</PrefixNic>
+    <JurName>ООО "Наунет СП"</JurName>
+   </Settings>
+   <PersonID>Contact login</PersonID>
+   <UseContractRegister>0</UseContractRegister>
+   <IsSupportContracts>1</IsSupportContracts>
+   <IsSupportPrivateWhoIs>1</IsSupportPrivateWhoIs>
+  </NauNet>
+  <!-- ********************************************************************* -->
+  <RuCenter>
+   <Name>RuCenter</Name>
+   <Settings>
+    <Address>www.nic.ru</Address>
+    <Port>443</Port>
+    <Protocol>ssl</Protocol>
+    <PrefixAPI />
+    <PrefixNic>RU-CENTER</PrefixNic>
+    <JurName>ЗАО "Региональный Сетевой Информационный Центр"</JurName>
+   </Settings>
+   <PersonID>000000/NIC-D</PersonID>
+   <UseContractRegister>1</UseContractRegister>
+   <IsSupportContracts>1</IsSupportContracts>
+   <IsSupportPrivateWhoIs>0</IsSupportPrivateWhoIs>
+  </RuCenter>
+  <!-- ********************************************************************* -->
+  <MasterName>
+   <Name>MasterName</Name>
+   <Settings>
+    <Address>cp.mastername.ru</Address>
+    <Port>443</Port>
+    <Protocol>ssl</Protocol>
+    <PrefixAPI />
+    <PrefixNic>REGISTRATOR</PrefixNic>
+    <JurName>ООО "Регистратор Доменов"</JurName>
+   </Settings>
+   <PersonID />
+   <UseContractRegister>1</UseContractRegister>
+   <IsSupportContracts>1</IsSupportContracts>
+   <IsSupportPrivateWhoIs>0</IsSupportPrivateWhoIs>
+  </MasterName>
+  <!-- ********************************************************************* -->
+  <RegRu>
+   <Name>RegRu</Name>
+   <Settings>
+    <Address>www.reg.ru</Address>
+    <Port>443</Port>
+    <Protocol>ssl</Protocol>
+    <PrefixAPI>/api/regru</PrefixAPI>
+    <PrefixNic>REGRU</PrefixNic>
+    <JurName>ООО "Регистратор доменных имён РЕГ.РУ"</JurName>
+   </Settings>
+   <PersonID />
+   <UseContractRegister>0</UseContractRegister>
+   <IsSupportContracts>0</IsSupportContracts>
+   <IsSupportPrivateWhoIs>0</IsSupportPrivateWhoIs>
+  </RegRu>
+  <!-- ********************************************************************* -->
+  <LogicBoxes>
+   <Name>LogicBoxes (beta)</Name>
+   <Settings>
+    <Address>www.isp.su</Address>
+    <Port>443</Port>
+    <Protocol>ssl</Protocol>
+    <PrefixAPI />
+    <PrefixNic />
+    <JurName />
+   </Settings>
+   <PersonID />
+   <UseContractRegister>1</UseContractRegister>
+   <IsSupportContracts>1</IsSupportContracts>
+   <IsSupportPrivateWhoIs>0</IsSupportPrivateWhoIs>
+  </LogicBoxes>
+  <!-- ********************************************************************* -->
+  <Started>
+   <Name>Started (beta)</Name>
+   <Settings>
+    <Address>api.started.ru</Address>
+    <Port>443</Port>
+    <Protocol>ssl</Protocol>
+    <PrefixAPI />
+    <PrefixNic />
+    <JurName />
+   </Settings>
+   <PersonID />
+   <UseContractRegister>1</UseContractRegister>
+   <IsSupportContracts>1</IsSupportContracts>
+   <IsSupportPrivateWhoIs>0</IsSupportPrivateWhoIs>
+  </Started>
+  <!-- ********************************************************************* -->
+  <R01>
+   <Name>R01 (beta)</Name>
+   <Settings>
+    <Address>partner.r01.ru</Address>
+    <Port>1443</Port>
+    <Protocol>ssl</Protocol>
+    <PrefixAPI>parnter_api.khtml</PrefixAPI>
+	<PrefixNic>R01</PrefixNic>
+    <JurName>ООО "Гарант-Парк-Телеком"</JurName>
+   </Settings>
+   <PersonID />
+   <UseContractRegister>1</UseContractRegister>
+   <IsSupportContracts>1</IsSupportContracts>
+   <IsSupportPrivateWhoIs>1</IsSupportPrivateWhoIs>
+  </R01>
+<!-- *********************************************************************** -->
+ </Registrators>
+</Domains>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<Users>
+ <Register>
+  <LayPayMaxDays>15</LayPayMaxDays>
+  <LayPayMaxSumm>500</LayPayMaxSumm>
+  <LayPayThreshold>500</LayPayThreshold>
+  <!-- ********************************************************************* -->
+  <Sign>C уважением,</Sign>
+ </Register>
+</Users>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+
+<Notifies>
+ <Types>
+  <HostingOrdersActive>
+   <Name>Активация заказа хостинга</Name>
+   <Title>Заказы хостинга</Title>
+   <GroupID>1</GroupID>
+  </HostingOrdersActive>
+  <!-- ********************************************************************* -->
+  <HostingNoticeSuspend>
+   <Name>Уведомление о блокировке заказа хостинга</Name>
+   <GroupID>1</GroupID>
+  </HostingNoticeSuspend>
+  <!-- ********************************************************************* -->
+  <HostingOrdersSuspended>
+   <Name>Блокировка заказа хостинга</Name>
+   <GroupID>1</GroupID>
+  </HostingOrdersSuspended>
+  <!-- ********************************************************************* -->
+  <HostingNoticeDelete>
+   <Name>Уведомление об удалении заказа хостинга</Name>
+   <GroupID>1</GroupID>
+  </HostingNoticeDelete>
+  <!-- ********************************************************************* -->
+  <HostingOrdersDeleted>
+   <Name>Удаление заказа хостинга</Name>
+   <GroupID>1</GroupID>
+  </HostingOrdersDeleted>
+  <!-- ********************************************************************* -->
+  <HostingPasswordChange>
+   <Name>Смена пароля на заказ хостинга</Name>
+   <GroupID>1</GroupID>
+  </HostingPasswordChange>
+  <!-- ********************************************************************* -->
+  <DomainsOrdersOnRegister>
+   <Title>Заказы доменов</Title>
+   <Name>Заказ домена поступил на регистрацию</Name>
+   <GroupID>1</GroupID>
+  </DomainsOrdersOnRegister>
+  <!-- ********************************************************************* -->
+  <DomainsOrdersActive>
+   <Name>Активация заказа домена</Name>
+   <GroupID>1</GroupID>
+  </DomainsOrdersActive>
+  <!-- ********************************************************************* -->
+  <DomainNsChange>
+   <Name>Уведомление о смене именных серверов</Name>
+   <GroupID>1</GroupID>
+  </DomainNsChange>
+  <!-- ********************************************************************* -->
+  <DomainsNoticeSuspend>
+   <Name>Уведомление о блокировке заказа домена</Name>
+   <GroupID>1</GroupID>
+  </DomainsNoticeSuspend>
+  <!-- ********************************************************************* -->
+  <DomainsOrdersSuspended>
+   <Name>Блокировка заказа домена</Name>
+   <GroupID>1</GroupID>
+  </DomainsOrdersSuspended>
+  <!-- ********************************************************************* -->
+  <DomainsNoticeDelete>
+   <Name>Уведомление об удалении заказа домена</Name>
+   <GroupID>1</GroupID>
+  </DomainsNoticeDelete>
+  <!-- ********************************************************************* -->
+  <DomainsOrdersDeleted>
+   <Name>Удаление заказа домена</Name>
+   <GroupID>1</GroupID>
+  </DomainsOrdersDeleted>
+  <!-- added by lissyara 2011-08-11 in 14:06 MSK *************************** -->
+  <!-- ********************************************************************* -->
+  <VPSOrdersActive>
+   <Name>Активация заказа VPS</Name>
+   <Title>Заказы VPS</Title>
+   <GroupID>1</GroupID>
+  </VPSOrdersActive>
+  <!-- ********************************************************************* -->
+  <VPSNoticeSuspend>
+   <Name>Уведомление о блокировке заказа VPS</Name>
+   <GroupID>1</GroupID>
+  </VPSNoticeSuspend>
+  <!-- ********************************************************************* -->
+  <VPSOrdersSuspended>
+   <Name>Блокировка заказа VPS</Name>
+   <GroupID>1</GroupID>
+  </VPSOrdersSuspended>
+  <!-- ********************************************************************* -->
+  <VPSNoticeDelete>
+   <Name>Уведомление об удалении заказа VPS</Name>
+   <GroupID>1</GroupID>
+  </VPSNoticeDelete>
+  <!-- ********************************************************************* -->
+  <VPSOrdersDeleted>
+   <Name>Удаление заказа VPS</Name>
+   <GroupID>1</GroupID>
+  </VPSOrdersDeleted>
+  <!-- ********************************************************************* -->
+  <VPSPasswordChange>
+   <Name>Смена пароля на заказ VPS</Name>
+   <GroupID>1</GroupID>
+  </VPSPasswordChange>
+  <!-- ********************************************************************* -->
+  <!-- added by lissyara 2011-08-11 in 14:10 MSK *************************** -->
+  <!-- ********************************************************************* -->
+  <ExtraIPOrdersActive>
+   <Name>Активация заказа выделенного IP</Name>
+   <Title>Заказы выделенных IP адресов</Title>
+   <GroupID>1</GroupID>
+  </ExtraIPOrdersActive>
+  <!-- ********************************************************************* -->
+  <ExtraIPNoticeDelete>
+   <Name>Уведомление об удалении заказа выделенного IP</Name>
+   <GroupID>1</GroupID>
+  </ExtraIPNoticeDelete>
+  <!-- ********************************************************************* -->
+  <ExtraIPOrdersDeleted>
+   <Name>Удаление заказа выделенного IP</Name>
+   <GroupID>1</GroupID>
+  </ExtraIPOrdersDeleted>
+  <!-- ********************************************************************* -->
+  <!-- ********************************************************************* -->
+ </Types>
+</Notifies>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<MotionDocuments>
+ <Types>
+  <Contract>
+   <Name>Договор</Name>
+  </Contract>
+  <ContractEnclosure>
+   <Name>Приложение к договору</Name>
+  </ContractEnclosure>
+  <WorksCompliteReport>
+   <Name>Акт вып. работ</Name>
+  </WorksCompliteReport>
+ </Types>
+</MotionDocuments>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+
+<Tasks>
+ <Types>
+  <DomainsNoticeSuspend>
+   <Name>Уведомления об окончании заказов на домены</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </DomainsNoticeSuspend>
+  <!-- ********************************************************************* -->
+  <DomainsNoticeDelete>
+   <Name>Уведомления об удалении заказов доменов</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </DomainsNoticeDelete>
+  <!-- ********************************************************************* -->
+  <DomainsForDelete>
+   <Name>Заказы на домены для удаления</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </DomainsForDelete>
+  <!-- ********************************************************************* -->
+  <DomainsOrdersWhoIsUpdate>
+   <Name>Синхронизация доменов с базой WhoIs</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </DomainsOrdersWhoIsUpdate>
+  <!-- ********************************************************************* -->
+  <DomainNsChange>
+   <Name>Смена именных серверов</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+    <Ns1Name>Адрес первого сервера имен</Ns1Name>
+    <Ns1IP>IP адрес первого сервера имен</Ns1IP>
+    <Ns2Name>Адрес второго сервера имен</Ns2Name>
+    <Ns2IP>IP адрес второго сервера имен</Ns2IP>
+    <Ns3Name>Адрес дополнительного сервера имен</Ns3Name>
+    <Ns3IP>IP адрес дополнительного сервера имен</Ns3IP>
+    <Ns4Name>Адрес расширенного сервера имен</Ns4Name>
+    <Ns4IP>IP адрес расширенного сервера имен</Ns4IP>
+    <TicketID>Номер заявки</TicketID>
+   </Params>
+   <IsActive>1</IsActive>
+  </DomainNsChange>
+  <!-- ********************************************************************* -->
+  <DomainPathRegister>
+   <Name>Выбрать алгоритм регистрации</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+    <AdditionalTaskExecuted>Дополнительная задача</AdditionalTaskExecuted>
+   </Params>
+   <IsActive>1</IsActive>
+  </DomainPathRegister>
+  <!-- ********************************************************************* -->
+  <DomainContractRegister>
+   <Name>Зарегистрировать договор для домена</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+    <TicketID>Номер заявки</TicketID>
+   </Params>
+   <IsActive>1</IsActive>
+  </DomainContractRegister>
+  <!-- ********************************************************************* -->
+  <DomainRegister>
+   <Name>Зарегистрировать домен</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+    <TicketID>Номер заявки</TicketID>
+   </Params>
+   <IsActive>1</IsActive>
+  </DomainRegister>
+  <!-- ********************************************************************* -->
+  <DomainProlong>
+   <Name>Продлить домен</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+    <TicketID>Номер заявки</TicketID>
+   </Params>
+   <IsActive>1</IsActive>
+  </DomainProlong>
+  <!-- ********************************************************************* -->
+  <DomainsOrdersRegStatusUpdate>
+   <Name>Проверка наличия домена у регистратора</Name>
+   <SleepTime>2592000</SleepTime>
+   <IsActive>1</IsActive>
+  </DomainsOrdersRegStatusUpdate>
+  <!-- ********************************************************************* -->
+  <DomainTransfer>
+   <Name>Перенести домен</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </DomainTransfer>
+  <!-- ********************************************************************* -->
+  <HostingNoticeSuspend>
+   <Name>Уведомления об окончании заказов на хостинг</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </HostingNoticeSuspend>
+  <!-- ********************************************************************* -->
+  <HostingConsider>
+   <Name>Учет заказов хостинга</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </HostingConsider>
+  <!-- ********************************************************************* -->
+  <HostingNoticeDelete>
+   <Name>Уведомления об удалении заказов хостинг</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </HostingNoticeDelete>
+  <!-- ********************************************************************* -->
+  <HostingForDelete>
+   <Name>Заказы на хостинг для удаления</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+   <StartHour>1</StartHour>
+   <StartMinutes>10</StartMinutes>
+   <DeleteTimeout>20</DeleteTimeout>
+  </HostingForDelete>
+  <!-- ********************************************************************* -->
+  <HostingSchemeChange>
+   <Name>Смена тарифного плана</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+    <HostingSchemeID>Идентификатор тарифа</HostingSchemeID>
+   </Params>
+   <IsActive>1</IsActive>
+  </HostingSchemeChange>
+  <!-- ********************************************************************* -->
+  <HostingCreate>
+   <Name>Создание хостинг-аккаунта</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </HostingCreate>
+  <!-- ********************************************************************* -->
+  <HostingActive>
+   <Name>Активация заказа хостинга</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </HostingActive>
+  <!-- ********************************************************************* -->
+  <HostingSuspend>
+   <Name>Блокировка заказа хостинга</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </HostingSuspend>
+  <!-- ********************************************************************* -->
+  <HostingDelete>
+   <Name>Удаление заказа хостинга</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </HostingDelete>
+  <!-- ********************************************************************* -->
+  <HostingSetPrimaryServer>
+   <Name>Автобалансировка серверов хостинга</Name>
+   <Params type="array" />
+   <RequestPeriod>60</RequestPeriod>
+   <IsActive>1</IsActive>
+  </HostingSetPrimaryServer>
+  <!-- ********************************************************************* -->
+  <!-- ********************************************************************* -->
+  <VPSNoticeSuspend>
+   <Name>Уведомления об окончании заказов на VPS</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </VPSNoticeSuspend>
+  <!-- ********************************************************************* -->
+  <VPSConsider>
+   <Name>Учет заказов VPS</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </VPSConsider>
+  <!-- ********************************************************************* -->
+  <VPSNoticeDelete>
+   <Name>Уведомления об удалении заказов VPS</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </VPSNoticeDelete>
+  <!-- ********************************************************************* -->
+  <VPSForDelete>
+   <Name>Заказы на VPS для удаления</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+   <StartHour>1</StartHour>
+   <StartMinutes>15</StartMinutes>
+   <DeleteTimeout>20</DeleteTimeout>
+  </VPSForDelete>
+  <!-- ********************************************************************* -->
+  <VPSSchemeChange>
+   <Name>Смена тарифного плана</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+    <VPSSchemeID>Идентификатор тарифа</VPSSchemeID>
+   </Params>
+   <IsActive>1</IsActive>
+  </VPSSchemeChange>
+  <!-- ********************************************************************* -->
+  <VPSCreate>
+   <Name>Создание аккаунта VPS</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </VPSCreate>
+  <!-- ********************************************************************* -->
+  <VPSActive>
+   <Name>Активация заказа VPS</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </VPSActive>
+  <!-- ********************************************************************* -->
+  <VPSSuspend>
+   <Name>Блокировка заказа VPS</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </VPSSuspend>
+  <!-- ********************************************************************* -->
+  <VPSDelete>
+   <Name>Удаление заказа VPS</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </VPSDelete>
+  <!-- ********************************************************************* -->
+  <VPSSetPrimaryServer>
+   <Name>Автобалансировка VPS</Name>
+   <Params type="array" />
+   <RequestPeriod>60</RequestPeriod>
+   <IsActive>1</IsActive>
+  </VPSSetPrimaryServer>
+  <!-- ********************************************************************* -->
+  <ServersQuestioning>
+   <Name>Опрос серверов хостинга</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </ServersQuestioning>
+  <!-- ********************************************************************* -->
+  <VPSServersQuestioning>
+    <Name>Опрос серверов VPS</Name>
+    <Params type="array" />
+    <IsActive>1</IsActive>
+  </VPSServersQuestioning>
+  <!-- ********************************************************************* -->
+  <!-- ********************************************************************* -->
+  <DSNoticeSuspend>
+   <Name>Уведомления об окончании заказов на аренду серверов</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </DSNoticeSuspend>
+  <!-- ********************************************************************* -->
+  <DSConsider>
+   <Name>Учет заказов аренды серверов</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </DSConsider>
+  <!-- ********************************************************************* -->
+  <DSNoticeDelete>
+   <Name>Уведомления об удалении заказов аренды серверов</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </DSNoticeDelete>
+  <!-- ********************************************************************* -->
+  <DSForDelete>
+   <Name>Заказы арендованных серверов для удаления</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+   <StartHour>1</StartHour>
+   <StartMinutes>20</StartMinutes>
+  </DSForDelete>
+  <!-- ********************************************************************* -->
+  <DSCreate>
+   <Name>Установка арендованного сервера</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </DSCreate>
+  <!-- ********************************************************************* -->
+  <DSActive>
+   <Name>Подключение арендованного сервера</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </DSActive>
+  <!-- ********************************************************************* -->
+  <DSSuspend>
+   <Name>Отключение арендованого сервера</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </DSSuspend>
+  <!-- ********************************************************************* -->
+  <DSDelete>
+   <Name>Деинсталляция арендованного сервера</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </DSDelete>
+  <!-- ********************************************************************* -->
+  <DSCalculateNumServers>
+   <Name>Пересчёт числа свободных/занятых выделенных серверов</Name>
+   <Params>
+    <Params type="array" />
+   </Params>
+  <RequestPeriod>10</RequestPeriod>
+  <IsActive>1</IsActive>
+  </DSCalculateNumServers>
+  <!-- ********************************************************************* -->
+  <!-- ********************************************************************* -->
+  <ExtraIPActive>
+   <Name>Активация заказа выделенного IP адреса</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </ExtraIPActive>
+  <!-- ********************************************************************* -->
+  <ExtraIPConsider>
+   <Name>Учет заказов IP адресов</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </ExtraIPConsider>
+  <!-- ********************************************************************* -->
+  <ExtraIPNoticeDelete>
+   <Name>Уведомления об удалении заказов IP адресов</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </ExtraIPNoticeDelete>
+  <!-- ********************************************************************* -->
+  <ExtraIPForDelete>
+   <Name>Заказы на IP адреса для удаления</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+   <StartHour>1</StartHour>
+   <StartMinutes>15</StartMinutes>
+  </ExtraIPForDelete>
+  <!-- ********************************************************************* -->
+  <ExtraIPCreate>
+   <Name>Подключение выделенного IP адреса</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </ExtraIPCreate>
+  <!-- ********************************************************************* -->
+  <ExtraIPDelete>
+   <Name>Удаление заказа IP адреса</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </ExtraIPDelete>
+  <!-- ********************************************************************* -->
+  <!-- ********************************************************************* -->
+  <ISPswNoticeSuspend>
+   <Name>Уведомления об окончании заказов на ПО ISPsystem</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </ISPswNoticeSuspend>
+  <!-- ********************************************************************* -->
+  <ISPswConsider>
+   <Name>Учет заказов ПО ISPsystem</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </ISPswConsider>
+  <!-- ********************************************************************* -->
+  <ISPswNoticeDelete>
+   <Name>Уведомления об удалении заказов ПО ISPsytsem</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </ISPswNoticeDelete>
+  <!-- ********************************************************************* -->
+  <ISPswForDelete>
+   <Name>Заказы на ПО ISPsystem для удаления</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+   <StartHour>1</StartHour>
+   <StartMinutes>50</StartMinutes>
+   <DeleteTimeout>20</DeleteTimeout>
+  </ISPswForDelete>
+  <!-- ********************************************************************* -->
+  <ISPswSchemeChange>
+   <Name>Смена тарифного плана</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+    <ISPswSchemeID>Идентификатор тарифа</ISPswSchemeID>
+   </Params>
+   <IsActive>1</IsActive>
+  </ISPswSchemeChange>
+  <!-- ********************************************************************* -->
+  <ISPswCreate>
+   <Name>Покупка ПО ISPsystem</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </ISPswCreate>
+  <!-- ********************************************************************* -->
+  <ISPswActive>
+   <Name>Активация заказа ПО ISPsystem</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </ISPswActive>
+  <!-- ********************************************************************* -->
+  <ISPswSuspend>
+   <Name>Блокировка заказа ПО ISPsystem</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </ISPswSuspend>
+  <!-- ********************************************************************* -->
+  <ISPswDelete>
+   <Name>Удаление заказа ПО ISPsystem</Name>
+   <Params>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </ISPswDelete>
+  <!-- ********************************************************************* -->
+  <ISPswCheckLicenses>
+   <Name>Синхронизация лицензий с ISPsystem</Name>
+   <Params>
+    <Params type="array" />
+   </Params>
+   <IsActive>1</IsActive>
+  </ISPswCheckLicenses>
+  <!-- ********************************************************************* -->
+  <!-- ********************************************************************* -->
+  <EmailBoxesNotifies>
+   <Name>Уведомления об окончании квоты почтовых ящиков</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </EmailBoxesNotifies>
+  <!-- ********************************************************************* -->
+  <ServersUpTime>
+   <Name>Мониторинг серверов</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </ServersUpTime>
+  <!-- ********************************************************************* -->
+  <UpTimeAgregate>
+   <Name>Агрегация стастистики мониторинга серверов</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </UpTimeAgregate>
+  <!-- ********************************************************************* -->
+  <GC>
+   <!-- список аккаунтов-исключений при опросе серверов -->
+   <ExcludeServerAccounts />
+   <!-- задачи -->
+   <DailyTasks>
+    <!-- синхронизации -->
+    <CheckUsersOnHostingServers>Синхронизация аккаунтов биллинга и серверов хостинга</CheckUsersOnHostingServers>
+    <!-- Операции с заказами -->
+    <EraseDeletedOrders>Удаление заказов в статусе Удален</EraseDeletedOrders>
+    <SetDeletedWaitingOrders>Отмена неоплаченных заказов</SetDeletedWaitingOrders>
+    <!-- Операции с доменами -->
+    <DomainsAutoProlongation>Автопродление истекающих доменов</DomainsAutoProlongation>
+    <SetSuspendExpiredDomains>Блокировка просроченных доменов</SetSuspendExpiredDomains>
+    <DomainPathRegisterNotify>Уведомления о доменах с неопределёнными владельцами</DomainPathRegisterNotify>
+    <!-- синхронизация аккаунтов -->
+   </DailyTasks>
+  </GC>
+ </Types>
+</Tasks>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<Statuses>
+ <HostingOrders>
+  <Waiting>
+   <Name>Ожидание оплаты</Name>
+  </Waiting>
+  <OnCreate>
+   <Name>На создании</Name>
+  </OnCreate>
+  <Active>
+   <Name>Активен</Name>
+  </Active>
+  <SchemeChange>
+   <Name>На смене тарифа</Name>
+  </SchemeChange>
+  <Suspended>
+   <Name>Заблокирован</Name>
+  </Suspended>
+  <Frozen>
+   <Name>Замороженный</Name>
+  </Frozen>
+  <Deleted>
+   <Name>Удален</Name>
+  </Deleted>
+ </HostingOrders>
+ <VPSOrders>
+  <Waiting>
+   <Name>Ожидание оплаты</Name>
+  </Waiting>
+  <OnCreate>
+   <Name>На создании</Name>
+  </OnCreate>
+  <Active>
+   <Name>Активен</Name>
+  </Active>
+  <SchemeChange>
+   <Name>На смене тарифа</Name>
+  </SchemeChange>
+  <Suspended>
+   <Name>Заблокирован</Name>
+  </Suspended>
+  <Frozen>
+   <Name>Замороженный</Name>
+  </Frozen>
+  <Deleted>
+   <Name>Удален</Name>
+  </Deleted>
+ </VPSOrders>
+ <DSOrders>
+  <Waiting>
+   <Name>Ожидание оплаты</Name>
+  </Waiting>
+  <OnCreate>
+   <Name>Установка сервера</Name>
+  </OnCreate>
+  <Active>
+   <Name>Активен</Name>
+  </Active>
+  <Suspended>
+   <Name>Сервер выключен</Name>
+  </Suspended>
+  <Frozen>
+   <Name>Замороженный</Name>
+  </Frozen>
+  <Deleted>
+   <Name>Сервер удалён</Name>
+  </Deleted>
+ </DSOrders>
+ <DomainsOrders>
+  <Waiting>
+   <Name>Ожидание оплаты</Name>
+  </Waiting>
+  <ClaimForRegister>
+   <Name>Заявка на регистрацию</Name>
+  </ClaimForRegister>
+  <ForContractRegister>
+   <Name>Для регистрации договора</Name>
+  </ForContractRegister>
+  <OnContractRegister>
+   <Name>На регистрации договора</Name>
+  </OnContractRegister>
+  <ForRegister>
+   <Name>Для регистрации</Name>
+  </ForRegister>
+  <OnRegister>
+   <Name>На регистрации</Name>
+  </OnRegister>
+  <OnDelegating>
+   <Name>На делегировании</Name>
+  </OnDelegating>
+  <Active>
+   <Name>Активен</Name>
+  </Active>
+  <ForProlong>
+   <Name>Для продления</Name>
+  </ForProlong>
+  <OnProlong>
+   <Name>На продлении</Name>
+  </OnProlong>
+  <ForNsChange>
+   <Name>Для изменения именных серверов</Name>
+  </ForNsChange>
+  <OnNsChange>
+   <Name>На изменении именных серверов</Name>
+  </OnNsChange>
+  <Suspended>
+   <Name>Заблокирован</Name>
+  </Suspended>
+  <OnTransfer>
+   <Name>На переносе</Name>
+  </OnTransfer>
+  <Deleted>
+   <Name>Удален</Name>
+  </Deleted>
+ </DomainsOrders>
+ <!-- IP addresses -->
+ <ExtraIPOrders>
+  <Waiting>
+   <Name>Ожидание оплаты</Name>
+  </Waiting>
+  <OnCreate>
+   <Name>На создании</Name>
+  </OnCreate>
+  <Active>
+   <Name>Активен</Name>
+  </Active>
+  <Deleted>
+   <Name>Удален</Name>
+  </Deleted>
+ </ExtraIPOrders>
+ <!-- ISPsystem software -->
+ <ISPswOrders>
+  <Waiting>
+   <Name>Ожидание оплаты</Name>
+  </Waiting>
+  <OnCreate>
+   <Name>На создании</Name>
+  </OnCreate>
+  <Active>
+   <Name>Активен</Name>
+  </Active>
+  <SchemeChange>
+   <Name>На смене тарифа</Name>
+  </SchemeChange>
+  <Suspended>
+   <Name>Заблокирован</Name>
+  </Suspended>
+  <Deleted>
+   <Name>Удален</Name>
+  </Deleted>
+ </ISPswOrders>
+ <!-- лицензии в биллинге ISPsystems -->
+ <ISPswLicenses>
+  <Waiting>
+   <Name>Ожидание оплаты</Name>
+  </Waiting>
+  <OnCreate>
+   <Name>На создании</Name>
+  </OnCreate>
+  <Active>
+   <Name>Активна</Name>
+  </Active>
+  <Suspended>
+   <Name>Заблокирована</Name>
+  </Suspended>
+  <Deleted>
+   <Name>Удалена</Name>
+  </Deleted>
+ </ISPswLicenses>
+</Statuses>
+<!-- *********************************************************************** -->
+</XML>

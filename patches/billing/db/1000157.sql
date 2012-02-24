@@ -1,0 +1,1 @@
+UPDATE `Users` SET `GroupID` = 3100000 WHERE `ID` = 100;

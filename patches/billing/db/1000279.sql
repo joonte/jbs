@@ -1,0 +1,3 @@
+INSERT INTO `Clauses` (`ID`, `PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
+('', 1307635655, 0, 100, 100, '/Help/Services/QIWIPhone', 'Необходимо ввести номер телефона', 'no', 'yes', 'yes', '<TABLE width="400">\r\n <TR>\r\n  <TD>\r\n   <SPAN>Для оплаты при помощи платёжной системы QIWI, вам необходимо ввести номер телефона, в <a title="Мои настройки" href="javascript:ShowWindow(''/UserPersonalDataChange'');">разделе Ваших настроек</a>.</SPAN>\r\n  </TD>\r\n  <TD>\r\n  </TD>\r\n </TR>\r\n</TABLE>', 'yes');
+

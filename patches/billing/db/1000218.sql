@@ -1,0 +1,1 @@
+UPDATE `Tasks` SET `IsActive` = 'yes',`Errors` = 0 WHERE `TypeID` = 'Temp';

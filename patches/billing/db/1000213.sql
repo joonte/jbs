@@ -1,0 +1,1 @@
+ALTER TABLE `Clauses` ADD `IsDOM` enum('no','yes') NOT NULL AFTER `IsXML`;

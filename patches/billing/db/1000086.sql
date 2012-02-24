@@ -1,0 +1,1 @@
+ALTER TABLE `HostingOrders` DROP FOREIGN KEY `HostingOrdersBlankID` ;

@@ -1,0 +1,1 @@
+ALTER TABLE `DomainsOrders` ADD `PersonID` char(50) default '' AFTER `ProfileID`;

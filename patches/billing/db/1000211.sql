@@ -1,0 +1,1 @@
+ALTER TABLE `Users` CHANGE `Rating` `Rating` float(7,2) default '0.00';

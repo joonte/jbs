@@ -1,0 +1,1 @@
+UPDATE `HostingSchemes` SET `QuotaCPU` = 0, `QuotaMEM` = 0, `QuotaPROC` = 0;

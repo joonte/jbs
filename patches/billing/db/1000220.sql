@@ -1,0 +1,1 @@
+ALTER TABLE `Users` CHANGE `Comment` `Notice` text;

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ID100>
+  <Text>Профили</Text>
+  <Prompt>Профили используются для создания договоров, на основании которых предоставляются услуги</Prompt>
+  <Paths>
+   <UniqID>^\/Profiles$</UniqID>
+  </Paths>
+  <Href>/Profiles</Href>
+  <Level>1</Level>
+ </ID100>
+ <ID200>
+  <Text>Договоры</Text>
+  <Prompt>Список ваших договоров</Prompt>
+  <Paths>
+   <UniqID>^\/Contracts$</UniqID>
+  </Paths>
+  <Href>/Contracts</Href>
+  <Level>1</Level>
+ </ID200>
+ <ID300>
+  <Text>Приложения</Text>
+  <Prompt>Список приложений к договорам, о оказании дополнительных услуг</Prompt>
+  <Paths>
+   <UniqID>^\/ContractsEnclosures$</UniqID>
+  </Paths>
+  <Href>/ContractsEnclosures</Href>
+  <Level>2</Level>
+ </ID300>
+ <ID400>
+  <Text>Счета на оплату</Text>
+  <Prompt>Выписка счетов на оплату и продление услуг</Prompt>
+  <Paths>
+   <UniqID>^\/Invoices$</UniqID>
+  </Paths>
+  <Href>/Invoices</Href>
+  <Level>1</Level>
+ </ID400>
+ <ID500>
+  <Text>Выполненные работы</Text>
+  <Prompt>Акты выполненных работ, список операций по вашим договорам</Prompt>
+  <Paths>
+   <UniqID>^\/(WorksComplite|WorksCompliteReports)$</UniqID>
+  </Paths>
+  <Href>/WorksComplite</Href>
+  <Level>1</Level>
+ </ID500>
+ <ID600>
+  <Text>Документооборот</Text>
+  <Prompt>Договора, приложения к договорам, акты выполненных работ</Prompt>
+  <Paths>
+   <UniqID>^\/MotionDocuments$</UniqID>
+  </Paths>
+  <Href>/MotionDocuments</Href>
+  <Level>1</Level>
+ </ID600>
+ <ID700>
+  <Text>История операций</Text>
+  <Prompt>Список финансовых операций по вашим договорам</Prompt>
+  <Paths>
+   <UniqID>^\/Postings$</UniqID>
+  </Paths>
+  <Href>/Postings</Href>
+  <Level>1</Level>
+ </ID700>
+ <ID800>
+  <Text>Партнерская программа</Text>
+  <Prompt>Реферальная программа</Prompt>
+  <Paths>
+   <UniqID>^\/(DependUsers|DependUsersStatistic)$</UniqID>
+  </Paths>
+  <Href>/DependUsers</Href>
+  <Level>1</Level>
+ </ID800>
+ <ID900>
+  <Text>Задачи системы</Text>
+  <Prompt>Задания системы - отправка сообщений, активация ваших заказанных услуг и т.п.</Prompt>
+  <Paths>
+   <UniqID>^\/Tasks$</UniqID>
+  </Paths>
+  <Href>/Tasks</Href>
+  <Level>1</Level>
+ </ID900>
+ </Items>
+<!-- *********************************************************************** -->
+</XML>

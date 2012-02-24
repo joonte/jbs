@@ -1,0 +1,1 @@
+UPDATE `Clauses` SET `AuthorID` = 100 WHERE `Partition` = 'UserHomeRightPanel';

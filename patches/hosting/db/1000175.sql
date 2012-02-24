@@ -1,0 +1,1 @@
+UPDATE `Tasks` SET `TypeID` = 'DomainsOrdersWhoIsUpdate' WHERE `TypeID` = 'DomainsUpdate';

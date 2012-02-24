@@ -1,0 +1,1 @@
+UPDATE `HostingBonuses` SET `UserID` = (SELECT `UserID` FROM `Contracts` WHERE `HostingBonuses`.`ContractID` = `Contracts`.`ID`);

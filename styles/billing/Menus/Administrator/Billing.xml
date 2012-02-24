@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Логи системы</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/Logs</UniqID>
+  </Paths>
+  <Href>/Administrator/Logs</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Лог пользователей</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/UsersLogs</UniqID>
+  </Paths>
+  <Href>/Administrator/UsersLogs</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Обновление системы</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/Update$</UniqID>
+  </Paths>
+  <Href>/Administrator/Update</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Версия биллинга</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/BillingVersions$</UniqID>
+  </Paths>
+  <Href>/Administrator/BillingVersions</Href>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

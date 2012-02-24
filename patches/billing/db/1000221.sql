@@ -1,0 +1,1 @@
+UPDATE `Tasks` SET `TypeID` = 'WorksCompliteReports' WHERE `TypeID` = 'ActsCreate';

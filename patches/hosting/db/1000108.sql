@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD `IsReselling` enum('no','yes') default 'no' AFTER `ServersGroupID`;

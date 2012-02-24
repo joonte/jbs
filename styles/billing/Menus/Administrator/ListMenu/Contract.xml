@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <UniqID>
+  <Text>Дополнительная информация</Text>
+  <Href>javascript:ShowWindow("/ContractInfo",{ContractID:%Replace%});</Href>
+  <Icon>Info.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Изменить договор</Text>
+  <Href>javascript:ShowWindow("/Administrator/ContractEdit",{ContractID:%Replace%});</Href>
+  <Icon>Edit.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Загрузить договор</Text>
+  <Href>javascript:AjaxCall("/ContractDownload",{ContractID:%Replace%},"Формирование договора","document.location = $Answer.Location;");</Href>
+  <Icon>PDF.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Акт сверки с контрагентом</Text>
+  <Href>javascript:ShowWindow("/VerifyReport",{ContractID:%Replace%});</Href>
+  <Icon>Info.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Финансовая проводка</Text>
+  <Href>javascript:ShowWindow("/Administrator/PostingMake",{ContractID:%Replace%});</Href>
+  <Icon>Money.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Выполнить работу</Text>
+  <Href>javascript:ShowWindow("/Administrator/WorkCompliteEdit",{ContractID:%Replace%});</Href>
+  <Icon>Works.gif</Icon>
+ </UniqID>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

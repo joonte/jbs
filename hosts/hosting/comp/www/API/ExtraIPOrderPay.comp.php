@@ -1,0 +1,364 @@
+<?php
+
+#-------------------------------------------------------------------------------
+/** @author Alex Keda, for www.host-food.ru */
+/******************************************************************************/
+/******************************************************************************/
+$__args_list = Array('Args');
+/******************************************************************************/
+Eval(COMP_INIT);
+/******************************************************************************/
+/******************************************************************************/
+$Args = IsSet($Args)?$Args:Args();
+#-------------------------------------------------------------------------------
+$ExtraIPOrderID = (integer) @$Args['ExtraIPOrderID'];
+$DaysPay        = (integer) @$Args['DaysPay'];
+$IsNoBasket     = (boolean) @$Args['IsNoBasket'];
+$PayMessage     =  (string) @$Args['PayMessage'];
+#-------------------------------------------------------------------------------
+if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
+  return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Columns = Array('ID','OrderID','ContractID','StatusID','UserID','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `ExtraIPOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `ExtraIPOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `ExtraIPOrdersOwners`.`OrderID`) as `IsPayed`');
+#-------------------------------------------------------------------------------
+$ExtraIPOrder = DB_Select('ExtraIPOrdersOwners',$Columns,Array('UNIQ','ID'=>$ExtraIPOrderID));
+#-------------------------------------------------------------------------------
+switch(ValueOf($ExtraIPOrder)){
+  case 'error':
+    return ERROR | @Trigger_Error(500);
+  case 'exception':
+    return new gException('ExtraIP_ORDER_NOT_FOUND','Выбранный заказ не найден');
+  case 'array':
+    #---------------------------------------------------------------------------
+    $UserID = (integer)$ExtraIPOrder['UserID'];
+    #---------------------------------------------------------------------------
+    $IsPermission = Permission_Check('ExtraIPOrdersPay',(integer)$GLOBALS['__USER']['ID'],$UserID);
+    #---------------------------------------------------------------------------
+    switch(ValueOf($IsPermission)){
+      case 'error':
+        return ERROR | @Trigger_Error(500);
+      case 'exception':
+        return ERROR | @Trigger_Error(400);
+      case 'false':
+        return ERROR | @Trigger_Error(700);
+      case 'true':
+        #-----------------------------------------------------------------------
+        $StatusID = $ExtraIPOrder['StatusID'];
+        #-----------------------------------------------------------------------
+        if(!In_Array($StatusID,Array('Waiting','Active','Suspended')))
+          return new gException('ExtraIP_ORDER_CAN_NOT_PAY','Заказ не может быть оплачен');
+        #-----------------------------------------------------------------------
+        $UserID = $ExtraIPOrder['UserID'];
+        #-----------------------------------------------------------------------
+        $ExtraIPScheme = DB_Select('ExtraIPSchemes',Array('ID','Name','CostDay','CostInstall','IsActive','IsProlong','MinDaysPay','MaxDaysPay'),Array('UNIQ','ID'=>$ExtraIPOrder['SchemeID']));
+        #-----------------------------------------------------------------------
+        switch(ValueOf($ExtraIPScheme)){
+          case 'error':
+            return ERROR | @Trigger_Error(500);
+          case 'exception':
+            return ERROR | @Trigger_Error(400);
+          case 'array':
+            #-------------------------------------------------------------------
+            if($ExtraIPOrder['IsPayed']){
+              #-----------------------------------------------------------------
+              if(!$ExtraIPScheme['IsProlong'])
+                return new gException('SCHEME_NOT_ALLOW_PROLONG','Тарифный план аренды сервера не позволяет продление');
+            }else{
+              #-----------------------------------------------------------------
+              if(!$ExtraIPScheme['IsActive'])
+                return new gException('SCHEME_NOT_ACTIVE','Тарифный план аренды сервера не активен');
+            }
+            #-------------------------------------------------------------------
+            if($DaysPay < $ExtraIPScheme['MinDaysPay'] || $DaysPay > $ExtraIPScheme['MaxDaysPay'])
+              return new gException('WRONG_DAYS_PAY','Неверное кол-во дней оплаты');
+            #-------------------------TRANSACTION-------------------------------
+            if(Is_Error(DB_Transaction($TransactionID = UniqID('ExtraIPOrderPay'))))
+              return ERROR | @Trigger_Error(500);
+            #-------------------------------------------------------------------
+            $ExtraIPOrderID = (integer)$ExtraIPOrder['ID'];
+            #-------------------------------------------------------------------
+            $Entrance = Tree_Path('Groups',(integer)$ExtraIPOrder['GroupID']);
+            #-------------------------------------------------------------------
+            switch(ValueOf($Entrance)){
+              case 'error':
+                return ERROR | @Trigger_Error(500);
+              case 'exception':
+                return ERROR | @Trigger_Error(400);
+              case 'array':
+                #---------------------------------------------------------------
+                $Where = SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysPay` <= %u',Implode(',',$Entrance),$ExtraIPOrder['UserID'],$ExtraIPScheme['ID'],$DaysPay);
+                #---------------------------------------------------------------
+                $ExtraIPPolitic = DB_Select('ExtraIPPolitics','*',Array('UNIQ','Where'=>$Where,'SortOn'=>'Discont','IsDesc'=>TRUE,'Limits'=>Array(0,1)));
+                #---------------------------------------------------------------
+                switch(ValueOf($ExtraIPPolitic)){
+                  case 'error':
+                    return ERROR | @Trigger_Error(500);
+                  case 'exception':
+                    # No more...
+                  break 2;
+                  case 'array':
+                    #-----------------------------------------------------------
+                    $IsInsert = DB_Insert('ExtraIPBonuses',Array('UserID'=>$UserID,'SchemeID'=>$ExtraIPScheme['ID'],'DaysReserved'=>$DaysPay,'Discont'=>$ExtraIPPolitic['Discont'],'Comment'=>'Ценовая политика'));
+                    if(Is_Error($IsInsert))
+                      return ERROR | @Trigger_Error(500);
+                  break 2;
+                  default:
+                    return ERROR | @Trigger_Error(101);
+                }
+              default:
+                return ERROR | @Trigger_Error(101);
+            }
+            #-------------------------------------------------------------------
+            $CostPay = 0.00;
+            #-------------------------------------------------------------------
+            $DaysRemainded = $DaysPay;
+            #-------------------------------------------------------------------
+            while($DaysRemainded > 0){
+              #-----------------------------------------------------------------
+              $IOrdersConsider = Array('OrderID'=>$ExtraIPOrder['OrderID'],'Cost'=>$ExtraIPScheme['CostDay']);
+              #-----------------------------------------------------------------
+              $Where = SPrintF('`UserID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysRemainded` > 0',$UserID,$ExtraIPScheme['ID']);
+              #-----------------------------------------------------------------
+              $ExtraIPBonus = DB_Select('ExtraIPBonuses','*',Array('IsDesc'=>TRUE,'SortOn'=>'Discont','Where'=>$Where));
+              #-----------------------------------------------------------------
+              switch(ValueOf($ExtraIPBonus)){
+                case 'error':
+                  return ERROR | @Trigger_Error(500);
+                case 'exception':
+                  #-------------------------------------------------------------
+                  $CostPay += $ExtraIPScheme['CostDay']*$DaysRemainded;
+                  #-------------------------------------------------------------
+                  $IOrdersConsider['DaysReserved'] = $DaysRemainded;
+                  #-------------------------------------------------------------
+                  $DaysRemainded = 0;
+                break;
+                case 'array':
+                  #-------------------------------------------------------------
+                  $ExtraIPBonus = Current($ExtraIPBonus);
+                  #-------------------------------------------------------------
+                  $Discont = (1 - $ExtraIPBonus['Discont']);
+                  #-------------------------------------------------------------
+                  $IOrdersConsider['Discont'] = $ExtraIPBonus['Discont'];
+                  #-------------------------------------------------------------
+                  if($ExtraIPBonus['DaysRemainded'] - $DaysRemainded < 0){
+                    #-----------------------------------------------------------
+                    $CostPay += $ExtraIPScheme['CostDay']*$ExtraIPBonus['DaysRemainded']*$Discont;
+                    #-----------------------------------------------------------
+                    $IOrdersConsider['DaysReserved'] = $ExtraIPBonus['DaysRemainded'];
+                    #-----------------------------------------------------------
+                    $UExtraIPBonus = Array('DaysRemainded'=>0);
+                    #-----------------------------------------------------------
+                    $DaysRemainded -= $ExtraIPBonus['DaysRemainded'];
+                  }else{
+                    #-----------------------------------------------------------
+                    $CostPay += $ExtraIPScheme['CostDay']*$DaysRemainded*$Discont;
+                    #-----------------------------------------------------------
+                    $IOrdersConsider['DaysReserved'] = $DaysRemainded;
+                    #-----------------------------------------------------------
+                    $UExtraIPBonus = Array('DaysRemainded'=>$ExtraIPBonus['DaysRemainded'] - $DaysRemainded);
+                    #-----------------------------------------------------------
+                    $DaysRemainded = 0;
+                  }
+                  #-------------------------------------------------------------
+                  $IsUpdate = DB_Update('ExtraIPBonuses',$UExtraIPBonus,Array('ID'=>$ExtraIPBonus['ID']));
+                  if(Is_Error($IsUpdate))
+                    return ERROR | @Trigger_Error(500);
+                break;
+                default:
+                  return ERROR | @Trigger_Error(101);
+              }
+              #-----------------------------------------------------------------
+              $IsInsert = DB_Insert('OrdersConsider',$IOrdersConsider);
+              if(Is_Error($IsInsert))
+                return ERROR | @Trigger_Error(500);
+            }
+            #-------------------------------------------------------------------
+            $CostPay = Round($CostPay,2);
+
+            if($ExtraIPScheme['CostInstall'] > 0){
+		# need give installation payment
+		if(!$ExtraIPOrder['IsPayed']){
+			# if it not prolongation
+			$CostPay += $ExtraIPScheme['CostInstall'];
+		}
+	    }
+            #-------------------------------------------------------------------
+            if(!$IsNoBasket && $CostPay > $ExtraIPOrder['ContractBalance']){
+              #-----------------------------------------------------------------
+              if(Is_Error(DB_Roll($TransactionID)))
+                return ERROR | @Trigger_Error(500);
+              #-----------------------------------------------------------------
+              $DaysRemainded = $ExtraIPOrder['DaysRemainded'];
+              #-----------------------------------------------------------------
+              $sDate = Comp_Load('/Formats/Date/Simple',Time() + $DaysRemainded*86400);
+              if(Is_Error($sDate))
+                return ERROR | @Trigger_Error(500);
+              #-----------------------------------------------------------------
+              $tDate = Comp_Load('/Formats/Date/Simple',Time() + ($DaysRemainded + $DaysPay)*86400);
+              if(Is_Error($tDate))
+                return ERROR | @Trigger_Error(500);
+              #-----------------------------------------------------------------
+              $IBasket = Array('OrderID'=>$ExtraIPOrder['OrderID'],'Comment'=>SPrintF('Тариф: %s, с %s по %s',$ExtraIPScheme['Name'],$sDate,$tDate),'Amount'=>$DaysPay,'Summ'=>$CostPay);
+              #-----------------------------------------------------------------
+              $Count = DB_Count('Basket',Array('Where'=>SPrintF('`OrderID` = %u',$ExtraIPOrder['OrderID'])));
+              if(Is_Error($Count))
+                return ERROR | @Trigger_Error(500);
+              #-----------------------------------------------------------------
+              if($Count){
+                #---------------------------------------------------------------
+                $IsInsert = DB_Update('Basket',$IBasket,Array('Where'=>SPrintF('`OrderID` = %u',$ExtraIPOrder['OrderID'])));
+                if(Is_Error($IsInsert))
+                  return ERROR | @Trigger_Error(500);
+              }else{
+                #---------------------------------------------------------------
+                $IsInsert = DB_Insert('Basket',$IBasket);
+                if(Is_Error($IsInsert))
+                  return ERROR | @Trigger_Error(500);
+              }
+              #-----------------------------------------------------------------
+              $Comp = Comp_Load('Basket/Update',$ExtraIPOrder['UserID'],$ExtraIPOrder['OrderID']);
+              if(Is_Error($Comp))
+                return ERROR | @Trigger_Error(500);
+              #-----------------------------------------------------------------
+              return Array('Status'=>'UseBasket');
+            }else{
+              #-----------------------------------------------------------------
+              $Comp = Comp_Load('Formats/Order/Number',$ExtraIPOrder['OrderID']);
+              if(Is_Error($Comp))
+                return ERROR | @Trigger_Error(500);
+              #-----------------------------------------------------------------
+              $ExtraIPOrder['Number'] = $Comp;
+              #-----------------------------------------------------------------
+              $IsUpdate = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$ExtraIPOrder['ContractID'],'Summ'=>-$CostPay,'ServiceID'=>50000,'Comment'=>SPrintF('№%s на %s дн.',$Comp,$DaysPay)));
+              #-----------------------------------------------------------------
+              switch(ValueOf($IsUpdate)){
+                case 'error':
+                  return ERROR | @Trigger_Error(500);
+                case 'exception':
+                  #-------------------------------------------------------------
+                  if(Is_Error(DB_Roll($TransactionID)))
+                    return ERROR | @Trigger_Error(500);
+                  #-------------------------------------------------------------
+                  return $IsUpdate;
+                case 'array':
+                  #-------------------------------------------------------------
+                  $IsUpdate = DB_Update('Orders',Array('IsPayed'=>TRUE),Array('ID'=>$ExtraIPOrder['OrderID']));
+                  if(Is_Error($IsUpdate))
+                    return ERROR | @Trigger_Error(500);
+                  #-------------------------------------------------------------
+                  switch($StatusID){
+                    case 'Waiting':
+                      #---------------------------------------------------------
+                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ExtraIPOrders','StatusID'=>'OnCreate','RowsIDs'=>$ExtraIPOrderID,'Comment'=>'Заказ успешно оплачен'));
+                      #---------------------------------------------------------
+                      switch(ValueOf($Comp)){
+                        case 'error':
+                          return ERROR | @Trigger_Error(500);
+                        case 'exception':
+                          return ERROR | @Trigger_Error(400);
+                        case 'array':
+                          # No more...
+                        break 2;
+                        default:
+                          return ERROR | @Trigger_Error(101);
+                      }
+                    case 'Active':
+                      #---------------------------------------------------------
+		      # вариант автопродления может быть только когда заказ ещё активен
+		      if(!$PayMessage)
+                        $PayMessage = "Заказ успешно оплачен";
+                      #---------------------------------------------------------
+                      $Comp = Comp_Load('www/API/StatusSet',Array('IsNotNotify'=>TRUE,'ModeID'=>'ExtraIPOrders','StatusID'=>'Active','RowsIDs'=>$ExtraIPOrderID,'Comment'=>$PayMessage));
+                      #---------------------------------------------------------
+                      switch(ValueOf($Comp)){
+                        case 'error':
+                          return ERROR | @Trigger_Error(500);
+                        case 'exception':
+                          return ERROR | @Trigger_Error(400);
+                        case 'array':
+                          # No more...
+                        break 2;
+                        default:
+                          return ERROR | @Trigger_Error(101);
+                      }
+                    case 'Suspended':
+                      #---------------------------------------------------------
+                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ExtraIPOrders','StatusID'=>'Active','RowsIDs'=>$ExtraIPOrderID,'Comment'=>'Заказ успешно оплачен и будет активирован'));
+                      #---------------------------------------------------------
+                      switch(ValueOf($Comp)){
+                        case 'error':
+                          return ERROR | @Trigger_Error(500);
+                        case 'exception':
+                          return ERROR | @Trigger_Error(400);
+                        case 'array':
+                          # No more...
+                        break 2;
+                        default:
+                          return ERROR | @Trigger_Error(101);
+                      }
+                    default:
+                      return ERROR | @Trigger_Error(101);
+                  }
+                  #-------------------------------------------------------------
+                  $ExtraIPDomainPolitic = DB_Select('ExtraIPDomainsPolitics','*',Array('IsDesc'=>TRUE,'SortOn'=>'DaysPay','Where'=>SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR `SchemeID` IS NULL) AND `DaysPay` <= %u',Implode(',',$Entrance),$ExtraIPOrder['UserID'],$ExtraIPOrder['SchemeID'],$DaysPay)));
+                  #-------------------------------------------------------------
+                  switch(ValueOf($ExtraIPDomainPolitic)){
+                    case 'error':
+                      return ERROR | @Trigger_Error(500);
+                    case 'exception':
+                      # No more...
+                    break;
+                    case 'array':
+                      #---------------------------------------------------------
+                      $ExtraIPDomainPolitic = Current($ExtraIPDomainPolitic);
+                      #---------------------------------------------------------
+                      $IDomainBonus = Array(
+                        #-------------------------------------------------------
+                        'UserID'                => $ExtraIPOrder['UserID'],
+                        'SchemeID'              => NULL,
+                        'DomainsSchemesGroupID' => $ExtraIPDomainPolitic['DomainsSchemesGroupID'],
+                        'YearsReserved'         => 1,
+                        'OperationID'           => 'Order',
+                        'Discont'               => $ExtraIPDomainPolitic['Discont'],
+                        'Comment'               => 'Назначен доменной политикой'
+                      );
+                      #---------------------------------------------------------
+                      $IsInsert = DB_Insert('DomainsBonuses',$IDomainBonus);
+                      if(Is_Error($IsInsert))
+                        return ERROR | @Trigger_Error(500);
+                      #---------------------------------------------------------
+                    break;
+                    default:
+                      return ERROR | @Trigger_Error(101);
+                  }
+                  #-------------------------------------------------------------
+		  $Event = Array(
+		  			'UserID'	=> $ExtraIPOrder['UserID'],
+					'PriorityID'	=> 'Billing',
+					'Text'		=> SPrintF('Заказ ExtraIP (%s) успешно оплачен на период %u дн.',$ExtraIPScheme['Name'], $DaysPay)
+		                );
+                  $Event = Comp_Load('Events/EventInsert',$Event);
+                  if(!$Event)
+                    return ERROR | @Trigger_Error(500);
+                  #-------------------------------------------------------------
+                  if(Is_Error(DB_Commit($TransactionID)))
+                    return ERROR | @Trigger_Error(500);
+                  #-------------------END TRANSACTION---------------------------
+                  return Array('Status'=>'Ok');
+                default:
+                   return ERROR | @Trigger_Error(101);
+              }
+            }
+          default:
+             return ERROR | @Trigger_Error(101);
+        }
+      default:
+        return ERROR | @Trigger_Error(101);
+    }
+  default:
+    return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+
+
+?>

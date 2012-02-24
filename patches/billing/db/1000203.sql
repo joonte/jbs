@@ -1,0 +1,1 @@
+ALTER TABLE `Clauses` ADD COLUMN `IsPublish` enum('no','yes') NOT NULL;

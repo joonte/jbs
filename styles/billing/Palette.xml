@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+ <Gradetion>
+  <Step>40</Step>
+  <Count>3</Count>
+ </Gradetion>
+ <Colors>
+  <UniqID>A7CCFF</UniqID>
+  <UniqID>B9F00A</UniqID>
+  <UniqID>99E823</UniqID>
+  <UniqID>505050</UniqID>
+  <UniqID>DCDCDC</UniqID>
+  <UniqID>F07D00</UniqID>
+  <UniqID>F5D227</UniqID>
+  <UniqID>7799E6</UniqID>
+  <UniqID>90E6FF</UniqID>
+  <UniqID>0359E4</UniqID>
+  <UniqID>FF0000</UniqID>
+ </Colors>
+</XML>

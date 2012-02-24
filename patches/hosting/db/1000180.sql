@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` CHANGE `QuotaAnonimousFTP` `IsAnonimousFTP` enum('no','yes') default 'no';

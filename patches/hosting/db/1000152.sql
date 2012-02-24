@@ -1,0 +1,1 @@
+ALTER TABLE `Registrators` ADD `Ns1Name` char(50) default '' AFTER `Password`;

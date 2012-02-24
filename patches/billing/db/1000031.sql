@@ -1,0 +1,2 @@
+INSERT INTO `Permissions` (`Name`,`HostID`,`UserGroupID`,`UserID`,`OwnerGroupID`,`OwnerID`,`Metric`,`IsAccess`) VALUES
+('/Administrator/Groups','billing',1,1,4000000,1,1,'yes'),('/Administrator/NewGroup','billing',1,1,4000000,1,1,'yes');

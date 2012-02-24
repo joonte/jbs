@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD `IsCatchAll` enum('no','yes') default 'no' AFTER `IsSpamAssasing`;

@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD `IsSystemInfo` enum('no','yes') default 'no' AFTER `IsCatchAll`;

@@ -1,0 +1,1 @@
+ALTER TABLE `Registrators` ADD `Comment` char(255) default '' AFTER `TypeID`;

@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD `IsPHPSafeMode` enum('no','yes') default 'no' AFTER `IsPHPFastCGIAccess`;

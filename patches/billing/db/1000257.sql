@@ -1,0 +1,1 @@
+ALTER TABLE `Events` ADD `IsReaded` enum('no','yes') default 'yes' AFTER `PriorityID`;

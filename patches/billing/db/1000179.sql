@@ -1,0 +1,1 @@
+UPDATE `Invoices` SET `PaymentSystemID` = 'Moneybookers' WHERE `PaymentSystemID` = 'MoneyBookers';

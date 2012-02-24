@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<HTML>
+  <HEAD id="Head">
+   <TITLE id="Title"></TITLE>
+  </HEAD>
+  <BODY id="Body">
+   <DIV id="Into" />
+   <DIV id="Floating" />
+  </BODY>
+</HTML>

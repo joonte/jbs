@@ -1,0 +1,1 @@
+UPDATE `Clauses` SET `Partition` = REPLACE(`Partition`,'Header:Header:/DependUsers','Header:/DependUsers');

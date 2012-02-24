@@ -1,0 +1,380 @@
+body {
+    cursor:      default;
+    margin:      0px;
+    padding:     0px;
+    font-family: Helvetica, sans-serif;
+    font-size:   12px;
+}
+/* ------------------------- */
+table.ButtonsPanel {
+    background-color:      #F1FCCE;
+    border:                2px solid #D5F66C;
+    -webkit-border-radius: 2px;
+    -moz-border-radius:    2px;
+    border-radius:         2px;
+    border-collapse:       separate;
+    empty-cells:           show;
+    font-size:             12px;
+    margin-bottom:         5px;
+    margin-top:            5px;
+}
+/* ------------------------- */
+table.Alert, table.Progress {
+    background-color:      #FFFFFF;
+    border:                5px solid #F9E47D;
+    -webkit-border-radius: 2px;
+    -moz-border-radius:    2px;
+    border-radius:         2px;
+}
+/* ------------------------- */
+#Tick {
+    background-color:      #F1FCCE;
+    border:                2px solid #5B8B15;
+    padding:               5px;
+    color:                 #5B8B15;
+    -webkit-border-radius: 2px;
+    -moz-border-radius:    2px;
+    border-radius:         2px;
+}
+/* ------------------------- */
+div.Exception {
+    padding: 5px;
+    color:   #253002;
+}
+/* ------------------------- */
+p {
+    margin: 15px;
+}
+/* ------------------------- */
+div.Title {
+    background-color: transparent;
+    border-bottom:    1px solid #EAEAEA;
+    font-size:        18px;
+    font-weight:      normal;
+    margin:           0px 10px 5px;
+    padding:          5px;
+    color:            #6F9006;
+    text-align:       left;
+}
+/* ------------------------- */
+h1,h2,h3,h4 {
+    background-color: transparent;
+    border-bottom:    1px dashed #DCDCDC;
+    font-size:        20px;
+    font-weight:      normal;
+    margin:           10px;
+    padding:          5px;
+    text-align:       left;
+}
+h1 {
+    color: #505050;
+}
+h2 {
+    color: #6F9006;
+}
+h3 {
+    color: #F07D00;
+}
+h4 {
+    color:         #F07D00;
+    font-size:     18px;
+    text-align:    left;
+}
+/* ------------------------- */
+a:link {
+    background-color: transparent;
+    color:            #505050;
+    text-decoration:  underline;
+}
+a:visited {
+    background-color: transparent;
+    color:            #505050;
+    text-decoration:  underline;
+}
+a:hover {
+    background-color: transparent;
+    color:            #303030;
+    text-decoration:  underline;
+}
+a.Image:link {
+    border:          none;
+    text-decoration: none;
+}
+a.Image:visited {
+    border:          none;
+    text-decoration: none;
+}
+a.Image:hover {
+    border:          none;
+    text-decoration: none;
+}
+
+a.Button:link {
+    text-decoration: none;
+    padding:         3px 4px 3px 4px;
+}
+a.Button:visited {
+    border:          1px solid #F8F8F8;
+    text-decoration: none;
+    padding:         2px 3px 2px 3px;
+}
+a.Button:hover {
+    border:           1px solid #DCDCDC;
+    text-decoration:  none;
+    padding:          2px 3px 2px 3px;
+    background-color: #F8F8F8;
+}
+a.External {
+    background: url(../Images/ExternalLink.png) center right no-repeat;
+    padding-right: 13px;
+}
+/* ------------------------- */
+li {
+    margin-top: 5px;
+}
+ul.Standard {
+    list-style-type:  square;
+    list-style-image: url(../Images/Ul.png);
+    margin-top:       5px;
+    margin-right:     5px;
+    margin-bottom:    5px;
+}
+ol.Standard {
+    list-style-type: decimal;
+}
+/* ------------------------- */
+table {
+    font-size: 12px;
+}
+/* ------------------------- */
+.Standard caption, caption.Standard {
+    background-color:      #F8F8F8;
+    background-image:      url(../Images/CaptionBg.png);
+    border:                1px solid #DCDCDC;
+    -webkit-border-radius: 2px;
+    -moz-border-radius:    2px;
+    border-radius:         2px;
+    color:                 #505050;
+    padding:               5px;
+    white-space:           nowrap;
+    margin-top:            5px;
+    margin-bottom:         5px;
+}
+table.Standard {
+    background-color:      #FFFFFF;
+    background-image:      url(../Images/TableStandardBg.png);
+    border:                2px solid #DCDCDC;
+    -webkit-border-radius: 2px;
+    -moz-border-radius:    2px;
+    border-radius:         2px;
+    border-collapse:       separate;
+    empty-cells:           show;
+    font-size:             12px;
+    margin-bottom:         5px;
+    margin-top:            5px;
+}
+table.Notice, table.Warning {
+    background-color:      #FDF6D3;
+    border:                1px solid #E2DAA6;
+    margin-top:            5px;
+    width:                 100%;
+}
+table.Warning {
+    border:           1px solid #F07D00;
+/*    border-left:      3px solid #E2DAA6; */
+    background-color: #FEFAE4;
+}
+td.Standard,div.Standard,pre.Standard,span.Standard {
+    border:                1px solid #DCDCDC;
+    -webkit-border-radius: 5px;
+    -moz-border-radius:    5px;
+    border-radius:         5px;
+    background-color:      #FFFFFF;
+    padding:               2px 5px 2px 5px;
+}
+td.Transparent {
+    border:                1px solid #DCDCDC;
+    -webkit-border-radius: 5px;
+    -moz-border-radius:    5px;
+    border-radius:         5px;
+    padding:               2px 5px 2px 5px;
+}
+td.Head {
+    border:                1px solid #969696;
+    -webkit-border-radius: 5px;
+    -moz-border-radius:    5px;
+    border-radius:         5px;
+    background-color:      #DCDCDC;
+    background-image:      url(../Images/TableHeadBg.png);
+    color:                 #505050;
+    font-size:             12px;
+    padding:               2px 5px 2px 5px;
+}
+td.Separator {
+    background-color:      #F1FCCE;
+    border:                1px solid #DCDCDC;
+    -webkit-border-radius: 5px;
+    -moz-border-radius:    5px;
+    border-radius:         5px;
+    padding:               2px 5px 2px 5px;
+    background-image:      url(../Images/TableSeparatorBg.png);
+}
+td.Comment {
+    text-align:    right;
+    padding:       2px 5px 6px 5px;
+}
+/* ------------------------- */
+td.Button {
+    background-color: transparent;
+    border-bottom:    1px solid #707680;
+    padding:          2px 5px 2px 5px;
+    cursor:           pointer;
+    text-decoration:  underline;
+    overflow:         hidden;
+    width: 100%;
+}
+td.Button:hover {
+    background-color: #ccbbff;
+    border-bottom:    1px solid #707680;
+    padding:          2px 5px 2px 5px;
+}
+/* ------------------------- */
+div.Margin {
+    margin: 0px 40px 0px 40px;
+}
+/* ------------------------- */
+textarea.Duty, input.Duty {
+    background-color: #FDF6D3;
+    border:           1px solid #F5D227;
+    border-width:     1px;
+}
+/* ------------------------- */
+button.Transparent,input.Transparent {
+    background-color: transparent;
+    border:           none;
+    padding:          0px;
+}
+/* ------------------------- */
+button.Standard {
+    padding: 0px;
+}
+/* ------------------------- */
+img {
+    border:      0px none;
+    color:       #303030;
+    font-size:   11px;
+    font-weight: normal;
+}
+/* ------------------------- */
+img.Button {
+    cursor: pointer;
+}
+/* ------------------------- */
+pre {
+    margin:      0px;
+}
+pre.Script {
+    border:           1px solid #DCDCDC;
+    background-color: #FFFFFF;
+    background-color: #FDF6D3;
+    font-family:      Courier New;
+    margin:           5px;
+    padding:          5px;
+}
+pre.Console {
+    border:           1px dashed #EAEAEA;
+    background-color: #000000;
+    color:            #B9F00A;
+    font-family:      Courier New;
+    margin:           5px;
+    padding:          5px;
+}
+/* ------------------------- */
+iframe {
+    background-color: #FFFFFF;
+    border:           1px solid #DCDCDC;
+}
+/* ------------------------- */
+span.Comment {
+    color: #6F9006;
+}
+/* ------------------------- */
+dfn {
+    cursor:     help;
+    font-style: normal;
+}
+/* ------------------------- */
+table.Widget {
+    background-image:      url(../Images/Tranparent.gif);
+    -webkit-border-radius: 5px;
+    -moz-border-radius:    5px;
+    border-radius:         5px;
+    margin-top:            10px;
+    margin-bottom:         10px;
+}
+/* ------------------------- */
+#Window {
+    background-color:      #FFFFFF;
+    border:                2px solid #DCDCDC;
+    -webkit-border-radius: 5px;
+    -moz-border-radius:    5px;
+    border-radius:         5px;
+}
+table.WindowHeader {
+    background-color: #EAEAEA;
+    background-image: url(../Images/WindowHeader.png);
+    border-bottom:    2px solid #DCDCDC;
+}
+td.WindowTitle {
+    color:         #171E2E;
+    font-weight:   bold;
+    padding:       5px;
+    padding-left:  25px;
+    white-space:   nowrap;
+}
+/* ------------------------- */
+div.Node {
+    padding-left: 25px;
+    margin:       0px;
+}
+p.NodeName,p.NodeParam {
+    border-left: 2px solid #DCDCDC;
+    margin:      0px;
+    padding:     5px 0px 5px 5px;
+    font-size:   12px;
+    font-weight: normal;
+}
+p.NodeParam {
+    background-color: #FDF6D3;
+    font-weight:      normal;
+}
+span.NodeParam {
+    background-color: #FFFFFF;
+    border:           1px solid #969696;
+    padding:          2px;
+}
+
+input[type=text],
+input[type=password] {
+    border:  1px solid silver;
+    padding: 3px;
+}
+
+.InputField {
+    width:   200px;
+}
+
+input[type="button"], input[type="submit"] {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    -webkit-user-select: none;
+    background: -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+    background: -moz-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+    border: 1px solid #AAA;
+    color: #444;
+    font-size: inherit;
+    margin-bottom: 0px;
+    padding: 3px 12px 3px 12px;
+}

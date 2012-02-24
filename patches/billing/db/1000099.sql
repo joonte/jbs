@@ -1,0 +1,1 @@
+ALTER TABLE `Tasks` CHANGE `Params` `Params` varchar(20000) default '[]';

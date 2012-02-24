@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD `IsPHPModAccess` enum('no','yes') default 'no' AFTER `QuotaEmailDomains`;

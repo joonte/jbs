@@ -1,0 +1,1 @@
+UPDATE `HostingConsider` SET `DaysConsidered` = `DaysRemainded`;

@@ -1,0 +1,1 @@
+ALTER TABLE `Services` ADD `IsProlong` enum('no','yes') default 'yes' AFTER `IsActive`;

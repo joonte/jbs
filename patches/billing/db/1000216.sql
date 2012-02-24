@@ -1,0 +1,1 @@
+UPDATE `Groups` SET `IsDefault` = 'yes' WHERE `ID` = 2000000;

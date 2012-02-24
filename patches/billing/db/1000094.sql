@@ -1,0 +1,1 @@
+ALTER TABLE `Contracts` ADD `ProfileID` int(11) default '0' AFTER `TypeID`;

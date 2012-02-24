@@ -1,0 +1,1 @@
+ALTER TABLE `HostingServers` ADD `Prefix` char(30) NOT NULL default 'h' AFTER `Domain`;

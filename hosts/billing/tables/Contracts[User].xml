@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<RootID>Contracts</RootID>
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+  <After>
+   <Delete />
+   <StatusSet />
+  </After>
+ </Comps>
+ <Sequence />
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <Conditions>
+  <Where>
+   <UniqID>`UserID` = @local.__USER_ID</UniqID>
+  </Where>
+  <Message>У Вас нет договоров.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Columns>
+ <Info>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/ContractInfo</ListElement>
+   <ListElement>
+    <ContractID>%ID%</ContractID>
+   </ListElement>
+   <ListElement>Дополнительная информация</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Info>
+ <!-- ********************************************************************** -->
+ <ContractDownload>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Standard</Comp>
+  <Args>
+   <ListElement>
+    <onclick>AjaxCall('/ContractDownload',{ContractID:%ID%},'Формирование договора','document.location = $Answer.Location');</onclick>
+   </ListElement>
+   <ListElement>Загрузить договор</ListElement>
+   <ListElement>PDF.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </ContractDownload>
+ <!-- ********************************************************************** -->
+ <Balance>
+  <Head>Баланс</Head>
+  <Comp>Contracts/Balance</Comp>
+  <Args>
+   <IsInvoiceMake>1</IsInvoiceMake>
+  </Args>
+ </Balance>
+</Columns>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>Info</ListElement>
+ <ListElement>ContractDownload</ListElement>
+ <ListElement>Number</ListElement>
+ <ListElement>Customer</ListElement>
+ <ListElement>Type</ListElement>
+ <ListElement>Balance</ListElement>
+ <ListElement>Status</ListElement>
+ <ListElement>StatusOver</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

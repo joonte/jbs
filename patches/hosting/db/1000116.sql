@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD `QuotaUsers` int(4) default '0' AFTER `QuotaEmailLists`;

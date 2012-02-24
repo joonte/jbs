@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ID100>
+  <Text>Группы услуг</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/ServicesGroups$</UniqID>
+  </Paths>
+  <Href>/Administrator/ServicesGroups</Href>
+  <Level>2</Level>
+ </ID100>
+ <ID200>
+  <Text>Виды услуг</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/Services$</UniqID>
+  </Paths>
+  <Href>/Administrator/Services</Href>
+  <Level>2</Level>
+ </ID200>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>Clauses</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>Partition</ListElement>
+  <ListElement>Title</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Статьи не найдены.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <Before>
+  <PatternOut>
+   <Args>
+    <Patterns>
+     <News>
+      <Name>Новости</Name>
+      <Where>`Partition` = 'News'</Where>
+     </News>
+     <Contracts>
+      <Name>Шаблоны договоров и приложений</Name>
+      <Where>`Partition` LIKE 'Contracts%'</Where>
+     </Contracts>
+    </Patterns>
+    <ActiveID>Default</ActiveID>
+   </Args>
+  </PatternOut>
+  <!-- ********************************************************************* -->
+  <Search>
+   <Args>
+    <ColumnsIDs>
+     <ListElement>ID</ListElement>
+     <ListElement>AuthorID</ListElement>
+     <ListElement>EditorID</ListElement>
+     <ListElement>Partition</ListElement>
+     <ListElement>Title</ListElement>
+    </ColumnsIDs>
+   </Args>
+  </Search>
+ </Before>
+ <!-- ********************************************************************** -->
+ <After>
+  <Data>
+   <Args>
+    <DataModeID>Horizontal</DataModeID>
+   </Args>
+  </Data>
+  <!-- ********************************************************************* -->
+  <Delete>
+   <Args>
+    <Comment>Выбранные статьи</Comment>
+    <Send>
+     <TableID>Clauses</TableID>
+    </Send>
+   </Args>
+  </Delete>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>UpdateDate</SortOn>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+ <SelectID>
+  <Args>
+   <TableID>Clauses</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <Preview>
+   <IsSorted>0</IsSorted>
+   <Comp>Buttons/Window</Comp>
+   <Args>
+     <ListElement>/Clause</ListElement>
+     <ListElement>
+       <ClauseID>%ID%</ClauseID>
+     </ListElement>
+     <ListElement>Просмотр статьи</ListElement>
+   </Args>
+   <Attribs>
+     <class>TableSuperStandard</class>
+     <style>width:22px;</style>
+   </Attribs>
+ </Preview>
+ <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Standard</Comp>
+  <Args>
+   <ListElement>
+    <onclick>window.open('/Administrator/ClauseEdit?ClauseID=%ID%','ClauseEdit',SPrintF('left=%u,top=%u,width=800,height=680,toolbar=0, scrollbars=1, location=0',(screen.width-800)/2,(screen.height-600)/2));</onclick>
+   </ListElement>
+   <ListElement>Редактировать статью</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+ <!-- ********************************************************************** -->
+ <PublicDate>
+  <Head>Дата публ.</Head>
+  <Comp>Formats/Date/Extended</Comp>
+  <Args>
+   <ListElement>%PublicDate%</ListElement>
+  </Args>
+ </PublicDate>
+ <!-- ********************************************************************** -->
+ <UpdateDate>
+  <Head>Дата изм.</Head>
+  <Comp>Formats/Date/Extended</Comp>
+  <Args>
+    <ListElement>%UpdateDate%</ListElement>
+  </Args>
+  <Alias>IF(`ChangedDate` > 0,`ChangedDate`,`PublicDate`)</Alias>
+ </UpdateDate>
+ <!-- ********************************************************************** -->
+ <Author>
+  <Head>Автор</Head>
+  <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `Clauses`.`AuthorID`)</Alias>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Author%</ListElement>
+   <Length>10</Length>
+  </Args>
+ </Author>
+ <!-- ********************************************************************** -->
+ <Editor>
+   <Head>Редактор</Head>
+   <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `Clauses`.`EditorID`)</Alias>
+   <Comp>Formats/String</Comp>
+   <Args>
+    <ListElement>%Editor%</ListElement>
+    <Length>10</Length>
+   </Args>
+ </Editor>
+ <!-- ********************************************************************** -->
+ <Title>
+  <Head>Заголовок</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Title%</ListElement>
+   <Length>45</Length>
+  </Args>
+ </Title>
+ <!-- ********************************************************************** -->
+ <Partition>
+  <Head>Раздел</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Partition%</ListElement>
+   <Length>30</Length>
+   </Args>
+ </Partition>
+</Columns>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>Preview</ListElement>
+ <ListElement>Edit</ListElement>
+ <ListElement>UpdateDate</ListElement>
+ <ListElement>Title</ListElement>
+ <ListElement>Partition</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

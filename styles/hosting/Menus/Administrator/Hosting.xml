@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Заказы</Text>
+  <Prompt>Все заказы на хостинг клиентов</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/HostingOrders$</UniqID>
+  </Paths>
+  <Href>/Administrator/HostingOrders</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Тарифы</Text>
+  <Prompt>Тарифные планы</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/HostingSchemes$</UniqID>
+  </Paths>
+  <Href>/Administrator/HostingSchemes</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Ценовые политики</Text>
+  <Prompt>Правила назначения бонусов при оплате заказов на различные периоды</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/HostingPolitics$</UniqID>
+  </Paths>
+  <Href>/Administrator/HostingPolitics</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Доменные политики</Text>
+  <Prompt>Правила назначения бонусов на домены при оплате заказов на различные периоды</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/HostingDomainsPolitics$</UniqID>
+  </Paths>
+  <Href>/Administrator/HostingDomainsPolitics</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Бонусы</Text>
+  <Prompt>Назначенные скидки клиентам на определённые периоды</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/HostingBonuses$</UniqID>
+  </Paths>
+  <Href>/Administrator/HostingBonuses</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Группы серверов</Text>
+  <Prompt>Характеристики объединения серверов</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/HostingServersGroups$</UniqID>
+  </Paths>
+  <Href>/Administrator/HostingServersGroups</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Серверы</Text>
+  <Prompt>Места размещения клиентов</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/HostingServers$</UniqID>
+  </Paths>
+  <Href>/Administrator/HostingServers</Href>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

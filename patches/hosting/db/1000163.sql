@@ -1,0 +1,1 @@
+UPDATE `HostingOrders` SET `StatusID` = 'Frozen' WHERE `StatusID` = 'Frosen';

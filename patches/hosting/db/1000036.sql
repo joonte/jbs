@@ -1,0 +1,1 @@
+ALTER TABLE `HostingOrders` CHANGE `ServerID` `ServerID` int(11) NOT NULL;

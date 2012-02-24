@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<RootID>ExtraIPOrders</RootID>
+<Cut>
+ <Comps>
+  <Before>
+   <DateSelect />
+   <PatternOut />
+   <Search />
+   <ExtraIPSearch />
+  </Before>
+  <After>
+   <StatusSet />
+  </After>
+ </Comps>
+ <Sequence />
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <Conditions>
+  <Where>
+   <UniqID>`UserID` = @local.__USER_ID</UniqID>
+  </Where>
+  <Message>У Вас нет заказов на IP адреса.</Message>
+ </Conditions>
+ <Adding>
+  <Message>По данному договору заказов на IP адреса не обнаружено.</Message>
+ </Adding>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <Before>
+  <ContractFilter>
+   <Comp>Contracts/SelectFilter</Comp>
+   <Args type="array" />
+  </ContractFilter>
+ </Before>
+</Comps>
+<!-- *********************************************************************** -->
+<Columns>
+ <Info>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/ExtraIPOrderInfo</ListElement>
+   <ListElement>
+    <ExtraIPOrderID>%ID%</ExtraIPOrderID>
+   </ListElement>
+   <ListElement>Дополнительная информация</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Info>
+ <!-- ********************************************************************** -->
+ <Pay>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/ExtraIPOrderPay</ListElement>
+   <ListElement>
+    <ExtraIPOrderID>%ID%</ExtraIPOrderID>
+   </ListElement>
+   <ListElement>Оплатить заказ</ListElement>
+   <ListElement>Pay.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Pay>
+ <!-- ********************************************************************** -->
+ <!-- ********************************************************************** -->
+ <!-- ********************************************************************** -->
+</Columns>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>Info</ListElement>
+ <ListElement>Pay</ListElement>
+ <ListElement>Number</ListElement>
+ <ListElement>Login</ListElement>
+ <ListElement>Scheme</ListElement>
+ <ListElement>Expiration</ListElement>
+ <ListElement>Status</ListElement>
+ <ListElement>StatusOver</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

@@ -1,0 +1,1 @@
+UPDATE `Contracts` SET `Customer` = `CustomerName`;

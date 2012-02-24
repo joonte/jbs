@@ -1,0 +1,1 @@
+ALTER TABLE `DomainsOrders` ADD `IsOrdered` enum('no','yes') default 'no' AFTER `ExpirationDate`;

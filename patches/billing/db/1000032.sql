@@ -1,0 +1,2 @@
+INSERT INTO `Permissions` (`Name`,`HostID`,`UserGroupID`,`UserID`,`OwnerGroupID`,`OwnerID`,`Metric`,`IsAccess`) VALUES
+('Groups-Delete','billing',1,1,4000000,1,1,'no'),('Groups-Delete','billing',3000000,1,1,1,2,'yes');

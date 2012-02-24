@@ -1,0 +1,1 @@
+UPDATE `HostingSchemes` SET `QuotaDisk` = 0,`QuotaEmailBox` = 0 WHERE `QuotaDisk` < 0 OR `QuotaEmailBox` < 0;

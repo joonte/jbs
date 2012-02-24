@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+ </Comps>
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>Services</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>Name</ListElement>
+  <ListElement>Measure</ListElement>
+  <ListElement>IsProtected</ListElement>
+  <ListElement>IsActive</ListElement>
+  <ListElement>SortID</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Where>
+    <UniqID>`IsHidden` != 'yes'</UniqID>
+  </Where>
+  <Message>Услуги не обнаружены.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <After>
+  <Delete>
+   <Args>
+    <Comment>Выбранные услуги</Comment>
+    <Send>
+     <TableID>Services</TableID>
+    </Send>
+   </Args>
+  </Delete>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>SortID</SortOn>
+ <IsDesc>0</IsDesc>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+  <SelectID>
+  <Args>
+   <TableID>Services</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/Administrator/ServiceEdit</ListElement>
+   <ListElement>
+    <ServiceID>%ID%</ServiceID>
+   </ListElement>
+   <ListElement>Редактировать услугу</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+ <!-- ********************************************************************** -->
+ <Group>
+  <Head>Группа</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Group%</ListElement>
+   <Length>15</Length>
+  </Args>
+  <Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `GroupID`)</Alias>
+ </Group>
+ <!-- ********************************************************************** -->
+ <User>
+  <Head>Польз.</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%User%</ListElement>
+   <Length>15</Length>
+  </Args>
+  <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `UserID`)</Alias>
+ </User>
+ <!-- ********************************************************************** -->
+ <Name>
+  <Head>Название услуги</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Name%</ListElement>
+   <Length>25</Length>
+  </Args>
+ </Name>
+ <!-- ********************************************************************** -->
+ <Measure>
+  <Head>Ед. изм.</Head>
+  <Prompt>Еденицы измерения</Prompt>
+ </Measure>
+ <!-- ********************************************************************** -->
+ <IsProtected>
+  <Head>Защищена</Head>
+  <Comp>Formats/Logic</Comp>
+  <Args>
+   <ListElement>%IsProtected%</ListElement>
+  </Args>
+ </IsProtected>
+ <!-- ********************************************************************** -->
+ <IsActive>
+  <Head>Активна</Head>
+  <Comp>Formats/Logic</Comp>
+  <Args>
+   <ListElement>%IsActive%</ListElement>
+  </Args>
+ </IsActive>
+ <!-- ********************************************************************** -->
+ <SortID>
+  <Args>
+   <TableID>Services</TableID>
+  </Args>
+ </SortID>
+</Columns>
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>Edit</ListElement>
+ <ListElement>Group</ListElement>
+ <ListElement>User</ListElement>
+ <ListElement>Name</ListElement>
+ <ListElement>Measure</ListElement>
+ <ListElement>IsProtected</ListElement>
+ <ListElement>IsActive</ListElement>
+ <ListElement>SortID</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

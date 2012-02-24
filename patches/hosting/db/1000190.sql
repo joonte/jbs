@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD `IsSchemeChangeable` enum('no','yes') default 'yes' AFTER `IsProlong`;

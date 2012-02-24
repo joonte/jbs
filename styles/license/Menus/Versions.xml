@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>История версий</Text>
+  <Paths>
+   <UniqID>^\/Versions$</UniqID>
+  </Paths>
+  <Href>/Versions</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Требования</Text>
+  <Paths>
+   <UniqID>^\/Features$</UniqID>
+  </Paths>
+  <Href>/Features</Href>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

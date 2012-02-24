@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+ </Comps>
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>ServicesGroups</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>Name</ListElement>
+  <ListElement>IsActive</ListElement>
+  <ListElement>SortID</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Групп услуг не обнаружено.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <After>
+  <Delete>
+   <Args>
+    <Comment>Выбранные группы услуг</Comment>
+    <Send>
+     <TableID>ServicesGroups</TableID>
+    </Send>
+   </Args>
+  </Delete>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>SortID</SortOn>
+ <IsDesc>0</IsDesc>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+  <SelectID>
+  <Args>
+   <TableID>ServicesGroups</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/Administrator/ServiceGroupEdit</ListElement>
+   <ListElement>
+    <ServiceGroupID>%ID%</ServiceGroupID>
+   </ListElement>
+   <ListElement>Редактировать группу услуг</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+ <!-- ********************************************************************** -->
+ <Name>
+  <Head>Название</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Name%</ListElement>
+   <Length>40</Length>
+  </Args>
+ </Name>
+ <!-- ********************************************************************** -->
+ <IsActive>
+  <Head>Активна</Head>
+  <Comp>Formats/Logic</Comp>
+  <Args>
+   <ListElement>%IsActive%</ListElement>
+  </Args>
+ </IsActive>
+ <!-- ********************************************************************** -->
+ <SortID>
+  <Args>
+   <TableID>ServicesGroups</TableID>
+  </Args>
+ </SortID>
+</Columns>
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>Edit</ListElement>
+ <ListElement>Name</ListElement>
+ <ListElement>IsActive</ListElement>
+ <ListElement>SortID</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

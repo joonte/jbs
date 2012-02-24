@@ -1,0 +1,1 @@
+ALTER TABLE `HostingServers` ADD `Notice` text AFTER `IsOK`;

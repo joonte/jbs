@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+  <After>
+   <Indexes1 />
+   <Indexes2 />
+  </After>
+ </Comps>
+</Cut>
+<!-- *********************************************************************** -->
+<Appearance>
+ <IsDataMode>0</IsDataMode>
+</Appearance>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>ServicesFields</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>Name</ListElement>
+  <ListElement>SortID</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Поля не обнаружены.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <After>
+  <Delete>
+   <Args>
+    <Comment>Выбранные поля</Comment>
+    <Send>
+     <TableID>ServicesFields</TableID>
+    </Send>
+   </Args>
+  </Delete>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>SortID</SortOn>
+ <IsDesc>0</IsDesc>
+ <InPage>9999</InPage>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+  <SelectID>
+  <Args>
+   <TableID>ServicesFields</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Standard</Comp>
+  <Args>
+   <ListElement>
+    <onclick>GetURL('/Administrator/ServiceFieldEdit?ServiceFieldID=%ID%');</onclick>
+   </ListElement>
+   <ListElement>Редактировать поле</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+ <!-- ********************************************************************** -->
+ <Name>
+  <Head>Имя</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Name%</ListElement>
+   <Length>20</Length>
+  </Args>
+  <Alias>IF(`IsDuty`!= 'no',CONCAT('*',`Name`),`Name`)</Alias>
+ </Name>
+ <!-- ********************************************************************** -->
+ <Type>
+  <Head>Тип</Head>
+  <Comp>Formats/Service/Field/Type</Comp>
+  <Args>
+   <ListElement>%Type%</ListElement>
+   <Length>10</Length>
+  </Args>
+  <Alias>TypeID</Alias>
+ </Type>
+</Columns>
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>Edit</ListElement>
+ <ListElement>Name</ListElement>
+ <ListElement>Type</ListElement>
+ <ListElement>SortID</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

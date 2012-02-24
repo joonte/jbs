@@ -1,0 +1,1 @@
+ALTER TABLE `Edesks` ADD `UpdateDate` int(11) default '0' AFTER `Theme`;

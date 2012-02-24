@@ -1,0 +1,62 @@
+<HTML>
+ <HEAD id="Head">
+  <TITLE id="Title"></TITLE>
+  <META http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <LINK rel="alternate" type="application/rss+xml" title="Новости компании" href="/Rss/News" />
+  <LINK rel="alternate" type="application/rss+xml" title="JBs версии и изменения" href="/Rss/Features" />
+ </HEAD>
+ <BODY id="Body">
+  <TABLE cellspacing="0" align="center" cellpadding="0" width="1000">
+   <TR>
+    <TD>
+     <TABLE cellspacing="0" height="100%" cellpadding="0">
+      <TR id="Top">
+       <TD>
+        <IMG src="SRC:{Images/TopLogo.png}" />
+       </TD>
+      </TR>
+     </TABLE>
+    </TD>
+   </TR>
+   <TR>
+    <TD>
+     <COMP id="TopPanel" path="TopPanel" debug="yes" />
+    </TD>
+   </TR>
+   <TR height="10">
+    <TD></TD>
+   </TR>
+   <TR>
+    <TD id="Context">
+     <TABLE cellspacing="0" cellpadding="0" width="100%" height="100%">
+      <TR>
+       <COMP id="MenuLeft" path="Menus/Left" />
+       <TD valign="top">
+        <DIV class="Title" id="Title" />
+        <TABLE width="100%" cellspacing="5" cellpadding="0">
+         <TR>
+          <TD id="Into"></TD>
+         </TR>
+        </TABLE>
+       </TD>
+      </TR>
+     </TABLE>
+    </TD>
+   </TR>
+   <TR>
+    <TD style="border-top:2px solid #DCDCDC;">
+     <TABLE cellspacing="5" width="100%" cellpadding="0">
+      <TR>
+       <TD id="Copyright"></TD>
+       <TD align="right">
+        <LIVEINTERNET skin="t26.6" />
+        <SCRIPT type="text/javascript" src="SRC:{Js/LiveInternet.js}"></SCRIPT>
+       </TD>
+      </TR>
+     </TABLE>
+    </TD>
+   </TR>
+  </TABLE>
+  <DIV id="Floating" />
+ </BODY>
+</HTML>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <UniqID>
+  <Text>Дополнительная информация</Text>
+  <Href>javascript:ShowWindow("/VPSOrderInfo",{VPSOrderID:"%Replace%"});</Href>
+  <Icon>Info.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Сменить тарифный план</Text>
+  <Href>javascript:ShowWindow("/VPSOrderSchemeChange",{VPSOrderID:%Replace%});</Href>
+  <Icon>Edit.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Компенсировать время</Text>
+  <Href>javascript:ShowWindow("/Administrator/VPSCompensation",{VPSOrderID:%Replace%});</Href>
+  <Icon>Add.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Перезагрузить VPS</Text>
+  <Href>javascript:ShowWindow("/VPSReboot",{VPSOrderID:%Replace%});</Href>
+  <Icon>VPSReboot.png</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Управлять заказом VPS</Text>
+  <Href>javascript:VPSManage(%Replace%);</Href>
+  <Icon>HostingManage.gif</Icon>
+  <JavaScript>VPSManage.js</JavaScript>
+ </UniqID>
+ <UniqID>
+  <Text>Сменить пароль от аккаунта</Text>
+  <Href>javascript:ShowWindow("/VPSPasswordChange",{VPSOrderID:%Replace%});</Href>
+  <Icon>Password.gif</Icon>
+ </UniqID>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

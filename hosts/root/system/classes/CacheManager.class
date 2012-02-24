@@ -1,0 +1,66 @@
+<?php
+/**
+ * Manage of system cache.
+ *
+ * @author vvelikodny
+ */
+class CacheManager {
+    /** Cache singleton instance. */
+    protected static $instance;
+
+    public static function getInstance() {
+        return self::$instance;
+    }
+
+    public function __construct() {
+        Debug("Start initializing cache system...");
+        
+
+                    self::$instance = Memcached::getInstance();
+
+
+        
+        Debug("Cache system has been initialized ...");
+    }
+    
+    /**
+     * Adds new pair key/value to cache.
+     *
+     * @return
+     */
+    public static function add($key, $value, $ttl = 0) {
+        Debug(sprintf("Adds new key/value to cache [key=%s, ttl=%d]", $key, $ttl));
+        if (IsSet(self::$instance)) {
+            Debug(sprintf("Adds new key/value to cache [key=%s, ttl=%d]", $key, $ttl));
+            
+            return self::$instance->add($key, $value, $ttl);
+        }
+    }
+
+    /**
+     * Gets value for given key from cache.
+     *
+     * @return
+     */
+    public static function get($key) {
+        Debug(sprintf("Gets value from cache [key=%s]", $key));
+        if (IsSet(self::$instance)) {
+            Debug(sprintf("Gets value from cache [key=%s]", $key));
+            
+            return self::$instance->get($key);
+        }
+    }
+
+    public function flush() {
+        if (IsSet(self::$instance)) {
+            Debug("Flush the system cache.");
+
+            return self::$instance->flush();
+        }
+    }
+
+    public static function isEnabled() {
+        return IsSet(self::$instance);
+    }
+}
+?>

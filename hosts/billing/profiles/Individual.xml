@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<ProfileName>ИП "%CompanyName%"</ProfileName>
+<!-- *********************************************************************** -->
+<Attribs>
+ <CompanyName>
+  <Title>Регистрационные данные</Title>
+  <Check>CompanyName</Check>
+  <Comment>Наименование ИП (без кавычек, только ФИО)</Comment>
+  <Example>Иванов Иван Иванович</Example>
+  <Type>TextArea</Type>
+  <Attribs>
+   <rows>3</rows>
+   <cols>30</cols>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </CompanyName>
+ <!-- ********************************************************************** -->
+ <Inn>
+  <Check>Inn</Check>
+  <Comment>ИНН</Comment>
+  <Example>770110725987</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>14</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </Inn>
+ <!-- ********************************************************************** -->
+ <Kpp>
+  <Check>Kpp</Check>
+  <Comment>КПП</Comment>
+  <Example>632946014</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>14</size>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </Kpp>
+ <!-- ********************************************************************** -->
+ <SvLine>
+  <Check>/^[0-9]{1,3}$/u</Check>
+  <Comment>Серия свидетельства</Comment>
+  <Example>37</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>5</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </SvLine>
+ <!-- ********************************************************************** -->
+ <SvNumber>
+  <Check>/^[0-9]{1,15}$/u</Check>
+  <Comment>Номер свидетельства</Comment>
+  <Example>020283930</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>15</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </SvNumber>
+ <!-- ********************************************************************** -->
+ <SvDate>
+  <Check>/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/u</Check>
+  <Comment>Дата выдачи свидетельства</Comment>
+  <Example>12.03.2005</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>10</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </SvDate>
+ <!-- ********************************************************************** -->
+ <dSourname>
+  <Title>Директор</Title>
+  <Check>/^[А-ЯЁ]{1}[а-яё\-]{2,25}$/u</Check>
+  <Comment>Фамилия директора</Comment>
+  <Example>Иванов</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>15</size>
+   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </dSourname>
+ <!-- ********************************************************************** -->
+ <dName>
+  <Check>/^[А-ЯЁ]{1}[а-яё\-]{2,25}$/u</Check>
+  <Comment>Имя директора</Comment>
+  <Example>Петр</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>10</size>
+   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </dName>
+ <!-- ********************************************************************** -->
+ <dLastname>
+  <Check>/^[А-ЯЁ]{1}[а-яё\-]{2,25}$/u</Check>
+  <Comment>Отчество директора</Comment>
+  <Example>Викторович</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>15</size>
+   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </dLastname>
+ <!-- ********************************************************************** -->
+ <dBornDate>
+  <Check>/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/u</Check>
+  <IsDuty>1</IsDuty>
+  <Comment>Дата рождения директора</Comment>
+  <Example>18.03.1986</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>10</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </dBornDate>
+ <!-- ********************************************************************** -->
+ <dPasportLine>
+  <Check>/^[0-9a-zA-Zа-яА-ЯёЁ]{1,10}$/u</Check>
+  <Comment>Серия паспорта директора</Comment>
+  <Example>3422</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>5</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </dPasportLine>
+ <!-- ********************************************************************** -->
+ <dPasportNum>
+  <Check>/^[0-9a-zA-Z]{1,10}$/u</Check>
+  <Comment>Номер паспорта директора</Comment>
+  <Example>427789</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>15</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </dPasportNum>
+ <!-- ********************************************************************** -->
+ <dPasportWhom>
+  <Check>/^.{1,250}$/u</Check>
+  <Comment>Кем выдан паспорт директора</Comment>
+  <Example>15 отделением милиции г. Москвы</Example>
+  <Type>TextArea</Type>
+  <Attribs>
+   <rows>3</rows>
+   <cols>30</cols>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </dPasportWhom>
+ <!-- ********************************************************************** -->
+ <dPasportDate>
+  <Check>/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/u</Check>
+  <Comment>Дата выдачи паспорта директора</Comment>
+  <Example>01.06.2001</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>10</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </dPasportDate>
+ <!-- ********************************************************************** -->
+ <Phone>
+  <Title>Общая информация</Title>
+  <Check>Phone</Check>
+  <Comment>Телефон</Comment>
+  <Example>+7 495 7558899</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </Phone>
+ <!-- ********************************************************************** -->
+  <CellPhone>
+   <Check>Phone</Check>
+   <Comment>Мобильный телефон</Comment>
+   <Example>+7 926 7558899</Example>
+   <Type>Input</Type>
+   <Attribs>
+    <size>20</size>
+   </Attribs>
+   <IsDuty>1</IsDuty>
+   <Value />
+  </CellPhone>
+ <!-- ********************************************************************** -->
+ <Fax>
+  <Check>Phone</Check>
+  <Comment>Факс</Comment>
+  <Example>+7 495 7558899</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </Fax>
+ <!-- ********************************************************************** -->
+ <Email>
+  <Check>Email</Check>
+  <Comment>Электронный адрес</Comment>
+  <Example>alexander@yandex.ru</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>25</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value>%Email%</Value>
+ </Email>
+ <!-- ********************************************************************** -->
+ <SiteURL>
+  <Check>Url</Check>
+  <Comment>Адрес сайта</Comment>
+  <Example>http://www.super.com</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>25</size>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </SiteURL>
+ <!-- ********************************************************************** -->
+ <jCountry>
+  <Title>Юридический адрес</Title>
+  <Check>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Comment>Страна юридического адреса</Comment>
+  <Example>Россия</Example>
+  <Type>Select</Type>
+  <Options>
+   <AZ>Азербайджан</AZ>
+   <BY>Беларусь</BY>
+   <BG>Болгария</BG>
+   <UK>Великобритания</UK>
+   <DE>Германия</DE>
+   <GE>Грузия</GE>
+   <IL>Израиль</IL>
+   <KZ>Казахстан</KZ>
+   <KG>Киргизия</KG>
+   <CA>Канада</CA>
+   <CC>Кокосовые острова</CC>
+   <LV>Латвия</LV>
+   <LT>Литва</LT>
+   <MT>Мальта</MT>
+   <MD>Молдова</MD>
+   <NL>Нидерланды</NL>
+   <NO>Норвегия</NO>
+   <PL>Польша</PL>
+   <RU>Россия</RU>
+   <US>США</US>
+   <UZ>Узбекистан</UZ>
+   <UA>Украина</UA>
+   <FI>Финляндия</FI>
+   <CZ>Чехия</CZ>
+   <EE>Эстония</EE>
+  </Options>
+  <Attribs>
+   <size>1</size>
+   <onblur>var Form = document.forms.ProfileEditForm;if(Form.pCountry == 'RU') Form.pCountry.value = Form.jCountry.value;</onblur>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value>RU</Value>
+ </jCountry>
+ <!-- ********************************************************************** -->
+ <jState>
+  <Check>/^[А-ЯёЁа-я\.\-\s\)\(]{1,60}$/u</Check>
+  <Comment>Область / край юридического адреса</Comment>
+  <Example>Московская обл.</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));var Form = document.forms.ProfileEditForm;if(!Form.pState.value) Form.pState.value = Form.jState.value;</onblur>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </jState>
+ <!-- ********************************************************************** -->
+ <jCity>
+  <Check>/^[А-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Comment>Город юридического адреса</Comment>
+  <Example>Москва</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));var Form = document.forms.ProfileEditForm;if(!Form.pCity.value) Form.pCity.value = value;</onblur>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </jCity>
+ <!-- ********************************************************************** -->
+ <jDistrict>
+  <Check>/^[А-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Comment>Район юридического адреса</Comment>
+  <Example>Ивановский</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </jDistrict>
+ <!-- ********************************************************************** -->
+ <jIndex>
+  <Check>/^[A-Za-z0-9\s]{3,10}$/u</Check>
+  <Comment>Почтовый индекс юридического адреса</Comment>
+  <Example>101000</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>7</size>
+   <onblur>var Form = document.forms.ProfileEditForm;if(!Form.pIndex.value) Form.pIndex.value = Form.jIndex.value;</onblur>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </jIndex>
+ <!-- ********************************************************************** -->
+ <jType>
+  <Check>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Comment>Тип юридического адреса</Comment>
+  <Example>Улица</Example>
+  <Type>Select</Type>
+  <Options>
+   <Street>улица</Street>
+   <Alleyway>переулок</Alleyway>
+   <Area>площадь</Area>
+   <Thoroughfare>проезд</Thoroughfare>
+   <Alley>аллея</Alley>
+   <Avenue>проспект</Avenue>
+   <Boulevard>бульвар</Boulevard>
+   <Wharf>набережная</Wharf>
+   <Highway>шоссе</Highway>
+   <Pobox>а/я</Pobox>
+   <Deadend>тупик</Deadend>
+   <Block>квартал</Block>
+   <No>n/a</No>
+  </Options>
+  <Attribs>
+   <size>1</size>
+   <onblur>var Form = document.forms.ProfileEditForm;if(!Form.pType.value) Form.pType.value = Form.jType.value;</onblur>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value>Street</Value>
+ </jType>
+ <!-- ********************************************************************** -->
+ <jAddress>
+  <Check>/^.{1,150}$/u</Check>
+  <Comment>Улица, дом юридического адреса</Comment>
+  <Example>Ленина, д. 51, кв. 7</Example>
+  <Type>TextArea</Type>
+  <Attribs>
+   <rows>3</rows>
+   <cols>30</cols>
+   <onblur>var Form = document.forms.ProfileEditForm;if(!Form.pAddress.value) Form.pAddress.value = Form.jAddress.value;</onblur>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </jAddress>
+ <!-- ********************************************************************** -->
+ <pCountry>
+  <Title>Почтовый адрес</Title>
+  <Check>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Comment>Страна почтового адреса</Comment>
+  <Example>Россия</Example>
+  <Type>Select</Type>
+  <Options>
+   <AZ>Азербайджан</AZ>
+   <BY>Беларусь</BY>
+   <BG>Болгария</BG>
+   <UK>Великобритания</UK>
+   <DE>Германия</DE>
+   <GE>Грузия</GE>
+   <IL>Израиль</IL>
+   <KZ>Казахстан</KZ>
+   <CA>Канада</CA>
+   <LV>Латвия</LV>
+   <LT>Литва</LT>
+   <MT>Мальта</MT>
+   <MD>Молдова</MD>
+   <NL>Нидерланды</NL>
+   <PL>Польша</PL>
+   <RU>Россия</RU>
+   <US>США</US>
+   <UZ>Узбекистан</UZ>
+   <UA>Украина</UA>
+   <FI>Финляндия</FI>
+   <CZ>Чехия</CZ>
+   <EE>Эстония</EE>
+  </Options>
+  <Attribs>
+   <size>1</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value>RU</Value>
+ </pCountry>
+ <!-- ********************************************************************** -->
+ <pState>
+  <Check>/^[А-ЯёЁа-я\.\-\s\)\(]{1,60}$/u</Check>
+  <Comment>Область / край почтового адреса</Comment>
+  <Example>Московская обл.</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </pState>
+ <!-- ********************************************************************** -->
+ <pCity>
+  <Check>/^[А-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Comment>Город почтового адреса</Comment>
+  <Example>Москва</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </pCity>
+ <!-- ********************************************************************** -->
+ <pDistrict>
+  <Check>/^[А-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Comment>Район почтового адреса</Comment>
+  <Example>Ивановский</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+  </Attribs>
+  <IsDuty>0</IsDuty>
+  <Value />
+ </pDistrict>
+ <!-- ********************************************************************** -->
+ <pIndex>
+  <Check>/^[A-Za-z0-9\s]{3,10}$/u</Check>
+  <Comment>Почтовый индекс почтового адреса</Comment>
+  <Example>101000</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>7</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </pIndex>
+ <!-- ********************************************************************** -->
+ <pType>
+  <Check>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Comment>Тип почтового адреса</Comment>
+  <Example>Улица</Example>
+  <Type>Select</Type>
+  <Options>
+   <Street>улица</Street>
+   <Alleyway>переулок</Alleyway>
+   <Area>площадь</Area>
+   <Thoroughfare>проезд</Thoroughfare>
+   <Alley>аллея</Alley>
+   <Avenue>проспект</Avenue>
+   <Boulevard>бульвар</Boulevard>
+   <Wharf>набережная</Wharf>
+   <Highway>шоссе</Highway>
+   <Pobox>а/я</Pobox>
+   <Deadend>тупик</Deadend>
+   <Block>квартал</Block>
+   <No>n/a</No>
+  </Options>
+  <Attribs>
+   <size>1</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value>Street</Value>
+ </pType>
+ <!-- ********************************************************************** -->
+ <pAddress>
+  <Check>/^.{1,150}$/u</Check>
+  <Comment>Улица, дом почтового адреса</Comment>
+  <Example>Ленина, д. 51, кв. 7</Example>
+  <Type>TextArea</Type>
+  <Attribs>
+   <rows>3</rows>
+   <cols>30</cols>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </pAddress>
+ <!-- ********************************************************************** -->
+ <BankName>
+  <Title>Банковские реквизиты</Title>
+  <Check>/^.{1,100}$/u</Check>
+  <Comment>Наименование банка</Comment>
+  <Example>ООО "КБ Легион"</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>20</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </BankName>
+ <!-- ********************************************************************** -->
+ <Bik>
+  <Check>Bik</Check>
+  <Comment>БИК</Comment>
+  <Example>544959119</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>10</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </Bik>
+ <!-- ********************************************************************** -->
+ <BankAccount>
+  <Check>BankAccount</Check>
+  <Comment>Номер расчетного счета</Comment>
+  <Example>40701256800030000589</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>25</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </BankAccount>
+ <!-- ********************************************************************** -->
+ <Kor>
+  <Check>Kor</Check>
+  <Comment>Корреспондентский счет</Comment>
+  <Example>30101810500000000444</Example>
+  <Type>Input</Type>
+  <Attribs>
+   <size>25</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value />
+ </Kor>
+</Attribs>
+<!-- *********************************************************************** -->
+</XML>

@@ -1,0 +1,1 @@
+UPDATE `Tasks` SET `IsActive` = 'yes', `IsExecuted` = 'no' WHERE `TypeID` = 'Spider';

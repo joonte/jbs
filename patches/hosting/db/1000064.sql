@@ -1,0 +1,1 @@
+UPDATE `Orders` SET `ServiceID` = 10000 WHERE EXISTS(SELECT * FROM `HostingOrders` WHERE `Orders`.`ID` = `HostingOrders`.`OrderID`);

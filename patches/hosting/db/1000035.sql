@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD FOREIGN KEY (`ServersGroupID`) REFERENCES `HostingServersGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;

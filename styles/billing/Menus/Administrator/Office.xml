@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Профили</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/Profiles$</UniqID>
+  </Paths>
+  <Href>/Administrator/Profiles</Href>
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Договоры</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/Contracts$</UniqID>
+  </Paths>
+  <Href>/Administrator/Contracts</Href>
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Приложения</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/ContractsEnclosures$</UniqID>
+  </Paths>
+  <Href>/Administrator/ContractsEnclosures</Href>
+  <Level>2</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Счета на оплату</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/Invoices$</UniqID>
+  </Paths>
+  <Href>/Administrator/Invoices</Href>
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Выполненные работы</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/(WorksComplite|WorksCompliteReports)$</UniqID>
+  </Paths>
+  <Href>/Administrator/WorksComplite</Href>
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Документооборот</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/MotionDocuments$</UniqID>
+  </Paths>
+  <Href>/Administrator/MotionDocuments</Href>
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>История операций</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/Postings$</UniqID>
+  </Paths>
+  <Href>/Administrator/Postings</Href>
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>Задачи системы</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/Tasks$</UniqID>
+  </Paths>
+  <Href>/Administrator/Tasks</Href>
+  <Level>1</Level>
+ </ListElement>
+ <ListElement>
+  <Text>События системы</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/Events$</UniqID>
+  </Paths>
+  <Href>/Administrator/Events</Href>
+  <Level>1</Level>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

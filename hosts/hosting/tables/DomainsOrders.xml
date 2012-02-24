@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Appearance>
+ <Row>
+  <Comp>DomainsOrders/Color</Comp>
+  <Args>
+   <ListElement>%StatusID%</ListElement>
+  </Args>
+ </Row>
+</Appearance>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>DomainsOrdersOwners</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>OrderID</ListElement>
+  <ListElement>UserID</ListElement>
+  <ListElement>OrderDate</ListElement>
+  <ListElement>ContractID</ListElement>
+  <ListElement>DomainName</ListElement>
+  <ListElement>SchemeID</ListElement>
+  <ListElement>ExpirationDate</ListElement>
+  <ListElement>StatusID</ListElement>
+  <ListElement>StatusDate</ListElement>
+  <ListElement>(SELECT `UserNotice` FROM `Orders` WHERE `DomainsOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `UserNotice`</ListElement>
+  <ListElement>(SELECT `AdminNotice` FROM `Orders` WHERE `DomainsOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `AdminNotice`</ListElement>
+  <ListElement>(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsOrdersOwners`.`SchemeID`=`DomainsSchemes`.`ID`) AS `DomainZone`</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Заказов на домены не обнаружено.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <Before>
+  <PatternOut>
+   <Args>
+    <Patterns>
+     <Yesterday>
+      <Name>Заказы за вчера</Name>
+      <Where>`OrderDate` &gt; BEGIN_DAY() - 86400</Where>
+     </Yesterday>
+     <!-- ****************************************************************** -->
+     <Today>
+      <Name>Заказы за сегодня</Name>
+      <Where>`OrderDate` &gt; BEGIN_DAY()</Where>
+     </Today>
+     <!-- ****************************************************************** -->
+     <Week>
+      <Name>Заказы за текущую неделю</Name>
+      <Where>`OrderDate` &gt; BEGIN_WEEK()</Where>
+     </Week>
+     <!-- ****************************************************************** -->
+     <Month>
+      <Name>Заказы за текущий месяц</Name>
+      <Where>`OrderDate` &gt; BEGIN_MONTH()</Where>
+     </Month>
+     <!-- ****************************************************************** -->
+     <Waiting>
+      <Name>Заказы для оплаты</Name>
+      <Where>`StatusID` = 'Waiting'</Where>
+     </Waiting>
+     <!-- ****************************************************************** -->
+     <ForRegister>
+      <Name>Заказы для регистрации</Name>
+      <Where>`StatusID` = 'ForRegister'</Where>
+     </ForRegister>
+     <!-- ****************************************************************** -->
+     <OnRegister>
+      <Name>Заказы на регистрации</Name>
+      <Where>`StatusID` = 'OnRegister'</Where>
+     </OnRegister>
+     <!-- ****************************************************************** -->
+     <OnProlong>
+      <Name>Заказы для продления</Name>
+      <Where>`StatusID` = 'OnProlong'</Where>
+     </OnProlong>
+     <!-- ****************************************************************** -->
+     <Active>
+      <Name>Активные заказы</Name>
+      <Where>`StatusID` = 'Active'</Where>
+     </Active>
+     <!-- ****************************************************************** -->
+     <Expiration>
+      <Name>Оканчивающиеся заказы</Name>
+      <Where>`StatusID` = 'Active' AND `ExpirationDate` - UNIX_TIMESTAMP() &lt; 2678400</Where>
+     </Expiration>
+     <!-- ****************************************************************** -->
+     <OnTransfer>
+      <Name>На переносе</Name>
+      <Where>`StatusID` = 'OnTransfer'</Where>
+     </OnTransfer>
+     <!-- ****************************************************************** -->
+     <Suspended>
+      <Name>Заблокированные заказы</Name>
+      <Where>`StatusID` = 'Suspended'</Where>
+     </Suspended>
+     <!-- ****************************************************************** -->
+     <Deleted>
+      <Name>Удаленные заказы</Name>
+      <Where>`StatusID` = 'Deleted'</Where>
+     </Deleted>
+     <!-- ****************************************************************** -->
+     <NsChange>
+      <Name>На смене серверов DNS</Name>
+      <Where>`StatusID` = 'ForNsChange'</Where>
+     </NsChange>
+     <!-- ****************************************************************** -->
+     <OnProcessing>
+      <Name>В переходном статусе</Name>
+      <Where>`StatusID` != 'Active' AND `StatusID` != 'Waiting' AND `StatusID` != 'Deleted' AND `StatusID` != 'Suspended' AND `StatusID` != 'OnTransfer'</Where>
+     </OnProcessing>
+    </Patterns>
+    <ActiveID>Week</ActiveID>
+   </Args>
+  </PatternOut>
+  <!-- ********************************************************************* -->
+  <Search>
+   <Args>
+    <ColumnsIDs>
+     <ListElement>OrderID</ListElement>
+     <ListElement>UserID</ListElement>
+     <ListElement>CONCAT(`DomainName`,'.',(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`))</ListElement>
+    </ColumnsIDs>
+   </Args>
+  </Search>
+ </Before>
+ <!-- ********************************************************************** -->
+ <After>
+  <Delete>
+   <Args>
+    <Comment>Выбранные заказы</Comment>
+    <Send>
+     <TableID>DomainsOrders</TableID>
+    </Send>
+   </Args>
+  </Delete>
+  <!-- ********************************************************************* -->
+  <StatusSet>
+   <Comp>Statuses/Set</Comp>
+   <Args>
+    <ListElement>DomainsOrders</ListElement>
+   </Args>
+  </StatusSet>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>Number</SortOn>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+ <SelectID>
+  <Args>
+   <TableID>DomainsOrders</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/Administrator/DomainOrderEdit</ListElement>
+   <ListElement>
+    <DomainOrderID>%ID%</DomainOrderID>
+   </ListElement>
+   <ListElement>Редактировать заказ на домен</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+ <!-- ********************************************************************** -->
+ <ExtendedMenu>
+  <IsSorted>0</IsSorted>
+  <Comp>Menus/List</Comp>
+  <Args>
+   <ListElement>Administrator/ListMenu/DomainsOrder.xml</ListElement>
+   <Replace>%ID%</Replace>
+  </Args>
+ </ExtendedMenu>
+ <!-- ********************************************************************** -->
+ <Number>
+  <Head>Номер</Head>
+  <Comp>Formats/Order/AddNotice</Comp>
+  <Args>
+   <ListElement>Orders</ListElement>
+   <ListElement>%OrderID%</ListElement>
+   <ListElement>Formats/Order/Number</ListElement>
+   <ListElement>%OrderID%</ListElement>
+   <ListElement>10</ListElement>
+   <ListElement>%AdminNotice%</ListElement>
+   <ListElement>%UserNotice%</ListElement>
+   <ListElement>%UserID%</ListElement>
+  </Args>
+  <Alias>ID</Alias>
+  <Attribs>
+   <style>text-align:right;</style>
+  </Attribs>
+ </Number>
+ <!-- ********************************************************************** -->
+ <DomainName>
+  <Head>Название</Head>
+  <Comp>Formats/DomainsOrder/Domains</Comp>
+  <Args>
+   <ListElement>%DomainName%</ListElement>
+   <Zone>%Scheme%</Zone>
+   <Length>15</Length>
+   <DomainZone>%DomainZone%</DomainZone>
+  </Args>
+ </DomainName>
+ <!-- ********************************************************************** -->
+ <Scheme>
+  <Head>Тариф</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Scheme%</ListElement>
+   <Length>7</Length>
+  </Args>
+  <Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `Registrators` WHERE `Registrators`.`ID` = `DomainsSchemes`.`RegistratorID`),')') FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`)</Alias>
+ </Scheme>
+ <!-- ********************************************************************** -->
+ <Expiration>
+  <IsSorted>0</IsSorted>
+  <Head>Дата оконч.</Head>
+  <Prompt>Дата окончания заказа | остаток дней</Prompt>
+  <Comp>Formats/DomainsOrder/ExpirationDate</Comp>
+  <Args>
+   <ListElement>%ExpirationDate%</ListElement>
+   <ListElement>%Expiration%</ListElement>
+  </Args>
+  <Alias>(SELECT SUM(`YearsRemainded`) FROM `DomainsConsider` WHERE `DomainsConsider`.`DomainOrderID` = `DomainsOrdersOwners`.`ID` AND `DomainsConsider`.`YearsRemainded` &gt; 0)</Alias>
+ </Expiration>
+ <!-- ********************************************************************** -->
+ <Status>
+  <Args>
+   <ModeID>DomainsOrders</ModeID>
+  </Args>
+ </Status>
+</Columns>
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>Edit</ListElement>
+ <ListElement>ExtendedMenu</ListElement>
+ <ListElement>Number</ListElement>
+ <ListElement>Owner</ListElement>
+ <ListElement>DomainName</ListElement>
+ <ListElement>Scheme</ListElement>
+ <ListElement>Expiration</ListElement>
+ <ListElement>Status</ListElement>
+ <ListElement>StatusOver</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

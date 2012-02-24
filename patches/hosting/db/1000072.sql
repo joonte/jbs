@@ -1,0 +1,1 @@
+ALTER TABLE `HostingConsider` ADD `Cost` float(5,2) default '0.00' AFTER `DaysRemainded`;

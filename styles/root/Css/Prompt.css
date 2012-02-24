@@ -1,0 +1,11 @@
+#Prompt {
+    background-color:      #FDF6D3;
+    background-image:      url(../Images/PromptBg.png);
+    border:                1px solid #F5D227;
+    -webkit-border-radius: 5px;
+    -moz-border-radius:    5px;
+    border-radius:         5px;
+    font-size:             11px;
+    padding:               5px;
+    text-align:            left;
+}

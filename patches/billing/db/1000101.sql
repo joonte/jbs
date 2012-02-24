@@ -1,0 +1,1 @@
+ALTER TABLE `Profiles` CHANGE `Name` `Name` char(255) NOT NULL;

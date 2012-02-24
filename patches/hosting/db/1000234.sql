@@ -1,0 +1,3 @@
+
+ALTER TABLE `Edesks` CHANGE `Flags` `Flags` VARCHAR(32) NOT NULL DEFAULT 'No';
+

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <UniqID>
+  <Text>Дополнительная информация</Text>
+  <Href>javascript:ShowWindow("/ISPswOrderInfo",{ISPswOrderID:"%Replace%"});</Href>
+  <Icon>Info.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Сменить тарифный план</Text>
+  <Href>javascript:ShowWindow("/ISPswOrderSchemeChange",{ISPswOrderID:%Replace%});</Href>
+  <Icon>Edit.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Компенсировать время</Text>
+  <Href>javascript:ShowWindow("/Administrator/ISPswCompensation",{ISPswOrderID:%Replace%});</Href>
+  <Icon>Add.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Сменить IP адрес лицензии</Text>
+  <Href>javascript:ShowWindow("/ISPswChangeIP",{ISPswOrderID:%Replace%});</Href>
+  <Icon>Password.gif</Icon>
+ </UniqID>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

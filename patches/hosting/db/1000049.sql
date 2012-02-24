@@ -1,0 +1,1 @@
+ALTER TABLE `HostingServers` ADD `Ns2Name` char(30) NOT NULL AFTER `Ns1Name`;

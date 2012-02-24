@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Provider>Tables/Providers/SQL</Provider>
+<!-- *********************************************************************** -->
+<Appearance comment="Внешнее оформление таблицы">
+ <Css>
+  <UniqID>TableSuper</UniqID>
+ </Css>
+ <IsHead>1</IsHead>
+ <IsSorted>1</IsSorted>
+ <IsDataMode>1</IsDataMode>
+ <!-- ********************************************************************** -->
+ <Row comment="Стиль строки">
+  <Comp />
+  <Args type="array" />
+ </Row>
+</Appearance>
+<!-- *********************************************************************** -->
+<IsSession>1</IsSession>
+<!-- *********************************************************************** -->
+<Column>
+ <Add>
+  <Head comment="Заголовок" />
+  <IsSorted comment="Поле сортируемое?">1</IsSorted>
+  <Comp comment="Компонент предобработки" />
+  <Args comment="Параметры компонента" type="array" />
+  <Attribs>
+   <class>TableSuperStandard</class>
+  </Attribs>
+ </Add>
+</Column>
+<!-- *********************************************************************** -->
+<Source comment="Источник данных">
+ <Comp />
+ <Args type="array" />
+ <!-- ********************************************************************** -->
+ <Conditions comment="Жесткие условия">
+  <Where type="array" />
+  <Count>0</Count>
+  <Message>Нет данных для отображения.</Message>
+ </Conditions>
+ <!-- ********************************************************************** -->
+ <Adding comment="Дополнительные условия">
+  <Where type="array" />
+  <Count>0</Count>
+  <Message>По данному запросу нет данных.</Message>
+ </Adding>
+ <!-- ********************************************************************** -->
+ <Data type="array" />
+ <Count>0</Count>
+</Source>
+<!-- *********************************************************************** -->
+<Query comment="Пользователький запрос">
+ <Index>0</Index>
+ <IsDesc>1</IsDesc>
+ <SortOn>ID</SortOn>
+ <GroupBy>ID</GroupBy>
+ <InPage>20</InPage>
+</Query>
+<!-- *********************************************************************** -->
+<Comps>
+ <Before>
+  <PatternOut>
+   <Comp>Tables/Forms/PatternOut</Comp>
+   <Args>
+    <Patterns>
+     <Default>
+      <Name>Нет шаблона</Name>
+      <Where />
+     </Default>
+    </Patterns>
+    <ActiveID>Default</ActiveID>
+   </Args>
+  </PatternOut>
+  <!-- ********************************************************************* -->
+  <Search>
+   <Comp>Tables/Forms/Search</Comp>
+   <Args>
+    <ColumnsIDs>
+     <ListElement>ID</ListElement>
+    </ColumnsIDs>
+   </Args>
+  </Search>
+ </Before>
+ <!-- ********************************************************************** -->
+ <After>
+  <Indexes1>
+   <Comp>Tables/Forms/Indexes</Comp>
+   <Args type="array" />
+   <NoBlock />
+  </Indexes1>
+  <!-- ********************************************************************* -->
+  <Data>
+   <Comp>Tables/Forms/Data</Comp>
+   <Args>
+    <DataModeID>Vertical</DataModeID>
+   </Args>
+   <NoBlock />
+  </Data>
+  <!-- ********************************************************************* -->
+  <Indexes2>
+   <Comp>Tables/Forms/Indexes</Comp>
+   <Args type="array" />
+   <NoBlock />
+  </Indexes2>
+  <!-- ********************************************************************* -->
+  <Delete>
+   <Comp>Tables/Forms/Delete</Comp>
+   <Args>
+    <Comment>Выбранные записи</Comment>
+    <Send>
+     <TableID />
+    </Send>
+   </Args>
+  </Delete>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Columns>
+ <SelectID>
+  <Head>
+   <Comp>Buttons/SelectIDs</Comp>
+   <Args>
+    <ListElement>56</ListElement>
+   </Args>
+  </Head>
+  <IsSorted>0</IsSorted>
+  <Comp>Tables/Forms/SelectIDs</Comp>
+  <Args>
+   <TableID />
+   <RowID>%ID%</RowID>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;text-align:center;</style>
+  </Attribs>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <ID>
+  <Head>ID</Head>
+  <IsSorted>1</IsSorted>
+  <Attribs>
+   <style>text-align:right;</style>
+  </Attribs>
+ </ID>
+ <!-- ********************************************************************** -->
+ <Owner>
+  <Head>Пользователь</Head>
+  <Prompt>Владелец объекта</Prompt>
+  <Comp>Users/Smart</Comp>
+  <Args>
+   <UserID>%UserID%</UserID>
+   <Length>10</Length>
+  </Args>
+  <Attribs>
+   <style>border 1px solid #475B8A;</style>
+  </Attribs>
+  <Alias>(SELECT `Email` FROM `Users` WHERE `UserID` = `Users`.`ID`)</Alias>
+ </Owner>
+ <!-- ********************************************************************** -->
+ <Status>
+  <Head>Статус</Head>
+  <Alias>StatusID</Alias>
+  <Comp>Formats/Status/Name</Comp>
+  <Args>
+   <ModeID />
+   <StatusID>%StatusID%</StatusID>
+   <RowID>%ID%</RowID>
+   <Length>7</Length>
+  </Args>
+ </Status>
+ <!-- ********************************************************************** -->
+ <StatusDate>
+  <Head>Статус установлен</Head>
+  <Comp>Formats/Date/Extended</Comp>
+  <Args>
+   <ListElement>%StatusDate%</ListElement>
+  </Args>
+  <Attribs>
+   <style>text-align:center;</style>
+  </Attribs>
+ </StatusDate>
+ <!-- ********************************************************************** -->
+ <StatusOver>
+  <Head>От статуса</Head>
+  <Alias>UNIX_TIMESTAMP() - `StatusDate`</Alias>
+  <Comp>Formats/Date/Remainder</Comp>
+  <Args>
+   <ListElement>%StatusOver%</ListElement>
+  </Args>
+  <Attribs>
+   <style>text-align:right;</style>
+  </Attribs>
+ </StatusOver>
+ <!-- ********************************************************************** -->
+ <SortID>
+  <Head>Сорт.</Head>
+  <Prompt>Порядок сортировки</Prompt>
+  <Comp>SortID</Comp>
+  <Args>
+   <TableID />
+   <RowID>%ID%</RowID>
+   <SortOn>%SortID%</SortOn>
+  </Args>
+  <Attribs>
+   <class>Button</class>
+   <style>text-align:right;</style>
+  </Attribs>
+ </SortID>
+</Columns>
+<!-- *********************************************************************** -->
+<Sequence type="array" />
+<!-- *********************************************************************** -->
+</XML>

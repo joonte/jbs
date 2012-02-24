@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD `QuotaCPU` int(4) default '0' AFTER `QuotaUsersDBs`;

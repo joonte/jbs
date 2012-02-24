@@ -1,0 +1,1 @@
+ALTER TABLE `ClausesFiles` CHANGE `FileData` `FileData` mediumblob;

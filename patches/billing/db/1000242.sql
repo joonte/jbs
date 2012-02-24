@@ -1,0 +1,1 @@
+ALTER TABLE `Services` ADD `CostOn` float(7,2) NOT NULL AFTER `ConsiderTypeID`;

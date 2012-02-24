@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Заказы</Text>
+  <Prompt>Все заказы клиентов на IP адреса</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/ExtraIPOrders$</UniqID>
+  </Paths>
+  <Href>/Administrator/ExtraIPOrders</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Тарифы</Text>
+  <Prompt>Тарифные планы</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/ExtraIPSchemes$</UniqID>
+  </Paths>
+  <Href>/Administrator/ExtraIPSchemes</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Ценовые политики</Text>
+  <Prompt>Правила назначения бонусов при оплате заказов на различные периоды</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/ExtraIPPolitics$</UniqID>
+  </Paths>
+  <Href>/Administrator/ExtraIPPolitics</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Бонусы</Text>
+  <Prompt>Назначенные скидки клиентам на определённые периоды</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/ExtraIPBonuses$</UniqID>
+  </Paths>
+  <Href>/Administrator/ExtraIPBonuses</Href>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

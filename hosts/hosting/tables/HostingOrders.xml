@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Appearance>
+ <Row>
+  <Comp>HostingOrders/Color</Comp>
+  <Args>
+   <ListElement>%StatusID%</ListElement>
+  </Args>
+ </Row>
+</Appearance>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>HostingOrdersOwners</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>OrderID</ListElement>
+  <ListElement>UserID</ListElement>
+  <ListElement>Domain</ListElement>
+  <ListElement>Parked</ListElement>
+  <ListElement>DaysRemainded</ListElement>
+  <ListElement>StatusID</ListElement>
+  <ListElement>StatusDate</ListElement>
+  <ListElement>(SELECT `UserNotice` FROM `Orders` WHERE `HostingOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `UserNotice`</ListElement>
+  <ListElement>(SELECT `AdminNotice` FROM `Orders` WHERE `HostingOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `AdminNotice`</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Заказов на хостинг не обнаружено.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <Before>
+  <DateSelect>
+   <Comp>Tables/Forms/DateSelect</Comp>
+   <Args>
+    <ListElement>OrderDate</ListElement>
+   </Args>
+   <NoBlock />
+  </DateSelect>
+  <!-- ********************************************************************* -->
+  <PatternOut>
+   <Args>
+    <Patterns>
+     <Yesterday>
+      <Name>Заказы за вчера</Name>
+      <Where>`OrderDate` &gt; BEGIN_DAY() - 86400</Where>
+     </Yesterday>
+     <!-- ****************************************************************** -->
+     <Today>
+      <Name>Заказы за сегодня</Name>
+      <Where>`OrderDate` &gt; BEGIN_DAY()</Where>
+     </Today>
+     <!-- ****************************************************************** -->
+     <Week>
+      <Name>Заказы за текущую неделю</Name>
+      <Where>`OrderDate` &gt; BEGIN_WEEK()</Where>
+     </Week>
+     <!-- ****************************************************************** -->
+     <Month>
+      <Name>Заказы за текущий месяц</Name>
+      <Where>`OrderDate` &gt; BEGIN_MONTH()</Where>
+     </Month>
+     <!-- ****************************************************************** -->
+     <Waiting>
+      <Name>Заказы для оплаты</Name>
+      <Where>`StatusID` = 'Waiting'</Where>
+     </Waiting>
+     <!-- ****************************************************************** -->
+     <OnCreate>
+      <Name>Заказы на создании</Name>
+      <Where>`StatusID` = 'OnCreate'</Where>
+     </OnCreate>
+     <!-- ****************************************************************** -->
+     <Active>
+      <Name>Активные заказы</Name>
+      <Where>`StatusID` = 'Active'</Where>
+     </Active>
+     <!-- ****************************************************************** -->
+     <Suspended>
+      <Name>Заблокированные заказы </Name>
+      <Where>`StatusID` = 'Suspended'</Where>
+     </Suspended>
+     <!-- ****************************************************************** -->
+     <Frozen>
+      <Name>Замороженные заказы</Name>
+      <Where>`StatusID` = 'Frozen'</Where>
+     </Frozen>
+     <!-- ****************************************************************** -->
+     <Deleted>
+      <Name>Удаленные заказы</Name>
+      <Where>`StatusID` = 'Deleted'</Where>
+     </Deleted>
+    </Patterns>
+    <ActiveID>Week</ActiveID>
+   </Args>
+  </PatternOut>
+  <!-- ********************************************************************* -->
+  <Search>
+   <Args>
+    <ColumnsIDs>
+     <ListElement>OrderID</ListElement>
+     <ListElement>UserID</ListElement>
+     <ListElement>Login</ListElement>
+     <ListElement>(SELECT `Name` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`)</ListElement>
+     <ListElement>Domain</ListElement>
+     <ListElement>Parked</ListElement>
+    </ColumnsIDs>
+   </Args>
+  </Search>
+  <!-- ********************************************************************* -->
+  <HostingSearch>
+   <Comp>HostingOrders/Search</Comp>
+   <Args type="array" />
+   <NoBlock />
+  </HostingSearch>
+ </Before>
+ <!-- ********************************************************************** -->
+ <After>
+  <Delete>
+   <Args>
+    <Comment>Выбранные заказы</Comment>
+    <Send>
+     <TableID>HostingOrders</TableID>
+    </Send>
+   </Args>
+  </Delete>
+  <!-- ********************************************************************* -->
+  <StatusSet>
+   <Comp>Statuses/Set</Comp>
+   <Args>
+    <ListElement>HostingOrders</ListElement>
+   </Args>
+  </StatusSet>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>Number</SortOn>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+ <SelectID>
+  <Args>
+   <TableID>HostingOrders</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/Administrator/HostingOrderEdit</ListElement>
+   <ListElement>
+    <HostingOrderID>%ID%</HostingOrderID>
+   </ListElement>
+   <ListElement>Редактировать заказ на хостинг</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+ <!-- ********************************************************************** -->
+ <ExtendedMenu>
+  <IsSorted>0</IsSorted>
+  <Comp>Menus/List</Comp>
+  <Args>
+   <ListElement>Administrator/ListMenu/HostingOrder.xml</ListElement>
+   <Replace>%ID%</Replace>
+  </Args>
+ </ExtendedMenu>
+ <!-- ********************************************************************** -->
+ <Number>
+  <Head>Номер</Head>
+  <Comp>Formats/Order/AddNotice</Comp>
+  <Args>
+   <ListElement>Orders</ListElement>
+   <ListElement>%OrderID%</ListElement>
+   <ListElement>Formats/Order/Number</ListElement>
+   <ListElement>%OrderID%</ListElement>
+   <ListElement>10</ListElement>
+   <ListElement>%AdminNotice%</ListElement>
+   <ListElement>%UserNotice%</ListElement>
+   <ListElement>%UserID%</ListElement>
+  </Args>
+  <Alias>ID</Alias>
+  <Attribs>
+   <style>text-align:right;</style>
+  </Attribs>
+ </Number>
+ <!-- ********************************************************************** -->
+ <Scheme>
+  <Head>Тариф</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Scheme%</ListElement>
+   <Length>10</Length>
+  </Args>
+  <Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `HostingServersGroups` WHERE `HostingServersGroups`.`ID` = `HostingSchemes`.`ServersGroupID`),')') FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`)</Alias>
+ </Scheme>
+ <!-- ********************************************************************** -->
+ <Expiration>
+  <Head>Дата оконч.</Head>
+  <Prompt>Дата окончания заказа | остаток дней</Prompt>
+  <Comp>Formats/HostingOrder/ExpirationDate</Comp>
+  <Args>
+   <ListElement>%DaysRemainded%</ListElement>
+  </Args>
+  <Alias>DaysRemainded</Alias>
+ </Expiration>
+ <!-- ********************************************************************** -->
+ <Domain>
+  <Head>Домен</Head>
+  <Comp>Formats/HostingOrder/Domains</Comp>
+  <Args>
+   <ListElement>%Domain%</ListElement>
+   <ListElement>%Parked%</ListElement>
+   <Length>15</Length>
+  </Args>
+ </Domain>
+ <!-- ********************************************************************** -->
+ <Status>
+  <Args>
+   <ModeID>HostingOrders</ModeID>
+  </Args>
+ </Status>
+</Columns>
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>Edit</ListElement>
+ <ListElement>ExtendedMenu</ListElement>
+ <ListElement>Number</ListElement>
+ <ListElement>Owner</ListElement>
+ <ListElement>Scheme</ListElement>
+ <ListElement>Expiration</ListElement>
+ <ListElement>Domain</ListElement>
+ <ListElement>Status</ListElement>
+ <ListElement>StatusOver</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

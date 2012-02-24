@@ -1,0 +1,1 @@
+ALTER TABLE `Registrators` ADD `ParentID` int(20) default '0' AFTER `Password`;

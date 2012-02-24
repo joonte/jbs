@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD `CostMonth` float(6,2) NOT NULL AFTER `CostDay`;

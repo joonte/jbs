@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<RootID>Postings</RootID>
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+  <After>
+   <Delete />
+  </After>
+ </Comps>
+ <Sequence />
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <Conditions>
+  <Where>
+   <UniqID>`UserID` = @local.__USER_ID</UniqID>
+  </Where>
+  <Message>Вы не проводили ни одной финансовой операции.</Message>
+ </Conditions>
+ <Adding>
+  <Message>По данному договору финансовые операции не производились.</Message>
+ </Adding>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <Before>
+  <UniqID>
+   <Comp>Contracts/SelectFilter</Comp>
+   <Args type="array" />
+  </UniqID>
+ </Before>
+</Comps>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>Number</ListElement>
+ <ListElement>CreateDate</ListElement>
+ <ListElement>Service</ListElement>
+ <ListElement>Comment</ListElement>
+ <ListElement>Before</ListElement>
+ <ListElement>After</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

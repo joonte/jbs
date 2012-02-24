@@ -1,0 +1,1 @@
+ALTER TABLE `Groups` ADD `IsDepartment` enum('no','yes') default 'no' AFTER `Name`;

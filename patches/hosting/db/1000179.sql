@@ -1,0 +1,1 @@
+UPDATE `ContractsEnclosures` SET `TypeID` = 'DomainRules' WHERE `TypeID` = 'DomainsRules';

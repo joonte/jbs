@@ -1,0 +1,1 @@
+ALTER TABLE `HostingOrders` ADD `Domain` char(255) NOT NULL AFTER `OldSchemeID`;

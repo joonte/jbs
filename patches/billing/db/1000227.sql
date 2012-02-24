@@ -1,0 +1,1 @@
+ALTER TABLE `Users` ADD `IsNotifies` enum('no','yes') default 'yes' AFTER `IsActive`;

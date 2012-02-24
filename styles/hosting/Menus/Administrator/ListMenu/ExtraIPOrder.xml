@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <UniqID>
+  <Text>Дополнительная информация</Text>
+  <Href>javascript:ShowWindow("/ExtraIPOrderInfo",{ExtraIPOrderID:"%Replace%"});</Href>
+  <Icon>Info.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Компенсировать время</Text>
+  <Href>javascript:ShowWindow("/Administrator/ExtraIPCompensation",{ExtraIPOrderID:%Replace%});</Href>
+  <Icon>Add.gif</Icon>
+ </UniqID>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

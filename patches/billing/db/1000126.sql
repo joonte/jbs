@@ -1,0 +1,1 @@
+ALTER TABLE `MotionDocuments` ADD `Link` char(255) default '' AFTER `ContractID`;

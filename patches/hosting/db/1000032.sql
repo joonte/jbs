@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD `ServersGroupID` int(11) NOT NULL AFTER `CostDay`;

@@ -1,0 +1,1 @@
+ALTER TABLE `DomainsSchemes` ADD FOREIGN KEY (`RegistratorID`) REFERENCES `Registrators` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;

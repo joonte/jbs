@@ -1,0 +1,1 @@
+UPDATE `Clauses` SET `Text` = REPLACE(`Text`,'/Styles/billing/Images/ArrowRight.png','SRC:{Images/ArrowRight.png}');

@@ -1,0 +1,1 @@
+UPDATE `Users` SET `IsActive` = 'yes' WHERE `Login` = 'joonte';

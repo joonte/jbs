@@ -1,0 +1,1 @@
+UPDATE `Edesks` SET `StatusID`='Closed' WHERE `StatusID`='Waiting';

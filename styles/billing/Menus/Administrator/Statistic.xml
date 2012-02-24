@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Общая статистика</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/Statistics</UniqID>
+  </Paths>
+  <Href>/Administrator/Statistics</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Статистика платежей</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/PaymentsSystemsStatistics$</UniqID>
+  </Paths>
+  <Href>/Administrator/PaymentsSystemsStatistics</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Статистика персонала</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/PersonalStatistics$</UniqID>
+  </Paths>
+  <Href>/Administrator/PersonalStatistics</Href>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

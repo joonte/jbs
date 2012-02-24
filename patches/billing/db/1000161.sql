@@ -1,0 +1,1 @@
+ALTER TABLE `Users` CHANGE `Password` `Watchword` char(40) NOT NULL;

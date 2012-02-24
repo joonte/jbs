@@ -1,0 +1,1 @@
+ALTER TABLE `Tasks` CHANGE `Params` `Params` text;

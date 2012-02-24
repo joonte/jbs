@@ -1,0 +1,1 @@
+ALTER TABLE `HostingSchemes` ADD `QuotaAnonimousFTP` int(3) default '0' AFTER `QuotaEmailForwards`;

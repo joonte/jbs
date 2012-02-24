@@ -1,0 +1,1 @@
+UPDATE `Users` SET `LayPayMaxDays` = 15;

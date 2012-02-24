@@ -1,0 +1,1 @@
+UPDATE `Contracts` SET `StatusID` = 'Public' WHERE `StatusID` = 'Waiting';

@@ -1,0 +1,1 @@
+ALTER TABLE `DomainsOrders` ADD `WhoIs` text AFTER `Ns3IP`;

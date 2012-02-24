@@ -1,0 +1,1 @@
+ALTER TABLE `DomainsOrders` CHANGE `ProfileID` `ProfileID` int(11) default NULL;

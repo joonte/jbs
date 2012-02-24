@@ -1,0 +1,1 @@
+ALTER TABLE `Basket` ADD `Comment` char(255) NOT NULL AFTER `OrderID`;

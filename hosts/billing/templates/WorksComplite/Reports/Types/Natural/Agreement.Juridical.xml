@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<NOBODY>
+ <NOBODY id="Executor.dSourname">-</NOBODY>
+ <NOBODY> </NOBODY>
+ <NOBODY id="Executor.dName">-</NOBODY>
+ <NOBODY> </NOBODY>
+ <NOBODY id="Executor.dLastname">-</NOBODY>
+ <NOBODY> от имени </NOBODY>
+ <NOBODY id="Executor.CompanyForm">-</NOBODY>
+ <NOBODY> "</NOBODY>
+ <NOBODY id="Executor.CompanyName">-</NOBODY>
+ <NOBODY>", именуемое в дальнейшем "Исполнитель", действующий(ая) на основании </NOBODY>
+ <NOBODY id="Executor.Basis">-</NOBODY>
+ <NOBODY> и, </NOBODY>
+ <NOBODY id="Customer.Sourname">-</NOBODY>
+ <NOBODY> </NOBODY>
+ <NOBODY id="Customer.Name">-</NOBODY>
+ <NOBODY> </NOBODY>
+ <NOBODY id="Customer.Lastname">-</NOBODY>
+ <NOBODY>, именуемый(ая) в дальнейшем "Заказчик", паспорт </NOBODY>
+ <NOBODY id="Customer.PasportLine">-</NOBODY>
+ <NOBODY> </NOBODY>
+ <NOBODY id="Customer.PasportNum">-</NOBODY>
+ <NOBODY>, выданный </NOBODY>
+ <NOBODY id="Customer.PasportWhom">-</NOBODY>
+ <NOBODY>, с другой стороны составили настоящий Акт о том, что в соответствии с договором №</NOBODY>
+ <NOBODY id="Contract.Number">-</NOBODY>
+ <NOBODY> от </NOBODY>
+ <NOBODY id="Contract.CreateDate">-</NOBODY>
+ <NOBODY> Исполнитель выполнил, а Заказчик принял работы согласно следующего перечня:</NOBODY>
+</NOBODY>

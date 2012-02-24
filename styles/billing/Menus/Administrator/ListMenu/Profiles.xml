@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <UniqID>
+  <Text>Дополнительная информация</Text>
+  <Href>javascript:ShowWindow("/ProfileInfo",{ProfileID:%Replace%});</Href>
+  <Icon>Info.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Редактировать</Text>
+  <Href>javascript:ShowWindow("/ProfileEdit",{ProfileID:%Replace%});</Href>
+  <Icon>Edit.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Сформировать конверт</Text>
+  <Href>javascript:AjaxCall("/Administrator/EnvelopeMake",{ProfileID:%Replace%},"Формирование конверта","document.location = $Answer.Location");</Href>
+  <Icon>Envelope.gif</Icon>
+ </UniqID>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

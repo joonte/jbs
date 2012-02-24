@@ -1,0 +1,1 @@
+UPDATE `Tasks` SET `ExecuteDate` = 0 WHERE `TypeID` = 'UpTimeAgregate';

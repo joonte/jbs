@@ -1,0 +1,1 @@
+UPDATE `Clauses` SET `Text` = REPLACE(`Text`,'<SPAN id="Logo" />','<DIV id="Logo">[логотип]</DIV>');

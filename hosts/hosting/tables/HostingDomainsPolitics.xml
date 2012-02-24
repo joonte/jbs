@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+ </Comps>
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>HostingDomainsPolitics</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>DaysPay</ListElement>
+  <ListElement>DomainsSchemesGroupID</ListElement>
+  <ListElement>Discont</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Доменных политик на хостинг не обнаружено.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <After>
+  <Delete>
+   <Args>
+    <Comment>Выбранные политики</Comment>
+    <Send>
+     <TableID>HostingDomainsPolitics</TableID>
+    </Send>
+   </Args>
+  </Delete>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>Scheme</SortOn>
+ <IsDesc>0</IsDesc>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+ <SelectID>
+  <Args>
+   <TableID>HostingDomainsPolitics</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/Administrator/HostingDomainsPoliticEdit</ListElement>
+   <ListElement>
+    <HostingDomainsPoliticID>%ID%</HostingDomainsPoliticID>
+   </ListElement>
+   <ListElement>Редактировать доменную политику</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+ <!-- ********************************************************************** -->
+ <Group>
+  <Head>Группа</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Group%</ListElement>
+   <Length>15</Length>
+  </Args>
+  <Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `HostingDomainsPolitics`.`GroupID`)</Alias>
+ </Group>
+ <!-- ********************************************************************** -->
+ <User>
+  <Head>Польз.</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%User%</ListElement>
+   <Length>15</Length>
+  </Args>
+  <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `HostingDomainsPolitics`.`UserID`)</Alias>
+ </User>
+ <!-- ********************************************************************** -->
+ <Scheme>
+  <Head>Тариф</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Scheme%</ListElement>
+   <Length>25</Length>
+  </Args>
+  <Alias>IF(ISNULL(`SchemeID`),'Все тарифы',(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `HostingServersGroups` WHERE `HostingSchemes`.`ServersGroupID` = `HostingServersGroups`.`ID`),')') FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingDomainsPolitics`.`SchemeID`))</Alias>
+ </Scheme>
+ <!-- ********************************************************************** -->
+ <DomainsSchemes>
+  <Head>Тарифы на домены</Head>
+  <Comp>Formats/DomainsOrder/SchemesGroup</Comp>
+  <Args>
+   <ListElement>%DomainsSchemesGroupID%</ListElement>
+   <ListElement>40</ListElement>
+  </Args>
+ </DomainsSchemes>
+ <!-- ********************************************************************** -->
+ <DaysPay>
+  <Head>Дней оплаты</Head>
+  <Attribs>
+   <style>text-align:right;</style>
+  </Attribs>
+ </DaysPay>
+ <!-- ********************************************************************** -->
+ <Discont>
+  <Head>Скидка</Head>
+  <Comp>Formats/Percent</Comp>
+  <Args>
+   <ListElement>%Discont%</ListElement>
+  </Args>
+  <Attribs>
+   <style>text-align:right;</style>
+  </Attribs>
+ </Discont>
+</Columns>
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>Edit</ListElement>
+ <ListElement>Group</ListElement>
+ <ListElement>User</ListElement>
+ <ListElement>Scheme</ListElement>
+ <ListElement>DomainsSchemes</ListElement>
+ <ListElement>DaysPay</ListElement>
+ <ListElement>Discont</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

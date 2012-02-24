@@ -1,0 +1,1 @@
+UPDATE `Users` SET `RegisterDate` = 0 WHERE `ID` = 200;

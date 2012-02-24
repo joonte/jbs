@@ -1,0 +1,1 @@
+ALTER TABLE `InvoicesItems` ADD `Comment` char(255) default '' AFTER `ServiceID`;

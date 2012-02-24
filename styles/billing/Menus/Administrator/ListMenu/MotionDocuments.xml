@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <UniqID>
+  <Text>Дополнительная информация</Text>
+  <Href>javascript:ShowWindow("/MotionDocumentInfo",{MotionDocumentID:"%Replace%"});</Href>
+  <Icon>Info.gif</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Загрузить документ</Text>
+  <Href>javascript:MotionDocumentDownload(%Replace%);</Href>
+  <Icon>PDF.gif</Icon>
+  <JavaScript>MotionDocumentDownload.js</JavaScript>
+ </UniqID>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

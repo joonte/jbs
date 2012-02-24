@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<NOBODY>
+ <H1 align="center">АКТ ВЫПОЛНЕННЫХ РАБОТ</H1>
+ <H2 align="center">
+  <NOBODY>№</NOBODY>
+  <NOBODY id="Report.Number">-</NOBODY>
+  <NOBODY> от </NOBODY>
+  <NOBODY id="SignDate">-</NOBODY>
+ </H2>
+</NOBODY>

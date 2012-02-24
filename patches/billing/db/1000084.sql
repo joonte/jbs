@@ -1,0 +1,1 @@
+ALTER TABLE `Postings` CHANGE `TypeID` `ServiceID` int(11) NOT NULL;

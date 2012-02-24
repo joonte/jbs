@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<RootID>DomainsSchemes</RootID>
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+  <After>
+   <Delete />
+  </After>
+ </Comps>
+ <Sequence />
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <Conditions>
+  <Where>
+   <UniqID>`IsActive` = 'yes'</UniqID>
+  </Where>
+  <Message>Для Вас не определены тарифы на домены.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>Info</ListElement>
+ <ListElement>Name</ListElement>
+ <ListElement>CostOrder</ListElement>
+ <ListElement>CostProlong</ListElement>
+ <ListElement>Registrator</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

@@ -1,0 +1,1 @@
+UPDATE `Invoices` SET `StatusID` = 'Conditionally' WHERE `StatusID` = 'ConditionPayed';
