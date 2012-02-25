@@ -26,15 +26,24 @@
     {else}
       <li>
     {/if}
+        {if $version->released}
+          <div style="float: left; margin: 5px;">
+            <img src="/styles/license/Images/Icons/Version/release.gif" />
+          </div>
+        {else}
+          <div style="float: left; margin: 5px;">
+            <img src="/styles/license/Images/Icons/Version/progress.gif" />
+          </div>
+        {/if}
           {$version->name}
           <div style="float: right; padding-top:5px;margin: 5px;font-size: 14px">
-            <a href="http://jira.joonte.com/browse/JBS/fixforversion/{$version->id}">История изменений</a>
+            <a href="http://jira.joonte.com/secure/IssueNavigator.jspa?reset=true&jqlQuery=project+%3D+JBS+AND+fixVersion+%3D+%22{$version->id}%22+AND+status+%3D+Resolved+ORDER+BY+priority+DESC&mode=hide">История изменений</a>
           </div>
           <div style="font-size:11px; color:#848484;">
             <cname>Дата выпуска: {$version->releaseDate|date_format: "%d.%m.%Y"}</cname>
           </div>
       </li>
-  {/if}
+ {/if}
 {/foreach}
 </ul>
 {/block}

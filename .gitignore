@@ -1,0 +1,8 @@
+DEBUG
+debug.log
+httpd.conf
+jbs-errors.log
+jbs.iml
+hosts/joonte/tmp/template_c
+hosts/joonte/tmp/sessions
+hosts/joonte/tmp/logs

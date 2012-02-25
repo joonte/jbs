@@ -126,3 +126,7 @@ ul#versions li {
     font-weight: bold;
     color: #505050;
 }
+
+ul#versions li div {
+    font-weight: normal;
+}

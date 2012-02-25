@@ -11,6 +11,7 @@
 
     <property name="releaseServer" value="91.227.18.14" />
     <property name="releaseDownloadPath" value="/home/joonte/data/www/joonte.com/public" />
+    <property name="releaseServerPath" value="/work/releases/jbs_" />
 
     <property name="joonteDir" value="/home/joonte/data/www/joonte.com" />
     <!--<property name="joonteDir" value="/home/joonte/data/jbs_" />-->
@@ -79,6 +80,24 @@
             </fileset>
         </copy>
         <touch file="${releasePath}/INSTALL" />
+    </target>
+
+    <!--
+        Publish project to server.
+    -->
+    <target name="publish-release">
+        <echo msg="Publish release to server ${releaseServer}:${releaseServerPath}" />
+
+        <!-- Publish. -->
+        <echo msg="rsync -rc --delete --exclude='.LastPatchFiles' ${releasePath}/* root@${releaseServer}:${releaseServerPath}" />
+        <exec command="rsync -rc --delete --exclude='.LastPatchFiles' ${releasePath}/* root@${releaseServer}:${releaseServerPath}" dir="${tmpDir}" escape="false" checkreturn="true" outputProperty="out" />
+        <echo msg="${out}"/>
+
+        <echo msg="rsync -c ${releasePath}/.htaccess joonte@${releaseServer}:${releaseServerPath}" />
+        <exec command="rsync -c ${releasePath}/.htaccess root@${releaseServer}:${releaseServerPath}" checkreturn="true" outputProperty="out" />
+        <echo msg="${out}"/>
+
+        <echo msg="Project release has been published." />
     </target>
 
     <target name="copy-project-files" depends="clean">
@@ -166,7 +185,7 @@
     <!-- ============================================  -->
     <!-- Target: deploy xI1Qa2br                               -->
     <!-- ============================================  -->
-    <target name="deploy" depends="copy-jbs-files,create-archive,publish-release-archive,create-version-info-file">
+    <target name="deploy" depends="copy-jbs-files,publish-release,create-archive,create-version-info-file">
         <echo msg="Project has been successfully deployed." />
     </target>
 
