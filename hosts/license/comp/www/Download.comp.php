@@ -30,6 +30,6 @@ if ($versionsJson && $versions) {
     }
 }
 
-return $smarty->display('versions.tpl');
+return $smarty->display('download.tpl');
 #-------------------------------------------------------------------------------
 ?>

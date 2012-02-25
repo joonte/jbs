@@ -8,7 +8,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Result = Array();
 
-$currentVersion = "##VERSION##";
+$currentVersion = VERSION;
 
 $versionInfoJson = @file_get_contents("http://joonte.com/public/version");
 Debug(SprintF($versionInfoJson));

@@ -19,6 +19,19 @@
   <LINK href="/styles/billing/Css/TableSuper.css" rel="stylesheet" type="text/css" />
   <LINK rel="stylesheet" type="text/css" href="/styles/root/others/jQuery/smoothness/jquery-ui-custom.css" />
   {block name=css}{/block}
+  <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-28933191-1']);
+      _gaq.push(['_setDomainName', 'joonte.com']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+  </script>
  </HEAD>
  <BODY id="Body">
   <TABLE cellspacing="0" align="center" cellpadding="0" width="1000">
@@ -67,7 +80,9 @@
       <TR>
        <TD id="Copyright">{copyright}</TD>
        <TD align="right">
-
+         <!--LiveInternet counter-->
+           <script type="text/javascript">document.write("<a href='http://www.liveinternet.ru/click' target=_blank><img src='//counter.yadro.ru/hit?t26.6;r" + escape(document.referrer) + ((typeof(screen)=="undefined")?"":";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?screen.colorDepth:screen.pixelDepth)) + ";u" + escape(document.URL) + ";" + Math.random() + "' border=0 width=88 height=15 alt='' title='LiveInternet: number of visitors for today is shown'><\/a>")</script>
+         <!--/LiveInternet-->
        </TD>
       </TR>
      </TABLE>

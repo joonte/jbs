@@ -21,9 +21,12 @@
 <ul id="versions">
 {foreach from=$versions item=version}
   {if $version->released}
+    {if isset($latestVersion) && $version->name eq $latestVersion}
+      <li class="current">
+    {else}
       <li>
+    {/if}
           {$version->name}
-
           <div style="float: right; padding-top:5px;margin: 5px;font-size: 14px">
             <a href="http://jira.joonte.com/browse/JBS/fixforversion/{$version->id}">История изменений</a>
           </div>

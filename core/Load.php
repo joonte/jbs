@@ -37,6 +37,9 @@ Ignore_User_Abort(TRUE); # Если пользователь закрыл сое
  * Defines system constants.
  */
 
+if(!Define('VERSION', '##VERSION##'))
+  Exit('[JBs core]: не удалось определить константу (VERSION)');
+
 /**
  * Defines SYSTEM_PATH constant.
  */
@@ -542,7 +545,7 @@ UnSet($Loaded,$HostsIDs,$HostID,$Path,$Folder,$File,$Module);
  */
  $smarty  = new Smarty();
 
-$smarty->setTemplateDir(array(SPrintF('%s/hosts/billing/templates', SYSTEM_PATH),SPrintF('%s/hosts/root/templates', SYSTEM_PATH)));
+$smarty->setTemplateDir(array(SPrintF('%s/hosts/billing/templates', SYSTEM_PATH),SPrintF('%s/hosts/joonte/templates', SYSTEM_PATH)));
 $smarty->setCompileDir(SPrintF('%s/hosts/joonte/tmp/template_c', SYSTEM_PATH));
 $smarty->setCacheDir(SPrintF('%s/hosts/joonte/tmp/cache', SYSTEM_PATH));
 $smarty->setConfigDir(SPrintF('%s/others/root/smarty/configs', SYSTEM_PATH));

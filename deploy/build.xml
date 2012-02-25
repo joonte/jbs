@@ -2,15 +2,15 @@
 
 <project name="Joonte Billing System" description="Deploy of JBS" default="deploy" >
     <property name="versionPrefix" value="v" />
-    <property name="version" value="2.5.1" />
+    <property name="version" value="2.5.5" />
     <property name="versionPostfix" value="-release" />
 
     <property name="tmpDir" value="/tmp/joonte" />
-    <property name="releaseName" value="joonte-${version}" />
+    <property name="releaseName" value="joonte-${versionPrefix}${version}" />
     <property name="releasePath" value="${tmpDir}/${releaseName}" />
 
     <property name="releaseServer" value="91.227.18.14" />
-    <property name="releaseDownloadPath" value="/home/joonte/data/jbs/tmp/joonte/public" />
+    <property name="releaseDownloadPath" value="/home/joonte/data/www/joonte.com/public" />
 
     <property name="joonteDir" value="/home/joonte/data/www/joonte.com" />
     <!--<property name="joonteDir" value="/home/joonte/data/jbs_" />-->
@@ -21,15 +21,6 @@
     <property name="projectHosts" value="billing,hosting,joonte,license,root" />
 
     <patternset id="jbs-common-files" description="Common billing hosts.">
-        <include name="core/**" />
-        <include name="*/billing/**" />
-        <include name="*/hosting/**" />
-        <include name="*/root/**" />
-        <include name=".htaccess" />
-        <include name="index.php" />
-    </patternset>
-
-    <patternset id="jbs-common-dirs" description="Common billing hosts.">
         <include name="core/**" />
         <include name="*/billing/**" />
         <include name="*/hosting/**" />
@@ -108,7 +99,6 @@
                 <patternset refid="${projectName}-files" />
             </fileset>
         </copy>
-        <mkdir dir="${releasePath}" description="Create release path." />
     </target>
 
     <!--
@@ -127,6 +117,20 @@
         <echo msg="Publish release ${releaseName}.zip to server ${releaseServer}:${releaseDownloadPath}" />
         <exec command="scp ${releaseName}.zip joonte@${releaseServer}:${releaseDownloadPath}" dir="${tmpDir}" escape="false" />
         <echo msg="Release has been published." />
+    </target>
+
+    <target name="create-version-info-file">
+        <append destFile="${releasePath}/version" file="./version">
+            <filterchain description="Replace tokens.">
+                <replacetokens begintoken="##" endtoken="##">
+                    <token key="VERSION" value="${versionPrefix}${version}" />
+                </replacetokens>
+            </filterchain>
+        </append>
+
+        <echo msg="Publish version file to server ${releaseServer}:${releaseDownloadPath}" />
+        <exec command="scp version joonte@${releaseServer}:${releaseDownloadPath}" dir="${releasePath}" escape="false" outputproperty="out" />
+        <echo msg="${out}"/>
     </target>
 
     <!--
@@ -162,7 +166,7 @@
     <!-- ============================================  -->
     <!-- Target: deploy xI1Qa2br                               -->
     <!-- ============================================  -->
-    <target name="deploy" depends="copy-jbs-files,create-archive,publish-release-archive">
+    <target name="deploy" depends="copy-jbs-files,create-archive,publish-release-archive,create-version-info-file">
         <echo msg="Project has been successfully deployed." />
     </target>
 

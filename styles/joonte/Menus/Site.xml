@@ -20,22 +20,6 @@
   <Level>1</Level>
  </ListElement>
  <ListElement>
-  <Text>Шаблоны документов</Text>
-  <Paths>
-   <UniqID>^\/Documents</UniqID>
-  </Paths>
-  <Href>/Documents</Href>
-  <Level>1</Level>
- </ListElement>
- <ListElement>
-  <Text>Наши партнеры</Text>
-  <Paths>
-   <UniqID>^\/Partners</UniqID>
-  </Paths>
-  <Href>/Partners</Href>
-  <Level>1</Level>
- </ListElement>
- <ListElement>
   <Text>Биллинговая система</Text>
   <Paths>
    <UniqID>^NULL$</UniqID>

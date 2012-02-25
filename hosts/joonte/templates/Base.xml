@@ -4,6 +4,19 @@
   <META http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <LINK rel="alternate" type="application/rss+xml" title="Новости компании" href="/Rss/News" />
   <LINK rel="alternate" type="application/rss+xml" title="JBs версии и изменения" href="/Rss/Features" />
+  <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-28933191-1']);
+      _gaq.push(['_setDomainName', 'joonte.com']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+  </script>
  </HEAD>
  <BODY id="Body">
   <TABLE cellspacing="0" align="center" cellpadding="0" width="1000">

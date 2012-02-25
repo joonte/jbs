@@ -107,14 +107,14 @@ ul#versions {
     padding: 0px;
 }
 
-ul#versions li:first-child {
+ul#versions li.current {
     border: 1px solid #33CC00;
     border-left-width: 2px;
     margin: 0px;
     padding: 8px 5px 8px;
     font-size: 16px;
     font-weight: bold;
-    color: #098712;
+    color: #505050;
     background-color: #F1FCCE;
 }
 
@@ -124,4 +124,5 @@ ul#versions li {
     padding: 5px 5px 5px;
     font-size: 16px;
     font-weight: bold;
+    color: #505050;
 }
