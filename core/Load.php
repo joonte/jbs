@@ -538,19 +538,28 @@ foreach($HostsIDs as $HostID){
   
   CloseDir($Folder);
 }
-UnSet($Loaded,$HostsIDs,$HostID,$Path,$Folder,$File,$Module);
 
 /**
  *  Configure Smarty template engine.
  */
- $smarty  = new Smarty();
+$smarty  = new Smarty();
 
-$smarty->setTemplateDir(array(SPrintF('%s/hosts/billing/templates', SYSTEM_PATH),SPrintF('%s/hosts/joonte/templates', SYSTEM_PATH)));
-$smarty->setCompileDir(SPrintF('%s/hosts/joonte/tmp/template_c', SYSTEM_PATH));
-$smarty->setCacheDir(SPrintF('%s/hosts/joonte/tmp/cache', SYSTEM_PATH));
+// Sets template paths.
+$templatePaths = Array();
+
+foreach($HostsIDs as $HostID) {
+    $templatePaths[] = SPrintF('%s/hosts/%s/templates', SYSTEM_PATH, $HostID);
+}
+
+$smarty->setTemplateDir($templatePaths);
+
+$smarty->setCompileDir(SPrintF('%s/hosts/%s/tmp/template_c', SYSTEM_PATH, HOST_ID));
+$smarty->setCacheDir(SPrintF('%s/hosts/%s/tmp/cache', SYSTEM_PATH, HOST_ID));
 $smarty->setConfigDir(SPrintF('%s/others/root/smarty/configs', SYSTEM_PATH));
 
 $GLOBALS['smarty']=$smarty;
+
+UnSet($Loaded,$HostsIDs,$HostID,$Path,$Folder,$File,$Module);
 /**
  * Start main module.
  */

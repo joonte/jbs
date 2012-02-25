@@ -13,6 +13,10 @@
   </SCRIPT>
 {/block}
 
+{block name=css}
+<LINK href="/styles/license/Css/Standard.css" rel="stylesheet" type="text/css" />
+{/block}
+
 {block name=menuLeft}
     {menu_left MenuPath='Site'}
 {/block}
