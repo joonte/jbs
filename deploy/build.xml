@@ -2,7 +2,7 @@
 
 <project name="Joonte Billing System" description="Deploy of JBS" default="deploy" >
     <property name="versionPrefix" value="v" />
-    <property name="version" value="2.5.5" />
+    <property name="version" value="2.5.6" />
     <property name="versionPostfix" value="-release" />
 
     <property name="tmpDir" value="/tmp/joonte" />
@@ -11,7 +11,7 @@
 
     <property name="releaseServer" value="91.227.18.14" />
     <property name="releaseDownloadPath" value="/home/joonte/data/www/joonte.com/public" />
-    <property name="releaseServerPath" value="/work/releases/jbs_" />
+    <property name="releaseServerPath" value="/work/releases/jbs" />
 
     <property name="joonteDir" value="/home/joonte/data/www/joonte.com" />
     <!--<property name="joonteDir" value="/home/joonte/data/jbs_" />-->
@@ -185,7 +185,7 @@
     <!-- ============================================  -->
     <!-- Target: deploy xI1Qa2br                               -->
     <!-- ============================================  -->
-    <target name="deploy" depends="copy-jbs-files,publish-release,create-archive,create-version-info-file">
+    <target name="deploy" depends="copy-jbs-files,publish-release,create-archive,publish-release-archive,create-version-info-file">
         <echo msg="Project has been successfully deployed." />
     </target>
 

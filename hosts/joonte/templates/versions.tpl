@@ -24,7 +24,7 @@
 {block name=into}
 <ul id="versions">
 {foreach from=$versions item=version}
-  {if $version->released}
+  {if !$version->archived}
     {if isset($latestVersion) && $version->name eq $latestVersion}
       <li class="current">
     {else}
