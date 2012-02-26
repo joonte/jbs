@@ -45,6 +45,16 @@ function Email_Send($Template,$UserID,$Replace = Array(),$FromID = 100){
           if(Is_Error($Comp))
             return ERROR | @Trigger_Error('[Email_Send]: ошибка загрузки шаблона письма');
           #---------------------------------------------------------------------
+          $smarty=$GLOBALS['smarty'];
+          $smarty->assign('Params', $Replace);
+          #---------------------------------------------------------------------
+          try {
+          $Comp['Message'] = $smarty->fetch('Notifies/Email/UserRegister.tpl');
+          }
+          catch(Exception $e){
+              return new gException('TEMPLATE_ERROR','TEMPLATE_ERROR');
+          }
+          #---------------------------------------------------------------------
           if(!Is_Array($Comp))
             return new gException('TEMPLATE_DISABLE','Шаблон не активен');
           #---------------------------------------------------------------------

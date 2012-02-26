@@ -145,8 +145,8 @@ if(Is_Error($Comp))
 if($Clause['IsXML'])
   $Comp->AddAttribs(Array('checked'=>'true'));
 #-------------------------------------------------------------------------------
-if($Clause['IsProtected'])
-  $Comp->AddAttribs(Array('disabled'=>'true'));
+/*if($Clause['IsProtected'])
+  $Comp->AddAttribs(Array('disabled'=>'true'));*/
 #-------------------------------------------------------------------------------
 $Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN','редактор')));
 #-------------------------------------------------------------------------------
@@ -161,11 +161,11 @@ $Comp = Comp_Load(
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if($Clause['IsDOM'])
-  $Comp->AddAttribs(Array('checked'=>'true'));
+/*if($Clause['IsDOM'])
+  $Comp->AddAttribs(Array('checked'=>'true'));*/
 #-------------------------------------------------------------------------------
-if($Clause['IsProtected'])
-  $Comp->AddAttribs(Array('disabled'=>'true'));
+/*if($Clause['IsProtected'])
+  $Comp->AddAttribs(Array('disabled'=>'true'));*/
 #-------------------------------------------------------------------------------
 $Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN','valid DOM')));
 #-------------------------------------------------------------------------------
