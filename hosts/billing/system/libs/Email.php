@@ -49,10 +49,11 @@ function Email_Send($Template,$UserID,$Replace = Array(),$FromID = 100){
           $smarty->assign('Params', $Replace);
           #---------------------------------------------------------------------
           try {
-          $Comp['Message'] = $smarty->fetch('Notifies/Email/UserRegister.tpl');
+          $templateFile = SPrintF('Notifies/Email/%s.tpl',$Template);
+          $Comp['Message'] = $smarty->fetch($templateFile);
           }
           catch(Exception $e){
-              return new gException('TEMPLATE_ERROR','TEMPLATE_ERROR');
+              return new gException('TEMPLATE_ERROR','Can\'t found: '.$templateFile.':'.$e);
           }
           #---------------------------------------------------------------------
           if(!Is_Array($Comp))

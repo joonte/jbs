@@ -1,10 +1,14 @@
 <?php
 /**
+ * Copyright (C) Joonte Software, http://www.joonte.com
+ */
+ 
+/**
  * Joonte Billing Core.
  *
  * Configure system environment and handle all users requests.
  * 
- * @author vvelikodny
+ * @author Vitaly Velikodny
  */
 #-------------------------------------------------------------------------------
 $GLOBALS['__MESSAGES'] = Array();
@@ -128,7 +132,7 @@ if($Inis = @Parse_Ini_File(SPrintF('%s/core/php.ini',SYSTEM_PATH),TRUE)){
 #******************************************************************************#
 # БАЗОВАЯ ФУНКЦИЯ ЗАГРУЗКИ
 #******************************************************************************#
-function Load($__FILE__){ require_once($__FILE__);  }
+function Load($__FILE__){ require($__FILE__);  }
 #******************************************************************************#
 
 function LoadComp($__FILE__){
@@ -183,7 +187,7 @@ function Debug($message) {
     $__SYSLOG[] = $message;
 
     if (IS_DEBUG) {
-    	umask(0077);
+        umask(0077);
         @File_Put_Contents(SPrintF('%s/debug.log', SYSTEM_PATH), SPrintF("%s\n", $message), FILE_APPEND);
     }
 }
@@ -223,7 +227,7 @@ $__ERR_CODE = 100;
 #-------------------------------------------------------------------------------
 function __Error_Handler__($Number,$Error,$File,$Line){
   #-----------------------------------------------------------------------------
-  $Message = SPrintF('[%s]-%s в линии %s файла %s',$Number,$Error,$Line,$File);
+  $Message = SPrintF('[!!%s]-%s в линии %s файла %s',$Number,$Error,$Line,$File);
   #-----------------------------------------------------------------------------
   $__ERR_CODE = &$GLOBALS['__ERR_CODE'];
   #-----------------------------------------------------------------------------
@@ -242,18 +246,9 @@ function __Error_Handler__($Number,$Error,$File,$Line){
     #---------------------------------------------------------------------------
     $Log = Implode("\n",$__SYSLOG);
     #---------------------------------------------------------------------------
-    $Debugger = @FsockOpen('127.0.0.1',9000,$nError,$sError,0);
-    if(Is_Resource($Debugger)){
-      #-------------------------------------------------------------------------
-      if(!@Fwrite($Debugger,$Log))
-        Debug('[__Error_Handler__]: не удалось отправить лог в отладчик');
-      #-------------------------------------------------------------------------
-      FClose($Debugger);
-    }else{
-      #-------------------------------------------------------------------------
-      Report($JBsErrorID,$JBsErrorID);
-      #-------------------------------------------------------------------------
-      foreach(Array(SYSTEM_PATH,'/tmp') as $Folder){
+    Report($JBsErrorID,$JBsErrorID);
+    #-------------------------------------------------------------------------
+    foreach(Array(SYSTEM_PATH,'/tmp') as $Folder){
         #-----------------------------------------------------------------------
         $Path = SPrintF('%s/jbs-errors.log',$Folder);
         #-----------------------------------------------------------------------
@@ -263,8 +258,8 @@ function __Error_Handler__($Number,$Error,$File,$Line){
             UnLink($Path);
         }
         #-----------------------------------------------------------------------
-	umask(0077);
-	#-----------------------------------------------------------------------
+        umask(0077);
+        #-----------------------------------------------------------------------
         if(!@File_Put_Contents($Path,SPrintF("%s\n\n%s\n\n",$JBsErrorID,$Log),FILE_APPEND)){
           #---------------------------------------------------------------------
           Debug(SPrintF('[__Error_Handler__]: не удалось осуществить запись ошибки в системный лог (%s)',$Path));
@@ -273,7 +268,6 @@ function __Error_Handler__($Number,$Error,$File,$Line){
         }
         #-----------------------------------------------------------------------
         break;
-      }
     }
     #---------------------------------------------------------------------------
     if(File_Exists(SPrintF('%s/DEBUG',SYSTEM_PATH)))
@@ -377,8 +371,6 @@ UnSet($Path);
 /******************************************************************************/
 # ЗАГРУЗКА БИБЛИОТЕК И КЛАССОВ
 /******************************************************************************/
-# Загрузчик
-
 # Предзагрузка
 /******************************************************************************/
 Debug('[JBs core]: загрузка автозагружаемых классов и библиотек');
@@ -416,25 +408,19 @@ foreach(Array('libs','classes') as $Folder){
 UnSet($Folder,$HostsIDs,$HostID,$Path,$Resource,$File);
 
 /**
- * Initialize Cache Manager.
- */
-$cacheConf = @Parse_Ini_File(SPrintF('%s/core/config.ini', SYSTEM_PATH), TRUE);
-if($cacheConf) {
-    if (IsSet($cacheConf['cache_enabled']) && $cacheConf['cache_enabled']) {
-        CacheManager::init();
-    }
-}
-
-/**
  * Custom class loader.
  *
  * @param <type> $class Class name for load.
  */
 function JoonteAutoLoad($class) {
   #-----------------------------------------------------------------------------
-  $ClassPath = System_Element('system/classes/'.$class.'.class');
+  $ClassPath = System_Element('system/classes/'.$class.'.class.php');
   #-----------------------------------------------------------------------------
-  require_once($ClassPath);
+  if (Is_Error($ClassPath)) {
+      throw new Exception("Coudn't load class: ".$ClassPath);
+  }
+
+  include_once($ClassPath);
 }
 
 spl_autoload_register('JoonteAutoLoad');
@@ -458,6 +444,13 @@ Debug(SPrintF('[JBs core]: внешний запрос сформирован к
  */
 function __ShutDown_Function__(){
   #-----------------------------------------------------------------------------
+  // Catch Fatal Errors.
+  $lastError = error_get_last();
+  if ($lastError != NULL) {
+      $Message = SPrintF('[%s]-%s в линии %s файла %s',$lastError['type'], $lastError['message'], $lastError['line'], $lastError['file']);
+      #-----------------------------------------------------------------------------
+      Debug(SPrintF('[!] %s',$Message));
+  }
   #-----------------------------------------------------------------------------
   # added by lissyara 2011-10-12 in 16:15 MSK, for JBS-173
   #Debug("[JBs core]:" . print_r($GLOBALS, true));
@@ -477,11 +470,11 @@ function __ShutDown_Function__(){
     'COUNTER_COMPS'	=> $GLOBALS['__COUNTER_COMPS']
   );
   #---------------------------------------------------------------
-  if($GLOBALS['_SERVER']['REQUEST_URI'] != '/API/Events'){
+/*  if($GLOBALS['_SERVER']['REQUEST_URI'] != '/API/Events'){
     $IsInsert = DB_Insert('RequestLog',$UserData);
     if(Is_Error($IsInsert))
       return ERROR | @Trigger_Error(500);
-  }
+  }*/
   #-----------------------------------------------------------------------------
   #-----------------------------------------------------------------------------
   List($Micro,$Seconds) = Explode(' ',MicroTime());
@@ -494,17 +487,11 @@ function __ShutDown_Function__(){
   Debug('[JBs core]: время работы MySQL: ' . $GLOBALS['__TIME_MYSQL'] . " [" . Round($GLOBALS['__TIME_MYSQL'] / WORK_TIME * 100, 2) . "%]");
   Debug('[JBs core]: запросов к MySQL: ' . $GLOBALS['__COUNTER_MYSQL']);
   Debug('[JBs core]: загружено компонентов: ' . $GLOBALS['__COUNTER_COMPS']);
-  #-----------------------------------------------------------------------------
-  if(IS_DEBUG && WORK_TIME > 100){
-    #---------------------------------------------------------------------------
-    $Debugger = @FsockOpen('127.0.0.1',9000,$nError,$sError,0);
-    if(Is_Resource($Debugger)){
-      #-------------------------------------------------------------------------
-      @Fwrite($Debugger,Implode("\n",$GLOBALS['__SYSLOG']));
-      #-------------------------------------------------------------------------
-      FClose($Debugger);
-    }
-  }
+
+  Debug('');
+  Debug('');
+  Debug('');
+  Debug('');
 }
 
 /**
@@ -554,7 +541,7 @@ foreach($HostsIDs as $HostID){
 /**
  *  Configure Smarty template engine.
  */
-$smarty  = new Smarty();
+$smarty  = JSmarty::get();
 
 // Sets template paths.
 $templatePaths = Array();
@@ -569,8 +556,6 @@ $smarty->setCompileDir(SPrintF('%s/hosts/%s/tmp/template_c', SYSTEM_PATH, HOST_I
 $smarty->setCacheDir(SPrintF('%s/hosts/%s/tmp/cache', SYSTEM_PATH, HOST_ID));
 $smarty->setConfigDir(SPrintF('%s/others/root/smarty/configs', SYSTEM_PATH));
 
-$GLOBALS['smarty']=$smarty;
-
 UnSet($Loaded,$HostsIDs,$HostID,$Path,$Folder,$File,$Module);
 /**
  * Start main module.
@@ -579,7 +564,7 @@ $HostsIDs = $GLOBALS['HOST_CONF']['HostsIDs'];
 #-------------------------------------------------------------------------------
 foreach($HostsIDs as $HostID) {
   #-----------------------------------------------------------------------------
-  $Path = SPrintF('%s/hosts/%s/system/modules/Main.mod', SYSTEM_PATH, $HostID);
+  $Path = SPrintF('%s/hosts/%s/system/modules/Main.php', SYSTEM_PATH, $HostID);
   #-----------------------------------------------------------------------------
   if (File_Exists($Path)) {
     if(Load($Path) === ERROR) {
