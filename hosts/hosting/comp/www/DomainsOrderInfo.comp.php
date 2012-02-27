@@ -22,7 +22,7 @@ if(!$DomainOrderID)
 	$DomainOrderID = (integer) @$Args['DomainsOrderID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','UserID','OrderID','OrderDate','ContractID','DomainName','ProfileID','PersonID','IsPrivateWhoIs','WhoIs','UpdateDate','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','StatusID','StatusDate','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `Name` FROM `Registrators` WHERE `Registrators`.`ID` = (SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`)) as `RegistratorName`');
+$Columns = Array('ID','UserID','OrderID','OrderDate','ContractID','DomainName','ProfileID','PersonID','IsPrivateWhoIs','WhoIs','UpdateDate','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','StatusID','StatusDate','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `Name` FROM `Registrators` WHERE `Registrators`.`ID` = (SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`)) as `RegistratorName`','(SELECT `IsAutoProlong` FROM `Orders` WHERE `DomainsOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',);
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
@@ -254,6 +254,36 @@ switch(ValueOf($DomainOrder)){
           #---------------------------------------------------------------------
           $Table[] = Array('IP адрес',$DomainOrder['Ns4IP']);
         }
+	#-----------------------------------------------------------------------
+	#-----------------------------------------------------------------------
+	$Table[] = 'Прочее';
+	#-----------------------------------------------------------------------
+        if($DomainOrder['IsAutoProlong']){
+		$Button = "Отключить";
+		$msg = "[включено]";
+	}else{
+		$Button = "Включить";
+		$msg = "[выключено]";
+	}
+	#-----------------------------------------------------------------------
+	$Params = Array('type'=>'hidden','name'=>'IsAutoProlong','value'=>$DomainOrder['IsAutoProlong']?'0':'1');
+	$IsAutoProlong = Comp_Load('Form/Input',$Params);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-----------------------------------------------------------------------
+	$Comp = Comp_Load(
+			'Form/Input',
+			Array(
+				'type'    => 'button',
+				'onclick' => "AjaxCall('/API/ServiceAutoProlongation',FormGet(form),'Сохрание настроек','GetURL(document.location);');",
+				'value'   => $Button
+				)
+			);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-----------------------------------------------------------------------
+	$Table[] = Array('Автопродление ' . $msg, $Comp);
+	#-----------------------------------------------------------------------
         #-----------------------------------------------------------------------
         $Comp = Comp_Load('Statuses/State','DomainsOrders',$DomainOrder);
         if(Is_Error($Comp))
@@ -265,7 +295,26 @@ switch(ValueOf($DomainOrder)){
         if(Is_Error($Comp))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
-        $DOM->AddChild('Into',$Comp);
+	#-----------------------------------------------------------------------
+	$Form = new Tag('FORM',Array('method'=>'POST'),$Comp);
+	#-----------------------------------------------------------------------
+	$Form->AddChild($IsAutoProlong);
+	#-----------------------------------------------------------------------
+	$Comp = Comp_Load(
+			'Form/Input',
+			Array(
+				'type'  => 'hidden',
+				'name'  => 'OrderID',
+				'value' => $DomainOrder['OrderID']
+				)
+			);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-----------------------------------------------------------------------
+	$Form->AddChild($Comp);
+	#-----------------------------------------------------------------------
+	#-----------------------------------------------------------------------
+        $DOM->AddChild('Into',$Form);
         #-----------------------------------------------------------------------
         if(Is_Error($DOM->Build(FALSE)))
           return ERROR | @Trigger_Error(500);
