@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -15,7 +14,19 @@ $UserID = (integer) @$Args['UserID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$User = DB_Select('Users',Array('ID','RegisterDate','Name','GroupID','Email','EmailConfirmed','ICQ','Mobile','Sign','OwnerID','IsManaged','LayPayMaxDays','LayPayMaxSumm','LayPayThreshold','EnterDate','EnterIP','Rating','IsActive','IsNotifies','IsHidden','IsProtected','AdminNotice'),Array('UNIQ','ID'=>$UserID));
+#-------------------------------------------------------------------------------
+$Columns = Array(
+			'ID','RegisterDate','Name','GroupID','Email','EmailConfirmed',
+			'ICQ','Mobile','Sign','OwnerID','IsManaged','LayPayMaxDays',
+			'LayPayMaxSumm','LayPayThreshold','EnterDate','EnterIP',
+			'Rating','IsActive','IsNotifies','IsHidden','IsProtected','AdminNotice',
+			'(SELECT COUNT(*) FROM `OrdersOwners` WHERE `OrdersOwners`.`UserID`=`Users`.`ID`) AS `NumOrders`',
+			'(SELECT COUNT(*) FROM `OrdersOwners` WHERE `OrdersOwners`.`UserID`=`Users`.`ID` AND `OrdersOwners`.`StatusID`="Active") AS `NumActiveOrders`',
+			'(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID`=`Users`.`ID`) AS `TotalPayments`',
+			'(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID`=`Users`.`ID` AND `InvoicesOwners`.`StatusID`="Payed") AS `SummPayments`',
+		);
+#-------------------------------------------------------------------------------
+$User = DB_Select('Users',$Columns,Array('UNIQ','ID'=>$UserID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($User)){
   case 'error':
@@ -122,6 +133,32 @@ switch(ValueOf($User)){
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
         $Table[] = Array('Пороговая сумма',$Comp);
+	#-----------------------------------------------------------------------
+	#-----------------------------------------------------------------------
+	# JBS-348
+	$Table[] = 'Активность пользователя';
+	#-----------------------------------------------------------------------
+	$Table[] = Array('Активных услуг',$User['NumActiveOrders']);
+	#-----------------------------------------------------------------------
+	$Comp = Comp_Load('Formats/Currency',$User['SummPayments']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-----------------------------------------------------------------------
+	$Table[] = Array('Оплачено счетов на сумму',$Comp);
+	#-----------------------------------------------------------------------
+	$Table[] = Array('Всего заказано услуг',$User['NumOrders']);
+	#-----------------------------------------------------------------------
+	$Comp = Comp_Load('Formats/Currency',$User['TotalPayments']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-----------------------------------------------------------------------
+	$Table[] = Array('Выписано счетов на сумму',$Comp);
+	#-----------------------------------------------------------------------
+	#-----------------------------------------------------------------------
+	$Comp = Comp_Load('Formats/Currency',$User['SummPayments']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-----------------------------------------------------------------------
         #-----------------------------------------------------------------------
         $Table[] = 'Информация о работе в системе';
         #-----------------------------------------------------------------------
@@ -133,6 +170,7 @@ switch(ValueOf($User)){
         #-----------------------------------------------------------------------
         $Table[] = Array('IP-адрес последнего входа',$User['EnterIP']);
         #-----------------------------------------------------------------------
+	#-----------------------------------------------------------------------
         $Table[] = 'Служебная информация';
         #-----------------------------------------------------------------------
         $Table[] = Array('Рейтинг',$User['Rating']);
@@ -161,10 +199,29 @@ switch(ValueOf($User)){
         #-----------------------------------------------------------------------
         $Table[] = Array('Защищенный пользователь',$Comp);
         #-----------------------------------------------------------------------
-        $Comp = Comp_Load('Tables/Standard',$Table);
-        if(Is_Error($Comp))
-          return ERROR | @Trigger_Error(500);
-        #-----------------------------------------------------------------------
+	#-----------------------------------------------------------------------
+	$Comp = Comp_Load(
+			'Form/Input',
+			Array(
+				'type'    => 'button',
+				'onclick' => SPrintF("ShowWindow('/Administrator/UserEdit',{UserID:'%u'});",$User['ID']),
+				'value'   => 'Редактировать'
+				)
+			);
+	#-----------------------------------------------------------------------
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-----------------------------------------------------------------------
+	$Div = new Tag('DIV',Array('align'=>'right'),$Comp);
+	#-----------------------------------------------------------------------
+	$Table[] = $Div;
+	#-----------------------------------------------------------------------
+	#-----------------------------------------------------------------------
+	$Comp = Comp_Load('Tables/Standard',$Table);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-----------------------------------------------------------------------
+	#-----------------------------------------------------------------------
         $DOM->AddChild('Into',$Comp);
         #-----------------------------------------------------------------------
         if(Is_Error($DOM->Build(FALSE)))
