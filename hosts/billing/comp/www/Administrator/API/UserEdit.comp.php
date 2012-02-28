@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -96,8 +95,19 @@ $IUser = Array(
   'AdminNotice'     => $AdminNotice
 );
 #-------------------------------------------------------------------------------
-if($User['Email'] != $Email)
+if($User['Email'] != $Email){
+	# ставим мыл как неподтверждённый
 	$IUser['EmailConfirmed'] = 0;
+	# добавляем событие - смена мыла
+	$Event = Array(
+			'UserID'        => $UserID,
+			'PriorityID'    => 'Billing',
+			'Text'          => SPrintF('Сотрудником (%s, #%u) изменён почтовый адрес пользователя с (%s) на (%s)',$GLOBALS['__USER']['Name'],$GLOBALS['__USER']['ID'],$User['Email'],$Email)
+			);
+	$Event = Comp_Load('Events/EventInsert',$Event);
+	if(!$Event)
+		return ERROR | @Trigger_Error(500);
+}
 #-------------------------------------------------------------------------------
 $IsUpdate = DB_Update('Users',$IUser,Array('ID'=>$UserID));
 if(Is_Error($IsUpdate))
