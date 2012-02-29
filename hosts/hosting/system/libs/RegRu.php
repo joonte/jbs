@@ -28,7 +28,7 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
     'username'              => $Settings['Login'],
     'password'              => $Settings['Password'],
     'domain_name'           => $Domain,
-    'enduser_ip'            => '77.73.25.114',
+    'enduser_ip'            => '127.0.0.1',	// see JBS-225
     'pay_type'              => 'prepay',
     'private_person_flag'   => $IsPrivateWhoIs
   );
