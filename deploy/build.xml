@@ -26,6 +26,7 @@
         <include name="*/billing/**" />
         <include name="*/hosting/**" />
         <include name="*/root/**" />
+        <include name="HostsIDs.txt" />
         <include name=".htaccess" />
         <include name="index.php" />
     </patternset>
@@ -89,8 +90,8 @@
         <echo msg="Publish release to server ${releaseServer}:${releaseServerPath}" />
 
         <!-- Publish. -->
-        <echo msg="rsync -rc --delete --exclude='.LastPatchFiles' ${releasePath}/* root@${releaseServer}:${releaseServerPath}" />
-        <exec command="rsync -rc --delete --exclude='.LastPatchFiles' ${releasePath}/* root@${releaseServer}:${releaseServerPath}" dir="${tmpDir}" escape="false" checkreturn="true" outputProperty="out" />
+        <echo msg="rsync -rc --delete --exclude='.LastPatchFiles' --exclude='HostsIDs.txt' ${releasePath}/* root@${releaseServer}:${releaseServerPath}" />
+        <exec command="rsync -rc --delete --exclude='.LastPatchFiles' --exclude='HostsIDs.txt' ${releasePath}/* root@${releaseServer}:${releaseServerPath}" dir="${tmpDir}" escape="false" checkreturn="true" outputProperty="out" />
         <echo msg="${out}"/>
 
         <echo msg="rsync -c ${releasePath}/.htaccess joonte@${releaseServer}:${releaseServerPath}" />
