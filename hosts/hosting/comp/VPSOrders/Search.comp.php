@@ -18,7 +18,7 @@ $Template = &$Links[$LinkID];
 /******************************************************************************/
 $Tr = new Tag('TR');
 #-------------------------------------------------------------------------------
-$VPSSchemes = DB_Select('VPSSchemes',Array('ID','Name','CostMonth','(SELECT `Name` FROM `VPSServersGroups` WHERE `VPSSchemes`.`ServersGroupID` = `VPSServersGroups`.`ID`) as `ServersGroupName`'),Array('SortOn'=>'Name'));
+$VPSSchemes = DB_Select('VPSSchemes',Array('ID','Name','CostMonth','(SELECT `Name` FROM `VPSServersGroups` WHERE `VPSSchemes`.`ServersGroupID` = `VPSServersGroups`.`ID`) as `ServersGroupName`'),Array('SortOn'=>'SortID'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($VPSSchemes)){
   case 'error':
