@@ -129,7 +129,7 @@ switch(ValueOf($Ticket)){
 		case 'exception':
 			$A = new Tag('A',Array('title'=>'как добавить шаблоны быстрых ответов',
 						'href'=>'http://wiki.joonte.com/index.php?title=TiketAnswerTemplate'),
-					'шаблоны ответов');
+						'шаблоны ответов');
 			$Td = new Tag('TD',$A);
 			$Tr->AddChild($Td);
 			break;
@@ -148,10 +148,27 @@ switch(ValueOf($Ticket)){
 				$Text = Str_Replace("\n\n","\n",$Text);
 				# prepare for java script
 				$Text = Str_Replace("\n",'\\n',$Text);
+				# format: /Administrator/Buttons:SortOrder:ImageName.gif
+				# button image, get image name
+				$Partition = explode(":", $Article['Partition']);
+				if(IsSet($Partition[2])){
+					# button image, get image extension
+					$Extension = explode(".", StrToLower($Partition[2]));
+				}else{
+					$Extension = '';
+				}
+				# если есть чё-то после точки, и если оно похоже на расширение картинки, ставим это как картинку
+				if(IsSet($Extension[1]) && In_Array($Extension[1],Array('png','gif','jpg','jpeg'))){
+					$Image = $Partition[2];
+				}else{
+					# иначе - дефолтовую информационную картинку
+					$Image = 'Info.gif';
+				}
+				# делаем кнопку
 				$Comp = Comp_Load('Buttons/Standard',
 						Array('onclick'	=> "form.Message.value += '" . $Text . "';",'style'=>'cursor: pointer;'),
 						$Article['Title'],
-						'Info.gif');
+						$Image);
 				if(Is_Error($Comp))
 					return ERROR | @Trigger_Error(500);
 				$Td = new Tag('TD');
