@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -19,7 +18,7 @@ $Template = &$Links[$LinkID];
 /******************************************************************************/
 $Tr = new Tag('TR');
 #-------------------------------------------------------------------------------
-$HostingSchemes = DB_Select('HostingSchemes',Array('ID','Name','CostMonth','(SELECT `Name` FROM `HostingServersGroups` WHERE `HostingSchemes`.`ServersGroupID` = `HostingServersGroups`.`ID`) as `ServersGroupName`'),Array('SortOn'=>'Name'));
+$HostingSchemes = DB_Select('HostingSchemes',Array('ID','Name','CostMonth','(SELECT `Name` FROM `HostingServersGroups` WHERE `HostingSchemes`.`ServersGroupID` = `HostingServersGroups`.`ID`) as `ServersGroupName`'),Array('SortOn'=>'SortID'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingSchemes)){
   case 'error':
