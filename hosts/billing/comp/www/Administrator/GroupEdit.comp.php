@@ -10,7 +10,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $GroupID = (integer) @$Args['GroupID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($GroupID){

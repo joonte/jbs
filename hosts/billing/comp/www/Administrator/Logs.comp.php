@@ -8,7 +8,7 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/DOM.class','modules/Authorisation.mod')))
+if(Is_Error(System_Load('classes/DOM.class.php','modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM = new DOM();

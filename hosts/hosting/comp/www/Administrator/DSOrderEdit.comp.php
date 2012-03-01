@@ -11,7 +11,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $DSOrderID = (integer) @$Args['DSOrderID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($DSOrderID){

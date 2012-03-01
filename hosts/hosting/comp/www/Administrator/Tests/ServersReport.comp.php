@@ -8,7 +8,7 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class','classes/Server.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','classes/Server.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $HostingServers = DB_Select('HostingServers',Array('ID','Address'),Array('Where'=>"`SystemID` = 'IspManager'"));

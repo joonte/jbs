@@ -11,7 +11,7 @@ Eval(COMP_INIT);
 if(XML_HTTP_REQUEST)
   return new gException('SOURCE_HIDDEN','Содержимое скрыто');
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/DOM.class')))
+if(Is_Error(System_Load('classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM = new DOM();

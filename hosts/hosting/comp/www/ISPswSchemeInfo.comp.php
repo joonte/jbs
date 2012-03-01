@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ISPswSchemeID = (string) @$Args['ISPswSchemeID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $ISPswScheme = DB_Select('ISPswSchemes','*',Array('UNIQ','ID'=>$ISPswSchemeID));

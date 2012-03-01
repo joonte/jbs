@@ -40,7 +40,7 @@ switch(ValueOf($Messages)){
           #---------------------------------------------------------------------
           if($TargetUserID != 100){
             #-------------------------------------------------------------------
-            $IsSend = Notify_Send('ToTicketsMessages',$TargetUserID,Array('TicketID'=>$Message['EdeskID'],'Theme'=>$Message['Theme'],'Message'=>$Message['Content']));
+            $IsSend = NotificationManager::sendMsg('ToTicketsMessages',$TargetUserID,Array('TicketID'=>$Message['EdeskID'],'Theme'=>$Message['Theme'],'Message'=>$Message['Content']));
             #-------------------------------------------------------------------
             switch(ValueOf($IsSend)){
               case 'error':
@@ -84,7 +84,7 @@ switch(ValueOf($Messages)){
                     #-----------------------------------------------------------
                     foreach($Employers as $Employer){
                       #---------------------------------------------------------
-                      $IsSend = Notify_Send('ToTicketsMessages',(integer)$Employer['ID'],Array('TicketID'=>$Message['EdeskID'],'Theme'=>$Message['Theme'],'Message'=>$Message['Content']));
+                      $IsSend = NotificationManager::sendMsg('ToTicketsMessages',(integer)$Employer['ID'],Array('TicketID'=>$Message['EdeskID'],'Theme'=>$Message['Theme'],'Message'=>$Message['Content']));
                       #---------------------------------------------------------
                       switch(ValueOf($IsSend)){
                         case 'error':
@@ -129,7 +129,7 @@ switch(ValueOf($Messages)){
           #---------------------------------------------------------------------
           $Message['Content'] = $String;
           #---------------------------------------------------------------------
-          $IsSend = Notify_Send('FromTicketsMessages',(integer)$OwnerID,Array('TicketID'=>$Message['EdeskID'],'Theme'=>$Message['Theme'],'Message'=>$Message['Content']));
+          $IsSend = NotificationManager::sendMsg('FromTicketsMessages',(integer)$OwnerID,Array('TicketID'=>$Message['EdeskID'],'Theme'=>$Message['Theme'],'Message'=>$Message['Content']));
           #---------------------------------------------------------------------
           switch(ValueOf($IsSend)){
             case 'error':

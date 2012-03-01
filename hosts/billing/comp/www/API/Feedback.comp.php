@@ -25,7 +25,7 @@ $Update = DB_Update('Users',Array('Email'=>$Email),Array('ID'=>200));
 if(Is_Error($Update))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IsSend = Notify_Send('Feedback',100,Array('Message'=>$Message),200);
+$IsSend = NotificationManager::sendMsg('Feedback',100,Array('Message'=>$Message),200);
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsSend)){
   case 'error':

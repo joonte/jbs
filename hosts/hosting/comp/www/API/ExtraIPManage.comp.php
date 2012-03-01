@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ExtraIPOrderID = (integer) @$Args['ExtraIPOrderID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/ExtraIPServer.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/ExtraIPServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','ServerID','Login','Password','StatusID');

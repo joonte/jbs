@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $DSSchemeID = (string) @$Args['DSSchemeID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DSScheme = DB_Select('DSSchemesOwners','*',Array('UNIQ','ID'=>$DSSchemeID));

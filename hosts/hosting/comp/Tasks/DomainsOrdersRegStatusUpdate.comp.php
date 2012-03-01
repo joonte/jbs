@@ -9,7 +9,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Config = Config();
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/Registrator.class')))
+if(Is_Error(System_Load('classes/Registrator.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Settings = $Config['Tasks']['Types']['DomainsOrdersRegStatusUpdate'];

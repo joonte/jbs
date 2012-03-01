@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $TicketID = (integer) @$Args['TicketID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Ticket = DB_Select('Edesks',Array('ID','UserID','Theme','UpdateDate','StatusID','SeenByPersonal','LastSeenBy','(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = (SELECT `GroupID` FROM `Users` WHERE `Users`.`ID` = `Edesks`.`UserID`)) as `IsDepartment`','Flags'),Array('UNIQ','ID'=>$TicketID));

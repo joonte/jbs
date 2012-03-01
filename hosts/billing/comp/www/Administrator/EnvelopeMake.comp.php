@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ProfileID = (integer) @$Args['ProfileID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class','libs/HTMLDoc.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/HTMLDoc.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Executor = Comp_Load('www/Administrator/API/ProfileCompile',Array('ProfileID'=>100));

@@ -17,7 +17,7 @@ $ICQ      =  (string) @$Args['ICQ'];
 $Protect  = (integer) @$Args['Protect'];
 $Eval     =  (string) @$Args['Eval'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/Session.class')))
+if(Is_Error(System_Load('classes/Session.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
@@ -145,7 +145,7 @@ switch(ValueOf($Comp)){
     #---------------------------------------------------------------------------
     $ContractID = $Comp['ContractID'];
     #---------------------------------------------------------------------------
-    $IsSend = Notify_Send('UserRegister',(integer)$UserID,Array('Password'=>$Password));
+    $IsSend = NotificationManager::sendMsg('UserRegister',(integer)$UserID,Array('Password'=>$Password));
     #---------------------------------------------------------------------------
     switch(ValueOf($IsSend)){
       case 'error':

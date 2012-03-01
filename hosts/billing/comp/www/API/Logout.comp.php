@@ -8,7 +8,7 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/Session.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/Session.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Session = new Session((string)@$_COOKIE['SessionID']);

@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $OrderFieldID = (integer) @$Args['OrderFieldID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class','libs/HTMLDoc.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/HTMLDoc.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $OrderField = DB_Select('OrdersFieldsOwners',Array('UserID','Value','FileName'),Array('UNIQ','ID'=>$OrderFieldID));

@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $UserID = (integer) @$Args['UserID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/Session.class','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/Session.class.php','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Session = new Session((string)@$_COOKIE['SessionID']);

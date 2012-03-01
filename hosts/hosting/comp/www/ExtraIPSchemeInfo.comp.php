@@ -11,7 +11,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ExtraIPSchemeID = (string) @$Args['ExtraIPSchemeID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $ExtraIPScheme = DB_Select('ExtraIPSchemes','*',Array('UNIQ','ID'=>$ExtraIPSchemeID));

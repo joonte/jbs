@@ -7,7 +7,7 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/VPSServer.class')))
+if(Is_Error(System_Load('classes/VPSServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $VPSServers = DB_Select('VPSServers',Array('ID','Address'));

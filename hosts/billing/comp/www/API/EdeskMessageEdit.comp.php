@@ -113,7 +113,7 @@ if($MessageID){
           #---------------------------------------------------------------------
           foreach($Users as $User){
             #-------------------------------------------------------------------
-            $IsSend = Notify_Send('EdeskMessageCreate',(integer)$User['ID'],Array('EdeskID'=>$Edesk['ID'],'Theme'=>$Edesk['Theme'],'Message'=>$Message));
+            $IsSend = NotificationManager::sendMsg('EdeskMessageCreate',(integer)$User['ID'],Array('EdeskID'=>$Edesk['ID'],'Theme'=>$Edesk['Theme'],'Message'=>$Message));
             #-------------------------------------------------------------------
             switch(ValueOf($IsSend)){
               case 'error':

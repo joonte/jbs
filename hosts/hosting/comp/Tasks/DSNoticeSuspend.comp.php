@@ -20,7 +20,7 @@ switch(ValueOf($DSOrders)){
     #---------------------------------------------------------------------------
     foreach($DSOrders as $DSOrder){
       #-------------------------------------------------------------------------
-      $IsSend = Notify_Send('DSNoticeSuspend',(integer)$DSOrder['UserID'],Array('DSOrder'=>$DSOrder));
+      $IsSend = NotificationManager::sendMsg('DSNoticeSuspend',(integer)$DSOrder['UserID'],Array('DSOrder'=>$DSOrder));
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':

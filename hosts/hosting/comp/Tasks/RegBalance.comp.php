@@ -12,7 +12,7 @@ $Config = Config();
 $Theme = "Проверка баланса счета регистратора";
 $Message = "";
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/Registrator.class','libs/IspSoft.php')))
+if(Is_Error(System_Load('classes/Registrator.class.php','libs/IspSoft.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Settings = $Config['Tasks']['Types']['RegBalance'];
@@ -171,7 +171,7 @@ default:
 #---------------------------------------------------------
 foreach($Employers as $Employer){
 	#---------------------------------------------------------
-	$IsSend = Notify_Send('Dispatch',(integer)$Employer['ID'],Array('Theme'=>$Theme,'Message'=>$Message));
+	$IsSend = NotificationManager::sendMsg('Dispatch',(integer)$Employer['ID'],Array('Theme'=>$Theme,'Message'=>$Message));
 	#---------------------------------------------------------
 	switch(ValueOf($IsSend)){
 	case 'error':

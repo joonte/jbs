@@ -14,7 +14,7 @@ Debug(SPrintF('[comp/Tasks/ICQ]: отправка ICQ сообщения для 
 #-------------------------------------------------------------------------------
 $GLOBALS['TaskReturnInfo'] = $UIN;
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/WebIcqLite.class')))
+if(Is_Error(System_Load('classes/WebIcqLite.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Config = Config();

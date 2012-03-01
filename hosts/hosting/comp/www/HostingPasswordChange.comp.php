@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $HostingOrderID = (integer) @$Args['HostingOrderID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $HostingOrder = DB_Select('HostingOrdersOwners',Array('ID','UserID','StatusID'),Array('UNIQ','ID'=>$HostingOrderID));

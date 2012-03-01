@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $VPSOrderID = (integer) @$Args['VPSOrderID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/VPSServer.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/VPSServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','ServerID','Login','Password','StatusID');

@@ -13,7 +13,7 @@ $Args = Args();
 $ServiceID  = (integer) @$Args['ServiceID'];
 $ContractID = (integer) @$Args['ContractID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Service = DB_Select('Services',Array('ID','Name','IsActive'),Array('UNIQ','ID'=>$ServiceID));

@@ -9,7 +9,7 @@ $__args_list = Array('Task','DSOrderID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/DSServer.class')))
+if(Is_Error(System_Load('classes/DSServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DSOrder = DB_Select('DSOrdersOwners',Array('ID','UserID','IP','SchemeID','(SELECT `ProfileID` FROM `Contracts` WHERE `Contracts`.`ID` = `DSOrdersOwners`.`ContractID`) as `ProfileID`'),Array('UNIQ','ID'=>$DSOrderID));

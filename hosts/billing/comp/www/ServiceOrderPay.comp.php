@@ -17,7 +17,7 @@ $OrderID        = (integer) @$Args['OrderID'];
 $AmountPay      = (integer) @$Args['AmountPay'];
 $IsChange       = (boolean) @$Args['IsChange'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','ServiceID','ExpirationDate','IsPayed','StatusID','(SELECT `Balance` FROM `Contracts` WHERE `Contracts`.`ID` = `ContractID`) as `ContractBalance`');

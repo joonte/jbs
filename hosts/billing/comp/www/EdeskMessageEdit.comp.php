@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $EdeskID = (integer) @$Args['EdeskID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Edesk = DB_Select('Edesks',Array('ID','Theme'),Array('UNIQ','ID'=>$EdeskID));

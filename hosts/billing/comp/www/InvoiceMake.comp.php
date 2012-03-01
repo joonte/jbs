@@ -15,7 +15,7 @@ $PaymentSystemID =  (string) @$Args['PaymentSystemID'];
 $Summ            =  (double) @$Args['Summ'];
 $StepID          = (integer) @$Args['StepID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM = new DOM();

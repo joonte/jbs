@@ -17,7 +17,7 @@ Debug(SPrintF('[comp/Tasks/Jabber]: отправка Jabber сообщения �
 #-------------------------------------------------------------------------------
 $GLOBALS['TaskReturnInfo'] = $JabberID;
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/JabberClient.class')))
+if(Is_Error(System_Load('classes/JabberClient.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Config = Config();

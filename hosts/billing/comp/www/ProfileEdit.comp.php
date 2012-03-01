@@ -18,7 +18,7 @@ $TemplatesIDs =  (string) @$Args['TemplatesIDs'];
 $Simple       =  (string) @$Args['Simple'];
 $Window       =  (string) @$Args['Window'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class','libs/Tree.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];

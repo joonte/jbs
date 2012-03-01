@@ -16,7 +16,7 @@ $FinishDate    = (integer) @$Args['FinishDate'];
 $StatisticsIDs =   (array) @$Args['StatisticsIDs'];
 $Details       =   (array) @$Args['Details'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class','libs/HTMLDoc.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/HTMLDoc.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 # Формирование отчетов

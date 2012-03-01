@@ -92,7 +92,7 @@ switch(ValueOf($Comp)){
         #-----------------------------------------------------------------------
         foreach($Users as $User){
           #---------------------------------------------------------------------
-          $IsSend = Notify_Send('EdeskCreate',(integer)$User['ID'],Array('EdeskID'=>$EdeskID,'Theme'=>$Theme,'Message'=>$Message));
+          $IsSend = NotificationManager::sendMsg('EdeskCreate',(integer)$User['ID'],Array('EdeskID'=>$EdeskID,'Theme'=>$Theme,'Message'=>$Message));
           #---------------------------------------------------------------------
           switch(ValueOf($IsSend)){
             case 'error':

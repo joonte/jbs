@@ -18,7 +18,7 @@ $DSOrderID	= (integer) @$Args['DSOrderID'];
 $OrderType	=  (string) @$Args['OrderType'];	# тип заказа к которому цепляем IP
 $DependOrderID	= (integer) @$Args['DependOrderID'];	# номер заказа к которому цепляем IP
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class','libs/WhoIs.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/WhoIs.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

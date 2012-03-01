@@ -9,7 +9,7 @@ $__args_list = Array('InvoiceID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/DOM.class','libs/Wizard.php')))
+if(Is_Error(System_Load('classes/DOM.class.php','libs/Wizard.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Invoice = DB_Select('Invoices',Array('ID','CreateDate','ContractID','PaymentSystemID','Summ'),Array('UNIQ','ID'=>$InvoiceID));

@@ -20,7 +20,7 @@ switch(ValueOf($HostingOrders)){
     #---------------------------------------------------------------------------
     foreach($HostingOrders as $HostingOrder){
       #-------------------------------------------------------------------------
-      $IsSend = Notify_Send('HostingNoticeSuspend',(integer)$HostingOrder['UserID'],Array('HostingOrder'=>$HostingOrder));
+      $IsSend = NotificationManager::sendMsg('HostingNoticeSuspend',(integer)$HostingOrder['UserID'],Array('HostingOrder'=>$HostingOrder));
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':

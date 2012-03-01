@@ -11,7 +11,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 if(Is_Null($Args)){
 	#-----------------------------------------------------------------------------
-	if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+	if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 		return ERROR | @Trigger_Error(500);
 }
 #-------------------------------------------------------------------------------

@@ -10,7 +10,7 @@ $__args_list = Array('Task','VPSOrderID','VPSSchemeID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/VPSServer.class')))
+if(Is_Error(System_Load('classes/VPSServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $VPSOrder = DB_Select('VPSOrdersOwners',Array('ID','Domain','UserID','OrderID','SchemeID','ServerID','Login','(SELECT `Name` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`OldSchemeID`) as `SchemeName`'),Array('UNIQ','ID'=>$VPSOrderID));

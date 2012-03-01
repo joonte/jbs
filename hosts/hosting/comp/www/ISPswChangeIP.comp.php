@@ -11,7 +11,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ISPswOrderID = (integer) @$Args['ISPswOrderID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','IP','UserID','StatusID','StatusDate','(SELECT `ISPtype` FROM `ISPswSchemes` WHERE `ISPswOrdersOwners`.`SchemeID`=`ISPswSchemes`.`ID`) AS `ISPtype`');

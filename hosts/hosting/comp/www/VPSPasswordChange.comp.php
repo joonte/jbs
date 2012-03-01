@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $VPSOrderID = (integer) @$Args['VPSOrderID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $VPSOrder = DB_Select('VPSOrdersOwners',Array('ID','UserID','StatusID'),Array('UNIQ','ID'=>$VPSOrderID));

@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ProfileID = (integer) @$Args['ProfileID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class','libs/Upload.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Upload.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Profile = DB_Select('Profiles',Array('ID','UserID','CreateDate','TemplateID','LENGTH(`Document`) as `Length`','StatusID','StatusDate'),Array('UNIQ','ID'=>$ProfileID));

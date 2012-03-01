@@ -14,7 +14,7 @@ $HostingSchemeID = (integer) @$Args['HostingSchemeID'];
 $Domain          =  (string) @$Args['Domain'];
 $StepID          = (integer) @$Args['StepID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class','libs/WhoIs.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/WhoIs.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM = new DOM();

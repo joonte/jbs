@@ -13,7 +13,7 @@ $Args = Args();
 $ClauseID   = (string) @$Args['ClauseID'];
 $TemplateID = (string) @$Args['TemplateID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/DOM.class')))
+if(Is_Error(System_Load('classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Clauses/Load',$ClauseID,TRUE);

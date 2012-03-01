@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $UIN = (integer) @$Args['UIN'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/IcqClient.class')))
+if(Is_Error(System_Load('classes/IcqClient.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $IsOnLine = IcqClient::IsOnLine($UIN);

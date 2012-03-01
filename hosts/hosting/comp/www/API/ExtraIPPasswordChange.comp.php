@@ -13,7 +13,7 @@ $Args = Args();
 $ExtraIPOrderID = (integer) @$Args['ExtraIPOrderID'];
 $Password       =  (string) @$Args['Password'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/ExtraIPServer.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/ExtraIPServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if(StrLen($Password) > 15)
@@ -76,8 +76,14 @@ switch(ValueOf($ExtraIPOrder)){
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
                 $ExtraIPOrder['Password'] = $Password;
+                #-------------------------------------------------------------------------------
+                $Server = DB_Select('ExtraIPs',Array('Address','Url','Ns1Name','Ns2Name'),Array('UNIQ','ID'=>$ExtraIPOrder['ServerID']));
+                if(!Is_Array($Server))
+                  return ERROR | @Trigger_Error(500);
+                #-------------------------------------------------------------------------------
+                $ExtraIPOrder['Server'] = $Server;
                 #---------------------------------------------------------------
-                $IsSend = Notify_Send('ExtraIPPasswordChange',(integer)$ExtraIPOrder['UserID'],Array('ExtraIPOrder'=>$ExtraIPOrder));
+                $IsSend = NotificationManager::sendMsg('ExtraIPPasswordChange',(integer)$ExtraIPOrder['UserID'],Array('Item'=>$ExtraIPOrder));
                 #---------------------------------------------------------------
                 switch(ValueOf($IsSend)){
                   case 'error':

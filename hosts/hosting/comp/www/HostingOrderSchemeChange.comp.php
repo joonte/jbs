@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $HostingOrderID = (integer) @$Args['HostingOrderID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class','libs/Tree.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','SchemeID','(SELECT `ServersGroupID` FROM `HostingServers` WHERE `HostingServers`.`ID` = `HostingOrdersOwners`.`ServerID`) as `ServersGroupID`','StatusID');

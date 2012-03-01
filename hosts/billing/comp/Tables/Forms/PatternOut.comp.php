@@ -17,7 +17,7 @@ $Links = &Links();
 $Template = &$Links[$LinkID];
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/Session.class')))
+if(Is_Error(System_Load('classes/Session.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table = $Options = Array();

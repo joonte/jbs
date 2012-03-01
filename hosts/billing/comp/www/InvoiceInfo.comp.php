@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $InvoiceID = (integer) @$Args['InvoiceID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Invoice = DB_Select('InvoicesOwners',Array('ID','UserID','CreateDate','ContractID','PaymentSystemID','Summ','StatusID','StatusDate'),Array('UNIQ','ID'=>$InvoiceID));

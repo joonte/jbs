@@ -11,7 +11,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ISPswOrderID = (integer) @$Args['ISPswOrderID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class','libs/Tree.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','SchemeID','(SELECT `SoftWareGroup` FROM `ISPswSchemes` WHERE `ISPswSchemes`.`ID` = `SchemeID`) AS SoftWareGroup','StatusID');

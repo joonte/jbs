@@ -18,7 +18,7 @@ $Regulars = Regulars();
 if(!Preg_Match($Regulars['ID'],$TableID))
   return ERROR | @Trigger_Error(201);
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Result = DB_Query(SPrintF('SHOW COLUMNS FROM `%s`',$TableID));

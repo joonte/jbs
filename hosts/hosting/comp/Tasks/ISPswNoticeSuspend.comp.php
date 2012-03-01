@@ -20,7 +20,7 @@ switch(ValueOf($ISPswOrders)){
     #---------------------------------------------------------------------------
     foreach($ISPswOrders as $ISPswOrder){
       #-------------------------------------------------------------------------
-      $IsSend = Notify_Send('ISPswNoticeSuspend',(integer)$ISPswOrder['UserID'],Array('ISPswOrder'=>$ISPswOrder));
+      $IsSend = NotificationManager::sendMsg('ISPswNoticeSuspend',(integer)$ISPswOrder['UserID'],Array('ISPswOrder'=>$ISPswOrder));
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':

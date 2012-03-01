@@ -10,7 +10,7 @@ $__args_list = Array('Task','ExtraIPOrderID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/ExtraIPServer.class')))
+if(Is_Error(System_Load('classes/ExtraIPServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $ExtraIPOrder = DB_Select('ExtraIPOrdersOwners',Array('ID','UserID','Login','OrderType','DependOrderID','SchemeID'),Array('UNIQ','ID'=>$ExtraIPOrderID));

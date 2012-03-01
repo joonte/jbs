@@ -13,7 +13,7 @@ $Args = Args();
 $ServerID = (integer) @$Args['ServerID'];
 $Month    = (integer) @$Args['Month'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/DOM.class')))
+if(Is_Error(System_Load('classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM = new DOM();

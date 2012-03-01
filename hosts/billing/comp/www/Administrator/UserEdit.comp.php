@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $UserID = (integer) @$Args['UserID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $User = DB_Select('Users',Array('ID','Email','Name','GroupID','OwnerID','IsManaged','IsInheritGroup','LayPayMaxDays','LayPayMaxSumm','LayPayThreshold','Rating','IsActive','IsNotifies','IsHidden','IsProtected','AdminNotice'),Array('UNIQ','ID'=>$UserID));

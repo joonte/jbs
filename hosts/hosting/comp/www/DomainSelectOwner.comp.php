@@ -17,7 +17,7 @@ $ProfileID     = (integer) @$Args['ProfileID'];
 $StepID        = (integer) @$Args['StepID'];
 $OwnerTypeID   =  (string) @$Args['OwnerTypeID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainsOrdersOwners',Array('ID','UserID','SchemeID','StatusID'),Array('UNIQ','ID'=>$DomainOrderID));

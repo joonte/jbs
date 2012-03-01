@@ -9,7 +9,7 @@ $__args_list = Array('Task','HostingOrderID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/Server.class')))
+if(Is_Error(System_Load('classes/Server.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $HostingOrder = DB_Select('HostingOrdersOwners',Array('ID','UserID','ServerID','Login','Domain','SchemeID','Password','(SELECT `ProfileID` FROM `Contracts` WHERE `Contracts`.`ID` = `HostingOrdersOwners`.`ContractID`) as `ProfileID`'),Array('UNIQ','ID'=>$HostingOrderID));

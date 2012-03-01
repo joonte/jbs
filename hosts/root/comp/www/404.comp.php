@@ -13,7 +13,7 @@ Header('HTTP/1.1 404 OK');
 if(XML_HTTP_REQUEST)
   return new gException('PAGE_NOT_FOUND','Страница не найдена [404]');
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/DOM.class')))
+if(Is_Error(System_Load('classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM = new DOM();

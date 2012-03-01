@@ -10,7 +10,7 @@ $__args_list = Array('Task','HostingOrderID','HostingSchemeID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/Server.class')))
+if(Is_Error(System_Load('classes/Server.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $HostingOrder = DB_Select('HostingOrdersOwners',Array('ID','UserID','OrderID','SchemeID','ServerID','Login','(SELECT `Name` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`OldSchemeID`) as `SchemeName`'),Array('UNIQ','ID'=>$HostingOrderID));

@@ -13,7 +13,7 @@ $Args = Args();
 $Base     =  (string) @$Args['Base'];
 $IsFormat = (boolean) @$Args['IsFormat'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Data = String_XML_Parse($Base);

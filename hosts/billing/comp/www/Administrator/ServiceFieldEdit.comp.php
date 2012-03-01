@@ -13,7 +13,7 @@ $Args = Args();
 $ServiceID      = (integer) @$Args['ServiceID'];
 $ServiceFieldID = (integer) @$Args['ServiceFieldID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #------------------------------------------------------------------------------
 $Form = new Tag('FORM',Array('name'=>'ServiceFieldEditForm','onsubmit'=>'return false;'));

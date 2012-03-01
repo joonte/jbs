@@ -16,7 +16,7 @@ $Email      =  (string) @$Args['Email'];
 $Password   =  (string) @$Args['Password'];
 $IsRemember = (boolean) @$Args['IsRemember'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/Session.class')))
+if(Is_Error(System_Load('classes/Session.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();

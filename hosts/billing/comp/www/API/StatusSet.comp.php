@@ -186,8 +186,11 @@ switch(ValueOf($Rows)){
         case 'array':
           #---------------------------------------------------------------------
           if(!$IsNoTrigger && !$IsNotNotify){
+            $msgClass = SPrintF('%s%sMsg',$ModeID,$StatusID);
+            $msg = new $msgClass($Row);
+            $msg->setTo($Row['UserID']);
             #-------------------------------------------------------------------
-            $IsSend = Notify_Send(SPrintF('%s%s',$ModeID,$StatusID),(integer)$Row['UserID'],Array('Row'=>$Row));
+            $IsSend = NotificationManager::sendMsg($msg);
             #-------------------------------------------------------------------
             switch(ValueOf($IsSend)){
               case 'error':

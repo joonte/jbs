@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ExtraIPOrderID = (integer) @$Args['ExtraIPOrderID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class','libs/Tree.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','SchemeID','(SELECT `sGroupID` FROM `ExtraIPs` WHERE `ExtraIPs`.`ID` = `ExtraIPOrdersOwners`.`ServerID`) as `sGroupID`','StatusID');

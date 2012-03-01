@@ -14,7 +14,7 @@ $ContractID = (integer) @$Args['ContractID'];
 $IsStamp    = (boolean) @$Args['IsStamp'];
 $Month      = (integer) @$Args['Month'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','libs/Wizard.php','classes/DOM.class','libs/HTMLDoc.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','libs/Wizard.php','classes/DOM.class.php','libs/HTMLDoc.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Contract = DB_Select('Contracts',Array('ID','CreateDate','UserID','TypeID','IsUponConsider','ProfileID'),Array('UNIQ','ID'=>$ContractID));

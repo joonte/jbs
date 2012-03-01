@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $TicketID = (integer) @$Args['TicketID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('*','(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `Edesks`.`TargetUserID`) as `TargetUser`','(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `Edesks`.`TargetGroupID`) as `TargetGroup`','(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `Edesks`.`LastSeenBy`) as `LastSeenByPersonal`');

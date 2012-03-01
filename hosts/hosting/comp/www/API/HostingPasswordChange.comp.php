@@ -13,7 +13,7 @@ $Args = Args();
 $HostingOrderID = (integer) @$Args['HostingOrderID'];
 $Password       =  (string) @$Args['Password'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/Server.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/Server.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
@@ -77,7 +77,7 @@ switch(ValueOf($HostingOrder)){
                 #---------------------------------------------------------------
                 $HostingOrder['Password'] = $Password;
                 #---------------------------------------------------------------
-                $IsSend = Notify_Send('HostingPasswordChange',(integer)$HostingOrder['UserID'],Array('HostingOrder'=>$HostingOrder));
+                $IsSend = NotificationManager::sendMsg('HostingPasswordChange',(integer)$HostingOrder['UserID'],Array('HostingOrder'=>$HostingOrder));
                 #---------------------------------------------------------------
                 switch(ValueOf($IsSend)){
                   case 'error':

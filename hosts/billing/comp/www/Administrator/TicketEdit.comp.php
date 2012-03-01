@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $TicketID = (integer) @$Args['TicketID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Ticket = DB_Select('Edesks',Array('ID','TargetGroupID','TargetUserID','PriorityID','Theme'),Array('UNIQ','ID'=>$TicketID));

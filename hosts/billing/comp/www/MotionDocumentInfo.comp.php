@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $MotionDocumentID = (integer) @$Args['MotionDocumentID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $MotionDocument = DB_Select('MotionDocumentsOwners','*',Array('UNIQ','ID'=>$MotionDocumentID));

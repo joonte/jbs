@@ -122,7 +122,7 @@ switch(ValueOf($Users)){
     #---------------------------------------------------------------------------
     foreach($Users as $User){
       #-------------------------------------------------------------------------
-      $IsSend = Notify_Send('Dispatch',(integer)$User['ID'],$Replace,$FromID);
+      $IsSend = NotificationManager::sendMsg('Dispatch',(integer)$User['ID'],$Replace,$FromID);
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':

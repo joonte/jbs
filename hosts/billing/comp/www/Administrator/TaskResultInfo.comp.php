@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $TaskID = (integer) @$Args['TaskID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Task = DB_Select('Tasks','Result',Array('UNIQ','ID'=>$TaskID));

@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ClauseID = (string) @$Args['ClauseID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/DOM.class','libs/HTMLDoc.php')))
+if(Is_Error(System_Load('classes/DOM.class.php','libs/HTMLDoc.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Clauses/Load',$ClauseID);

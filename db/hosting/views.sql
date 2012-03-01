@@ -205,7 +205,7 @@ DROP VIEW IF EXISTS `DSOrdersOwners`;
 DROP TABLE IF EXISTS `DSOrdersOwners`;
 CREATE VIEW `DSOrdersOwners` AS select
 	`DSOrders`.*,
-	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `DSOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
+	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `DSOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded1`,
 	`OrdersOwners`.`OrderDate` AS `OrderDate`,
 	`OrdersOwners`.`UserID` AS `UserID`,
 	`OrdersOwners`.`ContractID` AS `ContractID`

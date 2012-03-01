@@ -14,7 +14,7 @@ $InvoiceID = (integer) @$Args['InvoiceID'];
 $IsStamp   = (boolean) @$Args['IsStamp'];
 $IsTIFF    = (boolean) @$Args['IsTIFF'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class','libs/HTMLDoc.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/HTMLDoc.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','Document');

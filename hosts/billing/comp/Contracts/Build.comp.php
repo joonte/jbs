@@ -9,7 +9,7 @@ $__args_list = Array('ContractID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/DOM.class')))
+if(Is_Error(System_Load('classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Contract = DB_Select('Contracts',Array('ID','CreateDate','TypeID','ProfileID'),Array('UNIQ','ID'=>$ContractID));

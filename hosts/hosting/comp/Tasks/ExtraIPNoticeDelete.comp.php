@@ -20,7 +20,7 @@ switch(ValueOf($ExtraIPOrders)){
     #---------------------------------------------------------------------------
     foreach($ExtraIPOrders as $ExtraIPOrder){
       #-------------------------------------------------------------------------
-      $IsSend = Notify_Send('ExtraIPNoticeDelete',(integer)$ExtraIPOrder['UserID'],Array('ExtraIPOrder'=>$ExtraIPOrder));
+      $IsSend = NotificationManager::sendMsg('ExtraIPNoticeDelete',(integer)$ExtraIPOrder['UserID'],Array('ExtraIPOrder'=>$ExtraIPOrder));
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':

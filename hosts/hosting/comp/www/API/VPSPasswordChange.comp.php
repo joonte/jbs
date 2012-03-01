@@ -13,7 +13,7 @@ $Args = Args();
 $VPSOrderID = (integer) @$Args['VPSOrderID'];
 $Password       =  (string) @$Args['Password'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/VPSServer.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/VPSServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if(StrLen($Password) > 15)
@@ -76,8 +76,14 @@ switch(ValueOf($VPSOrder)){
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
                 $VPSOrder['Password'] = $Password;
+                #-------------------------------------------------------------------------------
+                $Server = DB_Select('VPSServers',Array('Address','Url','Ns1Name','Ns2Name'),Array('UNIQ','ID'=>$VPSOrder['ServerID']));
+                if(!Is_Array($Server))
+                  return ERROR | @Trigger_Error(500);
+                #-------------------------------------------------------------------------------
+                $VPSOrder['Server'] = $Server;
                 #---------------------------------------------------------------
-                $IsSend = Notify_Send('VPSPasswordChange',(integer)$VPSOrder['UserID'],Array('VPSOrder'=>$VPSOrder));
+                $IsSend = NotificationManager::sendMsg('VPSPasswordChange',(integer)$VPSOrder['UserID'],Array('VPSOrder'=>$VPSOrder));
                 #---------------------------------------------------------------
                 switch(ValueOf($IsSend)){
                   case 'error':
