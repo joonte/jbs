@@ -43,10 +43,17 @@ img.UserFoto {
 /* -----------------------------------------------------------------------------
 Формат обсуждений и сообщений
 ----------------------------------------------------------------------------- */
-div.QuoteText, div.LockText {
+/* цитата */
+div.QuoteText{
     border:           1px solid #7799E6;
     background-color: #E3EAFA;
     padding:          2px 5px 2px 5px;
+}
+/* скрытый текст */
+div.LockText {
+	border:           1px solid #FF0000;
+	background-color: #FFE4E1;
+	padding:          2px 5px 2px 5px;
 }
 /* ------------------------- */
 #ClauseImage {
