@@ -94,7 +94,7 @@ switch(ValueOf($ISPswOrder)){
 	$Table[] = Array('IP лицензии',$ISPswOrder['IP']);
 	#-----------------------------------------------------------------------
 	if(!Is_Null($ISPswOrder['LicenseID'])){
-		$Table[] = Array('Внутренний идентифкатор',$ISPswOrder['LicenseID']);
+		$Table[] = Array('Внутренний идентификатор',$ISPswOrder['LicenseID']);
 		$Table[] = Array('Номер лицензии ISPsystem (elid)',$ISPswOrder['elid']);
 	}
         #-----------------------------------------------------------------------
