@@ -56,7 +56,7 @@ foreach($cPaymentSystems as $PaymentSystemID=>$PaymentSystem){
     #---------------------------------------------------------------------------
     if(IsSet($PaymentSystems[$PaymentSystemID]) && @$Course['CharCode'] == $PaymentSystem['Valute'] && $PaymentSystem['IsCourseUpdate']){
       #-------------------------------------------------------------------------
-      $Current = (string)SPrintF('%01.2f',FloatVal(Str_Replace(',','.',@$Course['Value']))/@$Course['Nominal']);
+      $Current = (string)SPrintF('%01.6g',FloatVal(Str_Replace(',','.',@$Course['Value']))/@$Course['Nominal']);
       #-------------------------------------------------------------------------
       $PaymentSystems[$PaymentSystemID]['Course'] = $Current;
     }
