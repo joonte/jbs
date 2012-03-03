@@ -377,6 +377,35 @@
    <IsActive>0</IsActive>
   </ZPayment>
   <!-- ********************************************************************* -->
+  <EasyPay>
+   <Name>EasyPay</Name>
+   <SystemDescription>Электронные деньги, которые предназначены для осуществления быстрых платежей, надежный и быстрый способ передачи денег в интернете и с помощью SMS-сообщений. EasyPay действуют на территории Республики Беларусь, "электронные деньги" используются в качестве платежного средства.</SystemDescription>
+   <Send>
+    <EP_OrderNo>auto</EP_OrderNo>
+    <EP_Sum>auto</EP_Sum>
+    <EP_Expires>4</EP_Expires>
+    <EP_MerNo />
+    <EP_OrderInfo>Payment for invoice #</EP_OrderInfo>
+   </Send>
+   <Comp>EasyPay</Comp>
+   <Cpp>https://ssl.easypay.by/weborder/</Cpp>
+   <Hash />
+   <ContractsTypes>
+    <Default>1</Default>
+    <Natural>1</Natural>
+    <Juridical>1</Juridical>
+    <Individual>1</Individual>
+   </ContractsTypes>
+   <IsContinuePaying>1</IsContinuePaying>
+   <Course>1</Course>
+   <IsCourseUpdate>0</IsCourseUpdate>
+   <Measure>BYR</Measure>
+   <Valute>BYR</Valute>
+   <MinimumPayment>2</MinimumPayment>
+   <MaximumPayment>11000</MaximumPayment>
+   <IsActive>0</IsActive>
+  </EasyPay>
+  <!-- ********************************************************************* -->
   <Egold>
    <Name>E-Gold</Name>
    <SystemDescription>платёжное средство для безналичных платежей через Интернет. Юридически e-gold является распиской о размещении указанного количества золота на хранение в компании «E-gold Ltd.». По своей сути e-gold являются электронными деньгами, эмиссию которых осуществляет частная компания.</SystemDescription>
