@@ -37,7 +37,7 @@ Ignore_User_Abort(TRUE); # Если пользователь закрыл сое
  * Defines system constants.
  */
 
-if(!Define('VERSION', '##VERSION##'))
+if(!Define('VERSION', 'v2.5.6'))
   Exit('[JBs core]: не удалось определить константу (VERSION)');
 
 /**
@@ -465,11 +465,11 @@ function __ShutDown_Function__(){
     'COUNTER_COMPS'	=> $GLOBALS['__COUNTER_COMPS']
   );
   #---------------------------------------------------------------
-/*  if($GLOBALS['_SERVER']['REQUEST_URI'] != '/API/Events'){
+  if($GLOBALS['_SERVER']['REQUEST_URI'] != '/API/Events'){
     $IsInsert = DB_Insert('RequestLog',$UserData);
     if(Is_Error($IsInsert))
       return ERROR | @Trigger_Error(500);
-  }*/
+  }
   #-----------------------------------------------------------------------------
   #-----------------------------------------------------------------------------
   List($Micro,$Seconds) = Explode(' ',MicroTime());
