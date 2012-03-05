@@ -24,7 +24,8 @@ switch(ValueOf($DomainOrders)){
     #---------------------------------------------------------------------------
     foreach($DomainOrders as $DomainOrder){
       #-------------------------------------------------------------------------
-      $IsSend = NotificationManager::sendMsg('DomainsNoticeSuspend',(integer)$DomainOrder['UserID'],Array('DomainOrder'=>$DomainOrder));
+      $msg = new DomainsNoticeSuspendMsg($DomainOrder, (integer)$DomainOrder['UserID']);
+      $IsSend = NotificationManager::sendMsg($msg);
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':

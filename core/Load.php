@@ -231,7 +231,7 @@ function __Error_Handler__($Number,$Error,$File,$Line){
     $__ERR_CODE = $Error;
   #-----------------------------------------------------------------------------
   Debug(SPrintF('[!] %s',$Message));
-  //Debug(SPrintF('[!] %s',debug_print_backtrace()));
+  #Debug(SPrintF('[!] %s',debug_print_backtrace()));
   #-----------------------------------------------------------------------------
   #Error_Reporting(E_ALL);
   if(Error_Reporting()){
@@ -422,6 +422,10 @@ function JoonteAutoLoad($class) {
   #-----------------------------------------------------------------------------
   $ClassPath = System_Element('system/classes/'.$class.'.class.php');
   #-----------------------------------------------------------------------------
+  if (Is_Error($ClassPath)) {
+      throw new Exception("Coudn't load class: ".$ClassPath);
+  }
+
   include_once($ClassPath);
 }
 
@@ -572,7 +576,7 @@ $HostsIDs = $GLOBALS['HOST_CONF']['HostsIDs'];
 #-------------------------------------------------------------------------------
 foreach($HostsIDs as $HostID) {
   #-----------------------------------------------------------------------------
-  $Path = SPrintF('%s/hosts/%s/system/modules/Main.mod', SYSTEM_PATH, $HostID);
+  $Path = SPrintF('%s/hosts/%s/system/modules/Main.php', SYSTEM_PATH, $HostID);
   #-----------------------------------------------------------------------------
   if (File_Exists($Path)) {
     if(Load($Path) === ERROR) {

@@ -43,7 +43,8 @@ switch(ValueOf($Reports)){
           if($Contract['TypeID'] == 'Default' || !$Types[$Contract['TypeID']]['IsUsedMotionDocuments'])
             continue;
           #---------------------------------------------------------------------
-          $IsSend = NotificationManager::sendMsg('WorksCompliteReport',(integer)$Report['UserID'],Array('ContractID'=>$ContractID,'Month'=>$RegistrationMonth));
+          $msg = new WorksCompliteReportMsg(Array('ContractID'=>$ContractID,'Month'=>$RegistrationMonth), (integer)$Report['UserID']);
+          $IsSend = NotificationManager::sendMsg($msg);
           #---------------------------------------------------------------------
           switch(ValueOf($IsSend)){
             case 'error':

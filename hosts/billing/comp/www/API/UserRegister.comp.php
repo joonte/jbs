@@ -145,7 +145,7 @@ switch(ValueOf($Comp)){
     #---------------------------------------------------------------------------
     $ContractID = $Comp['ContractID'];
     #---------------------------------------------------------------------------
-    $IsSend = NotificationManager::sendMsg('UserRegister',(integer)$UserID,Array('Password'=>$Password));
+    $IsSend = NotificationManager::sendMsg(new Message('UserRegister',(integer)$UserID,Array('Password'=>$Password)));
     #---------------------------------------------------------------------------
     switch(ValueOf($IsSend)){
       case 'error':

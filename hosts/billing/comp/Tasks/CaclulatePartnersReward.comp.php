@@ -121,7 +121,7 @@ case 'array':
 			# если общая сумма больше нуля - надо слать письмо
 			if($TotalSummToUser > 0){
 				$MessageToUser .= "Итого, за прошедший месяц: " . $TotalSummToUser . " рублей";
-				$IsSend = NotificationManager::sendMsg('PartnersReneward',(integer)$Owner['DistinctOwnerID'],Array('Theme'=>$Theme,'Message'=>$MessageToUser));
+				$IsSend = NotificationManager::sendMsg(new Message('PartnersReneward',(integer)$Owner['DistinctOwnerID'],Array('Theme'=>$Theme,'Message'=>$MessageToUser)));
 				#---------------------------------------------------------
 				switch(ValueOf($IsSend)){
 				case 'error':
@@ -182,7 +182,7 @@ case 'array':
 			# select real users
 			if($Employer['ID'] > 2000 || $Employer['ID'] == 100){
 				Debug("[comp/Tasks/CaclulatePartnersReward]: Need send messages to #" . (integer)$Employer['ID']);
-				$IsSend = NotificationManager::sendMsg('PartnersReneward',(integer)$Employer['ID'],Array('Theme'=>$Theme,'Message'=>$MessageToAdmins));
+				$IsSend = NotificationManager::sendMsg(new Message('PartnersReneward',(integer)$Employer['ID'],Array('Theme'=>$Theme,'Message'=>$MessageToAdmins)));
 				#---------------------------------------------------------
 				switch(ValueOf($IsSend)){
 				case 'error':

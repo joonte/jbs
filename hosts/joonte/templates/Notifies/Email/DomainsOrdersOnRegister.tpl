@@ -1,99 +1,19 @@
-<?php
+{*
+ *  Joonte Billing System
+ *  Copyright © 2012 Vitaly Velikodnyy
+ *}
+{assign var=Theme value="Заказ поступил на регистрацию" scope=global}
+Здравствуйте, {$Params.User.Name|default:'$Params.User.Name'}!
 
-
-#-------------------------------------------------------------------------------
-/** @author Великодный В.В. (Joonte Ltd.) */
-/******************************************************************************/
-/******************************************************************************/
-$__args_list = Array('Replace');
-/******************************************************************************/
-Eval(COMP_INIT);
-/******************************************************************************/
-/******************************************************************************/
-#-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/Registrator.class.php')))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Replace['DomainOrder'] = $Replace['Row'];
-#-------------------------------------------------------------------------------
-$DomainOrder = &$Replace['DomainOrder'];
-#-------------------------------------------------------------------------------
-$StatusDate = Comp_Load('Formats/Date/Standard',$DomainOrder['StatusDate']);
-if(Is_Error($StatusDate))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$DomainOrder['StatusDate'] = $StatusDate;
-#-------------------------------------------------------------------------------
-$Number = Comp_Load('Formats/Order/Number',$DomainOrder['OrderID']);
-if(Is_Error($Number))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$DomainOrder['Number'] = $Number;
-#-------------------------------------------------------------------------------
-$DomainOrder['UploadURL'] = "";
-#-------------------------------------------------------------------------------
-$Registrator = new Registrator();
-#-------------------------------------------------------------------------------
-$IsSelected = $Registrator->Select((integer)$DomainOrder['RegistratorID']);
-#-------------------------------------------------------------------------------
-switch(ValueOf($IsSelected)){
-  #-----------------------------------------------------------------------------
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'true':
-    // For RegRu only
-    if($Registrator->Settings['TypeID'] == 'RegRu'){
-      #-------------------------------------------------------------------------
-      $Domain = SprintF("%s.%s",$DomainOrder['DomainName'],$DomainOrder['Name']);
-      #-------------------------------------------------------------------------
-      $Result = $Registrator->GetUploadID($Domain);
-      #-------------------------------------------------------------------------
-      switch(ValueOf($Result)){
-        case 'error':
-          return ERROR | @Trigger_Error(500);
-        case 'array':
-          #---------------------------------------------------------------------
-          $UploadID = $Result['UploadID'];
-          #-------------------------------------------------------------------------
-$DomainOrder['UploadURL'] = <<<EOT
+Уведомляем Вас о том, что {$Params.StatusDate|default:'$Params.StatusDate'} Ваш заказ №{$Params.OrderID|string_format:"%05u"} на регистрацию домена {$Params.DomainName|default:'$Params.DomainName'}.{$Params.Name|default:'$Params.Name'} был отправлен на регистрацию.
+{if isset($Params.UploadID)}
 
 Для регистрации домена Вам необходимо загрузить документ подтверждающий личность. Для этого пройдите по ссылке:
 
-http://www.reg.ru/user/docs/add?userdoc_secretkey=%s
+http://www.reg.ru/user/docs/add?userdoc_secretkey={$Params.UploadID|default:'$Params.UploadID'}
 
-EOT;
-          #-------------------------------------------------------------------------
-          Debug($UploadID);
-          #-------------------------------------------------------------------------
-          $DomainOrder['UploadURL'] = SprintF($DomainOrder['UploadURL'], $UploadID);
-          #---------------------------------------------------------------------
-        break;
-        default:
-          return ERROR | @Trigger_Error(101);
-      }
-      #-------------------------------------------------------------------------
-    }
-  break;
-  default:
-    return ERROR | @Trigger_Error(101);
-}
-#-------------------------------------------------------------------------------
-$Message = <<<EOT
-Здравствуйте, %User.Name%!
-
-Уведомляем Вас о том, что %DomainOrder.StatusDate% Ваш заказ №%DomainOrder.Number% на регистрацию домена %DomainOrder.DomainName%.%DomainOrder.Name% был отправлен на регистрацию.
-%DomainOrder.UploadURL%
+{/if}
 Данные в службе WhoIs станут доступны в течение нескольких часов, а полная регистрация Вашего доменного имени будет завершена в течение 24 часов.
 
-%From.Sign%
-EOT;
-#-------------------------------------------------------------------------------
-$Replace = Array_ToLine($Replace,'%');
-#-------------------------------------------------------------------------------
-foreach(Array_Keys($Replace) as $Key)
-  $Message = Str_Replace($Key,$Replace[$Key],$Message);
-#-------------------------------------------------------------------------------
-return Array('Theme'=>'Заказ поступил на регистрацию','Message'=>$Message);
-#-------------------------------------------------------------------------------
+{$Params.From.Sign|default:'$Params.From.Sign'}
 
-?>

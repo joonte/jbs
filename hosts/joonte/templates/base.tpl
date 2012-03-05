@@ -79,6 +79,10 @@
      <TABLE cellspacing="5" width="100%" cellpadding="0">
       <TR>
        <TD id="Copyright">{copyright}</TD>
+       <TD>
+         <A href="?lang=en">English</A>
+         <A href="?lang=">Русский</A>
+       </TD>
        <TD align="right">
          <!--LiveInternet counter-->
            <script type="text/javascript">document.write("<a href='http://www.liveinternet.ru/click' target=_blank><img src='//counter.yadro.ru/hit?t26.6;r" + escape(document.referrer) + ((typeof(screen)=="undefined")?"":";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?screen.colorDepth:screen.pixelDepth)) + ";u" + escape(document.URL) + ";" + Math.random() + "' border=0 width=88 height=15 alt='' title='LiveInternet: number of visitors for today is shown'><\/a>")</script>

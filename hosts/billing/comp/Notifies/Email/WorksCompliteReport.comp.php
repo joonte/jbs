@@ -31,7 +31,7 @@ $Replace = Array_ToLine($Replace,'%');
 foreach(Array_Keys($Replace) as $Key)
   $Message = Str_Replace($Key,$Replace[$Key],$Message);
 #-------------------------------------------------------------------------------
-return Array('Theme'=>'Отчет за услуги','Message'=>$Message);
+return Array('Theme'=>'','Message'=>$Message);
 #-------------------------------------------------------------------------------
 
 ?>

@@ -22,7 +22,7 @@ function ValueOf($Value){
     break;
     case 'object':
       #--------------------------------------------------------------------------
-      if(Get_Class($Value) == 'gException')
+      if(Get_Class($Value) == 'gException' || Get_Class($Value) == 'jException')
         return 'exception';
   }
   #-----------------------------------------------------------------------------

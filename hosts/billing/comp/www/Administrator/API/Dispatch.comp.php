@@ -121,8 +121,8 @@ switch(ValueOf($Users)){
     $Replace = Array('Theme'=>$Theme,'Message'=>$Message);
     #---------------------------------------------------------------------------
     foreach($Users as $User){
-      #-------------------------------------------------------------------------
-      $IsSend = NotificationManager::sendMsg('Dispatch',(integer)$User['ID'],$Replace,$FromID);
+      $msg = new DispatchMsg($Replace, (integer)$User['ID'], $FromID);
+      $IsSend = NotificationManager::sendMsg($msg);
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':

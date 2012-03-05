@@ -20,4 +20,8 @@ interface Msg {
     public function setParams(&$params);
 
     public function getParams();
+
+    public function setParam($key, $val);
+
+    public function &getParam($key);
 }

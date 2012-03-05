@@ -40,7 +40,14 @@ switch(ValueOf($Messages)){
           #---------------------------------------------------------------------
           if($TargetUserID != 100){
             #-------------------------------------------------------------------
-            $IsSend = NotificationManager::sendMsg('ToTicketsMessages',$TargetUserID,Array('TicketID'=>$Message['EdeskID'],'Theme'=>$Message['Theme'],'Message'=>$Message['Content']));
+            $msgParams = Array(
+                'TicketID' => $Message['EdeskID'],
+                'Theme' => $Message['Theme'],
+                'Message' => $Message['Content']
+            );
+
+            $msg = new Message('ToTicketsMessages', $TargetUserID, $msgParams);
+            $IsSend = NotificationManager::sendMsg($msg);
             #-------------------------------------------------------------------
             switch(ValueOf($IsSend)){
               case 'error':
@@ -84,7 +91,14 @@ switch(ValueOf($Messages)){
                     #-----------------------------------------------------------
                     foreach($Employers as $Employer){
                       #---------------------------------------------------------
-                      $IsSend = NotificationManager::sendMsg('ToTicketsMessages',(integer)$Employer['ID'],Array('TicketID'=>$Message['EdeskID'],'Theme'=>$Message['Theme'],'Message'=>$Message['Content']));
+                      $msgParams = Array(
+                          'TicketID' => $Message['EdeskID'],
+                          'Theme' => $Message['Theme'],
+                          'Message' => $Message['Content']
+                      );
+
+                      $msg = new Message('ToTicketsMessages',(integer)$Employer['ID'], $msgParams);
+                      $IsSend = NotificationManager::sendMsg($msg);
                       #---------------------------------------------------------
                       switch(ValueOf($IsSend)){
                         case 'error':
@@ -129,7 +143,15 @@ switch(ValueOf($Messages)){
           #---------------------------------------------------------------------
           $Message['Content'] = $String;
           #---------------------------------------------------------------------
-          $IsSend = NotificationManager::sendMsg('FromTicketsMessages',(integer)$OwnerID,Array('TicketID'=>$Message['EdeskID'],'Theme'=>$Message['Theme'],'Message'=>$Message['Content']));
+          $msgParams = Array(
+              'TicketID' => $Message['EdeskID'],
+              'Theme' => $Message['Theme'],
+              'Message'=>$Message['Content']
+          );
+
+          $msg = new Message('FromTicketsMessages',(integer)$OwnerID, $msgParams);
+
+          $IsSend = NotificationManager::sendMsg($msg);
           #---------------------------------------------------------------------
           switch(ValueOf($IsSend)){
             case 'error':

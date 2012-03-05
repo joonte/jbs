@@ -171,7 +171,8 @@ default:
 #---------------------------------------------------------
 foreach($Employers as $Employer){
 	#---------------------------------------------------------
-	$IsSend = NotificationManager::sendMsg('Dispatch',(integer)$Employer['ID'],Array('Theme'=>$Theme,'Message'=>$Message));
+    $msg = new DispatchMsg(Array('Theme'=>$Theme,'Message'=>$Message), (integer)$Employer['ID'], $FromID);
+	$IsSend = NotificationManager::sendMsg($msg);
 	#---------------------------------------------------------
 	switch(ValueOf($IsSend)){
 	case 'error':

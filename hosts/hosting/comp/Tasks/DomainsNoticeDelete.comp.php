@@ -22,7 +22,8 @@ switch(ValueOf($DomainOrders)){
     #---------------------------------------------------------------------------
     foreach($DomainOrders as $DomainOrder){
       #-------------------------------------------------------------------------
-      $IsSend = NotificationManager::sendMsg('DomainsNoticeDelete',(integer)$DomainOrder['UserID'],Array('DomainOrder'=>$DomainOrder));
+      $msg = new DomainsNoticeDeleteMsg($DomainOrder, (integer)$DomainOrder['UserID']);
+      $IsSend = NotificationManager::sendMsg($msg);
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':

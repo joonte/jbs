@@ -2,6 +2,7 @@
  *  Joonte Billing System
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
+{assign var=Theme value="Регистрационные данные" scope=global}
 Здравствуйте, {$Params.User.Name|default:'$Params.User.Name'}!
 
 Поздравляем Вас, вы успешно зарегистрировались на ресурсе {$Params.Executor.SiteURL|default:'$Params.Executor.SiteURL'}!

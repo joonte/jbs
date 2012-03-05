@@ -1,6 +1,6 @@
 {extends file='base.tpl'}
 
-{block name=title}Версии и изменения{/block}
+{block name=title}{$LANG.Versions|default:'$LANG.Versions'}{/block}
 
 {block name=js}
   <SCRIPT type="text/javascript" src="/styles/billing/Js/Logon.js"></SCRIPT>
@@ -44,7 +44,7 @@
             <a href="http://jira.joonte.com/secure/IssueNavigator.jspa?reset=true&jqlQuery=project+%3D+JBS+AND+fixVersion+%3D+%22{$version->id}%22+AND+status+%3D+Resolved+ORDER+BY+priority+DESC&mode=hide">История изменений</a>
           </div>
           <div style="font-size:11px; color:#848484;">
-            <cname>Дата выпуска: {$version->releaseDate|date_format: "%d.%m.%Y"}</cname>
+            <cname>Дата выпуска: {$version->releaseDate|date_format: $LANG.VersionsDate}</cname>
           </div>
       </li>
  {/if}

@@ -88,7 +88,7 @@ $Table[] = Array('Договор клиента',$Comp);
 #-------------------------------------------------------------------------------
 $CurrentMonth = (Date('Y') - 1970)*12 + Date('n');
 #-------------------------------------------------------------------------------
-for($Month=$CurrentMonth;$Month > $CurrentMonth-12;$Month--){
+for($Month=$CurrentMonth;$Month > $CurrentMonth-24;$Month--){
   #-----------------------------------------------------------------------------
   $Comp = Comp_Load('Formats/Date/Month',$Month);
   if(Is_Error($Comp))

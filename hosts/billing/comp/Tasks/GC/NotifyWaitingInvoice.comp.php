@@ -26,7 +26,7 @@ switch(ValueOf($Invoices)){
       if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Tasks/GC/NotifyWaitingInvoice'))))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
-      $IsSend = NotificationManager::sendMsg('NotPayedInvoice', (integer)$Invoice['UserID'], Array('Theme'=>SPrintF('Неоплаченный счет #%d',$Invoice['ID']),'InvoiceID'=>$Invoice['ID']));
+      $IsSend = NotificationManager::sendMsg(new Message('NotPayedInvoice', (integer)$Invoice['UserID'], Array('Theme'=>SPrintF('Неоплаченный счет #%d',$Invoice['ID']),'InvoiceID'=>$Invoice['ID'])));
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
       case 'true':

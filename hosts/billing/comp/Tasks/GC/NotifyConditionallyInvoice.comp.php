@@ -33,7 +33,8 @@ switch(ValueOf($Invoices)){
       if(Is_Error(DB_Transaction($TransactionID = UniqID('Tasks/GC/NotifyConditionallyInvoice'))))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
-      $IsSend = NotificationManager::sendMsg('ConditionallyPayedInvoice', (integer)$Invoice['UserID'], Array('Theme'=>SPrintF('Условно оплаченный счет #%d',$Invoice['ID']),'InvoiceID'=>$Invoice['ID']));
+      $msg = new ConditionallyPayedInvoiceMsg($Invoice, (integer)$Invoice['UserID']);
+      $IsSend = NotificationManager::sendMsg($msg);
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
       case 'true':
@@ -139,7 +140,8 @@ default:
 foreach($Employers as $Employer){
 	if($Employer['ID'] > 2000 || $Employer['ID'] == 100){
 		#---------------------------------------------------------
-		$IsSend = NotificationManager::sendMsg('Dispatch',(integer)$Employer['ID'],Array('Theme'=>'Список условно оплаченных счетов','Message'=>$ForBuhOut));
+        $msg = new DispatchMsg(Array('Theme'=>'Список условно оплаченных счетов','Message'=>$ForBuhOut), (integer)$Employer['ID']);
+		$IsSend = NotificationManager::sendMsg($msg);
 		#---------------------------------------------------------
 		switch(ValueOf($IsSend)){
 		case 'error':

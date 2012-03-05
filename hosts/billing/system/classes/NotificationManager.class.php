@@ -8,9 +8,7 @@
  */
 class NotificationManager {
     public static function sendMsg(Msg $msg) {
-        #---------------------------------------------------------------------------------------------------------------
         $Executor = Comp_Load('www/Administrator/API/ProfileCompile', Array('ProfileID' => 100));
-
         switch (ValueOf($Executor)) {
             case 'error':
                 return ERROR | @Trigger_Error(500);
@@ -18,14 +16,14 @@ class NotificationManager {
                 # No more...
                 break;
             case 'array':
-                $Replace['Executor'] = $Executor['Attribs'];
+                $msg->setParam('Executor', $Executor['Attribs']);
+
                 break;
             default:
                 return ERROR | @Trigger_Error(101);
         }
 
         $User = DB_Select('Users',Array('ID','Name','Sign','ICQ','Email','Mobile','UniqID','IsNotifies'),Array('UNIQ','ID'=>$msg->getTo()));
-
         switch(ValueOf($User)) {
             case 'error':
               return ERROR | @Trigger_Error('[Email_Send]: не удалось выбрать получателя');
@@ -36,11 +34,7 @@ class NotificationManager {
               if(!$User['IsNotifies'])
                 return new gException('NOTIFIES_RECIPIENT_DISABLED','Уведомления для получателя отключены');
               #-------------------------------------------------------------------------
-/*              if(!$User['Email'])
-                return new gException('RECIPIENT_EMAIL_ADDRESS_NOT_FILLED','Получатель не заполнил электронный адрес');*/
-              #-------------------------------------------------------------------------
-              $msg->getParams()['User'] = $User;
-                    die(print_r($msg->getParams()));
+              $msg->setParam('User', $User);
 
               break;
             default:
@@ -56,22 +50,20 @@ class NotificationManager {
               return new gException('EMAIL_SENDER_NOT_FOUND','Отправитель не найден');
             case 'array':
               #---------------------------------------------------------------------
-              $msg->getParams['From'] = $From;
+              $msg->setParam('From', $From);
 
               break;
             default:
               return ERROR | @Trigger_Error(101);
         }
 
-
         $Config = Config();
 
         $Notifies = $Config['Notifies'];
 
         $Index = 0;
-
         foreach (Array_Keys($Notifies['Methods']) as $MethodID) {
-            if ($MethodID != 'Email' || !$Notifies['Methods'][$MethodID]['IsActive'])
+            if (!$Notifies['Methods'][$MethodID]['IsActive'])
                 continue;
 
             $Count = DB_Count('Notifies', Array('Where' => SPrintF("`UserID` = %u AND `MethodID` = '%s' AND `TypeID` = '%s'", $msg->getTo(), $MethodID, $msg->getTemplate())));
@@ -81,18 +73,21 @@ class NotificationManager {
             if ($Count)
                 continue;
 
-            if (Is_Error(System_Load(SPrintF('libs/%s.php', $MethodID))))
-                return ERROR | @Trigger_Error('[NotificationManager::sendMsg]: библиотека метода оповещения не найдена');
+            // TODO Check if dispatcher exists. Required System elements.
+            $DispatcherClass = SPrintF('%s', $MethodID);
 
-            $Function = SPrintF('%s_Send', $MethodID);
+            $Dispatcher = $DispatcherClass::get();
+            if (!($Dispatcher instanceof Dispatcher)) {
+                return new gException('DISPATCHER_NOT_FOUND', 'Dispatcher not found: '.$DispatcherClass);
+            }
 
-            $Result = Call_User_Func($Function, $msg);
+            $Result = $Dispatcher->send($msg);
 
             switch (ValueOf($Result)) {
                 case 'error':
                     return ERROR | @Trigger_Error(SPrintF('[NotificationManager::sendMsg]: в функции (%s) оповещения произошла критическая ошибка', $Function));
                 case 'exception':
-                    # No more...
+                    return ERROR | @Trigger_Error(SPrintF('[NotificationManager::sendMsg]: в функции (%s) оповещения произошла критическая ошибка', $Function));
                     break;
                 case 'true':
                     $Index++;

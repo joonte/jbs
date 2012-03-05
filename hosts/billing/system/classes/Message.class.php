@@ -15,8 +15,11 @@ class Message implements Msg {
 
     protected $params = Array();
 
-    public function __construct($template) {
+    public function __construct($template, $toUser, $params = NULL, $fromUser = 100) {
         $this->template = $template;
+        $this->params = $params;
+        $this->toUser = $toUser;
+        $this->fromUser = $fromUser;
     }
 
     public function getTemplate() {
@@ -37,6 +40,15 @@ class Message implements Msg {
 
     public function getFrom() {
         return $this->fromUser;
+    }
+
+    public function setParam($key, $val) {
+        $params = & $this->params;
+        $params[$key] = $val;
+    }
+
+    public function &getParam($key) {
+        return $this->params[$key];
     }
 
     public function setParams(&$params) {
