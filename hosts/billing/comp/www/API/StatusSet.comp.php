@@ -206,7 +206,7 @@ switch(ValueOf($Rows)){
                 }
             }
             catch (Exception $e) {
-                Debug("Couldn't load dispatcher class: ".$msgClass);
+                Debug("Couldn't load dispatcher class: ".$msgClass.' . Message: '.$e->getTraceAsString());
             }
           }
         break;

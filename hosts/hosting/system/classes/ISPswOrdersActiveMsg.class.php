@@ -8,8 +8,6 @@
  */
  class ISPswOrdersActiveMsg extends Message {
      public function __construct(array $params, $toUser) {
-         parent::__construct('ISPswOrdersActive', $toUser);
-
-         $this->setParams($params);
+         parent::__construct('ISPswOrdersActive', $toUser, $params);
      }
  }

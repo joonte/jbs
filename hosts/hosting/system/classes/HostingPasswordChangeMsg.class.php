@@ -6,9 +6,9 @@
  *  Copyright © 2012 Vitaly Velikodnyy
  *
  */
-class HostingOrdersActiveMsg extends Message {
+class HostingPasswordChange extends Message {
     public function __construct(array $params, $toUser) {
-        parent::__construct('HostingOrdersActive', $toUser, $params);
+        parent::__construct('HostingPasswordChange', $toUser, $params);
     }
 
     public function getParams() {

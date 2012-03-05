@@ -827,6 +827,7 @@
   <SMS>
    <Name>SMS сообщения</Name>
    <IsActive>1</IsActive>
+   <Provider>SMSC</Provider>
   </SMS>
  </Methods>
 </Notifies>

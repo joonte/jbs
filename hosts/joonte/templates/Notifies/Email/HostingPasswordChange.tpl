@@ -1,68 +1,30 @@
-<?php
+{*
+ *  Joonte Billing System
+ *  Copyright © 2012 Vitaly Velikodnyy
+ *}
+{assign var=Theme value="Пароль для заказа хостинга успешно изменен" scope=global}
+Здравствуйте, {$Params.User.Name|default:'$Params.User.Name'}!
 
-
-#-------------------------------------------------------------------------------
-/** @author Великодный В.В. (Joonte Ltd.) */
-/******************************************************************************/
-/******************************************************************************/
-$__args_list = Array('Replace');
-/******************************************************************************/
-Eval(COMP_INIT);
-/******************************************************************************/
-/******************************************************************************/
-$HostingOrder = &$Replace['HostingOrder'];
-#-------------------------------------------------------------------------------
-$Number = Comp_Load('Formats/Order/Number',$HostingOrder['OrderID']);
-if(Is_Error($Number))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$HostingOrder['Number'] = $Number;
-#-------------------------------------------------------------------------------
-$Server = DB_Select('HostingServers',Array('Address','Url','Ns1Name','Ns2Name'),Array('UNIQ','ID'=>$HostingOrder['ServerID']));
-if(!Is_Array($Server))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$HostingOrder['Server'] = $Server;
-#-------------------------------------------------------------------------------
-$CurrentDate = Comp_Load('Formats/Date/Standard',Time());
-if(Is_Error($CurrentDate))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Replace['CurrentDate'] = $CurrentDate;
-#-------------------------------------------------------------------------------
-$Message = <<<EOT
-Здравствуйте, %User.Name%!
-
-Уведомляем Вас о том, что %CurrentDate% пароль на Ваш заказ хостинга №%HostingOrder.Number% был успешно изменен.
+Уведомляем Вас о том, что {$smarty.now|date_format:"%d.%m.%Y"} пароль на Ваш заказ хостинга №{$Params.OrderID|string_format:"%05u"} был успешно изменен.
 
 Ваши новые данные для доступа к аккаунту на сервере:
   * Адрес панели управления:
-      %HostingOrder.Server.Url%
+      {$Params.Server.Url|default:'$Params.Server.Url'}
   * Логин:
-      %HostingOrder.Login%
+      {$Params.Login|default:'$Params.Login'}
   * Пароль:
-      %HostingOrder.Password%
+      {$Params.Password|default:'$Params.Password'}
   * Доменное имя:
-      %HostingOrder.Domain%
+      {$Params.Domain|default:'$Params.Domain'}
   * FTP, POP3, SMTP, IMAP:
-      %HostingOrder.Server.Address%
+      {$Params.Server.Address|default:'$Params.Server.Address'}
 Сервера имен:
   * Первичный сервер имен:
-      %HostingOrder.Server.Ns1Name%
+      {$Params.Server.Ns1Name|default:'$Params.Server.Ns1Name'}
   * Вторичный сервер имен:
-      %HostingOrder.Server.Ns2Name%
+      {$Params.Server.Ns2Name|default:'$Params.Server.Ns2Name'}
 
 Сохраните эти данные в надежном месте, они потребуются для дальнейшей работы.
 
-%From.Sign%
-EOT;
-#-------------------------------------------------------------------------------
-$Replace = Array_ToLine($Replace,'%');
-#-------------------------------------------------------------------------------
-foreach(Array_Keys($Replace) as $Key)
-  $Message = Str_Replace($Key,$Replace[$Key],$Message);
-#-------------------------------------------------------------------------------
-return Array('Theme'=>'Пароль для заказа хостинга успешно изменен','Message'=>$Message);
-#-------------------------------------------------------------------------------
+{$Params.From.Sign|default:'$Params.From.Sign'}
 
-?>

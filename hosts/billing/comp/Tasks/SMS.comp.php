@@ -12,33 +12,42 @@ Debug(SPrintF('[comp/Tasks/SMS]: отправка SMS сообщения для 
 #-------------------------------------------------------------------------------
 $GLOBALS['TaskReturnInfo'] = $Mobile;
 #-------------------------------------------------------------------------------
-if (Is_Error(System_Load('classes/SMSC.class.php')))
+$Config = Config();
+
+if (!Isset($Config['Notifies']['Methods']['SMS']['Provider'])) {
+    return ERROR | @Trigger_Error(500);
+}
+
+$SMSProvider = $Config['Notifies']['Methods']['SMS']['Provider'];
+
+Debug(SPrintF('[comp/Tasks/SMS]: провайдер (%s)', $SMSProvider));
+
+if (Is_Error(System_Load(SPrintF('classes/%s.class.php', $SMSProvider))))
     return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Config = Config();
-#-------------------------------------------------------------------------------
-$Settings = $Config['SMSC'];
+$Settings = $Config[$SMSProvider];
 #-------------------------------------------------------------------------------
 $Links = &Links();
 #-------------------------------------------------------------------------------
-$LinkID = Md5('SMSC');
+$LinkID = Md5($SMSProvider);
+    Debug(print_r("111", true));
 #-------------------------------------------------------------------------------
 if (!IsSet($Links[$LinkID])) {
     #-----------------------------------------------------------------------------
     $Links[$LinkID] = NULL;
     #-----------------------------------------------------------------------------
-    $SMSC = &$Links[$LinkID];
+    $SMS = &$Links[$LinkID];
     #-----------------------------------------------------------------------------
-    $SMSC = new SMSC();
-    if (Is_Error($SMSC))
+    $SMS = new $SMSProvider();
+    if (Is_Error($SMS))
         return ERROR | @Trigger_Error(500);
 }
 #-------------------------------------------------------------------------------
-$SMSC = &$Links[$LinkID];
+$SMS = &$Links[$LinkID];
 #-------------------------------------------------------------------------------
 $Message = Mb_Convert_Encoding($Message, $Settings['Charset']);
 #-------------------------------------------------------------------------------
-$IsMessage = $SMSC->sendSms($Mobile, $Message);
+$IsMessage = $SMS->sendSms($Mobile, $Message);
 if (Is_Error($IsMessage)) {
     #-----------------------------------------------------------------------------
     UnSet($Links[$LinkID]);
@@ -50,7 +59,7 @@ if (Is_Error($IsMessage)) {
 #-------------------------------------------------------------------------------
 $Event = Array(
     'UserID' => $ID,
-    'Text' => SPrintF('Сообщение для (%s) через службу SMSC успешно отправлено', $Mobile)
+    'Text' => SPrintF('Сообщение для (%s) через службу %s успешно отправлено', $Mobile, $SMSProvider)
 );
 
 $Event = Comp_Load('Events/EventInsert', $Event);

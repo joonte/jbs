@@ -77,7 +77,8 @@ switch(ValueOf($HostingOrder)){
                 #---------------------------------------------------------------
                 $HostingOrder['Password'] = $Password;
                 #---------------------------------------------------------------
-                $IsSend = NotificationManager::sendMsg('HostingPasswordChange',(integer)$HostingOrder['UserID'],Array('HostingOrder'=>$HostingOrder));
+                $msg = new HostingPasswordChangeMsg($HostingOrder, (integer)$HostingOrder['UserID']);
+                $IsSend = NotificationManager::sendMsg($msg);
                 #---------------------------------------------------------------
                 switch(ValueOf($IsSend)){
                   case 'error':

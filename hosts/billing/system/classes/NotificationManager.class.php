@@ -87,7 +87,7 @@ class NotificationManager {
                 case 'error':
                     return ERROR | @Trigger_Error(SPrintF('[NotificationManager::sendMsg]: в функции (%s) оповещения произошла критическая ошибка', $Function));
                 case 'exception':
-                    return ERROR | @Trigger_Error(SPrintF('[NotificationManager::sendMsg]: в функции (%s) оповещения произошла критическая ошибка', $Function));
+
                     break;
                 case 'true':
                     $Index++;

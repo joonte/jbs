@@ -13,7 +13,7 @@
   * Пароль панели управления: {$Params.Password|default:'$Params.Password'}
 
  Данные для доступа на сервер по SSH:
-  * IP адрес сервера: {$Params.Server.Login|default:'$Params.Login'}
+  * IP адрес сервера: {$Params.Server.Login|default:'$Params.Server.Login'}
   * Имя пользователя: root
   * Пароль: {$Params.Password|default:'$Params.Password'}
  

@@ -231,9 +231,9 @@ function __Error_Handler__($Number,$Error,$File,$Line){
     $__ERR_CODE = $Error;
   #-----------------------------------------------------------------------------
   Debug(SPrintF('[!] %s',$Message));
-  #Debug(SPrintF('[!] %s',debug_print_backtrace()));
+  //Debug(SPrintF('[!] %s',debug_print_backtrace()));
   #-----------------------------------------------------------------------------
-  #Error_Reporting(E_ALL);
+  //Error_Reporting(E_ALL);
   if(Error_Reporting()){
     #---------------------------------------------------------------------------
     $JBsErrorID = SPrintF('%s[%s]',HOST_ID,Md5(Implode(':',Array($Number,$Error,$Line,$File))));
