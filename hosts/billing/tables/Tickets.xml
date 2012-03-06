@@ -13,7 +13,7 @@
 </Appearance>
 <!-- *********************************************************************** -->
 <Source>
- <TableID>EdeskMessages</TableID>
+ <TableID>EdesksOwners</TableID>
  <ColumnsIDs>
   <ListElement>ID</ListElement>
   <ListElement>CreateDate</ListElement>
@@ -28,8 +28,8 @@
  </ColumnsIDs>
  <Conditions>
   <Where>
-   <UniqID>(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = `EdeskMessages`.`TargetGroupID`) = 'yes'</UniqID>
-   <Define>(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = (SELECT `GroupID` FROM `Users` WHERE `Users`.`ID` = `EdeskMessages`.`UserID`)) = 'no'</Define>
+   <UniqID>(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = `EdesksOwners`.`TargetGroupID`) = 'yes'</UniqID>
+   <Define>(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = (SELECT `GroupID` FROM `Users` WHERE `Users`.`ID` = `EdesksOwners`.`UserID`)) = 'no'</Define>
   </Where>
   <Message>Нет запросов в центр поддержки.</Message>
  </Conditions>
@@ -82,7 +82,7 @@
    <Args>
     <Comment>Выбранные запросы</Comment>
     <Send>
-     <TableID>EdeskMessages</TableID>
+     <TableID>Edesks</TableID>
     </Send>
    </Args>
   </Delete>
@@ -105,7 +105,7 @@
 <Columns>
  <SelectID>
   <Args>
-   <TableID>EdeskMessages</TableID>
+   <TableID>Edesks</TableID>
   </Args>
  </SelectID>
  <!-- ********************************************************************** -->
@@ -187,7 +187,7 @@
    <ListElement>%TargetUser%</ListElement>
    <Length>10</Length>
   </Args>
-  <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `EdeskMessages`.`TargetUserID`)</Alias>
+  <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `EdesksOwners`.`TargetUserID`)</Alias>
  </TargetUser>
  <!-- ********************************************************************** -->
  <UpdateDate>

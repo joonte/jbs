@@ -176,7 +176,7 @@ switch(ValueOf($Rows)){
       if(Is_Error($IsInsert))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
-      $Row = DB_Select(SPrintF('%sOwners',$ModeID),'*',Array('UNIQ','ID'=>$Row['ID']));
+      $Row = DB_Select(SPrintF('%sOwners',$ModeID),'*',Array('GroupBy'=>'ID','UNIQ','ID'=>$Row['ID']));
       #-------------------------------------------------------------------------
       switch(ValueOf($Row)){
         case 'error':

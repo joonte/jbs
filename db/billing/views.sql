@@ -245,10 +245,10 @@ FROM
 LEFT JOIN `OrdersOwners`
 ON (`OrdersFields`.`OrderID` = `OrdersOwners`.`ID`);
 #-------------------------------------------------------------------------------
-DROP VIEW IF EXISTS `EdeskMessages`;
-DROP TABLE IF EXISTS `EdeskMessages`;
+DROP VIEW IF EXISTS `EdesksOwners`;
+DROP TABLE IF EXISTS `EdesksOwners`;
 CREATE
-  VIEW `EdeskMessages` AS
+  VIEW `EdesksOwners` AS
 SELECT
   `Edesks`.*,
   `EdesksMessages`.`Content` as `Content`
@@ -256,4 +256,3 @@ FROM
   `Edesks`
 LEFT JOIN `EdesksMessages`
 ON (`Edesks`.`ID` = `EdesksMessages`.`EdeskID`);
-#-------------------------------------------------------------------------------
