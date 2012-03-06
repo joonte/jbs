@@ -70,7 +70,7 @@
   <Pick />
  </ListElement>
  <ListElement>
-  <Text>Цены на услуги</Text>
+  <Text>Поддержать проект</Text>
   <Paths>
    <UniqID>^\/Prices</UniqID>
   </Paths>
@@ -94,7 +94,7 @@
   <Level>1</Level>
  </ListElement>
  <ListElement>
-  <Text>[ Платная подписка ]</Text>
+  <Text>[ Регистрация ]</Text>
   <Paths>
    <UniqID>^\/UserRegister</UniqID>
   </Paths>
@@ -103,7 +103,7 @@
   <Pick />
  </ListElement>
  <ListElement>
-  <Text>Форум (обсуждения)</Text>
+  <Text>Форум (сообщество)</Text>
   <Paths>
    <UniqID>^NULL$</UniqID>
   </Paths>
