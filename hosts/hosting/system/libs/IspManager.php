@@ -808,13 +808,13 @@ function IspManager_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
                 return new gException('IP_ADD_CREATE_ERROR','Не удалось добавить IP адрес');
         #-----------------------------------------------------------------------------
         #-----------------------------------------------------------------------------
-# commented, because http://forum.ispsystem.com/ru/showthread.php?t=16069
-# 2011-09-06: it's work for beta, wait for stable
-#        Debug("[system/libs/IspManager]: to hosting order added IP = " . $Doc['ip']);
-#        #-----------------------------------------------------------------------------
-#        $IsQuery = DB_Query("UPDATE `ExtraIPOrders` SET `Login`='" . $Doc['ip'] . "' WHERE `ID`='" . $ID . "'");
-#        if(Is_Error($IsQuery))
-#                return ERROR | @Trigger_Error('[IspManager_AddIP]: не удалось прописать IP адрес для заказа хостинга ' . $Login);
+        # commented, because http://forum.ispsystem.com/ru/showthread.php?t=16069
+        # 2011-09-06: it's work for beta, wait for stable
+        Debug("[system/libs/IspManager]: to hosting order added IP = " . $Doc['ip']);
+        #-----------------------------------------------------------------------------
+	$IsUpdate = DB_Update('ExtraIPOrders',Array('Login'=>$Doc['ip']),Array('ID'=>$ID));
+        if(Is_Error($IsUpdate))
+                return ERROR | @Trigger_Error('[IspManager_AddIP]: не удалось прописать IP адрес для заказа хостинга ' . $Login);
         #-----------------------------------------------------------------------------
         return TRUE;
 }

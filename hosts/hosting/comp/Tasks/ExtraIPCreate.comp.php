@@ -85,6 +85,19 @@ switch(ValueOf($ExtraIPOrder)){
                 case 'exception':
                   return $IsCreate;
                 case 'true':
+		  #---------------------------------------------------------------
+		  # достаём собсно адрес из БД
+                  $ExtraIP = DB_Select('ExtraIPOrdersOwners',Array('Login'),Array('UNIQ','ID'=>$ExtraIPOrderID));
+                  switch(ValueOf($ExtraIP)){
+		  case 'error':
+                    return ERROR | @Trigger_Error(500);
+                  case 'exception':
+                    return ERROR | @Trigger_Error(400);
+                  case 'array':
+		    break;
+		  default:
+		    return ERROR | @Trigger_Error(101);
+		  }
                   #---------------------------------------------------------------
                   $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ExtraIPOrders','StatusID'=>'Active','RowsIDs'=>$ExtraIPOrder['ID'],'Comment'=>'Дополнительный IP успешно добавлен'));
                   #---------------------------------------------------------------
@@ -98,12 +111,14 @@ switch(ValueOf($ExtraIPOrder)){
 		      $Event = Array(
 		      			'UserID'	=> $ExtraIPOrder['UserID'],
 					'PriorityID'	=> 'Billing',
-					'Text'		=> SPrintF('На сервере (%s) для логина (%s) успешно добавлен дополнительный IP c обратной зоной (%s)',$ExtraIPServer->Settings['Address'],$DependOrder['Login'],$DependOrder['Domain'])
+					'Text'		=> SPrintF('На сервере (%s) для логина (%s) успешно добавлен дополнительный IP (%s) c обратной зоной (%s)',$ExtraIPServer->Settings['Address'],$DependOrder['Login'],$ExtraIP['Login'],$DependOrder['Domain'])
 		                    );
                       $Event = Comp_Load('Events/EventInsert',$Event);
                       if(!$Event)
                         return ERROR | @Trigger_Error(500);
                       #-----------------------------------------------------------
+                      $GLOBALS['TaskReturnInfo'] = Array($ExtraIPServer->Settings['Address'],$DependOrder['Login'],$ExtraIP['Login']);
+		      #-----------------------------------------------------------
                       return TRUE;
                     default:
                       return ERROR | @Trigger_Error(101);
