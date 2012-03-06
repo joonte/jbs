@@ -9,7 +9,8 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $smarty=$GLOBALS['smarty'];
 
-$versionsJson = @file_get_contents("http://jira.joonte.com/rest/api/2.0.alpha1/project/JBS/versions");
+// Cache of http://jira.joonte.com/rest/api/2.0.alpha1/project/JBS/versions
+$versionsJson = @file_get_contents("http://joonte.com/public/versions");
 $versions = @json_decode($versionsJson);
 
 $smarty->assign('latestVersion', VERSION);
