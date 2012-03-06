@@ -1,8 +1,7 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
-/** @author Великодный В.В. (Joonte Ltd.) */
+/** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
 Eval(COMP_INIT);
@@ -59,9 +58,17 @@ $Table[] = new Tag('TD',Array('colspan'=>2,'width'=>300,'class'=>'Standard','sty
 $OrderCount = 0;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+# Where общее для Hosting/VPS/DS
+$Where = Array(
+              SPrintF('`ContractID` = %u',$ContractID),
+	      "`StatusID` = 'Active' OR `StatusID` = 'Waiting'"
+              );
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # create select, using ContractID for HostingOrders
 $Columns = Array('ID','Login','(SELECT `Address` FROM `HostingServers` WHERE `HostingServers`.`ID` = `ServerID`) as `Address`');
-$HostingOrders = DB_Select('HostingOrdersOwners',$Columns,Array('Where'=>'`ContractID` = ' . $ContractID));
+#-------------------------------------------------------------------------------
+$HostingOrders = DB_Select('HostingOrdersOwners',$Columns,Array('Where'=>$Where));
 switch(ValueOf($HostingOrders)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
@@ -87,7 +94,7 @@ default:
 #-------------------------------------------------------------------------------
 # create select, using ContractID for VPSOrders
 $Columns = Array('ID','Login','(SELECT `Address` FROM `VPSServers` WHERE `VPSServers`.`ID` = `ServerID`) as `Address`');
-$VPSOrders = DB_Select('VPSOrdersOwners',$Columns,Array('Where'=>'`ContractID` = ' . $ContractID));
+$VPSOrders = DB_Select('VPSOrdersOwners',$Columns,Array('Where'=>$Where));
 switch(ValueOf($VPSOrders)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
@@ -113,7 +120,7 @@ default:
 #-------------------------------------------------------------------------------
 # create select, using ContractID for DSOrders
 $Columns = Array('ID','IP','(SELECT `Name` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `SchemeID`) as `Name`');
-$DSOrders = DB_Select('DSOrdersOwners',$Columns,Array('Where'=>'`ContractID` = ' . $ContractID));
+$DSOrders = DB_Select('DSOrdersOwners',$Columns,Array('Where'=>$Where));
 switch(ValueOf($DSOrders)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
