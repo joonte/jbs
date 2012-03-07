@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
@@ -13,7 +12,7 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('classes/VPSServer.class')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$VPSOrder = DB_Select('VPSOrdersOwners',Array('ID','UserID','ServerID','Login','Domain','(SELECT `IsReselling` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`) as `IsReselling`'),Array('UNIQ','ID'=>$VPSOrderID));
+$VPSOrder = DB_Select('VPSOrdersOwners',Array('ID','UserID','ServerID','Login','Domain','(SELECT `IsReselling` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`) as `IsReselling`','(SELECT `Name` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`) as `SchemeName`'),Array('UNIQ','ID'=>$VPSOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($VPSOrder)){
   case 'error':
@@ -45,11 +44,13 @@ switch(ValueOf($VPSOrder)){
 	    $Event = Array(
 	    			'UserID'	=> $VPSOrder['UserID'],
 				'PriorityID'	=> 'Billing',
-				'Text'		=> SPrintF('Заказ VPS логин (%s) успешно активирован на сервере (%s)',$VPSOrder['Login'],$VPSOrder['Domain'],$VPSServer->Settings['Address'])
+				'Text'		=> SPrintF('Заказ VPS логин (%s) успешно активирован на сервере (%s)',$VPSOrder['Login'],$VPSServer->Settings['Address'])
 	                  );
             $Event = Comp_Load('Events/EventInsert',$Event);
             if(!$Event)
               return ERROR | @Trigger_Error(500);
+	    #-------------------------------------------------------------------
+            $GLOBALS['TaskReturnInfo'] = Array($VPSServer->Settings['Address'],$VPS_IP['Login'],$VPSOrder['SchemeName']);
             #-------------------------------------------------------------------
             return TRUE;
           default:

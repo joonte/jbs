@@ -93,6 +93,18 @@ switch(ValueOf($VPSOrder)){
               case 'exception':
                 return $IsCreate;
               case 'true':
+                # достаём собсно адрес из БД
+                $VPS_IP = DB_Select('VPSOrdersOwners',Array('Login'),Array('UNIQ','ID'=>$VPSOrderID));
+                switch(ValueOf($VPS_IP)){
+                case 'error':
+                  return ERROR | @Trigger_Error(500);
+                case 'exception':
+                  return ERROR | @Trigger_Error(400);
+                case 'array':
+                  break;
+                default:
+                  return ERROR | @Trigger_Error(101);
+                }
                 #---------------------------------------------------------------
                 $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'Active','RowsIDs'=>$VPSOrder['ID'],'Comment'=>'Заказ успешно создан на сервере'));
                 #---------------------------------------------------------------
@@ -105,14 +117,14 @@ switch(ValueOf($VPSOrder)){
                     #-----------------------------------------------------------
 		    $Event = Array(
 		    			'UserID'	=> $VPSOrder['UserID'],
-					'PriorityID'	=> 'Billing',
-					'Text'		=> SPrintF('Заказ VPS логин (%s) успешно создан на сервере (%s) с тарифным планом (%s), идентификатор пакета (%s)',$VPSOrder['Login'],$VPSOrder['Domain'],$VPSServer->Settings['Address'],$VPSScheme['Name'],$VPSScheme['PackageID'])
+					'PriorityID'	=> 'Hosting',
+					'Text'		=> SPrintF('Заказ VPS (%s) успешно создан на сервере (%s) с тарифным планом (%s), идентификатор пакета (%s)',$VPS_IP['Login'],$VPSServer->Settings['Address'],$VPSScheme['Name'],$VPSScheme['PackageID'])
 		                  );
                     $Event = Comp_Load('Events/EventInsert',$Event);
                     if(!$Event)
                        return ERROR | @Trigger_Error(500);
                     #-----------------------------------------------------------
-		    $GLOBALS['TaskReturnInfo'] = Array($VPSServer->Settings['Address'],$VPSOrder['Login'],$VPSScheme['Name']);
+		    $GLOBALS['TaskReturnInfo'] = Array($VPSServer->Settings['Address'],$VPS_IP['Login'],$VPSScheme['Name']);
 		    #-----------------------------------------------------------
                     return TRUE;
                   default:
