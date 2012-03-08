@@ -1,7 +1,7 @@
 <?php
 
 #-------------------------------------------------------------------------------
-/** @author Великодный В.В. (Joonte Ltd.) */
+/** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
 $__args_list = Array('Task','ISPswOrderID');
@@ -118,6 +118,8 @@ switch(ValueOf($ISPswOrder)){
                     if(!$Event)
                        return ERROR | @Trigger_Error(500);
                     #-----------------------------------------------------------
+		    $GLOBALS['TaskReturnInfo'] = Array($ISPswScheme['Name']);
+		    #-----------------------------------------------------------
                     return TRUE;
                   default:
                     return ERROR | @Trigger_Error(101);

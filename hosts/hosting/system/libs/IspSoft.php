@@ -334,7 +334,7 @@ function IspSoft_Delete($Settings,$ISPswScheme){
   /****************************************************************************/
   #-----------------------------------------------------------------------------
   # просто помечаем лицензию в таблице как свободную
-  $IsUpdate = DB_Update('ISPswLicenses',Array('IsUsed'=>'no','IsInternal'=>'yes','Flag'=>''),Array('Where'=>SPrintF('`elid` = %u',$ISPswScheme['elid'])));
+  $IsUpdate = DB_Update('ISPswLicenses',Array('IsUsed'=>FALSE,'IsInternal'=>'yes','Flag'=>''),Array('Where'=>SPrintF('`elid` = %u',$ISPswScheme['elid'])));
   if(Is_Error($IsUpdate))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
