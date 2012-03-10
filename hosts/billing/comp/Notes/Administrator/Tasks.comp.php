@@ -9,7 +9,7 @@ Eval(COMP_INIT);
 $CacheID = Md5($__FILE__);
 #-------------------------------------------------------------------------------
 if (CacheManager::isEnabled()) {
-    $Result = CacheManager::getInstance()->get($CacheID);
+    $Result = CacheManager::get($CacheID);
 
     if(!Is_Error($Result)) { return $Result; }
 }
@@ -44,7 +44,7 @@ EOD;
 }
 #-------------------------------------------------------------------------------
 if (CacheManager::isEnabled()) {
-    CacheManager::getInstance()->add($CacheID, $Result,60);
+    CacheManager::add($CacheID, $Result,60);
 }
 #-------------------------------------------------------------------------------
 return $Result;

@@ -13,7 +13,7 @@ Eval(COMP_INIT);
 if(IsSet($GLOBALS['__USER'])){
   # cache added by lissyara, 2011-10-03 in 21:08 MSK
   $CacheID = Md5($__FILE__ . $GLOBALS['__USER']['ID']);
-  $Result = MemoryCache_Get($CacheID);
+  $Result = CacheManager::get($CacheID);
   if(!Is_Error($Result))
     return $Result;
   #-----------------------------------------------------------------------------
@@ -56,7 +56,7 @@ if(IsSet($GLOBALS['__USER'])){
   #-----------------------------------------------------------------------------
   $Out = new Tag('TABLE',Array('class'=>'Standard','style'=>'background-image:url(SRC:{Images/Grid.png});','width'=>$Width,'height'=>$Height),new Tag('TR',new Tag('TD',Array('height'=>'20px','style'=>'font-size:11px;color:#DCDCDC;'),'Рабочая область')),new Tag('TR',$Td));
   #-----------------------------------------------------------------------------
-  MemoryCache_Add($CacheID,$Out,3600);
+  CacheManager::add($CacheID,$Out,3600);
   return $Out;
 
 }

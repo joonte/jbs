@@ -19,12 +19,12 @@ $OutCacheID = Md5($__FILE__ . $GLOBALS['__USER']['ID']);
 $TimeCacheID = Md5($__FILE__ . $GLOBALS['__USER']['ID'] . 'time');
 $LastIDCacheID = Md5($__FILE__ . $GLOBALS['__USER']['ID'] . 'ID');
 #-------------------------------------------------------------------------------
-$TimeResult = MemoryCache_Get($TimeCacheID);
+$TimeResult = CacheManager::get($TimeCacheID);
 if(!Is_Error($TimeResult)){
 	# проверяем не истекло ли время кэша
 	if($TimeResult > Time() - 10){
 		# проверяем, есть ли выхлоп в кэше
-		$Out = MemoryCache_Get($OutCacheID);
+		$Out = CacheManager::get($OutCacheID);
 		if(!Is_Error($Out)){
 			# отдаём кэш
 			Debug("[comp/www/API/Events]: UserID: " . $GLOBALS['__USER']['ID'] . ", результат найден в кэше");
@@ -48,7 +48,7 @@ switch(ValueOf($Entrance)){
     #---------------------------------------------------------------------------
     $Where = Array('UNIX_TIMESTAMP() - 10 <= `CreateDate`');
     #---------------------------------------------------------------------------
-    $LastID = MemoryCache_Get($LastIDCacheID);
+    $LastID = CacheManager::get($LastIDCacheID);
     if(!Is_Error($LastID)){
       Debug("[comp/www/API/Events]: last selected ID, from cache = " . $LastID . "; user = " . $GLOBALS['__USER']['ID']);
       $Where[] = SPrintF('`ID` > %u',$LastID);
@@ -77,7 +77,7 @@ switch(ValueOf($Entrance)){
 	  #Debug("[comp/www/API/Events]: last selected ID = " . $LastID);
 	}
         #-----------------------------------------------------------------------
-	MemoryCache_Add($LastIDCacheID,$LastID,24 * 3600); /* на сутки в кэш */
+	CacheManager::add($LastIDCacheID,$LastID,24 * 3600); /* на сутки в кэш */
 	#-----------------------------------------------------------------------
         $Out = Array('Status'=>'Ok','Events'=>$Result);
 	break;
@@ -86,8 +86,8 @@ switch(ValueOf($Entrance)){
     }
     #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
-    MemoryCache_Add($TimeCacheID,Time(),10);
-    MemoryCache_Add($OutCacheID,$Out,10);
+    CacheManager::add($TimeCacheID,Time(),10);
+    CacheManager::add($OutCacheID,$Out,10);
     #Debug("[comp/www/API/Events]: результат добавлен в кэш");
     #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------

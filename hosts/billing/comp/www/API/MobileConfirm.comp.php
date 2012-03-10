@@ -40,7 +40,7 @@ if($Email){
 	$Heads = "From: " . $Executor['Email'] . "\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit";
 	#-------------------------------------------------------------------------------
 	$Confirm = md5($GLOBALS['__USER']['ID'] . MicroTime());
-	MemoryCache_Add($CacheID, $Confirm, 10*24*3600);
+	CacheManager::add($CacheID, $Confirm, 10*24*3600);
 	#-------------------------------------------------------------------------------
 	$Url = "http://" . HOST_ID . "/API/EmailConfirm?Confirm=" . $Confirm;
 	#-------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ if($Email){
 	$NoBody = new Tag('NOBODY');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Result = MemoryCache_Get($CacheID);
+	$Result = CacheManager::get($CacheID);
 	if(!Is_Error($Result) && $Confirm == $Result){
 		#-------------------------------------------------------------------------------
 		$IsUpdate = DB_Update('Users',Array('EmailConfirmed'=>Time()),Array('ID'=>$GLOBALS['__USER']['ID']));
@@ -89,7 +89,7 @@ if($Email){
 		#-------------------------------------------------------------------------------
 		$DOM->AddAttribs('Body',Array('onload'=>"ShowAlert('Почтовый адрес успешно подтверждён.','Ok');"));
 		# erase $Confirm
-		MemoryCache_Add($CacheID, '1', 60);
+		CacheManager::add($CacheID, '1', 60);
 	}else{
 		$DOM->AddAttribs('Body',Array('onload'=>"ShowAlert('Введён неверный или просроченный код подтверждения. Попробуйте ещё раз.','Warning');"));
 	}

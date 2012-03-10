@@ -14,7 +14,7 @@ $ServiceID = (integer) @$Args['ServiceID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $CacheID = Md5($__FILE__ . $ServiceID);
-$Result = MemoryCache_Get($CacheID);
+$Result = CacheManager::get($CacheID);
 if(!Is_Error($Result)){
 	Header('Content-Type: image');
 	Header('Cache-Control: private, max-age=86400');
@@ -47,7 +47,7 @@ switch(ValueOf($Service)){
     Header('Content-Type: image');
     Header('Cache-Control: private, max-age=86400');
     #---------------------------------------------------------------------------
-    MemoryCache_Add($CacheID, $Emblem, 24 * 3600);
+    CacheManager::add($CacheID, $Emblem, 24 * 3600);
     #---------------------------------------------------------------------------
     return $Emblem;
   default:

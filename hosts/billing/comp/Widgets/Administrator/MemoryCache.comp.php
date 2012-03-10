@@ -8,22 +8,22 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Stats = MemoryCache_Get_Stats();
+$Stats = CacheManager::getStat();
 if(Is_Error($Stats))
   return FALSE;
 #-------------------------------------------------------------------------------
 $Table = Array();
 #-------------------------------------------------------------------------------
-$Table[] = Array('Версия сервера',$Stats['version']);
+$Table[] = Array('Версия',$Stats['version']);
 $Table[] = Array('Кол-во объектов',$Stats['curr_items']);
-$Table[] = Array('Выделение памяти',SPrintF('%01.2f Мб.',$Stats['bytes']/1048576));
+$Table[] = Array('Выделено памяти',SPrintF('%01.2f Мб.',$Stats['bytes']/1048576));
 $Table[] = Array('Ограничение',SPrintF('%01.2f Мб.',$Stats['limit_maxbytes']/1048576));
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => "AjaxCall('/MemoryCacheFlush',null,'Очищение памяти','ShowTick(\"Кэш успешно очищен\");');",
+    'onclick' => "AjaxCall('/CacheFlush',null,'Очищение памяти','ShowTick(\"Кэш успешно очищен\");');",
     'value'   => 'Очистить память'
   )
 );
@@ -36,7 +36,7 @@ $Comp = Comp_Load('Tables/Standard',$Table);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-return Array('Title'=>'Состояние памяти','DOM'=>$Comp);
+return Array('Title'=>'Состояние кеша','DOM'=>$Comp);
 #-------------------------------------------------------------------------------
 
 ?>

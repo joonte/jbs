@@ -2,10 +2,6 @@
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
 <!-- *********************************************************************** -->
-<Cache>
-  <Name>APC</Name>
-  <IsEnabled>0</IsEnabled>>
-</Cache>
 <Update>
  <Server>
   <Address>joonte.com</Address>

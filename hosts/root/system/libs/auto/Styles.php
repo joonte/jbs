@@ -62,7 +62,7 @@ function Styles_XML($Element){
   /****************************************************************************/
   $CacheID = SPrintF('Styles_XML[%s]',Md5($Element));
   #-----------------------------------------------------------------------------
-  $Result = MemoryCache_Get($CacheID);
+  $Result = CacheManager::get($CacheID);
   if(!Is_Error($Result))
     return $Result;
   #-----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ function Styles_XML($Element){
     Array_Union($Result,$Adding);
   }
   #-----------------------------------------------------------------------------
-  MemoryCache_Add($CacheID,$Result);
+  CacheManager::add($CacheID,$Result);
   #-----------------------------------------------------------------------------
   return $Result;
 }

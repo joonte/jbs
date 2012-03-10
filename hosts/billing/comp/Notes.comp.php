@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 if(IsSet($GLOBALS['__USER'])){
   # cache added by lissyara, 2011-10-03 in 21:16 MSK
   $CacheID = Md5($__FILE__ . $GLOBALS['__USER']['ID']);
-  $Result = MemoryCache_Get($CacheID);
+  $Result = CacheManager::get($CacheID);
   if(!Is_Error($Result))
     return $Result;
   #-----------------------------------------------------------------------------
@@ -52,7 +52,7 @@ if(IsSet($GLOBALS['__USER'])){
   #-----------------------------------------------------------------------------
   $Out = (Count($Table->Childs)?$Table:new Tag('NOBODY','No nodes...'));
   #-----------------------------------------------------------------------------
-  MemoryCache_Add($CacheID,$Out,60);
+  CacheManager::add($CacheID,$Out,60);
   return $Out;
 }
 #-------------------------------------------------------------------------------

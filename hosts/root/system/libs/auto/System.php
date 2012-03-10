@@ -68,7 +68,7 @@ function System_HostsIDs($Element,$HostsIDs = Array()){
   #-----------------------------------------------------------------------------
   $CacheID = SPrintF('System_HostsIDs[%s]',Md5(SPrintF('%s-%s',Implode(':',$HostsIDs),$Element)));
   #-----------------------------------------------------------------------------
-  $Result = MemoryCache_Get($CacheID);
+  $Result = CacheManager::get($CacheID);
   if(!Is_Error($Result))
     return $Result;
   #-----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ function System_HostsIDs($Element,$HostsIDs = Array()){
   if(!Count($Result))
     return ERROR | @Trigger_Error("[System_HostsIDs]: не удалось найти хосты для элемента ($Element)");
   #-----------------------------------------------------------------------------
-  MemoryCache_Add($CacheID,$Result);
+  CacheManager::add($CacheID,$Result);
   #-----------------------------------------------------------------------------
   return $Result;
 
@@ -104,6 +104,10 @@ function System_Element($Element){
   if(Is_Error($HostsIDs))
     return ERROR | @Trigger_Error("[System_Element]: список хостов содержащих элемент не найдены");
   #-----------------------------------------------------------------------------
+  if (is_array($HostsIDs)) {
+    Reset($HostsIDs);
+  }
+
   $HostID = Current($HostsIDs);
   #-----------------------------------------------------------------------------
   return SPrintF('%s/hosts/%s/%s',SYSTEM_PATH,$HostID,$Element);
@@ -128,7 +132,7 @@ function System_XML($Element,$HostsIDs = Array()){
     #---------------------------------------------------------------------------
     $CacheID = SPrintF('System_XML[%s]',Md5(SPrintF('%s-%s',Implode(':',$HostsIDs),$Element)));
     #---------------------------------------------------------------------------
-    $Result = MemoryCache_Get($CacheID);
+    $Result = CacheManager::get($CacheID);
     if(!Is_Error($Result))
       return $Result;
   }
@@ -160,7 +164,7 @@ function System_XML($Element,$HostsIDs = Array()){
   }
   #-----------------------------------------------------------------------------
   if($IsUseCache)
-    MemoryCache_Add($CacheID,$Result);
+    CacheManager::add($CacheID,$Result);
   #-----------------------------------------------------------------------------
   return $Result;
 }

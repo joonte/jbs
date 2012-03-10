@@ -14,7 +14,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
 #-------------------------------------------------------------------------------
 $CacheID = Md5($__FILE__ . $GLOBALS['__USER']['ID']);
 #-------------------------------------------------------------------------------
-$Result = MemoryCache_Get($CacheID);
+$Result = CacheManager::get($CacheID);
 if(!Is_Error($Result))
 	return $Result;
 #-------------------------------------------------------------------------------
@@ -118,7 +118,7 @@ $Out = $DOM->Build();
 if(Is_Error($Out))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-MemoryCache_Add($CacheID, $Out, 24 * 3600);  # cache it to 24 hour
+CacheManager::add($CacheID, $Out, 24 * 3600);  # cache it to 24 hour
 #-------------------------------------------------------------------------------
 return $Out;
 #-------------------------------------------------------------------------------

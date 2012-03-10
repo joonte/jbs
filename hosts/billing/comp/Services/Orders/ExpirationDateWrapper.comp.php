@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 #Debug("[comp/Services/Orders/ExpirationDateWrapper]: OrderTypeCode = $OrderTypeCode, ID = $ID");
 #-------------------------------------------------------------------------------
 $CacheID = Md5($__FILE__ . $OrderTypeCode . $ID);
-$Result = MemoryCache_Get($CacheID);
+$Result = CacheManager::get($CacheID);
 if(!Is_Error($Result))
 return $Result;
 #-------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-MemoryCache_Add($CacheID, $Comp, 3600);
+CacheManager::add($CacheID, $Comp, 3600);
 #-------------------------------------------------------------------------------
 return $Comp;
 #-------------------------------------------------------------------------------

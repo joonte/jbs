@@ -58,7 +58,7 @@ function WhoIs_Check($DomainName,$ZoneName){
   $CacheID = SPrintF('WhoIs_Check[%s]',$Domain);
   #-----------------------------------------------------------------------------
   if (CacheManager::isEnabled()) {
-    $Answer = CacheManager::getInstance()->get($CacheID);
+    $Answer = CacheManager::get($CacheID);
   }
   else {
     $Answer = ERROR;

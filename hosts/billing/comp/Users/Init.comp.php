@@ -100,7 +100,7 @@ switch(ValueOf($User)){
             #-------------------------------------------------------------------
             $CacheID = SPrintF('Groups/Interface[%s]',Md5(Implode(':',$Path)));
             #-------------------------------------------------------------------
-            $InterfaceID = MemoryCache_Get($CacheID);
+            $InterfaceID = CacheManager::get($CacheID);
             if(Is_Error($InterfaceID)){
               #-----------------------------------------------------------------
               $InterfaceID = '';
@@ -129,7 +129,7 @@ switch(ValueOf($User)){
                 }
               }
               #-----------------------------------------------------------------
-              MemoryCache_Add($CacheID,$InterfaceID);
+              CacheManager::add($CacheID,$InterfaceID);
             }
             #-------------------------------------------------------------------
             $User['InterfaceID'] = $InterfaceID;

@@ -11,7 +11,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 $CacheID = SPrintF('GC[%s]',Md5('Services'));
-$Services = MemoryCache_Get($CacheID);
+$Services = CacheManager::get($CacheID);
 if(Is_Error($Services)){
   $Services = DB_Select('Services', Array('ID','Name','Code'),Array('Where' =>"`IsActive` = 'yes' AND `Code` NOT IN ('Default')"));
   #-----------------------------------------------------------------------------
@@ -24,7 +24,7 @@ if(Is_Error($Services)){
     $Services[$i]['Table'] = Current($View);
   }
   #-----------------------------------------------------------------------------
-  MemoryCache_Add($CacheID,$Services,600);
+  CacheManager::add($CacheID,$Services,600);
 }
 #-------------------------------------------------------------------------------
 for($i=0;$i<Count($Services);$i++){

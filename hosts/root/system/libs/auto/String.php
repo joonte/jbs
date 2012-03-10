@@ -19,7 +19,7 @@ function String_Xml_Parse($String,$IsUseCache = TRUE){
     #---------------------------------------------------------------------------
     $CacheID = SPrintF('String_XML_Parse[%s]',Md5(Crc32($String)));
     #---------------------------------------------------------------------------
-    $Result = MemoryCache_Get($CacheID);
+    $Result = CacheManager::get($CacheID);
     if(!Is_Error($Result))
       return $Result;
   }
@@ -109,7 +109,7 @@ function String_Xml_Parse($String,$IsUseCache = TRUE){
   }
   #-----------------------------------------------------------------------------
   if($IsUseCache)
-    MemoryCache_Add($CacheID,$Root);
+    CacheManager::add($CacheID,$Root);
   #-----------------------------------------------------------------------------
   return $Root;
 }

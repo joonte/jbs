@@ -233,7 +233,7 @@ function __Error_Handler__($Number,$Error,$File,$Line){
   Debug(SPrintF('[!] %s',$Message));
   //Debug(SPrintF('[!] %s',debug_print_backtrace()));
   #-----------------------------------------------------------------------------
-  #Error_Reporting(E_ALL);
+  //Error_Reporting(E_ALL);
   if(Error_Reporting()){
     #---------------------------------------------------------------------------
     $JBsErrorID = SPrintF('%s[%s]',HOST_ID,Md5(Implode(':',Array($Number,$Error,$Line,$File))));
@@ -377,6 +377,8 @@ UnSet($Path);
 /******************************************************************************/
 # ЗАГРУЗКА БИБЛИОТЕК И КЛАССОВ
 /******************************************************************************/
+# Загрузчик
+
 # Предзагрузка
 /******************************************************************************/
 Debug('[JBs core]: загрузка автозагружаемых классов и библиотек');
@@ -412,6 +414,16 @@ foreach(Array('libs','classes') as $Folder){
 }
 #-------------------------------------------------------------------------------
 UnSet($Folder,$HostsIDs,$HostID,$Path,$Resource,$File);
+
+/**
+ * Initialize Cache Manager.
+ */
+$cacheConf = @Parse_Ini_File(SPrintF('%s/core/config.ini', SYSTEM_PATH), TRUE);
+if($cacheConf) {
+    if (IsSet($cacheConf['cache_enabled']) && $cacheConf['cache_enabled']) {
+        CacheManager::init();
+    }
+}
 
 /**
  * Custom class loader.
