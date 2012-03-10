@@ -20,9 +20,9 @@
  <ListElement>
   <Text>Обновление системы</Text>
   <Paths>
-   <UniqID>^\/Administrator\/Update$</UniqID>
+   <UniqID>^\/Administrator\/UpdateSystem$</UniqID>
   </Paths>
-  <Href>/Administrator/Update</Href>
+  <Href>/Administrator/UpdateSystem</Href>
  </ListElement>
  <ListElement>
   <Text>Версия биллинга</Text>

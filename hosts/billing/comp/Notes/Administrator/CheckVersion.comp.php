@@ -24,7 +24,7 @@ $Parse = <<<EOD
 <NOBODY>
  <SPAN>Внимание, доступна новая версия биллинговой системы </SPAN>
  <SPAN style="font-weight:bold;">%s</SPAN>
- <A href="/Administrator/Update">Перейти к обновлению »</A>
+ <A href="/Administrator/UpdateSystem">Перейти к обновлению »</A>
 </NOBODY>
 EOD;
     $LastVersion = $versionInfo['version'];
