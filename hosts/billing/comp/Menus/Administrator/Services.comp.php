@@ -37,9 +37,11 @@ switch(ValueOf($Services)){
       if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
+      if($Service['Code'] == "Domains"){
+          $Service['Code'] = "Domain";
+      }
+      #-------------------------------------------------------------------------
       $Code = $Service['Code'];
-      # added by lissyara 2011-10-10 in 16:01 MSK, for JBS-176
-      if($Code == "Domains"){$Code = "Domain";}
       #-------------------------------------------------------------------------
       $Item = Array('Text'=>$Comp,'Level'=>2,'Paths'=>Array($Code != 'Default'?SPrintF('\/Administrator\/%s[a-zA-Z0-9]+',$Service['Code']):SPrintF('\/Administrator\/ServicesOrders\?ServiceID=%u',$Service['ID'])),'Href'=>SPrintF('/Administrator/%s',($Code != 'Default'?SPrintF('%sOrders',$Code):SPrintF('ServicesOrders?ServiceID=%s',$Service['ID']))));
       #-------------------------------------------------------------------------
