@@ -4,11 +4,11 @@ AddDefaultCharset UTF-8
 RewriteEngine On
 
 # tmp, for debug
-#RedirectPermanent      /API/Events     http://www.ya.ru/
+RedirectPermanent      /API/Events     http://www.ya.ru/
 
 
 RewriteCond %{REQUEST_URI} (.*)
-RewriteRule (public|styles|index.php|favicon.ico|apc.php) - [L]
+RewriteRule (install|public|styles|index.php|favicon.ico|apc.php) - [L]
 #RewriteCond %{HTTPS} !=on
 #RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
 RewriteRule (.*) /index.php

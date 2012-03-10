@@ -1033,12 +1033,15 @@
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <SMSC>
+ <Server>smsc.ru</Server>
  <Login>joonte</Login>
  <Password>joonte@passwd</Password>
- <Server>smsc.ru</Server>
- <SenderID>Joonte</SenderID>
- <Charset>utf-8</Charset>
- <UseSSL>1</UseSSL>
+ <UseSSL>0</UseSSL>
+ <Send>
+   <sender>Joonte</sender>
+   <charset>utf-8</charset>
+   <translit>1</translit>
+ </Send>
 </SMSC>
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->

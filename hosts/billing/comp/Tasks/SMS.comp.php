@@ -30,7 +30,6 @@ $Settings = $Config[$SMSProvider];
 $Links = &Links();
 #-------------------------------------------------------------------------------
 $LinkID = Md5($SMSProvider);
-    Debug(print_r("111", true));
 #-------------------------------------------------------------------------------
 if (!IsSet($Links[$LinkID])) {
     #-----------------------------------------------------------------------------
@@ -38,21 +37,30 @@ if (!IsSet($Links[$LinkID])) {
     #-----------------------------------------------------------------------------
     $SMS = &$Links[$LinkID];
     #-----------------------------------------------------------------------------
-    $SMS = new $SMSProvider();
-    if (Is_Error($SMS))
+    try {
+        $SMS = $SMSProvider::get();
+    }
+    catch (Exception $e) {
         return ERROR | @Trigger_Error(500);
+    }
 }
 #-------------------------------------------------------------------------------
 $SMS = &$Links[$LinkID];
 #-------------------------------------------------------------------------------
-$Message = Mb_Convert_Encoding($Message, $Settings['Charset']);
+//$Message = Mb_Convert_Encoding($Message, $Settings['Charset']);
 #-------------------------------------------------------------------------------
-$IsMessage = $SMS->sendSms($Mobile, $Message);
-if (Is_Error($IsMessage)) {
+try {
+    $IsMessage = $SMS->send($Mobile, $Message);
+    if (Is_Error($IsMessage)) {
+        throw new ErrorException("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
+}
+catch (Exception $e) {
     #-----------------------------------------------------------------------------
     UnSet($Links[$LinkID]);
     #-----------------------------------------------------------------------------
-    Debug("[comp/Tasks/SMS]: error sending message, error is '" . $IsMessage->error . "'");
+    Debug("[comp/Tasks/SMS]: error sending message, error is '" . $e->getMessage() . "'");
+    return new jException($e->getMessage());
     #-----------------------------------------------------------------------------
     return 3600;
 }

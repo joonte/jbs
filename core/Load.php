@@ -1,10 +1,14 @@
 <?php
 /**
+ * Copyright (C) Joonte Software, http://www.joonte.com
+ */
+ 
+/**
  * Joonte Billing Core.
  *
  * Configure system environment and handle all users requests.
  * 
- * @author vvelikodny
+ * @author Vitaly Velikodny
  */
 #-------------------------------------------------------------------------------
 $GLOBALS['__MESSAGES'] = Array();
@@ -183,7 +187,7 @@ function Debug($message) {
     $__SYSLOG[] = $message;
 
     if (IS_DEBUG) {
-    	umask(0077);
+        umask(0077);
         @File_Put_Contents(SPrintF('%s/debug.log', SYSTEM_PATH), SPrintF("%s\n", $message), FILE_APPEND);
     }
 }
@@ -223,7 +227,7 @@ $__ERR_CODE = 100;
 #-------------------------------------------------------------------------------
 function __Error_Handler__($Number,$Error,$File,$Line){
   #-----------------------------------------------------------------------------
-  $Message = SPrintF('[%s]-%s в линии %s файла %s',$Number,$Error,$Line,$File);
+  $Message = SPrintF('[!!%s]-%s в линии %s файла %s',$Number,$Error,$Line,$File);
   #-----------------------------------------------------------------------------
   $__ERR_CODE = &$GLOBALS['__ERR_CODE'];
   #-----------------------------------------------------------------------------
@@ -242,18 +246,9 @@ function __Error_Handler__($Number,$Error,$File,$Line){
     #---------------------------------------------------------------------------
     $Log = Implode("\n",$__SYSLOG);
     #---------------------------------------------------------------------------
-    $Debugger = @FsockOpen('127.0.0.1',9000,$nError,$sError,0);
-    if(Is_Resource($Debugger)){
-      #-------------------------------------------------------------------------
-      if(!@Fwrite($Debugger,$Log))
-        Debug('[__Error_Handler__]: не удалось отправить лог в отладчик');
-      #-------------------------------------------------------------------------
-      FClose($Debugger);
-    }else{
-      #-------------------------------------------------------------------------
-      Report($JBsErrorID,$JBsErrorID);
-      #-------------------------------------------------------------------------
-      foreach(Array(SYSTEM_PATH,'/tmp') as $Folder){
+    Report($JBsErrorID,$JBsErrorID);
+    #-------------------------------------------------------------------------
+    foreach(Array(SYSTEM_PATH,'/tmp') as $Folder){
         #-----------------------------------------------------------------------
         $Path = SPrintF('%s/jbs-errors.log',$Folder);
         #-----------------------------------------------------------------------
@@ -263,8 +258,8 @@ function __Error_Handler__($Number,$Error,$File,$Line){
             UnLink($Path);
         }
         #-----------------------------------------------------------------------
-	umask(0077);
-	#-----------------------------------------------------------------------
+        umask(0077);
+        #-----------------------------------------------------------------------
         if(!@File_Put_Contents($Path,SPrintF("%s\n\n%s\n\n",$JBsErrorID,$Log),FILE_APPEND)){
           #---------------------------------------------------------------------
           Debug(SPrintF('[__Error_Handler__]: не удалось осуществить запись ошибки в системный лог (%s)',$Path));
@@ -273,7 +268,6 @@ function __Error_Handler__($Number,$Error,$File,$Line){
         }
         #-----------------------------------------------------------------------
         break;
-      }
     }
     #---------------------------------------------------------------------------
     if(File_Exists(SPrintF('%s/DEBUG',SYSTEM_PATH)))
@@ -450,6 +444,13 @@ Debug(SPrintF('[JBs core]: внешний запрос сформирован к
  */
 function __ShutDown_Function__(){
   #-----------------------------------------------------------------------------
+  // Catch Fatal Errors.
+  $lastError = error_get_last();
+  if ($lastError != NULL) {
+      $Message = SPrintF('[%s]-%s в линии %s файла %s',$lastError['type'], $lastError['message'], $lastError['line'], $lastError['file']);
+      #-----------------------------------------------------------------------------
+      Debug(SPrintF('[!] %s',$Message));
+  }
   #-----------------------------------------------------------------------------
   # added by lissyara 2011-10-12 in 16:15 MSK, for JBS-173
   #Debug("[JBs core]:" . print_r($GLOBALS, true));
@@ -491,17 +492,6 @@ function __ShutDown_Function__(){
   Debug('');
   Debug('');
   Debug('');
-  #-----------------------------------------------------------------------------
-  if(IS_DEBUG && WORK_TIME > 100){
-    #---------------------------------------------------------------------------
-    $Debugger = @FsockOpen('127.0.0.1',9000,$nError,$sError,0);
-    if(Is_Resource($Debugger)){
-      #-------------------------------------------------------------------------
-      @Fwrite($Debugger,Implode("\n",$GLOBALS['__SYSLOG']));
-      #-------------------------------------------------------------------------
-      FClose($Debugger);
-    }
-  }
 }
 
 /**
@@ -565,8 +555,6 @@ $smarty->setTemplateDir($templatePaths);
 $smarty->setCompileDir(SPrintF('%s/hosts/%s/tmp/template_c', SYSTEM_PATH, HOST_ID));
 $smarty->setCacheDir(SPrintF('%s/hosts/%s/tmp/cache', SYSTEM_PATH, HOST_ID));
 $smarty->setConfigDir(SPrintF('%s/others/root/smarty/configs', SYSTEM_PATH));
-
-//$GLOBALS['smarty']=$smarty;
 
 UnSet($Loaded,$HostsIDs,$HostID,$Path,$Folder,$File,$Module);
 /**
