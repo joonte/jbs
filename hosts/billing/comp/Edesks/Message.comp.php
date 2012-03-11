@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('libs/Upload.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$User = DB_Select('Users',Array('ID','GroupID','EnterDate','Email','Name','Sign'),Array('UNIQ','ID'=>$UserID));
+$User = DB_Select('Users',Array('ID','GroupID','EnterDate','Email','Name','Sign','(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`StatusID`="Payed" AND `InvoicesOwners`.`UserID`=`Users`.`ID`) AS `TotalPayments`'),Array('UNIQ','ID'=>$UserID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($User)){
   case 'error':
@@ -225,7 +225,7 @@ if(IsSet($GLOBALS['__USER']) && Mb_StrLen($Content) < 1000){
               if(Is_Error($UserLinks))
                 return ERROR | @Trigger_Error(500);
               #---------------------------------------------------------------------------
-              $UserLinks->AddAttribs(Array('target'=>'_blank','title'=>SPrintF('Заказы на %s (%s)',$Item['Item'],$Item['Name'])));
+              $UserLinks->AddAttribs(Array('target'=>'_blank','onMouseOver'=>SPrintF('PromptShow(event,\'Заказы на %s (%s)\',this);',$Item['Item'],$Item['Name'])));
               #---------------------------------------------------------------------------
               $Td->AddChild($UserLinks);
 	    }
@@ -235,16 +235,21 @@ if(IsSet($GLOBALS['__USER']) && Mb_StrLen($Content) < 1000){
             return ERROR | @Trigger_Error(101);
           }
           #---------------------------------------------------------------------------
-	  $UserLinks = Comp_Load('Formats/String','[Счета]',10,SPrintF('/Administrator/Invoices?Search=%s&PatternOutID=Default',$User['Email']));
+      if($User['TotalPayments'] > 0){
+        $InvoicesText = SPrintF('[%s]',$User['TotalPayments']);
+	  }else{
+        $InvoicesText = "[Счета]";
+	  }
+	  $UserLinks = Comp_Load('Formats/String',$InvoicesText,10,SPrintF('/Administrator/Invoices?Search=%s&PatternOutID=Default',$User['Email']));
 	  if(Is_Error($UserLinks))
 	    return ERROR | @Trigger_Error(500);
-	  $UserLinks->AddAttribs(Array('target'=>'_blank','title'=>'Найти счета на оплату'));
+	  $UserLinks->AddAttribs(Array('target'=>'_blank','onMouseOver'=>'PromptShow(event,\'Сумма оплаченных счетов пользователя\',this);'));
 	  $Td->AddChild($UserLinks);
 	  #---------------------------------------------------------------------------
 	  $UserLinks = Comp_Load('Formats/String','[Тикеты]',10,SPrintF('/Administrator/Tickets?Search=%s&PatternOutID=Default',$User['Email']));
 	  if(Is_Error($UserLinks))
 	    return ERROR | @Trigger_Error(500);
-	  $UserLinks->AddAttribs(Array('target'=>'_blank','title'=>'Найти все тикеты пользователя'));
+	  $UserLinks->AddAttribs(Array('target'=>'_blank','onMouseOver'=>'PromptShow(event,\'Найти все тикеты пользователя\',this);'));
 	  $Td->AddChild($UserLinks);
 	  #---------------------------------------------------------------------------
 	  # ссылка на редактирование
