@@ -460,50 +460,72 @@ function WebNames_Get_Balance($Settings){
   return new gException('WRONG_ANSWER',$Result);
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 function WebNames_Is_Available_Domain($Settings,$Domain){
   /****************************************************************************/
   $__args_types = Array('array','string');
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Address'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'CP1251'
-    );
+  # ввиду того, что вебнеймс интерфейса нормального не предоставляет, а за частые
+  # запросы банит, кэшируем полученный результат и юазем кэш
+  $CacheID = Md5($Settings['Login'] . $Settings['Password'] . 'pispAllDomainsInfo');
+  $Result = MemoryCache_Get($CacheID);
+  # если результата нет - лезем в вебнеймс
+  if(Is_Error($Result)){
+    $Http = Array(
+      #---------------------------------------------------------------------------
+      'Address'  => $Settings['Address'],
+      'Port'     => $Settings['Port'],
+      'Host'     => $Settings['Address'],
+      'Protocol' => $Settings['Protocol'],
+      'Charset'  => 'CP1251'
+      );
+    #-----------------------------------------------------------------------------
+    $Query = Array(
+      #---------------------------------------------------------------------------
+      'thisPage'           => 'pispAllDomainsInfo',	# see JBS-252
+      'username'           => $Settings['Login'],
+      'password'           => $Settings['Password'],
+      'interface_revision' => 1,
+      'interface_lang'     => 'en'
+      );
+    #-----------------------------------------------------------------------------
+    $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
+    if(Is_Error($Result))
+      return ERROR | @Trigger_Error('[WebNames_Is_Available_Domain]: не удалось выполнить запрос к серверу');
+    #-----------------------------------------------------------------------------
+    $Result = Trim($Result['Body']);
+    #-----------------------------------------------------------------------------
+    if(Preg_Match('/Error:/',$Result))
+      return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
+    #-----------------------------------------------------------------------------
+    if(!Preg_Match('/Success:/',$Result))
+      return ERROR | @Trigger_Error('[WebNames_Is_Available_Domain]: неизвестный ответ');
+    #-----------------------------------------------------------------------------
+    # кэшируем полученный результат
+	MemoryCache_Add($CacheID, $Result, 3600);
+  }
   #-----------------------------------------------------------------------------
-  $Query = Array(
-    #---------------------------------------------------------------------------
-    'thisPage'           => 'pispDomainInfo',
-    'username'           => $Settings['Login'],
-    'password'           => $Settings['Password'],
-    'domain_name'        => $Domain,
-    'interface_revision' => 1,
-    'interface_lang'     => 'en'
-    );
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
-  if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[WebNames_Is_Available_Domain]: не удалось выполнить запрос к серверу');
+  # разбираем строчки на массив
+  $iDomains = Explode("\n", $Result);
   #-----------------------------------------------------------------------------
-  $Result = Trim($Result['Body']);
+  # перебираем массив, ищщем нужный домен
+  foreach($iDomains as $iDomain){
+    # Domain f-box59.ru; Status N; CreationDate 2010-02-23; ExpirationDate 2012-02-23; FutureExpDate ;
+	#Debug("[system/libs/WebNames][WebNames_Is_Available_Domain]: " . $iDomain);
+    $DomainInfo = Explode(" ",$iDomain);
+	#Debug("[system/libs/WebNames][WebNames_Is_Available_Domain]: " . print_r($DomainInfo,true));
+	if(StrToLower(Trim($DomainInfo[1])) == StrToLower($Domain) . ';'){
+	  # домен есть на аккаунте
+	  return Array('Status'=>'true','ServiceID'=>'0');
+    }
+  }
   #-----------------------------------------------------------------------------
-  if(Preg_Match('/Success:\s(Status\s([YTBN]))/',$Result,$Status))
-    return Array('Status'=>'true','ServiceID'=>'0');
   #-----------------------------------------------------------------------------
-  if(Preg_Match('/Success:\s(Status\s[A-Z]+)/',$Result,$Status))
-    return Array('Status'=>'false','ErrorText'=>'Domain moved from account');
+  return Array('Status'=>'false','ErrorText'=>'Domain not found');
   #-----------------------------------------------------------------------------
-  if(Preg_Match('/Error:\sDomain\snot\sfound:/',$Result))
-    return Array('Status'=>'false','ErrorText'=>'Domain not found');
-  #-----------------------------------------------------------------------------
-  if(Preg_Match('/Error:/',$Result))
-    return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
-  #-----------------------------------------------------------------------------
-  return ERROR | @Trigger_Error('[WebNames_Is_Available_Domain]: неизвестный ответ');
 }
 #-------------------------------------------------------------------------------
 ?>
