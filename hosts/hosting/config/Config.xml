@@ -965,6 +965,7 @@
     <DomainsAutoProlongation>Автопродление истекающих доменов</DomainsAutoProlongation>
     <SetSuspendExpiredDomains>Блокировка просроченных доменов</SetSuspendExpiredDomains>
     <DomainPathRegisterNotify>Уведомления о доменах с неопределёнными владельцами</DomainPathRegisterNotify>
+    <DeleteDomainsOnTransfer>Удаление доменов в статусе &quot;На переносе&quot;</DeleteDomainsOnTransfer>
     <!-- синхронизация аккаунтов -->
    </DailyTasks>
   </GC>
