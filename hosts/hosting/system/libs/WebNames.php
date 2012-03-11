@@ -470,7 +470,7 @@ function WebNames_Is_Available_Domain($Settings,$Domain){
   # ввиду того, что вебнеймс интерфейса нормального не предоставляет, а за частые
   # запросы банит, кэшируем полученный результат и юазем кэш
   $CacheID = Md5($Settings['Login'] . $Settings['Password'] . 'pispAllDomainsInfo');
-  $Result = MemoryCache_Get($CacheID);
+  $Result = CacheManager::get($CacheID);
   # если результата нет - лезем в вебнеймс
   if(Is_Error($Result)){
     $Http = Array(
@@ -504,7 +504,7 @@ function WebNames_Is_Available_Domain($Settings,$Domain){
       return ERROR | @Trigger_Error('[WebNames_Is_Available_Domain]: неизвестный ответ');
     #-----------------------------------------------------------------------------
     # кэшируем полученный результат
-	MemoryCache_Add($CacheID, $Result, 3600);
+	CacheManager::add($CacheID, $Result, 3600);
   }
   #-----------------------------------------------------------------------------
   #-----------------------------------------------------------------------------
@@ -514,12 +514,12 @@ function WebNames_Is_Available_Domain($Settings,$Domain){
   # перебираем массив, ищщем нужный домен
   foreach($iDomains as $iDomain){
     # Domain f-box59.ru; Status N; CreationDate 2010-02-23; ExpirationDate 2012-02-23; FutureExpDate ;
-	#Debug("[system/libs/WebNames][WebNames_Is_Available_Domain]: " . $iDomain);
+    #Debug("[system/libs/WebNames][WebNames_Is_Available_Domain]: " . $iDomain);
     $DomainInfo = Explode(" ",$iDomain);
-	#Debug("[system/libs/WebNames][WebNames_Is_Available_Domain]: " . print_r($DomainInfo,true));
-	if(StrToLower(Trim($DomainInfo[1])) == StrToLower($Domain) . ';'){
-	  # домен есть на аккаунте
-	  return Array('Status'=>'true','ServiceID'=>'0');
+    #Debug("[system/libs/WebNames][WebNames_Is_Available_Domain]: " . print_r($DomainInfo,true));
+    if(StrToLower(Trim($DomainInfo[1])) == StrToLower($Domain) . ';'){
+      # домен есть на аккаунте
+      return Array('Status'=>'true','ServiceID'=>'0');
     }
   }
   #-----------------------------------------------------------------------------
