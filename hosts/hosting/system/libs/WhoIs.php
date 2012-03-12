@@ -57,14 +57,9 @@ function WhoIs_Check($DomainName,$ZoneName){
   #-----------------------------------------------------------------------------
   $CacheID = SPrintF('WhoIs_Check[%s]',$Domain);
   #-----------------------------------------------------------------------------
-  if (CacheManager::isEnabled()) {
-    $Answer = CacheManager::get($CacheID);
-  }
-  else {
-    $Answer = ERROR;
-  }
+  $Answer = CacheManager::get($CacheID);
   #-----------------------------------------------------------------------------
-  if(Is_Error($Answer)){
+  if(!$Answer){
     #---------------------------------------------------------------------------
     $Socket = @FsockOpen($DomainZone['Server'],43,$nError,$sError,5);
     #---------------------------------------------------------------------------

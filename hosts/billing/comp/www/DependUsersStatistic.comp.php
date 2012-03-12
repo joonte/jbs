@@ -15,8 +15,9 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
 $CacheID = Md5($__FILE__ . $GLOBALS['__USER']['ID']);
 #-------------------------------------------------------------------------------
 $Result = CacheManager::get($CacheID);
-if(!Is_Error($Result))
-	return $Result;
+if($Result) {
+    return $Result;
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $DOM = new DOM();

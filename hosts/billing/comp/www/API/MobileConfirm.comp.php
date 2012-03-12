@@ -81,7 +81,7 @@ if($Email){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Result = CacheManager::get($CacheID);
-	if(!Is_Error($Result) && $Confirm == $Result){
+	if($Result && $Confirm == $Result){
 		#-------------------------------------------------------------------------------
 		$IsUpdate = DB_Update('Users',Array('EmailConfirmed'=>Time()),Array('ID'=>$GLOBALS['__USER']['ID']));
 		if(Is_Error($IsUpdate))

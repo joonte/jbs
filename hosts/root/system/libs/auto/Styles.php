@@ -63,7 +63,7 @@ function Styles_XML($Element){
   $CacheID = SPrintF('Styles_XML[%s]',Md5($Element));
   #-----------------------------------------------------------------------------
   $Result = CacheManager::get($CacheID);
-  if(!Is_Error($Result))
+  if($Result)
     return $Result;
   #-----------------------------------------------------------------------------
   $HostsIDs = Styles_HostsIDs($Element);

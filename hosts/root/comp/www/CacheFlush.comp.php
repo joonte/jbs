@@ -12,8 +12,9 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $IsFlush = CacheManager::flush();
-if(Is_Error($IsFlush))
+if(!$IsFlush) {
   @Trigger_Error(500);
+}
 #-------------------------------------------------------------------------------
 return Array('Status'=>'Ok');
 #-------------------------------------------------------------------------------

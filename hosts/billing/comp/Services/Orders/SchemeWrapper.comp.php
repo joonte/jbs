@@ -12,9 +12,11 @@ Eval(COMP_INIT);
 Debug("[comp/Services/Orders/SchemeWrapper]: OrderTypeCode = $OrderTypeCode, ID = $ID");
 #-------------------------------------------------------------------------------
 $CacheID = Md5($__FILE__ . $OrderTypeCode . $ID);
+
 $Result = CacheManager::get($CacheID);
-if(!Is_Error($Result))
-	return $Result;
+if($Result) {
+    return $Result;
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($OrderTypeCode == 'Default'){
@@ -43,7 +45,6 @@ default:
 $Comp = Comp_Load('Formats/String',$Order['SchemeName'],10);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 CacheManager::add($CacheID, $Comp, 24 * 3600);
 #-------------------------------------------------------------------------------

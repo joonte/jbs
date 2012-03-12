@@ -13,7 +13,7 @@ if(IsSet($GLOBALS['__USER'])){
   # cache added by lissyara, 2011-10-03 in 21:16 MSK
   $CacheID = Md5($__FILE__ . $GLOBALS['__USER']['ID']);
   $Result = CacheManager::get($CacheID);
-  if(!Is_Error($Result))
+  if($Result)
     return $Result;
   #-----------------------------------------------------------------------------
   $Table = new Tag('TABLE',Array('cellspacing'=>0,'style'=>'margin-bottom: 5px; width: 100%'));

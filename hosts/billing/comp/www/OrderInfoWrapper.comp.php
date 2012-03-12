@@ -15,7 +15,7 @@ $ServiceOrderType	=  (string) @$Args['ServiceOrderType'];
 #-------------------------------------------------------------------------------
 #$CacheID = Md5($__FILE__ . $ServiceOrderType . $ServiceOrderID);
 #$Result = CacheManager::get($CacheID);
-#if(!Is_Error($Result))
+#if($Result)
 #  return $Result;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

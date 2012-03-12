@@ -101,7 +101,7 @@ switch(ValueOf($User)){
             $CacheID = SPrintF('Groups/Interface[%s]',Md5(Implode(':',$Path)));
             #-------------------------------------------------------------------
             $InterfaceID = CacheManager::get($CacheID);
-            if(Is_Error($InterfaceID)){
+            if(!$InterfaceID){
               #-----------------------------------------------------------------
               $InterfaceID = '';
               #-----------------------------------------------------------------

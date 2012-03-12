@@ -11,7 +11,7 @@ Eval(COMP_INIT);
 $CacheID = Md5($__FILE__);
 #-------------------------------------------------------------------------------
 $Result = CacheManager::get($CacheID);
-if(!Is_Error($Result))
+if($Result)
   return $Result;
 #-------------------------------------------------------------------------------
 $Result = Array();

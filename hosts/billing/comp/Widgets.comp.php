@@ -14,7 +14,7 @@ if(IsSet($GLOBALS['__USER'])){
   # cache added by lissyara, 2011-10-03 in 21:08 MSK
   $CacheID = Md5($__FILE__ . $GLOBALS['__USER']['ID']);
   $Result = CacheManager::get($CacheID);
-  if(!Is_Error($Result))
+  if($Result)
     return $Result;
   #-----------------------------------------------------------------------------
   $HostsIDs = Array_Reverse($GLOBALS['HOST_CONF']['HostsIDs']);

@@ -69,7 +69,7 @@ function System_HostsIDs($Element,$HostsIDs = Array()){
   $CacheID = SPrintF('System_HostsIDs[%s]',Md5(SPrintF('%s-%s',Implode(':',$HostsIDs),$Element)));
   #-----------------------------------------------------------------------------
   $Result = CacheManager::get($CacheID);
-  if(!Is_Error($Result))
+  if($Result)
     return $Result;
   #-----------------------------------------------------------------------------
   $Result = Array();
@@ -133,7 +133,7 @@ function System_XML($Element,$HostsIDs = Array()){
     $CacheID = SPrintF('System_XML[%s]',Md5(SPrintF('%s-%s',Implode(':',$HostsIDs),$Element)));
     #---------------------------------------------------------------------------
     $Result = CacheManager::get($CacheID);
-    if(!Is_Error($Result))
+    if($Result)
       return $Result;
   }
   #-----------------------------------------------------------------------------

@@ -19,8 +19,9 @@ $Details       =   (array) @$Args['Details'];
 $CacheID = Md5($__FILE__);
 #-------------------------------------------------------------------------------
 $Result = CacheManager::get($CacheID);
-if(!Is_Error($Result))
+if($Result) {
   return $Result;
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class','libs/HTMLDoc.php')))

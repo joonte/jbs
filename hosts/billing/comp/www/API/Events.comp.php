@@ -20,12 +20,12 @@ $TimeCacheID = Md5($__FILE__ . $GLOBALS['__USER']['ID'] . 'time');
 $LastIDCacheID = Md5($__FILE__ . $GLOBALS['__USER']['ID'] . 'ID');
 #-------------------------------------------------------------------------------
 $TimeResult = CacheManager::get($TimeCacheID);
-if(!Is_Error($TimeResult)){
+if($TimeResult){
 	# проверяем не истекло ли время кэша
 	if($TimeResult > Time() - 10){
 		# проверяем, есть ли выхлоп в кэше
 		$Out = CacheManager::get($OutCacheID);
-		if(!Is_Error($Out)){
+		if($Out){
 			# отдаём кэш
 			Debug("[comp/www/API/Events]: UserID: " . $GLOBALS['__USER']['ID'] . ", результат найден в кэше");
 			Return($Out);
@@ -49,7 +49,7 @@ switch(ValueOf($Entrance)){
     $Where = Array('UNIX_TIMESTAMP() - 10 <= `CreateDate`');
     #---------------------------------------------------------------------------
     $LastID = CacheManager::get($LastIDCacheID);
-    if(!Is_Error($LastID)){
+    if($LastID){
       Debug("[comp/www/API/Events]: last selected ID, from cache = " . $LastID . "; user = " . $GLOBALS['__USER']['ID']);
       $Where[] = SPrintF('`ID` > %u',$LastID);
     }

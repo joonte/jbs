@@ -43,9 +43,10 @@ class CacheManager {
     public static function add($key, $value, $ttl = 0) {
         if (self::isEnabled()) {
             //Debug(sprintf("Adds new key/value to cache [key=%s, ttl=%d]", $key, $ttl));
-            
             return self::$instance->add($key, $value, $ttl);
         }
+
+        return FALSE;
     }
 
     /**
@@ -56,19 +57,19 @@ class CacheManager {
     public static function get($key) {
         if (self::isEnabled()) {
             //Debug(sprintf("Gets value from cache [key=%s]", $key));
-            
             return self::$instance->get($key);
         }
 
-        return ERROR;
+        return FALSE;
     }
 
     public static function flush() {
         if (self::isEnabled()) {
             Debug("Flush the system cache.");
-
             return self::$instance->flush();
         }
+
+        return FALSE;
     }
 
     public static function getStat() {
@@ -76,7 +77,7 @@ class CacheManager {
             return self::$instance->getStatistic();
         }
 
-        return ERROR;
+        return FALSE;
     }
 
     public static function isEnabled() {

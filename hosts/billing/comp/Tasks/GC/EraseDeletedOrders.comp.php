@@ -12,7 +12,8 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $CacheID = SPrintF('GC[%s]',Md5('Services'));
 $Services = CacheManager::get($CacheID);
-if(Is_Error($Services)){
+
+if(!$Services){
   $Services = DB_Select('Services', Array('ID','Name','Code'),Array('Where' =>"`IsActive` = 'yes' AND `Code` NOT IN ('Default')"));
   #-----------------------------------------------------------------------------
   for($i=0;$i<Count($Services);$i++){

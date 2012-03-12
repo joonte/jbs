@@ -1,5 +1,7 @@
 <?php
+
 require_once 'Cache.class.php';
+
 /**
  * APC cache implementation.
  *
@@ -45,10 +47,10 @@ class APCCache implements Cache {
         $result = apc_store($key, $value, $ttl);
 
         if (!$result) {
-            return ERROR | @Trigger_Error(SPrintF('[APCCache::add]: не удалось закешировать объект [key=%s]', $key));
+            Debug(SPrintF('[APCCache::add]: не удалось закешировать объект [key=%s]', $key));
         }
 
-        return TRUE;
+        return $result;
     }
 
     public function flush() {
@@ -62,26 +64,28 @@ class APCCache implements Cache {
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 
         $result = apc_fetch($key);
-        if ($result === FALSE) {
-            return ERROR | @Trigger_Error(SPrintF('[APCCache::get]: не удалось извлечь объект [key=%s]', $key));
+
+        if (!$result) {
+            Debug(SPrintF('[APCCache::get]: не удалось извлечь объект [key=%s]', $key));
         }
+
         return $result;
     }
 
     public function getStatistic() {
-        $Result = Array();
+        $result = Array();
 
         $cache_user = apc_cache_info('user', 1);
 
-        $Result['version'] = phpversion('apc');
-        $Result['curr_items'] = $cache_user['num_entries'];
-        $Result['bytes'] = $cache_user['mem_size'];
+        $result['version'] = phpversion('apc');
+        $result['curr_items'] = $cache_user['num_entries'];
+        $result['bytes'] = $cache_user['mem_size'];
 
         $mem = apc_sma_info();
 
-        $Result['limit_maxbytes'] = $mem['avail_mem'];
+        $result['limit_maxbytes'] = $mem['avail_mem'];
 
-        return $Result;
+        return $result;
     }
 }
 ?>

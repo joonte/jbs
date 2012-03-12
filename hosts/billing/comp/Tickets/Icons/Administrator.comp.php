@@ -15,7 +15,7 @@ $__USER = $GLOBALS['__USER'];
 $CacheID = Md5(SPrintF('%s:%u',$__FILE__,$__USER['ID']));
 #-------------------------------------------------------------------------------
 $Result = CacheManager::get($CacheID);
-if(!Is_Error($Result))
+if($Result)
   return $Result;
 #-------------------------------------------------------------------------------
 $NoBody = new Tag('NOBODY');

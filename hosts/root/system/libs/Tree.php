@@ -16,7 +16,7 @@ function Tree_Path($TableID,$RowID,$ColumnsIDs = 'ID'){
   $CacheID = SPrintF('Tree_Path[%s]',Md5(SPrintF('%s:%u:%s',$TableID,$RowID,Is_String($ColumnsIDs)?$ColumnsIDs:Implode(':',$ColumnsIDs))));
   #-----------------------------------------------------------------------------
   $Result = CacheManager::get($CacheID);
-  if(Is_Error($Result)){
+  if(!$Result){
     #---------------------------------------------------------------------------
     $Row = DB_Select($TableID,'*',Array('UNIQ','ID'=>$RowID));
     #---------------------------------------------------------------------------
@@ -79,7 +79,7 @@ function Tree_Entrance($TableID,$RowID){
   $CacheID = SPrintF('Tree_Entrance[%s]',Md5(SPrintF('%s:%u',$TableID,$RowID)));
   #-----------------------------------------------------------------------------
   $Result = CacheManager::get($CacheID);
-  if(Is_Error($Result)){
+  if(!$Result){
     #---------------------------------------------------------------------------
     $Row = DB_Select($TableID,'*',Array('UNIQ','ID'=>$RowID));
     #---------------------------------------------------------------------------

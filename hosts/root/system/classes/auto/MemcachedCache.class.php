@@ -1,5 +1,7 @@
 <?php
+
 require_once 'Cache.class.php';
+
 /**
  * Memcached distributed cache implementation.
  * 
@@ -16,7 +18,7 @@ class MemcachedCache implements Cache {
      */
     const DFLT_PORT = 11211;
 
-    protected static $link;
+    protected static $memcached;
 
     /** Memcached singleton instance. */
     protected static $instance;
@@ -33,15 +35,14 @@ class MemcachedCache implements Cache {
         $Port = (IsSet($GLOBALS['HOST_CONF']['memcached.port'])?$GLOBALS['HOST_CONF']['memcached.port']:self::DFLT_PORT);
 
         // Check connection.
-        $Link = @memcache_connect('localhost', $Port, 0x1);
-        #---------------------------------------------------------------------------
-        if(!$Link) {
+        self::$memcached = new Memcache();
+
+        $connected = self::$memcached->connect('localhost', $Port, 0x1);
+        if(!$connected) {
             throw new Exception(SPrintF("Could not connet to memcached [port=%s]", $Port));
         }
 
-        self::$link = $Link;
-
-        $version = @MemCache_Get_Version(self::$link);
+        $version = self::$memcached->getVersion();
 
         Debug(SPrintF('[Memcached]: memcached connected [version=%s]', $version));
     }
@@ -67,21 +68,15 @@ class MemcachedCache implements Cache {
         $__args_types = Array('string', 'boolean,integer,string,array,object', 'integer');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 
-        $link = self::$link;
-
-        if($link === FALSE) {
-            return ERROR;
-        }
-
         $key = SPrintF('[%s]-%s', HOST_ID, $key);
 
-        $result = MemCache_Add($link, $key, $value, NULL, $time);
+        $result = self::$memcached->add($key, $value, NULL, $time);
 
         if (!$result) {
-            return ERROR | @Trigger_Error('[MemoryCache_Add]: не удалось закешировать объект');
+            Debug(SPrintF('[MemcachedCache::add]: не удалось закешировать объект [key=%s]', $key));
         }
 
-        return TRUE;
+        return $result;
     }
 
 
@@ -90,52 +85,36 @@ class MemcachedCache implements Cache {
         $__args_types = Array('string');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 
-        $link = self::$link;
-
-        if ($link === FALSE) {
-            return ERROR;
-        }
-
         $key = SPrintF('[%s]-%s', HOST_ID, $key);
 
-        $result = @MemCache_Get($link, $key);
+        $result = self::$memcached->get($key);
 
-        if ($result === FALSE) {
-            return ERROR | @Trigger_Error('[MemoryCache_Get]: не удалось извлечь объект');
+        if (!$result) {
+            Debug(SPrintF('[MemcachedCache::get]: не удалось извлечь объект [key=%s]', $key));
         }
 
         return $result;
     }
 
     function flush() {
-        $link = self::$link;
+        $result = self::$memcached->flush();
 
-        if ($link === FALSE) {
-            return ERROR;
+        if (!$result) {
+            Debug('[MemoryCache_Flush]: не удалось очистить память');
         }
 
-        $result = @MemCache_Flush($link);
-
-        if ($result === FALSE) {
-            return ERROR | @Trigger_Error('[MemoryCache_Flush]: не удалось очистить память');
-        }
-
-        return TRUE;
+        return $result;
     }
 
 
     function getStatistic() {
-        $link = self::$link;
+        $result = self::$memcached->getStats();
 
-        if ($link === FALSE) {
-            return ERROR;
+        if($result === FALSE) {
+            Debug('[MemcachedCache::getStatistic]: не удалось получить статистику кэшированной памяти');
         }
-
-        $Result = @Memcache_Get_Stats($link);
-        if($Result === FALSE)
-        return ERROR | @Trigger_Error('[MemoryCache_Get_Stats]: не удалось получить статистику кэшированной памяти');
         
-        return $Result;
+        return $result;
     }
 }
 ?>

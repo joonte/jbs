@@ -20,7 +20,7 @@ function String_Xml_Parse($String,$IsUseCache = TRUE){
     $CacheID = SPrintF('String_XML_Parse[%s]',Md5(Crc32($String)));
     #---------------------------------------------------------------------------
     $Result = CacheManager::get($CacheID);
-    if(!Is_Error($Result))
+    if($Result)
       return $Result;
   }
   #-----------------------------------------------------------------------------

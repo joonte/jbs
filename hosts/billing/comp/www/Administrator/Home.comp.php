@@ -48,7 +48,7 @@ if(!$Count){
   $DOM->AddAttribs('Body',Array('onload'=>"ShowWindow('/ProfileEdit',{TemplatesIDs:'Juridical,Individual'});"));
 }
 #-------------------------------------------------------------------------------
-if(!MemoryCache_IsOnLine())
+if(!CacheManager::isEnabled())
   $__MESSAGES[] = 'Система кеширования недоступна. Биллинг может работать быстрее используя ресурсы оперативной памяти. Убедитесь что memcached запущен и модуль для PHP установлен.';
 #-------------------------------------------------------------------------------
 $Result = DB_Query('SHOW ENGINES');

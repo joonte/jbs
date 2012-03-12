@@ -15,7 +15,7 @@ $ServiceID = (integer) @$Args['ServiceID'];
 #-------------------------------------------------------------------------------
 $CacheID = Md5($__FILE__ . $ServiceID);
 $Result = CacheManager::get($CacheID);
-if(!Is_Error($Result)){
+if($Result){
 	Header('Content-Type: image');
 	Header('Cache-Control: private, max-age=86400');
 	return $Result;
