@@ -16,8 +16,8 @@ class CacheManager {
                 if (extension_loaded(APCCache::EXT_NAME)) {
                     self::$instance = APCCache::getInstance();
                 }
-                else if (extension_loaded(Memcached::EXT_NAME)) {
-                    self::$instance = Memcached::getInstance();
+                else if (extension_loaded(MemcachedCache::EXT_NAME)) {
+                    self::$instance = MemcachedCache::getInstance();
                 }
                 else {
                     throw new Exception("Any supported cache not installed in your sysytem.");

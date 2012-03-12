@@ -5,7 +5,7 @@ require_once 'Cache.class.php';
  * 
  * @author vvelikodny
  */
-class Memcached implements Cache {
+class MemcachedCache implements Cache {
     /**
      * PHP lib name.
      */
