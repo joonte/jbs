@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Sergey Sedov (for www.host-food.ru) */
 /******************************************************************************/
@@ -28,6 +27,8 @@ switch(ValueOf($DomainOrders)){
   break;
   case 'array':
     #---------------------------------------------------------------------------
+    $GLOBALS['TaskReturnInfo'] = Array();
+    #---------------------------------------------------------------------------
     foreach($DomainOrders as $DomainOrder){
 	  #-------------------------------------------------------------------------
 	  $DomainOrder = DB_Select('DomainsOrdersOwners',Array('ID','UserID','DomainName','SchemeID','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) as `SchemeName`'),Array('UNIQ','ID'=>$DomainOrder['ID']));
@@ -38,6 +39,8 @@ switch(ValueOf($DomainOrders)){
 		  case 'exception':
 			return new gException('DOMAIN_ORDER_NOT_FOUND','Заказ домена не найден');
 		  case 'array':
+		    #-------------------------------------------------------------------
+			$GLOBALS['TaskReturnInfo'][] = SPrintF('%s.%s',mb_StrToLower($DomainOrder['DomainName'],'UTF-8'),$DomainOrder['SchemeName']);
 			#-------------------------------------------------------------------
 			$RegistratorID = DB_Select('DomainsSchemes','RegistratorID as ID',Array('UNIQ','ID'=>$DomainOrder['SchemeID']));
 			$RegistratorName = DB_Select('Registrators','Name',Array('UNIQ','ID'=>$RegistratorID['ID']));
