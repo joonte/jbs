@@ -434,7 +434,7 @@ function JoonteAutoLoad($class) {
   #-----------------------------------------------------------------------------
   $ClassPath = System_Element('system/classes/'.$class.'.class');
   #-----------------------------------------------------------------------------
-  include_once($ClassPath);
+  require_once($ClassPath);
 }
 
 spl_autoload_register('JoonteAutoLoad');
