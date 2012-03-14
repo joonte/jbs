@@ -375,8 +375,8 @@ $IsUpdate = DB_Update('Config',Array('Value'=>'TRUE'),Array('Where'=>"`Param` = 
 if(Is_Error($IsUpdate))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IsFlush = MemoryCache_Flush();
-if(Is_Error($IsFlush))
+$IsFlush = CacheManager::flush();
+if(!$IsFlush)
   @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 return '[OK]';

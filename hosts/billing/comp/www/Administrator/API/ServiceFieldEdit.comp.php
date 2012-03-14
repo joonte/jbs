@@ -74,8 +74,8 @@ if($ServiceFieldID){
     return ERROR | @Trigger_Error(500);
 }
 #-------------------------------------------------------------------------------
-$IsFlush = MemoryCache_Flush();
-if(Is_Error($IsFlush))
+$IsFlush = CacheManager::flush();
+if(!$IsFlush)
   @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 return Array('Status'=>'Ok');

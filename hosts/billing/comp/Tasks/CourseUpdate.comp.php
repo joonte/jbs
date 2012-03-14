@@ -71,8 +71,8 @@ $IsWrite = IO_Write($Path,To_XML_String($Config),TRUE);
 if(Is_Error($IsWrite))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IsFlush = MemoryCache_Flush();
-if(Is_Error($IsFlush))
+$IsFlush = CacheManager::flush();
+if(!$IsFlush)
   @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 return MkTime(2,0,0,Date('n'),Date('j')+1,Date('Y'));

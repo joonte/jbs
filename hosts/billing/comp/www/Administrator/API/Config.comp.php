@@ -76,8 +76,8 @@ $File = IO_Write($ConfigPath,To_XML_String($Config),TRUE);
 if(Is_Error($File))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IsFlush = MemoryCache_Flush();
-if(Is_Error($IsFlush))
+$IsFlush = CacheManager::flush();
+if(!$IsFlush)
   @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 return Array('Status'=>'Ok');

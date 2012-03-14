@@ -92,17 +92,17 @@
     <IsActive>0</IsActive>
    </WebMoneyE>
    <OKPAY>
-     <Send>
-       <ok_receiver>vvelikodny@gmail.com</ok_receiver>
-       <ok_currency>RUB</ok_currency>
-     </Send>
-     <IsActive>1</IsActive>
+    <Send>
+     <ok_receiver>vvelikodny@gmail.com</ok_receiver>
+     <ok_currency>RUB</ok_currency>
+    </Send>
+    <IsActive>1</IsActive>
    </OKPAY>
    <QIWI>
-     <Send>
-       <from>10593</from>
-     </Send>
-     <IsActive>1</IsActive>
+    <Send>
+     <from>10593</from>
+    </Send>
+    <IsActive>1</IsActive>
    </QIWI>
   </PaymentSystems>
  </Invoices>
@@ -151,4 +151,11 @@
  <Hosting>
   <IsNoDomain>0</IsNoDomain>
  </Hosting>
+ <Tasks>
+  <Types>
+   <GC>
+    <Name>Сборщик мусора</Name>
+   </GC>
+  </Types>
+ </Tasks>
 </XML>
