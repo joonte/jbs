@@ -74,7 +74,7 @@ switch(ValueOf($Ticket)){
 				return ERROR | @Trigger_Error(400);
 			case 'array':
 				# No more...
-				$IsUpdate = DB_Update('Edesks',Array('Flags'=>'no','StatusDate'=>time(),'StatusID'=>'Closed'),Array('ID'=>$TicketID));
+				$IsUpdate = DB_Update('Edesks',Array('Flags'=>'No','StatusDate'=>time(),'StatusID'=>'Closed'),Array('ID'=>$TicketID));
 				if(Is_Error($IsUpdate))
 					return ERROR | @Trigger_Error(500);
 				break;
