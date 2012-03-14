@@ -33,13 +33,13 @@
  </Name>
  <!-- ********************************************************************** -->
  <Lastname>
-  <Check>/^[А-ЯЁ]{1}[а-яё\-\s]{1,50}$/u</Check>
+  <Check>/^[a-zA-Zа-яА-ЯёЁ\s\-]{1,50}$/u</Check>
   <Comment>Отчество</Comment>
   <Example>Викторович</Example>
   <Type>Input</Type>
   <Attribs>
    <size>15</size>
-   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
+   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
