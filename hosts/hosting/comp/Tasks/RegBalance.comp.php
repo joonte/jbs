@@ -95,7 +95,7 @@ if($ISPSettings['Password'] && $ISPSettings['BalanceLowLimit'] > 0){
 	foreach($Balances as $Balance){
 		Debug("[comp/Tasks/RegBalance]: " . $Balance['name'] . " / " . $Balance['balance']);
 		if($Balance['name'] == 'ISPsystem'){
-			if($Balance['balance'] < $Settings['LowLimitISPsystem']){
+			if($Balance['balance'] < $ISPSettings['BalanceLowLimit']){
 				Debug("[comp/Tasks/RegBalance]: add to message: " . $Balance['name'] . " / " . $Balance['balance']);
 				$Message .= SPrintF("Остаток на счете ISPsystem ниже допустимого минимума - %01.2f евро. \n",$Balance['balance']);
 			}
