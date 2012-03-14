@@ -978,8 +978,6 @@
   <RegBalance>
     <Name>Проверка баланса счета регистратора</Name>
     <Params type="array" />
-    <LowLimit>2500</LowLimit>
-    <LowLimitISPsystem>50</LowLimitISPsystem>
     <IsActive>1</IsActive>
   </RegBalance>
   <!-- ********************************************************************* -->

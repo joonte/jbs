@@ -299,6 +299,7 @@ CREATE TABLE `Registrators` (
   `PartnerLogin` char(60) NOT NULL,
   `PartnerContract` char(60) NOT NULL,
   `JurName` char(255) NOT NULL,
+  `BalanceLowLimit` DOUBLE(7,2) NOT NULL DEFAULT '0',
   PRIMARY KEY(`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

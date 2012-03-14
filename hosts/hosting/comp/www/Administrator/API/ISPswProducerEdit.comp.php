@@ -13,13 +13,14 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 #-------------------------------------------------------------------------------
 $Args = Args();
 #-------------------------------------------------------------------------------
-$VisibleName		=  (string) @$Args['VisibleName'];
+$VisibleName	=  (string) @$Args['VisibleName'];
 $PrefixAPI		=  (string) @$Args['PrefixAPI'];
 $Address		=  (string) @$Args['Address'];
 $Port			= (integer) @$Args['Port'];
 $Protocol		=  (string) @$Args['Protocol'];
 $Login			=  (string) @$Args['Login'];
 $Password		=  (string) @$Args['Password'];
+$BalanceLowLimit=  (double) @$Args['BalanceLowLimit'];
 #-------------------------------------------------------------------------------
 $Config = Config();
 $ISPswProducer = $Config['IspSoft']['Settings'];
@@ -36,13 +37,13 @@ if(!$Login)
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $ISPswSettings = Array(
-	'VisibleName'			=> $VisibleName,
+	'VisibleName'		=> $VisibleName,
 	'PrefixAPI'			=> $PrefixAPI,
 	'Address'			=> $Address,
 	'Port'				=> $Port,
 	'Protocol'			=> $Protocol,
 	'Login'				=> $Login,
-	'Password'			=> $Password
+	'Password'			=> $Password,
 );
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -57,6 +58,8 @@ foreach ($ISPswSettings as $Key => $Value){
 		unset($ISPswSettings[$Key]);
 	}
 }
+#-------------------------------------------------------------------------------
+$ISPswSettings['BalanceLowLimit'] = $BalanceLowLimit;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $ConfigPath = SPrintF('%s/hosts/%s/config/Config.xml',SYSTEM_PATH,HOST_ID);

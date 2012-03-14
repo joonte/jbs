@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -32,8 +31,9 @@ $Ns4Name       =  (string) @$Args['Ns4Name'];
 $ParentID      = (integer) @$Args['ParentID'];
 $PrefixNic     =  (string) @$Args['PrefixNic'];
 $PartnerLogin  =  (string) @$Args['PartnerLogin'];
-$PartnerContract =(string) @$Args['PartnerContract'];
+$PartnerContract= (string) @$Args['PartnerContract'];
 $JurName       =  (string) @$Args['JurName'];
+$BalanceLowLimit= (double) @$Args['BalanceLowLimit'];
 #-------------------------------------------------------------------------------
 if(!$Name)
   return new gException('NAME_IS_EMPTY','Введите название регистратора');
@@ -103,7 +103,8 @@ $IRegistrator = Array(
   'PrefixNIC' => $PrefixNic,
   'PartnerLogin'    => $PartnerLogin,
   'PartnerContract' => $PartnerContract,
-  'JurName'   => $JurName
+  'JurName'   => $JurName,
+  'BalanceLowLimit' => $BalanceLowLimit,
 );
 #-------------------------------------------------------------------------------
 $Answer = Array('Status'=>'Ok');

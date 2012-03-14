@@ -181,6 +181,7 @@
   <PrefixAPI>/manager/billmgr</PrefixAPI>
   <Login />
   <Password />
+  <BalanceLowLimit />
  </Settings>
 </IspSoft>
 <!-- *********************************************************************** -->

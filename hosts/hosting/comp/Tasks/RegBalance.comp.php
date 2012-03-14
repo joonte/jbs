@@ -17,7 +17,7 @@ if(Is_Error(System_Load('classes/Registrator.class','libs/IspSoft.php')))
 #-------------------------------------------------------------------------------
 $Settings = $Config['Tasks']['Types']['RegBalance'];
 #-------------------------------------------------------------------------------
-$Registrators = DB_Select('Registrators',Array('ID','Name','TypeID'));
+$Registrators = DB_Select('Registrators',Array('ID','Name','TypeID','BalanceLowLimit'),Array('Where'=>'`BalanceLowLimit` > 0'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Registrators)){
 	case 'error':
@@ -65,11 +65,11 @@ switch(ValueOf($Registrators)){
 				#---------------------------------------------------------------
 				break;
 				case 'array':
-					Debug("[comp/Tasks/RegBalance]: Баланс - " . $Balance['Prepay'] . " RUR.");
+					Debug("[comp/Tasks/RegBalance]: Баланс: " . $Balance['Prepay']);
 					#-----------------------------------------------------------
-					if ((float)$Balance['Prepay'] < $Settings['LowLimit']) {
+					if ((float)$Balance['Prepay'] < $NowReg['BalanceLowLimit']){
 						Debug("[comp/Tasks/RegBalance]: Баланс ниже порога уведомления!");
-						$Message .= SPrintF("Остаток на счете регистратора %s ниже допустимого минимума - %01.2f руб. \n", $NowReg['Name'],$Balance['Prepay']);
+						$Message .= SPrintF("Остаток на счете регистратора %s ниже допустимого минимума - %01.2f\n", $NowReg['Name'],$Balance['Prepay']);
 					}
 					#-----------------------------------------------------------
 					break;
@@ -88,7 +88,7 @@ switch(ValueOf($Registrators)){
 # баланс ISPsystem
 $ISPSettings = $Config['IspSoft']['Settings'];
 # проверяем - настроено ли соединение с испсисем
-if($ISPSettings['Password']){
+if($ISPSettings['Password'] && $ISPSettings['BalanceLowLimit'] > 0){
 	# получаем баланс
 	$Balances = IspSoft_Get_Balance($ISPSettings);
 	#Debug("[comp/Tasks/RegBalance]: " . print_r($Balances, true) );
