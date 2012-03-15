@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -59,12 +58,12 @@ switch(ValueOf($ISPswOrder)){
                     return ERROR | @Trigger_Error(400);
                   case 'array':
                     #-----------------------------------------------------------
-		    $Event = Array(
-		    			'UserID'	=> $ISPswOrder['UserID'],
-					'PriorityID'	=> 'Error',
-					'Text'		=> SPrintF('Не удалось сменить тарифный план заказу ПО ISPsystem (%s) в автоматическом режиме, причина (%s)',$ISPswOrder['Login'],$SchemeChange->String),
-					'IsReaded'	=> FALSE
-		    		  );
+                    $Event = Array(
+                                  'UserID'	=> $ISPswOrder['UserID'],
+                                  'PriorityID'	=> 'Error',
+                                  'Text'	=> SPrintF('Не удалось сменить тарифный план заказу ПО ISPsystem (%s) в автоматическом режиме, причина (%s)',$ISPswOrder['Login'],$SchemeChange->String),
+                                  'IsReaded'	=> FALSE
+                                  );
 		    $Event = Comp_Load('Events/EventInsert',$Event);
                     if(!$Event)
                       return ERROR | @Trigger_Error(500);
@@ -83,6 +82,16 @@ switch(ValueOf($ISPswOrder)){
                   case 'exception':
                     return ERROR | @Trigger_Error(400);
                   case 'array':
+                    #-----------------------------------------------------------
+                    $Event = Array(
+                                  'UserID'	=> $ISPswOrder['UserID'],
+                                  'PriorityID'	=> 'Hosting',
+                                  'Text'	=> SPrintF('Тарифный план заказа ПО ISPsystem (%s) успешно изменён на (%s)',$ISPswOrder['Login'],$ISPswNewScheme['Name']),
+                                  );
+		    $Event = Comp_Load('Events/EventInsert',$Event);
+                    if(!$Event)
+                      return ERROR | @Trigger_Error(500);
+                    #-----------------------------------------------------------
                     return TRUE;
                   default:
                     return ERROR | @Trigger_Error(101);
