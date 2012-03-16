@@ -84,10 +84,10 @@ function CheckEvents(){
           //--------------------------------------------------------------------
           switch($Event.PriorityID){
             case 'Warning':
-             var $Color = '#EE82EE';
+	     var $Color = '#FFC0CB';
             break;
             case 'Error':
-             var $Color = '#FF6666';
+	     var $Color = '#EE82EE';
             break;
 	    case 'Notice':
 	     //var $Color = '#FFD700';
