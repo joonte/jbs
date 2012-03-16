@@ -82,15 +82,30 @@ function CheckEvents(){
           $Div = document.createElement('DIV');
           $Div.innerHTML = $Text;
           //--------------------------------------------------------------------
-          switch(Number($Event.PriorityID)){
+          switch($Event.PriorityID){
             case 'Warning':
-             var $Color = '#FFCCCC';
+             var $Color = '#EE82EE';
             break;
             case 'Error':
-             var $Color = '#FFCCCC';
+             var $Color = '#FF6666';
             break;
+	    case 'Notice':
+	     //var $Color = '#FFD700';
+	     var $Color = '#F1FCCE';
+	    break;
+	    case 'Billing':
+	     //var $Color = '#D5F66C';
+	     var $Color = '#F1FCCE';
+	    break;
+	    case 'System':
+	     //var $Color = '#ADC1F0';
+	     var $Color = '#F1FCCE';
+	    break;
+	    case 'Hosting':
+	     var $Color = '#F1FCCE';
+	    break;
             default:
-             var $Color = '#F1FCCE';
+             var $Color = '#FFCCCC';
           }
           //--------------------------------------------------------------------
           with($Div.style){
