@@ -3,9 +3,9 @@
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
 {assign var=Theme value="Регистрационные данные" scope=global}
-Здравствуйте, {$Params.User.Name|default:'$Params.User.Name'}!
+Здравствуйте, {$User.Name|default:'$User.Name'}!
 
-Поздравляем Вас, вы успешно зарегистрировались на ресурсе {$Params.Executor.SiteURL|default:'$Params.Executor.SiteURL'}!
+Поздравляем Вас, вы успешно зарегистрировались на ресурсе {$Executor.SiteURL|default:'$Executor.SiteURL'}!
 
 Просим Вас прочитать до конца данное электронное письмо, так как содержащаяся в нем информация поможет Вам в дальнейшей работе.
 
@@ -13,9 +13,9 @@
   * Адрес для входа:
       http://{$smarty.const.HOST_ID|default:'HOST_ID'}/Logon
   * Ваш электронный адрес (используется для входа в биллинговую систему):
-      {$Params.User.Email|default:'$Params.User.Email'}
+      {$User.Email|default:'$User.Email'}
   * Ваш пароль:
-      {$Params.Password|default:'$Password'}
+      {$Password|default:'$Password'}
 
 Сохраните эти данные в надежном месте, они потребуются для дальнейшей работы.
 
@@ -30,4 +30,4 @@
 Пожалуйста, следите за тем, чтобы эти данные были актуальными.
 В случае необходимости смените их в биллинговой системе.
 
-{$Params.From.Sign|default:'$Params.From.Sign'}
+{$From.Sign|default:'$From.Sign'}

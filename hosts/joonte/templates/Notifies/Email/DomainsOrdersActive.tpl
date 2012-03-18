@@ -2,10 +2,10 @@
  *  Joonte Billing System
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
-{assign var=Theme value="Заказ на домен {$Params.DomainName|default:'$Params.DomainName'}.{$Params.Name|default:'$Params.Name'} активирован" scope=global}
-Здравствуйте, {$Params.User.Name|default:'$Params.User.Name'}!
+{assign var=Theme value="Заказ на домен {$DomainName|default:'$DomainName'}.{$Name|default:'$Name'} активирован" scope=global}
+Здравствуйте, {$User.Name|default:'$User.Name'}!
 
-Уведомляем Вас о том, что {$Params.StatusDate|date_format:"%d.%m.%Y"} Ваш заказ домена №{$Params.OrderID|string_format:"%05u"} [{$Params.DomainName|default:'$Params.DomainName'}.{$Params.Name|default:'$Params.Name'}] был успешно активирован.
+Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ домена №{$OrderID|string_format:"%05u"} [{$DomainName|default:'$DomainName'}.{$Name|default:'$Name'}] был успешно активирован.
 
-{$Params.From.Sign|default:'$Params.From.Sign'}
+{$From.Sign|default:'$From.Sign'}
 

@@ -3,8 +3,8 @@
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
 {assign var=Theme value="Заказ выделенного IP адреса удален" scope=global}
-Здравствуйте, {$Params.User.Name|default:'$Params.User.Name'}!
+Здравствуйте, {$User.Name|default:'$User.Name'}!
 
-Уведомляем Вас о том, что  {$Params.StatusDate|date_format:"%d.%m.%Y"} Ваш заказ на выделенный IP [{$Params.Login|default:'$Params.Login'}], под номером  {$Params.Item.OrderID|string_format:"%05u"}, был удален.
+Уведомляем Вас о том, что  {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ на выделенный IP [{$Login|default:'$Login'}], под номером  {$Item.OrderID|string_format:"%05u"}, был удален.
 
-{$Params.From.Sign|default:'$Params.From.Sign'}
+{$From.Sign|default:'$From.Sign'}

@@ -9,5 +9,7 @@
  
 return Array(
     "Versions" => "Versions",
-    "VersionsDate" => "%D"
+    "VersionsDate" => "%D",
+    "Notifies" => "Notifies Templates",
+    "NotifiesType" => "Type:"
 );

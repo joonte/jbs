@@ -3,7 +3,7 @@
  *
  *  Joonte Billing System
  *
- *  Copyright © 2012 Vitaly Velikodnyy
+ *  Copyright © 2012 Joonte Software
  *
  */
 class NotificationManager {
@@ -23,7 +23,7 @@ class NotificationManager {
                 return ERROR | @Trigger_Error(101);
         }
 
-        $User = DB_Select('Users',Array('ID','Name','Sign','ICQ','Email','Mobile','UniqID','IsNotifies'),Array('UNIQ','ID'=>$msg->getTo()));
+        $User = DB_Select('Users',Array('ID','Name','Sign','ICQ','Email','Mobile','JabberID','UniqID','IsNotifies'),Array('UNIQ','ID'=>$msg->getTo()));
         switch(ValueOf($User)) {
             case 'error':
               return ERROR | @Trigger_Error('[Email_Send]: не удалось выбрать получателя');
@@ -61,7 +61,7 @@ class NotificationManager {
 
         $Notifies = $Config['Notifies'];
 
-        $Index = 0;
+        $sentMsgCnt = 0;
         foreach (Array_Keys($Notifies['Methods']) as $MethodID) {
             if (!$Notifies['Methods'][$MethodID]['IsActive'])
                 continue;
@@ -70,35 +70,30 @@ class NotificationManager {
             if (Is_Error($Count))
                 return ERROR | @Trigger_Error(500);
 
-            if ($Count)
+            if ($Count) {
                 continue;
-
-            // TODO Check if dispatcher exists. Required System elements.
-            $DispatcherClass = SPrintF('%s', $MethodID);
-
-            $Dispatcher = $DispatcherClass::get();
-            if (!($Dispatcher instanceof Dispatcher)) {
-                return new gException('DISPATCHER_NOT_FOUND', 'Dispatcher not found: '.$DispatcherClass);
             }
 
-            $Result = $Dispatcher->send($msg);
+            if (!class_exists($MethodID)) {
+                return new gException('DISPATCHER_NOT_FOUND', 'Dispatcher not found: '.$MethodID);
+            }
 
-            switch (ValueOf($Result)) {
-                case 'error':
-                    return ERROR | @Trigger_Error(SPrintF('[NotificationManager::sendMsg]: в функции (%s) оповещения произошла критическая ошибка', $Function));
-                case 'exception':
+            $dispatcher = $MethodID::get();
 
-                    break;
-                case 'true':
-                    $Index++;
-                    break;
-                default:
-                    return ERROR | @Trigger_Error(101);
+            try {
+                $dispatcher->send($msg);
+
+                $sentMsgCnt++;
+            } catch (jException $e) {
+                Debug(SPrintF("Error while sending message [userId=%s, message=%s]", $User['ID'], $e->getMessage()));
             }
         }
 
-        if ($Index < 1)
-            return new gException('USER_NOT_NOTIFIED', 'Не удалось оповестить пользователя ни одним из методов');
+        if ($sentMsgCnt < 1) {
+            Debug("Couldn't send notify by any methods to user :" . $User['ID']);
+
+            return FALSE;
+        }
 
         return TRUE;
     }

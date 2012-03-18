@@ -2,12 +2,12 @@
  *  Joonte Billing System
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
-Здравствуйте, {$Params.User.Name|default:'$Params.User.Name'}!
+Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Поступило новое сообщение с сайта:
 
 ---
-{$Params.Message|default:'$Params.Message'}
+{$Message|default:'$Message'}
 ---
 
-{$Params.From.Sign|default:'$Params.From.Sign'}
+{$From.Sign|default:'$From.Sign'}

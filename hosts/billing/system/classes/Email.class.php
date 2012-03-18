@@ -3,7 +3,11 @@
  *
  *  Joonte Billing System
  *
- *  Copyright © 2012 Vitaly Velikodnyy
+ *  Copyright © 2012 Joonte Software
+ *
+ */
+
+/**
  *
  */
 class Email implements Dispatcher {
@@ -25,51 +29,63 @@ class Email implements Dispatcher {
 
     public function send(Msg $msg) {
         // Get template file path.
-        $templateFile = SPrintF('Notifies/Email/%s.tpl', $msg->getTemplate());
+        $templatePath = SPrintF('Notifies/Email/%s.tpl', $msg->getTemplate());
 
         $smarty= JSmarty::get();
 
-        if (!$smarty->templateExists($templateFile)) {
-            return new jException('Template file not found: '.$templateFile);
+        if (!$smarty->templateExists($templatePath)) {
+            throw new jException('Template file not found: '.$templatePath);
         }
 
-        $smarty->assign('Params', $msg->getParams());
         $smarty->assign('Config', Config());
 
+        foreach(array_keys($msg->getParams()) as $paramName) {
+            $smarty->assign($paramName, $msg->getParam($paramName));
+        }
+
         try {
-            $message = $smarty->fetch($templateFile);
+            $message = $smarty->fetch($templatePath);
             $theme = $smarty->getTemplateVars('Theme');
 
             if (!$theme) {
                 $theme = '$Theme' ;
             }
         }
-        catch(Exception $e){
-            return new jException("Can't create template.", 'CREATE_TEMPLATE_ERROR', $e);
+        catch (Exception $e) {
+            throw new jException(SPrintF("Can't fetch template: %s", $templatePath), $e->getCode(), $e);
         }
 
-        $User = $msg->getParam('User');
+        $recipient = $msg->getParam('User');
 
-        if(!$User['Email'])
-            return new gException('RECIPIENT_EMAIL_ADDRESS_NOT_FILLED','Получатель не заполнил электронный адрес');
+        if(!$recipient['Email'])
+            throw new jException('E-mail address not found for user: '.$recipient['ID']);
 
-        $From = $msg->getParam('From');
+        $sender = $msg->getParam('From');
 
-        $Heads = Array(SPrintF('From: %s',$User['Email']),'MIME-Version: 1.0','Content-Type: text/plain; charset=UTF-8','Content-Transfer-Encoding: 8bit');
+        $emailHeads = Array(SPrintF('From: %s', $recipient['Email']), 'MIME-Version: 1.0', 'Content-Type: text/plain; charset=UTF-8','Content-Transfer-Encoding: 8bit');
 
-        if(IsSet($Comp['Heads']))
-            $Heads = Array_Merge($Heads,$Comp['Heads']);
+        $taskParams = Array(
+            'UserID' => $recipient['ID'],
+            'TypeID' => 'Email',
+            'Params' => Array(
+                $sender['Email'],
+                $theme,
+                $message,
+                Implode("\r\n", $emailHeads),
+                $recipient['ID']
+            )
+        );
 
-        $IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$User['ID'],'TypeID'=>'Email','Params'=>Array($From['Email'],$theme,$message,Implode("\r\n",$Heads),$User['ID'])));
-        switch(ValueOf($IsAdd)) {
+        $result = Comp_Load('www/Administrator/API/TaskEdit',$taskParams);
+        switch(ValueOf($result)) {
             case 'error':
-              return ERROR | @Trigger_Error('[Email_Send]: не удалось установить задание в очередь');
+              throw new jException("Couldn't add task to queue: ".$result);
             case 'exception':
-              return ERROR | @Trigger_Error('[Email_Send]: не удалось установить задание');
+              throw new jException("Couldn't add task to queue: ".$result->String);
             case 'array':
               return TRUE;
             default:
-              return ERROR | @Trigger_Error(101);
+              throw new jException("Unexpected error.");
         }
     }
 }

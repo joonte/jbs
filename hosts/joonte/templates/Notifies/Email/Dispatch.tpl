@@ -2,12 +2,12 @@
  *  Joonte Billing System
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
-{assign var=Theme value="{$Params.Theme|default:'$Params.Theme'}" scope=global}
-Здравствуйте, {$Params.User.Name|default:'$Params.User.Name'}!
+{assign var=Theme value="{$Theme|default:'$Theme'}" scope=global}
+Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 ---
-{$Params.Message|default:'$Params.Message'}
+{$Message|default:'$Message'}
 ---
 
-{$Params.From.Sign|default:'$Params.From.Sign'}
+{$From.Sign|default:'$From.Sign'}
 

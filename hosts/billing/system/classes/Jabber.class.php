@@ -6,7 +6,7 @@
  *  Copyright © 2012 Vitaly Velikodnyy
  *
  */
-class ICQ implements Dispatcher {
+class Jabber implements Dispatcher {
     /** Instance of email dispatcher. */
     private static $instance;
 
@@ -17,7 +17,7 @@ class ICQ implements Dispatcher {
 
     public static function get() {
         if (!isset(self::$instance)) {
-            self::$instance = new ICQ();
+            self::$instance = new Jabber();
         }
 
         return self::$instance;
@@ -25,7 +25,7 @@ class ICQ implements Dispatcher {
 
     public function send(Msg $msg) {
         // Get template file path.
-        $templatePath = SPrintF('Notifies/ICQ/%s.tpl', $msg->getTemplate());
+        $templatePath = SPrintF('Notifies/Jabber/%s.tpl', $msg->getTemplate());
 
         $smarty= JSmarty::get();
 
@@ -48,14 +48,14 @@ class ICQ implements Dispatcher {
 
         $recipient = $msg->getParam('User');
 
-        if(!$recipient['ICQ'])
-            throw new jException("ICQ UIN not found for user: ".$recipient['ID']);
+        if(!$recipient['JabberID'])
+            throw new jException("JabberID not found for user: ".$recipient['ID']);
 
         $taskParams = Array(
             'UserID' => $recipient['ID'],
-            'TypeID' => 'ICQ',
+            'TypeID' => 'Jabber',
             'Params' => Array(
-                $recipient['ICQ'],
+                $recipient['JabberID'],
                 $message,
                 $recipient['ID']
             )

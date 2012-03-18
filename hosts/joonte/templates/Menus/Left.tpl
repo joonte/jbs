@@ -26,6 +26,11 @@
           <TD>
               <TABLE border="0" height="100%" width="100%" cellspacing="0" cellpadding="0">
                <TR>
+                {if isset($item.Level) && $item.Level > 1}
+                    {for $i=1 to $item.Level}
+                    <TD width="10px"></TD>
+                    {/for}
+                {/if}
                 <TD>
                  <TABLE border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
                   <TR>

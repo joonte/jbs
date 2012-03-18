@@ -25,39 +25,52 @@ class SMS implements Dispatcher {
 
     public function send(Msg $msg) {
         // Get template file path.
-        $templateFile = SPrintF('Notifies/SMS/%s.tpl', $msg->getTemplate());
+        $templatePath = SPrintF('Notifies/SMS/%s.tpl', $msg->getTemplate());
 
         $smarty= JSmarty::get();
 
-        if (!$smarty->templateExists($templateFile)) {
-            return new jException('Template file not found: '.$templateFile);
+        if (!$smarty->templateExists($templatePath)) {
+            throw new jException('Template file not found: '.$templatePath);
         }
 
-        $smarty->assign('Params', $msg->getParams());
         $smarty->assign('Config', Config());
 
+        foreach(array_keys($msg->getParams()) as $paramName) {
+            $smarty->assign($paramName, $msg->getParam($paramName));
+        }
+
         try {
-            $message = $smarty->fetch($templateFile);
+            $message = $smarty->fetch($templatePath);
         }
         catch(Exception $e){
-            return new gException("Can't create template.", 'CREATE_TEMPLATE_ERROR', $e);
+            throw new jException(SPrintF("Can't fetch template: %s", $templatePath), $e->getCode(), $e);
         }
 
-        $User = $msg->getParam('User');
+        $recipient = $msg->getParam('User');
 
-        if(!$User['Mobile'])
-            return new gException('RECIPIENT_MOBILE_PHOME_NUM_NOT_FILLED','Получатель не заполнил мобильный номер');
+        if(!$recipient['Mobile'])
+            throw new jException('Mobile phone number not found for user: '.$recipient['ID']);
 
-        $IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$User['ID'],'TypeID'=>'SMS','Params'=>Array($User['Mobile'],$message,$User['ID'])));
-        switch(ValueOf($IsAdd)) {
+        $taskParams = Array(
+            'UserID' => $recipient['ID'],
+            'TypeID' => 'SMS',
+            'Params' => Array(
+                $recipient['Mobile'],
+                $message,
+                $recipient['ID']
+            )
+        );
+
+        $result = Comp_Load('www/Administrator/API/TaskEdit',$taskParams);
+        switch(ValueOf($result)) {
             case 'error':
-              return ERROR | @Trigger_Error('[Email_Send]: не удалось установить задание в очередь');
+              throw new jException("Couldn't add task to queue: ".$result);
             case 'exception':
-              return ERROR | @Trigger_Error('[Email_Send]: не удалось установить задание');
+              throw new jException("Couldn't add task to queue: ".$result->String);
             case 'array':
               return TRUE;
             default:
-              return ERROR | @Trigger_Error(101);
+              throw new jException("Unexpected error.");
         }
     }
 }

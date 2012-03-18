@@ -3,8 +3,8 @@
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
 {assign var=Theme value="Заказ виртуального сервера удален" scope=global}
-Здравствуйте, {$Params.User.Name|default:'$Params.User.Name'}!
+Здравствуйте, {$User.Name|default:'$User.Name'}!
 
-Уведомляем Вас о том, что {$Params.StatusDate|date_format:"%d.%m.%Y"} Ваш заказ на виртуальный выделенный сервер (VPS) №{$Params.OrderID|string_format:"%05u"} был удален.
+Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ на виртуальный выделенный сервер (VPS) №{$OrderID|string_format:"%05u"} был удален.
 
-{$Params.From.Sign|default:'$Params.From.Sign'}
+{$From.Sign|default:'$From.Sign'}

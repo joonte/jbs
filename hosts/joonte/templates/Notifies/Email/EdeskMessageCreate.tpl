@@ -14,4 +14,4 @@
 
 http://%HostID%/EdeskMessages?Email=%User.Email%&Password=%User.UniqID%&EdeskID=%EdeskID%
 
-{$Params.From.Sign|default:'$Params.From.Sign'}
+{$From.Sign|default:'$From.Sign'}

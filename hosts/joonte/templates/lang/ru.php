@@ -9,5 +9,7 @@
  
 return Array(
     "Versions" => "Версии",
-    "VersionsDate" => "%d.%m.%Y"
+    "VersionsDate" => "%d.%m.%Y",
+    "Notifies" => "Шаблоны сообщений",
+    "NotifiesType" => "Метод:"
 );
