@@ -408,6 +408,16 @@ foreach(Array('libs','classes') as $Folder){
 UnSet($Folder,$HostsIDs,$HostID,$Path,$Resource,$File);
 
 /**
+ * Initialize Cache Manager.
+ */
+$cacheConf = @Parse_Ini_File(SPrintF('%s/core/config.ini', SYSTEM_PATH), TRUE);
+if($cacheConf) {
+    if (IsSet($cacheConf['cache_enabled']) && $cacheConf['cache_enabled']) {
+        CacheManager::init();
+    }
+}
+
+/**
  * Custom class loader.
  *
  * @param <type> $class Class name for load.
