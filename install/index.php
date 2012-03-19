@@ -67,7 +67,7 @@ if (Preg_Match('/^(.+)\:[0-9]+$/', $HostID, $Mathces)) {
 }
 
 Define('HOST_ID', $HostID);
-Define('SYSTEM_PATH', DirName(DirName(DirName(__FILE__))));
+Define('SYSTEM_PATH', DirName(DirName(__FILE__)));
 Define('SETTINGS_FILE',SPrintF('%s/install.settings',SYSTEM_PATH));
 
 $__SETTINGS = Array(
