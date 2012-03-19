@@ -256,8 +256,11 @@ VALUES
 
 /* values for autoprolongation added by lissyara 2012-01-11 in 10:26 MSK */
 ('ServiceAutoProlongation', 'hosting', 1, 1, 4000000, 1, 1, 'yes'),
-('ServiceAutoProlongation', 'hosting', 3000000, 100, 1, 1, 2, 'yes')
+('ServiceAutoProlongation', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
 
+/* added by lissyara, for JBS-353, 2012-03-19 in 16:30 MSK */
+('DomainsOrdersChangeContactData','hosting',1,1,4000000,1,1,'yes'),
+('DomainsOrdersChangeContactData','hosting',3000000,100,1,1,2,'yes')
 
 ;
 UNLOCK TABLES;

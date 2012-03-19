@@ -14,6 +14,11 @@
   <Icon>Edit.gif</Icon>
  </UniqID>
  <UniqID>
+  <Text>Сменить контактные данные</Text>
+  <Href>javascript:ShowWindow("/DomainOrderChangeContactData",{DomainOrderID:%Replace%});</Href>
+  <Icon>Edit.gif</Icon>
+ </UniqID>
+ <UniqID>
   <Text>Обновить данные WhoIs</Text>
   <Href>javascript:DomainOrderWhoIsUpdate(%Replace%);</Href>
   <Icon>Edit.gif</Icon>

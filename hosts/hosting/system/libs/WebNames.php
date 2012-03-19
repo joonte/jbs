@@ -472,7 +472,7 @@ function WebNames_Is_Available_Domain($Settings,$Domain){
   $CacheID = Md5($Settings['Login'] . $Settings['Password'] . 'pispAllDomainsInfo');
   $Result = CacheManager::get($CacheID);
   # если результата нет - лезем в вебнеймс
-  if(!$Result){
+  if(Is_Error($Result)){
     $Http = Array(
       #---------------------------------------------------------------------------
       'Address'  => $Settings['Address'],
@@ -528,4 +528,59 @@ function WebNames_Is_Available_Domain($Settings,$Domain){
   #-----------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
+
+# added by lissyara, for JBS-353
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+function WebNames_Change_Contact_Detail($Settings,$Domain,$Person){
+  /****************************************************************************/
+  $__args_types = Array('array','string','array');
+  #-----------------------------------------------------------------------------
+  $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+  /****************************************************************************/
+  // phone, e_mail, cell_phone
+  #-------------------------------------------------------------------------------
+  $Http = Array(
+                #---------------------------------------------------------------------------
+	        'Address'  => $Settings['Address'],
+                'Port'     => $Settings['Port'],
+                'Host'     => $Settings['Address'],
+                'Protocol' => $Settings['Protocol'],
+                'Charset'  => 'CP1251'
+               );
+  #-------------------------------------------------------------------------------
+  $Query = Array(
+                 'thisPage'           => 'pispContactDetails',
+                 'username'           => $Settings['Login'],
+                 'password'           => $Settings['Password'],
+                 'interface_revision' => 1,
+                 'interface_lang'     => 'en',
+                 'domain_name'        => $Domain,
+                );
+  #-------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------
+  if(IsSet($Person['Phone']))
+    $Query['phone'] = $Person['Phone'];
+  #-------------------------------------------------------------------------------
+  if(IsSet($Person['CellPhone']))
+    $Query['cell_phone'] = Str_Replace(' ','',$Person['CellPhone']);
+  #-------------------------------------------------------------------------------
+  if(IsSet($Person['Email']))
+    $Query['e_mail'] = $Person['Email'];
+  #-------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------
+  $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
+  if(Is_Error($Result))
+    return ERROR | @Trigger_Error('[WebNames_Domain_Register]: не удалось выполнить запрос к серверу');
+  #-------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------
+  if(Preg_Match('/Error:/',$Result))
+    return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
+  #-----------------------------------------------------------------------------
+  if(!Preg_Match('/Success:/',$Result))
+    return ERROR | @Trigger_Error('[WebNames_Is_Available_Domain]: неизвестный ответ');
+  #-------------------------------------------------------------------------------
+}
+
+
 ?>
