@@ -529,7 +529,7 @@ function WebNames_Is_Available_Domain($Settings,$Domain){
 }
 #-------------------------------------------------------------------------------
 
-# added by lissyara, for JBS-353
+# added by lissyara, for JBS-353, 2012-03-19 in 14:00 MSK
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 function WebNames_Change_Contact_Detail($Settings,$Domain,$Person){
@@ -571,14 +571,57 @@ function WebNames_Change_Contact_Detail($Settings,$Domain,$Person){
   #-------------------------------------------------------------------------------
   $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[WebNames_Domain_Register]: не удалось выполнить запрос к серверу');
+    return ERROR | @Trigger_Error('[WebNames_Change_Contact_Detail]: не удалось выполнить запрос к серверу');
   #-------------------------------------------------------------------------------
   #-------------------------------------------------------------------------------
   if(Preg_Match('/Error:/',$Result))
     return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
   #-----------------------------------------------------------------------------
   if(!Preg_Match('/Success:/',$Result))
-    return ERROR | @Trigger_Error('[WebNames_Is_Available_Domain]: неизвестный ответ');
+    return ERROR | @Trigger_Error('[WebNames_Change_Contact_Detail]: неизвестный ответ');
+  #-------------------------------------------------------------------------------
+}
+
+# added by lissyara, for JBS-353, 2012-03-19 in 20:21 MSK
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+function WebNames_Get_Contact_Detail($Settings,$Domain){
+  /****************************************************************************/
+  $__args_types = Array('array','string','array');
+  #-----------------------------------------------------------------------------
+  $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+  /****************************************************************************/
+  // phone, e_mail, cell_phone
+  #-------------------------------------------------------------------------------
+  $Http = Array(
+                #---------------------------------------------------------------------------
+	        'Address'  => $Settings['Address'],
+                'Port'     => $Settings['Port'],
+                'Host'     => $Settings['Address'],
+                'Protocol' => $Settings['Protocol'],
+                'Charset'  => 'CP1251'
+               );
+  #-------------------------------------------------------------------------------
+  $Query = Array(
+                 'thisPage'           => 'pispGetContactDetails',
+                 'username'           => $Settings['Login'],
+                 'password'           => $Settings['Password'],
+                 'interface_revision' => 1,
+                 'interface_lang'     => 'en',
+                 'domain_name'        => $Domain,
+                );
+  #-------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------
+  $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
+  if(Is_Error($Result))
+    return ERROR | @Trigger_Error('[WebNames_Get_Contact_Detail]: не удалось выполнить запрос к серверу');
+  #-------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------
+  if(Preg_Match('/Error:/',$Result))
+    return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
+  #-----------------------------------------------------------------------------
+  if(!Preg_Match('/Success:/',$Result))
+    return ERROR | @Trigger_Error('[WebNames_Get_Contact_Detail]: неизвестный ответ');
   #-------------------------------------------------------------------------------
 }
 
