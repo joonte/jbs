@@ -573,6 +573,8 @@ function WebNames_Change_Contact_Detail($Settings,$Domain,$Person){
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[WebNames_Change_Contact_Detail]: не удалось выполнить запрос к серверу');
   #-------------------------------------------------------------------------------
+  $Result = Trim($Result['Body']);
+  #-------------------------------------------------------------------------------
   #-------------------------------------------------------------------------------
   if(Preg_Match('/Error:/',$Result))
     return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
@@ -587,7 +589,7 @@ function WebNames_Change_Contact_Detail($Settings,$Domain,$Person){
 #-------------------------------------------------------------------------------
 function WebNames_Get_Contact_Detail($Settings,$Domain){
   /****************************************************************************/
-  $__args_types = Array('array','string','array');
+  $__args_types = Array('array','string');
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
@@ -616,6 +618,8 @@ function WebNames_Get_Contact_Detail($Settings,$Domain){
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[WebNames_Get_Contact_Detail]: не удалось выполнить запрос к серверу');
   #-------------------------------------------------------------------------------
+  $Result = Trim($Result['Body']);
+  #-------------------------------------------------------------------------------
   #-------------------------------------------------------------------------------
   if(Preg_Match('/Error:/',$Result))
     return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
@@ -623,6 +627,34 @@ function WebNames_Get_Contact_Detail($Settings,$Domain){
   if(!Preg_Match('/Success:/',$Result))
     return ERROR | @Trigger_Error('[WebNames_Get_Contact_Detail]: неизвестный ответ');
   #-------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------
+  $Out = Array();
+  #-------------------------------------------------------------------------------
+  $iContactData = Explode("\n", $Result);
+  #-------------------------------------------------------------------------------
+  foreach($iContactData as $Line){
+   $ContactData = Explode(": ",$Line);
+   #-------------------------------------------------------------------------------
+   if(Trim($ContactData[0]) == 'e_mail')
+     $Out['Email'] = SubStr($ContactData[1],0,-1);
+   #-------------------------------------------------------------------------------
+   if(Trim($ContactData[0]) == 'phone')
+     $Out['Phone'] = SubStr($ContactData[1],0,-1);
+   #-------------------------------------------------------------------------------
+   if(Trim($ContactData[0]) == 'cell_phone')
+     $Out['CellPhone'] = SubStr($ContactData[1],0,-1);
+   #-------------------------------------------------------------------------------
+   # буржуйские домены
+   if(Trim($ContactData[0]) == 'o_phone')
+     $Out['Phone'] = SubStr($ContactData[1],0,-1);
+   #-------------------------------------------------------------------------------
+   if(Trim($ContactData[0]) == 'o_email')
+     $Out['Email'] = SubStr($ContactData[1],0,-1);
+   #-------------------------------------------------------------------------------
+
+  }
+  #-------------------------------------------------------------------------------
+  return $Out;
 }
 
 

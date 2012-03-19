@@ -11,10 +11,10 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $DomainOrderID = (integer) @$Args['DomainOrderID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class','classes/Registrator.class')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainsOrdersOwners',Array('ID','UserID','SchemeID','DomainName','StatusID'),Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainsOrdersOwners',Array('ID','UserID','SchemeID','DomainName','StatusID','RegistratorID'),Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
   case 'error':
@@ -63,11 +63,42 @@ switch(ValueOf($DomainOrder)){
             #-------------------------------------------------------------------
             $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/DomainOrderChangeContactData.js}')));
             #-------------------------------------------------------------------
-//            $DOM->AddAttribs('Body',Array('onload'=>'IsNewNs();'));
+            //$DOM->AddAttribs('Body',Array('onload'=>'IsNewNs();'));
+            #-------------------------------------------------------------------
+            #-------------------------------------------------------------------
+            $Domain = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainScheme['Name']);
+            #-------------------------------------------------------------------
+	    # получем контактные данные домена
+            $Registrator = new Registrator();
+            #-------------------------------------------------------------------
+            $IsSelected = $Registrator->Select((integer)$DomainOrder['RegistratorID']);
+            #---------------------------------------------------------------------------
+            switch(ValueOf($IsSelected)){
+            case 'error':
+              return ERROR | @Trigger_Error(500);
+            case 'exception':
+              return ERROR | @Trigger_Error(400);
+            case 'true':
+              break;
+            default:
+              return ERROR | @Trigger_Error(101);
+            }
+            #-------------------------------------------------------------------
+	    $ContactDetail = $Registrator->GetContactDetail($Domain);
+            switch(ValueOf($ContactDetail)){
+            case 'error':
+              return ERROR | @Trigger_Error(500);
+            case 'exception':
+              return new gException('CANNOT_GET_CURRENT_CONTACT_DATA','Не удалось получить текущие контактные данные от регистратора');
+            case 'array':
+              break;
+            default:
+              return ERROR | @Trigger_Error(101);
+            }
+            #-------------------------------------------------------------------
             #-------------------------------------------------------------------
             $Table = Array();
             #-------------------------------------------------------------------
-            $Domain = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainScheme['Name']);
             #-------------------------------------------------------------------
             $Table[] = Array('Доменное имя',$Domain);
             #-------------------------------------------------------------------
@@ -83,7 +114,7 @@ switch(ValueOf($DomainOrder)){
                 'size'    => 20,
                 'type'    => 'text',
                 'prompt'  => $Messages['Prompts']['Email'],
-                'value'   => ''
+                'value'   => IsSet($ContactDetail['Email'])?$ContactDetail['Email']:''
               )
             );
             if(Is_Error($Comp))
@@ -99,7 +130,7 @@ switch(ValueOf($DomainOrder)){
                 'size'    => 20,
                 'type'    => 'text',
                 'prompt'  => $Messages['Prompts']['Phone'],
-                'value'   => ''
+                'value'   => IsSet($ContactDetail['Phone'])?$ContactDetail['Phone']:''
               )
             );
             if(Is_Error($Comp))
@@ -115,7 +146,7 @@ switch(ValueOf($DomainOrder)){
                 'size'    => 20,
                 'type'    => 'text',
                 'prompt'  => $Messages['Prompts']['Phone'],
-                'value'   => ''
+                'value'   => IsSet($ContactDetail['CellPhone'])?$ContactDetail['CellPhone']:''
               )
             );
             if(Is_Error($Comp))
