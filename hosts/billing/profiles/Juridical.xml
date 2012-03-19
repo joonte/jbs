@@ -154,6 +154,8 @@
    <DeputyDirector>Заместитель директора</DeputyDirector>
    <Chairperson>Председатель</Chairperson>
    <Chairperson>Первый секретарь</Chairperson>
+   <Chairman>Председатель</Chairman>
+   <CouncilChairman>Председатель совета</CouncilChairman>
   </Options>
   <Attribs>
    <size>1</size>
