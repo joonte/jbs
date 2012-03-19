@@ -472,7 +472,7 @@ function WebNames_Is_Available_Domain($Settings,$Domain){
   $CacheID = Md5($Settings['Login'] . $Settings['Password'] . 'pispAllDomainsInfo');
   $Result = CacheManager::get($CacheID);
   # если результата нет - лезем в вебнеймс
-  if(Is_Error($Result)){
+  if(!$Result){
     $Http = Array(
       #---------------------------------------------------------------------------
       'Address'  => $Settings['Address'],
