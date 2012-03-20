@@ -185,24 +185,27 @@ switch(ValueOf($Rows)){
           return ERROR | @Trigger_Error(400);
         case 'array':
           #---------------------------------------------------------------------
-          if(!$IsNoTrigger && !$IsNotNotify){
+          if(!$IsNoTrigger && !$IsNotNotify) {
             try {
                 $msgClass = SPrintF('%s%sMsg',$ModeID,$StatusID);
-                $msg = new $msgClass($Row, $Row['UserID']);
-                #-------------------------------------------------------------------
-                $IsSend = NotificationManager::sendMsg($msg);
-                #-------------------------------------------------------------------
-                switch(ValueOf($IsSend)){
-                  case 'error':
-                    return ERROR | @Trigger_Error(500);
-                  case 'exception':
-                    # No more...
-                  break;
-                  case 'true':
-                    # No more...
-                  break;
-                  default:
-                    return ERROR | @Trigger_Error(101);
+
+                if (class_exists($msgClass)) {
+                    $msg = new $msgClass($Row, $Row['UserID']);
+                    #-------------------------------------------------------------------
+                    $IsSend = NotificationManager::sendMsg($msg);
+                    #-------------------------------------------------------------------
+                    switch(ValueOf($IsSend)){
+                      case 'error':
+                        return ERROR | @Trigger_Error(500);
+                      case 'exception':
+                        # No more...
+                      break;
+                      case 'true':
+                        # No more...
+                      break;
+                      default:
+                        return ERROR | @Trigger_Error(101);
+                    }
                 }
             }
             catch (Exception $e) {
