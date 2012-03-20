@@ -15,7 +15,7 @@ $Search = (string) @$Args['Search'];
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Search = MySQL_Escape_String($Search);
+$Search = MySQL_Real_Escape_String($Search);
 #-------------------------------------------------------------------------------
 $Where = SPrintF("`Email` LIKE '%%%s%%' OR `Name` LIKE '%%%s%%'",$Search,$Search);
 #-------------------------------------------------------------------------------

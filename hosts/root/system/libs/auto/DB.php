@@ -147,7 +147,7 @@ function DB_Select($TablesIDs,$ColumnsIDs = '*',$Query = Array()){
     #---------------------------------------------------------------------------
     foreach($SortOn as $ColumnID){
        #-------------------------------------------------------------------------
-      $ColumnID = MySQL_Escape_String($ColumnID);
+      $ColumnID = MySQL_Real_Escape_String($ColumnID);
       #-------------------------------------------------------------------------
       #$Array[] = SPrintF('`%s`',$ColumnID);
       $Array[] = $ColumnID;
@@ -234,7 +234,7 @@ function DB_Update($TableID,$Columns,$Query = Array()){
     #---------------------------------------------------------------------------
     $Column = $Columns[$ColumnID];
     #---------------------------------------------------------------------------
-    $Array[] = SPrintF('`%s` = %s',$ColumnID,Is_Null($Column)?'NULL':SPrintF("'%s'",Mysql_Escape_String($Column)));
+    $Array[] = SPrintF('`%s` = %s',$ColumnID,Is_Null($Column)?'NULL':SPrintF("'%s'",MySQL_Real_Escape_String($Column)));
   }
   #-----------------------------------------------------------------------------
   $String = Implode(',',$Array);
@@ -287,7 +287,7 @@ function DB_Insert($TableID,$Columns){
     #---------------------------------------------------------------------------
     $Column = $Columns[$ColumnID];
     #---------------------------------------------------------------------------
-    $Values[] = (Is_Null($Column)?'NULL':SPrintF("'%s'",Mysql_Escape_String($Column)));
+    $Values[] = (Is_Null($Column)?'NULL':SPrintF("'%s'",MySQL_Real_Escape_String($Column)));
   }
   #-----------------------------------------------------------------------------
   $Sql = SPrintF("%s VALUES ( %s )",$Sql,Implode(',',$Values));

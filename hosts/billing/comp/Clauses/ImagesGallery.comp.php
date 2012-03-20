@@ -24,7 +24,7 @@ if(!Comp_IsLoaded('Clauses/ImagesGallery')){
   $DOM->AddChild('Head',$Script);
 }
 #-------------------------------------------------------------------------------
-$Images = DB_Select('ClausesFiles',Array('ID','Comment','FileData'),Array('Where'=>SPrintF("`ClauseID` = %u AND `FileName` LIKE '%s%%'",$ClauseID,MySQL_Escape_String($Prefix))));
+$Images = DB_Select('ClausesFiles',Array('ID','Comment','FileData'),Array('Where'=>SPrintF("`ClauseID` = %u AND `FileName` LIKE '%s%%'",$ClauseID,MySQL_Real_Escape_String($Prefix))));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Images)){
   case 'error':

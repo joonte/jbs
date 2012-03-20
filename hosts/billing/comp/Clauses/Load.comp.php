@@ -9,7 +9,7 @@ $__args_list = Array('ClauseID','IsEdit');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Where = SPrintF("`ID` = %u OR `Partition` = '%s'",$ClauseID,MySQL_Escape_String($ClauseID));
+$Where = SPrintF("`ID` = %u OR `Partition` = '%s'",$ClauseID,MySQL_Real_Escape_String($ClauseID));
 #-------------------------------------------------------------------------------
 $Clause = DB_Select('Clauses','*',Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
