@@ -474,7 +474,7 @@ function RuCenter_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       $Query[] = SPrintF('fax-no: %s',$Person['Fax']);
       $Query[] = SPrintF('birth-date: %s',$Person['BornDate']);
       $Query[] = SPrintF('passport: %s %s выдан %s, %s',$Person['PasportLine'],$Person['PasportNum'],$Person['PasportWhom'],$Person['PasportDate']);
-      $Query[] = SPrintF('p-addr: %s, %s, %s, %s, %s',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pAddress'],$Person['pRecipient']);
+      $Query[] = SPrintF('p-addr: %s, %s, %s, %s %s, %s',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['pRecipient']);
       $Query[] = SPrintF('e-mail: %s',$Person['Email']);
     break;
     case 'Juridical':
@@ -488,9 +488,9 @@ function RuCenter_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       $Query[] = SPrintF('fax-no: %s',$Person['Fax']);
       $Query[] = SPrintF('code: %s',$Person['Inn']);
       $Query[] = SPrintF('kpp: %s',$Person['Kpp']);
-      $Query[] = SPrintF('address-r: %s, %s, %s, %s',$Person['jIndex'],$Person['jState'],$Person['jCity'],$Person['jAddress']);
-      $Query[] = SPrintF('p-addr: %s, %s, %s, %s, %s "%s"',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pAddress'],$Person['CompanyForm'],$Person['CompanyName']);
-      $Query[] = SPrintF('d-addr: %s, %s, %s, %s',$Person['jIndex'],$Person['jState'],$Person['jCity'],$Person['jAddress']);
+      $Query[] = SPrintF('address-r: %s, %s, %s, %s %s',$Person['jIndex'],$Person['jState'],$Person['jCity'],$Person['jType'],$Person['jAddress']);
+      $Query[] = SPrintF('p-addr: %s, %s, %s, %s %s, %s "%s"',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['CompanyForm'],$Person['CompanyName']);
+      $Query[] = SPrintF('d-addr: %s, %s, %s, %s %s',$Person['jIndex'],$Person['jState'],$Person['jCity'],$Person['jType'],$Person['jAddress']);
     break;
     default:
       return new gException('WRONG_PROFILE_ID','Неверный идентификатор профиля');
@@ -551,7 +551,7 @@ function RuCenter_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
     $Query[] = SPrintF('country: %s',$Person['pCountry']);
     $Query[] = SPrintF('region: %s',Translit($Person['pCity']));
     $Query[] = SPrintF('city: %s',Translit($Person['pCity']));
-    $Query[] = SPrintF('street: %s',Translit($Person['pAddress']));
+    $Query[] = SPrintF('street: %s',Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress'])));
     $Query[] = SPrintF('zipcode: %s',$Person['pIndex']);
     $Query[] = SPrintF('phone: %s',$Person['Phone']);
     $Query[] = SPrintF('fax: %s',$Person['Fax']);

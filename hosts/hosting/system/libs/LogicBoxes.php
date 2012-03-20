@@ -278,9 +278,9 @@ function LogicBoxes_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       #-------------------------------------------------------------------------
       $Params['name']     = SPrintF('%s %s %s',Translit($Person['Name']),Mb_SubStr(Translit($Person['Lastname']),0,1),Translit($Person['Sourname']));
       $Params['company']  = 'N/A';
-      $Params['address1'] = Translit($Person['pAddress']);
-      $Params['address2'] = Translit($Person['pAddress']);
-      $Params['address3'] = Translit($Person['pAddress']);
+      $Params['address1'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
+      $Params['address2'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
+      $Params['address3'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
       $Params['city']     = Translit($Person['pCity']);
       $Params['state']    = Translit($Person['pState']);
       $Params['country']  = $Person['pCountry'];
@@ -290,9 +290,9 @@ function LogicBoxes_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       #-------------------------------------------------------------------------
       $Params['name']     = SPrintF('%s %s %s',Translit($Person['dName']),Translit($Person['dLastname']),Translit($Person['dSourname']));
       $Params['company']  = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm']));
-      $Params['address1'] = Translit($Person['jAddress']);
-      $Params['address2'] = Translit($Person['pAddress']);
-      $Params['address3'] = Translit($Person['pAddress']);
+      $Params['address1'] = Translit(SPrintF('%s %s',$Person['jType'],$Person['jAddress']));
+      $Params['address2'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
+      $Params['address3'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
       $Params['city']     = Translit($Person['jCity']);
       $Params['state']    = Translit($Person['jState']);
       $Params['country']  = Translit($Person['jCountry']);

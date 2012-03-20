@@ -425,12 +425,12 @@ function MasterName_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       $Query[] = SPrintF('post-region: %s',$Person['pState']);
       $Query[] = SPrintF('post-zip-code: %s',$Person['pIndex']);
       $Query[] = SPrintF('post-city: %s',$Person['pCity']);
-      $Query[] = SPrintF('post-street: %s, %s',$Person['pAddress'],$Person['pRecipient']);
+      $Query[] = SPrintF('post-street: %s %s, %s',$Person['pType'],$Person['pAddress'],$Person['pRecipient']);
       #-------------------------------------------------------------------------
       $Query[] = SPrintF('reg-country: %s',$Person['pCountry']);
       $Query[] = SPrintF('reg-region: %s',$Person['pState']);
       $Query[] = SPrintF('reg-city: %s',$Person['pCity']);
-      $Query[] = SPrintF('reg-street: %s',$Person['pAddress']);
+      $Query[] = SPrintF('reg-street: %s %s',$Person['pType'],$Person['pAddress']);
     break;
     case 'Juridical':
       #-------------------------------------------------------------------------
@@ -460,19 +460,19 @@ function MasterName_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       $Query[] = SPrintF('post-zip-code: %s',$Person['pIndex']);
       $Query[] = SPrintF('post-region: %s',$Person['pState']);
       $Query[] = SPrintF('post-city: %s',$Person['pCity']);
-      $Query[] = SPrintF('post-street: %s, %s "%s"',$Person['pAddress'],$Person['CompanyForm'],$Person['CompanyName']);
+      $Query[] = SPrintF('post-street: %s %s, %s "%s"',$Person['pType'],$Person['pAddress'],$Person['CompanyForm'],$Person['CompanyName']);
       #-------------------------------------------------------------------------
       $Query[] = SPrintF('jur-country: %s',$Person['jCountry']);
       $Query[] = SPrintF('jur-zip-code: %s',$Person['jIndex']);
       $Query[] = SPrintF('jur-region: %s',$Person['jState']);
       $Query[] = SPrintF('jur-city: %s',$Person['jCity']);
-      $Query[] = SPrintF('jur-street: %s',$Person['jAddress']);
+      $Query[] = SPrintF('jur-street: %s %s',$Person['jType'],$Person['jAddress']);
       #-------------------------------------------------------------------------
       $Query[] = SPrintF('real-country: %s',$Person['jCountry']);
       $Query[] = SPrintF('real-zip-code: %s',$Person['jIndex']);
       $Query[] = SPrintF('real-region: %s',$Person['jState']);
       $Query[] = SPrintF('real-city: %s',$Person['jCity']);
-      $Query[] = SPrintF('real-street: %s',$Person['jAddress']);
+      $Query[] = SPrintF('real-street: %s %s',$Person['pType'],$Person['jAddress']);
     break;
     default:
       return new gException('WRONG_PROFILE_ID','Неверный идентификатор профиля');

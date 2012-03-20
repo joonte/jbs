@@ -43,10 +43,10 @@ function NauNet_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Nam
         $Query['person']     = SPrintF('%s %s %s',Translit($Person['Name']),Mb_SubStr(Translit($Person['Lastname']),0,1),Translit($Person['Sourname']));
         $Query['person-r']   = SPrintF('%s %s %s',$Person['Sourname'],$Person['Name'],$Person['Lastname']);
         $Query['passport']   = SPrintF('%s %s выдан %s %s',$Person['PasportLine'],$Person['PasportNum'],$Person['PasportWhom'],$Person['PasportDate']);
-        $Query['residence']  = SPrintF('%s, %s, %s, %s',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pAddress']);
+        $Query['residence']  = SPrintF('%s, %s, %s, %s %s',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress']);
         $Query['birth-date'] = $Person['BornDate'];
-        $Query['address-r']  = SPrintF('%s, %s, %s, %s, %s',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pAddress'],$Person['pRecipient']);
-        $Query['p-addr']     = SPrintF('%s, %s, %s, %s, %s',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pAddress'],$Person['pRecipient']);
+        $Query['address-r']  = SPrintF('%s, %s, %s, %s %s, %s',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['pRecipient']);
+        $Query['p-addr']     = SPrintF('%s, %s, %s, %s %s, %s',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['pRecipient']);
         $Query['phone']      = $Person['Phone'];
 	$Query['sms-phone']  = $Person['CellPhone'];
         $Query['fax-no']     = $Person['Fax'];
@@ -58,8 +58,8 @@ function NauNet_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Nam
         $Query['org-r']         = SPrintF('%s "%s"',$Person['CompanyForm'],$Person['CompanyName']);
         $Query['code']          = $Person['Inn'];
         $Query['kpp']           = $Person['Kpp'];
-        $Query['address-r']     = SPrintF('%s, %s, %s, %s',$Person['jIndex'],$Person['jState'],$Person['jCity'],$Person['jAddress']);
-        $Query['p-addr']        = SPrintF('%s, %s, %s, %s, %s "%s"',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pAddress'],$Person['CompanyForm'],$Person['CompanyName']);
+        $Query['address-r']     = SPrintF('%s, %s, %s, %s %s',$Person['jIndex'],$Person['jState'],$Person['jCity'],$Person['jType'],$Person['jAddress']);
+        $Query['p-addr']        = SPrintF('%s, %s, %s, %s %s, %s "%s"',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['CompanyForm'],$Person['CompanyName']);
         $Query['ogrn']          = $Person['Ogrn'];
         $Query['regdocuments']  = '';
         $Query['phone']         = $Person['Phone'];

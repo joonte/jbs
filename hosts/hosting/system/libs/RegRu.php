@@ -46,7 +46,7 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
         $Query['passport']            = SPrintF('%s %s выдан %s %s',$Person['PasportLine'],$Person['PasportNum'],$Person['PasportWhom'],$Person['PasportDate']);
         $Query['birth_date']          = $Person['BornDate'];
         $Query['country']             = $Person['pCountry'];
-        $Query['p_addr']              = SPrintF('%s, %s, %s, %s, %s',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pAddress'],$Person['pRecipient']);
+        $Query['p_addr']              = SPrintF('%s, %s, %s, %s %s, %s',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['pRecipient']);
         $Query['phone']               = $Person['Phone'];
 	$Query['sms_security_number'] = $Person['CellPhone'];
         $Query['fax']                 = $Person['Fax'];
@@ -59,8 +59,8 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
         $Query['code']                = $Person['Inn'];
         $Query['kpp']                 = $Person['Kpp'];
         $Query['country']             = $Person['jCountry'];
-        $Query['address_r']           = SPrintF('%s, %s, %s, %s',$Person['jIndex'],$Person['jState'],$Person['jCity'],$Person['jAddress']);
-        $Query['p_addr']              = SPrintF('%s, %s, %s, %s, %s "%s"',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pAddress'],$Person['CompanyForm'],$Person['CompanyName']);
+        $Query['address_r']           = SPrintF('%s, %s, %s, %s %s',$Person['jIndex'],$Person['jState'],$Person['jCity'],$Person['jType'],$Person['jAddress']);
+        $Query['p_addr']              = SPrintF('%s, %s, %s, %s %s, %s "%s"',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['CompanyForm'],$Person['CompanyName']);
         $Query['phone']               = $Person['Phone'];
 	$Query['sms_security_number'] = $Person['CellPhone'];
         $Query['fax']                 = $Person['Fax'];
@@ -105,10 +105,10 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
         $Query['t_email'] = $Person['Email'];
         $Query['b_email'] = $Person['Email'];
         #-----------------------------------------------------------------------
-        $Query['o_addr'] = Translit($Person['pAddress']);
-        $Query['a_addr'] = Translit($Person['pAddress']);
-        $Query['t_addr'] = Translit($Person['pAddress']);
-        $Query['b_addr'] = Translit($Person['pAddress']);
+        $Query['o_addr'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
+        $Query['a_addr'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
+        $Query['t_addr'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
+        $Query['b_addr'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
         #-----------------------------------------------------------------------
         $Query['o_city'] = Translit($Person['pCity']);
         $Query['a_city'] = Translit($Person['pCity']);
@@ -154,10 +154,10 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
         $Query['t_email'] = $Person['Email'];
         $Query['b_email'] = $Person['Email'];
         #-----------------------------------------------------------------------
-        $Query['o_addr'] = Translit($Person['jAddress']);
-        $Query['a_addr'] = Translit($Person['jAddress']);
-        $Query['t_addr'] = Translit($Person['jAddress']);
-        $Query['b_addr'] = Translit($Person['jAddress']);
+        $Query['o_addr'] = Translit(SPrintF('%s %s',$Person['jType'],$Person['jAddress']));
+        $Query['a_addr'] = Translit(SPrintF('%s %s',$Person['jType'],$Person['jAddress']));
+        $Query['t_addr'] = Translit(SPrintF('%s %s',$Person['jType'],$Person['jAddress']));
+        $Query['b_addr'] = Translit(SPrintF('%s %s',$Person['jType'],$Person['jAddress']));
         #-----------------------------------------------------------------------
         $Query['o_city'] = Translit($Person['jCity']);
         $Query['a_city'] = Translit($Person['jCity']);

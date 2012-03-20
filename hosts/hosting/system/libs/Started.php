@@ -330,10 +330,10 @@ function Started_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       if($IsRussian){
         #-----------------------------------------------------------------------
         $objUser->AddChild(new Tag('city',$Person['pCity']));
-        $objUser->AddChild(new Tag('addr',$Person['pAddress']));
+        $objUser->AddChild(new Tag('addr',SPrintF('%s %s',$Person['pType'],$Person['pAddress'])));
       }else{
         $objUser->AddChild(new Tag('city',Translit($Person['pCity'])));
-        $objUser->AddChild(new Tag('addr',Translit($Person['pAddress'])));
+        $objUser->AddChild(new Tag('addr',Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']))));
       }
       #-------------------------------------------------------------------------
       $objUser->AddChild(new Tag('pzip',$Person['pIndex']));
@@ -344,12 +344,12 @@ function Started_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       if($IsRussian){
         #-----------------------------------------------------------------------
         $objUser->AddChild(new Tag('pcity',$Person['pCity']));
-        $objUser->AddChild(new Tag('paddr',$Person['pAddress']));
+        $objUser->AddChild(new Tag('paddr',SPrintF('%s %s',$Person['pType'],$Person['pAddress'])));
         $objUser->AddChild(new Tag('pto',$Person['pRecipient']));
       }else{
         #-----------------------------------------------------------------------
         $objUser->AddChild(new Tag('pcity',Translit($Person['pCity'])));
-        $objUser->AddChild(new Tag('paddr',Translit($Person['pAddress'])));
+        $objUser->AddChild(new Tag('paddr',Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']))));
         $objUser->AddChild(new Tag('pto',Translit($Person['pRecipient'])));
       }
     break;
@@ -407,10 +407,10 @@ function Started_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       if($IsRussian){
         #-----------------------------------------------------------------------
         $objUser->AddChild(new Tag('city',$Person['jCity']));
-        $objUser->AddChild(new Tag('addr',$Person['jAddress']));
+        $objUser->AddChild(new Tag('addr',SPrintF('%s %s',$Person['jType'],$Person['jAddress'])));
       }else{
         $objUser->AddChild(new Tag('city',Translit($Person['jCity'])));
-        $objUser->AddChild(new Tag('addr',Translit($Person['jAddress'])));
+        $objUser->AddChild(new Tag('addr',Translit(SPrintF('%s %s',$Person['jType'],$Person['jAddress']))));
       }
       #-------------------------------------------------------------------------
       $objUser->AddChild(new Tag('pzip',$Person['pIndex']));
@@ -445,11 +445,11 @@ function Started_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       if($IsRussian){
         #-----------------------------------------------------------------------
         $objUser->AddChild(new Tag('pcity',$Person['pCity']));
-        $objUser->AddChild(new Tag('paddr',$Person['pAddress']));
+        $objUser->AddChild(new Tag('paddr',SPrintF('%s %s',$Person['pType'],$Person['pAddress'])));
         $objUser->AddChild(new Tag('pto',SPrintF('%s "%s"',$Person['CompanyForm'],$Person['CompanyName'])));
       }else{
         $objUser->AddChild(new Tag('pcity',Translit($Person['pCity'])));
-        $objUser->AddChild(new Tag('paddr',Translit($Person['pAddress'])));
+        $objUser->AddChild(new Tag('paddr',Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']))));
         $objUser->AddChild(new Tag('pto',SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm']))));
       }
     break;

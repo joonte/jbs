@@ -10,7 +10,7 @@ $__args_list = Array('Task','DomainOrderID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/Registrator.class.php')))
+if(Is_Error(System_Load('classes/Registrator.class')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','DomainName','UserID','IsPrivateWhoIs','PersonID','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','ProfileID','(SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `RegistratorID`','StatusID','(SELECT SUM(`YearsRemainded`) FROM `DomainsConsider` WHERE `DomainsConsider`.`DomainOrderID` = `DomainsOrdersOwners`.`ID`) as `YearsRemainded`','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP');
@@ -58,7 +58,23 @@ switch(ValueOf($DomainOrder)){
                 case 'exception':
                   return ERROR | @Trigger_Error(400);
                 case 'array':
-                  $DomainRegister = $Registrator->DomainRegister(mb_StrToLower($DomainOrder['DomainName'],'UTF-8'),$DomainOrder['DomainZone'],(integer)$DomainOrder['YearsRemainded'],$DomainOrder['Ns1Name'],$DomainOrder['Ns1IP'],$DomainOrder['Ns2Name'],$DomainOrder['Ns2IP'],$DomainOrder['Ns3Name'],$DomainOrder['Ns3IP'],$DomainOrder['Ns4Name'],$DomainOrder['Ns4IP'],$DomainOrder['IsPrivateWhoIs'],'',$Profile['TemplateID'],$Profile['Attribs']);
+                  # готовим поля профиля
+                  $ProfileCompile = Comp_Load('www/Administrator/API/ProfileCompile',Array('ProfileID'=>$ProfileID));
+                  #-------------------------------------------------------------
+                  switch(ValueOf($ProfileCompile)){
+                    case 'error':
+                      return ERROR | @Trigger_Error(500);
+                    case 'exception':
+                      return ERROR | @Trigger_Error(400);
+                    case 'array':
+                      # страна профиля должна быть кодом
+                      $ProfileCompile['Attribs']['pCountry'] = $Profile['Attribs']['pCountry'];
+                      break;
+                    default:
+                      return ERROR | @Trigger_Error(101);
+                  }
+                  #-------------------------------------------------------------
+                  $DomainRegister = $Registrator->DomainRegister(mb_StrToLower($DomainOrder['DomainName'],'UTF-8'),$DomainOrder['DomainZone'],(integer)$DomainOrder['YearsRemainded'],$DomainOrder['Ns1Name'],$DomainOrder['Ns1IP'],$DomainOrder['Ns2Name'],$DomainOrder['Ns2IP'],$DomainOrder['Ns3Name'],$DomainOrder['Ns3IP'],$DomainOrder['Ns4Name'],$DomainOrder['Ns4IP'],$DomainOrder['IsPrivateWhoIs'],'',$Profile['TemplateID'],$ProfileCompile['Attribs']);
                 break;
                 default:
                   return ERROR | @Trigger_Error(101);
