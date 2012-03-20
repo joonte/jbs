@@ -35,6 +35,30 @@ switch(ValueOf($DomainOrder)){
       case 'false':
         return ERROR | @Trigger_Error(700);
       case 'true':
+        # проверяем - администратор или нет. если нет - то ограничиваем частоту смены данных
+        $IsAdmin = Permission_Check('/Administrator/',(integer)$__USER['ID']);
+        #-----------------------------------------------------------------------------
+        switch(ValueOf($IsAdmin)){
+        case 'error':
+          return ERROR | @Trigger_Error(500);
+        case 'exception':
+          return ERROR | @Trigger_Error(400);
+        case 'false':
+	  #-----------------------------------------------------------------------
+          $CacheID = Md5($__FILE__ . $GLOBALS['__USER']['ID'] . $DomainOrder['RegistratorID']);
+          $Result = CacheManager::get($CacheID);
+          if($Result){
+            # в кэше чего-то есть, и чего там есть - неважно.
+            return new gException('WAIT_15_MINUT_BEFORE_NEXT_CHANGE','Контактные данные нельзя менять чаще чем раз в 15 минут');
+          }
+          #-----------------------------------------------------------------------
+          break;
+        case 'true':
+          break;
+        default:
+          return ERROR | @Trigger_Error(101);
+        }
+        #-----------------------------------------------------------------------
         #-----------------------------------------------------------------------
         if($DomainOrder['StatusID'] != 'Active')
           return new gException('ORDER_NOT_ACTIVE','Заказ домена не активен');
@@ -139,20 +163,22 @@ switch(ValueOf($DomainOrder)){
             $Table[] = Array('Номер телефона',$Comp);
             #-------------------------------------------------------------------
             #-------------------------------------------------------------------
-            $Comp = Comp_Load(
-              'Form/Input',
-              Array(
-                'name'    => 'CellPhone',
-                'size'    => 20,
-                'type'    => 'text',
-                'prompt'  => $Messages['Prompts']['Phone'],
-                'value'   => IsSet($ContactDetail['CellPhone'])?$ContactDetail['CellPhone']:''
-              )
-            );
-            if(Is_Error($Comp))
-              return ERROR | @Trigger_Error(500);
-            #-------------------------------------------------------------------
-            $Table[] = Array('Номер мобильного телефона',$Comp);
+            if(In_Array($DomainScheme['Name'],Array('ru','рф'))){
+              $Comp = Comp_Load(
+                'Form/Input',
+                Array(
+                  'name'    => 'CellPhone',
+                  'size'    => 20,
+                  'type'    => 'text',
+                  'prompt'  => $Messages['Prompts']['Phone'],
+                  'value'   => IsSet($ContactDetail['CellPhone'])?$ContactDetail['CellPhone']:''
+                )
+              );
+              if(Is_Error($Comp))
+                return ERROR | @Trigger_Error(500);
+              #-------------------------------------------------------------------
+              $Table[] = Array('Номер мобильного телефона',$Comp);
+            }
             #-------------------------------------------------------------------
             #-------------------------------------------------------------------
             $Comp = Comp_Load(
@@ -195,6 +221,11 @@ switch(ValueOf($DomainOrder)){
             #-------------------------------------------------------------------
             if(Is_Error($DOM->Build(FALSE)))
               return ERROR | @Trigger_Error(500);
+            #-------------------------------------------------------------------
+            #-------------------------------------------------------------------
+            if(IsSet($CacheID))
+              CacheManager::add($CacheID,Time(),60);
+            #-------------------------------------------------------------------
             #-------------------------------------------------------------------
             return Array('Status'=>'Ok','DOM'=>$DOM->Object);
           default:

@@ -581,6 +581,9 @@ function WebNames_Change_Contact_Detail($Settings,$Domain,$Person){
   #-----------------------------------------------------------------------------
   if(!Preg_Match('/Success:/',$Result))
     return ERROR | @Trigger_Error('[WebNames_Change_Contact_Detail]: неизвестный ответ');
+  #-----------------------------------------------------------------------------
+  if(Preg_Match('/Success:/',$Result))
+      return Array('TicketID'=>'NO');
   #-------------------------------------------------------------------------------
 }
 

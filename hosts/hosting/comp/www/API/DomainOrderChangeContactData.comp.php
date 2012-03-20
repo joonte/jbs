@@ -43,7 +43,7 @@ switch(ValueOf($DomainOrder)){
         $DomainOrderID = (integer)$DomainOrder['ID'];
         #-----------------------------------------------------------------------
         if($DomainOrder['StatusID'] != 'Active')
-          return new gException('ORDER_IS_NOT_ACTIVE','Смена именных серверов не доступна');
+          return new gException('ORDER_IS_NOT_ACTIVE','Невозможно изменить данные для неактивного домена');
         #-----------------------------------------------------------------------
         $DomainScheme = DB_Select('DomainsSchemes','*',Array('UNIQ','ID'=>$DomainOrder['SchemeID']));
         #-----------------------------------------------------------------------
@@ -85,7 +85,37 @@ switch(ValueOf($DomainOrder)){
             if(!Count($Person))
 	      return new gException('NO_INPUT_DATA','Необходимо ввести хоть какие-то данные для изменения');
             #-------------------------------------------------------------------
+            #-------------------------------------------------------------------
+            $Registrator = new Registrator();
+            #---------------------------------------------------------------------------
+            $IsSelected = $Registrator->Select((integer)$DomainOrder['RegistratorID']);
+            #---------------------------------------------------------------------------
+            switch(ValueOf($IsSelected)){
+            case 'error':
+              return ERROR | @Trigger_Error(500);
+            case 'exception':
+              return ERROR | @Trigger_Error(400);
+            case 'true':
+              break;
+            default:
+              return ERROR | @Trigger_Error(101);
+            }
+            #---------------------------------------------------------------------------
+            $ChangeContactDetail = $Registrator->ChangeContactDetail($Domain,$Person);
+            switch(ValueOf($ChangeContactDetail)){
+            case 'error':
+              return ERROR | @Trigger_Error(500);
+            case 'exception':
+              return new gException('CANNOT_UPDATE_CONTACT_DATA','Не удалось обновить контактные данные у регистратора');
+            case 'array':
+              break;
+            default:
+              return ERROR | @Trigger_Error(101);
+            }
+            #---------------------------------------------------------------------------
+            #---------------------------------------------------------------------------
             return Array('Status'=>'Ok','DomainOrderID'=>$DomainOrderID);
+            #---------------------------------------------------------------------------
           default:
              return ERROR | @Trigger_Error(101);
         }
