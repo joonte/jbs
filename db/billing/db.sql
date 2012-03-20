@@ -822,11 +822,11 @@ set @Text = '<FONT size="1">
   </TR>
   <TR>
    <TD>Юридический адрес</TD>
-   <TD>%Customer.jIndex%, %Customer.jCountry%, %Customer.jCity%, %Customer.jAddress%</TD>
+   <TD>%Customer.jIndex%, %Customer.jCountry%, %Customer.jCity%, %Customer.jType% %Customer.jAddress%</TD>
   </TR>
   <TR>
    <TD>Почтовый адрес</TD>
-   <TD>%Customer.pIndex%, %Customer.pCountry%, %Customer.pCity%, %Customer.pAddress%</TD>
+   <TD>%Customer.pIndex%, %Customer.pCountry%, %Customer.pCity%, %Customer.pType% %Customer.pAddress%</TD>
   </TR>
   <TR>
    <TD>Телефон</TD>
@@ -1016,11 +1016,11 @@ set @Text = '<FONT size="1">
   </TR>
   <TR>
    <TD>Юридический адрес</TD>
-   <TD>%Customer.jIndex%, %Customer.jCountry%, %Customer.jCity%, %Customer.jAddress%</TD>
+   <TD>%Customer.jIndex%, %Customer.jCountry%, %Customer.jCity%, %Customer.jType% %Customer.jAddress%</TD>
   </TR>
   <TR>
    <TD>Почтовый адрес</TD>
-   <TD>%Customer.pIndex%, %Customer.pCountry%, %Customer.pCity%, %Customer.pAddress%</TD>
+   <TD>%Customer.pIndex%, %Customer.pCountry%, %Customer.pCity%, %Customer.pType% %Customer.pAddress%</TD>
   </TR>
   <TR>
    <TD>Телефон</TD>
@@ -1210,7 +1210,7 @@ set @Text = '<FONT size="1">
   </TR>
   <TR>
    <TD>Почтовый адрес</TD>
-   <TD>%Customer.pIndex% %Customer.pCountry% %Customer.pCity% %Customer.pAddress%</TD>
+   <TD>%Customer.pIndex% %Customer.pCountry% %Customer.pCity% %Customer.pType% %Customer.pAddress%</TD>
   </TR>
   <TR>
    <TD>Телефон</TD>
@@ -1365,7 +1365,7 @@ set @Text = '<TABLE border="0" width="100%">
      <TD>
       <SPAN>%Customer.pCity%,</SPAN>
       <BR />
-      <SPAN>%Customer.pAddress%</SPAN>
+      <SPAN>%Customer.pType% %Customer.pAddress%</SPAN>
      </TD>
     </TR>
    </TABLE>
@@ -1677,7 +1677,7 @@ set @Text = '<FONT size="1">
   </TR>
   <TR>
    <TD>Почтовый адрес</TD>
-   <TD>%Customer.pIndex% %Customer.pCountry% %Customer.pCity% %Customer.pAddress%</TD>
+   <TD>%Customer.pIndex% %Customer.pCountry% %Customer.pCity% %Customer.pType% %Customer.pAddress%</TD>
   </TR>
   <TR>
    <TD>Телефон</TD>
@@ -2439,7 +2439,7 @@ set @Text = '<NOBODY>
    <TD bgcolor="#DCDCDC">Адрес плательщика:</TD>
   </TR>
   <TR>
-   <TD>%Customer.pState%, %Customer.pCity%, %Customer.pAddress%</TD>
+   <TD>%Customer.pState%, %Customer.pCity%, %Customer.pType% %Customer.pAddress%</TD>
   </TR>
   <TR>
    <TD>
@@ -2487,7 +2487,7 @@ set @Text = '<NOBODY>
    <TD bgcolor="#DCDCDC">Адрес плательщика:</TD>
   </TR>
   <TR>
-   <TD>%Customer.pState%, %Customer.pCity%, %Customer.pAddress%</TD>
+   <TD>%Customer.pState%, %Customer.pCity%, %Customer.pType% %Customer.pAddress%</TD>
   </TR>
   <TR>
    <TD>
@@ -2550,7 +2550,7 @@ set @Text = '<NOBODY>
    <TD bgcolor="#DCDCDC">Адрес плательщика:</TD>
   </TR>
   <TR>
-   <TD>%Customer.pState%, %Customer.pCity%, %Customer.pAddress%</TD>
+   <TD>%Customer.pState%, %Customer.pCity%, %Customer.pType% %Customer.pAddress%</TD>
   </TR>
   <TR>
    <TD>
@@ -2598,7 +2598,7 @@ set @Text = '<NOBODY>
    <TD bgcolor="#DCDCDC">Адрес плательщика:</TD>
   </TR>
   <TR>
-   <TD>%Customer.pState%, %Customer.pCity%, %Customer.pAddress%</TD>
+   <TD>%Customer.pState%, %Customer.pCity%, %Customer.pType% %Customer.pAddress%</TD>
   </TR>
   <TR>
    <TD>
