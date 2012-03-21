@@ -826,7 +826,7 @@
   <!-- ********************************************************************* -->
   <SMS>
    <Name>SMS сообщения</Name>
-   <IsActive>1</IsActive>
+   <IsActive>0</IsActive>
    <Provider>SMSC</Provider>
   </SMS>
  </Methods>
@@ -1034,11 +1034,11 @@
 <!-- *********************************************************************** -->
 <SMSC>
  <Server>smsc.ru</Server>
- <Login>joonte</Login>
- <Password>joonte@passwd</Password>
+ <Login>login</Login>
+ <Password>passwd</Password>
  <UseSSL>0</UseSSL>
  <Send>
-   <sender>Joonte</sender>
+   <sender>Sender</sender>
    <charset>utf-8</charset>
    <translit>1</translit>
  </Send>
