@@ -91,11 +91,11 @@ set @Text = '<NOBODY>
    </TR>
    <TR>
     <TD>Юридический адрес</TD>
-    <TD>%Executor.jIndex%, %Executor.jCountry%, %Executor.jCity%, %Executor.jAddress%</TD>
+    <TD>%Executor.jIndex%, %Executor.jCountry%, %Executor.jCity%, %Executor.jType% %Executor.jAddress%</TD>
    </TR>
    <TR>
     <TD>Почтовый адрес</TD>
-    <TD>%Executor.pIndex%, %Executor.pCountry%, %Executor.pCity%, %Executor.pAddress%</TD>
+    <TD>%Executor.pIndex%, %Executor.pCountry%, %Executor.pCity%, %Executor.pType% %Executor.pAddress%</TD>
    </TR>
    <TR>
     <TD>Телефон</TD>
@@ -162,11 +162,11 @@ set @Text = '<NOBODY>
    </TR>
    <TR>
     <TD>Юридический адрес</TD>
-    <TD>%Executor.jIndex%, %Executor.jCountry%, %Executor.jCity%, %Executor.jAddress%</TD>
+    <TD>%Executor.jIndex%, %Executor.jCountry%, %Executor.jCity%, %Executor.jType% %Executor.jAddress%</TD>
    </TR>
    <TR>
     <TD>Почтовый адрес</TD>
-    <TD>%Executor.pIndex%, %Executor.pCountry%, %Executor.pCity%, %Executor.pAddress%</TD>
+    <TD>%Executor.pIndex%, %Executor.pCountry%, %Executor.pCity%, %Executor.pType% %Executor.pAddress%</TD>
    </TR>
    <TR>
     <TD>Телефон</TD>
