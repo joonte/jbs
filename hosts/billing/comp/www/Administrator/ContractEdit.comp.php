@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -12,7 +11,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ContractID = (integer) @$Args['ContractID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Contract = DB_Select('Contracts',Array('CreateDate','UserID','IsUponConsider','ProfileID'),Array('UNIQ','ID'=>$ContractID));
@@ -72,10 +71,14 @@ switch(ValueOf($Contract)){
         #-----------------------------------------------------------------------
         foreach($Profiles as $Profile){
           #---------------------------------------------------------------------
-          $Name = $Profile['Name'];
+          $Comp = Comp_Load('Formats/Profile/Number',$Profile['ID']);
+           if(Is_Error($Comp))
+             return ERROR | @Trigger_Error(500);
           #---------------------------------------------------------------------
-          if(Mb_StrLen($Name) > 20)
-            $Name = SPrintF('%s...',Mb_SubStr($Name,0,20));
+          $Name = SPrintF('%s - %s',$Comp,$Profile['Name']);
+          #---------------------------------------------------------------------
+          if(Mb_StrLen($Name) > 30)
+            $Name = SPrintF('%s...',Mb_SubStr($Name,0,30));
           #---------------------------------------------------------------------
           $Options[$Profile['ID']] = $Name;
         }
