@@ -20,11 +20,15 @@ Options -Indexes
     </FilesMatch>
 </IfModule>
 
-# added by lissyara 2011-09-13 in 13:37 MSK
 <IfModule mod_php5.c>
+	# added by lissyara 2011-09-13 in 13:37 MSK
 	php_flag magic_quotes_gpc	Off
 	php_flag short_open_tag		Off
 	php_flag output_buffering	Off
+	# added by lissyara 2012-03-21 in 11:09 MSK
+	php_flag log_errors		On
+	php_flag display_errors		Off
+	php_flag display_startup_errors	Off
 </IfModule>
 
 
