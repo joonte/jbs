@@ -472,7 +472,7 @@ function WebNames_Is_Available_Domain($Settings,$Domain){
   $CacheID = Md5($Settings['Login'] . $Settings['Password'] . 'pispAllDomainsInfo');
   $Result = CacheManager::get($CacheID);
   # если результата нет - лезем в вебнеймс
-  if(!$Result){
+  if(!$Result || SizeOf($Result) < 2){
     $Http = Array(
       #---------------------------------------------------------------------------
       'Address'  => $Settings['Address'],
@@ -506,6 +506,7 @@ function WebNames_Is_Available_Domain($Settings,$Domain){
     # кэшируем полученный результат
 	CacheManager::add($CacheID, $Result, 3600);
   }
+  #Debug("[system/libs/WebNames][WebNames_Is_Available_Domain]: " . print_r($Result,true));
   #-----------------------------------------------------------------------------
   #-----------------------------------------------------------------------------
   # разбираем строчки на массив
