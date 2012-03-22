@@ -19,11 +19,11 @@ $Details       =   (array) @$Args['Details'];
 $CacheID = Md5($GLOBALS['__USER']['ID'] . $__FILE__);
 #-------------------------------------------------------------------------------
 $Result = CacheManager::get($CacheID);
-if(!Is_Error($Result))
+if($Result)
   return $Result;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class','libs/HTMLDoc.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/HTMLDoc.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
