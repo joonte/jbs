@@ -146,42 +146,12 @@ switch(ValueOf($DomainOrder)){
             }
             #------------------------------------------------------------------------
             #------------------------------------------------------------------------
-            $Comp = Comp_Load(
-              'Form/Input',
-              Array(
-                'type'    => 'button',
-                'onclick' => 'DomainOrderChangeContactData();',
-                'value'   => 'Изменить'
-              )
-            );
-            if(Is_Error($Comp))
-              return ERROR | @Trigger_Error(500);
-            #-------------------------------------------------------------------
-            $Table[] = $Comp;
-            #-------------------------------------------------------------------
             $Comp = Comp_Load('Tables/Standard',$Table);
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $Form = new Tag('FORM',Array('name'=>'DomainOrderChangeContactDataForm','onsubmit'=>'return false;'),$Comp);
             #-------------------------------------------------------------------
-            $Comp = Comp_Load(
-              'Form/Input',
-              Array(
-                'name'  => 'DomainOrderID',
-                'type'  => 'hidden',
-                'value' => $DomainOrder['ID']
-              )
-            );
-            if(Is_Error($Comp))
-              return ERROR | @Trigger_Error(500);
-            #-------------------------------------------------------------------
-            $Form->AddChild($Comp);
-            #-------------------------------------------------------------------
-            $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript'),SPrintF("var \$Domain = '%s';",$Domain)));
-            #-------------------------------------------------------------------
-            #-------------------------------------------------------------------
-            $DOM->AddChild('Into',$Form);
+            $DOM->AddChild('Into',$Comp);
             #-------------------------------------------------------------------
             if(Is_Error($DOM->Build(FALSE)))
               return ERROR | @Trigger_Error(500);
