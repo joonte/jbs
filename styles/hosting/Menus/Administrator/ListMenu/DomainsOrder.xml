@@ -19,6 +19,11 @@
   <Icon>Profiles.png</Icon>
  </UniqID>
  <UniqID>
+  <Text>Информация от регистратора</Text>
+  <Href>javascript:ShowWindow("/DomainOrderRegistratorInfo",{DomainOrderID:%Replace%});</Href>
+  <Icon>Info.gif</Icon>
+ </UniqID>
+ <UniqID>
   <Text>Обновить данные WhoIs</Text>
   <Href>javascript:DomainOrderWhoIsUpdate(%Replace%);</Href>
   <Icon>Edit.gif</Icon>
