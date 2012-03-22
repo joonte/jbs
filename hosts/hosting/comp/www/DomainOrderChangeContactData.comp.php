@@ -135,10 +135,10 @@ switch(ValueOf($DomainOrder)){
               'Form/Input',
               Array(
                 'name'    => 'Email',
-                'size'    => 20,
+                'size'    => 30,
                 'type'    => 'text',
                 'prompt'  => $Messages['Prompts']['Email'],
-                'value'   => IsSet($ContactDetail['Email'])?$ContactDetail['Email']:''
+                'value'   => IsSet($ContactDetail['ContactInfo']['Email'])?$ContactDetail['ContactInfo']['Email']:''
               )
             );
             if(Is_Error($Comp))
@@ -151,10 +151,10 @@ switch(ValueOf($DomainOrder)){
               'Form/Input',
               Array(
                 'name'    => 'Phone',
-                'size'    => 20,
+                'size'    => 30,
                 'type'    => 'text',
                 'prompt'  => $Messages['Prompts']['Phone'],
-                'value'   => IsSet($ContactDetail['Phone'])?$ContactDetail['Phone']:''
+                'value'   => IsSet($ContactDetail['ContactInfo']['Phone'])?$ContactDetail['ContactInfo']['Phone']:''
               )
             );
             if(Is_Error($Comp))
@@ -168,10 +168,10 @@ switch(ValueOf($DomainOrder)){
                 'Form/Input',
                 Array(
                   'name'    => 'CellPhone',
-                  'size'    => 20,
+                  'size'    => 30,
                   'type'    => 'text',
                   'prompt'  => $Messages['Prompts']['Phone'],
-                  'value'   => IsSet($ContactDetail['CellPhone'])?$ContactDetail['CellPhone']:''
+                  'value'   => IsSet($ContactDetail['ContactInfo']['CellPhone'])?$ContactDetail['ContactInfo']['CellPhone']:''
                 )
               );
               if(Is_Error($Comp))
@@ -179,6 +179,25 @@ switch(ValueOf($DomainOrder)){
               #-------------------------------------------------------------------
               $Table[] = Array('Номер мобильного телефона',$Comp);
             }
+            #-------------------------------------------------------------------
+            #-------------------------------------------------------------------
+	    # у некоторых доменных зон его нет
+	    if(IsSet($ContactDetail['ContactInfo']['PostalAddress']) && StrLen($ContactDetail['ContactInfo']['PostalAddress']) > 10){
+              $Comp = Comp_Load(
+                'Form/Input',
+                Array(
+                  'name'    => 'PostalAddress',
+                  'size'    => 30,
+                  'type'    => 'text',
+                  'prompt'  => 'Полный почтовый адрес - в том же самом формате что и отображён текущий. При неверном вводе, изменения не будут сохранены.',
+                  'value'   => $ContactDetail['ContactInfo']['PostalAddress']
+                )
+              );
+              if(Is_Error($Comp))
+                return ERROR | @Trigger_Error(500);
+              #-------------------------------------------------------------------
+              $Table[] = Array('Почтовый адрес',$Comp);
+	    }
             #-------------------------------------------------------------------
             #-------------------------------------------------------------------
             $Comp = Comp_Load(
@@ -212,10 +231,29 @@ switch(ValueOf($DomainOrder)){
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
             $Form->AddChild($Comp);
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+foreach(Array_Keys($ContactDetail['FullInfo']) as $Key){
+####$Message = Str_Replace($Key,$Replace[$Key],$Message);
+
+$Comp = Comp_Load(
+'Form/Input',
+Array(
+'name'  => $Key,
+'type'  => 'hidden',
+'value' => $ContactDetail['FullInfo'][$Key]
+)
+);
+if(Is_Error($Comp))
+return ERROR | @Trigger_Error(500);
+#-----------------------------------------------------------------------
+$Form->AddChild($Comp);
+#------------------------------------------------------------------------
+}
+
             #-------------------------------------------------------------------
             $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript'),SPrintF("var \$Domain = '%s';",$Domain)));
             #-------------------------------------------------------------------
-            $Form->AddChild($Comp);
             #-------------------------------------------------------------------
             $DOM->AddChild('Into',$Form);
             #-------------------------------------------------------------------

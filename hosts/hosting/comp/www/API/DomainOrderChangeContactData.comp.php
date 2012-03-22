@@ -13,6 +13,7 @@ $DomainOrderID = (integer) @$Args['DomainOrderID'];
 $Email         =  (string) @$Args['Email'];
 $Phone         =  (string) @$Args['Phone'];
 $CellPhone     =  (string) @$Args['CellPhone'];
+$PostalAddress =  (string) @$Args['PostalAddress'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
@@ -81,6 +82,15 @@ switch(ValueOf($DomainOrder)){
               }
               $Person['CellPhone'] = $CellPhone;
             }
+
+            #-------------------------------------------------------------------
+            if($PostalAddress){
+              if(StrLen($PostalAddress) < 10){
+                return new gException('WRONG_POSTAL_ADDRESS','Введён некорректный почтовый адрес');
+              }
+              $Person['PostalAddress'] = $PostalAddress;
+            }
+
             #-------------------------------------------------------------------
             if(!Count($Person))
 	      return new gException('NO_INPUT_DATA','Необходимо ввести хоть какие-то данные для изменения');

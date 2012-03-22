@@ -569,6 +569,9 @@ function WebNames_Change_Contact_Detail($Settings,$Domain,$Person){
   if(IsSet($Person['Email']))
     $Query['e_mail'] = $Person['Email'];
   #-------------------------------------------------------------------------------
+  if(IsSet($Person['PostalAddress']))
+    $Query['p_addr'] = $Person['PostalAddress'];
+  #-------------------------------------------------------------------------------
   #-------------------------------------------------------------------------------
   $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
   if(Is_Error($Result))
@@ -632,7 +635,8 @@ function WebNames_Get_Contact_Detail($Settings,$Domain){
     return ERROR | @Trigger_Error('[WebNames_Get_Contact_Detail]: неизвестный ответ');
   #-------------------------------------------------------------------------------
   #-------------------------------------------------------------------------------
-  $Out = Array();
+  $ContactInfo = Array();
+  $FullInfo    = Array();
   #-------------------------------------------------------------------------------
   $iContactData = Explode("\n", $Result);
   #-------------------------------------------------------------------------------
@@ -640,25 +644,30 @@ function WebNames_Get_Contact_Detail($Settings,$Domain){
    $ContactData = Explode(": ",$Line);
    #-------------------------------------------------------------------------------
    if(Trim($ContactData[0]) == 'e_mail')
-     $Out['Email'] = SubStr($ContactData[1],0,-1);
+     $ContactInfo['Email'] = SubStr($ContactData[1],0,-1);
    #-------------------------------------------------------------------------------
    if(Trim($ContactData[0]) == 'phone')
-     $Out['Phone'] = SubStr($ContactData[1],0,-1);
+     $ContactInfo['Phone'] = SubStr($ContactData[1],0,-1);
    #-------------------------------------------------------------------------------
    if(Trim($ContactData[0]) == 'cell_phone')
-     $Out['CellPhone'] = SubStr($ContactData[1],0,-1);
+     $ContactInfo['CellPhone'] = SubStr($ContactData[1],0,-1);
+   #-------------------------------------------------------------------------------
+   if(Trim($ContactData[0]) == 'p_addr')
+     $ContactInfo['PostalAddress'] = SubStr($ContactData[1],0,-1);
    #-------------------------------------------------------------------------------
    # буржуйские домены
    if(Trim($ContactData[0]) == 'o_phone')
-     $Out['Phone'] = SubStr($ContactData[1],0,-1);
+     $ContactInfo['Phone'] = SubStr($ContactData[1],0,-1);
    #-------------------------------------------------------------------------------
    if(Trim($ContactData[0]) == 'o_email')
-     $Out['Email'] = SubStr($ContactData[1],0,-1);
+     $ContactInfo['Email'] = SubStr($ContactData[1],0,-1);
    #-------------------------------------------------------------------------------
-
+   # полная информация
+   if(IsSet($ContactData[1]))
+     $FullInfo[Trim($ContactData[0])] = SubStr($ContactData[1],0,-1);
   }
   #-------------------------------------------------------------------------------
-  return $Out;
+  return Array('ContactInfo'=>$ContactInfo,'FullInfo'=>$FullInfo);
 }
 
 
