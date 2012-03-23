@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Serge Sedov (for www.host-food.ru) */
 /******************************************************************************/
@@ -10,31 +9,38 @@ $__args_list = Array('Task','DomainOrderID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('libs/WhoIs.php','classes/Registrator.class.php')))
+if(Is_Error(System_Load('libs/WhoIs.php','classes/Registrator.class')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('DomainName','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `RegistratorID`','StatusID');
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
-$WhoIs = WhoIs_Check($DomainOrder['DomainName'],$DomainOrder['DomainZone']);
-IsSet($WhoIs['Registrar'])?$Registrar = $WhoIs['Registrar']:$Registrar = 'NOT_FOUND';
-#-------------------------------------------------------------------------------
-$Registrator = DB_Select('Registrators','PrefixNic',Array('UNIQ','ID'=>$DomainOrder['RegistratorID']));
-#-------------------------------------------------------------------------------
-Debug("[Task/DomainTransfer]: Registrar - ". $Registrar);
-Debug("[Task/DomainTransfer]: PrefixNic - ". $Registrator['PrefixNic']);
-#-------------------------------------------------------------------------------
-$IsInternal = FALSE;
-if(Preg_Match(SPrintF('/%s/',$Registrator['PrefixNic']), $Registrar))
-  $IsInternal = TRUE;
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
   case 'error':
     return ERROR | @Trigger_Error(500);
   case 'exception':
-    return ERROR | @Trigger_Error(400);
+    #return ERROR | @Trigger_Error(400);
+    # к моменту выполнения задания, бывает что юзер уже успел грохнуть заказ...
+    Debug("[Task/DomainTransfer]: Заказа на домен уже не существует, вероятно пользователь его удалил");
+    return TRUE;
   case 'array':
+    #-------------------------------------------------------------------------------
+    $GLOBALS['TaskReturnInfo'] = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']);
+    #-------------------------------------------------------------------------------
+    $WhoIs = WhoIs_Check($DomainOrder['DomainName'],$DomainOrder['DomainZone']);
+    IsSet($WhoIs['Registrar'])?$Registrar = $WhoIs['Registrar']:$Registrar = 'NOT_FOUND';
+    #-------------------------------------------------------------------------------
+    $Registrator = DB_Select('Registrators','PrefixNic',Array('UNIQ','ID'=>$DomainOrder['RegistratorID']));
+    #-------------------------------------------------------------------------------
+    Debug("[Task/DomainTransfer]: Registrar - ". $Registrar);
+    Debug("[Task/DomainTransfer]: PrefixNic - ". $Registrator['PrefixNic']);
+    #-------------------------------------------------------------------------------
+    $IsInternal = FALSE;
+    if(Preg_Match(SPrintF('/%s/',$Registrator['PrefixNic']), $Registrar))
+      $IsInternal = TRUE;
+    #-------------------------------------------------------------------------------
     #---------------------------------------------------------------------------
     $Registrator = new Registrator();
     #---------------------------------------------------------------------------
