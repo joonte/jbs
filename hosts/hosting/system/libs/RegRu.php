@@ -768,7 +768,7 @@ function RegRu_Get_Contact_Detail($Settings,$Domain){
     if(IsSet($Result['answer']['services'][0]['details']['phone']))
       $ContactInfo['Phone'] = $Result['answer']['services'][0]['details']['phone'];
     #-------------------------------------------------------------------------
-    if(IsSet($Result['answer']['services'][0]['details']['e_mail']))
+    if(IsSet($Result['answer']['services'][0]['details']['sms_security_number']))
       $ContactInfo['CellPhone'] = $Result['answer']['services'][0]['details']['sms_security_number'];
     #-------------------------------------------------------------------------
     if(IsSet($Result['answer']['services'][0]['details']['p_addr']))
