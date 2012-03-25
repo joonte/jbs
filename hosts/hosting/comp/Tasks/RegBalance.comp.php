@@ -12,7 +12,7 @@ $Config = Config();
 $Theme = "Проверка баланса счета регистратора";
 $Message = "";
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/Registrator.class.php','libs/IspSoft.php')))
+if(Is_Error(System_Load('classes/Registrator.class','libs/IspSoft.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Settings = $Config['Tasks']['Types']['RegBalance'];
@@ -28,7 +28,11 @@ switch(ValueOf($Registrators)){
 		return MkTime(7,20,0,Date('n'),Date('j')+1,Date('Y'));
 	case 'array':
 		#-----------------------------------------------------------------------
+		$GLOBALS['TaskReturnInfo'] = Array();
+		#-----------------------------------------------------------------------
 		foreach($Registrators as $NowReg){
+			#-----------------------------------------------------------------------
+			$GLOBALS['TaskReturnInfo'][] = $NowReg['Name'];
 			#-------------------------------------------------------------------
 			Debug(SPrintF('[comp/Tasks/RegBalance]: Проверка баланса для %s (ID %d, тип %s)',$NowReg['Name'],$NowReg['ID'],$NowReg['TypeID']));
 			#-------------------------------------------------------------------
@@ -171,8 +175,7 @@ default:
 #---------------------------------------------------------
 foreach($Employers as $Employer){
 	#---------------------------------------------------------
-    $msg = new DispatchMsg(Array('Theme'=>$Theme,'Message'=>$Message), (integer)$Employer['ID'], $FromID);
-	$IsSend = NotificationManager::sendMsg($msg);
+	$IsSend = Notify_Send('Dispatch',(integer)$Employer['ID'],Array('Theme'=>$Theme,'Message'=>$Message));
 	#---------------------------------------------------------
 	switch(ValueOf($IsSend)){
 	case 'error':
