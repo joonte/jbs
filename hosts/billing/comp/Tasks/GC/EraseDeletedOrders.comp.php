@@ -12,9 +12,18 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $CacheID = SPrintF('GC[%s]',Md5('Services'));
 $Services = CacheManager::get($CacheID);
-
-if(!$Services){
+if(Is_Error($Services)){
   $Services = DB_Select('Services', Array('ID','Name','Code'),Array('Where' =>"`IsActive` = 'yes' AND `Code` NOT IN ('Default')"));
+  switch(ValueOf($Invoices)){
+  case 'error':
+    return ERROR | @Trigger_Error(500);
+  case 'exception':
+    return TRUE;
+  case 'array':
+    break;
+  default:
+    return ERROR | @Trigger_Error(101);
+  }
   #-----------------------------------------------------------------------------
   for($i=0;$i<Count($Services);$i++){
     $Query = DB_Query( SPrintF("SHOW TABLES LIKE '%s%%OrdersOwners'",$Services[$i]['Code']) );
