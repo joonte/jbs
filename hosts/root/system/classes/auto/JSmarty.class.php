@@ -1,4 +1,7 @@
 <?php
+
+require_once 'Smarty.class.php';
+
 /**
  *
  *  Joonte Billing System
