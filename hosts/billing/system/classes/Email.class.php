@@ -62,13 +62,13 @@ class Email implements Dispatcher {
 
         $sender = $msg->getParam('From');
 
-        $emailHeads = Array(SPrintF('From: %s', $recipient['Email']), 'MIME-Version: 1.0', 'Content-Type: text/plain; charset=UTF-8','Content-Transfer-Encoding: 8bit');
+        $emailHeads = Array(SPrintF('From: %s', $sender['Email']), 'MIME-Version: 1.0', 'Content-Type: text/plain; charset=UTF-8','Content-Transfer-Encoding: 8bit');
 
         $taskParams = Array(
             'UserID' => $recipient['ID'],
             'TypeID' => 'Email',
             'Params' => Array(
-                $sender['Email'],
+                $recipient['Email'],
                 $theme,
                 $message,
                 Implode("\r\n", $emailHeads),
