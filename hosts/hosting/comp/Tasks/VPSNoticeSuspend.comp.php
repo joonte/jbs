@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -22,7 +21,7 @@ switch(ValueOf($VPSOrders)){
     #---------------------------------------------------------------------------
     foreach($VPSOrders as $VPSOrder){
       #-------------------------------------------------------------------------
-      $IsSend = Notify_Send('VPSNoticeSuspend',(integer)$VPSOrder['UserID'],Array('VPSOrder'=>$VPSOrder));
+      $IsSend = NotificationManager::sendMsg('VPSNoticeSuspend',(integer)$VPSOrder['UserID'],Array('VPSOrder'=>$VPSOrder));
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':
