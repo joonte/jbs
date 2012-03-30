@@ -14,7 +14,10 @@ $ISPswOrderID = (integer) @$Args['ISPswOrderID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','IP','UserID','StatusID','StatusDate','(SELECT `ISPtype` FROM `ISPswSchemes` WHERE `ISPswOrdersOwners`.`SchemeID`=`ISPswSchemes`.`ID`) AS `ISPtype`');
+$Columns = Array(
+                 'ID','IP','UserID','StatusID','StatusDate','LicenseID',
+                 '(SELECT `ISPtype` FROM `ISPswSchemes` WHERE `ISPswOrdersOwners`.`SchemeID`=`ISPswSchemes`.`ID`) AS `ISPtype`'
+                );
 $ISPswOrder = DB_Select('ISPswOrdersOwners',$Columns,Array('UNIQ','ID'=>$ISPswOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($ISPswOrder)){
@@ -44,7 +47,7 @@ switch(ValueOf($ISPswOrder)){
 	# проверяем, можно ли менять IP для этой лицензии
 	# 1. внутренним, могут менять только сотрудники
 	# 2. время - прошёл ли 31 день от последней смены адреса
-	$ISPswLicense = DB_Select('ISPswLicenses',Array('ID','StatusDate','IsInternal'),Array('UNIQ','Where'=>"IP='" . $ISPswOrder['IP'] . "' AND `ISPtype`='" . $ISPswOrder['ISPtype'] . "'"));
+	$ISPswLicense = DB_Select('ISPswLicenses',Array('ID','StatusDate','IsInternal'),Array('UNIQ','ID'=>$ISPswOrder['LicenseID']));
 	switch(ValueOf($ISPswLicense)){
 	case 'error':
 	  return ERROR | @Trigger_Error(500);
