@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Sergey Sedov (for www.host-food.ru) */
 /******************************************************************************/
@@ -12,7 +11,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $CacheID = SPrintF('GC[%s]',Md5('Services'));
 $Services = CacheManager::get($CacheID);
-if(!$Services){
+if(!$Services || !Is_Array($Services)){
   $Services = DB_Select('Services', Array('ID','Name','Code'),Array('Where' =>"`IsActive` = 'yes' AND `Code` NOT IN ('Default')"));
   switch(ValueOf($Services)){
   case 'error':
@@ -36,6 +35,9 @@ if(!$Services){
   #-----------------------------------------------------------------------------
   CacheManager::add($CacheID,$Services,600);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+#Debug("[Tasks/GC/EraseDeletedOrders]: " . print_r($Services,true));
 #-------------------------------------------------------------------------------
 for($i=0;$i<Count($Services);$i++){
   Debug( SPrintF("[Tasks/GC/EraseDeletedOrders]: Код текущей услуги - %s",$Services[$i]['Code']) );
