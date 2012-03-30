@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -21,9 +20,11 @@ switch(ValueOf($HostingOrders)){
   break;
   case 'array':
     #---------------------------------------------------------------------------
+    $GLOBALS['TaskReturnInfo'] = SPrintF('Notified %n accounts',SizeOf($HostingOrders));
+    #---------------------------------------------------------------------------
     foreach($HostingOrders as $HostingOrder){
       #-------------------------------------------------------------------------
-      $IsSend = NotificationManager::sendMsg('HostingNoticeDelete',(integer)$HostingOrder['UserID'],Array('HostingOrder'=>$HostingOrder));
+      $IsSend = Notify_Send('HostingNoticeDelete',(integer)$HostingOrder['UserID'],Array('HostingOrder'=>$HostingOrder));
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':

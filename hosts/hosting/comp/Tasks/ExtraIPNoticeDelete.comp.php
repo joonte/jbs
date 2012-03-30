@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -18,9 +17,11 @@ switch(ValueOf($ExtraIPOrders)){
   break;
   case 'array':
     #---------------------------------------------------------------------------
+    $GLOBALS['TaskReturnInfo'] = SPrintF('Notified %n accounts',SizeOf($ExtraIPOrders));
+    #---------------------------------------------------------------------------
     foreach($ExtraIPOrders as $ExtraIPOrder){
       #-------------------------------------------------------------------------
-      $IsSend = NotificationManager::sendMsg('ExtraIPNoticeDelete',(integer)$ExtraIPOrder['UserID'],Array('ExtraIPOrder'=>$ExtraIPOrder));
+      $IsSend = Notify_Send('ExtraIPNoticeDelete',(integer)$ExtraIPOrder['UserID'],Array('ExtraIPOrder'=>$ExtraIPOrder));
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':

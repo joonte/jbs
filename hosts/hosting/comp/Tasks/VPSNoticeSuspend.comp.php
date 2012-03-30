@@ -18,9 +18,11 @@ switch(ValueOf($VPSOrders)){
   break;
   case 'array':
     #---------------------------------------------------------------------------
+    $GLOBALS['TaskReturnInfo'] = SPrintF('Notified %n accounts',SizeOf($VPSOrders));
+    #---------------------------------------------------------------------------
     foreach($VPSOrders as $VPSOrder){
       #-------------------------------------------------------------------------
-      $IsSend = NotificationManager::sendMsg('VPSNoticeSuspend',(integer)$VPSOrder['UserID'],Array('VPSOrder'=>$VPSOrder));
+      $IsSend = Notify_Send('VPSNoticeSuspend',(integer)$VPSOrder['UserID'],Array('VPSOrder'=>$VPSOrder));
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':

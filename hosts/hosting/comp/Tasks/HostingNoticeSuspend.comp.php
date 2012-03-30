@@ -18,9 +18,11 @@ switch(ValueOf($HostingOrders)){
   break;
   case 'array':
     #---------------------------------------------------------------------------
+    $GLOBALS['TaskReturnInfo'] = SPrintF('Notified %n accounts',SizeOf($HostingOrders));
+    #---------------------------------------------------------------------------
     foreach($HostingOrders as $HostingOrder){
       #-------------------------------------------------------------------------
-      $IsSend = NotificationManager::sendMsg('HostingNoticeSuspend',(integer)$HostingOrder['UserID'],Array('HostingOrder'=>$HostingOrder));
+      $IsSend = Notify_Send('HostingNoticeSuspend',(integer)$HostingOrder['UserID'],Array('HostingOrder'=>$HostingOrder));
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':
