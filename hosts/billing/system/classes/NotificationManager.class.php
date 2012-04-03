@@ -92,7 +92,7 @@ class NotificationManager {
         if ($sentMsgCnt < 1) {
             Debug("Couldn't send notify by any methods to user :" . $User['ID']);
 
-            return FALSE;
+            return new gException('USER_NOT_NOTIFIED','Не удалось оповестить пользователя ни одним из методов');
         }
 
         return TRUE;
