@@ -153,7 +153,7 @@ CREATE TABLE `Contracts` (
   `Customer` char(255) default '',
   `IsUponConsider` enum('no','yes') default 'no',
   `Balance` float(11,2) default '0.00',
-  `Document` mediumblob,
+  `Document` LONGBLOB,
   `StatusID` char(30) default 'UnSeted',
   `StatusDate` int(11) default '0',
   PRIMARY KEY  (`ID`),

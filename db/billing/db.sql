@@ -787,6 +787,7 @@ set @Text = '<NOBODY>
   </TR>
  </TABLE>
  <BR />
+ <COMP path="Clauses/TariffList" args="NotUsed"> [список тарифов] </COMP>
 </NOBODY>';
 
 INSERT INTO `Clauses`
