@@ -24,7 +24,7 @@ switch(ValueOf($VPSOrders)){
     #---------------------------------------------------------------------------
     foreach($VPSOrders as $VPSOrder){
       #-------------------------------------------------------------------------
-      $IsSend = NotificationManager::sendMsg('VPSNoticeDelete',(integer)$VPSOrder['UserID'],Array('VPSOrder'=>$VPSOrder));
+      $IsSend = NotificationManager::sendMsg(new Message('VPSNoticeDelete',(integer)$VPSOrder['UserID'],Array('VPSOrder'=>$VPSOrder)));
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':
