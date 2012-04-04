@@ -17,7 +17,7 @@ switch(ValueOf($ExtraIPOrders)){
   break;
   case 'array':
     #---------------------------------------------------------------------------
-    $GLOBALS['TaskReturnInfo'] = SPrintF('Notified %n accounts',SizeOf($ExtraIPOrders));
+    $GLOBALS['TaskReturnInfo'] = SPrintF('Notified %u accounts',SizeOf($ExtraIPOrders));
     #---------------------------------------------------------------------------
     foreach($ExtraIPOrders as $ExtraIPOrder){
       #-------------------------------------------------------------------------

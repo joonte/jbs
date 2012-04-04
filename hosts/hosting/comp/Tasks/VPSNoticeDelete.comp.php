@@ -20,7 +20,7 @@ switch(ValueOf($VPSOrders)){
   break;
   case 'array':
     #---------------------------------------------------------------------------
-    $GLOBALS['TaskReturnInfo'] = SPrintF('Notified %n accounts',SizeOf($VPSOrders));
+    $GLOBALS['TaskReturnInfo'] = SPrintF('Notified %u accounts',SizeOf($VPSOrders));
     #---------------------------------------------------------------------------
     foreach($VPSOrders as $VPSOrder){
       #-------------------------------------------------------------------------
