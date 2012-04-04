@@ -175,7 +175,7 @@ default:
 #---------------------------------------------------------
 foreach($Employers as $Employer){
 	#---------------------------------------------------------
-	$msg = new DispatchMsg(Array('Theme'=>$Theme,'Message'=>$Message), (integer)$Employer['ID'], $FromID);
+	$msg = new DispatchMsg(Array('Theme'=>$Theme,'Message'=>$Message), (integer)$Employer['ID'], 100 /*$FromID*/);
     	$IsSend = NotificationManager::sendMsg($msg);
 	#---------------------------------------------------------
 	switch(ValueOf($IsSend)){
