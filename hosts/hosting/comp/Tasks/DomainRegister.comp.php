@@ -67,8 +67,8 @@ switch(ValueOf($DomainOrder)){
                       return ERROR | @Trigger_Error(400);
                     case 'array':
                       # страна профиля должна быть кодом
-                      $ProfileCompile['Attribs']['pCountry'] = $Profile['Attribs']['pCountry'];
-		      $ProfileCompile['Attribs']['jCountry'] = $Profile['Attribs']['jCountry'];
+                      if(IsSet($Profile['Attribs']['pCountry'])){$ProfileCompile['Attribs']['pCountry'] = $Profile['Attribs']['pCountry'];}
+		      if(IsSet($Profile['Attribs']['jCountry'])){$ProfileCompile['Attribs']['jCountry'] = $Profile['Attribs']['jCountry'];}
                       break;
                     default:
                       return ERROR | @Trigger_Error(101);
