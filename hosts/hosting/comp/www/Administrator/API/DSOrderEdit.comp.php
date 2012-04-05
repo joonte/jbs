@@ -43,30 +43,32 @@ if(!$ContractID)
   return new gException('CONTRACT_NOT_FILLED','Договор клиента не указан');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-# ищщем старый контракт - сравниваем номерки
-$OldContractID = DB_Select('DSOrders','(SELECT `ContractID` FROM `Orders` WHERE `Orders`.`ID`=`DSOrders`.`OrderID`) AS `ContractID`',Array('UNIQ','ID'=>$DSOrderID));
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-switch(ValueOf($OldContractID)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	return ERROR | @Trigger_Error(400);
-case 'array':
-	if($OldContractID['ContractID'] != $ContractID){
-		# проверяем есть ли профиль у нового контракта
-		$Count = DB_Count('Contracts',Array('Where'=>SPrintF('`ID` = %u AND `ProfileID` IS NOT NULL',$ContractID)));
-		if(Is_Error($Count))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		if(!$Count)
-			return new gException('CONTRACT_WITHOUT_PROFILE','У выбранного договора отсутствует профиль. Выберите другой договор, или, пусть клиент создаст и назначит профиль для этого договора.');
-		#-------------------------------------------------------------------------------
-	}   
-	break;      
-default:            
-	return ERROR | @Trigger_Error(101);
-}  
+if($DSOrderID){
+  # ищщем старый контракт - сравниваем номерки
+  $OldContractID = DB_Select('DSOrders','(SELECT `ContractID` FROM `Orders` WHERE `Orders`.`ID`=`DSOrders`.`OrderID`) AS `ContractID`',Array('UNIQ','ID'=>$DSOrderID));
+  #-------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------
+  switch(ValueOf($OldContractID)){
+  case 'error':
+    return ERROR | @Trigger_Error(500);
+  case 'exception':
+    return ERROR | @Trigger_Error(400);
+  case 'array':
+    if($OldContractID['ContractID'] != $ContractID){
+      # проверяем есть ли профиль у нового контракта
+      $Count = DB_Count('Contracts',Array('Where'=>SPrintF('`ID` = %u AND `ProfileID` IS NOT NULL',$ContractID)));
+      if(Is_Error($Count))
+        return ERROR | @Trigger_Error(500);
+      #-------------------------------------------------------------------------------
+      if(!$Count)
+        return new gException('CONTRACT_WITHOUT_PROFILE','У выбранного договора отсутствует профиль. Выберите другой договор, или, пусть клиент создаст и назначит профиль для этого договора.');
+      #-------------------------------------------------------------------------------
+    }   
+    break;      
+  default:            
+    return ERROR | @Trigger_Error(101);
+  }
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IDSOrder = Array(
