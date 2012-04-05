@@ -21,7 +21,7 @@ switch(ValueOf($DSOrders)){
     #---------------------------------------------------------------------------
     foreach($DSOrders as $DSOrder){
       #-------------------------------------------------------------------------
-      $IsSend = NotificationManager::sendMsg('DSNoticeDelete',(integer)$DSOrder['UserID'],Array('DSOrder'=>$DSOrder));
+      $IsSend = NotificationManager::sendMsg(new Message('DSNoticeDelete',(integer)$DSOrder['UserID'],Array('DSOrder'=>$DSOrder)));
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':

@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -20,7 +19,7 @@ switch(ValueOf($DSOrders)){
     #---------------------------------------------------------------------------
     foreach($DSOrders as $DSOrder){
       #-------------------------------------------------------------------------
-      $IsSend = NotificationManager::sendMsg('DSNoticeSuspend',(integer)$DSOrder['UserID'],Array('DSOrder'=>$DSOrder));
+      $IsSend = NotificationManager::sendMsg(new Message('DSNoticeSuspend',(integer)$DSOrder['UserID'],Array('DSOrder'=>$DSOrder)));
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':
