@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -17,10 +16,12 @@ switch(ValueOf($ISPswOrders)){
     # No more...
   break;
   case 'array':
+    #-------------------------------------------------------------------------------
+    $GLOBALS['TaskReturnInfo'] = SPrintF('Notified %u accounts',SizeOf($ISPswOrders));
     #---------------------------------------------------------------------------
     foreach($ISPswOrders as $ISPswOrder){
       #-------------------------------------------------------------------------
-      $IsSend = NotificationManager::sendMsg('ISPswNoticeSuspend',(integer)$ISPswOrder['UserID'],Array('ISPswOrder'=>$ISPswOrder));
+      $IsSend = NotificationManager::sendMsg(new Message('ISPswNoticeSuspend',(integer)$ISPswOrder['UserID'],Array('ISPswOrder'=>$ISPswOrder)));
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':

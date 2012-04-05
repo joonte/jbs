@@ -5,8 +5,8 @@
 {assign var=Theme value="Оканчивается заказ на выделенный IP адрес" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
-Уведомляем Вас о том, что оканчивается срок действия Вашего заказа №{$Item.OrderID|string_format:"%05u"} на виртуальный выделенный сервер (ExtraIP).
-До окончания заказа {$Item.DaysRemainded|default:'$Item.DaysRemainded'} дн.
-IP адрес: {$Item.Login|default:'$Item.Login'}
+Уведомляем Вас о том, что оканчивается срок действия Вашего заказа №{$ExtraIPOrder.OrderID|string_format:"%05u"} на выделенный IP адрес.
+До окончания заказа {$ExtraIPOrder.DaysRemainded|default:'$ExtraIPOrder.DaysRemainded'} дн.
+IP адрес: {$ExtraIPOrder.Login|default:'$ExtraIPOrder.Login'}
 
 {$From.Sign|default:'$From.Sign'}
