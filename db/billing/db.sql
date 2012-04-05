@@ -2117,6 +2117,8 @@ set @Text = '<NOBODY>
   <SPAN>Распечатайте счет и образец платежного поручения в удобном для Вас формате. Обращаем Ваше внимание на то, что поступившие платежи обрабатываются автоматически. </SPAN>
   <B>Настоятельно рекомендуем Вам в точности повторить назначение платежа, указанное в образце.</B>
  </P>
+ <P><B>Внимание!</B><BR />
+ <SPAN>Оплата счёта должна производиться Заказчиком. Оплата счёта третьими лицами не допускается.</SPAN></P>
  <H1>Образец платежного поручения</H1>
  <TABLE border="1" cellpadding="5" cellspacing="0">
   <TR>
@@ -2153,7 +2155,7 @@ set @Text = '<NOBODY>
    </TD>
   </TR>
  </TABLE>
- <P>Плательщик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%</P>
+ <P>Плательщик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%<BR />Заказчик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%</P>
  <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <P>
@@ -2194,6 +2196,8 @@ set @Text = '<NOBODY>
   <SPAN>Распечатайте счет и образец платежного поручения в удобном для Вас формате. Обращаем Ваше внимание на то, что поступившие платежи обрабатываются автоматически. </SPAN>
   <B>Настоятельно рекомендуем Вам в точности повторить назначение платежа, указанное в образце.</B>
  </P>
+ <P><B>Внимание!</B><BR />
+ <SPAN>Оплата счёта должна производиться Заказчиком. Оплата счёта третьими лицами не допускается.</SPAN></P>
  <H1>Образец платежного поручения</H1>
  <TABLE border="1" cellpadding="5" cellspacing="0">
   <TR>
@@ -2230,7 +2234,7 @@ set @Text = '<NOBODY>
    </TD>
   </TR>
  </TABLE>
- <P>Плательщик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%</P>
+ <P>Плательщик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%<BR />Заказчик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%</P>
  <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <P>
@@ -2271,6 +2275,8 @@ set @Text = '<NOBODY>
   <SPAN>Распечатайте счет и образец платежного поручения в удобном для Вас формате. Обращаем Ваше внимание на то, что поступившие платежи обрабатываются автоматически. </SPAN>
   <B>Настоятельно рекомендуем Вам в точности повторить назначение платежа, указанное в образце.</B>
  </P>
+ <P><B>Внимание!</B><BR />
+ <SPAN>Оплата счёта должна производиться Заказчиком. Оплата счёта третьими лицами не допускается.</SPAN></P>
  <H1>Образец платежного поручения</H1>
  <TABLE border="1" cellpadding="5" cellspacing="0">
   <TR>
@@ -2307,7 +2313,7 @@ set @Text = '<NOBODY>
    </TD>
   </TR>
  </TABLE>
- <P>Плательщик: %Customer.CompanyForm% "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%</P>
+ <P>Плательщик: %Customer.CompanyForm% "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%<BR />Заказчик: %Customer.CompanyForm% "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%</P>
  <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <P>
@@ -2348,6 +2354,8 @@ set @Text = '<NOBODY>
   <SPAN>Распечатайте счет и образец платежного поручения в удобном для Вас формате. Обращаем Ваше внимание на то, что поступившие платежи обрабатываются автоматически. </SPAN>
   <B>Настоятельно рекомендуем Вам в точности повторить назначение платежа, указанное в образце.</B>
  </P>
+ <P><B>Внимание!</B><BR />
+ <SPAN>Оплата счёта должна производиться Заказчиком. Оплата счёта третьими лицами не допускается.</SPAN></P>
  <H1>Образец платежного поручения</H1>
  <TABLE border="1" cellpadding="5" cellspacing="0">
   <TR>
@@ -2384,7 +2392,7 @@ set @Text = '<NOBODY>
    </TD>
   </TR>
  </TABLE>
- <P>Плательщик: %Customer.CompanyForm% "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%</P>
+ <P>Плательщик: %Customer.CompanyForm% "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%<BR />Заказчик: %Customer.CompanyForm% "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%</P>
  <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <P>
