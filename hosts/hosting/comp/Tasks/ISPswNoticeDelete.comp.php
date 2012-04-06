@@ -24,7 +24,7 @@ switch(ValueOf($ISPswOrders)){
     #---------------------------------------------------------------------------
     foreach($ISPswOrders as $ISPswOrder){
       #-------------------------------------------------------------------------
-      $IsSend = NotificationManager::sendMsg('ISPswNoticeDelete',(integer)$ISPswOrder['UserID'],Array('ISPswOrder'=>$ISPswOrder));
+      $IsSend = NotificationManager::sendMsg(new Message('ISPswNoticeDelete',(integer)$ISPswOrder['UserID'],Array('ISPswOrder'=>$ISPswOrder)));
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':
