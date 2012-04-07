@@ -11,7 +11,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $DomainOrderID = (integer) @$Args['DomainOrderID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class','classes/Registrator.class')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','classes/Registrator.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainsOrdersOwners',Array('ID','UserID','SchemeID','DomainName','StatusID','RegistratorID'),Array('UNIQ','ID'=>$DomainOrderID));
