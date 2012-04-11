@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -83,7 +82,7 @@ switch(ValueOf($VPSOrder)){
                 #-------------------------------------------------------------------------------
                 $VPSOrder['Server'] = $Server;
                 #---------------------------------------------------------------
-                $IsSend = NotificationManager::sendMsg('VPSPasswordChange',(integer)$VPSOrder['UserID'],Array('VPSOrder'=>$VPSOrder));
+                $IsSend = NotificationManager::sendMsg(new Message('VPSPasswordChange',(integer)$VPSOrder['UserID'],Array('VPSOrder'=>$VPSOrder)));
                 #---------------------------------------------------------------
                 switch(ValueOf($IsSend)){
                   case 'error':

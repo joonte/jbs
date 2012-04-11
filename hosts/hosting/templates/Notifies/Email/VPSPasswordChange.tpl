@@ -5,7 +5,7 @@
 {assign var=Theme value="Пароль для заказа виртуального сервера успешно изменен" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
-Уведомляем Вас о том, что {$smarty.now|date_format:"%d.%m.%Y"} пароль на Ваш заказ виртуального выделенного сервера (VPS) №{$Item.OrderID|string_format:"%05u"} был успешно изменен.
+Уведомляем Вас о том, что {$smarty.now|date_format:"%d.%m.%Y"} пароль на Ваш заказ виртуального выделенного сервера (VPS) №{$VPSOrder.OrderID|string_format:"%05u"} был успешно изменен.
 
 Ваши новые данные для доступа к аккаунту на сервере:
   * Адрес панели управления: {$Server.Url|default:'$Server.Url'}
