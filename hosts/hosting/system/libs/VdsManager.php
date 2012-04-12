@@ -317,7 +317,8 @@ function VdsManager_Password_Change($Settings,$Login,$Password,$IsReseller = FAL
 		'passwd'   => $Password,
 		'confirm'  => $Password,
 		'sok'      => 'yes',
-                'su'       => $Login
+                'su'       => $Login,
+		'atype'    => 'atany',         # разрешаем доступ к панели с любого IP
 	);
         #---------------------------------------------------------------------------
         $Http = Array(
