@@ -608,70 +608,15 @@ function IspManager_Password_Change($Settings,$Login,$Password,$IsReseller = FAL
     'su'       => $Login,
     'sok'      => 'ok',
     'atype'    => 'atany',         # разрешаем доступ к панели с любого IP
-  );
-  #-----------------------------------------------------------------------------
-  $Response = Http_Send('/manager/ispmgr',$Http,$Request);
-  if(Is_Error($Response))
-    return ERROR | @Trigger_Error('[IspManager_Password_Change]: не удалось соедениться с сервером');
-  #-----------------------------------------------------------------------------
-  $Response = Trim($Response['Body']);
-  #-----------------------------------------------------------------------------
-  $XML = String_XML_Parse($Response);
-  if(Is_Exception($XML))
-    return ERROR | @Trigger_Error('[IspManager_Password_Change]: неверный ответ от сервера');
-  #-----------------------------------------------------------------------------
-  $XML = $XML->ToArray();
-  #-----------------------------------------------------------------------------
-  $Doc = $XML['doc'];
-  #-----------------------------------------------------------------------------
-  if(IsSet($Doc['error']))
-    return new gException('RESET_LIMIT_IP_ERROR','Не удалось сбросить список IP, для доступа к панели управления');
-  #-----------------------------------------------------------------------------
-  #-----------------------------------------------------------------------------
-  $Request = Array(
-    #---------------------------------------------------------------------------
-    'authinfo' => $authinfo,
-    'out'      => 'xml',
-    'func'     => ($IsReseller?'reseller.edit':'user.edit'),
-    'elid'     => $Login
-  );
-  #-----------------------------------------------------------------------------
-  $Response = Http_Send('/manager/ispmgr',$Http,$Request);
-  if(Is_Error($Response))
-    return ERROR | @Trigger_Error('[IspManager_Password_Change]: не удалось соедениться с сервером');
-  #-----------------------------------------------------------------------------
-  $Response = Trim($Response['Body']);
-  #-----------------------------------------------------------------------------
-  $XML = String_XML_Parse($Response);
-  if(Is_Exception($XML))
-    return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
-  #-----------------------------------------------------------------------------
-  $XML = $XML->ToArray();
-  #-----------------------------------------------------------------------------
-  $Doc = $XML['doc'];
-  #-----------------------------------------------------------------------------
-  if(IsSet($Doc['error']))
-    return new gException('USER_DATA_TAKE_ERROR','Ошибка получения данных пользователя из системы управления');
-  #-----------------------------------------------------------------------------
-  $Request = Array(
-    #---------------------------------------------------------------------------
-    'authinfo' => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
-    'out'      => 'xml',
-    'func'     => ($IsReseller?'reseller.edit':'user.edit'),
-    'elid'     => $Login,
     'passwd'   => $Password,
     'confirm'  => $Password,
-    'sok'      => 'yes'
   );
-  #-----------------------------------------------------------------------------
-  foreach(Array_Keys($Doc) as $ParamID)
-    $Request[$ParamID] = $Doc[$ParamID];
   #-----------------------------------------------------------------------------
   $Response = Http_Send('/manager/ispmgr',$Http,$Request);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[IspManager_Password_Change]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
-  $Response = $Response['Body'];
+  $Response = Trim($Response['Body']);
   #-----------------------------------------------------------------------------
   $XML = String_XML_Parse($Response);
   if(Is_Exception($XML))
