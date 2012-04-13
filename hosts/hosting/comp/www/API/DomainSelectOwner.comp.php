@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -14,9 +13,16 @@ $DomainOrderID = (integer) @$Args['DomainOrderID'];
 $PersonID      =  (string) @$Args['PersonID'];
 $ProfileID     = (integer) @$Args['ProfileID'];
 $OwnerTypeID   =  (string) @$Args['OwnerTypeID'];
+$Agree         = (boolean) @$Args['Agree'];
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(!$Agree)
+  return new gException('NOT_AGREE','Вы не дали согласия на передачу ваших персональных данных');
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainsOrdersOwners',Array('ID','UserID','SchemeID','StatusID','DomainName','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`'),Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
