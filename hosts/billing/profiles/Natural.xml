@@ -276,7 +276,7 @@
  </pType>
  <!-- ********************************************************************** -->
  <pAddress>
-  <Check>/^.{1,150}$/u</Check>
+  <Check>/^[^\\]{1,150}$/u</Check>
   <Comment>Адрес</Comment>
   <Example>Ленина, д. 51, кв. 7</Example>
   <Type>TextArea</Type>

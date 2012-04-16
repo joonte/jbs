@@ -30,9 +30,9 @@
  </pCity>
  <!-- ********************************************************************** -->
  <pAddress>
-  <Check>Char</Check>
+  <Check>/^[^\\]{1,150}$/u</Check>
   <Comment>Улица, дом, квартира</Comment>
-  <Example>ул. Ленина, д.51, кв.7</Example>
+  <Example>ул. Ленина, д. 51, кв. 7</Example>
   <Type>TextArea</Type>
   <Attribs>
    <rows>3</rows>
