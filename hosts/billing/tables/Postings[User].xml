@@ -42,6 +42,7 @@
  <ListElement>CreateDate</ListElement>
  <ListElement>Service</ListElement>
  <ListElement>Comment</ListElement>
+ <ListElement>Summ</ListElement>
  <ListElement>Before</ListElement>
  <ListElement>After</ListElement>
 </Sequence>

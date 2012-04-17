@@ -19,6 +19,7 @@
   <ListElement>CreateDate</ListElement>
   <ListElement>Before</ListElement>
   <ListElement>After</ListElement>
+  <ListElement>(`After` - `Before`) AS `Summ`</ListElement>
  </ColumnsIDs>
  <Conditions>
   <Message>Операции не найдены.</Message>
@@ -130,6 +131,18 @@
   </Args>
  </Comment>
  <!-- ********************************************************************** -->
+ <Summ>
+  <Head>Сумма</Head>
+  <Comp>Formats/Float</Comp>
+  <Args>
+   <ListElement>%Summ%</ListElement>
+   <ListElement>2</ListElement>
+  </Args>
+  <Attribs>
+   <style>text-align:right;</style>
+  </Attribs>
+ </Summ>
+ <!-- ********************************************************************** -->
  <Before>
   <Head>До</Head>
   <Comp>Formats/Float</Comp>
@@ -162,6 +175,7 @@
  <ListElement>Owner</ListElement>
  <ListElement>Service</ListElement>
  <ListElement>Comment</ListElement>
+ <ListElement>Summ</ListElement>
  <ListElement>Before</ListElement>
  <ListElement>After</ListElement>
 </Sequence>
