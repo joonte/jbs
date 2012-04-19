@@ -53,7 +53,21 @@ if(!Is_Null($Length)){
     return ERROR | @Trigger_Error(500);
 }
 #-------------------------------------------------------------------------------
-return new Tag('NOBODY',new Tag('IMG',Array('class'=>'Button','title'=>'История изменений','width'=>16,'height'=>16,'src'=>'SRC:{/Images/Icons/History.gif}','onclick'=>SPrintF("javascript:ShowWindow('/StatusesHistory',{ModeID:'%s',RowID:%u});",$ModeID,$RowID))),new Tag('SPAN',$Name));
+return new Tag(
+               'NOBODY',
+                new Tag(
+                        'IMG',
+                         Array(
+                               'class'       => 'Button',
+                               'onMouseOver' => 'PromptShow(event,\'История изменений\',this);',
+                               'width'       => 16,
+                               'height'      => 16,
+                               'src'         => 'SRC:{/Images/Icons/History.gif}',
+                               'onclick'     => SPrintF("javascript:ShowWindow('/StatusesHistory',{ModeID:'%s',RowID:%u});",$ModeID,$RowID)
+                               )
+                       ),
+                       new Tag('SPAN',$Name)
+              );
 #-------------------------------------------------------------------------------
 
 ?>
