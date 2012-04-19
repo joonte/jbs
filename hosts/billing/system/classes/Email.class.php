@@ -31,7 +31,8 @@ class Email implements Dispatcher {
         // Get template file path.
         $templatePath = SPrintF('Notifies/Email/%s.tpl', $msg->getTemplate());
 
-        $smarty= JSmarty::get();
+        $smarty = JSmarty::get();
+        $smarty->clear_all_assign();
 
         if (!$smarty->templateExists($templatePath)) {
             throw new jException('Template file not found: '.$templatePath);
@@ -44,9 +45,18 @@ class Email implements Dispatcher {
         }
 
         try {
-            $message = $smarty->fetch($templatePath);
-            $theme = $smarty->getTemplateVars('Theme');
+            Debug("msg->getParam('Theme'): "+ $msg->getParam('Theme'));
+            if ($msg->getParam('Theme')) {
+                Debug("SET THEME FROM PARAMS");
+                $theme = $msg->getParam('Theme');
+            }
+            else {
+                Debug("SET THEME FROM TEMPLATE");
+                $message = $smarty->fetch($templatePath);
+                $theme = $smarty->getTemplateVars('Theme');
+            }
 
+            Debug("THEME: "+$theme);
             if (!$theme) {
                 $theme = '$Theme' ;
             }
