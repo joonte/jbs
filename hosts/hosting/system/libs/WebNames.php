@@ -65,7 +65,7 @@ function WebNames_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1N
 	$Query['cell_phone']= Preg_Replace('/\s+/', '', $Person['CellPhone']);
         $Query['fax']       = $Person['Fax'];
         $Query['e_mail']    = $Person['Email'];
-	if($DomainZone == 'ru')
+	if(In_Array($DomainZone,Array('ru','su','рф')))
 	  $Query['ogrn_org']    = $Person['Ogrn'];
       break;
       default:
