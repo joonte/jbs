@@ -29,7 +29,7 @@ if (!IsSet($Links[$LinkID])) {
     $Links[$LinkID] = NULL;
     $JabberClient = &$Links[$LinkID];
 
-    $JabberClient = new Jabber(
+    $JabberClient = new JabberClient(
         $Settings['Server'],
         $Settings['Port'],
         $Settings['JabberID'],

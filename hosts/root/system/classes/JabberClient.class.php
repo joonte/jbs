@@ -28,7 +28,7 @@ function utf8_htmlspecialchars($value)
 }
 
 
-class jabber
+class JabberClient
 {
 	var $connection = null;
 	var $session = array();
@@ -49,7 +49,7 @@ class jabber
 
 	/**
 	*/
-	function jabber($server, $port, $username, $password, $use_ssl = false)
+	function JabberClient($server, $port, $username, $password, $use_ssl = false)
 	{
 		$this->connect_server		= ($server) ? $server : 'localhost';
 		$this->port					= ($port) ? $port : 5222;
