@@ -11,11 +11,11 @@
   * Адрес панели управления:
       {$Server.Url|default:'$Server.Url'}
   * Логин:
-      {$HostingOrder.Login|default:'$Login'}
+      {$Login|default:'$Login'}
   * Пароль:
-      {$HostingOrder.Password|default:'$Password'}
+      {$Password|default:'$Password'}
   * Доменное имя:
-      {$HostingOrder.Domain|default:'$Domain'}
+      {$Domain|default:'$Domain'}
   * FTP, POP3, SMTP, IMAP:
       {$Server.Address|default:'$Server.Address'}
 Сервера имен:
