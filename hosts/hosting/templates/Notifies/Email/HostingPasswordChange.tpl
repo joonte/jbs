@@ -5,17 +5,17 @@
 {assign var=Theme value="Пароль для заказа хостинга успешно изменен" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
-Уведомляем Вас о том, что {$smarty.now|date_format:"%d.%m.%Y"} пароль на Ваш заказ хостинга №{$HostingOrder.OrderID|string_format:"%05u"} был успешно изменен.
+Уведомляем Вас о том, что {$smarty.now|date_format:"%d.%m.%Y"} пароль на Ваш заказ хостинга №{$OrderID|string_format:"%05u"} был успешно изменен.
 
 Ваши новые данные для доступа к аккаунту на сервере:
   * Адрес панели управления:
       {$Server.Url|default:'$Server.Url'}
   * Логин:
-      {$HostingOrder.Login|default:'$HostingOrder.Login'}
+      {$HostingOrder.Login|default:'$Login'}
   * Пароль:
-      {$HostingOrder.Password|default:'$HostingOrder.Password'}
+      {$HostingOrder.Password|default:'$Password'}
   * Доменное имя:
-      {$HostingOrder.Domain|default:'$HostingOrder.Domain'}
+      {$HostingOrder.Domain|default:'$Domain'}
   * FTP, POP3, SMTP, IMAP:
       {$Server.Address|default:'$Server.Address'}
 Сервера имен:

@@ -6,7 +6,7 @@
  *  Copyright © 2012 Vitaly Velikodnyy
  *
  */
-class HostingPasswordChange extends Message {
+class HostingPasswordChangeMsg extends Message {
     public function __construct(array $params, $toUser) {
         parent::__construct('HostingPasswordChange', $toUser, $params);
     }
