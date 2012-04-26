@@ -250,7 +250,14 @@ EOD;
                 $__SETTINGS['db-name'],$__SETTINGS['db-port']))) {
           Message('Настройки конфигурации успешно сохранены');
 
-          $__STEP_ID = 5;
+          if (!chmod($File, 0600)) {
+            Error(SPrintF('Не удалось поставить права 0600 на файл конфигурации (%s)', $File));
+          }
+          else {
+            Message(SPrintF('Права 0600 на файл конфигурации (%s) успешно установлены.', $File));
+
+            $__STEP_ID = 5;
+          }
         }
         else {
             Error(SPrintF('Не возможно создать файл конфигурации (%s)', $File));
