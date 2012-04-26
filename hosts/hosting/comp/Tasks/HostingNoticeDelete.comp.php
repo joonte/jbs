@@ -24,7 +24,7 @@ switch(ValueOf($HostingOrders)){
     #---------------------------------------------------------------------------
     foreach($HostingOrders as $HostingOrder){
       #-------------------------------------------------------------------------
-      $IsSend = NotificationManager::sendMsg(new Message('HostingNoticeDelete',(integer)$HostingOrder['UserID'],Array('HostingOrder'=>$HostingOrder)));
+      $IsSend = NotificationManager::sendMsg(new HostingNoticeDeleteMsg($HostingOrder, (integer)$HostingOrder['UserID']));
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){
         case 'error':

@@ -83,7 +83,7 @@ switch(ValueOf($ExtraIPOrder)){
                 #-------------------------------------------------------------------------------
                 $ExtraIPOrder['Server'] = $Server;
                 #---------------------------------------------------------------
-                $IsSend = NotificationManager::sendMsg('ExtraIPPasswordChange',(integer)$ExtraIPOrder['UserID'],Array('Item'=>$ExtraIPOrder));
+                $IsSend = NotificationManager::sendMsg(new Message('ExtraIPPasswordChange',(integer)$ExtraIPOrder['UserID'],Array('Item'=>$ExtraIPOrder)));
                 #---------------------------------------------------------------
                 switch(ValueOf($IsSend)){
                   case 'error':
