@@ -23,6 +23,7 @@
 
     <patternset id="jbs-common-files" description="Common billing hosts.">
         <include name="core/**" />
+        <include name="install/**" />
         <include name="*/billing/**" />
         <include name="*/hosting/**" />
         <include name="*/root/**" />
