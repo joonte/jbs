@@ -82,7 +82,7 @@ switch(ValueOf($VPSOrder)){
                 #-------------------------------------------------------------------------------
                 $VPSOrder['Server'] = $Server;
                 #---------------------------------------------------------------
-                $IsSend = NotificationManager::sendMsg(new Message('VPSPasswordChange',(integer)$VPSOrder['UserID'],Array('VPSOrder'=>$VPSOrder)));
+                $IsSend = NotificationManager::sendMsg(new VPSPasswordChangeMsg($VPSOrder, (integer)$VPSOrder['UserID']));
                 #---------------------------------------------------------------
                 switch(ValueOf($IsSend)){
                   case 'error':
