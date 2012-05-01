@@ -26,7 +26,7 @@ switch(ValueOf($Orders)){
   break;
   case 'array':
     #---------------------------------------------------------------------------
-    $GLOBALS['TaskReturnInfo'] = SPrintF('Handled %n orders',SizeOf($Orders));
+    $GLOBALS['TaskReturnInfo'] = SPrintF('Handled %u orders',SizeOf($Orders));
     #---------------------------------------------------------------------------
     foreach($Orders as $Order){
       if($Order['IsAutoProlong'] && $Order['IsProlong']){

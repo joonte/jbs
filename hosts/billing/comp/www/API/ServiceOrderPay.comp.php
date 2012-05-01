@@ -172,7 +172,8 @@ switch(ValueOf($ServiceOrder)){
                   if(Is_Error(DB_Roll($TransactionID)))
                     return ERROR | @Trigger_Error(500);
                   #-------------------------------------------------------------
-                  return new gException('CAN_NOT_UPDATE_BALANCE',$Comp);
+                  #return new gException('CAN_NOT_UPDATE_BALANCE',$Comp);
+		  return $Comp;
                 case 'array':
                   #-------------------------------------------------------------
                   $CurrentMonth = (Date('Y') - 1970)*12 + (integer)Date('n');
