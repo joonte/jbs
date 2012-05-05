@@ -61,7 +61,7 @@ switch(ValueOf($ISPswOrder)){
                     $Event = Array(
                                   'UserID'	=> $ISPswOrder['UserID'],
                                   'PriorityID'	=> 'Error',
-                                  'Text'	=> SPrintF('Не удалось сменить тарифный план заказу ПО ISPsystem (%s) в автоматическом режиме, причина (%s)',$ISPswOrder['Login'],$SchemeChange->String),
+                                  'Text'	=> SPrintF('Не удалось сменить тарифный план заказу ПО ISPsystem (%s) в автоматическом режиме, причина (%s)',$ISPswOrder['IP'],$SchemeChange->String),
                                   'IsReaded'	=> FALSE
                                   );
 		    $Event = Comp_Load('Events/EventInsert',$Event);
@@ -86,7 +86,7 @@ switch(ValueOf($ISPswOrder)){
                     $Event = Array(
                                   'UserID'	=> $ISPswOrder['UserID'],
                                   'PriorityID'	=> 'Hosting',
-                                  'Text'	=> SPrintF('Тарифный план заказа ПО ISPsystem (%s) успешно изменён на (%s)',$ISPswOrder['Login'],$ISPswNewScheme['Name']),
+                                  'Text'	=> SPrintF('Тарифный план заказа ПО ISPsystem (%s) успешно изменён на (%s)',$ISPswOrder['IP'],$ISPswNewScheme['Name']),
                                   );
 		    $Event = Comp_Load('Events/EventInsert',$Event);
                     if(!$Event)
