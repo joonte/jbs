@@ -11,10 +11,13 @@ Eval(COMP_INIT);
 /******************************************************************************/
 
 #-------------------------------------------------------------------------------
-if(Mb_StrLen($Domain) > $Length)
-  $Domain = SPrintF('%s...',Mb_SubStr($Domain,0,$Length));
+if(Mb_StrLen($Domain) > $Length){
+  $Domain1 = SPrintF('%s...',Mb_SubStr($Domain,0,$Length));
+}else{
+  $Domain1 = $Domain;
+}
 #-------------------------------------------------------------------------------
-$A = new Tag('A',Array('target'=>'blank','href'=>SPrintF('http://%s.%s/',$Domain,$DomainZone),'title'=>'Перейти на сайт'),$Domain);
+$A = new Tag('A',Array('target'=>'blank','href'=>SPrintF('http://%s.%s/',$Domain,$DomainZone),'title'=>'Перейти на сайт'),$Domain1);
 #-------------------------------------------------------------------------------
 return $A;
 #-------------------------------------------------------------------------------
