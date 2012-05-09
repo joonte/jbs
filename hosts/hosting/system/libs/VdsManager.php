@@ -62,7 +62,7 @@ function VdsManager_Create($Settings,$Login,$Password,$Domain,$IP,$VPSScheme,$Em
     'bmem'            => ceil($VPSScheme['bmem']),	# Burstable RAM
     ($IsReselling?'maxswap':'swap') => ceil($VPSScheme['maxswap']), # использование swap
     'traf'            => $VPSScheme['traf'],		# Трафик
-    'chrate'          => $VPSScheme['chrate'] * 1024 * 1024 ,   # канал, полоса (VDSmanager жрёт в битах, в биллинге - мегабиты)
+    'chrate'          => SPrintF('%umbit',$VPSScheme['chrate']),   # канал, полоса, мегабит
     'desc'            => $VPSScheme['maxdesc'],		# файловых дескрипторов
     'proc'            => $VPSScheme['proc'],		# процессов
     'ipcount'         => $VPSScheme['ipalias'],		# дополнительных IP
@@ -263,7 +263,7 @@ function VdsManager_Scheme_Change($Settings,$Login,$VPSScheme){
     'bmem'            => ceil($VPSScheme['bmem']),	# Burstable RAM
     ($IsReselling?'maxswap':'swap') => ceil($VPSScheme['maxswap']), # использование swap
     'traf'            => $VPSScheme['traf'],		# Трафик
-    'chrate'          => $VPSScheme['chrate'] * 1024 * 1024,   # канал, полоса (VDSmanager жрёт в килобитах, в биллинге - мегабиты)
+    'chrate'          => SPrintF('%umbit',$VPSScheme['chrate']),   # канал, полоса, мегабит
     'desc'            => $VPSScheme['maxdesc'],		# файловых дескрипторов
     'proc'            => $VPSScheme['proc'],		# процессов
     'ipcount'         => $VPSScheme['ipalias'],		# дополнительных IP
