@@ -34,9 +34,9 @@ if(IsSet($Config['Domains']['NsServers']['Ns1']['Address'])){
 #-------------------------------------------------------------------------------
 $Where[] = '`Ns1Name` != ""';
 $Where[] = '`StatusID` = "Active"';
+$Where[] = '`Ns1Name` NOT LIKE CONCAT ("%",`DomainName`,".",`Name`)';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-
 $Columns = Array(
 		'SUBSTRING_INDEX(`Ns1Name`, ".", -2) AS Address',
 		'COUNT(*) AS Count',
