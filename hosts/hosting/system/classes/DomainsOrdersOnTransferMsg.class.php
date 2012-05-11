@@ -139,7 +139,7 @@
           $Event = Array (
                 'UserID'    => $UserID['ID'],
                 'PriorityID'=> 'Error',
-                'Text'      => SPrintF('Ошибка автоматического формирования инструкции по переносу домена к нам. Домен %s.%s.', $this->params['DomainName'], $this->params['SchemeName']),
+                'Text'      => SPrintF('Ошибка автоматического формирования инструкции по переносу домена (%s.%s) к нам.', $this->params['DomainName'], $SchemeName['SchemeName'] /*$this->params['SchemeName']*/),
                 'IsReaded'  => FALSE
           );
 
