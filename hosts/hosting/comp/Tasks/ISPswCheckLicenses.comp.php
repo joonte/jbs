@@ -69,7 +69,7 @@ foreach($Doc as $License){
 					'elid'		=> $License['id'],
 					'IsInternal'	=> 'no',	# TODO надо бы по IP определять
 					'IsUsed'	=> 'no',
-					'ISPname'	=> $License['name'],
+					'ISPname'	=> (IsSet($License['name'])?$License['name']:'Имя не задано'),
 					'StatusID'	=> $StatusID,
 					'CreateDate'	=> time(),
 					'UpdateDate'	=> time(),
@@ -89,7 +89,7 @@ foreach($Doc as $License){
 					'ISPswLicenses',
 					Array(
 						'IP'		=> $License['ip'],
-						'ISPname'	=> $License['name'],
+						'ISPname'	=> (IsSet($License['name'])?$License['name']:'Имя не задано'),
 						'UpdateDate'	=> time(),
 						'ExpireDate'	=> $ExpireDate
 					),
