@@ -6,7 +6,7 @@
  *  Copyright © 2012 Vitaly Velikodnyy
  *
  */
- class FromTicketsMessages extends Message {
+ class FromTicketsMessagesMsg extends Message {
      public function __construct(array $params, $toUser, $fromUser = 100) {
          parent::__construct('FromTicketsMessages', $toUser, $params, $fromUser);
      }

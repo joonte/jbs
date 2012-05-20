@@ -8,9 +8,7 @@
  */
  class DomainsOrdersOnTransferMsg extends Message {
      public function __construct(array $params, $toUser) {
-         parent::__construct('DomainsOrdersOnTransfer', $toUser);
-
-         $this->setParams($params);
+         parent::__construct('DomainsOrdersOnTransfer', $toUser, $params);
      }
 
      public function getParams() {
@@ -147,5 +145,7 @@
           if(!$Event)
             return ERROR | @Trigger_Error(500);
         }
+
+        return $this->params;
      }
  }
