@@ -148,7 +148,7 @@ switch(ValueOf($Messages)){
               'Message'=>$Message['Content']
           );
 
-          $msg = new FromTicketsMessages($msgParams, (integer)$OwnerID);
+          $msg = new FromTicketsMessagesMsg($msgParams, (integer)$OwnerID);
 
           $IsSend = NotificationManager::sendMsg($msg);
           #---------------------------------------------------------------------

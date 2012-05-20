@@ -12,7 +12,7 @@
      }
 
     public function getParams() {
-        $Message = Preg_Replace("#\[hidden\](.+)\[/hidden\]#sU", ' ', $this->params('Message'), -1);
+        $Message = Preg_Replace("#\[hidden\](.+)\[/hidden\]#sU", ' ', $this->params['Message'], -1);
 
         $this->params['Message'] = $Message;
 
