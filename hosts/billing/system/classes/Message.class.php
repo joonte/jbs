@@ -15,7 +15,7 @@ class Message implements Msg {
 
     protected $params = Array();
 
-    public function __construct($template, $toUser, $params = NULL, $fromUser = 100) {
+    public function __construct($template, $toUser, $params = Array(), $fromUser = 100) {
         $this->template = $template;
         $this->params = $params;
         $this->toUser = $toUser;

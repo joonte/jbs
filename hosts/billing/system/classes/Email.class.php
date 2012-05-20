@@ -40,6 +40,7 @@ class Email implements Dispatcher {
 
         $smarty->assign('Config', Config());
 
+
         foreach(array_keys($msg->getParams()) as $paramName) {
             $smarty->assign($paramName, $msg->getParam($paramName));
         }

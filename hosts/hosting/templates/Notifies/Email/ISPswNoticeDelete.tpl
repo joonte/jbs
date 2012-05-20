@@ -3,9 +3,10 @@
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
 {assign var=Theme value="Оканчивается срок блокировки заказа на программное обеспечение" scope=global}
+{assign var=ExpDate value=$ISPswOrder.StatusDate + $Config.Tasks.Types.ISPswForDelete.DeleteTimeout * 24 * 3600 - $smarty.now}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Уведомляем Вас о том, что оканчивается срок блокировки Вашего заказа №{$ISPswOrder.OrderID|string_format:"%05u"} на ПО ISPsystem, IP адрес {$ISPswOrder.IP|default:'$ISPswOrder.IP'}.
-До удаления заказа {$ISPswOrder.StatusDate + $Config.Tasks.Types.ISPswForDelete.DeleteTimeout * 24 * 3600 - $smarty.now|date_format:"%d.%m.%Y"}.
+Дата удаления заказа {$ExpDate|date_format:"%d.%m.%Y"}
 
 {$From.Sign|default:'$From.Sign'}
