@@ -11,9 +11,12 @@ Eval(COMP_INIT);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # added by lissyara, 2012-01-06 in 19:47 MSK, as JBS-260 implemetation
-if($_SERVER['REMOTE_ADDR'] != $_SERVER['SERVER_ADDR'])
-	if($_SERVER['REMOTE_ADDR'] != '127.0.0.1')
+if($_SERVER['REMOTE_ADDR'] != $_SERVER['SERVER_ADDR']){
+	if($_SERVER['REMOTE_ADDR'] != '127.0.0.1'){
+		Debug(SPrintF("[comp/www/Cron]: '%s' is not local IP address",$_SERVER['SERVER_ADDR']));
 		return SPrintF('Cron can be run only from server addresses (%s or 127.0.0.1), not from your IP (%s)',$_SERVER['SERVER_ADDR'],$_SERVER['REMOTE_ADDR']);
+	}
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $LockID = SPrintF('Cron[%s]',HOST_ID);
