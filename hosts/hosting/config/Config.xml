@@ -991,9 +991,6 @@
   <Suspended>
    <Name>Заблокирован</Name>
   </Suspended>
-  <Frozen>
-   <Name>Замороженный</Name>
-  </Frozen>
   <Deleted>
    <Name>Удален</Name>
   </Deleted>
@@ -1014,9 +1011,6 @@
   <Suspended>
    <Name>Заблокирован</Name>
   </Suspended>
-  <Frozen>
-   <Name>Замороженный</Name>
-  </Frozen>
   <Deleted>
    <Name>Удален</Name>
   </Deleted>
@@ -1034,9 +1028,6 @@
   <Suspended>
    <Name>Сервер выключен</Name>
   </Suspended>
-  <Frozen>
-   <Name>Замороженный</Name>
-  </Frozen>
   <Deleted>
    <Name>Сервер удалён</Name>
   </Deleted>

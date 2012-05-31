@@ -82,11 +82,6 @@
       <Where>`StatusID` = 'Suspended'</Where>
      </Suspended>
      <!-- ****************************************************************** -->
-     <Frozen>
-      <Name>Замороженные заказы</Name>
-      <Where>`StatusID` = 'Frozen'</Where>
-     </Frozen>
-     <!-- ****************************************************************** -->
      <Deleted>
       <Name>Удаленные заказы</Name>
       <Where>`StatusID` = 'Deleted'</Where>
