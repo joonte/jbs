@@ -23,7 +23,7 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $NoBody->AddChild(new Tag('TD',Array('width'=>25),$Comp));
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Buttons/Standard',Array('onclick'=>"form.Message.value += '[size:20]\\n\\n[/size]\\n';"),'Размер текста','TextSize.gif');
+$Comp = Comp_Load('Buttons/Standard',Array('onclick'=>"form.Message.value += '[b][/b]';"),'Жирный текст','TextSize.gif');
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
