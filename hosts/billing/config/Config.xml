@@ -1008,6 +1008,8 @@
     <NotifyConditionallyInvoice>Уведомление о условно оплаченных счетах</NotifyConditionallyInvoice>
     <!-- Очистка некоторых таблиц -->
     <CleanSomeTables>Очистка некоторых таблиц</CleanSomeTables>
+    <!-- проверка прав на конфигурационный файл биллинговой системы -->
+    <CheckConfigPermission>Проверка прав на конфигурационный файл</CheckConfigPermission>
    </DailyTasks>
    <WeeklyTasks type="array" />
    <MonthlyTasks type="array" />
