@@ -11,7 +11,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $FromContractID	= (integer) @$Args['FromContractID'];
 $ToContractID	= (integer) @$Args['ToContractID'];
-$Summ		=  (double) @$Args['Summ'];
+$Summ		=  (double) Str_Replace(',', '.', @$Args['Summ']);
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);

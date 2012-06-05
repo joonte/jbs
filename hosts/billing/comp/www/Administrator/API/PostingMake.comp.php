@@ -18,7 +18,7 @@ if(IsSet($Args)){
   $Args = Args();
 #-------------------------------------------------------------------------------
 $ContractID = (integer) @$Args['ContractID'];
-$Summ       =  (double) @$Args['Summ'];
+$Summ       =  (double) Str_Replace(',', '.', @$Args['Summ']);
 $ServiceID  = (integer) @$Args['ServiceID'];
 $Comment    =  (string) @$Args['Comment'];
 
