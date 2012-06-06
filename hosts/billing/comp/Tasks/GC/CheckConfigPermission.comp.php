@@ -16,8 +16,8 @@ if($ConfigPermission != "0600"){
 	Debug("[comp/Tasks/GC/CheckConfigPermission]: Bad config permission: " . $ConfigPermission);
 	#-------------------------------------------------------------------------------
 	$Event = Array(
-			'UserID'        => $ServerUser['UserID'],
-			'PriorityID'    => 'Hosting',
+			'UserID'        => 100,
+			'PriorityID'    => 'Warning',
 			'Text'          => SPrintF('Неверные права (%s) на конфигурационный файл (%s). Настоятельно рекомендуется установить права 0600.',$ConfigPermission,$ConfigFile),
 			'IsReaded'      => FALSE
 			);
