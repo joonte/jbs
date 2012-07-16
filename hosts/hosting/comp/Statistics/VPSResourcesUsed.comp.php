@@ -17,7 +17,7 @@ if(!$IsCreate)
   return $Result;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Table = Array(Array(new Tag('TD',Array('class'=>'Head'),'Сервер'),new Tag('TD',Array('class'=>'Head'),'Процессор, MHz'),new Tag('TD',Array('class'=>'Head'),'Память, Mb')));
+$Table = Array(Array(new Tag('TD',Array('class'=>'Head'),'Сервер'),new Tag('TD',Array('class'=>'Head'),'Процессор, MHz'),new Tag('TD',Array('class'=>'Head'),'Память, Mb'),new Tag('TD',Array('class'=>'Head'),'Диск, Gb')));
 #-------------------------------------------------------------------------------
 # выбираем все сервера, пеербираем их
 $VPSServers = DB_Select('VPSServers',Array('ID','Address'));
@@ -39,7 +39,7 @@ foreach ($VPSServers as &$VPSServer){
 	$Where[] = "`VPSSchemes`.`ID`=`VPSOrders`.`SchemeID`";
 	$Where[] = "`StatusID`='Active'";
 	$Where[] = SPrintF('`ServerID`=%u',$VPSServer['ID']);
-	$VPSResources = DB_Select(Array('VPSOrders','VPSSchemes'),Array('SUM(mem) AS tmem','SUM(ncpu * cpu) AS tcpu'),Array('Where'=>$Where,'UNIQ'));
+	$VPSResources = DB_Select(Array('VPSOrders','VPSSchemes'),Array('CEIL(SUM(mem)) AS tmem','CEIL(SUM(ncpu * cpu)) AS tcpu','CEIL(SUM(disklimit)/1024) AS tdisk'),Array('Where'=>$Where,'UNIQ'));
 	switch(ValueOf($VPSResources)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
@@ -47,7 +47,7 @@ foreach ($VPSServers as &$VPSServer){
 		return ERROR | @Trigger_Error(400);
 	case 'array':
 		#Debug(print_r($VPSResources,true));
-		$Table[] = Array($VPSServer['Address'],$VPSResources['tcpu'],$VPSResources['tmem']);
+		$Table[] = Array($VPSServer['Address'],$VPSResources['tcpu'],$VPSResources['tmem'],$VPSResources['tdisk']);
 		break;
 	default:
 		return ERROR | @Trigger_Error(101);
