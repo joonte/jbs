@@ -690,6 +690,37 @@
     <IsActive>0</IsActive>
   </OKPAY>
   <!-- ********************************************************************* -->
+  <OnPay>
+   <Name>OnPay.ru (webmoney, visa/mastercard  и т.д.)</Name>
+   <SystemDescription>Система электронных платежей с множеством способов оплаты OnPay.ru</SystemDescription>
+   <Send>
+    <pay_mode>fix</pay_mode>
+    <price>auto</price>
+    <user_email>auto</user_email>
+    <url_success>auto</url_success>
+    <url_fail>auto</url_fail>
+    <pay_for>auto</pay_for>
+   </Send>
+   <Comp>OnPay</Comp>
+   <Cpp>http://secure.onpay.ru/pay/MerchantLogin</Cpp>
+   <MerchantLogin>MerchantLogin</MerchantLogin>
+   <MerchantPass>MerchantPass</MerchantPass>
+   <ContractsTypes>
+    <Default>1</Default>
+    <Natural>1</Natural>
+    <Juridical>1</Juridical>
+    <Individual>1</Individual>
+   </ContractsTypes>
+   <IsContinuePaying>1</IsContinuePaying>
+   <Course>1</Course>
+   <IsCourseUpdate>0</IsCourseUpdate>
+   <Measure>руб</Measure>
+   <Valute>RUR</Valute>
+   <MinimumPayment>5.00</MinimumPayment>
+   <MaximumPayment>250000.00</MaximumPayment>
+   <IsActive>1</IsActive>
+  </OnPay>
+  <!-- ********************************************************************* -->
   <Natural>
    <Name>Банк (физ. лица)</Name>
    <SystemDescription>Оплата через СберБанк России</SystemDescription>
