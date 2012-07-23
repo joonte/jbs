@@ -330,7 +330,24 @@
    <IsSupportContracts>1</IsSupportContracts>
    <IsSupportPrivateWhoIs>1</IsSupportPrivateWhoIs>
   </R01>
-<!-- *********************************************************************** -->
+  <!-- ********************************************************************* -->
+  <InternetBS>
+   <Name>InternetBS (beta)</Name>
+   <Settings>
+    <Address>api.internet.bs</Address>
+    <Port>443</Port>
+    <Protocol>ssl</Protocol>
+    <PrefixAPI />
+    <PrefixNic />
+    <JurName />
+   </Settings>
+   <PersonID />
+   <UseContractRegister>0</UseContractRegister>
+   <IsSupportContracts>0</IsSupportContracts>
+   <IsSupportPrivateWhoIs>0</IsSupportPrivateWhoIs>
+  </InternetBS>
+  <!-- ********************************************************************* -->
+  <!-- *********************************************************************** -->
  </Registrators>
 </Domains>
 <!-- *********************************************************************** -->
