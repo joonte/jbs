@@ -13,19 +13,19 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('libs/Artichow.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Result = Array('Title'=>'Распределение доходов по серверам хостинга');
+$Result = Array('Title'=>'Распределение доходов/нагрузки по серверам хостинга');
 #-------------------------------------------------------------------------------
 if(!$IsCreate)
   return $Result;
 #-------------------------------------------------------------------------------
 $NoBody = new Tag('NOBODY');
 #-------------------------------------------------------------------------------
-$NoBody->AddChild(new Tag('P','Данный вид статистики содержит информацию о доходности каждого из имеющихся серверов хостинга за 1 мес.'));
+$NoBody->AddChild(new Tag('P','Данный вид статистики содержит информацию о доходности/нагрузке каждого из имеющихся серверов хостинга за 1 мес.'));
 $NoBody->AddChild(new Tag('P','Суммируются цены за месяц тарифов всех активных заказов размещенных на сервере.'));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Tables = Array('HostingServers','HostingOrders','HostingSchemes');
-$Columns = Array('SUM(`CostDay`*`MinDaysPay`) as `Income`','Address');
+$Columns = Array('COUNT(*) AS NumAcounts','SUM(`CostDay`*`MinDaysPay`) as `Income`','Address','CEIL(SUM(QuotaMEM)) AS tmem','CEIL(SUM(QuotaDisk)/1024) AS tdisk');
 $Condition = Array(
 			'Where'	 =>Array(
 					'`HostingSchemes`.`ID` = `HostingOrders`.`SchemeID`',
@@ -49,7 +49,7 @@ switch(ValueOf($Incomes)){
    #----------------------------------------------------------------------------
    $Params = $Labels = Array();
    #----------------------------------------------------------------------------
-   $Table = Array(Array(new Tag('TD',Array('class'=>'Head'),'Адрес сервера'),new Tag('TD',Array('class'=>'Head'),'Доход')));
+   $Table = Array(Array(new Tag('TD',Array('class'=>'Head'),'Адрес сервера'),new Tag('TD',Array('class'=>'Head'),'Аккаунтов'),new Tag('TD',Array('class'=>'Head'),'Доход сервера'),new Tag('TD',Array('class'=>'Head'),'Доход аккаунта'),new Tag('TD',Array('class'=>'Head'),'Диск, Gb'),new Tag('TD',Array('class'=>'Head'),'Память, Mb')));
    #----------------------------------------------------------------------------
    foreach($Incomes as $Income){
      #--------------------------------------------------------------------------
@@ -62,14 +62,18 @@ switch(ValueOf($Incomes)){
      if(Is_Error($Summ))
        return ERROR | @Trigger_Error(500);
      #--------------------------------------------------------------------------
-     $Table[] = Array($Income['Address'],$Summ);
+     $AccountPrice = Comp_Load('Formats/Currency',$Income['Income'] / $Income['NumAcounts']);
+     if(Is_Error($AccountPrice))
+       return ERROR | @Trigger_Error(500);
+     #--------------------------------------------------------------------------
+     $Table[] = Array($Income['Address'],$Income['NumAcounts'],$Summ,$AccountPrice,$Income['tdisk'],$Income['tmem']);
    }
    #----------------------------------------------------------------------------
    $Comp = Comp_Load('Formats/Currency',$Balance);
    if(Is_Error($Comp))
      return ERROR | @Trigger_Error(500);
    #----------------------------------------------------------------------------
-   $Table[] = Array(new Tag('TD',Array('colspan'=>3,'class'=>'Standard','align'=>'right'),SPrintF('Общий доход от серверов: %s',$Comp)));
+   $Table[] = Array(new Tag('TD',Array('colspan'=>7,'class'=>'Standard','align'=>'right'),SPrintF('Общий доход от серверов: %s',$Comp)));
    #----------------------------------------------------------------------------
    $Comp = Comp_Load('Tables/Extended',$Table);
    if(Is_Error($Comp))
