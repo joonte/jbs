@@ -521,8 +521,8 @@ function IspManager_Scheme_Change($Settings,$Login,$HostingScheme){
     'maildomainlimit' => $HostingScheme['QuotaEmailDomains'], # Почтовые домены
     'baselimit'       => $HostingScheme['QuotaDBs'], # Базы данных
     'baseuserlimit'   => $HostingScheme['QuotaUsersDBs'], # Пользователи баз данных
-    'bandwidthlimit'  => $HostingScheme['QuotaTraffic'], # Трафик
-    'email'           => $Email,			# мыло юзера
+    'bandwidthlimit'  => $HostingScheme['QuotaTraffic'],  # Трафик
+    'email'           => $HostingScheme['Email'],         # мыло юзера
     #---------------------------------------------------------------------------
     'shell'           => ($HostingScheme['IsShellAccess']?'on':'off'), # Доступ к shell
     'ssl'             => ($HostingScheme['IsSSLAccess']?'on':'off'), # SSL

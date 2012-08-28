@@ -32,6 +32,21 @@ switch(ValueOf($HostingOrder)){
       case 'exception':
         return ERROR | @Trigger_Error(400);
       case 'array':
+        $User = DB_Select('Users','*',Array('UNIQ','ID'=>$HostingOrder['UserID']));
+        #-------------------------------------------------------------------
+        switch(ValueOf($User)) {
+          case 'error':
+            return ERROR | @Trigger_Error(500);
+          case 'exception':
+            return ERROR | @Trigger_Error(400);
+            break;
+          case 'array':
+            #-------------------------------------------------------------
+            $HostingNewScheme['Email'] = $User['Email'];	# add email, for JBS-473
+            break;
+          default:
+            return ERROR | @Trigger_Error(101);
+        }
         #-----------------------------------------------------------------------
         $Server = new Server();
         #-----------------------------------------------------------------------
@@ -46,6 +61,7 @@ switch(ValueOf($HostingOrder)){
 	    #-------------------------------------------------------------------
 	    $GLOBALS['TaskReturnInfo'] = Array($Server->Settings['Address'],$HostingOrder['Login'],$HostingOrder['SchemeName'],$HostingNewScheme['Name']);
             #-------------------------------------------------------------------
+	    Debug("[comp/Tasks/HostingSchemeChange]: " . print_r($HostingNewScheme,true));
             $SchemeChange = $Server->SchemeChange($HostingOrder['Login'],$HostingNewScheme);
             #-------------------------------------------------------------------
             switch(ValueOf($SchemeChange)){
