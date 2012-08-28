@@ -512,6 +512,8 @@ CREATE TABLE IF NOT EXISTS `VPSSchemes` (
 	`ipalias` int(4) NOT NULL,
 	`disktempl` varchar(128) NOT NULL,
 	`extns` VARCHAR(32) NOT NULL,
+	`limitpvtdns` INT(6) DEFAULT '0',
+	`limitpubdns` INT(6) DEFAULT '0',
 	`backup` CHAR(16) NOT NULL,
 	PRIMARY KEY (`ID`),
 	KEY `VPSSchemesGroupID` (`GroupID`),

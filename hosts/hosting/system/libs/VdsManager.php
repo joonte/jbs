@@ -68,6 +68,8 @@ function VdsManager_Create($Settings,$Login,$Password,$Domain,$IP,$VPSScheme,$Em
     'ipcount'         => $VPSScheme['ipalias'],		# дополнительных IP
     'disktempl'       => $VPSScheme['disktempl'],	# шаблон диска
     'extns'           => $VPSScheme['extns'],		# DNS
+    'limitpvtdns'     => $VPSScheme['limitpvtdns'],	# ограничение на число доменов собственных DNS
+    'limitpubdns'     => $VPSScheme['limitpubdns'],	# ограничение на число доменов DNS провайдера
     'backup'          => $VPSScheme['backup'],		# резервное копирование
   );
   
@@ -269,6 +271,8 @@ function VdsManager_Scheme_Change($Settings,$Login,$VPSScheme){
     'ipcount'         => $VPSScheme['ipalias'],		# дополнительных IP
     'disktempl'       => $VPSScheme['disktempl'],	# шаблон диска
     'extns'           => $VPSScheme['extns'],		# DNS
+    'limitpvtdns'     => $VPSScheme['limitpvtdns'],     # ограничение на число доменов собственных DNS
+    'limitpubdns'     => $VPSScheme['limitpubdns'],     # ограничение на число доменов DNS провайдера
     'backup'          => $VPSScheme['backup'],		# резервное копирование
   );
   #-----------------------------------------------------------------------------

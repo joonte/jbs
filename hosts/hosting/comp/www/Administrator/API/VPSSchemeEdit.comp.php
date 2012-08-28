@@ -47,6 +47,8 @@ $proc			= (integer) @$Args['proc'];
 $ipalias		= (integer) @$Args['ipalias'];
 $disktempl		=  (string) @$Args['disktempl'];
 $extns			=  (string) @$Args['extns'];
+$limitpvtdns		= (integer) @$Args['limitpvtdns'];
+$limitpubdns		= (integer) @$Args['limitpubdns'];
 $backup			=  (string) @$Args['backup'];
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Groups',Array('ID'=>$GroupID));
@@ -115,6 +117,8 @@ $IVPSScheme = Array(
   'ipalias'             => $ipalias,
   'disktempl'           => $disktempl,
   'extns'		=> $extns,
+  'limitpvtdns'		=> $limitpvtdns,
+  'limitpubdns'		=> $limitpubdns,
   'backup'		=> $backup
 );
 #-------------------------------------------------------------------------------
