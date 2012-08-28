@@ -522,6 +522,7 @@ function IspManager_Scheme_Change($Settings,$Login,$HostingScheme){
     'baselimit'       => $HostingScheme['QuotaDBs'], # Базы данных
     'baseuserlimit'   => $HostingScheme['QuotaUsersDBs'], # Пользователи баз данных
     'bandwidthlimit'  => $HostingScheme['QuotaTraffic'], # Трафик
+    'email'           => $Email,			# мыло юзера
     #---------------------------------------------------------------------------
     'shell'           => ($HostingScheme['IsShellAccess']?'on':'off'), # Доступ к shell
     'ssl'             => ($HostingScheme['IsSSLAccess']?'on':'off'), # SSL
