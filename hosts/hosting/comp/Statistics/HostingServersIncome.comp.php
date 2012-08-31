@@ -62,7 +62,8 @@ foreach($HostingServersGroups as $HostingServersGroup){
     case 'error':
       return ERROR | @Trigger_Error(500);
     case 'exception':
-      return $Result;
+      break;
+      #return $Result;
     case 'array':
      #----------------------------------------------------------------------------
      $Balance = 0;
@@ -129,8 +130,10 @@ $Balance = 0;
 $Accounts = 0;
 #-------------------------------------------------------------------------------
 foreach($HostingServersGroups as $HostingServersGroup){
-  $Balance += $Graphs[$HostingServersGroup['ID']]['Balance'];
-  $Accounts+= $Graphs[$HostingServersGroup['ID']]['Accounts'];
+  if(IsSet($Graphs[$HostingServersGroup['ID']])){
+    $Balance += $Graphs[$HostingServersGroup['ID']]['Balance'];
+    $Accounts+= $Graphs[$HostingServersGroup['ID']]['Accounts'];
+  }
 }
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Formats/Currency',$Balance);
@@ -146,20 +149,22 @@ $NoBody->AddChild(new Tag('BR'));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 foreach($HostingServersGroups as $HostingServersGroup){
-  #Debug(print_r($Graphs[$HostingServersGroup['ID']],true));
-  #-------------------------------------------------------------------------------
-  if(Count($Graphs[$HostingServersGroup['ID']]['Params']) > 1){
-    #-------------------------------------------------------------------------
-    $File = SPrintF('%s.jpg',Md5('HostingIncome_fin' . $HostingServersGroup['ID']));
-    #-------------------------------------------------------------------------
-    Artichow_Pie(SPrintF('Доходы группы %s',$Graphs[$HostingServersGroup['ID']]['Name']),SPrintF('%s/%s',$Folder,$File),$Graphs[$HostingServersGroup['ID']]['Params'],$Graphs[$HostingServersGroup['ID']]['Labels']);
-    #-------------------------------------------------------------------------
+  if(IsSet($Graphs[$HostingServersGroup['ID']])){
+    #Debug(print_r($Graphs[$HostingServersGroup['ID']],true));
+    #-------------------------------------------------------------------------------
+    if(Count($Graphs[$HostingServersGroup['ID']]['Params']) > 1){
+      #-------------------------------------------------------------------------
+      $File = SPrintF('%s.jpg',Md5('HostingIncome_fin' . $HostingServersGroup['ID']));
+      #-------------------------------------------------------------------------
+      Artichow_Pie(SPrintF('Доходы группы %s',$Graphs[$HostingServersGroup['ID']]['Name']),SPrintF('%s/%s',$Folder,$File),$Graphs[$HostingServersGroup['ID']]['Params'],$Graphs[$HostingServersGroup['ID']]['Labels']);
+      #-------------------------------------------------------------------------
 //    $NoBody->AddChild(new Tag('BR'));
-    #-------------------------------------------------------------------------
-    $NoBody->AddChild(new Tag('IMG',Array('src'=>$File)));
-    #-------------------------------------------------------------------------
+      #-------------------------------------------------------------------------
+      $NoBody->AddChild(new Tag('IMG',Array('src'=>$File)));
+      #-------------------------------------------------------------------------
 //    $NoBody->AddChild(new Tag('BR'));
-    #-------------------------------------------------------------------------
+      #-------------------------------------------------------------------------
+    }
   }
 }
 #-------------------------------------------------------------------------------
