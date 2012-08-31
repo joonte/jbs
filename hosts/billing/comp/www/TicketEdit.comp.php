@@ -158,6 +158,7 @@ switch(ValueOf($Groups)){
     //if(Is_Error($Comp))
     //  return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     $Tr = new Tag('TR');
     #---------------------------------------------------------------------------
     $Comp = Comp_Load('Upload','TicketMessageFile');
@@ -166,7 +167,70 @@ switch(ValueOf($Groups)){
     #---------------------------------------------------------------------------
     $Tr->AddChild(new Tag('NOBODY',new Tag('TD',Array('class'=>'Comment'),'Прикрепить файл'),new Tag('TD',$Comp)));
     #---------------------------------------------------------------------------
+    if($IsPermission){ # is suppor
+      $Articles = DB_Select('Clauses','*',Array('Where'=>"`Partition` LIKE '/Administrator/ButtonsNew:%' AND `IsPublish`='yes'",'Order'=>'Partition'));
+      #-----------------------------------------------------------------------
+      switch(ValueOf($Articles)){
+      case 'error':
+        return ERROR | @Trigger_Error(500);
+      case 'exception':
+        $A = new Tag('A',Array('title'=>'как добавить шаблоны быстрых ответов',
+                               'href'=>'http://wiki.joonte.com/index.php?title=TiketAnswerTemplate'),
+                               'шаблоны ответов');
+        $Td = new Tag('TD',$A);
+        $Tr->AddChild($Td);
+        break;
+      case 'array':
+        #-------------------------------------------------------------------
+        foreach($Articles as $Article){
+          # prepare text: delete tags, begin/end space
+          $Text = trim(Strip_Tags($Article['Text']));
+          # delete space on string begin
+          $Text = Str_Replace("\n ","\n",$Text);
+          # delete double spaces
+          $Text = Str_Replace("  "," ",$Text);
+          # delete carrier return
+          $Text = Str_Replace("\r","",$Text);
+          # delete many \n
+          $Text = Str_Replace("\n\n","\n",$Text);
+          # prepare for java script
+          $Text = Str_Replace("\n",'\\n',$Text);
+          # format: /Administrator/Buttons:SortOrder:ImageName.gif
+          # button image, get image name
+          $Partition = explode(":", $Article['Partition']);
+          if(IsSet($Partition[2])){
+            # button image, get image extension
+            $Extension = explode(".", StrToLower($Partition[2]));
+          }else{
+            $Extension = '';
+          }
+          # если есть чё-то после точки, и если оно похоже на расширение картинки, ставим это как картинку
+          if(IsSet($Extension[1]) && In_Array($Extension[1],Array('png','gif','jpg','jpeg'))){
+            $Image = $Partition[2];
+          }else{
+            # иначе - дефолтовую информационную картинку
+            $Image = 'Info.gif';
+          }
+          # делаем кнопку
+          $Comp = Comp_Load('Buttons/Standard',
+                             Array('onclick' => "form.Message.value += '" . $Text . "';",'style'=>'cursor: pointer;'),
+                                   $Article['Title'],
+                                   $Image);
+          if(Is_Error($Comp))
+             return ERROR | @Trigger_Error(500);
+          $Td = new Tag('TD');
+          $Td->AddChild($Comp);
+          #$NoBody->AddChild(new Tag('TD',Array('width'=>25),$Comp));
+          $Tr->AddChild($Td);
+        }
+        break;
+      default:
+        return ERROR | @Trigger_Error(101);
+      }
+    } # is support
+    #---------------------------------------------------------------------------
     $Table[] = new Tag('TABLE',$Tr);
+    #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
     $Comp = Comp_Load(
       'Form/TextArea',
