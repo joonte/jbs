@@ -323,7 +323,7 @@ function RegRu_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID,$D
     'Charset'  => 'utf8'
   );
   #-----------------------------------------------------------------------------
-  $Domain = SPrintF('%s.%s',$DomainName,$DomainZone);
+  $Domain = StrToLower(PrintF('%s.%s',$DomainName,$DomainZone));
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
