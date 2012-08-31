@@ -1695,6 +1695,14 @@ INSERT INTO `Clauses` (`ID`, `PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`
 </tr>
 </tbody>
 </table>
+<table style="width: 100%;">
+<tbody>
+<tr>
+<td valign="top">2.9.</td>
+<td align="justify" width="95%">В случае отказа Заказчиком от оплаченного сервера, взимается стоимость установки сервера, в размере стоимости аренды за 30 (тридцать) календарных дней.</td>
+</tr>
+</tbody>
+</table>
 <h2>3. Порядок обработки заявок СТП</h2>
 <table style="width: 100%;">
 <tbody>
