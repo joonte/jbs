@@ -2,7 +2,7 @@
  *  Joonte Billing System
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
-{assign var=Theme value="Оканчивается срок блокировки заказа на хостинг" scope=global}
+{assign var=Theme value="Оканчивается срок блокировки заказа на хостинг ({$Login|default:'$Login'})" scope=global}
 {assign var=ExpDate value=$StatusDate + $Config.Tasks.Types.HostingForDelete.DeleteTimeout * 24 * 3600}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
