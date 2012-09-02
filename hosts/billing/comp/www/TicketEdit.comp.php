@@ -275,7 +275,8 @@ switch(ValueOf($Groups)){
 	#---------------------------------------------------------------------------
 	$Comp1 = Comp_Load('Form/Select',
 			Array('name'=>'Flags'),
-			$Positions);
+			$Positions,
+			'CloseOnSee');
 	if(Is_Error($Comp1))
 		return ERROR | @Trigger_Error(500);
 	
