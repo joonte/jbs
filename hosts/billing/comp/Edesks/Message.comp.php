@@ -81,7 +81,12 @@ $String = <<<EOD
     </TR>
    </TABLE>
   </TD>
-  <TD height="25" class="EdeskMessageInfo"><SPAN style="cursor: pointer;">%s</SPAN> Сообщение №%06u | %s | %s [%s]</TD>
+  <TD height="25" class="EdeskMessageInfo">
+   <div>
+    <div id="" class="ldiv">%s</div>
+    <div id="" class="rdiv">Сообщение №%06u | %s | %s [%s]</div>
+   </div>
+  </TD>
  </TR>
  <TR>
   <TD height="100" class="EdeskMessageContent" style="background-color:#%s;">

@@ -26,6 +26,17 @@ td.EdeskMessageInfo {
     padding:          5px;
     text-align:       right;
 }
+/* see http://forum.lissyara.su/viewtopic.php?f=17&t=37569 */
+td.EdeskMessageInfo div.ldiv {
+    float:            left;
+    cursor:           pointer;
+/*    color:            blue;*/
+}
+/* ------------------------- */
+td.EdeskMessageInfo div.rdiv {
+    float:            right;
+}
+/* ------------------------- */
 td.EdeskMessageContent {
     background-color: #FFFFFF;
     border:           1px solid #DCDCDC;
