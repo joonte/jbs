@@ -251,7 +251,8 @@ CREATE
   VIEW `EdesksOwners` AS
 SELECT
   `Edesks`.*,
-  `EdesksMessages`.`Content` as `Content`
+  `EdesksMessages`.`Content` as `Content`,
+  `EdesksMessages`.`ID` AS `MessageID`
 FROM
   `Edesks`
 LEFT JOIN `EdesksMessages`

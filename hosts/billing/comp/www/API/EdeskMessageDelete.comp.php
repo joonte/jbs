@@ -56,8 +56,35 @@ if($Count == 1)
 	return new gException('LAST_MESSAGE_IN_TRED','Это - последнее сообщение тикета. Необходимо удалять тикет.');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+# выбираем текст тикета, и его тему - для записи события
+$EdeskMessage = DB_Select('EdesksOwners',Array('ID','Theme','Content'),Array('UNIQ','Where'=>SPrintF('`MessageID` = %u',$MessageID)));
+#-------------------------------------------------------------------------------
+switch(ValueOf($EdeskMessage)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	# All OK
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $IsDeleted = DB_Delete('EdesksMessages',Array('ID'=>$MessageID));
 if(Is_Error($IsDeleted))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Event = Array(
+		'UserID'	=> $__USER['ID'],
+		'PriorityID'	=> 'Warning',
+		'Text'		=> SPrintF('Удалено сообщение #%u, тикет #%u (%s), текст сообщения (%s...)',$MessageID,$EdeskMessage['ID'],$EdeskMessage['Theme'],SubStr($EdeskMessage['Content'],0,100))
+		);
+$Event = Comp_Load('Events/EventInsert',$Event);
+#-------------------------------------------------------------------------------
+if(!$Event)
 	return ERROR | @Trigger_Error(500);
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
