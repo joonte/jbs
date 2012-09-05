@@ -26,6 +26,23 @@ switch(ValueOf($User)){
     return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$__USER = $GLOBALS['__USER'];
+#-------------------------------------------------------------------------------
+$IsAdmin = Permission_Check('/Administrator/',(integer)$__USER['ID']);
+switch(ValueOf($IsAdmin)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'false':
+	break;
+case 'true':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
 $CreateDate = Comp_Load('Formats/Date/Extended',$CreateDate);
 if(Is_Error($CreateDate))
   return ERROR | @Trigger_Error(500);
@@ -64,7 +81,7 @@ $String = <<<EOD
     </TR>
    </TABLE>
   </TD>
-  <TD height="25" class="EdeskMessageInfo">Сообщение №%06u | %s | %s [%s]</TD>
+  <TD height="25" class="EdeskMessageInfo"><SPAN style="cursor: pointer;">%s</SPAN> Сообщение №%06u | %s | %s [%s]</TD>
  </TR>
  <TR>
   <TD height="100" class="EdeskMessageContent" style="background-color:#%s;">
@@ -82,7 +99,9 @@ $Comp = Comp_Load('Formats/Date/Remainder',$EnterDate);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table->AddHTML(SPrintF($String,$User['ID'],$Comp,($EnterDate < 600?'OnLine':'OffLine'),$MessageID,$CreateDate,$User['Name'],$Group['Name'],($UserID != $OwnerID?'FFFFFF':'FDF6D3'),$Text,$User['Sign']));
+if($IsAdmin){$Delete = SPrintF('<a onclick="ShowConfirm(\'Вы подтверждаете удаление?\',\'AjaxCall(\\\'/API/EdeskMessageDelete\\\',{MessageID:%u},\\\'Удаление сообщения\\\',\\\'GetURL(document.location);\\\');\');" onmouseover="PromptShow(event,\'Удалить это сообщение\',this);">[удалить]</a>',$MessageID);}else{$Delete = '';}
+#-------------------------------------------------------------------------------
+$Table->AddHTML(SPrintF($String,$User['ID'],$Comp,($EnterDate < 600?'OnLine':'OffLine'),$Delete,$MessageID,$CreateDate,$User['Name'],$Group['Name'],($UserID != $OwnerID?'FFFFFF':'FDF6D3'),$Text,$User['Sign']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $FileLength = GetUploadedFileSize('EdesksMessages', $MessageID);
@@ -129,16 +148,7 @@ EOD;
 #-------------------------------------------------------------------------------
 if(IsSet($GLOBALS['__USER']) && Mb_StrLen($Content) < 1000){
   #-----------------------------------------------------------------------------
-  $__USER = $GLOBALS['__USER'];
-  #-----------------------------------------------------------------------------
-  $IsPermission = Permission_Check('/Administrator/',(integer)$__USER['ID']);
-  #-----------------------------------------------------------------------------
-  switch(ValueOf($IsPermission)){
-    case 'error':
-      return ERROR | @Trigger_Error(500);
-    case 'exception':
-      return ERROR | @Trigger_Error(400);
-    case 'false':
+  if(!$IsAdmin){
     if($__USER['ID'] != $UserID){
       #-----------------------------------------------------------------------
       $VoteTitle = Array(
@@ -180,14 +190,13 @@ if(IsSet($GLOBALS['__USER']) && Mb_StrLen($Content) < 1000){
       $Table->AddChild(new Tag('TR',$Td));
     }
     #-----------------------------------------------------------------------
-    break;
-    case 'true':
+  }else{	# $IsAdmin false->true
       # ссылка на редактирование
       $A = new Tag('A',Array('href'=>SPrintF("javascript:EdeskMessageEdit(%u,'%s');",$MessageID,AddcSlashes($Content,"\0\n\r\\\'"))),'[редактировать]');
       # дополнительно проверяем - не сотрудник ли это, для сотрудников не надо линки в подпись лепить
       Debug("[comp/Edesks/Message]: check for links, user id = " . (integer)$User['ID']);
-      $IsPermission1 = Permission_Check('/Administrator/',(integer)$User['ID']);
-      switch(ValueOf($IsPermission1)){
+      $IsPermission = Permission_Check('/Administrator/',(integer)$User['ID']);
+      switch(ValueOf($IsPermission)){
         case 'error':
 	  return ERROR | @Trigger_Error(500);
 	case 'exception':
@@ -264,9 +273,6 @@ if(IsSet($GLOBALS['__USER']) && Mb_StrLen($Content) < 1000){
       }
       #-------------------------------------------------------------------------
       $Table->AddChild(new Tag('TR',$Td));
-    break;
-    default:
-      return ERROR | @Trigger_Error(101);
   }
 }
 #-------------------------------------------------------------------------------
