@@ -72,6 +72,7 @@ switch(ValueOf($Entrance)){
         $Result = Array();
         #-----------------------------------------------------------------------
         foreach($Events as $Event){
+	  $Event['Text'] = HtmlSpecialChars($Event['Text']);
           $Result[] = $Event;
 	  $LastID = $Event['ID'];
 	  #Debug("[comp/www/API/Events]: last selected ID = " . $LastID);

@@ -50,7 +50,7 @@ switch(ValueOf($Ticket)){
         #-----------------------------------------------------------------------
         $DOM->AddChild('Head',$Script);
         #-----------------------------------------------------------------------
-        $DOM->AddText('Title',$Ticket['Theme']);
+        $DOM->AddText('Title',HtmlSpecialChars($Ticket['Theme']));
         #-----------------------------------------------------------------------
         $Comp = Comp_Load(
           'Form/Input',
