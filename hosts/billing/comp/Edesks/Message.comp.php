@@ -29,19 +29,6 @@ switch(ValueOf($User)){
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
-$IsAdmin = Permission_Check('/Administrator/',(integer)$__USER['ID']);
-switch(ValueOf($IsAdmin)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	return ERROR | @Trigger_Error(400);
-case 'false':
-	break;
-case 'true':
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
-}
 #-------------------------------------------------------------------------------
 $CreateDate = Comp_Load('Formats/Date/Extended',$CreateDate);
 if(Is_Error($CreateDate))
@@ -104,7 +91,7 @@ $Comp = Comp_Load('Formats/Date/Remainder',$EnterDate);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if($IsAdmin){$Delete = SPrintF('<a onclick="ShowConfirm(\'Вы подтверждаете удаление?\',\'AjaxCall(\\\'/API/EdeskMessageDelete\\\',{MessageID:%u},\\\'Удаление сообщения\\\',\\\'GetURL(document.location);\\\');\');" onmouseover="PromptShow(event,\'Удалить это сообщение\',this);">[удалить]</a>',$MessageID);}else{$Delete = '';}
+if($__USER['IsAdmin']){$Delete = SPrintF('<a onclick="ShowConfirm(\'Вы подтверждаете удаление?\',\'AjaxCall(\\\'/API/EdeskMessageDelete\\\',{MessageID:%u},\\\'Удаление сообщения\\\',\\\'GetURL(document.location);\\\');\');" onmouseover="PromptShow(event,\'Удалить это сообщение\',this);">[удалить]</a>',$MessageID);}else{$Delete = '';}
 #-------------------------------------------------------------------------------
 $Table->AddHTML(SPrintF($String,$User['ID'],$Comp,($EnterDate < 600?'OnLine':'OffLine'),$Delete,$MessageID,$CreateDate,$User['Name'],$Group['Name'],($UserID != $OwnerID?'FFFFFF':'FDF6D3'),$Text,$User['Sign']));
 #-------------------------------------------------------------------------------
@@ -153,7 +140,7 @@ EOD;
 #-------------------------------------------------------------------------------
 if(IsSet($GLOBALS['__USER']) && Mb_StrLen($Content) < 1000){
   #-----------------------------------------------------------------------------
-  if(!$IsAdmin){
+  if(!$__USER['IsAdmin']){
     if($__USER['ID'] != $UserID){
       #-----------------------------------------------------------------------
       $VoteTitle = Array(

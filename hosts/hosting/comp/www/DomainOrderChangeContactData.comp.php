@@ -36,14 +36,7 @@ switch(ValueOf($DomainOrder)){
         return ERROR | @Trigger_Error(700);
       case 'true':
         # проверяем - администратор или нет. если нет - то ограничиваем частоту смены данных
-        $IsAdmin = Permission_Check('/Administrator/',(integer)$__USER['ID']);
-        #-----------------------------------------------------------------------------
-        switch(ValueOf($IsAdmin)){
-        case 'error':
-          return ERROR | @Trigger_Error(500);
-        case 'exception':
-          return ERROR | @Trigger_Error(400);
-        case 'false':
+	if(!$__USER['IsAdmin']){
 	  #-----------------------------------------------------------------------
           $CacheID = Md5($__FILE__ . $GLOBALS['__USER']['ID'] . $DomainOrder['RegistratorID']);
           $Result = CacheManager::get($CacheID);
@@ -52,11 +45,6 @@ switch(ValueOf($DomainOrder)){
             return new gException('WAIT_15_MINUT_BEFORE_NEXT_CHANGE','Контактные данные нельзя менять чаще чем раз в 15 минут');
           }
           #-----------------------------------------------------------------------
-          break;
-        case 'true':
-          break;
-        default:
-          return ERROR | @Trigger_Error(101);
         }
         #-----------------------------------------------------------------------
         #-----------------------------------------------------------------------
