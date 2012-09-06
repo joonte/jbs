@@ -146,6 +146,34 @@ switch(ValueOf($Contract)){
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
                 $Table[] = Array('Выполнено работ',$Comp);
+		#---------------------------------------------------------------
+		#---------------------------------------------------------------
+		$Table[] = 'Оказываемые услуги';
+		#---------------------------------------------------------------
+                $Count = DB_Count('OrdersOwners',Array('Where'=>SPrintF('`StatusID` = "Active" AND `ContractID` = %u',$ContractID)));
+                if(Is_Error($Count))
+                  return ERROR | @Trigger_Error(500);
+                #---------------------------------------------------------------
+                $Table[] = Array('Активные',$Count);
+                #---------------------------------------------------------------
+                $Count = DB_Count('OrdersOwners',Array('Where'=>SPrintF('`StatusID` = "Suspended" AND `ContractID` = %u',$ContractID)));
+                if(Is_Error($Count))
+                  return ERROR | @Trigger_Error(500);
+                #---------------------------------------------------------------
+                $Table[] = Array('Заблокированные',$Count);
+                #---------------------------------------------------------------
+                $Count = DB_Count('OrdersOwners',Array('Where'=>SPrintF('`StatusID` = "Waiting" AND `ContractID` = %u',$ContractID)));
+                if(Is_Error($Count))
+                  return ERROR | @Trigger_Error(500);
+                #---------------------------------------------------------------
+                $Table[] = Array('Ожидающие оплату',$Count);
+                #---------------------------------------------------------------
+                $Count = DB_Count('OrdersOwners',Array('Where'=>SPrintF('`ContractID` = %u',$ContractID)));
+                if(Is_Error($Count))
+                  return ERROR | @Trigger_Error(500);
+                #---------------------------------------------------------------
+                $Table[] = Array('Всего услуг',$Count);
+                #---------------------------------------------------------------
                 #---------------------------------------------------------------
                 $Comp = Comp_Load('Statuses/State','Contracts',$Contract);
                 if(Is_Error($Comp))
