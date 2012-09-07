@@ -23,21 +23,6 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IsPermission = Permission_Check('/Administrator/',(integer)$GLOBALS['__USER']['ID']);
-#-------------------------------------------------------------------------------
-switch(ValueOf($IsPermission)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return ERROR | @Trigger_Error(400);
-  case 'false':
-    # No more...
-  case 'true':
-    # No more...
-  break;
-  default:
-    return ERROR | @Trigger_Error(101);
-}
 #-------------------------------------------------------------------------------
 if($UserID){
   #-----------------------------------------------------------------------------
@@ -102,7 +87,7 @@ switch(ValueOf($Groups)){
     #---------------------------------------------------------------------------
     $Table[] = Array('Отдел',$Comp);
     #---------------------------------------------------------------------------
-    if($IsPermission){
+    if($GLOBALS['__USER']['IsAdmin']){
       #-------------------------------------------------------------------------
       $Workers = DB_Select('Users',Array('ID','Name'),Array('Where'=>SPrintF("(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = `Users`.`GroupID`) = 'yes' OR `ID` = 100")));
       #-------------------------------------------------------------------------
@@ -167,7 +152,7 @@ switch(ValueOf($Groups)){
     #---------------------------------------------------------------------------
     $Tr->AddChild(new Tag('NOBODY',new Tag('TD',Array('class'=>'Comment'),'Прикрепить файл'),new Tag('TD',$Comp)));
     #---------------------------------------------------------------------------
-    if($IsPermission){ # is suppor
+    if($GLOBALS['__USER']['IsAdmin']){ # is suppor
       $Articles = DB_Select('Clauses','*',Array('Where'=>"`Partition` LIKE '/Administrator/ButtonsNew:%' AND `IsPublish`='yes'",'Order'=>'Partition'));
       #-----------------------------------------------------------------------
       switch(ValueOf($Articles)){
@@ -247,7 +232,7 @@ switch(ValueOf($Groups)){
     #---------------------------------------------------------------------------
     $Disabled = Array();
     #---------------------------------------------------------------------------
-    if(!$IsPermission)
+    if(!$GLOBALS['__USER']['IsAdmin'])
       $Disabled[] = 'hidden';
     #---------------------------------------------------------------------------
     $Comp = Comp_Load('Edesks/Panel',$Disabled);
@@ -268,7 +253,7 @@ switch(ValueOf($Groups)){
     if(Is_Error($Comp))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
-    if($IsPermission){
+    if($GLOBALS['__USER']['IsAdmin']){
         # сотрудник, добавляем флаги
 	$Config = Config();
 	$Positions = $Config['Edesks']['Flags'];

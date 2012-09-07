@@ -21,23 +21,6 @@ if(!Preg_Match($Regulars['ID'],$ModeID))
   return ERROR | @Trigger_Error(201);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsPermission = Permission_Check('/Administrator/',(integer)$GLOBALS['__USER']['ID']);
-#-----------------------------------------------------------------------------
-switch(ValueOf($IsPermission)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	return ERROR | @Trigger_Error(400);
-case 'false':
-	$StripEmail = TRUE;
-	break;
-case 'true':
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
-}
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
 $Statuses = $Config['Statuses'][$ModeID];
@@ -105,7 +88,7 @@ switch(ValueOf($Row)){
 	      $Tr->AddChild(new Tag('TD',Array('class'=>'Standard'),$Statuses[$StatusHistory['StatusID']]['Name']));
 	      #-----------------------------------------------------------------
 	      #-----------------------------------------------------------------
-	      $Initiator = IsSet($StripEmail)?preg_replace('/\s(\(\H+\))$/', '', $StatusHistory['Initiator']):$StatusHistory['Initiator'];
+	      $Initiator = $GLOBALS['__USER']['IsAdmin']?$StatusHistory['Initiator']:preg_replace('/\s(\(\H+\))$/', '', $StatusHistory['Initiator']);
 	      #-----------------------------------------------------------------
 	      $Tr->AddChild(new Tag('TD',Array('class'=>'Standard'),$Initiator));
               #-----------------------------------------------------------------

@@ -21,21 +21,9 @@ Debug("[comp/www/API/TicketVote]: MessageID = " . $MessageID . "; VoteBall = " .
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # проверить имеет ли он право в этом тикете голосовать - не администратор ли
-$IsPermission = Permission_Check('/Administrator/',(integer)$GLOBALS['__USER']['ID']);
-#-----------------------------------------------------------------------------
-switch(ValueOf($IsPermission)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	return ERROR | @Trigger_Error(400);
-case 'false':
-	break;
-case 'true':
+if($GLOBALS['__USER']['IsAdmin']){
 	# сотрудники не могут голосовать...
 	return new gException('PERSONAL_CANNOT_VOTE_1','Сотрудники не могут голосовать');
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
 }
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------

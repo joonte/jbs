@@ -39,20 +39,8 @@ switch(ValueOf($Invoice)){
         #-----------------------------------------------------------------------
         if($Invoice['IsPosted']){
           #---------------------------------------------------------------------
-          $Permission = Permission_Check('/Administrator/',(integer)$__USER['ID']);
-          #---------------------------------------------------------------------
-          switch(ValueOf($Permission)){
-            case 'error':
-              return ERROR | @Trigger_Error(500);
-            case 'exception':
-              return ERROR | @Trigger_Error(400);
-            case 'true':
-              # No more...
-            break;
-            case 'false':
+	  if(!$__USER['IsAdmin']){
               return new gException('ACCOUNT_PAYED','Счет оплачен и не может быть изменен');
-            default:
-              return ERROR | @Trigger_Error(101);
           }
         }
         #-----------------------------------------------------------------------

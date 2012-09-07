@@ -21,20 +21,8 @@ if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php','libs/Upload
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
-$IsPermission = Permission_Check('/Administrator/',(integer)$__USER['ID']);
-#-----------------------------------------------------------------------------
-switch(ValueOf($IsPermission)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	return ERROR | @Trigger_Error(400);
-case 'false':
+if(!$__USER['IsAdmin']){
 	return ERROR | @Trigger_Error(700);
-case 'true':
-	# all OK
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

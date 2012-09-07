@@ -43,14 +43,7 @@ switch(ValueOf($HostingOrder)){
         if($HostingOrder['StatusID'] != 'Active')
           return new gException('ORDER_NO_ACTIVE','Заказ хостинга не активен');
         #-----------------------------------------------------------------------
-        $IsPermission = Permission_Check('/Administrator/',(integer)$__USER['ID']);
-        #-----------------------------------------------------------------------
-        switch(ValueOf($IsPermission)){
-          case 'error':
-            return ERROR | @Trigger_Error(500);
-          case 'exception':
-            return ERROR | @Trigger_Error(400);
-          case 'false':
+	if(!$__USER['IsAdmin']){
             #-------------------------------------------------------------------
             $LastChange = Time() - $HostingOrder['StatusDate'];
             #-------------------------------------------------------------------
@@ -62,11 +55,6 @@ switch(ValueOf($HostingOrder)){
               #-----------------------------------------------------------------
 #              return new gException('TIME_NOT_EXPIRED',SPrintF('Тарифный план можно менять только 1 раз в сутки, сменить тарифный план можно только через %s, однако, в случае необходимости Вы можете обратиться в службу поддержки',$Comp));
             }
-          case 'true':
-            # No more...
-          break;
-          default:
-            return ERROR | @Trigger_Error(101);
         }
         #-----------------------------------------------------------------------
         $OldScheme = DB_Select('HostingSchemes',Array('IsSchemeChange','QuotaDisk','Name','IsProlong','ID'),Array('UNIQ','ID'=>$HostingOrder['SchemeID']));
@@ -99,7 +87,7 @@ switch(ValueOf($HostingOrder)){
                 if($OldScheme['QuotaDisk'] > $NewScheme['QuotaDisk']){
                   #-------------------------------------------------------------
 		  if($OldScheme['IsProlong'])
-                    if(!$IsPermission)
+                    if(!$$__USER['IsAdmin'])
                       return new gException('QUOTA_DISK_ERROR','Дисковое пространство на новом тарифном плане, меньше чем на текущем. Для смены тарифа обратитесь в Центр Поддержки.');
                 }
                 #---------------------------------------------------------------

@@ -29,16 +29,7 @@ $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
 if($MessageID){
   #-----------------------------------------------------------------------------
-  $IsPermission = Permission_Check('/Administrator/',(integer)$__USER['ID']);
-  #-----------------------------------------------------------------------------
-  switch(ValueOf($IsPermission)){
-    case 'error':
-      return ERROR | @Trigger_Error(500);
-    case 'exception':
-      return ERROR | @Trigger_Error(400);
-    case 'false':
-      return ERROR | @Trigger_Error(700);
-    case 'true':
+  if($__USER['IsAdmin']){
       #-------------------------------------------------------------------------
       $UMessage = Array('Content'=>$Message);
       #-------------------------------------------------------------------------
@@ -47,8 +38,6 @@ if($MessageID){
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
       return Array('Status'=>'Ok');
-    default:
-      return ERROR | @Trigger_Error(101);
   }
 }else{
   #-----------------------------------------------------------------------------

@@ -60,14 +60,7 @@ switch(ValueOf($ISPswOrder)){
 	  return ERROR | @Trigger_Error(101);
 	}
 	#-----------------------------------------------------------------------
-	$IsPermission = Permission_Check('/Administrator/',(integer)$__USER['ID']);
-	switch(ValueOf($IsPermission)){
-	case 'error':
-	  return ERROR | @Trigger_Error(500);
-	case 'exception':
-	  return ERROR | @Trigger_Error(400);
-	}
-        if(!$IsPermission && $ISPswLicense['IsInternal'])
+        if(!$__USER['IsAdmin'] && $ISPswLicense['IsInternal'])
 	  return new gException('INTERNAL_LICENSE','Данная лицензия предназначена для использования на заказах VPS и выделенных серверов. Вы не можете изменить её IP адрес. Если вам нужна лицензия для другого заказа VPS или выделенного сервера - сделайте заказ на новую лицензию.');
 	#-----------------------------------------------------------------------
 	$m_time = $ISPswOrder['StatusDate'] + 31 * 24 * 3600 - Time();

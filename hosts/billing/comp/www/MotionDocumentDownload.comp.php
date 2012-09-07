@@ -25,21 +25,10 @@ switch(ValueOf($MotionDocument)){
     #---------------------------------------------------------------------------
     $AjaxCall = $MotionDocument['AjaxCall'];
     #---------------------------------------------------------------------------
-    $IsPermission = Permission_Check('/Administrator/',(integer)$GLOBALS['__USER']['ID']);
-    #---------------------------------------------------------------------------
-    switch(ValueOf($IsPermission)){
-      case 'error':
-        return ERROR | @Trigger_Error(500);
-      case 'exception':
-        return ERROR | @Trigger_Error(400);
-      case 'false':
-        $AjaxCall['Args']['IsStamp'] = 1;
-      break;
-      case 'true':
-        $AjaxCall['Args']['IsStamp'] = 0;
-      break;
-      default:
-        return ERROR | @Trigger_Error(101);
+    if($GLOBALS['__USER']['IsAdmin']){
+      $AjaxCall['Args']['IsStamp'] = 0;
+    }else{
+      $AjaxCall['Args']['IsStamp'] = 1;
     }
     #---------------------------------------------------------------------------
     return Array('Status'=>'Ok','AjaxCall'=>$AjaxCall);

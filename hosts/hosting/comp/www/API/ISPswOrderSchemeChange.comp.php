@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -43,14 +42,7 @@ switch(ValueOf($ISPswOrder)){
         if($ISPswOrder['StatusID'] != 'Active')
           return new gException('ORDER_NO_ACTIVE','Заказ ПО не активен');
         #-----------------------------------------------------------------------
-        $IsPermission = Permission_Check('/Administrator/',(integer)$__USER['ID']);
-        #-----------------------------------------------------------------------
-        switch(ValueOf($IsPermission)){
-          case 'error':
-            return ERROR | @Trigger_Error(500);
-          case 'exception':
-            return ERROR | @Trigger_Error(400);
-          case 'false':
+	if(!$__USER['IsAdmin']){
             #-------------------------------------------------------------------
             $LastChange = Time() - $ISPswOrder['StatusDate'];
             #-------------------------------------------------------------------
@@ -62,11 +54,6 @@ switch(ValueOf($ISPswOrder)){
               #-----------------------------------------------------------------
               return new gException('TIME_NOT_EXPIRED',SPrintF('Тарифный план можно менять только 1 раз в сутки, сменить тарифный план можно только через %s, однако, в случае необходимости Вы можете обратиться в службу поддержки',$Comp));
             }
-          case 'true':
-            # No more...
-          break;
-          default:
-            return ERROR | @Trigger_Error(101);
         }
         #-----------------------------------------------------------------------
         $OldScheme = DB_Select('ISPswSchemes',Array('IsSchemeChange','Name'),Array('UNIQ','ID'=>$ISPswOrder['SchemeID']));
@@ -98,7 +85,7 @@ switch(ValueOf($ISPswOrder)){
                 #---------------------------------------------------------------
 #                if($OldScheme['QuotaDisk'] > $NewScheme['QuotaDisk']){
 #                  #-------------------------------------------------------------
-#                  if(!$IsPermission)
+#                  if(!$__USER['IsAdmin'])
 #                    return new gException('QUOTA_DISK_ERROR','Для смены тарифа обратитесь в Центр Поддержки');
 #                }
                 #---------------------------------------------------------------

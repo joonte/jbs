@@ -56,14 +56,7 @@ if(!IsSet($GLOBALS['__USER'])){
   $Links['DOM']->AddAttribs('Body',Array('onload'=>"CheckEvents();"));
   #-----------------------------------------------------------------------------
   #-----------------------------------------------------------------------------
-  $IsPermission = Permission_Check('/Administrator/',(integer)$__USER['ID']);
-  #-----------------------------------------------------------------------------
-  switch(ValueOf($IsPermission)){
-    case 'error':
-      return ERROR | @Trigger_Error(500);
-    case 'exception':
-      return ERROR | @Trigger_Error(400);
-    case 'false':
+  if(!$__USER['IsAdmin']){
       #-------------------------------------------------------------------------
       $Contracts = DB_Select('Contracts',Array('ID','TypeID','Customer','Balance'),Array('Where'=>SPrintF('`UserID` = %u',$__USER['ID'])));
       #-------------------------------------------------------------------------
@@ -114,8 +107,7 @@ if(!IsSet($GLOBALS['__USER'])){
         default:
           return ERROR | @Trigger_Error(101);
       }
-    break;
-    case 'true':
+  }else{	# неадмин -> админ
       # commented for JBS-239
       ##-------------------------------------------------------------------------
       #$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Events.js}'));
@@ -124,9 +116,6 @@ if(!IsSet($GLOBALS['__USER'])){
       ##-------------------------------------------------------------------------
       #$Links['DOM']->AddAttribs('Body',Array('onload'=>"CheckEvents();"));
       ##-------------------------------------------------------------------------
-    break;
-    default:
-      return ERROR | @Trigger_Error(101);
   }
   #-----------------------------------------------------------------------------
   $Comp = Comp_Load('Notes',$__USER['InterfaceID']);
