@@ -65,7 +65,7 @@ switch(ValueOf($Ticket)){
 	#-----------------------------------------------------------------------
 	if($__USER['ID'] == $Ticket['UserID']){
 		if($Ticket['Flags'] == "CloseOnSee"){
-        		$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Edesks','StatusID'=>'Closed','RowsIDs'=>$TicketID,'Comment'=>'Автоматическое закрытие после просмотра пользователем'));
+        		$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Edesks','IsNotNotify'=>TRUE,'IsNoTrigger'=>TRUE,'StatusID'=>'Closed','RowsIDs'=>$TicketID,'Comment'=>'Автоматическое закрытие после просмотра пользователем'));
 			#---------------------------------------------------------------------
 			switch(ValueOf($Comp)){
 			case 'error':

@@ -56,13 +56,13 @@ $Array = Array();
 foreach($RowsIDs as $RowID)
   $Array[] = (integer)$RowID;
 #-------------------------------------------------------------------------------
-$Rows = DB_Select(SPrintF('%sOwners',$ModeID),'*',Array('Where'=>SPrintF('`ID` IN (%s)',Implode(',',$Array))));
+$Rows = DB_Select(SPrintF('%sOwners',$ModeID),'*',Array('Where'=>SPrintF('`ID` IN (%s)',Implode(',',$Array)),'GroupBy'=>'ID'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Rows)){
   case 'error':
     return ERROR | @Trigger_Error(500);
   case 'exception':
-    return new gException('ROW_NOT_FOUND','Записи для установки статуса не найден');
+    return new gException('ROW_NOT_FOUND','Записи для установки статуса не найдены');
   case 'array':
     #---------------------------------------------------------------------------
     if(Is_Error(DB_Transaction($TransactionID = UniqID('StatusSet'))))

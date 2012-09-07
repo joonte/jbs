@@ -133,7 +133,7 @@ $TicketID = DB_Insert('Edesks',$ITicket);
 if(Is_Error($TicketID))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Edesks','StatusID'=>($UserID?'Opened':'Newest'),'RowsIDs'=>$TicketID));
+$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Edesks','IsNotNotify'=>TRUE,'IsNoTrigger'=>TRUE,'StatusID'=>($UserID?'Opened':'Newest'),'RowsIDs'=>$TicketID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Comp)){
   case 'error':

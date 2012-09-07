@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -43,7 +42,8 @@ $Config = Config();
 #-------------------------------------------------------------------------------
 $Statuses = $Config['Statuses'][$ModeID];
 #-------------------------------------------------------------------------------
-$Row = DB_Select(SPrintF('%sOwners',$ModeID),'UserID',Array('UNIQ','ID'=>$RowID));
+//$Row = DB_Select(SPrintF('%sOwners',$ModeID),'UserID',Array('UNIQ','ID'=>$RowID));
+$Row = DB_Select(SPrintF('%sOwners',$ModeID),'UserID',Array('UNIQ','Limits'=>Array(0,1),'Where'=>SPrintF("`ID` = %u",$RowID)));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Row)){
   case 'error':
