@@ -21,7 +21,7 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
 
   );
   #-----------------------------------------------------------------------------
-  $Domain = SPrintF('%s.%s',$DomainName,$DomainZone);
+  $Domain = StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone));
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
@@ -265,7 +265,7 @@ function RegRu_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contract
     'Charset'  => 'utf8'
   );
   #-----------------------------------------------------------------------------
-  $Domain = SPrintF('%s.%s',$DomainName,$DomainZone);
+  $Domain = StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone));
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
@@ -323,7 +323,7 @@ function RegRu_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID,$D
     'Charset'  => 'utf8'
   );
   #-----------------------------------------------------------------------------
-  $Domain = StrToLower(PrintF('%s.%s',$DomainName,$DomainZone));
+  $Domain = StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone));
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
@@ -562,7 +562,7 @@ function RegRu_Is_Available_Domain($Settings,$Domain){
     foreach($Result['answer']['services'] as $CurService){
       foreach(Array_Keys($CurService) as $Key){
         #-----------------------------------------------------------------------
-        Debug("[RegRu_Answer::Is_Available_Domain]: " . $Key . " - " . $CurService[$Key]);
+        #Debug("[RegRu_Answer::Is_Available_Domain]: " . $Key . " - " . $CurService[$Key]);
         #-----------------------------------------------------------------------
       }
       foreach(Array_Keys($CurService) as $Key){
@@ -612,7 +612,7 @@ function RegRu_Domain_Transfer($Settings,$DomainName,$DomainZone){
 
   );
   #-----------------------------------------------------------------------------
-  $Domain = SPrintF('%s.%s',$DomainName,$DomainZone);
+  $Domain = StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone));
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
