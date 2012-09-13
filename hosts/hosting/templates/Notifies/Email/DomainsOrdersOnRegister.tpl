@@ -2,7 +2,7 @@
  *  Joonte Billing System
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
-{assign var=Theme value="Заказ поступил на регистрацию" scope=global}
+{assign var=Theme value="Заказ домена ({$DomainName|default:'$DomainName'}.{$Name|default:'$Name'}) поступил на регистрацию" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Уведомляем Вас о том, что {$StatusDate|default:'$StatusDate'} Ваш заказ №{$OrderID|string_format:"%05u"} на регистрацию домена {$DomainName|default:'$DomainName'}.{$Name|default:'$Name'} был отправлен на регистрацию.
