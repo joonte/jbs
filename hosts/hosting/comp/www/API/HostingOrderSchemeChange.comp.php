@@ -87,7 +87,7 @@ switch(ValueOf($HostingOrder)){
                 if($OldScheme['QuotaDisk'] > $NewScheme['QuotaDisk']){
                   #-------------------------------------------------------------
 		  if($OldScheme['IsProlong'])
-                    if(!$$__USER['IsAdmin'])
+                    if(!$__USER['IsAdmin'])
                       return new gException('QUOTA_DISK_ERROR','Дисковое пространство на новом тарифном плане, меньше чем на текущем. Для смены тарифа обратитесь в Центр Поддержки.');
                 }
                 #---------------------------------------------------------------
