@@ -44,7 +44,7 @@ function IspSoft_Find_Free_License($ISPswScheme){
     break;
   case 'array':
     Debug("[system/libs/IspSoft.php]: found free license, type '" . $ISPswScheme['ISPtype'] . "', elid '" . $ISPswLicenses['elid'] . "'");
-    return Array('elid'=>$ISPswLicenses['elid'],'LicenseID'=>$ISPswScheme['ID']);
+    return Array('elid'=>$ISPswLicenses['elid'],'LicenseID'>$ISPswLicenses['ID']);
   default:
     return ERROR | @Trigger_Error(101);
   }      # end of ISPswLicenses
