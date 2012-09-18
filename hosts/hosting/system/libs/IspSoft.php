@@ -43,8 +43,8 @@ function IspSoft_Find_Free_License($ISPswScheme){
     Debug("[system/libs/IspSoft.php]: no free licenses, type '" . $ISPswScheme['ISPtype'] . "', IP '" . $ISPswScheme['IP'] . "'");
     break;
   case 'array':
-    Debug("[system/libs/IspSoft.php]: found free license, type '" . $ISPswScheme['ISPtype'] . "', elid '" . $ISPswLicenses['elid'] . "'");
-    return Array('elid'=>$ISPswLicenses['elid'],'LicenseID'>$ISPswLicenses['ID']);
+    Debug("[system/libs/IspSoft.php]: found free license , type '" . $ISPswScheme['ISPtype'] . "', elid '" . $ISPswLicenses['elid'] . "'");
+    return Array('elid'=>$ISPswLicenses['elid'],'LicenseID'=>$ISPswLicenses['ID']);
   default:
     return ERROR | @Trigger_Error(101);
   }      # end of ISPswLicenses
