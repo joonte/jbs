@@ -691,8 +691,8 @@
   </OKPAY>
   <!-- ********************************************************************* -->
   <OnPay>
-   <Name>OnPay.ru (webmoney, visa/mastercard  и т.д.)</Name>
-   <SystemDescription>Система электронных платежей с множеством способов оплаты OnPay.ru</SystemDescription>
+   <Name>OnPay.ru</Name>
+   <SystemDescription>Система электронных платежей с множеством способов оплаты: WebMoney, Visa, MasterCard</SystemDescription>
    <Send>
     <pay_mode>fix</pay_mode>
     <price>auto</price>
@@ -718,7 +718,7 @@
    <Valute>RUR</Valute>
    <MinimumPayment>5.00</MinimumPayment>
    <MaximumPayment>250000.00</MaximumPayment>
-   <IsActive>1</IsActive>
+   <IsActive>0</IsActive>
   </OnPay>
   <!-- ********************************************************************* -->
   <Natural>
