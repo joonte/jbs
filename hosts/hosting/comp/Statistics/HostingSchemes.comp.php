@@ -9,14 +9,14 @@ $__args_list = Array('IsCreate','Folder','StartDate','FinishDate','Details');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Result = Array('Title'=>'Распределение заказов на хостинг по тарифам');
+$Result = Array('Title'=>'Распределение доходов/заказов на хостинг по тарифам');
 #-------------------------------------------------------------------------------
 $NoBody = new Tag('NOBODY');
 #-------------------------------------------------------------------------------
 if(!$IsCreate)
   return $Result;
 #-------------------------------------------------------------------------------
-$HostingOrders = DB_Select('HostingSchemes',Array('Name','ServersGroupID','(SELECT COUNT(*) FROM `HostingOrders` WHERE `SchemeID` = `HostingSchemes`.`ID` AND `StatusID`="Active") as `Count`','(SELECT `Name` FROM `HostingServersGroups` WHERE `HostingServersGroups`.`ID`=`HostingSchemes`.`ServersGroupID`) as `ServersGroupName`'),Array('SortOn'=>Array('ServersGroupID','SortID')));
+$HostingOrders = DB_Select('HostingSchemes',Array('Name','ServersGroupID','(SELECT COUNT(*) FROM `HostingOrders` WHERE `SchemeID` = `HostingSchemes`.`ID` AND `StatusID`="Active") as `Count`','(SELECT `Name` FROM `HostingServersGroups` WHERE `HostingServersGroups`.`ID`=`HostingSchemes`.`ServersGroupID`) as `ServersGroupName`','SUM(`CostDay`*`MinDaysPay`)*(SELECT COUNT(*) FROM `HostingOrders` WHERE `SchemeID` = `HostingSchemes`.`ID` AND `StatusID`="Active") as `Income`'),Array('SortOn'=>Array('ServersGroupID','SortID'),'GroupBy'=>'ID'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingOrders)){
   case 'error':
@@ -25,9 +25,9 @@ switch(ValueOf($HostingOrders)){
     return $Result;
   case 'array':
     #---------------------------------------------------------------------------
-    $NoBody->AddChild(new Tag('P','Данный вид статистики дает детальную информацию о количестве активных заказов на каждом из тарифов.'));
+    $NoBody->AddChild(new Tag('P','Данный вид статистики дает детальную информацию о количестве активных заказов и доходов на каждом из тарифов.'));
     #---------------------------------------------------------------------------
-    $Table = Array(Array(new Tag('TD',Array('class'=>'Head'),'Наименование тарифа'),new Tag('TD',Array('class'=>'Head'),'Кол-во заказов')));
+    $Table = Array(Array(new Tag('TD',Array('class'=>'Head'),'Наименование тарифа'),new Tag('TD',Array('class'=>'Head'),'Кол-во заказов'),new Tag('TD',Array('class'=>'Head'),'Доход')));
     #---------------------------------------------------------------------------
     $ServersGroupName = UniqID();
     #---------------------------------------------------------------------------
@@ -40,7 +40,7 @@ switch(ValueOf($HostingOrders)){
         $Table[] = $ServersGroupName;
       }
       #-------------------------------------------------------------------------
-      $Table[] = Array($HostingOrder['Name'],(integer)$HostingOrder['Count']);
+      $Table[] = Array($HostingOrder['Name'],(integer)$HostingOrder['Count'],$HostingOrder['Income']);
     }
     #---------------------------------------------------------------------------
     $Comp = Comp_Load('Tables/Extended',$Table);
