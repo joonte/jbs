@@ -57,7 +57,7 @@ foreach($Services as $Service){
     $Table = Array();
     #-------------------------------------------------------------------------------
     $Tr = new Tag('TR');
-    $Tr->AddChild(new Tag('TD',Array('class'=>'Head','align'=>'center','bgcolor'=>'#B9CCDF'),new Tag('SPAN','Тариф')));
+    $Tr->AddChild(new Tag('TD',Array('class'=>'Head','align'=>'center','bgcolor'=>'#B9CCDF','width'=>200),new Tag('SPAN','Тариф')));
     $Tr->AddChild(new Tag('TD',Array('class'=>'Head','align'=>'center','bgcolor'=>'#B9CCDF'),new Tag('SPAN','Цена в день')));
     $Tr->AddChild(new Tag('TD',Array('class'=>'Head','align'=>'center','bgcolor'=>'#B9CCDF'),new Tag('SPAN','Цена в месяц')));
     $Table[] = $Tr;
