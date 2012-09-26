@@ -15,7 +15,6 @@ $Message = "";
 if(Is_Error(System_Load('classes/Registrator.class.php','libs/IspSoft.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Settings = $Config['Tasks']['Types']['RegBalance'];
 #-------------------------------------------------------------------------------
 $Registrators = DB_Select('Registrators',Array('ID','Name','TypeID','BalanceLowLimit'),Array('Where'=>'`BalanceLowLimit` > 0'));
 #-------------------------------------------------------------------------------
@@ -24,8 +23,8 @@ switch(ValueOf($Registrators)){
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
 		# No more...
-		Debug("[comp/Tasks/RegBalance]: Регистраторы не найдены");
-		return MkTime(7,20,0,Date('n'),Date('j')+1,Date('Y'));
+		Debug("[comp/Tasks/GC/RegBalance]: Регистраторы не найдены");
+		return TRUE;
 	case 'array':
 		#-----------------------------------------------------------------------
 		$GLOBALS['TaskReturnInfo'] = Array();
@@ -34,7 +33,7 @@ switch(ValueOf($Registrators)){
 			#-----------------------------------------------------------------------
 			$GLOBALS['TaskReturnInfo'][] = $NowReg['Name'];
 			#-------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/RegBalance]: Проверка баланса для %s (ID %d, тип %s)',$NowReg['Name'],$NowReg['ID'],$NowReg['TypeID']));
+			Debug(SPrintF('[comp/Tasks/GC/RegBalance]: Проверка баланса для %s (ID %d, тип %s)',$NowReg['Name'],$NowReg['ID'],$NowReg['TypeID']));
 			#-------------------------------------------------------------------
 			$Registrator = new Registrator();
 			#-------------------------------------------------------------------
@@ -60,19 +59,19 @@ switch(ValueOf($Registrators)){
 				#---------------------------------------------------------------
 				switch($Balance->CodeID){
 					case 'REGISTRATOR_ERROR':
-						Debug(SPrintF('[comp/Tasks/RegBalance]: %s: %s',$NowReg['Name'],$Balance->String));
+						Debug(SPrintF('[comp/Tasks/GC/RegBalance]: %s: %s',$NowReg['Name'],$Balance->String));
 						break;
 					default:
-						Debug(SPrintF('[comp/Tasks/RegBalance]: Для регистратора %s (ID %d, тип %s) проверка баланса счета не реализована.',$NowReg['Name'],$NowReg['ID'],$NowReg['TypeID']));
+						Debug(SPrintF('[comp/Tasks/GC/RegBalance]: Для регистратора %s (ID %d, тип %s) проверка баланса счета не реализована.',$NowReg['Name'],$NowReg['ID'],$NowReg['TypeID']));
 						$Message .= SPrintF("Для регистратора %s (ID %d, тип %s) проверка баланса счета не реализована. \n",$NowReg['Name'],$NowReg['ID'],$NowReg['TypeID']);
 				}
 				#---------------------------------------------------------------
 				break;
 				case 'array':
-					Debug("[comp/Tasks/RegBalance]: Баланс: " . $Balance['Prepay']);
+					Debug("[comp/Tasks/GC/RegBalance]: Баланс: " . $Balance['Prepay']);
 					#-----------------------------------------------------------
 					if ((float)$Balance['Prepay'] < $NowReg['BalanceLowLimit']){
-						Debug("[comp/Tasks/RegBalance]: Баланс ниже порога уведомления!");
+						Debug("[comp/Tasks/GC/RegBalance]: Баланс ниже порога уведомления!");
 						$Message .= SPrintF("Остаток на счете регистратора %s ниже допустимого минимума - %01.2f\n", $NowReg['Name'],$Balance['Prepay']);
 					}
 					#-----------------------------------------------------------
@@ -95,12 +94,12 @@ $ISPSettings = $Config['IspSoft']['Settings'];
 if($ISPSettings['Password'] && $ISPSettings['BalanceLowLimit'] > 0){
 	# получаем баланс
 	$Balances = IspSoft_Get_Balance($ISPSettings);
-	#Debug("[comp/Tasks/RegBalance]: " . print_r($Balances, true) );
+	#Debug("[comp/Tasks/GC/RegBalance]: " . print_r($Balances, true) );
 	foreach($Balances as $Balance){
-		Debug("[comp/Tasks/RegBalance]: " . $Balance['name'] . " / " . $Balance['balance']);
+		Debug("[comp/Tasks/GC/RegBalance]: " . $Balance['name'] . " / " . $Balance['balance']);
 		if($Balance['name'] == 'ISPsystem'){
 			if($Balance['balance'] < $ISPSettings['BalanceLowLimit']){
-				Debug("[comp/Tasks/RegBalance]: add to message: " . $Balance['name'] . " / " . $Balance['balance']);
+				Debug("[comp/Tasks/GC/RegBalance]: add to message: " . $Balance['name'] . " / " . $Balance['balance']);
 				$Message .= SPrintF("Остаток на счете ISPsystem ниже допустимого минимума - %01.2f евро. \n",$Balance['balance']);
 			}
 		}
@@ -110,7 +109,7 @@ if($ISPSettings['Password'] && $ISPSettings['BalanceLowLimit'] > 0){
 #-------------------------------------------------------------------------------
 # если нет сообщения, то нефига и отсылать пустое
 if(StrLen($Message) < 10)
-	return MkTime(7,20,0,Date('n'),Date('j')+1,Date('Y'));
+	return TRUE;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # ищщем сторудников бухгалтерии
@@ -151,7 +150,7 @@ case 'array':
 			case 'exception':
 				return ERROR | @Trigger_Error(400);
 			case 'array':
-				Debug(SPrintF("[comp/Tasks/RegBalance]: найдено %s сотрудников любых отделов",SizeOf($Employers)));
+				Debug(SPrintF("[comp/Tasks/GC/RegBalance]: найдено %s сотрудников любых отделов",SizeOf($Employers)));
 				break;
 			default:
 				return ERROR | @Trigger_Error(101);
@@ -162,7 +161,7 @@ case 'array':
 		}
 		break;
 	case 'array':
-		Debug(SPrintF("[comp/Tasks/RegBalance]: найдено %s сотрудников отдела бухгалтерии",SizeOf($Employers)));
+		Debug(SPrintF("[comp/Tasks/GC/RegBalance]: найдено %s сотрудников отдела бухгалтерии",SizeOf($Employers)));
 		break;
 	default:
 		return ERROR | @Trigger_Error(101);
@@ -185,7 +184,7 @@ foreach($Employers as $Employer){
 		# No more...
 	case 'true':
 		# No more...
-		Debug(SPrintF("[comp/Tasks/RegBalance]: Сообщение для сотрудника #%s отослано",$Employer['ID']));
+		Debug(SPrintF("[comp/Tasks/GC/RegBalance]: Сообщение для сотрудника #%s отослано",$Employer['ID']));
 		break;
 	default:
 		return ERROR | @Trigger_Error(101);
@@ -193,7 +192,7 @@ foreach($Employers as $Employer){
 }
 #---------------------------------------------------------
 #---------------------------------------------------------
-return MkTime(7,20,0,Date('n'),Date('j')+1,Date('Y'));
+return TRUE;
 
 
 ?>

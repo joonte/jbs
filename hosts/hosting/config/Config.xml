@@ -976,6 +976,8 @@
    <DailyTasks>
     <!-- синхронизации -->
     <CheckUsersOnHostingServers>Синхронизация аккаунтов биллинга и серверов хостинга</CheckUsersOnHostingServers>
+    <!-- проверка баллансов регистраторов/поставщиков -->
+    <CheckBalance>Проверка балланса регистраторов, поставщиков</CheckBalance>
     <!-- Операции с заказами -->
     <EraseDeletedOrders>Удаление заказов в статусе Удален</EraseDeletedOrders>
     <SetDeletedWaitingOrders>Отмена неоплаченных заказов</SetDeletedWaitingOrders>
