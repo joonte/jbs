@@ -1037,6 +1037,8 @@
     <EraseDeletedInvoice>Удаление счетов в статусе Отменен</EraseDeletedInvoice>
     <SetDeletedWaitingInvoice>Отмена неоплаченных счетов</SetDeletedWaitingInvoice>
     <NotifyConditionallyInvoice>Уведомление о условно оплаченных счетах</NotifyConditionallyInvoice>
+    <!-- Удаление пользователей не заходивших в биллинг более года -->
+    <EraseOldUsers>Удаление неактивных пользователей</EraseOldUsers>
     <!-- Очистка некоторых таблиц -->
     <CleanSomeTables>Очистка некоторых таблиц</CleanSomeTables>
     <!-- проверка прав на конфигурационный файл биллинговой системы -->
