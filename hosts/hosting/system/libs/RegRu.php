@@ -290,11 +290,11 @@ function RegRu_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contract
   #-----------------------------------------------------------------------------
   $Result = Json_Decode($Result,TRUE);
   #-----------------------------------------------------------------------------
-  Debug($Result);
+  #Debug($Result);
   #-----------------------------------------------------------------------------
   if($Result['result'] == 'success'){
-    foreach(Array_Keys($Result['answer']) as $Key)
-      Debug("[RegRu_Answer::Domain_Prolong]: " . $Key . " - " . $Result['answer'][$Key]);
+    #foreach(Array_Keys($Result['answer']) as $Key)
+    #  Debug("[RegRu_Answer::Domain_Prolong]: " . $Key . " - " . $Result['answer'][$Key]);
     #---------------------------------------------------------------------------
     if($Result['answer']['status'] == 'renew_success')
       return Array('TicketID'=>(integer)$Result['answer']['service_id']);
@@ -363,12 +363,12 @@ function RegRu_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID,$D
   #-----------------------------------------------------------------------------
   $Result = Json_Decode($Result,TRUE);
   #-----------------------------------------------------------------------------
-  Debug($Result);
+  #Debug($Result);
   #-----------------------------------------------------------------------------
   if($Result['result'] == 'success'){
     foreach($Result['answer']['domains'] as $Domains){
-      foreach(Array_Keys($Domains) as $Key)
-        Debug("[RegRu_Answer::Domain_Ns_Change]: " . $Key . " - " . $Domains[$Key]);
+      #foreach(Array_Keys($Domains) as $Key)
+      #  Debug("[RegRu_Answer::Domain_Ns_Change]: " . $Key . " - " . $Domains[$Key]);
       #-------------------------------------------------------------------------
       if($Domains['dname'] == $Domain && IsSet($Domains['error_code']))
         return new gException('REGISTRATOR_ERROR',IsSet($Domains['error_text'])?$Domains['error_text']:'Регистратор вернул ошибку');
@@ -423,10 +423,10 @@ function RegRu_Check_Task($Settings,$TicketID){
   #-----------------------------------------------------------------------------
   $Result = Json_Decode($Result,TRUE);
   #-----------------------------------------------------------------------------
-  Debug($Result);
+  #Debug($Result);
   #-----------------------------------------------------------------------------
-  foreach(Array_Keys($Result) as $Key)
-    Debug("[RegRu_Answer::Check_Task]: " . $Key . " - " . $Result[$Key]);
+  #foreach(Array_Keys($Result) as $Key)
+  #  Debug("[RegRu_Answer::Check_Task]: " . $Key . " - " . $Result[$Key]);
   #-----------------------------------------------------------------------------
   if($Result['result'] == 'success')
     return Array('DomainID'=>$TicketID);
@@ -470,7 +470,7 @@ function RegRu_GetUploadID($Settings,$Domain){
   #-----------------------------------------------------------------------------
   $Result = Json_Decode($Result,TRUE);
   #-----------------------------------------------------------------------------
-  Debug($Result);
+  #Debug($Result);
   #-----------------------------------------------------------------------------
   if($Result['result'] == 'success')
     return Array('UploadID'=>$Result['answer']['docs_upload_sid']);
@@ -513,7 +513,7 @@ function RegRu_Get_Balance($Settings){
   #----------------------------------------------------------------------------
   $Result = Json_Decode($Result,TRUE);
   #----------------------------------------------------------------------------
-  Debug($Result);
+  #Debug($Result);
   #----------------------------------------------------------------------------
   if($Result['result'] == 'success')
     return Array('Prepay'=>$Result['answer']['prepay']);
@@ -523,6 +523,7 @@ function RegRu_Get_Balance($Settings){
   #----------------------------------------------------------------------------
   return ERROR | @Trigger_Error('[RegRu_GetBalance]: неизвестный ответ');
 }
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 function RegRu_Is_Available_Domain($Settings,$Domain){
   /****************************************************************************/
@@ -556,15 +557,10 @@ function RegRu_Is_Available_Domain($Settings,$Domain){
   #----------------------------------------------------------------------------
   $Result = Json_Decode($Result,TRUE);
   #----------------------------------------------------------------------------
-  Debug($Result);
+  #Debug($Result);
   #----------------------------------------------------------------------------
   if($Result['result'] == 'success') {
     foreach($Result['answer']['services'] as $CurService){
-      foreach(Array_Keys($CurService) as $Key){
-        #-----------------------------------------------------------------------
-        #Debug("[RegRu_Answer::Is_Available_Domain]: " . $Key . " - " . $CurService[$Key]);
-        #-----------------------------------------------------------------------
-      }
       foreach(Array_Keys($CurService) as $Key){
         if($CurService['dname'] == $Domain){
           if($CurService['result'] == 'success'){
@@ -636,8 +632,8 @@ function RegRu_Domain_Transfer($Settings,$DomainName,$DomainZone){
     $Result = Json_Decode($Result,TRUE);
     #---------------------------------------------------------------------------
     if($Result['result'] == 'success'){
-      foreach(Array_Keys($Result['answer']) as $Key)
-        Debug("[RegRu_Answer::Domain_Transfer]: " . $Key . " - " . $Result['answer'][$Key]);
+      #foreach(Array_Keys($Result['answer']) as $Key)
+      #  Debug("[RegRu_Answer::Domain_Transfer]: " . $Key . " - " . $Result['answer'][$Key]);
       #-------------------------------------------------------------------------
       if($Result['answer']['dname'] == $Domain){
         return Array('DomainID'=>(integer)$Result['answer']['service_id']);
@@ -780,7 +776,60 @@ function RegRu_Get_Contact_Detail($Settings,$Domain){
   #---------------------------------------------------------------------------
   return new gException('WRONG_ANSWER',$Result);
 }
-
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+function RegRu_Get_List_Domains($Settings){
+  /****************************************************************************/
+  $__args_types = Array('array','string');
+  #---------------------------------------------------------------------------
+  $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+  /****************************************************************************/
+  $Http = Array(
+    #--------------------------------------------------------------------------
+    'Address'  => $Settings['Address'],
+    'Port'     => $Settings['Port'],
+    'Host'     => $Settings['Address'],
+    'Protocol' => $Settings['Protocol'],
+    'Charset'  => 'utf8'
+  );
+  #----------------------------------------------------------------------------
+  $Query = Array(
+    #--------------------------------------------------------------------------
+    'username'              => $Settings['Login'],
+    'password'              => $Settings['Password'],
+    'servtype'              => 'domain'
+  );
+  #----------------------------------------------------------------------------
+  $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","service/get_list");
+  #----------------------------------------------------------------------------
+  $Result = Http_Send($Settings['PrefixAPI'],$Http,Array(),$Query);
+  if(Is_Error($Result))
+    return ERROR | @Trigger_Error('[RegRu_Is_Available_Domain]: не удалось выполнить запрос к серверу');
+  #----------------------------------------------------------------------------
+  $Result = Trim($Result['Body']);
+  #----------------------------------------------------------------------------
+  $Result = Json_Decode($Result,TRUE);
+  #----------------------------------------------------------------------------
+  if($Result['result'] == 'success') {
+    # перебираем массив, составляем массив на выхлоп функции
+    $Out = Array();
+    foreach($Result['answer']['services'] as $CurService){
+      #----------------------------------------------------------------------------
+      #Debug("Array_Keys answer services " . print_r($CurService,true));
+      if($CurService['state'] == 'A')
+        $Out[] = $CurService['dname'];
+    }
+  }
+  #----------------------------------------------------------------------------
+  if(SizeOf($Out) > 0){
+    return Array('Status'=>'true','Domains'=>$Out);
+  }else{
+    return Array('Status'=>'false','ErrorText'=>'No domains on account');
+  }
+  #----------------------------------------------------------------------------
+  return ERROR | @Trigger_Error('[RegRu_Is_Available_Domain]: неизвестный ответ');
+}
+#-------------------------------------------------------------------------------
+
 
 ?>

@@ -692,7 +692,7 @@ function WebNames_Get_List_Domains($Settings){
       'Port'     => $Settings['Port'],
       'Host'     => $Settings['Address'],
       'Protocol' => $Settings['Protocol'],
-      'Charset'  => 'CP1251'
+      'Charset'  => 'UTF-8'
       );
     #-----------------------------------------------------------------------------
     $Query = Array(
@@ -717,20 +717,23 @@ function WebNames_Get_List_Domains($Settings){
       return ERROR | @Trigger_Error('[WebNames_Get_List_Domains]: неизвестный ответ');
     #-----------------------------------------------------------------------------
     # кэшируем полученный результат
-	CacheManager::add($CacheID, $Result, 3600);
+    CacheManager::add($CacheID, $Result, 3600);
   }
   #-----------------------------------------------------------------------------
   #-----------------------------------------------------------------------------
   # разбираем строчки на массив
   $Domains = Explode("\n", $Result);
+  Debug('[WebNames_Get_List_Domains]: ' . print_r($Domains,true));
   #-----------------------------------------------------------------------------
   # перебираем массив, составляем массив на выхлоп функции
   $Out = Array();
   foreach($Domains as $Domain){
     # Domain f-box59.ru; Status N; CreationDate 2010-02-23; ExpirationDate 2012-02-23; FutureExpDate ;
     $DomainInfo = Explode(" ",$Domain);
-    # добавляем домен в выхлоп
-    $Out[] = StrToLower(Trim($DomainInfo[1]));
+    # добавляем домен в выхлоп, если он есть вообще
+    if(StrLen(Trim($DomainInfo[1])) > 3){
+      $Out[] = Str_Replace(';','',StrToLower(Trim($DomainInfo[1])));
+    }
   }
   #-----------------------------------------------------------------------------
   #-----------------------------------------------------------------------------
