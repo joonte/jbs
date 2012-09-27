@@ -69,6 +69,7 @@
     <ColumnsIDs>
      <ListElement>ID</ListElement>
      <ListElement>UserID</ListElement>
+     <ListElement>TargetUserID</ListElement>
      <ListElement>PriorityID</ListElement>
      <ListElement>Theme</ListElement>
      <ListElement>Content</ListElement>
