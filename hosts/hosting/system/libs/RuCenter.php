@@ -469,7 +469,7 @@ function RuCenter_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       $Query[] = 'contract-type: PRS';
       $Query[] = SPrintF('person: %s %s %s',Translit($Person['Name']),Mb_SubStr(Translit($Person['Lastname']),0,1),Translit($Person['Sourname']));
       $Query[] = SPrintF('person-r: %s %s %s',$Person['Sourname'],$Person['Name'],$Person['Lastname']);
-      $Query[] = SPrintF('country: %s',$Person['pCountry']);
+      $Query[] = SPrintF('country: %s',IsSet($Person['PasportCountry'])?$Person['PasportCountry']:$Person['pCountry']);
       $Query[] = SPrintF('phone: %s',$Person['Phone']);
       $Query[] = SPrintF('fax-no: %s',$Person['Fax']);
       $Query[] = SPrintF('birth-date: %s',$Person['BornDate']);
@@ -548,7 +548,7 @@ function RuCenter_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
     $Query[] = SPrintF('status:registrant');
     $Query[] = SPrintF('org:');
     $Query[] = SPrintF('name: %s, %s',Translit($Person['Name']),Translit($Person['Lastname']));
-    $Query[] = SPrintF('country: %s',$Person['pCountry']);
+    $Query[] = SPrintF('country: %s',IsSet($Person['PasportCountry'])?$Person['PasportCountry']:$Person['pCountry']);
     $Query[] = SPrintF('region: %s',Translit($Person['pCity']));
     $Query[] = SPrintF('city: %s',Translit($Person['pCity']));
     $Query[] = SPrintF('street: %s',Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress'])));

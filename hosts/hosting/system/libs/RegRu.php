@@ -45,7 +45,7 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
         $Query['person_r']            = SPrintF('%s %s %s',$Person['Sourname'],$Person['Name'],$Person['Lastname']);
         $Query['passport']            = SPrintF('%s %s выдан %s %s',$Person['PasportLine'],$Person['PasportNum'],$Person['PasportWhom'],$Person['PasportDate']);
         $Query['birth_date']          = $Person['BornDate'];
-        $Query['country']             = $Person['pCountry'];
+        $Query['country']             = IsSet($Person['PasportCountry'])?$Person['PasportCountry']:$Person['pCountry'];
         $Query['p_addr']              = SPrintF('%s, %s, %s, %s %s, %s',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['pRecipient']);
         $Query['phone']               = $Person['Phone'];
 	$Query['sms_security_number'] = $Person['CellPhone'];

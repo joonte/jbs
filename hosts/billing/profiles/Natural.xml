@@ -107,8 +107,48 @@
   <Value>%Email%</Value>
  </Email>
  <!-- ********************************************************************** -->
- <PasportLine>
+ <PasportCountry>
   <Title>Паспортные данные</Title>
+  <Check>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Comment>Страна</Comment>
+  <Example>Россия</Example>
+  <Type>Select</Type>
+  <Options>
+   <AZ>Азербайджан</AZ>
+   <BY>Беларусь</BY>
+   <BG>Болгария</BG>
+   <UK>Великобритания</UK>
+   <DE>Германия</DE>
+   <GE>Грузия</GE>
+   <IL>Израиль</IL>
+   <KZ>Казахстан</KZ>
+   <KG>Киргизия</KG>
+   <CA>Канада</CA>
+   <CC>Кокосовые острова</CC>
+   <LV>Латвия</LV>
+   <LT>Литва</LT>
+   <MT>Мальта</MT>
+   <MD>Молдова</MD>
+   <NL>Нидерланды</NL>
+   <NO>Норвегия</NO>
+   <PL>Польша</PL>
+   <RU>Россия</RU>
+   <US>США</US>
+   <TM>Туркмения</TM>
+   <UZ>Узбекистан</UZ>
+   <UA>Украина</UA>
+   <FI>Финляндия</FI>
+   <CZ>Чехия</CZ>
+   <EE>Эстония</EE>
+  </Options>
+  <Attribs>
+   <size>1</size>
+  </Attribs>
+  <IsDuty>1</IsDuty>
+  <Value>RU</Value>
+ </PasportCountry>
+ <!-- ********************************************************************** -->
+ <PasportLine>
   <Check>/^[0-9a-zA-Zа-яА-ЯёЁ\-]{1,10}$/u</Check>
   <Comment>Серия паспорта</Comment>
   <Example>3422</Example>

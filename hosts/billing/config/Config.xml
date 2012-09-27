@@ -66,6 +66,7 @@
     <Lastname>1</Lastname>
     <Email>1</Email>
     <pCountry>0</pCountry>
+    <PasportCountry>0</PasportCountry>
     <pState>0</pState>
     <pCity>0</pCity>
     <pIndex>0</pIndex>

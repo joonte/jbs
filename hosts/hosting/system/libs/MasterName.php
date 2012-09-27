@@ -393,7 +393,7 @@ function MasterName_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       $Query[] = '[client]';
       #-------------------------------------------------------------------------
       $Query[] = 'client-type: ФИЗЛИЦО';
-      $Query[] = ($Person['pCountry'] != 'RU'?'non-resident:':'resident:');
+      $Query[] = ($Person['PasportCountry'] != 'RU'?'non-resident:':'resident:');
       #-------------------------------------------------------------------------
       $Query[] = SPrintF('person-r: %s %s %s',$Person['Sourname'],$Person['Name'],$Person['Lastname']);
       $Query[] = SPrintF('person: %s %s %s',Translit($Person['Name']),Mb_SubStr(Translit($Person['Lastname']),0,1),Translit($Person['Sourname']));

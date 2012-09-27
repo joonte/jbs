@@ -223,7 +223,7 @@ function Started_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
   if(Is_Error($Tmp))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
-  $pCountry = $Person['pCountry'];
+  $pCountry = IsSet($Person['PasportCountry'])?$Person['PasportCountry']:$Person['pCountry'];
   #-----------------------------------------------------------------------------
   $Path = SPrintF('%s/started/states[%s].json',$Tmp,$pCountry);
   #-----------------------------------------------------------------------------
@@ -271,7 +271,7 @@ function Started_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
   $objUser->AddChild(new Tag('email',$Person['Email']));
   $objUser->AddChild(new Tag('password',SubStr(Md5(UniqID()),-8)));
   #-----------------------------------------------------------------------------
-  $IsRussian = In_Array($Person['pCountry'],Array('RU','BY','UA'));
+  $IsRussian = In_Array(IsSet($Person['PasportCountry'])?$Person['PasportCountry']:$Person['pCountry'],Array('RU','BY','UA'));
   #-----------------------------------------------------------------------------
   switch($PepsonID){
     case 'Natural':
@@ -320,7 +320,7 @@ function Started_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       $objUser->AddChild(new Tag('doc_date',$Person['PasportDate']));
       $objUser->AddChild(new Tag('birth_date',$Person['BornDate']));
       #-------------------------------------------------------------------------
-      $objUser->AddChild(new Tag('country',StrToLower($Person['pCountry'])));
+      $objUser->AddChild(new Tag('country',StrToLower(IsSet($Person['PasportCountry'])?$Person['PasportCountry']:$Person['pCountry'])));
       #-------------------------------------------------------------------------
       $objUser->AddChild(new Tag('zip',$Person['pIndex']));
       $objUser->AddChild(new Tag('state',$pStateID));

@@ -283,7 +283,7 @@ function LogicBoxes_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       $Params['address3'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
       $Params['city']     = Translit($Person['pCity']);
       $Params['state']    = Translit($Person['pState']);
-      $Params['country']  = $Person['pCountry'];
+      $Params['country']  = IsSet($Person['PasportCountry'])?$Person['PasportCountry']:$Person['pCountry'];
       $Params['zip']      = $Person['pIndex'];
     break;
     case 'Juridical':
