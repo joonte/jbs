@@ -272,7 +272,7 @@ if(!$TemplateID){
     #---------------------------------------------------------------------------
     $Table[] = 'Подтверждение введенных данных';
     #---------------------------------------------------------------------------
-    $Document = $ProfileID?$Profile['Length']:0;
+    $Document = $ProfileID?GetUploadedFileSize('Profiles', $ProfileID):0;
     #---------------------------------------------------------------------------
     $Comp = Comp_Load('Upload','Document',$Document?SPrintF('%01.2f Кб.',$Document/1024):'не загружены');
     if(Is_Error($Comp))
