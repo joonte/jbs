@@ -48,6 +48,7 @@ if($HostingSchemeID){
     'IsSchemeChangeable'    => TRUE,
     'IsSchemeChange'        => TRUE,
     'MinDaysPay'            => 31,
+    'MinDaysProlong'        => 14,
     'MaxDaysPay'            => 1460,
     'SortID'                => 10,
     'QuotaDisk'             => 999,
@@ -314,13 +315,31 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'size'  => 5,
     'name'  => 'MinDaysPay',
-    'value' => $HostingScheme['MinDaysPay']
+    'value' => $HostingScheme['MinDaysPay'],
+    'prompt'=> 'Минимальное число дней, на которое можно производить первую оплату заказа'
   )
 );
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Минимальное кол-во дней оплаты',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+  'Form/Input',
+  Array(
+    'type'  => 'text',
+    'size'  => 5,
+    'name'  => 'MinDaysProlong',
+    'value' => $HostingScheme['MinDaysProlong'],
+    'prompt'=> 'Минимальное число дней, на которое можно продлевать заказ'
+  )
+);
+if(Is_Error($Comp))
+  return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Минимальное кол-во дней продления',$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',

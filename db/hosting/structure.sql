@@ -115,8 +115,9 @@ CREATE TABLE `HostingSchemes` (
   `IsProlong` enum('no','yes') default 'yes',
   `IsSchemeChangeable` enum('no','yes') default 'yes',
   `IsSchemeChange` enum('no','yes') default 'yes',
-  `MinDaysPay` int(6) default '0',
-  `MaxDaysPay` int(6) default '0',
+  `MinDaysPay` int(6) default '0',			/* минимальное число дней первой оплаты */
+  `MinDaysProlong` INT(6) default '0',			/* минимальное число дней продления, для ранее оплаченных заказов */
+  `MaxDaysPay` int(6) default '0',			/* максимальное число дней оплаты заказа */
   `SortID` int(11) default '10',
 --
 -- Common quotas

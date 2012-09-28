@@ -50,7 +50,7 @@ switch(ValueOf($HostingOrder)){
         #-----------------------------------------------------------------------
         $UserID = $HostingOrder['UserID'];
         #-----------------------------------------------------------------------
-        $HostingScheme = DB_Select('HostingSchemes',Array('ID','Name','CostDay','IsActive','IsProlong','MinDaysPay','MaxDaysPay'),Array('UNIQ','ID'=>$HostingOrder['SchemeID']));
+        $HostingScheme = DB_Select('HostingSchemes',Array('ID','Name','CostDay','IsActive','IsProlong','MinDaysPay','MinDaysProlong','MaxDaysPay'),Array('UNIQ','ID'=>$HostingOrder['SchemeID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($HostingScheme)){
           case 'error':
@@ -67,6 +67,24 @@ switch(ValueOf($HostingOrder)){
               #-----------------------------------------------------------------
               if(!$HostingScheme['IsActive'])
                 return new gException('SCHEME_NOT_ACTIVE','Тарифный план заказа хостинга не активен');
+            }
+	    #-------------------------------------------------------------------
+            # проверяем, это первая оплата или нет? если не первая, то минимальное число дней MinDaysProlong
+            $PayedSumm = DB_Select('OrdersConsider',Array('SUM(`DaysReserved`*`Cost`*(1-`Discont`)) as `Summ`'),Array('UNIQ','Where'=>SPrintF('`OrderID`=%u',$HostingOrder['OrderID'])));
+            switch(ValueOf($PayedSumm)){
+            case 'error':
+              return ERROR | @Trigger_Error(500);
+            case 'exception':
+              return ERROR | @Trigger_Error(400);
+            case 'array':
+              Debug(SPrintF('[comp/www/HostingOrderPay]: ранее оплачено за заказ %s',$PayedSumm['Summ']));
+              if($PayedSumm['Summ'] > 0)
+                $HostingScheme['MinDaysPay'] = $HostingScheme['MinDaysProlong'];
+              #-------------------------------------------------------------------
+              Debug(SPrintF('[comp/www/HostingOrderPay]: минимальное число дней %s',$HostingScheme['MinDaysPay']));
+              break;
+            default:
+              return ERROR | @Trigger_Error(101);
             }
             #-------------------------------------------------------------------
             if($DaysPay < $HostingScheme['MinDaysPay'] || $DaysPay > $HostingScheme['MaxDaysPay'])
