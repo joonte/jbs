@@ -19,7 +19,7 @@ $PayMessage     =  (string) @$Args['PayMessage'];
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','OrderID','ContractID','StatusID','UserID','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `ISPswOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `ISPswOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `ISPswOrdersOwners`.`OrderID`) as `IsPayed`');
+$Columns = Array('ID','OrderID','ContractID','StatusID','UserID','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `ISPswOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `ISPswOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `ISPswOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`ISPswOrdersOwners`.`OrderID`) AS PayedSumm');
 #-------------------------------------------------------------------------------
 $ISPswOrder = DB_Select('ISPswOrdersOwners',$Columns,Array('UNIQ','ID'=>$ISPswOrderID));
 #-------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ switch(ValueOf($ISPswOrder)){
         #-----------------------------------------------------------------------
         $UserID = $ISPswOrder['UserID'];
         #-----------------------------------------------------------------------
-        $ISPswScheme = DB_Select('ISPswSchemes',Array('ID','Name','CostDay','CostMonth','IsActive','IsProlong','MinDaysPay','MaxDaysPay','IsInternal'),Array('UNIQ','ID'=>$ISPswOrder['SchemeID']));
+        $ISPswScheme = DB_Select('ISPswSchemes',Array('ID','Name','CostDay','CostMonth','IsActive','IsProlong','MinDaysPay','MinDaysProlong','MaxDaysPay','IsInternal'),Array('UNIQ','ID'=>$ISPswOrder['SchemeID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($ISPswScheme)){
           case 'error':
@@ -69,7 +69,17 @@ switch(ValueOf($ISPswOrder)){
                 return new gException('SCHEME_NOT_ACTIVE','Тарифный план заказа ПО ISPsystem не активен');
             }
             #-------------------------------------------------------------------
-            if($DaysPay < $ISPswScheme['MinDaysPay'] || $DaysPay > $ISPswScheme['MaxDaysPay']){
+            # проверяем, это первая оплата или нет? если не первая, то минимальное число дней MinDaysProlong
+            Debug(SPrintF('[comp/www/API/ISPswOrderPay]: ранее оплачено за заказ %s',$ISPswOrder['PayedSumm']));
+            if($ISPswOrder['PayedSumm'] > 0){
+              $MinDaysPay = $ISPswScheme['MinDaysProlong'];
+            }else{
+              $MinDaysPay = $ISPswScheme['MinDaysPay'];
+            }
+            #-------------------------------------------------------------------
+            Debug(SPrintF('[comp/www/API/ISPswOrderPay]: минимальное число дней %s',$MinDaysPay));
+            #-------------------------------------------------------------------
+            if($DaysPay < $MinDaysPay || $DaysPay > $ISPswScheme['MaxDaysPay']){
 	      if($ISPswScheme['IsInternal']){
                 return new gException('WRONG_DAYS_PAY','Неверное кол-во дней оплаты');
 	      }

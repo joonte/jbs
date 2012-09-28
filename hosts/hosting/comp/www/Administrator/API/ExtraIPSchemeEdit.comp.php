@@ -30,6 +30,7 @@ $IsAutomatic		= (boolean) @$Args['IsAutomatic'];
 $IsActive		= (boolean) @$Args['IsActive'];
 $IsProlong		= (boolean) @$Args['IsProlong'];
 $MinDaysPay		= (integer) @$Args['MinDaysPay'];
+$MinDaysProlong		= (integer) @$Args['MinDaysProlong'];
 $MaxDaysPay		= (integer) @$Args['MaxDaysPay'];
 $SortID			= (integer) @$Args['SortID'];
 #-------------------------------------------------------------------------------
@@ -82,6 +83,9 @@ if($DSGroupID > 0){
 if(!$MinDaysPay)
   return new gException('MIN_DAYS_PAY_NOT_DEFINED','Минимальное кол-во дней оплаты не указано');
 #-------------------------------------------------------------------------------
+if($MinDaysProlong > $MinDaysPay)
+  return new gException('WRONG_MIN_DAYS_PROLONG','Минимальное число дней продления не может быть больше минимального числа дней оплаты');
+#-------------------------------------------------------------------------------
 if($MinDaysPay > $MaxDaysPay)
   return new gException('WRONG_MIN_DAYS_PAY','Минимальное кол-во дней оплаты не можеть быть больше максимального');
 #-------------------------------------------------------------------------------
@@ -103,6 +107,7 @@ $IExtraIPScheme = Array(
   'IsActive'            => $IsActive,
   'IsProlong'           => $IsProlong,
   'MinDaysPay'          => $MinDaysPay,
+  'MinDaysProlong'	=> $MinDaysProlong,
   'MaxDaysPay'          => $MaxDaysPay,
   'SortID'              => $SortID
 );

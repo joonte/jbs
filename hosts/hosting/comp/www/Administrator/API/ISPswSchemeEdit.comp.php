@@ -30,6 +30,7 @@ $IsSchemeChangeable	= (boolean) @$Args['IsSchemeChangeable'];
 $IsSchemeChange		= (boolean) @$Args['IsSchemeChange'];
 $IsInternal		= (boolean) @$Args['IsInternal'];
 $MinDaysPay		= (integer) @$Args['MinDaysPay'];
+$MinDaysProlong		= (integer) @$Args['MinDaysProlong'];
 $MaxDaysPay		= (integer) @$Args['MaxDaysPay'];
 $IsTimeManage		= (boolean) @$Args['IsTimeManage'];
 $SortID			= (integer) @$Args['SortID'];
@@ -71,6 +72,9 @@ if(!IsSet($Config['IspSoft']['Settings']['Password'])){
 if(!$MinDaysPay)
   return new gException('MIN_DAYS_PAY_NOT_DEFINED','Минимальное кол-во дней оплаты не указано');
 #-------------------------------------------------------------------------------
+if($MinDaysProlong > $MinDaysPay)
+  return new gException('WRONG_MIN_DAYS_PROLONG','Минимальное число дней продления не может быть больше минимального числа дней оплаты');
+#-------------------------------------------------------------------------------
 if($MinDaysPay > $MaxDaysPay)
   return new gException('WRONG_MIN_DAYS_PAY','Минимальное кол-во дней оплаты не можеть быть больше максимального');
 #-------------------------------------------------------------------------------
@@ -90,6 +94,7 @@ $IISPswScheme = Array(
   'IsSchemeChange'      => $IsSchemeChange,
   'IsInternal'		=> $IsInternal,
   'MinDaysPay'          => $MinDaysPay,
+  'MinDaysProlong'	=> $MinDaysProlong,
   'MaxDaysPay'          => $MaxDaysPay,
   'SortID'		=> $SortID,
   'ISPtype'		=> $ISPtype,

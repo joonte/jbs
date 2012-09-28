@@ -19,7 +19,7 @@ $PayMessage     =  (string) @$Args['PayMessage'];
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','OrderID','ContractID','StatusID','UserID','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `ExtraIPOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `ExtraIPOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `ExtraIPOrdersOwners`.`OrderID`) as `IsPayed`');
+$Columns = Array('ID','OrderID','ContractID','StatusID','UserID','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `ExtraIPOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `ExtraIPOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `ExtraIPOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`ExtraIPOrdersOwners`.`OrderID`) AS PayedSumm');
 #-------------------------------------------------------------------------------
 $ExtraIPOrder = DB_Select('ExtraIPOrdersOwners',$Columns,Array('UNIQ','ID'=>$ExtraIPOrderID));
 #-------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ switch(ValueOf($ExtraIPOrder)){
         #-----------------------------------------------------------------------
         $UserID = $ExtraIPOrder['UserID'];
         #-----------------------------------------------------------------------
-        $ExtraIPScheme = DB_Select('ExtraIPSchemes',Array('ID','Name','CostDay','CostInstall','IsActive','IsProlong','MinDaysPay','MaxDaysPay'),Array('UNIQ','ID'=>$ExtraIPOrder['SchemeID']));
+        $ExtraIPScheme = DB_Select('ExtraIPSchemes',Array('ID','Name','CostDay','CostInstall','IsActive','IsProlong','MinDaysPay','MinDaysProlong','MaxDaysPay'),Array('UNIQ','ID'=>$ExtraIPOrder['SchemeID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($ExtraIPScheme)){
           case 'error':
@@ -58,6 +58,16 @@ switch(ValueOf($ExtraIPOrder)){
           case 'exception':
             return ERROR | @Trigger_Error(400);
           case 'array':
+	    #-------------------------------------------------------------------
+            # проверяем, это первая оплата или нет? если не первая, то минимальное число дней MinDaysProlong
+            Debug(SPrintF('[comp/www/API/ExtraIPOrderPay]: ранее оплачено за заказ %s',$ExtraIPOrder['PayedSumm']));
+            if($ExtraIPOrder['PayedSumm'] > 0){
+              $MinDaysPay = $ExtraIPScheme['MinDaysProlong'];
+            }else{
+              $MinDaysPay = $ExtraIPScheme['MinDaysPay'];
+            }
+            #-------------------------------------------------------------------
+            Debug(SPrintF('[comp/www/API/ExtraIPOrderPay]: минимальное число дней %s',$MinDaysPay));
             #-------------------------------------------------------------------
             if($ExtraIPOrder['IsPayed']){
               #-----------------------------------------------------------------
@@ -69,7 +79,7 @@ switch(ValueOf($ExtraIPOrder)){
                 return new gException('SCHEME_NOT_ACTIVE','Тарифный план аренды сервера не активен');
             }
             #-------------------------------------------------------------------
-            if($DaysPay < $ExtraIPScheme['MinDaysPay'] || $DaysPay > $ExtraIPScheme['MaxDaysPay'])
+            if($DaysPay < $MinDaysPay || $DaysPay > $ExtraIPScheme['MaxDaysPay'])
               return new gException('WRONG_DAYS_PAY','Неверное кол-во дней оплаты');
             #-------------------------TRANSACTION-------------------------------
             if(Is_Error(DB_Transaction($TransactionID = UniqID('ExtraIPOrderPay'))))

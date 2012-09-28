@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
@@ -20,7 +19,7 @@ $IsChange       = (boolean) @$Args['IsChange'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','StatusID','UserID','SchemeID','DaysRemainded','(SELECT `TypeID` FROM `Contracts` WHERE `ISPswOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractTypeID`','(SELECT `Balance` FROM `Contracts` WHERE `ISPswOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `GroupID` FROM `Users` WHERE `ISPswOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `ISPswOrdersOwners`.`OrderID`) as `IsPayed`');
+$Columns = Array('ID','OrderID','StatusID','UserID','SchemeID','DaysRemainded','(SELECT `TypeID` FROM `Contracts` WHERE `ISPswOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractTypeID`','(SELECT `Balance` FROM `Contracts` WHERE `ISPswOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `GroupID` FROM `Users` WHERE `ISPswOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `ISPswOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`ISPswOrdersOwners`.`OrderID`) AS PayedSumm');
 #-------------------------------------------------------------------------------
 $Where = ($ISPswOrderID?SPrintF('`ID` = %u',$ISPswOrderID):SPrintF('`OrderID` = %u',$OrderID));
 #-------------------------------------------------------------------------------
@@ -79,7 +78,7 @@ switch(ValueOf($ISPswOrder)){
         #-----------------------------------------------------------------------
         $__USER = $GLOBALS['__USER'];
         #-----------------------------------------------------------------------
-        $ISPswScheme = DB_Select('ISPswSchemes',Array('ID','CostDay','CostMonth','MinDaysPay','MaxDaysPay','IsActive','IsProlong','IsInternal'),Array('UNIQ','ID'=>$ISPswOrder['SchemeID']));
+        $ISPswScheme = DB_Select('ISPswSchemes',Array('ID','CostDay','CostMonth','MinDaysPay','MinDaysProlong','MaxDaysPay','IsActive','IsProlong','IsInternal'),Array('UNIQ','ID'=>$ISPswOrder['SchemeID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($ISPswScheme)){
           case 'error':
@@ -87,6 +86,16 @@ switch(ValueOf($ISPswOrder)){
           case 'exception':
             return ERROR | @Trigger_Error(400);
           case 'array':
+            #-------------------------------------------------------------------
+            # проверяем, это первая оплата или нет? если не первая, то минимальное число дней MinDaysProlong
+            Debug(SPrintF('[comp/www/ISPswOrderPay]: ранее оплачено за заказ %s',$ISPswOrder['PayedSumm']));
+            if($ISPswOrder['PayedSumm'] > 0){
+              $MinDaysPay = $ISPswScheme['MinDaysProlong'];
+            }else{
+              $MinDaysPay = $ISPswScheme['MinDaysPay'];
+            }
+            #-------------------------------------------------------------------
+            Debug(SPrintF('[comp/www/ISPswOrderPay]: минимальное число дней %s',$MinDaysPay));
             #-------------------------------------------------------------------
             $Table = Array();
             #-------------------------------------------------------------------
@@ -363,12 +372,12 @@ EOD;
               #-----------------------------------------------------------------
               $ExpirationDate = MkTime(0,0,0,Date('m'),Date('j'),Date('y')) + $TimeRemainded;
               #-----------------------------------------------------------------
-              $sTime = MkTime(0,0,0,Date('m'),Date('j') + $ISPswScheme['MinDaysPay'] + $DaysRemainded,Date('Y'));
+              $sTime = MkTime(0,0,0,Date('m'),Date('j') + $MinDaysPay + $DaysRemainded,Date('Y'));
               $eTime = MkTime(0,0,0,Date('m'),Date('j') + $ISPswScheme['MaxDaysPay'] + $DaysRemainded,Date('Y'));
               #-----------------------------------------------------------------
               if($sTime >= $eTime){
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/ISPswOrderPay',Array('ISPswOrderID'=>$ISPswOrder['ID'],'DaysPay'=>$ISPswScheme['MinDaysPay']));
+                $Comp = Comp_Load('www/ISPswOrderPay',Array('ISPswOrderID'=>$ISPswOrder['ID'],'DaysPay'=>$MinDaysPay));
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
@@ -489,7 +498,7 @@ EOD;
 	      #-----------------------------------------------------------------
               if($ISPswScheme['CostDay'] > 0){
                 $DaysFromBallance = Floor($ISPswOrder['ContractBalance'] / $ISPswScheme['CostDay']);
-                if($ISPswScheme['MinDaysPay'] < $DaysFromBallance){
+                if($MinDaysPay < $DaysFromBallance){
                   if($IsPeriods){
                     #---------------------------------------------------------------
                     $Comp = Comp_Load('Form/Input',Array('onclick'=>'form.Period.disabled = true;form.Year.disabled = true;form.Month.disabled = true;form.Day.disabled = true;','name'=>'Calendar','type'=>'radio'));
