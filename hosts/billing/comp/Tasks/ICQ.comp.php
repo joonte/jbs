@@ -67,6 +67,9 @@ if(!IsSet($Links[$LinkID])){
 $WebIcqLite = &$Links[$LinkID];
 #-------------------------------------------------------------------------------
 $Message = Mb_Convert_Encoding($Message,$Settings['Encoding']);
+# переводы строк
+$Message = Str_Replace("\r","",$Message);
+$Message = Str_Replace("\n","\n\r",$Message);
 #-------------------------------------------------------------------------------
 $IsMessage = $WebIcqLite->send_message((integer)$UIN,$Message);
 if(Is_Error($IsMessage)){
