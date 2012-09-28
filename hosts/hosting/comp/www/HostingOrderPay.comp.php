@@ -89,10 +89,13 @@ switch(ValueOf($HostingOrder)){
 	    #-------------------------------------------------------------------
 	    # проверяем, это первая оплата или нет? если не первая, то минимальное число дней MinDaysProlong
             Debug(SPrintF('[comp/www/HostingOrderPay]: ранее оплачено за заказ %s',$HostingOrder['PayedSumm']));
-            if($HostingOrder['PayedSumm'] > 0)
-              $HostingScheme['MinDaysPay'] = $HostingScheme['MinDaysProlong'];
+            if($HostingOrder['PayedSumm'] > 0){
+              $MinDaysPay = $HostingScheme['MinDaysProlong'];
+	    }else{
+	      $MinDaysPay = $HostingScheme['MinDaysPay'];
+	    }
             #-------------------------------------------------------------------
-            Debug(SPrintF('[comp/www/HostingOrderPay]: минимальное число дней %s',$HostingScheme['MinDaysPay']));
+            Debug(SPrintF('[comp/www/HostingOrderPay]: минимальное число дней %s',$MinDaysPay));
             #-------------------------------------------------------------------
 	    #-------------------------------------------------------------------
             $Table = Array();
@@ -350,12 +353,12 @@ EOD;
               #-----------------------------------------------------------------
               $ExpirationDate = MkTime(0,0,0,Date('m'),Date('j'),Date('y')) + $TimeRemainded;
               #-----------------------------------------------------------------
-              $sTime = MkTime(0,0,0,Date('m'),Date('j') + $HostingScheme['MinDaysPay'] + $DaysRemainded,Date('Y'));
+              $sTime = MkTime(0,0,0,Date('m'),Date('j') + $MinDaysPay + $DaysRemainded,Date('Y'));
               $eTime = MkTime(0,0,0,Date('m'),Date('j') + $HostingScheme['MaxDaysPay'] + $DaysRemainded,Date('Y'));
               #-----------------------------------------------------------------
               if($sTime >= $eTime){
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/HostingOrderPay',Array('HostingOrderID'=>$HostingOrder['ID'],'DaysPay'=>$HostingScheme['MinDaysPay']));
+                $Comp = Comp_Load('www/HostingOrderPay',Array('HostingOrderID'=>$HostingOrder['ID'],'DaysPay'=>$MinDaysPay));
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
@@ -476,7 +479,7 @@ EOD;
 	      #-----------------------------------------------------------------
 	      if($HostingScheme['CostDay'] > 0){
                 $DaysFromBallance = Floor($HostingOrder['ContractBalance'] / $HostingScheme['CostDay']);
-	        if($HostingScheme['MinDaysPay'] < $DaysFromBallance){
+	        if($MinDaysPay < $DaysFromBallance){
                   if($IsPeriods){
                     #---------------------------------------------------------------
                     $Comp = Comp_Load('Form/Input',Array('onclick'=>'form.Period.disabled = true;form.Year.disabled = true;form.Month.disabled = true;form.Day.disabled = true;','name'=>'Calendar','type'=>'radio'));

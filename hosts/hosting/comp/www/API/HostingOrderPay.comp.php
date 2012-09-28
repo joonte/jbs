@@ -71,12 +71,15 @@ switch(ValueOf($HostingOrder)){
 	    #-------------------------------------------------------------------
             # проверяем, это первая оплата или нет? если не первая, то минимальное число дней MinDaysProlong
             Debug(SPrintF('[comp/www/HostingOrderPay]: ранее оплачено за заказ %s',$HostingOrder['PayedSumm']));
-            if($HostingOrder['PayedSumm'] > 0)
-              $HostingScheme['MinDaysPay'] = $HostingScheme['MinDaysProlong'];
+            if($HostingOrder['PayedSumm'] > 0){
+              $MinDaysPay = $HostingScheme['MinDaysProlong'];
+            }else{
+              $MinDaysPay = $HostingScheme['MinDaysPay'];
+            }
             #-------------------------------------------------------------------
-            Debug(SPrintF('[comp/www/HostingOrderPay]: минимальное число дней %s',$HostingScheme['MinDaysPay']));
+            Debug(SPrintF('[comp/www/HostingOrderPay]: минимальное число дней %s',$MinDaysPay));
             #-------------------------------------------------------------------
-            if($DaysPay < $HostingScheme['MinDaysPay'] || $DaysPay > $HostingScheme['MaxDaysPay'])
+            if($DaysPay < $MinDaysPay || $DaysPay > $HostingScheme['MaxDaysPay'])
               return new gException('WRONG_DAYS_PAY','Неверное кол-во дней оплаты');
             #-------------------------TRANSACTION-------------------------------
             if(Is_Error(DB_Transaction($TransactionID = UniqID('HostingOrderPay'))))
