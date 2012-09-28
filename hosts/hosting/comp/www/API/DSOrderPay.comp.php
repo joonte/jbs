@@ -76,6 +76,8 @@ switch(ValueOf($DSOrder)){
             }else{
               $MinDaysPay = $DSScheme['MinDaysPay'];
             }
+	    #-------------------------------------------------------------------
+	    Debug(SPrintF('[comp/www/DSOrderPay]: минимальное число дней %s',$MinDaysPay));
             #-------------------------------------------------------------------
             if($DaysPay < $MinDaysPay || $DaysPay > $DSScheme['MaxDaysPay'])
               return new gException('WRONG_DAYS_PAY','Неверное кол-во дней оплаты');
