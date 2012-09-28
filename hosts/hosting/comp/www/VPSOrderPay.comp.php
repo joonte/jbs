@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
@@ -20,7 +19,7 @@ $IsChange       = (boolean) @$Args['IsChange'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','StatusID','UserID','SchemeID','DaysRemainded','(SELECT `TypeID` FROM `Contracts` WHERE `VPSOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractTypeID`','(SELECT `Balance` FROM `Contracts` WHERE `VPSOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `GroupID` FROM `Users` WHERE `VPSOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `VPSOrdersOwners`.`OrderID`) as `IsPayed`');
+$Columns = Array('ID','OrderID','StatusID','UserID','SchemeID','DaysRemainded','(SELECT `TypeID` FROM `Contracts` WHERE `VPSOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractTypeID`','(SELECT `Balance` FROM `Contracts` WHERE `VPSOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `GroupID` FROM `Users` WHERE `VPSOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `VPSOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`VPSOrdersOwners`.`OrderID`) AS PayedSumm');
 #-------------------------------------------------------------------------------
 $Where = ($VPSOrderID?SPrintF('`ID` = %u',$VPSOrderID):SPrintF('`OrderID` = %u',$OrderID));
 #-------------------------------------------------------------------------------
@@ -79,7 +78,7 @@ switch(ValueOf($VPSOrder)){
         #-----------------------------------------------------------------------
         $__USER = $GLOBALS['__USER'];
         #-----------------------------------------------------------------------
-        $VPSScheme = DB_Select('VPSSchemes',Array('ID','CostDay','CostInstall','MinDaysPay','MaxDaysPay','IsActive','IsProlong'),Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
+        $VPSScheme = DB_Select('VPSSchemes',Array('ID','CostDay','CostInstall','MinDaysPay','MinDaysProlong','MaxDaysPay','IsActive','IsProlong'),Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($VPSScheme)){
           case 'error':
@@ -87,6 +86,8 @@ switch(ValueOf($VPSOrder)){
           case 'exception':
             return ERROR | @Trigger_Error(400);
           case 'array':
+            #-------------------------------------------------------------------
+
             #-------------------------------------------------------------------
             $Table = Array();
             #-------------------------------------------------------------------
@@ -104,6 +105,14 @@ switch(ValueOf($VPSOrder)){
               #-----------------------------------------------------------------
               if(!$VPSScheme['IsActive'])
                 return new gException('SCHEME_NOT_ACTIVE','Тарифный план заказа виртуального сервера не активен');
+            }
+            #-------------------------------------------------------------------
+            # проверяем, это первая оплата или нет? если не первая, то минимальное число дней MinDaysProlong
+            Debug(SPrintF('[comp/www/VPSOrderPay]: ранее оплачено за заказ %s',$VPSOrder['PayedSumm']));
+            if($VPSOrder['PayedSumm'] > 0){
+              $MinDaysPay = $VPSScheme['MinDaysProlong'];
+            }else{
+              $MinDaysPay = $VPSScheme['MinDaysPay'];
             }
             #-------------------------------------------------------------------
             if($DaysPay){
@@ -355,12 +364,12 @@ EOD;
               #-----------------------------------------------------------------
               $ExpirationDate = MkTime(0,0,0,Date('m'),Date('j'),Date('y')) + $TimeRemainded;
               #-----------------------------------------------------------------
-              $sTime = MkTime(0,0,0,Date('m'),Date('j') + $VPSScheme['MinDaysPay'] + $DaysRemainded,Date('Y'));
+              $sTime = MkTime(0,0,0,Date('m'),Date('j') + $MinDaysPay + $DaysRemainded,Date('Y'));
               $eTime = MkTime(0,0,0,Date('m'),Date('j') + $VPSScheme['MaxDaysPay'] + $DaysRemainded,Date('Y'));
               #-----------------------------------------------------------------
               if($sTime >= $eTime){
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/VPSOrderPay',Array('VPSOrderID'=>$VPSOrder['ID'],'DaysPay'=>$VPSScheme['MinDaysPay']));
+                $Comp = Comp_Load('www/VPSOrderPay',Array('VPSOrderID'=>$VPSOrder['ID'],'DaysPay'=>$MinDaysPay));
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
@@ -481,7 +490,7 @@ EOD;
 	      #-----------------------------------------------------------------
               if($VPSScheme['CostDay'] > 0){
                 $DaysFromBallance = Floor($VPSOrder['ContractBalance'] / $VPSScheme['CostDay']);
-                if($VPSScheme['MinDaysPay'] < $DaysFromBallance){
+                if($MinDaysPay < $DaysFromBallance){
                   if($IsPeriods){
                     #---------------------------------------------------------------
                     $Comp = Comp_Load('Form/Input',Array('onclick'=>'form.Period.disabled = true;form.Year.disabled = true;form.Month.disabled = true;form.Day.disabled = true;','name'=>'Calendar','type'=>'radio'));

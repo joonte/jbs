@@ -19,7 +19,7 @@ $PayMessage     =  (string) @$Args['PayMessage'];
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','OrderID','ContractID','StatusID','UserID','Login','Domain','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `VPSOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `VPSOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `VPSOrdersOwners`.`OrderID`) as `IsPayed`');
+$Columns = Array('ID','OrderID','ContractID','StatusID','UserID','Login','Domain','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `VPSOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `VPSOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `VPSOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`VPSOrdersOwners`.`OrderID`) AS PayedSumm');
 #-------------------------------------------------------------------------------
 $VPSOrder = DB_Select('VPSOrdersOwners',$Columns,Array('UNIQ','ID'=>$VPSOrderID));
 #-------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ switch(ValueOf($VPSOrder)){
         #-----------------------------------------------------------------------
         $UserID = $VPSOrder['UserID'];
         #-----------------------------------------------------------------------
-        $VPSScheme = DB_Select('VPSSchemes',Array('ID','Name','CostDay','CostInstall','IsActive','IsProlong','MinDaysPay','MaxDaysPay'),Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
+        $VPSScheme = DB_Select('VPSSchemes',Array('ID','Name','CostDay','CostInstall','IsActive','IsProlong','MinDaysPay','MinDaysProlong','MaxDaysPay'),Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($VPSScheme)){
           case 'error':
@@ -68,8 +68,16 @@ switch(ValueOf($VPSOrder)){
               if(!$VPSScheme['IsActive'])
                 return new gException('SCHEME_NOT_ACTIVE','Тарифный план заказа виртуального сервера не активен');
             }
+	    #-------------------------------------------------------------------
+            # проверяем, это первая оплата или нет? если не первая, то минимальное число дней MinDaysProlong
+            Debug(SPrintF('[comp/www/API/VPSOrderPay]: ранее оплачено за заказ %s',$VPSOrder['PayedSumm']));
+            if($VPSOrder['PayedSumm'] > 0){
+              $MinDaysPay = $VPSScheme['MinDaysProlong'];
+            }else{
+              $MinDaysPay = $VPSScheme['MinDaysPay'];
+            }
             #-------------------------------------------------------------------
-            if($DaysPay < $VPSScheme['MinDaysPay'] || $DaysPay > $VPSScheme['MaxDaysPay'])
+            if($DaysPay < $MinDaysPay || $DaysPay > $VPSScheme['MaxDaysPay'])
               return new gException('WRONG_DAYS_PAY','Неверное кол-во дней оплаты');
             #-------------------------TRANSACTION-------------------------------
             if(Is_Error(DB_Transaction($TransactionID = UniqID('VPSOrderPay'))))

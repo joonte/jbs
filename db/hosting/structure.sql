@@ -499,6 +499,7 @@ CREATE TABLE IF NOT EXISTS `VPSSchemes` (
 	`IsSchemeChangeable` enum('no','yes') DEFAULT 'yes',
 	`IsSchemeChange` enum('no','yes') DEFAULT 'yes',
 	`MinDaysPay` int(6) DEFAULT '0',
+	`MinDaysProlong` int(6) DEFAULT '0',
 	`MaxDaysPay` int(6) DEFAULT '0',
 	`SortID` int(11) DEFAULT '10',
 	`vdslimit` int(3) NOT NULL,
