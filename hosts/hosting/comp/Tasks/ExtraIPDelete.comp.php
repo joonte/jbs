@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -13,7 +12,7 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('classes/ExtraIPServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$ExtraIPOrder = DB_Select('ExtraIPOrdersOwners',Array('ID','UserID','Login','OrderType','DependOrderID','SchemeID'),Array('UNIQ','ID'=>$ExtraIPOrderID));
+$ExtraIPOrder = DB_Select('ExtraIPOrdersOwners',Array('ID','UserID','Login','OrderType','DependOrderID','SchemeID','(SELECT `Name` FROM `ExtraIPSchemes` WHERE `ExtraIPSchemes`.`ID` = `ExtraIPOrdersOwners`.`SchemeID`) as `SchemeName`'),Array('UNIQ','ID'=>$ExtraIPOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($ExtraIPOrder)){
   case 'error':
@@ -52,6 +51,8 @@ switch(ValueOf($ExtraIPOrder)){
             if(!$Event)
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
+	    $GLOBALS['TaskReturnInfo'] = Array($ExtraIPServer->Settings['Address'],$ExtraIPOrder['Login']);
+	    #-------------------------------------------------------------------
             return TRUE;
           default:
             return ERROR | @Trigger_Error(101);

@@ -20,7 +20,7 @@ public function FindSystem($ExtraIPOrderID,$OrderType,$DependOrderID){
 	case 'error':
 		return ERROR | @Trigger_Error('[Server->Select]: ошибка поиска зависимого заказа');
 	case 'exception':
-		return new gException('DEPEND_ORDER_NOT_FOUND','Не найден заказ к которому надо прикреплять IP адрес');
+		return new gException('DEPEND_ORDER_NOT_FOUND','Не найден заказ к которому необходимо добавить/удалить IP адрес');
 	case 'array':
 		$SysInfo = DB_Select($OrderType . 'Servers','*',Array('UNIQ','ID'=>$OrderServer['ServerID']));
 		switch(ValueOf($SysInfo)){
@@ -33,7 +33,7 @@ public function FindSystem($ExtraIPOrderID,$OrderType,$DependOrderID){
 			#-------------------------------------------------------------------------
 			# add User Login on server
 			$SysInfo['UserLogin'] = $OrderServer['Login'];
-			Debug("[comp/Tasks/ExtraIPCreate]: found ICS: " . $SysInfo['SystemID']);
+			Debug("[system/classes/ExtraIPServer]: found ICS: " . $SysInfo['SystemID']);
 			$this->SystemID = $SysInfo['SystemID'];
 			$this->Settings = $SysInfo;
 			if(Is_Error(System_Load(SPrintF('libs/%s.php',$this->SystemID))))
