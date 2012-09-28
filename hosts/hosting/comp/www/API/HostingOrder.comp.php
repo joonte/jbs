@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -43,7 +42,7 @@ if($DomainTypeID != 'None'){
 if(!$HostingSchemeID)
   return new gException('HOSTING_SCHEME_NOT_DEFINED','Тарифный план не выбран');
 #-------------------------------------------------------------------------------
-$HostingScheme = DB_Select('HostingSchemes',Array('ID','Name','ServersGroupID','IsActive'),Array('UNIQ','ID'=>$HostingSchemeID));
+$HostingScheme = DB_Select('HostingSchemes',Array('ID','Name','ServersGroupID','HardServerID','IsActive'),Array('UNIQ','ID'=>$HostingSchemeID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingScheme)){
   case 'error':
@@ -77,7 +76,13 @@ switch(ValueOf($HostingScheme)){
             return ERROR | @Trigger_Error(700);
           case 'true':
             #-------------------------------------------------------------------
-            $HostingServer = DB_Select('HostingServers',Array('ID','Domain','Prefix'),Array('Where'=>SPrintF("`ServersGroupID` = %u AND `IsDefault` = 'yes'",$HostingScheme['ServersGroupID'])));
+	    if($HostingScheme['HardServerID']){
+              $Where = SPrintF("`ID` = %u",$HostingScheme['HardServerID']);
+	    }else{
+	      $Where = SPrintF("`ServersGroupID` = %u AND `IsDefault` = 'yes'",$HostingScheme['ServersGroupID']);
+	    }
+	    #-------------------------------------------------------------------
+            $HostingServer = DB_Select('HostingServers',Array('ID','Domain','Prefix'),Array('Where'=>$Where));
             #-------------------------------------------------------------------
             switch(ValueOf($HostingServer)){
               case 'error':

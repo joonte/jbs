@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -41,6 +40,7 @@ if($HostingSchemeID){
     'CostDay'               => 40,
     'CostMonth'             => 1200,
     'ServersGroupID'        => 1,
+    'HardServerID'          => 0,
     'Comment'               => 'Идеальный тариф для ...',
     'IsReselling'           => FALSE,
     'IsActive'              => TRUE,
@@ -77,7 +77,7 @@ if($HostingSchemeID){
     'mysqlconnectlimit'     => 100000000,
     'mysqlupdateslimit'     => 100000000,
     'mysqlquerieslimit'     => 100000000,
-    'mailrate'			=> 100,
+    'mailrate'	            => 100,
     'IsSSIAccess'           => FALSE,
     'IsPHPModAccess'        => FALSE,
     'IsPHPCGIAccess'        => FALSE,
@@ -154,7 +154,8 @@ $Comp = Comp_Load(
   Array(
     'type'  => 'text',
     'name'  => 'Name',
-    'value' => $HostingScheme['Name']
+    'value' => $HostingScheme['Name'],
+    'prompt'=> 'Это название тарифа используется для показа пользователям'
   )
 );
 if(Is_Error($Comp))
@@ -168,7 +169,8 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'size'  => 10,
     'name'  => 'PackageID',
-    'value' => $HostingScheme['PackageID']
+    'value' => $HostingScheme['PackageID'],
+    'prompt'=> 'Внутренний идентификатор тарифа. Рекомендуется делать уникальными, только английские буквы и цифры'
   ),
   'Точное имя пакета в панели управления'
 );
@@ -177,13 +179,13 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array('Идентификатор пакета в панели',$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Summ',Array('name'=>'CostDay','value'=>SPrintF('%01.2f',$HostingScheme['CostDay'])));
+$Comp = Comp_Load('Form/Summ',Array('name'=>'CostDay','value'=>SPrintF('%01.2f',$HostingScheme['CostDay']),'prompt'=>'Используется при расчётах итоговой цены заказа, и во всех финансовых операциях по заказу хостинга'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Стоимость дня'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Используется в расчетах стоимости')),$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Summ',Array('name'=>'CostMonth','value'=>SPrintF('%01.2f',$HostingScheme['CostMonth'])));
+$Comp = Comp_Load('Form/Summ',Array('name'=>'CostMonth','value'=>SPrintF('%01.2f',$HostingScheme['CostMonth']),'prompt'=>'Эта сумма отображается при заказе хостинга пользователем'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -210,11 +212,40 @@ $Options = Array();
 foreach($ServersGroups as $ServersGroup)
   $Options[$ServersGroup['ID']] = $ServersGroup['Name'];
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ServersGroupID'),$Options,$HostingScheme['ServersGroupID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ServersGroupID','prompt'=>'Группа серверов, на которых будут размещаться заказы этого тарифа'),$Options,$HostingScheme['ServersGroupID']);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Группа серверов',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Options = Array();
+#-------------------------------------------------------------------------------
+$Servers = DB_Select('HostingServers','*',Array('SortOn'=>'Address'));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Servers)){
+  case 'error':
+    return ERROR | @Trigger_Error(500);
+  case 'exception':
+    return new gException('SERVERS_NOT_FOUND','Сервера хостинга не найдены');
+  case 'array':
+    # No more...
+  break;
+  default:
+    return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+$Options = Array('0'=>'Любой сервер');
+#-------------------------------------------------------------------------------
+foreach($Servers as $Server)
+  $Options[$Server['ID']] = $Server['Address'];
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Select',Array('name'=>'HardServerID','prompt'=>'Для размещения всех заказов этого тарифа на определённом сервере - выберите его из списка. Обратите внимание, что сервер должен быть из той же группы серверов к которой относится тарифный план.'),$Options,$HostingScheme['HardServerID']);
+if(Is_Error($Comp))
+  return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Сервер размещения',$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/TextArea',

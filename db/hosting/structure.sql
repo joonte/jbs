@@ -108,6 +108,7 @@ CREATE TABLE `HostingSchemes` (
   `CostDay` float(11,2) default '0.00',
   `CostMonth` float(11,2) default '0.00',
   `ServersGroupID` int(11) NOT NULL,
+  `HardServerID` int(11) NULL,
   `Comment` char(255) default '',
   `IsReselling` enum('no','yes') default 'no',
   `IsActive` enum('no','yes') default 'yes',
@@ -213,7 +214,9 @@ CREATE TABLE `HostingSchemes` (
   KEY `HostingSchemesUserID` (`UserID`),
   CONSTRAINT `HostingSchemesUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   KEY `HostingSchemesServersGroupID` (`ServersGroupID`),
-  CONSTRAINT `HostingSchemesServersGroupID` FOREIGN KEY (`ServersGroupID`) REFERENCES `HostingServersGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `HostingSchemesServersGroupID` FOREIGN KEY (`ServersGroupID`) REFERENCES `HostingServersGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `HostingSchemesHardServerID` (`HardServerID`),
+  CONSTRAINT `HostingSchemesHardServerID` FOREIGN KEY (`HardServerID`) REFERENCES `HostingServers` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

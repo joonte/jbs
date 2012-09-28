@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -22,6 +21,7 @@ $PackageID             =  (string) @$Args['PackageID'];
 $CostDay               =   (float) @$Args['CostDay'];
 $CostMonth             =   (float) @$Args['CostMonth'];
 $ServersGroupID        = (integer) @$Args['ServersGroupID'];
+$HardServerID          = (integer) @$Args['HardServerID'];
 $Comment               =  (string) @$Args['Comment'];
 $IsReselling           = (boolean) @$Args['IsReselling'];
 $IsActive              = (boolean) @$Args['IsActive'];
@@ -126,6 +126,14 @@ $Count = DB_Count('HostingServersGroups',Array('ID'=>$ServersGroupID));
 if(Is_Error($Count))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+if($HardServerID > 0){
+  $Count = DB_Count('HostingServers',Array('ID'=>$HardServerID));
+  if(Is_Error($Count))
+    return new gException('WRONG_HardServerID','Указанного сервера не существует');
+}else{
+  $HardServerID = NULL;
+}
+#-------------------------------------------------------------------------------
 if(!$Count)
   return new gException('SERVERS_GROUP_NOT_FOUND','Группа серверов не найдена');
 #-------------------------------------------------------------------------------
@@ -144,6 +152,7 @@ $IHostingScheme = Array(
   'CostDay'               => $CostDay,
   'CostMonth'             => $CostMonth,
   'ServersGroupID'        => $ServersGroupID,
+  'HardServerID'          => $HardServerID,
   'Comment'               => $Comment,
   'IsReselling'           => $IsReselling,
   'IsActive'              => $IsActive,
