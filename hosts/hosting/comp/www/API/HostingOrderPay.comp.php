@@ -19,7 +19,7 @@ $PayMessage	=  (string) @$Args['PayMessage'];
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','OrderID','ContractID','StatusID','UserID','Login','Domain','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `HostingOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `HostingOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `HostingOrdersOwners`.`OrderID`) as `IsPayed`', '(SELECT `Name` FROM `HostingSchemes` WHERE `HostingOrdersOwners`.`SchemeID` = `HostingSchemes`.`ID`) as `SchemeName`');
+$Columns = Array('ID','OrderID','ContractID','StatusID','UserID','Login','Domain','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `HostingOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `HostingOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `HostingOrdersOwners`.`OrderID`) as `IsPayed`', '(SELECT `Name` FROM `HostingSchemes` WHERE `HostingOrdersOwners`.`SchemeID` = `HostingSchemes`.`ID`) as `SchemeName`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`HostingOrdersOwners`.`OrderID`) AS PayedSumm');
 #-------------------------------------------------------------------------------
 $HostingOrder = DB_Select('HostingOrdersOwners',$Columns,Array('UNIQ','ID'=>$HostingOrderID));
 #-------------------------------------------------------------------------------
@@ -70,22 +70,11 @@ switch(ValueOf($HostingOrder)){
             }
 	    #-------------------------------------------------------------------
             # проверяем, это первая оплата или нет? если не первая, то минимальное число дней MinDaysProlong
-            $PayedSumm = DB_Select('OrdersConsider',Array('SUM(`DaysReserved`*`Cost`*(1-`Discont`)) as `Summ`'),Array('UNIQ','Where'=>SPrintF('`OrderID`=%u',$HostingOrder['OrderID'])));
-            switch(ValueOf($PayedSumm)){
-            case 'error':
-              return ERROR | @Trigger_Error(500);
-            case 'exception':
-              return ERROR | @Trigger_Error(400);
-            case 'array':
-              Debug(SPrintF('[comp/www/HostingOrderPay]: ранее оплачено за заказ %s',$PayedSumm['Summ']));
-              if($PayedSumm['Summ'] > 0)
-                $HostingScheme['MinDaysPay'] = $HostingScheme['MinDaysProlong'];
-              #-------------------------------------------------------------------
-              Debug(SPrintF('[comp/www/HostingOrderPay]: минимальное число дней %s',$HostingScheme['MinDaysPay']));
-              break;
-            default:
-              return ERROR | @Trigger_Error(101);
-            }
+            Debug(SPrintF('[comp/www/HostingOrderPay]: ранее оплачено за заказ %s',$HostingOrder['PayedSumm']));
+            if($HostingOrder['PayedSumm'] > 0)
+              $HostingScheme['MinDaysPay'] = $HostingScheme['MinDaysProlong'];
+            #-------------------------------------------------------------------
+            Debug(SPrintF('[comp/www/HostingOrderPay]: минимальное число дней %s',$HostingScheme['MinDaysPay']));
             #-------------------------------------------------------------------
             if($DaysPay < $HostingScheme['MinDaysPay'] || $DaysPay > $HostingScheme['MaxDaysPay'])
               return new gException('WRONG_DAYS_PAY','Неверное кол-во дней оплаты');
