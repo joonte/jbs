@@ -692,6 +692,7 @@ CREATE TABLE IF NOT EXISTS `DSSchemes` (
   `IsActive` enum('no','yes') DEFAULT 'yes',
   `IsProlong` enum('no','yes') NOT NULL,
   `MinDaysPay` int(6) DEFAULT '0',
+  `MinDaysProlong` int(6) DEFAULT '0',
   `MaxDaysPay` int(6) DEFAULT '0',
   `SortID` int(11) DEFAULT '10',
   `cputype` char(16) NOT NULL,

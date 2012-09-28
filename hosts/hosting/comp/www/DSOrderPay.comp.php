@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
@@ -20,7 +19,7 @@ $IsChange       = (boolean) @$Args['IsChange'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','StatusID','UserID','SchemeID','DaysRemainded','(SELECT `TypeID` FROM `Contracts` WHERE `DSOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractTypeID`','(SELECT `Balance` FROM `Contracts` WHERE `DSOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `GroupID` FROM `Users` WHERE `DSOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DSOrdersOwners`.`OrderID`) as `IsPayed`');
+$Columns = Array('ID','OrderID','StatusID','UserID','SchemeID','DaysRemainded','(SELECT `TypeID` FROM `Contracts` WHERE `DSOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractTypeID`','(SELECT `Balance` FROM `Contracts` WHERE `DSOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `GroupID` FROM `Users` WHERE `DSOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DSOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`DSOrdersOwners`.`OrderID`) AS PayedSumm');
 #-------------------------------------------------------------------------------
 $Where = ($DSOrderID?SPrintF('`ID` = %u',$DSOrderID):SPrintF('`OrderID` = %u',$OrderID));
 #-------------------------------------------------------------------------------
@@ -79,7 +78,7 @@ switch(ValueOf($DSOrder)){
         #-----------------------------------------------------------------------
         $__USER = $GLOBALS['__USER'];
         #-----------------------------------------------------------------------
-        $DSScheme = DB_Select('DSSchemes',Array('ID','CostDay','CostInstall','MinDaysPay','MaxDaysPay','IsActive','IsProlong'),Array('UNIQ','ID'=>$DSOrder['SchemeID']));
+        $DSScheme = DB_Select('DSSchemes',Array('ID','CostDay','CostInstall','MinDaysPay','MinDaysProlong','MaxDaysPay','IsActive','IsProlong'),Array('UNIQ','ID'=>$DSOrder['SchemeID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($DSScheme)){
           case 'error':
@@ -87,6 +86,14 @@ switch(ValueOf($DSOrder)){
           case 'exception':
             return ERROR | @Trigger_Error(400);
           case 'array':
+            #-------------------------------------------------------------------
+            # проверяем, это первая оплата или нет? если не первая, то минимальное число дней MinDaysProlong
+            Debug(SPrintF('[comp/www/DSOrderPay]: ранее оплачено за заказ %s',$DSOrder['PayedSumm']));
+            if($DSOrder['PayedSumm'] > 0){
+              $MinDaysPay = $DSScheme['MinDaysProlong'];
+            }else{
+              $MinDaysPay = $DSScheme['MinDaysPay'];
+            }
             #-------------------------------------------------------------------
             $Table = Array();
             #-------------------------------------------------------------------
@@ -355,12 +362,12 @@ EOD;
               #-----------------------------------------------------------------
               $ExpirationDate = MkTime(0,0,0,Date('m'),Date('j'),Date('y')) + $TimeRemainded;
               #-----------------------------------------------------------------
-              $sTime = MkTime(0,0,0,Date('m'),Date('j') + $DSScheme['MinDaysPay'] + $DaysRemainded,Date('Y'));
+              $sTime = MkTime(0,0,0,Date('m'),Date('j') + $MinDaysPay + $DaysRemainded,Date('Y'));
               $eTime = MkTime(0,0,0,Date('m'),Date('j') + $DSScheme['MaxDaysPay'] + $DaysRemainded,Date('Y'));
               #-----------------------------------------------------------------
               if($sTime >= $eTime){
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/DSOrderPay',Array('DSOrderID'=>$DSOrder['ID'],'DaysPay'=>$DSScheme['MinDaysPay']));
+                $Comp = Comp_Load('www/DSOrderPay',Array('DSOrderID'=>$DSOrder['ID'],'DaysPay'=>$MinDaysPay));
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
@@ -481,7 +488,7 @@ EOD;
 	      #-----------------------------------------------------------------
               if($DSScheme['CostDay'] > 0){
                 $DaysFromBallance = Floor($DSOrder['ContractBalance'] / $DSScheme['CostDay']);
-                if($DSScheme['MinDaysPay'] < $DaysFromBallance){
+                if($MinDaysPay < $DaysFromBallance){
                   if($IsPeriods){
                     #---------------------------------------------------------------
                     $Comp = Comp_Load('Form/Input',Array('onclick'=>'form.Period.disabled = true;form.Year.disabled = true;form.Month.disabled = true;form.Day.disabled = true;','name'=>'Calendar','type'=>'radio'));

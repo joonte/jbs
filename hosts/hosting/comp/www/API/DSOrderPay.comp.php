@@ -19,7 +19,7 @@ $PayMessage     =  (string) @$Args['PayMessage'];
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','OrderID','ContractID','StatusID','UserID','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `DSOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `DSOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DSOrdersOwners`.`OrderID`) as `IsPayed`');
+$Columns = Array('ID','OrderID','ContractID','StatusID','UserID','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `DSOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `DSOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DSOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`DSOrdersOwners`.`OrderID`) AS PayedSumm');
 #-------------------------------------------------------------------------------
 $DSOrder = DB_Select('DSOrdersOwners',$Columns,Array('UNIQ','ID'=>$DSOrderID));
 #-------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ switch(ValueOf($DSOrder)){
         #-----------------------------------------------------------------------
         $UserID = $DSOrder['UserID'];
         #-----------------------------------------------------------------------
-        $DSScheme = DB_Select('DSSchemes',Array('ID','Name','CostDay','CostInstall','IsActive','IsProlong','MinDaysPay','MaxDaysPay'),Array('UNIQ','ID'=>$DSOrder['SchemeID']));
+        $DSScheme = DB_Select('DSSchemes',Array('ID','Name','CostDay','CostInstall','IsActive','IsProlong','MinDaysPay','MinDaysProlong','MaxDaysPay'),Array('UNIQ','ID'=>$DSOrder['SchemeID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($DSScheme)){
           case 'error':
@@ -68,8 +68,16 @@ switch(ValueOf($DSOrder)){
               if(!$DSScheme['IsActive'])
                 return new gException('SCHEME_NOT_ACTIVE','Тарифный план аренды сервера не активен');
             }
+	    #-------------------------------------------------------------------
+            # проверяем, это первая оплата или нет? если не первая, то минимальное число дней MinDaysProlong
+            Debug(SPrintF('[comp/www/API/DSOrderPay]: ранее оплачено за заказ %s',$DSOrder['PayedSumm']));
+            if($DSOrder['PayedSumm'] > 0){
+              $MinDaysPay = $DSScheme['MinDaysProlong'];
+            }else{
+              $MinDaysPay = $DSScheme['MinDaysPay'];
+            }
             #-------------------------------------------------------------------
-            if($DaysPay < $DSScheme['MinDaysPay'] || $DaysPay > $DSScheme['MaxDaysPay'])
+            if($DaysPay < $MinDaysPay || $DaysPay > $DSScheme['MaxDaysPay'])
               return new gException('WRONG_DAYS_PAY','Неверное кол-во дней оплаты');
             #-------------------------TRANSACTION-------------------------------
             if(Is_Error(DB_Transaction($TransactionID = UniqID('DSOrderPay'))))
