@@ -17,20 +17,23 @@ $GC = $Config['Tasks']['Types']['GC'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # зачищаем таблицу задач
-$Clean = DB_Query(SPrintF("DELETE FROM `Tasks` WHERE `ExecuteDate` < UNIX_TIMESTAMP() - %s AND `IsExecuted` = 'yes' AND `UserID` != 1", $GC['TableTasksStoryPeriod'] * 24 * 3600 ));
-if(Is_Error($Clean))
+$Where = Array(SPrintF('`ExecuteDate` < UNIX_TIMESTAMP() - %u',$GC['TableTasksStoryPeriod'] * 24 * 3600),'`UserID` != 1');
+$IsDelete = DB_Delete('Tasks',Array('Where'=>$Where));
+if(Is_Error($IsDelete))
 	return ERROR | @Trigger_Error(500);
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # зачищаем таблицу ServersUpTime
-$Clean = DB_Query(SPrintF("DELETE FROM `ServersUpTime` WHERE `TestDate` < UNIX_TIMESTAMP() - %s", $GC['TableServersUpTimeStoryPeriod'] * 24 * 3600 ));
-if(Is_Error($Clean))
+$Where = SPrintF('`TestDate` < UNIX_TIMESTAMP() - %u',$GC['TableServersUpTimeStoryPeriod'] * 24 * 3600);
+$IsDelete = DB_Delete('ServersUpTime',Array('Where'=>$Where));
+if(Is_Error($IsDelete))
 	return ERROR | @Trigger_Error(500);
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # зачищаем таблицу RequestLog
-$Clean = DB_Query(SPrintF("DELETE FROM `ServersUpTime` WHERE `CreateDate` < UNIX_TIMESTAMP() - %s", $GC['TableRequestLogStoryPeriod'] * 24 * 3600 ));
-if(Is_Error($Clean))
+$Where = SPrintF('`CreateDate` < UNIX_TIMESTAMP() - %u',$GC['TableRequestLogStoryPeriod'] * 24 * 3600);
+$IsDelete = DB_Delete('RequestLog',Array('Where'=>$Where));
+if(Is_Error($IsDelete))
 	return ERROR | @Trigger_Error(500);
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
@@ -39,6 +42,14 @@ if(Is_Error($Clean))
 $IsUpdate = DB_Update('EdesksMessages',Array('IsNotify'=>'yes'),Array('Where'=>SPrintF('`CreateDate` < %u',(Time() - 7*24*3600))));
 if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
+#--------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
+# added by lissyara 2012-09-28 in 13:54 MSK, for JBS-377
+$Where = '(SELECT `ID` FROM `Users` WHERE `Events`.`UserID`=`Users`.`ID`) IS NULL';
+$IsDelete = DB_Delete('Events',Array('Where'=>$Where));
+if(Is_Error($IsDelete))
+	return ERROR | @Trigger_Error(500);
+#--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 return TRUE;
 #--------------------------------------------------------------------------------
