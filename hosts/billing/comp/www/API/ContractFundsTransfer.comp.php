@@ -135,7 +135,7 @@ if(Is_Error($Summ))
 $Event = Array(
 		'UserID'	=> $FromContract['UserID'],
 		'PriorityID'	=> 'Billing',
-		'Text'		=> SPrintF("Осуществлён перевод с договора '%s' на договор '%s', сумма перевода %s",$FromContract['Customer'],$ToContract['Customer'],$Summ)
+		'Text'		=> SPrintF("Осуществлён перевод с договора '%s' (#%u) на договор '%s' (#%u), сумма перевода %01.2f",$FromContract['Customer'],$FromContract['ID'],$ToContract['Customer'],$ToContract['ID'],$Summ)
 		);
 $Event = Comp_Load('Events/EventInsert',$Event);
 if(!$Event)
