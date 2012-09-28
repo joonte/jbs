@@ -40,6 +40,7 @@
      <ListElement>EditorID</ListElement>
      <ListElement>Partition</ListElement>
      <ListElement>Title</ListElement>
+     <ListElement>Text</ListElement>
     </ColumnsIDs>
    </Args>
   </Search>
