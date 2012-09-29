@@ -473,6 +473,7 @@ CREATE TABLE `Services` (
   `IsProtected` enum('no','yes') default 'no',
   `IsActive` enum('no','yes') default 'yes',
   `IsProlong` enum('no','yes') default 'yes',
+  `IsConditionally` ENUM('no','yes') default 'no',
   `SortID` int(11) default '10',
   PRIMARY KEY  (`ID`),
   KEY `ServicesGroupID` (`GroupID`),

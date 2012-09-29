@@ -19,6 +19,7 @@
   <ListElement>Measure</ListElement>
   <ListElement>IsProtected</ListElement>
   <ListElement>IsActive</ListElement>
+  <ListElement>IsConditionally</ListElement>
   <ListElement>SortID</ListElement>
  </ColumnsIDs>
  <Conditions>
@@ -121,6 +122,15 @@
   </Args>
  </IsActive>
  <!-- ********************************************************************** -->
+ <IsConditionally>
+  <Head>Условн.</Head>
+  <Prompt>Может быть оплачена условным счётом, самим пользователем</Prompt>
+  <Comp>Formats/Logic</Comp>
+  <Args>
+   <ListElement>%IsConditionally%</ListElement>
+  </Args>
+ </IsConditionally>
+ <!-- ********************************************************************** -->
  <SortID>
   <Args>
    <TableID>Services</TableID>
@@ -136,6 +146,7 @@
  <ListElement>Measure</ListElement>
  <ListElement>IsProtected</ListElement>
  <ListElement>IsActive</ListElement>
+ <ListElement>IsConditionally</ListElement>
  <ListElement>SortID</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->

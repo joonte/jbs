@@ -68,5 +68,7 @@
 <!-- *********************************************************************** -->
 <!-- дополнительная задача -->
 <AdditionalTaskExecuted>Logic</AdditionalTaskExecuted>
-
+<!-- added by lissyara 2012-09-29 in 20:06 MSK
+     see http://jira.joonte.com/browse/JBS-109 -->
+<IsConditionally>Logic</IsConditionally>
 </XML>

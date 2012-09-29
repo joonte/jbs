@@ -25,6 +25,7 @@ $CostOn          =    (float) @$Args['CostOn'];
 $Cost            =    (float) @$Args['Cost'];
 $IsActive        =  (boolean) @$Args['IsActive'];
 $IsProlong       =  (boolean) @$Args['IsProlong'];
+$IsConditionally =  (boolean) @$Args['IsConditionally'];
 $SortID          =  (integer) @$Args['SortID'];
 #-------------------------------------------------------------------------------
 $IService = Array(
@@ -40,6 +41,7 @@ $IService = Array(
   'Cost'            => $Cost,
   'IsActive'        => $IsActive,
   'IsProlong'       => $IsProlong,
+  'IsConditionally' => $IsConditionally,
   'SortID'          => $SortID
 );
 #-------------------------------------------------------------------------------
