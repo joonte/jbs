@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$User = DB_Select('Users',Array('ID','GroupID','Name','Sign','Email','EmailConfirmed','ICQ','JabberID','Mobile','UniqID','LENGTH(`Foto`) as `Foto`'),Array('UNIQ','ID'=>$UserID));
+$User = DB_Select('Users',Array('ID','GroupID','Name','Sign','Email','EmailConfirmed','ICQ','JabberID','Mobile','UniqID','LENGTH(`Foto`) as `Foto`','LayPayMaxSumm','LayPayThreshold'),Array('UNIQ','ID'=>$UserID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($User)){
   case 'error':
