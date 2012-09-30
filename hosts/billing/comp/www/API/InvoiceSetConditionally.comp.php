@@ -17,8 +17,8 @@ if(Count($InvoicesIDs) < 1)
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if(!$GLOBALS['__USER']['IsAdmin'])
-  return new gException('TMP_ONLY_FOR_ADMINs','Данная возможность находится в разработке');
+#if(!$GLOBALS['__USER']['IsAdmin'])
+#  return new gException('TMP_ONLY_FOR_ADMINs','Данная возможность находится в разработке');
 #-------------------------------------------------------------------------------
 if(SizeOf($InvoicesIDs) > 1)
   return new gException('CONDITIONALLY_PAYED_MORE_ONE_INVOICE','Условно зачислить можно лишь один счёт');
@@ -94,10 +94,78 @@ if($PayedSumm['Summ'] < $GLOBALS['__USER']['LayPayThreshold'])
 # проверяем что сумма счёта не превышает сумму на которую юзер может проводить счета условно
 if($Invoice['Summ'] > $GLOBALS['__USER']['LayPayMaxSumm'])
   return new gException('TOO_BIG_INVOICE_SUMM',SPrintF('Сумма счёта (%01.2f) слишком велика. Максимальная сумма которая может быть зачислена условно, равна (%01.2f)',$Invoice['Summ'],$GLOBALS['__USER']['LayPayMaxSumm']));
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # проверяем что именно оплачивается этим счётом - доступны не все услуги
+$Columns = Array(
+		'ServiceID','OrderID',
+		'(SELECT `Name` FROM `ServicesOwners` WHERE `ServicesOwners`.`ID` = `InvoicesItems`.`ServiceID`) AS `ServiceName`',
+		'(SELECT `Code` FROM `ServicesOwners` WHERE `ServicesOwners`.`ID` = `InvoicesItems`.`ServiceID`) AS `ServiceCode`',
+		'(SELECT `IsConditionally` FROM `ServicesOwners` WHERE `ServicesOwners`.`ID` = `InvoicesItems`.`ServiceID`) AS `IsConditionally`',
+                );
+$InvoicesItems = DB_Select('InvoicesItems',$Columns,Array('Where'=>SPrintF('`InvoiceID` = %u',$Invoice['ID'])));
+#-------------------------------------------------------------------------------
+switch(ValueOf($InvoicesItems)){
+  case 'error':
+    return ERROR | @Trigger_Error(500);
+  case 'exception':
+    return new gException('NO_INVOICES_ITEMS_FOR_INVOICE','Это не счёт на оплату услуг. Его нельзя провести условно');
+  case 'array':
+    break;
+  default:
+    return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+foreach($InvoicesItems as $InvoicesItem){
+  Debug(SPrintF('[comp/www/API/InvoiceSetConditionally]: processing order (#%u) service (%s/%s)',$InvoicesItem['OrderID'],$InvoicesItem['ServiceCode'],$InvoicesItem['ServiceName']));
+  if(!$InvoicesItem['IsConditionally'])
+    return new gException('BAD_ITEM_IN_INVOICE',SPrintF('В этом счёте на оплату присутствует сервис (%s) который нельзя оплачивать условно',$InvoicesItem['ServiceName']));
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# вроде как все условия соблюдены... проводим счёт условно
+$Number = Comp_Load('Formats/Invoice/Number',$Invoice['ID']);
+if(Is_Error($Number))
+  return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Summ = Comp_Load('Formats/Currency',$Invoice['Summ']);
+if(Is_Error($Summ))
+  return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+                 'www/API/StatusSet',
+		 Array(
+		      'ModeID'   => 'Invoices',
+		      'StatusID' => 'Conditionally',
+		      'RowsIDs'  => $Invoice['ID'],
+		      'Comment'  => 'Клиент взял в кредит'
+		      )
+		);
+#-----------------------------------------------------------------------
+switch(ValueOf($Comp)){
+case 'error':
+  return ERROR | @Trigger_Error(500);
+case 'exception':
+  return ERROR | @Trigger_Error(400);
+case 'array':
+  break;
+default:
+  return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------
+$Event = Array(
+              'UserID'        => $Invoice['UserID'],
+              'PriorityID'    => 'Billing',
+              'Text'          => SPrintF('Пользователь \'%s\' (%s) провёл условно счёт (#%u) на сумму (%s)',$GLOBALS['__USER']['Name'],$GLOBALS['__USER']['Email'],$Number,$Summ)
+              );
+$Event = Comp_Load('Events/EventInsert',$Event);
+if(!$Event)
+  return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+# выходим
+return Array('Status'=>'Ok');
 
-# проводим счёт условно
-
-return new gException('END_OF_FILE','Тестирование прошло успешно');
+#return new gException('END_OF_FILE','Тестирование прошло успешно');
 
 ?>
