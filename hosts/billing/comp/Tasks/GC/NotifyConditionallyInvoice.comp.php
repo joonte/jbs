@@ -9,14 +9,22 @@ $__args_list = Array('Params');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
+# added by lissyara 2012-09-30 in 20:20 MSK, for JBS-109
+# перебираем всех юзеров с условными инвойсами, смотрим сколкьо от статуса
+# если от статуса больше 31 дня:
+# 1. откатываем инвойс в статус "Удалён"
+# 2. вычитаем сумму счёта из договора, на который счёт.
+# 3. если балланс получился отрицательный - лочим все услуги этого договора
+
+
 #-------------------------------------------------------------------------------
 # выхлоп для сотрудников бухгалтерии
-$ForBuhOut = "";
+$Out = "";
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Where = "`StatusID` = 'Conditionally'";
 #-------------------------------------------------------------------------------
-$Invoices = DB_Select('InvoicesOwners',Array('ID','UserID','CreateDate','Summ','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `InvoicesOwners`.`UserID`) AS  `UserEmail`'),Array('SortOn'=>'UserID', 'IsDesc'=>TRUE, 'Where'=>$Where));
+$Invoices = DB_Select('InvoicesOwners',Array('ID','UserID','CreateDate','Summ','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `InvoicesOwners`.`UserID`) AS `UserEmail`'),Array('SortOn'=>'UserID', 'IsDesc'=>TRUE, 'Where'=>$Where));
 switch(ValueOf($Invoices)){
   case 'error':
     return ERROR | @Trigger_Error(500);
@@ -26,7 +34,7 @@ switch(ValueOf($Invoices)){
     #---------------------------------------------------------------------------
     foreach($Invoices as $Invoice){
       #-------------------------------------------------------------------------
-      $ForBuhOut = $ForBuhOut . "Неоплаченный счёт на сумму " . $Invoice['Summ'] . " от пользователя " . $Invoice['UserEmail'] . "\n";
+      $Out = $Out . "Неоплаченный счёт на сумму " . $Invoice['Summ'] . " от пользователя " . $Invoice['UserEmail'] . "\n";
       #-------------------------------------------------------------------------
       Debug(SPrintF("[Tasks/GC/NotifyConditionallyInvoice]: Уведомление о условно оплаченном счете #%d.",$Invoice['ID']));
       #----------------------------------TRANSACTION----------------------------
@@ -74,7 +82,7 @@ switch(ValueOf($Invoices)){
 }
 
 
-#Debug(SPrintF("[Tasks/GC/NotifyConditionallyInvoice]: отчёт для бухгалтерии %s",$ForBuhOut));
+#Debug(SPrintF("[Tasks/GC/NotifyConditionallyInvoice]: отчёт для бухгалтерии %s",$Out));
 #-------------------------------------------------------------------
 #-------------------------------------------------------------------
 # ищщем сотрудников бухгалтерии
@@ -140,7 +148,7 @@ default:
 foreach($Employers as $Employer){
 	if($Employer['ID'] > 2000 || $Employer['ID'] == 100){
 		#---------------------------------------------------------
-        $msg = new DispatchMsg(Array('Theme'=>'Список условно оплаченных счетов','Message'=>$ForBuhOut), (integer)$Employer['ID']);
+        $msg = new DispatchMsg(Array('Theme'=>'Список условно оплаченных счетов','Message'=>$Out), (integer)$Employer['ID']);
 		$IsSend = NotificationManager::sendMsg($msg);
 		#---------------------------------------------------------
 		switch(ValueOf($IsSend)){
