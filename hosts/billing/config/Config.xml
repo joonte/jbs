@@ -5,9 +5,9 @@
 <!-- *********************************************************************** -->
 <Users>
  <Register>
-  <LayPayMaxDays>15</LayPayMaxDays>
-  <LayPayMaxSumm>500</LayPayMaxSumm>
-  <LayPayThreshold>500</LayPayThreshold>
+  <LayPayMaxDays>31</LayPayMaxDays>
+  <LayPayMaxSumm>50</LayPayMaxSumm>
+  <LayPayThreshold>200</LayPayThreshold>
   <!-- ********************************************************************* -->
   <Sign>C уважением,</Sign>
  </Register>
