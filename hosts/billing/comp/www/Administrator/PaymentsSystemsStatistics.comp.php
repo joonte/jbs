@@ -116,7 +116,7 @@ for ($day = Date('d',time()) - 7; $day <= Date('d',time()); $day++){
 	# заполняем массивы
 	if(IntVal($Total['Summ']) == 0){$Total['Summ'] = 0;}
 	$Days[] = Date('Y',$TimeBegin) . "-" . Date('m',$TimeBegin) . "-" . Date('d',$TimeBegin);
-	$Summs[] = $Total['Summ'];
+	$Summs[] = Number_Format($Total['Summ'],2,'.',' ');
 }
 $Table[] = $Days;
 $Table[] = $Summs;
@@ -168,7 +168,7 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 		return ERROR | @Trigger_Error(500);
 	$Tr->AddChild(new Tag('TD',Array('class'=>'Head','align'=>'center'),$Comp));
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Formats/String','Всего оплачено, за месяц',6);
+	$Comp = Comp_Load('Formats/String','Всего оплачено',6);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	$Tr->AddChild(new Tag('TD',Array('class'=>'Head','align'=>'center'),$Comp));
@@ -216,16 +216,16 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 			return ERROR | @Trigger_Error(101);
 		}
 		#$TableLine[] = FloatVal($Total['Summ']);
-		$Tr->AddChild(new Tag('TD',Array('align'=>'center','class'=>'Standard','style'=>'background-color:#FDF6D3;'),SPrintF('%01.2f',FloatVal($Total['Summ']))));
+		$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard','style'=>'background-color:#FDF6D3;'),Number_Format($Total['Summ'],2,'.',' ')));
 		#-------------------------------------------------------------------------------
 		# ячейка со средним за месяц
 		# если это текущий год и текущий месяц - то расчёт будет иным
 		if(Date('Y', Time()) == $year && Date('m', Time()) == $month){
-			$AvgVal = SPrintF('%01.2f',Round((FloatVal($Total['Summ']) / Date('d', Time())),2));
+			$AvgVal = Round((FloatVal($Total['Summ']) / Date('d', Time())),2);
 		}else{
-			$AvgVal = SPrintF('%01.2f',Round((FloatVal($Total['Summ']) / $lastDayOfMonth),2));
+			$AvgVal = Round((FloatVal($Total['Summ']) / $lastDayOfMonth),2);
 		}
-		$Tr->AddChild(new Tag('TD',Array('align'=>'center','class'=>'Standard','style'=>'background-color:#B9CCDF;'),$AvgVal));
+		$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard','style'=>'background-color:#B9CCDF;'),Number_Format($AvgVal,2,'.',' ')));
 		#-------------------------------------------------------------------------------
 		# перебираем все платёжные системы, считаем для них суммы
 		foreach($PaymentSystems as $PaymentSystem){
@@ -244,7 +244,7 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 				return ERROR | @Trigger_Error(101);
 			}
 			#-------------------------------------------------------------------------------
-			$Tr->AddChild(new Tag('TD',Array('align'=>'center','class'=>'Standard'),SPrintF('%01.2f',FloatVal($Summ['Summ']))));
+			$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard'),Number_Format($Summ['Summ'],2,'.',' ')));
 		}
 		#-------------------------------------------------------------------------------
 		# если общая сумма больше нуля - добавляем строку - иначе - смысла нет
@@ -253,6 +253,64 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 			$Table[] = $Tr;
 		}
 	}
+	#-------------------------------------------------------------------------------
+	# полная статистика за год
+	$Tr = new Tag('TR');
+	#-------------------------------------------------------------------------------
+	# ячейка с датой
+	$Tr->AddChild(new Tag('TD',Array('align'=>'center','class'=>'Standard'),'Итого:'));
+	#-------------------------------------------------------------------------------
+	$TimeBegin = MkTime(0, 0, 0, 1, 1, $year);
+	$TimeEnd   = MkTime(23, 59, 59, 12, 31, $year);
+	#-------------------------------------------------------------------------------
+	# ячейка с общей суммой за месяц
+	$Columns = Array('SUM(`Summ`) AS `Summ`');
+	$Where = "`StatusID` = 'Payed' AND `StatusDate` BETWEEN $TimeBegin AND $TimeEnd";
+        $Total = DB_Select('Invoices',$Columns,Array('UNIQ', 'Where'=>$Where));
+	switch(ValueOf($Total)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		Debug("[comp/www/Administrator/PaymentsSystemsStatistics]: общая сумма за $year = " . $Total['Summ']);
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard','style'=>'background-color:#FDF6D3;'),new Tag('NOBR',Number_Format($Total['Summ'],2,'.',' '))));
+	#-------------------------------------------------------------------------------
+	# ячейка со средним за год
+	# если это текущий год - то расчёт будет иным
+	if(Date('Y', Time()) == $year){
+		$AvgVal = Round((FloatVal($Total['Summ']) / Date('z', Time())),2);
+	}else{
+		$AvgVal = Round((FloatVal($Total['Summ']) / Date('z', $TimeEnd)),2);
+	}
+	$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard','style'=>'background-color:#B9CCDF;'),new Tag('NOBR',Number_Format($AvgVal,2,'.',' '))));
+	#-------------------------------------------------------------------------------
+	# перебираем все платёжные системы, считаем для них суммы
+	foreach($PaymentSystems as $PaymentSystem){
+		$Columns = Array('SUM(`Summ`) AS `Summ`');
+		$Where = "`StatusID` = 'Payed' AND `PaymentSystemID` = '" . $PaymentSystem['PaymentSystemID'] . "' AND `StatusDate` BETWEEN $TimeBegin AND $TimeEnd";
+		$Summ = DB_Select('Invoices',$Columns,Array('UNIQ', 'Where'=>$Where));
+		switch(ValueOf($Total)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return ERROR | @Trigger_Error(400);
+		case 'array':
+			Debug("[comp/www/Administrator/PaymentsSystemsStatistics]: сумма для " . $PaymentSystem['PaymentSystemID'] . " за $year = " . $Summ['Summ']);
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+		$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard'),new Tag('NOBR',Number_Format($Summ['Summ'],2,'.',' '))));
+	}
+	#-------------------------------------------------------------------------------
+	# добавляем строку в таблицу
+	$Table[] = $Tr;
 	#Debug(print_r($Table, true));
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Tables/Extended',$Table);
