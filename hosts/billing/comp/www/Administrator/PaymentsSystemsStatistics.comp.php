@@ -216,14 +216,14 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 			return ERROR | @Trigger_Error(101);
 		}
 		#$TableLine[] = FloatVal($Total['Summ']);
-		$Tr->AddChild(new Tag('TD',Array('align'=>'center','class'=>'Standard','style'=>'background-color:#FDF6D3;'),FloatVal($Total['Summ'])));
+		$Tr->AddChild(new Tag('TD',Array('align'=>'center','class'=>'Standard','style'=>'background-color:#FDF6D3;'),SPrintF('%01.2f',FloatVal($Total['Summ']))));
 		#-------------------------------------------------------------------------------
 		# ячейка со средним за месяц
 		# если это текущий год и текущий месяц - то расчёт будет иным
 		if(Date('Y', Time()) == $year && Date('m', Time()) == $month){
-			$AvgVal = Round((FloatVal($Total['Summ']) / Date('d', Time())),2);
+			$AvgVal = SPrintF('%01.2f',Round((FloatVal($Total['Summ']) / Date('d', Time())),2));
 		}else{
-			$AvgVal = Round((FloatVal($Total['Summ']) / $lastDayOfMonth),2);
+			$AvgVal = SPrintF('%01.2f',Round((FloatVal($Total['Summ']) / $lastDayOfMonth),2));
 		}
 		$Tr->AddChild(new Tag('TD',Array('align'=>'center','class'=>'Standard','style'=>'background-color:#B9CCDF;'),$AvgVal));
 		#-------------------------------------------------------------------------------
@@ -244,7 +244,7 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 				return ERROR | @Trigger_Error(101);
 			}
 			#-------------------------------------------------------------------------------
-			$Tr->AddChild(new Tag('TD',Array('align'=>'center','class'=>'Standard'),FloatVal($Summ['Summ'])));
+			$Tr->AddChild(new Tag('TD',Array('align'=>'center','class'=>'Standard'),SPrintF('%01.2f',FloatVal($Summ['Summ']))));
 		}
 		#-------------------------------------------------------------------------------
 		# если общая сумма больше нуля - добавляем строку - иначе - смысла нет
