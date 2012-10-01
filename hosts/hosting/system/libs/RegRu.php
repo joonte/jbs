@@ -21,7 +21,7 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
 
   );
   #-----------------------------------------------------------------------------
-  $Domain = StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone));
+  $Domain = Mb_StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone),'UTF-8');
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
@@ -265,7 +265,7 @@ function RegRu_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contract
     'Charset'  => 'utf8'
   );
   #-----------------------------------------------------------------------------
-  $Domain = StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone));
+  $Domain = Mb_StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone),'UTF-8');
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
@@ -323,7 +323,7 @@ function RegRu_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID,$D
     'Charset'  => 'utf8'
   );
   #-----------------------------------------------------------------------------
-  $Domain = StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone));
+  $Domain = Mb_StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone),'UTF-8');
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
@@ -608,7 +608,7 @@ function RegRu_Domain_Transfer($Settings,$DomainName,$DomainZone){
 
   );
   #-----------------------------------------------------------------------------
-  $Domain = StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone));
+  $Domain = Mb_StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone),'UTF-8');
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------

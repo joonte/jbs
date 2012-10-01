@@ -28,11 +28,11 @@ $Ns4IP          =  (string) @$Args['Ns4IP'];
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/WhoIs.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DomainName = StrToLower($DomainName);
+$DomainName = Mb_StrToLower($DomainName,'UTF-8');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($Ns1Name){
-	if(StrToLower($Ns1Name) == StrToLower($Ns2Name)){
+	if(Mb_StrToLower($Ns1Name,'UTF-8') == Mb_StrToLower($Ns2Name,'UTF-8')){
 		return new gException('DNS_SERVERS_CANNOT_BE_EQUAL','Имена DNS серверов должны быть разными');
 	}
 }
@@ -45,7 +45,7 @@ if($Ns1IP){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(StrToLower($Ns1Name) == $DomainName || StrToLower($Ns2Name) == $DomainName || StrToLower($Ns3Name) == $DomainName || StrToLower($Ns4Name) == $DomainName)
+if(Mb_StrToLower($Ns1Name,'UTF-8') == $DomainName || Mb_StrToLower($Ns2Name,'UTF-8') == $DomainName || Mb_StrToLower($Ns3Name,'UTF-8') == $DomainName || Mb_StrToLower($Ns4Name,'UTF-8') == $DomainName)
 	return new gException('NS_HOSTNAME_CANT_BE_EQUAL_TO_DOMAIN','Имя DNS сервера не может совпадать с именем домена');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ switch(ValueOf($DomainScheme)){
           }
         }else{
           #---------------------------------------------------------------------
-          $Ns1Name = Trim(StrToLower($Ns1Name),'.');
+          $Ns1Name = Trim(Mb_StrToLower($Ns1Name,'UTF-8'),'.');
           #NS1------------------------------------------------------------------
           if(!Preg_Match($Regulars['Domain'],$Ns1Name))
             return new gException('WRONG_NAME_NS1','Неверное имя первого сервера имен');
@@ -127,7 +127,7 @@ switch(ValueOf($DomainScheme)){
             }
           }
           #---------------------------------------------------------------------
-          $Ns2Name = Trim(StrToLower($Ns2Name),'.');
+          $Ns2Name = Trim(Mb_StrToLower($Ns2Name,'UTF-8'),'.');
           #NS2------------------------------------------------------------------
           if(!Preg_Match($Regulars['Domain'],$Ns1Name))
             return new gException('WRONG_NAME_NS2','Неверное имя второго сервера имен');
@@ -142,7 +142,7 @@ switch(ValueOf($DomainScheme)){
               return new gException('IP_NS2_CAN_NOT_FILL','IP адрес второго сервера имен не может быть указан');
           }
           #---------------------------------------------------------------------
-          $Ns3Name = Trim(StrToLower($Ns3Name),'.');
+          $Ns3Name = Trim(Mb_StrToLower($Ns3Name,'UTF-8'),'.');
           #NS3------------------------------------------------------------------
           if($Ns3Name){
             #-------------------------------------------------------------------
@@ -164,7 +164,7 @@ switch(ValueOf($DomainScheme)){
               return new gException('NAME_NS3_NOT_FILL','Укажите имя дополнительного сервера имен');
           }
           #---------------------------------------------------------------------
-          $Ns4Name = Trim(StrToLower($Ns4Name),'.');
+          $Ns4Name = Trim(Mb_StrToLower($Ns4Name,'UTF-8'),'.');
           #NS4------------------------------------------------------------------
           if($Ns4Name){
             #-------------------------------------------------------------------

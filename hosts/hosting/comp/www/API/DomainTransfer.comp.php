@@ -22,7 +22,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','libs/WhoIs.php')))
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
-$DomainName = StrToLower($DomainName);
+$DomainName = Mb_StrToLower($DomainName,'UTF-8');
 #-------------------------------------------------------------------------------
 if(!Preg_Match($Regulars['DomainName'],$DomainName))
   return new gException('WRONG_DOMAIN_NAME','Неверное имя домена');
@@ -88,7 +88,7 @@ switch(ValueOf($Contract)){
                 $IDomainOrder = Array(
                   #-------------------------------------------------------------
                   'OrderID'    => $OrderID,
-                  'DomainName' => StrToLower($DomainName),
+                  'DomainName' => Mb_StrToLower($DomainName,'UTF-8'),
                   'SchemeID'   => $DomainScheme['ID'],
                   'PersonID'   => $PersonID,
                   'WhoIs'      => $WhoIs['Info'],

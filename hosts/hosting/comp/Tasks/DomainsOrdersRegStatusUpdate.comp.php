@@ -40,7 +40,7 @@ switch(ValueOf($DomainOrders)){
 			return new gException('DOMAIN_ORDER_NOT_FOUND','Заказ домена не найден');
 		  case 'array':
 		    #-------------------------------------------------------------------
-			$GLOBALS['TaskReturnInfo'][] = SPrintF('%s.%s',mb_StrToLower($DomainOrder['DomainName'],'UTF-8'),$DomainOrder['SchemeName']);
+			$GLOBALS['TaskReturnInfo'][] = SPrintF('%s.%s',Mb_StrToLower($DomainOrder['DomainName'],'UTF-8'),$DomainOrder['SchemeName']);
 			#-------------------------------------------------------------------
 			$RegistratorID = DB_Select('DomainsSchemes','RegistratorID as ID',Array('UNIQ','ID'=>$DomainOrder['SchemeID']));
 			$RegistratorName = DB_Select('Registrators','Name',Array('UNIQ','ID'=>$RegistratorID['ID']));
@@ -53,9 +53,9 @@ switch(ValueOf($DomainOrders)){
 				case 'exception':
 					return new gException('TRANSFER_TO_OPERATOR','Задание не может быть выполнено автоматически и передано оператору');
 				case 'true':
-					Debug("[comp/Tasks/DomainsOrdersRegStatusUpdate]: DomainName is " . SPrintF('%s.%s',mb_StrToLower($DomainOrder['DomainName'],'UTF-8'),$DomainOrder['SchemeName']));
+					Debug("[comp/Tasks/DomainsOrdersRegStatusUpdate]: DomainName is " . SPrintF('%s.%s',Mb_StrToLower($DomainOrder['DomainName'],'UTF-8'),$DomainOrder['SchemeName']));
 					#-----------------------------------------------------------
-					$Available = $Registrator->IsAvailableDomain(SPrintF('%s.%s',mb_StrToLower($DomainOrder['DomainName'],'UTF-8'),$DomainOrder['SchemeName']));
+					$Available = $Registrator->IsAvailableDomain(SPrintF('%s.%s',Mb_StrToLower($DomainOrder['DomainName'],'UTF-8'),$DomainOrder['SchemeName']));
 					#-----------------------------------------------------------
 					break;
 				default:

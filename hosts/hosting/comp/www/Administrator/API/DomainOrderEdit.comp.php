@@ -78,7 +78,7 @@ if($PersonID){
     return new gException('WRONG_PERSON_ID','Договор регистратора указан не верно');
 }
 #-------------------------------------------------------------------------------
-$Ns1Name = Trim(StrToLower($Ns1Name),'.');
+$Ns1Name = Trim(Mb_StrToLower($Ns1Name,'UTF-8'),'.');
 #-------------------------------------------------------------------------------
 if($Ns1Name && !Preg_Match($Regulars['Domain'],$Ns1Name))
   return new gException('WRONG_NAME_NS1','Неверное имя первого сервера имен');
@@ -86,7 +86,7 @@ if($Ns1Name && !Preg_Match($Regulars['Domain'],$Ns1Name))
 if($Ns1IP && !Preg_Match($Regulars['IP'],$Ns1IP))
   return new gException('WRONG_IP_NS1','Неверный IP адрес первого сервера имен');
 #-------------------------------------------------------------------------------
-$Ns2Name = Trim(StrToLower($Ns2Name),'.');
+$Ns2Name = Trim(Mb_StrToLower($Ns2Name,'UTF-8'),'.');
 #-------------------------------------------------------------------------------
 if($Ns2Name && !Preg_Match($Regulars['Domain'],$Ns2Name))
   return new gException('WRONG_NAME_NS2','Неверное имя второго сервера имен');
@@ -94,7 +94,7 @@ if($Ns2Name && !Preg_Match($Regulars['Domain'],$Ns2Name))
 if($Ns2IP && !Preg_Match($Regulars['IP'],$Ns2IP))
   return new gException('WRONG_IP_NS2','Неверный IP адрес второго сервера имен');
 #-------------------------------------------------------------------------------
-$Ns3Name = Trim(StrToLower($Ns3Name),'.');
+$Ns3Name = Trim(Mb_StrToLower($Ns3Name,'UTF-8'),'.');
 #-------------------------------------------------------------------------------
 if($Ns3Name && !Preg_Match($Regulars['Domain'],$Ns3Name))
   return new gException('WRONG_NAME_NS3','Неверное имя дополнительного сервера имен');
@@ -102,7 +102,7 @@ if($Ns3Name && !Preg_Match($Regulars['Domain'],$Ns3Name))
 if($Ns3IP && !Preg_Match($Regulars['IP'],$Ns3IP))
   return new gException('WRONG_IP_NS3','Неверный IP адрес дополнительного сервера имен');
 #-------------------------------------------------------------------------------
-$Ns4Name = Trim(StrToLower($Ns4Name),'.');
+$Ns4Name = Trim(Mb_StrToLower($Ns4Name,'UTF-8'),'.');
 #-------------------------------------------------------------------------------
 if($Ns4Name && !Preg_Match($Regulars['Domain'],$Ns4Name))
   return new gException('WRONG_NAME_NS3','Неверное имя расширенного сервера имен');

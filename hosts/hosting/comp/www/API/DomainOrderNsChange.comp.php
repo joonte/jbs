@@ -25,7 +25,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($Ns1Name){
-	if(StrToLower($Ns1Name) == StrToLower($Ns2Name)){
+	if(Mb_StrToLower($Ns1Name,'UTF-8') == Mb_StrToLower($Ns2Name,'UTF-8')){
 		return new gException('DNS_SERVERS_CANNOT_BE_EQUAL','Имена DNS серверов должны быть разными');
 	}
 }
@@ -78,7 +78,7 @@ switch(ValueOf($DomainOrder)){
             #-------------------------------------------------------------------
             $Domain = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainScheme['Name']);
             #-------------------------------------------------------------------
-            $Ns1Name = Trim(StrToLower($Ns1Name),'.');
+            $Ns1Name = Trim(Mb_StrToLower($Ns1Name,'UTF-8'),'.');
             #NS1----------------------------------------------------------------
             if(!Preg_Match($Regulars['DnsDomain'],$Ns1Name))
               return new gException('WRONG_NAME_NS1','Неверное имя первого сервера имен');
@@ -93,7 +93,7 @@ switch(ValueOf($DomainOrder)){
                 return new gException('IP_NS1_CAN_NOT_FILL','IP адрес первого сервера имен не может быть указан');
             }
             #-------------------------------------------------------------------
-            $Ns2Name = Trim(StrToLower($Ns2Name),'.');
+            $Ns2Name = Trim(Mb_StrToLower($Ns2Name,'UTF-8'),'.');
             #NS2----------------------------------------------------------------
             if(!Preg_Match($Regulars['DnsDomain'],$Ns1Name))
               return new gException('WRONG_NAME_NS2','Неверное имя второго сервера имен');
@@ -108,7 +108,7 @@ switch(ValueOf($DomainOrder)){
                 return new gException('IP_NS2_CAN_NOT_FILL','IP адрес второго сервера имен не может быть указан');
             }
             #-------------------------------------------------------------------
-            $Ns3Name = Trim(StrToLower($Ns3Name),'.');
+            $Ns3Name = Trim(Mb_StrToLower($Ns3Name,'UTF-8'),'.');
             #NS3----------------------------------------------------------------
             if($Ns3Name){
               #-----------------------------------------------------------------
@@ -130,7 +130,7 @@ switch(ValueOf($DomainOrder)){
                 return new gException('NAME_NS3_NOT_FILL','Укажите имя дополнительного сервера имен');
             }
             #-------------------------------------------------------------------
-            $Ns4Name = Trim(StrToLower($Ns4Name),'.');
+            $Ns4Name = Trim(Mb_StrToLower($Ns4Name,'UTF-8'),'.');
             #NS4----------------------------------------------------------------
             if($Ns4Name){
               #-----------------------------------------------------------------
@@ -153,7 +153,7 @@ switch(ValueOf($DomainOrder)){
             }
 	    #-------------------------------------------------------------------
 	    #-------------------------------------------------------------------
-	    if(StrToLower($Ns1Name) == $Domain || StrToLower($Ns2Name) == $Domain || StrToLower($Ns3Name) == $Domain || StrToLower($Ns4Name) == $Domain)
+	    if(Mb_StrToLower($Ns1Name,'UTF-8') == $Domain || Mb_StrToLower($Ns2Name,'UTF-8') == $Domain || Mb_StrToLower($Ns3Name,'UTF-8') == $Domain || Mb_StrToLower($Ns4Name,'UTF-8') == $Domain)
 	            return new gException('NS_HOSTNAME_CANT_BE_EQUAL_TO_DOMAIN','Имя DNS сервера не может совпадать с именем домена');
 	    #-------------------------------------------------------------------
             #-------------------------------------------------------------------

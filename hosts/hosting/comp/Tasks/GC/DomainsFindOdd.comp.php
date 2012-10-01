@@ -89,7 +89,7 @@ switch(ValueOf($Registrators)){
 							# строим массив доменов из биллинга
 							$BillDomains = Array();
 							foreach ($Domains as $Domain)
-								$BillDomains[] = StrToLower($Domain['Domain']);
+								$BillDomains[] = Mb_StrToLower($Domain['Domain'],'UTF-8');
 							#-----------------------------------------------------------
 							Debug("[comp/Tasks/GC/DomainsFindOdd]: доменов у регистратора " . SizeOf($RegDomains['Domains']) . "; в биллинге " . SizeOf($BillDomains));
 							# сортируем и сравниваем массивы
