@@ -21,7 +21,7 @@ switch(ValueOf($Invoices)){
 case 'error':
   return ERROR | @Trigger_Error(500);
 case 'exception':
-  return TRUE;
+  break;
 case 'array':
   break;
 default:
@@ -195,26 +195,27 @@ switch(ValueOf($Users)){
 case 'error':
   return ERROR | @Trigger_Error(500);
 case 'exception':
-  return TRUE;
+  break;
 case 'array':
+  #-------------------------------------------------------------------------------
+  foreach($Users as $User){
+    $Out = $Out . SPrintF("Отрицательный балланс (%s) у клиента %s\n",$User['Balance'],$User['UserEmail']);
+    #-------------------------------------------------------------------------------
+    $Event = Array(
+                  'UserID'	=> $User['UserID'],
+                  'PriorityID'	=> 'Billing',
+                  'Text'	=> SPrintF('У пользователя отрицательный баланс (%s)',$User['Balance']),
+	          'IsReaded'    => FALSE
+                  );
+    $Event = Comp_Load('Events/EventInsert',$Event);
+    if(!$Event)
+      return ERROR | @Trigger_Error(500);
+  }
   break;
 default:
   return ERROR | @Trigger_Error(101);
-}
-#-------------------------------------------------------------------------------
-foreach($Users as $User){
-  $Out = $Out . SPrintF("Отрицательный балланс (%s) у клиента %s\n",$User['Balance'],$User['UserEmail']);
-  #-------------------------------------------------------------------------------
-  $Event = Array(
-                'UserID'	=> $User['UserID'],
-                'PriorityID'	=> 'Billing',
-                'Text'		=> SPrintF('У пользователя отрицательный баланс (%s)',$User['Balance']),
-		'IsReaded'      => FALSE
-                );
-  $Event = Comp_Load('Events/EventInsert',$Event);
-  if(!$Event)
-    return ERROR | @Trigger_Error(500);
-}
+ }
+
 #-------------------------------------------------------------------
 #-------------------------------------------------------------------
 # 5. Обновляем лимиты пользователя
@@ -288,10 +289,13 @@ default:
 }
 #---------------------------------------------------------
 #---------------------------------------------------------
+if(StrLen($Out) == 0)
+	return TRUE;
+#---------------------------------------------------------
 foreach($Employers as $Employer){
 	if($Employer['ID'] > 2000 || $Employer['ID'] == 100){
 		#---------------------------------------------------------
-        $msg = new DispatchMsg(Array('Theme'=>'Список условно оплаченных счетов','Message'=>$Out), (integer)$Employer['ID']);
+		$msg = new DispatchMsg(Array('Theme'=>'Список условно оплаченных счетов','Message'=>$Out), (integer)$Employer['ID']);
 		$IsSend = NotificationManager::sendMsg($msg);
 		#---------------------------------------------------------
 		switch(ValueOf($IsSend)){
