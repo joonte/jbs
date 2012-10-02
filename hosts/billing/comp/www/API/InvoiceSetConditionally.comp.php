@@ -17,8 +17,8 @@ if(Count($InvoicesIDs) < 1)
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if(!$GLOBALS['__USER']['IsAdmin'])
-  return new gException('TMP_ONLY_FOR_ADMINs','Данная возможность находится в разработке');
+#if(!$GLOBALS['__USER']['IsAdmin'])
+#  return new gException('TMP_ONLY_FOR_ADMINs','Данная возможность находится в разработке');
 #-------------------------------------------------------------------------------
 if(SizeOf($InvoicesIDs) > 1)
   return new gException('CONDITIONALLY_PAYED_MORE_ONE_INVOICE','Условно зачислить можно лишь один счёт');
