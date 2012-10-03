@@ -150,13 +150,14 @@ switch(ValueOf($Ticket)){
         #-----------------------------------------------------------------------
         if($StatusID != $Ticket['StatusID']){
           #---------------------------------------------------------------------
-          $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Edesks','StatusID'=>$StatusID,'IsNotNotify'=>TRUE,'IsNoTrigger'=>TRUE,'RowsIDs'=>$Ticket['ID']));
+          $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Edesks','StatusID'=>$StatusID,'IsNotNotify'=>TRUE,'RowsIDs'=>$Ticket['ID']));
           #---------------------------------------------------------------------
           switch(ValueOf($Comp)){
             case 'error':
               return ERROR | @Trigger_Error(500);
             case 'exception':
-              return ERROR | @Trigger_Error(400);
+              #return ERROR | @Trigger_Error(400);
+	      return $Comp;
             case 'array':
               # No more...
             break;

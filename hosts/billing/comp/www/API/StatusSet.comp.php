@@ -17,6 +17,9 @@ if($IsExternal){
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
   $Args = Args();
+  # added by lissyara 2012-10-03 in 19:34 MSK
+  if(!$GLOBALS['__USER']['IsAdmin'])
+    return new gException('EXTERNAL_STATUS_SET_ONLY_FOR_ADMINS','Установка статусов доступна только персоналу');
 }
 #-------------------------------------------------------------------------------
 $ModeID      =   (string) @$Args['ModeID'];
@@ -32,7 +35,9 @@ if(IsSet($Args['IsNotNotify'])){
 	$IsNotNotify	= (boolean)$Args['IsNotNotify'];
 }else{
 	$IsNotNotify	= false;
-} 
+}
+#-------------------------------------------------------------------------------
+Debug(SPrintF('[comp/www/API/StatusSet]: ModeID = %s; StatusID = %s; RowsIDs = %s; Comment = %s; IsNoTrigger = %s; IsNotNotify = %s',$ModeID,$StatusID,$RowsIDs,$Comment,$IsNoTrigger,$IsNotNotify));
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
@@ -92,35 +97,6 @@ switch(ValueOf($Rows)){
       }
       #-------------------------------------------------------------------------------
       #-------------------------------------------------------------------------------
-      if($ModeID == "Edesks" && $StatusID == "Closed"){
-        # check ticket properties
-        $DenyClose = DB_Select(SPrintF('%sOwners',$ModeID),'ID',Array('UNIQ','Where'=>SPrintF("`Flags` = 'DenyClose' AND `ID` = %u",$Row['ID'])));
-	switch(ValueOf($DenyClose)){
-	  case 'error':
-	    return ERROR | @Trigger_Error(500);
-	  case 'array':
-	    return new gException('DENY_CLOSE_TICKET','Данный тикет запрещено закрывать');
-	  default:
-	    # No more...
-	}
-      }
-      #-------------------------------------------------------------------------------
-      #-------------------------------------------------------------------------------
-      # JBS-195: запрет второго условно проведённого
-      if($ModeID == "Invoices" && $StatusID == "Conditionally"){
-        $Where = SPrintF("`StatusID` = 'Conditionally' AND `UserID` = (SELECT `UserID` FROM `InvoicesOwners` WHERE `ID` = %u )",$Row['ID']);
-        $DenySecondConditionally = DB_Select(SPrintF('%sOwners',$ModeID),'ID',Array('UNIQ','Where'=>$Where));
-	switch(ValueOf($DenySecondConditionally)){
-          case 'error':
-	    return ERROR | @Trigger_Error(500);
-	  case 'array':
-	    return new gException('DENY_SECOND_CONDITIONALLY_INVOICE','У пользователя уже есть условно проведённые счета. Нельзя провести более одного счёта условно.');
-          default:
-	    # No more...
-	}
-      }
-      #-------------------------------------------------------------------------------
-      #-------------------------------------------------------------------------
       if(!$IsNoTrigger){
         #-----------------------------------------------------------------------
         $Path = SPrintF('Triggers/Statuses/%s/%s',$ModeID,$StatusID);
