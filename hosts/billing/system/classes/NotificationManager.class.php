@@ -78,7 +78,8 @@ class NotificationManager {
                 return new gException('DISPATCHER_NOT_FOUND', 'Dispatcher not found: '.$MethodID);
             }
 
-            $dispatcher = $MethodID::get();
+            #$dispatcher = $MethodID::get();
+	    $dispatcher = call_user_func($MethodID.'::get', true);
 
             try {
                 $dispatcher->send($msg);
