@@ -148,7 +148,11 @@ INSERT INTO `Permissions` (`Name`,`HostID`,`UserGroupID`,`UserID`,`OwnerGroupID`
 ('ServicesDelete','billing',3000000,100,1,1,2,'yes'),
 
 ('ServicesFieldsDelete','billing',1,1,4000000,1,1,'no'),
-('ServicesFieldsDelete','billing',3000000,100,1,1,2,'yes');
+('ServicesFieldsDelete','billing',3000000,100,1,1,2,'yes'),
+
+/* added by lissyara, 2012-10-03 in 21:57 for JBS-491 */
+('EdeskClose','billing',1,1,1,1,1,'yes'),
+('EdeskClose','billing',3000000,100,1,1,2,'yes');
 
 UNLOCK TABLES;
 

@@ -20,12 +20,12 @@ if($Template['Source']['Count'] < 1)
 #-------------------------------------------------------------------------------
 $DOM = &$Links['DOM'];
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/StatusSet.js}')));
+#$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/StatusSet.js}')));
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',
   Array(
-    'onclick' => "StatusSet();",
+    'onclick' => "AjaxCall('/API/EdesksClose',FormGet(form),'Закрытие запросов',\"GetURL(document.location);\");",
     'type'    => 'button',
     'value'   => 'Закрыть'
   )
@@ -41,31 +41,6 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $NoBody = new Tag('NOBODY',$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'name'  => 'ModeID',
-    'type'  => 'hidden',
-    'value' => 'Edesks'
-  )
-);
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$NoBody->AddChild($Comp);
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'name'  => 'StatusID',
-    'type'  => 'hidden',
-    'value' => 'Closed'
-  )
-);
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$NoBody->AddChild($Comp);
 #-------------------------------------------------------------------------------
 return $NoBody;
 #-------------------------------------------------------------------------------
