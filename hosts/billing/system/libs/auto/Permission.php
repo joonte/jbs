@@ -14,7 +14,7 @@ function Permission_Check($Name,$UserID,$OwnerID = 1){
   if(!$Name)
     return new gException('RULE_NAME_IS_EMPTY','Введите имя правила доступа');
   #-----------------------------------------------------------------------------
-  $Rules = DB_Select('Permissions','*',Array('Where'=>SPrintF("'%s' LIKE `Name`",MySQL_Real_Escape_String($Name)),'SortOn'=>'Metric'));
+  $Rules = DB_Select('Permissions','*',Array('Where'=>SPrintF("'%s' LIKE `Name`",DB_Escape($Name)),'SortOn'=>'Metric'));
   #-----------------------------------------------------------------------------
   switch(ValueOf($Rules)){
     case 'error':

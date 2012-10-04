@@ -24,9 +24,9 @@ $Title->AddText(SPrintF('%s - %s',Str_Replace('→','-',$Title->Text),HOST_ID),T
 $__URI = $GLOBALS['__URI'];
 #-------------------------------------------------------------------------------
 if(IsSet($GLOBALS['_GET']['ServiceID'])){
-	$Where = SPrintF("`Partition` = 'Header:%s'",MySQL_Real_Escape_String($GLOBALS['_GET']['ServiceID']));
+	$Where = SPrintF("`Partition` = 'Header:%s'",DB_Escape($GLOBALS['_GET']['ServiceID']));
 }else{
-	$Where = SPrintF("`Partition` = 'Header:%s'",MySQL_Real_Escape_String($__URI));
+	$Where = SPrintF("`Partition` = 'Header:%s'",DB_Escape($__URI));
 }
 #-------------------------------------------------------------------------------
 $Clauses = DB_Select('Clauses','ID',Array('Where'=>$Where));

@@ -15,7 +15,7 @@ $TypeID =  (string) @$Args['TypeID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/HTMLDoc.php','libs/Upload.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$TypeID = Mysql_Real_Escape_String($TypeID);
+$TypeID = DB_Escape($TypeID);
 #-------------------------------------------------------------------------------
 $FileData = DB_Select($TypeID,'*',Array('UNIQ','ID'=>$FileID));
 #-------------------------------------------------------------------------------

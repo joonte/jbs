@@ -9,7 +9,7 @@ $__args_list = Array('Pattern');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Where = SPrintF("`Partition` LIKE '%s' AND `IsPublish` = 'yes'",MySQL_Real_Escape_String($Pattern));
+$Where = SPrintF("`Partition` LIKE '%s' AND `IsPublish` = 'yes'",DB_Escape($Pattern));
 #-------------------------------------------------------------------------------
 $Clauses = DB_Select('Clauses',Array('ID','PublicDate','ChangedDate','EditorID','Partition','Title','Text'),Array('Where'=>$Where,'SortOn'=>'PublicDate'));
 #-------------------------------------------------------------------------------
