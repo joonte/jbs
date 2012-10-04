@@ -10,7 +10,7 @@ Eval(COMP_INIT);
 $Result = Array();
 #-------------------------------------------------------------------------------
 $Columns = Array(
-			'`ID`','`DaysRemainded`',
+			'`ID`','`DaysRemainded`','`ExpirationDate`',
 			'(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `Code`',
 			'(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `Name`',
 		);
@@ -30,11 +30,51 @@ case 'exception':
 case 'array':
 	#---------------------------------------------------------------------------
 	foreach($Orders as $Order){
-		Debug(SPrintF('[comp/Notes/User/NoticeSuspend]: processing service %s, days %s, order %s',$Order['Code'],$Order['DaysRemainded'],$Order['ID']));
+		#Debug(SPrintF('[comp/Notes/User/NoticeSuspend]: processing service %s, days %s, order %s',$Order['Code'],$Order['DaysRemainded'],$Order['ID']));
 		#-------------------------------------------------------------------------
 		# заказы настриваемых услуг и сильно отличающихся от хостинга - обрабатываем отдельно
 		if(In_Array($Order['Code'],Array('Default','Domains','ISPsw','DS'))){
+		if($Order['Code'] == 'Default'){
+		
+			#-------------------------------------------------------------------------
+			#-------------------------------------------------------------------------
+		}elseif($Order['Code'] == 'Domains'){
+			if($Order['ExpirationDate'] < Time() + 15 * 24 * 3600){
+				#Debug(SPrintF('[comp/Notes/User/NoticeSuspend]: domain order #%s expired %s',$Order['ID'],date('Y-m-d',$Order['ExpirationDate'])));
+				# выбираем данные по этому домену
+				$Columns = Array('ID','CONCAT(`DomainName`,".",(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`)) AS `DomainNameFull`');
+				$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
+				switch(ValueOf($DomainOrder)){
+				case 'error':
+					return ERROR | @Trigger_Error(500);
+				case 'exception':
+					return ERROR | @Trigger_Error(400);
+				case 'array':
+					Debug(SPrintF('[comp/Notes/User/NoticeSuspend]: domain %s expired %s',$DomainOrder['DomainNameFull'],date('Y-m-d',$Order['ExpirationDate'])));
+					$NoBody = new Tag('NOBODY');
+					#-------------------------------------------------------------------------
+					$NoBody->AddChild(new Tag('SPAN','Обращаем Ваше внимание, что истекает срок действия заказа на домен '));
+					$NoBody->AddChild(new Tag('STRONG',SPrintF('"%s".',$DomainOrder['DomainNameFull'])));
+					$NoBody->AddChild(new Tag('SPAN',SPrintF('В случае не поступления оплаты в течение %s дня(ей) он будет заблокирован.',Ceil(($Order['ExpirationDate'] - Time())/(24*3600)))));
+					$NoBody->AddChild(new Tag('SPAN','Для того, чтобы осуществить оплату сейчас, нажмите на кнопку '));
+					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DomainOrderPay',{DomainOrderID:%u});",$DomainOrder['ID'])),'[оплатить]')));
+					#-------------------------------------------------------------------------
+					$Result[] = $NoBody;
+					break;
+				default:
+					return ERROR | @Trigger_Error(101);
+				}
 
+
+			}
+			#-------------------------------------------------------------------------
+		}elseif($Order['Code'] == 'ISPsw'){
+		
+		}elseif($Order['Code'] == 'DS'){
+		
+		}else{
+			return ERROR | @Trigger_Error(101);
+		}
 
 		}else{
 			#-------------------------------------------------------------------------

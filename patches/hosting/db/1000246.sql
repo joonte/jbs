@@ -1,3 +1,3 @@
 
-UPDATE `Orders` SET `ExpirationDate`=(SELECT `ExpirationDate` FROM `DomainsOrders` WHERE `Orders`.`ID`=`DomainsOrders`.`ID`) WHERE `ServiceID`=20000;
+UPDATE `Orders` SET `ExpirationDate`=(SELECT `ExpirationDate` FROM `DomainsOrders` WHERE `Orders`.`ID`=`DomainsOrders`.`OrderID`) WHERE `ServiceID`=20000;
 
