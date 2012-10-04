@@ -331,7 +331,7 @@ DROP TRIGGER IF EXISTS `UpdateDomainsStatus`;
 DELIMITER |
 CREATE DEFINER = CURRENT_USER TRIGGER `UpdateDomainsStatus` AFTER UPDATE ON `DomainsOrders`
   FOR EACH ROW BEGIN
-    UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate` WHERE `ID` = NEW.`OrderID`;
+    UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate`, `ExpirationDate` = NEW.`ExpirationDate`  WHERE `ID` = NEW.`OrderID`;
   END;
 |
 DELIMITER ;
