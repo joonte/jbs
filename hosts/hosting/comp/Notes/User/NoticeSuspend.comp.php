@@ -75,7 +75,7 @@ case 'array':
 						$NoBody->AddChild(new Tag('STRONG',SPrintF('"%s".',$DomainOrder['DomainNameFull'])));
 						$NoBody->AddChild(new Tag('SPAN',SPrintF('В случае не поступления оплаты в течение %s дня(ей) он будет заблокирован.',$Order['DaysRemainded'])));
 						$NoBody->AddChild(new Tag('SPAN','Для того, чтобы осуществить оплату сейчас, нажмите на кнопку '));
-						$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DSOrderPay',{DSOrderID:%u});",$DSOrder['ID'])),'[оплатить]')));
+						$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DomainOrderPay',{DomainOrderID:%u});",$DomainOrder['ID'])),'[оплатить]')));
 						#-------------------------------------------------------------------------
 						$Result[] = $NoBody;
 						break;
