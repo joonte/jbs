@@ -104,7 +104,7 @@ case 'array':
 						return ERROR | @Trigger_Error(400);
 					case 'array':
 						# add text to message
-						$MessageToUser .= "Начисления от пользователя #" . $Row['UserID'] . "	составили " . $Reward . "	рублей\n";
+						$MessageToUser .= "Начисления от пользователя #" . $Row['UserID'] . "	составили " . SPrintf('%01.2f',$Reward) . "	рублей\n";
 						# add summ to total
 						$TotalSummToUser = $TotalSummToUser + $Reward;
 						# No more...
@@ -120,7 +120,7 @@ case 'array':
 			#Debug("[comp/Tasks/CaclulatePartnersReward]: message for #" . $Row['UserID'] . " is " . $MessageToUser);
 			# если общая сумма больше нуля - надо слать письмо
 			if($TotalSummToUser > 0){
-				$MessageToUser .= "Итого, за прошедший месяц: " . $TotalSummToUser . " рублей";
+				$MessageToUser .= "Итого, за прошедший месяц: " . SPrintF('%01.2f',$TotalSummToUser) . " рублей";
 				$IsSend = NotificationManager::sendMsg(new Message('PartnersReneward',(integer)$Owner['DistinctOwnerID'],Array('Theme'=>$Theme,'Message'=>$MessageToUser)));
 				#---------------------------------------------------------
 				switch(ValueOf($IsSend)){
@@ -135,7 +135,7 @@ case 'array':
 					return ERROR | @Trigger_Error(101);
 				}
 				# to admins
-				$MessageToAdmins .= "Начислено пользователю [" . $Owner['Email'] . "]:	" . $TotalSummToUser . "	рублей\n";
+				$MessageToAdmins .= "Начислено пользователю [" . $Owner['Email'] . "]:	" . SPrintF('%01.2f',$TotalSummToUser) . "	рублей\n";
 			}
 			#-------------------------------------------------------------------------------
 			break;
@@ -151,7 +151,7 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 
-$MessageToAdmins .= "\nИтого: " . $total_summ . " рублей";
+$MessageToAdmins .= "\nИтого: " . SPrintF('%01.2f',$total_summ) . " рублей";
 Debug("[comp/Tasks/CaclulatePartnersReward]: Total reward summ = " . $total_summ);
 Debug("[comp/Tasks/CaclulatePartnersReward]: Admin message = " . $MessageToAdmins);
 
