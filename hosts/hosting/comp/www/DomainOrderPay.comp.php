@@ -20,7 +20,7 @@ $IsChange       = (boolean) @$Args['IsChange'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','ContractID','OrderID','UserID','DomainName','ExpirationDate','StatusID','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `DomainsOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DomainsOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT `Balance` FROM `Contracts` WHERE `DomainsOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`');
+$Columns = Array('ID','ContractID','OrderID','UserID','DomainName','ExpirationDate','StatusID','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `DomainsOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DomainsOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT `Balance` FROM `Contracts` WHERE `DomainsOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) as `SchemeName`');
 #-------------------------------------------------------------------------------
 $Where = ($DomainOrderID?SPrintF('`ID` = %u',$DomainOrderID):SPrintF('`OrderID` = %u',$OrderID));
 #-------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ switch(ValueOf($DomainOrder)){
         if(Is_Error($DOM->Load('Window')))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
-        $DOM->AddText('Title','Оплата заказа');
+        $DOM->AddText('Title',SPrintF('Оплата заказа домена %s.%s',$DomainOrder['DomainName'],$DomainOrder['SchemeName']));
         #-----------------------------------------------------------------------
         $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/DomainOrderPay.js}')));
         #-----------------------------------------------------------------------
