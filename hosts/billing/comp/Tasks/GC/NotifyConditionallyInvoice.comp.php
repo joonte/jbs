@@ -82,43 +82,43 @@ case 'array':
       if(Is_Error($PostingID))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------
-      # 3. если балланс получился отрицательный - лочим все услуги этого договора
-      if($After < 0){
-        $Columns = Array('ID','ServiceID',
-                         '(SELECT `Services`.`Code` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) AS `OrderTypeCode`'
-                         );
-        #-----------------------------------------------------------------
-        #$Orders = DB_Select('OrdersOwners',$Columns,Array('Where'=>SPrintF('`StatusID` = "Active" AND `ContractID` = %u',$Invoice['ContractID'])));
-        $Orders = DB_Select('OrdersOwners',$Columns,Array('Where'=>SPrintF('`StatusID` = "Active" AND `UserID` = %u',$Invoice['UserID'])));
-        switch(ValueOf($Orders)){
-        case 'error':
-          return ERROR | @Trigger_Error(500);
-        case 'exception':
-          break;
-        case 'array':
-          foreach($Orders as $Order){
-            # как-то дохрена сложно получается...
-            # проще может событие вешать... и отдавать на откуп администратору.
-            # подумать надо.
-             Debug(SPrintF('[comp/Tasks/GC/NotifyConditionallyInvoice]: Необходимо залочить услугу (%s), номер заказа (#%u)',$Order['OrderTypeCode'],$Order['ID']));
-            #-----------------------------------------------------------------
-            $Event = Array(
-                        'UserID'        => $Invoice['UserID'],
-                        'PriorityID'    => 'Warning',
-                        'Text'          => SPrintF('Условно оплаченный счёт не был оплачен 31 день. Необходимо заблокировать услугу (%s), номер заказа (#%u)',$Order['OrderTypeCode'],$Order['ID']),
-                        'IsReaded'      => FALSE
-                        );
-            $Event = Comp_Load('Events/EventInsert',$Event);
-            if(!$Event)
-              return ERROR | @Trigger_Error(500);
-            }
-	    #-----------------------------------------------------------------
-          break;
-        default:
-          return ERROR | @Trigger_Error(101);
-        }
-      #-----------------------------------------------------------------
-      }
+#      # 3. если балланс получился отрицательный - лочим все услуги этого договора
+#      if($After < 0){
+#        $Columns = Array('ID','ServiceID',
+#                         '(SELECT `Services`.`Code` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) AS `OrderTypeCode`'
+#                         );
+#        #-----------------------------------------------------------------
+#        #$Orders = DB_Select('OrdersOwners',$Columns,Array('Where'=>SPrintF('`StatusID` = "Active" AND `ContractID` = %u',$Invoice['ContractID'])));
+#        $Orders = DB_Select('OrdersOwners',$Columns,Array('Where'=>SPrintF('`StatusID` = "Active" AND `UserID` = %u',$Invoice['UserID'])));
+#        switch(ValueOf($Orders)){
+#        case 'error':
+#          return ERROR | @Trigger_Error(500);
+#        case 'exception':
+#          break;
+#        case 'array':
+#          foreach($Orders as $Order){
+#            # как-то дохрена сложно получается...
+#            # проще может событие вешать... и отдавать на откуп администратору.
+#            # подумать надо.
+#             Debug(SPrintF('[comp/Tasks/GC/NotifyConditionallyInvoice]: Необходимо залочить услугу (%s), номер заказа (#%u)',$Order['OrderTypeCode'],$Order['ID']));
+#            #-----------------------------------------------------------------
+#            $Event = Array(
+#                        'UserID'        => $Invoice['UserID'],
+#                        'PriorityID'    => 'Warning',
+#                        'Text'          => SPrintF('Условно оплаченный счёт не был оплачен 31 день. Необходимо заблокировать услугу (%s), номер заказа (#%u)',$Order['OrderTypeCode'],$Order['ID']),
+#                        'IsReaded'      => FALSE
+#                        );
+#            $Event = Comp_Load('Events/EventInsert',$Event);
+#            if(!$Event)
+#              return ERROR | @Trigger_Error(500);
+#            }
+#	    #-----------------------------------------------------------------
+#          break;
+#        default:
+#          return ERROR | @Trigger_Error(101);
+#        }
+#      #-----------------------------------------------------------------
+#      }
     }
   }
   #-----------------------------------------------------------------
@@ -200,8 +200,33 @@ case 'exception':
 case 'array':
   #-------------------------------------------------------------------------------
   foreach($Users as $User){
+    # добавляем в отчёт для бухгалтерии
     $Out = $Out . SPrintF("Отрицательный балланс (%s) у клиента %s\n",$User['Balance'],$User['UserEmail']);
     #-------------------------------------------------------------------------------
+    # шлём юзеру уведомление
+    $msg = new NegativeContractBalanceMsg($UserBalance = $User, (integer)$User['UserID']);
+    $IsSend = NotificationManager::sendMsg($msg);
+    #-------------------------------------------------------------------------
+    switch(ValueOf($IsSend)){
+    case 'true':
+      break;
+    #-------------------------------------------------------------------------
+    case 'exception':
+      $Event = Array(
+                    'UserID'		=> $User['UserID'],
+                    'PriorityID'	=> 'Billing',
+                    'Text'		=> 'Уведомление о отрицательном баллансе не отправлено. Не удалось оповестить пользователя ни одним из методов.'
+                    );
+      $Event = Comp_Load('Events/EventInsert',$Event);
+      if(!$Event)
+        return ERROR | @Trigger_Error(500);
+      break;
+      #-------------------------------------------------------------------------
+    default:
+      return ERROR | @Trigger_Error(500);
+    }
+    #-------------------------------------------------------------------------------
+    # вешаем событие
     $Event = Array(
                   'UserID'	=> $User['UserID'],
                   'PriorityID'	=> 'Billing',
