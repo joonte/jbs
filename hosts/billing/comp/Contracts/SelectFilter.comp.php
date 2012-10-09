@@ -20,7 +20,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ContractID = (integer)@$Args['ContractID'];
 #-------------------------------------------------------------------------------
-$Contracts = DB_Select('Contracts',Array('ID','TypeID','Customer'),Array('Where'=>SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']),'GroupBy'=>'ID'));
+$Contracts = DB_Select('Contracts',Array('ID','TypeID','Customer'),Array('Where'=>SPrintF('`UserID` = %u AND `TypeID` != "NaturalPartner"',$GLOBALS['__USER']['ID']),'GroupBy'=>'ID'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Contracts)){
   case 'error':
@@ -32,14 +32,18 @@ switch(ValueOf($Contracts)){
     if(Count($Contracts) < 2)
       return FALSE;
     #---------------------------------------------------------------------------
-    $Options = Array('Default'=>'Все договоры');
+    $Options = Array('Default'=>'Все договора');
     #---------------------------------------------------------------------------
     foreach($Contracts as $Contract){
       #-------------------------------------------------------------------------
-      $Customer = $Contract['Customer'];
+      $Comp = Comp_Load('Formats/Contract/Number',$Contract['ID']);
+      if(Is_Error($Comp))
+        return ERROR | @Trigger_Error(500);
+      #-------------------------------------------------------------------------
+      $Customer = SPrintF('%s %s',$Comp,$Contract['Customer']);
       #-------------------------------------------------------------------------
       if(Mb_StrLen($Customer) > 40)
-        $Customer = SPrintF('%s...',Mb_SubStr($Customer,0,20));
+        $Customer = SPrintF('%s...',Mb_SubStr($Customer,0,30));
       #-------------------------------------------------------------------------
       $Options[$Contract['ID']] = $Customer;
     }
