@@ -14,6 +14,12 @@ $InvoicesIDs  = (array) @$Args['RowsIDs'];
 if(Count($InvoicesIDs) < 1)
   return new gException('ACCOUNTS_NOT_SELECTED','Счёт для условной оплаты не выбран');
 #-------------------------------------------------------------------------------
+$Config = Config();
+$AllowConditionally = $Config['Invoices']['AllowConditionally'];
+#-------------------------------------------------------------------------------
+if(!$AllowConditionally)
+  return new gException('GLOBAL_DENY_CONDITIONALLY_INVOICES','Проведение условно оплаченных счетов запрещено');
+#-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

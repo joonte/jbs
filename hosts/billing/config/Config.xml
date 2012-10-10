@@ -149,6 +149,7 @@
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Invoices>
+  <AllowConditionally>0</AllowConditionally>
  <PaymentSystems>
   <PayMaster>
    <Name>PayMaster</Name>

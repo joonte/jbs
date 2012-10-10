@@ -17,6 +17,8 @@ $Template = &$Links[$LinkID];
 if($Template['Source']['Count'] < 1)
   return FALSE;
 #-------------------------------------------------------------------------------
+$Config = Config();
+$AllowConditionally = $Config['Invoices']['AllowConditionally'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
@@ -33,38 +35,42 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 # проверяем, можно ли юзеру условно проводить счета
 $ShowButton = TRUE;
-#-------------------------------------------------------------------------------
-# проверяем нету ли у юзера условных счетов
-$Count = DB_Count('InvoicesOwners',Array('Where'=>SPrintF("`StatusID` = 'Conditionally' AND `UserID` = %u",$GLOBALS['__USER']['ID'])));
-if($Count)
-  $ShowButton = FALSE;
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-# проверяем не отрицательный ли у него балланс, на каком-либо договоре
-$Count = DB_Count('ContractsOwners',Array('Where'=>SPrintF("`Balance` < 0 AND `UserID` = %u",$GLOBALS['__USER']['ID'])));
-if($Count)
-  $ShowButton = FALSE;
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-# проверяем что он наоплачивал на ту сумму, начиная с которой можно проводить счета условно
-$PayedSumm = DB_Select('InvoicesOwners',Array('SUM(Summ) AS `Summ`'),Array('UNIQ','Where'=>SPrintF("`StatusID` = 'Payed' AND `UserID` = %u",$GLOBALS['__USER']['ID'])));
-#-------------------------------------------------------------------------------
-switch(ValueOf($PayedSumm)){
-case 'error':
-  return ERROR | @Trigger_Error(500);
-case 'exception':
-  return ERROR | @Trigger_Error(400);
-case 'array':
-  break;
-default:
-  return ERROR | @Trigger_Error(101);
+# смотрим, разрешено ли в принципе проведение условных счетов
+if($AllowConditionally){
+  #-------------------------------------------------------------------------------
+  # проверяем нету ли у юзера условных счетов
+  $Count = DB_Count('InvoicesOwners',Array('Where'=>SPrintF("`StatusID` = 'Conditionally' AND `UserID` = %u",$GLOBALS['__USER']['ID'])));
+  if($Count)
+    $ShowButton = FALSE;
+  #-------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------
+  # проверяем не отрицательный ли у него балланс, на каком-либо договоре
+  $Count = DB_Count('ContractsOwners',Array('Where'=>SPrintF("`Balance` < 0 AND `UserID` = %u",$GLOBALS['__USER']['ID'])));
+  if($Count)
+    $ShowButton = FALSE;
+  #-------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------
+  # проверяем что он наоплачивал на ту сумму, начиная с которой можно проводить счета условно
+  $PayedSumm = DB_Select('InvoicesOwners',Array('SUM(Summ) AS `Summ`'),Array('UNIQ','Where'=>SPrintF("`StatusID` = 'Payed' AND `UserID` = %u",$GLOBALS['__USER']['ID'])));
+  #-------------------------------------------------------------------------------
+  switch(ValueOf($PayedSumm)){
+  case 'error':
+    return ERROR | @Trigger_Error(500);
+  case 'exception':
+    return ERROR | @Trigger_Error(400);
+  case 'array':
+    break;
+  default:
+    return ERROR | @Trigger_Error(101);
+  }
+  #-------------------------------------------------------------------------------
+  if($PayedSumm['Summ'] < $GLOBALS['__USER']['LayPayThreshold'])
+    $ShowButton = FALSE;
+  #-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
-if($PayedSumm['Summ'] < $GLOBALS['__USER']['LayPayThreshold'])
-  $ShowButton = FALSE;
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-if($ShowButton){
+if($ShowButton && $AllowConditionally){
   $Comp1 = Comp_Load(
     'Form/Input',
     Array(
