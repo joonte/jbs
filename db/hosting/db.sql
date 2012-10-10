@@ -20,7 +20,6 @@ VALUES
 (63,1,'EmailBoxesNotifies','[]','yes'),
 (64,1,'QIWI','[]','yes'),
 (65,1,'VPSSetPrimaryServer','[]','yes'),
-(66,1,'VPSServersQuestioning','[]','yes'),
 (67,1,'VPSNoticeSuspend','[]','yes'),
 (68,1,'VPSConsider','[]','yes'),
 (69,1,'VPSNoticeDelete','[]','yes'),
