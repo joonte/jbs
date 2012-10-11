@@ -153,7 +153,7 @@
  <PaymentSystems>
   <PayMaster>
    <Name>PayMaster</Name>
-   <SystemDescription>Сервис Консервативного КБ обслуживает платежи в WebMoney, банковскими картами, через интернет-банкинги, наличными и многими другими способами, количество которых постоянно увеличивается.</SystemDescription>
+   <SystemDescription>Оплата через WebMoney, банковскими картами VISA/MasterCard (без процентов), через интернет-банкинги, наличными через кассы магазинов и многими другими способами</SystemDescription>
    <Send>
     <LMI_MERCHANT_ID />
     <LMI_PAYMENT_AMOUNT>auto</LMI_PAYMENT_AMOUNT>
