@@ -16,16 +16,17 @@ VALUES
 (4000000,1,'Система',NULL,'no','no','Группа всех клиентов');
 UNLOCK TABLES;
 
-DELETE FROM `Users` WHERE `ID` IN (1,2,50,100,200);
+DELETE FROM `Users` WHERE `ID` IN (1,2,50,100,200,300);
 LOCK TABLES `Users` WRITE;
 INSERT INTO `Users`
-  (`ID`,`GroupID`,`Name`,`Watchword`,`Email`,`Sign`,`IsActive`,`IsProtected`)
+  (`ID`,`GroupID`,`Name`,`Watchword`,`Email`,`Sign`,`IsActive`,`IsProtected`,`AdminNotice`)
 VALUES
-(1,4000000,'Система','54b53072540eeeb8f8e9343e71f28176','system@system.com','С уважением, биллинговая система JBs.','no','yes'),
-(10,2000000,'Гость','19e66fdb0d643d2f36080a9dca4c5de4','guest@system.com','С уважением, Гость.','no','yes'),
-(50,3900000,'Joonte Software','bf4f00d4c5f44227066f5668a599bf9f','office@joonte.com','С уважением, Joonte Software.','no','yes'),
-(100,3000000,'ООО \"Компания\"',MD5('default'),'admin@company.com','С уважением, ООО \"Компания\".','yes','yes'),
-(200,2000000,'Клиент',MD5('nopassword'),'client@company.com','С уважением, Клиент.','no','yes');
+(1,4000000,'Система','54b53072540eeeb8f8e9343e71f28176','system@system.com','С уважением, биллинговая система JBs.','no','yes','От этого пользователя работает биллинговая система'),
+(10,2000000,'Гость','19e66fdb0d643d2f36080a9dca4c5de4','guest@system.com','С уважением, Гость.','no','yes',''),
+(50,3900000,'Joonte Software','bf4f00d4c5f44227066f5668a599bf9f','office@joonte.com','С уважением, Joonte Software.','no','yes',''),
+(100,3000000,'ООО \"Компания\"',MD5('default'),'admin@company.com','С уважением, ООО \"Компания\".','yes','yes','От этого пользователя рассылаются уведомления, у него хранится профиль компании'),
+(200,2000000,'Клиент',MD5('nopassword'),'client@company.com','С уважением, Клиент.','no','yes','');
+(300,3000000,'Сайт компании','e02f7b992578cd299e3e3edaed120689','site@company.com','С уважением, сайт ООО \"Компания\".','no','yes','Пользователь с доступом только к API, используется для работы сайта'),
 ALTER TABLE `Users` AUTO_INCREMENT=2001;
 UNLOCK TABLES;
 

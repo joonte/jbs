@@ -24,7 +24,8 @@ if(!IsSet($GLOBALS['__USER']) || IsSet($Args['ReOpen'])){
         if(Is_Error($IsUpdated))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
-        return TRUE;
+        #return TRUE;
+	break 3;
       default:
         return ERROR | @Trigger_Error(101);
     }
@@ -35,6 +36,17 @@ if(!IsSet($GLOBALS['__USER']) || IsSet($Args['ReOpen'])){
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
   Exit(Is_Array($Comp)?JSON_Encode($Comp):$Comp);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# JBS-31: проверяем, не системный ли это юзер пришёл...
+if($GLOBALS['__USER']['ID'] == 300){
+  if(SubStr($GLOBALS['__URI'],0,5) != '/API/'){
+    if(SubStr($GLOBALS['__URI'],0,27) != '/Administrator/API/SelectDB'){
+      Debug('[system/modules/Authorisation.mod]: Этот пользователь не имеет прав на такие запросы, он предназначен для работы через API.');
+      exit;
+    }
+  }
 }
 #-------------------------------------------------------------------------------
 return TRUE;
