@@ -66,12 +66,20 @@ switch(ValueOf($DomainScheme)){
     if(!$DomainScheme['IsActive'])
       return new gException('SCHEME_NOT_ACTIVE','Выбранный тарифный план заказа домена не активен');
     #---------------------------------------------------------------------------
-    $Count = DB_Count('DomainsOrders',Array('Where'=>SPrintF("`DomainName` = '%s' AND (SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrders`.`SchemeID`) = '%s'",$DomainName,$DomainScheme['Name'])));
+    $Count = DB_Count('DomainsOrdersOwners',Array('Where'=>SPrintF("`DomainName` = '%s' AND (SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) = '%s' AND `UserID` = %u",$DomainName,$DomainScheme['Name'],$GLOBALS['__USER']['ID'])));
     if(Is_Error($Count))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
     if($Count)
-      return new gException('DOMAIN_ORDER_EXISTS','Домен уже находиться в списке заказов');
+      return new gException('DOMAIN_ORDER_EXISTS','Домен уже находиться в вашем списке заказов');
+    #---------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
+    $Count = DB_Count('DomainsOrdersOwners',Array('Where'=>SPrintF("`DomainName` = '%s' AND (SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) = '%s'",$DomainName,$DomainScheme['Name'])));
+    if(Is_Error($Count))
+      return ERROR | @Trigger_Error(500);
+    #---------------------------------------------------------------------------
+    if($Count)
+      return new gException('DOMAIN_ORDER_EXISTS','Домен уже находиться в списке заказов другого пользователя');
     #---------------------------------------------------------------------------
     $IsCheck = WhoIs_Check($DomainName,$DomainScheme['Name']);
     #---------------------------------------------------------------------------
