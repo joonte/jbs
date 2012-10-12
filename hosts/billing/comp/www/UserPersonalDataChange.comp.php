@@ -70,7 +70,7 @@ $Comp = Comp_Load(
     'name'	=> 'Email',
     'size'	=> 25,
     'type'	=> 'text',
-    'prompt'	=> $Messages['Prompts']['Email'],
+    'prompt'	=> 'Для смены почтового адреса, подтвердите текущий почтовый адрес, и обратитесь в "Центр поддержки", указав ноывый адрес, на который надо сменить текущий',
     'value'	=> $__USER['Email'],
     'readonly'	=> 'readonly',
   )
