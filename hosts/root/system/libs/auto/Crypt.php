@@ -5,6 +5,7 @@
 if(!Extension_Loaded('mcrypt'))
   $GLOBALS['__MESSAGES'][] = 'Модуль mcrypt не установлен. Функции шифрования могут работать не правильно. Пожалуйста, исправьте ошибку.';
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 function Crypt_Encode($String){
   /****************************************************************************/
   $__args_types = Array('string');
@@ -19,7 +20,7 @@ function Crypt_Encode($String){
       #-------------------------------------------------------------------------
       $Module = @MCrypt_Module_Open(MCRYPT_DES,'',MCRYPT_MODE_ECB,'');
       if(!Is_Resource($Module))
-        return ERROR | @Trigger_Error('[Crypt_Encode]: не удалось открыть дискриптор');
+        return ERROR | @Trigger_Error('[Crypt_Encode]: не удалось открыть дескриптор');
       #-------------------------------------------------------------------------
       $Iv = @MCrypt_Create_Iv(MCrypt_Enc_Get_Iv_Size($Module),MCRYPT_RAND);
       if(!$Iv)
@@ -58,7 +59,7 @@ function Crypt_Decode($String){
       #-------------------------------------------------------------------------
       $Module = @MCrypt_Module_Open(MCRYPT_DES,'',MCRYPT_MODE_ECB,'');
       if(!Is_Resource($Module))
-        return ERROR | @Trigger_Error('[Crypt_Decode]: не удалось открыть дискриптор');
+        return ERROR | @Trigger_Error('[Crypt_Decode]: не удалось открыть дескриптор');
       #-------------------------------------------------------------------------
       $Iv = @MCrypt_Create_Iv(MCrypt_Enc_Get_Iv_Size($Module),MCRYPT_RAND);
       if(!$Iv)
