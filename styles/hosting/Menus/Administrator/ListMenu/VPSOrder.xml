@@ -16,7 +16,7 @@
  <UniqID>
   <Text>Сменить тарифный план</Text>
   <Href>javascript:ShowWindow("/VPSOrderSchemeChange",{VPSOrderID:%Replace%});</Href>
-  <Icon>Edit.gif</Icon>
+  <Icon>SchemeChange.png</Icon>
  </UniqID>
  <UniqID>
   <Text>Компенсировать время</Text>
