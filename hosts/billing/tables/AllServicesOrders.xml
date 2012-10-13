@@ -105,23 +105,6 @@
   </Args>
  </SelectID>
  <!-- ********************************************************************** -->
- <Info>
-  <Head>Инф.</Head>
-  <Prompt>Дополнительная информация</Prompt>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/OrderInfoWrapper</ListElement>
-   <ListElement>
-    <ServiceOrderID>%ID%</ServiceOrderID>
-    <ServiceOrderType>%OrderTypeCode%</ServiceOrderType>
-   </ListElement>
-   <ListElement>Дополнительная информация</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-  </Attribs>
- </Info>
  <!-- ********************************************************************** -->
  <OrderType>
   <Head>Тип</Head>
@@ -203,7 +186,6 @@
  </Status>
 </Columns>
 <Sequence>
- <ListElement>Info</ListElement>
  <ListElement>Number</ListElement>
  <ListElement>ExtendedMenu</ListElement>
  <ListElement>OrderType</ListElement>

@@ -9,14 +9,14 @@
   <Icon>Info.gif</Icon>
  </UniqID>
  <UniqID>
-  <Text>Редактировать заказ хостинга</Text>
-  <Href>javascript:ShowWindow("/Administrator/HostingOrderEdit",{HostingOrderID:"%Replace%"});</Href>
-  <Icon>Edit.gif</Icon>
- </UniqID>
- <UniqID>
   <Text>Сменить тарифный план</Text>
   <Href>javascript:ShowWindow("/HostingOrderSchemeChange",{HostingOrderID:%Replace%});</Href>
   <Icon>SchemeChange.png</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Редактировать заказ хостинга</Text>
+  <Href>javascript:ShowWindow("/Administrator/HostingOrderEdit",{HostingOrderID:"%Replace%"});</Href>
+  <Icon>Edit.gif</Icon>
  </UniqID>
  <UniqID>
   <Text>Компенсировать время</Text>

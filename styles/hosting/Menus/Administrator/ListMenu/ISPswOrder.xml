@@ -9,14 +9,14 @@
   <Icon>Info.gif</Icon>
  </UniqID>
  <UniqID>
-  <Text>Редактировать заказ лицензии</Text>
-  <Href>javascript:ShowWindow("/Administrator/ISPswOrderEdit",{ISPswOrderID:%Replace%});</Href>
-  <Icon>Edit.gif</Icon>
- </UniqID>
- <UniqID>
   <Text>Сменить тарифный план</Text>
   <Href>javascript:ShowWindow("/ISPswOrderSchemeChange",{ISPswOrderID:%Replace%});</Href>
   <Icon>SchemeChange.png</Icon>
+ </UniqID>
+ <UniqID>
+  <Text>Редактировать заказ лицензии</Text>
+  <Href>javascript:ShowWindow("/Administrator/ISPswOrderEdit",{ISPswOrderID:%Replace%});</Href>
+  <Icon>Edit.gif</Icon>
  </UniqID>
  <UniqID>
   <Text>Компенсировать время</Text>

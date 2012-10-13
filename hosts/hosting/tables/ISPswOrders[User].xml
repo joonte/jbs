@@ -83,7 +83,7 @@
     <ISPswOrderID>%ID%</ISPswOrderID>
    </ListElement>
    <ListElement>Сменить тарифный план</ListElement>
-   <ListElement>Edit.gif</ListElement>
+   <ListElement>SchemeChange.png</ListElement>
   </Args>
   <Attribs>
    <class>TableSuperStandard</class>

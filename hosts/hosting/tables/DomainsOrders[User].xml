@@ -80,7 +80,7 @@
     <DomainOrderID>%ID%</DomainOrderID>
    </ListElement>
    <ListElement>Сменить серверы имен</ListElement>
-   <ListElement>Edit.gif</ListElement>
+   <ListElement>SchemeChange.png</ListElement>
   </Args>
   <Attribs>
    <class>TableSuperStandard</class>

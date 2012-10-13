@@ -111,6 +111,20 @@
   </Args>
  </ExtendedMenu>
  <!-- ********************************************************************** -->
+ <Info>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/ServiceOrderInfo</ListElement>
+   <ListElement>
+    <ServiceOrderID>%ID%</ServiceOrderID>
+   </ListElement>
+   <ListElement>Дополнительная информация</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+  </Attribs>
+ </Info>
  <!-- ********************************************************************** -->
  <Number>
   <Head>Номер</Head>
