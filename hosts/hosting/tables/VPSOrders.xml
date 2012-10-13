@@ -138,22 +138,6 @@
   </Args>
  </SelectID>
  <!-- ********************************************************************** -->
- <Edit>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/Administrator/VPSOrderEdit</ListElement>
-   <ListElement>
-    <VPSOrderID>%ID%</VPSOrderID>
-   </ListElement>
-   <ListElement>Редактировать заказ на VPS</ListElement>
-   <ListElement>Edit.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Edit>
  <!-- ********************************************************************** -->
  <ExtendedMenu>
   <IsSorted>0</IsSorted>
@@ -221,7 +205,6 @@
 </Columns>
 <Sequence>
  <ListElement>SelectID</ListElement>
- <ListElement>Edit</ListElement>
  <ListElement>ExtendedMenu</ListElement>
  <ListElement>Number</ListElement>
  <ListElement>Login</ListElement>

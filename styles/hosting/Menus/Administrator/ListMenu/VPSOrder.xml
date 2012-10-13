@@ -9,6 +9,11 @@
   <Icon>Info.gif</Icon>
  </UniqID>
  <UniqID>
+  <Text>Редактировать заказ VPS</Text>
+  <Href>javascript:ShowWindow("/Administrator/VPSOrderEdit",{VPSOrderID:"%Replace%"});</Href>
+  <Icon>Edit.gif</Icon>
+ </UniqID>
+ <UniqID>
   <Text>Сменить тарифный план</Text>
   <Href>javascript:ShowWindow("/VPSOrderSchemeChange",{VPSOrderID:%Replace%});</Href>
   <Icon>Edit.gif</Icon>

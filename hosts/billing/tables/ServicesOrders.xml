@@ -102,20 +102,15 @@
   </Args>
  </SelectID>
  <!-- ********************************************************************** -->
- <Info>
+ <ExtendedMenu>
   <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
+  <Comp>Menus/List</Comp>
   <Args>
-   <ListElement>/ServiceOrderInfo</ListElement>
-   <ListElement>
-    <ServiceOrderID>%ID%</ServiceOrderID>
-   </ListElement>
-   <ListElement>Дополнительная информация</ListElement>
+   <ListElement>Administrator/ListMenu/ServicesOrder.xml</ListElement>
+   <Replace>%ID%</Replace>
   </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-  </Attribs>
- </Info>
+ </ExtendedMenu>
+ <!-- ********************************************************************** -->
  <!-- ********************************************************************** -->
  <Number>
   <Head>Номер</Head>
@@ -172,7 +167,7 @@
 </Columns>
 <Sequence>
  <ListElement>SelectID</ListElement>
- <ListElement>Info</ListElement>
+ <ListElement>ExtendedMenu</ListElement>
  <ListElement>Number</ListElement>
  <ListElement>Owner</ListElement>
  <ListElement>Keys</ListElement>

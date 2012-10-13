@@ -9,6 +9,11 @@
   <Icon>Info.gif</Icon>
  </UniqID>
  <UniqID>
+  <Text>Редактировать заказ IP адреса</Text>
+  <Href>javascript:ShowWindow("/Administrator/ExtraIPOrderEdit",{ExtraIPOrderID:"%Replace%"});</Href>
+  <Icon>Info.gif</Icon>
+ </UniqID>
+ <UniqID>
   <Text>Компенсировать время</Text>
   <Href>javascript:ShowWindow("/Administrator/ExtraIPCompensation",{ExtraIPOrderID:%Replace%});</Href>
   <Icon>Add.gif</Icon>
