@@ -264,7 +264,7 @@ foreach($UserIDs as $UserID){
 		$Where  = Array();
 		$Where[]= SPrintF('`TargetUserID` = %u',$UserID);
 		$Where[]= SPrintF('`CreateDate` BETWEEN %u AND %u',$StartDate,$FinishDate);
-		$Tickets = DB_Select('EdesksOwners',Array('COUNT(*) AS Counter'),Array('UNIQ','Where'=>$Where));
+		$Tickets = DB_Select('EdesksOwners',Array('COUNT(DISTINCT(`ID`)) AS Counter'),Array('UNIQ','Where'=>$Where));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($Tickets)){
 		case 'error':
