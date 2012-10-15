@@ -19,13 +19,16 @@ $Details       =   (array) @$Args['Details'];
 $CacheID = Md5($__FILE__);
 #-------------------------------------------------------------------------------
 $Result = CacheManager::get($CacheID);
-if($Result) {
+if($Result)
   return $Result;
-}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/HTMLDoc.php')))
   return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(!$GLOBALS['__USER']['IsAdmin'])
+  return ERROR | @Trigger_Error(700);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $DOM = new DOM();
@@ -51,7 +54,6 @@ if(Is_Error($Comp))
 $DOM->AddChild('Into',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-
 if(!$IsCreate){
 	# выводим выбор временных интервалов
 	#-------------------------------------------------------------------------------
@@ -72,26 +74,6 @@ if(!$IsCreate){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$Table[] = Array('Конечная дата',$Comp);
-	#-------------------------------------------------------------------------------
-#	$Table[] = 'Уровень детализации';
-#	#-------------------------------------------------------------------------------
-#	$Input = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'Details[]','value'=>'ByDays'));
-#	if(Is_Error($Input))
-#		return ERROR | @Trigger_Error(500);
-#	#-------------------------------------------------------------------------------
-#	$Table[] = Array('По дням',$Input);
-#	#-------------------------------------------------------------------------------
-#	$Input = Comp_Load('Form/Input',Array('type'=>'checkbox','checked'=>'true','name'=>'Details[]','value'=>'ByMonth'));
-#	if(Is_Error($Input))
-#		return ERROR | @Trigger_Error(500);
-#	#-------------------------------------------------------------------------------
-#	$Table[] = Array('По месяцам',$Input);
-#	#-------------------------------------------------------------------------------
-#	$Input = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'Details[]','value'=>'ByQuarter'));
-#	if(Is_Error($Input))
-#		return ERROR | @Trigger_Error(500);
-#	#-------------------------------------------------------------------------------
-#	$Table[] = Array('По кварталам',$Input);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>'form.submit();','value'=>'Сформировать'));
@@ -145,7 +127,33 @@ case 'array':
 	case 'exception':
 		return ERROR | @Trigger_Error(400);
 	case 'array':
-		Debug(SPrintF("[comp/www/Administrator/PersonalStatistics]: найдено %s сотрудников",SizeOf($Employers)));
+		# получаем список всех на ком висят тикеты
+		$TargetUsers = DB_Select('EdesksOwners','DISTINCT(`TargetUserID`) AS `TargetUserID`');
+		switch(ValueOf($TargetUsers)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			break;
+		case 'array':
+			$UserIDs = Array();
+			#---------------------------------------------------------------
+			foreach ($TargetUsers as $TargetUser)
+				$UserIDs[] = $TargetUser['TargetUserID'];
+			#---------------------------------------------------------------
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#---------------------------------------------------------------
+		#---------------------------------------------------------------
+		foreach ($Employers as $Employer)
+			$UserIDs[] = $Employer['ID'];
+		#---------------------------------------------------------------
+		ASort($UserIDs);
+		#---------------------------------------------------------------
+		$UserIDs = Array_Unique($UserIDs);
+		#---------------------------------------------------------------
+		Debug(SPrintF("[comp/www/Administrator/PersonalStatistics]: найдено %s сотрудников",SizeOf($UserIDs)));
 		break;
 	default:
 		return ERROR | @Trigger_Error(101);
@@ -154,10 +162,6 @@ case 'array':
 default:
 	return ERROR | @Trigger_Error(101);
 }
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-#if(In_Array('ByDays',$Details)){
-#}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table = Array();
@@ -211,14 +215,17 @@ $Tr->AddChild(new Tag('TD',Array('class'=>'Head','align'=>'center'),$Comp));
 $Table[] = $Tr;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-foreach($Employers as $Employer){
-	if($Employer['ID'] > 2000 || $Employer['ID'] == 100){
+foreach($UserIDs as $UserID){
+	if($UserID > 2000 || $UserID == 100){
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF("[comp/www/Administrator/PersonalStatistics]: Построение данных для сотрудника #%s",$Employer['ID']));
+		Debug(SPrintF("[comp/www/Administrator/PersonalStatistics]: Построение данных для сотрудника #%s",$UserID));
 		#-------------------------------------------------------------------------------
 		$Tr = new Tag('TR');
+		#-------------------------------------------------------------------------------
+		$IsAdd = FALSE;
+		#-------------------------------------------------------------------------------
 		# Имя сотрудника / мыло сотрудника
-		$Employee = DB_Select('Users',Array('Name','Email'),Array('UNIQ', 'ID'=>$Employer['ID']));
+		$Employee = DB_Select('Users',Array('Name','Email'),Array('UNIQ', 'ID'=>$UserID));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($Employee)){
 		case 'error':
@@ -236,7 +243,7 @@ foreach($Employers as $Employer){
 		#-------------------------------------------------------------------------------
 		# число запросов по HTTP к биллингу
 		$Where	= Array();
-		$Where[]= SPrintF('`UserID` = %u',$Employer['ID']);
+		$Where[]= SPrintF('`UserID` = %u',$UserID);
 		$Where[]= SPrintF('`CreateDate` BETWEEN %u AND %u',$StartDate,$FinishDate);
 		#-------------------------------------------------------------------------------
 		$HttpQuery = DB_Select('RequestLog',Array('COUNT(*) AS Counter'),Array('UNIQ','Where'=>$Where));
@@ -255,7 +262,7 @@ foreach($Employers as $Employer){
 		#-------------------------------------------------------------------------------
 		# Число назначенных тикетов
 		$Where  = Array();
-		$Where[]= SPrintF('`TargetUserID` = %u',$Employer['ID']);
+		$Where[]= SPrintF('`TargetUserID` = %u',$UserID);
 		$Where[]= SPrintF('`CreateDate` BETWEEN %u AND %u',$StartDate,$FinishDate);
 		$Tickets = DB_Select('EdesksOwners',Array('COUNT(*) AS Counter'),Array('UNIQ','Where'=>$Where));
 		#-------------------------------------------------------------------------------
@@ -274,10 +281,9 @@ foreach($Employers as $Employer){
 		#-------------------------------------------------------------------------------
 		# число ответов в тикетнице
                 $Where  = Array();
-		$Where[]= '`EdesksMessages`.`EdeskID` = `Edesks`.`ID`';
-		$Where[]= SPrintF('`Edesks`.`TargetUserID` = %u',$Employer['ID']);
-		$Where[]= SPrintF('`EdesksMessages`.`CreateDate` BETWEEN %u AND %u',$StartDate,$FinishDate);
-		$Answers = DB_Select(Array('EdesksMessages','Edesks'),Array('COUNT(*) AS Counter'),Array('UNIQ','Where'=>$Where));
+		$Where[]= SPrintF('`UserID` = %u',$UserID);
+		$Where[]= SPrintF('`CreateDate` BETWEEN %u AND %u',$StartDate,$FinishDate);
+		$Answers = DB_Select('EdesksMessagesOwners',Array('COUNT(*) AS Counter'),Array('UNIQ','Where'=>$Where));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($Answers)){
 		case 'error':
@@ -286,6 +292,8 @@ foreach($Employers as $Employer){
 			return ERROR | @Trigger_Error(400);
 		case 'array':
 			$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard'),$Answers['Counter']));
+			if($Answers['Counter'] > 0)
+				$IsAdd = TRUE;
 			break;
 		default:
 			return ERROR | @Trigger_Error(101);
@@ -294,11 +302,10 @@ foreach($Employers as $Employer){
 		#-------------------------------------------------------------------------------
 		# сообщений с оценками
                 $Where  = Array();
-		$Where[]= '`EdesksMessages`.`EdeskID` = `Edesks`.`ID`';
-		$Where[]= SPrintF('`Edesks`.`TargetUserID` = %u',$Employer['ID']);
-		$Where[]= '`EdesksMessages`.`VoteBall` > 0';
-		$Where[]= SPrintF('`EdesksMessages`.`CreateDate` BETWEEN %u AND %u',$StartDate,$FinishDate);
-		$NumVotes = DB_Select(Array('EdesksMessages','Edesks'),Array('COUNT(*) AS Counter'),Array('UNIQ','Where'=>$Where));
+		$Where[]= SPrintF('`UserID` = %u',$UserID);
+		$Where[]= '`VoteBall` > 0';
+		$Where[]= SPrintF('`CreateDate` BETWEEN %u AND %u',$StartDate,$FinishDate);
+		$NumVotes = DB_Select('EdesksMessagesOwners',Array('COUNT(*) AS Counter'),Array('UNIQ','Where'=>$Where));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($NumVotes)){
 		case 'error':
@@ -321,11 +328,10 @@ foreach($Employers as $Employer){
 		#-------------------------------------------------------------------------------
 		# средний балл оценки в тикетнице
                 $Where  = Array();
-		$Where[]= '`EdesksMessages`.`EdeskID` = `Edesks`.`ID`';
-		$Where[]= SPrintF('`Edesks`.`TargetUserID` = %u',$Employer['ID']);
-		$Where[]= '`EdesksMessages`.`VoteBall` > 0';
-		$Where[]= SPrintF('`EdesksMessages`.`CreateDate` BETWEEN %u AND %u',$StartDate,$FinishDate);
-		$SumVotes = DB_Select(Array('EdesksMessages','Edesks'),Array('SUM(`EdesksMessages`.`VoteBall`) AS VoteSumm'),Array('UNIQ','Where'=>$Where));
+		$Where[]= SPrintF('`UserID` = %u',$UserID);
+		$Where[]= '`VoteBall` > 0';
+		$Where[]= SPrintF('`CreateDate` BETWEEN %u AND %u',$StartDate,$FinishDate);
+		$SumVotes = DB_Select('EdesksMessagesOwners',Array('SUM(`VoteBall`) AS VoteSumm'),Array('UNIQ','Where'=>$Where));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($NumVotes)){
 		case 'error':
@@ -345,9 +351,9 @@ foreach($Employers as $Employer){
 		default:
 			return ERROR | @Trigger_Error(101);
 		}
-		
 		#-------------------------------------------------------------------------------
-		$Table[] = $Tr;
+		if($IsAdd)
+			$Table[] = $Tr;
 	}
 }
 
