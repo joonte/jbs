@@ -60,6 +60,10 @@ if($Search){
         $UsersIDs[] = $User['ID'];
       #-------------------------------------------------------------------------
       $Where = SPrintF('(%s OR `%s` IN (%s))',$Where,(In_Array('UserID',$ColumnsIDs)?'UserID':'ID'),Implode(',',$UsersIDs));
+      #-------------------------------------------------------------------------
+      if(In_Array('TargetUserID',$ColumnsIDs))
+        $Where = SPrintF('(%s OR `TargetUserID` IN (%s))',$Where,Implode(',',$UsersIDs));
+      #-------------------------------------------------------------------------
     break;
     default:
       return ERROR | @Trigger_Error(101);
