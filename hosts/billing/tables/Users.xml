@@ -114,22 +114,6 @@
   </Args>
  </SelectID>
  <!-- ********************************************************************** -->
- <Edit>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/Administrator/UserEdit</ListElement>
-   <ListElement>
-    <UserID>%ID%</UserID>
-   </ListElement>
-   <ListElement>Редактировать пользователя</ListElement>
-   <ListElement>Edit.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Edit>
  <!-- ********************************************************************** -->
  <RegisterDate>
   <Head>Дата рег.</Head>
@@ -206,7 +190,6 @@
 <!-- *********************************************************************** -->
 <Sequence>
  <ListElement>SelectID</ListElement>
- <ListElement>Edit</ListElement>
  <ListElement>RegisterDate</ListElement>
  <ListElement>Owner</ListElement>
  <ListElement>Group</ListElement>

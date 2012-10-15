@@ -10,7 +10,7 @@
   <JavaScript>UserSwitch.js</JavaScript>
  </UniqID>
  <UniqID>
-  <Text>Информация</Text>
+  <Text>Информация / Править</Text>
   <Href>javascript:ShowWindow("/UserInfo?UserID=%ID%");</Href>
   <Icon>Info.gif</Icon>
  </UniqID>
