@@ -816,7 +816,7 @@ function RegRu_Get_List_Domains($Settings){
     foreach($Result['answer']['services'] as $CurService){
       #----------------------------------------------------------------------------
       #Debug("Array_Keys answer services " . print_r($CurService,true));
-      if($CurService['state'] == 'A')
+      if($CurService['state'] == 'A' || $CurService['state'] == 'S')	// активные или заблокированные
         $Out[] = $CurService['dname'];
     }
   }

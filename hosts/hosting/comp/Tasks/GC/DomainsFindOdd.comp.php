@@ -93,10 +93,10 @@ switch(ValueOf($Registrators)){
 							#-----------------------------------------------------------
 							Debug("[comp/Tasks/GC/DomainsFindOdd]: доменов у регистратора " . SizeOf($RegDomains['Domains']) . "; в биллинге " . SizeOf($BillDomains));
 							# сортируем и сравниваем массивы
-							#Debug("[comp/Tasks/GC/DomainsFindOdd]: " . print_r($RegDomains['Domains'],true));
-							#Debug("[comp/Tasks/GC/DomainsFindOdd]: " . print_r($BillDomains,true));
 							ASort($RegDomains['Domains']);
 							ASort($BillDomains);
+							#-----------------------------------------------------------
+							# лишние у регистратора
 							$DomainsOdd = Array_Diff($RegDomains['Domains'],$BillDomains);
 							if(SizeOf($DomainsOdd) > 0){
 								foreach($DomainsOdd as $DomainOdd){
@@ -104,8 +104,23 @@ switch(ValueOf($Registrators)){
 									Debug('[comp/Tasks/GC/DomainsFindOdd]: ' . $Message);
 									$Event = Array('Text' => $Message,'PriorityID' => 'Error','IsReaded' => FALSE);
 									$Event = Comp_Load('Events/EventInsert', $Event);
-									if (!$Event)
+									if(!$Event)
 										return ERROR | @Trigger_Error(500);
+								}
+							}
+							#-----------------------------------------------------------
+							# лишние в биллинге
+							$DomainsOdd = Array_Diff($BillDomains,$RegDomains['Domains']);
+							if(SizeOf($DomainsOdd) > 0){
+								foreach($DomainsOdd as $DomainOdd){
+									$Message = SPrintF('Найден домен %s отсутствующий у регистратора %s',$DomainOdd,$NowReg['Name']);
+									Debug('[comp/Tasks/GC/DomainsFindOdd]: ' . $Message);
+									$Event = Array('Text' => $Message,'PriorityID' => 'Error','IsReaded' => FALSE);
+									$Event = Comp_Load('Events/EventInsert', $Event);
+									if(!$Event)
+										return ERROR | @Trigger_Error(500);
+									#-----------------------------------------------------------
+									# по хорошему, тут надо привернуть проставку статуса "удалён" для этого домена
 								}
 							}
 							break;

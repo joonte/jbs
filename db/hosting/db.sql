@@ -32,8 +32,6 @@ VALUES
 (76,1,'ExtraIPConsider','[]','yes'),
 (77,1,'ExtraIPNoticeDelete','[]','yes'),
 (78,1,'ExtraIPForDelete','[]','yes'),
-/* (79,1,'RegBalance','[]','yes'), */
-(80,1,'DomainsOrdersRegStatusUpdate','[]','yes'),
 (81,1,'ISPswNoticeSuspend','[]','yes'),
 (82,1,'ISPswConsider','[]','yes'),
 (83,1,'ISPswNoticeDelete','[]','yes'),
