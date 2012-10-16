@@ -321,7 +321,7 @@
     <Address>partner.r01.ru</Address>
     <Port>1443</Port>
     <Protocol>ssl</Protocol>
-    <PrefixAPI>parnter_api.khtml</PrefixAPI>
+    <PrefixAPI>partner_api.khtml</PrefixAPI>
 	<PrefixNic>R01</PrefixNic>
     <JurName>ООО "Гарант-Парк-Телеком"</JurName>
    </Settings>
