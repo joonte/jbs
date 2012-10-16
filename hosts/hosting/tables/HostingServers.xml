@@ -18,6 +18,8 @@
   <ListElement>Address</ListElement>
   <ListElement>Port</ListElement>
   <ListElement>IP</ListElement>
+  <ListElement>BalancingFactor</ListElement>
+  <ListElement>IsAutoBalancing</ListElement>
   <ListElement>IsDefault</ListElement>
  </ColumnsIDs>
  <Conditions>
@@ -90,6 +92,20 @@
   <Head>Адрес</Head>
  </Address>
  <!-- ********************************************************************** -->
+ <BalancingFactor>
+  <Head>Приор. баланс.</Head>
+  <Prompt>Приоритет балансировки сервера - множитель для определения наггрузки</Prompt>
+ </BalancingFactor>
+ <!-- ********************************************************************** -->
+ <IsAutoBalancing>
+  <Head>АвтоБаланс.</Head>
+  <Prompt>Этот сервер учавствует в авоматической балансировке нагрузки между серверами</Prompt>
+  <Comp>Formats/Logic</Comp>
+  <Args>
+   <ListElement>%IsAutoBalancing%</ListElement>
+  </Args>
+ </IsAutoBalancing>
+ <!-- ********************************************************************** -->
  <IP>
   <Head>IP адрес</Head>
  </IP>
@@ -103,6 +119,8 @@
   </Args>
  </IsDefault>
 </Columns>
+<!-- ********************************************************************** -->
+<!-- ********************************************************************** -->
 <Sequence>
  <ListElement>SelectID</ListElement>
  <ListElement>Edit</ListElement>
@@ -110,6 +128,8 @@
  <ListElement>HostingGroup</ListElement>
  <ListElement>Address</ListElement>
  <ListElement>IP</ListElement>
+ <ListElement>BalancingFactor</ListElement>
+ <ListElement>IsAutoBalancing</ListElement>
  <ListElement>IsDefault</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
