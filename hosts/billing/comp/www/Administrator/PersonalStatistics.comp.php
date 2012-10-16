@@ -14,6 +14,7 @@ $StartDate     = (integer) @$Args['StartDate'];
 $FinishDate    = (integer) @$Args['FinishDate'];
 $StatisticsIDs =   (array) @$Args['StatisticsIDs'];
 $Details       =   (array) @$Args['Details'];
+$ShowFired     = (boolean) @$Args['ShowFired'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $CacheID = Md5($__FILE__);
@@ -76,6 +77,13 @@ if(!$IsCreate){
 	$Table[] = Array('Конечная дата',$Comp);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'ShowFired','value'=>'yes'));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array('Показать уволенных',$Comp);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>'form.submit();','value'=>'Сформировать'));
 	#-------------------------------------------------------------------------------
 	if(Is_Error($Comp))
@@ -127,22 +135,28 @@ case 'array':
 	case 'exception':
 		return ERROR | @Trigger_Error(400);
 	case 'array':
-		# получаем список всех на ком висят тикеты
-		$TargetUsers = DB_Select('EdesksOwners','DISTINCT(`TargetUserID`) AS `TargetUserID`');
-		switch(ValueOf($TargetUsers)){
-		case 'error':
-			return ERROR | @Trigger_Error(500);
-		case 'exception':
-			break;
-		case 'array':
-			$UserIDs = Array();
+		#---------------------------------------------------------------
+		$UserIDs = Array();
+		#---------------------------------------------------------------
+		if($ShowFired){
 			#---------------------------------------------------------------
-			foreach ($TargetUsers as $TargetUser)
-				$UserIDs[] = $TargetUser['TargetUserID'];
+			# получаем список всех на ком висят тикеты
+			$TargetUsers = DB_Select('EdesksOwners','DISTINCT(`TargetUserID`) AS `TargetUserID`');
+			switch(ValueOf($TargetUsers)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				break;
+			case 'array':
+				#---------------------------------------------------------------
+				foreach ($TargetUsers as $TargetUser)
+					$UserIDs[] = $TargetUser['TargetUserID'];
+				#---------------------------------------------------------------
+				break;
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
 			#---------------------------------------------------------------
-			break;
-		default:
-			return ERROR | @Trigger_Error(101);
 		}
 		#---------------------------------------------------------------
 		#---------------------------------------------------------------
