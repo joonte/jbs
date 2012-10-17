@@ -110,7 +110,7 @@ switch(ValueOf($VPSOrder)){
                     if(Is_Error($IsUpdate))
                       return ERROR | @Trigger_Error(500);
                     #-----------------------------------------------------------
-                    $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'SchemeChange','RowsIDs'=>$VPSOrderID,'Comment'=>"Поступила заявка на изменение тарифного плана [".$OldScheme['Name']."->".$NewScheme['Name']."]"));
+                    $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'SchemeChange','RowsIDs'=>$VPSOrderID,'Comment'=>"Смена тарифа [".$OldScheme['Name']."->".$NewScheme['Name']."]"));
                     #-----------------------------------------------------------
                     switch(ValueOf($Comp)){
                       case 'error':

@@ -107,7 +107,7 @@ switch(ValueOf($ISPswOrder)){
                     if(Is_Error($IsUpdate))
                       return ERROR | @Trigger_Error(500);
                     #-----------------------------------------------------------
-                    $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ISPswOrders','StatusID'=>'SchemeChange','RowsIDs'=>$ISPswOrderID,'Comment'=>"Поступила заявка на изменение тарифного плана [".$OldScheme['Name']."->".$NewScheme['Name']."]"));
+                    $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ISPswOrders','StatusID'=>'SchemeChange','RowsIDs'=>$ISPswOrderID,'Comment'=>"Смена тарифа [".$OldScheme['Name']."->".$NewScheme['Name']."]"));
                     #-----------------------------------------------------------
                     switch(ValueOf($Comp)){
                       case 'error':
