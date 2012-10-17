@@ -91,7 +91,7 @@ switch(ValueOf($Row)){
 	        $Mode = 'Tickets';
               }elseif($ModeID == 'ContractsEnclosures'){
 	        $Mode = 'Contracts/Enclosures';
-              }elseif($Mode = 'Orders'){
+              }elseif($ModeID == 'Orders'){
                 $Mode = 'Services/Orders';
               }else{
 	        $Mode = $ModeID;
