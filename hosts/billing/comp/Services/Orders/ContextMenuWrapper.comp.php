@@ -18,7 +18,9 @@ if($Result) {
     return $Result;
 }
 #-------------------------------------------------------------------------------
-if($OrderTypeCode != 'Default'){
+if($OrderTypeCode == 'Default'){
+	$OrderTypeCode = 'Services';
+}else{
 	$Order = DB_Select($OrderTypeCode . 'OrdersOwners',Array('ID'),Array('UNIQ','Where'=>'OrderID=' . $ID));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Order)){
