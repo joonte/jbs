@@ -98,10 +98,12 @@ foreach($Registrators as $NowReg){
 		case 'array':
 			# строим массив доменов из биллинга
 			$BillDomains = Array();
+			#-----------------------------------------------------------
 			foreach ($Domains as $Domain)
 				$BillDomains[] = Mb_StrToLower($Domain['Domain'],'UTF-8');
 			#-----------------------------------------------------------
-			Debug("[comp/Tasks/GC/DomainsFindOdd]: доменов у регистратора " . SizeOf($RegDomains['Domains']) . "; в биллинге " . SizeOf($BillDomains));
+			Debug('[comp/Tasks/GC/DomainsFindOdd]: [%s] доменов у регистратора %s, в биллинге %s',$NowReg['Name'],SizeOf($RegDomains['Domains']),SizeOf($BillDomains));
+			#-----------------------------------------------------------
 			# сортируем массивы
 			ASort($RegDomains['Domains']);
 			ASort($BillDomains);
@@ -110,12 +112,27 @@ foreach($Registrators as $NowReg){
 			$DomainsOdd = Array_Diff($RegDomains['Domains'],$BillDomains);
 			if(SizeOf($DomainsOdd) > 0){
 				foreach($DomainsOdd as $DomainOdd){
-					$Message = SPrintF('У регистратора %s найден лишний домен %s',$NowReg['Name'],$DomainOdd);
-					Debug('[comp/Tasks/GC/DomainsFindOdd]: ' . $Message);
-					$Event = Array('Text' => $Message,'PriorityID' => 'Error','IsReaded' => FALSE);
-					$Event = Comp_Load('Events/EventInsert', $Event);
-					if(!$Event)
+					# ищщем этот домен в биллинге, безотносительно его статуса, но у того же регистратора
+					$Where = Array(
+							SPrintF("CONCAT(`DomainsOrdersOwners`.`DomainName`,'.',`DomainsSchemes`.`Name`) = '%s'",$DomainOdd),
+							'`DomainsSchemes`.`ID` = `SchemeID`',
+							SPrintF('`DomainsSchemes`.`RegistratorID` = %u',$NowReg['ID'])
+							);
+					$Count = DB_Count(Array('DomainsOrdersOwners','DomainsSchemes'),Array('Where'=>$Where));
+					if(Is_Error($Count))
 						return ERROR | @Trigger_Error(500);
+					#-----------------------------------------------------------
+					if(!$Count){
+						$Message = SPrintF('У регистратора %s найден лишний домен %s',$NowReg['Name'],$DomainOdd);
+						Debug(SPrintF('[comp/Tasks/GC/DomainsFindOdd]: %s',$Message));
+						#-----------------------------------------------------------
+						$Event = Array('Text' => $Message,'PriorityID' => 'Error','IsReaded' => FALSE);
+						$Event = Comp_Load('Events/EventInsert', $Event);
+						if(!$Event)
+							return ERROR | @Trigger_Error(500);
+					}else{
+						Debug(SPrintF('comp/Tasks/GC/DomainsFindOdd]: Домен %s/%s, в биллинге есть, но его статус несоответствует критериям выборки',$DomainOdd,$NowReg['Name']));
+					}
 				}
 			}
 			#-----------------------------------------------------------
@@ -123,14 +140,59 @@ foreach($Registrators as $NowReg){
 			$DomainsOdd = Array_Diff($BillDomains,$RegDomains['Domains']);
 			if(SizeOf($DomainsOdd) > 0){
 				foreach($DomainsOdd as $DomainOdd){
-					$Message = SPrintF('Найден домен %s отсутствующий у регистратора %s',$DomainOdd,$NowReg['Name']);
-					Debug('[comp/Tasks/GC/DomainsFindOdd]: ' . $Message);
-					$Event = Array('Text' => $Message,'PriorityID' => 'Error','IsReaded' => FALSE);
-					$Event = Comp_Load('Events/EventInsert', $Event);
-					if(!$Event)
-						return ERROR | @Trigger_Error(500);
+					Debug(SPrintF('[comp/Tasks/GC/DomainsFindOdd]: Найден домен %s отсутствующий у регистратора %s',$DomainOdd,$NowReg['Name']));
 					#-----------------------------------------------------------
-					# по хорошему, тут надо привернуть проставку статуса "удалён" для этого домена
+					# Ищщем параметры этого заказа на домен
+					$Where = Array(
+							SPrintF("CONCAT(`DomainsOrdersOwners`.`DomainName`,'.',`DomainsSchemes`.`Name`) = '%s'",$DomainOdd),
+							'`DomainsSchemes`.`ID` = `SchemeID`',
+							SPrintF('`DomainsSchemes`.`RegistratorID` = %u',$NowReg['ID'])
+							);
+					$DomainOrder = DB_Select(Array('DomainsOrdersOwners','DomainsSchemes'),Array('`DomainsOrdersOwners`.`ID` AS `ID`','`DomainsOrdersOwners`.`UserID` AS `UserID`'),Array('UNIQ','Where'=>$Where));
+					#-----------------------------------------------------------
+					switch(ValueOf($DomainOrder)){
+					case 'error':
+						return ERROR | @Trigger_Error(500);
+					case 'exception':
+						return ERROR | @Trigger_Error(400);
+					case 'array':
+						break;
+					default:
+						return ERROR | @Trigger_Error(101);
+					}
+					#-----------------------------------------------------------
+					# ставим статус "Удалён"
+					$Comp = Comp_Load(
+							'www/API/StatusSet',
+							Array(
+								'ModeID'	=> 'DomainsOrders',
+								'StatusID'	=> 'Deleted',
+								'RowsIDs'	=> $DomainOrder['ID'],
+								'Comment'	=> SPrintF('Заказ домена не найден у регистратора %s',$NowReg['Name'])
+								)
+							);
+					#-----------------------------------------------------------
+					switch(ValueOf($Comp)){
+					case 'error':
+						return ERROR | @Trigger_Error(500);
+					case 'exception':
+						return ERROR | @Trigger_Error(400);
+					case 'array':
+						#-----------------------------------------------------------
+						$Event = Array(
+								'UserID'	=> $DomainOrder['UserID'],
+								'PriorityID'	=> 'Error',
+								'Text'		=> SPrintF('Заказ домена %s не найден у регистратора %s. Статус заказа изменен на "Удален".',$DomainOdd,$NowReg['Name']),
+								'IsReaded'	=> FALSE
+								);
+						$Event = Comp_Load('Events/EventInsert',$Event);
+						if(!$Event)
+							return ERROR | @Trigger_Error(500);
+						#-----------------------------------------------------------
+						break;
+					default:
+						return ERROR | @Trigger_Error(101);
+					}
 				}
 			}
 			break;
