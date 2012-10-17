@@ -85,7 +85,25 @@ switch(ValueOf($Row)){
               #-----------------------------------------------------------------
 	      $Tr->AddChild(new Tag('TD',Array('class'=>'Standard'),$Comp));
 	      #-----------------------------------------------------------------
-	      $Tr->AddChild(new Tag('TD',Array('class'=>'Standard'),$Statuses[$StatusHistory['StatusID']]['Name']));
+              #-----------------------------------------------------------------
+	      # костыли для JBS-512
+	      if($ModeID == 'Edesks'){
+	        $Mode = 'Tickets';
+              }elseif($ModeID == 'ContractsEnclosures'){
+	        $Mode = 'Contracts/Enclosures';
+              }elseif($Mode = 'Orders'){
+                $Mode = 'Services/Orders';
+              }else{
+	        $Mode = $ModeID;
+	      }
+	      #-----------------------------------------------------------------
+              $Comp = Comp_Load(SPrintF('%s/Color',$Mode),$StatusHistory['StatusID']);
+              if(Is_Error($Comp))
+                return ERROR | @Trigger_Error(500);
+              #-------------------------------------------------------------------------------
+	      $Style = Array('class'=>'Standard','style'=>SPrintF('background-color:%s;',$Comp['bgcolor']));
+	      #-------------------------------------------------------------------------------
+	      $Tr->AddChild(new Tag('TD',$Style,$Statuses[$StatusHistory['StatusID']]['Name']));
 	      #-----------------------------------------------------------------
 	      #-----------------------------------------------------------------
 	      $Initiator = $GLOBALS['__USER']['IsAdmin']?$StatusHistory['Initiator']:preg_replace('/\s(\(\H+\))$/', '', $StatusHistory['Initiator']);
