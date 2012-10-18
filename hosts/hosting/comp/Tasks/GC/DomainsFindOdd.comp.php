@@ -102,7 +102,7 @@ foreach($Registrators as $NowReg){
 			foreach ($Domains as $Domain)
 				$BillDomains[] = Mb_StrToLower($Domain['Domain'],'UTF-8');
 			#-----------------------------------------------------------
-			Debug('[comp/Tasks/GC/DomainsFindOdd]: [%s] доменов у регистратора %s, в биллинге %s',$NowReg['Name'],SizeOf($RegDomains['Domains']),SizeOf($BillDomains));
+			Debug(SPrintF('[comp/Tasks/GC/DomainsFindOdd]: [%s] доменов у регистратора %s, в биллинге %s',$NowReg['Name'],SizeOf($RegDomains['Domains']),SizeOf($BillDomains)));
 			#-----------------------------------------------------------
 			# сортируем массивы
 			ASort($RegDomains['Domains']);
@@ -131,7 +131,7 @@ foreach($Registrators as $NowReg){
 						if(!$Event)
 							return ERROR | @Trigger_Error(500);
 					}else{
-						Debug(SPrintF('comp/Tasks/GC/DomainsFindOdd]: Домен %s/%s, в биллинге есть, но его статус несоответствует критериям выборки',$DomainOdd,$NowReg['Name']));
+						Debug(SPrintF('comp/Tasks/GC/DomainsFindOdd]: Домен %s / %s, в биллинге есть, но его статус несоответствует критериям выборки',$DomainOdd,$NowReg['Name']));
 					}
 				}
 			}
