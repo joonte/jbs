@@ -27,13 +27,13 @@ td.EdeskMessageInfo {
     text-align:       right;
 }
 /* see http://forum.lissyara.su/viewtopic.php?f=17&t=37569 */
-td.EdeskMessageInfo div.ldiv {
+td.EdeskMessageInfo div.LeftDiv {
     float:            left;
     cursor:           pointer;
 /*    color:            blue;*/
 }
 /* ------------------------- */
-td.EdeskMessageInfo div.rdiv {
+td.EdeskMessageInfo div.RightDiv {
     float:            right;
 }
 /* ------------------------- */
