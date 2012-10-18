@@ -65,15 +65,20 @@ $Options = Array();
 foreach($ContractsFrom as $Contract){
 	# проверяем, что баланс не нулевой
 	if($Contract['Balance'] > 0){
+		#-----------------------------------------------------------------------
 		$Customer = $Contract['Customer'];
 		if(Mb_StrLen($Customer) > 20)
 			$Customer = SPrintF('%s...',Mb_SubStr($Customer,0,20));
-		# add ballance
-		$SummFrom = Comp_Load('Formats/Currency',$Contract['Balance']);
-		if(Is_Error($SummFrom))
+		#-----------------------------------------------------------------------
+		$Balance = Comp_Load('Formats/Currency',$Contract['Balance']);
+		if(Is_Error($Balance))
 			return ERROR | @Trigger_Error(500);
-		$Customer .= " [" . $SummFrom . "]";
-		$Options[$Contract['ID']] = $Customer;
+		#-----------------------------------------------------------------------
+		$Number = Comp_Load('Formats/Contract/Number',$Contract['ID']);
+		if(Is_Error($Number))
+			return ERROR | @Trigger_Error(500);
+		#-----------------------------------------------------------------------
+		$Options[$Contract['ID']] = SPrintF('%s / %s [%s]',$Number,$Customer,$Balance);
 	}
 }
 #-----------------------------------------------------------------------
@@ -89,13 +94,20 @@ $Table[] = Array('Откуда',$NoBody);
 #-----------------------------------------------------------------------
 $Options = Array();
 foreach($ContractsTo as $Contract){
+	#-----------------------------------------------------------------------
 	$Customer = $Contract['Customer'];
 	if(Mb_StrLen($Customer) > 20)
-	$Customer = SPrintF('%s...',Mb_SubStr($Customer,0,20));
-	# add ballance
-	$SummTo = Comp_Load('Formats/Currency',$Contract['Balance']);
-	$Customer .= " [" . $SummTo . "]";
-	$Options[$Contract['ID']] = $Customer;
+		$Customer = SPrintF('%s...',Mb_SubStr($Customer,0,20));
+	#-----------------------------------------------------------------------
+	$Balance = Comp_Load('Formats/Currency',$Contract['Balance']);
+	if(Is_Error($Balance))
+		return ERROR | @Trigger_Error(500);
+	#-----------------------------------------------------------------------
+	$Number = Comp_Load('Formats/Contract/Number',$Contract['ID']);
+	if(Is_Error($Number))
+		return ERROR | @Trigger_Error(500);
+	#-----------------------------------------------------------------------
+	$Options[$Contract['ID']] = SPrintF('%s / %s [%s]',$Number,$Customer,$Balance);
 }
 #-----------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'ToContractID'),$Options);
@@ -111,6 +123,7 @@ $Comp = Comp_Load(
 			'name'  => 'Summ',
 			'value' => '0.00',
 			'type'  => 'text',
+			'prompt'=> 'Сумма которую вы хотите перевести между договорами'
 		)
 	);
 if(Is_Error($Comp))
