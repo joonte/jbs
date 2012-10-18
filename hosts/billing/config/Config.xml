@@ -150,6 +150,7 @@
 <!-- *********************************************************************** -->
 <Invoices>
   <AllowConditionally>0</AllowConditionally>
+  <EventOnNegativeBalance>0</EventOnNegativeBalance>
  <PaymentSystems>
   <PayMaster>
    <Name>PayMaster</Name>
