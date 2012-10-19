@@ -112,7 +112,7 @@ switch(ValueOf($HostingOrder)){
                     if(Is_Error($IsUpdate))
                       return ERROR | @Trigger_Error(500);
                     #-----------------------------------------------------------
-                    $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'HostingOrders','StatusID'=>'SchemeChange','RowsIDs'=>$HostingOrderID,'Comment'=>SPrintF('Смена тарифа [%s=>%s]',$OldScheme['Name'],$NewScheme['Name'])));
+                    $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'HostingOrders','StatusID'=>'SchemeChange','RowsIDs'=>$HostingOrderID,'Comment'=>SPrintF('Смена тарифа [%s->%s]',$OldScheme['Name'],$NewScheme['Name'])));
                     #-----------------------------------------------------------
                     switch(ValueOf($Comp)){
                       case 'error':

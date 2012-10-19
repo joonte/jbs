@@ -12,7 +12,7 @@ class HostingOrdersActiveMsg extends Message {
     }
 
     public function getParams() {
-        $Server = DB_Select('HostingServers', Array('Address', 'Url', 'Ns1Name', 'Ns2Name'), Array('UNIQ', 'ID' => $this->params['ServerID']));
+        $Server = DB_Select('HostingServers', Array('Address', 'Url', 'Ns1Name', 'Ns2Name', 'MySQL'), Array('UNIQ', 'ID' => $this->params['ServerID']));
         if (!Is_Array($Server))
             return ERROR | @Trigger_Error(500);
 

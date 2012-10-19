@@ -41,6 +41,7 @@ $Ns1Name		=  (string) @$Args['Ns1Name'];
 $Ns2Name		=  (string) @$Args['Ns2Name'];
 $Ns3Name		=  (string) @$Args['Ns3Name'];
 $Ns4Name		=  (string) @$Args['Ns4Name'];
+$MySQL			=  (string) @$Args['MySQL'];
 $Services		=  (string) @$Args['Services'];
 $Notice			=  (string) @$Args['Notice'];
 #-------------------------------------------------------------------------------
@@ -118,6 +119,9 @@ if($Ns3Name && !Preg_Match($Regulars['Domain'],$Ns3Name))
 if($Ns4Name && !Preg_Match($Regulars['Domain'],$Ns4Name))
   return new gException('WRONG_NS4','Неверный адрес расширенного сервера имён');
 #-------------------------------------------------------------------------------
+if(!$MySQL)
+  return new gException('MySQL_NOT_FILLED','Не указан хост для сервера MySQL');
+#-------------------------------------------------------------------------------
 $Services = Trim($Services);
 #-------------------------------------------------------------------------------
 if(!$Services)
@@ -184,6 +188,7 @@ $IHostingServer = Array(
   'Ns2Name'			=> $Ns2Name,
   'Ns3Name'			=> $Ns3Name,
   'Ns4Name'			=> $Ns4Name,
+  'MySQL'			=> $MySQL,
   'Services'			=> $Services,
   'Notice'			=> $Notice
 );

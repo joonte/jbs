@@ -267,6 +267,7 @@ CREATE TABLE `HostingServers` (
   `Ns2Name` char(30) default '',
   `Ns3Name` char(30) default '',
   `Ns4Name` char(30) default '',
+  `MySQL` char(30) default '',
   `Services` text,
   `TestDate` int(11) default '0',
   `IsOK` enum('no','yes') default 'no',
