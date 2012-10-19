@@ -26,14 +26,18 @@ if($ExtraIPOrderID){
     case 'array':
       # Select DependOrder
       $ExtraIPDependOrder = DB_Select($ExtraIPOrder['OrderType'] . 'OrdersOwners',Array('*'),Array('UNIQ','ID'=>$ExtraIPOrder['DependOrderID']));
-      switch(ValueOf($ExtraIPOrder)){
+      switch(ValueOf($ExtraIPDependOrder)){
       case 'error':
       	return ERROR | @Trigger_Error(500);
       case 'exception':
         $ExtraIPOrder['DependOrder'] = "не задано";
 	break;
       case 'array':
-        $ExtraIPOrder['DependOrder'] = $ExtraIPDependOrder['Login'];
+        if($ExtraIPOrder['OrderType'] == 'DS'){
+	  $ExtraIPOrder['DependOrder'] = $ExtraIPDependOrder['IP'];
+	}else{
+          $ExtraIPOrder['DependOrder'] = $ExtraIPDependOrder['Login'];
+	}
 	break;
       default:
         return ERROR | @Trigger_Error(101);
