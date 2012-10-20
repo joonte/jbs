@@ -117,7 +117,7 @@ switch(ValueOf($DomainOrder)){
 		$Event = Array(
 				'UserID'	=> $DomainOrder['UserID'],
 				'PriorityID'	=> 'Billing',
-				'Text'		=> SPrintF('Именные сервера для заказа домена (%s.%s) успешно изменены',$DomainOrder['DomainName'],$DomainOrder['DomainZone']),
+				'Text'		=> SPrintF('Именные сервера для заказа домена (%s.%s) успешно изменены на (%s, %s)',$DomainOrder['DomainName'],$DomainOrder['DomainZone'],$DomainOrder['Ns1Name'],$DomainOrder['Ns2Name']),
 				'PriorityID'	=> 'Notice'
 		              );
                 $Event = Comp_Load('Events/EventInsert',$Event);
