@@ -132,7 +132,7 @@ $DOM->AddChild('Into',$Comp);
 #-------------------------------------------------------------------------------
 for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $year; $year--){
 	#-------------------------------------------------------------------------------
-	$CacheID = Md5($GLOBALS['__USER']['ID'] . $__FILE__ . $year);
+	$CacheID = Md5($__FILE__ . $year);
 	#-------------------------------------------------------------------------------
 	$Result = CacheManager::get($CacheID);
 	if($Result && $year != Date('Y', Time())){
@@ -198,7 +198,7 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 		$Months = Array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12');
 		foreach($Months as $month){
 			#-------------------------------------------------------------------------------
-			$CacheID1 = Md5($GLOBALS['__USER']['ID'] . $__FILE__ . $year . $month);
+			$CacheID1 = Md5( $__FILE__ . $year . $month);
 			#-------------------------------------------------------------------------------
 			$Result = CacheManager::get($CacheID1);
 			if($Result && $year != Date('Y', Time()) && $month != Date('m', Time())){
