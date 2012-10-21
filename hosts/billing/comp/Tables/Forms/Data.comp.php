@@ -35,7 +35,7 @@ if($Template['Appearance']['IsDataMode']){
   #-----------------------------------------------------------------------------
   $Button1 = new Tag('BUTTON',Array('class'=>'Standard','title'=>'Сбросить параметры','onclick'=>'TableSuperFlush();'),new Tag('IMG',Array('width'=>16,'height'=>16,'src'=>'SRC:{Images/Icons/Flush.gif}')));
   #-----------------------------------------------------------------------------
-  $NoBody->AddChild(new Tag('NOBODY',new Tag('TABLE',Array('style'=>'margin-top:5px;','cellspacing'=>0),new Tag('TR',new Tag('TD',$Button1),new Tag('TD','Сбросить параметры')))));
+  $NoBody->AddChild(new Tag('NOBODY',new Tag('TABLE',Array('style'=>'margin-top:5px;','cellspacing'=>0),new Tag('TR',new Tag('TD',$Button1),new Tag('TD',Array('style'=>'cursor:pointer;','onclick'=>'TableSuperFlush();'),'Сбросить параметры')))));
 }
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(SPrintF('Tables/Forms/%s',$DataModeID),$LinkID);
