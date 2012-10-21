@@ -75,7 +75,7 @@ switch(ValueOf($VPSOrder)){
         if(Is_Error($Comp))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
-        $NoBody = new Tag('NOBODY',new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px;'),'Вставить из примера')));
+        $NoBody = new Tag('NOBODY',new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px; cursor:pointer;','onclick'=>'javascript: if(document.VPSPasswordChangeForm.IsPasswordCreate.checked){document.VPSPasswordChangeForm.IsPasswordCreate.checked = false;}else{document.VPSPasswordChangeForm.IsPasswordCreate.checked = true;} PasswordMode(); return false;'),'Вставить из примера')));
         #-----------------------------------------------------------------------
         $Messages = Messages();
         #-----------------------------------------------------------------------

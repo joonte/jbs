@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -120,7 +119,7 @@ $Comp = Comp_Load('Form/Input',Array('name'=>'IsPasswordCreate','value'=>$Passwo
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$NoBody = new Tag('NOBODY',new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px;'),'Вставить из примера')));
+$NoBody = new Tag('NOBODY',new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px; cursor:pointer;','onclick'=>'javascript: if(document.UserRegisterForm.IsPasswordCreate.checked){document.UserRegisterForm.IsPasswordCreate.checked = false;}else{document.UserRegisterForm.IsPasswordCreate.checked = true;} PasswordMode(); return false;'),'Вставить из примера')));
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',
