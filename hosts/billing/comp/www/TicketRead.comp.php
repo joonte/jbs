@@ -322,7 +322,7 @@ switch(ValueOf($Ticket)){
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 	        #-----------------------------------------------------------------------
-		$Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN','закрыть запрос (проблема решена)')));
+		$Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'javascript: if(document.TicketReadForm.Flags.checked){document.TicketReadForm.Flags.checked = false;}else{document.TicketReadForm.Flags.checked = true;} return false;'),'закрыть запрос (проблема решена)')));
 	}else{ # user -> support
 		$Config = Config();
 		$Positions = $Config['Edesks']['Flags'];
