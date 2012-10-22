@@ -27,9 +27,6 @@ $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
 $Element = System_Element('templates/Base.xml');
 if(Is_Error($Element))

@@ -32,7 +32,6 @@ $DOM->AddAttribs('MenuLeft',Array('args'=>'User/Services'));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/DomainOrder.js}')));
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}')));
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Заказ доменного имени');
 #-------------------------------------------------------------------------------

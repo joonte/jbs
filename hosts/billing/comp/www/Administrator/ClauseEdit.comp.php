@@ -67,9 +67,6 @@ $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
 $Form = new Tag('FORM',Array('name'=>'ClauseEditForm','action'=>'?IsReloaded=yes','onsubmit'=>'return false;','method'=>'POST'));
 #-------------------------------------------------------------------------------
