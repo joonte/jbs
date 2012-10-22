@@ -49,6 +49,12 @@ switch(ValueOf($Ticket)){
         $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/TicketRead.js}'));
         #-----------------------------------------------------------------------
         $DOM->AddChild('Head',$Script);
+	#-----------------------------------------------------------------------
+	#-----------------------------------------------------------------------
+	$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}'));
+	#-----------------------------------------------------------------------
+	$DOM->AddChild('Head',$Script);
+	#-----------------------------------------------------------------------
         #-----------------------------------------------------------------------
         $DOM->AddText('Title',HtmlSpecialChars($Ticket['Theme']));
         #-----------------------------------------------------------------------
@@ -322,7 +328,7 @@ switch(ValueOf($Ticket)){
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 	        #-----------------------------------------------------------------------
-		$Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'javascript: if(document.TicketReadForm.Flags.checked){document.TicketReadForm.Flags.checked = false;}else{document.TicketReadForm.Flags.checked = true;} return false;'),'закрыть запрос (проблема решена)')));
+		$Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'Flags\'); return false;'),'закрыть запрос (проблема решена)')));
 	}else{ # user -> support
 		$Config = Config();
 		$Positions = $Config['Edesks']['Flags'];
@@ -361,7 +367,7 @@ switch(ValueOf($Ticket)){
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN','к следующему')));
+            $Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsNext\'); return false;'),'к следующему')));
           break;
           default:
             return ERROR | @Trigger_Error(101);

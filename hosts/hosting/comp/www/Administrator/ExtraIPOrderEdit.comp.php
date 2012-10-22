@@ -72,6 +72,8 @@ if(Is_Error($DOM->Load('Window')))
 #-------------------------------------------------------------------------------
 $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ExtraIPOrderEdit.js}'));
 #-------------------------------------------------------------------------------
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}'));
+#-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$ExtraIPOrderID?'Редактирование заказа на виртуальный сервер':'Добавление заказа на виртуальный сервер');
@@ -143,7 +145,7 @@ if(!$ExtraIPOrderID){
   if(Is_Error($Comp))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
-  $Table[] = Array('Добавить IP на сервере',$Comp);
+  $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsCreate\'); return false;'),'Добавить IP на сервере'),$Comp);
 }
 #-------------------------------------------------------------------------------
 $Table[] = 'Параметры заказа';

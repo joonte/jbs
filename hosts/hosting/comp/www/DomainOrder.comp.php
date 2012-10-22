@@ -32,6 +32,8 @@ $DOM->AddAttribs('MenuLeft',Array('args'=>'User/Services'));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/DomainOrder.js}')));
 #-------------------------------------------------------------------------------
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}')));
+#-------------------------------------------------------------------------------
 $DOM->AddText('Title','Заказ доменного имени');
 #-------------------------------------------------------------------------------
 $Form = new Tag('FORM',Array('name'=>'DomainOrderForm','onsubmit'=>'return false;'));
@@ -203,7 +205,7 @@ if($StepID){
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $Table[] = Array('Скрыть данные в WhoIs',$Comp);
+            $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPrivateWhoIs\'); return false;'),'Скрыть данные в WhoIs'),$Comp);
             #-------------------------------------------------------------------
             $Messages = Messages();
             #-------------------------------------------------------------------

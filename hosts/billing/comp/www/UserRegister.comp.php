@@ -45,6 +45,12 @@ $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}'));
+#-------------------------------------------------------------------------------
+$DOM->AddChild('Head',$Script);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/PasswordCheck.js}')));
 #-------------------------------------------------------------------------------
 $DOM->AddAttribs('Body',Array('onload'=>'PasswordMode();'));
@@ -119,7 +125,7 @@ $Comp = Comp_Load('Form/Input',Array('name'=>'IsPasswordCreate','value'=>$Passwo
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$NoBody = new Tag('NOBODY',new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px; cursor:pointer;','onclick'=>'javascript: if(document.UserRegisterForm.IsPasswordCreate.checked){document.UserRegisterForm.IsPasswordCreate.checked = false;}else{document.UserRegisterForm.IsPasswordCreate.checked = true;} PasswordMode(); return false;'),'Вставить из примера')));
+$NoBody = new Tag('NOBODY',new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px; cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPasswordCreate\'); PasswordMode(); return false;'),'Вставить из примера')));
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',

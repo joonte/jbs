@@ -40,6 +40,8 @@ if(Is_Error($DOM->Load('Window')))
 #-------------------------------------------------------------------------------
 $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ISPswLicenseEdit.js}'));
 #-------------------------------------------------------------------------------
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}'));
+#-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Редактирование информации о лицензии');
@@ -145,7 +147,7 @@ if(Is_Error($Comp))
 if($ISPswLicense['IsInternal'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-----------------------------------------------------------------------------
-$Table[] = Array('Внутренняя лицензия',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsInternal\'); return false;'),'Внутренняя лицензия'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsUsed','value'=>'yes'),$ISPswLicense['IsUsed']);
@@ -154,7 +156,7 @@ if(Is_Error($Comp))
 if($ISPswLicense['IsUsed'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-----------------------------------------------------------------------------
-$Table[] = Array('Используется',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsUsed\'); return false;'),'Используется'),$Comp);
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

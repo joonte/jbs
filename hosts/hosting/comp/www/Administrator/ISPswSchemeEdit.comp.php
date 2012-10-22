@@ -68,6 +68,8 @@ if(Is_Error($DOM->Load('Window')))
 #-------------------------------------------------------------------------------
 $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ISPswSchemeEdit.js}'));
 #-------------------------------------------------------------------------------
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}'));
+#-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
 $Title = ($ISPswSchemeID?'Редактирование нового тарифа на ПО':'Добавление нового тарифа на ПО');
@@ -170,7 +172,7 @@ if(Is_Error($Comp))
 if($ISPswScheme['IsActive'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Тариф активен',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsActive\'); return false;'),'Тариф активен'),$Comp);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProlong','value'=>'yes'));
 if(Is_Error($Comp))
@@ -179,7 +181,7 @@ if(Is_Error($Comp))
 if($ISPswScheme['IsProlong'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Возможность продления',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsProlong\'); return false;'),'Возможность продления'),$Comp);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSchemeChangeable','value'=>'yes'));
 if(Is_Error($Comp))
@@ -188,7 +190,7 @@ if(Is_Error($Comp))
 if($ISPswScheme['IsSchemeChangeable'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Возможность перехода на тариф',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsSchemeChangeable\'); return false;'),'Возможность перехода на тариф'),$Comp);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSchemeChange','value'=>'yes'));
 if(Is_Error($Comp))
@@ -197,7 +199,7 @@ if(Is_Error($Comp))
 if($ISPswScheme['IsSchemeChange'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Возможность перехода с тарифа',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsSchemeChange\'); return false;'),'Возможность перехода с тарифа'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsInternal','value'=>'yes'));
@@ -205,7 +207,7 @@ if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 if($ISPswScheme['IsInternal'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
-$Table[] = Array('Внутренний тариф',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsInternal\'); return false;'),'Внутренний тариф'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
@@ -261,7 +263,7 @@ if(Is_Error($Comp))
 if($ISPswScheme['IsTimeManage'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Учитывать дни пользования'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'для "вечных" - галку снять')),$Comp);
+$Table[] = Array(new Tag('NOBODY',new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsTimeManage\'); return false;'),'Учитывать дни пользования'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'для "вечных" - галку снять')),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
@@ -302,7 +304,8 @@ if($ISPswSchemeID){
     Array(
       'type'    => 'checkbox',
       'onclick' => 'form.ISPswSchemeID.value = (checked?0:value);',
-      'value'   => $ISPswSchemeID
+      'value'   => $ISPswSchemeID,
+      'name'	=> 'CreateNewTariff'
     )
   );
   if(Is_Error($Comp))

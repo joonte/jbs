@@ -73,6 +73,10 @@ $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}'));
+#-------------------------------------------------------------------------------
+$DOM->AddChild('Head',$Script);
+#-------------------------------------------------------------------------------
 $Title = ($VPSServerID?'Редактирование сервера':'Добавление сервера');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);
@@ -139,7 +143,7 @@ if(Is_Error($Comp))
 if($VPSServer['IsDefault'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Основной в группе',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsDefault\'); return false;'),'Основной в группе'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('name'=>'IsAutoBalancing','type'=>'checkbox','value'=>'yes'));
@@ -149,7 +153,7 @@ if(Is_Error($Comp))
 if($VPSServer['IsAutoBalancing'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Автобалансировка',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsAutoBalancing\'); return false;'),'Автобалансировка'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(

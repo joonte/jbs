@@ -77,6 +77,8 @@ if(Is_Error($DOM->Load('Window')))
 #-------------------------------------------------------------------------------
 $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/HostingServerEdit.js}'));
 #-------------------------------------------------------------------------------
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}'));
+#-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
 $Title = ($HostingServerID?'Редактирование сервера':'Добавление сервера');
@@ -145,7 +147,7 @@ if(Is_Error($Comp))
 if($HostingServer['IsDefault'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Основной в группе',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsDefault\'); return false;'),'Основной в группе'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('name'=>'IsAutoBalancing','type'=>'checkbox','value'=>'yes'));
@@ -155,7 +157,7 @@ if(Is_Error($Comp))
 if($HostingServer['IsAutoBalancing'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Автобалансировка',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsAutoBalancing\'); return false;'),'Автобалансировка'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
@@ -179,7 +181,7 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 if($HostingServer['NoRestartCreate'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
-$Table[] = Array('Не перезапускать apache, Create',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'NoRestartCreate\'); return false;'),'Не перезапускать apache, Create'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('name'=>'NoRestartActive','type'=>'checkbox','value'=>'yes'));
@@ -187,7 +189,7 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 if($HostingServer['NoRestartActive'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
-$Table[] = Array('Не перезапускать apache, Active',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'NoRestartActive\'); return false;'),'Не перезапускать apache, Active'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('name'=>'NoRestartSuspend','type'=>'checkbox','value'=>'yes'));
@@ -195,7 +197,7 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 if($HostingServer['NoRestartSuspend'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
-$Table[] = Array('Не перезапускать apache, Suspend',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'NoRestartSuspend\'); return false;'),'Не перезапускать apache, Suspend'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('name'=>'NoRestartDelete','type'=>'checkbox','value'=>'yes'));
@@ -203,7 +205,7 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 if($HostingServer['NoRestartDelete'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
-$Table[] = Array('Не перезапускать apache, Delete',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'NoRestartDelete\'); return false;'),'Не перезапускать apache, Delete'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('name'=>'NoRestartSchemeChange','type'=>'checkbox','value'=>'yes'));
@@ -211,7 +213,7 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 if($HostingServer['NoRestartSchemeChange'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
-$Table[] = Array('Не перезапускать apache, SchemeChange',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'NoRestartSchemeChange\'); return false;'),'Не перезапускать apache, SchemeChange'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Пользовательские аккаунты';

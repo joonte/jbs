@@ -68,6 +68,10 @@ $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}'));
+#-------------------------------------------------------------------------------
+$DOM->AddChild('Head',$Script);
+#-------------------------------------------------------------------------------
 $Title = ($ExtraIPSchemeID?'Редактирование нового тарифа ExtraIP':'Добавление нового тарифа ExtraIP');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);
@@ -156,7 +160,7 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 if($ExtraIPScheme['IsAutomatic'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
-$Table[] = Array('Автоматическое подключение/отключение',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsAutomatic\'); return false;'),'Автоматическое подключение/отключение'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes'));
@@ -166,7 +170,7 @@ if(Is_Error($Comp))
 if($ExtraIPScheme['IsActive'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Тариф активен',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsActive\'); return false;'),'Тариф активен'),$Comp);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProlong','value'=>'yes'));
 if(Is_Error($Comp))
@@ -175,7 +179,7 @@ if(Is_Error($Comp))
 if($ExtraIPScheme['IsProlong'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Возможность продления',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsProlong\'); return false;'),'Возможность продления'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(

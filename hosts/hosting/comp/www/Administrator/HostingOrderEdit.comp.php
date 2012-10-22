@@ -54,6 +54,8 @@ if(Is_Error($DOM->Load('Window')))
 #-------------------------------------------------------------------------------
 $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/HostingOrderEdit.js}'));
 #-------------------------------------------------------------------------------
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}'));
+#-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$HostingOrderID?'Редактирование заказа на хостинг':'Добавление заказа на хостинг');
@@ -161,7 +163,7 @@ if(!$HostingOrderID){
   if(Is_Error($Comp))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
-  $Table[] = Array('Создать заказ на сервере',$Comp);
+  $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsCreate\'); return false;'),'Создать заказ на сервере'),$Comp);
 }
 #-------------------------------------------------------------------------------
 $Table[] = 'Параметры доступа';

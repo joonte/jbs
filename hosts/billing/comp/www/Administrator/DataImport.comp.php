@@ -22,6 +22,10 @@ if(Is_Error($DOM->Load('Base')))
 #-------------------------------------------------------------------------------
 $DOM->AddAttribs('MenuLeft',Array('args'=>'Administrator/AddIns'));
 #-------------------------------------------------------------------------------
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}'));
+#-------------------------------------------------------------------------------
+$DOM->AddChild('Head',$Script);
+#-------------------------------------------------------------------------------
 $DOM->AddText('Title','Дополнения → Импорт данных');
 #-------------------------------------------------------------------------------
 $Table = Array();
@@ -43,7 +47,7 @@ $Comp = Comp_Load(
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Div = new Tag('DIV',Array('align'=>'right'),$Comp,new Tag('SPAN',Array('class'=>'Comment'),'удалить данные'));
+$Div = new Tag('DIV',Array('align'=>'right'),$Comp,new Tag('SPAN',Array('class'=>'Comment','style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsDelete\'); return false;'),'удалить данные'));
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',

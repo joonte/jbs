@@ -26,6 +26,8 @@ if(!IsSet($GLOBALS['__USER'])){
   #-----------------------------------------------------------------------------
   $Links['DOM']->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Logon.js}')));
   #-----------------------------------------------------------------------------
+  $Links['DOM']->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}')));
+  #-----------------------------------------------------------------------------
   $Path = System_Element('templates/TopPanel/Logon.xml');
   if(Is_Error($Path))
     return ERROR | @Trigger_Error(500);

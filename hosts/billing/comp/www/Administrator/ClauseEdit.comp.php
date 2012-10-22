@@ -67,6 +67,10 @@ $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}'));
+#-------------------------------------------------------------------------------
+$DOM->AddChild('Head',$Script);
+#-------------------------------------------------------------------------------
 $Form = new Tag('FORM',Array('name'=>'ClauseEditForm','action'=>'?IsReloaded=yes','onsubmit'=>'return false;','method'=>'POST'));
 #-------------------------------------------------------------------------------
 if($ClauseID){
@@ -167,7 +171,8 @@ if(Is_Error($Comp))
 /*if($Clause['IsProtected'])
   $Comp->AddAttribs(Array('disabled'=>'true'));*/
 #-------------------------------------------------------------------------------
-$Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN','valid DOM')));
+$Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsDOM\'); return false;'),'valid DOM')));
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',
@@ -183,7 +188,8 @@ if(Is_Error($Comp))
 if($Clause['IsPublish'])
   $Comp->AddAttribs(Array('checked'=>'true'));
 #-------------------------------------------------------------------------------
-$Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN','опубликовать')));
+$Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPublish\'); return false;'),'опубликовать')));
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',
@@ -210,7 +216,7 @@ if($ClauseID){
   if(Is_Error($Comp))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
-  $Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN',Array('class'=>'Comment'),'(закрыть редактор)')));
+  $Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN',Array('class'=>'Comment','style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsReturn\'); return false;'),'(закрыть редактор)')));
 }
 #-------------------------------------------------------------------------------
 $Table[] = $Div;

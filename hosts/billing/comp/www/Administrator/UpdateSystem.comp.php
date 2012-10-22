@@ -22,6 +22,10 @@ if(Is_Error($DOM->Load('Base')))
 #-------------------------------------------------------------------------------
 $DOM->AddAttribs('MenuLeft',Array('args'=>'Administrator/AddIns'));
 #-------------------------------------------------------------------------------
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}'));
+#-------------------------------------------------------------------------------
+$DOM->AddChild('Head',$Script);
+#-------------------------------------------------------------------------------
 $DOM->AddText('Title','Дополнения → Обслуживание системы → Обновление системы');
 #-------------------------------------------------------------------------------
 $NoBody = new Tag('NOBODY');
@@ -73,7 +77,7 @@ $Checkbox = Comp_Load(
 if(Is_Error($Checkbox))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Backup = new Tag('NOBODY',new Tag('DIV',Array('class'=>'Standard'),'Структурировать базу данных'),$Checkbox,new Tag('SPAN',Array('style'=>'font-size:11px;'),'сделать резервную копию базы'));
+$Backup = new Tag('NOBODY',new Tag('DIV',Array('class'=>'Standard'),'Структурировать базу данных'),$Checkbox,new Tag('SPAN',Array('style'=>'font-size:11px; cursor:pointer;','onclick'=>'ChangeCheckBox(\'Backup\'); return false;'),'сделать резервную копию базы'));
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Buttons/Panel',Array('Comp'=>$Comp1,'Name'=>'Проверить наличие обновлений'),$Img,Array('Comp'=>$Comp2,'Name'=>'Применить обновления'),$Img,Array('Comp'=>$Comp3,'Name'=>$Backup));
 if(Is_Error($Comp))

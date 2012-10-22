@@ -40,10 +40,10 @@
     </TD>
     <TD width="5" />
     <TD valign="middle">
-     <INPUT type="checkbox" id="TopPanelIsRemember" />
+     <INPUT type="checkbox" id="TopPanelIsRemember" name="TopPanelIsRemember" />
     </TD>
     <TD valign="middle">
-     <SPAN style="font-size:11px;">[запомнить]</SPAN>
+     <SPAN onclick="ChangeCheckBox('TopPanelIsRemember'); return false;" style="font-size:11px; cursor:pointer;">[запомнить]</SPAN>
     </TD>
     <TD width="5" />
     <TD>

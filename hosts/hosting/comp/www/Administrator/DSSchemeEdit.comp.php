@@ -83,6 +83,10 @@ $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}'));
+#-------------------------------------------------------------------------------
+$DOM->AddChild('Head',$Script);
+#-------------------------------------------------------------------------------
 $Title = ($DSSchemeID?'Редактирование нового тарифа DS':'Добавление нового тарифа DS');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);
@@ -200,7 +204,7 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 if($DSScheme['IsCalculateNumServers'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Автоматический пересчёт числа серверов'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'тариф отключается, если нет серверов')),$Comp);
+$Table[] = Array(new Tag('NOBODY',new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsCalculateNumServers\'); return false;'),'Автоматический пересчёт числа серверов'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'тариф отключается, если нет серверов')),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes'));
@@ -210,7 +214,8 @@ if(Is_Error($Comp))
 if($DSScheme['IsActive'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Тариф активен',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsActive\'); return false;'),'Тариф активен'),$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProlong','value'=>'yes'));
 if(Is_Error($Comp))
@@ -219,11 +224,8 @@ if(Is_Error($Comp))
 if($DSScheme['IsProlong'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Возможность продления',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsProlong\'); return false;'),'Возможность продления'),$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSchemeChangeable','value'=>'yes'));
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',

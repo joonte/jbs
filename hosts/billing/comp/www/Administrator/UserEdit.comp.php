@@ -41,6 +41,10 @@ $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}'));
+#-------------------------------------------------------------------------------
+$DOM->AddChild('Head',$Script);
+#-------------------------------------------------------------------------------
 $DOM->AddText('Title','Редактирование пользователя');
 #-------------------------------------------------------------------------------
 $Table = Array('Общая информация');
@@ -135,7 +139,8 @@ if(Is_Error($Comp))
 if($User['IsManaged'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Возможность управления',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsManaged\'); return false;'),'Возможность управления'),$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsInheritGroup','value'=>'yes'));
 if(Is_Error($Comp))
@@ -144,7 +149,8 @@ if(Is_Error($Comp))
 if($User['IsInheritGroup'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Наследовать группу патнера',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsInheritGroup\'); return false;'),'Наследовать группу патнера'),$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Условия отложенного платежа';
 #-------------------------------------------------------------------------------
@@ -198,7 +204,8 @@ if(Is_Error($Comp))
 if($User['IsActive'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Активный пользователь',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsActive\'); return false;'),'Активный пользователь'),$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsNotifies','value'=>'yes'));
 if(Is_Error($Comp))
@@ -207,7 +214,8 @@ if(Is_Error($Comp))
 if($User['IsNotifies'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Рассылать уведомления',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsNotifies\'); return false;'),'Рассылать уведомления'),$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsHidden','value'=>'yes'));
 if(Is_Error($Comp))
@@ -216,7 +224,8 @@ if(Is_Error($Comp))
 if($User['IsHidden'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Скрытый пользователь',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsHidden\'); return false;'),'Скрытый пользователь'),$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProtected','value'=>'yes'));
 if(Is_Error($Comp))
@@ -225,7 +234,8 @@ if(Is_Error($Comp))
 if($User['IsProtected'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Защищенный пользователь',$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsProtected\'); return false;'),'Защищенный пользователь'),$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/TextArea',
