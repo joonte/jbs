@@ -449,7 +449,8 @@ if($StepID){
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $NoBody->AddChild(new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px;'),'Заказать хостинг без домена')));
+	    $OnClick = "ChangeCheckBox('IsNoDomain'); document.getElementsByName('Domain')[0].disabled = document.getElementsByName('IsNoDomain')[0].checked?true:false; document.getElementsByName('Submit')[0].onclick = (document.getElementsByName('IsNoDomain')[0].checked?function(){HostingOrder();}:function(){ShowWindow('/HostingOrder',FormGet(form));});";
+            $NoBody->AddChild(new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px; cursor:pointer;','onclick'=>$OnClick),'Заказать хостинг без домена')));
           }
           #---------------------------------------------------------------------
           $Comp = Comp_Load(
