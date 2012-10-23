@@ -241,7 +241,7 @@ if($Foto){
   if(Is_Error($Comp))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
-  $Table[] = Array('Удалить фотографию',$Comp);
+  $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsClear\'); return false;'),'Удалить фотографию'),$Comp);
 }
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
