@@ -203,23 +203,23 @@ $Table[] = Array('Конечная дата',$Comp);
 #-------------------------------------------------------------------------------
 $Table[] = 'Уровень детализации';
 #-------------------------------------------------------------------------------
-$Input = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'Details[]','value'=>'ByDays'));
+$Input = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'Details[]','value'=>'ByDays','id'=>'ByDays'));
 if(Is_Error($Input))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('По дням',$Input);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'ByDays\'); return false;'),'По дням'),$Input);
 #-------------------------------------------------------------------------------
-$Input = Comp_Load('Form/Input',Array('type'=>'checkbox','checked'=>'true','name'=>'Details[]','value'=>'ByMonth'));
+$Input = Comp_Load('Form/Input',Array('type'=>'checkbox','checked'=>'true','name'=>'Details[]','value'=>'ByMonth','id'=>'ByMonth'));
 if(Is_Error($Input))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('По месяцам',$Input);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'ByMonth\'); return false;'),'По месяцам'),$Input);
 #-------------------------------------------------------------------------------
-$Input = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'Details[]','value'=>'ByQuarter'));
+$Input = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'Details[]','value'=>'ByQuarter','id'=>'ByQuarter'));
 if(Is_Error($Input))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('По кварталам',$Input);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'ByQuarter\'); return false;'),'По кварталам'),$Input);
 #-------------------------------------------------------------------------------
 $Table[] = 'Виды отчетов';
 #-------------------------------------------------------------------------------
@@ -244,11 +244,11 @@ foreach($HostsIDs as $HostID){
     if(Is_Error($Comp))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
-    $Input = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'StatisticsIDs[]','value'=>$StatisticID));
+    $Input = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'StatisticsIDs[]','value'=>$StatisticID,'id'=>$StatisticID));
     if(Is_Error($Input))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
-    $Table[] = Array($Comp['Title'],$Input);
+    $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>SPrintF('ChangeCheckBox(\'%s\'); return false;',$StatisticID)),$Comp['Title']),$Input);
   }
 }
 #-------------------------------------------------------------------------------
