@@ -95,7 +95,7 @@ if(!$TypeID){
   if(Is_Error($Comp))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
-  $Table[] = Array('Сформировать договор позже',new Tag('NOBODY',$Comp,new Tag('SPAN',Array('class'=>'Comment'),'(заполнить минимальные данные)')));
+  $Table[] = Array('Сформировать договор позже',new Tag('NOBODY',$Comp,new Tag('SPAN',Array('class'=>'Comment','style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsSimple\'); return false;'),'(заполнить минимальные данные)')));
   #-----------------------------------------------------------------------------
   $Comp = Comp_Load(
     'Form/Input',
