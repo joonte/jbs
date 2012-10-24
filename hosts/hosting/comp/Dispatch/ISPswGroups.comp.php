@@ -9,6 +9,10 @@ $__args_list = Array('IsSearch');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
+
+# not work, need fix
+return FALSE;
+
 $ISPswGroups = DB_Select('ISPswGroups',Array('ID','Address'),Array('SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($ISPswGroups)){
