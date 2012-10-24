@@ -166,7 +166,7 @@ foreach($HostsIDs as $HostID){
   }
 }
 #-------------------------------------------------------------------------------
-$Div = new Tag('DIV',Array('style'=>'overflow:scroll;overflow-x:auto;height:200px;padding-right:5px;'));
+$Div = new Tag('DIV',Array('style'=>'overflow:scroll;overflow-x:auto;height:400px;padding-right:5px;'));
 #-------------------------------------------------------------------------------
 if(Count($Filters)){
 Debug(print_r($Filters,true));
