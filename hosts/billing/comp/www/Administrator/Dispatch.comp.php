@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -108,6 +107,7 @@ foreach(Array_Keys($Methods) as $MethodID){
     'Form/Input',
     Array(
       'name'  => 'MethodsIDs[]',
+      'id'    => $MethodID,
       'type'  => 'checkbox',
       'value' =>  $MethodID
     )
@@ -115,7 +115,7 @@ foreach(Array_Keys($Methods) as $MethodID){
   if(Is_Error($Comp))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
-  $Nobody->AddChild(new Tag('DIV',$Comp,new Tag('SPAN',$Method['Name'])));
+  $Nobody->AddChild(new Tag('DIV',$Comp,new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>SPrintF('ChangeCheckBox(\'%s\'); return false;',$MethodID)),$Method['Name'])));
 }
 #-------------------------------------------------------------------------------
 $Table[] = $Nobody;
@@ -169,6 +169,7 @@ foreach($HostsIDs as $HostID){
 $Div = new Tag('DIV',Array('style'=>'overflow:scroll;overflow-x:auto;height:200px;padding-right:5px;'));
 #-------------------------------------------------------------------------------
 if(Count($Filters)){
+Debug(print_r($Filters,true));
   #-----------------------------------------------------------------------------
   foreach(Array_Keys($Filters) as $FilterID){
     #---------------------------------------------------------------------------
@@ -185,6 +186,7 @@ if(Count($Filters)){
       'Form/Input',
       Array(
         'name'  => 'FiltersIDs[]',
+	'id'    => $FilterID,
         'type'  => 'checkbox',
         'value' =>  SPrintF('%s|%s',$Filter['Dispatch'],$FilterID)
       )
@@ -196,7 +198,7 @@ if(Count($Filters)){
     if(Is_Error($Name))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
-    $Div->AddChild(new Tag('DIV',$Comp,new Tag('SPAN',$Name)));
+    $Div->AddChild(new Tag('DIV',$Comp,new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>SPrintF('ChangeCheckBox(\'%s\'); return false;',$FilterID)),$Name)));
   }
 }else
   $Div->AddChild(new Tag('SPAN','Фильтры не найдены'));
