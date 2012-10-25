@@ -11,7 +11,21 @@ Eval(COMP_INIT);
 /******************************************************************************/
 // проверяем, не системный ли
 if($User['ID'] < 2001)
-  return new gException('USER_CAN_NOT_DELETED',SPrintF('Пользователь [%s] не может быть удален, поскольку он системный',$User['Email']));
+	return new gException('USER_CAN_NOT_DELETED',SPrintF('Пользователь [%s] не может быть удален, поскольку он системный',$User['Email']));
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# проверяем наличие любых счетов
+$Count = DB_Count('InvoicesOwners',Array('Where'=>SPrintF("`UserID` = %u",$User['ID'])));
+if($Count)
+	return new gException('USER_HAVE_INVOICES',SPrintF('Пользователь [%s] не может быть удален, поскольку у него есть счета на оплату',$User['Email']));
+# проверяем наличие оплаченных счетов
+$Count = DB_Count('InvoicesOwners',Array('Where'=>SPrintF("`StatusID` = 'Payed' AND `UserID` = %u",$User['ID'])));
+if($Count)
+	return new gException('USER_HAVE_PAYED_INVOICES',SPrintF('Пользователь [%s] не может быть удален, поскольку у него есть оплаченные счета',$User['Email']));
+# проверяем наличие заказов
+$Count = DB_Count('OrdersOwners',Array('Where'=>SPrintF("`UserID` = %u",$User['ID'])));
+if($Count)
+	return new gException('USER_HAVE_INVOICES',SPrintF('Пользователь [%s] не может быть удален, поскольку у него есть заказанные услуги',$User['Email']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // удаляем события этого юзера
