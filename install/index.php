@@ -98,6 +98,7 @@ echo <<<EOD
   <TITLE>Установка биллинговой системы</TITLE>
   <META http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <LINK href="/styles/root/Css/Standard.css" rel="stylesheet" type="text/css" />
+  <SCRIPT type="text/javascript" src="/styles/root/Js/CheckBox.js"></SCRIPT>
   <STYLE>body {margin:10px;}</STYLE>
  </HEAD>
  <BODY>
@@ -425,7 +426,7 @@ echo <<<EOD
  </TR>
  <TR>
   <TD align="right">
-   <INPUT type="checkbox" onclick="document.getElementById('Continue').disabled=!this.checked;" />Я согласен
+   <INPUT type="checkbox" onclick="document.getElementById('Continue').disabled=!this.checked;" id="Agree" /><SPAN style="cursor:pointer;" onclick="ChangeCheckBox('Agree'); document.getElementById('Continue').disabled=!document.getElementById('Agree').checked; return false;">Я согласен</SPAN>
    <INPUT id="Continue" type="submit" value="Продолжить" disabled="true" />
   </TD>
  </TR>
