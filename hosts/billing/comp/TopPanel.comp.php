@@ -69,7 +69,7 @@ if(!IsSet($GLOBALS['__USER'])){
         break;
         case 'array':
           #---------------------------------------------------------------------
-          $Table = new Tag('TABLE',Array('class'=>'Standard','cellspacing'=>5));
+          $Table = new Tag('TABLE',Array('class'=>'Standard','cellspacing'=>5,'width'=>'1000'));
 	  #---------------------------------------------------------------------
 	  #---------------------------------------------------------------------
 	  if(SizeOf($Contracts) > 2){
@@ -80,7 +80,7 @@ if(!IsSet($GLOBALS['__USER'])){
 				'colspan'=>3,
 				'style'=>'cursor:pointer;',
 				'onclick'=>SPrintF("var Style = document.getElementById('%s').style;Style.display = (Style.display != 'none'?'none':'');",$UniqID)),
-			'Просмотр списка ваших договоров'
+				'Просмотр списка ваших договоров'
 			)));
 		$Table->AddChild(new Tag('TBODY',Array('id'=>$UniqID,'style'=>'display:none;')));
 	  }
@@ -95,9 +95,9 @@ if(!IsSet($GLOBALS['__USER'])){
             $A = new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/InvoiceMake',{ContractID:%u,StepID:1});",$Contract['ID'])),'[пополнить]');
             #-------------------------------------------------------------------
             $Table->AddChild(new Tag('TR',
-	    				new Tag('TD',Array('class'=>'Comment'),$Contract['Customer']),
-					new Tag('TD',SPrintF('баланс: %s',$Comp)),
-					new Tag('TD',$A))
+	    				new Tag('TD',Array('class'=>'Comment','style'=>'text-align:left;overflow-x:hidden','width'=>750),$Contract['Customer']),
+					new Tag('TD',Array('style'=>'text-align:left;'),SPrintF('баланс: %s',$Comp)),
+					new Tag('TD',Array('style'=>'text-align:left'),$A))
 				);
           }
           #---------------------------------------------------------------------
