@@ -100,15 +100,23 @@ if($FromContract['Balance'] < $Summ){
 		return ERROR | @Trigger_Error(500);
 	return new gException('CONTRACT_BALLANCE_TOO_LOW','На балансе выбранного договора слишком мало средств. Введите сумму меньшую или равную ' . $fSumm);
 }
-
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
 #-----------------------------TRANSACTION-------------------------------
 if(Is_Error(DB_Transaction($TransactionID = UniqID('ContractFundsTransfer'))))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------
-
+$NumberFrom = Comp_Load('Formats/Contract/Number',$FromContract['ID']);
+if(Is_Error($NumberFrom))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------
+$NumberTo = Comp_Load('Formats/Contract/Number',$ToContract['ID']);
+if(Is_Error($NumberTo))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------
 # снимаем с одного договора деньгу
 #Debug(print_r($GLOBALS, true));
-$Comment = "Перевод на договор '" . $ToContract['Customer'] . "', запрошено с IP адреса '" . $GLOBALS['_SERVER']['REMOTE_ADDR'] . "'";
+$Comment = "Перевод на договор '#" . $NumberTo . "', запрошено с IP адреса '" . $GLOBALS['_SERVER']['REMOTE_ADDR'] . "'";
 $Comp = Comp_Load(
 			'www/Administrator/API/PostingMake',
 			Array(
@@ -119,7 +127,7 @@ $Comp = Comp_Load(
 			)
 		);
 # кладём деньгу на другой договор
-$Comment = "Перевода с договора '" . $FromContract['Customer'] . "', запрошено с IP адреса '" . $GLOBALS['_SERVER']['REMOTE_ADDR'] . "'";
+$Comment = "Перевод с договора '#" . $NumberFrom . "', запрошено с IP адреса '" . $GLOBALS['_SERVER']['REMOTE_ADDR'] . "'";
 $Comp = Comp_Load(
 			'www/Administrator/API/PostingMake',
 			Array(
@@ -139,7 +147,7 @@ if(Is_Error($Summ))
 $Event = Array(
 		'UserID'	=> $FromContract['UserID'],
 		'PriorityID'	=> 'Billing',
-		'Text'		=> SPrintF("Осуществлён перевод с договора '%s' (#%u) на договор '%s' (#%u), сумма перевода %01.2f",$FromContract['Customer'],$FromContract['ID'],$ToContract['Customer'],$ToContract['ID'],$Summ)
+		'Text'		=> SPrintF("Осуществлён перевод с договора '%s' (#%s) на договор '%s' (#%s), сумма перевода %01.2f",$FromContract['Customer'],$NumberFrom,$ToContract['Customer'],$NumberTo,$Summ)
 		);
 $Event = Comp_Load('Events/EventInsert',$Event);
 if(!$Event)
