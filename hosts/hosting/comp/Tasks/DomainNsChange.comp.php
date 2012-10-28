@@ -64,7 +64,7 @@ switch(ValueOf($DomainOrder)){
 		    			'UserID'	=> $DomainOrder['UserID'],
 					'PriorityID'	=> 'Error',
 					'Text'		=> SPrintF('Не удалось сменить именные сервера заказу домена (%s.%s) в автоматическом режиме, причина (%s).',$DomainOrder['DomainName'],$DomainOrder['DomainZone'],$DomainNsChange->String),
-					'IsReaded'	=> FALSE
+					'IsReaded'	=> TRUE
 		                  );
                      $Event = Comp_Load('Events/EventInsert',$Event);
                      if(!$Event)
