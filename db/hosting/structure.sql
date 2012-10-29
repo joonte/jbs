@@ -1267,8 +1267,8 @@ CREATE TABLE `OrdersConsider` (
 
 -- SEPARATOR
 /* общая таблица для бонусов. реализация JBS-157 */
-DROP TABLE IF EXISTS `OrdersBonuses`;
-CREATE TABLE `OrdersBonuses` (
+DROP TABLE IF EXISTS `Bonuses`;
+CREATE TABLE `Bonuses` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `CreateDate` int(11) default '0',	-- дата создания бонуса
   `ExpirationDate` int(11) default '0', -- дата окончания возможности заюзать бонус
@@ -1281,18 +1281,18 @@ CREATE TABLE `OrdersBonuses` (
   `Comment` char(255) default '',	-- комментарий к бонусу
   PRIMARY KEY(`ID`),
   /* просто ключ, чтоб не перебирать всю таблицу при поиске */
-  KEY `OrdersBonusesSchemeID` (`SchemeID`),
+  KEY `BonusesSchemeID` (`SchemeID`),
   /* внешний ключ на юзера */
-  KEY `OrdersBonusesUserID` (`UserID`),
-  CONSTRAINT `OrdersBonusesUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `BonusesUserID` (`UserID`),
+  CONSTRAINT `BonusesUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   /* внешний ключ на сервис */
-  KEY `OrdersBonusesServiceID` (`ServiceID`),
-  CONSTRAINT `OrdersBonusesServiceID` FOREIGN KEY (`ServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `BonusesServiceID` (`ServiceID`),
+  CONSTRAINT `BonusesServiceID` FOREIGN KEY (`ServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* общая таблица для политик. реализация JBS-158 */
-DROP TABLE IF EXISTS `OrdersPolitics`;
-CREATE TABLE `OrdersPolitics` (
+DROP TABLE IF EXISTS `Politics`;
+CREATE TABLE `Politics` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `CreateDate` int(11) default '0',	-- дата создания политики
   `ExpirationDate` int(11) default '0', -- дата окончания действия политики
@@ -1307,20 +1307,20 @@ CREATE TABLE `OrdersPolitics` (
   `Comment` char(255) default '',       -- комментарий к политике
   PRIMARY KEY(`ID`),
   /* просто ключи для тарифов */
-  KEY `OrdersPoliticsFromSchemeID` (`FromSchemeID`),
+  KEY `PoliticsFromSchemeID` (`FromSchemeID`),
   KEY `ToPoliticsFromSchemeID` (`ToSchemeID`),
   /* внешний ключ на группы юзеров */
-  KEY `OrdersPoliticsGroupID` (`GroupID`),
-  CONSTRAINT `OrdersPoliticsGroupID` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `PoliticsGroupID` (`GroupID`),
+  CONSTRAINT `PoliticsGroupID` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   /* внешний ключ на юзеров */
-  KEY `OrdersPoliticsUserID` (`UserID`),
-  CONSTRAINT `OrdersPoliticsUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `PoliticsUserID` (`UserID`),
+  CONSTRAINT `PoliticsUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   /* внешний ключ на сервис, при заказе которого работает политика */
-  KEY `OrdersPoliticsFromServiceID` (`FromServiceID`),
-  CONSTRAINT `OrdersPoliticsFromServiceID` FOREIGN KEY (`FromServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `PoliticsFromServiceID` (`FromServiceID`),
+  CONSTRAINT `PoliticsFromServiceID` FOREIGN KEY (`FromServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   /* внешний ключ на сервис, на который даётся бонус этой политикой */
-  KEY `OrdersPoliticsToServiceID` (`ToServiceID`),
-  CONSTRAINT `OrdersPoliticsToServiceID` FOREIGN KEY (`ToServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `PoliticsToServiceID` (`ToServiceID`),
+  CONSTRAINT `PoliticsToServiceID` FOREIGN KEY (`ToServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

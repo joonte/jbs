@@ -426,9 +426,9 @@ DELIMITER ;
 
 /* реализация JBS-157 */
 /*
-DROP TRIGGER IF EXISTS `OrdersBonusesOnInsert`;
+DROP TRIGGER IF EXISTS `BonusesOnInsert`;
 DELIMITER |
-CREATE DEFINER = CURRENT_USER TRIGGER `OrdersBonusesOnInsert` BEFORE INSERT ON `OrdersBonuses`
+CREATE DEFINER = CURRENT_USER TRIGGER `BonusesOnInsert` BEFORE INSERT ON `Bonuses`
   FOR EACH ROW BEGIN
     IF NEW.`CreateDate` = 0
       THEN
