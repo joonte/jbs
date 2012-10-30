@@ -186,10 +186,11 @@
  </Status>
 </Columns>
 <Sequence>
- <ListElement>Number</ListElement>
+ <ListElement>SelectID</ListElement>
  <ListElement>ExtendedMenu</ListElement>
- <ListElement>OrderType</ListElement>
+ <ListElement>Number</ListElement>
  <ListElement>Owner</ListElement>
+ <ListElement>OrderType</ListElement>
  <ListElement>Scheme</ListElement>
  <ListElement>Expiration</ListElement>
  <ListElement>Status</ListElement>
