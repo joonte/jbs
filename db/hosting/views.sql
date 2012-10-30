@@ -72,7 +72,7 @@ DROP TABLE IF EXISTS `DomainsSchemesOwners`;
 CREATE
   VIEW `DomainsSchemesOwners` AS
 SELECT
-  `DomainsSchemes`.*
+  `DomainsSchemes`.*, `DomainsSchemes`.`Name` AS `PackageID`
 FROM
   `DomainsSchemes`;
 #-------------------------------------------------------------------------------

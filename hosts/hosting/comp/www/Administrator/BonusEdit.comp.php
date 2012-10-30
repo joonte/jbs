@@ -2,10 +2,6 @@
 
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
-
-# JBS-157
-
-
 /******************************************************************************/
 /******************************************************************************/
 Eval(COMP_INIT);
@@ -56,12 +52,9 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+$DOM->AddAttribs('Body',Array('onload'=>SPrintF("GetSchemes(%s,'SchemeID','%s');",$Bonus['ServiceID'],$Bonus['SchemeID'])));
+#-------------------------------------------------------------------------------
 $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/BonusEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/BonusEdit.js}'));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
@@ -85,7 +78,7 @@ switch(ValueOf($Services)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return new gException('SERVICES_NOT_FOUND','Для назначения бонуса необходим хотябы один активный сервис');
+	return new gException('SERVICES_NOT_FOUND','Для назначения бонуса необходим хотя бы один активный сервис');
 	break;
 case 'array':
 	#---------------------------------------------------------------------------
@@ -98,7 +91,7 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID','onchange'=>'GetSchemes(this.value);'),$Options,$Bonus['ServiceID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ServiceID','onchange'=>SPrintF("GetSchemes(this.value,'SchemeID','%s');",$Bonus['SchemeID'])),$Options,$Bonus['ServiceID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -108,11 +101,12 @@ $Table[] = Array('Сервис',$Comp);
 # надо как-то динамически подсасывать тарифы, на основе выбора ServiceID
 $Options = Array('Любой тариф');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'Scheme'),$Options,$Bonus['SchemeID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID','id'=>'SchemeID','disabled'=>TRUE),$Options,$Bonus['SchemeID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Тариф',new Tag('SPAN',Array('id'=>'Scheme'),$Comp));
+#$Table[] = Array('Тариф',new Tag('SPAN',Array('id'=>'Scheme'),$Comp));
+$Table[] = Array('Тариф',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 /*

@@ -16,28 +16,48 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Result = Array();
+$Status = 'Exception';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($ServiceID == 10000){ # hosting
-	#-------------------------------------------------------------------------------
-	$Schemes = DB_Select('HostingSchemesOwners',Array('ID','Name','PackageID'),Array('SortOn'=>'SortID'));
-	#-------------------------------------------------------------------------------
-	switch(ValueOf($Schemes)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		return new gException('NO_RESULT','Пользователи не найдены');
-	case 'array':
-		foreach($Schemes as $Scheme)
-			$Result[UniqID('ID')] = Array('Value'=>$Scheme['ID'],'Label'=>SPrintF('%s (%s)',$Scheme['Name'],$Scheme['PackageID']));
-		break;
-	default:
-		return ERROR | @Trigger_Error(101);
-	}
+if($ServiceID == 0)
+	return Array('Options'=>$Result,'Status'=>$Status);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# достаём код сервиса
+Debug("[comp/www/Administrator/AutoComplite/SchemeID]: ServiceID = " . $ServiceID);
+$Service = DB_Select('ServicesOwners',Array('ID','Name','Code'),Array('UNIQ','ID'=>$ServiceID));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Service)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('NO_SERVICE','Выбранный сервис не найден');
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
-
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return Array('Options'=>$Result,'Status'=>'Ok');
+$Schemes = DB_Select(SPrintF('%sSchemesOwners',$Service['Code']),Array('ID','Name','PackageID'),Array('SortOn'=>'SortID'));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Schemes)){
+case 'error':
+return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('NO_RESULT','Тарифы не найдены');
+case 'array':
+	foreach($Schemes as $Scheme)
+		$Result[UniqID('ID')] = Array('Value'=>$Scheme['ID'],'Label'=>SPrintF('%s (%s)',$Scheme['Name'],$Scheme['PackageID']));
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(SizeOf($Result) > 0)
+	$Status = 'Ok';
+#-------------------------------------------------------------------------------
+return Array('Options'=>$Result,'Status'=>$Status);
 
 ?>
