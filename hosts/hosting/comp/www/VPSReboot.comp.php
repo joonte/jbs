@@ -48,80 +48,44 @@ switch(ValueOf($VPSOrder)){
         if(Is_Error($DOM->Load('Window')))
           return ERROR | @Trigger_Error(500);
 	#-----------------------------------------------------------------------
-	 $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/VPSReboot.js}'));
-	#-----------------------------------------------------------------------
-	$DOM->AddChild('Head',$Script);
+	$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
         #-----------------------------------------------------------------------
-        $DOM->AddText('Title','Перезагрузка виртуального сервера');
+	$Title = SPrintF('Перезагрузка виртуального сервера %s',$VPSOrder['Login']);
+	#-----------------------------------------------------------------------
+        $DOM->AddText('Title',$Title);
         #-----------------------------------------------------------------------
         $Text = new Tag('SPAN',SPrintF('Вы действительно хотите перезагрузить виртуальный сервер %s?',$VPSOrder['Login']));
-
-#-----------------------------------------------------------------------
-
-#-----------------------------------------------------------------------
-
-$Comp = Comp_Load(
-
-'Form/Input',
-
-Array(
-
-'type'    => 'button',
-
-'onclick' => "VPSReboot();",
-
-'value'   => 'Перезагрузить'
-
-)
-
-);
-
-if(Is_Error($Comp))
-
-return ERROR | @Trigger_Error(500);
-
-#-----------------------------------------------------------------------
-
-
-#-----------------------------------------------------------------------
-
-$Button = new Tag('CENTER',$Comp);
-
-
-#-----------------------------------------------------------------------
-
-$Form = new Tag('FORM',Array('name'=>'VPSRebootForm','onsubmit'=>'return false;'),$Text,new Tag('BR'),new Tag('BR'),$Button);
-
-#-----------------------------------------------------------------------
-
-$Comp = Comp_Load(
-
-'Form/Input',
-
-Array(
-
-'type'  => 'hidden',
-
-'name'  => 'VPSOrderID',
-
-'value' => $VPSOrder['ID']
-
-
-)
-
-);
-
-if(Is_Error($Comp))
-
-return ERROR | @Trigger_Error(500);
-
-
-
-#-----------------------------------------------------------------------
-
-$Form->AddChild($Comp);
-
-#-----------------------------------------------------------------------
+	#-----------------------------------------------------------------------
+	#-----------------------------------------------------------------------
+	$Comp = Comp_Load(
+			'Form/Input',
+			Array(
+				'type'    => 'button',
+				'onclick' => SPrintF("FormEdit('/API/VPSReboot','VPSRebootForm','%s');",$Title),
+				'value'   => 'Перезагрузить'
+				)
+			);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-----------------------------------------------------------------------
+	#-----------------------------------------------------------------------
+	$Button = new Tag('CENTER',$Comp);
+	#-----------------------------------------------------------------------
+	$Form = new Tag('FORM',Array('name'=>'VPSRebootForm','onsubmit'=>'return false;'),$Text,new Tag('BR'),new Tag('BR'),$Button);
+	#-----------------------------------------------------------------------
+	$Comp = Comp_Load(
+			'Form/Input',
+			Array(
+				'type'  => 'hidden',
+				'name'  => 'VPSOrderID',
+				'value' => $VPSOrder['ID']
+			)
+		);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-----------------------------------------------------------------------
+	$Form->AddChild($Comp);
+	#-----------------------------------------------------------------------
         $DOM->AddChild('Into',$Form);
         #-----------------------------------------------------------------------
         if(Is_Error($DOM->Build(FALSE)))
