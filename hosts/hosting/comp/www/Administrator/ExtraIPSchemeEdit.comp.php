@@ -64,9 +64,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ExtraIPSchemeEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Title = ($ExtraIPSchemeID?'Редактирование нового тарифа ExtraIP':'Добавление нового тарифа ExtraIP');
@@ -335,8 +333,8 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'ExtraIPSchemeEdit();',
-    'value'   => 'Сохранить'
+    'onclick' => SPrintF("FormEdit('/Administrator/API/ExtraIPSchemeEdit','ExtraIPSchemeEditForm','%s');",$Title),
+    'value'   => ($ExtraIPSchemeID?'Сохранить':'Добавить')
   )
 );
 if(Is_Error($Comp))

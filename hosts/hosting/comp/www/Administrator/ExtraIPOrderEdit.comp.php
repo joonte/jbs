@@ -70,11 +70,11 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ExtraIPOrderEdit.js}'));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$Title = ($ExtraIPOrderID?'Редактирование заказа на выделенный IP адрес':'Добавление заказа на выделенный IP адрес');
 #-------------------------------------------------------------------------------
-$DOM->AddText('Title',$ExtraIPOrderID?'Редактирование заказа на виртуальный сервер':'Добавление заказа на виртуальный сервер');
+$DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
 $Table = $Options = Array();
 #-------------------------------------------------------------------------------
@@ -193,8 +193,8 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'ExtraIPOrderEdit();',
-    'value'   => 'Сохранить'
+    'onclick' => SPrintF("FormEdit('/Administrator/API/ExtraIPOrderEdit','ExtraIPOrderEditForm','%s');",$Title),
+    'value'   => ($ExtraIPOrderID?'Сохранить':'Добавить')
   )
 );
 if(Is_Error($Comp))

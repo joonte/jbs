@@ -51,9 +51,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ExtraIPBonusEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $Title = ($ExtraIPBonusID?'Редактирование бонуса на IP адрес':'Добавление нового бонуса на IP адрес');
 #-------------------------------------------------------------------------------
@@ -153,7 +151,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'ExtraIPBonusEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/ExtraIPBonusEdit','ExtraIPBonusEditForm','%s');",$Title),
     'value'   => ($ExtraIPBonusID?'Сохранить':'Добавить')
   )
 );

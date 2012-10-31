@@ -50,9 +50,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ExtraIPPoliticEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $Title = ($ExtraIPPoliticID?'Редактирование ценовой политики на IP адреса':'Добавление ценовой политики на IP адреса');
 #-------------------------------------------------------------------------------
@@ -123,7 +121,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'ExtraIPPoliticEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/ExtraIPPoliticEdit','ExtraIPPoliticEditForm','%s');",$Title),
     'value'   => ($ExtraIPPoliticID?'Сохранить':'Добавить')
   )
 );
