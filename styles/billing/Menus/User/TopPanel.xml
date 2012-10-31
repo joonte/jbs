@@ -17,7 +17,7 @@
    <Text>Мой офис</Text>
    <Prompt>Управление профилями, договорами, счетами на оплату и т.д.</Prompt>
    <Paths>
-    <UniqID>\/(Profiles|Contracts|ContractsEnclosures|Invoices|WorksComplite|WorksCompliteReports|MotionDocuments|Postings|Tasks|DependUsers|DependUsersStatistic)$</UniqID>
+    <UniqID>\/(Profiles|Contracts|ContractsEnclosures|Invoices|Bonuses|WorksComplite|WorksCompliteReports|MotionDocuments|Postings|Tasks|DependUsers|DependUsersStatistic)$</UniqID>
    </Paths>
    <Href>/Profiles</Href>
  </ID300>

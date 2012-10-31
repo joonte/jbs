@@ -36,6 +36,15 @@
   <Level>1</Level>
  </ListElement>
  <ListElement>
+  <Text>Бонусы</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/(Bonuses|Politics|DomainPolitics|PromoCodes)$</UniqID>
+  </Paths>
+  <Href>/Administrator/Bonuses</Href>
+  <Level>1</Level>
+  <Prompt>Скидки, бонусы, промокоды...</Prompt>
+ </ListElement>
+ <ListElement>
   <Text>Выполненные работы</Text>
   <Paths>
    <UniqID>^\/Administrator\/(WorksComplite|WorksCompliteReports)$</UniqID>

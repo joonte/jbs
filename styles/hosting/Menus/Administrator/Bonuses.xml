@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Бонусы</Text>
+  <Prompt>Назначенные скидки клиентам на определённые периоды</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/Bonuses$</UniqID>
+  </Paths>
+  <Href>/Administrator/Bonuses</Href>
+ </ListElement>
+ <!-- *********************************************************************** -->
+ <ListElement>
+  <Text>Ценовые политики</Text>
+  <Prompt>Правила назначения бонусов при оплате заказов на различные периоды</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/Politics$</UniqID>
+  </Paths>
+  <Href>/Administrator/Politics</Href>
+ </ListElement>
+ <!-- *********************************************************************** -->
+ <ListElement>
+  <Text>Группы тарифов</Text>
+  <Prompt>Группировка тарифов, для удобства управления ценовыми политиками, бонусами и промокодами</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/SchemesGroups$</UniqID>
+  </Paths>
+  <Href>/Administrator/SchemesGroups</Href>
+ </ListElement>
+ <!-- *********************************************************************** -->
+ <ListElement>
+  <Text>Доменные политики</Text>
+  <Prompt>Правила назначения бонусов на домены при оплате заказов на различные периоды</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/DomainsPolitics$</UniqID>
+  </Paths>
+  <Href>/Administrator/DomainsPolitics</Href>
+ </ListElement>
+ <!-- *********************************************************************** -->
+ <ListElement>
+  <Text>ПромоКоды</Text>
+  <Prompt>Управление ПромоКодами - добавление, удаление, статистика</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/PromoCodes$</UniqID>
+  </Paths>
+  <Href>/Administrator/PromoCodes</Href>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

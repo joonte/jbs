@@ -23,9 +23,9 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Base')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DOM->AddAttribs('MenuLeft',Array('args'=>'Administrator/Services'));
+$DOM->AddAttribs('MenuLeft',Array('args'=>'Administrator/Office'));
 #-------------------------------------------------------------------------------
-$DOM->AddText('Title','Услуги → Бонусы');
+$DOM->AddText('Title','Офис → Бонусы');
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/Administrator/BonusEdit');"),'Новый бонус','Add.gif');
 if(Is_Error($Comp))
@@ -43,7 +43,7 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $NoBody->AddChild($Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Tab','Administrator/Hosting',$NoBody);
+$Comp = Comp_Load('Tab','Administrator/Bonuses',$NoBody);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

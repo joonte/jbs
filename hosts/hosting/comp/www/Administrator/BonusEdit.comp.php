@@ -98,52 +98,22 @@ if(Is_Error($Comp))
 $Table[] = Array('Сервис',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-# надо как-то динамически подсасывать тарифы, на основе выбора ServiceID
 $Options = Array('Любой тариф');
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID','id'=>'SchemeID','disabled'=>TRUE),$Options,$Bonus['SchemeID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-#$Table[] = Array('Тариф',new Tag('SPAN',Array('id'=>'Scheme'),$Comp));
 $Table[] = Array('Тариф',$Comp);
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-/*
-$Columns = Array('ID','Name','(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Schemes`.`ServersGroupID`) as `ServersGroupName`');
-#-------------------------------------------------------------------------------
-$Schemes = DB_Select('Schemes',$Columns,Array('SortOn'=>'SortID'));
-#-------------------------------------------------------------------------------
-switch(ValueOf($Schemes)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return new gException('HOSTING_SCHEMES_NOT_FOUND','Для назначения бонуса необходимо добавить хотя бы один тарифный план на хостинг');
-  break;
-  case 'array':
-    #---------------------------------------------------------------------------
-    $Options = Array('Все тарифы');
-    #---------------------------------------------------------------------------
-    foreach($Schemes as $Scheme)
-      $Options[$Scheme['ID']] = SPrintF('%s (%s)',$Scheme['Name'],$Scheme['ServersGroupName']);
-  break;
-  default:
-    return ERROR | @Trigger_Error(101);
-}
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID'),$Options,$Bonus['SchemeID']);
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array('Тарифный план',$Comp);
-*/
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
     'name'  => 'DaysReserved',
-    'value' => $Bonus['DaysReserved']
+    'value' => $Bonus['DaysReserved'],
+    'prompt'=> 'Число дней выданной скидки'
   )
 );
 if(Is_Error($Comp))
@@ -156,7 +126,8 @@ $Comp = Comp_Load(
   Array(
     'type'  => 'text',
     'name'  => 'DaysRemainded',
-    'value' => $Bonus['DaysRemainded']
+    'value' => $Bonus['DaysRemainded'],
+    'prompt'=> 'Сколько дней скидки осталось неизрасходованными'
   )
 );
 if(Is_Error($Comp))
@@ -169,7 +140,8 @@ $Comp = Comp_Load(
   Array(
     'type'  => 'text',
     'name'  => 'Discont',
-    'value' => $Bonus['Discont']*100
+    'value' => $Bonus['Discont']*100,
+    'prompt'=> 'Число от 5 до 100'
   )
 );
 if(Is_Error($Comp))
@@ -182,7 +154,8 @@ $Comp = Comp_Load(
   Array(
     'name'  => 'Comment',
     'style' => 'width:100%;',
-    'rows'  => 5
+    'rows'  => 5,
+    'prompt'=> 'Цель/причина создания этой скидки клиенту'
   ),
   $Bonus['Comment']
 );
