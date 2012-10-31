@@ -450,7 +450,7 @@ function LockPage($Name,$Color,$Alpha){
     return true;
   //----------------------------------------------------------------------------
   if(!$Color)
-    $Color = '#000000';
+    $Color = '#EBECE4';
   //----------------------------------------------------------------------------
   switch($BrouserID){
     case 'MSIE':
@@ -463,7 +463,8 @@ function LockPage($Name,$Color,$Alpha){
       //------------------------------------------------------------------------
       $LockPage = document.createElement('DIV');
       //------------------------------------------------------------------------
-      $LockPage.style.backgroundColor = $Color;
+      //$LockPage.style.backgroundColor = $Color;
+      $LockPage.style.backgroundImage = 'url(/styles/root/Images/Tranparent.gif)';
     break;
     case 'Opera':
       //------------------------------------------------------------------------
