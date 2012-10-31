@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -50,9 +49,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/HostingServersGroupEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $Title = ($HostingServersGroupID?'Редактирование группы серверов':'Добавление группы серверов');
 #-------------------------------------------------------------------------------
@@ -112,7 +109,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'HostingServersGroupEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/HostingServersGroupEdit','HostingServersGroupEditForm','%s');",$Title),
     'value'   => ($HostingServersGroupID?'Сохранить':'Добавить')
   )
 );

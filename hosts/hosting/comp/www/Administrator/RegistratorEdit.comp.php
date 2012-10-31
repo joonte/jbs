@@ -65,9 +65,9 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/RegistratorEdit.js}'));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/RegistratorEdit.js}')));
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $Title = ($RegistratorID?'Редактирование регистратора':'Добавление регистратора');
 #-------------------------------------------------------------------------------
@@ -359,7 +359,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'RegistratorEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/RegistratorEdit','RegistratorEditForm','%s');",$Title),
     'value'   => ($RegistratorID?'Сохранить':'Добавить')
   )
 );

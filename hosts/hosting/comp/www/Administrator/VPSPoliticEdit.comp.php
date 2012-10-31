@@ -50,9 +50,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/VPSPoliticEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $Title = ($VPSPoliticID?'Редактирование ценовой политики на VPS':'Добавление ценовой политики на VPS');
 #-------------------------------------------------------------------------------
@@ -123,7 +121,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'VPSPoliticEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/VPSPoliticEdit','VPSPoliticEditForm','%s');",$Title),
     'value'   => ($VPSPoliticID?'Сохранить':'Добавить')
   )
 );

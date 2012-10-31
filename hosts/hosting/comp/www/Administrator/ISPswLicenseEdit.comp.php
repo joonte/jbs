@@ -38,9 +38,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ISPswLicenseEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Редактирование информации о лицензии');
 #-------------------------------------------------------------------------------
@@ -169,7 +167,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'ISPswLicenseEdit();',
+    'onclick' => "FormEdit('/Administrator/API/ISPswLicenseEdit','ISPswLicenseEditForm','Редактирование информации о лицензии');",
     'value'   => 'Сохранить'
   )
 );

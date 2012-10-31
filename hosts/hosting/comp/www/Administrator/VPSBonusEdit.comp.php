@@ -51,11 +51,9 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/VPSBonusEdit.js}'));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
-#-------------------------------------------------------------------------------
-$Title = ($VPSBonusID?'Редактирование бонуса на VPS':'Добавление нового бонуса на VPS');
+$Title = ($VPSBonusID?'Редактирование бонуса на виртуальный сервер':'Добавление нового бонуса на виртуальный сервер');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
@@ -153,7 +151,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'VPSBonusEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/VPSBonusEdit','VPSBonusEditForm','%s');",$Title),
     'value'   => ($VPSBonusID?'Сохранить':'Добавить')
   )
 );

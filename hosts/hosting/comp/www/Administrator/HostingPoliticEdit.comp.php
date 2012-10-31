@@ -50,9 +50,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/HostingPoliticEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $Title = ($HostingPoliticID?'Редактирование ценовой политики на хостинг':'Добавление ценовой политики на хостинг');
 #-------------------------------------------------------------------------------
@@ -123,7 +121,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'HostingPoliticEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/HostingPoliticEdit','HostingPoliticEditForm','%s');",$Title),
     'value'   => ($HostingPoliticID?'Сохранить':'Добавить')
   )
 );

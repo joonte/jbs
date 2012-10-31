@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -75,9 +74,9 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/HostingServerEdit.js}'));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/HostingServerEdit.js}')));
 #-------------------------------------------------------------------------------
 $Title = ($HostingServerID?'Редактирование сервера':'Добавление сервера');
 #-------------------------------------------------------------------------------
@@ -491,7 +490,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'HostingServerEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/HostingServerEdit','HostingServerEditForm','%s');",$Title),
     'value'   => ($HostingServerID?'Сохранить':'Добавить')
   )
 );

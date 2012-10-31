@@ -30,9 +30,9 @@ if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 $DOM->AddChild('Into',$Comp);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ISPswProducerEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
+#-------------------------------------------------------------------------------\
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ISPswProducerEdit.js}')));
 #-------------------------------------------------------------------------------
 # get settings
 $Config = Config();
@@ -107,7 +107,7 @@ if(Is_Error($Comp))
 $Table[] = Array('Порт',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'Protocol'),Array('ssl'=>'ssl','tcp'=>'tcp'),$ISPswProducer['Protocol']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'Protocol','onchange'=>'SettingsUpdate();'),Array('ssl'=>'ssl','tcp'=>'tcp'),$ISPswProducer['Protocol']);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -164,7 +164,7 @@ $Comp = Comp_Load(
 		'Form/Input',
 		Array(
 			'type'    => 'button',
-			'onclick' => 'ISPswProducerEdit();',
+			'onclick' => "FormEdit('/Administrator/API/ISPswProducerEdit','ISPswProducerEditForm','Редактирование настроек продавца ПО ISPsystem');",
 			'value'   => 'Сохранить'
 		)
 	);

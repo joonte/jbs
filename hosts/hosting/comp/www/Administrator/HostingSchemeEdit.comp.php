@@ -134,10 +134,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/HostingSchemeEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
-#-------------------------------------------------------------------------------
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $Title = ($HostingSchemeID?'Редактирование нового тарифа на хостинг':'Добавление нового тарифа на хостинг');
 #-------------------------------------------------------------------------------
@@ -1253,8 +1250,8 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'HostingSchemeEdit();',
-    'value'   => 'Сохранить'
+    'onclick' => SPrintF("FormEdit('/Administrator/API/HostingSchemeEdit','HostingSchemeEditForm','%s');",$Title),
+    'value'   => ($HostingSchemeID?'Сохранить':'Добавить')
   )
 );
 if(Is_Error($Comp))

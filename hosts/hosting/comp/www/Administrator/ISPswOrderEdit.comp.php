@@ -50,11 +50,11 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ISPswOrderEdit.js}'));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$Title = ($ISPswOrderID?'Редактирование заказа на ПО ISPsystem':'Добавление заказа на ПО ISPsystem');
 #-------------------------------------------------------------------------------
-$DOM->AddText('Title',$ISPswOrderID?'Редактирование заказа на ПО ISPsystem':'Добавление заказа на ПО ISPsystem');
+$DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
 $Table = $Options = Array();
 #-------------------------------------------------------------------------------
@@ -183,8 +183,8 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'ISPswOrderEdit();',
-    'value'   => 'Сохранить'
+    'onclick' => SPrintF("FormEdit('/Administrator/API/ISPswOrderEdit','ISPswOrderEditForm','%s');",$Title),
+    'value'   => ($ISPswOrderID?'Сохранить':'Добавить')
   )
 );
 if(Is_Error($Comp))

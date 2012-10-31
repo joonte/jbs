@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -52,9 +51,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/VPSDomainsPoliticEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $Title = ($VPSDomainsPoliticID?'Редактирование ценовой политики на домены':'Добавление ценовой политики на домены');
 #-------------------------------------------------------------------------------
@@ -150,7 +147,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'VPSDomainsPoliticEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/VPSDomainsPoliticEdit','VPSDomainsPoliticEditForm','%s');",$Title),
     'value'   => ($VPSDomainsPoliticID?'Сохранить':'Добавить')
   )
 );

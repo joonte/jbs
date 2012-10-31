@@ -51,9 +51,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/HostingBonusEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $Title = ($HostingBonusID?'Редактирование бонуса на хостинг':'Добавление нового бонуса на хостинг');
 #-------------------------------------------------------------------------------
@@ -153,7 +151,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'HostingBonusEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/HostingBonusEdit','HostingBonusEditForm','%s');",$Title),
     'value'   => ($HostingBonusID?'Сохранить':'Добавить')
   )
 );

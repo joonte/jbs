@@ -66,9 +66,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ISPswSchemeEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $Title = ($ISPswSchemeID?'Редактирование нового тарифа на ПО':'Добавление нового тарифа на ПО');
 #-------------------------------------------------------------------------------
@@ -318,8 +316,8 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'ISPswSchemeEdit();',
-    'value'   => 'Сохранить'
+    'onclick' => SPrintF("FormEdit('/Administrator/API/ISPswSchemeEdit','ISPswSchemeEditForm','%s');",$Title),
+    'value'   => ($ISPswSchemeID?'Сохранить':'Добавить')
   )
 );
 if(Is_Error($Comp))

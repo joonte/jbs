@@ -50,9 +50,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ISPswPoliticEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $Title = ($ISPswPoliticID?'Редактирование ценовой политики на ПО ISPsystem':'Добавление ценовой политики на ПО ISPsystem');
 #-------------------------------------------------------------------------------
@@ -123,7 +121,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'ISPswPoliticEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/ISPswPoliticEdit','ISPswPoliticEditForm','%s');",$Title),
     'value'   => ($ISPswPoliticID?'Сохранить':'Добавить')
   )
 );

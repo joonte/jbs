@@ -52,11 +52,11 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/HostingOrderEdit.js}'));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$Title = ($HostingOrderID?'Редактирование заказа на хостинг':'Добавление заказа на хостинг');
 #-------------------------------------------------------------------------------
-$DOM->AddText('Title',$HostingOrderID?'Редактирование заказа на хостинг':'Добавление заказа на хостинг');
+$DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
 $Table = $Options = Array();
 #-------------------------------------------------------------------------------
@@ -196,8 +196,8 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'HostingOrderEdit();',
-    'value'   => 'Сохранить'
+    'onclick' => SPrintF("FormEdit('/Administrator/API/HostingOrderEdit','HostingOrderEditForm','%s');",$Title),
+    'value'   => ($HostingOrderID?'Сохранить':'Добавить')
   )
 );
 if(Is_Error($Comp))

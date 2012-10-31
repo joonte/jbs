@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -49,11 +48,9 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ISPswGroupEdit.js}'));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
-#-------------------------------------------------------------------------------
-$Title = ($ISPswGroupID?'Редактирование группы ПО':'Добавление группы ПО');
+$Title = ($ISPswGroupID?'Редактирование группы ПО ISPsystem':'Добавление группы ПО ISPsystem');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
@@ -98,7 +95,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'ISPswGroupEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/ISPswGroupEdit','ISPswGroupEditForm','%s');",$Title),
     'value'   => ($ISPswGroupID?'Сохранить':'Добавить')
   )
 );

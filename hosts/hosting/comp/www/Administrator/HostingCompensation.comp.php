@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -24,9 +23,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/HostingCompensation.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Компенсация времени');
 #-------------------------------------------------------------------------------
@@ -111,7 +108,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => "ShowConfirm('Подверждаете выполнение операции?','HostingCompensation();')",
+    'onclick' => "ShowConfirm('Подверждаете выполнение операции?','FormEdit(\'/Administrator/API/HostingCompensation\',\'HostingCompensationForm\',\'Компенсация времени\');')",
     'value'   => 'Компенсировать'
   )
 );

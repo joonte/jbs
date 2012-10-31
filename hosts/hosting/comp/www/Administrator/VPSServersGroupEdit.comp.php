@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -50,11 +49,9 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/VPSServersGroupEdit.js}'));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
-#-------------------------------------------------------------------------------
-$Title = ($VPSServersGroupID?'Редактирование группы серверов':'Добавление группы серверов');
+$Title = ($VPSServersGroupID?'Редактирование группы серверов VPS':'Добавление группы серверов VPS');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
@@ -112,7 +109,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'VPSServersGroupEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/VPSServersGroupEdit','VPSServersGroupEditForm','%s');",$Title),
     'value'   => ($VPSServersGroupID?'Сохранить':'Добавить')
   )
 );

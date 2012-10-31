@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -53,11 +52,11 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/VPSOrderEdit.js}'));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$Title = ($VPSOrderID?'Редактирование заказа на виртуальный сервер':'Добавление заказа на виртуальный сервер');
 #-------------------------------------------------------------------------------
-$DOM->AddText('Title',$VPSOrderID?'Редактирование заказа на виртуальный сервер':'Добавление заказа на виртуальный сервер');
+$DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
 $Table = $Options = Array();
 #-------------------------------------------------------------------------------
@@ -197,7 +196,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'VPSOrderEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/VPSOrderEdit','VPSOrderEditForm','%s');",$Title),
     'value'   => 'Сохранить'
   )
 );
