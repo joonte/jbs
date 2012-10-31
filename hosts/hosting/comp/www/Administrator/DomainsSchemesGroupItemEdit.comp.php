@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -48,9 +47,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Standard')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/DomainsSchemesGroupItemEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $Title = ($DomainsSchemesGroupItemID?'Редактирование тарифа группы тарифов на домены':'Добавление нового тарифа в группу тарифов на домены');
 #-------------------------------------------------------------------------------
@@ -96,7 +93,7 @@ switch(ValueOf($DomainsSchemes)){
       'Form/Input',
       Array(
         'type'    => 'button',
-        'onclick' => 'DomainsSchemesGroupItemEdit();',
+        'onclick' => SPrintF("FormEdit('/Administrator/API/DomainsSchemesGroupItemEdit','DomainsSchemesGroupItemEditForm','%s');",$Title),
         'value'   => ($DomainsSchemesGroupItemID?'Сохранить':'Добавить')
       )
     );

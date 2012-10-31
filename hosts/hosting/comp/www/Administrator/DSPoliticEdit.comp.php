@@ -50,9 +50,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/DSPoliticEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $Title = ($DSPoliticID?'Редактирование ценовой политики на DS':'Добавление ценовой политики на DS');
 #-------------------------------------------------------------------------------
@@ -123,7 +121,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'DSPoliticEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/DSPoliticEdit','DSPoliticEditForm','%s');",$Title),
     'value'   => ($DSPoliticID?'Сохранить':'Добавить')
   )
 );

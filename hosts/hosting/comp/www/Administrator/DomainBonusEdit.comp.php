@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -53,9 +52,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/DomainBonusEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $Title = ($DomainBonusID?'Редактирование бонуса на домен':'Добавление нового бонуса на домен');
 #-------------------------------------------------------------------------------
@@ -186,7 +183,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'DomainBonusEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/DomainBonusEdit','DomainBonusEditForm','%s');",$Title),
     'value'   => ($DomainBonusID?'Сохранить':'Добавить')
   )
 );

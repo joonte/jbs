@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -51,9 +50,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/DSServersGroupEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $Title = ($DSServersGroupID?'Редактирование группы серверов':'Добавление группы серверов');
 #-------------------------------------------------------------------------------
@@ -113,9 +110,8 @@ foreach(Array_Keys($Systems) as $SystemID){
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',new Tag('SCRIPT',Implode("\n",$Script)));
 #-------------------------------------------------------------------------------
-$DOM->AddAttribs('Body',Array('onload'=>'SettingsUpdate();'));
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SystemID','onchange'=>'SettingsUpdate();'),$Options,$DSServersGroup['SystemID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'SystemID'),$Options,$DSServersGroup['SystemID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -140,7 +136,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'DSServersGroupEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/DSServersGroupEdit','DSServersGroupEditForm','%s');",$Title),
     'value'   => ($DSServersGroupID?'Сохранить':'Добавить')
   )
 );

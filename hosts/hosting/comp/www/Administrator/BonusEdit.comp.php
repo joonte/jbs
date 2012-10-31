@@ -55,9 +55,7 @@ if(Is_Error($DOM->Load('Window')))
 #-------------------------------------------------------------------------------
 $DOM->AddAttribs('Body',Array('onload'=>SPrintF("GetSchemes(%s,'SchemeID','%s');",$Bonus['ServiceID'],$Bonus['SchemeID'])));
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/BonusEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/GetSchemes.js}'));
@@ -183,7 +181,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'BonusEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/BonusEdit','BonusEditForm','%s');",$Title),
     'value'   => ($BonusID?'Сохранить':'Добавить')
   )
 );

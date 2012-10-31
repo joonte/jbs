@@ -37,11 +37,11 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/DomainOrderEdit.js}'));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$Title = SPrintF('Редактирование заказа на домен %s.%s',$DomainOrder['DomainName'],$DomainOrder['Name']);
 #-------------------------------------------------------------------------------
-$DOM->AddText('Title','Редактирование заказа на домен ' . $DomainOrder['DomainName'] . '.' . $DomainOrder['Name']);
+$DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
 $Table = Array('Общие параметры');
 #-------------------------------------------------------------------------------
@@ -228,7 +228,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'DomainOrderEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/DomainOrderEdit','DomainOrderEditForm','%s');",$Title),
     'value'   => 'Сохранить'
   )
 );

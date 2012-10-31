@@ -51,11 +51,11 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/DSBonusEdit.js}'));
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}'));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
-$Title = ($DSBonusID?'Редактирование бонуса на DS':'Добавление нового бонуса на DS');
+$Title = ($DSBonusID?'Редактирование бонуса на выделенный сервер':'Добавление нового бонуса на выделенный сервер');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
@@ -153,7 +153,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'DSBonusEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/DSBonusEdit','DSBonusEditForm','%s');",$Title),
     'value'   => ($DSBonusID?'Сохранить':'Добавить')
   )
 );

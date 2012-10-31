@@ -52,11 +52,11 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/DSOrderEdit.js}'));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$Title = $DSOrderID?'Редактирование заказа на аренду сервера':'Добавление заказа на аренду сервера';
 #-------------------------------------------------------------------------------
-$DOM->AddText('Title',$DSOrderID?'Редактирование заказа на аренду сервера':'Добавление заказа на аренду сервера');
+$DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
 $Table = $Options = Array();
 #-------------------------------------------------------------------------------
@@ -184,8 +184,8 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'DSOrderEdit();',
-    'value'   => 'Сохранить'
+    'onclick' => SPrintF("FormEdit('/Administrator/API/DSOrderEdit','DSOrderEditForm','%s');",$Title),
+    'value'   => ($DSOrderID?'Сохранить':'Добавить')
   )
 );
 if(Is_Error($Comp))

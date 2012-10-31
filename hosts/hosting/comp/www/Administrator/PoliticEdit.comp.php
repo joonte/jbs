@@ -55,10 +55,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/PoliticEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
-#-------------------------------------------------------------------------------
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
 #-------------------------------------------------------------------------------
 $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/GetSchemes.js}'));
 #-------------------------------------------------------------------------------
@@ -185,8 +182,8 @@ $Table[] = $Comp;
 $Comp = Comp_Load(
   'Form/Input',
   Array(
-    'type'    => 'button',
-    'onclick' => 'PoliticEdit();',
+    'type'    => 'button', # FormEdit($URL,$FormName,$ShowProgress)
+    'onclick' => SPrintF("FormEdit('/Administrator/API/PoliticEdit','PoliticEditForm','%s');",$Title),
     'value'   => ($PoliticID?'Сохранить':'Добавить')
   )
 );
