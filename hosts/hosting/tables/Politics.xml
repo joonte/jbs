@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>Politics</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>DaysPay</ListElement>
+  <ListElement>Discont</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Ценовых политик не обнаружено.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <Before>
+  <Search>
+   <Args>
+    <ColumnsIDs>
+     <ListElement>UserID</ListElement>
+<!--     <ListElement>SchemeID</ListElement> -->
+     <ListElement>DaysPay</ListElement>
+     <ListElement>Discont</ListElement>
+    </ColumnsIDs>
+   </Args>
+  </Search>
+ </Before>
+ <!-- ********************************************************************** -->
+ <After>
+  <Delete>
+   <Args>
+    <Comment>Выбранные политики</Comment>
+    <Send>
+     <TableID>Politics</TableID>
+    </Send>
+   </Args>
+  </Delete>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<!--<Query>
+ <SortOn>Scheme</SortOn>
+ <IsDesc>0</IsDesc>
+</Query> -->
+<!-- *********************************************************************** -->
+<Columns>
+ <SelectID>
+  <Args>
+   <TableID>Politics</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/Administrator/PoliticEdit</ListElement>
+   <ListElement>
+    <PoliticID>%ID%</PoliticID>
+   </ListElement>
+   <ListElement>Редактировать ценовую политику на хостинг</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+ <!-- ********************************************************************** -->
+ <Group>
+  <Head>Группа</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Group%</ListElement>
+   <Length>15</Length>
+  </Args>
+  <Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `Politics`.`GroupID`)</Alias>
+ </Group>
+ <!-- ********************************************************************** -->
+ <User>
+  <Head>Польз.</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%User%</ListElement>
+   <Length>15</Length>
+  </Args>
+  <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `Politics`.`UserID`)</Alias>
+ </User>
+ <!-- ********************************************************************** -->
+<!-- <Scheme>
+  <Head>Тариф</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Scheme%</ListElement>
+   <Length>25</Length>
+  </Args>
+  <Alias>IF(ISNULL(`SchemeID`),'Все тарифы',(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `ServersGroups` WHERE `Schemes`.`ServersGroupID` = `ServersGroups`.`ID`),')') FROM `Schemes` WHERE `Schemes`.`ID` = `Politics`.`SchemeID`))</Alias>
+ </Scheme> -->
+ <!-- ********************************************************************** -->
+ <DaysPay>
+  <Head>Дней оплаты</Head>
+  <Attribs>
+   <style>text-align:right;</style>
+  </Attribs>
+ </DaysPay>
+ <!-- ********************************************************************** -->
+ <Discont>
+  <Head>Скидка</Head>
+  <Comp>Formats/Percent</Comp>
+  <Args>
+   <ListElement>%Discont%</ListElement>
+  </Args>
+  <Attribs>
+   <style>text-align:right;</style>
+  </Attribs>
+ </Discont>
+</Columns>
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>Edit</ListElement>
+ <ListElement>Group</ListElement>
+ <ListElement>User</ListElement>
+<!--  <ListElement>Scheme</ListElement> -->
+ <ListElement>DaysPay</ListElement>
+ <ListElement>Discont</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

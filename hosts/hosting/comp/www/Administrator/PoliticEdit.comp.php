@@ -12,13 +12,13 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 #-------------------------------------------------------------------------------
 $Args = Args();
 #-------------------------------------------------------------------------------
-$BonusID = (integer) @$Args['BonusID'];
+$PoliticID = (integer) @$Args['PoliticID'];
 #-------------------------------------------------------------------------------
-if($BonusID){
+if($PoliticID){
   #-----------------------------------------------------------------------------
-  $Bonus = DB_Select('Bonuses','*',Array('UNIQ','ID'=>$BonusID));
+  $Politic = DB_Select('Politics','*',Array('UNIQ','ID'=>$PoliticID));
   #-----------------------------------------------------------------------------
-  switch(ValueOf($Bonus)){
+  switch(ValueOf($Politic)){
     case 'error':
       return ERROR | @Trigger_Error(500);
     case 'exception':
@@ -30,17 +30,19 @@ if($BonusID){
       return ERROR | @Trigger_Error(101);
   }
 }else{
-  #-----------------------------------------------------------------------------
-  $Bonus = Array(
-     #--------------------------------------------------------------------------
-    'UserID'        => 1,
-    'ServiceID'     => 0,
-    'SchemeID'      => 0,
-    'ExpirationDate'=> Time() + 365 * 24 * 3600,
-    'DaysReserved'  => 30,
-    'DaysRemainded' => 30,
-    'Discont'       => 0.5,
-    'Comment'       => 'Как партнеру'
+	#-----------------------------------------------------------------------------
+	$Politic = Array(
+		#--------------------------------------------------------------------------
+		'ExpirationDate'	=> Time() + 10 * 365 * 24 * 3600,
+		'GroupID'		=> 1,
+		'UserID'		=> 1,
+		'FromServiceID'		=> 0,
+		'FromSchemeID'		=> 0,
+		'ToServiceID'		=> 0,
+		'ToSchemeID'		=> 0,
+		'DaysPay'		=> 363,
+		'Discont'		=> 0.1,
+		'Comment'		=> '10% скидки тем кто платит сразу за год'
   );
 }
 #-------------------------------------------------------------------------------
@@ -53,9 +55,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DOM->AddAttribs('Body',Array('onload'=>SPrintF("GetSchemes(%s,'SchemeID','%s');",$Bonus['ServiceID'],$Bonus['SchemeID'])));
-#-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/BonusEdit.js}'));
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/PoliticEdit.js}'));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
@@ -65,17 +65,18 @@ $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/GetSc
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Title = ($BonusID?'Редактирование бонуса':'Добавление нового бонуса');
+$Title = ($PoliticID?'Редактирование ценовой политики':'Добавление ценовой политики');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
-$Table = Array('Общая информация');
+$Table = Array();
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Users/Select','UserID',$Bonus['UserID']);
+$Comp = Comp_Load('Form/Owner','Владелец политики',$Politic['GroupID'],$Politic['UserID']);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Пользователь',$Comp);
+#-------------------------------------------------------------------------------
+$Table[] = $Comp;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Services = DB_Select('ServicesOwners','*',Array('Where'=>'`IsActive` = "yes"','SortOn'=>'SortID'));
@@ -84,36 +85,50 @@ switch(ValueOf($Services)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return new gException('SERVICES_NOT_FOUND','Для назначения бонуса необходим хотя бы один активный сервис');
+	return new gException('SERVICES_NOT_FOUND','Для создания политики необходим хотя бы один активный сервис');
 	break;
 case 'array':
 	#---------------------------------------------------------------------------
-	$Options = Array('Любой активный сервис');
+	$ServicesOptions = Array('Любой активный сервис');
 	#---------------------------------------------------------------------------
 	foreach($Services as $Service)
-		$Options[$Service['ID']] = SPrintF('%s (%s)',$Service['Code'],$Service['Name']);
+		$ServicesOptions[$Service['ID']] = SPrintF('%s (%s)',$Service['Code'],$Service['Name']);
 	break;
 default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ServiceID','onchange'=>SPrintF("GetSchemes(this.value,'SchemeID','%s');",$Bonus['SchemeID'])),$Options,$Bonus['ServiceID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'FromServiceID','onchange'=>SPrintF("GetSchemes(this.value,'FromSchemeID','%s');",$Politic['FromSchemeID'])),$ServicesOptions,$Politic['FromServiceID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Сервис',$Comp);
+$Table[] = Array('Оплачиваемый сервис',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Options = Array('Любой тариф');
+$SchemesOptions = Array('Любой тариф');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID','id'=>'SchemeID','disabled'=>TRUE),$Options,$Bonus['SchemeID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'FromSchemeID','id'=>'FromSchemeID','disabled'=>TRUE),$SchemesOptions,$Politic['FromSchemeID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Тариф',$Comp);
+$Table[] = Array('Оплачиваемый тариф',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('jQuery/DatePicker','ExpirationDate',$Bonus['ExpirationDate']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ToServiceID','onchange'=>SPrintF("GetSchemes(this.value,'ToSchemeID','%s');",$Politic['ToSchemeID'])),$ServicesOptions,$Politic['ToServiceID']);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Скидка на сервис',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Select',Array('name'=>'ToSchemeID','id'=>'ToSchemeID','disabled'=>TRUE),$SchemesOptions,$Politic['ToSchemeID']);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Скидка на тариф',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('jQuery/DatePicker','ExpirationDate',$Politic['ExpirationDate']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -124,36 +139,22 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'name'  => 'DaysReserved',
-    'value' => $Bonus['DaysReserved'],
-    'prompt'=> 'Число дней выданной скидки'
+    'name'  => 'DaysPay',
+    'value' => $Politic['DaysPay'],
+    'prompt'=> 'Сколько дней надо оплатить, чтобы политика сработала'
   )
 );
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Действителен дней',$Comp);
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'name'  => 'DaysRemainded',
-    'value' => $Bonus['DaysRemainded'],
-    'prompt'=> 'Сколько дней скидки осталось неизрасходованными'
-  )
-);
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array('Действителен осталось',$Comp);
+$Table[] = Array('Дней оплаты',$Comp);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
     'name'  => 'Discont',
-    'value' => $Bonus['Discont']*100,
+    'value' => $Politic['Discont']*100,
     'prompt'=> 'Число от 5 до 100'
   )
 );
@@ -162,29 +163,31 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array('Размер скидки в %',$Comp);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/TextArea',
-  Array(
-    'name'  => 'Comment',
-    'style' => 'width:100%;',
-    'rows'  => 5,
-    'prompt'=> 'Цель/причина создания этой скидки клиенту'
-  ),
-  $Bonus['Comment']
+   Array(
+	'name'  => 'Comment',
+	'style' => 'width:100%;',
+	'rows'  => 5,
+	'prompt'=> 'Цель/причина создания этой скидки клиенту'
+	),
+   $Politic['Comment']
 );
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = 'Комментарий';
 #-------------------------------------------------------------------------------
 $Table[] = $Comp;
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'BonusEdit();',
-    'value'   => ($BonusID?'Сохранить':'Добавить')
+    'onclick' => 'PoliticEdit();',
+    'value'   => ($PoliticID?'Сохранить':'Добавить')
   )
 );
 if(Is_Error($Comp))
@@ -196,16 +199,16 @@ $Comp = Comp_Load('Tables/Standard',$Table);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Form = new Tag('FORM',Array('name'=>'BonusEditForm','onsubmit'=>'return false;'),$Comp);
+$Form = new Tag('FORM',Array('name'=>'PoliticEditForm','onsubmit'=>'return false;'),$Comp);
 #-------------------------------------------------------------------------------
-if($BonusID){
+if($PoliticID){
   #-----------------------------------------------------------------------------
   $Comp = Comp_Load(
     'Form/Input',
     Array(
-      'name'  => 'BonusID',
+      'name'  => 'PoliticID',
       'type'  => 'hidden',
-      'value' => $BonusID
+      'value' => $PoliticID
     )
   );
   if(Is_Error($Comp))

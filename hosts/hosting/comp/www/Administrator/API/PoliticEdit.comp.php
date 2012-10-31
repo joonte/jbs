@@ -1,7 +1,8 @@
 <?php
 
+
 #-------------------------------------------------------------------------------
-/** @author Alex Keda, for www.host-food.ru */
+/** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
 /******************************************************************************/
 Eval(COMP_INIT);
@@ -13,39 +14,33 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 #-------------------------------------------------------------------------------
 $Args = Args();
 #-------------------------------------------------------------------------------
-$BonusID        = (integer) @$Args['BonusID'];
-$UserID         = (integer) @$Args['UserID'];
-$ServiceID	= (integer) @$Args['ServiceID'];
-$SchemeID       = (integer) @$Args['SchemeID'];
-$ExpirationDate = (integer) @$Args['ExpirationDate'];
-$DaysReserved   = (integer) @$Args['DaysReserved'];
-$DaysRemainded  = (integer) @$Args['DaysRemainded'];
-$Discont        = (integer) @$Args['Discont'];
-$Comment        =  (string) @$Args['Comment'];
+$PoliticID = (integer) @$Args['PoliticID'];
+$GroupID          = (integer) @$Args['GroupID'];
+$UserID           = (integer) @$Args['UserID'];
+$SchemeID         = (integer) @$Args['SchemeID'];
+$DaysPay          = (integer) @$Args['DaysPay'];
+$Discont          = (integer) @$Args['Discont'];
 #-------------------------------------------------------------------------------
 if($Discont < 5 || $Discont > 100)
   return new gException('WRONG_DISCOUNT','Скидка должна принимать значение от 5 до 100');
 #-------------------------------------------------------------------------------
-$IBonus = Array(
+$IPolitic = Array(
   #-----------------------------------------------------------------------------
-  'UserID'        => $UserID,
-  'ServiceID'     => ($ServiceID?$ServiceID:NULL),
-  'SchemeID'      => ($SchemeID?$SchemeID:NULL),
-  'ExpirationDate'=> $ExpirationDate,
-  'DaysReserved'  => $DaysReserved,
-  'DaysRemainded' => $DaysRemainded,
-  'Discont'       => $Discont/100,
-  'Comment'       => $Comment
+  'GroupID'  => $GroupID,
+  'UserID'   => $UserID,
+  'SchemeID' => ($SchemeID?$SchemeID:NULL),
+  'DaysPay'  => $DaysPay,
+  'Discont'  => $Discont/100
 );
 #-------------------------------------------------------------------------------
-if($BonusID){
+if($PoliticID){
   #-----------------------------------------------------------------------------
-  $IsUpdate = DB_Update('Bonuses',$IBonus,Array('ID'=>$BonusID));
+  $IsUpdate = DB_Update('Politics',$IPolitic,Array('ID'=>$PoliticID));
   if(Is_Error($IsUpdate))
     return ERROR | @Trigger_Error(500);
 }else{
   #-----------------------------------------------------------------------------
-  $IsInsert = DB_Insert('Bonuses',$IBonus);
+  $IsInsert = DB_Insert('Politics',$IPolitic);
   if(Is_Error($IsInsert))
     return ERROR | @Trigger_Error(500);
 }

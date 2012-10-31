@@ -8,6 +8,7 @@
   <ListElement>ID</ListElement>
   <ListElement>CreateDate</ListElement>
   <ListElement>UserID</ListElement>
+  <ListElement>ExpirationDate</ListElement>
   <ListElement>DaysReserved</ListElement>
   <ListElement>DaysRemainded</ListElement>
   <ListElement>Discont</ListElement>
@@ -80,6 +81,14 @@
   </Args>
  </CreateDate>
  <!-- ********************************************************************** -->
+ <ExpirationDate>
+  <Head>Дата окончания</Head>
+  <Comp>Formats/Date/Standard</Comp>
+  <Args>
+   <ListElement>%ExpirationDate%</ListElement>
+  </Args>
+ </ExpirationDate>
+ <!-- ********************************************************************** -->
 <!-- <Scheme>
   <Head>Тариф</Head>
   <Comp>Formats/String</Comp>
@@ -130,6 +139,7 @@
  <ListElement>Edit</ListElement>
  <ListElement>CreateDate</ListElement>
  <ListElement>Owner</ListElement>
+ <ListElement>ExpirationDate</ListElement>
 <!-- <ListElement>Scheme</ListElement> -->
  <ListElement>DaysReserved</ListElement>
  <ListElement>DaysRemainded</ListElement>
