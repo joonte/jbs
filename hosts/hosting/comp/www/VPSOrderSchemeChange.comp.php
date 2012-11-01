@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -84,7 +83,7 @@ switch(ValueOf($VPSOrder)){
                 #---------------------------------------------------------------
                 $DOM->AddText('Title','Смена тарифного плана');
                 #---------------------------------------------------------------
-                $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/VPSOrderSchemeChange.js}')));
+		$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
                 #---------------------------------------------------------------
                 $Table = $Options = Array();
                 #---------------------------------------------------------------
@@ -101,7 +100,7 @@ switch(ValueOf($VPSOrder)){
                   'Form/Input',
                   Array(
                     'type'    => 'button',
-                    'onclick' => 'VPSOrderSchemeChange();',
+                    'onclick' => "FormEdit('/API/VPSOrderSchemeChange','VPSOrderSchemeChangeForm','Смена тарифного плана');",
                     'value'   => 'Сменить'
                   )
                 );

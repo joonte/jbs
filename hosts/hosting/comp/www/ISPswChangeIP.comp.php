@@ -81,13 +81,7 @@ switch(ValueOf($ISPswOrder)){
         #-----------------------------------------------------------------------
         $DOM->AddText('Title','Смена IP адреса для заказа ПО');
         #-----------------------------------------------------------------------
-        $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/PasswordCheck.js}'));
-        #-----------------------------------------------------------------------
-        $DOM->AddChild('Head',$Script);
-        #-----------------------------------------------------------------------
-        $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/ISPswChangeIP.js}'));
-        #-----------------------------------------------------------------------
-        $DOM->AddChild('Head',$Script);
+	$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
         #-----------------------------------------------------------------------
         $Table = Array();
         #-----------------------------------------------------------------------
@@ -113,7 +107,7 @@ switch(ValueOf($ISPswOrder)){
           'Form/Input',
           Array(
             'type'    => 'button',
-            'onclick' => "ISPswChangeIP();",
+            'onclick' => "FormEdit('/API/ISPswChangeIP','ISPswChangeIPForm','Смена IP адреса лицензии ISPsystem');",
             'value'   => 'Сменить'
           )
         );

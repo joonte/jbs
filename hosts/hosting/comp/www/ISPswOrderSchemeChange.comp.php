@@ -83,7 +83,7 @@ switch(ValueOf($ISPswOrder)){
                 #---------------------------------------------------------------
                 $DOM->AddText('Title','Смена тарифного плана');
                 #---------------------------------------------------------------
-                $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/ISPswOrderSchemeChange.js}')));
+		$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
                 #---------------------------------------------------------------
                 $Table = $Options = Array();
                 #---------------------------------------------------------------
@@ -100,7 +100,7 @@ switch(ValueOf($ISPswOrder)){
                   'Form/Input',
                   Array(
                     'type'    => 'button',
-                    'onclick' => 'ISPswOrderSchemeChange();',
+                    'onclick' => "FormEdit('/API/ISPswOrderSchemeChange','ISPswOrderSchemeChangeForm','Смена тарифного плана');",
                     'value'   => 'Сменить'
                   )
                 );

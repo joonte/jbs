@@ -73,10 +73,7 @@ switch(ValueOf($DomainOrder)){
             #-------------------------------------------------------------------
             $DOM->AddText('Title','Смена контактных данных владельца домена');
             #-------------------------------------------------------------------
-            $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/DomainOrderChangeContactData.js}')));
-            #-------------------------------------------------------------------
-            //$DOM->AddAttribs('Body',Array('onload'=>'IsNewNs();'));
-            #-------------------------------------------------------------------
+	    $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
             #-------------------------------------------------------------------
             $Domain = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainScheme['Name']);
             #-------------------------------------------------------------------
@@ -192,7 +189,7 @@ switch(ValueOf($DomainOrder)){
               'Form/Input',
               Array(
                 'type'    => 'button',
-                'onclick' => 'DomainOrderChangeContactData();',
+                'onclick' => "FormEdit('/API/DomainOrderChangeContactData','DomainOrderChangeContactDataForm','Смена контактных данных');",
                 'value'   => 'Изменить'
               )
             );
