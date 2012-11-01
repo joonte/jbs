@@ -9,14 +9,6 @@ $__args_list = Array('OrderTypeCode', 'ID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-#Debug("[comp/Services/Orders/ContextMenuWrapper]: OrderTypeCode = $OrderTypeCode, ID = $ID");
-#-------------------------------------------------------------------------------
-$CacheID = Md5($__FILE__ . $OrderTypeCode . $ID);
-
-$Result = CacheManager::get($CacheID);
-if($Result) {
-    return $Result;
-}
 #-------------------------------------------------------------------------------
 if($OrderTypeCode == 'Default'){
 	$OrderTypeCode = 'Services';
@@ -41,7 +33,6 @@ $Comp = Comp_Load('Menus/List', 'Administrator/ListMenu/' . $OrderTypeCode . 'Or
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-CacheManager::add($CacheID, $Comp, 24 * 3600);
 #-------------------------------------------------------------------------------
 return $Comp;
 #-------------------------------------------------------------------------------
