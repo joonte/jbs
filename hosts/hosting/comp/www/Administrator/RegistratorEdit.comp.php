@@ -67,8 +67,6 @@ if(Is_Error($DOM->Load('Window')))
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/RegistratorEdit.js}')));
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
-#-------------------------------------------------------------------------------
 $Title = ($RegistratorID?'Редактирование регистратора':'Добавление регистратора');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);

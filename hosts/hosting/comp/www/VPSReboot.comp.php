@@ -48,8 +48,6 @@ switch(ValueOf($VPSOrder)){
         if(Is_Error($DOM->Load('Window')))
           return ERROR | @Trigger_Error(500);
 	#-----------------------------------------------------------------------
-	$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
-        #-----------------------------------------------------------------------
 	$Title = SPrintF('Перезагрузка виртуального сервера %s',$VPSOrder['Login']);
 	#-----------------------------------------------------------------------
         $DOM->AddText('Title',$Title);

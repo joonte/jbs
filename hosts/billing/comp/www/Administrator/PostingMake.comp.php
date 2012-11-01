@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -34,10 +33,6 @@ switch(ValueOf($Contract)){
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
     $DOM->AddText('Title','Осуществить финансовую проводку');
-    #---------------------------------------------------------------------------
-    $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/PostingMake.js}'));
-    #---------------------------------------------------------------------------
-    $DOM->AddChild('Head',$Script);
     #---------------------------------------------------------------------------
     $Comp = Comp_Load(
       'Form/Input',
@@ -107,7 +102,7 @@ switch(ValueOf($Contract)){
           'Form/Input',
           Array(
             'type'    => 'button',
-            'onclick' => 'PostingMake();',
+            'onclick' => "FormEdit('/Administrator/API/PostingMake','PostingMakeForm','Осуществление финансовой проводки');",
             'value'   => 'Осуществить'
           )
         );

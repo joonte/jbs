@@ -37,8 +37,6 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
-#-------------------------------------------------------------------------------
 $Title = SPrintF('Редактирование заказа на домен %s.%s',$DomainOrder['DomainName'],$DomainOrder['Name']);
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);

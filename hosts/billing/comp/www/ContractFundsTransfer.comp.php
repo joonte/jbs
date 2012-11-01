@@ -23,9 +23,6 @@ if(Is_Error($DOM->Load('Window')))
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Перевод средств между счетами');
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ContractFundsTransfer.js}'));
-$DOM->AddChild('Head',$Script);
-#-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
 $Form = new Tag('FORM',Array('name'=>'ContractFundsTransferForm','onsubmit'=>'return false;'));
@@ -135,7 +132,7 @@ $Table[] = Array('Сумма',$Comp);
 $Comp = Comp_Load(
 		'Form/Input',
 		Array(
-			'onclick' => 'ContractFundsTransfer();',
+			'onclick' => "FormEdit('/API/ContractFundsTransfer','ContractFundsTransferForm','Осуществление перевода средств между договорами');",
 			'type'    => 'button',
 			'value'   => 'Перевести'
 		)

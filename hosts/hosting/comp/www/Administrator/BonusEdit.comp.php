@@ -55,9 +55,6 @@ if(Is_Error($DOM->Load('Window')))
 #-------------------------------------------------------------------------------
 $DOM->AddAttribs('Body',Array('onload'=>SPrintF("GetSchemes(%s,'SchemeID','%s');",$Bonus['ServiceID'],$Bonus['SchemeID'])));
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/GetSchemes.js}'));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);

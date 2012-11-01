@@ -48,8 +48,6 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
-#-------------------------------------------------------------------------------
 $Title = ($ISPswGroupID?'Редактирование группы ПО ISPsystem':'Добавление группы ПО ISPsystem');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);

@@ -1,6 +1,5 @@
 <?php
 
-
 #-----------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -54,11 +53,9 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DOM->AddText('Title',$WorkCompliteID?'Редактировать выполненную работу':'Добавить выполненную работу');
+$Title = ($WorkCompliteID?'Редактировать выполненную работу':'Добавить выполненную работу');
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/WorkCompliteEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+$DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
 $Form = new Tag('FORM',Array('name'=>'WorkCompliteEditForm','onsubmit'=>'return false;'));
 #-------------------------------------------------------------------------------
@@ -179,7 +176,7 @@ switch(ValueOf($Services)){
       'Form/Input',
       Array(
         'type'    => 'button',
-        'onclick' => 'WorkCompliteEdit();',
+        'onclick' => SPrintF("FormEdit('/Administrator/API/WorkCompliteEdit','WorkCompliteEditForm','%s');",$Title),
         'value'   => ($WorkCompliteID?'Сохранить':'Добавить')
       )
     );

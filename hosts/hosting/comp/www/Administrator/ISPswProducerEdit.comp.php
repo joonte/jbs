@@ -30,8 +30,6 @@ if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 $DOM->AddChild('Into',$Comp);
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
-#-------------------------------------------------------------------------------\
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ISPswProducerEdit.js}')));
 #-------------------------------------------------------------------------------
 # get settings

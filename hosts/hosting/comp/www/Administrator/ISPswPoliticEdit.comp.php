@@ -50,8 +50,6 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
-#-------------------------------------------------------------------------------
 $Title = ($ISPswPoliticID?'Редактирование ценовой политики на ПО ISPsystem':'Добавление ценовой политики на ПО ISPsystem');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);

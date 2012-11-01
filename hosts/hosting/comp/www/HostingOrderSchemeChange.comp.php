@@ -83,8 +83,6 @@ switch(ValueOf($HostingOrder)){
                 #---------------------------------------------------------------
                 $DOM->AddText('Title','Смена тарифного плана');
                 #---------------------------------------------------------------
-		$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
-                #---------------------------------------------------------------
                 $Table = $Options = Array();
                 #---------------------------------------------------------------
                 foreach($HostingSchemes as $HostingScheme)

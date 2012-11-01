@@ -32,11 +32,6 @@ switch(ValueOf($Contract)){
     if(Is_Error($DOM->Load('Window')))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
-    $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ContractEdit.js}'));
-    #---------------------------------------------------------------------------
-    $DOM->AddChild('Head',$Script);
-    #---------------------------------------------------------------------------
-    #---------------------------------------------------------------------------
     $DOM->AddText('Title','Изменение договора');
     #---------------------------------------------------------------------------
     $Table = Array();
@@ -107,7 +102,7 @@ switch(ValueOf($Contract)){
           'Form/Input',
           Array(
             'type'    => 'button',
-            'onclick' => 'ContractEdit();',
+            'onclick' => "FormEdit('/Administrator/API/ContractEdit','ContractEditForm','Изменение договора');",
             'value'   => 'Изменить'
           )
         );
