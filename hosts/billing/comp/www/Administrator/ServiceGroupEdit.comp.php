@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -49,11 +48,6 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ServiceGroupEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 $Title = ($ServiceGroupID?'Редактирование группы услуг':'Добавление новой группы услуг');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);
@@ -101,7 +95,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'ServiceGroupEdit();',
+    'onclick' => SPrintF("FormEdit('/Administrator/API/ServiceGroupEdit','ServiceGroupEditForm','%s');",$Title),
     'value'   => ($ServiceGroupID?'Сохранить':'Добавить')
   )
 );

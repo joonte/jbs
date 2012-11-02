@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -56,11 +55,9 @@ switch(ValueOf($Row)){
     if(Is_Error($DOM->Load('Window')))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
-    $DOM->AddText('Title',SPrintF('Таблица: %s, запись ID: %s',$TableID,$Row['ID']));
+    $Title = SPrintF('Таблица: %s, запись ID: %s',$TableID,$Row['ID']);
     #---------------------------------------------------------------------------
-    $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/RowEdit.js}'));
-    #---------------------------------------------------------------------------
-    $DOM->AddChild('Head',$Script);
+    $DOM->AddText('Title',$Title);
     #---------------------------------------------------------------------------
     $DOM->AddChild('Into',new Tag('FORM',Array('id'=>'RowEditForm','name'=>'RowEditForm','onsubmit'=>'return false;')));
     #---------------------------------------------------------------------------
@@ -111,7 +108,7 @@ switch(ValueOf($Row)){
     $Comp = Comp_Load(
       'Form/Input',
       Array(
-        'onclick' => 'RowEdit();',
+        'onclick' => "FormEdit('/Administrator/API/RowEdit','RowEditForm','Сохранение записи');",
         'type'    => 'button',
         'value'   => 'Обновить'
       )

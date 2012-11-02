@@ -379,7 +379,7 @@ FROM
 
 /* реализация JBS-157 */
 #-------------------------------------------------------------------------------
-/*
+
 DROP VIEW IF EXISTS `BonusesOwners`;
 DROP TABLE IF EXISTS `BonusesOwners`;
 CREATE
@@ -388,10 +388,10 @@ SELECT
   `Bonuses`.*
 FROM
   `Bonuses`;
-*/
+
 #-------------------------------------------------------------------------------
 /* реализация JBS-158 */
-/*
+
 DROP VIEW IF EXISTS `PoliticsOwners`;
 DROP TABLE IF EXISTS `PoliticsOwners`;
 CREATE
@@ -400,6 +400,6 @@ SELECT
   `Politics`.*
 FROM
   `Politics`;
-*/
+
 
 

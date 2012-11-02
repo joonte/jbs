@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -53,8 +52,6 @@ switch(ValueOf($Invoice)){
         if(Is_Error($DOM->Load('Window')))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
-        $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/InvoiceEdit.js}')));
-        #-----------------------------------------------------------------------
         $DOM->AddText('Title','Изменение счета');
         #-----------------------------------------------------------------------
         $Comp = Comp_Load('jQuery/DatePicker','CreateDate',$Invoice['CreateDate']);
@@ -91,7 +88,7 @@ switch(ValueOf($Invoice)){
         $Comp = Comp_Load(
           'Form/Input',
           Array(
-            'onclick' => 'InvoiceEdit();',
+            'onclick' => "FormEdit('/API/InvoiceEdit','InvoiceEditForm','Изменение счета');",
             'type'    => 'button',
             'value'   => 'Изменить'
           )
