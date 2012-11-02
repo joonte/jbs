@@ -81,7 +81,7 @@ RootDir=`dirname $RootDir`
 #------------------------------------------------
 #------------------------------------------------
 # проверяем, запущен скрипт или нет
-if [ ! `ps auxww | grep "sh demon.sh h41810.srv8.test-hf.ru" | grep -v grep| wc -l` -gt 0 ]
+if [ ! `ps auxww | grep "sh demon.sh $HostsID" | grep -v grep | wc -l` -gt 0 ]
 then
 	# let Mortal Combat begin! =)
 	sh demon.sh $HostsID $RootDir >> $RootDir/demon.log &

@@ -10,7 +10,7 @@ tmp_dir="/tmp/$$.bill"
 mkdir -p $tmp_dir
 file_list="$tmp_dir/file.list.txt"
 
-dir_list="install core hosts/billing hosts/joonte  hosts/hosting hosts/root db others scripts/billing scripts/hosting scripts/root styles/billing styles/hosting styles/root patches"
+dir_list="install core hosts/billing hosts/hosting hosts/root db others scripts/billing scripts/hosting scripts/root styles/billing styles/hosting styles/root patches"
 
 cd $1 || exit 2;
 
