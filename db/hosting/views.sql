@@ -380,26 +380,26 @@ FROM
 /* реализация JBS-157 */
 #-------------------------------------------------------------------------------
 /*
-DROP VIEW IF EXISTS `OrdersBonusesOwners`;
-DROP TABLE IF EXISTS `OrdersBonusesOwners`;
+DROP VIEW IF EXISTS `BonusesOwners`;
+DROP TABLE IF EXISTS `BonusesOwners`;
 CREATE
-  VIEW `OrdersBonusesOwners` AS
+  VIEW `BonusesOwners` AS
 SELECT
-  `OrdersBonuses`.*
+  `Bonuses`.*
 FROM
-  `OrdersBonuses`;
+  `Bonuses`;
 */
 #-------------------------------------------------------------------------------
 /* реализация JBS-158 */
 /*
-DROP VIEW IF EXISTS `OrdersPoliticsOwners`;
-DROP TABLE IF EXISTS `OrdersPoliticsOwners`;
+DROP VIEW IF EXISTS `PoliticsOwners`;
+DROP TABLE IF EXISTS `PoliticsOwners`;
 CREATE
-  VIEW `OrdersPoliticsOwners` AS
+  VIEW `PoliticsOwners` AS
 SELECT
-  `OrdersPolitics`.*
+  `Politics`.*
 FROM
-  `OrdersPolitics`;
+  `Politics`;
 */
 
 
