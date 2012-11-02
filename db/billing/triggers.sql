@@ -197,3 +197,28 @@ CREATE DEFINER = CURRENT_USER TRIGGER `EventsOnInsert` BEFORE INSERT ON `Events`
 |
 DELIMITER ;
 
+/* реализация JBS-157 */
+
+DROP TRIGGER IF EXISTS `BonusesOnInsert`;
+DELIMITER |
+CREATE DEFINER = CURRENT_USER TRIGGER `BonusesOnInsert` BEFORE INSERT ON `Bonuses`
+  FOR EACH ROW BEGIN
+    IF NEW.`CreateDate` = 0
+      THEN
+        SET NEW.`CreateDate` = UNIX_TIMESTAMP();
+    END IF;
+    IF NEW.`ExpirationDate` = 0
+      THEN
+        SET NEW.`ExpirationDate` = (UNIX_TIMESTAMP() + NEW.`DaysReserved` * 24 * 3600);
+    END IF;
+    IF NEW.`DaysRemainded` = 0
+      THEN
+        SET NEW.`DaysRemainded` = NEW.`DaysReserved`;
+    END IF;
+  END;
+|
+DELIMITER ;
+
+
+
+

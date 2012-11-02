@@ -257,3 +257,52 @@ FROM
   `Edesks`
 LEFT JOIN `EdesksMessages`
 ON (`Edesks`.`ID` = `EdesksMessages`.`EdeskID`);
+
+
+/* реализация JBS-157 / JBS-158 */
+#-------------------------------------------------------------------------------
+
+DROP VIEW IF EXISTS `BonusesOwners`;
+DROP TABLE IF EXISTS `BonusesOwners`;
+CREATE
+   VIEW `BonusesOwners` AS
+SELECT
+  `Bonuses`.*
+FROM
+  `Bonuses`;
+
+#-------------------------------------------------------------------------------
+DROP VIEW IF EXISTS `PoliticsOwners`;
+DROP TABLE IF EXISTS `PoliticsOwners`;
+CREATE
+   VIEW `PoliticsOwners` AS
+SELECT
+   `Politics`.*
+FROM
+   `Politics`;
+
+#-------------------------------------------------------------------------------
+DROP VIEW IF EXISTS `SchemesGroupsOwners`;
+DROP TABLE IF EXISTS `SchemesGroupsOwners`;
+CREATE
+   VIEW `SchemesGroupsOwners` AS
+SELECT
+   `SchemesGroups`.*,
+   100 as `UserID`
+FROM
+   `SchemesGroups`;
+
+#-------------------------------------------------------------------------------
+DROP VIEW IF EXISTS `SchemesGroupsItemsOwners`;
+DROP TABLE IF EXISTS `SchemesGroupsItemsOwners`;
+CREATE
+   VIEW `SchemesGroupsItemsOwners` AS
+SELECT
+   `SchemesGroupsItems`.*,
+   100 as `UserID`
+FROM
+   `SchemesGroupsItems`;
+
+
+
+

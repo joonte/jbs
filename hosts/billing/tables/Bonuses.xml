@@ -9,6 +9,8 @@
   <ListElement>CreateDate</ListElement>
   <ListElement>UserID</ListElement>
   <ListElement>ExpirationDate</ListElement>
+  <ListElement>ServiceID</ListElement>
+  <ListElement>SchemeID</ListElement>
   <ListElement>DaysReserved</ListElement>
   <ListElement>DaysRemainded</ListElement>
   <ListElement>Discont</ListElement>
@@ -89,25 +91,27 @@
   </Args>
  </ExpirationDate>
  <!-- ********************************************************************** -->
-<!-- <Scheme>
+ <Scheme>
   <Head>Тариф</Head>
-  <Comp>Formats/String</Comp>
+  <Comp>www/Administrator/API/SchemesGroupItemInfo</Comp>
   <Args>
-   <ListElement>%Scheme%</ListElement>
-   <Length>15</Length>
+   <ListElement>%ServiceID%</ListElement>
+   <ListElement>%SchemeID%</ListElement>
+   <Length>20</Length>
   </Args>
-  <Alias>IF(ISNULL(`SchemeID`),'Все тарифы',(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `OrdersServersGroups` WHERE `OrdersSchemes`.`ServersGroupID` = `OrdersServersGroups`.`ID`),')') FROM `OrdersSchemes` WHERE `OrdersSchemes`.`ID` = `OrdersBonuses`.`SchemeID`))</Alias>
- </Scheme> -->
+ </Scheme>
  <!-- ********************************************************************** -->
  <DaysReserved>
-  <Head>Дней зарез.</Head>
+  <Head>Зарез.</Head>
+  <Prompt>Сколько предоставлено дней/лет со скидкой</Prompt>
   <Attribs>
    <style>text-align:right;</style>
   </Attribs>
  </DaysReserved>
  <!-- ********************************************************************** -->
  <DaysRemainded>
-  <Head>Дней ост.</Head>
+  <Head>Осталось</Head>
+  <Prompt>Сколько дней/лет неизрасходовано</Prompt>
   <Attribs>
    <style>text-align:right;</style>
   </Attribs>
@@ -140,7 +144,7 @@
  <ListElement>CreateDate</ListElement>
  <ListElement>Owner</ListElement>
  <ListElement>ExpirationDate</ListElement>
-<!-- <ListElement>Scheme</ListElement> -->
+ <ListElement>Scheme</ListElement>
  <ListElement>DaysReserved</ListElement>
  <ListElement>DaysRemainded</ListElement>
  <ListElement>Discont</ListElement>

@@ -377,29 +377,3 @@ SELECT
 FROM
 	`ISPswSchemes`;
 
-/* реализация JBS-157 */
-#-------------------------------------------------------------------------------
-
-DROP VIEW IF EXISTS `BonusesOwners`;
-DROP TABLE IF EXISTS `BonusesOwners`;
-CREATE
-  VIEW `BonusesOwners` AS
-SELECT
-  `Bonuses`.*
-FROM
-  `Bonuses`;
-
-#-------------------------------------------------------------------------------
-/* реализация JBS-158 */
-
-DROP VIEW IF EXISTS `PoliticsOwners`;
-DROP TABLE IF EXISTS `PoliticsOwners`;
-CREATE
-  VIEW `PoliticsOwners` AS
-SELECT
-  `Politics`.*
-FROM
-  `Politics`;
-
-
-

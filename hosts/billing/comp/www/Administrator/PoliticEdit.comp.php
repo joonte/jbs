@@ -57,10 +57,7 @@ if(Is_Error($DOM->Load('Window')))
 #-------------------------------------------------------------------------------
 $DOM->AddAttribs('Body',Array('onload'=>SPrintF("GetSchemes(%s,'FromSchemeID','%s');GetSchemes(%s,'ToSchemeID','%s');",$Politic['FromServiceID'],$Politic['FromSchemeID'],$Politic['ToServiceID'],$Politic['ToSchemeID'])));
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/GetSchemes.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
-#-------------------------------------------------------------------------------
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/GetSchemes.js}')));
 #-------------------------------------------------------------------------------
 $Title = ($PoliticID?'Редактирование ценовой политики':'Добавление ценовой политики');
 #-------------------------------------------------------------------------------

@@ -152,7 +152,20 @@ INSERT INTO `Permissions` (`Name`,`HostID`,`UserGroupID`,`UserID`,`OwnerGroupID`
 
 /* added by lissyara, 2012-10-03 in 21:57 for JBS-491 */
 ('EdeskClose','billing',1,1,1,1,1,'yes'),
-('EdeskClose','billing',3000000,100,1,1,2,'yes');
+('EdeskClose','billing',3000000,100,1,1,2,'yes'),
+
+/* added by lissyara, 2012-11-02 in 15:30 for JBS-157 / JBS-158 */
+('SchemesGroupsDelete','billing',1,1,4000000,1,1,'no'),
+('SchemesGroupsDelete','billing',3000000,100,1,1,2,'yes'),
+
+('SchemesGroupsItemsDelete','billing',1,1,4000000,1,1,'no'),
+('SchemesGroupsItemsDelete','billing',3000000,100,1,1,2,'yes'),
+
+('PoliticsDelete','billing',1,1,4000000,1,1,'no'),
+('PoliticsDelete','billing',3000000,100,1,1,2,'yes'),
+
+('BonusesDelete','billing',1,1,4000000,1,1,'no'),
+('BonusesDelete','billing',3000000,100,1,1,2,'yes');
 
 UNLOCK TABLES;
 
