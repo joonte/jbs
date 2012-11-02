@@ -49,7 +49,7 @@ if($Service['Code'] != 'Default'){
 		return new gException('NO_RESULT','Тарифы не найдены');
 	case 'array':
 		foreach($Schemes as $Scheme)
-			$Result[UniqID('ID')] = Array('Value'=>$Scheme['ID'],'Label'=>SPrintF('%s (%s)',$Scheme['Name'],$Scheme['PackageID']));
+			$Result[UniqID('ID')] = Array('Value'=>$Scheme['ID'],'Label'=>SPrintF('%s [%s]',$Scheme['Name'],$Scheme['PackageID']));
 		break;
 	default:
 		return ERROR | @Trigger_Error(101);

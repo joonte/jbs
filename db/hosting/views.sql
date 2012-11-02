@@ -72,7 +72,8 @@ DROP TABLE IF EXISTS `DomainsSchemesOwners`;
 CREATE
   VIEW `DomainsSchemesOwners` AS
 SELECT
-  `DomainsSchemes`.*, `DomainsSchemes`.`Name` AS `PackageID`
+  `DomainsSchemes`.*,
+  CONCAT(`Name`,' (',(SELECT `Name` FROM `Registrators` WHERE `Registrators`.`ID` = `DomainsSchemes`.`RegistratorID`),')') AS PackageID
 FROM
   `DomainsSchemes`;
 #-------------------------------------------------------------------------------

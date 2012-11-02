@@ -12,8 +12,8 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 #-------------------------------------------------------------------------------
 $Args = Args();
 #-------------------------------------------------------------------------------
-$SchemesGroupID = (integer) @$Args['SchemesGroupID'];
-$Name                  =  (string) @$Args['Name'];
+$SchemesGroupID	= (integer) @$Args['SchemesGroupID'];
+$Name		=  (string) @$Args['Name'];
 #-------------------------------------------------------------------------------
 $ISchemesGroup = Array(
   #-----------------------------------------------------------------------------
