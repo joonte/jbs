@@ -68,7 +68,7 @@
   <Natural>
    <Name>Физическое лицо</Name>
    <IsActive>1</IsActive>
-   <IsUsedMotionDocuments>1</IsUsedMotionDocuments>
+   <IsUsedMotionDocuments>0</IsUsedMotionDocuments>
    <IsUponConsider>0</IsUponConsider>
    <ProfileTemplateID>Natural</ProfileTemplateID>
    <Simple>
