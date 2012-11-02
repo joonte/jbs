@@ -55,6 +55,8 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+$DOM->AddAttribs('Body',Array('onload'=>SPrintF("GetSchemes(%s,'FromSchemeID','%s');GetSchemes(%s,'ToSchemeID','%s');",$Politic['FromServiceID'],$Politic['FromSchemeID'],$Politic['ToServiceID'],$Politic['ToSchemeID'])));
+#-------------------------------------------------------------------------------
 $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/GetSchemes.js}'));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
@@ -74,7 +76,12 @@ if(Is_Error($Comp))
 $Table[] = $Comp;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Services = DB_Select('ServicesOwners','*',Array('Where'=>'`IsActive` = "yes"','SortOn'=>'SortID'));
+$Where = Array(
+		'`IsActive` = "yes"',
+		'`IsHidden` != "yes"',
+		);
+#-------------------------------------------------------------------------------
+$Services = DB_Select('ServicesOwners','*',Array('Where'=>$Where,'SortOn'=>'SortID'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Services)){
 case 'error':

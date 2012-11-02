@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+ </Comps>
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>SchemesGroups</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>Name</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Группы тарифов не обнаружены.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <After>
+  <Delete>
+   <Args>
+    <Comment>Выбранные группы тарифов</Comment>
+    <Send>
+     <TableID>SchemesGroups</TableID>
+    </Send>
+   </Args>
+  </Delete>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>Name</SortOn>
+ <IsDesc>0</IsDesc>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+ <SelectID>
+  <Args>
+   <TableID>SchemesGroups</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/Administrator/SchemesGroupEdit</ListElement>
+   <ListElement>
+    <SchemesGroupID>%ID%</SchemesGroupID>
+   </ListElement>
+   <ListElement>Редактировать группу тарифов</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+ <!-- ********************************************************************** -->
+ <Name>
+  <Head>Название группы</Head>
+ </Name>
+ <!-- ********************************************************************** -->
+ <Schemes>
+  <Head>Тарифы</Head>
+  <Comp>Formats/Order/SchemesGroup</Comp>
+  <Args>
+   <ListElement>%ID%</ListElement>
+   <ListElement>50</ListElement>
+  </Args>
+ </Schemes>
+</Columns>
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>Edit</ListElement>
+ <ListElement>Name</ListElement>
+ <ListElement>Schemes</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

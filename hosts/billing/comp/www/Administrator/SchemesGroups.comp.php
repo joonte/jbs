@@ -1,65 +1,56 @@
 <?php
 
 #-------------------------------------------------------------------------------
-/** @author Alex Keda, for www.host-food.ru */
+/** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Args = Args();
-#-------------------------------------------------------------------------------
-$ServiceID = (integer) @$Args['ServiceID'];
-#-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+$DOM = new DOM();
 #-------------------------------------------------------------------------------
-$Result = Array();
-$Status = 'Exception';
+$Links = &Links();
+# Коллекция ссылок
+$Links['DOM'] = &$DOM;
 #-------------------------------------------------------------------------------
+if(Is_Error($DOM->Load('Base')))
+  return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if($ServiceID == 0)
-	return Array('Options'=>$Result,'Status'=>$Status);
+$DOM->AddAttribs('MenuLeft',Array('args'=>'Administrator/Office'));
 #-------------------------------------------------------------------------------
+$DOM->AddText('Title','Офис → Бонусы → Группы тарифов');
 #-------------------------------------------------------------------------------
-# достаём код сервиса
-Debug("[comp/www/Administrator/AutoComplite/SchemeID]: ServiceID = " . $ServiceID);
-$Service = DB_Select('ServicesOwners',Array('ID','Name','Code'),Array('UNIQ','ID'=>$ServiceID));
+$Comp = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/Administrator/SchemesGroupEdit');"),'Новая группа тарифов','Add.gif');
+if(Is_Error($Comp))
+  return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-switch(ValueOf($Service)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	return new gException('NO_SERVICE','Выбранный сервис не найден');
-case 'array':
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
-}
+$Comp = Comp_Load('Buttons/Panel',Array('Comp'=>$Comp,'Name'=>'Новая группа тарифов'));
+if(Is_Error($Comp))
+  return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+$NoBody = new Tag('NOBODY',$Comp);
 #-------------------------------------------------------------------------------
-if($Service['Code'] != 'Default'){
-	$Schemes = DB_Select(SPrintF('%sSchemesOwners',$Service['Code']),Array('ID','Name','PackageID'),Array('SortOn'=>'SortID'));
-	#-------------------------------------------------------------------------------
-	switch(ValueOf($Schemes)){
-	case 'error':
-	return ERROR | @Trigger_Error(500);
-	case 'exception':
-		return new gException('NO_RESULT','Тарифы не найдены');
-	case 'array':
-		foreach($Schemes as $Scheme)
-			$Result[UniqID('ID')] = Array('Value'=>$Scheme['ID'],'Label'=>SPrintF('%s (%s)',$Scheme['Name'],$Scheme['PackageID']));
-		break;
-	default:
-		return ERROR | @Trigger_Error(101);
-	}
-}
+$Comp = Comp_Load('Tables/Super','SchemesGroups');
+if(Is_Error($Comp))
+  return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+$NoBody->AddChild($Comp);
 #-------------------------------------------------------------------------------
-if(SizeOf($Result) > 0)
-	$Status = 'Ok';
+$Comp = Comp_Load('Tab','Administrator/Bonuses',$NoBody);
+if(Is_Error($Comp))
+  return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-return Array('Options'=>$Result,'Status'=>$Status);
+$DOM->AddChild('Into',$Comp);
+#-------------------------------------------------------------------------------
+$Out = $DOM->Build();
+#-------------------------------------------------------------------------------
+if(Is_Error($Out))
+  return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+return $Out;
+#-------------------------------------------------------------------------------
 
 ?>

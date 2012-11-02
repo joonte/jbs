@@ -73,7 +73,12 @@ if(Is_Error($Comp))
 $Table[] = Array('Пользователь',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Services = DB_Select('ServicesOwners','*',Array('Where'=>'`IsActive` = "yes"','SortOn'=>'SortID'));
+$Where = Array(
+		'`IsActive` = "yes"',
+		'`IsHidden` != "yes"',
+		);
+#-------------------------------------------------------------------------------
+$Services = DB_Select('ServicesOwners','*',Array('Where'=>$Where,'SortOn'=>'SortID'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Services)){
 case 'error':
