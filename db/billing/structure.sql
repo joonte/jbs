@@ -702,7 +702,7 @@ CREATE TABLE `SchemesGroups` (
 
 /* общая таблица для группировки тарифов - элементы групп. реализация JBS-158 */
 DROP TABLE IF EXISTS `SchemesGroupsItems`;
-  CREATE TABLE `SchemesGroupsItems` (
+CREATE TABLE `SchemesGroupsItems` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `SchemesGroupID` int(11) NOT NULL,
   `ServiceID` int(11) NULL,
@@ -716,6 +716,37 @@ DROP TABLE IF EXISTS `SchemesGroupsItems`;
   KEY `SchemesGroupsItemsServiceID` (`ServiceID`),
   CONSTRAINT `SchemesGroupsItemsServiceID` FOREIGN KEY (`ServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/* ПромоКоды, JBS-15 */
+DROP TABLE IF EXISTS `PromoCodes`;
+CREATE TABLE `PromoCodes` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Code` char(32),				-- промокод
+  `CreateDate` int(11) default '0',     	-- дата создания промокода
+  `ExpirationDate` int(11) default '0', 	-- дата окончания действия промокода
+  `ServiceID` int(11) NULL,			-- на какой сервис
+  `SchemeID` int(11) NULL,			-- идентификатор тарифа
+  `SchemesGroupID` int(11) NULL,		-- группа тарифов
+  `Discont` float(11,2) default '0.00',		-- размер скидки, в долях от единицы
+  `MaxAmount` int(11) default '0',		-- сколько раз можно ввести промокод
+  `CurrentAmount` int(11) default '0',		-- сколько раз его уже вводили
+  `OwnerID` int(11) NULL,			-- сделать того кто введёт партнёром этого юзера
+  `ForceOwnerID` enum('no','yes') default 'no',	-- делать партнёром принудительно (если уже чей-то партнёр)
+  `Comment` char(255) default '',		-- комментарий к промокоду
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY (`Code`),
+  /* внешний ключ на сервис */
+  KEY `PromoCodesServiceID` (`ServiceID`),
+  CONSTRAINT `PromoCodesServiceID` FOREIGN KEY (`ServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  /* внешний ключ на группы тарифов */
+  KEY `PromoCodesSchemesGroupID` (`SchemesGroupID`),
+  CONSTRAINT `PromoCodesSchemesGroupID` FOREIGN KEY (`SchemesGroupID`) REFERENCES `SchemesGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  /* внешний ключ на таблицу юзеров */
+  KEY `PromoCodesOwnerID` (`OwnerID`),
+  CONSTRAINT `PromoCodesOwnerID` FOREIGN KEY (`OwnerID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 
 
