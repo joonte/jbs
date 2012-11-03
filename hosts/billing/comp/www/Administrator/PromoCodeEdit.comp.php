@@ -12,13 +12,13 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 #-------------------------------------------------------------------------------
 $Args = Args();
 #-------------------------------------------------------------------------------
-$BonusID = (integer) @$Args['BonusID'];
+$PromoCodeID = (integer) @$Args['PromoCodeID'];
 #-------------------------------------------------------------------------------
-if($BonusID){
+if($PromoCodeID){
   #-----------------------------------------------------------------------------
-  $Bonus = DB_Select('Bonuses','*',Array('UNIQ','ID'=>$BonusID));
+  $PromoCode = DB_Select('PromoCodes','*',Array('UNIQ','ID'=>$PromoCodeID));
   #-----------------------------------------------------------------------------
-  switch(ValueOf($Bonus)){
+  switch(ValueOf($PromoCode)){
     case 'error':
       return ERROR | @Trigger_Error(500);
     case 'exception':
@@ -31,18 +31,18 @@ if($BonusID){
   }
 }else{
   #-----------------------------------------------------------------------------
-  $Bonus = Array(
+  $PromoCode = Array(
      #--------------------------------------------------------------------------
-    'Code'		=> 1,
+    'Code'		=> FALSE,
     'ExpirationDate'	=> Time() + 365 * 24 * 3600,
     'ServiceID'		=> 0,
     'SchemeID'		=> 0,
     'SchemesGroupID'	=> 0,
     'Discont'		=> 0.5,
     'MaxAmount'		=> 100,
-    'OwnerID'		=> 0,
+    'OwnerID'		=> FALSE,
     'ForceOwnerID'	=> FALSE,
-    'Comment'		=> 'Новогодняя скидка'
+    'Comment'		=> 'Промокод размещён на форуме профильного сайта forum.joonte.ru'
   );
 }
 #-------------------------------------------------------------------------------
@@ -55,22 +55,36 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DOM->AddAttribs('Body',Array('onload'=>SPrintF("GetSchemes(%s,'SchemeID','%s');",$Bonus['ServiceID'],$Bonus['SchemeID'])));
+$DOM->AddAttribs('Body',Array('onload'=>SPrintF("GetSchemes(%s,'SchemeID','%s');",$PromoCode['ServiceID'],$PromoCode['SchemeID'])));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/GetSchemes.js}')));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Title = ($BonusID?'Редактирование бонуса':'Добавление нового бонуса');
+$Title = ($PromoCodeID?'Редактирование бонуса':'Добавление нового бонуса');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
 $Table = Array('Общая информация');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Users/Select','UserID',$Bonus['UserID']);
+#-------------------------------------------------------------------------------
+if(!$PromoCodeID){
+	$Comp = Comp_Load(
+			'Form/Input',
+			Array(
+				'type'  => 'text',
+				'name'  => 'Code',
+				'value' => $PromoCode['Code'],
+				'prompt'=> 'Английские буквы и цифры, дефисы и подчёркивания'
+				)
+			);
+}else{
+	$Comp = $PromoCode['Code'];
+}
+#-------------------------------------------------------------------------------
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Пользователь',$Comp);
+$Table[] = Array('Промокод',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Where = Array(
@@ -97,7 +111,7 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ServiceID','onchange'=>SPrintF("GetSchemes(this.value,'SchemeID','%s');",$Bonus['SchemeID'])),$Options,$Bonus['ServiceID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ServiceID','onchange'=>SPrintF("GetSchemes(this.value,'SchemeID','%s');",$PromoCode['SchemeID'])),$Options,$PromoCode['ServiceID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -106,14 +120,40 @@ $Table[] = Array('Сервис',$Comp);
 #-------------------------------------------------------------------------------
 $Options = Array('Любой тариф');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID','id'=>'SchemeID','disabled'=>TRUE),$Options,$Bonus['SchemeID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID','id'=>'SchemeID','disabled'=>TRUE),$Options,$PromoCode['SchemeID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Тариф',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('jQuery/DatePicker','ExpirationDate',$Bonus['ExpirationDate']);
+$SchemesGroups = DB_Select('SchemesGroups','*');
+#-------------------------------------------------------------------------------
+switch(ValueOf($SchemesGroups)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	$Options = Array('Нет групп тарифов');
+	break;
+case 'array':
+	#---------------------------------------------------------------------------
+	$Options = Array();
+	#---------------------------------------------------------------------------
+	foreach($SchemesGroups as $SchemesGroup)
+		$Options[$SchemesGroup['ID']] = $Service['Name'];
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Select',Array('name'=>'SchemesGroup'),$Options,$PromoCode['SchemesGroupID']);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Группа тарифов',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('jQuery/DatePicker','ExpirationDate',$PromoCode['ExpirationDate']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -124,36 +164,8 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'name'  => 'DaysReserved',
-    'value' => $Bonus['DaysReserved'],
-    'prompt'=> 'Число дней выданной скидки'
-  )
-);
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array('Действителен дней',$Comp);
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'name'  => 'DaysRemainded',
-    'value' => $Bonus['DaysRemainded'],
-    'prompt'=> 'Сколько дней скидки осталось неизрасходованными'
-  )
-);
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array('Действителен осталось',$Comp);
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
     'name'  => 'Discont',
-    'value' => $Bonus['Discont']*100,
+    'value' => $PromoCode['Discont']*100,
     'prompt'=> 'Число от 5 до 100'
   )
 );
@@ -161,6 +173,71 @@ if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Размер скидки в %',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+  'Form/Input',
+  Array(
+    'type'  => 'text',
+    'name'  => 'MaxAmount',
+    'value' => $PromoCode['MaxAmount'],
+    'prompt'=> 'Сколько раз можно ввести этот промокод'
+  )
+);
+if(Is_Error($Comp))
+  return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Количество использований',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Table[] = 'Настройки реферальной программы';
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+		'Form/Input',
+		Array(
+			'name'		=> 'UseOwnerID',
+			'type'		=> 'checkbox',
+			'onclick'	=> "form.SearchOwnerID.disabled = !checked; form.ForceOwnerID.disabled = !checked;"
+		)
+	);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox("UseOwnerID"); document.getElementsByName("SearchOwnerID")[0].disabled = document.getElementsByName("UseOwnerID")[0].checked?false:true; document.getElementsByName("ForceOwnerID")[0].disabled = document.getElementsByName("UseOwnerID")[0].checked?false:true; return false;'),'Делать рефералами'),$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+		'Form/Input',
+		Array(
+			'name'		=> 'ForceOwnerID',
+			'type'		=> 'checkbox',
+			'prompt'	=> 'Если пользователь уже чей-то реферал, менять реферала на указанного'
+		)
+	);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------
+if(IntVal($PromoCode['OwnerID']) < 2001)
+	$Comp->AddAttribs(Array('disabled'=>TRUE));
+#-------------------------------------------------------------------
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox("ForceOwnerID"); return false;'),'Менять реферала'),$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+			'Users/Select',
+			'OwnerID',						# имя скрытой формы, для передачи значения
+			$PromoCode['OwnerID']?$PromoCode['OwnerID']:'1',	# если не задан - то используем 1 - система
+			'SearchOwnerID',					# имя формы, где выбираем юзера
+			$PromoCode['OwnerID']?FALSE:TRUE,			# если не задан - дисаблим форму поиска
+			'Все кто введёт промокод, автоматически станут рефералами указанного тут пользователя'
+		);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Сделать рефералом',$Comp);
+
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/TextArea',
@@ -170,7 +247,7 @@ $Comp = Comp_Load(
     'rows'  => 5,
     'prompt'=> 'Цель/причина создания этой скидки клиенту'
   ),
-  $Bonus['Comment']
+  $PromoCode['Comment']
 );
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
@@ -183,8 +260,8 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => SPrintF("FormEdit('/Administrator/API/BonusEdit','BonusEditForm','%s');",$Title),
-    'value'   => ($BonusID?'Сохранить':'Добавить')
+    'onclick' => SPrintF("FormEdit('/Administrator/API/PromoCodeEdit','PromoCodeEditForm','%s');",$Title),
+    'value'   => ($PromoCodeID?'Сохранить':'Добавить')
   )
 );
 if(Is_Error($Comp))
@@ -196,16 +273,16 @@ $Comp = Comp_Load('Tables/Standard',$Table);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Form = new Tag('FORM',Array('name'=>'BonusEditForm','onsubmit'=>'return false;'),$Comp);
+$Form = new Tag('FORM',Array('name'=>'PromoCodeEditForm','onsubmit'=>'return false;'),$Comp);
 #-------------------------------------------------------------------------------
-if($BonusID){
+if($PromoCodeID){
   #-----------------------------------------------------------------------------
   $Comp = Comp_Load(
     'Form/Input',
     Array(
-      'name'  => 'BonusID',
+      'name'  => 'PromoCodeID',
       'type'  => 'hidden',
-      'value' => $BonusID
+      'value' => $PromoCodeID
     )
   );
   if(Is_Error($Comp))

@@ -5,7 +5,7 @@
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('Name','UserID','UniqID','IsDisabled');
+$__args_list = Array('Name','UserID','UniqID','IsDisabled','Prompt');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
@@ -34,7 +34,8 @@ switch(ValueOf($User)){
         'onfocus' => "value='';",
         'onclick' => SPrintF("AutoComplite(this,GetPosition(this),'/Administrator/AutoComplite/UserID',function(Text,Value){form.%s.value = Text;form.%s.value = Value;});",$UniqID,$Name),
         'type'    => 'text',
-        'value'   => SPrintF('%s (%s)',$User['Email'],$User['Name'])
+        'value'   => SPrintF('%s (%s)',$User['Email'],$User['Name']),
+	'prompt'  => $Prompt?$Prompt:'Для поиска пользователя введите первые буквы его имени или email адреса',
       )
     );
     if(Is_Error($Comp))
