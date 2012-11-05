@@ -643,6 +643,7 @@ CREATE TABLE `Bonuses` (
   `UserID` int(11) NOT NULL,		-- для какого юзера этот бонус
   `ServiceID` int(11) NULL,		-- на какой сервис бонус
   `SchemeID` int(11) NULL,		-- идентификатор тарифа, на который даётся бонус
+  `SchemesGroupID` int(11) NULL,   -- группа тарифов на которую даётся бонус
   `DaysReserved` int(11) default '0',	-- на сколько дней дан бонус
   `DaysRemainded` int(11) default '0',	-- сколько дней осталось от бонуса
   `Discont` float(11,2) default '0.00',	-- размер скидки, в долях от единицы
@@ -655,7 +656,10 @@ CREATE TABLE `Bonuses` (
   CONSTRAINT `BonusesUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   /* внешний ключ на сервис */
   KEY `BonusesServiceID` (`ServiceID`),
-  CONSTRAINT `BonusesServiceID` FOREIGN KEY (`ServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `BonusesServiceID` FOREIGN KEY (`ServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  /* внешний ключ на группы тарифов */
+  KEY `PoliticsSchemesGroupID` (`SchemesGroupID`),
+  CONSTRAINT `PoliticsSchemesGroupID` FOREIGN KEY (`SchemesGroupID`) REFERENCES `SchemesGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* общая таблица для политик. реализация JBS-158 */
@@ -668,8 +672,10 @@ CREATE TABLE `Politics` (
   `GroupID` int(11) NOT NULL,		-- для какой группы юзеров эта политика
   `FromServiceID` int(11) NULL,		-- при заказе какого сервиса работает политика
   `FromSchemeID` int(11) NULL,		-- идентификатор тарифа, по которому срабатывает политика
+  `FromSchemesGroupID` int(11) NULL,	-- какую группу услуг оплачивают
   `ToServiceID` int(11) NULL,		-- на какой сервис работает эта политика
   `ToSchemeID` int(11) NULL,		-- идентификатор тарифа, на который будет даваться скидка
+  `ToSchemesGroupID` int(11) NULL,	-- на какую группу услуг будет даваться бонус
   `DaysPay` int(11) default '665',	-- какой срок надо оплатить, чтобы сработала политика
   `Discont` float(11,2) default '0.00',	-- размер скидки, в долях от единицы
   `Comment` char(255) default '',       -- комментарий к политике
@@ -686,10 +692,15 @@ CREATE TABLE `Politics` (
   /* внешний ключ на сервис, при заказе которого работает политика */
   KEY `PoliticsFromServiceID` (`FromServiceID`),
   CONSTRAINT `PoliticsFromServiceID` FOREIGN KEY (`FromServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  /* внешний ключ на группы тарифов */
+  KEY `PoliticsFromSchemesGroupID` (`FromSchemesGroupID`),
+  CONSTRAINT `PoliticsFromSchemesGroupID` FOREIGN KEY (`FromSchemesGroupID`) REFERENCES `SchemesGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   /* внешний ключ на сервис, на который даётся бонус этой политикой */
   KEY `PoliticsToServiceID` (`ToServiceID`),
-  CONSTRAINT `PoliticsToServiceID` FOREIGN KEY (`ToServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
-
+  CONSTRAINT `PoliticsToServiceID` FOREIGN KEY (`ToServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  /* внешний ключ на группы тарифов */
+  KEY `PoliticsToSchemesGroupID` (`ToSchemesGroupID`),
+  CONSTRAINT `PoliticsToSchemesGroupID` FOREIGN KEY (`ToSchemesGroupID`) REFERENCES `SchemesGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* общая таблица для группировки тарифов - группы. реализация JBS-158 */
