@@ -8,6 +8,7 @@
   <ListElement>ID</ListElement>
   <ListElement>CreateDate</ListElement>
   <ListElement>ExpirationDate</ListElement>
+  <ListElement>Code</ListElement>
   <ListElement>ServiceID</ListElement>
   <ListElement>SchemeID</ListElement>
   <ListElement>Discont</ListElement>
@@ -59,7 +60,7 @@
   <Args>
    <ListElement>/Administrator/PromoCodeEdit</ListElement>
    <ListElement>
-    <BonusID>%ID%</BonusID>
+    <PromoCodeID>%ID%</PromoCodeID>
    </ListElement>
    <ListElement>Редактировать ПромоКод</ListElement>
    <ListElement>Edit.gif</ListElement>
@@ -85,6 +86,28 @@
    <ListElement>%ExpirationDate%</ListElement>
   </Args>
  </ExpirationDate>
+ <!-- ********************************************************************** -->
+ <Code>
+  <Head>ПромоКод</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Code%</ListElement>
+   <Length>20</Length>
+  </Args>
+ </Code>
+ <!-- ********************************************************************** -->
+ <MaxAmount>
+  <Head>Кол</Head>
+  <Prompt>Сколько раз можно вводить этот код</Prompt>
+  <Alias>`MaxAmount`</Alias>
+ </MaxAmount>
+ <!-- ********************************************************************** -->
+ <Amount>
+  <Head>Ост.</Head>
+  <Prompt>Количество оставшихся вводов</Prompt>
+  <Alias>(`MaxAmount` - `CurrentAmount`)</Alias>
+ </Amount>
+
  <!-- ********************************************************************** -->
 <!-- <Scheme>
   <Head>Тариф</Head>
@@ -124,6 +147,9 @@
  <ListElement>Edit</ListElement>
  <ListElement>CreateDate</ListElement>
  <ListElement>ExpirationDate</ListElement>
+ <ListElement>Code</ListElement>
+ <ListElement>MaxAmount</ListElement>
+ <ListElement>Amount</ListElement>
  <ListElement>Discont</ListElement>
  <ListElement>Comment</ListElement>
 </Sequence>

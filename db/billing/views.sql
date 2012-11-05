@@ -304,5 +304,17 @@ FROM
    `SchemesGroupsItems`;
 
 
+#-------------------------------------------------------------------------------
+DROP VIEW IF EXISTS `PromoCodesOwners`;
+DROP TABLE IF EXISTS `PromoCodesOwners`;
+CREATE
+   VIEW `PromoCodesOwners` AS
+SELECT
+   `PromoCodes`.*,
+   100 as `UserID`
+FROM
+   `PromoCodes`;
+
+
 
 

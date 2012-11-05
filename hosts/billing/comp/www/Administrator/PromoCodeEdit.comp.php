@@ -15,35 +15,35 @@ $Args = Args();
 $PromoCodeID = (integer) @$Args['PromoCodeID'];
 #-------------------------------------------------------------------------------
 if($PromoCodeID){
-  #-----------------------------------------------------------------------------
-  $PromoCode = DB_Select('PromoCodes','*',Array('UNIQ','ID'=>$PromoCodeID));
-  #-----------------------------------------------------------------------------
-  switch(ValueOf($PromoCode)){
-    case 'error':
-      return ERROR | @Trigger_Error(500);
-    case 'exception':
-      return ERROR | @Trigger_Error(400);
-    case 'array':
-      # No more...
-    break;
-    default:
-      return ERROR | @Trigger_Error(101);
-  }
+	#-----------------------------------------------------------------------------
+	$PromoCode = DB_Select('PromoCodesOwners','*',Array('UNIQ','ID'=>$PromoCodeID));
+	#-----------------------------------------------------------------------------
+	switch(ValueOf($PromoCode)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		# No more...
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
 }else{
-  #-----------------------------------------------------------------------------
-  $PromoCode = Array(
-     #--------------------------------------------------------------------------
-    'Code'		=> FALSE,
-    'ExpirationDate'	=> Time() + 365 * 24 * 3600,
-    'ServiceID'		=> 0,
-    'SchemeID'		=> 0,
-    'SchemesGroupID'	=> 0,
-    'Discont'		=> 0.5,
-    'MaxAmount'		=> 100,
-    'OwnerID'		=> FALSE,
-    'ForceOwnerID'	=> FALSE,
-    'Comment'		=> 'Промокод размещён на форуме профильного сайта forum.joonte.ru'
-  );
+	#-----------------------------------------------------------------------------
+	$PromoCode = Array(
+		#--------------------------------------------------------------------------
+		'Code'		=> FALSE,
+		'ExpirationDate'=> Time() + 365 * 24 * 3600,
+		'ServiceID'	=> 0,
+		'SchemeID'	=> 0,
+		'SchemesGroupID'=> 0,
+		'Discont'	=> 0.5,
+		'MaxAmount'	=> 100,
+		'OwnerID'	=> FALSE,
+		'ForceOwnerID'	=> FALSE,
+		'Comment'	=> 'Промокод размещён на форуме профильного сайта forum.joonte.ru'
+		);
 }
 #-------------------------------------------------------------------------------
 $DOM = new DOM();
@@ -60,14 +60,17 @@ $DOM->AddAttribs('Body',Array('onload'=>SPrintF("GetSchemes(%s,'SchemeID','%s');
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/GetSchemes.js}')));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Title = ($PromoCodeID?'Редактирование бонуса':'Добавление нового бонуса');
+$Title = ($PromoCodeID?'Редактирование ПромоКода':'Добавление нового ПромоКода');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
 $Table = Array('Общая информация');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$PromoCodeExample = StrToUpper(SPrintF('%s-%s-%s-%s',SubStr(md5(MicroTime()),1,4),SubStr(md5(MicroTime()),6,4),SubStr(md5(MicroTime()),12,4),SubStr(md5(MicroTime()),20,4)));
+#-------------------------------------------------------------------------------
 if(!$PromoCodeID){
+	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load(
 			'Form/Input',
 			Array(
@@ -77,14 +80,17 @@ if(!$PromoCodeID){
 				'prompt'=> 'Английские буквы и цифры, дефисы и подчёркивания'
 				)
 			);
+	#-------------------------------------------------------------------------------
+	$Comp1 = new Tag('NOBODY',new Tag('SPAN','ПромоКод'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Например: '),new Tag('SPAN',Array('class'=>'Comment','style'=>'cursor: pointer;','onclick'=>SPrintF('document.getElementsByName("Code")[0].value = "%s";',$PromoCodeExample)),$PromoCodeExample));
 }else{
 	$Comp = $PromoCode['Code'];
+	$Comp1 = 'ПромоКод';
 }
 #-------------------------------------------------------------------------------
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Промокод',$Comp);
+$Table[] = Array($Comp1,$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Where = Array(
@@ -137,16 +143,16 @@ case 'exception':
 	break;
 case 'array':
 	#---------------------------------------------------------------------------
-	$Options = Array();
+	$Options = Array('Не использовать');
 	#---------------------------------------------------------------------------
 	foreach($SchemesGroups as $SchemesGroup)
-		$Options[$SchemesGroup['ID']] = $Service['Name'];
+		$Options[$SchemesGroup['ID']] = $SchemesGroup['Name'];
 	break;
 default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SchemesGroup'),$Options,$PromoCode['SchemesGroupID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'SchemesGroupID'),$Options,$PromoCode['SchemesGroupID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

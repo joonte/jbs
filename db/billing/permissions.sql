@@ -165,7 +165,14 @@ INSERT INTO `Permissions` (`Name`,`HostID`,`UserGroupID`,`UserID`,`OwnerGroupID`
 ('PoliticsDelete','billing',3000000,100,1,1,2,'yes'),
 
 ('BonusesDelete','billing',1,1,4000000,1,1,'no'),
-('BonusesDelete','billing',3000000,100,1,1,2,'yes');
+('BonusesDelete','billing',3000000,100,1,1,2,'yes'),
+
+/* added by lissyara, 2012-11-05 in 15:43 MSK, for JBS-15 */
+('PromoCodesDelete','billing',1,1,4000000,1,1,'no'),
+('PromoCodesDelete','billing',3000000,100,1,1,2,'yes');
+
+
+
 
 UNLOCK TABLES;
 
