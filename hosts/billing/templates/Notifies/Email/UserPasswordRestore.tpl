@@ -2,7 +2,7 @@
  *  Joonte Billing System
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
-{assign var=Theme value="Ваши данные для входа" scope=global}
+{assign var=Theme value="Восстановление ваших данных для входа" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 По Вашему запросу, был восстановлен Ваш пароль для входа в биллинговую систему.
