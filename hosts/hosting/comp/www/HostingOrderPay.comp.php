@@ -69,7 +69,7 @@ switch(ValueOf($HostingOrder)){
         #-----------------------------------------------------------------------
         $Form->AddChild($Comp);
         #-----------------------------------------------------------------------
-        $DOM->AddText('Title',SPrintF('Оплата заказа хостинга, %s / %s',$HostingOrder['Login'],$HostingOrder['Domain']));
+        $DOM->AddText('Title',SPrintF('Оплата заказа хостинга, %s',$HostingOrder['Login']));
         #-----------------------------------------------------------------------
         $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/HostingOrderPay.js}')));
         #-----------------------------------------------------------------------
