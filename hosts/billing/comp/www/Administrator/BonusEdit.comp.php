@@ -36,6 +36,7 @@ if($BonusID){
     'UserID'        => 1,
     'ServiceID'     => 0,
     'SchemeID'      => 0,
+    'SchemesGroupID'=> 0,
     'ExpirationDate'=> Time() + 365 * 24 * 3600,
     'DaysReserved'  => 30,
     'DaysRemainded' => 30,
@@ -109,6 +110,32 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Тариф',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$SchemesGroups = DB_Select('SchemesGroups','*');
+#-------------------------------------------------------------------------------
+switch(ValueOf($SchemesGroups)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	$Options = Array('Нет групп тарифов');
+	break;
+case 'array':
+	#---------------------------------------------------------------------------
+	$Options = Array('Не использовать');
+	#---------------------------------------------------------------------------
+	foreach($SchemesGroups as $SchemesGroup)
+		$Options[$SchemesGroup['ID']] = $SchemesGroup['Name'];
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Select',Array('name'=>'SchemesGroupID'),$Options,$Bonus['SchemesGroupID']);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Группа тарифов',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('jQuery/DatePicker','ExpirationDate',$Bonus['ExpirationDate']);

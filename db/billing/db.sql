@@ -2781,7 +2781,20 @@ INSERT INTO `Clauses` (`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtecte
 
 /* added by lissyara, 2012-10-31 in 09:34 MSK, JBS-157 */
 INSERT INTO `Clauses` (`ID`, `PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
-(103, 1351627200, 1351661397, 100, 100, 'Header:/Administrator/Bonuses', 'Раздел в тестовом режиме', 'no', 'yes', 'yes', 'yes', '<NOBODY>\n <TABLE align="center" cellspacing="5" class="Warning">\n  <TBODY>\n   <TR>\n    <TD style="padding:5px;">\n    Данный раздел находится в тестовом режиме, ещё ничего не работает.<BR />\n    Для создания скидок пользуйтесь соответствующими пунктами меню в разделах услуг.<BR />\n    Пожелания по функционалу можно оставить в форуме: <A href="http://forum.joonte.com/viewtopic.php?f=4&t=779" target="_blank">http://forum.joonte.com/viewtopic.php?f=4&t=779</A></TD>\n   </TR>\n  </TBODY>\n </TABLE>\n <BR />\n</NOBODY>\n');
+(103, 1351627200, 1351661397, 100, 100, 'Header:/Administrator/Bonuses', 'Раздел в тестовом режиме', 'no', 'yes', 'yes', 'yes', '<NOBODY>
+<TABLE align="center" cellspacing="5" class="Warning">
+<TBODY>
+	<TR>
+		<TD style="padding:5px;">
+			Данный раздел находится в тестовом режиме, ещё ничего не работает.<BR />
+			Для создания скидок пользуйтесь соответствующими пунктами меню в разделах услуг.<BR />
+			Пожелания по функционалу можно оставить в форуме: <A href="http://forum.joonte.com/viewtopic.php?f=4&amp;t=779" target="_blank">http://forum.joonte.com/viewtopic.php?f=4&amp;t=779</A>
+		</TD>
+	</TR>
+</TBODY>
+</TABLE>
+<BR />
+</NOBODY>');
 
 
 
