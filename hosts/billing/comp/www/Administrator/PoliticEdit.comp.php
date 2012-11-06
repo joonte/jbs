@@ -38,8 +38,10 @@ if($PoliticID){
 		'UserID'		=> 1,
 		'FromServiceID'		=> 0,
 		'FromSchemeID'		=> 0,
+		'FromSchemesGroupID'	=> 0,
 		'ToServiceID'		=> 0,
 		'ToSchemeID'		=> 0,
+		'ToSchemesGroupID'	=> 0,
 		'DaysPay'		=> 363,
 		'Discont'		=> 0.1,
 		'Comment'		=> '10% скидки тем кто платит сразу за год'
@@ -113,6 +115,32 @@ if(Is_Error($Comp))
 $Table[] = Array('Оплачиваемый тариф',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$SchemesGroups = DB_Select('SchemesGroups','*');
+#-------------------------------------------------------------------------------
+switch(ValueOf($SchemesGroups)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	$Options = Array('Нет групп тарифов');
+	break;
+case 'array':
+	#---------------------------------------------------------------------------
+	$Options = Array('Не использовать');
+	#---------------------------------------------------------------------------
+	foreach($SchemesGroups as $SchemesGroup)
+		$Options[$SchemesGroup['ID']] = $SchemesGroup['Name'];
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Select',Array('name'=>'FromSchemesGroupID'),$Options,$Politic['FromSchemesGroupID']);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Оплачиваемая группа тарифов',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'ToServiceID','onchange'=>SPrintF("GetSchemes(this.value,'ToSchemeID','%s');",$Politic['ToSchemeID'])),$ServicesOptions,$Politic['ToServiceID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
@@ -125,6 +153,32 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Скидка на тариф',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$SchemesGroups = DB_Select('SchemesGroups','*');
+#-------------------------------------------------------------------------------
+switch(ValueOf($SchemesGroups)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	$Options = Array('Нет групп тарифов');
+	break;
+case 'array':
+	#---------------------------------------------------------------------------
+	$Options = Array('Не использовать');
+	#---------------------------------------------------------------------------
+	foreach($SchemesGroups as $SchemesGroup)
+		$Options[$SchemesGroup['ID']] = $SchemesGroup['Name'];
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Select',Array('name'=>'ToSchemesGroupID'),$Options,$Politic['ToSchemesGroupID']);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Скидка на группу тарифов',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('jQuery/DatePicker','ExpirationDate',$Politic['ExpirationDate']);
