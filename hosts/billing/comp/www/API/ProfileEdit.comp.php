@@ -200,7 +200,7 @@ if($ProfileID){
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Contracts','StatusID'=>'Public','RowsIDs'=>$ContractID));
+            $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Contracts','StatusID'=>'Public','RowsIDs'=>$ContractID,'Comment'=>'Заполнение профиля'));
             #-------------------------------------------------------------------
             switch(ValueOf($Comp)){
               case 'error':
@@ -252,7 +252,7 @@ if(IsSet($UProfile['Format']))
   if(!SaveUploadedFile('Profiles', $ProfileID, $Upload['Data']))
     return new gException('CANNOT_SAVE_UPLOADED_FILE','Не удалось сохранить загруженный файл');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Profiles','StatusID'=>(Count($Simple)?'OnFilling':'Filled'),'RowsIDs'=>$ProfileID));
+$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Profiles','StatusID'=>(Count($Simple)?'OnFilling':'Filled'),'RowsIDs'=>$ProfileID,'Comment'=>'Правка уже заполненного профиля'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Comp)){
   case 'error':
@@ -277,6 +277,35 @@ if($Window){
   #-----------------------------------------------------------------------------
   $Answer = Array('Status'=>'Window','Window'=>$Window);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# реализация JBS-539 - активизируем задачи по регистрации доменов этого юзера
+$Where = Array(
+		"`IsExecuted` = 'no'",
+		"`IsActive` = 'no'",
+		"`TypeID` = 'DomainRegister'",
+		SPrintF('`UserID` = %u',$__USER['ID'])
+		);
+$Tasks = DB_Select('Tasks',Array('ID'),Array('Where'=>$Where));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Tasks)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	# no tasks
+	break;
+case 'array':
+	# активируем задачи
+	foreach($Tasks as $Task){
+		$IsUpdate = DB_Update('Tasks',Array('ExecuteDate'=>Time(),'Errors'=>0,'Result'=>'','IsActive'=>TRUE),Array('ID'=>$Task['ID']));
+		if(Is_Error($IsUpdate))
+			return ERROR | @Trigger_Error(500);
+	}
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $Answer;
 #-------------------------------------------------------------------------------
