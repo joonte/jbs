@@ -33,7 +33,7 @@ switch(ValueOf($DomainOrder)){
       case 'error':
         return ERROR | @Trigger_Error(500);
       case 'exception':
-        return new gException('TRANSFER_TO_OPERATOR','Задание не может быть выполнено автоматически и передано оператору');
+        return new gException('CANNOT_SELECT_REGISTRATOR','Не удалось выбрать регистратора');
       case 'true':
         #-----------------------------------------------------------------------
         $GLOBALS['TaskReturnInfo'] = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']);
@@ -86,7 +86,23 @@ switch(ValueOf($DomainOrder)){
               case 'error':
                 return ERROR | @Trigger_Error(500);
               case 'exception':
-                return new gException('TRANSFER_TO_OPERATOR','Задание не может быть выполнено автоматически и передано оператору');
+                # add ticket to user, about it's exception
+                $Clause = DB_Select('Clauses','*',Array('UNIQ','Where'=>"`Partition` = 'CreateTicket/ERROR_DOMAIN_REGISTER'"));
+                switch(ValueOf($Clause)){
+                case 'array':
+                  $CompParameters = Array('Theme'         => SPrintF('%s %s.%s',$Clause['Title'],$DomainOrder['DomainName'],$DomainOrder['DomainZone']),
+                                          'TargetGroupID' => 3100000,
+                                          'TargetUserID'  => 100,
+                                          'PriorityID'    => 'Low',
+                                          'Message'       => trim(Strip_Tags($Clause['Text'])),
+                                          'UserID'        => $DomainOrder['UserID'],
+                                          'Flags'         => 'CloseOnSee'
+                                         );
+                  # set variable, for post-executing task
+                  $GLOBALS['TaskReturnArray'] = Array('CompName' => 'www/API/TicketEdit', 'CompParameters' => $CompParameters);
+                }
+                #-------------------------------------------------------------------
+                return new gException('TRANSFER_TO_OPERATOR_1','Задание не может быть выполнено автоматически и передано оператору');
               case 'false':
                 return 300;
               case 'array':
@@ -129,7 +145,7 @@ switch(ValueOf($DomainOrder)){
               case 'error':
                 return ERROR | @Trigger_Error(500);
               case 'exception':
-                return new gException('TRANSFER_TO_OPERATOR','Задание не может быть выполнено автоматически и передано оператору');
+                return new gException('TRANSFER_TO_OPERATOR_2','Задание не может быть выполнено автоматически и передано оператору');
               case 'false':
                 return 300;
               case 'array':

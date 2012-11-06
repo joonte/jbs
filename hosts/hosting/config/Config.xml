@@ -558,6 +558,7 @@
    <Params>
     <ID>Идентификатор заказа</ID>
     <TicketID>Номер заявки</TicketID>
+    <AdditionalTaskExecuted>Дополнительная задача</AdditionalTaskExecuted>
    </Params>
    <IsActive>1</IsActive>
   </DomainRegister>

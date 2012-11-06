@@ -163,13 +163,13 @@ switch(ValueOf($Task)){
     # execute additional task, if need
     if(IsSet($GLOBALS['TaskReturnArray'])){
       # выполнено или нет?
-      if($Task['Params']['AdditionalTaskExecuted'] != "yes"){
-        Debug("[comp/www/Administrator/API/TaskExecute]: TaskReturnArray is set, need run additional task: " . $GLOBALS['TaskReturnArray']['CompName']);
+      if(IsSet($Task['Params']['AdditionalTaskExecuted']) && $Task['Params']['AdditionalTaskExecuted'] != 'yes'){
+        Debug(SPrintF('[comp/www/Administrator/API/TaskExecute]: TaskReturnArray is set, need run additional task: %s',$GLOBALS['TaskReturnArray']['CompName']));
         $Comp = Comp_Load($GLOBALS['TaskReturnArray']['CompName'],$GLOBALS['TaskReturnArray']['CompParameters']);
         if(Is_Error($Comp))
           return ERROR | @Trigger_Error(500);
         # set in task parameters: additional task is executed
-        $Task['Params']['AdditionalTaskExecuted'] = "yes";
+        $Task['Params']['AdditionalTaskExecuted'] = 'yes';
         $IsUpdate = DB_Update('Tasks',Array('Params'=>$Task['Params']),Array('ID'=>$Task['ID']));
         if(Is_Error($IsUpdate))
         return ERROR | @Trigger_Error(500);
