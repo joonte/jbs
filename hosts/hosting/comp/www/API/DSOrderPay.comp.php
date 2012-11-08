@@ -123,65 +123,12 @@ switch(ValueOf($DSOrder)){
             #-------------------------------------------------------------------
             $DaysRemainded = $DaysPay;
             #-------------------------------------------------------------------
-            while($DaysRemainded > 0){
-              #-----------------------------------------------------------------
-              $IOrdersConsider = Array('OrderID'=>$DSOrder['OrderID'],'Cost'=>$DSScheme['CostDay']);
-              #-----------------------------------------------------------------
-              $Where = SPrintF('`UserID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysRemainded` > 0',$UserID,$DSScheme['ID']);
-              #-----------------------------------------------------------------
-              $DSBonus = DB_Select('DSBonuses','*',Array('IsDesc'=>TRUE,'SortOn'=>'Discont','Where'=>$Where));
-              #-----------------------------------------------------------------
-              switch(ValueOf($DSBonus)){
-                case 'error':
-                  return ERROR | @Trigger_Error(500);
-                case 'exception':
-                  #-------------------------------------------------------------
-                  $CostPay += $DSScheme['CostDay']*$DaysRemainded;
-                  #-------------------------------------------------------------
-                  $IOrdersConsider['DaysReserved'] = $DaysRemainded;
-                  #-------------------------------------------------------------
-                  $DaysRemainded = 0;
-                break;
-                case 'array':
-                  #-------------------------------------------------------------
-                  $DSBonus = Current($DSBonus);
-                  #-------------------------------------------------------------
-                  $Discont = (1 - $DSBonus['Discont']);
-                  #-------------------------------------------------------------
-                  $IOrdersConsider['Discont'] = $DSBonus['Discont'];
-                  #-------------------------------------------------------------
-                  if($DSBonus['DaysRemainded'] - $DaysRemainded < 0){
-                    #-----------------------------------------------------------
-                    $CostPay += $DSScheme['CostDay']*$DSBonus['DaysRemainded']*$Discont;
-                    #-----------------------------------------------------------
-                    $IOrdersConsider['DaysReserved'] = $DSBonus['DaysRemainded'];
-                    #-----------------------------------------------------------
-                    $UDSBonus = Array('DaysRemainded'=>0);
-                    #-----------------------------------------------------------
-                    $DaysRemainded -= $DSBonus['DaysRemainded'];
-                  }else{
-                    #-----------------------------------------------------------
-                    $CostPay += $DSScheme['CostDay']*$DaysRemainded*$Discont;
-                    #-----------------------------------------------------------
-                    $IOrdersConsider['DaysReserved'] = $DaysRemainded;
-                    #-----------------------------------------------------------
-                    $UDSBonus = Array('DaysRemainded'=>$DSBonus['DaysRemainded'] - $DaysRemainded);
-                    #-----------------------------------------------------------
-                    $DaysRemainded = 0;
-                  }
-                  #-------------------------------------------------------------
-                  $IsUpdate = DB_Update('DSBonuses',$UDSBonus,Array('ID'=>$DSBonus['ID']));
-                  if(Is_Error($IsUpdate))
-                    return ERROR | @Trigger_Error(500);
-                break;
-                default:
-                  return ERROR | @Trigger_Error(101);
-              }
-              #-----------------------------------------------------------------
-              $IsInsert = DB_Insert('OrdersConsider',$IOrdersConsider);
-              if(Is_Error($IsInsert))
-                return ERROR | @Trigger_Error(500);
-            }
+            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,40000,$DSScheme['ID'],$UserID,$CostPay,$DSScheme['CostDay']);
+            if(Is_Error($Comp))
+              return ERROR | @Trigger_Error(500);
+            #-----------------------------------------------------------------
+            $CostPay = $Comp['CostPay'];
+            $Bonuses = $Comp['Bonuses'];
             #-------------------------------------------------------------------
             $CostPay = Round($CostPay,2);
 	    #-------------------------------------------------------------------

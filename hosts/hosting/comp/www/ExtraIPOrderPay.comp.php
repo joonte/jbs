@@ -167,77 +167,15 @@ switch(ValueOf($ExtraIPOrder)){
                   return ERROR | @Trigger_Error(101);
               }
               #-----------------------------------------------------------------
-              $ExtraIPBonuses = Array();
               #-----------------------------------------------------------------
               $DaysRemainded = $DaysPay;
               #-----------------------------------------------------------------
-              while($DaysRemainded){
-                #---------------------------------------------------------------
-                $Where = SPrintF('`UserID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysRemainded` > 0',$UserID,$ExtraIPScheme['ID']);
-                #---------------------------------------------------------------
-                $ExtraIPBonus = DB_Select('ExtraIPBonuses','*',Array('IsDesc'=>TRUE,'SortOn'=>'Discont','Where'=>$Where));
-                #---------------------------------------------------------------
-                switch(ValueOf($ExtraIPBonus)){
-                  case 'error':
-                    return ERROR | @Trigger_Error(500);
-                  case 'exception':
-                    #-----------------------------------------------------------
-                    $CostPay += $ExtraIPScheme['CostDay']*$DaysRemainded;
-                    #-----------------------------------------------------------
-                    $DaysRemainded = 0;
-                  break;
-                  case 'array':
-                    #-----------------------------------------------------------
-                    $ExtraIPBonus = Current($ExtraIPBonus);
-                    #-----------------------------------------------------------
-                    $Discont = (1 - $ExtraIPBonus['Discont']);
-                    #-----------------------------------------------------------
-                    if($ExtraIPBonus['DaysRemainded'] - $DaysRemainded < 0){
-                      #---------------------------------------------------------
-                      $CostPay += $ExtraIPScheme['CostDay']*$ExtraIPBonus['DaysRemainded']*$Discont;
-                      #---------------------------------------------------------
-                      $UExtraIPBonus = Array('DaysRemainded'=>0);
-                      #---------------------------------------------------------
-                      $DaysRemainded -= $ExtraIPBonus['DaysRemainded'];
-                      #---------------------------------------------------------
-                      $Comp = Comp_Load('Formats/Percent',$ExtraIPBonus['Discont']);
-                      if(Is_Error($Comp))
-                        return ERROR | @Trigger_Error(500);
-                      #---------------------------------------------------------
-                      $Tr = new Tag('TR');
-                      #---------------------------------------------------------
-                      foreach(Array($ExtraIPBonus['DaysRemainded'],$Comp) as $Text)
-                        $Tr->AddChild(new Tag('TD',Array('class'=>'Standard','align'=>'right'),$Text));
-                      #---------------------------------------------------------
-                      $ExtraIPBonuses[] = $Tr;
-                    }else{
-                      #---------------------------------------------------------
-                      $CostPay += $ExtraIPScheme['CostDay']*$DaysRemainded*$Discont;
-                      #---------------------------------------------------------
-                      $UExtraIPBonus = Array('DaysRemainded'=>$ExtraIPBonus['DaysRemainded'] - $DaysRemainded);
-                      #---------------------------------------------------------
-                      $Comp = Comp_Load('Formats/Percent',$ExtraIPBonus['Discont']);
-                      if(Is_Error($Comp))
-                        return ERROR | @Trigger_Error(500);
-                      #---------------------------------------------------------
-                      $Tr = new Tag('TR');
-                      #---------------------------------------------------------
-                      foreach(Array($DaysRemainded,$Comp) as $Text)
-                        $Tr->AddChild(new Tag('TD',Array('class'=>'Standard','align'=>'right'),$Text));
-                      #---------------------------------------------------------
-                      $ExtraIPBonuses[] = $Tr;
-                      #---------------------------------------------------------
-                      $DaysRemainded = 0;
-                    }
-                    #-----------------------------------------------------------
-                    $IsUpdate = DB_Update('ExtraIPBonuses',$UExtraIPBonus,Array('ID'=>$ExtraIPBonus['ID']));
-                    if(Is_Error($IsUpdate))
-                      return ERROR | @Trigger_Error(500);
-                  break;
-                  default:
-                    return ERROR | @Trigger_Error(101);
-                }
-              }
+              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,50000,$ExtraIPScheme['ID'],$UserID,$CostPay,$ExtraIPScheme['CostDay']);
+              if(Is_Error($Comp))
+                return ERROR | @Trigger_Error(500);
+              #-----------------------------------------------------------------
+              $CostPay = $Comp['CostPay'];
+              $Bonuses = $Comp['Bonuses'];
               #-----------------------------------------------------------------
               if(Is_Error(DB_Roll($TransactionID)))
                 return ERROR | @Trigger_Error(500);
@@ -274,18 +212,17 @@ switch(ValueOf($ExtraIPOrder)){
 		  $CostPay += $ExtraIPScheme['CostInstall'];
 		}
 	      }
-#
               #-----------------------------------------------------------------
-              if(Count($ExtraIPBonuses)){
+              if(Count($Bonuses)){
                 #---------------------------------------------------------------
                 $Tr = new Tag('TR');
                 #---------------------------------------------------------------
                 foreach(Array('Дней','Скидка') as $Text)
                   $Tr->AddChild(new Tag('TD',Array('class'=>'Head'),$Text));
                 #---------------------------------------------------------------
-                Array_UnShift($ExtraIPBonuses,$Tr);
+                Array_UnShift($Bonuses,$Tr);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('Tables/Extended',$ExtraIPBonuses,'Бонусы');
+                $Comp = Comp_Load('Tables/Extended',$Bonuses,'Бонусы');
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------

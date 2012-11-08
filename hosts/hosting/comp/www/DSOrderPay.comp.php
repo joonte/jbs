@@ -167,77 +167,16 @@ switch(ValueOf($DSOrder)){
                   return ERROR | @Trigger_Error(101);
               }
               #-----------------------------------------------------------------
-              $DSBonuses = Array();
               #-----------------------------------------------------------------
               $DaysRemainded = $DaysPay;
               #-----------------------------------------------------------------
-              while($DaysRemainded){
-                #---------------------------------------------------------------
-                $Where = SPrintF('`UserID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysRemainded` > 0',$UserID,$DSScheme['ID']);
-                #---------------------------------------------------------------
-                $DSBonus = DB_Select('DSBonuses','*',Array('IsDesc'=>TRUE,'SortOn'=>'Discont','Where'=>$Where));
-                #---------------------------------------------------------------
-                switch(ValueOf($DSBonus)){
-                  case 'error':
-                    return ERROR | @Trigger_Error(500);
-                  case 'exception':
-                    #-----------------------------------------------------------
-                    $CostPay += $DSScheme['CostDay']*$DaysRemainded;
-                    #-----------------------------------------------------------
-                    $DaysRemainded = 0;
-                  break;
-                  case 'array':
-                    #-----------------------------------------------------------
-                    $DSBonus = Current($DSBonus);
-                    #-----------------------------------------------------------
-                    $Discont = (1 - $DSBonus['Discont']);
-                    #-----------------------------------------------------------
-                    if($DSBonus['DaysRemainded'] - $DaysRemainded < 0){
-                      #---------------------------------------------------------
-                      $CostPay += $DSScheme['CostDay']*$DSBonus['DaysRemainded']*$Discont;
-                      #---------------------------------------------------------
-                      $UDSBonus = Array('DaysRemainded'=>0);
-                      #---------------------------------------------------------
-                      $DaysRemainded -= $DSBonus['DaysRemainded'];
-                      #---------------------------------------------------------
-                      $Comp = Comp_Load('Formats/Percent',$DSBonus['Discont']);
-                      if(Is_Error($Comp))
-                        return ERROR | @Trigger_Error(500);
-                      #---------------------------------------------------------
-                      $Tr = new Tag('TR');
-                      #---------------------------------------------------------
-                      foreach(Array($DSBonus['DaysRemainded'],$Comp) as $Text)
-                        $Tr->AddChild(new Tag('TD',Array('class'=>'Standard','align'=>'right'),$Text));
-                      #---------------------------------------------------------
-                      $DSBonuses[] = $Tr;
-                    }else{
-                      #---------------------------------------------------------
-                      $CostPay += $DSScheme['CostDay']*$DaysRemainded*$Discont;
-                      #---------------------------------------------------------
-                      $UDSBonus = Array('DaysRemainded'=>$DSBonus['DaysRemainded'] - $DaysRemainded);
-                      #---------------------------------------------------------
-                      $Comp = Comp_Load('Formats/Percent',$DSBonus['Discont']);
-                      if(Is_Error($Comp))
-                        return ERROR | @Trigger_Error(500);
-                      #---------------------------------------------------------
-                      $Tr = new Tag('TR');
-                      #---------------------------------------------------------
-                      foreach(Array($DaysRemainded,$Comp) as $Text)
-                        $Tr->AddChild(new Tag('TD',Array('class'=>'Standard','align'=>'right'),$Text));
-                      #---------------------------------------------------------
-                      $DSBonuses[] = $Tr;
-                      #---------------------------------------------------------
-                      $DaysRemainded = 0;
-                    }
-                    #-----------------------------------------------------------
-                    $IsUpdate = DB_Update('DSBonuses',$UDSBonus,Array('ID'=>$DSBonus['ID']));
-                    if(Is_Error($IsUpdate))
-                      return ERROR | @Trigger_Error(500);
-                  break;
-                  default:
-                    return ERROR | @Trigger_Error(101);
-                }
-              }
+              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,40000,$DSScheme['ID'],$UserID,$CostPay,$DSScheme['CostDay']);
+              if(Is_Error($Comp))
+                return ERROR | @Trigger_Error(500);
+              #-----------------------------------------------------------------
+              $CostPay = $Comp['CostPay'];
+              $Bonuses = $Comp['Bonuses'];
+              #-----------------------------------------------------------------
               #-----------------------------------------------------------------
               if(Is_Error(DB_Roll($TransactionID)))
                 return ERROR | @Trigger_Error(500);
@@ -275,16 +214,16 @@ switch(ValueOf($DSOrder)){
 		}
 	      }
               #-----------------------------------------------------------------
-              if(Count($DSBonuses)){
+              if(Count($Bonuses)){
                 #---------------------------------------------------------------
                 $Tr = new Tag('TR');
                 #---------------------------------------------------------------
                 foreach(Array('Дней','Скидка') as $Text)
                   $Tr->AddChild(new Tag('TD',Array('class'=>'Head'),$Text));
                 #---------------------------------------------------------------
-                Array_UnShift($DSBonuses,$Tr);
+                Array_UnShift($Bonuses,$Tr);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('Tables/Extended',$DSBonuses,'Бонусы');
+                $Comp = Comp_Load('Tables/Extended',$Bonuses,'Бонусы');
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------

@@ -126,65 +126,13 @@ switch(ValueOf($ISPswOrder)){
             #-------------------------------------------------------------------
             $DaysRemainded = $DaysPay;
             #-------------------------------------------------------------------
-            while($DaysRemainded > 0){
-              #-----------------------------------------------------------------
-              $IOrdersConsider = Array('OrderID'=>$ISPswOrder['OrderID'],'Cost'=>$ISPswScheme['CostDay']);
-              #-----------------------------------------------------------------
-              $Where = SPrintF('`UserID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysRemainded` > 0',$UserID,$ISPswScheme['ID']);
-              #-----------------------------------------------------------------
-              $ISPswBonus = DB_Select('ISPswBonuses','*',Array('IsDesc'=>TRUE,'SortOn'=>'Discont','Where'=>$Where));
-              #-----------------------------------------------------------------
-              switch(ValueOf($ISPswBonus)){
-                case 'error':
-                  return ERROR | @Trigger_Error(500);
-                case 'exception':
-                  #-------------------------------------------------------------
-                  $CostPay += $ISPswScheme['CostDay']*$DaysRemainded;
-                  #-------------------------------------------------------------
-                  $IOrdersConsider['DaysReserved'] = $DaysRemainded;
-                  #-------------------------------------------------------------
-                  $DaysRemainded = 0;
-                break;
-                case 'array':
-                  #-------------------------------------------------------------
-                  $ISPswBonus = Current($ISPswBonus);
-                  #-------------------------------------------------------------
-                  $Discont = (1 - $ISPswBonus['Discont']);
-                  #-------------------------------------------------------------
-                  $IOrdersConsider['Discont'] = $ISPswBonus['Discont'];
-                  #-------------------------------------------------------------
-                  if($ISPswBonus['DaysRemainded'] - $DaysRemainded < 0){
-                    #-----------------------------------------------------------
-                    $CostPay += $ISPswScheme['CostDay']*$ISPswBonus['DaysRemainded']*$Discont;
-                    #-----------------------------------------------------------
-                    $IOrdersConsider['DaysReserved'] = $ISPswBonus['DaysRemainded'];
-                    #-----------------------------------------------------------
-                    $UISPswBonus = Array('DaysRemainded'=>0);
-                    #-----------------------------------------------------------
-                    $DaysRemainded -= $ISPswBonus['DaysRemainded'];
-                  }else{
-                    #-----------------------------------------------------------
-                    $CostPay += $ISPswScheme['CostDay']*$DaysRemainded*$Discont;
-                    #-----------------------------------------------------------
-                    $IOrdersConsider['DaysReserved'] = $DaysRemainded;
-                    #-----------------------------------------------------------
-                    $UISPswBonus = Array('DaysRemainded'=>$ISPswBonus['DaysRemainded'] - $DaysRemainded);
-                    #-----------------------------------------------------------
-                    $DaysRemainded = 0;
-                  }
-                  #-------------------------------------------------------------
-                  $IsUpdate = DB_Update('ISPswBonuses',$UISPswBonus,Array('ID'=>$ISPswBonus['ID']));
-                  if(Is_Error($IsUpdate))
-                    return ERROR | @Trigger_Error(500);
-                break;
-                default:
-                  return ERROR | @Trigger_Error(101);
-              }
-              #-----------------------------------------------------------------
-              $IsInsert = DB_Insert('OrdersConsider',$IOrdersConsider);
-              if(Is_Error($IsInsert))
-                return ERROR | @Trigger_Error(500);
-            }
+            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,51000,$ISPswScheme['ID'],$UserID,$CostPay,$ISPswScheme['CostDay']);
+            if(Is_Error($Comp))
+               return ERROR | @Trigger_Error(500);
+            #-----------------------------------------------------------------
+            $CostPay = $Comp['CostPay'];
+            $Bonuses = $Comp['Bonuses'];
+            #-------------------------------------------------------------------
             #-------------------------------------------------------------------
             $CostPay = Round($CostPay,2);
 	    if(!$ISPswScheme['IsInternal']){

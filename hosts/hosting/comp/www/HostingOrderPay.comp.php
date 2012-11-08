@@ -168,77 +168,17 @@ switch(ValueOf($HostingOrder)){
                   return ERROR | @Trigger_Error(101);
               }
               #-----------------------------------------------------------------
-              $HostingBonuses = Array();
+              $Bonuses = Array();
               #-----------------------------------------------------------------
               $DaysRemainded = $DaysPay;
+	      #-----------------------------------------------------------------
+              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,10000,$HostingScheme['ID'],$UserID,$CostPay,$HostingScheme['CostDay']);
+              if(Is_Error($Comp))
+                return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
-              while($DaysRemainded){
-                #---------------------------------------------------------------
-                $Where = SPrintF('`UserID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysRemainded` > 0',$UserID,$HostingScheme['ID']);
-                #---------------------------------------------------------------
-                $HostingBonus = DB_Select('HostingBonuses','*',Array('IsDesc'=>TRUE,'SortOn'=>'Discont','Where'=>$Where));
-                #---------------------------------------------------------------
-                switch(ValueOf($HostingBonus)){
-                  case 'error':
-                    return ERROR | @Trigger_Error(500);
-                  case 'exception':
-                    #-----------------------------------------------------------
-                    $CostPay += $HostingScheme['CostDay']*$DaysRemainded;
-                    #-----------------------------------------------------------
-                    $DaysRemainded = 0;
-                  break;
-                  case 'array':
-                    #-----------------------------------------------------------
-                    $HostingBonus = Current($HostingBonus);
-                    #-----------------------------------------------------------
-                    $Discont = (1 - $HostingBonus['Discont']);
-                    #-----------------------------------------------------------
-                    if($HostingBonus['DaysRemainded'] - $DaysRemainded < 0){
-                      #---------------------------------------------------------
-                      $CostPay += $HostingScheme['CostDay']*$HostingBonus['DaysRemainded']*$Discont;
-                      #---------------------------------------------------------
-                      $UHostingBonus = Array('DaysRemainded'=>0);
-                      #---------------------------------------------------------
-                      $DaysRemainded -= $HostingBonus['DaysRemainded'];
-                      #---------------------------------------------------------
-                      $Comp = Comp_Load('Formats/Percent',$HostingBonus['Discont']);
-                      if(Is_Error($Comp))
-                        return ERROR | @Trigger_Error(500);
-                      #---------------------------------------------------------
-                      $Tr = new Tag('TR');
-                      #---------------------------------------------------------
-                      foreach(Array($HostingBonus['DaysRemainded'],$Comp) as $Text)
-                        $Tr->AddChild(new Tag('TD',Array('class'=>'Standard','align'=>'right'),$Text));
-                      #---------------------------------------------------------
-                      $HostingBonuses[] = $Tr;
-                    }else{
-                      #---------------------------------------------------------
-                      $CostPay += $HostingScheme['CostDay']*$DaysRemainded*$Discont;
-                      #---------------------------------------------------------
-                      $UHostingBonus = Array('DaysRemainded'=>$HostingBonus['DaysRemainded'] - $DaysRemainded);
-                      #---------------------------------------------------------
-                      $Comp = Comp_Load('Formats/Percent',$HostingBonus['Discont']);
-                      if(Is_Error($Comp))
-                        return ERROR | @Trigger_Error(500);
-                      #---------------------------------------------------------
-                      $Tr = new Tag('TR');
-                      #---------------------------------------------------------
-                      foreach(Array($DaysRemainded,$Comp) as $Text)
-                        $Tr->AddChild(new Tag('TD',Array('class'=>'Standard','align'=>'right'),$Text));
-                      #---------------------------------------------------------
-                      $HostingBonuses[] = $Tr;
-                      #---------------------------------------------------------
-                      $DaysRemainded = 0;
-                    }
-                    #-----------------------------------------------------------
-                    $IsUpdate = DB_Update('HostingBonuses',$UHostingBonus,Array('ID'=>$HostingBonus['ID']));
-                    if(Is_Error($IsUpdate))
-                      return ERROR | @Trigger_Error(500);
-                  break;
-                  default:
-                    return ERROR | @Trigger_Error(101);
-                }
-              }
+	      $CostPay = $Comp['CostPay'];
+	      $Bonuses = $Comp['Bonuses'];
+              #-----------------------------------------------------------------
               #-----------------------------------------------------------------
               if(Is_Error(DB_Roll($TransactionID)))
                 return ERROR | @Trigger_Error(500);
@@ -264,16 +204,16 @@ switch(ValueOf($HostingOrder)){
               #-----------------------------------------------------------------
               $Table[] = Array('Дата окончания после оплаты',$Comp);
               #-----------------------------------------------------------------
-              if(Count($HostingBonuses)){
+              if(Count($Bonuses)){
                 #---------------------------------------------------------------
                 $Tr = new Tag('TR');
                 #---------------------------------------------------------------
                 foreach(Array('Дней','Скидка') as $Text)
                   $Tr->AddChild(new Tag('TD',Array('class'=>'Head'),$Text));
                 #---------------------------------------------------------------
-                Array_UnShift($HostingBonuses,$Tr);
+                Array_UnShift($Bonuses,$Tr);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('Tables/Extended',$HostingBonuses,'Бонусы');
+                $Comp = Comp_Load('Tables/Extended',$Bonuses,'Бонусы');
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------

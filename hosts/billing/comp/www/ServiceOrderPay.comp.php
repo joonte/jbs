@@ -216,6 +216,14 @@ switch(ValueOf($ServiceOrder)){
               if(!$IsPayed && $Service['CostOn'])
                 $CostPay += $Service['CostOn'];
               #-----------------------------------------------------------------
+#              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,10000,$HostingScheme['ID'],$UserID,$CostPay,$HostingScheme['CostDay']);
+#              if(Is_Error($Comp))
+#                return ERROR | @Trigger_Error(500);
+              #-----------------------------------------------------------------
+#              $CostPay = $Comp['CostPay'];
+#              $Bonuses = $Comp['Bonuses'];
+              #-----------------------------------------------------------------
+              #-----------------------------------------------------------------
               $CostPay = Round($CostPay,2);
               #-----------------------------------------------------------------
               $Comp = Comp_Load('Formats/Currency',$CostPay);

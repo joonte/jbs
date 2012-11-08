@@ -123,65 +123,12 @@ switch(ValueOf($VPSOrder)){
             #-------------------------------------------------------------------
             $DaysRemainded = $DaysPay;
             #-------------------------------------------------------------------
-            while($DaysRemainded > 0){
-              #-----------------------------------------------------------------
-              $IOrdersConsider = Array('OrderID'=>$VPSOrder['OrderID'],'Cost'=>$VPSScheme['CostDay']);
-              #-----------------------------------------------------------------
-              $Where = SPrintF('`UserID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysRemainded` > 0',$UserID,$VPSScheme['ID']);
-              #-----------------------------------------------------------------
-              $VPSBonus = DB_Select('VPSBonuses','*',Array('IsDesc'=>TRUE,'SortOn'=>'Discont','Where'=>$Where));
-              #-----------------------------------------------------------------
-              switch(ValueOf($VPSBonus)){
-                case 'error':
-                  return ERROR | @Trigger_Error(500);
-                case 'exception':
-                  #-------------------------------------------------------------
-                  $CostPay += $VPSScheme['CostDay']*$DaysRemainded;
-                  #-------------------------------------------------------------
-                  $IOrdersConsider['DaysReserved'] = $DaysRemainded;
-                  #-------------------------------------------------------------
-                  $DaysRemainded = 0;
-                break;
-                case 'array':
-                  #-------------------------------------------------------------
-                  $VPSBonus = Current($VPSBonus);
-                  #-------------------------------------------------------------
-                  $Discont = (1 - $VPSBonus['Discont']);
-                  #-------------------------------------------------------------
-                  $IOrdersConsider['Discont'] = $VPSBonus['Discont'];
-                  #-------------------------------------------------------------
-                  if($VPSBonus['DaysRemainded'] - $DaysRemainded < 0){
-                    #-----------------------------------------------------------
-                    $CostPay += $VPSScheme['CostDay']*$VPSBonus['DaysRemainded']*$Discont;
-                    #-----------------------------------------------------------
-                    $IOrdersConsider['DaysReserved'] = $VPSBonus['DaysRemainded'];
-                    #-----------------------------------------------------------
-                    $UVPSBonus = Array('DaysRemainded'=>0);
-                    #-----------------------------------------------------------
-                    $DaysRemainded -= $VPSBonus['DaysRemainded'];
-                  }else{
-                    #-----------------------------------------------------------
-                    $CostPay += $VPSScheme['CostDay']*$DaysRemainded*$Discont;
-                    #-----------------------------------------------------------
-                    $IOrdersConsider['DaysReserved'] = $DaysRemainded;
-                    #-----------------------------------------------------------
-                    $UVPSBonus = Array('DaysRemainded'=>$VPSBonus['DaysRemainded'] - $DaysRemainded);
-                    #-----------------------------------------------------------
-                    $DaysRemainded = 0;
-                  }
-                  #-------------------------------------------------------------
-                  $IsUpdate = DB_Update('VPSBonuses',$UVPSBonus,Array('ID'=>$VPSBonus['ID']));
-                  if(Is_Error($IsUpdate))
-                    return ERROR | @Trigger_Error(500);
-                break;
-                default:
-                  return ERROR | @Trigger_Error(101);
-              }
-              #-----------------------------------------------------------------
-              $IsInsert = DB_Insert('OrdersConsider',$IOrdersConsider);
-              if(Is_Error($IsInsert))
-                return ERROR | @Trigger_Error(500);
-            }
+            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,30000,$VPSScheme['ID'],$UserID,$CostPay,$VPSScheme['CostDay']);
+            if(Is_Error($Comp))
+              return ERROR | @Trigger_Error(500);
+            #-----------------------------------------------------------------
+            $CostPay = $Comp['CostPay'];
+            $Bonuses = $Comp['Bonuses'];
             #-------------------------------------------------------------------
             $CostPay = Round($CostPay,2);
 	    #-------------------------------------------------------------------

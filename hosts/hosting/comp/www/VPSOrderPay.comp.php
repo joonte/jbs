@@ -169,77 +169,15 @@ switch(ValueOf($VPSOrder)){
                   return ERROR | @Trigger_Error(101);
               }
               #-----------------------------------------------------------------
-              $VPSBonuses = Array();
               #-----------------------------------------------------------------
               $DaysRemainded = $DaysPay;
               #-----------------------------------------------------------------
-              while($DaysRemainded){
-                #---------------------------------------------------------------
-                $Where = SPrintF('`UserID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysRemainded` > 0',$UserID,$VPSScheme['ID']);
-                #---------------------------------------------------------------
-                $VPSBonus = DB_Select('VPSBonuses','*',Array('IsDesc'=>TRUE,'SortOn'=>'Discont','Where'=>$Where));
-                #---------------------------------------------------------------
-                switch(ValueOf($VPSBonus)){
-                  case 'error':
-                    return ERROR | @Trigger_Error(500);
-                  case 'exception':
-                    #-----------------------------------------------------------
-                    $CostPay += $VPSScheme['CostDay']*$DaysRemainded;
-                    #-----------------------------------------------------------
-                    $DaysRemainded = 0;
-                  break;
-                  case 'array':
-                    #-----------------------------------------------------------
-                    $VPSBonus = Current($VPSBonus);
-                    #-----------------------------------------------------------
-                    $Discont = (1 - $VPSBonus['Discont']);
-                    #-----------------------------------------------------------
-                    if($VPSBonus['DaysRemainded'] - $DaysRemainded < 0){
-                      #---------------------------------------------------------
-                      $CostPay += $VPSScheme['CostDay']*$VPSBonus['DaysRemainded']*$Discont;
-                      #---------------------------------------------------------
-                      $UVPSBonus = Array('DaysRemainded'=>0);
-                      #---------------------------------------------------------
-                      $DaysRemainded -= $VPSBonus['DaysRemainded'];
-                      #---------------------------------------------------------
-                      $Comp = Comp_Load('Formats/Percent',$VPSBonus['Discont']);
-                      if(Is_Error($Comp))
-                        return ERROR | @Trigger_Error(500);
-                      #---------------------------------------------------------
-                      $Tr = new Tag('TR');
-                      #---------------------------------------------------------
-                      foreach(Array($VPSBonus['DaysRemainded'],$Comp) as $Text)
-                        $Tr->AddChild(new Tag('TD',Array('class'=>'Standard','align'=>'right'),$Text));
-                      #---------------------------------------------------------
-                      $VPSBonuses[] = $Tr;
-                    }else{
-                      #---------------------------------------------------------
-                      $CostPay += $VPSScheme['CostDay']*$DaysRemainded*$Discont;
-                      #---------------------------------------------------------
-                      $UVPSBonus = Array('DaysRemainded'=>$VPSBonus['DaysRemainded'] - $DaysRemainded);
-                      #---------------------------------------------------------
-                      $Comp = Comp_Load('Formats/Percent',$VPSBonus['Discont']);
-                      if(Is_Error($Comp))
-                        return ERROR | @Trigger_Error(500);
-                      #---------------------------------------------------------
-                      $Tr = new Tag('TR');
-                      #---------------------------------------------------------
-                      foreach(Array($DaysRemainded,$Comp) as $Text)
-                        $Tr->AddChild(new Tag('TD',Array('class'=>'Standard','align'=>'right'),$Text));
-                      #---------------------------------------------------------
-                      $VPSBonuses[] = $Tr;
-                      #---------------------------------------------------------
-                      $DaysRemainded = 0;
-                    }
-                    #-----------------------------------------------------------
-                    $IsUpdate = DB_Update('VPSBonuses',$UVPSBonus,Array('ID'=>$VPSBonus['ID']));
-                    if(Is_Error($IsUpdate))
-                      return ERROR | @Trigger_Error(500);
-                  break;
-                  default:
-                    return ERROR | @Trigger_Error(101);
-                }
-              }
+              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,30000,$VPSScheme['ID'],$UserID,$CostPay,$VPSScheme['CostDay']);
+              if(Is_Error($Comp))
+                return ERROR | @Trigger_Error(500);
+              #-----------------------------------------------------------------
+              $CostPay = $Comp['CostPay'];
+              $Bonuses = $Comp['Bonuses'];
               #-----------------------------------------------------------------
               if(Is_Error(DB_Roll($TransactionID)))
                 return ERROR | @Trigger_Error(500);
@@ -277,16 +215,16 @@ switch(ValueOf($VPSOrder)){
 		}
 	      }
               #-----------------------------------------------------------------
-              if(Count($VPSBonuses)){
+              if(Count($Bonuses)){
                 #---------------------------------------------------------------
                 $Tr = new Tag('TR');
                 #---------------------------------------------------------------
                 foreach(Array('Дней','Скидка') as $Text)
                   $Tr->AddChild(new Tag('TD',Array('class'=>'Head'),$Text));
                 #---------------------------------------------------------------
-                Array_UnShift($VPSBonuses,$Tr);
+                Array_UnShift($Bonuses,$Tr);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('Tables/Extended',$VPSBonuses,'Бонусы');
+                $Comp = Comp_Load('Tables/Extended',$Bonuses,'Бонусы');
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------

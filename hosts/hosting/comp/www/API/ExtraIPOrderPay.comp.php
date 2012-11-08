@@ -123,75 +123,24 @@ switch(ValueOf($ExtraIPOrder)){
             #-------------------------------------------------------------------
             $DaysRemainded = $DaysPay;
             #-------------------------------------------------------------------
-            while($DaysRemainded > 0){
-              #-----------------------------------------------------------------
-              $IOrdersConsider = Array('OrderID'=>$ExtraIPOrder['OrderID'],'Cost'=>$ExtraIPScheme['CostDay']);
-              #-----------------------------------------------------------------
-              $Where = SPrintF('`UserID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysRemainded` > 0',$UserID,$ExtraIPScheme['ID']);
-              #-----------------------------------------------------------------
-              $ExtraIPBonus = DB_Select('ExtraIPBonuses','*',Array('IsDesc'=>TRUE,'SortOn'=>'Discont','Where'=>$Where));
-              #-----------------------------------------------------------------
-              switch(ValueOf($ExtraIPBonus)){
-                case 'error':
-                  return ERROR | @Trigger_Error(500);
-                case 'exception':
-                  #-------------------------------------------------------------
-                  $CostPay += $ExtraIPScheme['CostDay']*$DaysRemainded;
-                  #-------------------------------------------------------------
-                  $IOrdersConsider['DaysReserved'] = $DaysRemainded;
-                  #-------------------------------------------------------------
-                  $DaysRemainded = 0;
-                break;
-                case 'array':
-                  #-------------------------------------------------------------
-                  $ExtraIPBonus = Current($ExtraIPBonus);
-                  #-------------------------------------------------------------
-                  $Discont = (1 - $ExtraIPBonus['Discont']);
-                  #-------------------------------------------------------------
-                  $IOrdersConsider['Discont'] = $ExtraIPBonus['Discont'];
-                  #-------------------------------------------------------------
-                  if($ExtraIPBonus['DaysRemainded'] - $DaysRemainded < 0){
-                    #-----------------------------------------------------------
-                    $CostPay += $ExtraIPScheme['CostDay']*$ExtraIPBonus['DaysRemainded']*$Discont;
-                    #-----------------------------------------------------------
-                    $IOrdersConsider['DaysReserved'] = $ExtraIPBonus['DaysRemainded'];
-                    #-----------------------------------------------------------
-                    $UExtraIPBonus = Array('DaysRemainded'=>0);
-                    #-----------------------------------------------------------
-                    $DaysRemainded -= $ExtraIPBonus['DaysRemainded'];
-                  }else{
-                    #-----------------------------------------------------------
-                    $CostPay += $ExtraIPScheme['CostDay']*$DaysRemainded*$Discont;
-                    #-----------------------------------------------------------
-                    $IOrdersConsider['DaysReserved'] = $DaysRemainded;
-                    #-----------------------------------------------------------
-                    $UExtraIPBonus = Array('DaysRemainded'=>$ExtraIPBonus['DaysRemainded'] - $DaysRemainded);
-                    #-----------------------------------------------------------
-                    $DaysRemainded = 0;
-                  }
-                  #-------------------------------------------------------------
-                  $IsUpdate = DB_Update('ExtraIPBonuses',$UExtraIPBonus,Array('ID'=>$ExtraIPBonus['ID']));
-                  if(Is_Error($IsUpdate))
-                    return ERROR | @Trigger_Error(500);
-                break;
-                default:
-                  return ERROR | @Trigger_Error(101);
-              }
-              #-----------------------------------------------------------------
-              $IsInsert = DB_Insert('OrdersConsider',$IOrdersConsider);
-              if(Is_Error($IsInsert))
-                return ERROR | @Trigger_Error(500);
-            }
+            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,50000,$ExtraIPScheme['ID'],$UserID,$CostPay,$ExtraIPScheme['CostDay']);
+            if(Is_Error($Comp))
+              return ERROR | @Trigger_Error(500);
+            #-----------------------------------------------------------------
+            $CostPay = $Comp['CostPay'];
+            $Bonuses = $Comp['Bonuses'];
             #-------------------------------------------------------------------
-            $CostPay = Round($CostPay,2);
-
+            #-------------------------------------------------------------------
             if($ExtraIPScheme['CostInstall'] > 0){
-		# need give installation payment
-		if(!$ExtraIPOrder['IsPayed']){
-			# if it not prolongation
-			$CostPay += $ExtraIPScheme['CostInstall'];
-		}
-	    }
+              # need give installation payment
+              if(!$ExtraIPOrder['IsPayed']){
+                # if it not prolongation
+                $Comp = Comp_Load('Formats/Currency',$ExtraIPScheme['CostInstall']);
+                if(Is_Error($Comp))
+                   return ERROR | @Trigger_Error(500);
+                $CostPay += $ExtraIPScheme['CostInstall'];
+              }
+            }
             #-------------------------------------------------------------------
             if(!$IsNoBasket && $CostPay > $ExtraIPOrder['ContractBalance']){
               #-----------------------------------------------------------------

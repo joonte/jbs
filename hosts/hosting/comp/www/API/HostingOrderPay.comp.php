@@ -122,66 +122,14 @@ switch(ValueOf($HostingOrder)){
             $CostPay = 0.00;
             #-------------------------------------------------------------------
             $DaysRemainded = $DaysPay;
+	    #-------------------------------------------------------------------
+            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,10000,$HostingScheme['ID'],$UserID,$CostPay,$HostingScheme['CostDay']);
+            if(Is_Error($Comp))
+              return ERROR | @Trigger_Error(500);
+            #-----------------------------------------------------------------
+            $CostPay = $Comp['CostPay'];
+            $Bonuses = $Comp['Bonuses'];
             #-------------------------------------------------------------------
-            while($DaysRemainded > 0){
-              #-----------------------------------------------------------------
-              $IOrdersConsider = Array('OrderID'=>$HostingOrder['OrderID'],'Cost'=>$HostingScheme['CostDay']);
-              #-----------------------------------------------------------------
-              $Where = SPrintF('`UserID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysRemainded` > 0',$UserID,$HostingScheme['ID']);
-              #-----------------------------------------------------------------
-              $HostingBonus = DB_Select('HostingBonuses','*',Array('IsDesc'=>TRUE,'SortOn'=>'Discont','Where'=>$Where));
-              #-----------------------------------------------------------------
-              switch(ValueOf($HostingBonus)){
-                case 'error':
-                  return ERROR | @Trigger_Error(500);
-                case 'exception':
-                  #-------------------------------------------------------------
-                  $CostPay += $HostingScheme['CostDay']*$DaysRemainded;
-                  #-------------------------------------------------------------
-                  $IOrdersConsider['DaysReserved'] = $DaysRemainded;
-                  #-------------------------------------------------------------
-                  $DaysRemainded = 0;
-                break;
-                case 'array':
-                  #-------------------------------------------------------------
-                  $HostingBonus = Current($HostingBonus);
-                  #-------------------------------------------------------------
-                  $Discont = (1 - $HostingBonus['Discont']);
-                  #-------------------------------------------------------------
-                  $IOrdersConsider['Discont'] = $HostingBonus['Discont'];
-                  #-------------------------------------------------------------
-                  if($HostingBonus['DaysRemainded'] - $DaysRemainded < 0){
-                    #-----------------------------------------------------------
-                    $CostPay += $HostingScheme['CostDay']*$HostingBonus['DaysRemainded']*$Discont;
-                    #-----------------------------------------------------------
-                    $IOrdersConsider['DaysReserved'] = $HostingBonus['DaysRemainded'];
-                    #-----------------------------------------------------------
-                    $UHostingBonus = Array('DaysRemainded'=>0);
-                    #-----------------------------------------------------------
-                    $DaysRemainded -= $HostingBonus['DaysRemainded'];
-                  }else{
-                    #-----------------------------------------------------------
-                    $CostPay += $HostingScheme['CostDay']*$DaysRemainded*$Discont;
-                    #-----------------------------------------------------------
-                    $IOrdersConsider['DaysReserved'] = $DaysRemainded;
-                    #-----------------------------------------------------------
-                    $UHostingBonus = Array('DaysRemainded'=>$HostingBonus['DaysRemainded'] - $DaysRemainded);
-                    #-----------------------------------------------------------
-                    $DaysRemainded = 0;
-                  }
-                  #-------------------------------------------------------------
-                  $IsUpdate = DB_Update('HostingBonuses',$UHostingBonus,Array('ID'=>$HostingBonus['ID']));
-                  if(Is_Error($IsUpdate))
-                    return ERROR | @Trigger_Error(500);
-                break;
-                default:
-                  return ERROR | @Trigger_Error(101);
-              }
-              #-----------------------------------------------------------------
-              $IsInsert = DB_Insert('OrdersConsider',$IOrdersConsider);
-              if(Is_Error($IsInsert))
-                return ERROR | @Trigger_Error(500);
-            }
             #-------------------------------------------------------------------
             $CostPay = Round($CostPay,2);
             #-------------------------------------------------------------------

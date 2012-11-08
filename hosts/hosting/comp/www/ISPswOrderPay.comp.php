@@ -175,77 +175,15 @@ switch(ValueOf($ISPswOrder)){
                   return ERROR | @Trigger_Error(101);
               }
               #-----------------------------------------------------------------
-              $ISPswBonuses = Array();
               #-----------------------------------------------------------------
               $DaysRemainded = $DaysPay;
               #-----------------------------------------------------------------
-              while($DaysRemainded){
-                #---------------------------------------------------------------
-                $Where = SPrintF('`UserID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysRemainded` > 0',$UserID,$ISPswScheme['ID']);
-                #---------------------------------------------------------------
-                $ISPswBonus = DB_Select('ISPswBonuses','*',Array('IsDesc'=>TRUE,'SortOn'=>'Discont','Where'=>$Where));
-                #---------------------------------------------------------------
-                switch(ValueOf($ISPswBonus)){
-                  case 'error':
-                    return ERROR | @Trigger_Error(500);
-                  case 'exception':
-                    #-----------------------------------------------------------
-                    $CostPay += $ISPswScheme['CostDay']*$DaysRemainded;
-                    #-----------------------------------------------------------
-                    $DaysRemainded = 0;
-                  break;
-                  case 'array':
-                    #-----------------------------------------------------------
-                    $ISPswBonus = Current($ISPswBonus);
-                    #-----------------------------------------------------------
-                    $Discont = (1 - $ISPswBonus['Discont']);
-                    #-----------------------------------------------------------
-                    if($ISPswBonus['DaysRemainded'] - $DaysRemainded < 0){
-                      #---------------------------------------------------------
-                      $CostPay += $ISPswScheme['CostDay']*$ISPswBonus['DaysRemainded']*$Discont;
-                      #---------------------------------------------------------
-                      $UISPswBonus = Array('DaysRemainded'=>0);
-                      #---------------------------------------------------------
-                      $DaysRemainded -= $ISPswBonus['DaysRemainded'];
-                      #---------------------------------------------------------
-                      $Comp = Comp_Load('Formats/Percent',$ISPswBonus['Discont']);
-                      if(Is_Error($Comp))
-                        return ERROR | @Trigger_Error(500);
-                      #---------------------------------------------------------
-                      $Tr = new Tag('TR');
-                      #---------------------------------------------------------
-                      foreach(Array($ISPswBonus['DaysRemainded'],$Comp) as $Text)
-                        $Tr->AddChild(new Tag('TD',Array('class'=>'Standard','align'=>'right'),$Text));
-                      #---------------------------------------------------------
-                      $ISPswBonuses[] = $Tr;
-                    }else{
-                      #---------------------------------------------------------
-                      $CostPay += $ISPswScheme['CostDay']*$DaysRemainded*$Discont;
-                      #---------------------------------------------------------
-                      $UISPswBonus = Array('DaysRemainded'=>$ISPswBonus['DaysRemainded'] - $DaysRemainded);
-                      #---------------------------------------------------------
-                      $Comp = Comp_Load('Formats/Percent',$ISPswBonus['Discont']);
-                      if(Is_Error($Comp))
-                        return ERROR | @Trigger_Error(500);
-                      #---------------------------------------------------------
-                      $Tr = new Tag('TR');
-                      #---------------------------------------------------------
-                      foreach(Array($DaysRemainded,$Comp) as $Text)
-                        $Tr->AddChild(new Tag('TD',Array('class'=>'Standard','align'=>'right'),$Text));
-                      #---------------------------------------------------------
-                      $ISPswBonuses[] = $Tr;
-                      #---------------------------------------------------------
-                      $DaysRemainded = 0;
-                    }
-                    #-----------------------------------------------------------
-                    $IsUpdate = DB_Update('ISPswBonuses',$UISPswBonus,Array('ID'=>$ISPswBonus['ID']));
-                    if(Is_Error($IsUpdate))
-                      return ERROR | @Trigger_Error(500);
-                  break;
-                  default:
-                    return ERROR | @Trigger_Error(101);
-                }
-              }
+              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,51000,$ISPswScheme['ID'],$UserID,$CostPay,$ISPswScheme['CostDay']);
+              if(Is_Error($Comp))
+                 return ERROR | @Trigger_Error(500);
+              #-----------------------------------------------------------------
+              $CostPay = $Comp['CostPay'];
+              $Bonuses = $Comp['Bonuses'];
               #-----------------------------------------------------------------
               if(Is_Error(DB_Roll($TransactionID)))
                 return ERROR | @Trigger_Error(500);
@@ -280,16 +218,16 @@ switch(ValueOf($ISPswOrder)){
               #-----------------------------------------------------------------
               $Table[] = Array('Дата окончания после оплаты',$Comp);
               #-----------------------------------------------------------------
-              if(Count($ISPswBonuses)){
+              if(Count($Bonuses)){
                 #---------------------------------------------------------------
                 $Tr = new Tag('TR');
                 #---------------------------------------------------------------
                 foreach(Array('Дней','Скидка') as $Text)
                   $Tr->AddChild(new Tag('TD',Array('class'=>'Head'),$Text));
                 #---------------------------------------------------------------
-                Array_UnShift($ISPswBonuses,$Tr);
+                Array_UnShift($Bonuses,$Tr);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('Tables/Extended',$ISPswBonuses,'Бонусы');
+                $Comp = Comp_Load('Tables/Extended',$Bonuses,'Бонусы');
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
