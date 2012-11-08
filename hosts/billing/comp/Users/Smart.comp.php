@@ -22,7 +22,7 @@ switch(ValueOf($User)){
     if(Is_Error($Comp))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
-    $Tr = new Tag('TR',new Tag('TD',$Comp));
+    $Tr = new Tag('TR',new Tag('TD',Array('style'=>'width: 5px'),$Comp));
     #---------------------------------------------------------------------------
     $Comp = Comp_Load('Notice','Users',$User['ID'],$User['AdminNotice']);
     if(Is_Error($Comp))

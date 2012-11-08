@@ -154,9 +154,9 @@
    <UserID>%UserID%</UserID>
    <Length>10</Length>
   </Args>
-  <Attribs>
-   <style>border 1px solid #475B8A;</style>
-  </Attribs>
+<!--  <Attribs>
+   <style>border: 1px solid #475B8A;</style>
+  </Attribs> -->
   <Alias>(SELECT `Email` FROM `Users` WHERE `UserID` = `Users`.`ID`)</Alias>
  </Owner>
  <!-- ********************************************************************** -->

@@ -61,7 +61,7 @@ foreach($Items as $Item){
 #-------------------------------------------------------------------------------
 $String = Implode(',',$Array);
 #-------------------------------------------------------------------------------
-$Button = new TAG('BUTTON',Array('class'=>'Standard','onclick'=>SPrintF('ListMenuShow(event,[%s]);',$String)));
+$Button = new TAG('BUTTON',Array('class'=>'Standard','style'=>'width: 15px','onclick'=>SPrintF('ListMenuShow(event,[%s]);',$String)));
 #-------------------------------------------------------------------------------
 $LinkID = UniqID('Button');
 #-------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 UnSet($Links[$LinkID]);
 #-------------------------------------------------------------------------------
-$Button->AddChild(new Tag('IMG',Array('align'=>'center','widht'=>5,'height'=>10,'style'=>'display:block;','src'=>'SRC:{Images/ListMenuArrow.gif}')));
+$Button->AddChild(new Tag('IMG',Array('align'=>'center','width'=>5,'height'=>10,'style'=>'display:block;','src'=>'SRC:{Images/ListMenuArrow.gif}')));
 #-------------------------------------------------------------------------------
 return $Button;
 #-------------------------------------------------------------------------------

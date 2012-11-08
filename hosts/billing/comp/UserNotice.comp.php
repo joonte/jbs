@@ -10,7 +10,7 @@ $__args_list = Array('TableID','RowID','UserNotice');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Img = new Tag('IMG',Array('class'=>'Button','onclick'=>SPrintF("ShowWindow('/NoticeEdit',{TableID:'%s',RowID:%u});",$TableID,$RowID),'alt'=>'Заметка','src'=>SPrintF('SRC:{Images/Icons/%s}',$UserNotice?'Notice3.gif':'Notice1.gif'),'widht'=>16,'height'=>16));
+$Img = new Tag('IMG',Array('class'=>'Button','onclick'=>SPrintF("ShowWindow('/NoticeEdit',{TableID:'%s',RowID:%u});",$TableID,$RowID),'alt'=>'Заметка','src'=>SPrintF('SRC:{Images/Icons/%s}',$UserNotice?'Notice3.gif':'Notice1.gif'),'width'=>16,'height'=>16));
 #-------------------------------------------------------------------------------
 if(!$UserNotice)
   $UserNotice = 'Добавить заметку о заказе';

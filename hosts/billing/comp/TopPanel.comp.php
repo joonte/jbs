@@ -269,7 +269,7 @@ EOD;
     #---------------------------------------------------------------------------
     $Span->AddAttribs(Array('onclick'=>"with(document.getElementById('TopPanelUserSwitch').style){ if(display != 'none'){ display = 'none'; } else { var Position = GetPosition(this); left = Position.clientX; top = Position.clientY + 10; display = 'block'; }}",'style'=>'cursor:pointer;'));
     #---------------------------------------------------------------------------
-    $Span->AddChild(new Tag('IMG',Array('widht'=>5,'height'=>10,'src'=>'SRC:{Images/TopPanelUserSwitch.gif}')));
+    $Span->AddChild(new Tag('IMG',Array('width'=>5,'height'=>10,'src'=>'SRC:{Images/TopPanelUserSwitch.gif}')));
     #---------------------------------------------------------------------------
     $Span->AddChild(new Tag('SPAN','[сменить]'));
   }

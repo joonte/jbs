@@ -41,11 +41,11 @@ if(IsSet($_COOKIE[$WidgetID])){
 #-------------------------------------------------------------------------------
 $Table->AddAttribs($lPosition && $rPosition?Array('style'=>SPrintF('position:absolute;left:%u;top:%u;',$lPosition,$rPosition)):Array('style'=>'display:inline-table;'));
 #-------------------------------------------------------------------------------
-$Move = new Tag('IMG',Array('class'=>'Button','alt'=>'Переместить','widht'=>16,'height'=>16,'onmousedown'=>SPrintF("WidgetInit(event,'%s');document.body.onmouseup = function(){ document.body.onmousemove = null;document.body.onmouseup = null;WidgetRender('%s'); };document.body.onmousemove = function(event){ WidgetMove(event,'%s'); };",$WidgetID,$WidgetID,$WidgetID),'src'=>'SRC:{Images/Icons/WidgetMove.gif}'));
+$Move = new Tag('IMG',Array('class'=>'Button','alt'=>'Переместить','width'=>16,'height'=>16,'onmousedown'=>SPrintF("WidgetInit(event,'%s');document.body.onmouseup = function(){ document.body.onmousemove = null;document.body.onmouseup = null;WidgetRender('%s'); };document.body.onmousemove = function(event){ WidgetMove(event,'%s'); };",$WidgetID,$WidgetID,$WidgetID),'src'=>'SRC:{Images/Icons/WidgetMove.gif}'));
 #-------------------------------------------------------------------------------
-$Switch = new Tag('IMG',Array('class'=>'Button','alt'=>'Показать (скрыть)','widht'=>16,'height'=>16,'onclick'=>SPrintF("WidgetSwitch('%s');",$WidgetID),'src'=>'SRC:{Images/Icons/WidgetSwitch.gif}'));
+$Switch = new Tag('IMG',Array('class'=>'Button','alt'=>'Показать (скрыть)','width'=>16,'height'=>16,'onclick'=>SPrintF("WidgetSwitch('%s');",$WidgetID),'src'=>'SRC:{Images/Icons/WidgetSwitch.gif}'));
 #-------------------------------------------------------------------------------
-$Dock = new Tag('IMG',Array('class'=>'Button','alt'=>'Закрепить','widht'=>16,'height'=>16,'onclick'=>SPrintF("WidgetDock('%s');",$WidgetID),'src'=>'SRC:{Images/Icons/WidgetDock.gif}'));
+$Dock = new Tag('IMG',Array('class'=>'Button','alt'=>'Закрепить','width'=>16,'height'=>16,'onclick'=>SPrintF("WidgetDock('%s');",$WidgetID),'src'=>'SRC:{Images/Icons/WidgetDock.gif}'));
 #-------------------------------------------------------------------------------
 $Panel = new Tag('TR',Array('height'=>16),new Tag('TD',Array('width'=>16),$Move),new Tag('TD',$Title),new Tag('TD',Array('width'=>16),$Switch),new Tag('TD',Array('width'=>16,'align'=>'right'),$Dock));
 #-------------------------------------------------------------------------------

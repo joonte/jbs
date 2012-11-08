@@ -225,18 +225,22 @@ td.Comment {
 }
 /* ------------------------- */
 td.Button {
-    background-color: transparent;
+/*    background-color: transparent;
     border-bottom:    1px solid #707680;
-    padding:          2px 5px 2px 5px;
+    padding:          2px 5px 2px 5px;*/
     cursor:           pointer;
     text-decoration:  underline;
     overflow:         hidden;
-    width: 100%;
+    width:            100%;
+    padding:          2px 3px 2px 3px;
+    border-bottom:    1px solid #707680;
+    white-space:      nowrap;
+
 }
 td.Button:hover {
     background-color: #ccbbff;
     border-bottom:    1px solid #707680;
-    padding:          2px 5px 2px 5px;
+    padding:          2px 3px 2px 3px;
 }
 /* ------------------------- */
 div.Margin {
