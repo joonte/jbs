@@ -22,6 +22,7 @@ $ExpirationDate = (integer) @$Args['ExpirationDate'];
 $MaxAmount	= (integer) @$Args['MaxAmount'];
 $OwnerID	= (integer) @$Args['OwnerID'];
 $ForceOwnerID	= (boolean) @$Args['ForceOwnerID'];
+$DaysDiscont	= (boolean) @$Args['DaysDiscont'];
 $Discont        = (integer) @$Args['Discont'];
 $Comment        =  (string) @$Args['Comment'];
 #-------------------------------------------------------------------------------
@@ -46,6 +47,10 @@ if($MaxAmount < 1)
 	return new gException('WRONG_MAX_AMOUNT','Количество использований промокода не может быть меньше единицы');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+if($DaysDiscont < 1)
+	return new gException('WRONG_DAYS_DISCOUNT','Количество дней скидки промокода не может быть меньше единицы');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if($Discont < 5 || $Discont > 100)
 	return new gException('WRONG_DISCOUNT','Скидка должна принимать значение от 5 до 100');
 #-------------------------------------------------------------------------------
@@ -62,6 +67,7 @@ $IPromoCode = Array(
 	'MaxAmount'	=> $MaxAmount,
 	'OwnerID'	=> $OwnerID,
 	'ForceOwnerID'	=> $ForceOwnerID,
+	'DaysDiscont'	=> $DaysDiscont,
 	'Discont'       => $Discont/100,
 	'Comment'       => $Comment
 );

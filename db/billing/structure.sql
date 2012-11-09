@@ -677,6 +677,7 @@ CREATE TABLE `Politics` (
   `ToSchemeID` int(11) NULL,		-- идентификатор тарифа, на который будет даваться скидка
   `ToSchemesGroupID` int(11) NULL,	-- на какую группу услуг будет даваться бонус
   `DaysPay` int(11) default '665',	-- какой срок надо оплатить, чтобы сработала политика
+  `DaysDiscont` int(11) default '665',  -- на какой срок даётся скидка
   `Discont` float(11,2) default '0.00',	-- размер скидки, в долях от единицы
   `Comment` char(255) default '',       -- комментарий к политике
   PRIMARY KEY(`ID`),
@@ -738,6 +739,7 @@ CREATE TABLE `PromoCodes` (
   `ServiceID` int(11) NULL,			-- на какой сервис
   `SchemeID` int(11) NULL,			-- идентификатор тарифа
   `SchemesGroupID` int(11) NULL,		-- группа тарифов
+  `DaysDiscont` int(11) default '665',		-- на какой срок создаётся бонус
   `Discont` float(11,2) default '0.00',		-- размер скидки, в долях от единицы
   `MaxAmount` int(11) default '0',		-- сколько раз можно ввести промокод
   `CurrentAmount` int(11) default '0',		-- сколько раз его уже вводили

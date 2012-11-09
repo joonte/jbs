@@ -24,6 +24,7 @@ $ToServiceID		= (integer) @$Args['ToServiceID'];
 $ToSchemeID		= (integer) @$Args['ToSchemeID'];
 $ToSchemesGroupID	= (integer) @$Args['ToSchemesGroupID'];
 $DaysPay		= (integer) @$Args['DaysPay'];
+$DaysDiscont		= (integer) @$Args['DaysDiscont'];
 $Discont		= (integer) @$Args['Discont'];
 $Comment		=  (string) @$Args['Comment'];
 #-------------------------------------------------------------------------------
@@ -48,6 +49,10 @@ if($ExpirationDate < Time())
 	return new gException('WRONG_EXPIRATION_DATE','Дата окончания действия находится в прошлом');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+if($DaysDiscont < 0)
+	return new gException('WRONG_DAYS_DICONT','Неверное число дней скидки');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if($Discont < 5 || $Discont > 100)
 	return new gException('WRONG_DISCOUNT','Скидка должна принимать значение от 5 до 100');
 #-------------------------------------------------------------------------------
@@ -64,6 +69,7 @@ $IPolitic = Array(
 	'ToSchemeID'		=> ($ToSchemeID?$ToSchemeID:NULL),
 	'ToSchemesGroupID'	=> ($ToSchemesGroupID?$ToSchemesGroupID:NULL),
 	'DaysPay'		=> $DaysPay,
+	'DaysDiscont'		=> $DaysDiscont,
 	'Discont'		=> $Discont/100,
 	'Comment'		=> $Comment
 );
