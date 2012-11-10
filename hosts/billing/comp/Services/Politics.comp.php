@@ -18,9 +18,9 @@ case 'exception':
 	return ERROR | @Trigger_Error(400);
 case 'array':
 	#-------------------------------------------------------------
-	$Where = SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`FromSchemeID` = %u OR ISNULL(`FromSchemeID`)) AND `DaysPay` <= %u',Implode(',',$Entrance),$UserID,$SchemeID,$DaysPay);
+	$Where = SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`FromSchemeID` = %u OR ISNULL(`FromSchemeID`)) AND `FromServiceID` = %u AND `DaysPay` <= %u',Implode(',',$Entrance),$UserID,$SchemeID,$ServiceID,$DaysPay);
 	#-------------------------------------------------------------
-	$Politic = DB_Select('Politics','*',Array('UNIQ','Where'=>$Where,'SortOn'=>'Discont','IsDesc'=>TRUE,'Limits'=>Array(0,1)));
+	$Politic = DB_Select('Politics',Array('*'/*,"CONCAT(``,'','','','')"*/),Array('UNIQ','Where'=>$Where,'SortOn'=>'Discont','IsDesc'=>TRUE,'Limits'=>Array(0,1)));
 	#-------------------------------------------------------------
 	switch(ValueOf($Politic)){
 	case 'error':
@@ -30,7 +30,7 @@ case 'array':
 		break 2;
 	case 'array':
 		#---------------------------------------------------------
-		$IsInsert = DB_Insert('Bonuses',Array('UserID'=>$UserID,'ServiceID'=>$ServiceID,'SchemeID'=>$SchemeID,'DaysReserved'=>$DaysPay,'Discont'=>$Politic['Discont']));
+		$IsInsert = DB_Insert('Bonuses',Array('UserID'=>$UserID,'ServiceID'=>$Politic['ToServiceID'],'SchemeID'=>$Politic['ToSchemeID'],'DaysReserved'=>($Politic['DaysDiscont']?$Politic['DaysDiscont']:$DaysPay),'Discont'=>$Politic['Discont'],'Comment'=>SPrintF('Добавлено политикой #%u',$Politic['ID'])));
 		if(Is_Error($IsInsert))
 			return ERROR | @Trigger_Error(500);
 		break 2;

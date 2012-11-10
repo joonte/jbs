@@ -233,6 +233,7 @@ switch(ValueOf($VPSOrder)){
                       return ERROR | @Trigger_Error(101);
                   }
                   #-------------------------------------------------------------
+/*
                   $VPSDomainPolitic = DB_Select('VPSDomainsPolitics','*',Array('IsDesc'=>TRUE,'SortOn'=>'DaysPay','Where'=>SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR `SchemeID` IS NULL) AND `DaysPay` <= %u',Implode(',',$Entrance),$VPSOrder['UserID'],$VPSOrder['SchemeID'],$DaysPay)));
                   #-------------------------------------------------------------
                   switch(ValueOf($VPSDomainPolitic)){
@@ -264,6 +265,7 @@ switch(ValueOf($VPSOrder)){
                     default:
                       return ERROR | @Trigger_Error(101);
                   }
+*/
                   #-------------------------------------------------------------
 		  $Event = Array(
 		  		'UserID'	=> $VPSOrder['UserID'],
