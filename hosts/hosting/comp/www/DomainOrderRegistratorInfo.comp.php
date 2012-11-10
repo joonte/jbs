@@ -48,8 +48,9 @@ switch(ValueOf($DomainOrder)){
         }
         #-----------------------------------------------------------------------
         #-----------------------------------------------------------------------
-	if(!In_Array($DomainOrder['StatusID'],Array('Active','Suspended','OnDelegating','ForProlong','OnProlong','ForNsChange')))
-          return new gException('WE_NOT_OWN_THIS_ORDER','Можно смотреть информацию только по доменам зарегистрированным у нас');
+	if(!$__USER['ID']['IsAdmin'])
+	  if(!In_Array($DomainOrder['StatusID'],Array('Active','Suspended','OnDelegating','ForProlong','OnProlong','ForNsChange')))
+            return new gException('WE_NOT_OWN_THIS_ORDER','Можно смотреть информацию только по доменам зарегистрированным у нас');
         #-----------------------------------------------------------------------
         $__USER = $GLOBALS['__USER'];
         #-----------------------------------------------------------------------
