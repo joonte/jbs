@@ -4,17 +4,20 @@
 /** @author Alex Keda, for www.host-food.ru  */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('DaysRemainded','ServiceID','SchemeID','UserID','CostPay','CostDay');
+$__args_list = Array('DaysRemainded','ServiceID','SchemeID','UserID','CostPay','CostDay','OrderID');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-#Debug("[comp/Services/Bonuses]: DaysRemainded = $DaysRemainded; ServiceID = $ServiceID, SchemeID = $SchemeID, UserID = $UserID, CostPay = $CostPay, CostDay = $CostDay");
+Debug("[comp/Services/Bonuses]: DaysRemainded = $DaysRemainded; ServiceID = $ServiceID, SchemeID = $SchemeID, UserID = $UserID, CostPay = $CostPay, CostDay = $CostDay; OrderID = $OrderID");
 #-------------------------------------------------------------------------------
 $Bonuses = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 while($DaysRemainded){
+	#---------------------------------------------------------------
+	if($OrderID)
+		$IOrdersConsider = Array('OrderID'=>$OrderID,'Cost'=>$CostDay);
 	#---------------------------------------------------------------
 	$Where = SPrintF('`UserID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysRemainded` > 0 AND `ServiceID` = %u',$UserID,$SchemeID,$ServiceID);
 	#---------------------------------------------------------------
@@ -27,6 +30,9 @@ while($DaysRemainded){
 		#-----------------------------------------------------------
 		$CostPay += $CostDay*$DaysRemainded;
 		#-----------------------------------------------------------
+		if($OrderID)
+			$IOrdersConsider['DaysReserved'] = $DaysRemainded;
+		#-----------------------------------------------------------
 		$DaysRemainded = 0;
 		break;
 	case 'array':
@@ -35,9 +41,15 @@ while($DaysRemainded){
 		#-----------------------------------------------------------
 		$Discont = (1 - $Bonus['Discont']);
 		#-----------------------------------------------------------
+		if($OrderID)
+			$IOrdersConsider['Discont'] = $Bonus['Discont'];
+		#-----------------------------------------------------------
 		if($Bonus['DaysRemainded'] - $DaysRemainded < 0){
 			#---------------------------------------------------------
 			$CostPay += $CostDay*$Bonus['DaysRemainded']*$Discont;
+			#---------------------------------------------------------
+			if($OrderID)
+				$IOrdersConsider['DaysReserved'] = $Bonus['DaysRemainded'];
 			#---------------------------------------------------------
 			$UBonus = Array('DaysRemainded'=>0);
 			#---------------------------------------------------------
@@ -56,6 +68,9 @@ while($DaysRemainded){
 		}else{
 			#---------------------------------------------------------
 			$CostPay += $CostDay*$DaysRemainded*$Discont;
+			#---------------------------------------------------------
+			if($OrderID)
+				$IOrdersConsider['DaysReserved'] = $DaysRemainded;
 			#---------------------------------------------------------
 			$UBonus = Array('DaysRemainded'=>$Bonus['DaysRemainded'] - $DaysRemainded);
 			#---------------------------------------------------------
@@ -80,6 +95,13 @@ while($DaysRemainded){
 	default:
 		return ERROR | @Trigger_Error(101);
 	}
+	#-----------------------------------------------------------
+	if($OrderID){
+		$IsInsert = DB_Insert('OrdersConsider',$IOrdersConsider);
+		if(Is_Error($IsInsert))
+			return ERROR | @Trigger_Error(500);
+	}
+	#-----------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

@@ -85,45 +85,19 @@ switch(ValueOf($VPSOrder)){
             if(Is_Error(DB_Transaction($TransactionID = UniqID('VPSOrderPay'))))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $VPSOrderID = (integer)$VPSOrder['ID'];
             #-------------------------------------------------------------------
-            $Entrance = Tree_Path('Groups',(integer)$VPSOrder['GroupID']);
+            $Comp = Comp_Load('Services/Politics',$VPSOrder['UserID'],$VPSOrder['GroupID'],30000,$VPSScheme['ID'],$DaysPay);
+            if(Is_Error($Comp))
+              return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            switch(ValueOf($Entrance)){
-              case 'error':
-                return ERROR | @Trigger_Error(500);
-              case 'exception':
-                return ERROR | @Trigger_Error(400);
-              case 'array':
-                #---------------------------------------------------------------
-                $Where = SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysPay` <= %u',Implode(',',$Entrance),$VPSOrder['UserID'],$VPSScheme['ID'],$DaysPay);
-                #---------------------------------------------------------------
-                $VPSPolitic = DB_Select('VPSPolitics','*',Array('UNIQ','Where'=>$Where,'SortOn'=>'Discont','IsDesc'=>TRUE,'Limits'=>Array(0,1)));
-                #---------------------------------------------------------------
-                switch(ValueOf($VPSPolitic)){
-                  case 'error':
-                    return ERROR | @Trigger_Error(500);
-                  case 'exception':
-                    # No more...
-                  break 2;
-                  case 'array':
-                    #-----------------------------------------------------------
-                    $IsInsert = DB_Insert('VPSBonuses',Array('UserID'=>$UserID,'SchemeID'=>$VPSScheme['ID'],'DaysReserved'=>$DaysPay,'Discont'=>$VPSPolitic['Discont'],'Comment'=>'Ценовая политика'));
-                    if(Is_Error($IsInsert))
-                      return ERROR | @Trigger_Error(500);
-                  break 2;
-                  default:
-                    return ERROR | @Trigger_Error(101);
-                }
-              default:
-                return ERROR | @Trigger_Error(101);
-            }
-            #-------------------------------------------------------------------
+	    #-------------------------------------------------------------------
+	    $VPSOrderID = (integer)$VPSOrder['ID'];
+	    #-------------------------------------------------------------------
             $CostPay = 0.00;
             #-------------------------------------------------------------------
             $DaysRemainded = $DaysPay;
             #-------------------------------------------------------------------
-            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,30000,$VPSScheme['ID'],$UserID,$CostPay,$VPSScheme['CostDay']);
+            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,30000,$VPSScheme['ID'],$UserID,$CostPay,$VPSScheme['CostDay'],$VPSOrder['OrderID']);
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-----------------------------------------------------------------

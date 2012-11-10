@@ -88,45 +88,19 @@ switch(ValueOf($ISPswOrder)){
             if(Is_Error(DB_Transaction($TransactionID = UniqID('ISPswOrderPay'))))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $ISPswOrderID = (integer)$ISPswOrder['ID'];
             #-------------------------------------------------------------------
-            $Entrance = Tree_Path('Groups',(integer)$ISPswOrder['GroupID']);
+            $Comp = Comp_Load('Services/Politics',$ISPswOrder['UserID'],$ISPswOrder['GroupID'],51000,$ISPswScheme['ID'],$DaysPay);
+            if(Is_Error($Comp))
+              return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            switch(ValueOf($Entrance)){
-              case 'error':
-                return ERROR | @Trigger_Error(500);
-              case 'exception':
-                return ERROR | @Trigger_Error(400);
-              case 'array':
-                #---------------------------------------------------------------
-                $Where = SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysPay` <= %u',Implode(',',$Entrance),$ISPswOrder['UserID'],$ISPswScheme['ID'],$DaysPay);
-                #---------------------------------------------------------------
-                $ISPswPolitic = DB_Select('ISPswPolitics','*',Array('UNIQ','Where'=>$Where,'SortOn'=>'Discont','IsDesc'=>TRUE,'Limits'=>Array(0,1)));
-                #---------------------------------------------------------------
-                switch(ValueOf($ISPswPolitic)){
-                  case 'error':
-                    return ERROR | @Trigger_Error(500);
-                  case 'exception':
-                    # No more...
-                  break 2;
-                  case 'array':
-                    #-----------------------------------------------------------
-                    $IsInsert = DB_Insert('ISPswBonuses',Array('UserID'=>$UserID,'SchemeID'=>$ISPswScheme['ID'],'DaysReserved'=>$DaysPay,'Discont'=>$ISPswPolitic['Discont'],'Comment'=>'Ценовая политика'));
-                    if(Is_Error($IsInsert))
-                      return ERROR | @Trigger_Error(500);
-                  break 2;
-                  default:
-                    return ERROR | @Trigger_Error(101);
-                }
-              default:
-                return ERROR | @Trigger_Error(101);
-            }
-            #-------------------------------------------------------------------
+	    #-------------------------------------------------------------------
+	    $ISPswOrderID = (integer)$ISPswOrder['ID'];
+	    #-------------------------------------------------------------------
             $CostPay = 0.00;
             #-------------------------------------------------------------------
             $DaysRemainded = $DaysPay;
             #-------------------------------------------------------------------
-            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,51000,$ISPswScheme['ID'],$UserID,$CostPay,$ISPswScheme['CostDay']);
+            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,51000,$ISPswScheme['ID'],$UserID,$CostPay,$ISPswScheme['CostDay'],$ISPswOrder['OrderID']);
             if(Is_Error($Comp))
                return ERROR | @Trigger_Error(500);
             #-----------------------------------------------------------------
@@ -256,6 +230,7 @@ switch(ValueOf($ISPswOrder)){
                       return ERROR | @Trigger_Error(101);
                   }
                   #-------------------------------------------------------------
+/*
                   $ISPswDomainPolitic = DB_Select('ISPswDomainsPolitics','*',Array('IsDesc'=>TRUE,'SortOn'=>'DaysPay','Where'=>SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR `SchemeID` IS NULL) AND `DaysPay` <= %u',Implode(',',$Entrance),$ISPswOrder['UserID'],$ISPswOrder['SchemeID'],$DaysPay)));
                   #-------------------------------------------------------------
                   switch(ValueOf($ISPswDomainPolitic)){
@@ -287,6 +262,7 @@ switch(ValueOf($ISPswOrder)){
                     default:
                       return ERROR | @Trigger_Error(101);
                   }
+*/
                   #-------------------------------------------------------------
 		  $Event = Array(
 		  			'UserID'	=> $ISPswOrder['UserID'],

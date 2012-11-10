@@ -131,48 +131,20 @@ switch(ValueOf($HostingOrder)){
               #-----------------------------------------------------------------
               $Form->AddChild($Comp);
               #-----------------------------------------------------------------
-              $CostPay = 0.00;
               #-----------------------------------------------------------------
               if(Is_Error(DB_Transaction($TransactionID = UniqID('HostingOrderPay'))))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
-              $Entrance = Tree_Path('Groups',(integer)$HostingOrder['GroupID']);
+	      #-----------------------------------------------------------------
+	      $Comp = Comp_Load('Services/Politics',$HostingOrder['UserID'],$HostingOrder['GroupID'],10000,$HostingScheme['ID'],$DaysPay);
+	      if(Is_Error($Comp))
+                return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
-              switch(ValueOf($Entrance)){
-                case 'error':
-                  return ERROR | @Trigger_Error(500);
-                case 'exception':
-                  return ERROR | @Trigger_Error(400);
-                case 'array':
-                  #-------------------------------------------------------------
-                  $Where = SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysPay` <= %u',Implode(',',$Entrance),$HostingOrder['UserID'],$HostingScheme['ID'],$DaysPay);
-                  #-------------------------------------------------------------
-                  $HostingPolitic = DB_Select('HostingPolitics','*',Array('UNIQ','Where'=>$Where,'SortOn'=>'Discont','IsDesc'=>TRUE,'Limits'=>Array(0,1)));
-                  #-------------------------------------------------------------
-                  switch(ValueOf($HostingPolitic)){
-                    case 'error':
-                      return ERROR | @Trigger_Error(500);
-                    case 'exception':
-                      # No more...
-                    break 2;
-                    case 'array':
-                      #---------------------------------------------------------
-                      $IsInsert = DB_Insert('HostingBonuses',Array('UserID'=>$UserID,'SchemeID'=>$HostingScheme['ID'],'DaysReserved'=>$DaysPay,'Discont'=>$HostingPolitic['Discont']));
-                      if(Is_Error($IsInsert))
-                        return ERROR | @Trigger_Error(500);
-                    break 2;
-                    default:
-                      return ERROR | @Trigger_Error(101);
-                  }
-                default:
-                  return ERROR | @Trigger_Error(101);
-              }
-              #-----------------------------------------------------------------
-              $Bonuses = Array();
               #-----------------------------------------------------------------
               $DaysRemainded = $DaysPay;
+	      $CostPay = 0.00;
 	      #-----------------------------------------------------------------
-              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,10000,$HostingScheme['ID'],$UserID,$CostPay,$HostingScheme['CostDay']);
+              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,10000,$HostingScheme['ID'],$UserID,$CostPay,$HostingScheme['CostDay'],FALSE);
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------

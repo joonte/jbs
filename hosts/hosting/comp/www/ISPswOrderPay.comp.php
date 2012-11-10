@@ -138,47 +138,21 @@ switch(ValueOf($ISPswOrder)){
               #-----------------------------------------------------------------
               $Form->AddChild($Comp);
               #-----------------------------------------------------------------
-              $CostPay = 0.00;
               #-----------------------------------------------------------------
               if(Is_Error(DB_Transaction($TransactionID = UniqID('ISPswOrderPay'))))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
-              $Entrance = Tree_Path('Groups',(integer)$ISPswOrder['GroupID']);
               #-----------------------------------------------------------------
-              switch(ValueOf($Entrance)){
-                case 'error':
-                  return ERROR | @Trigger_Error(500);
-                case 'exception':
-                  return ERROR | @Trigger_Error(400);
-                case 'array':
-                  #-------------------------------------------------------------
-                  $Where = SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysPay` <= %u',Implode(',',$Entrance),$ISPswOrder['UserID'],$ISPswScheme['ID'],$DaysPay);
-                  #-------------------------------------------------------------
-                  $ISPswPolitic = DB_Select('ISPswPolitics','*',Array('UNIQ','Where'=>$Where,'SortOn'=>'Discont','IsDesc'=>TRUE,'Limits'=>Array(0,1)));
-                  #-------------------------------------------------------------
-                  switch(ValueOf($ISPswPolitic)){
-                    case 'error':
-                      return ERROR | @Trigger_Error(500);
-                    case 'exception':
-                      # No more...
-                    break 2;
-                    case 'array':
-                      #---------------------------------------------------------
-                      $IsInsert = DB_Insert('ISPswBonuses',Array('UserID'=>$UserID,'SchemeID'=>$ISPswScheme['ID'],'DaysReserved'=>$DaysPay,'Discont'=>$ISPswPolitic['Discont']));
-                      if(Is_Error($IsInsert))
-                        return ERROR | @Trigger_Error(500);
-                    break 2;
-                    default:
-                      return ERROR | @Trigger_Error(101);
-                  }
-                default:
-                  return ERROR | @Trigger_Error(101);
-              }
+              $Comp = Comp_Load('Services/Politics',$ISPswOrder['UserID'],$ISPswOrder['GroupID'],51000,$ISPswScheme['ID'],$DaysPay);
+              if(Is_Error($Comp))
+                return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
               #-----------------------------------------------------------------
+	      $CostPay = 0.00;
+	      #-----------------------------------------------------------------
               $DaysRemainded = $DaysPay;
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,51000,$ISPswScheme['ID'],$UserID,$CostPay,$ISPswScheme['CostDay']);
+              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,51000,$ISPswScheme['ID'],$UserID,$CostPay,$ISPswScheme['CostDay'],FALSE);
               if(Is_Error($Comp))
                  return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------

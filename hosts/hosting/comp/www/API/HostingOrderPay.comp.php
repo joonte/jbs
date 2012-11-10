@@ -85,45 +85,19 @@ switch(ValueOf($HostingOrder)){
             if(Is_Error(DB_Transaction($TransactionID = UniqID('HostingOrderPay'))))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $HostingOrderID = (integer)$HostingOrder['ID'];
+	    #-------------------------------------------------------------------
+            $Comp = Comp_Load('Services/Politics',$HostingOrder['UserID'],$HostingOrder['GroupID'],10000,$HostingScheme['ID'],$DaysPay);
+            if(Is_Error($Comp))
+              return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $Entrance = Tree_Path('Groups',(integer)$HostingOrder['GroupID']);
-            #-------------------------------------------------------------------
-            switch(ValueOf($Entrance)){
-              case 'error':
-                return ERROR | @Trigger_Error(500);
-              case 'exception':
-                return ERROR | @Trigger_Error(400);
-              case 'array':
-                #---------------------------------------------------------------
-                $Where = SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysPay` <= %u',Implode(',',$Entrance),$HostingOrder['UserID'],$HostingScheme['ID'],$DaysPay);
-                #---------------------------------------------------------------
-                $HostingPolitic = DB_Select('HostingPolitics','*',Array('UNIQ','Where'=>$Where,'SortOn'=>'Discont','IsDesc'=>TRUE,'Limits'=>Array(0,1)));
-                #---------------------------------------------------------------
-                switch(ValueOf($HostingPolitic)){
-                  case 'error':
-                    return ERROR | @Trigger_Error(500);
-                  case 'exception':
-                    # No more...
-                  break 2;
-                  case 'array':
-                    #-----------------------------------------------------------
-                    $IsInsert = DB_Insert('HostingBonuses',Array('UserID'=>$UserID,'SchemeID'=>$HostingScheme['ID'],'DaysReserved'=>$DaysPay,'Discont'=>$HostingPolitic['Discont'],'Comment'=>'Ценовая политика'));
-                    if(Is_Error($IsInsert))
-                      return ERROR | @Trigger_Error(500);
-                  break 2;
-                  default:
-                    return ERROR | @Trigger_Error(101);
-                }
-              default:
-                return ERROR | @Trigger_Error(101);
-            }
-            #-------------------------------------------------------------------
+	    #-------------------------------------------------------------------
+	    $HostingOrderID = (integer)$HostingOrder['ID'];
+	    #-------------------------------------------------------------------
             $CostPay = 0.00;
             #-------------------------------------------------------------------
             $DaysRemainded = $DaysPay;
 	    #-------------------------------------------------------------------
-            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,10000,$HostingScheme['ID'],$UserID,$CostPay,$HostingScheme['CostDay']);
+            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,10000,$HostingScheme['ID'],$UserID,$CostPay,$HostingScheme['CostDay'],$HostingOrder['OrderID']);
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-----------------------------------------------------------------
@@ -250,6 +224,7 @@ switch(ValueOf($HostingOrder)){
                       return ERROR | @Trigger_Error(101);
                   }
                   #-------------------------------------------------------------
+/*
                   $HostingDomainPolitic = DB_Select('HostingDomainsPolitics','*',Array('IsDesc'=>TRUE,'SortOn'=>'DaysPay','Where'=>SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR `SchemeID` IS NULL) AND `DaysPay` <= %u',Implode(',',$Entrance),$HostingOrder['UserID'],$HostingOrder['SchemeID'],$DaysPay)));
                   #-------------------------------------------------------------
                   switch(ValueOf($HostingDomainPolitic)){
@@ -281,6 +256,7 @@ switch(ValueOf($HostingOrder)){
                     default:
                       return ERROR | @Trigger_Error(101);
                   }
+*/
                   #-------------------------------------------------------------
 		  $Event = Array(
 		                  'UserID'	=> $HostingOrder['UserID'],

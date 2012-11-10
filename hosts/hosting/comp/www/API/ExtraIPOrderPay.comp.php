@@ -85,45 +85,19 @@ switch(ValueOf($ExtraIPOrder)){
             if(Is_Error(DB_Transaction($TransactionID = UniqID('ExtraIPOrderPay'))))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
+            #-------------------------------------------------------------------
+            $Comp = Comp_Load('Services/Politics',$ExtraIPOrder['UserID'],$ExtraIPOrder['GroupID'],50000,$ExtraIPScheme['ID'],$DaysPay);
+            if(Is_Error($Comp))
+              return ERROR | @Trigger_Error(500);
+            #-------------------------------------------------------------------
+	    #-------------------------------------------------------------------
             $ExtraIPOrderID = (integer)$ExtraIPOrder['ID'];
-            #-------------------------------------------------------------------
-            $Entrance = Tree_Path('Groups',(integer)$ExtraIPOrder['GroupID']);
-            #-------------------------------------------------------------------
-            switch(ValueOf($Entrance)){
-              case 'error':
-                return ERROR | @Trigger_Error(500);
-              case 'exception':
-                return ERROR | @Trigger_Error(400);
-              case 'array':
-                #---------------------------------------------------------------
-                $Where = SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysPay` <= %u',Implode(',',$Entrance),$ExtraIPOrder['UserID'],$ExtraIPScheme['ID'],$DaysPay);
-                #---------------------------------------------------------------
-                $ExtraIPPolitic = DB_Select('ExtraIPPolitics','*',Array('UNIQ','Where'=>$Where,'SortOn'=>'Discont','IsDesc'=>TRUE,'Limits'=>Array(0,1)));
-                #---------------------------------------------------------------
-                switch(ValueOf($ExtraIPPolitic)){
-                  case 'error':
-                    return ERROR | @Trigger_Error(500);
-                  case 'exception':
-                    # No more...
-                  break 2;
-                  case 'array':
-                    #-----------------------------------------------------------
-                    $IsInsert = DB_Insert('ExtraIPBonuses',Array('UserID'=>$UserID,'SchemeID'=>$ExtraIPScheme['ID'],'DaysReserved'=>$DaysPay,'Discont'=>$ExtraIPPolitic['Discont'],'Comment'=>'Ценовая политика'));
-                    if(Is_Error($IsInsert))
-                      return ERROR | @Trigger_Error(500);
-                  break 2;
-                  default:
-                    return ERROR | @Trigger_Error(101);
-                }
-              default:
-                return ERROR | @Trigger_Error(101);
-            }
-            #-------------------------------------------------------------------
+	    #-------------------------------------------------------------------
             $CostPay = 0.00;
             #-------------------------------------------------------------------
             $DaysRemainded = $DaysPay;
             #-------------------------------------------------------------------
-            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,50000,$ExtraIPScheme['ID'],$UserID,$CostPay,$ExtraIPScheme['CostDay']);
+            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,50000,$ExtraIPScheme['ID'],$UserID,$CostPay,$ExtraIPScheme['CostDay'],$ExtraIPOrder['OrderID']);
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-----------------------------------------------------------------
@@ -259,6 +233,7 @@ switch(ValueOf($ExtraIPOrder)){
                       return ERROR | @Trigger_Error(101);
                   }
                   #-------------------------------------------------------------
+/*
                   $ExtraIPDomainPolitic = DB_Select('ExtraIPDomainsPolitics','*',Array('IsDesc'=>TRUE,'SortOn'=>'DaysPay','Where'=>SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR `SchemeID` IS NULL) AND `DaysPay` <= %u',Implode(',',$Entrance),$ExtraIPOrder['UserID'],$ExtraIPOrder['SchemeID'],$DaysPay)));
                   #-------------------------------------------------------------
                   switch(ValueOf($ExtraIPDomainPolitic)){
@@ -290,6 +265,7 @@ switch(ValueOf($ExtraIPOrder)){
                     default:
                       return ERROR | @Trigger_Error(101);
                   }
+*/
                   #-------------------------------------------------------------
 		  $Event = Array(
 		  			'UserID'	=> $ExtraIPOrder['UserID'],

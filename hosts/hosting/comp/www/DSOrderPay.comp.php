@@ -130,47 +130,21 @@ switch(ValueOf($DSOrder)){
               #-----------------------------------------------------------------
               $Form->AddChild($Comp);
               #-----------------------------------------------------------------
-              $CostPay = 0.00;
               #-----------------------------------------------------------------
               if(Is_Error(DB_Transaction($TransactionID = UniqID('DSOrderPay'))))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
-              $Entrance = Tree_Path('Groups',(integer)$DSOrder['GroupID']);
               #-----------------------------------------------------------------
-              switch(ValueOf($Entrance)){
-                case 'error':
-                  return ERROR | @Trigger_Error(500);
-                case 'exception':
-                  return ERROR | @Trigger_Error(400);
-                case 'array':
-                  #-------------------------------------------------------------
-                  $Where = SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysPay` <= %u',Implode(',',$Entrance),$DSOrder['UserID'],$DSScheme['ID'],$DaysPay);
-                  #-------------------------------------------------------------
-                  $DSPolitic = DB_Select('DSPolitics','*',Array('UNIQ','Where'=>$Where,'SortOn'=>'Discont','IsDesc'=>TRUE,'Limits'=>Array(0,1)));
-                  #-------------------------------------------------------------
-                  switch(ValueOf($DSPolitic)){
-                    case 'error':
-                      return ERROR | @Trigger_Error(500);
-                    case 'exception':
-                      # No more...
-                    break 2;
-                    case 'array':
-                      #---------------------------------------------------------
-                      $IsInsert = DB_Insert('DSBonuses',Array('UserID'=>$UserID,'SchemeID'=>$DSScheme['ID'],'DaysReserved'=>$DaysPay,'Discont'=>$DSPolitic['Discont']));
-                      if(Is_Error($IsInsert))
-                        return ERROR | @Trigger_Error(500);
-                    break 2;
-                    default:
-                      return ERROR | @Trigger_Error(101);
-                  }
-                default:
-                  return ERROR | @Trigger_Error(101);
-              }
+              $Comp = Comp_Load('Services/Politics',$DSOrder['UserID'],$DSOrder['GroupID'],40000,$DSScheme['ID'],$DaysPay);
+              if(Is_Error($Comp))
+                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
               #-----------------------------------------------------------------
+	      $CostPay = 0.00;
+	      #-----------------------------------------------------------------
               $DaysRemainded = $DaysPay;
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,40000,$DSScheme['ID'],$UserID,$CostPay,$DSScheme['CostDay']);
+              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,40000,$DSScheme['ID'],$UserID,$CostPay,$DSScheme['CostDay'],FALSE);
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------

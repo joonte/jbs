@@ -85,45 +85,19 @@ switch(ValueOf($DSOrder)){
             if(Is_Error(DB_Transaction($TransactionID = UniqID('DSOrderPay'))))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $DSOrderID = (integer)$DSOrder['ID'];
             #-------------------------------------------------------------------
-            $Entrance = Tree_Path('Groups',(integer)$DSOrder['GroupID']);
+            $Comp = Comp_Load('Services/Politics',$DSOrder['UserID'],$DSOrder['GroupID'],40000,$DSScheme['ID'],$DaysPay);
+            if(Is_Error($Comp))
+              return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            switch(ValueOf($Entrance)){
-              case 'error':
-                return ERROR | @Trigger_Error(500);
-              case 'exception':
-                return ERROR | @Trigger_Error(400);
-              case 'array':
-                #---------------------------------------------------------------
-                $Where = SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysPay` <= %u',Implode(',',$Entrance),$DSOrder['UserID'],$DSScheme['ID'],$DaysPay);
-                #---------------------------------------------------------------
-                $DSPolitic = DB_Select('DSPolitics','*',Array('UNIQ','Where'=>$Where,'SortOn'=>'Discont','IsDesc'=>TRUE,'Limits'=>Array(0,1)));
-                #---------------------------------------------------------------
-                switch(ValueOf($DSPolitic)){
-                  case 'error':
-                    return ERROR | @Trigger_Error(500);
-                  case 'exception':
-                    # No more...
-                  break 2;
-                  case 'array':
-                    #-----------------------------------------------------------
-                    $IsInsert = DB_Insert('DSBonuses',Array('UserID'=>$UserID,'SchemeID'=>$DSScheme['ID'],'DaysReserved'=>$DaysPay,'Discont'=>$DSPolitic['Discont'],'Comment'=>'Ценовая политика'));
-                    if(Is_Error($IsInsert))
-                      return ERROR | @Trigger_Error(500);
-                  break 2;
-                  default:
-                    return ERROR | @Trigger_Error(101);
-                }
-              default:
-                return ERROR | @Trigger_Error(101);
-            }
-            #-------------------------------------------------------------------
+	    #-------------------------------------------------------------------
+	    $DSOrderID = (integer)$DSOrder['ID'];
+	    #-------------------------------------------------------------------
             $CostPay = 0.00;
             #-------------------------------------------------------------------
             $DaysRemainded = $DaysPay;
             #-------------------------------------------------------------------
-            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,40000,$DSScheme['ID'],$UserID,$CostPay,$DSScheme['CostDay']);
+            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,40000,$DSScheme['ID'],$UserID,$CostPay,$DSScheme['CostDay'],$DSOrder['OrderID']);
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-----------------------------------------------------------------
@@ -259,6 +233,7 @@ switch(ValueOf($DSOrder)){
                       return ERROR | @Trigger_Error(101);
                   }
                   #-------------------------------------------------------------
+/*
                   $DSDomainPolitic = DB_Select('DSDomainsPolitics','*',Array('IsDesc'=>TRUE,'SortOn'=>'DaysPay','Where'=>SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR `SchemeID` IS NULL) AND `DaysPay` <= %u',Implode(',',$Entrance),$DSOrder['UserID'],$DSOrder['SchemeID'],$DaysPay)));
                   #-------------------------------------------------------------
                   switch(ValueOf($DSDomainPolitic)){
@@ -290,6 +265,7 @@ switch(ValueOf($DSOrder)){
                     default:
                       return ERROR | @Trigger_Error(101);
                   }
+*/
                   #-------------------------------------------------------------
 		  $Event = Array(
 		  			'UserID'	=> $DSOrder['UserID'],
