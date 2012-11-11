@@ -1057,6 +1057,8 @@
     <CleanSomeTables>Очистка некоторых таблиц</CleanSomeTables>
     <!-- проверка прав на конфигурационный файл биллинговой системы -->
     <CheckConfigPermission>Проверка прав на конфигурационный файл</CheckConfigPermission>
+    <!-- Уведомление о окончании услуг настроенных вручную -->
+    <OrdersNoticeSuspend>Уведомление о окончании услуг</OrdersNoticeSuspend>
    </DailyTasks>
    <WeeklyTasks type="array" />
    <MonthlyTasks type="array" />
