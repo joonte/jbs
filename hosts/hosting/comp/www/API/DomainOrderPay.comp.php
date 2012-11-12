@@ -68,7 +68,7 @@ switch(ValueOf($DomainOrder)){
                 return new gException('YEARS_PAY_MIN_ORDER_YEARS','Кол-во лет оплаты меньше, чем допустимое значение лет заказа, определённое в тарифном плане');
               #-----------------------------------------------------------------
               if($YearsPay > $DomainScheme['MaxActionYears'])
-                return new gException('YEARS_PAY_MAX_ACTION_YEARS','Кол-во лет оплаты больше, чем допустимое значение, опредедённое в тарифном плане');
+                return new gException('YEARS_PAY_MAX_ACTION_YEARS','Кол-во лет оплаты больше, чем допустимое значение, определённое в тарифном плане');
             }else{
               #-----------------------------------------------------------------
               $YearsRemainder = Date('Y',$ExpirationDate) - Date('Y') - 1;
