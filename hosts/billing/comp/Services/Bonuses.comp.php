@@ -19,7 +19,12 @@ while($DaysRemainded){
 	if($OrderID)
 		$IOrdersConsider = Array('OrderID'=>$OrderID,'Cost'=>$CostDay);
 	#---------------------------------------------------------------
-	$Where = SPrintF('`UserID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND `DaysRemainded` > 0 AND `ServiceID` = %u',$UserID,$SchemeID,$ServiceID);
+	$Where = Array(
+			SPrintF('`UserID` = %u',$UserID),
+			/* задан сервис + (задан/не задан тариф) + не задана группа || не задан сервис + не задан тариф + задана группа */
+			SPrintF('(`ServiceID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND NOT EXISTS(SELECT * FROM `SchemesGroupsItems` WHERE `SchemesGroupsItems`.`SchemesGroupID` = `SchemesGroupID` AND `ServiceID` = %u AND `SchemeID` = %u)) OR (ISNULL(`ServiceID`) AND ISNULL(`SchemeID`) AND EXISTS(SELECT * FROM `SchemesGroupsItems` WHERE `SchemesGroupsItems`.`SchemesGroupID` = `SchemesGroupID` AND `ServiceID` = %u AND `SchemeID` = %u))',$ServiceID,$SchemeID,$ServiceID,$SchemeID,$ServiceID,$SchemeID),
+			'`DaysRemainded` > 0',
+			);
 	#---------------------------------------------------------------
 	$Bonus = DB_Select('Bonuses','*',Array('IsDesc'=>TRUE,'SortOn'=>'Discont','Where'=>$Where));
 	#---------------------------------------------------------------
