@@ -249,6 +249,8 @@
   <Example>Россия</Example>
   <Type>Select</Type>
   <Options>
+   <AU>Австралия</AU>
+   <AT>Австрия</AT>
    <AZ>Азербайджан</AZ>
    <BY>Беларусь</BY>
    <BG>Болгария</BG>
@@ -386,6 +388,8 @@
   <Example>Россия</Example>
   <Type>Select</Type>
   <Options>
+   <AU>Австралия</AU>
+   <AT>Австрия</AT>
    <AZ>Азербайджан</AZ>
    <BY>Беларусь</BY>
    <BG>Болгария</BG>
