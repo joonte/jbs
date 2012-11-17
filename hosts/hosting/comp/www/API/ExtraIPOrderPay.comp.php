@@ -86,7 +86,7 @@ switch(ValueOf($ExtraIPOrder)){
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
             #-------------------------------------------------------------------
-            $Comp = Comp_Load('Services/Politics',$ExtraIPOrder['UserID'],$ExtraIPOrder['GroupID'],50000,$ExtraIPScheme['ID'],$DaysPay);
+            $Comp = Comp_Load('Services/Politics',$ExtraIPOrder['UserID'],$ExtraIPOrder['GroupID'],50000,$ExtraIPScheme['ID'],$DaysPay,SPrintF('IP/%s',$ExtraIPOrder['Login']));
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------

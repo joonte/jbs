@@ -52,6 +52,15 @@
   </Args>
  </SelectID>
  <!-- ********************************************************************** -->
+ <ID>
+  <Head>#</Head>
+  <Prompt>Внутренний идентификатор политики</Prompt>
+  <Alias>ID</Alias>
+  <Attribs>
+   <style>text-align:left;</style>
+  </Attribs>
+ </ID>
+ <!-- ********************************************************************** -->
  <Edit>
   <IsSorted>0</IsSorted>
   <Comp>Buttons/Window</Comp>
@@ -119,6 +128,7 @@
 </Columns>
 <Sequence>
  <ListElement>SelectID</ListElement>
+ <ListElement>ID</ListElement>
  <ListElement>Edit</ListElement>
  <ListElement>Group</ListElement>
  <ListElement>User</ListElement>

@@ -143,7 +143,7 @@ switch(ValueOf($ISPswOrder)){
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Services/Politics',$ISPswOrder['UserID'],$ISPswOrder['GroupID'],51000,$ISPswScheme['ID'],$DaysPay);
+              $Comp = Comp_Load('Services/Politics',$ISPswOrder['UserID'],$ISPswOrder['GroupID'],51000,$ISPswScheme['ID'],$DaysPay,SPrintF('ISPsystem/%s',$ISPswOrder['ID']));
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------

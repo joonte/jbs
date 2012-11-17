@@ -86,7 +86,7 @@ switch(ValueOf($VPSOrder)){
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
             #-------------------------------------------------------------------
-            $Comp = Comp_Load('Services/Politics',$VPSOrder['UserID'],$VPSOrder['GroupID'],30000,$VPSScheme['ID'],$DaysPay);
+            $Comp = Comp_Load('Services/Politics',$VPSOrder['UserID'],$VPSOrder['GroupID'],30000,$VPSScheme['ID'],$DaysPay,SPrintF('VPS/%s',$VPSOrder['Login']));
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------

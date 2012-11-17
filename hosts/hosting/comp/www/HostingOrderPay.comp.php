@@ -136,7 +136,7 @@ switch(ValueOf($HostingOrder)){
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
 	      #-----------------------------------------------------------------
-	      $Comp = Comp_Load('Services/Politics',$HostingOrder['UserID'],$HostingOrder['GroupID'],10000,$HostingScheme['ID'],$DaysPay);
+	      $Comp = Comp_Load('Services/Politics',$HostingOrder['UserID'],$HostingOrder['GroupID'],10000,$HostingScheme['ID'],$DaysPay,SPrintF('Hosting/%s',$HostingOrder['Login']));
 	      if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------

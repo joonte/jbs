@@ -4,7 +4,7 @@
 /** @author Alex Keda, for www.host-food.ru  */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('UserID','GroupID','ServiceID','SchemeID','DaysPay');
+$__args_list = Array('UserID','GroupID','ServiceID','SchemeID','DaysPay','ServiceInfo');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
@@ -17,31 +17,55 @@ case 'error':
 case 'exception':
 	return ERROR | @Trigger_Error(400);
 case 'array':
-	#-------------------------------------------------------------
-	$Where = Array(
-			SPrintF('`GroupID` IN (%s) OR `UserID` = %u',Implode(',',$Entrance),$UserID),
-			/* задан сервис + (задан/не задан тариф) + не задана группа || не задан сервис + не задан тариф + задана группа */
-			SPrintF('(`FromServiceID` = %u AND (`FromSchemeID` = %u OR ISNULL(`FromSchemeID`)) AND NOT EXISTS(SELECT * FROM `SchemesGroupsItems` WHERE `SchemesGroupsItems`.`SchemesGroupID` = `SchemesGroupID` AND `ServiceID` = %u AND `SchemeID` = %u)) OR (ISNULL(`FromServiceID`) AND ISNULL(`FromSchemeID`) AND EXISTS(SELECT * FROM `SchemesGroupsItems` WHERE `SchemesGroupsItems`.`SchemesGroupID` = `SchemesGroupID` AND `ServiceID` = %u AND `SchemeID` = %u))',$ServiceID,$SchemeID,$ServiceID,$SchemeID,$ServiceID,$SchemeID),
-			SPrintF('`DaysPay` <= %u',$DaysPay),
-			);
-	#-------------------------------------------------------------
-	$Politic = DB_Select('Politics',Array('*'/*,"CONCAT(``,'','','','')"*/),Array('UNIQ','Where'=>$Where,'SortOn'=>'Discont','IsDesc'=>TRUE,'Limits'=>Array(0,1)));
-	#-------------------------------------------------------------
-	switch(ValueOf($Politic)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		# No more...
-		break 2;
-	case 'array':
-		#---------------------------------------------------------
-		$IsInsert = DB_Insert('Bonuses',Array('UserID'=>$UserID,'ServiceID'=>$Politic['ToServiceID'],'SchemeID'=>$Politic['ToSchemeID'],'SchemesGroupID'=>$Politic['ToSchemesGroupID'],'DaysReserved'=>($Politic['DaysDiscont']?$Politic['DaysDiscont']:$DaysPay),'Discont'=>$Politic['Discont'],'Comment'=>SPrintF('Добавлено политикой #%u',$Politic['ID'])));
+	break;
+
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$UniqID = UniqID('Politics');
+#-------------------------------------------------------------------------------
+$Create = SPrintF("CREATE TEMPORARY TABLE `%s` AS SELECT *, CONCAT(`UserID`,':',`GroupID`,':',(IF(ISNULL(`FromServiceID`),'0',`FromServiceID`)),':',(IF(ISNULL(`FromSchemesGroupID`),'0',`FromSchemesGroupID`)),':',(IF(ISNULL(`ToServiceID`),'0',`ToServiceID`)),':',(IF(ISNULL(`ToSchemeID`),'0',`ToSchemeID`)),':',(IF(ISNULL(`ToSchemesGroupID`),'0',`ToSchemesGroupID`)),':',`DaysDiscont`) AS `UniqScheme` FROM `Politics` ORDER BY `Discont` DESC",$UniqID);
+#-------------------------------------------------------------------------------
+$IsQuery = DB_Query($Create);
+if(Is_Error($IsQuery))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Where = Array(
+		SPrintF('`GroupID` IN (%s) OR `UserID` = %u',Implode(',',$Entrance),$UserID),
+		/* задан сервис + (задан/не задан тариф) + не задана группа || не задан сервис + не задан тариф + задана группа */
+		SPrintF('(`FromServiceID` = %u AND (`FromSchemeID` = %u OR ISNULL(`FromSchemeID`)) AND NOT EXISTS(SELECT * FROM `SchemesGroupsItems` WHERE `%s`.`FromSchemesGroupID` = `SchemesGroupID` AND `ServiceID` = %u AND `SchemeID` = %u)) OR (ISNULL(`FromServiceID`) AND ISNULL(`FromSchemeID`) AND EXISTS(SELECT * FROM `SchemesGroupsItems` WHERE `%s`.`FromSchemesGroupID` = `SchemesGroupID` AND `ServiceID` = %u AND `SchemeID` = %u))',$ServiceID,$SchemeID,$UniqID,$ServiceID,$SchemeID,$UniqID,$ServiceID,$SchemeID),
+		SPrintF('`DaysPay` <= %u',$DaysPay),
+		);
+#-------------------------------------------------------------------------------
+$Columns = Array(
+		'DISTINCT(`UniqScheme`) AS UniqScheme',
+		'ToServiceID',
+		'ToSchemeID',
+		'ToSchemesGroupID',
+		'DaysDiscont',
+		'Discont',
+		'ID'
+		);
+#-------------------------------------------------------------------------------
+$Politics = DB_Select($UniqID,$Columns,Array('Where'=>$Where,'GroupBy'=>'UniqScheme','SortOn'=>'Discont','IsDesc'=>TRUE));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Politics)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	# No more...
+	break;
+case 'array':
+	#-----------------------------------------------------------------------
+	foreach($Politics as $Politic){
+		$IsInsert = DB_Insert('Bonuses',Array('UserID'=>$UserID,'ServiceID'=>$Politic['ToServiceID'],'SchemeID'=>$Politic['ToSchemeID'],'SchemesGroupID'=>$Politic['ToSchemesGroupID'],'DaysReserved'=>($Politic['DaysDiscont']?$Politic['DaysDiscont']:$DaysPay),'Discont'=>$Politic['Discont'],'Comment'=>SPrintF('Добавлено политикой #%u, оплата %s',$Politic['ID'],$ServiceInfo)));
 		if(Is_Error($IsInsert))
 			return ERROR | @Trigger_Error(500);
-		break 2;
-	default:
-		return ERROR | @Trigger_Error(101);
 	}
+	break;
 default:
 	return ERROR | @Trigger_Error(101);
 }
