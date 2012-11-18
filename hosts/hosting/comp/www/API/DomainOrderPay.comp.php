@@ -151,6 +151,15 @@ switch(ValueOf($DomainOrder)){
             $CostPay = 0.00;
             #-------------------------------------------------------------------
             $YearsRemainded = $YearsPay;
+	    #-------------------------------------------------------------------
+	    #-------------------------------------------------------------------
+#            $Comp = Comp_Load('Services/Bonuses',$YearsRemainded,20000,$DomainScheme['ID'],$UserID,$CostPay,$DomainScheme[(!$IsPayed && $YearsPay - $YearsRemainded < $DomainScheme['MinOrderYears']?'CostOrder':'CostProlong')],$DomainOrderID);
+#            if(Is_Error($Comp))
+#              return ERROR | @Trigger_Error(500);
+#            #-----------------------------------------------------------------
+#            $CostPay = $Comp['CostPay'];
+#            $Bonuses = $Comp['Bonuses'];
+
             #-------------------------------------------------------------------
             while($YearsRemainded){
               #-----------------------------------------------------------------

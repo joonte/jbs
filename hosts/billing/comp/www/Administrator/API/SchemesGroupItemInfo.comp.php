@@ -4,7 +4,7 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('ServiceID','SchemeID','Length');
+$__args_list = Array('ServiceID','SchemeID','Length','SchemesGroupID');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
@@ -38,7 +38,7 @@ if($ServiceID > 0 && $SchemeID > 0 && $Service['Code'] != 'Default'){
 	case 'error':
 	return ERROR | @Trigger_Error(500);
 	case 'exception':
-		return new gException('NO_RESULT','Выбранный тариф не найден');
+		return new gException('NO_RESULT_SCHEME','Выбранный тариф не найден');
 	case 'array':
 		break;
 	default:
@@ -49,7 +49,25 @@ if($ServiceID > 0 && $SchemeID > 0 && $Service['Code'] != 'Default'){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Formats/String',SPrintF('%s / %s',$Service['Name'],$Scheme['Name']),$Length);
+if($SchemesGroupID){
+	$SchemesGroup = DB_Select('SchemesGroups',Array('ID','Name'),Array('UNIQ','ID'=>$SchemesGroupID));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($SchemesGroup)){
+	case 'error':
+	return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return new gException('NO_RESULT_SCHEME_GROUP','Выбранная группа тарифов не найдена');
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Out = $SchemesGroupID?$SchemesGroup['Name']:SPrintF('%s / %s',$Service['Name'],$Scheme['Name']);
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Formats/String',$Out,$Length);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

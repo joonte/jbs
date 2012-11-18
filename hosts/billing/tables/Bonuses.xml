@@ -11,6 +11,7 @@
   <ListElement>ExpirationDate</ListElement>
   <ListElement>ServiceID</ListElement>
   <ListElement>SchemeID</ListElement>
+  <ListElement>SchemesGroupID</ListElement>
   <ListElement>DaysReserved</ListElement>
   <ListElement>DaysRemainded</ListElement>
   <ListElement>Discont</ListElement>
@@ -92,12 +93,14 @@
  </ExpirationDate>
  <!-- ********************************************************************** -->
  <Scheme>
-  <Head>Тариф</Head>
+  <Head>Тариф/Группа</Head>
+  <Prompt>Сервис/тариф или группа тарифов на которые предоставляется скидка</Prompt>
   <Comp>www/Administrator/API/SchemesGroupItemInfo</Comp>
   <Args>
    <ListElement>%ServiceID%</ListElement>
    <ListElement>%SchemeID%</ListElement>
    <Length>20</Length>
+   <ListElement>%SchemesGroupID%</ListElement>
   </Args>
  </Scheme>
  <!-- ********************************************************************** -->
