@@ -30,7 +30,8 @@
 <!-- *********************************************************************** -->
 <Sequence>
  <ListElement>CreateDate</ListElement>
-<!-- <ListElement>Scheme</ListElement> -->
+ <ListElement>ExpirationDate</ListElement>
+ <ListElement>SchemeID</ListElement>
  <ListElement>DaysReserved</ListElement>
  <ListElement>DaysRemainded</ListElement>
  <ListElement>Discont</ListElement>

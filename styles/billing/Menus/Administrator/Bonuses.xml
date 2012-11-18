@@ -31,15 +31,6 @@
  </ListElement>
  <!-- *********************************************************************** -->
  <ListElement>
-  <Text>Доменные политики</Text>
-  <Prompt>Правила назначения бонусов на домены при оплате заказов на различные периоды</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/DomainsPolitics$</UniqID>
-  </Paths>
-  <Href>/Administrator/DomainsPolitics</Href>
- </ListElement>
- <!-- *********************************************************************** -->
- <ListElement>
   <Text>ПромоКоды</Text>
   <Prompt>Управление ПромоКодами - добавление, удаление, статистика</Prompt>
   <Paths>

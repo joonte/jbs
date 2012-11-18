@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Бонусы</Text>
+  <Prompt>Назначенные скидки на определённые периоды</Prompt>
+  <Paths>
+   <UniqID>^\/Bonuses$</UniqID>
+  </Paths>
+  <Href>/Bonuses</Href>
+ </ListElement>
+ <!-- *********************************************************************** -->
+ <ListElement>
+  <Text>Ценовые политики</Text>
+  <Prompt>Правила назначения бонусов при оплате заказов на различные периоды</Prompt>
+  <Paths>
+   <UniqID>^\/Politics$</UniqID>
+  </Paths>
+  <Href>/Politics</Href>
+ </ListElement>
+ <!-- *********************************************************************** -->
+ <ListElement>
+  <Text>ПромоКоды</Text>
+  <Prompt>Ввод и погашение промокодов</Prompt>
+  <Paths>
+   <UniqID>^\/PromoCodes$</UniqID>
+  </Paths>
+  <Href>/PromoCodes</Href>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

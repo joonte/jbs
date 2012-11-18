@@ -40,6 +40,15 @@
   <Level>1</Level>
  </ID400>
  <ID500>
+  <Text>Бонусы</Text>
+  <Prompt>Ваши бонусы, скидки, промокоды</Prompt>
+  <Paths>
+   <UniqID>^\/(Bonuses|Politics|PromoCodes)$</UniqID>
+  </Paths>
+  <Href>/Bonuses</Href>
+  <Level>1</Level>
+ </ID500>
+ <ID600>
   <Text>Выполненные работы</Text>
   <Prompt>Акты выполненных работ, список операций по вашим договорам</Prompt>
   <Paths>
@@ -47,8 +56,8 @@
   </Paths>
   <Href>/WorksComplite</Href>
   <Level>1</Level>
- </ID500>
- <ID600>
+ </ID600>
+ <ID700>
   <Text>Документооборот</Text>
   <Prompt>Договора, приложения к договорам, акты выполненных работ</Prompt>
   <Paths>
@@ -56,8 +65,8 @@
   </Paths>
   <Href>/MotionDocuments</Href>
   <Level>1</Level>
- </ID600>
- <ID700>
+ </ID700>
+ <ID800>
   <Text>История операций</Text>
   <Prompt>Список финансовых операций по вашим договорам</Prompt>
   <Paths>
@@ -65,8 +74,8 @@
   </Paths>
   <Href>/Postings</Href>
   <Level>1</Level>
- </ID700>
- <ID800>
+ </ID800>
+ <ID900>
   <Text>Партнерская программа</Text>
   <Prompt>Реферальная программа</Prompt>
   <Paths>
@@ -74,8 +83,8 @@
   </Paths>
   <Href>/DependUsers</Href>
   <Level>1</Level>
- </ID800>
- <ID900>
+ </ID900>
+ <ID1000>
   <Text>Задачи системы</Text>
   <Prompt>Задания системы - отправка сообщений, активация ваших заказанных услуг и т.п.</Prompt>
   <Paths>
@@ -83,7 +92,7 @@
   </Paths>
   <Href>/Tasks</Href>
   <Level>1</Level>
- </ID900>
+ </ID1000>
  </Items>
 <!-- *********************************************************************** -->
 </XML>
