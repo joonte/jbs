@@ -11,6 +11,7 @@
   <ListElement>Code</ListElement>
   <ListElement>ServiceID</ListElement>
   <ListElement>SchemeID</ListElement>
+  <ListElement>SchemesGroupID</ListElement>
   <ListElement>Discont</ListElement>
  </ColumnsIDs>
  <Conditions>
@@ -107,18 +108,19 @@
   <Prompt>Количество оставшихся вводов</Prompt>
   <Alias>(`MaxAmount` - `CurrentAmount`)</Alias>
  </Amount>
-
  <!-- ********************************************************************** -->
-<!-- <Scheme>
-  <Head>Тариф</Head>
+ <!-- ********************************************************************** -->
+ <ServiceID>
+  <Head>На что скидка</Head>
+  <Prompt>Сервис/тариф или группа тарифов на которые будет предоставлена скидка, в результате активации бонуса</Prompt>
   <Comp>www/Administrator/API/SchemesGroupItemInfo</Comp>
   <Args>
    <ListElement>%ServiceID%</ListElement>
    <ListElement>%SchemeID%</ListElement>
    <Length>20</Length>
+   <ListElement>%SchemesGroupID%</ListElement>
   </Args>
- </Scheme> -->
- <!-- ********************************************************************** -->
+ </ServiceID>
  <!-- ********************************************************************** -->
  <!-- ********************************************************************** -->
  <Discont>
@@ -148,6 +150,7 @@
  <ListElement>CreateDate</ListElement>
  <ListElement>ExpirationDate</ListElement>
  <ListElement>Code</ListElement>
+ <ListElement>ServiceID</ListElement>
  <ListElement>MaxAmount</ListElement>
  <ListElement>Amount</ListElement>
  <ListElement>Discont</ListElement>

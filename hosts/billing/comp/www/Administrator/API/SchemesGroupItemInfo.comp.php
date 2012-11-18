@@ -10,7 +10,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/www/Administrator/SchemesGroupItemInfo]: ServiceID = %s, SchemeID = %s, Length = %s',$ServiceID,$SchemeID,$Length));
+Debug(SPrintF('[comp/www/Administrator/SchemesGroupItemInfo]: ServiceID = %s, SchemeID = %s, Length = %s, SchemesGroupID = %s',$ServiceID,$SchemeID,$Length,$SchemesGroupID));
 # достаём название сервиса
 if($ServiceID > 0){
 	#-------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ if($SchemesGroupID){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Out = $SchemesGroupID?$SchemesGroup['Name']:SPrintF('%s / %s',$Service['Name'],$Scheme['Name']);
+$Out = $SchemesGroupID?SPrintF('* %s',$SchemesGroup['Name']):SPrintF('%s / %s',$Service['Name'],$Scheme['Name']);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Formats/String',$Out,$Length);
 if(Is_Error($Comp))

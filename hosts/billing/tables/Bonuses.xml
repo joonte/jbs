@@ -92,7 +92,7 @@
   </Args>
  </ExpirationDate>
  <!-- ********************************************************************** -->
- <Scheme>
+ <SchemeID>
   <Head>Тариф/Группа</Head>
   <Prompt>Сервис/тариф или группа тарифов на которые предоставляется скидка</Prompt>
   <Comp>www/Administrator/API/SchemesGroupItemInfo</Comp>
@@ -102,19 +102,19 @@
    <Length>20</Length>
    <ListElement>%SchemesGroupID%</ListElement>
   </Args>
- </Scheme>
+ </SchemeID>
  <!-- ********************************************************************** -->
  <DaysReserved>
   <Head>Зарез.</Head>
-  <Prompt>Сколько предоставлено дней/лет со скидкой</Prompt>
+  <Prompt>Сколько предоставлено дней/лет/штук со скидкой</Prompt>
   <Attribs>
    <style>text-align:right;</style>
   </Attribs>
  </DaysReserved>
  <!-- ********************************************************************** -->
  <DaysRemainded>
-  <Head>Осталось</Head>
-  <Prompt>Сколько дней/лет неизрасходовано</Prompt>
+  <Head>Ост.</Head>
+  <Prompt>Сколько дней/лет/штук неизрасходовано</Prompt>
   <Attribs>
    <style>text-align:right;</style>
   </Attribs>
@@ -147,7 +147,7 @@
  <ListElement>CreateDate</ListElement>
  <ListElement>Owner</ListElement>
  <ListElement>ExpirationDate</ListElement>
- <ListElement>Scheme</ListElement>
+ <ListElement>SchemeID</ListElement>
  <ListElement>DaysReserved</ListElement>
  <ListElement>DaysRemainded</ListElement>
  <ListElement>Discont</ListElement>

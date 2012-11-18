@@ -6,6 +6,12 @@
  <TableID>Politics</TableID>
  <ColumnsIDs>
   <ListElement>ID</ListElement>
+  <ListElement>FromServiceID</ListElement>
+  <ListElement>FromSchemeID</ListElement>
+  <ListElement>FromSchemesGroupID</ListElement>
+  <ListElement>ToServiceID</ListElement>
+  <ListElement>ToSchemeID</ListElement>
+  <ListElement>ToSchemesGroupID</ListElement>
   <ListElement>DaysPay</ListElement>
   <ListElement>Discont</ListElement>
  </ColumnsIDs>
@@ -20,7 +26,12 @@
    <Args>
     <ColumnsIDs>
      <ListElement>UserID</ListElement>
-<!--     <ListElement>SchemeID</ListElement> -->
+     <ListElement>FromServiceID</ListElement>
+     <ListElement>FromSchemeID</ListElement>
+     <ListElement>FromSchemesGroupID</ListElement>
+     <ListElement>ToServiceID</ListElement>
+     <ListElement>ToSchemeID</ListElement>
+     <ListElement>ToSchemesGroupID</ListElement>
      <ListElement>DaysPay</ListElement>
      <ListElement>Discont</ListElement>
     </ColumnsIDs>
@@ -98,22 +109,46 @@
   <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `Politics`.`UserID`)</Alias>
  </User>
  <!-- ********************************************************************** -->
-<!-- <Scheme>
-  <Head>Тариф</Head>
-  <Comp>Formats/String</Comp>
+ <FromServiceID>
+  <Head>Оплачивается</Head>
+  <Prompt>Сервис/тариф или группа тарифов которые оплачиваются для срабатывания политики</Prompt>
+  <Comp>www/Administrator/API/SchemesGroupItemInfo</Comp>
   <Args>
-   <ListElement>%Scheme%</ListElement>
-   <Length>25</Length>
+   <ListElement>%FromServiceID%</ListElement>
+   <ListElement>%FromSchemeID%</ListElement>
+   <Length>20</Length>
+   <ListElement>%FromSchemesGroupID%</ListElement>
   </Args>
-  <Alias>IF(ISNULL(`SchemeID`),'Все тарифы',(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `ServersGroups` WHERE `Schemes`.`ServersGroupID` = `ServersGroups`.`ID`),')') FROM `Schemes` WHERE `Schemes`.`ID` = `Politics`.`SchemeID`))</Alias>
- </Scheme> -->
+ </FromServiceID>
+ <!-- ********************************************************************** -->
+ <ToServiceID>
+  <Head>Скидка</Head>
+  <Prompt>Сервис/тариф или группа тарифов на которые будет предоставлена скидка, в результате действия политики</Prompt>
+  <Comp>www/Administrator/API/SchemesGroupItemInfo</Comp>
+  <Args>
+   <ListElement>%ToServiceID%</ListElement>
+   <ListElement>%ToSchemeID%</ListElement>
+   <Length>20</Length>
+   <ListElement>%ToSchemesGroupID%</ListElement>
+  </Args>
+ </ToServiceID>
  <!-- ********************************************************************** -->
  <DaysPay>
-  <Head>Дней оплаты</Head>
+  <Head>Ср. опл.</Head>
+  <Prompt>Минимальное количество дней/лет/штук которое надо оплатить для срабатывания этой политики</Prompt>
   <Attribs>
    <style>text-align:right;</style>
   </Attribs>
  </DaysPay>
+ <!-- ********************************************************************** -->
+ <DaysDiscont>
+  <Head>Ср. бон.</Head>
+  <Prompt>Число получаемых бонусных дней/лет/штук</Prompt>
+  <Attribs>
+   <style>text-align:right;</style>
+  </Attribs>
+  <Alias>IF(`DaysDiscont` > 0,`DaysDiscont`,'Ср. опл.')</Alias>
+ </DaysDiscont>
  <!-- ********************************************************************** -->
  <Discont>
   <Head>Скидка</Head>
@@ -132,8 +167,10 @@
  <ListElement>Edit</ListElement>
  <ListElement>Group</ListElement>
  <ListElement>User</ListElement>
-<!--  <ListElement>Scheme</ListElement> -->
+ <ListElement>FromServiceID</ListElement>
+ <ListElement>ToServiceID</ListElement>
  <ListElement>DaysPay</ListElement>
+ <ListElement>DaysDiscont</ListElement>
  <ListElement>Discont</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
