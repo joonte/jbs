@@ -32,7 +32,7 @@
    <Text>Офис</Text>
    <Prompt>Управление профилями, договорами, счетами, история операций, задачи системы и т.д.</Prompt>
    <Paths>
-    <UniqID>^\/Administrator\/(Profiles|Contracts|Invoices|Bonuses|Politics|DomainPolitics|PromoCodes|WorksComplite|WorksCompliteReports|ContractsEnclosures|MotionDocuments|Postings|Tasks|Events|SchemesGroups)$</UniqID>
+    <UniqID>^\/Administrator\/(Profiles|Contracts|Invoices|Bonuses|Politics|DomainPolitics|PromoCodes|PromoCodesExtinguished|WorksComplite|WorksCompliteReports|ContractsEnclosures|MotionDocuments|Postings|Tasks|Events|SchemesGroups)$</UniqID>
    </Paths>
    <Href>/Administrator/Invoices</Href>
  </ID500>

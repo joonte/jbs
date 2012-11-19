@@ -43,7 +43,7 @@
   <Text>Бонусы</Text>
   <Prompt>Ваши бонусы, скидки, промокоды</Prompt>
   <Paths>
-   <UniqID>^\/(Bonuses|Politics|PromoCodes)$</UniqID>
+   <UniqID>^\/(Bonuses|Politics|PromoCodes|PromoCodesExtinguished)$</UniqID>
   </Paths>
   <Href>/Bonuses</Href>
   <Level>1</Level>

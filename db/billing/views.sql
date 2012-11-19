@@ -315,6 +315,16 @@ SELECT
 FROM
    `PromoCodes`;
 
+#-------------------------------------------------------------------------------
+DROP VIEW IF EXISTS `PromoCodesExtinguishedOwners`;
+DROP TABLE IF EXISTS `PromoCodesExtinguishedOwners`;
+CREATE
+   VIEW `PromoCodesExtinguishedOwners` AS
+SELECT
+   `PromoCodesExtinguished`.*
+FROM
+   `PromoCodesExtinguished`;
+
 
 
 

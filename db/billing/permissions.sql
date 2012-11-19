@@ -169,7 +169,11 @@ INSERT INTO `Permissions` (`Name`,`HostID`,`UserGroupID`,`UserID`,`OwnerGroupID`
 
 /* added by lissyara, 2012-11-05 in 15:43 MSK, for JBS-15 */
 ('PromoCodesDelete','billing',1,1,4000000,1,1,'no'),
-('PromoCodesDelete','billing',3000000,100,1,1,2,'yes');
+('PromoCodesDelete','billing',3000000,100,1,1,2,'yes'),
+
+/* added by lissyara, 2012-11-19 in 22:21 MSK, for JBS-15 */
+('PromoCodesExtinguishedDelete','billing',1,1,4000000,1,1,'no'),
+('PromoCodesExtinguishedDelete','billing',3000000,100,1,1,2,'yes');
 
 
 

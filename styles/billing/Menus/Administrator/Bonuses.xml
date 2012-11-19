@@ -38,6 +38,15 @@
   </Paths>
   <Href>/Administrator/PromoCodes</Href>
  </ListElement>
+ <!-- *********************************************************************** -->
+ <ListElement>
+  <Text>Погашенные ПромоКоды</Text>
+  <Prompt>Список погашенных промокодов</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/PromoCodesExtinguished$</UniqID>
+  </Paths>
+  <Href>/Administrator/PromoCodesExtinguished</Href>
+ </ListElement>
 </Items>
 <!-- *********************************************************************** -->
 </XML>

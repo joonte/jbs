@@ -38,7 +38,7 @@
  <ListElement>
   <Text>Бонусы</Text>
   <Paths>
-   <UniqID>^\/Administrator\/(Bonuses|Politics|SchemesGroups|PromoCodes)$</UniqID>
+   <UniqID>^\/Administrator\/(Bonuses|Politics|SchemesGroups|PromoCodes|PromoCodesExtinguished)$</UniqID>
   </Paths>
   <Href>/Administrator/Bonuses</Href>
   <Level>1</Level>

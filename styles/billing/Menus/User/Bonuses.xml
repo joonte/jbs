@@ -12,6 +12,7 @@
   <Href>/Bonuses</Href>
  </ListElement>
  <!-- *********************************************************************** -->
+ <!-- вопрос, нужно ли показывать юзеру все возможные варианты скидок?
  <ListElement>
   <Text>Ценовые политики</Text>
   <Prompt>Правила назначения бонусов при оплате заказов на различные периоды</Prompt>
@@ -20,14 +21,15 @@
   </Paths>
   <Href>/Politics</Href>
  </ListElement>
+ -->
  <!-- *********************************************************************** -->
  <ListElement>
   <Text>ПромоКоды</Text>
-  <Prompt>Ввод и погашение промокодов</Prompt>
+  <Prompt>Ввод и погашение промокодов, просмотр погашенных промокодов</Prompt>
   <Paths>
-   <UniqID>^\/PromoCodes$</UniqID>
+   <UniqID>^\/PromoCodesExtinguished$</UniqID>
   </Paths>
-  <Href>/PromoCodes</Href>
+  <Href>/PromoCodesExtinguished</Href>
  </ListElement>
 </Items>
 <!-- *********************************************************************** -->

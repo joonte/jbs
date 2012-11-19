@@ -759,8 +759,22 @@ CREATE TABLE `PromoCodes` (
   CONSTRAINT `PromoCodesOwnerID` FOREIGN KEY (`OwnerID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-
+/* активированные ПромоКоды */
+DROP TABLE IF EXISTS `PromoCodesExtinguished`;
+CREATE TABLE `PromoCodesExtinguished` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `PromoCodeID` int(11) NOT NULL,		-- идентификатор погашенного промокода
+  `UserID` int(11) NOT NULL,			-- какой юзер погасил промокод
+  `CreateDate` int(11) default '0',		-- когда промокод был погашен
+  /* уникальный ключ */
+  PRIMARY KEY (`ID`),
+  /* внешний ключ на юзеров */
+  KEY `PromoCodesExtinguishedUserID` (`UserID`),
+  CONSTRAINT `PromoCodesExtinguishedUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  /* внешний ключ на ПромоКоды */
+  KEY `PromoCodesPromoCodeID` (`PromoCodeID`),
+  CONSTRAINT `PromoCodesPromoCodeID` FOREIGN KEY (`PromoCodeID`) REFERENCES `PromoCodes` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 SET FOREIGN_KEY_CHECKS=1;
