@@ -105,6 +105,12 @@ EOD;
 		$Send = Trim($Send['Body']);
 		$xml = simplexml_load_string('<?xml version="1.0" encoding="utf-8"?>' . $Send);
 		if ($xml->{'result-code'}){
+			#-------------------------------------------------------------------------
+			# вероятно, сервис отключен... зайдём попозже
+			Debug(SPrintF('[Tasks/QIWI]: result-code = %s',$xml->{'result-code'}));
+			if($xml->{'result-code'} != 0)
+				return (time() + 3600);
+			#-------------------------------------------------------------------------
 			$result = array();
 			foreach ($xml->{'bills-list'}->children() as $bill) {
 				#-------------------------------------------------------------------------
