@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>PromoCodesExtinguished</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>CreateDate</ListElement>
+  <ListElement>UserID</ListElement>
+  <ListElement>(SELECT `ServiceID` FROM `PromoCodes` WHERE `ID` = `PromoCodesExtinguished`.`PromoCodeID`) AS `ServiceID`</ListElement>
+  <ListElement>(SELECT `SchemeID` FROM `PromoCodes` WHERE `ID` = `PromoCodesExtinguished`.`PromoCodeID`) AS `SchemeID`</ListElement>
+  <ListElement>(SELECT `SchemesGroupID` FROM `PromoCodes` WHERE `ID` = `PromoCodesExtinguished`.`PromoCodeID`) AS `SchemesGroupID`</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Нет активированных промокодов.</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <Before>
+  <Search>
+   <Args>
+    <ColumnsIDs>
+     <ListElement>UserID</ListElement>
+     <ListElement>CreateDate</ListElement>
+    </ColumnsIDs>
+   </Args>
+  </Search>
+ </Before>
+ <!-- ********************************************************************** -->
+ <After>
+  <Delete>
+   <Args>
+    <Comment>Выбранные записи активции ПромоКодов</Comment>
+    <Send>
+     <TableID>PromoCodesExtinguished</TableID>
+    </Send>
+   </Args>
+  </Delete>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>CreateDate</SortOn>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+ <SelectID>
+  <Args>
+   <TableID>PromoCodesExtinguished</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <!-- ********************************************************************** -->
+ <CreateDate>
+  <Head>Дата актив.</Head>
+  <Prompt>Дата и время, когда промокод был использован/активрован</Prompt>
+  <Comp>Formats/Date/Extended</Comp>
+  <Args>
+   <ListElement>%CreateDate%</ListElement>
+  </Args>
+ </CreateDate>
+ <!-- ********************************************************************** -->
+ <PromoCodeID>
+  <Head>ПромоКод</Head>
+  <Prompt>Активированный промокод</Prompt>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%PromoCodeID%</ListElement>
+   <Length>20</Length>
+  </Args>
+  <Alias>(SELECT `Code` FROM `PromoCodes` WHERE `ID` = `PromoCodesExtinguished`.`PromoCodeID`)</Alias>
+ </PromoCodeID>
+ <!-- ********************************************************************** -->
+ <SchemeID>
+  <Head>Тариф/Группа</Head>
+  <Prompt>Сервис/тариф или группа тарифов на которые предоставляется скидка</Prompt>
+  <Comp>www/Administrator/API/SchemesGroupItemInfo</Comp>
+  <Args>
+   <ListElement>%ServiceID%</ListElement>
+   <ListElement>%SchemeID%</ListElement>
+   <Length>40</Length>
+   <ListElement>%SchemesGroupID%</ListElement>
+  </Args>
+ </SchemeID>
+ <!-- ********************************************************************** -->
+ <!-- ********************************************************************** -->
+ <!-- ********************************************************************** -->
+</Columns>
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>CreateDate</ListElement>
+ <ListElement>Owner</ListElement>
+ <ListElement>PromoCodeID</ListElement>
+ <ListElement>SchemeID</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

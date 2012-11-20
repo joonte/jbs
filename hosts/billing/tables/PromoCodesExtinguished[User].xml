@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<RootID>PromoCodesExtinguished</RootID>
+<Cut>
+ <Comps>
+  <Before>
+   <PatternOut />
+   <Search />
+  </Before>
+  <After>
+   <Delete />
+  </After>
+ </Comps>
+ <Sequence />
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+ <Conditions>
+  <Where>
+   <UniqID>`UserID` = @local.__USER_ID</UniqID>
+  </Where>
+  <Message>У Вас нет бонусов на услуги.</Message>
+ </Conditions>
+ <Adding>
+  <Message>Для данного договора бонусы не были назначены.</Message>
+ </Adding>
+</Source>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>CreateDate</ListElement>
+ <ListElement>PromoCodeID</ListElement>
+ <ListElement>SchemeID</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>
