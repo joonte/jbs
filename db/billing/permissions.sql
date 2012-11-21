@@ -173,9 +173,11 @@ INSERT INTO `Permissions` (`Name`,`HostID`,`UserGroupID`,`UserID`,`OwnerGroupID`
 
 /* added by lissyara, 2012-11-19 in 22:21 MSK, for JBS-15 */
 ('PromoCodesExtinguishedDelete','billing',1,1,4000000,1,1,'no'),
-('PromoCodesExtinguishedDelete','billing',3000000,100,1,1,2,'yes');
+('PromoCodesExtinguishedDelete','billing',3000000,100,1,1,2,'yes'),
 
-
+/* added by lissyara, 2012-11-21 in 14:41 MSK, for JBS-565 */
+('ContractConsiderEdit','billing',1,1,4000000,1,1,'yes'),
+('ContractConsiderEdit','billing',3000000,100,1,1,2,'yes');
 
 
 UNLOCK TABLES;

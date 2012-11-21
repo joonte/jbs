@@ -168,7 +168,7 @@
   <Comp>Formats/Logic</Comp>
   <Args>
    <ListElement>%IsUponConsider%</ListElement>
-   <ListElement>Ежемесячно</ListElement>
+   <ListElement>Ежемесячный</ListElement>
    <ListElement>По факту</ListElement>
   </Args>
  </IsUponConsider>
