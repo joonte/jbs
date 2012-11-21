@@ -27,7 +27,6 @@ VALUES
 (100,3000000,'ООО \"Компания\"',MD5('default'),'admin@company.com','С уважением, ООО \"Компания\".','yes','yes','От этого пользователя рассылаются уведомления, у него хранится профиль компании'),
 (200,2000000,'Клиент',MD5('nopassword'),'client@company.com','С уважением, Клиент.','no','yes',''),
 (300,3000000,'Сайт компании','e02f7b992578cd299e3e3edaed120689','site@company.com','С уважением, сайт ООО \"Компания\".','no','yes','Пользователь с доступом только к API, используется для работы сайта');
-ALTER TABLE `Users` AUTO_INCREMENT=2001;
 UNLOCK TABLES;
 
 DELETE FROM `Tasks` WHERE `ID` IN(1,2,3,4,5,6,7,8,9,11,12);
@@ -48,10 +47,7 @@ VALUES
 (12,1,'GC','[]','yes');
 
 ;
-ALTER TABLE `Tasks` AUTO_INCREMENT=1000;
 UNLOCK TABLES;
-
-ALTER TABLE `Profiles` AUTO_INCREMENT=100;
 
 DELETE FROM `Clauses` WHERE `Partition` IN ('User/Panel','/Help/Services/Paying','News','/Contacts');
 INSERT INTO `Clauses`
@@ -2809,7 +2805,6 @@ VALUES
 ('billing','Copyright','ООО "Компания" 2000-2012 г.');
 UNLOCK TABLES;
 
-ALTER TABLE `Orders` AUTO_INCREMENT=1000;
 
 LOCK TABLES `ServicesGroups` WRITE;
 DELETE FROM `ServicesGroups` WHERE `ID` IN(1000);
@@ -2834,3 +2829,9 @@ VALUES
 UNLOCK TABLES;
 
 SET FOREIGN_KEY_CHECKS=1;
+
+ALTER TABLE `Users` AUTO_INCREMENT=2001;
+ALTER TABLE `Tasks` AUTO_INCREMENT=1000;
+ALTER TABLE `Profiles` AUTO_INCREMENT=100;
+ALTER TABLE `Orders` AUTO_INCREMENT=1000;
+
