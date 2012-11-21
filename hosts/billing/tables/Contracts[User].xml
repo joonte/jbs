@@ -59,6 +59,23 @@
   </Attribs>
  </ContractDownload>
  <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/ContractEdit</ListElement>
+   <ListElement>
+    <ContractID>%ID%</ContractID>
+   </ListElement>
+   <ListElement>Изменить тип учёта</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+ <!-- ********************************************************************** -->
  <Balance>
   <Head>Баланс</Head>
   <Comp>Contracts/Balance</Comp>
@@ -71,9 +88,11 @@
 <Sequence>
  <ListElement>Info</ListElement>
  <ListElement>ContractDownload</ListElement>
+ <ListElement>Edit</ListElement>
  <ListElement>Number</ListElement>
  <ListElement>Customer</ListElement>
  <ListElement>Type</ListElement>
+ <ListElement>IsUponConsider</ListElement>
  <ListElement>Balance</ListElement>
  <ListElement>Status</ListElement>
  <ListElement>StatusOver</ListElement>

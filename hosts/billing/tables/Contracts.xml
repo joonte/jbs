@@ -18,6 +18,7 @@
   <ListElement>CreateDate</ListElement>
   <ListElement>UserID</ListElement>
   <ListElement>Customer</ListElement>
+  <ListElement>IsUponConsider</ListElement>
   <ListElement>Balance</ListElement>
   <ListElement>StatusID</ListElement>
   <ListElement>StatusDate</ListElement>
@@ -162,6 +163,16 @@
   <Alias>TypeID</Alias>
  </Type>
  <!-- ********************************************************************** -->
+ <IsUponConsider>
+  <Head>Тип учёта</Head>
+  <Comp>Formats/Logic</Comp>
+  <Args>
+   <ListElement>%IsUponConsider%</ListElement>
+   <ListElement>Ежемесячно</ListElement>
+   <ListElement>По факту</ListElement>
+  </Args>
+ </IsUponConsider>
+ <!-- ********************************************************************** -->
  <Balance>
   <Head>Баланс</Head>
   <Comp>Contracts/Balance</Comp>
@@ -188,6 +199,7 @@
  <ListElement>Owner</ListElement>
  <ListElement>Customer</ListElement>
  <ListElement>Type</ListElement>
+ <ListElement>IsUponConsider</ListElement>
  <ListElement>Balance</ListElement>
  <ListElement>Status</ListElement>
  <ListElement>StatusOver</ListElement>
