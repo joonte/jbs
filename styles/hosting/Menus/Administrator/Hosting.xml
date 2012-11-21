@@ -20,28 +20,12 @@
   <Href>/Administrator/HostingSchemes</Href>
  </ListElement>
  <ListElement>
-  <Text>Ценовые политики</Text>
-  <Prompt>Правила назначения бонусов при оплате заказов на различные периоды</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/HostingPolitics$</UniqID>
-  </Paths>
-  <Href>/Administrator/HostingPolitics</Href>
- </ListElement>
- <ListElement>
   <Text>Доменные политики</Text>
   <Prompt>Правила назначения бонусов на домены при оплате заказов на различные периоды</Prompt>
   <Paths>
    <UniqID>^\/Administrator\/HostingDomainsPolitics$</UniqID>
   </Paths>
   <Href>/Administrator/HostingDomainsPolitics</Href>
- </ListElement>
- <ListElement>
-  <Text>Бонусы</Text>
-  <Prompt>Назначенные скидки клиентам на определённые периоды</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/HostingBonuses$</UniqID>
-  </Paths>
-  <Href>/Administrator/HostingBonuses</Href>
  </ListElement>
  <ListElement>
   <Text>Группы серверов</Text>

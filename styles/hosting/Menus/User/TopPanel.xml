@@ -5,7 +5,7 @@
 <Items>
  <ID400>
   <Paths>
-   <UniqID>^\/(HostingOrders|HostingSchemes|HostingBonuses|DomainOrders|DomainSchemes|DomainBonuses|DomainWhoIs|VPSOrders|VPSSchemes|VPSBonuses|DSOrders|DSSchemes|DSBonuses|ExtraIPOrders|ExtraIPSchemes|ExtraIPBonuses|ISPswOrders|ISPswSchemes|ISPswBonuses)$</UniqID>
+   <UniqID>^\/(HostingOrders|HostingSchemes|DomainOrders|DomainSchemes|DomainBonuses|DomainWhoIs|VPSOrders|VPSSchemes|DSOrders|DSSchemes|ExtraIPOrders|ExtraIPSchemes|ISPswOrders|ISPswSchemes)$</UniqID>
   </Paths>
  </ID400>
 </Items>

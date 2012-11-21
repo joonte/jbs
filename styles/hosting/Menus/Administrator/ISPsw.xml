@@ -44,14 +44,6 @@
   </Paths>
   <Href>/Administrator/ISPswLicenses</Href>
  </ListElement>
- <ListElement>
-  <Text>Ценовые политики</Text>
-  <Prompt>Правила назначения бонусов при оплате заказов на различные периоды</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/ISPswPolitics$</UniqID>
-  </Paths>
-  <Href>/Administrator/ISPswPolitics</Href>
- </ListElement>
 <!-- commented by lissyara 2011-09-19 in 17:04 MSK
  <ListElement>
   <Text>Доменные политики</Text>
@@ -62,14 +54,6 @@
   <Href>/Administrator/ISPswDomainsPolitics</Href>
  </ListElement>
  -->
- <ListElement>
-  <Text>Бонусы</Text>
-  <Prompt>Назначенные скидки клиентам на определённые периоды</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/ISPswBonuses$</UniqID>
-  </Paths>
-  <Href>/Administrator/ISPswBonuses</Href>
- </ListElement>
 </Items>
 <!-- *********************************************************************** -->
 </XML>

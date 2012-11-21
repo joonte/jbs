@@ -17,13 +17,6 @@
   </Paths>
   <Href>/ISPswSchemes</Href>
  </ListElement>
- <ListElement>
-  <Text>Мои бонусы</Text>
-  <Paths>
-   <UniqID>^\/ISPswBonuses$</UniqID>
-  </Paths>
-  <Href>/ISPswBonuses</Href>
- </ListElement>
 </Items>
 <!-- *********************************************************************** -->
 </XML>

@@ -20,28 +20,12 @@
   <Href>/Administrator/DSSchemes</Href>
  </ListElement>
  <ListElement>
-  <Text>Ценовые политики</Text>
-  <Prompt>Правила назначения бонусов при оплате заказов на различные периоды</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/DSPolitics$</UniqID>
-  </Paths>
-  <Href>/Administrator/DSPolitics</Href>
- </ListElement>
- <ListElement>
   <Text>Доменные политики</Text>
   <Prompt>Правила назначения бонусов на домены при оплате заказов на различные периоды</Prompt>
   <Paths>
    <UniqID>^\/Administrator\/DSDomainsPolitics$</UniqID>
   </Paths>
   <Href>/Administrator/DSDomainsPolitics</Href>
- </ListElement>
- <ListElement>
-  <Text>Бонусы</Text>
-  <Prompt>Назначенные скидки клиентам на определённые периоды</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/DSBonuses$</UniqID>
-  </Paths>
-  <Href>/Administrator/DSBonuses</Href>
  </ListElement>
  <ListElement>
   <Text>Группы серверов</Text>

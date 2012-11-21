@@ -17,13 +17,6 @@
   </Paths>
   <Href>/DSSchemes</Href>
  </ListElement>
- <ListElement>
-  <Text>Мои бонусы</Text>
-  <Paths>
-   <UniqID>^\/DSBonuses$</UniqID>
-  </Paths>
-  <Href>/DSBonuses</Href>
- </ListElement>
 </Items>
 <!-- *********************************************************************** -->
 </XML>

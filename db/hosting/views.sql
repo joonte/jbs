@@ -32,22 +32,12 @@ LEFT JOIN `OrdersOwners`
 ON (`DomainsOrders`.`OrderID` = `OrdersOwners`.`ID`);
 #-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `HostingBonusesOwners`;
+#-------------------------------------------------------------------------------
 DROP TABLE IF EXISTS `HostingBonusesOwners`;
-CREATE
-  VIEW `HostingBonusesOwners` AS
-SELECT
-  `HostingBonuses`.*
-FROM
-  `HostingBonuses`;
 #-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `HostingPoliticsOwners`;
+#-------------------------------------------------------------------------------
 DROP TABLE IF EXISTS `HostingPoliticsOwners`;
-CREATE
-  VIEW `HostingPoliticsOwners` AS
-SELECT
-  `HostingPolitics`.*
-FROM
-  `HostingPolitics`;
 #-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `DomainsBonusesOwners`;
 DROP TABLE IF EXISTS `DomainsBonusesOwners`;
@@ -170,18 +160,15 @@ SELECT
 	100 as `UserID`
 FROM
 	`VPSServersGroups`;
-
 -- SEPARATOR
 DROP VIEW IF EXISTS `VPSBonusesOwners`;
+-- SEPARATOR
 DROP TABLE IF EXISTS `VPSBonusesOwners`;
-CREATE VIEW `VPSBonusesOwners` AS select
-	`VPSBonuses`.*
-from `VPSBonuses`;
-
 -- SEPARATOR
 DROP VIEW IF EXISTS `VPSPoliticsOwners`;
+-- SEPARATOR
 DROP TABLE IF EXISTS `VPSPoliticsOwners`;
-CREATE VIEW `VPSPoliticsOwners` AS select `VPSPolitics`.* from `VPSPolitics`;
+
 -- SEPARATOR
 DROP VIEW IF EXISTS `VPSDomainsPoliticsOwners`;
 DROP TABLE IF EXISTS `VPSDomainsPoliticsOwners`;
@@ -236,15 +223,13 @@ FROM
 
 -- SEPARATOR
 DROP VIEW IF EXISTS `DSBonusesOwners`;
+-- SEPARATOR
 DROP TABLE IF EXISTS `DSBonusesOwners`;
-CREATE VIEW `DSBonusesOwners` AS select
-	`DSBonuses`.*
-from `DSBonuses`;
-
 -- SEPARATOR
 DROP VIEW IF EXISTS `DSPoliticsOwners`;
+-- SEPARATOR
 DROP TABLE IF EXISTS `DSPoliticsOwners`;
-CREATE VIEW `DSPoliticsOwners` AS select `DSPolitics`.* from `DSPolitics`;
+
 -- SEPARATOR
 DROP VIEW IF EXISTS `DSDomainsPoliticsOwners`;
 DROP TABLE IF EXISTS `DSDomainsPoliticsOwners`;
@@ -298,15 +283,13 @@ FROM
 
 -- SEPARATOR
 DROP VIEW IF EXISTS `ExtraIPBonusesOwners`;
+-- SEPARATOR
 DROP TABLE IF EXISTS `ExtraIPBonusesOwners`;
-CREATE VIEW `ExtraIPBonusesOwners` AS select
-	`ExtraIPBonuses`.*
-from `ExtraIPBonuses`;
-
 -- SEPARATOR
 DROP VIEW IF EXISTS `ExtraIPPoliticsOwners`;
+-- SEPARATOR
 DROP TABLE IF EXISTS `ExtraIPPoliticsOwners`;
-CREATE VIEW `ExtraIPPoliticsOwners` AS select `ExtraIPPolitics`.* from `ExtraIPPolitics`;
+
 -- SEPARATOR
 DROP VIEW IF EXISTS `ExtraIPDomainsPoliticsOwners`;
 DROP TABLE IF EXISTS `ExtraIPDomainsPoliticsOwners`;
@@ -354,15 +337,14 @@ FROM
 
 -- SEPARATOR
 DROP VIEW IF EXISTS `ISPswBonusesOwners`;
+-- SEPARATOR
 DROP TABLE IF EXISTS `ISPswBonusesOwners`;
-CREATE VIEW `ISPswBonusesOwners` AS select
-	`ISPswBonuses`.*
-from `ISPswBonuses`;
-
 -- SEPARATOR
 DROP VIEW IF EXISTS `ISPswPoliticsOwners`;
+-- SEPARATOR
 DROP TABLE IF EXISTS `ISPswPoliticsOwners`;
-CREATE VIEW `ISPswPoliticsOwners` AS select `ISPswPolitics`.* from `ISPswPolitics`;
+
+
 -- SEPARATOR
 DROP VIEW IF EXISTS `ISPswDomainsPoliticsOwners`;
 DROP TABLE IF EXISTS `ISPswDomainsPoliticsOwners`;

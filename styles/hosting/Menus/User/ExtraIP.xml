@@ -17,13 +17,6 @@
   </Paths>
   <Href>/ExtraIPSchemes</Href>
  </ListElement>
- <ListElement>
-  <Text>Мои бонусы</Text>
-  <Paths>
-   <UniqID>^\/ExtraIPBonuses$</UniqID>
-  </Paths>
-  <Href>/ExtraIPBonuses</Href>
- </ListElement>
 </Items>
 <!-- *********************************************************************** -->
 </XML>

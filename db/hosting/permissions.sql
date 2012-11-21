@@ -55,14 +55,8 @@ VALUES
 ('DomainsSchemesDelete','hosting',1,1,4000000,1,1,'no'),
 ('DomainsSchemesDelete','hosting',3000000,100,1,1,2,'yes'),
 
-('HostingBonusesDelete','hosting',1,1,4000000,1,1,'no'),
-('HostingBonusesDelete','hosting',3000000,100,1,1,2,'yes'),
-
 ('DomainsBonusesDelete','hosting',1,1,4000000,1,1,'no'),
 ('DomainsBonusesDelete','hosting',3000000,100,1,1,2,'yes'),
-
-('HostingPoliticsDelete','hosting',1,1,4000000,1,1,'no'),
-('HostingPoliticsDelete','hosting',3000000,100,1,1,2,'yes'),
 
 ('HostingServersGroupsDelete','hosting',1,1,4000000,1,1,'no'),
 ('HostingServersGroupsDelete','hosting',3000000,100,1,1,2,'yes'),
@@ -107,12 +101,6 @@ VALUES
 ('VPSSchemesDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
 ('VPSSchemesDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
 
-('VPSBonusesDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
-('VPSBonusesDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
-
-('VPSPoliticsDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
-('VPSPoliticsDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
-
 ('VPSServersGroupsDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
 ('VPSServersGroupsDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
 
@@ -146,12 +134,6 @@ VALUES
 
 ('DSSchemesDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
 ('DSSchemesDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
-
-('DSBonusesDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
-('DSBonusesDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
-
-('DSPoliticsDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
-('DSPoliticsDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
 
 ('DSServersGroupsDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
 ('DSServersGroupsDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
@@ -195,12 +177,6 @@ VALUES
 ('ExtraIPSchemesDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
 ('ExtraIPSchemesDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
 
-('ExtraIPBonusesDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
-('ExtraIPBonusesDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
-
-('ExtraIPPoliticsDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
-('ExtraIPPoliticsDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
-
 ('ExtraIPsGroupsDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
 ('ExtraIPsGroupsDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
 
@@ -234,12 +210,6 @@ VALUES
 
 ('ISPswSchemesDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
 ('ISPswSchemesDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
-
-('ISPswBonusesDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
-('ISPswBonusesDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
-
-('ISPswPoliticsDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
-('ISPswPoliticsDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
 
 ('ISPswProducerDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
 ('ISPswProducerDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),

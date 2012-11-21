@@ -11,20 +11,6 @@ CREATE DEFINER = CURRENT_USER TRIGGER `HostingSchemesOnInsert` BEFORE INSERT ON 
 DELIMITER ;
 #-------------------------------------------------------------------------------
 DROP TRIGGER IF EXISTS `HostingBonusesOnInsert`;
-DELIMITER |
-CREATE DEFINER = CURRENT_USER TRIGGER `HostingBonusesOnInsert` BEFORE INSERT ON `HostingBonuses`
-  FOR EACH ROW BEGIN
-    IF NEW.`CreateDate` = 0
-      THEN
-        SET NEW.`CreateDate` = UNIX_TIMESTAMP();
-    END IF;
-    IF NEW.`DaysRemainded` = 0
-      THEN
-        SET NEW.`DaysRemainded` = NEW.`DaysReserved`;
-    END IF;
-  END;
-|
-DELIMITER ;
 #-------------------------------------------------------------------------------
 /* moved to OrdersConsider */
 DROP TRIGGER IF EXISTS `HostingConsiderOnInsert`;
@@ -128,20 +114,6 @@ DELIMITER ;
 
 -- SEPARATOR
 DROP TRIGGER IF EXISTS `VPSBonusesOnInsert`;
-DELIMITER |
-CREATE DEFINER = CURRENT_USER TRIGGER `VPSBonusesOnInsert` BEFORE INSERT ON `VPSBonuses`
-FOR EACH ROW BEGIN
-IF NEW.`CreateDate` = 0
-THEN
-	SET NEW.`CreateDate` = UNIX_TIMESTAMP();
-END IF;
-IF NEW.`DaysRemainded` = 0
-THEN
-	SET NEW.`DaysRemainded` = NEW.`DaysReserved`;
-END IF;
-END
-|
-DELIMITER ;
 -- SEPARATOR
 /* moved to OrdersConsider */
 DROP TRIGGER IF EXISTS `VPSConsiderOnInsert`;
@@ -181,20 +153,6 @@ DELIMITER ;
 
 -- SEPARATOR
 DROP TRIGGER IF EXISTS `DSBonusesOnInsert`;
-DELIMITER |
-CREATE DEFINER = CURRENT_USER TRIGGER `DSBonusesOnInsert` BEFORE INSERT ON `DSBonuses`
-FOR EACH ROW BEGIN
-IF NEW.`CreateDate` = 0
-THEN
-	SET NEW.`CreateDate` = UNIX_TIMESTAMP();
-END IF;
-IF NEW.`DaysRemainded` = 0
-THEN
-	SET NEW.`DaysRemainded` = NEW.`DaysReserved`;
-END IF;
-END
-|
-DELIMITER ;
 -- SEPARATOR
 /* moved to OrdersConsider */
 DROP TRIGGER IF EXISTS `DSConsiderOnInsert`;
@@ -234,20 +192,6 @@ DELIMITER ;
 
 -- SEPARATOR
 DROP TRIGGER IF EXISTS `ExtraIPBonusesOnInsert`;
-DELIMITER |
-CREATE DEFINER = CURRENT_USER TRIGGER `ExtraIPBonusesOnInsert` BEFORE INSERT ON `ExtraIPBonuses`
-FOR EACH ROW BEGIN
-IF NEW.`CreateDate` = 0
-THEN
-	SET NEW.`CreateDate` = UNIX_TIMESTAMP();
-END IF;
-IF NEW.`DaysRemainded` = 0
-THEN
-	SET NEW.`DaysRemainded` = NEW.`DaysReserved`;
-END IF;
-END
-|
-DELIMITER ;
 -- SEPARATOR
 /* moved to OrdersConsider */
 DROP TRIGGER IF EXISTS `ExtraIPConsiderOnInsert`;
@@ -289,20 +233,6 @@ DELIMITER ;
 
 -- SEPARATOR
 DROP TRIGGER IF EXISTS `ISPswBonusesOnInsert`;
-DELIMITER |
-CREATE DEFINER = CURRENT_USER TRIGGER `ISPswBonusesOnInsert` BEFORE INSERT ON `ISPswBonuses`
-FOR EACH ROW BEGIN
-IF NEW.`CreateDate` = 0
-THEN
-	SET NEW.`CreateDate` = UNIX_TIMESTAMP();
-END IF;
-IF NEW.`DaysRemainded` = 0
-THEN
-	SET NEW.`DaysRemainded` = NEW.`DaysReserved`;
-END IF;
-END
-|
-DELIMITER ;
 -- SEPARATOR
 /* moved to OrdersConsider */
 DROP TRIGGER IF EXISTS `ISPswConsiderOnInsert`;

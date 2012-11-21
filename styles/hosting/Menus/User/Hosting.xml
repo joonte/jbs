@@ -17,13 +17,6 @@
   </Paths>
   <Href>/HostingSchemes</Href>
  </ListElement>
- <ListElement>
-  <Text>Мои бонусы</Text>
-  <Paths>
-   <UniqID>^\/HostingBonuses$</UniqID>
-  </Paths>
-  <Href>/HostingBonuses</Href>
- </ListElement>
 </Items>
 <!-- *********************************************************************** -->
 </XML>

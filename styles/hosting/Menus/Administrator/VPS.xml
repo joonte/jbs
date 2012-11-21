@@ -20,28 +20,12 @@
   <Href>/Administrator/VPSSchemes</Href>
  </ListElement>
  <ListElement>
-  <Text>Ценовые политики</Text>
-  <Prompt>Правила назначения бонусов при оплате заказов на различные периоды</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/VPSPolitics$</UniqID>
-  </Paths>
-  <Href>/Administrator/VPSPolitics</Href>
- </ListElement>
- <ListElement>
   <Text>Доменные политики</Text>
   <Prompt>Правила назначения бонусов на домены при оплате заказов на различные периоды</Prompt>
   <Paths>
    <UniqID>^\/Administrator\/VPSDomainsPolitics$</UniqID>
   </Paths>
   <Href>/Administrator/VPSDomainsPolitics</Href>
- </ListElement>
- <ListElement>
-  <Text>Бонусы</Text>
-  <Prompt>Назначенные скидки клиентам на определённые периоды</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/VPSBonuses$</UniqID>
-  </Paths>
-  <Href>/Administrator/VPSBonuses</Href>
  </ListElement>
  <ListElement>
   <Text>Группы серверов</Text>

@@ -17,13 +17,6 @@
   </Paths>
   <Href>/VPSSchemes</Href>
  </ListElement>
- <ListElement>
-  <Text>Мои бонусы</Text>
-  <Paths>
-   <UniqID>^\/VPSBonuses$</UniqID>
-  </Paths>
-  <Href>/VPSBonuses</Href>
- </ListElement>
 </Items>
 <!-- *********************************************************************** -->
 </XML>
