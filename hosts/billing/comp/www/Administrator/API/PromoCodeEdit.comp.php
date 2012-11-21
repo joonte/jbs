@@ -22,7 +22,7 @@ $ExpirationDate = (integer) @$Args['ExpirationDate'];
 $MaxAmount	= (integer) @$Args['MaxAmount'];
 $OwnerID	= (integer) @$Args['OwnerID'];
 $ForceOwnerID	= (boolean) @$Args['ForceOwnerID'];
-$DaysDiscont	= (boolean) @$Args['DaysDiscont'];
+$DaysDiscont	= (integer) @$Args['DaysDiscont'];
 $Discont        = (integer) @$Args['Discont'];
 $Comment        =  (string) @$Args['Comment'];
 #-------------------------------------------------------------------------------
