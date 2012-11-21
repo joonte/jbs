@@ -79,20 +79,48 @@ if(Is_Error(DB_Transaction($TransactionID = UniqID('PromoCodesExtinguished'))))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+# фтыкаем в таблицу погашеных промокодов
 $IsInsert = DB_Insert('PromoCodesExtinguished',$ICode);
 if(Is_Error($IsInsert))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+# втыкаем бонусы в таблицу бонусов
 $IsInsert = DB_Insert('Bonuses',$IBonus);
 if(Is_Error($IsInsert))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+# Проверяем, не надо ли сделать юзера рефералом
+if($PromoCode['OwnerID'] > 2000){
+	$User = DB_Select('Users','*',Array('UNIQ','ID'=>$GLOBALS['__USER']['ID']));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($User)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	if((IntVal($User['OwnerID']) > 0 && $PromoCode['ForceOwner']) || (IntVal($User['OwnerID']) == 0)){
+		$IsUpdate = DB_Update('Users',Array('OwnerID'=>$PromoCode['OwnerID']),Array('ID'=>$GLOBALS['__USER']['ID']));
+		if(Is_Error($IsUpdate))
+			return ERROR | @Trigger_Error(500);
+	}
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# считаем число заюзанных промокодов
 $Count = DB_Count('PromoCodesExtinguished',Array('Where'=>SPrintF('`PromoCodeID` = %u',$PromoCode['ID'])));
 if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+# обновляем число заюзанных промокодов
+# TODO подумать надо ли это. можно просто SELECT по двум таблицам гонять и не парится
 $IsUpdate = DB_Update('PromoCodes',Array('CurrentAmount'=>$Count),Array('ID'=>$PromoCode['ID']));
 if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);

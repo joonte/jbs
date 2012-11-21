@@ -744,7 +744,7 @@ CREATE TABLE `PromoCodes` (
   `MaxAmount` int(11) default '0',		-- сколько раз можно ввести промокод
   `CurrentAmount` int(11) default '0',		-- сколько раз его уже вводили
   `OwnerID` int(11) NULL,			-- сделать того кто введёт партнёром этого юзера
-  `ForceOwnerID` enum('no','yes') default 'no',	-- делать партнёром принудительно (если уже чей-то партнёр)
+  `ForceOwner` enum('no','yes') default 'no',	-- делать партнёром принудительно (если уже чей-то партнёр)
   `Comment` char(255) default '',		-- комментарий к промокоду
   PRIMARY KEY (`ID`),
   UNIQUE KEY (`Code`),

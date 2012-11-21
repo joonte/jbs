@@ -20,8 +20,9 @@ $SchemeID       = (integer) @$Args['SchemeID'];
 $SchemesGroupID	= (integer) @$Args['SchemesGroupID'];
 $ExpirationDate = (integer) @$Args['ExpirationDate'];
 $MaxAmount	= (integer) @$Args['MaxAmount'];
+$UseOwnerID	= (boolean) @$Args['UseOwnerID'];
 $OwnerID	= (integer) @$Args['OwnerID'];
-$ForceOwnerID	= (boolean) @$Args['ForceOwnerID'];
+$ForceOwner	= (boolean) @$Args['ForceOwner'];
 $DaysDiscont	= (integer) @$Args['DaysDiscont'];
 $Discont        = (integer) @$Args['Discont'];
 $Comment        =  (string) @$Args['Comment'];
@@ -55,7 +56,14 @@ if($Discont < 5 || $Discont > 100)
 	return new gException('WRONG_DISCOUNT','Скидка должна принимать значение от 5 до 100');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-
+if($UseOwnerID && $OwnerID <= 2000)
+	return new gException('WRONG_OWNER','Клиент не может стать рефералом системного пользователя');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(!$UseOwnerID){
+	$OwnerID	= 1;
+	$ForceOwner	= FALSE;
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IPromoCode = Array(
@@ -66,7 +74,7 @@ $IPromoCode = Array(
 	'ExpirationDate'=> $ExpirationDate,
 	'MaxAmount'	=> $MaxAmount,
 	'OwnerID'	=> $OwnerID,
-	'ForceOwnerID'	=> $ForceOwnerID,
+	'ForceOwner'	=> $ForceOwner,
 	'DaysDiscont'	=> $DaysDiscont,
 	'Discont'       => $Discont/100,
 	'Comment'       => $Comment

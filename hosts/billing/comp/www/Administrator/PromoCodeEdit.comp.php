@@ -41,8 +41,8 @@ if($PromoCodeID){
 		'Discont'	=> 0.5,
 		'DaysDiscont'	=> 363,
 		'MaxAmount'	=> 100,
-		'OwnerID'	=> FALSE,
-		'ForceOwnerID'	=> FALSE,
+		'OwnerID'	=> 1,
+		'ForceOwner'	=> FALSE,
 		'Comment'	=> 'Промокод размещён на форуме профильного сайта forum.joonte.ru'
 		);
 }
@@ -220,19 +220,22 @@ $Comp = Comp_Load(
 		Array(
 			'name'		=> 'UseOwnerID',
 			'type'		=> 'checkbox',
-			'onclick'	=> "form.SearchOwnerID.disabled = !checked; form.ForceOwnerID.disabled = !checked;"
+			'onclick'	=> "form.SearchOwnerID.disabled = !checked; form.ForceOwner.disabled = !checked;",
 		)
 	);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if($PromoCode['OwnerID'] >= 2000)
+	$Comp->AddAttribs(Array('checked'=>TRUE));
 #-------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox("UseOwnerID"); document.getElementsByName("SearchOwnerID")[0].disabled = document.getElementsByName("UseOwnerID")[0].checked?false:true; document.getElementsByName("ForceOwnerID")[0].disabled = document.getElementsByName("UseOwnerID")[0].checked?false:true; return false;'),'Делать рефералами'),$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox("UseOwnerID"); document.getElementsByName("SearchOwnerID")[0].disabled = document.getElementsByName("UseOwnerID")[0].checked?false:true; document.getElementsByName("ForceOwner")[0].disabled = document.getElementsByName("UseOwnerID")[0].checked?false:true; return false;'),'Делать рефералами'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
 		'Form/Input',
 		Array(
-			'name'		=> 'ForceOwnerID',
+			'name'		=> 'ForceOwner',
 			'type'		=> 'checkbox',
 			'prompt'	=> 'Если пользователь уже чей-то реферал, менять реферала на указанного'
 		)
@@ -240,16 +243,19 @@ $Comp = Comp_Load(
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------
-if(IntVal($PromoCode['OwnerID']) < 2001)
+if($PromoCode['ForceOwner'])
+	$Comp->AddAttribs(Array('checked'=>TRUE));
+#-------------------------------------------------------------------------------
+if($PromoCode['OwnerID'] < 2001)
 	$Comp->AddAttribs(Array('disabled'=>TRUE));
 #-------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox("ForceOwnerID"); return false;'),'Менять реферала'),$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox("ForceOwner"); return false;'),'Менять реферала'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
 			'Users/Select',
 			'OwnerID',						# имя скрытой формы, для передачи значения
-			$PromoCode['OwnerID']?$PromoCode['OwnerID']:'1',	# если не задан - то используем 1 - система
+			($PromoCode['OwnerID'] > 2000)?$PromoCode['OwnerID']:'1',	# если не задан - то используем 1 - система
 			'SearchOwnerID',					# имя формы, где выбираем юзера
 			$PromoCode['OwnerID']?FALSE:TRUE,			# если не задан - дисаблим форму поиска
 			'Все кто введёт промокод, автоматически станут рефералами указанного тут пользователя'
