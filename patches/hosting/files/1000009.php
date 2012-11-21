@@ -36,7 +36,11 @@ default:
 	return ERROR | @Trigger_Error(500);
 }
 #-------------------------------------------------------------------------------
-$NewUserID = $MaxUserID['ID'];
+if($MaxUserID['ID'] < 2001){
+	$NewUserID = 2001;
+}else{
+	$NewUserID = $MaxUserID['ID'];
+}
 #-------------------------------------------------------------------------------
 foreach($OldUserIDs as $OldUserID){
 	$NewUserID++;
