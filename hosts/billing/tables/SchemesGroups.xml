@@ -73,9 +73,10 @@
   <Comp>Formats/Order/SchemesGroup</Comp>
   <Args>
    <ListElement>%ID%</ListElement>
-   <ListElement>50</ListElement>
+   <ListElement>80</ListElement>
   </Args>
  </Schemes>
+ <!-- ********************************************************************** -->
 </Columns>
 <Sequence>
  <ListElement>SelectID</ListElement>

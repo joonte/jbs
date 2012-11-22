@@ -10,38 +10,42 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 $Result = Array();
-
-return 'Надо сделать список типа сервис/тариф';
-
 #-------------------------------------------------------------------------------
-$Where = SPrintF('`ID` IN (SELECT `SchemeID` FROM `SchemesGroupsItems` WHERE `SchemesGroupID` = %u)',$SchemesGroupID);
 #-------------------------------------------------------------------------------
-$DomainSchemes = DB_Select('Schemes',Array('Name','(SELECT `Name` FROM `Registrators` WHERE `Registrators`.`ID` = `RegistratorID`) as `RegistratorName`'),Array('Where'=>$Where));
+$SchemesGroupsItems = DB_Select('SchemesGroupsItems','*',Array('Where'=>SPrintF('`SchemesGroupID` = %u',$SchemesGroupID)));
 #-------------------------------------------------------------------------------
-switch(ValueOf($DomainSchemes)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    # No more...
-  break;
-  case 'array':
-    #---------------------------------------------------------------------------
-    foreach($DomainSchemes as $DomainScheme)
-      $Result[] = SPrintF('%s (%s)',$DomainScheme['Name'],$DomainScheme['RegistratorName']);
-    #---------------------------------------------------------------------------
-  break;
-  default:
-    return ERROR | @Trigger_Error(101);
+switch(ValueOf($SchemesGroupsItems)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return 'Для группы не задан ни один сервис';
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
+#---------------------------------------------------------------------------
+foreach($SchemesGroupsItems as $SchemesGroupsItem){
+	#---------------------------------------------------------------------------
+	$Comp = Comp_Load('www/Administrator/API/SchemesGroupItemInfo',$SchemesGroupsItem['ServiceID'],$SchemesGroupsItem['SchemeID'],30,0);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#---------------------------------------------------------------------------
+	$Result[] = $Comp;
+	#---------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Result = Implode(', ',$Result);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if(!Is_Null($Length)){
-  #-----------------------------------------------------------------------------
-  $Result = Comp_Load('Formats/String',$Result,$Length);
-  if(Is_Error($Result))
-    return ERROR | @Trigger_Error(500);
+	#-----------------------------------------------------------------------------
+	$Result = Comp_Load('Formats/String',$Result,$Length);
+	if(Is_Error($Result))
+		return ERROR | @Trigger_Error(500);
 }
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $Result;
 #-------------------------------------------------------------------------------
