@@ -1446,8 +1446,9 @@ INSERT INTO `Clauses` (`ID`, `PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`
 
 
 /* added by lissyara 2011-12-07 in 16:02 MSK */
+DELETE FROM `Clauses` WHERE `Partition` = 'Contracts/Enclosures/Types/DSRules/Content';
 INSERT INTO `Clauses` (`ID`, `PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
-(231, 1353441600, 1353568754, 100, 100, 'Contracts/Enclosures/Types/DSRules/Content', 'Регламент предоставления услуг аренды сервера', 'no', 'yes', 'yes', 'yes', '<NOBODY>
+(231, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 100, 100, 'Contracts/Enclosures/Types/DSRules/Content', 'Регламент предоставления услуг аренды сервера', 'no', 'yes', 'yes', 'yes', '<NOBODY>
  <P align="justify">
  Настоящий Регламент определяет порядок оказания услуг Исполнителем, своим Заказчикам по размещению виртуального web-сервера на оборудовании исполнителя, а так же, порядок использования таких услуг со стороны Заказчика или пользователя, порядок взаимодействия между Исполнителем и Заказчиком или пользователем, а также иные вопросы, не оговоренные явно в Договоре.
 </P>
@@ -1491,9 +1492,7 @@ INSERT INTO `Clauses` (`ID`, `PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`
    </TR>
   </TBODY>
  </TABLE>
- <H2>\
-n 2. Права и ответственность сторон
-</H2>
+ <H2>2. Права и ответственность сторон</H2>
  <TABLE style="width: 100%;">
   <TBODY>
    <TR>
@@ -1895,8 +1894,7 @@ n 2. Права и ответственность сторон
        </TD>
         <TD align="justify" width="98%">
         Низкий - вопросы, просьбы, предложения Заказчика, а также все остальное, что не вошло в другие приоритеты.
-       </
-TD>
+       </TD>
        </TR>
       </TBODY>
      </TABLE>
@@ -1978,8 +1976,7 @@ align="justify" width="95%">
     Исполнитель не несет ответственности за возможную компрометацию паролей Заказчика, произошедшую по его вине, но по требованию Заказчика производит оперативную смену таких паролей.
    </TD>
    </TR>
-  </
-TBODY>
+  </TBODY>
  </TABLE>
  <H2>
  6. Использование ресурсов системы
