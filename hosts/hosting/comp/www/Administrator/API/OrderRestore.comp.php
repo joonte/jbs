@@ -21,7 +21,7 @@ $OrderID	= (integer) @$Args['OrderID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Where = SPrintF('`ID` = (SELECT `ServiceID` FROM `OrdersOwners` WHERE `ID` = %u )',$OrderID);
-$Service = DB_Select('Services',Array('Code'),Array('UNIQ','Where'=>$Where));
+$Service = DB_Select('Services',Array('Code','NameShort'),Array('UNIQ','Where'=>$Where));
 switch(ValueOf($Service)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
@@ -81,10 +81,14 @@ switch(ValueOf($Order)){
           }
           #-----------------------------------------------------------------
 	  #-----------------------------------------------------------------
+          $Comp = Comp_Load('Formats/Currency',$SummRemainded);
+          if(Is_Error($Comp))
+            return ERROR | @Trigger_Error(500);
+          #-----------------------------------------------------------------
           $Event = Array(
                          'UserID'        => $Order['UserID'],
                          'PriorityID'    => 'Hosting',
-                         'Text'          => SPrintF('Осуществлён возврат средств за заказ (#%u), услуга (%s), сумма (%s)',$OrderID,$Service['Code'],$SummRemainded)
+                         'Text'          => SPrintF('Осуществлён возврат средств за заказ (#%u), услуга (%s), сумма (%s)',$OrderID,$Service['NameShort'],$Comp)
                          );
           $Event = Comp_Load('Events/EventInsert',$Event);
           if(!$Event)
