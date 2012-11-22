@@ -2,7 +2,7 @@
  *  Joonte Billing System
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
-{assign var=Theme value="Оканчивается срок действия заказа на виртуальный сервер" scope=global}
+{assign var=Theme value="Оканчивается срок действия заказа на виртуальный сервер #{$VPSOrder.OrderID|string_format:"%05u"}/[{$Login|default:'$Login'}]" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Уведомляем Вас о том, что оканчивается срок действия Вашего заказа №{$VPSOrder.OrderID|string_format:"%05u"} на виртуальный выделенный сервер (VPS).
