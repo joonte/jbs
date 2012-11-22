@@ -90,7 +90,7 @@ case 'array':
 	$Options = Array('Любой активный сервис');
 	#---------------------------------------------------------------------------
 	foreach($Services as $Service)
-		$Options[$Service['ID']] = SPrintF('%s (%s)',$Service['Code'],$Service['Name']);
+		$Options[$Service['ID']] = SPrintF('%s (%s)',$Service['Code'],$Service['NameShort']);
 	break;
 default:
 	return ERROR | @Trigger_Error(101);

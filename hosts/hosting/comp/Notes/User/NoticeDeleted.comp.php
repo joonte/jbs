@@ -12,7 +12,7 @@ $Result = Array();
 $Columns = Array(
 			'`ID`','`DaysRemainded`','`ExpirationDate`',
 			'(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `Code`',
-			'(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `Name`',
+			'(SELECT `NameShort` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `Name`',
 		);
 $Where = Array(
 			'`UserID` = @local.__USER_ID',

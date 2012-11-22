@@ -16,6 +16,7 @@
  <ColumnsIDs>
   <ListElement>ID</ListElement>
   <ListElement>Name</ListElement>
+  <ListElement>NameShort</ListElement>
   <ListElement>Measure</ListElement>
   <ListElement>IsProtected</ListElement>
   <ListElement>IsActive</ListElement>
@@ -96,7 +97,7 @@
   <Head>Название услуги</Head>
   <Comp>Formats/String</Comp>
   <Args>
-   <ListElement>%Name%</ListElement>
+   <ListElement>%NameShort%</ListElement>
    <Length>25</Length>
   </Args>
  </Name>

@@ -80,7 +80,7 @@ case 'array':
 	$Options = Array('Любой активный сервис');
 	#---------------------------------------------------------------------------
 	foreach($Services as $Service)
-		$Options[$Service['ID']] = SPrintF('%s (%s)',$Service['Code'],$Service['Name']);
+		$Options[$Service['ID']] = SPrintF('%s (%s)',$Service['Code'],$Service['NameShort']);
 	break;
 default:
 	return ERROR | @Trigger_Error(101);
@@ -114,36 +114,9 @@ $Table[] = Array('Тариф',$Comp);
 
 
 
-# сервисы
-
-# тарифы
-
-
-    #---------------------------------------------------------------------------
-#    $Comp = Comp_Load('Information','Тарифы на домены не найдены.','Notice');
-##    if(Is_Error($Comp))
-#      return ERROR | @Trigger_Error(500);
-    #---------------------------------------------------------------------------
-#    $DOM->AddChild('Into',$Comp);
-#  break;
     #---------------------------------------------------------------------------
     $Options = Array();
     #---------------------------------------------------------------------------
-#    foreach($Schemes as $DomainScheme){
-#      #-------------------------------------------------------------------------
-#      $Comp = Comp_Load('Formats/Currency',$DomainScheme['CostOrder']);
-#      if(Is_Error($Comp))
-#        return ERROR | @Trigger_Error(500);
-#      #-------------------------------------------------------------------------
-#      $Options[$DomainScheme['ID']] = SPrintF('%s, %s, %s',$DomainScheme['Name'],$DomainScheme['RegistratorName'],$Comp);
-#    }
-#    #---------------------------------------------------------------------------
-#    $Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID'),$Options,$SchemesGroupItem['SchemeID']);
-#    if(Is_Error($Comp))
-#      return ERROR | @Trigger_Error(500);
-#    #---------------------------------------------------------------------------
-#    $Table[] = Array('Тарифный план',$Comp);
-#    #---------------------------------------------------------------------------
     $Comp = Comp_Load(
       'Form/Input',
       Array(

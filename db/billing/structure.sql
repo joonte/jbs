@@ -461,6 +461,7 @@ CREATE TABLE `Services` (
   `UserID` int(11) NOT NULL,
   `ServicesGroupID` int(11) NOT NULL,
   `Name` char(255) default '',
+  `NameShort` CHAR(32) default '', 
   `Code` char(255) default 'Default',
   `OperationSign` char(1) NOT NULL DEFAULT '-',
   `Item` char(255) default '',

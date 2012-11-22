@@ -14,7 +14,7 @@ Debug(SPrintF('[comp/www/Administrator/SchemesGroupItemInfo]: ServiceID = %s, Sc
 # достаём название сервиса
 if($ServiceID > 0){
 	#-------------------------------------------------------------------------------
-	$Service = DB_Select('ServicesOwners',Array('ID','Name','Code'),Array('UNIQ','ID'=>$ServiceID));
+	$Service = DB_Select('ServicesOwners',Array('ID','`NameShort` AS `Name`','Code'),Array('UNIQ','ID'=>$ServiceID));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Service)){
 	case 'error':

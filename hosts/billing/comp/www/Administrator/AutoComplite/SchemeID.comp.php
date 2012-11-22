@@ -25,7 +25,7 @@ if($ServiceID == 0)
 #-------------------------------------------------------------------------------
 # достаём код сервиса
 Debug("[comp/www/Administrator/AutoComplite/SchemeID]: ServiceID = " . $ServiceID);
-$Service = DB_Select('ServicesOwners',Array('ID','Name','Code'),Array('UNIQ','ID'=>$ServiceID));
+$Service = DB_Select('ServicesOwners',Array('ID','`NameShort` AS `Name`','Code'),Array('UNIQ','ID'=>$ServiceID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Service)){
 case 'error':
