@@ -130,7 +130,7 @@ case 'array':
 					'Form/Input',
 					Array(
 						'type'    => 'button',
-						'onclick' => "AjaxCall('/Administrator/API/OrderRestore',FormGet(form),'Возвращение денег','GetURL(document.location);');",
+						'onclick' => "javascript:ShowConfirm('Вы действительно хотите осуществить возврат средств?','AjaxCall(\'/Administrator/API/OrderRestore\',FormGet(OrderInfo),\'Возвращение денег\',\'GetURL(document.location);\');');",
 						'value'   => SPrintF('Вернуть %s',$Comp)
 						)
 					);

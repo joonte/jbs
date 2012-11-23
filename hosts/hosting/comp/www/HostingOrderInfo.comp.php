@@ -187,7 +187,7 @@ switch(ValueOf($HostingOrder)){
         if(Is_Error($Comp))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
-        $Form = new Tag('FORM',Array('method'=>'POST'),$Comp);
+        $Form = new Tag('FORM',Array('method'=>'POST','name'=>'OrderInfo'),$Comp);
 	#-----------------------------------------------------------------------
 	$Form->AddChild($IsAutoProlong);
         #-----------------------------------------------------------------------
