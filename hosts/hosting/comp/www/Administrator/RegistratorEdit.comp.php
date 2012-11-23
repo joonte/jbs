@@ -33,26 +33,26 @@ if($RegistratorID){
   #-----------------------------------------------------------------------------
   $Registrator = Array(
     #---------------------------------------------------------------------------
-    'Name'      => 'RuCenter',
-    'TypeID'    => 'Default',
-    'Comment'   => 'Региональный сетевой центр',
-    'SortID'    => 10,
-    'Address'   => 'isp.su',
-    'Port'      => 80,
-    'Protocol'  => 'tcp',
-    'PrefixAPI' => '',
-    'Login'     => 'root',
-    'Password'  => 'Default',
-    'Ns1Name'   => 'ns1.company.com',
-    'Ns2Name'   => 'ns2.company.com',
-    'Ns3Name'   => '',
-    'Ns4Name'   => '',
-    'ParentID'  => 1000,
-    'PrefixNic' => 'RU-CENTER',
+    'Name'            => 'RuCenter',
+    'TypeID'          => 'Default',
+    'Comment'         => 'Региональный сетевой центр',
+    'SortID'          => 10,
+    'Address'         => 'isp.su',
+    'Port'            => 80,
+    'Protocol'        => 'tcp',
+    'PrefixAPI'       => '',
+    'Login'           => 'root',
+    'Password'        => 'Default',
+    'Ns1Name'         => 'ns1.company.com',
+    'Ns2Name'         => 'ns2.company.com',
+    'Ns3Name'         => '',
+    'Ns4Name'         => '',
+    'ParentID'        => 1000,
+    'PrefixNic'       => 'RU-CENTER',
     'PartnerLogin'    => 'root',
     'PartnerContract' => '123456',
-    'JurName'   => 'ЗАО "Региональный Сетевой Информационный Центр"',
-	'BalanceLowLimit' => 0
+    'JurName'         => 'ЗАО "Региональный Сетевой Информационный Центр"',
+    'BalanceLowLimit' => 0
   );
 }
 #-------------------------------------------------------------------------------
@@ -100,7 +100,11 @@ foreach(Array_Keys($Types) as $TypeID){
   #-----------------------------------------------------------------------------
   $Options[$TypeID] = $Type['Name'];
   #-----------------------------------------------------------------------------
-  $Script[] = SPrintF("Settings['%s'] = %s;",$TypeID,JSON_Encode($Type['Settings']));
+  $Settings = $Type['Settings'];
+  #-----------------------------------------------------------------------------
+  $Settings['Name'] = $Type['Name'];
+  #-----------------------------------------------------------------------------
+  $Script[] = SPrintF("Settings['%s'] = %s;",$TypeID,JSON_Encode($Settings));
 }
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',new Tag('SCRIPT',Implode("\n",$Script)));
