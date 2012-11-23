@@ -47,10 +47,15 @@ if($Result[1]){
 	}elseif(File_Exists('/usr/bin/mysql')){
 		$MySQLbin = '/usr/bin/mysql';
 	}else{
-		echo 'mysql not found using $PATH, or /usr/local/bin/mysql, or /usr/bin/mysql';
-		exit;
+		#echo 'mysql not found using $PATH, or /usr/local/bin/mysql, or /usr/bin/mysql';
+		#exit;
+		$TestMySQL = Array('Name'=>'Клиент MySQL','Status'=>'Не найден','IsOk'=>FALSE);
 	}
 }
+
+if(IsSet($MySQLbin))
+	$TestMySQL = Array('Name'=>'Клиент MySQL','Status'=>$MySQLbin,'IsOk'=>TRUE);
+
 
 Set_Error_Handler('__Error_Handler__');
 
@@ -454,10 +459,11 @@ if($__STEP_ID == 1){
   #-----------------------------------------------------------------------------
   $Tests[] = 'Поиск приложений';
   #-----------------------------------------------------------------------------
+  $Tests[] = $TestMySQL;
   #-----------------------------------------------------------------------------
   if(IsSet($MySQLbin)){
     #---------------------------------------------------------------------------
-    $Result = Exec($MySQLbin . ' --version 2>&1');
+    $Result = Exec(SPrintF('%s --version 2>&1',$MySQLbin));
     #---------------------------------------------------------------------------
     if(Preg_Match('/[0-9]+\.[0-9]+\.[0-9]/',$Result,$MySQL)){
       #-------------------------------------------------------------------------
@@ -472,7 +478,7 @@ if($__STEP_ID == 1){
   }else
     $Test = Array('Status'=>'Не найдено','IsOk'=>FALSE,'Comment'=>'Приложение mysql не найдено. Пожалуйста, воспользуйтесь менеджером пакетов для установки данной программы <A target="blank" href="http://wiki.joonte.com/?title=Документация:Подготовка_к_установке">[подробнее...]</A>');
   #-----------------------------------------------------------------------------
-  $Test['Name'] = 'Клиент баз данных mysql';
+  $Test['Name'] = 'Версия клиента базы данных MySQL';
   #-----------------------------------------------------------------------------
   $Tests[] = $Test;
   #-----------------------------------------------------------------------------
