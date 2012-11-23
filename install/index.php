@@ -47,7 +47,7 @@ if($Result[1]){
 	}elseif(File_Exists('/usr/bin/mysql')){
 		$MySQLbin = '/usr/bin/mysql';
 	}else{
-		echo "mysql not found using PATH, or /usr/local/bin/mysql, or /usr/bin/mysql";
+		echo 'mysql not found using $PATH, or /usr/local/bin/mysql, or /usr/bin/mysql';
 		exit;
 	}
 }
@@ -552,22 +552,28 @@ EOD;
     }
   }
   #-----------------------------------------------------------------------------
-  if($IsError)
+  if($IsError){
 echo <<<EOD
 <TR>
- <TD colspan="2" class="Standard" style="background-color:#FCE5CC;">В ходе проверки системных требований произошли ошибки. Можно продолжить установку системы, однако ее запуск и кооректная работа не гарантируется.</TD>
+ <TD colspan="2" class="Standard" style="background-color:#FCE5CC;">В ходе проверки системных требований произошли ошибки.<BR />Продолжение установки невозможно.</TD>
 </TR>
 EOD;
+    $Input = '<INPUT type="submit" value="Продолжить" disabled="yes" />';
+  }else{
+    $Input = '<INPUT type="submit" value="Продолжить" />';
+  }
   #-----------------------------------------------------------------------------
-echo <<<EOD
+$Out = <<<EOD
  <TR>
   <TD colspan="2" align="right">
-   <INPUT type="submit" value="Продолжить" />
+   %s
   </TD>
  </TR>
  <INPUT type="hidden" name="step-id" value="3" />
 </FORM>
 EOD;
+  #-----------------------------------------------------------------------------
+  echo SPrintF($Out,$Input);
   #-----------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
