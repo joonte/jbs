@@ -12,7 +12,7 @@
   <Example>Алибаба</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>15</size>
+   <size>25</size>
    <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
   </Attribs>
   <IsDuty>1</IsDuty>
@@ -25,7 +25,7 @@
   <Example>Василий</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>10</size>
+   <size>25</size>
    <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
   </Attribs>
   <IsDuty>1</IsDuty>
@@ -38,7 +38,7 @@
   <Example>Алибабаевич</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>15</size>
+   <size>25</size>
    <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
   </Attribs>
   <IsDuty>1</IsDuty>
@@ -51,7 +51,7 @@
   <Example>18.03.1986</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>10</size>
+   <size>25</size>
    <onblur>value = value.charAt(0).toUpperCase() + value.substring(1).toLowerCase();</onblur>
   </Attribs>
   <IsDuty>0</IsDuty>
@@ -64,7 +64,7 @@
   <Example>+7 495 7558899</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>20</size>
+   <size>25</size>
   </Attribs>
   <IsDuty>0</IsDuty>
   <Value />
@@ -132,7 +132,7 @@
   <Example>Московская обл.</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>20</size>
+   <size>25</size>
    <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
   </Attribs>
   <IsDuty>0</IsDuty>
@@ -145,7 +145,7 @@
   <Example>Москва</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>20</size>
+   <size>25</size>
    <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
   </Attribs>
   <IsDuty>0</IsDuty>
@@ -158,7 +158,7 @@
   <Example>Ивановский</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>20</size>
+   <size>25</size>
    <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
   </Attribs>
   <IsDuty>0</IsDuty>
@@ -171,7 +171,7 @@
   <Example>101000</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>7</size>
+   <size>25</size>
   </Attribs>
   <IsDuty>0</IsDuty>
   <Value />
@@ -212,7 +212,7 @@
   <Type>TextArea</Type>
   <Attribs>
    <rows>3</rows>
-   <cols>30</cols>
+   <cols>29</cols>
   </Attribs>
   <IsDuty>0</IsDuty>
   <Value />
@@ -225,7 +225,7 @@
   <Example>R824672857673</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>20</size>
+   <size>25</size>
   </Attribs>
   <IsDuty>0</IsDuty>
   <Value />
@@ -238,7 +238,7 @@
   <Example>ООО "КБ Легион"</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>20</size>
+   <size>25</size>
   </Attribs>
   <IsDuty>0</IsDuty>
   <Value />
@@ -250,7 +250,7 @@
   <Example>544959119</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>10</size>
+   <size>25</size>
   </Attribs>
   <IsDuty>0</IsDuty>
   <Value />

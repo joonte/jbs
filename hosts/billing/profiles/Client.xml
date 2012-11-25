@@ -11,7 +11,7 @@
   <Example>Joonte</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>15</size>
+   <size>35</size>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -48,7 +48,7 @@
   <Type>TextArea</Type>
   <Attribs>
    <rows>5</rows>
-   <cols>35</cols>
+   <cols>40</cols>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
