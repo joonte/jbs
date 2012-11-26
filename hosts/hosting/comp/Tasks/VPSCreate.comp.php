@@ -118,7 +118,7 @@ switch(ValueOf($VPSOrder)){
 		    $Event = Array(
 		    			'UserID'	=> $VPSOrder['UserID'],
 					'PriorityID'	=> 'Hosting',
-					'Text'		=> SPrintF('Заказ VPS (%s) успешно создан на сервере (%s) с тарифным планом (%s), идентификатор пакета (%s)',$VPS_IP['Login'],$VPSServer->Settings['Address'],$VPSScheme['Name'],$VPSScheme['PackageID'])
+					'Text'		=> SPrintF('Заказ VPS [%s] успешно создан на сервере (%s) с тарифным планом (%s), идентификатор пакета (%s)',$VPS_IP['Login'],$VPSServer->Settings['Address'],$VPSScheme['Name'],$VPSScheme['PackageID'])
 		                  );
                     $Event = Comp_Load('Events/EventInsert',$Event);
                     if(!$Event)

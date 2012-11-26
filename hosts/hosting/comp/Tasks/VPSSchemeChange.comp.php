@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
@@ -71,7 +70,7 @@ switch(ValueOf($VPSOrder)){
 		    $Event = Array(
 		    			'UserID'	=> $VPSOrder['UserID'],
 					'PriorityID'	=> 'Error',
-					'Text'		=> SPrintF('Не удалось сменить тарифный план заказу VPS (%s) в автоматическом режиме, причина (%s)',$VPSOrder['Login'],$SchemeChange->String),
+					'Text'		=> SPrintF('Не удалось сменить тарифный план заказу VPS [%s] в автоматическом режиме, причина (%s)',$VPSOrder['Login'],$SchemeChange->String),
 					'IsReaded'	=> FALSE
 		                  );
                     $Event = Comp_Load('Events/EventInsert',$Event);
@@ -96,7 +95,7 @@ switch(ValueOf($VPSOrder)){
                     $Event = Array(
                                    'UserID'        => $VPSOrder['UserID'],
                                    'PriorityID'    => 'Hosting',
-                                   'Text'          => SPrintF('Успешно изменён тарифный план (%s->%s) заказа на VPS (%s), сервер (%s)',$VPSOrder['SchemeName'],$VPSNewScheme['Name'],$VPSOrder['Login'],$VPSServer->Settings['Address']),
+                                   'Text'          => SPrintF('Успешно изменён тарифный план (%s->%s) заказа на VPS [%s], сервер (%s)',$VPSOrder['SchemeName'],$VPSNewScheme['Name'],$VPSOrder['Login'],$VPSServer->Settings['Address']),
                                   );
                     $Event = Comp_Load('Events/EventInsert',$Event);
                     if(!$Event)

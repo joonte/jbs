@@ -44,7 +44,7 @@ switch(ValueOf($VPSOrder)){
 	    $Event = Array(
 	    			'UserID'	=> $VPSOrder['UserID'],
 				'PriorityID'	=> 'Billing',
-				'Text'		=> SPrintF('Заказ VPS (%s), тариф (%s) успешно удален с сервера (%s)',$VPSOrder['Login'],$VPSOrder['SchemeName'],$VPSServer->Settings['Address'])
+				'Text'		=> SPrintF('Заказ VPS [%s], тариф (%s) успешно удален с сервера (%s)',$VPSOrder['Login'],$VPSOrder['SchemeName'],$VPSServer->Settings['Address'])
 	                  );
             $Event = Comp_Load('Events/EventInsert',$Event);
             if(!$Event)
