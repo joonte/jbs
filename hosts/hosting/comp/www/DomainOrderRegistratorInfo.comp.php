@@ -38,11 +38,11 @@ switch(ValueOf($DomainOrder)){
         # проверяем - администратор или нет. если нет - то ограничиваем частоту
 	if(!$__USER['IsAdmin']){
 	  #-----------------------------------------------------------------------
-          $CacheID = Md5($__FILE__ . $GLOBALS['__USER']['ID'] . $DomainOrderID);
+          $CacheID = Md5($__FILE__ . $__USER['ID']);
           $Result = CacheManager::get($CacheID);
-          if($Result){
-            # в кэше чего-то есть, и чего там есть - неважно.
-            return new gException('WAIT_15_MINUT_BEFORE_NEXT_ATTEMPT','К сожалению, запросы к интерфейсу вышестоящего регистратора нельзя делать слишком часто. Подождите 15 минут до следующей попытки.');
+          if($Result && $Result > 5){
+            # число запросов за последние 5 минут больше 5 
+            return new gException('WAIT_5_MINUT_BEFORE_NEXT_ATTEMPT','К сожалению, запросы к интерфейсу вышестоящего регистратора нельзя делать слишком часто. Подождите 5 минут, до следующей попытки');
           }
           #-----------------------------------------------------------------------
         }
@@ -75,8 +75,6 @@ switch(ValueOf($DomainOrder)){
             $DOM->AddText('Title','Информация о домене из интерфейса регистратора');
             #-------------------------------------------------------------------
             $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/DomainOrderChangeContactData.js}')));
-            #-------------------------------------------------------------------
-            //$DOM->AddAttribs('Body',Array('onload'=>'IsNewNs();'));
             #-------------------------------------------------------------------
             #-------------------------------------------------------------------
             $Domain = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainScheme['Name']);
@@ -144,8 +142,14 @@ switch(ValueOf($DomainOrder)){
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
             #-------------------------------------------------------------------
-            if(IsSet($CacheID))
-              CacheManager::add($CacheID,Time(),60);
+            if(IsSet($CacheID)){
+	      $Result = CacheManager::get($CacheID);
+	      #-------------------------------------------------------------------
+	      $Count = ($Result)?$Result + 1:1;
+	      Debug(SPrintF('[comp/www/DomainOrderRegistratorInfo]: Count = %s',$Count));
+	      #-------------------------------------------------------------------
+              CacheManager::add($CacheID,$Count,300);
+	    }
             #-------------------------------------------------------------------
             #-------------------------------------------------------------------
             return Array('Status'=>'Ok','DOM'=>$DOM->Object);

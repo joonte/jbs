@@ -104,6 +104,15 @@
    <style>width:22px;</style>
   </Attribs>
  </DomainSelectOwner>
+ <!-- ********************************************************************** -->
+ <ExtendedMenu>
+  <IsSorted>0</IsSorted>
+  <Comp>Menus/List</Comp>
+  <Args>
+   <ListElement>User/ListMenu/DomainsOrder.xml</ListElement>
+   <Replace>%ID%</Replace>
+  </Args>
+ </ExtendedMenu>
 </Columns>
 <!-- *********************************************************************** -->
 <Sequence>
@@ -112,6 +121,7 @@
  <ListElement>Pay</ListElement>
  <ListElement>NsChange</ListElement>
  <ListElement>DomainSelectOwner</ListElement>
+ <ListElement>ExtendedMenu</ListElement>
  <ListElement>Number</ListElement>
  <ListElement>DomainName</ListElement>
  <ListElement>Scheme</ListElement>

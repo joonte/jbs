@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
@@ -19,7 +18,7 @@ $IsAutoProlong	= (boolean) @$Args['IsAutoProlong'];
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Columns = Array('*','(SELECT `Item` FROM `Services` WHERE `OrdersOwners`.`ServiceID`=`Services`.`ID`) AS `ItemName`');
+$Columns = Array('*','(SELECT `NameShort` FROM `Services` WHERE `OrdersOwners`.`ServiceID`=`Services`.`ID`) AS `NameShort`');
 #-------------------------------------------------------------------------------
 $Order = DB_Select('OrdersOwners', $Columns, Array('UNIQ','ID'=>$OrderID));
 #-------------------------------------------------------------------------------
@@ -56,7 +55,7 @@ case 'array':
 		$Event = Array(
 				'UserID'        => $__USER['ID'],
 				'PriorityID'    => 'Hosting',
-				'Text'          => SPrintF($Text,$Order['ID'],$Order['ItemName'])
+				'Text'          => SPrintF($Text,$Order['ID'],$Order['NameShort'])
 				);
 		$Event = Comp_Load('Events/EventInsert',$Event);
 		if(!$Event)
