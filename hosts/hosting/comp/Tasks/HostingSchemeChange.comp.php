@@ -85,7 +85,7 @@ switch(ValueOf($HostingOrder)){
 		    $Event = Array(
 		    			'UserID'	=> $HostingOrder['UserID'],
 					'PriorityID'	=> 'Error',
-					'Text'		=> SPrintF('Не удалось сменить тарифный план заказу хостинга (%s) в автоматическом режиме, причина (%s)',$HostingOrder['Login'],$SchemeChange->String),
+					'Text'		=> SPrintF('Не удалось сменить тарифный план заказу хостинга [%s] в автоматическом режиме, причина (%s)',$HostingOrder['Login'],$SchemeChange->String),
 					'IsReaded'	=> FALSE
 		                  );
                     $Event = Comp_Load('Events/EventInsert',$Event);
@@ -110,7 +110,7 @@ switch(ValueOf($HostingOrder)){
                     $Event = Array(
 					'UserID'        => $HostingOrder['UserID'],
 					'PriorityID'    => 'Hosting',
-					'Text'          => SPrintF('Успешно изменён тарифный план (%s->%s) заказа на хостинг (%s), сервер (%s)',$HostingOrder['SchemeName'],$HostingNewScheme['Name'],$HostingOrder['Login'],$Server->Settings['Address']),
+					'Text'          => SPrintF('Успешно изменён тарифный план (%s->%s) заказа на хостинг [%s], сервер (%s)',$HostingOrder['SchemeName'],$HostingNewScheme['Name'],$HostingOrder['Login'],$Server->Settings['Address']),
 				);
 		    $Event = Comp_Load('Events/EventInsert',$Event);
                     if(!$Event)
