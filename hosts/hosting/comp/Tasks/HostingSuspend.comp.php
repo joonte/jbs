@@ -45,7 +45,7 @@ switch(ValueOf($HostingOrder)){
 	    $Event = Array(
 	    			'UserID'	=> $HostingOrder['UserID'],
 				'PriorityID'	=> 'Hosting',
-				'Text'		=> SPrintF('Заказ хостинга логин (%s), домен (%s), тариф (%s) успешно заблокирован на сервере (%s)',$HostingOrder['Login'],$HostingOrder['Domain'],$HostingOrder['SchemeName'],$Server->Settings['Address'])
+				'Text'		=> SPrintF('Заказ хостинга логин [%s], домен (%s), тариф (%s) успешно заблокирован на сервере (%s)',$HostingOrder['Login'],$HostingOrder['Domain'],$HostingOrder['SchemeName'],$Server->Settings['Address'])
 	                  );
             $Event = Comp_Load('Events/EventInsert',$Event);
             if(!$Event)

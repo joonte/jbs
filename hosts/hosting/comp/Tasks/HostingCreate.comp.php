@@ -106,7 +106,7 @@ switch(ValueOf($HostingOrder)){
 		    $Event = Array(
 		    		    'UserID'	=> $HostingOrder['UserID'],
 				    'PriorityID'=> 'Hosting',
-				    'Text'	=> SPrintF('Заказ хостинга логин (%s), домен (%s) успешно создан на сервере (%s) с тарифным планом (%s), идентификатор пакета (%s)',$HostingOrder['Login'],$HostingOrder['Domain'],$Server->Settings['Address'],$HostingScheme['Name'],$HostingScheme['PackageID'])
+				    'Text'	=> SPrintF('Заказ хостинга логин [%s], домен (%s) успешно создан на сервере (%s) с тарифным планом (%s), идентификатор пакета (%s)',$HostingOrder['Login'],$HostingOrder['Domain'],$Server->Settings['Address'],$HostingScheme['Name'],$HostingScheme['PackageID'])
 				  );
 		    $Event = Comp_Load('Events/EventInsert',$Event);
 		    if(!$Event)
