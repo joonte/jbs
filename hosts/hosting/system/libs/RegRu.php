@@ -770,7 +770,12 @@ function RegRu_Get_Contact_Detail($Settings,$Domain){
     if(IsSet($Result['answer']['services'][0]['details']['p_addr']))
       $ContactInfo['PostalAddress'] = $Result['answer']['services'][0]['details']['p_addr'];
     #-------------------------------------------------------------------------
-    return Array('ContactInfo'=>$ContactInfo,'FullInfo'=>$Result['answer']['services'][0]['details']);
+    if(IsSet($Result['answer']['services'][0]['details'])){
+      $FullInfo = $Result['answer']['services'][0]['details'];
+    }else{
+      $FullInfo = Array('FullInfo'=>'Домен отсутствует у регистратора');
+    }
+    return Array('ContactInfo'=>$ContactInfo,'FullInfo'=>$FullInfo);
   }
   #---------------------------------------------------------------------------
   #---------------------------------------------------------------------------
