@@ -6,6 +6,6 @@
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ на виртуальный выделенный сервер (VPS) №{$OrderID|string_format:"%05u"} был удален.
-IP адрес: {$VPSOrder.Login|default:'$VPSOrder.Login'}
+IP адрес: {$Login|default:'$Login'}
 
 {$From.Sign|default:'$From.Sign'}
