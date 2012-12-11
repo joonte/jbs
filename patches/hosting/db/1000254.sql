@@ -1,4 +1,15 @@
 
+/* общая таблица для группировки тарифов - группы. реализация JBS-158 */
+DROP TABLE IF EXISTS `SchemesGroups`;
+-- SEPARATOR
+CREATE TABLE `SchemesGroups` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` char(255) default '',
+   PRIMARY KEY(`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- SEPARATOR
+
 /* общая таблица для бонусов. реализация JBS-157 */
 DROP TABLE IF EXISTS `Bonuses`;
 -- SEPARATOR
@@ -32,6 +43,7 @@ CREATE TABLE `Bonuses` (
 
 /* общая таблица для политик. реализация JBS-158 */
 DROP TABLE IF EXISTS `Politics`;
+-- SEPARATOR
 CREATE TABLE `Politics` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `CreateDate` int(11) default '0',	-- дата создания политики
@@ -74,18 +86,9 @@ CREATE TABLE `Politics` (
 
 -- SEPARATOR
 
-/* общая таблица для группировки тарифов - группы. реализация JBS-158 */
-DROP TABLE IF EXISTS `SchemesGroups`;
-CREATE TABLE `SchemesGroups` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` char(255) default '',
-   PRIMARY KEY(`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- SEPARATOR
-
 /* общая таблица для группировки тарифов - элементы групп. реализация JBS-158 */
 DROP TABLE IF EXISTS `SchemesGroupsItems`;
+-- SEPARATOR
 CREATE TABLE `SchemesGroupsItems` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `SchemesGroupID` int(11) NOT NULL,
@@ -105,6 +108,7 @@ CREATE TABLE `SchemesGroupsItems` (
 
 /* ПромоКоды, JBS-15 */
 DROP TABLE IF EXISTS `PromoCodes`;
+-- SEPARATOR
 CREATE TABLE `PromoCodes` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Code` char(32),				-- промокод
@@ -137,6 +141,7 @@ CREATE TABLE `PromoCodes` (
 
 /* активированные ПромоКоды */
 DROP TABLE IF EXISTS `PromoCodesExtinguished`;
+-- SEPARATOR
 CREATE TABLE `PromoCodesExtinguished` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `PromoCodeID` int(11) NOT NULL,		-- идентификатор погашенного промокода
