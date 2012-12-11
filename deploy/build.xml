@@ -2,7 +2,7 @@
 
 <project name="Joonte Billing System" description="Deploy of JBS" default="deploy" >
     <property name="versionPrefix" value="v" />
-    <property name="version" value="2.5.11" />
+    <property name="version" value="2.5.12" />
     <property name="versionPostfix" value="-release" />
 
     <property name="tmpDir" value="/tmp/joonte" />
@@ -40,11 +40,6 @@
     <!-- ============================================  -->
     <!-- Target: update from repo                      -->
     <!-- ============================================  -->
-    <target name="svn-update">
-        <echo msg="Update project from SVN." />
-        <exec command="pwd" outputproperty="pwd"/>
-        <svnupdate todir="${pwd}/../.." username="vvelikodny" password="Joonte@Svn" />
-    </target>
 
     <target name="clean">
         <available file="${releasePath}" type="dir" property="release-path-exists" />
