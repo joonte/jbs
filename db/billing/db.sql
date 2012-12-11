@@ -2775,24 +2775,6 @@ INSERT INTO `Clauses` (`ID`, `PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`
 /* added by lissyara, 2012-09-25 in 14:37 MSK */
 INSERT INTO `Clauses` (`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES (100, 100, 'Contracts/Enclosures/Types/Tariffs/Content', 'Тарифы', 'yes', 'yes', 'yes', 'yes', '<NOBODY>\n <COMP path="Clauses/TariffList" args="NotUsed">\n [список тарифов]\n</COMP>\n</NOBODY>\n');
 
-/* added by lissyara, 2012-10-31 in 09:34 MSK, JBS-157 */
-INSERT INTO `Clauses` (`ID`, `PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
-(103, 1351627200, 1351661397, 100, 100, 'Header:/Administrator/Bonuses', 'Раздел в тестовом режиме', 'no', 'yes', 'yes', 'yes', '<NOBODY>
-<TABLE align="center" cellspacing="5" class="Warning">
-<TBODY>
-	<TR>
-		<TD style="padding:5px;">
-			Данный раздел находится в тестовом режиме, ещё ничего не работает.<BR />
-			Для создания скидок пользуйтесь соответствующими пунктами меню в разделах услуг.<BR />
-			Пожелания по функционалу можно оставить в форуме: <A href="http://forum.joonte.com/viewtopic.php?f=4&amp;t=779" target="_blank">http://forum.joonte.com/viewtopic.php?f=4&amp;t=779</A>
-		</TD>
-	</TR>
-</TBODY>
-</TABLE>
-<BR />
-</NOBODY>');
-
-
 
 
 
