@@ -1,7 +1,7 @@
 
--- SEPARATOR
 /* общая таблица для бонусов. реализация JBS-157 */
 DROP TABLE IF EXISTS `Bonuses`;
+-- SEPARATOR
 CREATE TABLE `Bonuses` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `CreateDate` int(11) default '0',	-- дата создания бонуса
