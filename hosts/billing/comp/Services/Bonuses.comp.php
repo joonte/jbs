@@ -22,7 +22,7 @@ while($DaysRemainded){
 	$Where = Array(
 			SPrintF('`UserID` = %u',$UserID),
 			/* задан сервис + (задан/не задан тариф) + не задана группа || не задан сервис + не задан тариф + задана группа */
-			SPrintF('(`ServiceID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND NOT EXISTS(SELECT * FROM `SchemesGroupsItems` WHERE `Bonuses`.`SchemesGroupID` = `SchemesGroupID` AND `ServiceID` = %u AND `SchemeID` = %u)) OR (ISNULL(`ServiceID`) AND ISNULL(`SchemeID`) AND EXISTS(SELECT * FROM `SchemesGroupsItems` WHERE `Bonuses`.`SchemesGroupID` = `SchemesGroupID` AND `ServiceID` = %u AND `SchemeID` = %u))',$ServiceID,$SchemeID,$ServiceID,$SchemeID,$ServiceID,$SchemeID),
+			SPrintF('(`ServiceID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND NOT EXISTS(SELECT * FROM `SchemesGroupsItems` WHERE `Bonuses`.`SchemesGroupID` = `SchemesGroupID` AND `ServiceID` = %u AND `SchemeID` = %u)) OR (ISNULL(`ServiceID`) AND ISNULL(`SchemeID`) AND EXISTS(SELECT * FROM `SchemesGroupsItems` WHERE `Bonuses`.`SchemesGroupID` = `SchemesGroupID` AND `ServiceID` = %u AND `SchemeID` = %u)) OR (ISNULL(`ServiceID`) AND ISNULL(`SchemeID`) AND EXISTS(SELECT * FROM `SchemesGroupsItems` WHERE `Bonuses`.`SchemesGroupID` = `SchemesGroupID` AND `ServiceID` = %u AND ISNULL(`SchemeID`)))',$ServiceID,$SchemeID,$ServiceID,$SchemeID,$ServiceID,$SchemeID,$ServiceID),
 			'`DaysRemainded` > 0',
 			);
 	#---------------------------------------------------------------

@@ -27,7 +27,7 @@ default:
 #---------------------------------------------------------------------------
 foreach($SchemesGroupsItems as $SchemesGroupsItem){
 	#---------------------------------------------------------------------------
-	$Comp = Comp_Load('www/Administrator/API/SchemesGroupItemInfo',$SchemesGroupsItem['ServiceID'],$SchemesGroupsItem['SchemeID'],30,0);
+	$Comp = Comp_Load('www/Administrator/API/SchemesGroupItemInfo',$SchemesGroupsItem['ServiceID'],$SchemesGroupsItem['SchemeID'],100500,0);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#---------------------------------------------------------------------------

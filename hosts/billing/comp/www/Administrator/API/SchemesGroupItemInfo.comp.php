@@ -65,7 +65,7 @@ if($SchemesGroupID){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Out = $SchemesGroupID?SPrintF('* %s',$SchemesGroup['Name']):SPrintF('%s / %s',$Service['Name'],$Scheme['Name']);
+$Out = $SchemesGroupID?SPrintF('* %s',$SchemesGroup['Name']):SPrintF('%s/%s',$Service['Name'],$Scheme['Name']);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Formats/String',$Out,$Length);
 if(Is_Error($Comp))
