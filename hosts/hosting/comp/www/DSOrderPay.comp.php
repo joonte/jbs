@@ -135,7 +135,7 @@ switch(ValueOf($DSOrder)){
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Services/Politics',$DSOrder['UserID'],$DSOrder['GroupID'],40000,$DSScheme['ID'],$DaysPay,SPrintF('Dedicated/%s',$DSOrder['Login']));
+              $Comp = Comp_Load('Services/Politics',$DSOrder['UserID'],$DSOrder['GroupID'],40000,$DSScheme['ID'],$DaysPay,SPrintF('Dedicated/%s',$DSOrder['IP']));
               if(Is_Error($Comp))
                  return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
