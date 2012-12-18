@@ -63,7 +63,7 @@ function VdsManager_Create($Settings,$Login,$Password,$Domain,$IP,$VPSScheme,$Em
     ($IsReselling?'maxswap':'swap') => ceil($VPSScheme['maxswap']), # использование swap
     'traf'            => $VPSScheme['traf'],		# Трафик
     'chrate'          => SPrintF('%u',$VPSScheme['chrate'] * 1024),   # канал, полоса, мегабит
-    'desc'            => $VPSScheme['maxdesc'],		# файловых дескрипторов
+    'desc'            => $VPSScheme['maxdesc'],		# открытых файлов
     'proc'            => $VPSScheme['proc'],		# процессов
     'ipcount'         => $VPSScheme['ipalias'],		# дополнительных IP
     'disktempl'       => $VPSScheme['disktempl'],	# шаблон диска
@@ -266,7 +266,7 @@ function VdsManager_Scheme_Change($Settings,$Login,$VPSScheme){
     ($IsReselling?'maxswap':'swap') => ceil($VPSScheme['maxswap']), # использование swap
     'traf'            => $VPSScheme['traf'],		# Трафик
     'chrate'          => SPrintF('%u',$VPSScheme['chrate'] * 1024),   # канал, полоса, мегабит
-    'desc'            => $VPSScheme['maxdesc'],		# файловых дескрипторов
+    'desc'            => $VPSScheme['maxdesc'],		# открытых файлов
     'proc'            => $VPSScheme['proc'],		# процессов
     'ipcount'         => $VPSScheme['ipalias'],		# дополнительных IP
     'disktempl'       => $VPSScheme['disktempl'],	# шаблон диска
