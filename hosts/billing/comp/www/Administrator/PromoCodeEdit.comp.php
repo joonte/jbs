@@ -56,7 +56,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DOM->AddAttribs('Body',Array('onload'=>SPrintF("GetSchemes(%s,'SchemeID','%s');",$PromoCode['ServiceID'],$PromoCode['SchemeID'])));
+$DOM->AddAttribs('Body',Array('onload'=>SPrintF("GetSchemes('%s','SchemeID','%s');",$PromoCode['ServiceID'],$PromoCode['SchemeID'])));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/GetSchemes.js}')));
 #-------------------------------------------------------------------------------
