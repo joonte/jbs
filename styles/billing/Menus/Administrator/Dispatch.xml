@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Новая рассылка</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/Dispatch$</UniqID>
+  </Paths>
+  <Href>/Administrator/Dispatch</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Все рассылки</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/DispatchAll$</UniqID>
+  </Paths>
+  <Href>/Administrator/DispatchAll</Href>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

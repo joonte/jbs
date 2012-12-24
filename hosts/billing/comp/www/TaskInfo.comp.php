@@ -97,7 +97,11 @@ switch(ValueOf($Task)){
               #-------------------------------------------------------------------
               $Td->AddHTML(SPrintF('<SPAN>%s</SPAN>',$Text));
               #-------------------------------------------------------------------
-              $Table[] = Array($Type['Params'][$ParamID],$Td);
+	      if(IsSet($Type['Params'][$ParamID])){
+                $Table[] = Array($Type['Params'][$ParamID],$Td);
+              }else{
+                $Table[] = Array($ParamID,$Td);    
+              }
             }
           }
         }

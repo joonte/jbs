@@ -35,7 +35,7 @@ if($Count > 9)
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $SendToIDs = Explode(',',$Task['Params']['SendToIDs']);
-$SendedIDs = Explode(',',$Task['Params']['SendedIDs']);
+$SendedIDs = IsSet($Task['Params']['SendedIDs'])?Explode(',',$Task['Params']['SendedIDs']):Array();
 #-------------------------------------------------------------------------------
 $Count = 0;
 $Replace = Array('Theme'=>$Task['Params']['Theme'],'Message'=>$Task['Params']['Message']);

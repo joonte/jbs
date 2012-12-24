@@ -929,7 +929,6 @@
    <Name>Рассылка</Name>
    <Params>
     <SendToIDs>Кому шлём</SendToIDs>
-    <SendedIDs>Кому отослали</SendedIDs>
     <Theme>Тема</Theme>
     <Message>Сообщение</Message>
    </Params>
