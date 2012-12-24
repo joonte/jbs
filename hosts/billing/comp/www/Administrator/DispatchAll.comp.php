@@ -27,11 +27,7 @@ $Comp = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/Administrato
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Buttons/Panel',Array('Comp'=>$Comp,'Name'=>'Новый бонус'));
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$NoBody = new Tag('NOBODY',$Comp);
+$NoBody = new Tag('NOBODY');
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Super','DispatchAll');
 if(Is_Error($Comp))

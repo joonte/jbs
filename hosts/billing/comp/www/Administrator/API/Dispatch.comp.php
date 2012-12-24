@@ -117,35 +117,13 @@ switch(ValueOf($Users)){
     #---------------------------------------------------------------------------
     $Count = 0;
     #---------------------------------------------------------------------------
-    $Replace = Array('Theme'=>$Theme,'Message'=>$Message);
     #--------------------------------------------------------------------------
     $SendTo = Array();
     foreach($Users as $User){
       $SendTo[] = $User['ID'];
     }
-    /*
-    foreach($Users as $User){
-      $msg = new DispatchMsg($Replace, (integer)$User['ID'], $FromID);
-      $IsSend = NotificationManager::sendMsg($msg);
-      #-------------------------------------------------------------------------
-      switch(ValueOf($IsSend)){
-        case 'error':
-          return ERROR | @Trigger_Error(500);
-        case 'exception':
-          # No more...
-        break;
-        case 'true':
-          $Count++;
-        break;
-        default:
-          return ERROR | @Trigger_Error(101);
-      }
-    }
     #---------------------------------------------------------------------------
-    if(!$Count)
-      return new gException('USERS_NOT_NOTIFIES','Ни один из пользователей не был оповещен');
-    */
-    #UnSet($UsersIDs);
+    #---------------------------------------------------------------------------
     $Params = Array(Implode(',',$SendTo),$Theme,$Message,$FromID);
     #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
