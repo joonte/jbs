@@ -9,7 +9,7 @@ $__args_list = Array('Task');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-Debug('[comp/Tasks/Dispatch]: ' . print_r($Task,true));
+#Debug('[comp/Tasks/Dispatch]: ' . print_r($Task,true));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # смотрим количество сообщений в очереди
@@ -45,14 +45,18 @@ foreach($SendToIDs as $User){
 	if($Count > 9)
 		continue;
 	#-------------------------------------------------------------------------
-	$msg = new DispatchMsg($Replace, (integer)$User, $Task['UserID']);
+	Debug(SPrintF('[comp/Tasks/Dispatch]: send message to UserID = %s;',$User));
+	#-------------------------------------------------------------------------
+	$msg = new DispatchMsg($Replace, (integer)$User, $Task['Params']['FromID']);
 	$IsSend = NotificationManager::sendMsg($msg);
 	#-------------------------------------------------------------------------
 	switch(ValueOf($IsSend)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
-		# No more...
+		# Исключение - системные юзеры, например...
+		$SendedIDs[] = $User;
+		Array_Shift($SendToIDs);
 		break;
 	case 'true':
 		#-------------------------------------------------------------------------
@@ -67,10 +71,12 @@ foreach($SendToIDs as $User){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/Tasks/Dispatch]: SendToIDs = %s; SendedIDs = %s;',Implode(',',$SendToIDs),Implode(',',$SendedIDs)));
+#Debug(SPrintF('[comp/Tasks/Dispatch]: SendToIDs = %s; SendedIDs = %s;',Implode(',',$SendToIDs),Implode(',',$SendedIDs)));
 #-------------------------------------------------------------------------------
 # сохраняем параметры задачи
-$UTasks = Array('Params'=>Array('SendToIDs'=>Implode(',',$SendToIDs),'SendedIDs'=>Implode(',',$SendedIDs),'Theme'=>$Task['Params']['Theme'],'Message'=>$Task['Params']['Message']));
+$Task['Params']['SendToIDs'] = Implode(',',$SendToIDs);
+$Task['Params']['SendedIDs'] = Implode(',',$SendedIDs);
+$UTasks = Array('Params'=>$Task['Params']);
 $IsUpdate = DB_Update('Tasks',$UTasks,Array('ID'=>$Task['ID']));
 #-------------------------------------------------------------------------------
 if(Is_Error($IsUpdate))

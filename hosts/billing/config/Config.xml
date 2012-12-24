@@ -931,6 +931,7 @@
     <SendToIDs>Кому шлём</SendToIDs>
     <Theme>Тема</Theme>
     <Message>Сообщение</Message>
+    <FromID>Идентификатор отправителя</FromID>
    </Params>
    <IsActive>1</IsActive>
   </Dispatch>

@@ -146,10 +146,10 @@ switch(ValueOf($Users)){
       return new gException('USERS_NOT_NOTIFIES','Ни один из пользователей не был оповещен');
     */
     #UnSet($UsersIDs);
-    $Params = Array(Implode(',',$SendTo),$Theme,$Message);
+    $Params = Array(Implode(',',$SendTo),$Theme,$Message,$FromID);
     #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
-    $IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$FromID,'TypeID'=>'Dispatch','Params'=>$Params));
+    $IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$GLOBALS['__USER']['ID'],'TypeID'=>'Dispatch','Params'=>$Params));
     #---------------------------------------------------------------------------
     switch(ValueOf($IsAdd)){
     case 'error':
