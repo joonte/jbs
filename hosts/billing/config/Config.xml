@@ -925,6 +925,17 @@
    <IsActive>1</IsActive>
   </SMS>
   <!-- ********************************************************************* -->
+  <Dispatch>
+   <Name>Рассылка</Name>
+   <Params>
+    <SendToIDs>Кому шлём</SendToIDs>
+    <SendedIDs>Кому отослали</SendedIDs>
+    <Theme>Тема</Theme>
+    <Message>Сообщение</Message>
+   </Params>
+   <IsActive>1</IsActive>
+  </Dispatch>
+  <!-- ********************************************************************* -->
   <BackUp>
    <Name>Процедура резервного копирования</Name>
    <Params type="array" />

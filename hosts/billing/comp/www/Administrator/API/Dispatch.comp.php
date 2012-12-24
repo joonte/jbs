@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -119,7 +118,12 @@ switch(ValueOf($Users)){
     $Count = 0;
     #---------------------------------------------------------------------------
     $Replace = Array('Theme'=>$Theme,'Message'=>$Message);
-    #---------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
+    $SendTo = Array();
+    foreach($Users as $User){
+      $SendTo[] = $User['ID'];
+    }
+    /*
     foreach($Users as $User){
       $msg = new DispatchMsg($Replace, (integer)$User['ID'], $FromID);
       $IsSend = NotificationManager::sendMsg($msg);
@@ -140,8 +144,27 @@ switch(ValueOf($Users)){
     #---------------------------------------------------------------------------
     if(!$Count)
       return new gException('USERS_NOT_NOTIFIES','Ни один из пользователей не был оповещен');
+    */
+    #UnSet($UsersIDs);
+    $Params = Array(Implode(',',$SendTo),1,$Theme,$Message);
     #---------------------------------------------------------------------------
-    return Array('Status'=>'Ok','Users'=>$Count);
+    #---------------------------------------------------------------------------
+    $IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$FromID,'TypeID'=>'Dispatch','Params'=>$Params));
+    #---------------------------------------------------------------------------
+    switch(ValueOf($IsAdd)){
+    case 'error':
+      return ERROR | @Trigger_Error(500);
+    case 'exception':
+      return ERROR | @Trigger_Error(400);
+    case 'array':
+      # No more...
+      break;
+    default:
+      return ERROR | @Trigger_Error(101);
+    }
+    #---------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
+    return Array('Status'=>'Ok','Users'=>SizeOf($Users));
   default:
     return ERROR | @Trigger_Error(101);
 }
