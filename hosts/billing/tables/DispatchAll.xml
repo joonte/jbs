@@ -2,6 +2,17 @@
 <!-- @author Alex Keda, for www.host-food.ru -->
 <XML>
 <!-- *********************************************************************** -->
+<Appearance>
+ <Row>
+ <Comp>Tasks/Color</Comp>
+ <Args>
+  <ListElement>%Errors%</ListElement>
+  <ListElement>%IsExecuted%</ListElement>
+  <ListElement>%IsActive%</ListElement>
+ </Args>
+ </Row>
+</Appearance>
+<!-- *********************************************************************** -->
 <Source>
  <TableID>TasksOwners</TableID>
  <ColumnsIDs>
@@ -99,18 +110,49 @@
   </Args>
  </ExecuteDate>
  <!-- ********************************************************************** -->
-<!-- <SchemeID>
-  <Head>Тариф/Группа</Head>
-  <Prompt>Сервис/тариф или группа тарифов на которые предоставляется скидка</Prompt>
-  <Comp>www/Administrator/API/SchemesGroupItemInfo</Comp>
+ <Theme>
+  <Head>Тема</Head>
+  <Prompt>Тема сообщения</Prompt>
+  <Comp>Formats/Task/Params</Comp>
   <Args>
-   <ListElement>%ServiceID%</ListElement>
-   <ListElement>%SchemeID%</ListElement>
-   <Length>20</Length>
-   <ListElement>%SchemesGroupID%</ListElement>
+   <ListElement>%Theme%</ListElement>
+   <ListElement>Theme</ListElement>
   </Args>
- </SchemeID>
- -->
+  <Alias>`Params`</Alias>
+ </Theme>
+ <!-- ********************************************************************** -->
+ <Message>
+  <Head>Текст</Head>
+  <Prompt>Текст отправленного сообщения</Prompt>
+  <Comp>Formats/Task/Params</Comp>
+  <Args>
+   <ListElement>%Message%</ListElement>
+   <ListElement>Message</ListElement>
+  </Args>
+  <Alias>`Params`</Alias>
+ </Message>
+ <!-- ********************************************************************** -->
+ <SendToIDs>
+  <Head>Получ.</Head>
+  <Prompt>Число получателей в рассылке</Prompt>
+  <Comp>Formats/Task/Params</Comp>
+  <Args>
+   <ListElement>%SendToIDs%</ListElement>
+   <ListElement>SendToIDs</ListElement>
+  </Args>
+  <Alias>`Params`</Alias>
+ </SendToIDs>
+ <!-- ********************************************************************** -->
+ <SendedIDs>
+  <Head>Отпр.</Head>
+  <Prompt>Число отправленных сообщений</Prompt>
+  <Comp>Formats/Task/Params</Comp>
+  <Args>
+   <ListElement>%SendedIDs%</ListElement>
+   <ListElement>SendedIDs</ListElement>
+  </Args>
+  <Alias>`Params`</Alias>
+ </SendedIDs>
  <!-- ********************************************************************** -->
  <!--
  <DaysReserved>
@@ -163,11 +205,10 @@
  <ListElement>CreateDate</ListElement>
  <ListElement>ExecuteDate</ListElement>
  <ListElement>Owner</ListElement>
-<!-- <ListElement>SchemeID</ListElement>
- <ListElement>DaysReserved</ListElement>
- <ListElement>DaysRemainded</ListElement>
- <ListElement>Discont</ListElement>
- <ListElement>Comment</ListElement>-->
+ <ListElement>Theme</ListElement>
+ <ListElement>Message</ListElement>
+ <ListElement>SendToIDs</ListElement>
+ <ListElement>SendedIDs</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
 </XML>
