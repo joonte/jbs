@@ -58,7 +58,7 @@
    <Text>Дополнения</Text>
    <Prompt>Рассылка сообщений, функции CMS, настройка системы, обновление системы</Prompt>
    <Paths>
-    <UniqID>^\/Administrator\/(Dispatch|Statistics|PaymentsSystemsStatistics|PersonalStatistics|Clauses|ClauseEdit|Config|Appearanse|DataImport|Migration|Logs|UsersLogs|UpdateSystem|JBsLicense|BillingVersions)</UniqID>
+    <UniqID>^\/Administrator\/(Dispatch|DispatchAll|Statistics|PaymentsSystemsStatistics|PersonalStatistics|Clauses|ClauseEdit|Config|Appearanse|DataImport|Migration|Logs|UsersLogs|UpdateSystem|JBsLicense|BillingVersions)</UniqID>
    </Paths>
    <Href>/Administrator/PersonalStatistics</Href>
  </ID800>

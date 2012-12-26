@@ -6,7 +6,7 @@
  <ID100>
   <Text>Рассылка</Text>
   <Paths>
-   <UniqID>^\/Administrator\/Dispatch$</UniqID>
+   <UniqID>^\/Administrator\/(Dispatch|DispatchAll)$</UniqID>
   </Paths>
   <Href>/Administrator/Dispatch</Href>
   <Level>1</Level>

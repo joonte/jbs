@@ -83,7 +83,7 @@ if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$GLOBALS['TaskReturnInfo'] = Array(SPrintF('Generate: %u messages',$Count));
+$GLOBALS['TaskReturnInfo'] = Array(SPrintF('Sended: %u, estimated: %u, new: %u messages',SizeOf($SendedIDs),SizeOf($SendToIDs),$Count));
 #-------------------------------------------------------------------------------
 if(SizeOf($SendToIDs) > 0)
 	return (Time() + 60);
