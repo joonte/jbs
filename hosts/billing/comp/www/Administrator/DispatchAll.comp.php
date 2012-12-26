@@ -23,10 +23,6 @@ $DOM->AddAttribs('MenuLeft',Array('args'=>'Administrator/AddIns'));
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Дополнения → Рассылка → Все рассылки');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/Administrator/BonusEdit');"),'Новый бонус','Add.gif');
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
 $NoBody = new Tag('NOBODY');
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Super','DispatchAll');

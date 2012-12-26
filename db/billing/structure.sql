@@ -307,7 +307,7 @@ CREATE TABLE `Tasks` (
   `UserID` int(11) NOT NULL,
   `TypeID` char(30) default '',
   `ExecuteDate` int(11) default '0',
-  `Params` text,
+  `Params` LONGTEXT,
   `Errors` int(11) default '0',
   `Result` text,
   `IsExecuted` enum('no','yes') default 'no',

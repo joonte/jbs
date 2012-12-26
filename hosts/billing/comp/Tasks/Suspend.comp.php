@@ -20,10 +20,10 @@ if($Template['Source']['Count'] < 1)
 $Comp = Comp_Load(
   'Form/Input',
   Array(
-    'onclick' => 'TasksActivate();',
+    'onclick' => 'TasksSuspend();',
     'type'    => 'button',
-    'value'   => 'Активировать',
-    'prompt'  => 'Запустить рассылку'
+    'value'   => 'Остановить',
+    'prompt'  => 'Временно приостановить выполнение рассылки'
   )
 );
 if(Is_Error($Comp))
