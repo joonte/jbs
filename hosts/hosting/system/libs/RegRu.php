@@ -370,16 +370,20 @@ function RegRu_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID,$D
   #Debug($Result);
   #-----------------------------------------------------------------------------
   if($Result['result'] == 'success'){
-    foreach($Result['answer']['domains'] as $Domains){
-      #foreach(Array_Keys($Domains) as $Key)
-      #  Debug("[RegRu_Answer::Domain_Ns_Change]: " . $Key . " - " . $Domains[$Key]);
-      #-------------------------------------------------------------------------
-      if($Domains['dname'] == $Domain && IsSet($Domains['error_code']))
-        return new gException('REGISTRATOR_ERROR',IsSet($Domains['error_text'])?$Domains['error_text']:'Регистратор вернул ошибку');
-      #-------------------------------------------------------------------------
-      if($Domains['dname'] == $Domain && $Domains['result'] == 'success')
-        return Array('TicketID'=>(integer)$Domains['service_id']);
-      #-------------------------------------------------------------------------
+    if(IsSet($Result['error_code'])){
+      return new gException('REGISTRATOR_ERROR_1',$Result['error_code']);
+    }else{
+      foreach($Result['answer']['domains'] as $Domains){
+        #foreach(Array_Keys($Domains) as $Key)
+        #  Debug("[RegRu_Answer::Domain_Ns_Change]: " . $Key . " - " . $Domains[$Key]);
+        #-------------------------------------------------------------------------
+        if($Domains['dname'] == $Domain && IsSet($Domains['error_code']))
+          return new gException('REGISTRATOR_ERROR',IsSet($Domains['error_text'])?$Domains['error_text']:'Регистратор вернул ошибку');
+        #-------------------------------------------------------------------------
+        if($Domains['dname'] == $Domain && $Domains['result'] == 'success')
+          return Array('TicketID'=>(integer)$Domains['service_id']);
+        #-------------------------------------------------------------------------
+      }
     }
   }
   #-----------------------------------------------------------------------------
