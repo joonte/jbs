@@ -301,9 +301,9 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 		# ячейка со средним за год
 		# если это текущий год - то расчёт будет иным
 		if(Date('Y', Time()) == $year){
-			$AvgVal = Round((FloatVal($Total['Summ']) / Date('z', Time())),2);
+			$AvgVal = Round((FloatVal($Total['Summ']) / (Date('z', Time()) + 1)),2);
 		}else{
-			$AvgVal = Round((FloatVal($Total['Summ']) / Date('z', $TimeEnd)),2);
+			$AvgVal = Round((FloatVal($Total['Summ']) / (Date('z', $TimeEnd) + 1)),2);
 		}
 		$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard','style'=>'background-color:#B9CCDF;'),new Tag('NOBR',Number_Format($AvgVal,2,'.',' '))));
 		#-------------------------------------------------------------------------------
