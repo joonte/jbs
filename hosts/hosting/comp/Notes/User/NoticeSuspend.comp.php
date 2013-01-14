@@ -13,6 +13,7 @@ $Columns = Array(
 			'`ID`','`DaysRemainded`','`ExpirationDate`',
 			'(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `Code`',
 			'(SELECT `NameShort` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `Name`',
+			'(SELECT `ConsiderTypeID` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `ConsiderType`'
 		);
 $Where = Array(
 			'`UserID` = @local.__USER_ID',
@@ -43,7 +44,7 @@ case 'array':
 				#-------------------------------------------------------------------------
 				$Order['DaysRemainded'] = Ceil(($Order['ExpirationDate'] - Time())/(24*3600));
 				#-------------------------------------------------------------------------
-				if($Order['Code'] == 'Default'){
+				if($Order['Code'] == 'Default' && $Order['ConsiderType'] != 'Upon'){
 					$NoBody = new Tag('NOBODY');
 					#-------------------------------------------------------------------------
 					$NoBody->AddChild(new Tag('SPAN','Обращаем Ваше внимание, что истекает срок действия заказа на услугу '));
