@@ -42,7 +42,7 @@ foreach($Doc as $License){
 	if($License['status'] == 5){$StatusID = "OnCreate";}
 	#---------------------------------------------------------------
 	# проверяем наличие лицензии с таким идентификатором в биллинге
-	$ISPswLic = DB_Select('ISPswLicenses',Array('ID','elid','StatusID'),Array('UNIQ','Where'=>'`elid`=' . $License['id']));
+	$ISPswLic = DB_Select('ISPswLicenses',Array('ID','elid','ip','StatusID'),Array('UNIQ','Where'=>'`elid`=' . $License['id']));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($ISPswLic)){
 	case 'error':
@@ -54,7 +54,7 @@ foreach($Doc as $License){
 		$Event = Array(
 				'UserID'	=> 100,
 				'PriorityID'	=> 'Error',
-				'Text'		=> SPrintF('Найдена неучтённая лицензия ISPsystem #%u, продукт (%s), период (%s)',$License['id'],$License['price'],$License['period']),
+				'Text'		=> SPrintF('Найдена неучтённая лицензия ISPsystem #%u, продукт (%s), период (%s), IP (%s)',$License['id'],$License['price'],$License['period'],$License['ip']),
 				'IsReaded'	=> FALSE
 			);
 		$Event = Comp_Load('Events/EventInsert',$Event);
@@ -84,6 +84,35 @@ foreach($Doc as $License){
 	case 'array';
 		# лицензия в биллинге есть
 		Debug("[comp/Tasks/ISPswCheckLicenses]: found license #" . $License['id']);
+		#-------------------------------------------------------------------------------
+		# сравниваем IP адреса в биллинге ISPsystem и у нас
+		if($License['ip'] != $ISPswLic['ip']){
+			#-------------------------------------------------------------------------
+			Debug(SPrintF("[comp/Tasks/ISPswCheckLicenses]: change license #%s IP %s->%s",$License['id'],$ISPswLic['ip'],$License['ip']));
+			#-------------------------------------------------------------------------
+			$Comp = Comp_Load('www/API/StatusSet',
+						Array(  'ModeID'        => 'ISPswLicenses',
+							'IsNotNotify'   => TRUE,
+							'IsNoTrigger'   => TRUE,
+							'StatusID'      => $StatusID,
+							'RowsIDs'       => $ISPswLic['ID'],
+							'Comment'       => SPrintF('Изменение IP в биллинге ISPsystem [%s->%s]',$ISPswLic['ip'],$License['ip'])
+						)
+					);
+			#-------------------------------------------------------------------------
+			switch(ValueOf($Comp)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				return ERROR | @Trigger_Error(400);
+			case 'array':
+				break;
+			default:
+				return ERROR | @Trigger_Error(101);
+
+			}
+		}
+		#-------------------------------------------------------------------------------
 		# обновляем данные лицензии
 		$IsUpdate = DB_Update(
 					'ISPswLicenses',
