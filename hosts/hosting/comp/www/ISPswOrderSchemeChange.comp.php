@@ -61,7 +61,7 @@ switch(ValueOf($ISPswOrder)){
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $Where = SPrintF("`SoftWareGroup` = %u AND `ID` != %u AND `IsActive` = 'yes' AND `IsSchemeChangeable` = 'yes'",$ISPswOrder['SoftWareGroup'],$ISPswOrder['SchemeID']);
+            $Where = SPrintF("`SoftWareGroup` = %u /*AND `ID` != %u*/ AND `IsActive` = 'yes' AND `IsSchemeChangeable` = 'yes'",$ISPswOrder['SoftWareGroup'],$ISPswOrder['SchemeID']);
             #-------------------------------------------------------------------
             $ISPswSchemes = DB_Select($UniqID,Array('ID','Name'),Array('SortOn'=>'SortID','Where'=>$Where));
             #-------------------------------------------------------------------
@@ -71,6 +71,9 @@ switch(ValueOf($ISPswOrder)){
               case 'exception':
                 return new gException('ISPsw_SCHEMES_NOT_FOUND','Нет тарифов для смены');
               case 'array':
+	        #---------------------------------------------------------------
+		if(SizeOf($ISPswSchemes) == 1)
+		  return new gException('ISPsw_SCHEMES_NOT_FOUND','Нет тарифов для смены');
                 #---------------------------------------------------------------
                 $DOM = new DOM();
                 #---------------------------------------------------------------
@@ -88,7 +91,7 @@ switch(ValueOf($ISPswOrder)){
                 foreach($ISPswSchemes as $ISPswScheme)
                   $Options[$ISPswScheme['ID']] = $ISPswScheme['Name'];
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('Form/Select',Array('name'=>'NewSchemeID'),$Options);
+                $Comp = Comp_Load('Form/Select',Array('name'=>'NewSchemeID'),$Options,NULL,$ISPswOrder['SchemeID']);
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------

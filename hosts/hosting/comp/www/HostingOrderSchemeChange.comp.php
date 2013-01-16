@@ -61,7 +61,7 @@ switch(ValueOf($HostingOrder)){
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $Where = SPrintF("`ServersGroupID` = %u AND `ID` != %u AND `IsActive` = 'yes' AND `IsSchemeChangeable` = 'yes' AND `IsReselling` = '%s'",$HostingOrder['ServersGroupID'],$HostingOrder['SchemeID'],$OldScheme['IsReselling']?'yes':'no');
+            $Where = SPrintF("`ServersGroupID` = %u /*AND `ID` != %u*/ AND `IsActive` = 'yes' AND `IsSchemeChangeable` = 'yes' AND `IsReselling` = '%s'",$HostingOrder['ServersGroupID'],$HostingOrder['SchemeID'],$OldScheme['IsReselling']?'yes':'no');
             #-------------------------------------------------------------------
             $HostingSchemes = DB_Select($UniqID,Array('ID','Name'),Array('SortOn'=>'SortID','Where'=>$Where));
             #-------------------------------------------------------------------
@@ -69,8 +69,11 @@ switch(ValueOf($HostingOrder)){
               case 'error':
                 return ERROR | @Trigger_Error(500);
               case 'exception':
-                return new gException('HOSTING_SCHEMES_NOT_FOUND','Не тарифов для смены');
+                return new gException('HOSTING_SCHEMES_NOT_FOUND','Нет тарифов для смены');
               case 'array':
+	        #---------------------------------------------------------------
+		if(SizeOf($HostingSchemes) == 1)
+		  return new gException('HOSTING_SCHEMES_NOT_FOUND','Нет тарифов для смены');
                 #---------------------------------------------------------------
                 $DOM = new DOM();
                 #---------------------------------------------------------------
@@ -88,7 +91,7 @@ switch(ValueOf($HostingOrder)){
                 foreach($HostingSchemes as $HostingScheme)
                   $Options[$HostingScheme['ID']] = $HostingScheme['Name'];
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('Form/Select',Array('name'=>'NewSchemeID'),$Options);
+                $Comp = Comp_Load('Form/Select',Array('name'=>'NewSchemeID'),$Options,NULL,$HostingOrder['SchemeID']);
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------

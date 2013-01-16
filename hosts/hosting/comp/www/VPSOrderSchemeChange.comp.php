@@ -61,7 +61,7 @@ switch(ValueOf($VPSOrder)){
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $Where = SPrintF("`ServersGroupID` = %u AND `ID` != %u AND `IsActive` = 'yes' AND `IsSchemeChangeable` = 'yes' AND `IsReselling` = '%s'",$VPSOrder['ServersGroupID'],$VPSOrder['SchemeID'],$OldScheme['IsReselling']?'yes':'no');
+            $Where = SPrintF("`ServersGroupID` = %u /*AND `ID` != %u*/ AND `IsActive` = 'yes' AND `IsSchemeChangeable` = 'yes' AND `IsReselling` = '%s'",$VPSOrder['ServersGroupID'],$VPSOrder['SchemeID'],$OldScheme['IsReselling']?'yes':'no');
             #-------------------------------------------------------------------
             $VPSSchemes = DB_Select($UniqID,Array('ID','Name'),Array('SortOn'=>'SortID','Where'=>$Where));
             #-------------------------------------------------------------------
@@ -71,6 +71,9 @@ switch(ValueOf($VPSOrder)){
               case 'exception':
                 return new gException('VPS_SCHEMES_NOT_FOUND','Не тарифов для смены');
               case 'array':
+	        #---------------------------------------------------------------
+		if(SizeOf($VPSSchemes) == 1)
+		  return new gException('VPS_SCHEMES_NOT_FOUND','Нет тарифов для смены');
                 #---------------------------------------------------------------
                 $DOM = new DOM();
                 #---------------------------------------------------------------
@@ -88,7 +91,7 @@ switch(ValueOf($VPSOrder)){
                 foreach($VPSSchemes as $VPSScheme)
                   $Options[$VPSScheme['ID']] = $VPSScheme['Name'];
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('Form/Select',Array('name'=>'NewSchemeID'),$Options);
+                $Comp = Comp_Load('Form/Select',Array('name'=>'NewSchemeID'),$Options,NULL,$VPSOrder['SchemeID']);
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
