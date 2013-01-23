@@ -116,7 +116,8 @@ function Styles_Url($Element){
   #-----------------------------------------------------------------------------
   $HostID = Current($HostsIDs);
   #-----------------------------------------------------------------------------
-  return SPrintF('%s://%s/styles/%s/%s',@$_SERVER['SERVER_PORT'] != 80?'https':'http',@$_SERVER['HTTP_HOST'],$HostID,$Element);
+  #return SPrintF('%s://%s/styles/%s/%s',@$_SERVER['SERVER_PORT'] != 80?'https':'http',@$_SERVER['HTTP_HOST'],$HostID,$Element);
+  return SPrintF('/styles/%s/%s',$HostID,$Element);
 }
 /*------------------------------------------------------------------------------
       Задача:

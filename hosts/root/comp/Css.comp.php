@@ -32,7 +32,8 @@ foreach($Css as $Path){
     $Link = new Tag(
       'LINK',
       Array(
-        'href' => SPrintF('%s://%s/styles/%s/%s',(@$_SERVER['SERVER_PORT'] != 80?'https':'http'),@$_SERVER['HTTP_HOST'],$HostID,$Path),
+        //'href' => SPrintF('%s://%s/styles/%s/%s',(@$_SERVER['SERVER_PORT'] != 80?'https':'http'),@$_SERVER['HTTP_HOST'],$HostID,$Path),
+	'href' => SPrintF('/styles/%s/%s',$HostID,$Path),
         'rel'  => 'stylesheet',
         'type' => 'text/css'
       )
