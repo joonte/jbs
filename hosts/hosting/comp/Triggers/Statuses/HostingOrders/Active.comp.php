@@ -134,7 +134,26 @@ switch($HostingOrder['StatusID']){
       return ERROR | @Trigger_Error(101);
     }
     */
-    $ExecuteDate = Time();
+    #-------------------------------------------------------------------------------
+    # added by lissyara, for JBS-536
+    $Where = Array(SPrintF('`Params` = \'{"ID":"%u"}\'',$HostingOrder['ID']));
+    #-------------------------------------------------------------------------------
+    $TaskExecuteTime = DB_Select('Tasks','ExecuteDate',Array('UNIQ','Where'=>$Where,'SortOn'=>'ExecuteDate','IsDesc'=>TRUE,'Limits'=>Array(0,1)));
+    #-------------------------------------------------------------------------------
+    switch(ValueOf($TaskExecuteTime)){
+    case 'error':
+      return ERROR | @Trigger_Error(500);
+    case 'exception':
+      $ExecuteDate = Time();
+      break;
+    case 'array':
+        $ExecuteDate = $TaskExecuteTime['ExecuteDate'] + 2*60;
+      break;
+    default:
+      return ERROR | @Trigger_Error(101);
+    }
+
+    #$ExecuteDate = Time();
     #---------------------------------------------------------------------------
     $IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'HostingActive','ExecuteDate'=>$ExecuteDate,'Params'=>Array($HostingOrder['ID'])));
     #---------------------------------------------------------------------------
