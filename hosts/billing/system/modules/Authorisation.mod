@@ -25,7 +25,7 @@ if(!IsSet($GLOBALS['__USER']) || IsSet($Args['ReOpen'])){
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
         #return TRUE;
-	break 3;
+	break;
       default:
         return ERROR | @Trigger_Error(101);
     }
