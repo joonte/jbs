@@ -63,7 +63,7 @@ switch(ValueOf($Order)){
           if(Is_Error($Comp))
             return ERROR | @Trigger_Error(500);
           #---------------------------------------------------------------------
-          $IsUpdate = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$Order['ContractID'],'Summ'=>$SummRemainded,'ServiceID'=>3000,'Comment'=>SPrintF('Заказ услуги "%s", #%s',$Service['NameShort'],$Comp)));
+          $IsUpdate = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$Order['ContractID'],'Summ'=>$SummRemainded,'ServiceID'=>3000,'Comment'=>SPrintF('Услуга "%s", #%s',$Service['NameShort'],$Comp)));
           #---------------------------------------------------------------------
           switch(ValueOf($IsUpdate)){
             case 'error':
