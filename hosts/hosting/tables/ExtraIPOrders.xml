@@ -96,6 +96,7 @@
     <ColumnsIDs>
      <ListElement>OrderID</ListElement>
      <ListElement>UserID</ListElement>
+     <ListElement>Login</ListElement>
      <ListElement>(SELECT `Name` FROM `ExtraIPSchemes` WHERE `ExtraIPSchemes`.`ID` = `ExtraIPOrdersOwners`.`SchemeID`)</ListElement>
     </ColumnsIDs>
    </Args>
