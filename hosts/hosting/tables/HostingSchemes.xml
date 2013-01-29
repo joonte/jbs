@@ -11,6 +11,8 @@
   <ListElement>QuotaEmail</ListElement>
   <ListElement>QuotaDomains</ListElement>
   <ListElement>QuotaDBs</ListElement>
+  <ListElement>QuotaFTP</ListElement>
+  <ListElement>mailrate</ListElement>
   <ListElement>IsActive</ListElement>
   <ListElement>SortID</ListElement>
  </ColumnsIDs>
@@ -138,9 +140,9 @@
   <Args>
    <ListElement>%CostMonth%</ListElement>
   </Args>
-  <Attribs>
+<!--  <Attribs>
    <style>text-align:right;</style>
-  </Attribs>
+  </Attribs> -->
  </CostMonth>
  <!-- ********************************************************************** -->
  <ServersGroup>
@@ -167,34 +169,44 @@
  <QuotaDisk>
   <Head>Место</Head>
   <Prompt>Объем выделяемого пространства в мегабайтах</Prompt>
-  <Attribs>
+<!--  <Attribs>
    <style>text-align:right;</style>
-  </Attribs>
+  </Attribs> -->
  </QuotaDisk>
  <!-- ********************************************************************** -->
  <QuotaDomains>
   <Head>Дом.</Head>
   <Prompt>Кол-во дополнительных доменов</Prompt>
-  <Attribs>
+<!--  <Attribs>
    <style>text-align:right;</style>
-  </Attribs>
+  </Attribs> -->
  </QuotaDomains>
  <!-- ********************************************************************** -->
  <QuotaEmail>
   <Head>Почт.</Head>
   <Prompt>Кол-во почтовых ящиков</Prompt>
-  <Attribs>
+<!--  <Attribs>
    <style>text-align:right;</style>
-  </Attribs>
+  </Attribs> -->
  </QuotaEmail>
  <!-- ********************************************************************** -->
  <QuotaDBs>
   <Head>Баз</Head>
   <Prompt>Кол-во баз данных</Prompt>
-  <Attribs>
+<!--  <Attribs>
    <style>text-align:right;</style>
-  </Attribs>
+  </Attribs> -->
  </QuotaDBs>
+ <!-- ********************************************************************** -->
+  <QuotaFTP>
+  <Head>FTP</Head>
+  <Prompt>Кол-во ftp-аккаунтов</Prompt>
+ </QuotaFTP>
+ <!-- ********************************************************************** -->
+ <mailrate>
+  <Head>Email</Head>
+  <Prompt>Максимальное количество отправляемых писем, в час</Prompt>
+ </mailrate>
  <!-- ********************************************************************** -->
  <IsActive>
   <Head>Актив.</Head>
