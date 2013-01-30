@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -12,11 +11,12 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ClauseID   = (string) @$Args['ClauseID'];
 $TemplateID = (string) @$Args['TemplateID'];
+$Preview    = (string) @$Args['Preview'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Clauses/Load',$ClauseID,TRUE);
+$Comp = Comp_Load('Clauses/Load',$ClauseID,TRUE,$Preview);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

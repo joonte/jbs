@@ -84,6 +84,7 @@
      <ListElement>/Clause</ListElement>
      <ListElement>
        <ClauseID>%ID%</ClauseID>
+       <Preview>true</Preview>
      </ListElement>
      <ListElement>Просмотр статьи</ListElement>
    </Args>
