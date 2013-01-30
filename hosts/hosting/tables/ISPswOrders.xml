@@ -104,6 +104,7 @@
      <ListElement>UserID</ListElement>
      <ListElement>IP</ListElement>
      <ListElement>(SELECT `Name` FROM `ISPswSchemes` WHERE `ISPswSchemes`.`ID` = `ISPswOrdersOwners`.`SchemeID`)</ListElement>
+     <ListElement>AdminNotice</ListElement>
     </ColumnsIDs>
    </Args>
   </Search>

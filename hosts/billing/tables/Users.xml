@@ -90,6 +90,7 @@
      <ListElement>EnterIP</ListElement>
      <ListElement>ICQ</ListElement>
      <ListElement>Mobile</ListElement>
+     <ListElement>AdminNotice</ListElement>
     </ColumnsIDs>
    </Args>
   </Search>

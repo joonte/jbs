@@ -101,6 +101,7 @@
      <ListElement>(SELECT `Name` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`)</ListElement>
      <ListElement>Domain</ListElement>
      <ListElement>Parked</ListElement>
+     <ListElement>AdminNotice</ListElement>
     </ColumnsIDs>
    </Args>
   </Search>

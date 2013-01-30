@@ -97,6 +97,7 @@
      <ListElement>UserID</ListElement>
      <ListElement>Login</ListElement>
      <ListElement>(SELECT `Name` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`)</ListElement>
+     <ListElement>AdminNotice</ListElement>
     </ColumnsIDs>
    </Args>
   </Search>

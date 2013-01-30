@@ -123,6 +123,7 @@
      <ListElement>OrderID</ListElement>
      <ListElement>UserID</ListElement>
      <ListElement>CONCAT(`DomainName`,'.',(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`))</ListElement>
+     <ListElement>AdminNotice</ListElement>
     </ColumnsIDs>
    </Args>
   </Search>

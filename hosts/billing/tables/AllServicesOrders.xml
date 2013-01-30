@@ -87,6 +87,7 @@
     <ColumnsIDs>
      <ListElement>ID</ListElement>
      <ListElement>UserID</ListElement>
+     <ListElement>AdminNotice</ListElement>
     </ColumnsIDs>
    </Args>
   </Search>

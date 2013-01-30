@@ -7,7 +7,8 @@ SELECT
   (SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `HostingOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
   `OrdersOwners`.`OrderDate`,
   `OrdersOwners`.`UserID`,
-  `OrdersOwners`.`ContractID`
+  `OrdersOwners`.`ContractID`,
+  `OrdersOwners`.`AdminNotice`
 FROM
   `HostingOrders`
 LEFT JOIN `OrdersOwners`
@@ -23,7 +24,8 @@ SELECT
   `DomainsSchemes`.`RegistratorID`,
   `OrdersOwners`.`OrderDate`,
   `OrdersOwners`.`UserID`,
-  `OrdersOwners`.`ContractID`
+  `OrdersOwners`.`ContractID`,
+  `OrdersOwners`.`AdminNotice`
 FROM
   `DomainsOrders`
 LEFT JOIN `DomainsSchemes`
@@ -136,7 +138,8 @@ CREATE VIEW `VPSOrdersOwners` AS select
 	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `VPSOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
 	`OrdersOwners`.`OrderDate` AS `OrderDate`,
 	`OrdersOwners`.`UserID` AS `UserID`,
-	`OrdersOwners`.`ContractID` AS `ContractID`
+	`OrdersOwners`.`ContractID` AS `ContractID`,
+	`OrdersOwners`.`AdminNotice`
 	FROM (`VPSOrders` LEFT JOIN `OrdersOwners` ON((`VPSOrders`.`OrderID` = `OrdersOwners`.`ID`)));
 
 -- SEPARATOR
@@ -196,7 +199,8 @@ CREATE VIEW `DSOrdersOwners` AS select
 	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `DSOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
 	`OrdersOwners`.`OrderDate` AS `OrderDate`,
 	`OrdersOwners`.`UserID` AS `UserID`,
-	`OrdersOwners`.`ContractID` AS `ContractID`
+	`OrdersOwners`.`ContractID` AS `ContractID`,
+	`OrdersOwners`.`AdminNotice`
 	FROM (`DSOrders` LEFT JOIN `OrdersOwners` ON((`DSOrders`.`OrderID` = `OrdersOwners`.`ID`)));
 
 -- SEPARATOR
@@ -256,7 +260,8 @@ CREATE VIEW `ExtraIPOrdersOwners` AS select
 	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `ExtraIPOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
 	`OrdersOwners`.`OrderDate` AS `OrderDate`,
 	`OrdersOwners`.`UserID` AS `UserID`,
-	`OrdersOwners`.`ContractID` AS `ContractID`
+	`OrdersOwners`.`ContractID` AS `ContractID`,
+	`OrdersOwners`.`AdminNotice`
 	FROM (`ExtraIPOrders` LEFT JOIN `OrdersOwners` ON((`ExtraIPOrders`.`OrderID` = `OrdersOwners`.`ID`)));
 
 -- SEPARATOR
@@ -321,7 +326,8 @@ CREATE VIEW `ISPswOrdersOwners` AS select
 	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `ISPswOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
 	`OrdersOwners`.`OrderDate` AS `OrderDate`,
 	`OrdersOwners`.`UserID` AS `UserID`,
-	`OrdersOwners`.`ContractID` AS `ContractID`
+	`OrdersOwners`.`ContractID` AS `ContractID`,
+	`OrdersOwners`.`AdminNotice`
 	FROM (`ISPswOrders` LEFT JOIN `OrdersOwners` ON((`ISPswOrders`.`OrderID` = `OrdersOwners`.`ID`)));
 
 -- SEPARATOR

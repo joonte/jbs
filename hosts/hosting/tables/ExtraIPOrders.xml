@@ -98,6 +98,7 @@
      <ListElement>UserID</ListElement>
      <ListElement>Login</ListElement>
      <ListElement>(SELECT `Name` FROM `ExtraIPSchemes` WHERE `ExtraIPSchemes`.`ID` = `ExtraIPOrdersOwners`.`SchemeID`)</ListElement>
+     <ListElement>AdminNotice</ListElement>
     </ColumnsIDs>
    </Args>
   </Search>
