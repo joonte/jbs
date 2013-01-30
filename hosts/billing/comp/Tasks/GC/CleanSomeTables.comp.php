@@ -17,7 +17,10 @@ $GC = $Config['Tasks']['Types']['GC'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # зачищаем таблицу задач
-$Where = Array(SPrintF('`ExecuteDate` < UNIX_TIMESTAMP() - %u',$GC['TableTasksStoryPeriod'] * 24 * 3600),'`UserID` != 1');
+$Where = Array(
+		SPrintF('`ExecuteDate` < UNIX_TIMESTAMP() - %u',$GC['TableTasksStoryPeriod'] * 24 * 3600),'`UserID` != 1',
+		"`TypeID` != 'Dispatch'"
+		);
 $IsDelete = DB_Delete('Tasks',Array('Where'=>$Where));
 if(Is_Error($IsDelete))
 	return ERROR | @Trigger_Error(500);
