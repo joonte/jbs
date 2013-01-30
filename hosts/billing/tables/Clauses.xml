@@ -3,11 +3,13 @@
 <XML>
 <!-- *********************************************************************** -->
 <Source>
- <TableID>Clauses</TableID>
+ <TableID>ClausesOwners</TableID>
  <ColumnsIDs>
   <ListElement>ID</ListElement>
   <ListElement>Partition</ListElement>
   <ListElement>Title</ListElement>
+  <ListElement>IsPublish</ListElement>
+  <ListElement>IsProtected</ListElement>
  </ColumnsIDs>
  <Conditions>
   <Message>Статьи не найдены.</Message>
@@ -161,6 +163,24 @@
    <Length>30</Length>
    </Args>
  </Partition>
+ <!-- ********************************************************************** -->
+ <IsPublish>
+  <Head>Опуб.</Head>
+  <Prompt>Статья опубликована</Prompt>
+  <Comp>Formats/Logic</Comp>
+  <Args>
+   <ListElement>%IsPublish%</ListElement>
+  </Args>
+ </IsPublish>
+ <!-- ********************************************************************** -->
+ <IsProtected>
+  <Head>Защ.</Head>
+  <Prompt>Статья защищена от удаления</Prompt>
+  <Comp>Formats/Logic</Comp>
+  <Args>
+   <ListElement>%IsProtected%</ListElement>
+  </Args>
+ </IsProtected>
 </Columns>
 <!-- *********************************************************************** -->
 <Sequence>
@@ -170,6 +190,8 @@
  <ListElement>UpdateDate</ListElement>
  <ListElement>Title</ListElement>
  <ListElement>Partition</ListElement>
+ <ListElement>IsPublish</ListElement>
+ <ListElement>IsProtected</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
 </XML>
