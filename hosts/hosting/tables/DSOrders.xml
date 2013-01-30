@@ -17,6 +17,7 @@
   <ListElement>ID</ListElement>
   <ListElement>OrderID</ListElement>
   <ListElement>UserID</ListElement>
+  <ListElement>IP</ListElement>
   <ListElement>DaysRemainded</ListElement>
   <ListElement>StatusID</ListElement>
   <ListElement>StatusDate</ListElement>
@@ -96,6 +97,9 @@
      <ListElement>OrderID</ListElement>
      <ListElement>UserID</ListElement>
      <ListElement>(SELECT `Name` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`)</ListElement>
+     <ListElement>IP</ListElement>
+     <ListElement>ExtraIP</ListElement>
+     <ListElement>AdminNotice</ListElement>
     </ColumnsIDs>
    </Args>
   </Search>
@@ -166,6 +170,10 @@
   </Attribs>
  </Number>
  <!-- ********************************************************************** -->
+ <IP>
+  <Head>IP</Head>
+  <Prompt>IP адрес сервера</Prompt>
+ </IP>
  <!-- ********************************************************************** -->
  <Scheme>
   <Head>Тариф</Head>
@@ -198,6 +206,7 @@
  <ListElement>SelectID</ListElement>
  <ListElement>ExtendedMenu</ListElement>
  <ListElement>Number</ListElement>
+ <ListElement>IP</ListElement>
  <ListElement>Owner</ListElement>
  <ListElement>Scheme</ListElement>
  <ListElement>Expiration</ListElement>
