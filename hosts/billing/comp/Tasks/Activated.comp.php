@@ -23,7 +23,7 @@ $Comp = Comp_Load(
     'onclick' => 'TasksActivate();',
     'type'    => 'button',
     'value'   => 'Активировать',
-    'prompt'  => 'Запустить рассылку'
+    'prompt'  => 'Запустить задачу'
   )
 );
 if(Is_Error($Comp))

@@ -19,6 +19,8 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Base')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Tasks.js}')));
+#-------------------------------------------------------------------------------
 $DOM->AddAttribs('MenuLeft',Array('args'=>'Administrator/AddIns'));
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Дополнения → Рассылка → Все рассылки');

@@ -12,6 +12,7 @@
   <After>
    <Executed />
    <Delete />
+   <Activate />
   </After>
  </Comps>
  <Sequence />

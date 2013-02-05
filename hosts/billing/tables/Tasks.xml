@@ -84,8 +84,8 @@
   </Executed>
   <!-- ********************************************************************* -->
   <Activate>
-    <Comp>Tasks/Activated</Comp>
-    <Args type="array" />
+   <Comp>Tasks/Activated</Comp>
+   <Args type="array" />
   </Activate>
   <!-- ********************************************************************* -->
   <Delete>
