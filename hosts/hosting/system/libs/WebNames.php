@@ -762,6 +762,13 @@ function WebNames_Get_List_Domains($Settings){
 #-------------------------------------------------------------------------------
 function WebNames_Domain_Transfer($Settings,$DomainName,$DomainZone,$Params){
   #-------------------------------------------------------------------------------
+  if(In_Array($DomainScheme['Name'],Array('ru','su','рф'))){
+    # ну до того там мутно всё...
+    # пеернос этих доменов по параметрам аналогичен регистрации.
+    # только 'thisPage' другой
+    return new gException('REGISTRATOR_ERROR',SPrintF("В текущей версии библиотеки перенос доменов в зоне '%s' не реализован.",$DomainZone));
+  }
+  #-------------------------------------------------------------------------------
   $Http = Array(
                 #---------------------------------------------------------------------------
 	        'Address'  => $Settings['Address'],
@@ -800,7 +807,6 @@ function WebNames_Domain_Transfer($Settings,$DomainName,$DomainZone,$Params){
   #-------------------------------------------------------------------------------
   #-------------------------------------------------------------------------------
   return Array('DomainID'=>0);
-  # return new gException('REGISTRATOR_ERROR',SPrintF("В текущей версии библиотеки перенос доменов в зоне %s не реализован.",$DomainZone));
 }
 
 
