@@ -600,9 +600,9 @@ function RegRu_Is_Available_Domain($Settings,$Domain){
   return ERROR | @Trigger_Error('[RegRu_Is_Available_Domain]: неизвестный ответ');
 }
 #-------------------------------------------------------------------------------
-function RegRu_Domain_Transfer($Settings,$DomainName,$DomainZone){
+function RegRu_Domain_Transfer($Settings,$DomainName,$DomainZone,$Param){
   /****************************************************************************/
-  $__args_types = Array('array','string','string');
+  $__args_types = Array('array','string','string','array');
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
