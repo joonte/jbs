@@ -24,6 +24,7 @@ CREATE TABLE `DomainsOrders` (
   `Ns4Name` char(50) default '',
   `Ns4IP` char(16) default '',
   `WhoIs` text,
+  `AuthInfo` char(64) default NULL, 
   `UpdateDate` int(11) default '0',
   `RegUpdateDate` INT(11) default '0',
   `StatusID` char(30) default 'UnSeted',

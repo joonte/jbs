@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -16,6 +15,7 @@ $ContractID     = (integer) @$Args['ContractID'];
 $DomainName     =  (string) @$Args['DomainName'];
 $DomainSchemeID = (integer) @$Args['DomainSchemeID'];
 $PersonID       =  (string) @$Args['PersonID'];
+$AuthInfo	=  (string) @$Args['AuthInfo'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/WhoIs.php')))
   return ERROR | @Trigger_Error(500);
@@ -57,6 +57,11 @@ switch(ValueOf($Contract)){
           case 'exception':
             return new gException('DOMAIN_SCHEME_NOT_FOUND','Выбранный тарифный план домена не найден');
           case 'array':
+	    #-------------------------------------------------------------------
+            if(!In_Array($DomainScheme['Name'],Array('ru','su','рф'))){
+              if(StrLen($AuthInfo) < 3 || StrLen($AuthInfo) > 40)
+	        return new gException('INCORRECT_AUTHINFO','Указан неверный код переноса домена');
+	    }
             #-------------------------------------------------------------------
             $Count = DB_Count('DomainsOrders',Array('Where'=>SPrintF("`DomainName` = '%s' AND (SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrders`.`SchemeID`) = '%s'",$DomainName,$DomainScheme['Name'])));
             if(Is_Error($Count))
@@ -92,6 +97,7 @@ switch(ValueOf($Contract)){
                   'SchemeID'   => $DomainScheme['ID'],
                   'PersonID'   => $PersonID,
                   'WhoIs'      => $WhoIs['Info'],
+		  'AuthInfo'   => ($AuthInfo)?$AuthInfo:'NotUsed',
                   'UpdateDate' => Time()
                 );
                 #---------------------------------------------------------------

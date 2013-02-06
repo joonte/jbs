@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('libs/WhoIs.php','classes/Registrator.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('DomainName','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `RegistratorID`','StatusID');
+$Columns = Array('DomainName','AuthInfo','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `RegistratorID`','StatusID');
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
@@ -62,8 +62,9 @@ switch(ValueOf($DomainOrder)){
               Debug("[Task/DomainTransfer]: IsInternal - TRUE");
               return TRUE;
             }
+	    $Param = Array('AuthInfo' => $DomainOrder['AuthInfo']);
             #-------------------------------------------------------------------
-            $IsDomainTransfer = $Registrator->DomainTransfer($DomainOrder['DomainName'],$DomainOrder['DomainZone']);
+            $IsDomainTransfer = $Registrator->DomainTransfer($DomainOrder['DomainName'],$DomainOrder['DomainZone'],$Param);
             #-------------------------------------------------------------------
             switch(ValueOf($IsDomainTransfer)){
               case 'error':

@@ -757,4 +757,54 @@ function WebNames_Get_List_Domains($Settings){
   #-----------------------------------------------------------------------------
 }
 
+# added by lissyara, for JBS-122, 2013-02-06 in 17:22 MSK
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+function WebNames_Domain_Transfer($Settings,$DomainName,$DomainZone,$Params){
+  #-------------------------------------------------------------------------------
+  $Http = Array(
+                #---------------------------------------------------------------------------
+	        'Address'  => $Settings['Address'],
+                'Port'     => $Settings['Port'],
+                'Host'     => $Settings['Address'],
+                'Protocol' => $Settings['Protocol'],
+                'Charset'  => 'CP1251'
+               );
+  #-------------------------------------------------------------------------------
+  $Query = Array(
+                 'thisPage'           => 'pispInitiateTransfer',
+                 'username'           => $Settings['Login'],
+                 'password'           => $Settings['Password'],
+                 'interface_revision' => 1,
+                 'interface_lang'     => 'en',
+                 'domain_name'        => SPrintF('%s.%s',$DomainName,$DomainZone),
+		 'notpaid'            => 1,
+		 'period'             => 1,
+		 'authinfo'           => $Params['AuthInfo']
+                );
+  #-------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------
+  $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
+  if(Is_Error($Result))
+    return ERROR | @Trigger_Error('[WebNames_Domain_Transfer]: не удалось выполнить запрос к серверу');
+  #-------------------------------------------------------------------------------
+  $Result = Trim($Result['Body']);
+  #-------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------
+  if(Preg_Match('/Error:/',$Result))
+    return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
+    #return new gException('REGISTRATOR_ERROR',IsSet($Result['error_text'])?$Result['error_text']:'Регистратор вернул ошибку');
+  #-----------------------------------------------------------------------------
+  if(!Preg_Match('/Success:/',$Result))
+    return ERROR | @Trigger_Error('[WebNames_Domain_Transfer]: неизвестный ответ');
+  #-------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------
+  return Array('DomainID'=>0);
+  # return new gException('REGISTRATOR_ERROR',SPrintF("В текущей версии библиотеки перенос доменов в зоне %s не реализован.",$DomainZone));
+}
+
+
+
+
+
 ?>
