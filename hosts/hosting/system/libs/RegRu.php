@@ -817,7 +817,7 @@ function RegRu_Get_List_Domains($Settings){
   #----------------------------------------------------------------------------
   $Result = Http_Send($Settings['PrefixAPI'],$Http,Array(),$Query);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[RegRu_Is_Available_Domain]: не удалось выполнить запрос к серверу');
+    return ERROR | @Trigger_Error('[RegRu_Get_List_Domains]: не удалось выполнить запрос к серверу');
   #----------------------------------------------------------------------------
   $Result = Trim($Result['Body']);
   #----------------------------------------------------------------------------
@@ -840,7 +840,7 @@ function RegRu_Get_List_Domains($Settings){
     return Array('Status'=>'false','ErrorText'=>'No domains on account');
   }
   #----------------------------------------------------------------------------
-  return ERROR | @Trigger_Error('[RegRu_Is_Available_Domain]: неизвестный ответ');
+  return ERROR | @Trigger_Error('[RegRu_Get_List_Domains]: неизвестный ответ');
 }
 #-------------------------------------------------------------------------------
 

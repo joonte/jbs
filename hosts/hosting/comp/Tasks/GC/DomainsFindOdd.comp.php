@@ -132,6 +132,22 @@ foreach($Registrators as $NowReg){
 							return ERROR | @Trigger_Error(500);
 					}else{
 						Debug(SPrintF('comp/Tasks/GC/DomainsFindOdd]: Домен %s / %s, в биллинге есть, но его статус несоответствует критериям выборки',$DomainOdd,$NowReg['Name']));
+						# JBS-595 - проверяем не на переносе ли он - возможно перенеос завершился успешно
+						$Where[] = "`StatusID` = 'OnTransfer'";	# сама Where задана выше, тут тока условие добавляем
+						#-----------------------------------------------------------
+						$Count = DB_Count(Array('DomainsOrdersOwners','DomainsSchemes'),Array('Where'=>$Where));
+						if(Is_Error($Count))
+							return ERROR | @Trigger_Error(500);
+						#-----------------------------------------------------------
+						if($Count){
+							$Message = SPrintF('Домен %s успешно перенесён к регистратору %s',$DomainOdd,$NowReg['Name']);
+							Debug(SPrintF('[comp/Tasks/GC/DomainsFindOdd]: %s',$Message));
+							#-----------------------------------------------------------
+							$Event = Array('Text' => $Message,'PriorityID' => 'Notice','IsReaded' => FALSE);
+							$Event = Comp_Load('Events/EventInsert', $Event);
+							if(!$Event)
+								return ERROR | @Trigger_Error(500);
+						}					
 					}
 				}
 			}
