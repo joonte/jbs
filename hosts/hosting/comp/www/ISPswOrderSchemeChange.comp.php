@@ -72,8 +72,8 @@ switch(ValueOf($ISPswOrder)){
                 return new gException('ISPsw_SCHEMES_NOT_FOUND','Нет тарифов для смены');
               case 'array':
 	        #---------------------------------------------------------------
-		if(SizeOf($ISPswSchemes) == 1)
-		  return new gException('ISPsw_SCHEMES_NOT_FOUND','Нет тарифов для смены');
+		#if(SizeOf($ISPswSchemes) == 1)
+		#  return new gException('ISPsw_SCHEMES_NOT_FOUND','Нет тарифов для смены');
                 #---------------------------------------------------------------
                 $DOM = new DOM();
                 #---------------------------------------------------------------
