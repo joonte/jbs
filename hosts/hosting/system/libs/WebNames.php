@@ -762,7 +762,7 @@ function WebNames_Get_List_Domains($Settings){
 #-------------------------------------------------------------------------------
 function WebNames_Domain_Transfer($Settings,$DomainName,$DomainZone,$Params){
   #-------------------------------------------------------------------------------
-  if(In_Array($DomainScheme['Name'],Array('ru','su','рф'))){
+  if(In_Array($DomainZone,Array('ru','su','рф'))){
     # ну до того там мутно всё...
     # пеернос этих доменов по параметрам аналогичен регистрации.
     # только 'thisPage' другой
