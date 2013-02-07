@@ -20,8 +20,12 @@ if(!IsSet($Args)){
 #Debug(print_r($Args,true));
 $TasksIDs = (array) @$Args['RowsIDs'];
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if(Count($TasksIDs) < 1)
   return new gException('TASKS_NOT_SELECTED','Задачи не выбраны');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Config = Config();
 #-------------------------------------------------------------------------------
 $Array = Array();
 #-------------------------------------------------------------------------------
@@ -45,7 +49,7 @@ foreach($TasksIDs as $TaskID){
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
-	$IsUpdate = DB_Update('Tasks',Array('Errors'=>0,'Result'=>'','IsActive'=>$Tasks['Types'][$Task['TypeID']]['IsActive']),Array('ID'=>$TaskID));
+	$IsUpdate = DB_Update('Tasks',Array('Errors'=>$Config['Tasks']['MaxErrors'],'Result'=>'','IsActive'=>$Tasks['Types'][$Task['TypeID']]['IsActive']),Array('ID'=>$TaskID));
 	if(Is_Error($IsUpdate))
 		return ERROR | @Trigger_Error(500);
 }

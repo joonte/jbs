@@ -22,6 +22,7 @@ $TaskID = (integer) @$Args['TaskID'];
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Task = DB_Select('Tasks',Array('ID','CreateDate','UserID','TypeID','Params','Errors','Result','ExecuteDate'),Array('UNIQ','ID'=>$TaskID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Task)){
