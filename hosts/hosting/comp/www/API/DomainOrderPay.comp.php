@@ -310,10 +310,14 @@ switch(ValueOf($DomainOrder)){
                       return ERROR | @Trigger_Error(400);
                     case 'array':
                       #---------------------------------------------------------
+		      $Text = SPrintF('Заказ домена (%s.%s) успешно оплачен на период %u лет',$DomainOrder['DomainName'],$DomainScheme['Name'],$YearsPay);
+		      if($StatusID == 'ForTransfer')
+                        $Text = SPrintF('Заявка на перенос домена (%s.%s) успешно оплачена',$DomainOrder['DomainName'],$DomainScheme['Name']);
+		      #---------------------------------------------------------
 		      $Event = Array(
 		                       'UserID'		=> $DomainOrder['UserID'],
 				       'PriorityID'	=> 'Billing',
-				       'Text'		=> SPrintF('Заказ домена (%s.%s) успешно оплачен на период %u лет',$DomainOrder['DomainName'],$DomainScheme['Name'],$YearsPay)
+				       'Text'		=> $Text
 				     );
                       $Event = Comp_Load('Events/EventInsert',$Event);
                       if(!$Event)
