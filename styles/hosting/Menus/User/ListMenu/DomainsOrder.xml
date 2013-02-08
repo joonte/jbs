@@ -29,6 +29,12 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
+  <Text>Ввести AuthCode</Text>
+  <Href>javascript:ShowWindow("/DomainAuthCodeInput",{DomainOrderID:%Replace%});</Href>
+  <Icon>Password.gif</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
   <Text>Сменить контактные данные</Text>
   <Href>javascript:ShowWindow("/DomainOrderChangeContactData",{DomainOrderID:%Replace%});</Href>
   <Icon>Profiles.png</Icon>
