@@ -523,7 +523,40 @@ case 'array':
 				#-------------------------------------------------------------------------
 				$Result[] = $NoBody;
 			}
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+		}elseif($Order['StatusID'] == 'ClaimForRegister'){
+			#-------------------------------------------------------------------------------
+			$Columns = Array('ID','PersonID','ProfileID','CONCAT(`DomainName`,".",(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`)) AS `DomainNameFull`');
+			$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
+			switch(ValueOf($DomainOrder)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				return ERROR | @Trigger_Error(400);
+			case 'array':
+				if(Is_Null($DomainOrder['ProfileID']) && !$DomainOrder['PersonID']){
+					#-------------------------------------------------------------------------
+					$Path = System_Element('templates/modules/NoticeOrders.ClaimForRegister.html');
+					if(Is_Error($Path))
+				        	return ERROR | @Trigger_Error(500);
+					#-------------------------------------------------------------------------------
+					$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
+					$NoBody = new Tag('NOBODY');
+					$NoBody->AddHTML(SPrintF($Parse,$DomainOrder['DomainNameFull']));
+					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DomainSelectOwner',{DomainOrderID:%u});",$DomainOrder['ID'])),'[определить]')));
+				#-------------------------------------------------------------------------
+				$Result[] = $NoBody;
+				}
+				break;
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+		}elseif($Order['StatusID'] == 'ForTransfer'){
 
+		}elseif($Order['StatusID'] == 'OnTransfer'){
 		}else{
 			# ничё не делаем?
 		}
