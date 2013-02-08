@@ -294,7 +294,7 @@ switch(ValueOf($DomainOrder)){
                     $PayMessage = "Заказ успешно оплачен";
 		  #-------------------------------------------------------------
 		  #-------------------------------------------------------------
-		  $NewStatusID = 'Waiting';
+		  $NewStatusID = 'ForProlong';
 		  #-------------------------------------------------------------
 		  if($StatusID == 'Waiting')
 		    $NewStatusID = 'ClaimForRegister';
