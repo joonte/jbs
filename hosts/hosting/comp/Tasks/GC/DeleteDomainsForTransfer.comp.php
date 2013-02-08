@@ -10,7 +10,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 $Where = Array(
-               "`StatusID` = 'OnTransfer'",				// статус на переносе
+               "`StatusID` = 'ForTransfer'",				// статус на переносе
 	       "`StatusDate` < UNIX_TIMESTAMP() - 180 * 24 * 3600"	// от статуса - больше 180 дней
 	       );
 #-------------------------------------------------------------------------------
@@ -31,9 +31,9 @@ switch(ValueOf($DomainOrders)){
   case 'array':
     #---------------------------------------------------------------------------
     foreach($DomainOrders as $DomainOrder){
-      Debug(SPrintF("[Tasks/GC/DeleteDomainsOnTransfer]: Удаление домена на переносе: %s.%s",$DomainOrder['DomainName'],$DomainOrder['Name']));
+      Debug(SPrintF("[Tasks/GC/DeleteDomainsForTransfer]: Удаление домена для переносе: %s.%s",$DomainOrder['DomainName'],$DomainOrder['Name']));
       #----------------------------------TRANSACTION----------------------------
-      if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Tasks/GC/DeleteDomainsOnTransfer'))))
+      if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Tasks/GC/DeleteDomainsForTransfer'))))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
       $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Deleted','RowsIDs'=>$DomainOrder['ID'],'Comment'=>SPrintF('Заказ домена не был перенесён к регистратору %s, более 180 дней',$DomainOrder['RegistratorName'])));
@@ -43,7 +43,7 @@ switch(ValueOf($DomainOrders)){
         $Event = Array(
                        'UserID'    => $DomainOrder['UserID'],
                        'PriorityID'=> 'Hosting',
-                       'Text'      => SPrintF('Автоматическое удаление домена (%s.%s), находится в статусе "На переносе" более 180 дней',$DomainOrder['DomainName'],$DomainOrder['Name'])
+                       'Text'      => SPrintF('Автоматическое удаление домена (%s.%s), находится в статусе "Для переноса" более 180 дней',$DomainOrder['DomainName'],$DomainOrder['Name'])
       		    );
         $Event = Comp_Load('Events/EventInsert',$Event);
         if(!$Event)

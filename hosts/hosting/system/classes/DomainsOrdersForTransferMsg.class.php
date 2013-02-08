@@ -6,9 +6,9 @@
  *  Copyright © 2012 Vitaly Velikodnyy
  *
  */
- class DomainsOrdersOnTransferMsg extends Message {
+ class DomainsOrdersForTransferMsg extends Message {
      public function __construct(array $params, $toUser) {
-         parent::__construct('DomainsOrdersOnTransfer', $toUser, $params);
+         parent::__construct('DomainsOrdersForTransfer', $toUser, $params);
      }
 
      public function getParams() {
@@ -32,17 +32,17 @@
           $RegistratorID = DB_Select('DomainsSchemes','RegistratorID as ID',Array('UNIQ','ID'=>$this->params['SchemeID']));
           $Settings = DB_Select('Registrators','*',Array('UNIQ','ID'=>$RegistratorID['ID']));
           #-----------------------------------------------------------------------------
-          Debug("[Notifies/Email/DomainsOrdersOnTransfer]: Registrators[TypeID] - " . $Settings['TypeID']);
-          Debug("[Notifies/Email/DomainsOrdersOnTransfer]: Settings[PrefixNic] - " . $Settings['PrefixNic']);
-          Debug("[Notifies/Email/DomainsOrdersOnTransfer]: Registrar - " . $Registrar);
-          Debug("[Notifies/Email/DomainsOrdersOnTransfer]: PrefixRegistrar - " . $PrefixRegistrar);
+          Debug("[Notifies/Email/DomainsOrdersForTransfer]: Registrators[TypeID] - " . $Settings['TypeID']);
+          Debug("[Notifies/Email/DomainsOrdersForTransfer]: Settings[PrefixNic] - " . $Settings['PrefixNic']);
+          Debug("[Notifies/Email/DomainsOrdersForTransfer]: Registrar - " . $Registrar);
+          Debug("[Notifies/Email/DomainsOrdersForTransfer]: PrefixRegistrar - " . $PrefixRegistrar);
           #-----------------------------------------------------------------------------
           # Проверяем является ли регистрар нашим регистратором
           if($PrefixRegistrar == $Settings['PrefixNic']){
             $this->params['internalRegister'] = true;
             #---------------------------------------------------------------------------
-            Debug("[Notifies/Email/DomainsOrdersOnTransfer]: IsOurRegistrar - TRUE");
-            Debug("[Notifies/Email/DomainsOrdersOnTransfer]: Инструкция по трансферу в пределах регистратора");
+            Debug("[Notifies/Email/DomainsOrdersForTransfer]: IsOurRegistrar - TRUE");
+            Debug("[Notifies/Email/DomainsOrdersForTransfer]: Инструкция по трансферу в пределах регистратора");
             #---------------------------------------------------------------------------
             $this->params['registratorID'] = $Settings['TypeID'];
             $this->params['partnerLogin'] = $Settings['PartnerLogin'];
@@ -58,7 +58,7 @@
                 break;
               default:
                 #-----------------------------------------------------------------------
-                Debug(SPrintF('[Notifies/Email/DomainsOrdersOnTransfer]: Статья не найдена. Ожидалась Registrators/%s/internal', $PrefixRegistrar));
+                Debug(SPrintF('[Notifies/Email/DomainsOrdersForTransfer]: Статья не найдена. Ожидалась Registrators/%s/internal', $PrefixRegistrar));
                 #-----------------------------------------------------------------------
                 $TransferDoc = "Для получения информации об оформлении писем Вашему текущему регистратору и его контактах перейдите на его сайт.";
                 #-----------------------------------------------------------------------
@@ -80,7 +80,7 @@
           else {
             $this->params['internalRegister'] = false;
             #---------------------------------------------------------------------------
-            Debug("[Notifies/Email/DomainsOrdersOnTransfer]: Инструкция по трансферу от стороннего регистратора");
+            Debug("[Notifies/Email/DomainsOrdersForTransfer]: Инструкция по трансферу от стороннего регистратора");
             #---------------------------------------------------------------------------
             # Формируем постфикс идентификатора
             switch ($SchemeName['SchemeName']){
@@ -110,7 +110,7 @@
                 break;
               default:
                 #-----------------------------------------------------------------------
-                Debug(SPrintF('[Notifies/Email/DomainsOrdersOnTransfer]: Статья не найдена. Ожидалась Registrators/%s/external',$PrefixRegistrar));
+                Debug(SPrintF('[Notifies/Email/DomainsOrdersForTransfer]: Статья не найдена. Ожидалась Registrators/%s/external',$PrefixRegistrar));
                 #-----------------------------------------------------------------------
                 $TransferDoc = "\n\nДля получения информации об оформлении писем Вашему текущему регистратору и его контактах перейдите на его сайт.";
                 #-----------------------------------------------------------------------
@@ -131,7 +131,7 @@
           }
         }
         else {
-          Debug("[Notifies/Email/DomainsOrdersOnTransfer]: Registrar или PrefixRegistrar не был определён.");
+          Debug("[Notifies/Email/DomainsOrdersForTransfer]: Registrar или PrefixRegistrar не был определён.");
 
           # Уведомление об ошибке формирования инструкции
           $Event = Array (

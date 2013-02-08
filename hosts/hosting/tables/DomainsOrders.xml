@@ -90,7 +90,7 @@
      <!-- ****************************************************************** -->
      <OnTransfer>
       <Name>На переносе</Name>
-      <Where>`StatusID` = 'OnTransfer'</Where>
+      <Where>`StatusID` = 'OnTransfer' OR `StatusID` = 'ForTransfer'</Where>
      </OnTransfer>
      <!-- ****************************************************************** -->
      <Suspended>
@@ -110,7 +110,7 @@
      <!-- ****************************************************************** -->
      <OnProcessing>
       <Name>В переходном статусе</Name>
-      <Where>`StatusID` != 'Active' AND `StatusID` != 'Waiting' AND `StatusID` != 'Deleted' AND `StatusID` != 'Suspended' AND `StatusID` != 'OnTransfer'</Where>
+      <Where>`StatusID` != 'Active' AND `StatusID` != 'Waiting' AND `StatusID` != 'Deleted' AND `StatusID` != 'Suspended' AND `StatusID` != 'OnTransfer' AND `StatusID` != 'ForTransfer'</Where>
      </OnProcessing>
     </Patterns>
     <ActiveID>Week</ActiveID>
