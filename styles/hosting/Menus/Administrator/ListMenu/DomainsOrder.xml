@@ -8,26 +8,37 @@
   <Href>javascript:ShowWindow("/DomainsOrderInfo",{DomainOrderID:%Replace%});</Href>
   <Icon>Info.gif</Icon>
  </UniqID>
+ <!-- *********************************************************************** -->
  <UniqID>
   <Text>Сменить именные сервера</Text>
   <Href>javascript:ShowWindow("/DomainOrderNsChange",{DomainOrderID:%Replace%});</Href>
   <Icon>SchemeChange.png</Icon>
  </UniqID>
+ <!-- *********************************************************************** -->
  <UniqID>
   <Text>Редактировать заказ домена</Text>
   <Href>javascript:ShowWindow("/Administrator/DomainOrderEdit",{DomainOrderID:%Replace%});</Href>
   <Icon>Edit.gif</Icon>
  </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Ввести AuthCode</Text>
+  <Href>javascript:ShowWindow("/DomainAuthCodeInput",{DomainOrderID:%Replace%});</Href>
+  <Icon>Password.gif</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
  <UniqID>
   <Text>Сменить контактные данные</Text>
   <Href>javascript:ShowWindow("/DomainOrderChangeContactData",{DomainOrderID:%Replace%});</Href>
   <Icon>Profiles.png</Icon>
  </UniqID>
+ <!-- *********************************************************************** -->
  <UniqID>
   <Text>Информация от регистратора</Text>
   <Href>javascript:ShowWindow("/DomainOrderRegistratorInfo",{DomainOrderID:%Replace%});</Href>
   <Icon>Info.gif</Icon>
  </UniqID>
+ <!-- *********************************************************************** -->
  <UniqID>
   <Text>Обновить данные WhoIs</Text>
   <Href>javascript:DomainOrderWhoIsUpdate(%Replace%);</Href>
