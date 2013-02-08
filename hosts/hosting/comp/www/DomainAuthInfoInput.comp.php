@@ -63,7 +63,7 @@ if(In_Array($DomainOrder['Name'],Array('ru','su','рф')))
 $DOM->AddText('Title',SPrintF('Перенос домена %s.%s',$DomainOrder['DomainName'],$DomainOrder['Name']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Form = new Tag('FORM',Array('name'=>'DomainAuthCodeInputForm','onsubmit'=>'return false;'));
+$Form = new Tag('FORM',Array('name'=>'DomainAuthInfoInputForm','onsubmit'=>'return false;'));
 #-------------------------------------------------------------------------------
           #---------------------------------------------------------------------
           $Comp = Comp_Load(
@@ -86,6 +86,7 @@ $Form = new Tag('FORM',Array('name'=>'DomainAuthCodeInputForm','onsubmit'=>'retu
                 'type'   => 'text',
                 'name'   => 'AuthInfo',
                 'size'   => 20,
+		'value'  => $DomainOrder['AuthInfo'],
 		'prompt' => 'Пароль (authinfo) домена. Для переноса домена, его необходимо получить у прежнего регистратора.'
               )
             );
@@ -100,8 +101,8 @@ $Form = new Tag('FORM',Array('name'=>'DomainAuthCodeInputForm','onsubmit'=>'retu
             'Form/Input',
             Array(
               'type'    => 'button',
-              'onclick' => 'DomainTransfer();',
-              'value'   => 'Продолжить'
+              'onclick' => "FormEdit('/API/DomainAuthInfoInput','DomainAuthInfoInputForm','Смена пароля (AuthInfo) домена');",
+              'value'   => 'Изменить'
             )
           );
           if(Is_Error($Comp))

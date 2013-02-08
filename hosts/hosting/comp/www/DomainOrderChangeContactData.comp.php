@@ -214,26 +214,23 @@ switch(ValueOf($DomainOrder)){
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
             $Form->AddChild($Comp);
-#-------------------------------------------------------------------
-#-------------------------------------------------------------------
-foreach(Array_Keys($ContactDetail['FullInfo']) as $Key){
-####$Message = Str_Replace($Key,$Replace[$Key],$Message);
-
-$Comp = Comp_Load(
-'Form/Input',
-Array(
-'name'  => $Key,
-'type'  => 'hidden',
-'value' => $ContactDetail['FullInfo'][$Key]
-)
-);
-if(Is_Error($Comp))
-return ERROR | @Trigger_Error(500);
-#-----------------------------------------------------------------------
-$Form->AddChild($Comp);
-#------------------------------------------------------------------------
-}
-
+            #-------------------------------------------------------------------
+            #-------------------------------------------------------------------
+            foreach(Array_Keys($ContactDetail['FullInfo']) as $Key){
+              $Comp = Comp_Load(
+                               'Form/Input',
+                               Array(            
+                                    'name'  => $Key,
+                                    'type'  => 'hidden',
+                                    'value' => $ContactDetail['FullInfo'][$Key]
+                                    )
+                              );
+              if(Is_Error($Comp))
+                return ERROR | @Trigger_Error(500);
+              #-----------------------------------------------------------------------
+              $Form->AddChild($Comp);
+              #------------------------------------------------------------------------
+            }
             #-------------------------------------------------------------------
             $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript'),SPrintF("var \$Domain = '%s';",$Domain)));
             #-------------------------------------------------------------------
