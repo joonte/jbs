@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('libs/WhoIs.php','classes/Registrator.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('DomainName','AuthInfo','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `RegistratorID`','StatusID');
+$Columns = Array('UserID','DomainName','AuthInfo','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `RegistratorID`','StatusID');
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
@@ -75,6 +75,17 @@ switch(ValueOf($DomainOrder)){
                 $IsUpdate = DB_Update('DomainsOrders',Array('ProfileID'=>NULL,'DomainID'=>$IsDomainTransfer['DomainID']),Array('ID'=>$DomainOrderID));
                 if(Is_Error($IsUpdate))
                   return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------
+		$Event = Array(
+                               'UserID'        => $DomainOrder['UserID'],
+                               'PriorityID'    => 'Hosting',
+                               'Text'          => SPrintF('Подана заявка на перенос домена (%s.%s)',$DomainOrder['DomainName'],$DomainOrder['DomainZone']),
+                               'IsReaded'      => TRUE
+                              );
+                $Event = Comp_Load('Events/EventInsert',$Event);
+                if(!$Event)
+                  return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------
                 return TRUE;
               default:
                 return ERROR | @Trigger_Error(101);

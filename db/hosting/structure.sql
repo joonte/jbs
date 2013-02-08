@@ -53,6 +53,7 @@ CREATE TABLE `DomainsSchemes` (
   `IsProlong` enum('no','yes') default 'no',
   `CostOrder` float(6,2) default '0.00',
   `CostProlong` float(6,2) default '0.00',
+  `CostTransfer` float(6,2) default '0.00',
   `RegistratorID` int(11) NOT NULL,
   `SortID` int(11) default '10',
   `MinOrderYears` int(11) default '1',

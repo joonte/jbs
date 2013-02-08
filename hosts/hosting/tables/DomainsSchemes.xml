@@ -10,6 +10,7 @@
   <ListElement>Name</ListElement>
   <ListElement>CostOrder</ListElement>
   <ListElement>CostProlong</ListElement>
+  <ListElement>CostTransfer</ListElement>
   <ListElement>IsActive</ListElement>
   <ListElement>SortID</ListElement>
  </ColumnsIDs>
@@ -130,9 +131,6 @@
   <Args>
    <ListElement>%CostOrder%</ListElement>
   </Args>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
  </CostOrder>
  <!-- ********************************************************************** -->
  <CostProlong>
@@ -141,10 +139,15 @@
   <Args>
    <ListElement>%CostProlong%</ListElement>
   </Args>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
  </CostProlong>
+ <!-- ********************************************************************** -->
+ <CostTransfer>
+  <Head>Цена переноса</Head>
+  <Comp>Formats/Currency</Comp>
+  <Args>
+   <ListElement>%CostTransfer%</ListElement>
+  </Args>
+ </CostTransfer>
  <!-- ********************************************************************** -->
  <Registrator>
   <Head>Регистратор</Head>
@@ -175,6 +178,7 @@
  <ListElement>User</ListElement>
  <ListElement>CostOrder</ListElement>
  <ListElement>CostProlong</ListElement>
+ <ListElement>CostTransfer</ListElement>
  <ListElement>Registrator</ListElement>
  <ListElement>IsActive</ListElement>
  <ListElement>SortID</ListElement>

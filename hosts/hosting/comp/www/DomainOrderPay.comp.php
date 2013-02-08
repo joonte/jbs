@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -20,7 +19,7 @@ $IsChange       = (boolean) @$Args['IsChange'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','ContractID','OrderID','UserID','DomainName','ExpirationDate','StatusID','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `DomainsOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DomainsOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT `Balance` FROM `Contracts` WHERE `DomainsOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) as `SchemeName`');
+$Columns = Array('ID','ContractID','OrderID','UserID','DomainName','ExpirationDate','AuthInfo','StatusID','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `DomainsOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DomainsOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT `Balance` FROM `Contracts` WHERE `DomainsOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) as `SchemeName`');
 #-------------------------------------------------------------------------------
 $Where = ($DomainOrderID?SPrintF('`ID` = %u',$DomainOrderID):SPrintF('`OrderID` = %u',$OrderID));
 #-------------------------------------------------------------------------------
@@ -61,8 +60,11 @@ switch(ValueOf($DomainOrder)){
         #-----------------------------------------------------------------------
         $StatusID = $DomainOrder['StatusID'];
         #-----------------------------------------------------------------------
-        if(!In_Array($StatusID,Array('Waiting','Active','Suspended')))
+        if(!In_Array($StatusID,Array('Waiting','Active','Suspended','ForTransfer')))
           return new gException('ORDER_CAN_NOT_PAY','Заказ домена не может быть оплачен');
+	#-----------------------------------------------------------------------
+	if($StatusID == 'ForTransfer' && !In_Array($DomainOrder['SchemeName'],Array('ru','su','рф')) && StrLen($DomainOrder['AuthInfo']) < 3)
+	  return new gException('NEED_AUTHINFO','До оплаты домена, введите пароль (AuthInfo) для домена');
         #-----------------------------------------------------------------------
         $__USER = $GLOBALS['__USER'];
         #-----------------------------------------------------------------------
@@ -89,6 +91,16 @@ switch(ValueOf($DomainOrder)){
             #-------------------------------------------------------------------
             $Table[] = Array('Стоимость продления (в год)',$Comp);
             #-------------------------------------------------------------------
+	    if($StatusID == 'ForTransfer'){
+              $Comp = Comp_Load('Formats/Currency',$DomainScheme['CostTransfer']);
+              if(Is_Error($Comp))
+                return ERROR | @Trigger_Error(500);
+              #-------------------------------------------------------------------
+              $Table[] = Array('Стоимость переноса (разово)',$Comp);
+              #-------------------------------------------------------------------
+            }
+            #-------------------------------------------------------------------
+	    #-------------------------------------------------------------------
             $Comp = Comp_Load(
               'Form/Input',
               Array(
@@ -128,7 +140,7 @@ switch(ValueOf($DomainOrder)){
                 #---------------------------------------------------------------
                 $YearsRemainder = Date('Y',$ExpirationDate) - Date('Y') - 1;
                 #---------------------------------------------------------------
-                if($YearsRemainder >= $DomainScheme['MaxActionYears'])
+                if($YearsRemainder >= $DomainScheme['MaxActionYears'] && $StatusID != 'ForTransfer')
                   return new gException('DOMAIN_ORDER_ON_MAX_YEARS_1','Доменное имя уже зарегистрировано на максимальное кол-во лет');
               }else{
                 #---------------------------------------------------------------
@@ -212,7 +224,12 @@ switch(ValueOf($DomainOrder)){
               #-----------------------------------------------------------------
               while($YearsRemainded){
                 #---------------------------------------------------------------
-                $CurrentCost = $DomainScheme[(!$IsPayed && $YearsPay - $YearsRemainded < $DomainScheme['MinOrderYears']?'CostOrder':'CostProlong')];
+		if($StatusID == 'ForTransfer'){
+                  $CurrentCost = $DomainScheme['CostTransfer'];
+		}else{
+                  $CurrentCost = $DomainScheme[(!$IsPayed && $YearsPay - $YearsRemainded < $DomainScheme['MinOrderYears']?'CostOrder':'CostProlong')];
+		}
+		#Debug(SPrintF('[comp/www/DomainOrderPay]: CurrentCost = %s',$CurrentCost));
                 #---------------------------------------------------------------
                 $Where = SPrintF("`UserID` = %u AND ((`SchemeID` = %u OR %u IN (SELECT `SchemeID` FROM `DomainsSchemesGroupsItems` WHERE `DomainsSchemesGroupsItems`.`DomainsSchemesGroupID` = `DomainsBonuses`.`DomainsSchemesGroupID`)) OR ISNULL(`SchemeID`) AND ISNULL(`DomainsSchemesGroupID`)) AND `YearsRemainded` > 0",$UserID,$DomainScheme['ID'],$DomainScheme['ID']);
                 #---------------------------------------------------------------
@@ -285,7 +302,7 @@ switch(ValueOf($DomainOrder)){
               #-----------------------------------------------------------------
               $CostPay = Round($CostPay,2);
               #-----------------------------------------------------------------
-              $Table[] = Array('Кол-во лет',$YearsPay);
+              $Table[] = Array('Количество лет',$YearsPay);
               #-----------------------------------------------------------------
               if(Count($DomainsBonuses)){
                 #---------------------------------------------------------------
@@ -368,7 +385,7 @@ EOD;
                 #---------------------------------------------------------------
                 $DaysToProlong = $DomainScheme['DaysToProlong'];
                 #---------------------------------------------------------------
-                if(($ExpirationDate - Time())/86400 > $DaysToProlong)
+                if(($ExpirationDate - Time())/86400 > $DaysToProlong && $StatusID != 'ForTransfer')
                   return new gException('PROLONG_IS_EARLY',SPrintF('Заказ домена может быть продлен только за %u дн. до окончания',$DaysToProlong));
                 #---------------------------------------------------------------
                 $Options = Array();
@@ -379,7 +396,7 @@ EOD;
 		  $YearsRemainder = 0;
 		}
                 #---------------------------------------------------------------
-                if($YearsRemainder >= $DomainScheme['MaxActionYears'])
+                if($YearsRemainder >= $DomainScheme['MaxActionYears'] && $StatusID != 'ForTransfer')
                   return new gException('DOMAIN_ORDER_ON_MAX_YEARS_2','Доменное имя уже зарегистрировано на максимальное кол-во лет');
                 #---------------------------------------------------------------
                 for($Years=1;$Years<=$DomainScheme['MaxActionYears'] - $YearsRemainder;$Years++)
@@ -394,12 +411,17 @@ EOD;
               #-----------------------------------------------------------------
               if(Count($Options) < 2){
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/DomainOrderPay',Array('DomainOrderID'=>$DomainOrder['ID'],'YearsPay'=>Current($Options)));
+                $Comp = Comp_Load('www/DomainOrderPay',Array('DomainOrderID'=>$DomainOrder['ID'],'YearsPay'=>($StatusID == 'ForTransfer')?1:Current($Options)));
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
                 return $Comp;
               }
+	      #-----------------------------------------------------------------
+	      # костыль для пеерноса на максимально продлённом домене
+#	      if(Count($Options) < 2 && $StatusID == 'ForTransfer'){
+ #               $Options[1] = 1;
+#	      }
               #-----------------------------------------------------------------
               $Comp = Comp_Load('Form/Select',Array('name'=>'YearsPay'),$Options);
               if(Is_Error($Comp))

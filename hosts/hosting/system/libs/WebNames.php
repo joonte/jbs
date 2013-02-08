@@ -785,7 +785,7 @@ function WebNames_Domain_Transfer($Settings,$DomainName,$DomainZone,$Params){
                  'interface_revision' => 1,
                  'interface_lang'     => 'en',
                  'domain_name'        => SPrintF('%s.%s',$DomainName,$DomainZone),
-		 'notpaid'            => 1,
+		 'notpaid'            => 0,
 		 'period'             => 1,
 		 'authinfo'           => $Params['AuthInfo']
                 );

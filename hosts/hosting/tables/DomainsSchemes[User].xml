@@ -30,6 +30,7 @@
  <ListElement>Name</ListElement>
  <ListElement>CostOrder</ListElement>
  <ListElement>CostProlong</ListElement>
+ <ListElement>CostTransfer</ListElement>
  <ListElement>Registrator</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->

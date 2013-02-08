@@ -221,7 +221,7 @@ switch(ValueOf($HostingScheme)){
                             return new gException('DOMAIN_SCHEME_NOT_FOUND','Выбранный тарифный домена план не найден');
                           case 'array':
                             #---------------------------------------------------
-                            $DomainTransfer = Comp_Load('www/API/DomainTransfer',Array('ContractID'=>$Contract['ID'],'DomainName'=>$DomainName,'DomainSchemeID'=>$DomainScheme['ID']));
+                            $DomainTransfer = Comp_Load('www/API/DomainTransfer',Array('ContractID'=>$Contract['ID'],'DomainName'=>$DomainName,'DomainSchemeID'=>$DomainScheme['ID'],'IsNoBasket'=>TRUE));
                             #---------------------------------------------------
                             switch(ValueOf($DomainTransfer)){
                               case 'error':

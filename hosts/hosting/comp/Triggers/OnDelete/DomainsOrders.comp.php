@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $StatusID = $DomainOrder['StatusID'];
 #-------------------------------------------------------------------------------
-if(!In_Array($StatusID,Array('Waiting','OnTransfer','Deleted')))
+if(!In_Array($StatusID,Array('Waiting','ForTransfer','Deleted')))
   return new gException('DELETE_DENIED','Удаление заказа не возможно');
 #-------------------------------------------------------------------------------
 return TRUE;

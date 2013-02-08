@@ -19,7 +19,7 @@ $PayMessage	=  (string) @$Args['PayMessage'];
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','ContractID','OrderID','UserID','DomainName','ExpirationDate','StatusID','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `DomainsOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DomainsOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT `Balance` FROM `Contracts` WHERE `DomainsOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`');
+$Columns = Array('ID','ContractID','OrderID','UserID','DomainName','ExpirationDate','AuthInfo','StatusID','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `DomainsOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DomainsOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT `Balance` FROM `Contracts` WHERE `DomainsOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`');
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
@@ -45,8 +45,10 @@ switch(ValueOf($DomainOrder)){
         #-----------------------------------------------------------------------
         $StatusID = $DomainOrder['StatusID'];
         #-----------------------------------------------------------------------
-        if(!In_Array($StatusID,Array('Waiting','Active','Suspended')))
-          return ($StatusID != 'OnTransfer'?new gException('DOMAIN_ORDER_CAN_NOT_PAY','Заказ домена не может быть оплачен'):new gException('DOMAIN_ORDER_ON_TRANSFERING','Заказ не может быть оплачен до завершения ручной обработки оператором, осуществляющим перенос Вашего домена'));
+#        if(!In_Array($StatusID,Array('Waiting','Active','Suspended')))
+#          return ($StatusID != 'OnTransfer'?new gException('DOMAIN_ORDER_CAN_NOT_PAY','Заказ домена не может быть оплачен'):new gException('DOMAIN_ORDER_ON_TRANSFERING','Заказ не может быть оплачен до завершения ручной обработки оператором, осуществляющим перенос Вашего домена'));
+        if(!In_Array($StatusID,Array('Waiting','Active','Suspended','ForTransfer')))
+          return new gException('ORDER_CAN_NOT_PAY','Заказ домена не может быть оплачен');
         #-----------------------------------------------------------------------
         $DomainScheme = DB_Select('DomainsSchemes','*',Array('UNIQ','ID'=>$DomainOrder['SchemeID']));
         #-----------------------------------------------------------------------
@@ -163,7 +165,11 @@ switch(ValueOf($DomainOrder)){
             #-------------------------------------------------------------------
             while($YearsRemainded){
               #-----------------------------------------------------------------
-              $CurrentCost = $DomainScheme[(!$IsPayed && $YearsPay - $YearsRemainded < $DomainScheme['MinOrderYears']?'CostOrder':'CostProlong')];
+	      if($StatusID == 'ForTransfer'){
+                $CurrentCost = $DomainScheme['CostTransfer'];
+              }else{
+                $CurrentCost = $DomainScheme[(!$IsPayed && $YearsPay - $YearsRemainded < $DomainScheme['MinOrderYears']?'CostOrder':'CostProlong')];
+	      }
               #-----------------------------------------------------------------
               $IDomainsConsider = Array('DomainOrderID'=>$DomainOrderID,'Cost'=>$CurrentCost);
               #-----------------------------------------------------------------
@@ -287,7 +293,15 @@ switch(ValueOf($DomainOrder)){
 		  if(!$PayMessage)
                     $PayMessage = "Заказ успешно оплачен";
 		  #-------------------------------------------------------------
-                  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>($StatusID != 'Waiting'?'ForProlong':'ClaimForRegister'),'RowsIDs'=>$DomainOrder['ID'],'Comment'=>$PayMessage));
+		  #-------------------------------------------------------------
+		  $NewStatusID = 'Waiting';
+		  #-------------------------------------------------------------
+		  if($StatusID == 'Waiting')
+		    $NewStatusID = 'ClaimForRegister';
+		  #-------------------------------------------------------------
+		  if($StatusID == 'ForTransfer')
+		    $NewStatusID = 'OnTransfer';
+                  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>$NewStatusID,'RowsIDs'=>$DomainOrder['ID'],'Comment'=>$PayMessage));
                   #-------------------------------------------------------------
                   switch(ValueOf($Comp)){
                     case 'error':

@@ -1081,6 +1081,9 @@
   <Suspended>
    <Name>Заблокирован</Name>
   </Suspended>
+  <ForTransfer>
+   <Name>Для переноса</Name>
+  </ForTransfer>
   <OnTransfer>
    <Name>На переносе</Name>
   </OnTransfer>

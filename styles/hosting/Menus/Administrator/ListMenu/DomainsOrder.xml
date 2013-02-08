@@ -22,8 +22,8 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
-  <Text>Ввести AuthCode</Text>
-  <Href>javascript:ShowWindow("/DomainAuthCodeInput",{DomainOrderID:%Replace%});</Href>
+  <Text>Ввести AuthInfo</Text>
+  <Href>javascript:ShowWindow("/DomainAuthInfoInput",{DomainOrderID:%Replace%});</Href>
   <Icon>Password.gif</Icon>
  </UniqID>
  <!-- *********************************************************************** -->

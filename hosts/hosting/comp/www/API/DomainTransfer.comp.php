@@ -16,6 +16,7 @@ $DomainName     =  (string) @$Args['DomainName'];
 $DomainSchemeID = (integer) @$Args['DomainSchemeID'];
 $PersonID       =  (string) @$Args['PersonID'];
 $AuthInfo	=  (string) @$Args['AuthInfo'];
+$IsNoBasket     = (boolean) @$Args['IsNoBasket'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/WhoIs.php')))
   return ERROR | @Trigger_Error(500);
@@ -59,8 +60,9 @@ switch(ValueOf($Contract)){
           case 'array':
 	    #-------------------------------------------------------------------
             if(!In_Array($DomainScheme['Name'],Array('ru','su','рф'))){
-              if(StrLen($AuthInfo) < 3 || StrLen($AuthInfo) > 40)
-	        return new gException('INCORRECT_AUTHINFO','Указан неверный код переноса домена');
+	      if(!$IsNoBasket)
+                if(StrLen($AuthInfo) < 3 || StrLen($AuthInfo) > 40)
+                  return new gException('INCORRECT_AUTHINFO','Указан неверный код переноса домена');
 	    }
             #-------------------------------------------------------------------
             $Count = DB_Count('DomainsOrders',Array('Where'=>SPrintF("`DomainName` = '%s' AND (SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrders`.`SchemeID`) = '%s'",$DomainName,$DomainScheme['Name'])));
@@ -97,7 +99,7 @@ switch(ValueOf($Contract)){
                   'SchemeID'   => $DomainScheme['ID'],
                   'PersonID'   => $PersonID,
                   'WhoIs'      => $WhoIs['Info'],
-		  'AuthInfo'   => ($AuthInfo)?$AuthInfo:'NotUsed',
+		  'AuthInfo'   => ($AuthInfo)?$AuthInfo:NULL,
                   'UpdateDate' => Time()
                 );
                 #---------------------------------------------------------------
@@ -120,7 +122,7 @@ switch(ValueOf($Contract)){
                 if(Is_Error($DomainOrderID))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'OnTransfer','RowsIDs'=>$DomainOrderID,'Comment'=>'Поступила заявка на перенос доменного имени'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'ForTransfer','RowsIDs'=>$DomainOrderID,'Comment'=>'Поступила заявка на перенос доменного имени'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':

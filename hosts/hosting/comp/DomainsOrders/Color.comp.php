@@ -52,6 +52,9 @@ switch($StatusID){
   case 'Deleted':
     $Color = 'DCDCDC';
   break;
+  case 'ForTransfer':
+    $Color = 'ADD8E6';
+  break;
   case 'OnTransfer':
     $Color = 'E8FAFF';
   break;
