@@ -101,6 +101,8 @@ case 'array':
 							return ERROR | @Trigger_Error(400);
 						case 'array':
 							#-------------------------------------------------------------------------
+							$NoBody = new Tag('NOBODY');
+							#-------------------------------------------------------------------------
 							if($ISPswOrder['IsProlong'] == 'yes'){
 								#-------------------------------------------------------------------------
 								$Path = System_Element('templates/modules/NoticeOrders.Active.ISPsw.IsProlong.html');
@@ -108,7 +110,6 @@ case 'array':
 							        	return ERROR | @Trigger_Error(500);
 								#-------------------------------------------------------------------------------
 								$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
-								$NoBody = new Tag('NOBODY');
 								$NoBody->AddHTML(SPrintF($Parse,$ISPswOrder['SchemeName'],$ISPswOrder['DaysRemainded']));
 								$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ISPswOrderPay',{ISPswOrderID:%u});",$ISPswOrder['ID'])),'[оплатить]')));
 							}else{
@@ -118,7 +119,6 @@ case 'array':
 							        	return ERROR | @Trigger_Error(500);
 								#-------------------------------------------------------------------------------
 								$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
-								$NoBody = new Tag('NOBODY');
 								$NoBody->AddHTML(SPrintF($Parse,$ISPswOrder['SchemeName']));
 								$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ISPswOrderSchemeChange',{ISPswOrderID:%u});",$ISPswOrder['ID'])),'[сменить тариф]')));
 							}
@@ -184,6 +184,8 @@ case 'array':
         	                #-------------------------------------------------------------------------
 				#-------------------------------------------------------------------------
 				# В зависимости от того разрешено продление, или нет - выводим разный текст.
+				$NoBody = new Tag('NOBODY');
+				#-------------------------------------------------------------------------
 				if($ServiceOrder['IsProlong'] == 'yes'){
 					#-------------------------------------------------------------------------------
 					$Path = System_Element('templates/modules/NoticeOrders.Active.Hosting.IsProlong.html');
@@ -191,7 +193,6 @@ case 'array':
 				        	return ERROR | @Trigger_Error(500);
 					#-------------------------------------------------------------------------------
 					$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
-					$NoBody = new Tag('NOBODY');
 					$NoBody->AddHTML(SPrintF($Parse,$Order['Name'],$ServiceOrder['Login'],$ServiceOrder['SchemeName'],$Order['DaysRemainded']));
 					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/%sOrderPay',{%sOrderID:%u});",$Order['Code'],$Order['Code'],$ServiceOrder['ID'])),'[оплатить]')));
 					#-------------------------------------------------------------------------
@@ -202,7 +203,6 @@ case 'array':
 				        	return ERROR | @Trigger_Error(500);
 					#-------------------------------------------------------------------------------
 					$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
-					$NoBody = new Tag('NOBODY');
 					$NoBody->AddHTML(SPrintF($Parse,$Order['Name'],$ServiceOrder['Login'],$ServiceOrder['SchemeName']));
 					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/%sOrderSchemeChange',{%sOrderID:%u});",$Order['Code'],$Order['Code'],$ServiceOrder['ID'])),'[сменить тариф]')));
 					#-------------------------------------------------------------------------
@@ -274,6 +274,8 @@ case 'array':
 						return ERROR | @Trigger_Error(400);
 					case 'array':
 						#-------------------------------------------------------------------------
+						$NoBody = new Tag('NOBODY');
+						#-------------------------------------------------------------------------
 						if($ISPswOrder['IsProlong'] == 'yes'){
 							#-------------------------------------------------------------------------
 							$Path = System_Element('templates/modules/NoticeOrders.Suspended.ISPsw.IsProlong.html');
@@ -281,7 +283,6 @@ case 'array':
 						        	return ERROR | @Trigger_Error(500);
 							#-------------------------------------------------------------------------------
 							$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
-							$NoBody = new Tag('NOBODY');
 							$NoBody->AddHTML(SPrintF($Parse,$ISPswOrder['SchemeName']));
 							$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ISPswOrderPay',{ISPswOrderID:%u});",$ISPswOrder['ID'])),'[оплатить]')));
 						}else{
@@ -291,7 +292,6 @@ case 'array':
 						        	return ERROR | @Trigger_Error(500);
 							#-------------------------------------------------------------------------------
 							$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
-							$NoBody = new Tag('NOBODY');
 							$NoBody->AddHTML(SPrintF($Parse,$ISPswOrder['SchemeName']));
 							$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("/Tickets")),'[систему тикетов]')));
 						}
@@ -355,6 +355,8 @@ case 'array':
 				}
         	                #-------------------------------------------------------------------------
 				# В зависимости от того разрешено продление, или нет - выводим разный текст.
+				$NoBody = new Tag('NOBODY');
+				#-------------------------------------------------------------------------
 				if($ServiceOrder['IsProlong'] == 'yes'){
 					#-------------------------------------------------------------------------
 					$Path = System_Element('templates/modules/NoticeOrders.Suspended.Hosting.IsProlong.html');
@@ -362,7 +364,6 @@ case 'array':
 					       	return ERROR | @Trigger_Error(500);
 					#-------------------------------------------------------------------------------
 					$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
-					$NoBody = new Tag('NOBODY');
 					$NoBody->AddHTML(SPrintF($Parse,$Order['Name'],$ServiceOrder['Login'],$ServiceOrder['SchemeName']));
 					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/%sOrderPay',{%sOrderID:%u});",$Order['Code'],$Order['Code'],$ServiceOrder['ID'])),'[оплатить]')));
 					#-------------------------------------------------------------------------
@@ -373,7 +374,6 @@ case 'array':
 					       	return ERROR | @Trigger_Error(500);
 					#-------------------------------------------------------------------------------
 					$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
-					$NoBody = new Tag('NOBODY');
 					$NoBody->AddHTML(SPrintF($Parse,$Order['Name'],$ServiceOrder['Login'],$ServiceOrder['SchemeName']));
 					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("/Tickets")),'[систему тикетов]')));
 					#-------------------------------------------------------------------------
@@ -545,8 +545,8 @@ case 'array':
 					$NoBody = new Tag('NOBODY');
 					$NoBody->AddHTML(SPrintF($Parse,$DomainOrder['DomainNameFull']));
 					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DomainSelectOwner',{DomainOrderID:%u});",$DomainOrder['ID'])),'[определить]')));
-				#-------------------------------------------------------------------------
-				$Result[] = $NoBody;
+					#-------------------------------------------------------------------------
+					$Result[] = $NoBody;
 				}
 				break;
 			default:
@@ -555,8 +555,100 @@ case 'array':
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 		}elseif($Order['StatusID'] == 'ForTransfer'){
+			#-------------------------------------------------------------------------------
+			$Columns = Array('ID','AuthInfo','DomainName','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) AS `Name`','(SELECT `CostTransfer` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) AS `CostTransfer`');
+			$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
+			switch(ValueOf($DomainOrder)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				return ERROR | @Trigger_Error(400);
+			case 'array':
+				#-------------------------------------------------------------------------
+				$NoBody = new Tag('NOBODY');
+				#-------------------------------------------------------------------------
+				if(In_Array($DomainOrder['Name'],Array('ru','su','рф'))){
+					#-------------------------------------------------------------------------
+					$Path = System_Element('templates/modules/NoticeOrders.ForTransfer.USSR.html');
+					if(Is_Error($Path))
+				        	return ERROR | @Trigger_Error(500);
+					#-------------------------------------------------------------------------------
+					$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
+					$NoBody->AddHTML(SPrintF($Parse,$DomainOrder['DomainName'],$DomainOrder['Name'],$DomainOrder['Name']));
+					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DomainOrderPay',{DomainOrderID:%u});",$DomainOrder['ID'])),'[оплатить]')));
+					#-------------------------------------------------------------------------
+				}else{
+					# два варианта - зависит от наличия AuthInfo
+					if($DomainOrder['AuthInfo']){
+						#-------------------------------------------------------------------------
+						$Summ = Comp_Load('Formats/Currency',$DomainOrder['CostTransfer']);
+						if(Is_Error($Summ))
+							return ERROR | @Trigger_Error(500);
+						#-------------------------------------------------------------------------
+						$Path = System_Element('templates/modules/NoticeOrders.ForTransfer.bourgeois.AuthInfo.html');
+						if(Is_Error($Path))
+					        	return ERROR | @Trigger_Error(500);
+						#-------------------------------------------------------------------------------
+						$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
+						$NoBody->AddHTML(SPrintF($Parse,$DomainOrder['DomainName'],$DomainOrder['Name'],$DomainOrder['Name'],$Summ));
+						$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DomainOrderPay',{DomainOrderID:%u});",$DomainOrder['ID'])),'[оплатить]')));
+						#-------------------------------------------------------------------------
+					}else{
+						#-------------------------------------------------------------------------
+						$Path = System_Element('templates/modules/NoticeOrders.ForTransfer.bourgeois.NoAuthInfo.html');
+						if(Is_Error($Path))
+					        	return ERROR | @Trigger_Error(500);
+						#-------------------------------------------------------------------------------
+						$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
+						$NoBody->AddHTML(SPrintF($Parse,$DomainOrder['DomainName'],$DomainOrder['Name']));
+						$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DomainAuthInfoInput',{DomainOrderID:%u});",$DomainOrder['ID'])),'[ввести пароль домена]')));
+					#-------------------------------------------------------------------------
+					}
+				}
+				#-------------------------------------------------------------------------
+				$Result[] = $NoBody;
+				break;
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
 
 		}elseif($Order['StatusID'] == 'OnTransfer'){
+			#-------------------------------------------------------------------------------
+			$Columns = Array('ID','AuthInfo','DomainName','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) AS `Name`','StatusDate');
+			$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
+			switch(ValueOf($DomainOrder)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				return ERROR | @Trigger_Error(400);
+			case 'array':
+				#-------------------------------------------------------------------------
+				$NoBody = new Tag('NOBODY');
+				#-------------------------------------------------------------------------
+				if(In_Array($DomainOrder['Name'],Array('ru','su','рф'))){
+					#-------------------------------------------------------------------------
+					$Path = System_Element('templates/modules/NoticeOrders.OnTransfer.USSR.html');
+					if(Is_Error($Path))
+				        	return ERROR | @Trigger_Error(500);
+					#-------------------------------------------------------------------------------
+					$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
+					$NoBody->AddHTML(SPrintF($Parse,$DomainOrder['DomainName'],$DomainOrder['Name'],Ceil(($DomainOrder['StatusDate'] + 180*24*3600 - Time())/(24*3600))));
+					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("/Tickets")),'[систему тикетов]')));
+					#-------------------------------------------------------------------------
+					$Result[] = $NoBody;
+				}else{
+					# ничё?
+				}
+				#-------------------------------------------------------------------------
+				break;
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+
 		}else{
 			# ничё не делаем?
 		}
