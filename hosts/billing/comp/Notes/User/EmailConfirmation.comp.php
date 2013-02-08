@@ -16,15 +16,14 @@ if(!CacheManager::isEnabled())
 #-------------------------------------------------------------------------------
 if($GLOBALS['__USER']['EmailConfirmed'] < Time() - 365 * 24 * 3600 /* пусть раз в год подтверждают */){
 	#-------------------------------------------------------------------------------
+	$Path = System_Element('templates/modules/EmailConfirmation.html');
+	if(Is_Error($Path))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
 	$NoBody = new Tag('NOBODY');
-	#-------------------------------------------------------------------------------
-	$Message = '<NOBODY><SPAN>Обращаем Ваше внимание, что у вас не подтверждён ваш почтовый адрес </SPAN>';
-	$Message .= '<SPAN style="font-size:14px;font-weight:bold;">' . $GLOBALS['__USER']['Email'] . '</SPAN>';
-	$Message .= '<SPAN>. Для подтверждения, нажмите соответствующую кнопку в разделе</SPAN>';
-	$Message .= '<A style="font-size:14px;font-weight:bold;" href="javascript:ShowWindow(\'/UserPersonalDataChange\');">[Мои настройки]</A>';
-	$Message .= '<SPAN>, и следуйте инструкциям.</SPAN></NOBODY>';
-	#-------------------------------------------------------------------------------
-	$NoBody->AddHTML($Message);
+	$NoBody->AddHTML(SPrintF($Parse,$GLOBALS['__USER']['Email']));
+	$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>"javascript:ShowWindow('/UserPersonalDataChange');"),'[Мои настройки]')));
 	#-------------------------------------------------------------------------
 	$Result[] = $NoBody;
 }
