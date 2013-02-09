@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Sergey Sedov (for www.host-food.ru) */
 /******************************************************************************/
@@ -29,9 +28,9 @@ if(!$Services){
 }
 #-------------------------------------------------------------------------------
 for($i=0;$i<Count($Services);$i++){
-  Debug( SPrintF("[Tasks/GC/SetDeletedWaitingOrders]: Код текущей услуги - %s",$Services[$i]['Code']) );
+  Debug(SPrintF("[Tasks/GC/SetDeletedWaitingOrders]: Код текущей услуги - %s",$Services[$i]['Code']));
   #-----------------------------------------------------------------------------
-  $Where = SPrintF("`StatusID` = 'Waiting' AND `StatusDate` < UNIX_TIMESTAMP( ) - %d *86400", $Params['DaysBeforeDeleted']);
+  $Where = SPrintF("`StatusID` = 'Waiting' AND `StatusDate` < UNIX_TIMESTAMP() - %d * 86400", $Params['DaysBeforeDeleted']);
   #-----------------------------------------------------------------------------
   $Orders = DB_Select($Services[$i]['View'],Array('ID','OrderID','UserID'),Array('Where'=>$Where,'Limits'=>Array(0,$Params['ItemPerIteration'])));
   #-----------------------------------------------------------------------------
@@ -44,7 +43,7 @@ for($i=0;$i<Count($Services);$i++){
     case 'array':
       #---------------------------------------------------------------------------
       foreach($Orders as $Order){
-        Debug( SPrintF("[Tasks/GC/SetDeletedWaitingOrders]: Отмена заказа (%s) #%d.",$Services[$i]['Code'],$Order['OrderID']) );
+        Debug(SPrintF("[Tasks/GC/SetDeletedWaitingOrders]: Отмена заказа (%s) #%d.",$Services[$i]['Code'],$Order['OrderID']) );
         #----------------------------------TRANSACTION----------------------------
         if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Tasks/GC/SetDeletedWaitingOrders'))))
           return ERROR | @Trigger_Error(500);
@@ -80,6 +79,28 @@ for($i=0;$i<Count($Services);$i++){
     default:
       return ERROR | @Trigger_Error(101);
   }
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# JBS-604: помечаем как удалённые заказы на услуги настраиваемые вгучную
+$Where = SPrintF("`StatusID` = 'Waiting' AND `StatusDate` < UNIX_TIMESTAMP() - %d * 86400", $Params['DaysBeforeDeleted']);
+#-------------------------------------------------------------------------------
+$Orders = DB_Select('OrdersOwners',Array('ID','UserID','(SELECT `NameShort` FROM `Services` WHERE `OrdersOwners`.`ServiceID`=`Services`.`ID`) AS `NameShort`','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `OrdersOwners`.`UserID`) as `Email`'),Array('Where'=>$Where));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Orders)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	# No more...
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	foreach($Orders as $Order){
+		Debug(SPrintF("[Tasks/GC/SetDeletedWaitingOrders]: юзер %s; услуга %s; заказ #%s",$Order['Email'],$Order['NameShort'],$Order['ID']));
+	}
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
 return TRUE;
