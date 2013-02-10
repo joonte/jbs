@@ -14,7 +14,8 @@ if(!CacheManager::isEnabled())
 	return $Result;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($GLOBALS['__USER']['EmailConfirmed'] < Time() - 365 * 24 * 3600 /* пусть раз в год подтверждают */){
+#if($GLOBALS['__USER']['EmailConfirmed'] < Time() - 365 * 24 * 3600 /* пусть раз в год подтверждают */){
+if($GLOBALS['__USER']['EmailConfirmed'] < 1 /* пусть просто подтверждают... */){
 	#-------------------------------------------------------------------------------
 	$Path = System_Element('templates/modules/EmailConfirmation.html');
 	if(Is_Error($Path))
