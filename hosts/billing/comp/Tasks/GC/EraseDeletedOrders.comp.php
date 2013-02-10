@@ -97,7 +97,7 @@ for($i=0;$i<Count($Services);$i++){
 # JBS-604: удаляем удалённые
 $Where = SPrintF("`StatusID` = 'Deleted' AND `StatusDate` < UNIX_TIMESTAMP() - %d * 86400", $Params['DaysBeforeErase']);
 #-------------------------------------------------------------------------------
-$Orders = DB_Select('OrdersOwners',Array('ID','UserID','(SELECT `NameShort` FROM `Services` WHERE `OrdersOwners`.`ServiceID`=`Services`.`ID`) AS `NameShort`','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `OrdersOwners`.`UserID`) as `Email`'),Array('Where'=>$Where));
+$Orders = DB_Select('OrdersOwners',Array('ID','UserID','(SELECT `NameShort` FROM `Services` WHERE `OrdersOwners`.`ServiceID`=`Services`.`ID`) AS `NameShort`','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `OrdersOwners`.`UserID`) as `Email`','(SELECT `Code` FROM `Services` WHERE `OrdersOwners`.`ServiceID`=`Services`.`ID`) AS `Code`'),Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Orders)){
 case 'error':
@@ -108,7 +108,7 @@ case 'exception':
 case 'array':
 	#-------------------------------------------------------------------------------
 	foreach($Orders as $Order){
-		Debug(SPrintF("[comp/Tasks/GC/EraseDeletedOrders]: юзер %s; услуга %s; заказ #%s",$Order['Email'],$Order['NameShort'],$Order['ID']));
+		Debug(SPrintF("[comp/Tasks/GC/EraseDeletedOrders]: юзер %s; услуга %s; код услуги %s; ID услуги %s; заказ #%s",$Order['Email'],$Order['NameShort'],$Order['Code'],$Order['ServiceID'],$Order['ID']))
 	}
 	break;
 default:

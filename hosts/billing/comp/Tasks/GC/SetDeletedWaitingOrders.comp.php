@@ -85,7 +85,7 @@ for($i=0;$i<Count($Services);$i++){
 # JBS-604: помечаем как удалённые заказы на услуги настраиваемые вгучную
 $Where = SPrintF("`StatusID` = 'Waiting' AND `StatusDate` < UNIX_TIMESTAMP() - %d * 86400", $Params['DaysBeforeDeleted']);
 #-------------------------------------------------------------------------------
-$Orders = DB_Select('OrdersOwners',Array('ID','UserID','(SELECT `NameShort` FROM `Services` WHERE `OrdersOwners`.`ServiceID`=`Services`.`ID`) AS `NameShort`','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `OrdersOwners`.`UserID`) as `Email`'),Array('Where'=>$Where));
+$Orders = DB_Select('OrdersOwners',Array('ID','UserID','(SELECT `NameShort` FROM `Services` WHERE `OrdersOwners`.`ServiceID`=`Services`.`ID`) AS `NameShort`','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `OrdersOwners`.`UserID`) as `Email`','(SELECT `Code` FROM `Services` WHERE `OrdersOwners`.`ServiceID`=`Services`.`ID`) AS `Code`'),Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Orders)){
 case 'error':
@@ -96,7 +96,7 @@ case 'exception':
 case 'array':
 	#-------------------------------------------------------------------------------
 	foreach($Orders as $Order){
-		Debug(SPrintF("[Tasks/GC/SetDeletedWaitingOrders]: юзер %s; услуга %s; заказ #%s",$Order['Email'],$Order['NameShort'],$Order['ID']));
+		Debug(SPrintF("[Tasks/GC/SetDeletedWaitingOrders]: юзер %s; услуга %s; код услуги %s; ID услуги %s; заказ #%s",$Order['Email'],$Order['NameShort'],$Order['Code'],$Order['ServiceID'],$Order['ID']));
 	}
 	break;
 default:
