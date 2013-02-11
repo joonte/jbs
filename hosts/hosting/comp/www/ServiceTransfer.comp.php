@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$OrderID	= (integer) @$Args['OrderID'];
+$ServiceOrderID	= (integer) @$Args['ServiceOrderID'];
 $TableID	=  (string) @$Args['TableID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ if($__USER['EmailConfirmed'] + 3600 < Time() && !$__USER['IsAdmin'])
 	return new gException('EMAIL_CONFIRMED_TOO_OLD','Для возможности передачи заказа на другой аккаунт, вам необходимо подтвердить ваш почтовый адрес в разделе "Мои настройки". Возможноть переноса будет доступна в течение часа, после подтверждения.');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Order = DB_Select(SPrintF('%sOrdersOwners',$TableID),Array('*'),Array('UNIQ','ID'=>$OrderID));
+$Order = DB_Select(SPrintF('%sOrdersOwners',$TableID),Array('*'),Array('UNIQ','ID'=>$ServiceOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Order)){
 case 'error':
@@ -133,9 +133,9 @@ $Form->AddChild($Comp);
 $Comp = Comp_Load(
 		'Form/Input',
 		Array(
-			'name'  => 'OrderID',
+			'name'  => 'ServiceOrderID',
 			'type'  => 'hidden',
-			'value' => $OrderID
+			'value' => $ServiceOrderID
 			)
 		);
 #-------------------------------------------------------------------------------
