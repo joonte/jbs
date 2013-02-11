@@ -133,7 +133,7 @@ foreach($Registrators as $NowReg){
 					}else{
 						Debug(SPrintF('comp/Tasks/GC/DomainsFindOdd]: Домен %s / %s, в биллинге есть, но его статус несоответствует критериям выборки',$DomainOdd,$NowReg['Name']));
 						# JBS-595 - проверяем не на переносе ли он - возможно перенеос завершился успешно
-						$Where[] = "`StatusID` = 'OnTransfer'";	# сама Where задана выше, тут тока условие добавляем
+						$Where[] = "`StatusID` = 'OnTransfer' OR `StatusID` = 'ForTransfer'";	# сама Where задана выше, тут тока условие добавляем
 						#-----------------------------------------------------------
 						$Count = DB_Count(Array('DomainsOrdersOwners','DomainsSchemes'),Array('Where'=>$Where));
 						if(Is_Error($Count))
