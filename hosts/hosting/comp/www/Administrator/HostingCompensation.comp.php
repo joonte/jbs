@@ -63,7 +63,7 @@ if($HostingOrderID){
   }
 }else{
   #-----------------------------------------------------------------------------
-  $HostingServers = DB_Select('HostingServers',Array('ID','Address'));
+  $HostingServers = DB_Select('HostingServers',Array('ID','Address'),Array('SortOn'=>'Address'));
   #-----------------------------------------------------------------------------
   switch(ValueOf($HostingServers)){
     case 'error':

@@ -63,7 +63,7 @@ if($VPSOrderID){
   }
 }else{
   #-----------------------------------------------------------------------------
-  $VPSServers = DB_Select('VPSServers',Array('ID','Address'));
+  $VPSServers = DB_Select('VPSServers',Array('ID','Address'),Array('SortOn'=>'Address'));
   #-----------------------------------------------------------------------------
   switch(ValueOf($VPSServers)){
     case 'error':
