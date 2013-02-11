@@ -94,7 +94,8 @@ $Comp = Comp_Load(
 		'Form/Input',
 		Array(
 			'type'    => 'button',
-			'onclick' => "FormEdit('/API/ServiceTransfer','ServiceTransferForm','Отправка заявки на передачу услуги');",
+			'onclick' => "javascript:ShowConfirm('Вы действительно хотите передать данный аккаунт пользователю \"' + form.Email.value + '\"?','AjaxCall(\'/API/ServiceTransfer\',FormGet(ServiceTransferForm),\'Отправка заявки на передачу услуги\',\'GetURL(document.location);\');');",
+//			'onclick' => "FormEdit('/API/ServiceTransfer','ServiceTransferForm','Отправка заявки на передачу услуги');",
 			'value'   => 'Передать'
 			)
 		);
