@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -16,7 +15,7 @@ $RowID   = (integer) @$Args['RowID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$UserNotice = DB_Select($TableID,Array('ID','UserNotice'),Array('UNIQ','ID'=>$RowID));
+$UserNotice = DB_Select(SPrintF('%sOwners',$TableID),Array('ID','UserNotice','UserID'),Array('UNIQ','ID'=>$RowID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($UserNotice)){
   case 'error':
@@ -24,6 +23,10 @@ switch(ValueOf($UserNotice)){
   case 'exception':
     return ERROR | @Trigger_Error(400);
   case 'array':
+    #---------------------------------------------------------------------------
+    if($GLOBALS['__USER']['ID'] != $UserNotice['UserID'])
+      if(!$GLOBALS['__USER']['IsAdmin'])
+        return ERROR | @Trigger_Error(700);
     #---------------------------------------------------------------------------
     $DOM = new DOM();
     #---------------------------------------------------------------------------
