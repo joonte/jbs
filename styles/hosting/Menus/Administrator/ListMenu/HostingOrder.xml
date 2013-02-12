@@ -23,7 +23,7 @@
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Передать на другой аккаунт</Text>
-  <Href>javascript:ShowWindow("/ServiceTransfer",{ServiceOrderID:"%Replace%",TableID:"Hosting"});</Href>
+  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%Replace%",ServiceID:"10000"});</Href>
   <Icon>ListMenuItem.gif</Icon>
  </UniqID>
  <!-- *********************************************************************** -->

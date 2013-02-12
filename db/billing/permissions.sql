@@ -177,7 +177,12 @@ INSERT INTO `Permissions` (`Name`,`HostID`,`UserGroupID`,`UserID`,`OwnerGroupID`
 
 /* added by lissyara, 2012-11-21 in 14:41 MSK, for JBS-565 */
 ('ContractConsiderEdit','billing',1,1,4000000,1,1,'yes'),
-('ContractConsiderEdit','billing',3000000,100,1,1,2,'yes');
+('ContractConsiderEdit','billing',3000000,100,1,1,2,'yes'),
+
+/* added by lissyara, for JBS-600, 2013-02-11 in 15:31 MSK  */
+('OrdersTransfer', 'hosting', 1, 1, 4000000, 1, 1, 'yes'),
+('OrdersTransfer', 'hosting', 3000000, 100, 1, 1, 2, 'yes')
+;
 
 
 UNLOCK TABLES;

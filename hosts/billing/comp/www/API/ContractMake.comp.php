@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -157,6 +156,10 @@ if($TypeID != "NaturalPartner"){
 	      $Answer = Array('Status'=>'Window','Window'=>$Window);
 	    }
 	    #---------------------------------------------------------------------------
+            $CacheFlush = Comp_Load('www/CacheFlush');
+            if(Is_Error($CacheFlush))
+              return ERROR | @Trigger_Error(500);
+            #---------------------------------------------------------------------------
 	    return $Answer;
 	  default:
 	    return ERROR | @Trigger_Error(101);
@@ -190,6 +193,11 @@ if($TypeID != "NaturalPartner"){
 	case 'exception':
 		return ERROR | @Trigger_Error(400);
 	case 'array':
+                #---------------------------------------------------------------------------
+                $CacheFlush = Comp_Load('www/CacheFlush');
+                if(Is_Error($CacheFlush))
+                  return ERROR | @Trigger_Error(500);
+                #---------------------------------------------------------------------------
 		return $Answer;
 	default:
 		return ERROR | @Trigger_Error(101);

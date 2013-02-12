@@ -13,7 +13,7 @@ $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $ServiceOrderID	= (integer) @$Args['ServiceOrderID'];
-$TableID	=  (string) @$Args['TableID'];
+$ServiceID	= (integer) @$Args['ServiceID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
@@ -23,10 +23,26 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
 if($__USER['EmailConfirmed'] + 3600 < Time() && !$__USER['IsAdmin'])
-	return new gException('EMAIL_CONFIRMED_TOO_OLD','Для возможности передачи заказа на другой аккаунт, вам необходимо подтвердить ваш почтовый адрес в разделе "Мои настройки". Возможноть переноса будет доступна в течение часа, после подтверждения.');
+	return new gException('EMAIL_CONFIRMED_TOO_OLD','Для возможности передачи заказа на другой аккаунт, вам необходимо подтвердить ваш почтовый адрес в разделе "Мои настройки". Возможность переноса будет доступна в течение часа, после подтверждения.');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Order = DB_Select(SPrintF('%sOrdersOwners',$TableID),Array('*'),Array('UNIQ','ID'=>$ServiceOrderID));
+# достаём сервис
+$Service = DB_Select('ServicesOwners',Array('ID','Code','NameShort'),Array('UNIQ','ID'=>$ServiceID));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Service)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('SERVICE_NOT_FOUND','Указанный сервис не найден');
+case 'array':
+	# No more...
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),Array('*'),Array('UNIQ','ID'=>$ServiceOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Order)){
 case 'error':
@@ -35,7 +51,7 @@ case 'exception':
 	return ERROR | @Trigger_Error(400);
 case 'array':
 	#---------------------------------------------------------------------------
-	$IsPermission = Permission_Check('ServiceTransfer',(integer)$__USER['ID'],(integer)$Order['UserID']);
+	$IsPermission = Permission_Check('OrdersTransfer',(integer)$__USER['ID'],(integer)$Order['UserID']);
 	#---------------------------------------------------------------------------
 	switch(ValueOf($IsPermission)){
 	case 'error':
@@ -66,7 +82,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
 	return ERROR | @Trigger_Error(500);
 #---------------------------------------------------------------------------
-$DOM->AddText('Title',SPrintF('Передача заказа #%s на другой аккаунт биллинга',$Order['OrderID']));
+$DOM->AddText('Title',SPrintF('Передача заказа "%s", #%s на другой аккаунт биллинга',$Service['NameShort'],$Order['OrderID']));
 #---------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table = Array();
@@ -94,8 +110,7 @@ $Comp = Comp_Load(
 		'Form/Input',
 		Array(
 			'type'    => 'button',
-			'onclick' => "javascript:ShowConfirm('Вы действительно хотите передать данный аккаунт пользователю \"' + form.Email.value + '\"?','AjaxCall(\'/API/ServiceTransfer\',FormGet(ServiceTransferForm),\'Отправка заявки на передачу услуги\',\'GetURL(document.location);\');');",
-//			'onclick' => "FormEdit('/API/ServiceTransfer','ServiceTransferForm','Отправка заявки на передачу услуги');",
+			'onclick' => "javascript:ShowConfirm('Вы действительно хотите передать данный аккаунт пользователю \"' + form.Email.value + '\"?','AjaxCall(\'/API/OrdersTransfer\',FormGet(OrdersTransferForm),\'Отправка заявки на передачу услуги\',\'GetURL(document.location);\');');",
 			'value'   => 'Передать'
 			)
 		);
@@ -112,15 +127,15 @@ $Comp = Comp_Load('Tables/Standard',$Table);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Form = new Tag('FORM',Array('name'=>'ServiceTransferForm','onsubmit'=>'return false;'),$Comp);
+$Form = new Tag('FORM',Array('name'=>'OrdersTransferForm','onsubmit'=>'return false;'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
 		'Form/Input',
 		Array(
-			'name'  => 'TableID',
+			'name'  => 'ServiceID',
 			'type'  => 'hidden',
-			'value' => $TableID
+			'value' => $ServiceID
 			)
 		);
 #-------------------------------------------------------------------------------
