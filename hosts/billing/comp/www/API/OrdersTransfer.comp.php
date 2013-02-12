@@ -213,7 +213,7 @@ if(!$OrdersTransferID){
 		$Form = new Tag('FORM',Array('name'=>'OrdersTransferForm','onsubmit'=>'return false;'));
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Contracts = DB_Select('Contracts',Array('ID','Customer'),Array('Where'=>SPrintF("`UserID` = %u AND `TypeID` != 'NaturalPartner'",$OrdersTransfer['ToUserID'])));
+		$Contracts = DB_Select('Contracts',Array('ID','Customer'),Array('Where'=>SPrintF("`UserID` = %u AND `TypeID` != 'NaturalPartner' AND (`StatusID` = 'Complite' OR `StatusID` = 'Public')",$OrdersTransfer['ToUserID'])));
 		#-----------------------------------------------------------------------------
 		switch(ValueOf($Contracts)){
 		case 'error':
