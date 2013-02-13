@@ -110,7 +110,7 @@ $Comp = Comp_Load(
 		'Form/Input',
 		Array(
 			'type'    => 'button',
-			'onclick' => "javascript:ShowConfirm('Вы действительно хотите передать данный аккаунт пользователю \"' + form.Email.value + '\"?','AjaxCall(\'/API/OrdersTransfer\',FormGet(OrdersTransferForm),\'Отправка заявки на передачу услуги\',\'GetURL(document.location);\');');",
+			'onclick' => "javascript:ShowConfirm('Вы действительно хотите передать данный заказ пользователю \"' + form.Email.value + '\"?','AjaxCall(\'/API/OrdersTransfer\',FormGet(OrdersTransferForm),\'Отправка заявки на передачу услуги\',\'GetURL(document.location);\');');",
 			'value'   => 'Передать'
 			)
 		);
