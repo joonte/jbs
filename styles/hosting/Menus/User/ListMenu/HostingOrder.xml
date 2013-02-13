@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <UniqID>
+  <Text>Дополнительная информация</Text>
+  <Href>javascript:ShowWindow("/HostingOrderInfo",{HostingOrderID:"%Replace%"});</Href>
+  <Icon>Info.gif</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Оплатить заказ</Text>
+  <Href>javascript:ShowWindow("/HostingOrderPay",{HostingOrderID:%Replace%});</Href>
+  <Icon>Pay.gif</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Сменить тарифный план</Text>
+  <Href>javascript:ShowWindow("/HostingOrderSchemeChange",{HostingOrderID:%Replace%});</Href>
+  <Icon>SchemeChange.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Передать на другой аккаунт</Text>
+  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%Replace%",ServiceID:"10000"});</Href>
+  <Icon>OrdersTransfer.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Управлять заказом хостинга</Text>
+  <Href>javascript:HostingManage(%Replace%);</Href>
+  <Icon>HostingManage.gif</Icon>
+  <JavaScript>HostingManage.js</JavaScript>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Сменить пароль от аккаунта</Text>
+  <Href>javascript:ShowWindow("/HostingPasswordChange",{HostingOrderID:%Replace%});</Href>
+  <Icon>Password.gif</Icon>
+ </UniqID>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

@@ -123,7 +123,18 @@
    <style>width:22px;</style>
   </Attribs>
  </PasswordChange>
+ <!-- *********************************************************************** -->
+ <ExtendedMenu>
+  <IsSorted>0</IsSorted>
+  <Comp>Menus/List</Comp>
+  <Args>
+   <ListElement>User/ListMenu/HostingOrder.xml</ListElement>
+   <Replace>%ID%</Replace>
+  </Args>
+ </ExtendedMenu>
+ <!-- *********************************************************************** -->
 </Columns>
+<!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Sequence>
  <ListElement>SelectID</ListElement>
@@ -132,6 +143,7 @@
  <ListElement>SchemeChange</ListElement>
  <ListElement>Manage</ListElement>
  <ListElement>PasswordChange</ListElement>
+ <ListElement>ExtendedMenu</ListElement>
  <ListElement>Number</ListElement>
  <ListElement>Scheme</ListElement>
  <ListElement>Expiration</ListElement>

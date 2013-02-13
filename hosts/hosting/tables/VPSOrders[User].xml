@@ -140,6 +140,15 @@
    <style>width:22px;</style>
   </Attribs>
  </Reboot>
+ <!-- ********************************************************************** -->
+ <ExtendedMenu>
+  <IsSorted>0</IsSorted>
+  <Comp>Menus/List</Comp>
+  <Args>
+   <ListElement>User/ListMenu/VPSOrder.xml</ListElement>
+   <Replace>%ID%</Replace>
+  </Args>
+ </ExtendedMenu>
 </Columns>
 <!-- *********************************************************************** -->
 <Sequence>
@@ -150,6 +159,7 @@
  <ListElement>Manage</ListElement>
  <ListElement>PasswordChange</ListElement>
  <ListElement>Reboot</ListElement>
+ <ListElement>ExtendedMenu</ListElement>
  <ListElement>Number</ListElement>
  <ListElement>Login</ListElement>
  <ListElement>Scheme</ListElement>

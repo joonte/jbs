@@ -29,6 +29,12 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
+  <Text>Передать на другой аккаунт</Text>
+  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%Replace%",ServiceID:"20000"});</Href>
+  <Icon>OrdersTransfer.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
   <Text>Ввести AuthInfo</Text>
   <Href>javascript:ShowWindow("/DomainAuthInfoInput",{DomainOrderID:%Replace%});</Href>
   <Icon>Password.gif</Icon>

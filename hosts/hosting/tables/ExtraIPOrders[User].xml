@@ -73,6 +73,14 @@
   </Attribs>
  </Pay>
  <!-- ********************************************************************** -->
+ <ExtendedMenu>
+  <IsSorted>0</IsSorted>
+  <Comp>Menus/List</Comp>
+  <Args>
+   <ListElement>User/ListMenu/ExtraIPOrder.xml</ListElement>
+   <Replace>%ID%</Replace>
+  </Args>
+ </ExtendedMenu>
  <!-- ********************************************************************** -->
  <!-- ********************************************************************** -->
 </Columns>
@@ -81,6 +89,7 @@
  <ListElement>SelectID</ListElement>
  <ListElement>Info</ListElement>
  <ListElement>Pay</ListElement>
+ <ListElement>ExtendedMenu</ListElement>
  <ListElement>Number</ListElement>
  <ListElement>Login</ListElement>
  <ListElement>Scheme</ListElement>
