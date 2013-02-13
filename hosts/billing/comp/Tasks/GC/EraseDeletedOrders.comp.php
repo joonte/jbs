@@ -108,7 +108,7 @@ case 'exception':
 case 'array':
 	#-------------------------------------------------------------------------------
 	foreach($Orders as $Order){
-		Debug(SPrintF("[comp/Tasks/GC/EraseDeletedOrders]: юзер %s; услуга %s; код услуги %s; ID услуги %s; заказ #%s",$Order['Email'],$Order['NameShort'],$Order['Code'],$Order['ServiceID'],$Order['ID']))
+		Debug(SPrintF("[comp/Tasks/GC/EraseDeletedOrders]: юзер %s; услуга %s; код услуги %s; ID услуги %s; заказ #%s",$Order['Email'],$Order['NameShort'],$Order['Code'],$Order['ServiceID'],$Order['ID']));
 	}
 	break;
 default:

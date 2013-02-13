@@ -96,7 +96,36 @@ case 'exception':
 case 'array':
 	#-------------------------------------------------------------------------------
 	foreach($Orders as $Order){
+		#-------------------------------------------------------------------------------
 		Debug(SPrintF("[Tasks/GC/SetDeletedWaitingOrders]: юзер %s; услуга %s; код услуги %s; ID услуги %s; заказ #%s",$Order['Email'],$Order['NameShort'],$Order['Code'],$Order['ServiceID'],$Order['ID']));
+		#-------------------------------------------------------------------------------
+		#----------------------------------TRANSACTION----------------------------
+		if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Tasks/GC/SetDeletedWaitingOrders'))))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------
+		$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Orders','StatusID'=>'Deleted','RowsIDs'=>$Order['ID'],'IsNoTrigger'=>'yes','Comment'=>SPrintF('Автоматическая отмена заказа, неоплачен более %d дней',$Params['DaysBeforeDeleted'])));
+		#-------------------------------------------------------------------------
+		switch(ValueOf($Comp)){
+		case 'array':
+			$Event = Array(
+					'UserID'	=> $Order['UserID'],
+					'PriorityID'	=> 'Billing',
+					'Text'		=> SPrintF('Автоматическая отмена заказа (%s) #%d, неоплачен более %d дней.',$Order['NameShort'],$Order['ID'],$Params['DaysBeforeDeleted'])
+					);
+			#-------------------------------------------------------------------------------
+			$Event = Comp_Load('Events/EventInsert',$Event);
+			if(!$Event)
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		default:
+			return ERROR | @Trigger_Error(500);
+		}
+		#-------------------------------------------------------------------------
+		if(Is_Error(DB_Commit($TransactionID)))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------
 	}
 	break;
 default:
