@@ -9,37 +9,37 @@ $__args_list = Array('Args');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Text		=  (string) @$Args['Text'];
 #-------------------------------------------------------------------------------
-if(IsSet($Args['UserID'])){
-	$UserID = (integer) @$Args['UserID'];
-}else{
-	$UserID = 1;
-}
+$Text		= (IsSet($Args['Text'])?$Args['Text']:'текст события не задан');
+$UserID		= (IsSet($Args['UserID'])?$Args['UserID']:1);
+$IsReaded	= (IsSet($Args['IsReaded'])?$Args['IsReaded']:TRUE);
+$PriorityID	= (IsSet($Args['PriorityID'])?$Args['PriorityID']:'System');
 #-------------------------------------------------------------------------------
-if(IsSet($Args['IsReaded'])){
-	$IsReaded = (boolean) @$Args['IsReaded'];
-}else{
-	$IsReaded = TRUE;
-}
 #-------------------------------------------------------------------------------
-if(IsSet($Args['PriorityID'])){
-	$PriorityID = (string) @$Args['PriorityID'];
+$UserIDs = Array();
+#-------------------------------------------------------------------------------
+if(Is_Array($UserID)){
+	$UserIDs   = $UserID;
 }else{
-	$PriorityID = 'System';
+	$UserIDs[] = $UserID;
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Event = Array	(
-			'UserID'	=> $UserID,
-			'Text'		=> $Text,
-			'PriorityID'	=> $PriorityID,
-			'IsReaded'	=> $IsReaded
-		);
+foreach($UserIDs as $UserID){
+	#-------------------------------------------------------------------------------
+	$Event = Array	(
+				'UserID'	=> (integer)$UserID,
+				'Text'		=>  (string)$Text,
+				'PriorityID'	=>  (string)$PriorityID,
+				'IsReaded'	=> (boolean)$IsReaded
+			);
+	#-------------------------------------------------------------------------------
+	$IsInsert = DB_Insert('Events',$Event);
+	if(Is_Error($IsInsert))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
-$IsInsert = DB_Insert('Events',$Event);
-if(Is_Error($IsInsert))
-	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 return TRUE;
 #-------------------------------------------------------------------------------
