@@ -225,7 +225,7 @@ EOD;
   foreach($UsersIDs as $UserID)
     $Array[] = (integer)$UserID;
   #-----------------------------------------------------------------------------
-  $Users = DB_Select('Users',Array('ID','GroupID','Name'),Array('Where'=>SPrintF('`ID` IN (%s)',Implode(',',$Array))));
+  $Users = DB_Select('Users',Array('ID','GroupID','Name','Email'),Array('Where'=>SPrintF('`ID` IN (%s)',Implode(',',$Array))));
   #-----------------------------------------------------------------------------
   switch(ValueOf($Users)){
     case 'error':
@@ -251,7 +251,7 @@ EOD;
     #---------------------------------------------------------------------------
     $Table = new Tag('TABLE',Array('id'=>'TopPanelUserSwitch','class'=>'Standard','cellspacing'=>5,'style'=>'position:absolute;display:none;'));
     #---------------------------------------------------------------------------
-    $Users[] = Array('ID'=>NULL,'Name'=>'[очистить список]');
+    $Users[] = Array('ID'=>NULL,'Email'=>'[очистить список]');
     #---------------------------------------------------------------------------
     foreach($Users as $User){
       #-------------------------------------------------------------------------
@@ -259,7 +259,8 @@ EOD;
       #-------------------------------------------------------------------------
       if($UserID != $__USER['ID']){
         #-----------------------------------------------------------------------
-        $A = new Tag('A',Array('href'=>SPrintF('javascript:UserSwitch(%u);',$UserID)),$User['Name']);
+	#Debug(print_r($User,true));
+        $A = new Tag('A',Array('href'=>SPrintF('javascript:UserSwitch(%u);',$UserID)),$User['Email']);
         #-----------------------------------------------------------------------
         $Table->AddChild($UserID?new Tag('TR',new Tag('TD',Array('class'=>'Standard','width'=>10)),new Tag('TD',$UserID != @$Session->Data['RootID']?$A:new Tag('B',$A))):new Tag('TD',Array('colspan'=>2,'align'=>'right','style'=>'border-top:1px solid #DCDCDC;'),$A));
       }
