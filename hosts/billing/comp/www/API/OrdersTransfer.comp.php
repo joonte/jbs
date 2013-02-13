@@ -138,19 +138,7 @@ if(!$OrdersTransferID){
 	#-------------------------------------------------------------------------------
 	# событие, о постановке задачи на перенос
 	$Event = Array(
-			'UserID'	=> $Order['UserID'],
-			'PriorityID'	=> 'Billing',
-			'Text'		=> SPrintF('Подана заявка на перенос заказа #%u (%s) с аккаунта (%s) на аккаунт (%s)',$Order['OrderID'],$Service['NameShort'],$__USER['Email'],$User['Email'])
-	);
-	#-------------------------------------------------------------------------------
-	$Event = Comp_Load('Events/EventInsert',$Event);
-	if(!$Event)
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	# событие принимающей стороне
-	$Event = Array(
-			'UserID'	=> $User['ID'],
+			'UserID'	=> Array($Order['UserID'],$User['ID']),
 			'PriorityID'	=> 'Billing',
 			'Text'		=> SPrintF('Подана заявка на перенос заказа #%u (%s) с аккаунта (%s) на аккаунт (%s)',$Order['OrderID'],$Service['NameShort'],$__USER['Email'],$User['Email'])
 	);
@@ -384,23 +372,10 @@ if(!$OrdersTransferID){
 		#-------------------------------------------------------------------------------
 		# событие, о выполнении переноса
 		$Event = Array(
-				'UserID'	=> $OrdersTransfer['ToUserID'],
+				'UserID'	=> Array($OrdersTransfer['ToUserID'],$OrdersTransfer['UserID']),
 				'PriorityID'	=> 'Billing',
 				'Text'		=> SPrintF('Выполнен перенос заказа #%u (%s) с аккаунта (%s) на аккаунт (%s)',$Order['OrderID'],$Service['NameShort'],$OrdersTransfer['EmailFrom'],$OrdersTransfer['EmailTo'])
 		);
-		#-------------------------------------------------------------------------------
-		$Event = Comp_Load('Events/EventInsert',$Event);
-		if(!$Event)
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		# событие отдавшей стороне
-		$Event = Array(
-				'UserID'	=> $OrdersTransfer['UserID'],
-				'PriorityID'	=> 'Billing',
-				'Text'		=> SPrintF('Выполнен перенос заказа #%u (%s) с аккаунта (%s) на аккаунт (%s)',$Order['OrderID'],$Service['NameShort'],$OrdersTransfer['EmailFrom'],$OrdersTransfer['EmailTo'])
-
-);
 		#-------------------------------------------------------------------------------
 		$Event = Comp_Load('Events/EventInsert',$Event);
 		if(!$Event)
