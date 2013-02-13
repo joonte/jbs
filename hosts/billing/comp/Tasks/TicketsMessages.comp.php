@@ -40,9 +40,10 @@ switch(ValueOf($Messages)){
           if($TargetUserID != 100){
             #-------------------------------------------------------------------
             $msgParams = Array(
-                'TicketID' => $Message['EdeskID'],
-                'Theme' => $Message['Theme'],
-                'Message' => $Message['Content']
+                'TicketID'	=> $Message['EdeskID'],
+                'Theme'		=> $Message['Theme'],
+                'Message'	=> $Message['Content'],
+		'Message-ID'	=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID)
             );
 
             $msg = new Message('ToTicketsMessages', $TargetUserID, $msgParams);
@@ -91,9 +92,11 @@ switch(ValueOf($Messages)){
                     foreach($Employers as $Employer){
                       #---------------------------------------------------------
                       $msgParams = Array(
-                          'TicketID' => $Message['EdeskID'],
-                          'Theme' => $Message['Theme'],
-                          'Message' => $Message['Content']
+                          'TicketID'	=> $Message['EdeskID'],
+                          'Theme'	=> $Message['Theme'],
+                          'Message'	=> $Message['Content'],
+                          'Message-ID'	=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID)
+
                       );
 
                       $msg = new Message('ToTicketsMessages',(integer)$Employer['ID'], $msgParams);
@@ -143,9 +146,11 @@ switch(ValueOf($Messages)){
           $Message['Content'] = $String;
           #---------------------------------------------------------------------
           $msgParams = Array(
-              'TicketID' => $Message['EdeskID'],
-              'Theme' => $Message['Theme'],
-              'Message'=>$Message['Content']
+              'TicketID'	=> $Message['EdeskID'],
+              'Theme'		=> $Message['Theme'],
+              'Message'		=> $Message['Content'],
+              'Message-ID'	=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID)
+
           );
 
           $msg = new FromTicketsMessagesMsg($msgParams, (integer)$OwnerID);

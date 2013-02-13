@@ -1038,6 +1038,17 @@
     <IsActive>1</IsActive>
   </RegBalance>
   <!-- ********************************************************************* -->
+  <CheckEmail>
+    <Name>Проверка почтового ящика</Name>
+    <Params type="array" />
+    <CheckEmailServer>pop.yandex.ru</CheckEmailServer>
+    <CheckEmailLogin>admin@company.com</CheckEmailLogin>
+    <CheckEmailPassword>1234567</CheckEmailPassword>
+    <CheckEmailProtocol>pop</CheckEmailProtocol>
+    <UseSSL>0</UseSSL>
+    <IsActive>0</IsActive>
+  </CheckEmail>
+  <!-- ********************************************************************* -->
   <GC>
    <Name>Сборщик мусора</Name>
    <Params>

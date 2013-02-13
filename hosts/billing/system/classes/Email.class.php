@@ -73,7 +73,10 @@ class Email implements Dispatcher {
 
         $sender = $msg->getParam('From');
 
-        $emailHeads = Array(SPrintF('From: %s', $sender['Email']), 'MIME-Version: 1.0', 'Content-Type: text/plain; charset=UTF-8','Content-Transfer-Encoding: 8bit');
+        $emailHeads = Array(SPrintF('From: %s', $sender['Email']), 'MIME-Version: 1.0', 'Content-Type: text/plain; charset=UTF-8', 'Content-Transfer-Encoding: 8bit');
+        // added by lissyara 2013-02-13 in 15:45 MSK, for JBS-609
+        if($msg->getParam('Message-ID'))
+          $emailHeads[] = SPrintF('Message-ID: %s',$msg->getParam('Message-ID'));
 
         $taskParams = Array(
             'UserID' => $recipient['ID'],

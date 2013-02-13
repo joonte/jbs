@@ -29,7 +29,7 @@ VALUES
 (300,3000000,'Сайт компании','e02f7b992578cd299e3e3edaed120689','site@company.com','С уважением, сайт ООО \"Компания\".','no','yes','Пользователь с доступом только к API, используется для работы сайта');
 UNLOCK TABLES;
 
-DELETE FROM `Tasks` WHERE `ID` IN(1,2,3,4,5,6,7,8,9,11,12);
+DELETE FROM `Tasks` WHERE `ID` IN(1,2,3,4,5,6,7,8,9,11,12,13);
 LOCK TABLES `Tasks` WRITE;
 INSERT INTO `Tasks`
   (`ID`,`UserID`,`TypeID`,`Params`,`IsActive`)
@@ -44,9 +44,9 @@ VALUES
 (8,1,'CourseUpdate','[]','yes'),
 (9,1,'OrdersForSuspend','[]','yes'),
 (11,1,'CaclulatePartnersReward','[]','yes'),
-(12,1,'GC','[]','yes');
+(12,1,'GC','[]','yes'),
+(13,1,'CheckEmail','[]','yes');
 
-;
 UNLOCK TABLES;
 
 DELETE FROM `Clauses` WHERE `Partition` IN ('User/Panel','/Help/Services/Paying','News','/Contacts');
