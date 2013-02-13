@@ -25,6 +25,11 @@ $__USER = $GLOBALS['__USER'];
 if($__USER['EmailConfirmed'] + 3600 < Time() && !$__USER['IsAdmin'])
 	return new gException('EMAIL_CONFIRMED_TOO_OLD','Для возможности передачи заказа на другой аккаунт, вам необходимо подтвердить ваш почтовый адрес в разделе "Мои настройки". Возможность переноса будет доступна в течение часа, после подтверждения.');
 #-------------------------------------------------------------------------------
+# ствим как выполненные все старые задачи
+$IsUpdate = DB_Update('OrdersTransfer',Array('IsExecuted'=>TRUE),Array('Where'=>SPrintF('`CreateDate` < %u',(Time() - 24*3600))));
+if(Is_Error($IsUpdate))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # варианты, если задано OrdersTransferID - это подтверждение приёма, иначе - передача
 Debug(SPrintF('[comp/www/API/OrdersTransfer]: OrdersTransferID = %u',$OrdersTransferID));
