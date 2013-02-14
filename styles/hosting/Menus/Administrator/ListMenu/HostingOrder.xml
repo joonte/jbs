@@ -22,12 +22,6 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
-  <Text>Передать на другой аккаунт</Text>
-  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%Replace%",ServiceID:"10000"});</Href>
-  <Icon>ListMenuItem.gif</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
   <Text>Компенсировать время</Text>
   <Href>javascript:ShowWindow("/Administrator/HostingCompensation",{HostingOrderID:%Replace%});</Href>
   <Icon>Add.gif</Icon>
