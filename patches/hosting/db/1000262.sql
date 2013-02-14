@@ -1,0 +1,3 @@
+
+ALTER TABLE `Edesks` ADD `NotifyEmail` CHAR(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL;
+

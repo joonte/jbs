@@ -103,6 +103,7 @@ CREATE TABLE `Edesks` (
   `LastSeenBy` INT(11) NOT NULL,
   `SeenByUser` INT(11) NOT NULL, 
   `Flags` enum('No','Closed','CloseOnSee','DenyClose') NOT NULL DEFAULT 'No',
+  `NotifyEmail` char(255) NOT NULL,
   PRIMARY KEY  (`ID`),
   KEY `EdesksUserID` (`UserID`),
   CONSTRAINT `EdesksUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,

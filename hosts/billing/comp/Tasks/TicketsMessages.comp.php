@@ -13,7 +13,15 @@ if(Is_Error(System_Load('libs/Tree.php')))
 #-------------------------------------------------------------------------------
 $MessagesCount = 0;
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','UserID','EdeskID','SUBSTR(`Content`,1,4096) AS `Content`','(SELECT `Theme` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `Theme`','(SELECT `TargetGroupID` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `TargetGroupID`','(SELECT `TargetUserID` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `TargetUserID`','(SELECT `UserID` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `OwnerID`','(SELECT `StatusID` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `StatusID`');
+$Columns = Array(
+		'ID','UserID','EdeskID','SUBSTR(`Content`,1,4096) AS `Content`',
+		'(SELECT `Theme` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `Theme`',
+		'(SELECT `TargetGroupID` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `TargetGroupID`',
+		'(SELECT `TargetUserID` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `TargetUserID`',
+		'(SELECT `UserID` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `OwnerID`',
+		'(SELECT `StatusID` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `StatusID`',
+		'(SELECT `NotifyEmail` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `NotifyEmail`'
+		);
 #-------------------------------------------------------------------------------
 $Messages = DB_Select('EdesksMessages',$Columns,Array('Where'=>"`IsNotify` = 'no'"));
 #-------------------------------------------------------------------------------
@@ -45,7 +53,7 @@ switch(ValueOf($Messages)){
                 'Message'	=> $Message['Content'],
 		'Message-ID'	=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID)
             );
-
+	    #-------------------------------------------------------------------
             $msg = new Message('ToTicketsMessages', $TargetUserID, $msgParams);
             $IsSend = NotificationManager::sendMsg($msg);
             #-------------------------------------------------------------------
@@ -96,9 +104,8 @@ switch(ValueOf($Messages)){
                           'Theme'	=> $Message['Theme'],
                           'Message'	=> $Message['Content'],
                           'Message-ID'	=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID)
-
                       );
-
+		      #-------------------------------------------------------------------
                       $msg = new Message('ToTicketsMessages',(integer)$Employer['ID'], $msgParams);
                       $IsSend = NotificationManager::sendMsg($msg);
                       #---------------------------------------------------------
@@ -150,11 +157,15 @@ switch(ValueOf($Messages)){
               'Theme'		=> $Message['Theme'],
               'Message'		=> $Message['Content'],
               'Message-ID'	=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID)
-
           );
-
+          #-------------------------------------------------------------------
+          if(StrLen($Message['NotifyEmail']) > 5)
+            $msgParams['Recipient'] = $Message['NotifyEmail'];
+	  #-------------------------------------------------------------------
+	  Debug(SPrintF('[comp/Tasks/TicketsMessages]: NotifyEmail = %s',$Message['NotifyEmail']));
+	  Debug(SPrintF('[comp/Tasks/TicketsMessages]: msgParams = %s',print_r($msgParams,true)));
+          #-------------------------------------------------------------------
           $msg = new FromTicketsMessagesMsg($msgParams, (integer)$OwnerID);
-
           $IsSend = NotificationManager::sendMsg($msg);
           #---------------------------------------------------------------------
           switch(ValueOf($IsSend)){

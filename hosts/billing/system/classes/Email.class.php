@@ -78,16 +78,21 @@ class Email implements Dispatcher {
         if($msg->getParam('Message-ID'))
           $emailHeads[] = SPrintF('Message-ID: %s',$msg->getParam('Message-ID'));
 
+        $Params = Array();
+	if($msg->getParam('Recipient')){
+	  $Params[] = $msg->getParam('Recipient');
+	}else{
+	  $Params[] = $recipient['Email'];
+	}
+	$Params[] = $theme;
+	$Params[] = $message;
+	$Params[] = Implode("\r\n", $emailHeads);
+	$Params[] = $recipient['ID'];
+
         $taskParams = Array(
             'UserID' => $recipient['ID'],
             'TypeID' => 'Email',
-            'Params' => Array(
-                $recipient['Email'],
-                $theme,
-                $message,
-                Implode("\r\n", $emailHeads),
-                $recipient['ID']
-            )
+            'Params' => $Params
         );
 
         $result = Comp_Load('www/Administrator/API/TaskEdit',$taskParams);

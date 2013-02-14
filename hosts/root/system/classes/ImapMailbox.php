@@ -448,7 +448,7 @@ class ImapMailbox {
 			}
 		}
 		if (!empty($params['charset'])) {
-			$data = iconv($params['charset'], $this->serverEncoding, $data);
+			$data = @iconv($params['charset'], $this->serverEncoding, $data);
 		}
 
 		// attachments
@@ -498,7 +498,7 @@ class ImapMailbox {
 			if ($elements[$i]->charset == 'default') {
 				$elements[$i]->charset = 'iso-8859-1';
 			}
-			$newString .= iconv($elements[$i]->charset, $charset, $elements[$i]->text);
+			$newString .= @iconv($elements[$i]->charset, $charset, $elements[$i]->text);
 		}
 		return $newString;
 	}

@@ -23,6 +23,7 @@ $PriorityID    =  (string) @$Args['PriorityID'];
 $Message       =  (string) @$Args['Message'];
 $UserID        = (integer) @$Args['UserID'];
 $Flags         =  (string) @$Args['Flags'];
+$NotifyEmail   =  (string) @$Args['NotifyEmail'];
 #-------------------------------------------------------------------------------
 # truncate $Theme & $Message
 $Theme		= substr($Theme, 0, 127);
@@ -128,6 +129,9 @@ if($TargetUserID){
   }
 }else
   $ITicket['TargetUserID'] = ($UserID?$__USER['ID']:100);
+#-------------------------------------------------------------------------------
+if(IsSet($NotifyEmail))
+  $ITicket['NotifyEmail'] = $NotifyEmail;
 #-------------------------------------------------------------------------------
 $TicketID = DB_Insert('Edesks',$ITicket);
 if(Is_Error($TicketID))
