@@ -10,7 +10,9 @@ $Result = Array();
 
 $currentVersion = VERSION;
 
-$versionInfoJson = @file_get_contents("http://joonte.com/public/version");
+$opts = array('http'=>array('timeout'=>2));
+$context  = stream_context_create($opts);
+$versionInfoJson = @file_get_contents("http://joonte.com/public/version",false,$context);
 Debug(SprintF($versionInfoJson));
 
 $versionInfo = @json_decode($versionInfoJson, true);
