@@ -1046,6 +1046,9 @@
     <CheckEmailPassword>1234567</CheckEmailPassword>
     <CheckEmailProtocol>pop</CheckEmailProtocol>
     <UseSSL>0</UseSSL>
+    <CutQuotes>1</CutQuotes>
+    <CutSign>1</CutSign>
+    <SaveHeaders>0</SaveHeaders>
     <IsActive>0</IsActive>
   </CheckEmail>
   <!-- ********************************************************************* -->

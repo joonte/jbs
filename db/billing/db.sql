@@ -16,7 +16,7 @@ VALUES
 (4000000,1,'Система',NULL,'no','no','Группа всех клиентов');
 UNLOCK TABLES;
 
-DELETE FROM `Users` WHERE `ID` IN (1,2,50,100,200,300);
+DELETE FROM `Users` WHERE `ID` IN (1,10,50,100,200,300);
 LOCK TABLES `Users` WRITE;
 INSERT INTO `Users`
   (`ID`,`GroupID`,`Name`,`Watchword`,`Email`,`Sign`,`IsActive`,`IsProtected`,`AdminNotice`)

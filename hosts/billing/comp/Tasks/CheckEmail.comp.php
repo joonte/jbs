@@ -44,7 +44,41 @@ foreach ($mails as $mail){
 	$Subject = $mail->subject;
 	$fromAddress = $mail->fromAddress;
 	$textPlain = $mail->textPlain;
-	#$GLOBALS['TaskReturnInfo'][] = SPrintF('fromAddress = %s',$fromAddress);
+	#-------------------------------------------------------------------------------
+	#Debug(SPrintF('[comp/Tasks/CheckEmail]: fromAddress %s',$fromAddress));
+	#-------------------------------------------------------------------------------
+	# надо ли вырезать цитаты из текста
+	if($Settings['CutQuotes']){
+		$textPlain = Trim(Preg_Replace('#^>(.*)$#m', '',$textPlain));
+		$textPlain = preg_replace("/\r/", "\n",$textPlain);
+		$textPlain = trim(preg_replace('/[\n]+/m',"\n",$textPlain)); 
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	# надо ли отпиливать подпись из сообщения
+	if($Settings['CutSign']){
+		#-------------------------------------------------------------------------------
+		$Texts = Explode("\n",$textPlain);
+		#-------------------------------------------------------------------------------
+		$textPlain = Array();
+		#-------------------------------------------------------------------------------
+		foreach($Texts as $Text){
+			#-------------------------------------------------------------------------------
+			$textPlain[] = Trim($Text);
+			#-------------------------------------------------------------------------------
+			if(Trim($Text) == '--')
+				$SignPos = SizeOf($textPlain) - 1;
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		$Length = (IsSet($SignPos))?$SignPos:SizeOf($textPlain);
+		#-------------------------------------------------------------------------------
+		$textPlain = Implode("\n",Array_Slice($textPlain,0,$Length));
+		#-------------------------------------------------------------------------------
+		UnSet($SignPos);
+	}
+	#-------------------------------------------------------------------------------
+	#Debug(SPrintF('[comp/Tasks/CheckEmail]: text = %s',$textPlain));
 	#-------------------------------------------------------------------------------
 	# достаём все заголовки
 	$References = FALSE;
@@ -61,11 +95,32 @@ foreach ($mails as $mail){
 			if(StrToLower($HeaderLine[0]) == 'references:')
 				$References = $HeaderLine[1];
 			#-------------------------------------------------------------------------------
+			if(StrToLower($HeaderLine[0]) == 'x-autoreply:')
+				$AutoReply = TRUE;
 		}
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if(IsSet($AutoReply)){
+		# это автоответ. удаляем сообщение и продолжаем
+		Debug(SPrintF('[comp/Tasks/CheckEmail]: AutoReply from %s',$fromAddress));
+		$mailbox->deleteMessage($mail->mId, TRUE);
+		UnSet($AutoReply);
+		continue;
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if(StrLen($textPlain) < 2){
+		# пустое сообщение, или вместе с подписью текст выпилился
+		Debug(SPrintF('[comp/Tasks/CheckEmail]: Пустое сообщение с адреса %s',$fromAddress));
+		$mailbox->deleteMessage($mail->mId, TRUE);
+		continue;
 	}
 	#-------------------------------------------------------------------------------
 	# проверяем наличие ссылки на тикет
 	if($References){
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/Tasks/CheckEmail]: References %s',$References));
 		#-------------------------------------------------------------------------------
 		$Address = MailParse_RFC822_Parse_Addresses($References);
 		$Address = Explode("@",$Address[0]['address']);
@@ -74,139 +129,98 @@ foreach ($mails as $mail){
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[comp/Tasks/CheckEmail]: в Message-ID найдено число = %s',$Address[0]));
 			# проверяем наличие такого тикета
-			$Count = DB_Count('EdesksMessagesOwners',Array('ID'=>$Address[0]));
-			if(Is_Error($Count))
+			$Columns = Array('*','(SELECT `UserID` FROM `Edesks` WHERE `EdesksMessagesOwners`.`EdeskID` = `Edesks`.`ID`) AS `EdeskUserID`');
+			$Edesk = DB_Select('EdesksMessagesOwners',$Columns,Array('UNIQ','ID'=>$Address[0]));
+			switch(ValueOf($Edesk)){
+			case 'error':
 				return ERROR | @Trigger_Error(500);
-			#-------------------------------------------------------------------------------
-			if($Count){
+			case 'exception':
+				break;
+			case 'array':
+				#-------------------------------------------------------------------------------
 				$MessageID = $Address[0];
 				Debug(SPrintF('[comp/Tasks/CheckEmail]: найден ответ на сообщение тикета %s',$MessageID));
+				break;
+			default:
+				return ERROR | @Trigger_Error(101);
 			}
 		}
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	if($Settings['SaveHeaders'])
+		$SaveHeaders = SPrintF("[hidden]\n%s[/hidden]\n",$mailbox->fetchHeader($mail->mId));
+	#-------------------------------------------------------------------------------
+	$Message = SPrintF("%s\n\n%s[size:10][color:gray]posteted via email, from: %s[/color][/size]",$textPlain,(IsSet($SaveHeaders))?$SaveHeaders:'',$fromAddress);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	# имеем 2 ситуации, задан или не задан $MessageID - соответственно, добавление в тикет или создание тикета
 	if(IsSet($MessageID)){
 		#-------------------------------------------------------------------------------
-		# сообщение на www/API/TicketMessageEdit
-		# перезадать $GLOBALS['__USER']['ID'], потом вернуть
+		# либо от существующего юзера, либо от гостя - определяемся по владельцу треда
+		$GLOBALS['__USER']['ID'] = $Edesk['EdeskUserID'];
+		#-------------------------------------------------------------------------------
+		$IsAdd = Comp_Load('www/API/TicketMessageEdit',Array('Message'=>$Message,'TicketID'=>$Edesk['EdeskID']));
+		if(Is_Error($IsAdd))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$GLOBALS['__USER']['ID'] = 100;
+		#-------------------------------------------------------------------------------
+		$mailbox->deleteMessage($mail->mId, TRUE);
+		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
-		# сообщение на www/API/TicketEdit, от юзера "Гость" (проверить его существование)
+		# ищщем в юзерах этого пользователя
+		$User = DB_Select('Users',Array('ID','GroupID'),Array('UNIQ','Where'=>SPrintF('`Email` = "%s"',$fromAddress)));
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($User)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			#-------------------------------------------------------------------------------
+			# сообщение на www/API/TicketEdit, от юзера "Гость" (проверить его существование)
+			Debug(SPrintF('[comp/Tasks/CheckEmail]: пользователь не найден %s',$fromAddress));
+			break;
+		case 'array':
+			#-------------------------------------------------------------------------------
+			# сообщение на www/API/TicketEdit, от найденного юзера
+			Debug(SPrintF('[comp/Tasks/CheckEmail]: найден пользователь биллинга %s',$fromAddress));
+			$Params = Array(
+					'Theme'		=> $Subject,
+					'PriorityID'	=> 'Low',
+					'Message'	=> $Message,
+					'Flags'		=> 'No',
+					'TargetGroupID'	=> 3100000
+					);
+			#-------------------------------------------------------------------------------
+			$GLOBALS['__USER']['ID'] = $User['ID'];
+			#-------------------------------------------------------------------------------
+			$IsAdd = Comp_Load('www/API/TicketEdit',$Params);
+			if(Is_Error($IsAdd))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			$GLOBALS['__USER']['ID'] = 100;
+			#-------------------------------------------------------------------------------
+			$mailbox->deleteMessage($mail->mId, TRUE);
+			#-------------------------------------------------------------------------------
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 	# ампутируем переменную, чтоб в один тикет не напостило все письма
 	UnSet($MessageID);
+	
 }
 
 
 
-#Debug(SPrintF('[comp/Tasks/CheckEmail]: %s',print_r($mails,true)));
+$mailbox->disconnect();
 
-
-#Debug(SPrintF('[comp/Tasks/CheckEmail]: %s',print_r($mailbox->fetchHeader(2),true)));
-
-
-
-
-
-
+#-------------------------------------------------------------------------------
 return 120;
-$MBox = Imap_Open(SPrintF("{%s/pop3:110/notls}INBOX",$Settings['CheckEmailServer']), $Settings['CheckEmailLogin'], $Settings['CheckEmailPassword']);
-#-------------------------------------------------------------------------------
-$Count = imap_num_msg($MBox);
-Debug(SPrintF('[comp/Tasks/CheckEmail]: imap_num_msg = %s',$Count));
-#-------------------------------------------------------------------------------
-# нет сообщений - нечего делать
-if($Count == 0){
-	$GLOBALS['TaskReturnInfo'][] = 'no messages';
-	return 60;
-}
-#-------------------------------------------------------------------------------
-$GLOBALS['TaskReturnInfo'][] = SPrintF('%s messages',$Count);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-# достаём заголовки сообщения
-$MsgNum = 2;
-
-$References = FALSE;
-
-$Header = Imap_HeaderInfo($MBox, $MsgNum);
-if(IsSet($Header->references))
-	$References = $Header->references;
-if(IsSet($Header->in_reply_to))
-	$References = $Header->references;
-
-$GLOBALS['TaskReturnInfo'][] = SPrintF('References = %s',$References);
-
-Debug(print_r(imap_headerinfo($MBox, $MsgNum),true));
-Debug(print_r(Imap_FetchHeader($MBox, $MsgNum),true));
-return 20;
-
-
-$Headers = Explode("\n", Trim(Imap_FetchHeader($MBox, $MsgNum)));
-Debug('[comp/Tasks/CheckEmail]: after headers');
-if (Is_Array($Headers) && Count($Headers)){
-	foreach($Headers as $Line){
-		list($HeaderName,$HeaderContent) = @Explode(" ",Trim($Line));
-		# проверяем References:
-		if(StrToLower($HeaderName) == 'references:'){
-			Debug(SPrintF('[comp/Tasks/CheckEmail]: %s',Trim($Line)));
-			$References = $HeaderContent;
-			break;
-		# проверяем In-Reply-To:
-		}elseif(StrToLower($HeaderName) == 'in-reply-to:'){
-			Debug(SPrintF('[comp/Tasks/CheckEmail]: %s',Trim($Line)));
-			$References = $HeaderContent;
-			break;
-		}
-	}
-}
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-# достаём тушку сообщения
-$Structure = Imap_FetchStructure($MBox, $MsgNum);
-if(!empty($Structure->parts)){
-	for ($i = 0, $j = Count($Structure->parts); $i < $j; $i++){
-		$Part = $Structure->parts[$i];
-		if($Part->subtype == 'PLAIN'){
-			$Body = Imap_FetchBody($MBox, $MsgNum, $i+1);
-		}
-	}
-}else{
-	$Body = Imap_Body($MBox, $MsgNum);
-}
-#$GLOBALS['TaskReturnInfo'][] = print_r($Body,true);
-$GLOBALS['TaskReturnInfo'][] = print_r(Imap_Body($MBox, $MsgNum),true);
-
-
-#$MsgList = Imap_Headers($MBox);
-
-#$header = imap_header($MBox, 1);
-
-#$header = imap_fetchheader($MBox,1);
-
-#$GLOBALS['TaskReturnInfo'] = print_r($header,true);
-
-#Debug(print_r($MsgList,true));
-
-
-#$Headers = Imap_Headers($MBox);
-
-#if($Headers){
-#	while(list($key,$val) = each($Headers)){
-#		Debug(SPrintF('[comp/Tasks/CheckEmail]: key = %s; val = %s',$key,$val));
-#	}
-
-#}
-
-# закрываем подключение
-Imap_Close($MBox);
-
-
-#-------------------------------------------------------------------------------
-return 60;
 #-------------------------------------------------------------------------------
 
 ?>

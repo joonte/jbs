@@ -49,7 +49,8 @@ class ImapMailbox {
 			$errors = imap_errors();
 			if ($errors) {
 				foreach ($errors as $error) {
-					trigger_error($error);
+					#trigger_error($error);
+					Debug(SPrintF('[system/classes/ImapMailbox]: %s', Trim($error)));
 				}
 			}
 			imap_close($this->mbox);
