@@ -1044,7 +1044,7 @@
     <CheckEmailServer>pop.yandex.ru</CheckEmailServer>
     <CheckEmailLogin>admin@company.com</CheckEmailLogin>
     <CheckEmailPassword>1234567</CheckEmailPassword>
-    <CheckEmailProtocol>pop</CheckEmailProtocol>
+    <CheckEmailProtocol>pop3</CheckEmailProtocol>
     <RequestPeriod>10</RequestPeriod>
     <UseSSL>0</UseSSL>
     <CutQuotes>1</CutQuotes>

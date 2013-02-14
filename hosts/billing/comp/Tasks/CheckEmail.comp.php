@@ -23,10 +23,10 @@ if(Is_Error(System_Load('classes/ImapMailbox.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$GLOBALS['TaskReturnInfo'] = Array();
+$Server = SPrintF("{%s/%s/%s}INBOX",$Settings['CheckEmailServer'],$Settings['CheckEmailProtocol'],$Settings['UseSSL']?'ssl/novalidate-cert':'notls');
 #-------------------------------------------------------------------------------
+$mailbox = new ImapMailbox($Server, $Settings['CheckEmailLogin'], $Settings['CheckEmailPassword']);
 #-------------------------------------------------------------------------------
-$mailbox = new ImapMailbox(SPrintF("{%s/pop3:110/notls}INBOX",$Settings['CheckEmailServer']), $Settings['CheckEmailLogin'], $Settings['CheckEmailPassword']);
 $mails = array();
 #-------------------------------------------------------------------------------
 foreach($mailbox->searchMailbox() as $mailId) {
