@@ -25,15 +25,22 @@ if(Is_Error(System_Load('classes/ImapMailbox.php')))
 #-------------------------------------------------------------------------------
 $Server = SPrintF("{%s/%s/%s}INBOX",$Settings['CheckEmailServer'],$Settings['CheckEmailProtocol'],$Settings['UseSSL']?'ssl/novalidate-cert':'notls');
 #-------------------------------------------------------------------------------
-$mailbox = new ImapMailbox($Server, $Settings['CheckEmailLogin'], $Settings['CheckEmailPassword']);
+$attachmentsDir = SPrintF('%s/hosts/%s/tmp/imap',SYSTEM_PATH,HOST_ID);
+#-------------------------------------------------------------------------------
+@mkdir($attachmentsDir, 0700, true);
+#-------------------------------------------------------------------------------
+$mailbox = new ImapMailbox($Server, $Settings['CheckEmailLogin'], $Settings['CheckEmailPassword'],$attachmentsDir);
 #-------------------------------------------------------------------------------
 $mails = array();
 #-------------------------------------------------------------------------------
-foreach($mailbox->searchMailbox() as $mailId) {
+foreach($mailbox->searchMailbox() as $mailId){
+	#-------------------------------------------------------------------------------
 	$mail = $mailbox->getMail($mailId);
-	// $mailbox->setMailAsSeen($mail->mId);
-	// $mailbox->deleteMail($mail->mId);
+	#-------------------------------------------------------------------------------
 	$mails[] = $mail;
+	#-------------------------------------------------------------------------------
+	#Debug(SPrintF('[comp/Tasks/CheckEmail]: attachments = %s',print_r($mail->attachments,true)));
+	#Debug(SPrintF('[comp/Tasks/CheckEmail]: attachmentsIds = %s',print_r($mail->attachmentsIds,true)));
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -46,7 +53,7 @@ if(SizeOf($mails) < 1){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/Tasks/CheckEmail]: imap_num_msg = %s',SizeOf($mails)));
+Debug(SPrintF('[comp/Tasks/CheckEmail]: сообщений = %s',SizeOf($mails)));
 $GLOBALS['TaskReturnInfo'] = Array();
 $GLOBALS['TaskReturnInfo'][] = SPrintF('%s messages',SizeOf($mails));
 #-------------------------------------------------------------------------------
@@ -57,7 +64,29 @@ foreach ($mails as $mail){
 	$fromAddress = $mail->fromAddress;
 	$textPlain = $mail->textPlain;
 	#-------------------------------------------------------------------------------
-	#Debug(SPrintF('[comp/Tasks/CheckEmail]: fromAddress %s',$fromAddress));
+	# перебираем аттачменты
+	UnSet($_FILES);
+	#-------------------------------------------------------------------------------
+	$Files = $mail->attachments;
+	foreach(Array_Keys($Files) as $FileName){
+		#---------------------------------------------------------------------
+		Debug(SPrintF('[comp/Tasks/CheckEmail]: name = "%s"; path = "%s"',$FileName,$Files[$FileName]));
+		$FileData = Array(
+					'size'		=> FileSize($Files[$FileName]),
+					'error'		=> 0,
+					'tmp_name'	=> $Files[$FileName],
+					'name'		=> $FileName
+				);
+		#---------------------------------------------------------------------
+		$_FILES = Array('Upload'=>$FileData);
+		#---------------------------------------------------------------------
+		global $_FILES;
+		#---------------------------------------------------------------------
+		$Comp = Comp_Load('www/API/Upload');
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#---------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 	# надо ли вырезать цитаты из текста
 	if($Settings['CutQuotes']){
@@ -91,7 +120,6 @@ foreach ($mails as $mail){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	#Debug(SPrintF('[comp/Tasks/CheckEmail]: text = %s',$textPlain));
 	#-------------------------------------------------------------------------------
 	# достаём все заголовки
 	$References = FALSE;
@@ -142,7 +170,6 @@ foreach ($mails as $mail){
 		#-------------------------------------------------------------------------------
 		if(IsSet($Address[1]) && $Address[1] == HOST_ID && IntVal($Address[0]) == $Address[0]){
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/CheckEmail]: в Message-ID найдено число = %s',$Address[0]));
 			# проверяем наличие такого тикета
 			$Columns = Array('*','(SELECT `UserID` FROM `Edesks` WHERE `EdesksMessagesOwners`.`EdeskID` = `Edesks`.`ID`) AS `EdeskUserID`');
 			$Edesk = DB_Select('EdesksMessagesOwners',$Columns,Array('UNIQ','ID'=>$Address[0]));
@@ -154,7 +181,7 @@ foreach ($mails as $mail){
 			case 'array':
 				#-------------------------------------------------------------------------------
 				$MessageID = $Address[0];
-				Debug(SPrintF('[comp/Tasks/CheckEmail]: найден ответ на сообщение тикета %s',$MessageID));
+				#-------------------------------------------------------------------------------
 				break;
 			default:
 				return ERROR | @Trigger_Error(101);
@@ -194,14 +221,15 @@ foreach ($mails as $mail){
 		case 'exception':
 			#-------------------------------------------------------------------------------
 			# сообщение на www/API/TicketEdit, от юзера "Гость" (проверить его существование)
-			Debug(SPrintF('[comp/Tasks/CheckEmail]: пользователь не найден %s',$fromAddress));
 			$Count = DB_Count('Users',Array('ID'=>10));
 			if(Is_Error($Count))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
 			if(!$Count){
+				#-------------------------------------------------------------------------------
 				Debug('[comp/Tasks/CheckEmail]: пользователь "Гость", идентификатор 10 не найден %s');
 				$mailbox->deleteMessage($mail->mId, TRUE);
+				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
 			$Params = Array(
@@ -228,7 +256,6 @@ foreach ($mails as $mail){
 		case 'array':
 			#-------------------------------------------------------------------------------
 			# сообщение на www/API/TicketEdit, от найденного юзера
-			Debug(SPrintF('[comp/Tasks/CheckEmail]: найден пользователь биллинга %s',$fromAddress));
 			$Params = Array(
 					'Theme'		=> $Subject,
 					'PriorityID'	=> 'Low',
