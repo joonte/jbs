@@ -8,15 +8,23 @@
   <Href>javascript:ShowWindow("/TicketInfo",{TicketID:%Replace%});</Href>
   <Icon>Info.gif</Icon>
  </UniqID>
+ <!-- *********************************************************************** -->
  <UniqID>
   <Text>Просмотреть запрос</Text>
   <Href>javascript:ShowWindow("/TicketRead",{TicketID:%Replace%});</Href>
   <Icon>TicketRead.gif</Icon>
  </UniqID>
+ <!-- *********************************************************************** -->
  <UniqID>
   <Text>Изменить запрос</Text>
   <Href>javascript:ShowWindow("/Administrator/TicketEdit",{TicketID:%Replace%});</Href>
   <Icon>Edit.gif</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Копировать запрос</Text>
+  <Href>javascript:ShowWindow("/Administrator/TicketCopy",{TicketID:%Replace%});</Href>
+  <Icon>Copy.png</Icon>
  </UniqID>
 </Items>
 <!-- *********************************************************************** -->

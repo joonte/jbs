@@ -16,7 +16,7 @@
  <UniqID>
    <Text>Все заказанные услуги</Text>
    <Href>/Administrator/ServicesOrders?Search=%Email%&amp;PatternOutID=Default</Href>
-   <Icon>ListMenuItem.gif</Icon>
+   <Icon>AllServices.png</Icon>
  </UniqID>
 </Items>
 <!-- *********************************************************************** -->

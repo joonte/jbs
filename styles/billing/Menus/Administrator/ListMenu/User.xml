@@ -52,12 +52,12 @@
  <UniqID>
   <Text>Документооборот</Text>
   <Href>/Administrator/MotionDocuments?Search=%Email%&amp;PatternOutID=Default</Href>
-  <Icon>ListMenuItem.gif</Icon>
+  <Icon>MotionDocuments.png</Icon>
  </UniqID>
  <UniqID>
   <Text>История операций</Text>
   <Href>/Administrator/Postings?Search=%Email%&amp;PatternOutID=Default</Href>
-  <Icon>ListMenuItem.gif</Icon>
+  <Icon>Clock.png</Icon>
  </UniqID>
  <UniqID>
   <Text>Задачи системы</Text>
