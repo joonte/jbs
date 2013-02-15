@@ -14,6 +14,7 @@ $Args = IsSet($Args)?$Args:Args();
 $TicketID 		= (integer) @$Args['TicketID'];
 $Email			=  (string) @$Args['Email'];
 $Flags			=  (string) @$Args['Flags'];
+$FromID			= (integer) @$Args['FromID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
@@ -48,6 +49,21 @@ case 'array':
 	#-------------------------------------------------------------------------------
 	break;
 	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+# проверяем наличие юзера от которого будет тикет
+$UserFrom = DB_Select('Users',Array('ID','Email'),Array('UNIQ','ID'=>$FromID));
+#-------------------------------------------------------------------------------
+switch(ValueOf($UserFrom)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('FROM_USER_NOT_FOUND','Пользователь от которого будет тикет, не найден');
+case 'array':
+	# No more...
+	break;
 default:
 	return ERROR | @Trigger_Error(101);
 }
@@ -89,7 +105,7 @@ if(Is_Error($EdeskID))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IMessage = Array(
-		'UserID'	=> $GLOBALS['__USER']['ID'],
+		'UserID'	=> $FromID,
 		'EdeskID'	=> $EdeskID,
 		'Content'	=> $Message['Content']
 		);
