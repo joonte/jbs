@@ -98,7 +98,7 @@ $IsInsert = DB_Insert('EdesksMessages',$IMessage);
 if(Is_Error($IsInsert))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Edesks','IsNotNotify'=>TRUE,'IsNoTrigger'=>TRUE,'StatusID'=>'Opened','RowsIDs'=>$EdeskID));
+$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Edesks','IsNotNotify'=>TRUE,'IsNoTrigger'=>TRUE,'StatusID'=>'Opened','Comment'=>SPrintF('Скопирован из #%s',$TicketID),'RowsIDs'=>$EdeskID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Comp)){
 case 'error':
