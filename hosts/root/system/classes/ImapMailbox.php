@@ -450,7 +450,7 @@ class ImapMailbox {
 				$params[strtolower($param->attribute)] = $param->value;
 			}
 		}
-		if (!empty($params['charset'])) {
+		if (!empty($params['charset'])){
 			$data = @iconv($params['charset'], $this->serverEncoding, $data);
 		}
 

@@ -84,7 +84,6 @@ foreach($mailbox->searchMailbox() as $mailId){
 		$Hash = Comp_Load('www/API/Upload');
 		if(Is_Error($Hash))
 			return ERROR | @Trigger_Error(500);
-		Debug(SPrintF('[comp/Tasks/CheckEmail]: Hash = %s',$Hash));
 		#---------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
