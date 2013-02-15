@@ -71,7 +71,7 @@ CREATE TABLE `Invoices` (
   `CreateDate` int(11) default '0',
   `ContractID` int(11) NOT NULL,
   `PaymentSystemID` char(50) default '',
-  `Summ` float(11,2) default '0.00',
+  `Summ` decimal(11,2) default '0.00',
   `Document` mediumblob,
   `IsPosted` enum('no','yes') default 'no',
   `StatusID` char(30) default 'UnSeted',
@@ -153,7 +153,7 @@ CREATE TABLE `Contracts` (
   `ProfileID` int(11) default '0',
   `Customer` char(255) default '',
   `IsUponConsider` enum('no','yes') default 'no',
-  `Balance` float(11,2) default '0.00',
+  `Balance` decimal(11,2) default '0.00',
   `Document` LONGBLOB,
   `StatusID` char(30) default 'UnSeted',
   `StatusDate` int(11) default '0',
@@ -263,8 +263,8 @@ CREATE TABLE `Postings` (
   `ContractID` int(11) NOT NULL,
   `ServiceID` int(11) NOT NULL,
   `Comment` char(255) default '',
-  `Before` float(11,2) default '0.00',
-  `After` float(11,2) default '0.00',
+  `Before` decimal(11,2) default '0.00',
+  `After` decimal(11,2) default '0.00',
   PRIMARY KEY  (`ID`),
   KEY `PostingsContractID` (`ContractID`),
   CONSTRAINT `PostingsContractID` FOREIGN KEY (`ContractID`) REFERENCES `Contracts` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -344,13 +344,13 @@ CREATE TABLE `Users` (
   `ICQ` char(12) default '',
   `JabberID` CHAR(64) default '', 
   `Mobile` char(20) default '',
-  `Rating` float(7,2) default '0.00',
+  `Rating` decimal(7,2) default '0.00',
   `Sign` char(255) default '',
   `EnterIP` char(20) default '-',
   `EnterDate` int(11) default '0',
   `LayPayMaxDays` int(11) default '0',
-  `LayPayMaxSumm` float(11,2) default '0.00',
-  `LayPayThreshold` float(11,2) default '0.00',
+  `LayPayMaxSumm` decimal(11,2) default '0.00',
+  `LayPayThreshold` decimal(11,2) default '0.00',
   `IsActive` enum('no','yes') default 'yes',
   `IsNotifies` enum('no','yes') default 'yes',
   `IsHidden` enum('no','yes') default 'no',
@@ -379,8 +379,8 @@ CREATE TABLE `WorksComplite` (
   `ServiceID` int(11) NOT NULL,
   `Comment` char(255) default '',
   `Amount` int(11) default '1',
-  `Cost` float(11,2) default '0.00',
-  `Discont` float(11,2) default '0.00',
+  `Cost` decimal(11,2) default '0.00',
+  `Discont` decimal(11,2) default '0.00',
   `UniqID` char(255) default '',
   PRIMARY KEY  (`ID`),
   KEY `WorksCompliteContractID` (`ContractID`),
@@ -449,7 +449,7 @@ CREATE TABLE `Basket` (
   `OrderID` int(11) NOT NULL,
   `Comment` char(255) default '',
   `Amount` int(11) default '1',
-  `Summ` float(11,2) default '0.00',
+  `Summ` decimal(11,2) default '0.00',
   PRIMARY KEY  (`ID`),
   KEY `BasketOrderID` (`OrderID`),
   CONSTRAINT `BasketOrderID` FOREIGN KEY (`OrderID`) REFERENCES `Orders` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -467,7 +467,7 @@ CREATE TABLE `InvoicesItems` (
   `Comment` char(255) default '',
   `OrderID` int(11) default NULL,
   `Amount` int(11) default '1',
-  `Summ` float(11,2) default '0.00',
+  `Summ` decimal(11,2) default '0.00',
   PRIMARY KEY  (`ID`),
   KEY `InvoicesItemsInvoiceID` (`InvoiceID`),
   CONSTRAINT `InvoicesItemsInvoiceID` FOREIGN KEY (`InvoiceID`) REFERENCES `Invoices` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -493,8 +493,8 @@ CREATE TABLE `Services` (
   `Emblem` mediumblob,
   `Measure` char(30) default '',
   `ConsiderTypeID` char(30) default 'Upon',
-  `CostOn` float(11,2) default '0.00',
-  `Cost` float(11,2) default '0.00',
+  `CostOn` decimal(11,2) default '0.00',
+  `Cost` decimal(11,2) default '0.00',
   `IsHidden` enum('no','yes') default 'no',
   `IsProtected` enum('no','yes') default 'no',
   `IsActive` enum('no','yes') default 'yes',
@@ -672,7 +672,7 @@ CREATE TABLE `Bonuses` (
   `SchemesGroupID` int(11) NULL,   -- группа тарифов на которую даётся бонус
   `DaysReserved` int(11) default '0',	-- на сколько дней дан бонус
   `DaysRemainded` int(11) default '0',	-- сколько дней осталось от бонуса
-  `Discont` float(11,2) default '0.00',	-- размер скидки, в долях от единицы
+  `Discont` decimal(11,2) default '0.00',	-- размер скидки, в долях от единицы
   `Comment` char(255) default '',	-- комментарий к бонусу
   PRIMARY KEY(`ID`),
   /* просто ключ, чтоб не перебирать всю таблицу при поиске */
@@ -704,7 +704,7 @@ CREATE TABLE `Politics` (
   `ToSchemesGroupID` int(11) NULL,	-- на какую группу услуг будет даваться бонус
   `DaysPay` int(11) default '665',	-- какой срок надо оплатить, чтобы сработала политика
   `DaysDiscont` int(11) default '665',  -- на какой срок даётся скидка
-  `Discont` float(11,2) default '0.00',	-- размер скидки, в долях от единицы
+  `Discont` decimal(11,2) default '0.00',	-- размер скидки, в долях от единицы
   `Comment` char(255) default '',       -- комментарий к политике
   PRIMARY KEY(`ID`),
   /* просто ключи для тарифов */
@@ -766,7 +766,7 @@ CREATE TABLE `PromoCodes` (
   `SchemeID` int(11) NULL,			-- идентификатор тарифа
   `SchemesGroupID` int(11) NULL,		-- группа тарифов
   `DaysDiscont` int(11) default '665',		-- на какой срок создаётся бонус
-  `Discont` float(11,2) default '0.00',		-- размер скидки, в долях от единицы
+  `Discont` decimal(11,2) default '0.00',		-- размер скидки, в долях от единицы
   `MaxAmount` int(11) default '0',		-- сколько раз можно ввести промокод
   `CurrentAmount` int(11) default '0',		-- сколько раз его уже вводили
   `OwnerID` int(11) NULL,			-- сделать того кто введёт партнёром этого юзера
