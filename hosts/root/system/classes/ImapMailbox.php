@@ -419,8 +419,11 @@ class ImapMailbox {
 
 	public function quoteAttachmentFilename($filename) {
 		$replace = array('/\s/' => '_', '/[^0-9a-zA-Z_\.]/' => '', '/_+/' => '_', '/(^_)|(_$)/' => '');
-
-		return preg_replace(array_keys($replace), $replace, $filename);
+		$name = preg_replace(array_keys($replace), $replace, $filename);
+		if(preg_match('/^\.[\w]+$/',$name))
+			$name = SPrintF('%s%s',Md5(MicroTime()),$name);
+			
+		return $name;
 	}
 
 	public function initMailPart(IncomingMail $mail, $partStruct, $partNum) {

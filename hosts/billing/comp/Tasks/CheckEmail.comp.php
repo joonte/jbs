@@ -70,7 +70,6 @@ foreach($mailbox->searchMailbox() as $mailId){
 	$Files = $mail->attachments;
 	foreach(Array_Keys($Files) as $FileName){
 		#---------------------------------------------------------------------
-		Debug(SPrintF('[comp/Tasks/CheckEmail]: name = "%s"; path = "%s"',$FileName,$Files[$FileName]));
 		$FileData = Array(
 					'size'		=> FileSize($Files[$FileName]),
 					'error'		=> 0,
@@ -82,9 +81,10 @@ foreach($mailbox->searchMailbox() as $mailId){
 		#---------------------------------------------------------------------
 		global $_FILES;
 		#---------------------------------------------------------------------
-		$Comp = Comp_Load('www/API/Upload');
-		if(Is_Error($Comp))
+		$Hash = Comp_Load('www/API/Upload');
+		if(Is_Error($Hash))
 			return ERROR | @Trigger_Error(500);
+		Debug(SPrintF('[comp/Tasks/CheckEmail]: Hash = %s',$Hash));
 		#---------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -193,7 +193,7 @@ foreach($mailbox->searchMailbox() as $mailId){
 	if($Settings['SaveHeaders'])
 		$SaveHeaders = SPrintF("[hidden]\n%s[/hidden]\n",$mailbox->fetchHeader($mail->mId));
 	#-------------------------------------------------------------------------------
-	$Message = SPrintF("%s\n\n%s[size:10][color:gray]posted via email, from: %s[/color][/size]",$textPlain,(IsSet($SaveHeaders))?$SaveHeaders:'',$fromAddress);
+	$Message = SPrintF("%s\n\n%s[size:10][color:gray]posted via email, from: %s[/color][/size]",Trim($textPlain),(IsSet($SaveHeaders))?$SaveHeaders:'',$fromAddress);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# имеем 2 ситуации, задан или не задан $MessageID - соответственно, добавление в тикет или создание тикета
@@ -202,7 +202,12 @@ foreach($mailbox->searchMailbox() as $mailId){
 		# либо от существующего юзера, либо от гостя - определяемся по владельцу треда
 		$GLOBALS['__USER']['ID'] = $Edesk['EdeskUserID'];
 		#-------------------------------------------------------------------------------
-		$IsAdd = Comp_Load('www/API/TicketMessageEdit',Array('Message'=>$Message,'TicketID'=>$Edesk['EdeskID']));
+		$Params = Array('Message'=>$Message,'TicketID'=>$Edesk['EdeskID']);
+		#-------------------------------------------------------------------------------
+		if(IsSet($Hash))
+			$Params['TicketMessageFile'] = $Hash;
+		#-------------------------------------------------------------------------------
+		$IsAdd = Comp_Load('www/API/TicketMessageEdit',$Params);
 		if(Is_Error($IsAdd))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
@@ -241,6 +246,9 @@ foreach($mailbox->searchMailbox() as $mailId){
 					'NotifyEmail'	=> $fromAddress
 					);
 			#-------------------------------------------------------------------------------
+			if(IsSet($Hash))
+				$Params['TicketMessageFile'] = $Hash;
+			#-------------------------------------------------------------------------------
 			$GLOBALS['__USER']['ID'] = 10;
 			#-------------------------------------------------------------------------------
 			$IsAdd = Comp_Load('www/API/TicketEdit',$Params);
@@ -264,6 +272,9 @@ foreach($mailbox->searchMailbox() as $mailId){
 					'TargetGroupID'	=> 3100000
 					);
 			#-------------------------------------------------------------------------------
+			if(IsSet($Hash))
+				$Params['TicketMessageFile'] = $Hash;
+			#-------------------------------------------------------------------------------
 			$GLOBALS['__USER']['ID'] = $User['ID'];
 			#-------------------------------------------------------------------------------
 			$IsAdd = Comp_Load('www/API/TicketEdit',$Params);
@@ -284,8 +295,24 @@ foreach($mailbox->searchMailbox() as $mailId){
 	# ампутируем переменную, чтоб в один тикет не напостило все письма
 	UnSet($MessageID);
 	#-------------------------------------------------------------------------------
+	# удаляем файлы
+	$Files = IO_Scan($attachmentsDir);
+	if(Is_Error($Files))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	foreach($Files as $File){
+		#-----------------------------------------------------------------------------
+		$Path = SPrintF('%s/%s',$attachmentsDir,$File);
+		#-----------------------------------------------------------------------------
+		if(!UnLink($Path))
+			return ERROR | @Trigger_Error(SPrintF('Не удалось удалить файл (%s)',$Path));
+	}
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(SizeOf($mailbox->searchMailbox()) < 1)
+	UnSet($GLOBALS['TaskReturnInfo']);
 #-------------------------------------------------------------------------------
 $mailbox->disconnect();
 #-------------------------------------------------------------------------------

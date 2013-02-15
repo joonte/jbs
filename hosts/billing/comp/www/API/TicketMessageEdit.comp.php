@@ -79,7 +79,7 @@ switch(ValueOf($Ticket)){
             'Content' => $Message
           );
           #---------------------------------------------------------------------
-          $Upload = Upload_Get('TicketMessageFile');
+	  $Upload = Upload_Get('TicketMessageFile',(IsSet($Args['TicketMessageFile'])?$Args['TicketMessageFile']:FALSE));
           #---------------------------------------------------------------------
           switch(ValueOf($Upload)){
             case 'error':
