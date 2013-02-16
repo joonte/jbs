@@ -45,7 +45,7 @@ switch($File['error']){
     return ERROR | @Trigger_Error(SPrintF('[Upload]: не известный код ошибки (%s)',$File['error']));
 }
 #-------------------------------------------------------------------------------
-if(!$File['size'])
+if(!$File['size'] && IsSet($_SERVER["REMOTE_PORT"]))
   return ERROR | @Trigger_Error('[Upload]: загружаемый файл имеет нулевой размер');
 #-------------------------------------------------------------------------------
 $Tmp = System_Element('tmp');
@@ -82,7 +82,7 @@ if(Is_Error($IsWrite))
 $Size = Round($File['size']/1024);
 #-------------------------------------------------------------------------------
 # вывод для JS в браузере...
-if(isset($_SERVER["REMOTE_PORT"]))
+if(IsSet($_SERVER["REMOTE_PORT"]))
 	echo SPrintF('%s^%s^%s^',$Name,$Size,$Hash);
 #-------------------------------------------------------------------------------
 $Files = IO_Scan($Uploads);
