@@ -181,6 +181,8 @@ foreach($mailbox->searchMailbox() as $mailId){
 				#-------------------------------------------------------------------------------
 				$MessageID = $Address[0];
 				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/CheckEmail]: EdeskID = %s',$Edesk['EdeskID']));
+				#-------------------------------------------------------------------------------
 				break;
 			default:
 				return ERROR | @Trigger_Error(101);
