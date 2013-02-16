@@ -9,7 +9,7 @@ $__args_list = Array('ContractID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/DOM.class.php')))
+if(Is_Error(System_Load('classes/DOM.class.php','libs/Upload.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Contract = DB_Select('Contracts',Array('ID','CreateDate','TypeID','ProfileID'),Array('UNIQ','ID'=>$ContractID));
@@ -164,9 +164,12 @@ switch(ValueOf($Contract)){
             if(Is_Error(DB_Transaction($TransactionID = UniqID('ContractBuld'))))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $IsUpdate = DB_Update('Contracts',Array('Customer'=>$Customer['Name'],'Document'=>$Document),Array('ID'=>$ContractID));
+            $IsUpdate = DB_Update('Contracts',Array('Customer'=>$Customer['Name']),Array('ID'=>$ContractID));
             if(Is_Error($IsUpdate))
               return ERROR | @Trigger_Error(500);
+           #-------------------------------------------------------------------
+           if(!SaveUploadedFile('Contracts', $ContractID, $Document))
+             return new gException('CANNOT_SAVE_UPLOADED_FILE','Не удалось сохранить загруженный файл');
             #-------------------------------------------------------------------
             $ContractsEnclosures = DB_Select('ContractsEnclosures','ID',Array('Where'=>SPrintF('`ContractID` = %u',$ContractID)));
             #-------------------------------------------------------------------

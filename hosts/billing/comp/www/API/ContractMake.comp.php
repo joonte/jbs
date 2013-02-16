@@ -13,7 +13,7 @@ $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 $TypeID     =  (string) @$Args['TypeID'];
 $ProfileID  = (integer) @$Args['ProfileID'];
-$Window =  (string) @$Args['Window'];
+$Window     =  (string) @$Args['Window'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
