@@ -108,7 +108,35 @@ case 'exception':
 case 'array':
 	#-------------------------------------------------------------------------------
 	foreach($Orders as $Order){
+		#-------------------------------------------------------------------------------
 		Debug(SPrintF("[comp/Tasks/GC/EraseDeletedOrders]: юзер %s; услуга %s; код услуги %s; ID услуги %s; заказ #%s",$Order['Email'],$Order['NameShort'],$Order['Code'],$Order['ServiceID'],$Order['ID']));
+		#----------------------------------TRANSACTION----------------------------
+		if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Tasks/GC/EraseDeletedOrders'))))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------
+		$Comp = Comp_Load('www/API/Delete',Array('TableID'=>'Orders','RowsIDs'=>$Order['ID']));
+		#-------------------------------------------------------------------------
+		switch(ValueOf($Comp)){
+		case 'array':
+			#-------------------------------------------------------------------------------
+			$Event = Array(
+					'UserID'	=> $Order['UserID'],
+					'PriorityID'	=> 'Billing',
+					'Text'		=> SPrintF('Отмененный заказ (%s) #%d автоматически удален.',$Order['NameShort'],$Order['OrderID'])
+					);
+			#-------------------------------------------------------------------------------
+			$Event = Comp_Load('Events/EventInsert',$Event);
+			if(!$Event)
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			break;
+		default:
+			return ERROR | @Trigger_Error(500);
+		}
+		#-------------------------------------------------------------------------
+		if(Is_Error(DB_Commit($TransactionID)))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------
 	}
 	break;
 default:
