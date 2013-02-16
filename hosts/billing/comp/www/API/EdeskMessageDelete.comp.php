@@ -60,9 +60,12 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsDeleted = DB_Delete('EdesksMessages',Array('ID'=>$MessageID));
-if(Is_Error($IsDeleted))
-	return ERROR | @Trigger_Error(500);
+#$IsDeleted = DB_Delete('EdesksMessages',Array('ID'=>$MessageID));
+#if(Is_Error($IsDeleted))
+#	return ERROR | @Trigger_Error(500);
+$Comp = Comp_Load('www/API/Delete',Array('TableID'=>'EdesksMessages','RowsIDs'=>$MessageID));
+if(Is_Error($Comp))
+	return new gException('CANNOT_DELETE_TABLE_ROW','Не удалось удалить выбранное сообщение');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Event = Array(

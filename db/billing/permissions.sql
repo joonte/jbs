@@ -129,6 +129,9 @@ INSERT INTO `Permissions` (`Name`,`HostID`,`UserGroupID`,`UserID`,`OwnerGroupID`
 ('EdesksDelete','billing',1,1,4000000,1,1,'no'),
 ('EdesksDelete','billing',3000000,100,1,1,2,'yes'),
 
+('EdesksMessagesDelete','billing',1,1,4000000,1,1,'no'),
+('EdesksMessagesDelete','billing',3000000,100,1,1,2,'yes'),
+
 ('TasksDelete','billing',1,1,4000000,1,1,'no'),
 ('TasksDelete','billing',3000000,100,1,1,2,'yes'),
 
