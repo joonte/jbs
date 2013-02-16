@@ -10,6 +10,18 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
+  <Text>Оплатить заказ</Text>
+  <Href>javascript:ShowWindow("/VPSOrderPay",{VPSOrderID:%Replace%});</Href>
+  <Icon>Pay.gif</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Учёт заказа</Text>
+  <Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%Replace%",ServiceID:"30000"});</Href>
+  <Icon>OrderConsiderInfo.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
   <Text>Сменить тарифный план</Text>
   <Href>javascript:ShowWindow("/VPSOrderSchemeChange",{VPSOrderID:%Replace%});</Href>
   <Icon>SchemeChange.png</Icon>

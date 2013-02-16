@@ -84,12 +84,6 @@ switch(ValueOf($DSOrder)){
         $Table[] = Array('Тарифный план',SPrintF('%s (%s)',$DSOrder['Scheme'],$DSOrder['ServersGroupName']));
         #-----------------------------------------------------------------------
         #-----------------------------------------------------------------------
-	$Table = Comp_Load('OrderConsiderInfo',Array('OrderID'=>$DSOrder['OrderID'],'Table'=>$Table,'Code'=>$DSOrder['Code'],'UserID'=>$DSOrder['UserID']));
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-        #-----------------------------------------------------------------------
-        #-----------------------------------------------------------------------
-         #-----------------------------------------------------------------------
 	 $Table[] = 'IP адреса';
 	 $Table[] = Array('Первичный IP адрес',$DSOrder['IP']);
 	 $Table[] = Array('Дополнительные IP адреса', new Tag('PRE',$DSOrder['ExtraIP']));

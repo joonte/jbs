@@ -88,11 +88,6 @@ switch(ValueOf($HostingOrder)){
         $Table[] = Array('Тарифный план',SPrintF('%s (%s)',$HostingOrder['Scheme'],$HostingOrder['ServersGroupName']));
 	#-----------------------------------------------------------------------
         #-----------------------------------------------------------------------
-	$Table = Comp_Load('OrderConsiderInfo',Array('OrderID'=>$HostingOrder['OrderID'],'Table'=>$Table,'Code'=>$HostingOrder['Code'],'UserID'=>$HostingOrder['UserID']));
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-----------------------------------------------------------------------
-        #-----------------------------------------------------------------------
         $Table[] = 'Параметры доступа';
         #-----------------------------------------------------------------------
         $Server = DB_Select('HostingServers',Array('Url','Address'),Array('UNIQ','ID'=>$HostingOrder['ServerID']));

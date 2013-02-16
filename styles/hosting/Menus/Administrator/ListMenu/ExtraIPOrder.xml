@@ -8,11 +8,19 @@
   <Href>javascript:ShowWindow("/ExtraIPOrderInfo",{ExtraIPOrderID:"%Replace%"});</Href>
   <Icon>Info.gif</Icon>
  </UniqID>
+ <!-- *********************************************************************** -->
  <UniqID>
   <Text>Редактировать заказ IP адреса</Text>
   <Href>javascript:ShowWindow("/Administrator/ExtraIPOrderEdit",{ExtraIPOrderID:"%Replace%"});</Href>
   <Icon>Info.gif</Icon>
  </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Учёт заказа</Text>
+  <Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%Replace%",ServiceID:"50000"});</Href>
+  <Icon>OrderConsiderInfo.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
  <UniqID>
   <Text>Компенсировать время</Text>
   <Href>javascript:ShowWindow("/Administrator/ExtraIPCompensation",{ExtraIPOrderID:%Replace%});</Href>

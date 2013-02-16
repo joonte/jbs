@@ -16,6 +16,12 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
+  <Text>Учёт заказа</Text>
+  <Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%Replace%",ServiceID:"10000"});</Href>
+  <Icon>OrderConsiderInfo.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
   <Text>Сменить тарифный план</Text>
   <Href>javascript:ShowWindow("/HostingOrderSchemeChange",{HostingOrderID:%Replace%});</Href>
   <Icon>SchemeChange.png</Icon>

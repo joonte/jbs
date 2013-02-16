@@ -88,11 +88,6 @@ switch(ValueOf($VPSOrder)){
         $Table[] = Array('Тарифный план',SPrintF('%s (%s)',$VPSOrder['Scheme'],$VPSOrder['ServersGroupName']));
         #-----------------------------------------------------------------------
         #-----------------------------------------------------------------------
-	$Table = Comp_Load('OrderConsiderInfo',Array('OrderID'=>$VPSOrder['OrderID'],'Table'=>$Table,'Code'=>$VPSOrder['Code'],'UserID'=>$VPSOrder['UserID']));
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-----------------------------------------------------------------------
-        #-----------------------------------------------------------------------
         $Table[] = 'Параметры доступа';
         #-----------------------------------------------------------------------
         $Server = DB_Select('VPSServers',Array('Url','Address'),Array('UNIQ','ID'=>$VPSOrder['ServerID']));

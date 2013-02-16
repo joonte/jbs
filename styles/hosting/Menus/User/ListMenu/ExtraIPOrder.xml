@@ -10,6 +10,18 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
+  <Text>Оплатить заказ</Text>
+  <Href>javascript:ShowWindow("/ExtraIPOrderPay",{ExtraIPOrderID:%Replace%});</Href>
+  <Icon>Pay.gif</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Учёт заказа</Text>
+  <Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%Replace%",ServiceID:"50000"});</Href>
+  <Icon>OrderConsiderInfo.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
   <Text>Передать на другой аккаунт</Text>
   <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%Replace%",ServiceID:"50000"});</Href>
   <Icon>OrdersTransfer.png</Icon>

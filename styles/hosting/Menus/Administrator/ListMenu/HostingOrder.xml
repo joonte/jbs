@@ -22,6 +22,12 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
+  <Text>Учёт заказа</Text>
+  <Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%Replace%",ServiceID:"10000"});</Href>
+  <Icon>OrderConsiderInfo.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
   <Text>Компенсировать время</Text>
   <Href>javascript:ShowWindow("/Administrator/HostingCompensation",{HostingOrderID:%Replace%});</Href>
   <Icon>Add.gif</Icon>
