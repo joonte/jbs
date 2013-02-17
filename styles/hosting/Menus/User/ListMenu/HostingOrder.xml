@@ -21,6 +21,12 @@
   <Icon>OrderConsiderInfo.png</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
+  <UniqID>
+   <Text>Настройки автопродления</Text>
+   <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%Replace%",ServiceID:"10000"});</Href>
+   <Icon>AutoProlong.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
  <UniqID>
   <Text>Сменить тарифный план</Text>
   <Href>javascript:ShowWindow("/HostingOrderSchemeChange",{HostingOrderID:%Replace%});</Href>

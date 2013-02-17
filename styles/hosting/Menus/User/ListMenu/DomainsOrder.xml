@@ -16,6 +16,12 @@
   <Icon>Pay.gif</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
+  <UniqID>
+   <Text>Настройки автопродления</Text>
+   <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%Replace%",ServiceID:"20000"});</Href>
+   <Icon>AutoProlong.png</Icon>
+  </UniqID>
+  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Сменить именные сервера</Text>
   <Href>javascript:ShowWindow("/DomainOrderNsChange",{DomainOrderID:%Replace%});</Href>

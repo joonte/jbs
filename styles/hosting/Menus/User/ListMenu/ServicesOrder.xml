@@ -9,12 +9,18 @@
   <Icon>Info.gif</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Оплатить заказ</Text>
+  <Href>javascript:ShowWindow("/ServiceOrderPay",{ServiceOrderID:"%Replace%"});</Href>
+  <Icon>Pay.gif</Icon>
+ </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
-  <Text>Редактировать заказ услуги</Text>
-  <Href>javascript:ShowWindow("/Administrator/ServiceOrderEdit",{ServiceOrderID:%Replace%});</Href>
-  <Icon>Edit.gif</Icon>
+  <Text>Настройки автопродления</Text>
+  <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%Replace%"});</Href>
+  <Icon>AutoProlong.png</Icon>
  </UniqID>
 </Items>
+<!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 </XML>

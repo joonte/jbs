@@ -142,34 +142,15 @@ switch(ValueOf($VPSOrder)){
 #          $Table[] = Array('Паркованные домены',new Tag('PRE',Array('class'=>'Standard'),Implode("\n",$Parked)));
 #        }
         #-----------------------------------------------------------------------
+	#-----------------------------------------------------------------------
 	$Table[] = 'Прочее';
 	#-----------------------------------------------------------------------
-	#-----------------------------------------------------------------------
-	if($VPSOrder['IsAutoProlong']){
-		$Button = "Отключить";
-		$msg = "[включено]";
-	}else{
-		$Button = "Включить";
-		$msg = "[выключено]";
-	}
-	#-----------------------------------------------------------------------
-	$Params = Array('type'=>'hidden','name'=>'IsAutoProlong','value'=>$VPSOrder['IsAutoProlong']?'0':'1');
-	$IsAutoProlong = Comp_Load('Form/Input',$Params);
+	$Comp = Comp_Load('Formats/Logic',$VPSOrder['IsAutoProlong']);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-----------------------------------------------------------------------
-	$Comp = Comp_Load(
-			'Form/Input',
-			Array(
-				'type'    => 'button',
-				'onclick' => "AjaxCall('/API/ServiceAutoProlongation',FormGet(form),'Сохрание настроек','GetURL(document.location);');",
-				'value'   => $Button
-			)
-		);
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
+	$Table[] = Array('Автопродление',$Comp);
 	#-----------------------------------------------------------------------
-	$Table[] = Array('Автопродление ' . $msg, $Comp);
 	#-----------------------------------------------------------------------
         $Comp = Comp_Load('Statuses/State','VPSOrders',$VPSOrder);
         if(Is_Error($Comp))
@@ -183,7 +164,6 @@ switch(ValueOf($VPSOrder)){
         #-----------------------------------------------------------------------
         $Form = new Tag('FORM',Array('method'=>'POST','name'=>'OrderInfo'),$Comp);
 	#-----------------------------------------------------------------------
-	$Form->AddChild($IsAutoProlong);
         #-----------------------------------------------------------------------
         $Comp = Comp_Load(
           'Form/Input',

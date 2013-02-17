@@ -23,8 +23,8 @@ $ISPswOrderID = (integer) @$Args['ISPswOrderID'];
 $Columns = Array(
 			'*',
 			'(SELECT `Name` FROM `ISPswSchemes` WHERE `ISPswSchemes`.`ID` = `ISPswOrdersOwners`.`SchemeID`) as `Scheme`',
-			'(SELECT `IsAutoProlong` FROM `Orders` WHERE `ISPswOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',
 			'(SELECT `elid` FROM `ISPswLicenses` WHERE `ISPswOrdersOwners`.`LicenseID`=`ISPswLicenses`.`ID`) AS `elid`',
+			'(SELECT `IsAutoProlong` FROM `Orders` WHERE `ISPswOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',
 			'(SELECT (SELECT `Code` FROM `Services` WHERE `Orders`.`ServiceID` = `Services`.`ID`) FROM `Orders` WHERE `ISPswOrdersOwners`.`OrderID` = `Orders`.`ID`) AS `Code`'
 		);
 #-------------------------------------------------------------------------------
@@ -96,31 +96,11 @@ switch(ValueOf($ISPswOrder)){
 	#-----------------------------------------------------------------------
 	$Table[] = 'Прочее';
 	#-----------------------------------------------------------------------
-	if($ISPswOrder['IsAutoProlong']){
-		$Button = "Отключить";
-		$msg = "[включено]";
-	}else{
-		$Button = "Включить";
-		$msg = "[выключено]";
-	}
-	#-----------------------------------------------------------------------
-	$Params = Array('type'=>'hidden','name'=>'IsAutoProlong','value'=>$ISPswOrder['IsAutoProlong']?'0':'1');
-	$IsAutoProlong = Comp_Load('Form/Input',$Params);
+	$Comp = Comp_Load('Formats/Logic',$ISPswOrder['IsAutoProlong']);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-----------------------------------------------------------------------
-	$Comp = Comp_Load(
-			'Form/Input',
-			Array(
-				'type'    => 'button',
-				'onclick' => "AjaxCall('/API/ServiceAutoProlongation',FormGet(form),'Сохрание настроек','GetURL(document.location);');",
-				'value'   => $Button
-			)
-		);
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-----------------------------------------------------------------------
-	$Table[] = Array('Автопродление ' . $msg,$Comp);
+	$Table[] = Array('Автопродление',$Comp);
 	#-----------------------------------------------------------------------
 	#-----------------------------------------------------------------------
         $Comp = Comp_Load('Statuses/State','ISPswOrders',$ISPswOrder);
@@ -135,8 +115,6 @@ switch(ValueOf($ISPswOrder)){
         #-----------------------------------------------------------------------
         $Form = new Tag('FORM',Array('method'=>'POST','name'=>'OrderInfo'),$Comp);
 	#-----------------------------------------------------------------------
-	$Form->AddChild($IsAutoProlong);
-        #-----------------------------------------------------------------------
 	#-----------------------------------------------------------------------
         $Comp = Comp_Load(
           'Form/Input',

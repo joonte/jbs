@@ -22,7 +22,7 @@ if(!$DomainOrderID)
 	$DomainOrderID = (integer) @$Args['DomainsOrderID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','UserID','OrderID','OrderDate','ContractID','DomainName','ProfileID','PersonID','IsPrivateWhoIs','WhoIs','UpdateDate','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','StatusID','StatusDate','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `Name` FROM `Registrators` WHERE `Registrators`.`ID` = (SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`)) as `RegistratorName`','(SELECT `IsAutoProlong` FROM `Orders` WHERE `DomainsOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',);
+$Columns = Array('ID','UserID','OrderID','OrderDate','ContractID','DomainName','ProfileID','PersonID','IsPrivateWhoIs','WhoIs','UpdateDate','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','StatusID','StatusDate','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `Name` FROM `Registrators` WHERE `Registrators`.`ID` = (SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`)) as `RegistratorName`','(SELECT `IsAutoProlong` FROM `Orders` WHERE `DomainsOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`');
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
@@ -258,31 +258,11 @@ switch(ValueOf($DomainOrder)){
 	#-----------------------------------------------------------------------
 	$Table[] = 'Прочее';
 	#-----------------------------------------------------------------------
-        if($DomainOrder['IsAutoProlong']){
-		$Button = "Отключить";
-		$msg = "[включено]";
-	}else{
-		$Button = "Включить";
-		$msg = "[выключено]";
-	}
-	#-----------------------------------------------------------------------
-	$Params = Array('type'=>'hidden','name'=>'IsAutoProlong','value'=>$DomainOrder['IsAutoProlong']?'0':'1');
-	$IsAutoProlong = Comp_Load('Form/Input',$Params);
+	$Comp = Comp_Load('Formats/Logic',$DomainOrder['IsAutoProlong']);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-----------------------------------------------------------------------
-	$Comp = Comp_Load(
-			'Form/Input',
-			Array(
-				'type'    => 'button',
-				'onclick' => "AjaxCall('/API/ServiceAutoProlongation',FormGet(form),'Сохрание настроек','GetURL(document.location);');",
-				'value'   => $Button
-				)
-			);
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-----------------------------------------------------------------------
-	$Table[] = Array('Автопродление ' . $msg, $Comp);
+	$Table[] = Array('Автопродление',$Comp);
 	#-----------------------------------------------------------------------
         #-----------------------------------------------------------------------
         $Comp = Comp_Load('Statuses/State','DomainsOrders',$DomainOrder);
@@ -298,7 +278,6 @@ switch(ValueOf($DomainOrder)){
 	#-----------------------------------------------------------------------
 	$Form = new Tag('FORM',Array('method'=>'POST','name'=>'OrderInfo'),$Comp);
 	#-----------------------------------------------------------------------
-	$Form->AddChild($IsAutoProlong);
 	#-----------------------------------------------------------------------
 	$Comp = Comp_Load(
 			'Form/Input',

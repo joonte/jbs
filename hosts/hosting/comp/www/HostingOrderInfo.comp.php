@@ -142,34 +142,14 @@ switch(ValueOf($HostingOrder)){
           $Table[] = Array('Паркованные домены',new Tag('PRE',Array('class'=>'Standard'),Implode("\n",$Parked)));
         }
         #-----------------------------------------------------------------------
+	#-----------------------------------------------------------------------
 	$Table[] = 'Прочее';
 	#-----------------------------------------------------------------------
-	#-----------------------------------------------------------------------
-	if($HostingOrder['IsAutoProlong']){
-		$Button = "Отключить";
-		$msg = "[включено]";
-	}else{
-		$Button = "Включить";
-		$msg = "[выключено]";
-	}
-	#-----------------------------------------------------------------------
-	$Params = Array('type'=>'hidden','name'=>'IsAutoProlong','value'=>$HostingOrder['IsAutoProlong']?'0':'1');
-	$IsAutoProlong = Comp_Load('Form/Input',$Params);
+	$Comp = Comp_Load('Formats/Logic',$HostingOrder['IsAutoProlong']);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-----------------------------------------------------------------------
-	$Comp = Comp_Load(
-			'Form/Input',
-			Array(
-				'type'    => 'button',
-				'onclick' => "AjaxCall('/API/ServiceAutoProlongation',FormGet(form),'Сохрание настроек','GetURL(document.location);');",
-				'value'   => $Button
-			)
-		);
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-----------------------------------------------------------------------
-	$Table[] = Array('Автопродление ' . $msg, $Comp);
+	$Table[] = Array('Автопродление',$Comp);
 	#-----------------------------------------------------------------------
 	#-----------------------------------------------------------------------
         $Comp = Comp_Load('Statuses/State','HostingOrders',$HostingOrder);
@@ -184,7 +164,6 @@ switch(ValueOf($HostingOrder)){
         #-----------------------------------------------------------------------
         $Form = new Tag('FORM',Array('method'=>'POST','name'=>'OrderInfo'),$Comp);
 	#-----------------------------------------------------------------------
-	$Form->AddChild($IsAutoProlong);
         #-----------------------------------------------------------------------
         $Comp = Comp_Load(
           'Form/Input',

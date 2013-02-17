@@ -22,6 +22,12 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
+  <Text>Настройки автопродления</Text>
+  <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%Replace%",ServiceID:"51000"});</Href>
+  <Icon>AutoProlong.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
   <Text>Сменить тарифный план</Text>
   <Href>javascript:ShowWindow("/ISPswOrderSchemeChange",{ISPswOrderID:%Replace%});</Href>
   <Icon>SchemeChange.png</Icon>

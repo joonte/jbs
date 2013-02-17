@@ -144,32 +144,12 @@ switch(ValueOf($DSOrder)){
         #------------------------------------------------------------------------
 	$Table[] = 'Прочее';
 	#------------------------------------------------------------------------
-	#------------------------------------------------------------------------
-	if($DSOrder['IsAutoProlong']){
-		$Button = "Отключить";
-		$msg = "[включено]";
-	}else{
-		$Button = "Включить";
-		$msg = "[выключено]";
-	}
-	#------------------------------------------------------------------------
-	$Params = Array('type'=>'hidden','name'=>'IsAutoProlong','value'=>$DSOrder['IsAutoProlong']?'0':'1');
-	$IsAutoProlong = Comp_Load('Form/Input',$Params);
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#------------------------------------------------------------------------
-	$Comp = Comp_Load(
-			'Form/Input',
-			Array(
-				'type'    => 'button',
-				'onclick' => "AjaxCall('/API/ServiceAutoProlongation',FormGet(form),'Сохрание настроек','GetURL(document.location);');",
-				'value'   => $Button
-			)
-		);
+	$Comp = Comp_Load('Formats/Logic',$DSOrder['IsAutoProlong']);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-----------------------------------------------------------------------
-	$Table[] = Array('Автопродление ' . $msg, $Comp);
+	$Table[] = Array('Автопродление',$Comp);
+	#------------------------------------------------------------------------
 	#-----------------------------------------------------------------------
         $Comp = Comp_Load('Statuses/State','DSOrders',$DSOrder);
         if(Is_Error($Comp))
@@ -183,7 +163,6 @@ switch(ValueOf($DSOrder)){
         #-----------------------------------------------------------------------
         $Form = new Tag('FORM',Array('method'=>'POST','name'=>'OrderInfo'),$Comp);
 	#-----------------------------------------------------------------------
-	$Form->AddChild($IsAutoProlong);
         #-----------------------------------------------------------------------
         $Comp = Comp_Load(
           'Form/Input',
