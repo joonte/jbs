@@ -1050,6 +1050,7 @@
     <CutQuotes>1</CutQuotes>
     <CutSign>1</CutSign>
     <SaveHeaders>0</SaveHeaders>
+    <DeletePersonalEmails>0</DeletePersonalEmails>
     <IsActive>0</IsActive>
   </CheckEmail>
   <!-- ********************************************************************* -->
