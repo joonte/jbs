@@ -122,7 +122,7 @@ case 'array':
 			$Event = Array(
 					'UserID'	=> $Order['UserID'],
 					'PriorityID'	=> 'Billing',
-					'Text'		=> SPrintF('Отмененный заказ (%s) #%d автоматически удален.',$Order['NameShort'],$Order['OrderID'])
+					'Text'		=> SPrintF('Отмененный заказ (%s) #%d автоматически удален.',$Order['NameShort'],$Order['ID'])
 					);
 			#-------------------------------------------------------------------------------
 			$Event = Comp_Load('Events/EventInsert',$Event);
