@@ -41,6 +41,12 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
+  <Text>Настройки автопродления</Text>
+  <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%Replace%",ServiceID:"10000"});</Href>
+  <Icon>ListMenuItem.gif</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
   <Text>Сменить пароль от аккаунта</Text>
   <Href>javascript:ShowWindow("/HostingPasswordChange",{HostingOrderID:%Replace%});</Href>
   <Icon>Password.gif</Icon>

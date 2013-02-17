@@ -46,16 +46,12 @@ case 'array':
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		if($IsAutoProlong){
-			$Text = "Включено автопродление для заказа #%u (%s)";
-		}else{
-			$Text = "Отключено автопродление для заказа #%u (%s)";
-		}
+		$Text = SPrintF("%s автопродление для заказа #%u (%s)",(($IsAutoProlong)?'Включено':'Отключено'),$Order['ID'],$Order['NameShort']);
 		#-------------------------------------------------------------------------------
 		$Event = Array(
 				'UserID'        => $__USER['ID'],
 				'PriorityID'    => 'Hosting',
-				'Text'          => SPrintF($Text,$Order['ID'],$Order['NameShort'])
+				'Text'          => $Text
 				);
 		$Event = Comp_Load('Events/EventInsert',$Event);
 		if(!$Event)
