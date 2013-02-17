@@ -231,7 +231,9 @@ VALUES
 /* added by lissyara, for JBS-353, 2012-03-19 in 16:30 MSK */
 ('DomainsOrdersChangeContactData','hosting',1,1,4000000,1,1,'yes'),
 ('DomainsOrdersChangeContactData','hosting',3000000,100,1,1,2,'yes')
+
 ;
+
 UNLOCK TABLES;
 
 SET FOREIGN_KEY_CHECKS=1;

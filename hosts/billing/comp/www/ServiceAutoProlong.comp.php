@@ -15,7 +15,27 @@ $ServiceOrderID	= (integer) @$Args['ServiceOrderID'];
 $ServiceID	= (integer) @$Args['ServiceID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-# достаём сервис
+# достаём сервис, если он не задан
+if($ServiceID < 1){
+	#-------------------------------------------------------------------------------
+	$Order = DB_Select('OrdersOwners',Array('*','`ID` AS `OrderID`'),Array('UNIQ','ID'=>$ServiceOrderID));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Order)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$ServiceID = $Order['ServiceID'];
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Service = DB_Select('ServicesOwners',Array('ID','Code','NameShort','Name'),Array('UNIQ','ID'=>$ServiceID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Service)){
@@ -31,21 +51,26 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),Array('*'),Array('UNIQ','ID'=>$ServiceOrderID));
-#-------------------------------------------------------------------------------
-switch(ValueOf($Order)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	return ERROR | @Trigger_Error(400);
-case 'array':
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
+if($Service['Code'] != "Default"){
+	$Columns = Array('*',SPrintF('(SELECT `IsAutoProlong` FROM `Orders` WHERE `%sOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',$Service['Code']));
+	#-------------------------------------------------------------------------------
+	$Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),$Columns,Array('UNIQ','ID'=>$ServiceOrderID));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Order)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsPermission = Permission_Check(SPrintF('%sOrdersConsider',$Service['Code']),(integer)$GLOBALS['__USER']['ID'],(integer)$Order['UserID']);
+$IsPermission = Permission_Check('ServiceAutoProlongation',(integer)$GLOBALS['__USER']['ID'],(integer)$Order['UserID']);
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsPermission)){
 case 'error':
@@ -74,35 +99,19 @@ $DOM->AddText('Title',SPrintF('Настройки автопродления, у
 #-------------------------------------------------------------------------------
 $Table = Array(SPrintF('Настройки автопродления, услуга "%s", заказ #%u',$Service['NameShort'],$Order['OrderID']));
 #-------------------------------------------------------------------------------
-if($Order['IsAutoProlong']){
-	$Button = "Отключить";
-	$msg = "[включено]";
-}else{
-	$Button = "Включить";
-	$msg = "[выключено]";
-}
-#-----------------------------------------------------------------------
-$Params = Array('type'=>'hidden','name'=>'IsAutoProlong','value'=>$Order['IsAutoProlong']?'0':'1');
-$IsAutoProlong = Comp_Load('Form/Input',$Params);
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-#-----------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load(
 		'Form/Input',
 		Array(
 			'type'    => 'button',
 			'onclick' => "AjaxCall('/API/ServiceAutoProlongation',FormGet(form),'Сохрание настроек','GetURL(document.location);');",
-			'value'   => $Button
+			'value'   => (($Order['IsAutoProlong'])?'Отключить':'Включить')
 			)
 		);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
-#-----------------------------------------------------------------------
-$Table[] = Array('Автопродление ' . $msg, $Comp);
-
-
-
-
+#-------------------------------------------------------------------------------
+$Table[] = Array(SPrintF('Автопродление %s',(($Order['IsAutoProlong'])?'[включено]':'[выключено]')), $Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Standard',$Table);
@@ -111,6 +120,14 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Form = new Tag('FORM',Array('method'=>'POST','name'=>'OrderConsiderInfoForm'),$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Params = Array('type'=>'hidden','name'=>'IsAutoProlong','value'=>$Order['IsAutoProlong']?'0':'1');
+$Comp = Comp_Load('Form/Input',$Params);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Form->AddChild($Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(

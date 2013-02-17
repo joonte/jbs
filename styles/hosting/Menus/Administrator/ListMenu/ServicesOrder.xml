@@ -8,6 +8,13 @@
   <Href>javascript:ShowWindow("/ServiceOrderInfo",{ServiceOrderID:"%Replace%"});</Href>
   <Icon>Info.gif</Icon>
  </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Настройки автопродления</Text>
+  <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%Replace%"});</Href>
+  <Icon>ListMenuItem.gif</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
  <UniqID>
   <Text>Редактировать заказ услуги</Text>
   <Href>javascript:ShowWindow("/Administrator/ServiceOrderEdit",{ServiceOrderID:%Replace%});</Href>
