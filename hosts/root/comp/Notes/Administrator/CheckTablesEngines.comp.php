@@ -20,12 +20,10 @@ if($Out)
 $Config = Config();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Where = Array(
-		SPrintF("`TABLE_SCHEMA` = '%s'",$Config['DBConnection']['DbName']),
-		"`TABLE_NAME` IN ('Users','Services','Orders','OrdersConsider','Bonuses','Clauses','Contracts','ContractsEnclosures','DomainsOrders','DomainsSchemes','Edesks','EdesksMessages','HostingOrders','HostingSchemes','HostingServers','HostingServersGroups','Invoices','InvoicesItems','OrdersConsider','OrdersFields','OrdersTransfer','Permissions','Politics','Postings','Profiles','PromoCodes','PromoCodesExtinguished','Registrators','ServicesFields','ServicesGroups','Tasks','WorksComplite')"
-	);
+$MyISAM = Array('Events','RequestLog','ServersUpTime','StatusesHistory');
 #-------------------------------------------------------------------------------
-$Tables = DB_Select('`INFORMATION_SCHEMA`.`TABLES`',Array('TABLE_NAME','ENGINE'),Array('Where'=>$Where));
+#-------------------------------------------------------------------------------
+$Tables = DB_Select('`INFORMATION_SCHEMA`.`TABLES`',Array('TABLE_NAME','ENGINE'),Array('Where'=>SPrintF("`TABLE_SCHEMA` = '%s' AND `ENGINE` IS NOT NULL",$Config['DBConnection']['DbName'])));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Tables)){
 case 'error':
@@ -41,7 +39,7 @@ default:
 #-------------------------------------------------------------------------------
 foreach($Tables as $Table){
 	#-------------------------------------------------------------------------------
-	if($Table['ENGINE'] != 'InnoDB'){
+	if($Table['ENGINE'] != 'InnoDB' && !In_Array($Table['TABLE_NAME'],$MyISAM)){
 		#-------------------------------------------------------------------------------
 		$Note = TRUE;
 		Debug(SPrintF('[comp/Notes/Administrator/CheckTablesEngines]: Incorrect Table Engine, table = %s',$Table['TABLE_NAME']));
@@ -66,7 +64,7 @@ $NoBody->AddChild(new Tag('P','Список таблиц с некорректн
 #-------------------------------------------------------------------------------
 foreach($Tables as $Table){
 	#-------------------------------------------------------------------------------
-	if($Table['ENGINE'] != 'InnoDB'){
+	if($Table['ENGINE'] != 'InnoDB' && !In_Array($Table['TABLE_NAME'],$MyISAM)){
 		#-------------------------------------------------------------------------------
 		$NoBody->AddChild(new Tag('SPAN',SPrintF('Таблица: "%s"; Storage Engine: "%s"',$Table['TABLE_NAME'],$Table['ENGINE'])));
 		$NoBody->AddChild(new Tag('BR'));
