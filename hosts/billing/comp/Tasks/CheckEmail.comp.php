@@ -67,7 +67,7 @@ foreach($Mails as $mailId){
 	if(IsSet($mail->replyTo)){
 		#-------------------------------------------------------------------------------
 		foreach(Array_Keys($mail->replyTo) as $replyToAddr)
-			$replyTo[] = StrToLower($replyTo);
+			$replyTo[] = StrToLower($replyToAddr);
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
