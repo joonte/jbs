@@ -26,8 +26,8 @@ if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(IsSet($GLOBALS['__USER']['IsEmulate']))
-	return new gException('DENY_WRITE_MESSAGE_FROM_ANOTHER_USER','Нельзя писать сообщения от имени другого пользователя');
+#if(IsSet($GLOBALS['__USER']['IsEmulate']))
+#	return new gException('DENY_WRITE_MESSAGE_FROM_ANOTHER_USER','Нельзя писать сообщения от имени другого пользователя');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # truncate $Theme & $Message
