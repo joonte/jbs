@@ -330,7 +330,7 @@ class ImapMailbox {
 		$mail = new IncomingMail();
 		$mail->mId = $mId;
 		$mail->date = date('Y-m-d H:i:s', isset($head->date) ? strtotime($head->date) : time());
-		$mail->subject = $this->decodeMimeStr($head->subject);
+		$mail->subject = $this->decodeMimeStr(IsSet($head->subject)?($head->subject):'[no message theme]');
 		$mail->fromName = isset($head->from[0]->personal) ? $this->decodeMimeStr($head->from[0]->personal) : null;
 		$mail->fromAddress = strtolower($head->from[0]->mailbox . '@' . $head->from[0]->host);
 

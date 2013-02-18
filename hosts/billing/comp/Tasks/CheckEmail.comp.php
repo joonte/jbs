@@ -58,8 +58,23 @@ foreach($Mails as $mailId){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Subject = $mail->subject;
-	$fromAddress = $mail->fromAddress;
+	$fromAddress = StrToLower($mail->fromAddress);
 	$textPlain = $mail->textPlain;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$replyTo = Array();
+	#-------------------------------------------------------------------------------
+	if(IsSet($mail->replyTo)){
+		#-------------------------------------------------------------------------------
+		foreach(Array_Keys($mail->replyTo) as $replyToAddr)
+			$replyTo[] = StrToLower($replyTo);
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		$replyTo = $fromAddress;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# если сообщение в html to textPlain - пустая
 	if(!$textPlain)
@@ -200,29 +215,37 @@ foreach($Mails as $mailId){
 	$IsUser = FALSE;
 	$IsAdmin= FALSE;
 	#-------------------------------------------------------------------------------
-	$User = DB_Select('Users',Array('*'),Array('UNIQ','Where'=>SPrintF('`Email` = "%s"',StrToLower($fromAddress))));
-	#-------------------------------------------------------------------------------
-	switch(ValueOf($User)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		Debug(SPrintF('[comp/Tasks/CheckEmail]: user not found: %s',$fromAddress));
-		break;
-	case 'array':
+	foreach($replyTo as $Addr){
 		#-------------------------------------------------------------------------------
-		$IsUser = TRUE;
+		$User = DB_Select('Users',Array('*'),Array('UNIQ','Where'=>SPrintF('`Email` = "%s"',$Addr)));
 		#-------------------------------------------------------------------------------
-		$IsAdmin = Permission_Check('/Administrator/',(integer)$User['ID']);
-		switch(ValueOf($IsAdmin)){
+		switch(ValueOf($User)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
-			return ERROR | @Trigger_Error(400);
-		case 'false':
+			Debug(SPrintF('[comp/Tasks/CheckEmail]: user not found: %s',$Addr));
 			break;
-		case 'true':
+		case 'array':
 			#-------------------------------------------------------------------------------
-			$IsAdmin = TRUE;
+			$IsUser = TRUE;
+			#-------------------------------------------------------------------------------
+			$IsAdmin = Permission_Check('/Administrator/',(integer)$User['ID']);
+			switch(ValueOf($IsAdmin)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				return ERROR | @Trigger_Error(400);
+			case 'false':
+				break;
+			case 'true':
+				#-------------------------------------------------------------------------------
+				$IsAdmin = TRUE;
+				#-------------------------------------------------------------------------------
+				break 2;
+				#-------------------------------------------------------------------------------
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
 			#-------------------------------------------------------------------------------
 			break;
 			#-------------------------------------------------------------------------------
@@ -230,10 +253,6 @@ foreach($Mails as $mailId){
 			return ERROR | @Trigger_Error(101);
 		}
 		#-------------------------------------------------------------------------------
-		break;
-		#-------------------------------------------------------------------------------
-	default:
-		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
