@@ -23,9 +23,13 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/OrderCompensation.js}'));
+#-------------------------------------------------------------------------------
+$DOM->AddChild('Head',$Script);
+#-------------------------------------------------------------------------------
 $DOM->AddText('Title','Компенсация времени');
 #-------------------------------------------------------------------------------
-$Form = new Tag('FORM',Array('name'=>'ISPswCompensationForm','onsubmit'=>'return false;'));
+$Form = new Tag('FORM',Array('name'=>'OrderCompensationForm','onsubmit'=>'return false;'));
 #-------------------------------------------------------------------------------
 $Table = Array();
 #-------------------------------------------------------------------------------
@@ -106,7 +110,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => "ShowConfirm('Подверждаете выполнение операции?','FormEdit(\'/Administrator/API/ISPswCompensation\',\'ISPswCompensationForm\',\'Компенсация времени\');')",
+    'onclick' => "ShowConfirm('Подверждаете выполнение операции?','OrderCompensation(\'/Administrator/API/ISPswCompensation\');')",
     'value'   => 'Компенсировать'
   )
 );
