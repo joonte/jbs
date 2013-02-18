@@ -17,17 +17,20 @@ if(!IsSet($Args)){
 	$Args = Args();
 }
 #-------------------------------------------------------------------------------
-$TicketID = (integer) @$Args['TicketID'];
-$Message  =  (string) @$Args['Message'];
-//$IsClose= (boolean) @$Args['IsClose'];
-$Flags    =  (string) @$Args['Flags'];
+$TicketID		= (integer) @$Args['TicketID'];
+$Message		=  (string) @$Args['Message'];
+$Flags			=  (string) @$Args['Flags'];
+$OpenTicketUserID	= (integer) @$Args['OpenTicketUserID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-#if(IsSet($GLOBALS['__USER']['IsEmulate']))
-#	return new gException('DENY_WRITE_MESSAGE_FROM_ANOTHER_USER','Нельзя писать сообщения от имени другого пользователя');
+$__USER = $GLOBALS['__USER'];
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(IsSet($__USER['IsEmulate']) && $__USER['ID'] != $OpenTicketUserID)
+	return new gException('DENY_WRITE_MESSAGE_FROM_ANOTHER_USER','Нельзя писать сообщения от имени другого пользователя');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # truncate $Theme & $Message
@@ -47,8 +50,6 @@ switch(ValueOf($Ticket)){
   case 'exception':
     return ERROR | @Trigger_Error(400);
   case 'array':
-    #---------------------------------------------------------------------------
-    $__USER = $GLOBALS['__USER'];
     #---------------------------------------------------------------------------
     $IsPermission = Permission_Check('TicketEdit',(integer)$__USER['ID'],(integer)$Ticket['UserID']);
     #---------------------------------------------------------------------------

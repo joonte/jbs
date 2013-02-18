@@ -66,6 +66,20 @@ switch(ValueOf($Ticket)){
         #-----------------------------------------------------------------------
         $Form = new Tag('FORM',Array('name'=>'TicketReadForm','onsubmit'=>'return false;'),$Comp);
         #-----------------------------------------------------------------------
+	#-----------------------------------------------------------------------
+        $Comp = Comp_Load(
+          'Form/Input',
+          Array(
+            'name'  => 'OpenTicketUserID',
+            'type'  => 'hidden',
+            'value' => $__USER['ID']
+          )
+        );
+        if(Is_Error($Comp))
+          return ERROR | @Trigger_Error(500);
+        #-----------------------------------------------------------------------
+	$Form->AddChild($Comp);
+        #-----------------------------------------------------------------------
         //$Smiles = System_XML('config/Smiles.xml');
         //if(Is_Error($Smiles))
         //  return ERROR | @Trigger_Error(500);
