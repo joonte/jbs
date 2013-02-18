@@ -23,9 +23,13 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/OrderCompensation.js}'));
+#-------------------------------------------------------------------------------
+$DOM->AddChild('Head',$Script);
+#-------------------------------------------------------------------------------
 $DOM->AddText('Title','Компенсация времени');
 #-------------------------------------------------------------------------------
-$Form = new Tag('FORM',Array('name'=>'ExtraIPCompensationForm','onsubmit'=>'return false;'));
+$Form = new Tag('FORM',Array('name'=>'OrderCompensationForm','onsubmit'=>'return false;'));
 #-------------------------------------------------------------------------------
 $Table = Array();
 #-------------------------------------------------------------------------------
@@ -63,25 +67,25 @@ if($ExtraIPOrderID){
   }
 }else{
   #-----------------------------------------------------------------------------
-  $ExtraIPs = DB_Select('ExtraIPs',Array('ID','Address'));
+  $ExtraIPSchemes = DB_Select('ExtraIPSchemes',Array('ID','Name'),Array('SortOn'=>'SortID'));
   #-----------------------------------------------------------------------------
-  switch(ValueOf($ExtraIPs)){
+  switch(ValueOf($ExtraIPSchemes)){
     case 'error':
       return ERROR | @Trigger_Error(500);
     case 'exception':
-      return new gException('SERVERS_NOT_FOUND','Серверы ExtraIP не настроены');
+      return new gException('SCHEMES_NOT_FOUND','Тарифы на дополнительные IP адреса не найдены');
     case 'array':
       #-------------------------------------------------------------------------
       $Options = Array();
       #-------------------------------------------------------------------------
-      foreach($ExtraIPs as $ExtraIPServer)
-        $Options[$ExtraIPServer['ID']] = $ExtraIPServer['Address'];
+      foreach($ExtraIPSchemes as $ExtraIPScheme)
+        $Options[$ExtraIPScheme['ID']] = $ExtraIPScheme['Name'];
       #-------------------------------------------------------------------------
-      $Comp = Comp_Load('Form/Select',Array('name'=>'ExtraIPServerID'),$Options);
+      $Comp = Comp_Load('Form/Select',Array('name'=>'ExtraIPSchemeID'),$Options);
       if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
-      $Table[] = Array('Сервер ExtraIP',$Comp);
+      $Table[] = Array('Тарифные планы на IP адреса',$Comp);
     break;
     default:
       return ERROR | @Trigger_Error(101);
@@ -106,7 +110,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => "ShowConfirm('Подверждаете выполнение операции?','FormEdit(\'/Administrator/API/ExtraIPCompensation\',\'ExtraIPCompensationForm\',\'Компенсация времени\');')",
+    'onclick' => "ShowConfirm('Подверждаете выполнение операции?','OrderCompensation(\'/Administrator/API/ExtraIPCompensation\');')",
     'value'   => 'Компенсировать'
   )
 );
