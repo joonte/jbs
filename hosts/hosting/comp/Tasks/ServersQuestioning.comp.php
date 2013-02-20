@@ -20,11 +20,15 @@ switch(ValueOf($HostingServers)){
   break;
   case 'array':
     #---------------------------------------------------------------------------
+    $GLOBALS['TaskReturnInfo'] = Array();
+    #---------------------------------------------------------------------------
     foreach($HostingServers as $HostingServer){
       #-------------------------------------------------------------------------
       $Server = new Server();
       #-------------------------------------------------------------------------
       $IsSelected = $Server->Select((integer)$HostingServer['ID']);
+      #-------------------------------------------------------------------------
+      $GLOBALS['TaskReturnInfo'][] = $Server->Settings['Address'];
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSelected)){
         case 'error':
