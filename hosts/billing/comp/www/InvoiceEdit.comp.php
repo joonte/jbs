@@ -14,7 +14,7 @@ $InvoiceID = (integer) @$Args['InvoiceID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Invoice = DB_Select('InvoicesOwners',Array('ID','CreateDate','UserID','PaymentSystemID','IsPosted','StatusID','(SELECT `TypeID` FROM `Contracts` WHERE `Contracts`.`ID` = `InvoicesOwners`.`ContractID`) as `ContractTypeID`'),Array('UNIQ','ID'=>$InvoiceID));
+$Invoice = DB_Select('InvoicesOwners',Array('ID','CreateDate','UserID','Summ','PaymentSystemID','IsPosted','StatusID','(SELECT `TypeID` FROM `Contracts` WHERE `Contracts`.`ID` = `InvoicesOwners`.`ContractID`) as `ContractTypeID`'),Array('UNIQ','ID'=>$InvoiceID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Invoice)){
   case 'error':
@@ -84,6 +84,16 @@ switch(ValueOf($Invoice)){
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
         $Table[] = Array('Платежная система',$Comp);
+        #-----------------------------------------------------------------------
+        if($__USER['IsAdmin']){
+          #---------------------------------------------------------------------
+          $Comp = Comp_Load('Form/Summ',Array('value'=>$Invoice['Summ']));
+          if(Is_Error($Comp))
+            return ERROR | @Trigger_Error(500);
+          #---------------------------------------------------------------------
+          $Table[] = Array('Сумма для зачисления',$Comp);
+          #---------------------------------------------------------------------
+        }
         #-----------------------------------------------------------------------
         $Comp = Comp_Load(
           'Form/Input',

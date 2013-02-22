@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -10,14 +9,15 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
-$InvoiceID       = (integer) @$Args['InvoiceID'];
-$CreateDate      = (integer) @$Args['CreateDate'];
-$PaymentSystemID =  (string) @$Args['PaymentSystemID'];
+$InvoiceID	= (integer) @$Args['InvoiceID'];
+$CreateDate	= (integer) @$Args['CreateDate'];
+$PaymentSystemID=  (string) @$Args['PaymentSystemID'];
+$Summ		=  (double) @$Args['Summ'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Invoice = DB_Select('InvoicesOwners',Array('ID','UserID','ContractID','IsPosted'),Array('UNIQ','ID'=>$InvoiceID));
+$Invoice = DB_Select('InvoicesOwners',Array('ID','Summ','UserID','ContractID','IsPosted'),Array('UNIQ','ID'=>$InvoiceID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Invoice)){
   case 'error':
@@ -46,6 +46,39 @@ switch(ValueOf($Invoice)){
 	  if(!$__USER['ID']['IsAdmin']){
             return new gException('ACCOUNT_PAYED','Счет оплачен и не может быть изменен');
 	  }
+        }
+        #-------------------------------------------------------------------
+        # сумму счёта можно править только в случае если это пополнение средств, и ничего другого
+        $InvoiceItems = DB_Select('InvoicesItems','*',Array('Where'=>SPrintF('`InvoiceID` = %u ',$InvoiceID)));
+        #-----------------------------------------------------------------------
+        switch(ValueOf($InvoiceItems)){
+        case 'error':
+          return ERROR | @Trigger_Error(500);
+        case 'exception':
+          return ERROR | @Trigger_Error(400);
+        case 'array':
+          #-------------------------------------------------------------------------------
+          if($__USER['IsAdmin']){
+            #-----------------------------------------------------------------------
+            if(SizeOf($InvoiceItems) > 1 && $Summ != $Invoice['Summ'])
+              return new gException('INVOICE_HAVE_MORE_ONE_ITEM','Сумму счёта можно изменять только если он на пополнение средств');
+            #-----------------------------------------------------------------------
+            if($Summ != $Invoice['Summ']){
+              #-------------------------------------------------------------------------------
+              foreach($InvoiceItems as $InvoiceItem){
+                #-------------------------------------------------------------------------------
+                if($InvoiceItem['ServiceID'] != 1000)
+                  return new gException('INVOICE_HAVE_NOT_1000_SERVICES','Сумму счёта можно изменять только если он на пополнение средств');
+              }
+              #-------------------------------------------------------------------------------
+            }
+            #-------------------------------------------------------------------------------
+          }
+          #-----------------------------------------------------------------------
+          break;
+          #-----------------------------------------------------------------------
+        default:
+          return ERROR | @Trigger_Error(101);
         }
         #-----------------------------------------------------------------------
         $Contract = DB_Select('Contracts',Array('ID','CreateDate','TypeID'),Array('UNIQ','ID'=>$Invoice['ContractID']));
@@ -76,15 +109,39 @@ switch(ValueOf($Invoice)){
             if(!$PaymentSystem['ContractsTypes'][$Contract['TypeID']])
               return new gException('WRONG_CONTRACT_TYPE','Данный вид договора не может быть использован для выписывания счета данного типа');
             #-------------------------------------------------------------------
-            $IsUpdate = DB_Update('Invoices',Array('CreateDate'=>$CreateDate,'PaymentSystemID'=>$PaymentSystemID),Array('ID'=>$InvoiceID));
+            #-------------------------------TRANSACTION---------------------------------
+            if(Is_Error(DB_Transaction($TransactionID = UniqID('InvoiceEdit'))))
+              return ERROR | @Trigger_Error(500);
+            #-------------------------------------------------------------------------------
+            $IInvoice = Array('CreateDate'=>$CreateDate,'PaymentSystemID'=>$PaymentSystemID);
+            #-------------------------------------------------------------------------------
+            if($__USER['IsAdmin'] && $Summ != $Invoice['Summ']){
+              #-------------------------------------------------------------------------------
+              #надо обновить сумму, в Invoices и в InvoicesItems
+              $IInvoice['Summ'] = $Summ;
+              #-------------------------------------------------------------------------------
+              $IsUpdate = DB_Update('InvoicesItems',Array('Summ'=>$Summ),Array('Where'=>SPrintF('`InvoiceID` = %u',$InvoiceID)));
+              if(Is_Error($IsUpdate))
+                return ERROR | @Trigger_Error(500);
+              #-------------------------------------------------------------------------------
+            }
+            #-------------------------------------------------------------------------------
+            $IsUpdate = DB_Update('Invoices',$IInvoice,Array('ID'=>$InvoiceID));
             if(Is_Error($IsUpdate))
               return ERROR | @Trigger_Error(500);
+            #-------------------------------------------------------------------------------
             #-------------------------------------------------------------------
             $Comp = Comp_Load('Invoices/Build',$InvoiceID);
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
+            #-------------------------------------------------------------------------------
+            if(Is_Error(DB_Commit($TransactionID)))
+              return ERROR | @Trigger_Error(500);
+            #-------------------------------------------------------------------------------
+            #-------------------------------------------------------------------------------
             return Array('Status'=>'Ok');
+            #-------------------------------------------------------------------------------
           default:
             return ERROR | @Trigger_Error(101);
         }
