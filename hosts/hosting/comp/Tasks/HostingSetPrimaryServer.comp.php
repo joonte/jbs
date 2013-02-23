@@ -10,7 +10,12 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+$Config = Config();
+#------------------------------------------------------------------------------
+$Settings = $Config['Tasks']['Types']['HostingSetPrimaryServer'];
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 # проверяем наличие серверов вообще
 $Count = DB_Count('HostingServers',Array('Where'=>"`IsAutoBalancing` = 'yes'"));
 if(Is_Error($Count))
@@ -46,10 +51,7 @@ foreach($HostingServersGroups as $HostingServersGroup){
 	# выбираем все сервера этой группы, где стоит галка про автобалансировку
 	$Where = "`IsAutoBalancing` = 'yes' AND `ServersGroupID` = " . $HostingServersGroup['ID'];
 	$Columns = Array(
-				'ID',
-				'BalancingFactor',
-				'Address',
-				'IsDefault',
+				'ID','BalancingFactor','Address','IsDefault',
 				"(SELECT COUNT(*) FROM `HostingOrders` WHERE `ServerID` = `HostingServers`.`ID` AND `StatusID` = 'Active' ) / `BalancingFactor` AS LoadValueActive",
 				"(SELECT COUNT(*) FROM `HostingOrders` WHERE `ServerID` = `HostingServers`.`ID` AND (`StatusID` = 'Active' OR `StatusID` = 'Suspended')) / `BalancingFactor` AS LoadValueAll",
 			);
@@ -136,14 +138,20 @@ foreach($HostingServersGroups as $HostingServersGroup){
 			if(Is_Error($IsUpdate))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------
-			$Event = Array(
-					'UserID'        => 1,
-					'PriorityID'    => 'Hosting',
-					'Text'          => SPrintF('Замена основного сервера группы %s (%s=>%s)',$HostingServersGroup['Name'],$IsDefault,$SN[$ServerID])
-					);
-			$Event = Comp_Load('Events/EventInsert',$Event);
-			if(!$Event)
-				return ERROR | @Trigger_Error(500);
+			if($Settings['IsEvent']){
+				#-------------------------------------------------------------------------------
+				$Event = Array(
+						'UserID'        => 1,
+						'PriorityID'    => 'Hosting',
+						'Text'          => SPrintF('Замена основного сервера группы %s (%s=>%s)',$HostingServersGroup['Name'],$IsDefault,$SN[$ServerID])
+						);
+				#-------------------------------------------------------------------------------
+				$Event = Comp_Load('Events/EventInsert',$Event);
+				if(!$Event)
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+			}
+		#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
 		$GLOBALS['TaskReturnInfo'][] = $SN[$ServerID];
@@ -156,17 +164,14 @@ foreach($HostingServersGroups as $HostingServersGroup){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # set next run +$Settings['RequestPeriod'] min to future
-$Config = Config();
-$RequestPeriod = $Config['Tasks']['Types']['HostingSetPrimaryServer']['RequestPeriod'];
-#-------------------------------------------------------------------------
-if(intval($RequestPeriod) < 60){	# меньше часа
+if(intval($Settings['RequestPeriod']) < 60){	# меньше часа
 	# time not set, or incorrect. go to default value - 1 hour
-	return(time() + 3600);
-}elseif($RequestPeriod > 1440){	# больше суток
+	return(Time() + 3600);
+}elseif($Settings['RequestPeriod'] > 1440){	# больше суток
 	# time not set, or incorrect. go to default value - 1 hour
-	return(time() + 3600);
+	return(Time() + 3600);
 }else{
-	return (time() + 60 * $RequestPeriod);
+	return (Time() + 60 * $Settings['RequestPeriod']);
 }
 #-------------------------------------------------------------------------------
 

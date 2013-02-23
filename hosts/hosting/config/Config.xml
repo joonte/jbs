@@ -659,6 +659,7 @@
    <Params type="array" />
    <RequestPeriod>60</RequestPeriod>
    <IsActive>1</IsActive>
+   <IsEvent>0</IsEvent>
   </HostingSetPrimaryServer>
   <!-- ********************************************************************* -->
   <!-- ********************************************************************* -->

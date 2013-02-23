@@ -59,6 +59,7 @@
 <!-- *********************************************************************** -->
 <!-- Events -->
 <IsReaded>Logic</IsReaded>
+<IsEvent>Logic</IsEvent>
 <!-- Menus -->
 <IsVisible>Logic</IsVisible>
 <IsPick>Logic</IsPick>
