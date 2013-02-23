@@ -22,7 +22,7 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
-  <Text>Копировать запрос</Text>
+  <Text>Копировать/Переместить</Text>
   <Href>javascript:ShowWindow("/Administrator/TicketCopy",{TicketID:%Replace%});</Href>
   <Icon>Copy.png</Icon>
  </UniqID>
