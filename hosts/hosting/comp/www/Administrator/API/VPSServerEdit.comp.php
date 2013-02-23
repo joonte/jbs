@@ -22,6 +22,7 @@ $IsAutoBalancing = (boolean) @$Args['IsAutoBalancing'];
 $BalancingFactor =  (double) @$Args['BalancingFactor'];
 $Domain          =  (string) @$Args['Domain'];
 $Prefix          =  (string) @$Args['Prefix'];
+$disktempl       =  (string) @$Args['disktempl'];
 $Address         =  (string) @$Args['Address'];
 $Port            = (integer) @$Args['Port'];
 $Protocol        =  (string) @$Args['Protocol'];
@@ -61,6 +62,11 @@ if(!Preg_Match($Regulars['Domain'],$Domain))
 #-------------------------------------------------------------------------------
 if(!Preg_Match($Regulars['ID'],$Prefix))
   return new gException('WRONG_PREFIX','Неверный префикс имени аккаунта');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(StrLen($disktempl) < 1)
+	return new gException('WRONG_DISK_TEMPLATE','Неверно указан дисковый шаблон');
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!Preg_Match($Regulars['Domain'],$Address))
   return new gException('WRONG_ADDRESS','Неверный адрес сервера');
@@ -158,6 +164,7 @@ $IVPSServer = Array(
   'BalancingFactor'=> $BalancingFactor,
   'Domain'         => $Domain,
   'Prefix'         => $Prefix,
+  'disktempl'      => $disktempl,
   'Address'        => $Address,
   'Port'           => $Port,
   'Protocol'       => $Protocol,

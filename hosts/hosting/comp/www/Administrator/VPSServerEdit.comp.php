@@ -38,9 +38,10 @@ if($VPSServerID){
     'IsDefault'      => TRUE,
     'IsAutoBalancing'=> TRUE,
     'BalancingFactor'=> 1,
-    'Address'        => 'isp.su',
-    'Domain'         => 'isp.su',
+    'Address'        => 'vds01.isp.su',
+    'Domain'         => 'vds01.isp.su',
     'Prefix'         => 'v',
+    'disktempl'      => 'FreeBSD-9-ISPmanager',
     'Port'           => 80,
     'Protocol'       => 'tcp',
     'Login'          => 'root',
@@ -49,7 +50,7 @@ if($VPSServerID){
     'IPsPool'        => "127.0.0.1\n127.0.0.2",
     'Theme'          => '',
     'Language'       => 'Default',
-    'Url'            => 'http://isp.su/manage',
+    'Url'            => 'http://vds01.isp.su/manager/',
     'Ns1Name'        => 'ns1.isp.su',
     'Ns2Name'        => 'ns2.isp.su',
     'Ns3Name'        => '',
@@ -195,6 +196,22 @@ if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Префикс имени аккаунта',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+		'Form/Input',
+		Array(
+			'type'  => 'text',
+			'name'  => 'disktempl',
+			'value' => $VPSServer['disktempl'],
+			'prompt'=> 'Шаблон используемый при создании VPS. Обязательный параметр.'
+			)
+		);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Шаблон диска',$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Параметры соединения';
 #-------------------------------------------------------------------------------

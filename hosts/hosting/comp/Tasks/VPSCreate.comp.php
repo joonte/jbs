@@ -41,6 +41,8 @@ switch(ValueOf($VPSOrder)){
             return ERROR | @Trigger_Error(400);
           case 'array':
             #-------------------------------------------------------------------
+            $VPSScheme['disktempl'] = (StrLen($VPSScheme['disktempl']) > 0)?$VPSScheme['disktempl']:$VPSServer->Settings['disktempl'];
+            #-------------------------------------------------------------------
             $IPsPool = Explode("\n",$VPSServer->Settings['IPsPool']);
             #-------------------------------------------------------------------
             $IP = $IPsPool[Rand(0,Count($IPsPool) - 1)];
