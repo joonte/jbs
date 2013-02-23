@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -13,39 +12,45 @@ if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php','libs/Imag
 #-------------------------------------------------------------------------------
 $Args = Args();
 #-------------------------------------------------------------------------------
-$ServiceID       =  (integer) @$Args['ServiceID'];
-$GroupID         =  (integer) @$Args['GroupID'];
-$UserID          =  (integer) @$Args['UserID'];
-$ServicesGroupID =  (integer) @$Args['ServicesGroupID'];
-$Name            =   (string) @$Args['Name'];
-$NameShort       =   (string) @$Args['NameShort'];
-$Item            =   (string) @$Args['Item'];
-$Measure         =   (string) @$Args['Measure'];
-$ConsiderTypeID  =   (string) @$Args['ConsiderTypeID'];
-$CostOn          =    (float) @$Args['CostOn'];
-$Cost            =    (float) @$Args['Cost'];
-$IsActive        =  (boolean) @$Args['IsActive'];
-$IsProlong       =  (boolean) @$Args['IsProlong'];
-$IsConditionally =  (boolean) @$Args['IsConditionally'];
-$SortID          =  (integer) @$Args['SortID'];
+$ServiceID		= (integer) @$Args['ServiceID'];
+$GroupID		= (integer) @$Args['GroupID'];
+$UserID			= (integer) @$Args['UserID'];
+$ServicesGroupID	= (integer) @$Args['ServicesGroupID'];
+$Name			=  (string) @$Args['Name'];
+$NameShort		=  (string) @$Args['NameShort'];
+$Item			=  (string) @$Args['Item'];
+$Measure		=  (string) @$Args['Measure'];
+$ConsiderTypeID		=  (string) @$Args['ConsiderTypeID'];
+$CostOn			=   (float) @$Args['CostOn'];
+$Cost			=   (float) @$Args['Cost'];
+$IsActive		= (boolean) @$Args['IsActive'];
+$IsProlong		= (boolean) @$Args['IsProlong'];
+$IsConditionally	= (boolean) @$Args['IsConditionally'];
+$IsNoActionProlong	= (boolean) @$Args['IsNoActionProlong'];
+$IsNoActionSuspend	= (boolean) @$Args['IsNoActionSuspend'];
+$IsNoActionDelete	= (boolean) @$Args['IsNoActionDelete'];
+$SortID			= (integer) @$Args['SortID'];
 #-------------------------------------------------------------------------------
 $IService = Array(
-  #-----------------------------------------------------------------------------
-  'GroupID'         => $GroupID,
-  'UserID'          => $UserID,
-  'ServicesGroupID' => $ServicesGroupID,
-  'Name'            => $Name,
-  'NameShort'       => $NameShort,
-  'Item'            => $Item,
-  'Measure'         => $Measure,
-  'ConsiderTypeID'  => $ConsiderTypeID,
-  'CostOn'          => $CostOn,
-  'Cost'            => $Cost,
-  'IsActive'        => $IsActive,
-  'IsProlong'       => $IsProlong,
-  'IsConditionally' => $IsConditionally,
-  'SortID'          => $SortID
-);
+		#-------------------------------------------------------------------------------
+		'GroupID'		=> $GroupID,
+		'UserID'		=> $UserID,
+		'ServicesGroupID'	=> $ServicesGroupID,
+		'Name'			=> $Name,
+		'NameShort'		=> $NameShort,
+		'Item'			=> $Item,
+		'Measure'		=> $Measure,
+		'ConsiderTypeID'	=> $ConsiderTypeID,
+		'CostOn'		=> $CostOn,
+		'Cost'			=> $Cost,
+		'IsActive'		=> $IsActive,
+		'IsProlong'		=> $IsProlong,
+		'IsConditionally'	=> $IsConditionally,
+		'IsNoActionProlong'	=> $IsNoActionProlong,
+		'IsNoActionSuspend'	=> $IsNoActionSuspend,
+		'IsNoActionDelete'	=> $IsNoActionDelete,
+		'SortID'		=> $SortID
+		);
 #-------------------------------------------------------------------------------
 $Upload = Upload_Get('Emblem');
 #-------------------------------------------------------------------------------

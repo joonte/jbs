@@ -14,42 +14,47 @@ $ServiceID = (integer) @$Args['ServiceID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if($ServiceID){
-  #-----------------------------------------------------------------------------
-  $Service = DB_Select('Services','*',Array('UNIQ','ID'=>$ServiceID));
-  #-----------------------------------------------------------------------------
-  switch(ValueOf($Service)){
-    case 'error':
-      return ERROR | @Trigger_Error(500);
-    case 'exception':
-      return ERROR | @Trigger_Error(400);
-    case 'array':
-      # No more...
-    break;
-    default:
-      return ERROR | @Trigger_Error(101);
-  }
+	#-------------------------------------------------------------------------------
+	$Service = DB_Select('Services','*',Array('UNIQ','ID'=>$ServiceID));
+	switch(ValueOf($Service)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		# No more...
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
 }else{
-  #-----------------------------------------------------------------------------
-  $Service = Array(
-    #---------------------------------------------------------------------------
-    'GroupID'         => 20,
-    'UserID'          => 1,
-    'ServicesGroupID' => 1000,
-    'Name'            => 'Новая нужная услуга',
-    'NameShort'       => 'Новая услуга',
-    'Item'            => 'Услуга',
-    'Emblem'          => '',
-    'Measure'         => 'шт.',
-    'ConsiderTypeID'  => 'Upon',
-    'CostOn'          => 10,
-    'Cost'            => 10,
-    'IsProtected'     => FALSE,
-    'IsActive'        => TRUE,
-    'IsProlong'       => TRUE,
-    'IsConditionally' => FALSE,
-    'SortID'          => 10
-  );
+	#-------------------------------------------------------------------------------
+	$Service = Array(
+			#-------------------------------------------------------------------------------
+			'GroupID'		=> 20,
+			'UserID'		=> 1,
+			'ServicesGroupID'	=> 1000,
+			'Name'			=> 'Новая нужная услуга',
+			'NameShort'		=> 'Новая услуга',
+			'Item'			=> 'Услуга',
+			'Emblem'		=> '',
+			'Measure'		=> 'шт.',
+			'ConsiderTypeID'	=> 'Upon',
+			'CostOn'		=> 10,
+			'Cost'			=> 10,
+			'IsProtected'		=> FALSE,
+			'IsActive'		=> TRUE,
+			'IsProlong'		=> TRUE,
+			'IsConditionally'	=> FALSE,
+			'IsNoActionProlong'	=> FALSE,
+			'IsNoActionSuspend'	=> FALSE,
+			'IsNoActionDelete'	=> FALSE,
+			'SortID'		=> 10
+			#-------------------------------------------------------------------------------
+			);
 }
 #-------------------------------------------------------------------------------
 $DOM = new DOM();
@@ -66,7 +71,7 @@ $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Title = ($ServiceID?'Редактирование услуги':'Добавление новой услуги');
+$Title = ($ServiceID?SPrintF('Редактирование услуги "%s"',$Service['NameShort']):'Добавление новой услуги');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
@@ -239,12 +244,46 @@ $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'Cha
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsConditionally','value'=>'yes','prompt'=>'Пользователь может продлевать эту услугу условным счётом, при условии что он её ранее оплачивал'));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Service['IsConditionally'])
-  $Comp->AddAttribs(Array('checked'=>'yes'));
+	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsConditionally\'); return false;'),'Может быть оплачена условно'),$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(IsSet($Service['Code']) && $Service['Code'] == 'Default'){
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsNoActionProlong','value'=>'yes','prompt'=>'Продление услуги не требует никаких действий, т.е. не будет напоминаний и задач'));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	if($Service['IsNoActionProlong'])
+		$Comp->AddAttribs(Array('checked'=>'yes'));
+	#-------------------------------------------------------------------------------
+	$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsNoActionProlong\'); return false;'),'Продление не требует действий'),$Comp);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsNoActionSuspend','value'=>'yes','prompt'=>'Блокировка услуги не требует никаких действий, т.е. не будет напоминаний и задач'));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	if($Service['IsNoActionSuspend'])
+		$Comp->AddAttribs(Array('checked'=>'yes'));
+	#-------------------------------------------------------------------------------
+	$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsNoActionSuspend\'); return false;'),'Блокировка не требует действий'),$Comp);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsNoActionDelete','value'=>'yes','prompt'=>'Удаление услуги не требует никаких действий, т.е. не будет напоминаний и задач'));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	if($Service['IsNoActionDelete'])
+		$Comp->AddAttribs(Array('checked'=>'yes'));
+	#-------------------------------------------------------------------------------
+	$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsNoActionDelete\'); return false;'),'Удаление не требует действий'),$Comp);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(

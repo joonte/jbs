@@ -76,6 +76,15 @@
 <!-- added by lissyara 2012-11-21 in 16:09 MSK
      see http://jira.joonte.com/browse/JBS-15 -->
 <ForceOwner>Logic</ForceOwner>
+<!-- *********************************************************************** -->
+<!-- added by lissyara 2013-02-23 in 18:12 MSK
+     see http://jira.joonte.com/browse/JBS-606 -->
+<IsNoActionProlong>Logic</IsNoActionProlong>
+<IsNoActionSuspend>Logic</IsNoActionSuspend>
+<IsNoActionDelete>Logic</IsNoActionDelete>
+
+
+
 
 
 </XML>
