@@ -69,7 +69,7 @@ if(!IsSet($GLOBALS['__USER'])){
         break;
         case 'array':
           #---------------------------------------------------------------------
-          $Table = new Tag('TABLE',Array('class'=>'Standard','cellspacing'=>5,'width'=>'1000'));
+          $Table = new Tag('TABLE',Array('class'=>'Standard','cellspacing'=>5,'width'=>'100%'));
 	  #---------------------------------------------------------------------
 	  #---------------------------------------------------------------------
 	  if(SizeOf($Contracts) > 2){
