@@ -51,7 +51,7 @@ switch(ValueOf($ServiceOrder)){
         if(!In_Array($StatusID,Array('Waiting','Active','Suspended')))
           return new gException('SERVICE_ORDER_CAN_NOT_PAY','Заказ не может быть оплачен');
         #-----------------------------------------------------------------------
-        $Service = DB_Select('Services',Array('ID','ConsiderTypeID','Measure','CostOn','Cost','IsActive','IsProlong'),Array('UNIQ','ID'=>$ServiceOrder['ServiceID']));
+        $Service = DB_Select('Services',Array('ID','ConsiderTypeID','Measure','CostOn','Cost','IsActive','IsProlong','IsNoActionProlong'),Array('UNIQ','ID'=>$ServiceOrder['ServiceID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($Service)){
           case 'error':
@@ -221,8 +221,23 @@ switch(ValueOf($ServiceOrder)){
                   #-------------------------------------------------------------
                   if(!$PayMessage)
                     $PayMessage = "Заказ успешно оплачен";
+                  #-------------------------------------------------------------
+                  #-------------------------------------------------------------
+                  if($StatusID == 'Waiting'){
+                    #-------------------------------------------------------------
+                    $NewStatusID = 'OnCreate';
+                    #-------------------------------------------------------------
+                  }else{
+                    #-------------------------------------------------------------
+                    $NewStatusID = 'OnProlong';
+                    #-------------------------------------------------------------
+                    if($Service['IsNoActionProlong'])
+                      $NewStatusID = 'Active';
+                    #-------------------------------------------------------------
+                  }
+                  #-------------------------------------------------------------
 		  #-------------------------------------------------------------
-                  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Orders','StatusID'=>($StatusID == 'Waiting'?'OnCreate':'OnProlong'),'RowsIDs'=>$ServiceOrderID,'Comment'=>$PayMessage));
+                  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Orders','StatusID'=>$NewStatusID,'RowsIDs'=>$ServiceOrderID,'Comment'=>$PayMessage));
                   #-------------------------------------------------------------
                   switch(ValueOf($Comp)){
                     case 'error':
