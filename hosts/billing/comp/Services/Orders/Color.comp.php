@@ -24,7 +24,7 @@ switch($StatusID){
     $Color = 'FFFF2F';
   break;
   case 'Suspended':
-    $Color = 'E6E6E6';
+    $Color = 'FF6666';
   break;
   case 'Deleted':
     $Color = 'C0C0C0';
