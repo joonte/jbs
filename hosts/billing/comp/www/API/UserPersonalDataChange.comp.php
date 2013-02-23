@@ -105,14 +105,18 @@ switch(ValueOf($User)){
         if(Is_Error($Foto))
           return new gException('FOTO_RESIZE_ERROR','Ошибка изменения размеров персональной фотографии');
         #-----------------------------------------------------------------------
-        $UUser['Foto'] = $Foto;
+        if(!SaveUploadedFile('Users', $User['ID'], $Foto))
+          return new gException('CANNOT_SAVE_UPLOADED_FILE','Не удалось сохранить загруженный файл');
+        #-----------------------------------------------------------------------
       break;
       default:
         return ERROR | @Trigger_Error(101);
     }
     #---------------------------------------------------------------------------
-    if($IsClear)
-      $UUser['Foto'] = NULL;
+    if($IsClear){
+      if(!DeleteUploadedFile('Users',$User['ID']))
+        return new gException('CANNOT_DELETE_FILE','Не удалось удалить связанный файл');
+    }
     #---------------------------------------------------------------------------
     $IsUpdate = DB_Update('Users',$UUser,Array('ID'=>$User['ID']));
     if(Is_Error($IsUpdate))
