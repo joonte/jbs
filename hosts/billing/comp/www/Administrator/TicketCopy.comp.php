@@ -119,7 +119,7 @@ $Comp = Comp_Load(
 		'Form/Input',
 		Array(
 			'type'    => 'button',
-			'onclick' => "javascript:ShowConfirm('Вы действительно хотите скопировать данный тикет пользователю \"' + form.Email.value + '\"?','AjaxCall(\'/Administrator/API/TicketCopy\',FormGet(TicketCopyForm),\'Копирование тикета\',\'GetURL(document.location);\');');",
+			'onclick' => "javascript:form.IsMove.checked?a='переместить':a='скопировать';ShowConfirm('Вы действительно хотите ' + a + ' данный тикет пользователю \"' + form.Email.value + '\"?','AjaxCall(\'/Administrator/API/TicketCopy\',FormGet(TicketCopyForm),\'Копирование тикета\',\'GetURL(document.location);\');');",
 			'value'   => 'Скопировать/Переместить'
 			)
 		);
