@@ -67,7 +67,8 @@ foreach($Mails as $mailId){
 	if(IsSet($mail->replyTo)){
 		#-------------------------------------------------------------------------------
 		foreach(Array_Keys($mail->replyTo) as $replyToAddr)
-			$replyTo[] = StrToLower($replyToAddr);
+			if($fromAddress != $replyToAddr)
+				$replyTo[] = StrToLower($replyToAddr);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -153,6 +154,9 @@ foreach($Mails as $mailId){
 				$AutoReply = SPrintF('%s %s',$HeaderLine[0],(IsSet($HeaderLine[1])?$HeaderLine[1]:''));
 			#-------------------------------------------------------------------------------
 			if(StrToLower($HeaderLine[0]) == 'auto-submitted:')
+				$AutoReply = SPrintF('%s %s',$HeaderLine[0],(IsSet($HeaderLine[1])?$HeaderLine[1]:''));
+			#-------------------------------------------------------------------------------
+			if(StrToLower($HeaderLine[0]) == 'x-auto-response-suppress:')
 				$AutoReply = SPrintF('%s %s',$HeaderLine[0],(IsSet($HeaderLine[1])?$HeaderLine[1]:''));
 			#-------------------------------------------------------------------------------
 		}
