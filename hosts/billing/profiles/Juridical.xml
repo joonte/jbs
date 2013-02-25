@@ -156,6 +156,7 @@
    <Chairperson>Первый секретарь</Chairperson>
    <Chairman>Председатель</Chairman>
    <CouncilChairman>Председатель совета</CouncilChairman>
+   <Rector>Ректор</Rector>
   </Options>
   <Attribs>
    <size>1</size>
