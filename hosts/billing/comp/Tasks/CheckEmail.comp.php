@@ -145,19 +145,19 @@ foreach($Mails as $mailId){
 			$HeaderLine = Explode(" ",Trim($Line));
 			#-------------------------------------------------------------------------------
 			if(StrToLower($HeaderLine[0]) == 'in-reply-to:')
-				$References = $HeaderLine[1];
+				$References = (IsSet($HeaderLine[1])?$HeaderLine[1]:'[empty header]');
 			#-------------------------------------------------------------------------------
 			if(StrToLower($HeaderLine[0]) == 'references:')
-				$References = $HeaderLine[1];
+				$References = (IsSet($HeaderLine[1])?$HeaderLine[1]:'[empty header]');
 			#-------------------------------------------------------------------------------
 			if(StrToLower($HeaderLine[0]) == 'x-autoreply:')
-				$AutoReply = SPrintF('%s %s',$HeaderLine[0],(IsSet($HeaderLine[1])?$HeaderLine[1]:''));
+				$AutoReply = SPrintF('%s %s',$HeaderLine[0],(IsSet($HeaderLine[1])?$HeaderLine[1]:'[empty header]'));
 			#-------------------------------------------------------------------------------
 			if(StrToLower($HeaderLine[0]) == 'auto-submitted:')
-				$AutoReply = SPrintF('%s %s',$HeaderLine[0],(IsSet($HeaderLine[1])?$HeaderLine[1]:''));
+				$AutoReply = SPrintF('%s %s',$HeaderLine[0],(IsSet($HeaderLine[1])?$HeaderLine[1]:'[empty header]'));
 			#-------------------------------------------------------------------------------
 			if(StrToLower($HeaderLine[0]) == 'x-auto-response-suppress:')
-				$AutoReply = SPrintF('%s %s',$HeaderLine[0],(IsSet($HeaderLine[1])?$HeaderLine[1]:''));
+				$AutoReply = SPrintF('%s %s',$HeaderLine[0],(IsSet($HeaderLine[1])?$HeaderLine[1]:'[empty header]'));
 			#-------------------------------------------------------------------------------
 		}
 	}
