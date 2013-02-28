@@ -57,6 +57,12 @@ default:
 # если надо переменстить, то просто перемещаем тикет
 if($IsMove){
 	#-------------------------------------------------------------------------------
+	# JBS-640: check messages
+	$Comp = Comp_Load('Tasks/TicketsMessages');
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$IsUpdate = DB_Update('Edesks',Array('UserID'=>$User['ID'],'NotifyEmail'=>''),Array('ID'=>$TicketID));
 	if(Is_Error($IsUpdate))
 		return ERROR | @Trigger_Error(500);
