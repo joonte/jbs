@@ -192,9 +192,13 @@ switch(ValueOf($Comp)){
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
     # JBS-641: generate messages
-    $Comp = Comp_Load('Tasks/TicketsMessages');
-    if(Is_Error($Comp))
-      return ERROR | @Trigger_Error(500);
+    if($Config['Tasks']['Types']['TicketsMessages']['IsImmediately']){
+      #---------------------------------------------------------------------------
+      $Comp = Comp_Load('Tasks/TicketsMessages');
+      if(Is_Error($Comp))
+        return ERROR | @Trigger_Error(500);
+      #---------------------------------------------------------------------------
+    }
     #---------------------------------------------------------------------------
     return Array('Status'=>'Ok');
   default:

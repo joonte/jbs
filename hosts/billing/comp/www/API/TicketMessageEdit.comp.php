@@ -38,7 +38,8 @@ $Message	= substr($Message, 0, 62000);
 #-------------------------------------------------------------------------------
 if($Flags == "Closed" || $Flags == "DenyAddMessage"){$IsClose = TRUE;}else{$IsClose = FALSE;}
 if(StrLen($Flags) < 2){$Flags = "No";}
-Debug("[comp/www/API/TicketMessageEdit]: Flags = '" . $Flags . "'");
+#-------------------------------------------------------------------------------
+$Config = Config();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Ticket = DB_Select('Edesks',Array('ID','UserID','TargetUserID','Theme','StatusID','Flags'),Array('UNIQ','ID'=>$TicketID));
@@ -174,9 +175,13 @@ switch(ValueOf($Ticket)){
         }
         #-----------------------------------------------------------------------
 	# JBS-641: load task
-        $Comp = Comp_Load('Tasks/TicketsMessages');
-        if(Is_Error($Comp))
-          return ERROR | @Trigger_Error(500);
+        if($Config['Tasks']['Types']['TicketsMessages']['IsImmediately']){
+          #---------------------------------------------------------------------------
+          $Comp = Comp_Load('Tasks/TicketsMessages');
+          if(Is_Error($Comp))
+            return ERROR | @Trigger_Error(500);
+          #---------------------------------------------------------------------------
+        }
         #-----------------------------------------------------------------------
         return Array('Status'=>'Ok');
 	#-----------------------------------------------------------------------

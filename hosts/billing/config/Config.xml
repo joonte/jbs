@@ -964,6 +964,7 @@
    <Name>Уведомления о новых сообщениях в запросах</Name>
    <Params type="array" />
    <IsActive>1</IsActive>
+   <IsImmediately>0</IsImmediately>
    <TicketsMessagesHandlePerid>10</TicketsMessagesHandlePerid>
   </TicketsMessages>
   <!-- ********************************************************************* -->
