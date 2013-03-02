@@ -38,7 +38,7 @@ $Message	= substr($Message, 0, 62000);
 #-------------------------------------------------------------------------------
 if($Flags == "Closed" || $Flags == "DenyAddMessage"){$IsClose = TRUE;}else{$IsClose = FALSE;}
 #-------------------------------------------------------------------------------
-if($Flags = 'NotVisible'){
+if($Flags == 'NotVisible'){
 	$Flags = 'No';
 	$NotVisible = TRUE;
 }

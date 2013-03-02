@@ -344,6 +344,7 @@ switch(ValueOf($Ticket)){
 			return ERROR | @Trigger_Error(500);
 	        #-----------------------------------------------------------------------
 		$Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'Flags\'); return false;'),'закрыть запрос (проблема решена)')));
+		#-----------------------------------------------------------------------
 	}else{ # user -> support
 		$Config = Config();
 		$Positions = $Config['Edesks']['Flags'];
