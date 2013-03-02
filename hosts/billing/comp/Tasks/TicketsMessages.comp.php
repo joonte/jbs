@@ -22,7 +22,12 @@ $Columns = Array(
 		'(SELECT `NotifyEmail` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `NotifyEmail`'
 		);
 #-------------------------------------------------------------------------------
-$Messages = DB_Select('EdesksMessages',$Columns,Array('Where'=>"`IsNotify` = 'no'"));
+$Where = Array(
+		"`IsNotify` = 'no'",
+		"`IsVisible` = 'yes'"
+		);
+#-------------------------------------------------------------------------------
+$Messages = DB_Select('EdesksMessages',$Columns,Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Messages)){
   case 'error':

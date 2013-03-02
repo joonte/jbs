@@ -1137,6 +1137,7 @@
   <DenyClose>Запрещено закрывать</DenyClose>
   <Closed>Закрыть</Closed>
   <DenyAddMessage>Запретить добавлять сообщения</DenyAddMessage>
+  <NotVisible>Сообщение невидимо</NotVisible>
  </Flags>
 </Edesks>
 <!-- *********************************************************************** -->
