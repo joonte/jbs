@@ -16,9 +16,9 @@ RETURNS INT
    END IF;
    IF ISNULL($CreateDate)
      THEN
-       SET $Result = (SELECT COUNT(*) FROM `EdesksMessages` WHERE `EdeskID` = $TicketID);
+       SET $Result = (SELECT COUNT(*) FROM `EdesksMessages` WHERE `EdeskID` = $TicketID AND `IsVisible` = 'yes');
      ELSE
-       SET $Result = (SELECT COUNT(*) FROM `EdesksMessages` WHERE `EdeskID` = $TicketID AND `CreateDate` > $CreateDate);
+       SET $Result = (SELECT COUNT(*) FROM `EdesksMessages` WHERE `EdeskID` = $TicketID AND `CreateDate` > $CreateDate AND `IsVisible` = 'yes');
    END IF;
    RETURN $Result;
   END

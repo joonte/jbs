@@ -130,6 +130,7 @@ CREATE TABLE `EdesksMessages` (
   `FileData` mediumblob,
   `FileName` char(255) default '0',
   `IsNotify` ENUM('no','yes') NOT NULL DEFAULT 'no',
+  `IsVisible` ENUM('yes','no') NOT NULL DEFAULT 'yes', 
   `VoteBall` INT(2) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`ID`),
   KEY `EdesksMessagesCreateDate` (`CreateDate`),

@@ -4,13 +4,19 @@
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('MessageID','CreateDate','UserID','OwnerID','Content','FileName','FileLength','VoteBall');
+$__args_list = Array('MessageID','CreateDate','UserID','OwnerID','Content','FileName','IsVisible','VoteBall');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(Is_Error(System_Load('libs/Upload.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(!$IsVisible && !$GLOBALS['__USER']['IsAdmin'])
+	#return SPrintF('<!-- invisible #%s -->', $MessageID);
+	return "";
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $User = DB_Select('Users',Array('ID','GroupID','EnterDate','Email','Name','Sign','(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`StatusID`="Payed" AND `InvoicesOwners`.`UserID`=`Users`.`ID`) AS `TotalPayments`'),Array('UNIQ','ID'=>$UserID));
 #-------------------------------------------------------------------------------
@@ -93,7 +99,11 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 if($__USER['IsAdmin']){$Delete = SPrintF('<a onclick="ShowConfirm(\'Вы подтверждаете удаление?\',\'AjaxCall(\\\'/API/EdeskMessageDelete\\\',{MessageID:%u},\\\'Удаление сообщения\\\',\\\'GetURL(document.location);\\\');\');" onmouseover="PromptShow(event,\'Удалить это сообщение\',this);">[удалить]</a>',$MessageID);}else{$Delete = '';}
 #-------------------------------------------------------------------------------
-$Table->AddHTML(SPrintF($String,$User['ID'],$Comp,($EnterDate < 600?'OnLine':'OffLine'),$Delete,$MessageID,$CreateDate,$User['Name'],$Group['Name'],($UserID != $OwnerID?'FFFFFF':'FDF6D3'),$Text,$User['Sign']));
+$BgColor = ($UserID != $OwnerID?'FFFFFF':'FDF6D3');
+if(!$IsVisible)
+	$BgColor = 'FFE4E1';
+#-------------------------------------------------------------------------------
+$Table->AddHTML(SPrintF($String,$User['ID'],$Comp,($EnterDate < 600?'OnLine':'OffLine'),$Delete,$MessageID,$CreateDate,$User['Name'],$Group['Name'],$BgColor,$Text,$User['Sign']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $FileLength = GetUploadedFileSize('EdesksMessages', $MessageID);

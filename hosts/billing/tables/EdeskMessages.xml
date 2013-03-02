@@ -39,7 +39,7 @@
   <ListElement>(SELECT `UserID` FROM `Edesks` WHERE `Edesks`.`ID` = `EdesksMessages`.`EdeskID`) as `OwnerID`</ListElement>
   <ListElement>Content</ListElement>
   <ListElement>FileName</ListElement>
-  <ListElement>LENGTH(`FileData`) as `FileLength`</ListElement>
+  <ListElement>IsVisible</ListElement>
   <ListElement>VoteBall</ListElement>
  </ColumnsIDs>
  <Conditions>
@@ -64,7 +64,7 @@
    <ListElement>%OwnerID%</ListElement>
    <ListElement>%Content%</ListElement>
    <ListElement>%FileName%</ListElement>
-   <ListElement>%FileLength%</ListElement>
+   <ListElement>%IsVisible%</ListElement>
    <ListElement>%VoteBall%</ListElement>
   </Args>
  </Message>
