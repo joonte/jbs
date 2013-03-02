@@ -102,7 +102,7 @@ CREATE TABLE `Edesks` (
   `SeenByPersonal` INT(11) NOT NULL,
   `LastSeenBy` INT(11) NOT NULL,
   `SeenByUser` INT(11) NOT NULL, 
-  `Flags` enum('No','Closed','CloseOnSee','DenyClose') NOT NULL DEFAULT 'No',
+  `Flags` char(32) DEFAULT 'No',
   `NotifyEmail` char(255) NOT NULL,
   PRIMARY KEY  (`ID`),
   KEY `EdesksUserID` (`UserID`),
