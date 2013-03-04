@@ -51,8 +51,6 @@ if(Mb_StrToLower($Ns1Name,'UTF-8') == $DomainName || Mb_StrToLower($Ns2Name,'UTF
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
-if(!Preg_Match($Regulars['DomainName'],$DomainName))
-  return new gException('WRONG_DOMAIN_NAME','Неверное имя домена');
 #-------------------------------------------------------------------------------
 $DomainScheme = DB_Select('DomainsSchemes',Array('ID','Name','IsActive'),Array('UNIQ','ID'=>$DomainSchemeID));
 #-------------------------------------------------------------------------------
@@ -62,6 +60,16 @@ switch(ValueOf($DomainScheme)){
   case 'exception':
     return new gException('DOMAIN_SCHEME_NOT_FOUND','Выбранный тарифный план не найден');
   case 'array':
+    #---------------------------------------------------------------------------
+    $IDNAConverter = new IDNAConvert();
+    #---------------------------------------------------------------------------
+    $Key = SPrintF('DomainName_%s',$IDNAConverter->encode($DomainScheme['Name']));
+    #---------------------------------------------------------------------------
+    if(!IsSet($Regulars[$Key]))
+      $Key = 'DomainName';
+    #---------------------------------------------------------------------------
+    if(!Preg_Match($Regulars[$Key],$DomainName))
+      return new gException('WRONG_DOMAIN_NAME','Неверное имя домена');
     #---------------------------------------------------------------------------
     if(!$DomainScheme['IsActive'])
       return new gException('SCHEME_NOT_ACTIVE','Выбранный тарифный план заказа домена не активен');

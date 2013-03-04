@@ -75,9 +75,6 @@ if($StepID){
   //$DomainName = Mb_StrToLower($DomainName,'UTF-8');
   #-----------------------------------------------------------------------------
   $Regulars = Regulars();
-#-----------------------------------------------------------------------------
-  if(!Preg_Match($Regulars['DomainName'],$DomainName))
-    return new gException('WRONG_DOMAIN_NAME','Неверное доменное имя');
   #-----------------------------------------------------------------------------
   $Comp = Comp_Load(
     'Form/Input',
@@ -107,6 +104,16 @@ if($StepID){
     case 'exception':
       return new gException('DOMAIN_SCHEME_NOT_FOUND','Тарифный план не найден');
     case 'array':
+      #---------------------------------------------------------------------------
+      $IDNAConverter = new IDNAConvert();
+      #---------------------------------------------------------------------------
+      $Key = SPrintF('DomainName_%s',$IDNAConverter->encode($DomainScheme['Name']));
+      #---------------------------------------------------------------------------
+      if(!IsSet($Regulars[$Key]))
+        $Key = 'DomainName';
+      #---------------------------------------------------------------------------
+      if(!Preg_Match($Regulars[$Key],$DomainName))
+        return new gException('WRONG_DOMAIN_NAME','Неверное имя домена');
       #-------------------------------------------------------------------------
       if(!$DomainScheme['IsActive'])
         return new gException('SCHEME_NOT_ACTIVE','Выбранный тарифный план заказа домена не активен');
