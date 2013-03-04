@@ -315,7 +315,7 @@ foreach($Mails as $mailId){
 			if($IsAdmin && !$Settings['DeletePersonalEmails']){
 				#-------------------------------------------------------------------------------
 				$NewUserID = 10;
-				$Message = SPrintF("[hidden]\nПисьмо от сотрудника '%s'[/hidden]\n%s",$User['Name'],$Message);
+				$Message = SPrintF("[hidden]\nПисьмо от сотрудника '%s/%s'[/hidden]\n%s",$User['Name'],$User['Email']$Message);
 				#-------------------------------------------------------------------------------
 			}else{
 				#-------------------------------------------------------------------------------
