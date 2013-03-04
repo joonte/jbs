@@ -124,7 +124,7 @@ switch(ValueOf($Users)){
     }
     #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
-    $Params = Array(Implode(',',$SendTo),$Theme,$Message,$FromID);
+    $Params = Array(Implode(',',$SendTo),$Theme,$Message,$FromID,'');
     #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
     $IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$GLOBALS['__USER']['ID'],'TypeID'=>'Dispatch','Params'=>$Params));
