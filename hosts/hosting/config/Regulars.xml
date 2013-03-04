@@ -17,6 +17,6 @@ see: http://forum.lissyara.su/viewtopic.php?f=17&t=34580
 <!-- .рф -->
 <DomainName_xn--p1ai>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</DomainName_xn--p1ai>
 <!-- .ru -->
-<DomainName_xn--p1ai>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</DomainName_xn--p1ai>
+<DomainName_ru>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</DomainName_ru>
 <!-- *********************************************************************** -->
 </XML>
