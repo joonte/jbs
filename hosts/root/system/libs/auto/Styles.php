@@ -116,8 +116,21 @@ function Styles_Url($Element){
   #-----------------------------------------------------------------------------
   $HostID = Current($HostsIDs);
   #-----------------------------------------------------------------------------
-  return SPrintF('%s://%s/styles/%s/%s',@$_SERVER['SERVER_PORT'] != 80?'https':'http',@$_SERVER['HTTP_HOST'],$HostID,$Element);
+  return SPrintF('%s://%s/styles/%s/%s',Url_Scheme(),@$_SERVER['HTTP_HOST'],$HostID,$Element);
   #return SPrintF('/styles/%s/%s',$HostID,$Element);
+}
+/*------------------------------------------------------------------------------
+>       Задача:
+> Получить схему http.
+> ------------------------------------------------------------------------------*/
+function Url_Scheme(){
+	/****************************************************************************/
+	if ((@$_SERVER['HTTPS'] == "on") || (@$_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') || (@$_SERVER['SERVER_PORT'] != 80))
+	{
+		return 'https';
+	}else{
+		return 'http';
+	}
 }
 /*------------------------------------------------------------------------------
       Задача:
