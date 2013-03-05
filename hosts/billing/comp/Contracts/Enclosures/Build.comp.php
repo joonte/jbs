@@ -9,8 +9,8 @@ $__args_list = Array('ContractEnclosureID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/DOM.class.php')))
-  return ERROR | @Trigger_Error(500);
+if(Is_Error(System_Load('classes/DOM.class.php','libs/Upload.php')))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $ContractEnclosure = DB_Select('ContractsEnclosures',Array('ID','CreateDate','TypeID','ContractID','Number'),Array('UNIQ','ID'=>$ContractEnclosureID));
 #-------------------------------------------------------------------------------
@@ -167,9 +167,8 @@ switch(ValueOf($ContractEnclosure)){
                   $Document = Str_Replace(SPrintF('%%%s%%',$LinkID),$Text?$Text:'-',$Document);
                 }
                 #---------------------------------------------------------------
-                $IsUpdate = DB_Update('ContractsEnclosures',Array('Document'=>$Document),Array('ID'=>$ContractEnclosureID));
-                if(Is_Error($IsUpdate))
-                  return ERROR | @Trigger_Error(500);
+		if(!SaveUploadedFile('ContractsEnclosures',$ContractEnclosureID,$Document))
+                  return new gException('CANNOT_SAVE_FILE','Не удалось сохранить файл');
                 #---------------------------------------------------------------
                 return TRUE;
               default:
