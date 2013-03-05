@@ -35,42 +35,43 @@ if($TicketID){
     $DOM->AddAttribs('Body',Array('onload'=>SPrintF("ShowWindow('/TicketRead',{TicketID:%u})",$TicketID)));
 }
 #-------------------------------------------------------------------------------
-$Table = Array();
+#$Table = Array();
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Users/Select','UserID');
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+#$Comp = Comp_Load('Users/Select','UserID');
+#if(Is_Error($Comp))
+#  return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Для пользователя',$Comp);
+#$Table[] = Array('Для пользователя',$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'onclick' => "javascript:ShowWindow('/TicketEdit',{UserID:form.UserID.value});",
-    'type'    => 'button',
-    'value'   => 'Добавить'
-  )
-);
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+#$Comp = Comp_Load(
+#  'Form/Input',
+#  Array(
+#    'onclick' => "javascript:ShowWindow('/TicketEdit',{UserID:form.UserID.value});",
+#    'type'    => 'button',
+#    'value'   => 'Добавить'
+#  )
+#);
+#if(Is_Error($Comp))
+#  return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = $Comp;
+#$Table[] = $Comp;
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Tables/Standard',$Table);
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+#$Comp = Comp_Load('Tables/Standard',$Table);
+#if(Is_Error($Comp))
+#  return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Hidden','Новый запрос',new Tag('FORM',$Comp));
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+#$Comp = Comp_Load('Hidden','Новый запрос',new Tag('FORM',$Comp));
+#if(Is_Error($Comp))
+#  return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$NoBody = new Tag('NOBODY',$Comp);
+#$NoBody = new Tag('NOBODY',$Comp);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Super','Tickets');
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$NoBody->AddChild($Comp);
+$NoBody = new Tag('NOBODY',$Comp);
+#$NoBody->AddChild($Comp);
 #-------------------------------------------------------------------------------
 #$Comp = Comp_Load('Tab','Administrator/Support',$NoBody);
 #if(Is_Error($Comp))
