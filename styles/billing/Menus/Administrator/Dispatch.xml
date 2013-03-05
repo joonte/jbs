@@ -13,9 +13,9 @@
  <ListElement>
   <Text>Все рассылки</Text>
   <Paths>
-   <UniqID>^\/Administrator\/DispatchAll$</UniqID>
+   <UniqID>^\/Administrator\/Dispatches$</UniqID>
   </Paths>
-  <Href>/Administrator/DispatchAll</Href>
+  <Href>/Administrator/Dispatches</Href>
  </ListElement>
 </Items>
 <!-- *********************************************************************** -->
