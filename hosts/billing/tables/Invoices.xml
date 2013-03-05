@@ -78,7 +78,7 @@
       <Where>`PaymentSystemID` = 'Natural'</Where>
      </Natural>
     </Patterns>
-    <ActiveID>Week</ActiveID>
+    <ActiveID>Payed</ActiveID>
    </Args>
   </PatternOut>
   <!-- ********************************************************************* -->

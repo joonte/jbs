@@ -43,7 +43,7 @@
       <Where>UNIX_TIMESTAMP() - `UpdateDate` &gt; 604800</Where>
      </Archive>
     </Patterns>
-    <ActiveID>Urgent</ActiveID>
+    <ActiveID>Default</ActiveID>
    </Args>
   </PatternOut>
  </Before>
