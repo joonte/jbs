@@ -87,15 +87,9 @@ switch(ValueOf($Row)){
 	      #-----------------------------------------------------------------
               #-----------------------------------------------------------------
 	      # костыли для JBS-512
-	      if($ModeID == 'Edesks'){
-	        $Mode = 'Tickets';
-              }elseif($ModeID == 'ContractsEnclosures'){
-	        $Mode = 'Contracts/Enclosures';
-              }elseif($ModeID == 'Orders'){
-                $Mode = 'Services/Orders';
-              }else{
-	        $Mode = $ModeID;
-	      }
+	      $Mode = $ModeID;
+              if($ModeID == 'ContractsEnclosures'){$Mode = 'Contracts/Enclosures';}
+              if($ModeID == 'Orders'){$Mode = 'Services/Orders';}
 	      #-----------------------------------------------------------------
               $Comp = Comp_Load(SPrintF('%s/Color',$Mode),$StatusHistory['StatusID']);
               if(Is_Error($Comp))
