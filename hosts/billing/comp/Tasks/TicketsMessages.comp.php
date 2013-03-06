@@ -202,7 +202,7 @@ switch(ValueOf($Messages)){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($MessagesCount > 0){
+if($MessagesCount > 0 && !IsSet($GLOBALS['TaskReturnInfo'])){
 	$GLOBALS['TaskReturnInfo'] = SPrintF('%u new messages',$MessagesCount);
 }
 #-------------------------------------------------------------------------------
