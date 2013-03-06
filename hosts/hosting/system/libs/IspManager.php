@@ -17,60 +17,132 @@ function IspManager_Logon($Settings,$Login,$Password){
 }
 #-------------------------------------------------------------------------------
 function IspManager_Get_Domains($Settings){
-  /****************************************************************************/
-  $__args_types = Array('array');
-  #-----------------------------------------------------------------------------
-  $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
-  /****************************************************************************/
-  $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
-  #-----------------------------------------------------------------------------
-  $Http = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Hidden'   => $authinfo,
-    'IsLoggin' => FALSE
-  );
-  #-----------------------------------------------------------------------------
-  $Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'wwwdomain'));
-  if(Is_Error($Response))
-    return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
-  #-----------------------------------------------------------------------------
-  $Response = Trim($Response['Body']);
-  #-----------------------------------------------------------------------------
-  $XML = String_XML_Parse($Response);
-  if(Is_Exception($XML))
-    return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
-  #-----------------------------------------------------------------------------
-  $XML = $XML->ToArray('elem');
-  #-----------------------------------------------------------------------------
-  $Domains = $XML['doc'];
-  #-----------------------------------------------------------------------------
-  if(!Is_Array($Domains))
-    return new gException('DOMAINS_NOT_FOUND','Доменов не обнаружено');
-  #-----------------------------------------------------------------------------
-  if(IsSet($Domains['error']))
-    return new gException('GET_DOMAINS_ERROR',$Domains['error']);
-  #-----------------------------------------------------------------------------
-  $Users = Array();
-  #-----------------------------------------------------------------------------
-  foreach($Domains as $Domain){
-    #---------------------------------------------------------------------------
-    if(!IsSet($Domain['owner']))
-      continue;
-    #---------------------------------------------------------------------------
-    $Owner = $Domain['owner'];
-    #---------------------------------------------------------------------------
-    if(!IsSet($Users[$Owner]))
-      $Users[$Owner] = Array();
-    #---------------------------------------------------------------------------
-    $Users[$Owner][] = $Domain['name'];
-  }
-  #-----------------------------------------------------------------------------
-  return $Users;
+	/****************************************************************************/
+	$__args_types = Array('array');
+	#-----------------------------------------------------------------------------
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/****************************************************************************/
+	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
+	#-----------------------------------------------------------------------------
+	$Http = Array(
+			#---------------------------------------------------------------------------
+			'Address'  => $Settings['IP'],
+			'Port'     => $Settings['Port'],
+			'Host'     => $Settings['Address'],
+			'Protocol' => $Settings['Protocol'],
+			'Hidden'   => $authinfo,
+			'IsLoggin' => FALSE
+			);
+	#-------------------------------------------------------------------------------
+	# достаём список реселлеров
+	$Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'reseller'));
+	if(Is_Error($Response))
+		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
+	#-------------------------------------------------------------------------------
+	$Response = Trim($Response['Body']);
+	#-----------------------------------------------------------------------------
+	$XML = String_XML_Parse($Response);
+	if(Is_Exception($XML))
+		return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
+	#-----------------------------------------------------------------------------
+	$XML = $XML->ToArray('elem');
+	#-----------------------------------------------------------------------------
+	$Elems = $XML['doc'];
+	#-----------------------------------------------------------------------------
+	if(IsSet($Elems['error']))
+		return new gException('GET_RESELLERS_ERROR',$Elems['error']);
+	#-----------------------------------------------------------------------------
+	$Resellers = Array();
+	#-----------------------------------------------------------------------------
+	if(Is_Array($Elems)){
+		#-------------------------------------------------------------------------------
+		foreach($Elems as $Elem)
+			$Resellers[] = $Elem['name'];
+		#-------------------------------------------------------------------------------
+	}
+	#Debug(SPrintF('[system/libs/IspManager.php]: Resellers = %s',print_r($Resellers,true)));
+	#-------------------------------------------------------------------------------
+	# достаём список пользователей
+	$Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
+	if(Is_Error($Response))
+		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
+	#-------------------------------------------------------------------------------
+	$Response = Trim($Response['Body']);
+	#-----------------------------------------------------------------------------
+	$XML = String_XML_Parse($Response);
+	if(Is_Exception($XML))
+		return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
+	#-----------------------------------------------------------------------------
+	$XML = $XML->ToArray('elem');
+	#-----------------------------------------------------------------------------
+	$Elems = $XML['doc'];
+	#-----------------------------------------------------------------------------
+	if(IsSet($Elems['error']))
+		return new gException('GET_USERS_ERROR',$Elems['error']);
+	#-----------------------------------------------------------------------------
+	$Owners = Array();
+	#-----------------------------------------------------------------------------
+	if(Is_Array($Elems)){
+		#-------------------------------------------------------------------------------
+		foreach($Elems as $Elem)
+			if(In_Array($Elem['owner'],$Resellers))
+				$Owners[$Elem['name']] = $Elem['owner'];
+		#-------------------------------------------------------------------------------
+	}
+	#Debug(SPrintF('[system/libs/IspManager.php]: Owners = %s',print_r($Owners,true)));
+	#-------------------------------------------------------------------------------
+	# достаём список доменов
+	$Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'wwwdomain'));
+	if(Is_Error($Response))
+		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
+	#-----------------------------------------------------------------------------
+	$Response = Trim($Response['Body']);
+	#-----------------------------------------------------------------------------
+	$XML = String_XML_Parse($Response);
+	if(Is_Exception($XML))
+		return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
+	#-----------------------------------------------------------------------------
+	$XML = $XML->ToArray('elem');
+	#-----------------------------------------------------------------------------
+	$Domains = $XML['doc'];
+	#-----------------------------------------------------------------------------
+	if(!Is_Array($Domains))
+		return new gException('DOMAINS_NOT_FOUND','Доменов не обнаружено');
+	#-----------------------------------------------------------------------------
+	if(IsSet($Domains['error']))
+		return new gException('GET_DOMAINS_ERROR',$Domains['error']);
+	#-----------------------------------------------------------------------------
+	# строим выхлопной массив
+	$Users = Array();
+	#-----------------------------------------------------------------------------
+	foreach($Domains as $Domain){
+		#---------------------------------------------------------------------------
+		if(!IsSet($Domain['owner']))
+			continue;
+		#---------------------------------------------------------------------------
+		$Owner = $Domain['owner'];
+		#---------------------------------------------------------------------------
+		if(!IsSet($Users[$Owner]))
+			$Users[$Owner] = Array();
+		#---------------------------------------------------------------------------
+		$Users[$Owner][] = $Domain['name'];
+		#---------------------------------------------------------------------------
+		# домены юзеров реселлеров
+		if(IsSet($Owners[$Owner])){
+			#---------------------------------------------------------------------------
+			if(!IsSet($Users[$Owners[$Owner]]))
+				$Users[$Owners[$Owner]] = Array();
+			#---------------------------------------------------------------------------
+			$Users[$Owners[$Owner]][] = $Domain['name'];
+		}
+		#---------------------------------------------------------------------------
+	}
+	#-----------------------------------------------------------------------------
+	#Debug(SPrintF('[system/libs/IspManager.php]: UsersList = %s',print_r($Users,true)));
+	return $Users;
+	#-----------------------------------------------------------------------------
 }
+#-----------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 function IspManager_Get_Users($Settings){
   /****************************************************************************/
@@ -480,11 +552,11 @@ function IspManager_Delete($Settings,$Login,$IsReseller = FALSE){
 	$XML = $XML->ToArray('elem');
 	$UsersList = $XML['doc'];
 	if(Is_Array($UsersList)){
+		#-----------------------------------------------------------------------------
 		# дропаем юзеров
-		foreach($UsersList as $ReslUser){
+		foreach($UsersList as $ReslUser)
 			$DeleteList = $ReslUser['name'] . ', ';
-		}
-		Debug("[system/libs/IspManager.php]: Users for delete = " . $DeleteList);
+		#Debug("[system/libs/IspManager.php]: Users for delete = " . $DeleteList);
 		#-----------------------------------------------------------------------------
 		$Request = Array(
 				'authinfo'      => $authinfo,
@@ -498,7 +570,9 @@ function IspManager_Delete($Settings,$Login,$IsReseller = FALSE){
 		if(Is_Error($Response))
 			return ERROR | @Trigger_Error('[IspManager_Delete]: не удалось соедениться с сервером');
 		# я так думаю, неважно чё он там ответил, если ответил...
+		#-----------------------------------------------------------------------------
 	}
+	#-----------------------------------------------------------------------------
   }
   #-----------------------------------------------------------------------------
   $Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.delete':'user.delete','elid'=>$Login));
@@ -835,7 +909,7 @@ function IspManager_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
                 return new gException('IP_ADD_CREATE_ERROR','Не удалось добавить IP адрес');
         #-----------------------------------------------------------------------------
         #-----------------------------------------------------------------------------
-        Debug("[system/libs/IspManager]: to hosting order added IP = " . $Doc['ip']);
+        #Debug("[system/libs/IspManager]: to hosting order added IP = " . $Doc['ip']);
         #-----------------------------------------------------------------------------
 	$IsUpdate = DB_Update('ExtraIPOrders',Array('Login'=>$Doc['ip']),Array('ID'=>$ID));
         if(Is_Error($IsUpdate))
@@ -898,22 +972,30 @@ function IspManager_DeleteIP($Settings,$ExtraIP){
                         'su'            => $Settings['UserLogin']
                 );
                 $Response = Http_Send('/manager/ispmgr',$Http,$Request);
-        
                 if(Is_Error($Response))
                         return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
+		#-----------------------------------------------------------------------------
                 $Response = Trim($Response['Body']);
+		#-----------------------------------------------------------------------------
                 $XML = String_XML_Parse($Response);
                 if(Is_Exception($XML))
                         return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
+		#-----------------------------------------------------------------------------
                 $XML = $XML->ToArray('elem');
+		#-----------------------------------------------------------------------------
                 $Domains = $XML['doc'];
+		#-----------------------------------------------------------------------------
                 if(!Is_Array($Domains))
                         return new gException('DOMAINS_NOT_FOUND','Доменов не обнаружено');
+		#-----------------------------------------------------------------------------
                 if(IsSet($Domains['error']))
                         return new gException('GET_DOMAINS_ERROR',$Domains['error']);
+		#-----------------------------------------------------------------------------
                 foreach($Domains as $Domain){
+			#-----------------------------------------------------------------------------
                         if($Domain['ip'] == $ExtraIP){
-                                Debug("[system/libs/IspManager.php]: on IP " . $ExtraIP . " found domain " . $Domain['name']);
+				#-----------------------------------------------------------------------------
+                                #Debug("[system/libs/IspManager.php]: on IP " . $ExtraIP . " found domain " . $Domain['name']);
                                 # get domain settings
                                 # func=wwwdomain.edit&elid=ffffff.ru
                                 $Request = Array(
@@ -923,17 +1005,25 @@ function IspManager_DeleteIP($Settings,$ExtraIP){
                                         'out'           => 'xml',
                                         'su'            => $Settings['UserLogin']
                                 );
+				#-----------------------------------------------------------------------------
                                 $Response = Http_Send('/manager/ispmgr',$Http,$Request);
                                 if(Is_Error($Response))
                                         return ERROR | @Trigger_Error('[IspManager_DeleteIP]: не удалось соедениться с сервером');
+				#-----------------------------------------------------------------------------
                                 $Response = Trim($Response['Body']);
+				#-----------------------------------------------------------------------------
                                 $XML = String_XML_Parse($Response);
+				#-----------------------------------------------------------------------------
                                 if(Is_Exception($XML))
                                         return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
+				#-----------------------------------------------------------------------------
                                 $XML = $XML->ToArray();
+				#-----------------------------------------------------------------------------
                                 $Doc = $XML['doc'];
+				#-----------------------------------------------------------------------------
                                 if(IsSet($Doc['error']))
                                         return new gException('USER_DATA_TAKE_ERROR','Ошибка получения данных пользователя из системы управления');
+				#-----------------------------------------------------------------------------
                                 # change settings
                                 $Request = Array(
                                         'authinfo'      => $authinfo,
@@ -942,24 +1032,35 @@ function IspManager_DeleteIP($Settings,$ExtraIP){
                                         'elid'          => $Domain['name'],
                                         'sok'           => 'ok'
                                 );
-                                foreach(Array_Keys($Doc) as $ParamID){
+				#-----------------------------------------------------------------------------
+                                foreach(Array_Keys($Doc) as $ParamID)
                                         $Request[$ParamID] = $Doc[$ParamID];
-                                }
+				#-----------------------------------------------------------------------------
                                 # change IP to shared
                                 $Request['ip']  = $Settings['IP'];
+				#-----------------------------------------------------------------------------
                                 $Response = Http_Send('/manager/ispmgr',$Http,$Request);
                                 if(Is_Error($Response))
                                         return ERROR | @Trigger_Error('[IspManager_DeleteIP]: не удалось соедениться с сервером');
+				#-----------------------------------------------------------------------------
                                 $Response = $Response['Body'];
+				#-----------------------------------------------------------------------------
                                 $XML = String_XML_Parse($Response);
+				#-----------------------------------------------------------------------------
                                 if(Is_Exception($XML))
                                         return ERROR | @Trigger_Error('[IspManager_DeleteIP]: неверный ответ от сервера');
+				#-----------------------------------------------------------------------------
                                 $XML = $XML->ToArray();
+				#-----------------------------------------------------------------------------
                                 $Doc = $XML['doc'];
+				#-----------------------------------------------------------------------------
                                 if(IsSet($Doc['error']))
                                         return new gException('IspManager_DeleteIP','Не удалось изменить IP для домена' . $Domain['name']);
+				#-----------------------------------------------------------------------------
                         }
+			#-----------------------------------------------------------------------------
                 }
+		#-----------------------------------------------------------------------------
         }
         #-----------------------------------------------------------------------------
         #-----------------------------------------------------------------------------
