@@ -14,7 +14,7 @@ VALUES
 (57,1,'DomainsNoticeDelete','[]','yes'),
 (58,1,'DomainsForDelete','[]','yes'),
 (59,1,'DomainsOrdersWhoIsUpdate','[]','yes'),
-(60,1,'ServersQuestioning','[]','yes'),
+(60,1,'HostingServersQuestioning','[]','yes'),
 (61,1,'ServersUpTime','[]','yes'),
 (62,1,'UpTimeAgregate','[]','yes'),
 (63,1,'EmailBoxesNotifies','[]','yes'),

@@ -738,11 +738,11 @@
    <IsActive>1</IsActive>
   </VPSSetPrimaryServer>
   <!-- ********************************************************************* -->
-  <ServersQuestioning>
+  <HostingServersQuestioning>
    <Name>Опрос серверов хостинга</Name>
    <Params type="array" />
    <IsActive>1</IsActive>
-  </ServersQuestioning>
+  </HostingServersQuestioning>
   <!-- ********************************************************************* -->
   <VPSServersQuestioning>
     <Name>Опрос серверов VPS</Name>
