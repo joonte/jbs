@@ -75,6 +75,7 @@
    <ListElement>%ContractID%</ListElement>
    <ListElement>%Month%</ListElement>
   </Args>
+  <Alias>ContractID</Alias>
  </Number>
  <!-- ********************************************************************** -->
  <Customer>
