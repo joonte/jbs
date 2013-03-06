@@ -336,7 +336,7 @@ function IspManager_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme
     'phpcgi'                => ($HostingScheme['IsPHPCGIAccess']?'on':'off'), # PHP как CGI
     'phpfcgi'               => ($HostingScheme['IsPHPFastCGIAccess']?'on':'off'), # PHP как FastCGI
     'safemode'              => ($HostingScheme['IsPHPSafeMode']?'on':'off'), # Безопасный режим
-    'cpulimit'              => Ceil($HostingScheme['QuotaCPU']), # Ограничение на CPU
+    'cpulimit'              => $HostingScheme['MaxExecutionTime'], # Ограничение на CPU
     'memlimit'              => Ceil($HostingScheme['QuotaMEM']), # Ограничение на память
     'proclimit'             => $HostingScheme['QuotaPROC'], # Кол-во процессов
     'maxclientsvhost'       => $HostingScheme['QuotaMPMworkers'], # mpm-itk
@@ -657,7 +657,7 @@ function IspManager_Scheme_Change($Settings,$Login,$HostingScheme){
     'phpcgi'          => ($HostingScheme['IsPHPCGIAccess']?'on':'off'), # PHP как CGI
     'phpfcgi'         => ($HostingScheme['IsPHPFastCGIAccess']?'on':'off'), # PHP как FastCGI
     'safemode'        => ($HostingScheme['IsPHPSafeMode']?'on':'off'), # Безопасный режим
-    'cpulimit'        => Ceil($HostingScheme['QuotaCPU']), # Ограничение на CPU
+    'cpulimit'        => $HostingScheme['MaxExecutionTime'], # Ограничение на CPU
     'memlimit'        => Ceil($HostingScheme['QuotaMEM']), # Ограничение на память
     'proclimit'       => $HostingScheme['QuotaPROC'], # Кол-во процессов
     'maxclientsvhost' => $HostingScheme['QuotaMPMworkers'], # mpm-itk

@@ -157,6 +157,10 @@ switch(ValueOf($HostingScheme)){
       #-------------------------------------------------------------------------
       $Table[] = Array('Кол-во пользователей баз данных',$HostingScheme['QuotaUsersDBs']);
       #-------------------------------------------------------------------------
+      $Table[] = Array('Время выполения скриптов',SPrintF('%s секунд',$HostingScheme['MaxExecutionTime']));
+      #-------------------------------------------------------------------------
+      $Table[] = Array('Ограничение на процессор',SPrintF('%s%%',$HostingScheme['QuotaCPU']));
+      #-------------------------------------------------------------------------
       $Comp = Comp_Load('Formats/Logic',$HostingScheme['IsSSIAccess']);
       if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
