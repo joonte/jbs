@@ -11,6 +11,7 @@ VALUES
 (53,1,'HostingNoticeDelete','[]','yes'),
 (54,1,'HostingForDelete','[]','yes'),
 (55,1,'DomainsNoticeSuspend','[]','yes'),
+(56,1,'HostingCPUUsage','[]','yes'),
 (57,1,'DomainsNoticeDelete','[]','yes'),
 (58,1,'DomainsForDelete','[]','yes'),
 (59,1,'DomainsOrdersWhoIsUpdate','[]','yes'),

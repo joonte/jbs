@@ -11,6 +11,9 @@ if(Is_Error(System_Load('classes/Server.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+
+return 60;
+
 $HostingServers = DB_Select('HostingServers',Array('ID','Address'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingServers)){
@@ -38,17 +41,36 @@ foreach($HostingServers as $HostingServer){
 	case 'exception':
 		return ERROR | @Trigger_Error(400);
 	case 'true':
-		#-------------------------------------------------------------------------------
-		$CPU = $Server->GetCPU();
-
-
-		#-------------------------------------------------------------------------------
 		break;
-		#-------------------------------------------------------------------------------
 	default:
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
+	# достаём за неделю
+	$TFilter = SPrintF('%s - %s',date('Y-m-d',time() - 7*24*3600),date('Y-m-d',time()));
+	$Usages = Call_User_Func_Array(Array($Server,'GetCPUUsage'),Array($TFilter));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Usages)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return $Usages;
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+#	$BUsage = Array();
+	#-------------------------------------------------------------------------------
+#	foreach ($Usages as $Usage)
+#		$BUsage[$Usage['account']] = Array('utime'=>$Usage['utime'],'stime'=>$Usage['stime'],'etime'=>$Usage['etime']);
+	
+#	Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: GetCPUUsage = %s',print_r($Usages,true)));
+
+break;
+
+
 }
 
 
