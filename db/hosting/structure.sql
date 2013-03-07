@@ -978,7 +978,7 @@ CREATE TABLE IF NOT EXISTS `ISPswSchemes` (
 	`MinDaysPay` int(6) DEFAULT '0',
 	`MinDaysProlong` int(6) DEFAULT '0',
 	`MaxDaysPay` int(6) DEFAULT '0',
-	`IsTimeManage` enum('no','yes') DEFAULT 'yes',
+	`ConsiderTypeID` char(30) default 'Daily',
 	`SortID` int(11) DEFAULT '10',
 	`ISPtype` char(12) DEFAULT '7:7',
 	PRIMARY KEY (`ID`),

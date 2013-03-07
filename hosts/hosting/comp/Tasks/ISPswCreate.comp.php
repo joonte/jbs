@@ -50,12 +50,7 @@ switch(ValueOf($ISPswOrder)){
             }
             #-------------------------------------------------------------------
 	    # create license comment
-	    if($ISPswScheme['IsInternal']){
-	      $LicComment = "INTERNAL, order #" . $ISPswOrder['OrderID'];
-	    }else{
-	      $LicComment = "EXTERNAL, order #" . $ISPswOrder['OrderID'] . ", for " . $User['Email'];
-	    }
-	    $ISPswScheme['LicComment'] = $LicComment;
+	    $ISPswScheme['LicComment'] = SPrintF('%s, order #%u%s',(($ISPswScheme['IsInternal'])?'INTERNAL':'EXTERNAL'),$ISPswOrder['OrderID'],(($ISPswScheme['IsInternal'])?'':SPrintF(', for %s',$User['Email'])));
 	    # add IP
             $ISPswScheme['IP'] = $ISPswOrder['IP'];
             #-------------------------------------------------------------------
@@ -72,9 +67,14 @@ switch(ValueOf($ISPswOrder)){
 	      if(Is_Error($Change_IP)){
 	        return ERROR | @Trigger_Error(500);
 	      }else{
-	        $IsUpdate = DB_Update('ISPswLicenses',Array('StatusDate'=>Time(),'IsUsed'=>'yes','ip'=>$ISPswScheme['IP']),Array('ID'=>$License['LicenseID']));
+	        #-------------------------------------------------------------------
+	        $IUpdate = Array('StatusDate'=>Time(),'IsUsed'=>'yes','ip'=>$ISPswScheme['IP']);
+		$IUpdate['IsInternal'] = (($ISPswScheme['IsInternal'])?TRUE:FALSE);
+		#-------------------------------------------------------------------
+	        $IsUpdate = DB_Update('ISPswLicenses',$IUpdate,Array('ID'=>$License['LicenseID']));
 		if(Is_Error($IsUpdate))
                   return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------
               }
 	      # разблокируем
 	      if(!IspSoft_UnLock($Settings,$ISPswScheme))

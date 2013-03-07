@@ -9,7 +9,11 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $CurrentDay = (integer)(Time()/86400);
 #-------------------------------------------------------------------------------
-$Where = SPrintF("`StatusID` = 'Active' AND `ConsiderDay` < %u",$CurrentDay);
+$Where = Array(
+		'`StatusID` = "Active"',
+		SPrintF('`ConsiderDay` < %u',$CurrentDay),
+		'`ConsiderTypeID` = "Daily"'
+		);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','OrderID','ContractID','ConsiderDay','SchemeID','(SELECT `IsAutoProlong` FROM `Orders` WHERE `ISPswOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`');
 $ISPswOrders = DB_Select('ISPswOrdersOwners',$Columns,Array('Where'=>$Where,'Limit'=>Array('Start'=>0,'Length'=>5)));

@@ -78,7 +78,7 @@ switch(ValueOf($ISPswOrder)){
         #-----------------------------------------------------------------------
         $__USER = $GLOBALS['__USER'];
         #-----------------------------------------------------------------------
-        $ISPswScheme = DB_Select('ISPswSchemes',Array('ID','CostDay','CostMonth','MinDaysPay','MinDaysProlong','MaxDaysPay','IsActive','IsProlong','IsInternal'),Array('UNIQ','ID'=>$ISPswOrder['SchemeID']));
+        $ISPswScheme = DB_Select('ISPswSchemes',Array('ID','CostDay','CostMonth','MinDaysPay','MinDaysProlong','MaxDaysPay','IsActive','IsProlong','IsInternal','ConsiderTypeID'),Array('UNIQ','ID'=>$ISPswOrder['SchemeID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($ISPswScheme)){
           case 'error':
@@ -99,15 +99,11 @@ switch(ValueOf($ISPswOrder)){
             #-------------------------------------------------------------------
             $Table = Array();
             #-------------------------------------------------------------------
-            $Comp = Comp_Load('Formats/Currency',$ISPswScheme['IsInternal']?$ISPswScheme['CostDay']:$ISPswScheme['CostMonth']);
+            $Comp = Comp_Load('Formats/Currency',($ISPswScheme['ConsiderTypeID'] == 'Daily')?$ISPswScheme['CostDay']:$ISPswScheme['CostMonth']);
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-	    if($ISPswScheme['IsInternal']){
-              $Table[] = Array('Стоимость тарифа (в день)',$Comp);
-	    }else{
-              $Table[] = Array('Стоимость тарифа',$Comp);
-	    }
+            $Table[] = Array(($ISPswScheme['ConsiderTypeID'] == 'Upon')?'Стоимость тарифа':'Стоимость тарифа (в день)',$Comp);
             #-------------------------------------------------------------------
             if($ISPswOrder['IsPayed']){
               #-----------------------------------------------------------------
@@ -120,10 +116,11 @@ switch(ValueOf($ISPswOrder)){
             }
             #-------------------------------------------------------------------
 	    #-------------------------------------------------------------------
+if($ISPswScheme['ConsiderTypeID'] == 'Upon'){
+$DaysPay = 1;
+}
+
             if($DaysPay){
-              #-----------------------------------------------------------------
-	      if(!$ISPswScheme['IsInternal'])
-	        $DaysPay = 1956441600 / ( 24 * 3600 ); # 31 декабря 2031 г.
               #-----------------------------------------------------------------
               $Comp = Comp_Load(
                 'Form/Input',
@@ -152,7 +149,7 @@ switch(ValueOf($ISPswOrder)){
 	      #-----------------------------------------------------------------
               $DaysRemainded = $DaysPay;
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,51000,$ISPswScheme['ID'],$UserID,$CostPay,$ISPswScheme['CostDay'],FALSE);
+              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,51000,$ISPswScheme['ID'],$UserID,$CostPay,$ISPswScheme['CostDay'],FALSE,$ISPswScheme['ConsiderTypeID']);
               if(Is_Error($Comp))
                  return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
@@ -175,24 +172,19 @@ switch(ValueOf($ISPswOrder)){
                 $Table[] = Array('Текущая дата окончания',$Comp);
               }
               #-----------------------------------------------------------------
-	      if($ISPswScheme['IsInternal']){
+	      if($ISPswScheme['ConsiderTypeID'] == 'Daily'){
                 $Table[] = Array('Кол-во дней оплаты',SPrintF('%u дн.',$DaysPay));
               }else{
 	        $Table[] = Array('Кол-во дней оплаты','-');
 	      }
               #-----------------------------------------------------------------
-	      if($ISPswScheme['IsInternal']){
-	        $RemainTime = Time() + ($DaysRemainded + $DaysPay)*86400;
-	      }else{
-                $RemainTime = 1956441600;	# 31 декабря 2031 г.
-	      }
-              $Comp = Comp_Load('/Formats/Date/Standard',$RemainTime);
+              $Comp = Comp_Load('/Formats/Date/Standard',(Time() + ($DaysRemainded + $DaysPay)*86400));
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
-              $Table[] = Array('Дата окончания после оплаты',$Comp);
+              $Table[] = Array('Дата окончания после оплаты',($ISPswScheme['ConsiderTypeID'] == 'Upon')?'-':$Comp);
               #-----------------------------------------------------------------
-              if(Count($Bonuses)){
+              if($ISPswScheme['ConsiderTypeID'] == 'Daily' && Count($Bonuses)){
                 #---------------------------------------------------------------
                 $Tr = new Tag('TR');
                 #---------------------------------------------------------------
@@ -207,10 +199,11 @@ switch(ValueOf($ISPswOrder)){
                 #---------------------------------------------------------------
                 $Table[] = new Tag('DIV',Array('align'=>'center'),$Comp);
               }
+	      #-----------------------------------------------------------------
               #-----------------------------------------------------------------
-	      if(!$ISPswScheme['IsInternal']){
+	      if($ISPswScheme['ConsiderTypeID'] == 'Upon')
 	        $CostPay = $ISPswScheme['CostMonth'];
-	      }
+	      #-----------------------------------------------------------------
               $Comp = Comp_Load('Formats/Currency',$CostPay);
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);

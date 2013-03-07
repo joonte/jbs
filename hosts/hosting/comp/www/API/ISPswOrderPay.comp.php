@@ -50,7 +50,7 @@ switch(ValueOf($ISPswOrder)){
         #-----------------------------------------------------------------------
         $UserID = $ISPswOrder['UserID'];
         #-----------------------------------------------------------------------
-        $ISPswScheme = DB_Select('ISPswSchemes',Array('ID','Name','CostDay','CostMonth','IsActive','IsProlong','MinDaysPay','MinDaysProlong','MaxDaysPay','IsInternal'),Array('UNIQ','ID'=>$ISPswOrder['SchemeID']));
+        $ISPswScheme = DB_Select('ISPswSchemes',Array('ID','Name','CostDay','CostMonth','IsActive','IsProlong','MinDaysPay','MinDaysProlong','MaxDaysPay','ConsiderTypeID'),Array('UNIQ','ID'=>$ISPswOrder['SchemeID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($ISPswScheme)){
           case 'error':
@@ -80,7 +80,7 @@ switch(ValueOf($ISPswOrder)){
             Debug(SPrintF('[comp/www/API/ISPswOrderPay]: минимальное число дней %s',$MinDaysPay));
             #-------------------------------------------------------------------
             if($DaysPay < $MinDaysPay || $DaysPay > $ISPswScheme['MaxDaysPay']){
-	      if($ISPswScheme['IsInternal']){
+	      if($ISPswScheme['ConsiderTypeID'] == 'Daily'){
                 return new gException('WRONG_DAYS_PAY','Неверное кол-во дней оплаты');
 	      }
 	    }
@@ -100,7 +100,7 @@ switch(ValueOf($ISPswOrder)){
             #-------------------------------------------------------------------
             $DaysRemainded = $DaysPay;
             #-------------------------------------------------------------------
-            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,51000,$ISPswScheme['ID'],$UserID,$CostPay,$ISPswScheme['CostDay'],$ISPswOrder['OrderID']);
+            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,51000,$ISPswScheme['ID'],$UserID,$CostPay,$ISPswScheme['CostDay'],$ISPswOrder['OrderID'],$ISPswScheme['ConsiderTypeID']);
             if(Is_Error($Comp))
                return ERROR | @Trigger_Error(500);
             #-----------------------------------------------------------------
@@ -109,9 +109,8 @@ switch(ValueOf($ISPswOrder)){
             #-------------------------------------------------------------------
             #-------------------------------------------------------------------
             $CostPay = Round($CostPay,2);
-	    if(!$ISPswScheme['IsInternal']){
+	    if($ISPswScheme['ConsiderTypeID'] == 'Upon')
 	      $CostPay = $ISPswScheme['CostMonth'];
-	    }
             #-------------------------------------------------------------------
             if(!$IsNoBasket && $CostPay > $ISPswOrder['ContractBalance']){
               #-----------------------------------------------------------------

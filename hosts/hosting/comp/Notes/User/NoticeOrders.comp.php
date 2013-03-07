@@ -92,7 +92,7 @@ case 'array':
 					#-------------------------------------------------------------------------
 					if($Order['Code'] == 'ISPsw'){
 						#-------------------------------------------------------------------------
-						$ISPswOrder = DB_Select('ISPswOrdersOwners',Array('ID','DaysRemainded','IP','(SELECT `Name` FROM `ISPswSchemes` WHERE `ISPswOrdersOwners`.`SchemeID` = `ISPswSchemes`.`ID`) as `SchemeName`','(SELECT `IsProlong` FROM `ISPswSchemes` WHERE `ISPswOrdersOwners`.`SchemeID` = `ISPswSchemes`.`ID`) as `IsProlong`'),Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
+						$ISPswOrder = DB_Select('ISPswOrdersOwners',Array('ID','DaysRemainded','IP','(SELECT `Name` FROM `ISPswSchemes` WHERE `ISPswOrdersOwners`.`SchemeID` = `ISPswSchemes`.`ID`) as `SchemeName`','(SELECT `IsProlong` FROM `ISPswSchemes` WHERE `ISPswOrdersOwners`.`SchemeID` = `ISPswSchemes`.`ID`) as `IsProlong`','(SELECT `ConsiderTypeID` FROM `ISPswSchemes` WHERE `ISPswOrdersOwners`.`SchemeID` = `ISPswSchemes`.`ID`) as `ConsiderTypeID`'),Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
 						#-------------------------------------------------------------------------
 						switch(ValueOf($ISPswOrder)){
 						case 'error':
@@ -100,6 +100,10 @@ case 'array':
 						case 'exception':
 							return ERROR | @Trigger_Error(400);
 						case 'array':
+							#-------------------------------------------------------------------------
+							# нечего напоминать о вечном =))
+							if($ISPswOrder['ConsiderTypeID'] == 'Upon')
+								break;
 							#-------------------------------------------------------------------------
 							$NoBody = new Tag('NOBODY');
 							#-------------------------------------------------------------------------

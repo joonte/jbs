@@ -52,7 +52,7 @@ if($ISPswSchemeID){
     'MinDaysProlong'		=> 14,
     'MaxDaysPay'		=> 14,
     'ISPtype'			=> '7:7',
-    'IsTimeManage'		=> TRUE,
+    'ConsiderTypeID'		=> 'Daily',
     'SortID'			=> 10,
   );
 }
@@ -79,7 +79,7 @@ if(Is_Error($Comp))
 $Table[] = $Comp;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Table[] = "Группа ПО к которой относится тариф";
+$Table[] = "Общие параметры тарифного плана";
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $ISPswGroups = DB_Select('ISPswGroups',Array('ID','Name'),Array('SortOn'=>'SortID'));
@@ -250,14 +250,18 @@ if(Is_Error($Comp))
 $Table[] = Array('Максимальное кол-во дней оплаты',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsTimeManage','value'=>'yes'));
+$Types = $Config['Services']['Consider']['Types'];
+#-------------------------------------------------------------------------------
+$Options = Array();
+#-------------------------------------------------------------------------------
+foreach($Types as $TypeID=>$Type)
+	$Options[$TypeID] = $Type['Name'];
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Select',Array('name'=>'ConsiderTypeID','prompt'=>'Тип учёта для лицензий: обычные - ежедневно, вечные - разово'),$Options,$ISPswScheme['ConsiderTypeID']);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if($ISPswScheme['IsTimeManage'])
-  $Comp->AddAttribs(Array('checked'=>'yes'));
-#-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsTimeManage\'); return false;'),'Учитывать дни пользования'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'для "вечных" - галку снять')),$Comp);
+$Table[] = Array('Способ учета',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(

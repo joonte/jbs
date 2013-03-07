@@ -32,7 +32,7 @@ $IsInternal		= (boolean) @$Args['IsInternal'];
 $MinDaysPay		= (integer) @$Args['MinDaysPay'];
 $MinDaysProlong		= (integer) @$Args['MinDaysProlong'];
 $MaxDaysPay		= (integer) @$Args['MaxDaysPay'];
-$IsTimeManage		= (boolean) @$Args['IsTimeManage'];
+$ConsiderTypeID		=  (string) @$Args['ConsiderTypeID'];
 $SortID			= (integer) @$Args['SortID'];
 $ISPtype		=  (string) @$Args['ISPtype'];
 #-------------------------------------------------------------------------------
@@ -78,6 +78,10 @@ if($MinDaysProlong > $MinDaysPay)
 if($MinDaysPay > $MaxDaysPay)
   return new gException('WRONG_MIN_DAYS_PAY','Минимальное кол-во дней оплаты не можеть быть больше максимального');
 #-------------------------------------------------------------------------------
+if(!In_Array($ConsiderTypeID,Array('Upon','Daily')))
+	return new gException('WRONG_CONSIDER_TYPE','Тип учёта может быть только Разово/Ежедневно');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $IISPswScheme = Array(
   #-----------------------------------------------------------------------------
   'GroupID'             => $GroupID,
@@ -98,7 +102,7 @@ $IISPswScheme = Array(
   'MaxDaysPay'          => $MaxDaysPay,
   'SortID'		=> $SortID,
   'ISPtype'		=> $ISPtype,
-  'IsTimeManage'	=> $IsTimeManage,
+  'ConsiderTypeID'	=> $ConsiderTypeID
 );
 #-------------------------------------------------------------------------------
 if($ISPswSchemeID){

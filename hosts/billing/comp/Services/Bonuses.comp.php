@@ -4,12 +4,14 @@
 /** @author Alex Keda, for www.host-food.ru  */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('DaysRemainded','ServiceID','SchemeID','UserID','CostPay','CostDay','OrderID');
+$__args_list = Array('DaysRemainded','ServiceID','SchemeID','UserID','CostPay','CostDay','OrderID','ConsiderTypeID');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-Debug("[comp/Services/Bonuses]: DaysRemainded = $DaysRemainded; ServiceID = $ServiceID, SchemeID = $SchemeID, UserID = $UserID, CostPay = $CostPay, CostDay = $CostDay; OrderID = $OrderID");
+$ConsiderTypeID = IsSet($ConsiderTypeID)?$ConsiderTypeID:'Daily';
+#-------------------------------------------------------------------------------
+Debug("[comp/Services/Bonuses]: DaysRemainded = $DaysRemainded; ServiceID = $ServiceID, SchemeID = $SchemeID, UserID = $UserID, CostPay = $CostPay, CostDay = $CostDay; OrderID = $OrderID, ConsiderTypeID = $ConsiderTypeID");
 #-------------------------------------------------------------------------------
 $Bonuses = Array();
 #-------------------------------------------------------------------------------
@@ -25,6 +27,10 @@ while($DaysRemainded){
 			SPrintF('(`ServiceID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND NOT EXISTS(SELECT * FROM `SchemesGroupsItems` WHERE `Bonuses`.`SchemesGroupID` = `SchemesGroupID` AND `ServiceID` = %u AND `SchemeID` = %u)) OR (ISNULL(`ServiceID`) AND ISNULL(`SchemeID`) AND EXISTS(SELECT * FROM `SchemesGroupsItems` WHERE `Bonuses`.`SchemesGroupID` = `SchemesGroupID` AND `ServiceID` = %u AND `SchemeID` = %u)) OR (ISNULL(`ServiceID`) AND ISNULL(`SchemeID`) AND EXISTS(SELECT * FROM `SchemesGroupsItems` WHERE `Bonuses`.`SchemesGroupID` = `SchemesGroupID` AND `ServiceID` = %u AND ISNULL(`SchemeID`)))',$ServiceID,$SchemeID,$ServiceID,$SchemeID,$ServiceID,$SchemeID,$ServiceID),
 			'`DaysRemainded` > 0',
 			);
+	#-------------------------------------------------------------------------------
+	# если цена за период = 0, то добавляем нереальное условие
+	if((double)$CostDay == 0.00)
+		$Where[] = '1 = 2';
 	#---------------------------------------------------------------
 	$Bonus = DB_Select('Bonuses','*',Array('IsDesc'=>TRUE,'SortOn'=>'Discont','Where'=>$Where));
 	#---------------------------------------------------------------
@@ -102,9 +108,15 @@ while($DaysRemainded){
 	}
 	#-----------------------------------------------------------
 	if($OrderID){
+		#-------------------------------------------------------------------------------
+		# костыли для вечных заказов
+		if($ConsiderTypeID == 'Upon')
+			$IOrdersConsider['DaysReserved'] = 0;
+		#-------------------------------------------------------------------------------
 		$IsInsert = DB_Insert('OrdersConsider',$IOrdersConsider);
 		if(Is_Error($IsInsert))
 			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
 	}
 	#-----------------------------------------------------------
 }
