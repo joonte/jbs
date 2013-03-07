@@ -14,6 +14,11 @@ if(Is_Error(System_Load('classes/Server.class.php')))
 
 #return 60;
 
+$Config = Config();
+$Settings = $Config['Tasks']['Types']['HostingCPUUsage'];
+
+
+
 $HostingServers = DB_Select('HostingServers',Array('ID','Address'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingServers)){
@@ -46,27 +51,40 @@ foreach($HostingServers as $HostingServer){
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
-	# достаём за неделю
-	$TFilter = SPrintF('%s - %s',date('Y-m-d',time() - 7*24*3600),date('Y-m-d',time()));
-	$Usages = Call_User_Func_Array(Array($Server,'GetCPUUsage'),Array($TFilter));
+	# достаём за период
+	$TFilter = SPrintF('%s - %s',date('Y-m-d',time() - $Settings['PeriodToLock']*24*3600),date('Y-m-d',time() - 24*3600));
+	$BUsages = Call_User_Func_Array(Array($Server,'GetCPUUsage'),Array($TFilter));
 	#-------------------------------------------------------------------------------
-	switch(ValueOf($Usages)){
+	switch(ValueOf($BUsages)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
-		return $Usages;
+		return $BUsages;
 	case 'array':
 		break;
 	default:
 		return ERROR | @Trigger_Error(101);
 	}
+	#Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: BUsage = %s',print_r($BUsages,true)));
 	#-------------------------------------------------------------------------------
-#	$BUsage = Array();
+	# достаём за вчера
+	$TFilter = SPrintF('%s - %s',date('Y-m-d',time() - 24*3600),date('Y-m-d',time() - 24*3600));
+	$SUsages = Call_User_Func_Array(Array($Server,'GetCPUUsage'),Array($TFilter));
 	#-------------------------------------------------------------------------------
-#	foreach ($Usages as $Usage)
-#		$BUsage[$Usage['account']] = Array('utime'=>$Usage['utime'],'stime'=>$Usage['stime'],'etime'=>$Usage['etime']);
-	
-#	Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: GetCPUUsage = %s',print_r($Usages,true)));
+	switch(ValueOf($SUsages)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return $SUsages;
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: SUsage = %s',print_r($SUsages,true)));
+	#-------------------------------------------------------------------------------
+	# достаём юзеров из биллинга, и их лимиты
+
 
 break;
 
