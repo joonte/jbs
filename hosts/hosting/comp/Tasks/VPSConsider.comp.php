@@ -21,6 +21,8 @@ switch(ValueOf($VPSOrders)){
     return MkTime(4,15,0,Date('n'),Date('j')+1,Date('Y'));
   case 'array':
     #---------------------------------------------------------------------------
+    $GLOBALS['TaskReturnInfo'] = SPrintF('considered %u accounts',SizeOf($VPSOrders));
+    #---------------------------------------------------------------------------
     foreach($VPSOrders as $VPSOrder){
       #-------------------------------------------------------------------------
       $VPSOrderID = (integer)$VPSOrder['ID'];
