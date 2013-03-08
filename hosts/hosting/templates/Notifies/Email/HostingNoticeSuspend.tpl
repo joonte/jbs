@@ -8,6 +8,6 @@
 Уведомляем Вас о том, что оканчивается срок действия Вашего заказа №{$HostingOrder.OrderID|string_format:"%05u"} на хостинг.
 До окончания заказа {$HostingOrder.DaysRemainded|default:'$HostingOrder.DaysRemainded'} дн.
 Логин: {$HostingOrder.Login|default:'$HostingOrder.Login'}
-Паркованный домен: {$HostingOrder.Domain|default:'$HostingOrder.DaysRemainded'}.
+Паркованный домен: {$HostingOrder.Domain|default:'$HostingOrder.Domain'}.
 
 {$From.Sign|default:'$From.Sign'}

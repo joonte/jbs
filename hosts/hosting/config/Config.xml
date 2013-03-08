@@ -385,6 +385,13 @@
    <GroupID>1</GroupID>
   </HostingPasswordChange>
   <!-- ********************************************************************* -->
+  <HostingCPUUsageNotice>
+   <Name>Уведомление о превышении использования процессорного времени</Name>
+   <GroupID>1</GroupID>
+  </HostingCPUUsageNotice>
+  <!-- ********************************************************************* -->
+  <!-- ********************************************************************* -->
+  <!-- ********************************************************************* -->
   <DomainsOrdersOnRegister>
    <Title>Заказы доменов</Title>
    <Name>Заказ домена поступил на регистрацию</Name>
@@ -665,13 +672,14 @@
   <HostingCPUUsage>
    <Name>Учёт используемого процессорного времени пользователями хостинга</Name>
    <Params type="array" />
-   <IsActive>1</IsActive>
+   <IsActive>0</IsActive>
    <!-- за какой период считаем среднее значение и смотрим превышения -->
    <PeriodToLock>7</PeriodToLock>
-   <!-- сколько дней надо превышать чтобы залочило -->
-   <DaysOverlimits>3</DaysOverlimits>
    <!-- блокировать превышающих -->
    <LockOverlimits>0</LockOverlimits>
+   <!-- автоматически разблокировать залоченных -->
+   <UnLockOverlimits>1</UnLockOverlimits>
+   <UnLockOverlimitsPeriod>12</UnLockOverlimitsPeriod>
    <!-- уведомлять превышающих -->
    <NotifyOverlimits>1</NotifyOverlimits>
    <!-- множитель, с которого начинаются уведомления
@@ -684,6 +692,7 @@
    <!-- начиная с какого процента лочить юзеров
 	(на мелких тарифах, мелких сайтах, мелких лимитах - лучше вообще не лочить - говна много, эффекта мало) -->
    <LockBeginFrom>2</LockBeginFrom>
+   <LockNotifyFrom>1</LockNotifyFrom>
    <IsEvent>0</IsEvent>
   </HostingCPUUsage>
   <!-- ********************************************************************* -->
