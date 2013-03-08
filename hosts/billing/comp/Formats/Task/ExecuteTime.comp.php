@@ -19,7 +19,7 @@ if(IsSet($ExecutePeriod) && $ExecutePeriod){
 		if((integer)$Time[0] >= 0 && (integer)$Time[0] <= 23 && (integer)$Time[1] >= 0 && (integer)$Time[1] <= 59){
 			#-------------------------------------------------------------------------------
 			if((integer)$Time[0] > 0)
-				return (integer)$Time[0] * (integer)$Time[1] * 60;
+				return (integer)$Time[0] * 3600 + (integer)$Time[1] * 60;
 			#-------------------------------------------------------------------------------
 			return (integer)$Time[1] * 60;
 			#-------------------------------------------------------------------------------

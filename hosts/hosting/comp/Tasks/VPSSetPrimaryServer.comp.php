@@ -109,7 +109,7 @@ foreach($VPSServersGroups as $VPSServersGroup){
 		if(Is_Error($IsUpdate))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------
-		$IsUpdate = DB_Update('VPSServers',Array('IsDefault'=>TRUE),Array('Where'=> '`ID`=' . $ServerID));
+		$IsUpdate = DB_Update('VPSServers',Array('IsDefault'=>TRUE),Array('ID'=>$ServerID));
 		if(Is_Error($IsUpdate))
 			return ERROR | @Trigger_Error(500);
 
