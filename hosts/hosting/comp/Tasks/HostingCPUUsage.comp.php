@@ -12,7 +12,7 @@ if(Is_Error(System_Load('classes/Server.class.php')))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
-#return 60;
+return 60;
 
 $Config = Config();
 $Settings = $Config['Tasks']['Types']['HostingCPUUsage'];
@@ -84,6 +84,34 @@ foreach($HostingServers as $HostingServer){
 	#Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: SUsage = %s',print_r($SUsages,true)));
 	#-------------------------------------------------------------------------------
 	# достаём юзеров из биллинга, и их лимиты
+	$Array = Array();
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($BUsages) as $Login)
+		$Array[] = SPrintF("'%s'",$Login);
+	#-------------------------------------------------------------------------------
+	$Where = SPrintF('`ServerID` = %u AND `Login` IN (%s)',$HostingServer['ID'],Implode(',',$Array));
+	#-------------------------------------------------------------------------------
+	$HostingOrders = DB_Select('HostingOrders',Array('ID','Login','(SELECT `QuotaCPU` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrders`.`SchemeID`) as `QuotaCPU`'),Array('Where'=>$Where));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($HostingOrders)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		# No more...
+		break;
+	case 'array':
+		foreach($HostingOrders as $HostingOrder){
+			# проверяем превышение за предыдущий день, если оно есть - то делаем остальное. если нет - не трогаем юзера.
+
+				# шлём уведомление
+				# проверяем превышение за неделю
+					# если есть - лочим
+		}
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
 
 
 break;
