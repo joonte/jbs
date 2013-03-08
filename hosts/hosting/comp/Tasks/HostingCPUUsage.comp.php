@@ -14,9 +14,14 @@ if(Is_Error(System_Load('classes/Server.class.php')))
 $Config = Config();
 $Settings = $Config['Tasks']['Types']['HostingCPUUsage'];
 #-------------------------------------------------------------------------------
+# достаём время выполнения
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',$Settings['ExecuteTime'],MkTime(10,0,0,Date('n'),Date('j')+1,Date('Y')));
+if(Is_Error($ExecuteTime))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 # если неактивна, то через день запуск
 if(!$Settings['IsActive'])
-	return MkTime(10,0,0,Date('n'),Date('j')+1,Date('Y'));
+	return $ExecuteTime;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $HostingServers = DB_Select('HostingServers',Array('ID','Address'));
@@ -219,6 +224,6 @@ foreach($HostingServers as $HostingServer){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # запуск в 10 утра
-return MkTime(10,0,0,Date('n'),Date('j')+1,Date('Y'));
+return $ExecuteTime;
 #-------------------------------------------------------------------------------
 ?>
