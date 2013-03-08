@@ -966,7 +966,7 @@
    <Params type="array" />
    <IsActive>1</IsActive>
    <IsImmediately>0</IsImmediately>
-   <TicketsMessagesHandlePerid>10</TicketsMessagesHandlePerid>
+   <ExecutePeriod>00:10</ExecutePeriod>
   </TicketsMessages>
   <!-- ********************************************************************* -->
   <WorksComplite>

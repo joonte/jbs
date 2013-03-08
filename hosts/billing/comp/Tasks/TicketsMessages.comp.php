@@ -10,6 +10,17 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+$Config = Config();
+$Settings = $Config['Tasks']['Types']['TicketsMessages'];
+#-------------------------------------------------------------------------------
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',FALSE,600,$Settings['ExecutePeriod']);
+if(Is_Error($ExecuteTime))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if(!$Settings['IsActive'])
+	return $ExecuteTime;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $MessagesCount = 0;
 #-------------------------------------------------------------------------------
 $Columns = Array(
@@ -207,11 +218,7 @@ if($MessagesCount > 0 && !IsSet($GLOBALS['TaskReturnInfo'])){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Config = Config();
-#-------------------------------------------------------------------------------
-$RunTimeout = $Config['Tasks']['Types']['TicketsMessages']['TicketsMessagesHandlePerid'] * 60;
-
-return $RunTimeout;
+return $ExecuteTime;
 #-------------------------------------------------------------------------------
 
 ?>
