@@ -1023,7 +1023,7 @@
   <QIWI>
    <Name>Опрос сервера QIWI для получения статусов счетов</Name>
    <Params type="array" />
-   <RequestPeriod>10</RequestPeriod>
+   <ExecutePeriod>00:10</ExecutePeriod>
    <IsActive>1</IsActive>
   </QIWI>
   <!-- ********************************************************************* -->
@@ -1047,7 +1047,7 @@
     <CheckEmailLogin>admin@company.com</CheckEmailLogin>
     <CheckEmailPassword>1234567</CheckEmailPassword>
     <CheckEmailProtocol>pop3</CheckEmailProtocol>
-    <RequestPeriod>10</RequestPeriod>
+    <ExecutePeriod>00:10</ExecutePeriod>
     <UseSSL>0</UseSSL>
     <CutQuotes>1</CutQuotes>
     <CutSign>1</CutSign>

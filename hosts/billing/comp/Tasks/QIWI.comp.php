@@ -11,15 +11,21 @@ $Config = Config();
 #-------------------------------------------------------------------------------
 $Settings = $Config['Invoices']['PaymentSystems']['QIWI'];
 #-------------------------------------------------------------------------------
+# достаём время выполнения
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',FALSE,3600,$Config['Tasks']['Types']['QIWI']['ExecutePeriod']);
+if(Is_Error($ExecuteTime))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 # проверяем, активна ли платёжная система. если нет - следующая проверка через час
-if($Settings['IsActive'] != 1){return (time() + 3600);}
+if(!$Settings['IsActive'])
+	return 3600;
 #-------------------------------------------------------------------------------
 $NumInvoices = 0;
 $NumPayed = 0;
 #-------------------------------------------------------------------------------
 # грузим либы
 if(Is_Error(System_Load('libs/Http.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # исключаем отменённые счета, если число минут не кратно 5 (исполняться это будет редко - раз в час, примерно)
@@ -92,7 +98,7 @@ EOD;
 		$Http = Array('Protocol'=>'ssl','Port'=>'443','Address'=>'ishop.qiwi.ru','Host'=>'ishop.qiwi.ru');
 		$Send = Http_Send('/xml',$Http,Array(),$Result,Array('Content-type: text/xml; encoding=utf-8'));
 		if(Is_Error($Send))
-			return (time() + 60 * $Settings['RequestPeriod']);
+			return $ExecuteTime;
 		#-------------------------------------------------------------------------
 		# parse XML
 		$XML = String_XML_Parse($Send['Body']);
@@ -109,7 +115,7 @@ EOD;
 			# вероятно, сервис отключен... зайдём попозже
 			Debug(SPrintF('[Tasks/QIWI]: result-code = %s',$xml->{'result-code'}));
 			if($xml->{'result-code'} != 0)
-				return (time() + 3600);
+				return $ExecuteTime;
 			#-------------------------------------------------------------------------
 			$result = array();
 			foreach ($xml->{'bills-list'}->children() as $bill) {
@@ -208,7 +214,7 @@ EOD;
 			Debug("[Tasks/QIWI]: XML error, result code '" . $xml->{'result-code'} . "'");
 			#return ERROR | @Trigger_Error(500);
 			# service error, go executing to later
-			return (time() + 3600);
+			return $ExecuteTime;
 		}
 		break;
 	default:
@@ -224,14 +230,7 @@ if($NumInvoices > 0){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$RequestPeriod = $Config['Tasks']['Types']['QIWI']['RequestPeriod'];
-# set next run +$Settings['RequestPeriod'] min to future
-if(intval($RequestPeriod) < 1){
-	# time not set, or incorrect. go to default value - 5 minutes
-	return(time() +300);
-}else{
-	return (time() + 60 * $RequestPeriod);
-}
+return $ExecuteTime;
 
 # functions, from https://ishop.qiwi.ru/docs/qiwi-php-xml/simple_crypt.php
 # deleted, because from cron it redeclared on second cron run

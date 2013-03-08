@@ -10,8 +10,15 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(Is_Error(System_Load('classes/VPSServer.class.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Config = Config();
+$Settings = $Config['Tasks']['Types']['VPSSetPrimaryServer'];
+#-------------------------------------------------------------------------------
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',FALSE,3600,$Settings['ExecutePeriod']);
+if(Is_Error($ExecuteTime))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 # проверяем наличие серверов вообще
 $Count = DB_Count('VPSServers',Array('Where'=>"`IsAutoBalancing` = 'yes'"));
@@ -120,23 +127,7 @@ foreach($VPSServersGroups as $VPSServersGroup){
 }
 #-------------------------------------------------------------------------
 #-------------------------------------------------------------------------
-# set next run +$Settings['RequestPeriod'] min to future
-$Config = Config();
-$RequestPeriod = $Config['Tasks']['Types']['VPSSetPrimaryServer']['RequestPeriod'];
+return $ExecuteTime;
 #-------------------------------------------------------------------------
-if(intval($RequestPeriod) < 60){	# меньше часа
-	# time not set, or incorrect. go to default value - 1 hour
-	return(time() + 3600);
-}elseif($RequestPeriod > 1440){		# больше суток
-	# time not set, or incorrect. go to default value - 1 hour
-	return(time() + 3600);
-}else{
-	return (time() + 60 * $RequestPeriod);
-}
-
-
-#return MkTime(2,50,0,Date('n'),Date('j')+1,Date('Y'));
-
-
 
 ?>

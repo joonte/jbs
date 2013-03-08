@@ -664,7 +664,7 @@
   <HostingSetPrimaryServer>
    <Name>Автобалансировка серверов хостинга</Name>
    <Params type="array" />
-   <RequestPeriod>60</RequestPeriod>
+   <ExecutePeriod>01:00</ExecutePeriod>
    <IsActive>1</IsActive>
    <IsEvent>0</IsEvent>
   </HostingSetPrimaryServer>
@@ -769,7 +769,7 @@
   <VPSSetPrimaryServer>
    <Name>Автобалансировка VPS</Name>
    <Params type="array" />
-   <RequestPeriod>60</RequestPeriod>
+   <ExecutePeriod>01:00</ExecutePeriod>
    <IsActive>1</IsActive>
   </VPSSetPrimaryServer>
   <!-- ********************************************************************* -->
@@ -849,7 +849,7 @@
    <Params>
     <Params type="array" />
    </Params>
-  <RequestPeriod>10</RequestPeriod>
+  <ExecutePeriod>00:10</ExecutePeriod>
   <IsActive>1</IsActive>
   </DSCalculateNumServers>
   <!-- ********************************************************************* -->

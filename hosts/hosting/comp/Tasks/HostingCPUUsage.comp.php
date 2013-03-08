@@ -15,7 +15,7 @@ $Config = Config();
 $Settings = $Config['Tasks']['Types']['HostingCPUUsage'];
 #-------------------------------------------------------------------------------
 # достаём время выполнения
-$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',$Settings['ExecuteTime'],MkTime(10,0,0,Date('n'),Date('j')+1,Date('Y')));
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',$Settings['ExecuteTime'],MkTime(10,0,0,Date('n'),Date('j')+1,Date('Y')),FALSE);
 if(Is_Error($ExecuteTime))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
