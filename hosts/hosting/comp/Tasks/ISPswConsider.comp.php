@@ -12,7 +12,7 @@ $CurrentDay = (integer)(Time()/86400);
 $Where = Array(
 		'`StatusID` = "Active"',
 		SPrintF('`ConsiderDay` < %u',$CurrentDay),
-		'`ConsiderTypeID` = "Daily"'
+		'(SELECT `ConsiderTypeID` FROM `ISPswSchemes` WHERE `ISPswSchemes`.`ID` = `ISPswOrdersOwners`.`SchemeID`)  = "Daily"'
 		);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','OrderID','ContractID','ConsiderDay','SchemeID','(SELECT `IsAutoProlong` FROM `Orders` WHERE `ISPswOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`');
