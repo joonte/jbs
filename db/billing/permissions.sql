@@ -183,8 +183,8 @@ INSERT INTO `Permissions` (`Name`,`HostID`,`UserGroupID`,`UserID`,`OwnerGroupID`
 ('ContractConsiderEdit','billing',3000000,100,1,1,2,'yes'),
 
 /* added by lissyara, for JBS-600, 2013-02-11 in 15:31 MSK  */
-('OrdersTransfer', 'hosting', 1, 1, 4000000, 1, 1, 'yes'),
-('OrdersTransfer', 'hosting', 3000000, 100, 1, 1, 2, 'yes')
+('OrdersTransfer', 'billing', 1, 1, 4000000, 1, 1, 'yes'),
+('OrdersTransfer', 'billing', 3000000, 100, 1, 1, 2, 'yes')
 ;
 
 
