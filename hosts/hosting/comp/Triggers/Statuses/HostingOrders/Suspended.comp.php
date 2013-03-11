@@ -9,8 +9,8 @@ $__args_list = Array('HostingOrder');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$TaskExecuteTime = Comp_Load('HostingOrders/SearchExecuteTime');
-if(Is_Error($TaskExecuteTime))
+$ExecuteDate = Comp_Load('HostingOrders/SearchExecuteTime');
+if(Is_Error($ExecuteDate))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

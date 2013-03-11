@@ -30,8 +30,8 @@ if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$TaskExecuteTime = Comp_Load('HostingOrders/SearchExecuteTime');
-if(Is_Error($TaskExecuteTime))
+$ExecuteDate = Comp_Load('HostingOrders/SearchExecuteTime');
+if(Is_Error($ExecuteDate))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

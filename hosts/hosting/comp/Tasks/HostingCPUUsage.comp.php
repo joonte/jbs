@@ -185,8 +185,8 @@ foreach($HostingServers as $HostingServer){
 					# событие, чтоле прибить...
 					#-------------------------------------------------------------------------------
 					# время выполнения задачи
-					$TaskExecuteTime = Comp_Load('HostingOrders/SearchExecuteTime');
-					if(Is_Error($Comp))
+					$ExecuteDate = Comp_Load('HostingOrders/SearchExecuteTime');
+					if(Is_Error($ExecuteDate))
 						return ERROR | @Trigger_Error(500);
 					#-------------------------------------------------------------------------------
 					#-------------------------------------------------------------------------------
