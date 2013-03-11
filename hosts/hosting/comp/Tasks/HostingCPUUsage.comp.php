@@ -173,7 +173,6 @@ foreach($HostingServers as $HostingServer){
 				#-------------------------------------------------------------------------------
 				Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: Надо лочить: Login = %s; SUsage = %s; BUsage = %s; QuotaCPU = %s',$HostingOrder['Login'],$SUsage,$BUsage,$HostingOrder['QuotaCPU']));
 				#-------------------------------------------------------------------------------
-if(FALSE){
 				$IsSend = NotificationManager::sendMsg(new Message('HostingCPUUsageNoticeLock',$HostingOrder['UserID'],Array('HostingOrder'=>$Params)));
 				#-------------------------------------------------------------------------------
 				switch(ValueOf($IsSend)){
@@ -185,10 +184,26 @@ if(FALSE){
 					#-------------------------------------------------------------------------------
 					# событие, чтоле прибить...
 					#-------------------------------------------------------------------------------
-					# блокируем юзера - через триггер, чтобы задания в очередь строились а не разом
-					$IsLock = Comp_Load('Triggers/Statuses/HostingOrders/Suspended',$Params);
-					if(Is_Error($IsLock))
-					        return ERROR | @Trigger_Error(500);
+					# время выполнения задачи
+					$TaskExecuteTime = Comp_Load('HostingOrders/SearchExecuteTime');
+					if(Is_Error($Comp))
+						return ERROR | @Trigger_Error(500);
+					#-------------------------------------------------------------------------------
+					#-------------------------------------------------------------------------------
+					# лочим 
+					$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'HostingSuspend','ExecuteDate'=>$ExecuteDate,'Params'=>Array($HostingOrder['ID'])));
+					#-------------------------------------------------------------------------------
+					switch(ValueOf($IsAdd)){
+					case 'error':
+						return ERROR | @Trigger_Error(500);
+					case 'exception':
+						return ERROR | @Trigger_Error(400);
+					case 'array':
+						break;
+					default:
+						return ERROR | @Trigger_Error(101);
+					}
+					#-------------------------------------------------------------------------------
 					#-------------------------------------------------------------------------------
 					# создаём задачу на разблокировку аккаунта
 					$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'HostingActive','ExecuteDate'=>(Time() + $Settings['UnLockOverlimitsPeriod']*3600),'Params'=>Array($HostingOrder['ID'])));
@@ -211,7 +226,6 @@ if(FALSE){
 					return ERROR | @Trigger_Error(101);
 				}
 				#-------------------------------------------------------------------------------
-}
 			}
 			#-------------------------------------------------------------------------------
 		}
