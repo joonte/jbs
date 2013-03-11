@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 $Config = Config();
 $Settings = $Config['Tasks']['Types']['DSCalculateNumServers'];
 #-------------------------------------------------------------------------------
-$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',FALSE,3600,$Settings['ExecutePeriod']);
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecutePeriod'=>$Settings['ExecutePeriod']));
 if(Is_Error($ExecuteTime))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

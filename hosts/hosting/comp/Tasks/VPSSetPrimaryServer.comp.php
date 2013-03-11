@@ -16,7 +16,7 @@ if(Is_Error(System_Load('classes/VPSServer.class.php')))
 $Config = Config();
 $Settings = $Config['Tasks']['Types']['VPSSetPrimaryServer'];
 #-------------------------------------------------------------------------------
-$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',FALSE,3600,$Settings['ExecutePeriod']);
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array($Settings['ExecutePeriod']));
 if(Is_Error($ExecuteTime))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

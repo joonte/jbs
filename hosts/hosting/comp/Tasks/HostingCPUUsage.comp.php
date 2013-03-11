@@ -15,7 +15,7 @@ $Config = Config();
 $Settings = $Config['Tasks']['Types']['HostingCPUUsage'];
 #-------------------------------------------------------------------------------
 # достаём время выполнения
-$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',$Settings['ExecuteTime'],MkTime(10,0,0,Date('n'),Date('j')+1,Date('Y')),FALSE);
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecuteTime'=>$Settings['ExecuteTime'],'DefaultTime'=>MkTime(10,0,0,Date('n'),Date('j')+1,Date('Y'))));
 if(Is_Error($ExecuteTime))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -42,8 +42,8 @@ default:
 foreach($HostingServers as $HostingServer){
 	#-------------------------------------------------------------------------------
 	# костыль, чтоб ткоа один сервер
-	if($HostingServer['ID'] != 16)
-		continue;
+	#if($HostingServer['ID'] != 16)
+	#	continue;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Server = new Server();
@@ -173,6 +173,7 @@ foreach($HostingServers as $HostingServer){
 				#-------------------------------------------------------------------------------
 				Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: Надо лочить: Login = %s; SUsage = %s; BUsage = %s; QuotaCPU = %s',$HostingOrder['Login'],$SUsage,$BUsage,$HostingOrder['QuotaCPU']));
 				#-------------------------------------------------------------------------------
+if(FALSE){
 				$IsSend = NotificationManager::sendMsg(new Message('HostingCPUUsageNoticeLock',$HostingOrder['UserID'],Array('HostingOrder'=>$Params)));
 				#-------------------------------------------------------------------------------
 				switch(ValueOf($IsSend)){
@@ -210,6 +211,7 @@ foreach($HostingServers as $HostingServer){
 					return ERROR | @Trigger_Error(101);
 				}
 				#-------------------------------------------------------------------------------
+}
 			}
 			#-------------------------------------------------------------------------------
 		}

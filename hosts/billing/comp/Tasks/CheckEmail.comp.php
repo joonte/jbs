@@ -15,7 +15,7 @@ $Settings = $Config['Tasks']['Types']['CheckEmail'];
 if(!Function_Exists('imap_open'))
 	return 24*3600;
 #-------------------------------------------------------------------------------
-$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',FALSE,3600,$Settings['ExecutePeriod']);
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecutePeriod'=>$Settings['ExecutePeriod']));
 if(Is_Error($ExecuteTime))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

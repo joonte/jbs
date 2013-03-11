@@ -15,7 +15,7 @@ $Config = Config();
 #------------------------------------------------------------------------------
 $Settings = $Config['Tasks']['Types']['HostingSetPrimaryServer'];
 #------------------------------------------------------------------------------
-$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',FALSE,3600,$Settings['ExecutePeriod']);
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecutePeriod'=>$Settings['ExecutePeriod']));
 if(Is_Error($ExecuteTime))
 	return ERROR | @Trigger_Error(500);
 #------------------------------------------------------------------------------

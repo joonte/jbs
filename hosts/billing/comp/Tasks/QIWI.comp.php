@@ -12,7 +12,7 @@ $Config = Config();
 $Settings = $Config['Invoices']['PaymentSystems']['QIWI'];
 #-------------------------------------------------------------------------------
 # достаём время выполнения
-$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',FALSE,3600,$Config['Tasks']['Types']['QIWI']['ExecutePeriod']);
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecutePeriod'=>$Config['Tasks']['Types']['QIWI']['ExecutePeriod']));
 if(Is_Error($ExecuteTime))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
