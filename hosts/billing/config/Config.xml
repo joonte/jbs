@@ -1034,12 +1034,6 @@
     <IsActive>0</IsActive>
   </CaclulatePartnersReward>
   <!-- ********************************************************************* -->
-  <RegBalance>
-    <Name>Проверка баланса счета регистратора</Name>
-    <Params type="array" />
-    <IsActive>1</IsActive>
-  </RegBalance>
-  <!-- ********************************************************************* -->
   <CheckEmail>
     <Name>Проверка почтового ящика</Name>
     <Params type="array" />
