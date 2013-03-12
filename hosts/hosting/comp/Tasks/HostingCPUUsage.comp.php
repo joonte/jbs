@@ -39,6 +39,10 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$NotifyedCount = 0;
+$LockedCount = 0;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 foreach($HostingServers as $HostingServer){
 	#-------------------------------------------------------------------------------
 	# костыль, чтоб ткоа один сервер
@@ -147,6 +151,8 @@ foreach($HostingServers as $HostingServer){
 			# шлём уведомление тем кто превысил порог уведомления, и превысил порог оповещения
 			if($SUsage > $HostingOrder['QuotaCPU']*$Settings['NotifyRatio'] && $SUsage > $Settings['LockNotifyFrom']){
 				#-------------------------------------------------------------------------------
+				$NotifyedCount++;
+				#-------------------------------------------------------------------------------
 				Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: Надо уведомление: Login = %s; SUsage = %s; BUsage = %s; QuotaCPU = %s',$HostingOrder['Login'],$SUsage,$BUsage,$HostingOrder['QuotaCPU']));
 				#-------------------------------------------------------------------------------
 				$IsSend = NotificationManager::sendMsg(new Message('HostingCPUUsageNotice',$HostingOrder['UserID'],Array('HostingOrder'=>$Params)));
@@ -169,62 +175,112 @@ foreach($HostingServers as $HostingServer){
 			$BUsage = Round(($BUsages[$HostingOrder['Login']]['utime'] + $BUsages[$HostingOrder['Login']]['stime'])*100 / ($Settings['PeriodToLock']*24*3600),2);
 			#-------------------------------------------------------------------------------
 			# если есть превышения за вчера, за неделю, и разрешено лочить
-			if($SUsage > $HostingOrder['QuotaCPU']*$Settings['LockRatio'] && $BUsage > $HostingOrder['QuotaCPU']*$Settings['LockRatio'] && $Settings['LockOverlimits']){
+			if($SUsage > $HostingOrder['QuotaCPU']*$Settings['LockRatio']	// вчера превышали
+			&& $BUsage > $HostingOrder['QuotaCPU']*$Settings['LockRatio']	// всё время превышали
+			&& $BUsage > $Settings['LockBeginFrom']				// всё время - больше чем порог блокировки
+			&& $Settings['LockOverlimits']){				// разрешено блокироват
 				#-------------------------------------------------------------------------------
 				Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: Надо лочить: Login = %s; SUsage = %s; BUsage = %s; QuotaCPU = %s',$HostingOrder['Login'],$SUsage,$BUsage,$HostingOrder['QuotaCPU']));
 				#-------------------------------------------------------------------------------
-				$IsSend = NotificationManager::sendMsg(new Message('HostingCPUUsageNoticeLock',$HostingOrder['UserID'],Array('HostingOrder'=>$Params)));
+				$LockedCount++;
 				#-------------------------------------------------------------------------------
-				switch(ValueOf($IsSend)){
+				if($Settings['CreateTicket']){
+					#-------------------------------------------------------------------------------
+					$IsSend = NotificationManager::sendMsg(new Message('HostingCPUUsageNoticeLock',$HostingOrder['UserID'],Array('HostingOrder'=>$Params)));
+					#-------------------------------------------------------------------------------
+					switch(ValueOf($IsSend)){
+					case 'error':
+						return ERROR | @Trigger_Error(500);
+					case 'exception':
+						# No more...
+					case 'true':
+						#-------------------------------------------------------------------------------
+						# событие, чтоле прибить...
+						#-------------------------------------------------------------------------------
+						break;
+						#-------------------------------------------------------------------------------
+					default:
+						return ERROR | @Trigger_Error(101);
+					}
+					#-------------------------------------------------------------------------------
+				}else{
+					#-------------------------------------------------------------------------------
+					$Clause = DB_Select('Clauses','*',Array('UNIQ','Where'=>"`Partition` = 'CreateTicket/LOCK_OVERLIMITS'"));
+					#-------------------------------------------------------------------------------
+					switch(ValueOf($Clause)){
+					case 'error':
+						return ERROR | @Trigger_Error(500);
+					case 'exception':
+						Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: Статья для создания тикета не обнаружена: CreateTicket/LOCK_OVERLIMITS'));
+						break;
+					case 'array':
+						#-------------------------------------------------------------------------------
+						# готовим текст сообщения
+						$Replace = Array_ToLine($Params,'%');
+						$Message = $Clause['Text'];
+						#-------------------------------------------------------------------------------
+						foreach(Array_Keys($Replace) as $Key)
+							$Message = Str_Replace($Key,$Replace[$Key],$Message);
+						#-------------------------------------------------------------------------------
+						$ITicket = Array(
+								'Theme'		=> $Clause['Title'],
+								'PriorityID'	=> 'Low',
+								'Flags'		=> 'CloseOnSee',
+								'TargetGroupID'	=> 3100000,
+								'TargetUserID'	=> 100,
+								'UserID'	=> $HostingOrder['UserID'],
+								'Message'	=> $Message
+								);
+						#-------------------------------------------------------------------------------
+						$IsAdd = Comp_Load('www/API/TicketEdit',$ITicket);
+						if(Is_Error($IsAdd))
+							return ERROR | @Trigger_Error(500);
+						#-------------------------------------------------------------------------------
+						break;
+						#-------------------------------------------------------------------------------
+					default:
+						return ERROR | @Trigger_Error(101);
+					}
+					#-------------------------------------------------------------------------------
+				}
+				#-------------------------------------------------------------------------------
+				#-------------------------------------------------------------------------------
+				# время выполнения задачи
+				$ExecuteDate = Comp_Load('HostingOrders/SearchExecuteTime');
+				if(Is_Error($ExecuteDate))
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+				#-------------------------------------------------------------------------------
+				# лочим 
+				$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'HostingSuspend','ExecuteDate'=>$ExecuteDate,'Params'=>Array($HostingOrder['ID'])));
+				#-------------------------------------------------------------------------------
+				switch(ValueOf($IsAdd)){
 				case 'error':
 					return ERROR | @Trigger_Error(500);
 				case 'exception':
-					# No more...
-				case 'true':
-					#-------------------------------------------------------------------------------
-					# событие, чтоле прибить...
-					#-------------------------------------------------------------------------------
-					# время выполнения задачи
-					$ExecuteDate = Comp_Load('HostingOrders/SearchExecuteTime');
-					if(Is_Error($ExecuteDate))
-						return ERROR | @Trigger_Error(500);
-					#-------------------------------------------------------------------------------
-					#-------------------------------------------------------------------------------
-					# лочим 
-					$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'HostingSuspend','ExecuteDate'=>$ExecuteDate,'Params'=>Array($HostingOrder['ID'])));
-					#-------------------------------------------------------------------------------
-					switch(ValueOf($IsAdd)){
-					case 'error':
-						return ERROR | @Trigger_Error(500);
-					case 'exception':
-						return ERROR | @Trigger_Error(400);
-					case 'array':
-						break;
-					default:
-						return ERROR | @Trigger_Error(101);
-					}
-					#-------------------------------------------------------------------------------
-					#-------------------------------------------------------------------------------
-					# создаём задачу на разблокировку аккаунта
-					$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'HostingActive','ExecuteDate'=>(Time() + $Settings['UnLockOverlimitsPeriod']*3600),'Params'=>Array($HostingOrder['ID'])));
-					#-------------------------------------------------------------------------------
-					switch(ValueOf($IsAdd)){
-					case 'error':
-						return ERROR | @Trigger_Error(500);
-					case 'exception':
-						return ERROR | @Trigger_Error(400);
-					case 'array':
-						# No more...
-						break;
-					default:
-						return ERROR | @Trigger_Error(101);
-					}
-					#-------------------------------------------------------------------------------
+					return ERROR | @Trigger_Error(400);
+				case 'array':
 					break;
-					#-------------------------------------------------------------------------------
 				default:
 					return ERROR | @Trigger_Error(101);
 				}
+				#-------------------------------------------------------------------------------
+				#-------------------------------------------------------------------------------
+				# создаём задачу на разблокировку аккаунта
+				$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'HostingActive','ExecuteDate'=>(Time() + $Settings['UnLockOverlimitsPeriod']*3600),'Params'=>Array($HostingOrder['ID'])));
+				#-------------------------------------------------------------------------------
+				switch(ValueOf($IsAdd)){
+				case 'error':
+					return ERROR | @Trigger_Error(500);
+				case 'exception':
+					return ERROR | @Trigger_Error(400);
+				case 'array':
+					# No more...
+					break;
+				default:
+					return ERROR | @Trigger_Error(101);
+				}
+				#-------------------------------------------------------------------------------
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
@@ -237,6 +293,10 @@ foreach($HostingServers as $HostingServer){
 	}
 	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($LockedCount > 0 || $NotifyedCount > 0)
+	$GLOBALS['TaskReturnInfo'] = Array(SPrintF('Notyfyed: %s',$NotifyedCount),SPrintF('Locked: %s',$LockedCount));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # запуск в 10 утра

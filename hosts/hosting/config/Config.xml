@@ -694,6 +694,7 @@
 	(на мелких тарифах, мелких сайтах, мелких лимитах - лучше вообще не лочить - говна много, эффекта мало) -->
    <LockBeginFrom>2</LockBeginFrom>
    <LockNotifyFrom>1</LockNotifyFrom>
+   <CreateTicket>1</CreateTicket>
    <IsEvent>0</IsEvent>
   </HostingCPUUsage>
   <!-- ********************************************************************* -->
