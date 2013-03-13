@@ -184,7 +184,7 @@ foreach($HostingServers as $HostingServer){
 				#-------------------------------------------------------------------------------
 				$LockedCount++;
 				#-------------------------------------------------------------------------------
-				if($Settings['CreateTicket']){
+				if(!$Settings['CreateTicket']){
 					#-------------------------------------------------------------------------------
 					$IsSend = NotificationManager::sendMsg(new Message('HostingCPUUsageNoticeLock',$HostingOrder['UserID'],Array('HostingOrder'=>$Params)));
 					#-------------------------------------------------------------------------------
