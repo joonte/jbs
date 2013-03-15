@@ -41,6 +41,7 @@ default:
 #-------------------------------------------------------------------------------
 $NotifyedCount = 0;
 $LockedCount = 0;
+$TUsages = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 foreach($HostingServers as $HostingServer){
@@ -48,6 +49,8 @@ foreach($HostingServers as $HostingServer){
 	# костыль, чтоб ткоа один сервер
 	#if($HostingServer['ID'] != 16)
 	#	continue;
+	#-------------------------------------------------------------------------------
+	$TUsages[$HostingServer['ID']] = Array();
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Server = new Server();
@@ -81,6 +84,8 @@ foreach($HostingServers as $HostingServer){
 	}
 	#Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: BUsage = %s',print_r($BUsages,true)));
 	#-------------------------------------------------------------------------------
+	$TUsages[$HostingServer['ID']]['BUsages'] = $BUsages;
+	#-------------------------------------------------------------------------------
 	# достаём за вчера
 	$TFilter = SPrintF('%s - %s',date('Y-m-d',time() - 24*3600),date('Y-m-d',time() - 24*3600));
 	$SUsages = Call_User_Func_Array(Array($Server,'GetCPUUsage'),Array($TFilter));
@@ -95,15 +100,23 @@ foreach($HostingServers as $HostingServer){
 	default:
 		return ERROR | @Trigger_Error(101);
 	}
+	#-------------------------------------------------------------------------------
+	$TUsages[$HostingServer['ID']]['SUsages'] = $SUsages;
 	#Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: SUsage = %s',print_r($SUsages,true)));
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# перебираем полученные данные
+foreach(Array_Keys($TUsages) as $ServerID){
 	#-------------------------------------------------------------------------------
 	# достаём юзеров из биллинга, и их лимиты
 	$Array = Array();
 	#-------------------------------------------------------------------------------
-	foreach(Array_Keys($BUsages) as $Login)
+	foreach(Array_Keys($TUsages[$ServerID]['BUsages']) as $Login)
 		$Array[] = SPrintF("'%s'",$Login);
 	#-------------------------------------------------------------------------------
-	$Where = SPrintF('`ServerID` = %u AND `Login` IN (%s)',$HostingServer['ID'],Implode(',',$Array));
+	$Where = SPrintF('`ServerID` = %u AND `Login` IN (%s)',$ServerID,Implode(',',$Array));
 	#-------------------------------------------------------------------------------
 	$Columns = Array(
 			'ID','Login','UserID','Domain',
@@ -125,12 +138,12 @@ foreach($HostingServers as $HostingServer){
 		foreach($HostingOrders as $HostingOrder){
 			#-------------------------------------------------------------------------------
 			# проверяем превышение за предыдущий день, если оно есть - то делаем остальное. если нет - не трогаем юзера.
-			if(!IsSet($SUsages[$HostingOrder['Login']]))
+			if(!IsSet($TUsages[$ServerID]['SUsages'][$HostingOrder['Login']]))
 				continue;
 			#-------------------------------------------------------------------------------
-			$SUsage = Round(($SUsages[$HostingOrder['Login']]['utime'] + $SUsages[$HostingOrder['Login']]['stime'])*100 / (24*3600),2);
+			$SUsage = Round(($TUsages[$ServerID]['SUsages'][$HostingOrder['Login']]['utime'] + $TUsages[$ServerID]['SUsages'][$HostingOrder['Login']]['stime'])*100 / (24*3600),2);
 			#-------------------------------------------------------------------------------
-			$BUsage = Round(($BUsages[$HostingOrder['Login']]['utime'] + $BUsages[$HostingOrder['Login']]['stime'])*100 / ($Settings['PeriodToLock']*24*3600),2);
+			$BUsage = Round(($TUsages[$ServerID]['BUsages'][$HostingOrder['Login']]['utime'] + $TUsages[$ServerID]['BUsages'][$HostingOrder['Login']]['stime'])*100 / ($Settings['PeriodToLock']*24*3600),2);
 			#-------------------------------------------------------------------------------
 			# параметры для уведомлений
 			$Params = Array(
@@ -172,7 +185,7 @@ foreach($HostingServers as $HostingServer){
 			}
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-			$BUsage = Round(($BUsages[$HostingOrder['Login']]['utime'] + $BUsages[$HostingOrder['Login']]['stime'])*100 / ($Settings['PeriodToLock']*24*3600),2);
+			$BUsage = Round(($TUsages[$ServerID]['BUsages'][$HostingOrder['Login']]['utime'] + $TUsages[$ServerID]['BUsages'][$HostingOrder['Login']]['stime'])*100 / ($Settings['PeriodToLock']*24*3600),2);
 			#-------------------------------------------------------------------------------
 			# если есть превышения за вчера, за неделю, и разрешено лочить
 			if($SUsage > $HostingOrder['QuotaCPU']*$Settings['LockRatio']	// вчера превышали
@@ -217,7 +230,7 @@ foreach($HostingServers as $HostingServer){
 						#-------------------------------------------------------------------------------
 						# готовим текст сообщения
 						$Replace = Array_ToLine($Params,'%');
-						$Message = $Clause['Text'];
+						$Message = Trim(Strip_Tags($Clause['Text']));
 						#-------------------------------------------------------------------------------
 						foreach(Array_Keys($Replace) as $Key)
 							$Message = Str_Replace($Key,$Replace[$Key],$Message);
