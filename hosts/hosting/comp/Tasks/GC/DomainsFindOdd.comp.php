@@ -164,7 +164,7 @@ foreach($Registrators as $NowReg){
 							'`DomainsSchemes`.`ID` = `SchemeID`',
 							SPrintF('`DomainsSchemes`.`RegistratorID` = %u',$NowReg['ID'])
 							);
-					$DomainOrder = DB_Select(Array('DomainsOrdersOwners','DomainsSchemes'),Array('`DomainsOrdersOwners`.`ID` AS `ID`','`DomainsOrdersOwners`.`UserID` AS `UserID`'),Array('UNIQ','Where'=>$Where));
+					$DomainOrder = DB_Select(Array('DomainsOrdersOwners','DomainsSchemes'),Array('StatusDate','`DomainsOrdersOwners`.`ID` AS `ID`','`DomainsOrdersOwners`.`UserID` AS `UserID`'),Array('UNIQ','Where'=>$Where));
 					#-----------------------------------------------------------
 					switch(ValueOf($DomainOrder)){
 					case 'error':
@@ -172,7 +172,13 @@ foreach($Registrators as $NowReg){
 					case 'exception':
 						return ERROR | @Trigger_Error(400);
 					case 'array':
+						# если от статуса менее суток - пропускаем, были накладки,
+						# когда в 4 час ночи зарегал, а в пять его удалило, т.к. не найден =)
+						if($DomainOrder['StatusDate'] + 24*3600 > Time())
+							continue;
+						#-----------------------------------------------------------
 						break;
+						#-----------------------------------------------------------
 					default:
 						return ERROR | @Trigger_Error(101);
 					}
