@@ -21,6 +21,8 @@ switch(ValueOf($ISPswOrders)){
   break;
   case 'array':
     #---------------------------------------------------------------------------
+    $GLOBALS['TaskReturnInfo'] = SPrintF('Deleted %s accounts',SizeOf($ISPswOrders));
+    #---------------------------------------------------------------------------
     foreach($ISPswOrders as $ISPswOrder){
       #-------------------------------------------------------------------------
       $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ISPswOrders','StatusID'=>'Deleted','RowsIDs'=>$ISPswOrder['ID'],'Comment'=>'Срок блокировки заказа окончен'));

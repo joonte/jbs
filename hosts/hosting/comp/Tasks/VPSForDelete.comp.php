@@ -22,6 +22,8 @@ switch(ValueOf($VPSOrders)){
   break;
   case 'array':
     #---------------------------------------------------------------------------
+    $GLOBALS['TaskReturnInfo'] = SPrintF('Deleted %s accounts',SizeOf($VPSOrders));
+    #---------------------------------------------------------------------------
     foreach($VPSOrders as $VPSOrder){
       #-------------------------------------------------------------------------
       $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'Deleted','RowsIDs'=>$VPSOrder['ID'],'Comment'=>'Срок блокировки заказа окончен'));

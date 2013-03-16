@@ -19,7 +19,7 @@ case 'exception':
 	break;
 case 'array':
 	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'] = SPrintF('deleted: %s domains',SizeOf($DomainOrders));
+	$GLOBALS['TaskReturnInfo'] = SPrintF('Deleted: %s domains',SizeOf($DomainOrders));
 	#-------------------------------------------------------------------------------
 	foreach($DomainOrders as $DomainOrder){
 		#-------------------------------------------------------------------------------
