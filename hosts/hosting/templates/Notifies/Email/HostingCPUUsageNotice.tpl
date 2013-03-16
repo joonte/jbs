@@ -8,6 +8,10 @@
 Уведомляем Вас о том, что ваш аккаунт {$HostingOrder.Login|default:'$HostingOrder.Login'}, паркованный домен {$HostingOrder.Domain|default:'$HostingOrder.Domain'}, превысил использование процессорного времени, определённое вашим тарифом "{$HostingOrder.Scheme|default:'$HostingOrder.Scheme'}".
 
 Среднесуточное использование за вчерашний день составило: {$HostingOrder.SUsage|default:'$HostingOrder.SUsage'}%, при лимите тарифного плана: {$HostingOrder.QuotaCPU|default:'$HostingOrder.QuotaCPU'}%.
+Пользовательское время: {$HostingOrder.UTime|default:'$HostingOrder.UTime'} сек.
+Системное время: {$HostingOrder.STime|default:'$HostingOrder.STime'} сек.
+Всего: {$HostingOrder.ATime|default:'$HostingOrder.ATime'} сек.
+
 
 Просим вас решить эту проблему или повысить тариф, иначе, при систематических превышениях, аккаунт может быть заблокирован в автоматическом режиме.
 

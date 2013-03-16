@@ -137,11 +137,12 @@ foreach(Array_Keys($TUsages) as $ServerID){
 		#-------------------------------------------------------------------------------
 		foreach($HostingOrders as $HostingOrder){
 			#-------------------------------------------------------------------------------
-			# проверяем превышение за предыдущий день, если оно есть - то делаем остальное. если нет - не трогаем юзера.
+			# проверяем наличие такого юзера в массиве с нагрузкой
 			if(!IsSet($TUsages[$ServerID]['SUsages'][$HostingOrder['Login']]))
 				continue;
 			#-------------------------------------------------------------------------------
-			$SUsage = Round(($TUsages[$ServerID]['SUsages'][$HostingOrder['Login']]['utime'] + $TUsages[$ServerID]['SUsages'][$HostingOrder['Login']]['stime'])*100 / (24*3600),2);
+			$ATime = $TUsages[$ServerID]['SUsages'][$HostingOrder['Login']]['utime'] + $TUsages[$ServerID]['SUsages'][$HostingOrder['Login']]['stime'];
+			$SUsage = Round($ATime*100 / (24*3600),2);
 			#-------------------------------------------------------------------------------
 			$BUsage = Round(($TUsages[$ServerID]['BUsages'][$HostingOrder['Login']]['utime'] + $TUsages[$ServerID]['BUsages'][$HostingOrder['Login']]['stime'])*100 / ($Settings['PeriodToLock']*24*3600),2);
 			#-------------------------------------------------------------------------------
@@ -154,6 +155,9 @@ foreach(Array_Keys($TUsages) as $ServerID){
 					'Scheme'		=> $HostingOrder['Scheme'],
 					'SUsage'		=> $SUsage,
 					'BUsage'		=> $BUsage,
+					'ATime'			=> $ATime,
+					'UTime'			=> $TUsages[$ServerID]['SUsages'][$HostingOrder['Login']]['utime'],
+					'STime'			=> $TUsages[$ServerID]['SUsages'][$HostingOrder['Login']]['stime'],
 					'QuotaCPU'		=> $HostingOrder['QuotaCPU'],
 					'Url'			=> $HostingOrder['Url'],
 					'PeriodToLock'		=> $Settings['PeriodToLock'],
@@ -184,8 +188,6 @@ foreach(Array_Keys($TUsages) as $ServerID){
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
-			$BUsage = Round(($TUsages[$ServerID]['BUsages'][$HostingOrder['Login']]['utime'] + $TUsages[$ServerID]['BUsages'][$HostingOrder['Login']]['stime'])*100 / ($Settings['PeriodToLock']*24*3600),2);
 			#-------------------------------------------------------------------------------
 			# если есть превышения за вчера, за неделю, и разрешено лочить
 			if($SUsage > $HostingOrder['QuotaCPU']*$Settings['LockRatio']	// вчера превышали
