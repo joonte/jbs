@@ -17,7 +17,7 @@ function WhoIs_Parse($Domain){
     #---------------------------------------------------------------------------
     $Name = $DomainZone['Name'];
     #---------------------------------------------------------------------------
-    if(Preg_Match(SPrintF('/^([0-9a-zа-я\-]+)\.%s$/',Str_Replace('.','\.',$Name)),$Domain,$Matches))
+    if(Preg_Match(SPrintF('/^([0-9a-zабвгдеёжзийклмнопрстуфхцчшщьыъэюя\-]+)\.%s$/',Str_Replace('.','\.',$Name)),$Domain,$Matches))
       return Array('DomainName'=>Next($Matches),'DomainZone'=>$DomainZone['Name']);
   }
   #-----------------------------------------------------------------------------
