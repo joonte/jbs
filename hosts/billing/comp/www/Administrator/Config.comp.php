@@ -49,8 +49,6 @@ function Config_Read($Array,$Path = Array(),$Level = 1){
     #---------------------------------------------------------------------------
     $StringPath = Implode('.',$CurrentPath = Array_Merge($Path,Array($ElementID)));
     #---------------------------------------------------------------------------
-    $ElementPrompt = 'Файл конфигурации не содержит дополнительного описания параметра';
-    #---------------------------------------------------------------------------
     if(IsSet($ConfigNames[$ElementID])){
       #-------------------------------------------------------------------------
       $Item = Explode('|',$ConfigNames[$ElementID]);
@@ -116,7 +114,11 @@ function Config_Read($Array,$Path = Array(),$Level = 1){
       }
     }else{
       #-----------------------------------------------------------------------
-      $Node->AddChild(new Tag('P',Array('class'=>'NodeParam'),new Tag('SPAN',Array('onMouseOver'=>SPrintF('PromptShow(event,\'%s\',this);',$ElementPrompt)),SPrintF('%s: ',$ElementName)),$Comp));
+      $Params = (IsSet($ElementPrompt))?Array('onMouseOver'=>SPrintF('PromptShow(event,\'%s\',this);',$ElementPrompt)):Array();
+      #-----------------------------------------------------------------------
+      $Node->AddChild(new Tag('P',Array('class'=>'NodeParam'),new Tag('SPAN',$Params,SPrintF('%s: ',$ElementName)),$Comp));
+      #-----------------------------------------------------------------------
+      UnSet($ElementPrompt);
       #-----------------------------------------------------------------------
     }
     #-----------------------------------------------------------------------
