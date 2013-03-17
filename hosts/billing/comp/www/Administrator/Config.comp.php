@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -50,14 +49,25 @@ function Config_Read($Array,$Path = Array(),$Level = 1){
     #---------------------------------------------------------------------------
     $StringPath = Implode('.',$CurrentPath = Array_Merge($Path,Array($ElementID)));
     #---------------------------------------------------------------------------
-    if(IsSet($ConfigNames[$ElementID]))
+    $ElementPrompt = 'Файл конфигурации не содержит дополнительного описания параметра';
+    #---------------------------------------------------------------------------
+    if(IsSet($ConfigNames[$ElementID])){
+      #-------------------------------------------------------------------------
       $Item = Explode('|',$ConfigNames[$ElementID]);
-    else{
+      #-------------------------------------------------------------------------
+      if(IsSet($ConfigNames[SPrintF('Prompt.%s',$ElementID)]))
+        $ElementPrompt = $ConfigNames[SPrintF('Prompt.%s',$ElementID)];
+      #-------------------------------------------------------------------------
+    }else{
       #-------------------------------------------------------------------------
       if(!IsSet($ConfigNames[$StringPath]))
         continue;
       #-------------------------------------------------------------------------
       $Item = Explode('|',$ConfigNames[$StringPath]);
+      #-------------------------------------------------------------------------
+      if(IsSet($ConfigNames[SPrintF('Prompt.%s',$StringPath)]))
+        $ElementPrompt = $ConfigNames[SPrintF('Prompt.%s',$StringPath)];
+      #-------------------------------------------------------------------------
     }
     #---------------------------------------------------------------------------
     $ElementName = Current($Item);
@@ -104,8 +114,12 @@ function Config_Read($Array,$Path = Array(),$Level = 1){
         #-----------------------------------------------------------------------
         $Node->AddChild(new Tag('DIV',Array('id'=>$ID,'style'=>'display:none;'),$Result));
       }
-    }else
-      $Node->AddChild(new Tag('P',Array('class'=>'NodeParam'),new Tag('SPAN',SPrintF('%s: ',$ElementName)),$Comp));
+    }else{
+      #-----------------------------------------------------------------------
+      $Node->AddChild(new Tag('P',Array('class'=>'NodeParam'),new Tag('SPAN',Array('onMouseOver'=>SPrintF('PromptShow(event,\'%s\',this);',$ElementPrompt)),SPrintF('%s: ',$ElementName)),$Comp));
+      #-----------------------------------------------------------------------
+    }
+    #-----------------------------------------------------------------------
   }
   #-----------------------------------------------------------------------------
   return (Count($Node->Childs)?$Node:FALSE);
