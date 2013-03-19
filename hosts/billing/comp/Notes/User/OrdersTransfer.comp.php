@@ -59,7 +59,10 @@ case 'array':
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
-			return ERROR | @Trigger_Error(400);
+			#-------------------------------------------------------------------------------
+			return $Result;
+			#return ERROR | @Trigger_Error(400);
+			#-------------------------------------------------------------------------------
 		case 'array':
 			# No more...
 			break;
