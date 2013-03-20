@@ -69,7 +69,7 @@ if(!IsSet($GLOBALS['__USER'])){
         break;
         case 'array':
           #---------------------------------------------------------------------
-          $Table = new Tag('TABLE',Array('class'=>'Standard','cellspacing'=>5,'width'=>'1000'));
+          $Table = new Tag('TABLE',Array('class'=>'Standard','style'=>'border: 1px solid #707680;','width'=>'100%'));
 	  #---------------------------------------------------------------------
 	  #---------------------------------------------------------------------
 	  if(SizeOf($Contracts) > 2){
@@ -77,7 +77,7 @@ if(!IsSet($GLOBALS['__USER'])){
 		$Table->AddChild(new Tag('TR',
 		new Tag('TD',
 			Array(
-				'colspan'=>3,
+				'colspan'=>4,
 				'style'=>'cursor:pointer;',
 				'onclick'=>SPrintF("var Style = document.getElementById('%s').style;Style.display = (Style.display != 'none'?'none':'');",$UniqID)),
 				'Просмотр списка ваших договоров'
@@ -87,6 +87,10 @@ if(!IsSet($GLOBALS['__USER'])){
 	  #---------------------------------------------------------------------
 	  #---------------------------------------------------------------------
           foreach($Contracts as $Contract){
+	    #-------------------------------------------------------------------
+            $ContractID = Comp_Load('Formats/Contract/Number',$Contract['ID']);
+            if(Is_Error($ContractID))
+              return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
             $Comp = Comp_Load('Formats/Currency',$Contract['Balance']);
             if(Is_Error($Comp))
@@ -95,7 +99,8 @@ if(!IsSet($GLOBALS['__USER'])){
             $A = new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/InvoiceMake',{ContractID:%u,StepID:1});",$Contract['ID'])),'[пополнить]');
             #-------------------------------------------------------------------
             $Table->AddChild(new Tag('TR',
-	    				new Tag('TD',Array('class'=>'Comment','style'=>'text-align:left;overflow-x:hidden','width'=>750),$Contract['Customer']),
+	    				new Tag('TD',Array('style'=>'text-align:left;'),SPrintF('#%s',$ContractID)),
+	    				new Tag('TD',Array('style'=>'text-align:left;overflow-x:hidden','width'=>'70%'),$Contract['Customer']),
 					new Tag('TD',Array('style'=>'text-align:left;'),SPrintF('баланс: %s',$Comp)),
 					new Tag('TD',Array('style'=>'text-align:left'),$A))
 				);
