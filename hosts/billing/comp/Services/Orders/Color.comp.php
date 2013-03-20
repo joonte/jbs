@@ -26,7 +26,7 @@ switch($StatusID){
     $Color = 'FF6666';
   break;
   case 'Deleted':
-    $Color = 'C0C0C0';
+    $Color = 'DCDCDC';
   break;
   default:
     $Color = '999999';
