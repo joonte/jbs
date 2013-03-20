@@ -10,7 +10,7 @@
 Среднее использование за {$HostingOrder.PeriodToLock|default:'$HostingOrder.PeriodToLock'} дней составило: {$HostingOrder.BUsage|default:'$HostingOrder.BUsage'}%, при лимите тарифного плана: {$HostingOrder.QuotaCPU|default:'$HostingOrder.QuotaCPU'}%.
 
 {if $HostingOrder.UnLockOverlimits}
-Если вы никак не отреагируете на данное событие, то ваш аккаунт будет автоматически разблокирован через {$HostingOrder.UnLockOverlimitsPeriod|default:'$HostingOrder.UnLockOverlimitsPeriod'} часов.
+Если вы никак не отреагируете на данное событие, то ваш аккаунт будет автоматически разблокирован в {$HostingOrder.UnLockOverlimitsTime|default:'$HostingOrder.UnLockOverlimitsTime'}.
 
 {/if}
 Подробную статистику использования ресурсов, вы можете узнать в панели управления хостингом:

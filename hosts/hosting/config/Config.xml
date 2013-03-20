@@ -680,7 +680,7 @@
    <LockOverlimits>0</LockOverlimits>
    <!-- автоматически разблокировать залоченных -->
    <UnLockOverlimits>1</UnLockOverlimits>
-   <UnLockOverlimitsPeriod>12</UnLockOverlimitsPeriod>
+   <UnLockOverlimitsTime>22:15</UnLockOverlimitsTime>
    <!-- уведомлять превышающих -->
    <NotifyOverlimits>1</NotifyOverlimits>
    <!-- множитель, с которого начинаются уведомления

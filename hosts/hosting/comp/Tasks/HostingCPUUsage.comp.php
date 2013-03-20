@@ -15,7 +15,7 @@ $Config = Config();
 $Settings = $Config['Tasks']['Types']['HostingCPUUsage'];
 #-------------------------------------------------------------------------------
 # достаём время выполнения
-$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecuteTime'=>$Settings['ExecuteTime'],'DefaultTime'=>MkTime(10,0,0,Date('n'),Date('j')+1,Date('Y'))));
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecuteTime'=>$Settings['ExecuteTime'],'DefaultTime'=>MkTime(10,15,0,Date('n'),Date('j')+1,Date('Y'))));
 if(Is_Error($ExecuteTime))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -179,7 +179,8 @@ foreach(Array_Keys($TUsages) as $ServerID){
 					'Url'			=> $HostingOrder['Url'],
 					'PeriodToLock'		=> $Settings['PeriodToLock'],
 					'UnLockOverlimits'	=> $Settings['UnLockOverlimits'],
-					'UnLockOverlimitsPeriod'=> $Settings['UnLockOverlimitsPeriod']
+					'UnLockOverlimitsTime'	=> $Settings['UnLockOverlimitsTime'],
+					'UnLockOverlimitsText'	=> SPrintF("Если вы никак не отреагируете на данное событие, то ваш аккаунт будет автоматически разблокирован в %s.\n\n",$Settings['UnLockOverlimitsTime'])
 					);
 			#-------------------------------------------------------------------------------
 			# шлём уведомление тем кто превысил порог уведомления, и превысил порог оповещения
@@ -298,8 +299,13 @@ foreach(Array_Keys($TUsages) as $ServerID){
 				}
 				#-------------------------------------------------------------------------------
 				#-------------------------------------------------------------------------------
+				# время срабатывания задачи на разблокировку
+				$UnLockOverlimitsTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecuteTime'=>$Settings['UnLockOverlimitsTime'],'DefaultTime'=>MkTime(22,0,0,Date('n'),Date('j'),Date('Y'))));
+				if(Is_Error($UnLockOverlimitsTime))
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
 				# создаём задачу на разблокировку аккаунта
-				$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'HostingActive','ExecuteDate'=>(Time() + $Settings['UnLockOverlimitsPeriod']*3600),'Params'=>Array($HostingOrder['ID'])));
+				$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'HostingActive','ExecuteDate'=>$UnLockOverlimitsTime,'Params'=>Array($HostingOrder['ID'])));
 				#-------------------------------------------------------------------------------
 				switch(ValueOf($IsAdd)){
 				case 'error':

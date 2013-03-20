@@ -10,6 +10,7 @@ INSERT INTO `Clauses` (`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtecte
 Системное время: %STime% сек.
 Всего: %ATime% сек.
 <BR /><BR />
+%UnLockOverlimitsText%
 Подробную статистику использования ресурсов, вы можете узнать в панели управления хостингом:<BR />
 %Url%
 </P>
