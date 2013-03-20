@@ -180,7 +180,7 @@ foreach(Array_Keys($TUsages) as $ServerID){
 					'PeriodToLock'		=> $Settings['PeriodToLock'],
 					'UnLockOverlimits'	=> $Settings['UnLockOverlimits'],
 					'UnLockOverlimitsTime'	=> $Settings['UnLockOverlimitsTime'],
-					'UnLockOverlimitsText'	=> SPrintF("Если вы никак не отреагируете на данное событие, то ваш аккаунт будет автоматически разблокирован в %s.\n\n",$Settings['UnLockOverlimitsTime'])
+					'UnLockOverlimitsText'	=> ($UnLockOverlimits)?SPrintF("Если вы никак не отреагируете на данное событие, то ваш аккаунт будет автоматически разблокирован в %s.\n\n",$Settings['UnLockOverlimitsTime']):''
 					);
 			#-------------------------------------------------------------------------------
 			# шлём уведомление тем кто превысил порог уведомления, и превысил порог оповещения
