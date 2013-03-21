@@ -7,13 +7,13 @@ if(Is_Error(System_Load('libs/Http.php')))
 #-------------------------------------------------------------------------------
 Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
 #-------------------------------------------------------------------------------
-function Cpanel_Logon($Settings,$Login,$Password){
+function Cpanel_Logon($Settings,$Params){
   /****************************************************************************/
-  $__args_types = Array('array','string','string');
+  $__args_types = Array('array','array');
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  return Array('Url'=>SPrintF('https://%s:2083/login/',$Settings['Address']),'Args'=>Array('user'=>$Login,'pass'=>$Password));
+  return Array('Url'=>$Params['Url'],'Args'=>Array('user'=>$Params['Login'],'pass'=>$Params['Password']));
 }
 #-------------------------------------------------------------------------------
 function Cpanel_Get_Domains($Settings){

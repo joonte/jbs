@@ -7,13 +7,13 @@ if(Is_Error(System_Load('libs/Http.php')))
 #-------------------------------------------------------------------------------
 Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
 #-------------------------------------------------------------------------------
-function IspManager_Logon($Settings,$Login,$Password){
+function IspManager_Logon($Settings,$Params){
   /****************************************************************************/
-  $__args_types = Array('array','string','string');
+  $__args_types = Array('array','array');
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  return Array('Url'=>SPrintF('https://%s/manager/ispmgr',$Settings['Address']),'Args'=>Array('lang'=>$Settings['Language'],'theme'=>$Settings['Theme'],'checkcookie'=>'no','username'=>$Login,'password'=>$Password,'func'=>'auth'));
+  return Array('Url'=>$Params['Url'],'Args'=>Array('lang'=>$Settings['Language'],'theme'=>$Settings['Theme'],'checkcookie'=>'no','username'=>$Params['Login'],'password'=>$Params['Password'],'func'=>'auth'));
 }
 #-------------------------------------------------------------------------------
 function IspManager_Get_Domains($Settings){

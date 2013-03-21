@@ -47,6 +47,7 @@
    <Settings>
     <Port>1000</Port>
     <Protocol>tcp</Protocol>
+    <Url>http://isp.su/manage</Url>
    </Settings>
   </NullSystem>
   <!-- ********************************************************************* -->
@@ -57,6 +58,7 @@
     <Protocol>ssl</Protocol>
     <Theme>x3</Theme>
     <Language>default</Language>
+    <Url>https://isp.su:2083/login/</Url>
    </Settings>
   </Cpanel>
   <!-- ********************************************************************* -->
@@ -67,6 +69,7 @@
     <Protocol>ssl</Protocol>
     <Theme>sirius</Theme>
     <Language>ru</Language>
+    <Url>https://isp.su:1500/</Url>
    </Settings>
   </IspManager>
   <!-- ********************************************************************* -->
@@ -77,6 +80,7 @@
     <Protocol>ssl</Protocol>
     <Theme>default</Theme>
     <Language>default</Language>
+    <Url>https://isp.su:8443/login_up.php3</Url>
    </Settings>
   </Plesk>
   <!-- ********************************************************************* -->
@@ -87,6 +91,7 @@
     <Protocol>tcp</Protocol>
     <Theme>default</Theme>
     <Language>default</Language>
+    <Url>http://isp.su:2222/CMD_LOGIN</Url>
    </Settings>
   </DirectAdmin>
  </Systems>

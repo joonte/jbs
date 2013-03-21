@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -15,7 +14,7 @@ $HostingOrderID = (integer) @$Args['HostingOrderID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/Server.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','UserID','ServerID','Login','Password','StatusID');
+$Columns = Array('ID','UserID','ServerID','Login','Password','StatusID','(SELECT `Url` FROM `HostingServers` WHERE `HostingServers`.`ID` = `HostingOrdersOwners`.`ServerID`) as `Url`');
 #-------------------------------------------------------------------------------
 $HostingOrder = DB_Select('HostingOrdersOwners',$Columns,Array('UNIQ','ID'=>$HostingOrderID));
 #-------------------------------------------------------------------------------
@@ -53,7 +52,7 @@ switch(ValueOf($HostingOrder)){
             return ERROR | @Trigger_Error(400);
           case 'true':
             #-------------------------------------------------------------------
-            $IsLogon = $Server->Logon($HostingOrder['Login'],$HostingOrder['Password']);
+            $IsLogon = $Server->Logon(Array('Login'=>$HostingOrder['Login'],'Password'=>$HostingOrder['Password'],'Url'=>$HostingOrder['Url']));
             #-------------------------------------------------------------------
             switch(ValueOf($IsLogon)){
               case 'error':

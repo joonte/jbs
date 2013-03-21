@@ -7,13 +7,13 @@ if(Is_Error(System_Load('libs/Http.php')))
 #-------------------------------------------------------------------------------
 Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
 #-------------------------------------------------------------------------------
-function Plesk_Logon($Settings,$Login,$Password){
+function Plesk_Logon($Settings,$Params){
   /****************************************************************************/
-  $__args_types = Array('array','string','string');
+  $__args_types = Array('array','array');
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  return Array('Url'=>SPrintF('https://%s:8443/login_up.php3',$Settings['Address']),'Args'=>Array('login_name'=>$Login,'passwd'=>$Password));
+  return Array('Url'=>$Params['Url'],'Args'=>Array('login_name'=>$Params['Login'],'passwd'=>$Params['Password']));
 }
 #-------------------------------------------------------------------------------
 function Plesk_Get_Domains($Settings){

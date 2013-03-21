@@ -7,13 +7,13 @@ if(Is_Error(System_Load('libs/Http.php')))
 #-------------------------------------------------------------------------------
 Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
 #-------------------------------------------------------------------------------
-function DirectAdmin_Logon($Settings,$Login,$Password){
+function DirectAdmin_Logon($Settings,$Params){
   /****************************************************************************/
-  $__args_types = Array('array','string','string');
+  $__args_types = Array('array','array');
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  return Array('Url'=>SPrintF('http://%s:2222/CMD_LOGIN',$Settings['Address']),'Args'=>Array('username'=>$Login,'password'=>$Password,'LOGOUT_URL'=>@$_SERVER['HTTP_REFERER']));
+  return Array('Url'=>$Params['Url'],'Args'=>Array('username'=>$Params['Login'],'password'=>$Params['Password'],'LOGOUT_URL'=>@$_SERVER['HTTP_REFERER']));
 }
 #-------------------------------------------------------------------------------
 function DirectAdmin_Get_Domains($Settings){
