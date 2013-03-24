@@ -7,7 +7,7 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$HostingServers = DB_Select('HostingServers',Array('ID','Address','Port','Services'));
+$HostingServers = DB_Select('HostingServers',Array('ID','Address','Port','Services'),Array('SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingServers)){
   case 'error':
