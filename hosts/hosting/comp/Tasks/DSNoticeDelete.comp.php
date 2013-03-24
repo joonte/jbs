@@ -19,6 +19,8 @@ switch(ValueOf($DSOrders)){
   break;
   case 'array':
     #---------------------------------------------------------------------------
+    $GLOBALS['TaskReturnInfo'] = SPrintF('Notified %u accounts',SizeOf($DSOrders));
+    #---------------------------------------------------------------------------
     foreach($DSOrders as $DSOrder){
       #-------------------------------------------------------------------------
       $IsSend = NotificationManager::sendMsg(new Message('DSNoticeDelete',(integer)$DSOrder['UserID'],Array('DSOrder'=>$DSOrder)));
