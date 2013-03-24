@@ -161,6 +161,8 @@ switch(ValueOf($HostingScheme)){
       #-------------------------------------------------------------------------
       $Table[] = Array('Ограничение на процессор',SPrintF('%s%%',$HostingScheme['QuotaCPU']));
       #-------------------------------------------------------------------------
+      $Table[] = Array('Ограничение на отправку писем',SPrintF('%s в час',$HostingScheme['mailrate']));
+      #-------------------------------------------------------------------------
       $Comp = Comp_Load('Formats/Logic',$HostingScheme['IsSSIAccess']);
       if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
