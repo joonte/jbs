@@ -35,21 +35,47 @@ $LMI_PAYMENT_SYSTEMs = Array(
 				8	=> 'Альфа-банк',
 				21	=> 'Сбербанк "Спасибо"',
 				22	=> 'ВТБ24',
+				23	=> 'Банковский перевод',
 				24	=> 'Русский Стандарт Банк',
+				30	=> 'Яндекс.Деньги',
 				31	=> 'WebMoney',
+				33	=> 'Тест',
 				34	=> 'WebMoney карты',
+				39	=> 'Сбербанк "Спасибо"',
 				41	=> 'Билайн',
+				45	=> 'WebMoney X20 с ЭДС',
+				46	=> 'QIWI-кошелек',
+				47	=> 'CONTACT',
+				48	=> 'UniStream',
+				49	=> 'Anelik',
+				50	=> 'Сбербанк "Спасибо"',
+				51	=> 'Webmoney X20 PIN',
+				56	=> 'Электронные деньги ККБ',
+				57	=> 'WebMoney Trust Test',
+				58	=> 'WebMoney Trust',
+				59	=> 'WebMoney X20 PIN Тест',
+				62	=> 'Евросеть',
 				63	=> 'Банковские карты',
 				64	=> 'Промсвязьбанк',
+				65	=> 'Связной',
+				66	=> 'WebMoney x20 Test',
+				68	=> 'WebMoney X20',
+				70	=> 'Альфа-банк',
+				71	=> 'WebMoney Invoice Test',
+				72	=> 'WebMoney Invoice',
+				73	=> 'МТС',
+				74	=> 'МегаФон',
 				75	=> 'VISA',
 				76	=> 'MasterCard',
+				77	=> 'Boleto Bancario EBANX',
+				78	=> 'Transferencia Bancaria EBANX',
+				79	=> 'WebMoney KKB e-money',
+				80	=> 'WebMoney KKB e-money Тест',
+				81	=> 'Онлайн-банкинг',
+				82	=> 'Ростелеком',
 			    );
 #-------------------------------------------------------------------------------
-if(IsSet($LMI_PAYMENT_SYSTEMs[$Args['LMI_PAYMENT_SYSTEM']])){
-	$PS = $LMI_PAYMENT_SYSTEMs[$Args['LMI_PAYMENT_SYSTEM']];
-}else{
-	$PS = "LMI_PAYMENT_SYSTEM=" . $Args['LMI_PAYMENT_SYSTEM'];
-}
+$PS = SPrintF('%s / %s',((IsSet($LMI_PAYMENT_SYSTEMs[$Args['LMI_PAYMENT_SYSTEM']]))?$LMI_PAYMENT_SYSTEMs[$Args['LMI_PAYMENT_SYSTEM']]:'LMI_PAYMENT_SYSTEM'),$Args['LMI_PAYMENT_SYSTEM']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Config = Config();
