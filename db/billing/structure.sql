@@ -824,7 +824,7 @@ CREATE TABLE IF NOT EXISTS `OrdersHistory` (
 	KEY `OrdersHistoryEmail` (`Email`),
 	KEY `OrdersHistoryServiceID` (`ServiceID`),
 	KEY `OrdersHistorySchemeID` (`SchemeID`),
-	KEY `OrdersHistoryOrderID` (`OrderID`)
+	UNIQUE KEY `OrdersHistoryOrderID` (`OrderID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 

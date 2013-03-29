@@ -35,14 +35,14 @@ if($Count){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # проверяем, были ли такие же заказы
-$Count = DB_Count('OrdersHistory',Array('Where'=>Array(SPrintF('`UserID` = %u',$UserID),'`ServiceID` = 51000',SPrintF('`SchemeID` = %u',$Params['SchemeID']))));
+$Count = DB_Count('OrdersHistory',Array('Where'=>Array(SPrintF('`UserID` = %u',$UserID),SPrintF('`ServiceID` = %u',$Params['ServiceID']),SPrintF('`SchemeID` = %u',$Params['SchemeID']))));
 if(Is_Error($Count))
 	return ERROR | Trigger_Error(500);
 #-------------------------------------------------------------------------------
 # проверяем, как много таких заказов можно делать
 if($Params['MaxOrders'] > 0 && $Count >= $Params['MaxOrders'])
 	if(!$GLOBALS['__USER']['IsAdmin'])
-		return new gException('TOO_MANY_ORDERS',SPrintF('Для данного тарифного плана существует ограничение на максимальное число заказов, равное %s. Ранее, вы уже делали заказы по данному тарифу, и больше сделать не можете. Выберите другой тарифный план.',$Params['MaxOrders']));
+		return new gException('TOO_MANY_ORDERS',SPrintF('Для данного тарифного плана существует ограничение на максимальное число заказов, равное %s. Ранее, вы уже делали заказы по данному тарифу%s, и больше сделать не можете. Выберите другой тарифный план.',$Params['MaxOrders'],($Count > $Params['MaxOrders'])?SPrintF(' (%s)',$Count):''));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # вносим заказ в таблицу, если его там нет

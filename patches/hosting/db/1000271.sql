@@ -17,8 +17,10 @@ CREATE TABLE IF NOT EXISTS `OrdersHistory` (
 	KEY `OrdersHistoryEmail` (`Email`),
 	KEY `OrdersHistoryServiceID` (`ServiceID`),
 	KEY `OrdersHistorySchemeID` (`SchemeID`),
-	KEY `OrdersHistoryOrderID` (`OrderID`)
+	UNIQUE KEY `OrdersHistoryOrderID` (`OrderID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 -- SEPARATOR
 ALTER TABLE `ISPswSchemes` ADD `MaxOrders` INT(6) DEFAULT '0' AFTER `MaxDaysPay` ;
+-- SEPARATOR
+ALTER TABLE `HostingSchemes` ADD `MaxOrders` INT(6) DEFAULT '0' AFTER `MaxDaysPay` ;
 

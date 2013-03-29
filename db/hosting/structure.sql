@@ -120,6 +120,7 @@ CREATE TABLE `HostingSchemes` (
   `MinDaysPay` int(6) default '0',			/* минимальное число дней первой оплаты */
   `MinDaysProlong` INT(6) default '0',			/* минимальное число дней продления, для ранее оплаченных заказов */
   `MaxDaysPay` int(6) default '0',			/* максимальное число дней оплаты заказа */
+  `MaxOrders` int(6) DEFAULT '0',			/* максимальное число заказов по этому тарифу, на одного пользователя */
   `SortID` int(11) default '10',
 --
 -- Common quotas
