@@ -4,30 +4,33 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('OrderTypeCode', 'ID');
+$__args_list = Array('OrderTypeCode','ID');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-Debug("[comp/Services/Orders/SchemeWrapper]: OrderTypeCode = $OrderTypeCode, ID = $ID");
+#Debug("[comp/Services/Orders/SchemeWrapper]: OrderTypeCode = $OrderTypeCode, ID = $ID");
 #-------------------------------------------------------------------------------
 $CacheID = Md5($__FILE__ . $OrderTypeCode . $ID);
-
+#-------------------------------------------------------------------------------
 $Result = CacheManager::get($CacheID);
-if($Result) {
-    return $Result;
-}
+if($Result)
+	return $Result;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($OrderTypeCode == 'Default'){
-	$Order = DB_Select('OrdersOwners','(SELECT `Item` FROM `Services` WHERE `OrdersOwners`.`ServiceID`=`Services`.`ID`) AS `SchemeName`',Array('UNIQ','Where'=>'ID=' . $ID));
+	#-------------------------------------------------------------------------------
+	$Order = DB_Select('OrdersOwners','(SELECT `Item` FROM `Services` WHERE `OrdersOwners`.`ServiceID`=`Services`.`ID`) AS `SchemeName`',Array('UNIQ','ID'=>$ID));
 	#-------------------------------------------------------------------------------
 }else{
+	#-------------------------------------------------------------------------------
 	$Columns = Array(
 			'ID',
 			SPrintF('(SELECT `Name` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `%sSchemes`.`ID`) as `SchemeName`',$OrderTypeCode,$OrderTypeCode,$OrderTypeCode)
 			);
-	$Order = DB_Select(SPrintF('%sOrdersOwners',$OrderTypeCode),$Columns,Array('UNIQ','Where'=>'OrderID=' . $ID));
+	#-------------------------------------------------------------------------------
+	$Order = DB_Select(SPrintF('%sOrdersOwners',$OrderTypeCode),$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$ID)));
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 switch(ValueOf($Order)){
