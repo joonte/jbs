@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
@@ -113,7 +112,7 @@ switch(ValueOf($ExtraIPScheme)){
 		    $Event = Array(
 		    			'UserID'	=> $Contract['UserID'],
 					'PriorityID'	=> 'Billing',
-					'Text'		=> SPrintF('Сформирована заявка на заказ выделенного IP адреса, по тарифу %s',$ExtraIPScheme['Name'])
+					'Text'		=> SPrintF('Сформирована заявка на заказ выделенного IP адреса, по тарифу (%s)',$ExtraIPScheme['Name'])
 		                  );
                     $Event = Comp_Load('Events/EventInsert',$Event);
                     if(!$Event)
