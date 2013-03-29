@@ -20,7 +20,7 @@ if($Out)
 $Config = Config();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$MyISAM = Array('Events','RequestLog','ServersUpTime','StatusesHistory');
+$MyISAM = Array('Events','RequestLog','ServersUpTime','StatusesHistory','OrdersHistory');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Tables = DB_Select('`INFORMATION_SCHEMA`.`TABLES`',Array('TABLE_NAME','ENGINE'),Array('Where'=>SPrintF("`TABLE_SCHEMA` = '%s' AND `ENGINE` IS NOT NULL",$Config['DBConnection']['DbName'])));
@@ -66,8 +66,8 @@ foreach($Tables as $Table){
 	#-------------------------------------------------------------------------------
 	if($Table['ENGINE'] != 'InnoDB' && !In_Array($Table['TABLE_NAME'],$MyISAM)){
 		#-------------------------------------------------------------------------------
-		$NoBody->AddChild(new Tag('SPAN',SPrintF('Таблица: "%s"; Storage Engine: "%s"',$Table['TABLE_NAME'],$Table['ENGINE'])));
-		$NoBody->AddChild(new Tag('BR'));
+		$NoBody->AddChild(new Tag('P',SPrintF('Таблица: "%s"; Storage Engine: "%s"',$Table['TABLE_NAME'],$Table['ENGINE'])));
+#		$NoBody->AddChild(new Tag('BR'));
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------

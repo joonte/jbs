@@ -806,6 +806,27 @@ CREATE TABLE `PromoCodesExtinguished` (
   CONSTRAINT `PromoCodesPromoCodeID` FOREIGN KEY (`PromoCodeID`) REFERENCES `PromoCodes` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/* история заказов */
+DROP TABLE IF EXISTS `OrdersHistory`;
+CREATE TABLE IF NOT EXISTS `OrdersHistory` (
+	`ID` int(11) NOT NULL AUTO_INCREMENT,
+	`UserID` int(11) NOT NULL,		-- идентификатор юзера... пока не уверен, но пусть будет
+	`Email` char(255) NOT NULL,		-- мыло юзера, т.к. юзер может быть удалён
+	`ServiceID` int(11) NOT NULL,
+	`ServiceName` char(255) NOT NULL,	-- имя сервиса
+	`SchemeID` int(11) NOT NULL,
+	`SchemeName` char(255) NOT NULL,	-- имя тарифа
+	`OrderID` int(11) NOT NULL,
+	`CreateDate` int(11) NOT NULL,		-- дата создания
+	`StatusDate` int(11) NOT NULL,		-- дата установки последнего статуса
+	PRIMARY KEY (`ID`),
+	KEY `OrdersHistoryUserID` (`UserID`),
+	KEY `OrdersHistoryEmail` (`Email`),
+	KEY `OrdersHistoryServiceID` (`ServiceID`),
+	KEY `OrdersHistorySchemeID` (`SchemeID`),
+	KEY `OrdersHistoryOrderID` (`OrderID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 
 SET FOREIGN_KEY_CHECKS=1;
 
