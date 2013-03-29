@@ -1,5 +1,4 @@
 <?php
-
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
@@ -161,7 +160,8 @@ switch(ValueOf($ISPswScheme)){
                   case 'error':
                     return ERROR | @Trigger_Error(500);
                   case 'exception':
-                    return ERROR | @Trigger_Error(400);
+                    #return ERROR | @Trigger_Error(400);
+		    return $Comp;
                   case 'array':
                     #-----------------------------------------------------------
 		    $Event = Array(

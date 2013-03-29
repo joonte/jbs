@@ -13,7 +13,6 @@
   </Before>
   <After>
    <StatusSet />
-   <Delete />
   </After>
  </Comps>
  <Sequence />
