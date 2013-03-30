@@ -28,6 +28,12 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
+  <Text>Настройки автопродления</Text>
+  <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%Replace%",ServiceID:"51000"});</Href>
+  <Icon>AutoProlong.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
   <Text>Компенсировать время</Text>
   <Href>javascript:ShowWindow("/Administrator/ISPswCompensation",{ISPswOrderID:%Replace%});</Href>
   <Icon>Add.gif</Icon>

@@ -15,6 +15,13 @@
   <Href>javascript:ShowWindow("/Administrator/ServiceOrderEdit",{ServiceOrderID:%Replace%});</Href>
   <Icon>Edit.gif</Icon>
  </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Настройки автопродления</Text>
+  <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%Replace%"});</Href>
+  <Icon>AutoProlong.png</Icon>
+ </UniqID>
+<!-- *********************************************************************** -->
 </Items>
 <!-- *********************************************************************** -->
 </XML>
