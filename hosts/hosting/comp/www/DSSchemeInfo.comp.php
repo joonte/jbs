@@ -59,7 +59,6 @@ switch(ValueOf($DSScheme)){
     #---------------------------------------------------------------------------
     $Table[] = Array('Группа серверов',$ServersGroup['Name']);
     #---------------------------------------------------------------------------
-
     # check permission for additional info
     $__USER = $GLOBALS['__USER'];
     #---------------------------------------------------------------------------
@@ -69,16 +68,15 @@ switch(ValueOf($DSScheme)){
     case 'true':
 	$Table[] = Array('Всего серверов',$DSScheme['NumServers']);
 	#---------------------------------------------------------------------------
-	$Table[] = Array('Осталось серверов',$DSScheme['RemainServers']);
+	$Table[] = Array('Свободных серверов',$DSScheme['RemainServers']);
 	#---------------------------------------------------------------------------
 	$Comp = Comp_Load('Formats/Logic',$DSScheme['IsCalculateNumServers']);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	$Table[] = Array('Автоподсчёт серверов',$Comp);
     }
-
-
-
+    #---------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     $Comp = Comp_Load('Formats/Logic',$DSScheme['IsActive']);
     if(Is_Error($Comp))
       return ERROR | @Trigger_Error(500);
@@ -91,15 +89,16 @@ switch(ValueOf($DSScheme)){
     #---------------------------------------------------------------------------
     $Table[] = Array('Возможность продления',$Comp);
     #---------------------------------------------------------------------------
-
     $Table[] = Array('Минимальное кол-во дней оплаты',$DSScheme['MinDaysPay']);
+    #---------------------------------------------------------------------------
     $Table[] = Array('Максимальное кол-во дней оплаты',$DSScheme['MaxDaysPay']);
-
+    #---------------------------------------------------------------------------
+    if($DSScheme['MaxOrders'])
+      $Table[] = Array('Максимальное число заказов',$DSScheme['MaxOrders']);
     #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
-
     $Table[] = 'Технические характеристики сервера';
-
+    #---------------------------------------------------------------------------
     # Load CPUType => CPUName Array
     $CpuArray = Comp_Load('Formats/DSOrder/CPUTypesList');
     if(Is_Error($CpuArray))
@@ -131,7 +130,7 @@ switch(ValueOf($DSScheme)){
     $Table[] = 'Прочая информация';
     $Table[] = Array('Скорость канала, мегабит',$DSScheme['chrate']);
     $Table[] = Array('Месячный трафик, Gb',$DSScheme['trafflimit']);
-    $Table[] = Array('Соотношения трафика, входящий/исходящий',$DSScheme['traffcorrelation']);
+    $Table[] = Array('Соотношения трафика, in/out',$DSScheme['traffcorrelation']);
     $Table[] = Array('Предустановленная ОС',$DSScheme['OS']);
     $Table[] = 'Дополнительная информация';
     $Table[] = new Tag('TD',Array('class'=>'Standard','colspan'=>2),$DSScheme['UserComment']);

@@ -4,17 +4,17 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('HostingOrder');
+$__args_list = Array('ExtraIPOrder');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-Debug(SPrintF('[comp/Triggers/Statuses/HostingOrders/Waiting]: HostingOrder = %s',print_r($HostingOrder,true)));
+Debug(SPrintF('[comp/Triggers/Statuses/ExtraIPOrders/Waiting]: ExtraIPOrder = %s',print_r($ExtraIPOrder,true)));
 #-------------------------------------------------------------------------------
 $UserID = $GLOBALS['__USER']['ID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Service = DB_Select('Services',Array('ID','Code','Name'),Array('UNIQ','ID'=>10000));
+$Service = DB_Select('Services',Array('ID','Code','Name'),Array('UNIQ','ID'=>50000));
 switch(ValueOf($Service)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
@@ -27,7 +27,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Scheme = DB_Select(SPrintF('%sSchemes',$Service['Code']),Array('*'),Array('UNIQ','ID'=>$HostingOrder['SchemeID']));
+$Scheme = DB_Select(SPrintF('%sSchemes',$Service['Code']),Array('*'),Array('UNIQ','ID'=>$ExtraIPOrder['SchemeID']));
 switch(ValueOf($Scheme)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
@@ -41,8 +41,8 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Params = Array(
-		'SchemeID'	=> $HostingOrder['SchemeID'],
-		'OrderID'	=> $HostingOrder['OrderID'],
+		'SchemeID'	=> $ExtraIPOrder['SchemeID'],
+		'OrderID'	=> $ExtraIPOrder['OrderID'],
 		'MaxOrders'	=> $Scheme['MaxOrders'],
 		'ServiceID'	=> $Service['ID'],
 		'ServiceName'	=> $Service['Name'],

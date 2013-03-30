@@ -18,7 +18,19 @@ if(!In_Array($Order['StatusID'],Array('Waiting','Deleted'))){
   return new gException('ORDER_CAN_NOT_DELETED',SPrintF('Заказ №%s не может быть удален',$Comp));
 }
 #-------------------------------------------------------------------------------
-return TRUE;
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$Order['ID']));
+switch(ValueOf($Comp)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $Comp;
+case 'array':
+	return TRUE;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>

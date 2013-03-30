@@ -25,7 +25,7 @@ if(Is_Error($Count))
 #-------------------------------------------------------------------------------
 if($Count){
 	# это вторичная проставка статуса для заказа. просто обновляем StatusDate
-	$IsUpdate = DB_Update('OrdersHistory',$IOrdersHistory,Array('ID'=>$OrdersHistory['ID']));
+	$IsUpdate = DB_Update('OrdersHistory',$IOrdersHistory,Array('Where'=>SPrintF('`OrderID` = %u',$Params['OrderID'])));
 	if(Is_Error($IsUpdate))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

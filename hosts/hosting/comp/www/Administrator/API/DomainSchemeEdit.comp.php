@@ -26,6 +26,7 @@ $RegistratorID  =  (string) @$Args['RegistratorID'];
 $SortID         = (integer) @$Args['SortID'];
 $MinOrderYears  = (integer) @$Args['MinOrderYears'];
 $MaxActionYears = (integer) @$Args['MaxActionYears'];
+$MaxOrders	= (integer) @$Args['MaxOrders'];
 $DaysToProlong  = (integer) @$Args['DaysToProlong'];
 #-------------------------------------------------------------------------------
 $Name = Trim($Name,'.');
@@ -54,6 +55,7 @@ $IDomainScheme = Array(
   'SortID'         => $SortID,
   'MinOrderYears'  => $MinOrderYears,
   'MaxActionYears' => $MaxActionYears,
+  'MaxOrders'      => $MaxOrders,
   'DaysToProlong'  => $DaysToProlong
 );
 #-------------------------------------------------------------------------------

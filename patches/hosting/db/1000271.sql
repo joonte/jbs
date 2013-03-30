@@ -23,4 +23,12 @@ CREATE TABLE IF NOT EXISTS `OrdersHistory` (
 ALTER TABLE `ISPswSchemes` ADD `MaxOrders` INT(6) DEFAULT '0' AFTER `MaxDaysPay` ;
 -- SEPARATOR
 ALTER TABLE `HostingSchemes` ADD `MaxOrders` INT(6) DEFAULT '0' AFTER `MaxDaysPay` ;
+-- SEPARATOR
+ALTER TABLE `VPSSchemes` ADD `MaxOrders` INT(6) DEFAULT '0' AFTER `MaxDaysPay` ;
+-- SEPARATOR
+ALTER TABLE `DSSchemes` ADD `MaxOrders` INT(6) DEFAULT '0' AFTER `MaxDaysPay` ;
+-- SEPARATOR
+ALTER TABLE `ExtraIPSchemes` ADD `MaxOrders` INT(6) DEFAULT '0' AFTER `MaxDaysPay` ;
+-- SEPARATOR
+ALTER TABLE `DomainsSchemes` ADD `MaxOrders` INT(6) DEFAULT '0' AFTER `MaxActionYears`;
 

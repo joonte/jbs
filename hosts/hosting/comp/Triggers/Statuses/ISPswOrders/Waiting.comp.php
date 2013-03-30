@@ -14,7 +14,7 @@ Debug(SPrintF('[comp/Triggers/Statuses/ISPswOrders/Waiting]: ISPswOrder = %s',pr
 $UserID = $GLOBALS['__USER']['ID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Service = DB_Select('Services',Array('Code','Name'),Array('UNIQ','ID'=>51000));
+$Service = DB_Select('Services',Array('ID','Code','Name'),Array('UNIQ','ID'=>51000));
 switch(ValueOf($Service)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
@@ -44,7 +44,7 @@ $Params = Array(
 		'SchemeID'	=> $ISPswOrder['SchemeID'],
 		'OrderID'	=> $ISPswOrder['OrderID'],
 		'MaxOrders'	=> $Scheme['MaxOrders'],
-		'ServiceID'	=> 51000,
+		'ServiceID'	=> $Service['ID'],
 		'ServiceName'	=> $Service['Name'],
 		'SchemeName'	=> $Scheme['Name']
 		);

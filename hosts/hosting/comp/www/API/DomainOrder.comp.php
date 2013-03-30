@@ -279,7 +279,8 @@ switch(ValueOf($DomainScheme)){
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':
-                    return ERROR | @Trigger_Error(500);
+                    #return ERROR | @Trigger_Error(500);
+		    return $Comp;
                   case 'exception':
                     return ERROR | @Trigger_Error(400);
                   case 'array':
