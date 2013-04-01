@@ -7,7 +7,7 @@
 
 Уведомляем Вас о том, что ваш аккаунт {$HostingOrder.Login|default:'$HostingOrder.Login'}, паркованный домен {$HostingOrder.Domain|default:'$HostingOrder.Domain'}, превысил использование процессорного времени, определённое вашим тарифом "{$HostingOrder.Scheme|default:'$HostingOrder.Scheme'}". Превышения были систематические, на предыдущие уведомления по данному поводу вы не реагировали, поэтому аккаунт заблокирован.
 
-Среднее использование за {$HostingOrder.PeriodToLock|default:'$HostingOrder.PeriodToLock'} дней составило: {$HostingOrder.BUsage|default:'$HostingOrder.BUsage'}%, при лимите тарифного плана: {$HostingOrder.QuotaCPU|default:'$HostingOrder.QuotaCPU'}%.
+Среднее использование за {$HostingOrder.PeriodToLock|default:'$HostingOrder.PeriodToLock'} дней составило: {$HostingOrder.BUsage|default:'$HostingOrder.BUsage'}%, при лимите тарифного плана: {$HostingOrder.QuotaCPU|default:'$HostingOrder.QuotaCPU'}% ({$HostingOrder.QuotaCPUTime|default:'$HostingOrder.QuotaCPUTime'} сек.).
 
 {if $HostingOrder.UnLockOverlimits}
 Если вы никак не отреагируете на данное событие, то ваш аккаунт будет автоматически разблокирован в {$HostingOrder.UnLockOverlimitsTime|default:'$HostingOrder.UnLockOverlimitsTime'}.

@@ -176,6 +176,7 @@ foreach(Array_Keys($TUsages) as $ServerID){
 					'UTime'			=> $TUsages[$ServerID]['SUsages'][$HostingOrder['Login']]['utime'],
 					'STime'			=> $TUsages[$ServerID]['SUsages'][$HostingOrder['Login']]['stime'],
 					'QuotaCPU'		=> $HostingOrder['QuotaCPU'],
+					'QuotaCPUTime'		=> $HostingOrder['QuotaCPU'] * 24 * 60 * 60 / 100,
 					'Url'			=> $HostingOrder['Url'],
 					'PeriodToLock'		=> $Settings['PeriodToLock'],
 					'UnLockOverlimits'	=> $Settings['UnLockOverlimits'],
@@ -337,7 +338,7 @@ if($LockedCount > 0 || $NotifyedCount > 0)
 	$GLOBALS['TaskReturnInfo'] = Array(SPrintF('Notifyed: %s',$NotifyedCount),SPrintF('Locked: %s',$LockedCount));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-# запуск в 10 утра
+Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: ExecuteTime = %s',print_r($ExecuteTime,true)));
 return $ExecuteTime;
 #-------------------------------------------------------------------------------
 ?>
