@@ -108,3 +108,13 @@ pre.Whois {
     background-color: #FFFFFF;
 }
 
+/* added by lissyara, for JBS-11 */
+img.small{
+	width:	200px;
+	cursor:	pointer;
+}
+img.big{
+	cursor: pointer;
+}
+
+

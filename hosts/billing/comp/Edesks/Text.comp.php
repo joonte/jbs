@@ -26,7 +26,7 @@ $String = Preg_Replace('/\[color:([a-z]+)\](.+)\[\/color\]/sU','<SPAN style="col
 $String = Preg_Replace('/\[size:([0-9]+)\](.+)\[\/size\]/sU','<SPAN style="font-size:\\1px;">\\2</SPAN>',$String);
 #-------------------------------------------------------------------------------
 #$String = Preg_Replace('/\[image]http:\/\/[\/a-zA-Z0-9\.\-\_]+\[\/image\]/sU','<IMG src="\\1" />',$String);
-$String = Preg_Replace("/\[image\](http|ftp|https):\/\/([\/a-zA-Z0-9\.\-\_]+)\[\/image\]/sU", "<img src=\"\\1://\\2\" />", $String);
+$String = Preg_Replace("/\[image\](http|ftp|https):\/\/([\/a-zA-Z0-9\.\-\_]+)\[\/image\]/sU", "<img class=\"sampleimg small\" src=\"\\1://\\2\" />", $String);
 #-------------------------------------------------------------------------------
 $String = Preg_Replace('/\[link](.+)\[\/link\]/sU','<A href="\\1" target="blank">\\1</A>',$String);
 #-------------------------------------------------------------------------------
