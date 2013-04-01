@@ -177,8 +177,8 @@ switch(ValueOf($Messages)){
           if(StrLen($Message['NotifyEmail']) > 5)
             $msgParams['Recipient'] = $Message['NotifyEmail'];
 	  #-------------------------------------------------------------------
-	  Debug(SPrintF('[comp/Tasks/TicketsMessages]: NotifyEmail = %s',$Message['NotifyEmail']));
-	  Debug(SPrintF('[comp/Tasks/TicketsMessages]: msgParams = %s',print_r($msgParams,true)));
+	  #Debug(SPrintF('[comp/Tasks/TicketsMessages]: NotifyEmail = %s',$Message['NotifyEmail']));
+	  #Debug(SPrintF('[comp/Tasks/TicketsMessages]: msgParams = %s',print_r($msgParams,true)));
           #-------------------------------------------------------------------
           $msg = new FromTicketsMessagesMsg($msgParams, (integer)$OwnerID);
           $IsSend = NotificationManager::sendMsg($msg);
