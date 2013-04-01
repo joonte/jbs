@@ -40,17 +40,17 @@ $String = Preg_Replace('/\\n--\n/sU','<HR align="left" width="90%" />',$String);
 #-------------------------------------------------------------------------------
 $String = Preg_Replace('/\[bg:([a-z]+)\](.+)\[\/bg\]/sU','<DIV style="padding:5px;background-color:\\1;">\\2</DIV>',$String);
 #-------------------------------------------------------------------------------
-$String = Preg_Replace('/\[h:([a-zA-Z0-9]+)\](.+)\[\/h\]/sU','<\\1>\\2</\\1>',$String);
+//$String = Preg_Replace('/\[h:([a-zA-Z0-9]+)\](.+)\[\/h\]/sU','<\\1>\\2</\\1>',$String);
 #-------------------------------------------------------------------------------
 $Smiles = System_XML('config/Smiles.xml');
 if(Is_Error($Smiles))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 foreach(Array_Keys($Smiles) as $SmileID){
-  #-----------------------------------------------------------------------------
-  $Smile = $Smiles[$SmileID];
-  #-----------------------------------------------------------------------------
-  $String = Str_Replace($Smile['Pattern'],SPrintF('<IMG alt="%s" src="%s" style="display:inline;" />',$Smile['Name'],SPrintF('SRC:{Images/Smiles/%s.gif}',$SmileID)),$String);
+	#-----------------------------------------------------------------------------
+	$Smile = $Smiles[$SmileID];
+	#-----------------------------------------------------------------------------
+	$String = Str_Replace($Smile['Pattern'],SPrintF('<IMG alt="%s" src="%s" style="display:inline;" />',$Smile['Name'],SPrintF('SRC:{Images/Smiles/%s.gif}',$SmileID)),$String);
 }
 #-------------------------------------------------------------------------------
 if(StrLen(Trim($String)) < 1)
