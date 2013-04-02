@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru  */
 /******************************************************************************/
@@ -11,12 +10,18 @@ Eval(COMP_INIT);
 $Config = Config();
 #-------------------------------------------------------------------------------
 $Settings = $Config['Tasks']['Types']['CaclulatePartnersReward'];
-
-# если партнёрка не включена - ничё не делаем и проверка через час
-if($Settings['IsActive'] != 1){
-	return(time() + 3600);
-}
-
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# достаём время выполнения
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecuteTime'=>$Settings['ExecuteTime'],'ExecuteDayOfMonth'=>$Settings['ExecuteDayOfMonth'],'ExecuteMonths'=>$Settings['ExecuteMonths'],'DefaultTime'=>MkTime(4,0,0,Date('n')+1,5,Date('Y'))));
+if(Is_Error($ExecuteTime))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+# если неактивна, то через день запуск
+if(!$Settings['IsActive'])
+	return $ExecuteTime;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # vars
 $total_summ = 0;
 $MessageToAdmins = "Начисления по реферальной программе за прошлый месяц:\n\n";
@@ -87,8 +92,8 @@ case 'array':
 				if($Reward > 0){
 					Debug("[comp/Tasks/CaclulatePartnersReward]: Reward for [" . $Owner['Email'] . "] from #" . $Row['UserID'] . ' = ' . $Reward);
 					# fill user ballance
-					$Comment = "Начисления по партнёрской программе за " . date('Y/m',MkTime(4,0,0,Date('n')-1,5,Date('Y'))) . ", пользователь #" . $Row['UserID'];
-							
+					$Comment = SPrintF("Начисления по партнёрской программе за %s, пользователь #%s",date('Y/m',$PreviousTime),$Row['UserID']);
+					#-------------------------------------------------------------------------------
 					$Comp = Comp_Load('www/Administrator/API/PostingMake',
 							Array(	'ContractID'	=>$Contracts['ID'],
 								'ServiceID'	=>'1100',
@@ -206,9 +211,9 @@ case 'array':
 default:
 	return ERROR | @Trigger_Error(101);
 }
-
 #-------------------------------------------------------------------------------
-return MkTime(4,0,0,Date('n')+1,5,Date('Y'));
+#-------------------------------------------------------------------------------
+return $ExecuteTime;
 #-------------------------------------------------------------------------------
 
 
