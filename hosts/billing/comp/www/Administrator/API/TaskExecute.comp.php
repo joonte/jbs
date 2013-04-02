@@ -141,23 +141,37 @@ switch(ValueOf($Task)){
           return ERROR | @Trigger_Error(500);
       break;
       case 'integer':
-        Debug(SPrintF('[comp/www/Administrator/API/TaskExecute]: Task.TypeID = %s; Result = %s; Time = %s; Task.ExecuteDate = %s',$Task['TypeID'],date('Y-m-d G:i:s',$Result),date('Y-m-d G:i:s',time()),date('Y-m-d G:i:s',$Task['ExecuteDate'])));
-        #-----------------------------------------------------------------------
-        if($Result < Time()){
-          #---------------------------------------------------------------------
-          $ExecuteDate = $Task['ExecuteDate'];
-          #---------------------------------------------------------------------
-          if($ExecuteDate < Time())
-            $ExecuteDate += Round((Time() - $ExecuteDate)/$Result + 1)*$Result;
-          #---------------------------------------------------------------------
-          $UTask['ExecuteDate'] = $ExecuteDate;
-        }else
-          $UTask['ExecuteDate'] = $Result;
-        #-----------------------------------------------------------------------
+	Debug(SPrintF('[comp/www/Administrator/API/TaskExecute]: Task.TypeID = %s; Result = %s; Time = %s; Task.ExecuteDate = %s',$Task['TypeID'],date('Y-m-d G:i:s',$Result),date('Y-m-d G:i:s',time()),date('Y-m-d G:i:s',$Task['ExecuteDate'])));
+	#-----------------------------------------------------------------------
+	if($Result < Time() && $Result > Time() - 365*24*60*60){
+		#-------------------------------------------------------------------------------
+		# вариант, когда вылезло достаточно старое время, но это явно не сдвиг
+		$UTask['ExecuteDate'] = $Result + 24*60*60;
+		#-------------------------------------------------------------------------------
+	}elseif($Result < Time()){
+		#-------------------------------------------------------------------------------
+		# сдвиг времени
+		$ExecuteDate = $Task['ExecuteDate'];
+		#-------------------------------------------------------------------------------
+		if($ExecuteDate < Time())
+			$ExecuteDate += Round((Time() - $ExecuteDate)/$Result + 1)*$Result;
+		#-------------------------------------------------------------------------------
+		$UTask['ExecuteDate'] = $ExecuteDate;
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		# явно указанное время запуска
+		$UTask['ExecuteDate'] = $Result;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[comp/www/Administrator/API/TaskExecute]: Task.TypeID = %s; UTask.ExecuteDate = %s',$Task['TypeID'],date('Y-m-d G:i:s',$UTask['ExecuteDate'])));
-        if(Is_Error(DB_Commit($TransactionID)))
-          return ERROR | @Trigger_Error(500);
-      break;
+	#-------------------------------------------------------------------------------
+	if(Is_Error(DB_Commit($TransactionID)))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
       default:
         return ERROR | @Trigger_Error(101);
     }
