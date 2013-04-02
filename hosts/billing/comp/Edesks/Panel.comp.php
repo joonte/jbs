@@ -17,7 +17,7 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $NoBody->AddChild(new Tag('TD',Array('width'=>25),$Comp));
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Buttons/Standard',Array('onclick'=>"form.Message.value += '[image]http://server/image.gif[/image]\\n';"),'Добавить изображение','Image.gif');
+$Comp = Comp_Load('Buttons/Standard',Array(/*'onclick'=>"form.Message.value += '[image]http://server/image.gif[/image]\\n';",*/'id'=>'image'),'Добавить изображение','Image.gif');
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

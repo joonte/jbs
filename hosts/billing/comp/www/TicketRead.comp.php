@@ -230,10 +230,11 @@ switch(ValueOf($Ticket)){
         $Comp = Comp_Load(
           'Form/TextArea',
           Array(
-            'name'       => 'Message',
-            'onkeypress' => 'ctrlEnterEvent(event);',
-            'style'      => SPrintF('background:%s; width:%u;',$color,Max(@$_COOKIE['wScreen']/1.5,630)),
-            'rows'       => 5
+            'name'	=> 'Message',
+	    'id'	=> 'Message',
+            'onkeypress'=> 'ctrlEnterEvent(event);',
+            'style'	=> SPrintF('background:%s; width:%u;',$color,Max(@$_COOKIE['wScreen']/1.5,630)),
+            'rows'	=> 5
           )
         );
         if(Is_Error($Comp))

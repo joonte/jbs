@@ -109,12 +109,12 @@ pre.Whois {
 }
 
 /* added by lissyara, for JBS-11 */
-img.small{
+img.TicketSmall {
 	width:	200px;
 	cursor:	pointer;
 }
-img.big{
-	cursor: pointer;
+img.TicketOrig {
+	width:	auto;
+	cursor:	pointer;
 }
-
 
