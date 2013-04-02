@@ -141,6 +141,7 @@ switch(ValueOf($Task)){
           return ERROR | @Trigger_Error(500);
       break;
       case 'integer':
+        #Debug(SPrintF('[comp/www/Administrator/API/TaskExecute]: Task.TypeID = %s; Result = %s; Time = %s; Task.ExecuteDate = %s',$Task['TypeID'],date('Y-m-d G:i:s',$Result),date('Y-m-d G:i:s',time()),date('Y-m-d G:i:s',$Task['ExecuteDate'])));
         #-----------------------------------------------------------------------
         if($Result < Time()){
           #---------------------------------------------------------------------
@@ -153,6 +154,7 @@ switch(ValueOf($Task)){
         }else
           $UTask['ExecuteDate'] = $Result;
         #-----------------------------------------------------------------------
+	#Debug(SPrintF('[comp/www/Administrator/API/TaskExecute]: Task.TypeID = %s; UTask.ExecuteDate = %s',$Task['TypeID'],date('Y-m-d G:i:s',$UTask['ExecuteDate'])));
         if(Is_Error(DB_Commit($TransactionID)))
           return ERROR | @Trigger_Error(500);
       break;
