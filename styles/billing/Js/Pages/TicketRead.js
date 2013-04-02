@@ -174,9 +174,14 @@ $.fn.extend({
 //дальше пойдет код окошка с запросом
 $(document).ready(function(){
 	$('#image').click(function(){
-		$('#Message').insertAtCaret('[image]' + prompt("Please enter image url","http://") + '[/image]');
-	});
-});
+		var $UserInput = prompt("Please enter image url","http://");
+		if($UserInput){
+			$('#Message').insertAtCaret('[image]' + $UserInput + '[/image]');
+		}else{
+			return false;
+		}
+	});// click
+}); // ready
 //------------------------------------------------------------------------------
 
 
