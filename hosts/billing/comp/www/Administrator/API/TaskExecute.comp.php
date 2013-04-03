@@ -104,7 +104,7 @@ switch(ValueOf($Task)){
 	$Event = Array(
 			'UserID'	=> $Task['UserID'],
 			'PriorityID'	=> 'Error',
-			'Text'		=> SPrintF('Задание №%s [' . $Task['TypeID'] . '] вернуло ошибку выполнения',$Number),
+			'Text'		=> SPrintF('Задание №%s [%s] вернуло ошибку выполнения',$Number,$Task['TypeID']),
 		      );
 	$Event = Comp_Load('Events/EventInsert',$Event);
 	if(!$Event)
@@ -125,7 +125,7 @@ switch(ValueOf($Task)){
 	$Event = Array(
 			'UserID'	=> $Task['UserID'],
 			'PriorityID'	=> 'Error',
-			'Text'		=> SPrintF('Задание №%s [' . $Task['TypeID'] . '] не может быть выполнено в автоматическом режиме',$Number),
+			'Text'		=> SPrintF('Задание №%s [%s] не может быть выполнено в автоматическом режиме',$Number,$Task['TypeID']),
 		      );
 	$Event = Comp_Load('Events/EventInsert',$Event);
 	if(!$Event)
@@ -141,7 +141,7 @@ switch(ValueOf($Task)){
           return ERROR | @Trigger_Error(500);
       break;
       case 'integer':
-	Debug(SPrintF('[comp/www/Administrator/API/TaskExecute]: Task.TypeID = %s; Result = %s; Time = %s; Task.ExecuteDate = %s',$Task['TypeID'],date('Y-m-d G:i:s',$Result),date('Y-m-d G:i:s',time()),date('Y-m-d G:i:s',$Task['ExecuteDate'])));
+	#Debug(SPrintF('[comp/www/Administrator/API/TaskExecute]: Task.TypeID = %s; Result = %s; Time = %s; Task.ExecuteDate = %s',$Task['TypeID'],date('Y-m-d G:i:s',$Result),date('Y-m-d G:i:s',time()),date('Y-m-d G:i:s',$Task['ExecuteDate'])));
 	#-----------------------------------------------------------------------
 	if($Result < Time() && $Result > Time() - 365*24*60*60){
 		#-------------------------------------------------------------------------------
@@ -165,7 +165,7 @@ switch(ValueOf($Task)){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/www/Administrator/API/TaskExecute]: Task.TypeID = %s; UTask.ExecuteDate = %s',$Task['TypeID'],date('Y-m-d G:i:s',$UTask['ExecuteDate'])));
+	#Debug(SPrintF('[comp/www/Administrator/API/TaskExecute]: Task.TypeID = %s; UTask.ExecuteDate = %s',$Task['TypeID'],date('Y-m-d G:i:s',$UTask['ExecuteDate'])));
 	#-------------------------------------------------------------------------------
 	if(Is_Error(DB_Commit($TransactionID)))
 		return ERROR | @Trigger_Error(500);
