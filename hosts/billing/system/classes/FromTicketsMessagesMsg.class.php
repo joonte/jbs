@@ -12,9 +12,13 @@
      }
 
     public function getParams() {
-        $Message = Preg_Replace("#\[hidden\](.+)\[/hidden\]#sU", ' ', $this->params['Message'], -1);
+        #$Message = Preg_Replace("#\[hidden\](.+)\[/hidden\]#sU", ' ', $this->params['Message'], -1);
 
-        $this->params['Message'] = $Message;
+	$Message = Comp_Load('Edesks/Text',Array('String'=>$this->params['Message'],'IsEmail'=>TRUE));
+	if(Is_Error($Message))
+		return ERROR | @Trigger_Error(500);
+
+	$this->params['Message'] = $Message;
 
         return $this->params;
     }
