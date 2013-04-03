@@ -263,7 +263,7 @@ foreach($Mails as $mailId){
 	if($Settings['SaveHeaders'])
 		$SaveHeaders = SPrintF("[hidden]\n%s[/hidden]\n",$mailbox->fetchHeader($mail->mId));
 	#-------------------------------------------------------------------------------
-	$Message = SPrintF("%s\n\n%s[size:10][color:gray]posted via email, from: %s[/color][/size]",Trim($textPlain),(IsSet($SaveHeaders))?$SaveHeaders:'',(($IsAdmin)?$User['Name']:$fromAddress));
+	$Message = SPrintF("%s\n\n%s[size=10][color=gray]posted via email, from: %s[/color][/size]",Trim($textPlain),(IsSet($SaveHeaders))?$SaveHeaders:'',(($IsAdmin)?$User['Name']:$fromAddress));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# имеем 2 ситуации, задан или не задан $MessageID - соответственно, добавление в тикет или создание тикета
