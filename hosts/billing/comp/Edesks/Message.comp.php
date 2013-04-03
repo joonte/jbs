@@ -54,7 +54,7 @@ switch(ValueOf($Group)){
     return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$Text = Comp_Load('Edesks/Text',$Content,$OwnerID != @$GLOBALS['__USER']['ID']);
+$Text = Comp_Load('Edesks/Text',Array('String'=>$Content,'IsLockText'=>($OwnerID != @$GLOBALS['__USER']['ID'])));
 if(Is_Error($Text))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

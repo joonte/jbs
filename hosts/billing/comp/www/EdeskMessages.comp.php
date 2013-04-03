@@ -46,7 +46,7 @@ switch(ValueOf($Edesk)){
         #-----------------------------------------------------------------------
         if(In_Array($GLOBALS['__USER']['GroupID'],$Entrance)){
           #---------------------------------------------------------------------
-          $Theme = Comp_Load('Edesks/Text',$Edesk['Theme']);
+          $Theme = Comp_Load('Edesks/Text',Array('String'=>$Edesk['Theme']));
           if(Is_Error($Theme))
             return ERROR | @Trigger_Error(500);
           #---------------------------------------------------------------------

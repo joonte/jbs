@@ -4,12 +4,25 @@
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('String','IsLockText');
+$__args_list = Array('Params');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$String = Str_Replace(Chr(7),'',SPrintF("%s\n",$String));
+#Debug(SPrintF('[comp/Edesks/Text]: Params = %s',print_r($Params,true)));
+$IsLockText = FALSE;
+#-------------------------------------------------------------------------------
+if(IsSet($Params['IsLockText']))
+	if($Params['IsLockText'])
+		$IsLockText = TRUE;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# если это сообщение для почты, то скрытый текст надо убрать
+if(IsSet($Params['IsEmail']))
+	$IsLockText = FALSE;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$String = Str_Replace(Chr(7),'',SPrintF("%s\n",$Params['String']));
 #-------------------------------------------------------------------------------
 $String = Str_Replace('&quot;','"',HtmlSpecialChars($String));
 #-------------------------------------------------------------------------------
@@ -17,47 +30,54 @@ $String = Str_Replace('&quot;','"',HtmlSpecialChars($String));
 #-------------------------------------------------------------------------------
 $String = Preg_Replace('/\[hidden\](.+)\[\/hidden\]/sU',$IsLockText?'<DIV class="LockText"><B style="font-size:11px;">Скрытый текст:</B>\\1</DIV>':'',$String);
 #-------------------------------------------------------------------------------
-$String = preg_replace( "#(^|\s|>)((http|https|news|ftp)://\w+[^\s\[\]\<]+)#i", "\\1<A href=\"\\2\" target=\"blank\">\\2</A>", $String);
+$String = preg_replace( "#(^|\s|>)((http|https|news|ftp)://\w+[^\s\[\]\<]+)#i", !IsSet($Params['IsEmail'])?"\\1<A href=\"\\2\" target=\"blank\">\\2</A>":'\\1\\2',$String);
 #-------------------------------------------------------------------------------
-$String = Preg_Replace('/\[quote\](.+)\[\/quote\]/sU','<DIV class="QuoteText"><!-- <B style="font-size:11px;">Цитата:</B> -->\\1</DIV>',$String);
+$String = Preg_Replace('/\[quote\](.+)\[\/quote\]/sU',!IsSet($Params['IsEmail'])?'<DIV class="QuoteText"><!-- <B style="font-size:11px;">Цитата:</B> -->\\1</DIV>':'\\1',$String);
 #-------------------------------------------------------------------------------
-$String = Preg_Replace('/\[color:([a-z]+)\](.+)\[\/color\]/sU','<SPAN style="color:\\1;">\\2</SPAN>',$String);
+$String = Preg_Replace('/\[color=([a-z]+)\](.+)\[\/color\]/sU',!IsSet($Params['IsEmail'])?'<SPAN style="color:\\1;">\\2</SPAN>':'\\2',$String);
 #-------------------------------------------------------------------------------
-$String = Preg_Replace('/\[size:([0-9]+)\](.+)\[\/size\]/sU','<SPAN style="font-size:\\1px;">\\2</SPAN>',$String);
+$String = Preg_Replace('/\[size=([0-9]+)\](.+)\[\/size\]/sU',!IsSet($Params['IsEmail'])?'<SPAN style="font-size:\\1px;">\\2</SPAN>':'\\2',$String);
 #-------------------------------------------------------------------------------
-#$String = Preg_Replace('/\[image]http:\/\/[\/a-zA-Z0-9\.\-\_]+\[\/image\]/sU','<IMG src="\\1" />',$String);
-//$String = Preg_Replace("/\[image\](http|ftp|https):\/\/([\/a-zA-Z0-9\.\-\_]+)\[\/image\]/sU", "<img class=\"sampleimg small\" src=\"\\1://\\2\" />", $String);
-$String = Preg_Replace("/\[image\](http|ftp|https):\/\/([\/a-zA-Z0-9\.\-\_]+)\[\/image\]/sU", "<img class=\"TicketSmall\" src=\"\\1://\\2\" />", $String);
+$String = Preg_Replace("/\[image\](http|ftp|https):\/\/([\/a-zA-Z0-9\.\-\_]+)\[\/image\]/sU",!IsSet($Params['IsEmail'])?"<img class=\"TicketSmall\" src=\"\\1://\\2\" />":'\\1://\\2',$String);
 #-------------------------------------------------------------------------------
-$String = Preg_Replace('/\[link](.+)\[\/link\]/sU','<A href="\\1" target="blank">\\1</A>',$String);
+$String = Preg_Replace('/\[link](.+)\[\/link\]/sU',!IsSet($Params['IsEmail'])?'<A href="\\1" target="blank">\\1</A>':'\\1',$String);
 #-------------------------------------------------------------------------------
-$String = Preg_Replace('/\[b](.+)\[\/b\]/sU','<B>\\1</B>',$String);
+$String = Preg_Replace('/\[b](.+)\[\/b\]/sU',!IsSet($Params['IsEmail'])?'<B>\\1</B>':'\\1',$String);
 #-------------------------------------------------------------------------------
-$String = Preg_Replace('/\[p](.+)\[\/p\]\n/sU','<P>\\1</P>',$String);
+$String = Preg_Replace('/\[p](.+)\[\/p\]\n/sU',!IsSet($Params['IsEmail'])?'<P>\\1</P>':'\\1',$String);
 #-------------------------------------------------------------------------------
-$String = Preg_Replace('/\[marker](.+)\[\/marker\]\n/sU','<TABLE  style="margin-left:15px;" cellspacing="2" cellpadding="2"><TR><TD valign="top" style="padding-top:5px;"><IMG alt="+" width="8px" height="8px" src="/styles/root/Images/Ul.png" /></TD><TD>\\1</TD></TR></TABLE>',$String);
+$String = Preg_Replace('/\[marker](.+)\[\/marker\]\n/sU',!IsSet($Params['IsEmail'])?'<TABLE  style="margin-left:15px;" cellspacing="2" cellpadding="2"><TR><TD valign="top" style="padding-top:5px;"><IMG alt="+" width="8px" height="8px" src="/styles/root/Images/Ul.png" /></TD><TD>\\1</TD></TR></TABLE>':'\\1',$String);
 #-------------------------------------------------------------------------------
-$String = Preg_Replace('/\\n--\n/sU','<HR align="left" width="90%" />',$String);
+$String = Preg_Replace('/\\n--\n/sU',!IsSet($Params['IsEmail'])?'<HR align="left" width="90%" />':"\n--\n",$String);
 #-------------------------------------------------------------------------------
-$String = Preg_Replace('/\[bg:([a-z]+)\](.+)\[\/bg\]/sU','<DIV style="padding:5px;background-color:\\1;">\\2</DIV>',$String);
+$String = Preg_Replace('/\[bg=([a-z]+)\](.+)\[\/bg\]/sU',!IsSet($Params['IsEmail'])?'<DIV style="padding:5px;background-color:\\1;">\\2</DIV>':'\\2',$String);
 #-------------------------------------------------------------------------------
-//$String = Preg_Replace('/\[h:([a-zA-Z0-9]+)\](.+)\[\/h\]/sU','<\\1>\\2</\\1>',$String);
 #-------------------------------------------------------------------------------
-$Smiles = System_XML('config/Smiles.xml');
-if(Is_Error($Smiles))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-foreach(Array_Keys($Smiles) as $SmileID){
-	#-----------------------------------------------------------------------------
-	$Smile = $Smiles[$SmileID];
-	#-----------------------------------------------------------------------------
-	$String = Str_Replace($Smile['Pattern'],SPrintF('<IMG alt="%s" src="%s" style="display:inline;" />',$Smile['Name'],SPrintF('SRC:{Images/Smiles/%s.gif}',$SmileID)),$String);
+if(!IsSet($Params['IsEmail'])){
+	#-------------------------------------------------------------------------------
+	$Smiles = System_XML('config/Smiles.xml');
+	#-------------------------------------------------------------------------------
+	if(Is_Error($Smiles))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Smiles) as $SmileID){
+		#-----------------------------------------------------------------------------
+		$Smile = $Smiles[$SmileID];
+		#-----------------------------------------------------------------------------
+		$String = Str_Replace($Smile['Pattern'],SPrintF('<IMG alt="%s" src="%s" style="display:inline;" />',$Smile['Name'],SPrintF('SRC:{Images/Smiles/%s.gif}',$SmileID)),$String);
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
-if(StrLen(Trim($String)) < 1)
-	$String = '<FONT color="gray">Извините, но это сообщение было удалено автором до того как вы его прочитали</FONT>';
 #-------------------------------------------------------------------------------
-$String = Str_Replace("\n",'<BR />',Trim($String));
+if(StrLen(Trim($String)) < 1)
+	$String = !IsSet($Params['IsEmail'])?'<FONT color="gray">Извините, но это сообщение было удалено автором до того как вы его прочитали</FONT>':'Пустое сообщение';
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(!IsSet($Params['IsEmail']))
+	$String = Str_Replace("\n",'<BR />',Trim($String));
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $String;
 #-------------------------------------------------------------------------------

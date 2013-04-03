@@ -45,7 +45,7 @@ switch(ValueOf($Group)){
     return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$Theme = Comp_Load('Edesks/Text',$Theme);
+$Theme = Comp_Load('Edesks/Text',Array('String'=>$Theme));
 if(Is_Error($Theme))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
