@@ -170,7 +170,7 @@ foreach($HostingServersGroups as $HostingServersGroup){
 		$Table[] = Array(new Tag('TD',Array('colspan'=>7,'class'=>'Standard'),SPrintF('Общий доход от серверов группы: %s',$Comp)));
 		#----------------------------------------------------------------------------
 		# средняя стоимость аккаунта
-		$Comp = Comp_Load('Formats/Currency',$Balance / $Accounts);
+		$Comp = Comp_Load('Formats/Currency',$Balance / $NumPaid);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#----------------------------------------------------------------------------
