@@ -47,13 +47,13 @@ if(IsSet($Params['ExecutePeriod']) && $Params['ExecutePeriod']){
 	if(IsSet($Time[1])){
 		#-------------------------------------------------------------------------------
 		# если задана периодичность в днях - добавляем период, дней
-		$ExecuteDay = Date('j') + IsSet($Params['ExecuteDays'])?IntVal($Params['ExecuteDays']):0;
+		$ExecuteDay = Date('j') + (IsSet($Params['ExecuteDays'])?IntVal($Params['ExecuteDays']):0);
 		#-------------------------------------------------------------------------------
 		# если задан точный день месяца - устанавливаем его
 		$ExecuteDay = IsSet($Params['ExecuteDayOfMonth'])?IntVal($Params['ExecuteDayOfMonth']):$ExecuteDay;
 		#-------------------------------------------------------------------------------
 		# если задана периодичнось в месяцах, добавляем период, месяцев
-		$ExecuteMonth = Date('n') + IsSet($Params['ExecuteMonths'])?IntVal($Params['ExecuteMonths']):0;
+		$ExecuteMonth = Date('n') + (IsSet($Params['ExecuteMonths'])?IntVal($Params['ExecuteMonths']):0);
 		#-------------------------------------------------------------------------------
 		# если задан точный месяц - устанавливаем его
 		$ExecuteMonth = IsSet($Params['ExecuteMonth'])?IntVal($Params['ExecuteMonth']):$ExecuteMonth;
