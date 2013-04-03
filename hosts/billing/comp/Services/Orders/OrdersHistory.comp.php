@@ -9,7 +9,7 @@ $__args_list = Array('Params');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-Debug(SPrintF('[comp/Services/Orders/OrdersHistory]: Params = %s',print_r($Params,true)));
+#Debug(SPrintF('[comp/Services/Orders/OrdersHistory]: Params = %s',print_r($Params,true)));
 #-------------------------------------------------------------------------------
 $UserID = $GLOBALS['__USER']['ID'];
 #-------------------------------------------------------------------------------
