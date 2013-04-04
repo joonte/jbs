@@ -104,7 +104,7 @@ foreach($HostingServersGroups as $HostingServersGroup){
 				# считаем все не-бесплатные аккаунты, по ним будут расчёты цены и доходов
 				$Count = DB_Select('OrdersConsider','DISTINCT(`OrderID`) AS `OrderID`',Array('Where'=>$Where));
 				#-------------------------------------------------------------------------------
-				switch(ValueOf($ServerAccounts)){
+				switch(ValueOf($Count)){
 				case 'error':
 					return ERROR | @Trigger_Error(500);
 				case 'exception':
