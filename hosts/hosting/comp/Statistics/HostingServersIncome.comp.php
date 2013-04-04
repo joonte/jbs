@@ -59,7 +59,7 @@ foreach($HostingServersGroups as $HostingServersGroup){
 		$NumPaid = 0;
 		$Params = $Labels = Array();
 		#-------------------------------------------------------------------------------
-		$Table = Array(Array(new Tag('TD',Array('class'=>'Transparent','colspan'=>7),SPrintF('Группа серверов: %s',$HostingServersGroup['Name']))));
+		$Table = Array(SPrintF('Группа серверов: %s',$HostingServersGroup['Name']));
 		#-------------------------------------------------------------------------------
 		$Table[] = Array(new Tag('TD',Array('class'=>'Head'),'Адрес сервера'),new Tag('TD',Array('class'=>'Head'),'Аккаунтов (всего/платно)'),new Tag('TD',Array('class'=>'Head'),'Доход сервера'),new Tag('TD',Array('class'=>'Head'),'Доход аккаунта'),new Tag('TD',Array('class'=>'Head'),'Диск, Gb'),new Tag('TD',Array('class'=>'Head'),'Память, Mb'));
 		#-------------------------------------------------------------------------------
@@ -108,15 +108,21 @@ foreach($HostingServersGroups as $HostingServersGroup){
 				case 'error':
 					return ERROR | @Trigger_Error(500);
 				case 'exception':
-					return ERROR | @Trigger_Error(400);
-				case 'array':
-					# All OK, accounts found
+					#-------------------------------------------------------------------------------
+					$PaidAccounts = 0;
+					#-------------------------------------------------------------------------------
 					break;
+					#-------------------------------------------------------------------------------
+				case 'array':
+					#-------------------------------------------------------------------------------
+					# All OK, accounts found
+					$PaidAccounts = SizeOf($Count);
+					#-------------------------------------------------------------------------------
+					break;
+					#-------------------------------------------------------------------------------
 				default:
 					return ERROR | @Trigger_Error(101);
 				}
-				#-------------------------------------------------------------------------------
-				$PaidAccounts = SizeOf($Count);
 				#-------------------------------------------------------------------------------
 				# достаём место на диске и оперативную память
 				$Usage = DB_Select(Array('HostingOrders','HostingSchemes'),Array('CEIL(SUM(QuotaMEM)) AS tmem','CEIL(SUM(QuotaDisk)/1024) AS tdisk'),Array('UNIQ','Where'=>Array(SPrintF('`HostingOrders`.`ServerID` = %u',$Server['ID']),'`HostingSchemes`.`ID` = `HostingOrders`.`SchemeID`','`HostingOrders`.`StatusID` = "Active"')));
