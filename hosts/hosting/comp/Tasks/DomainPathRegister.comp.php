@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -10,7 +9,7 @@ $__args_list = Array('Task','DomainOrderID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Columns = Array('ID','UserID','DomainName','ProfileID','PersonID','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `RegistratorID`');
+$Columns = Array('ID','UserID','DomainName','ProfileID','PersonID','StatusID','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `RegistratorID`');
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
@@ -20,6 +19,11 @@ switch(ValueOf($DomainOrder)){
   case 'exception':
     return ERROR | @Trigger_Error(400);
   case 'array':
+    #-------------------------------------------------------------------------------
+    # JBS-663 - домен может быть уже удалён
+    if($DomainOrder['StatusID'] == 'Deleted')
+      return TRUE;
+    #-------------------------------------------------------------------------------
     #---------------------------------------------------------------------------
     $GLOBALS['TaskReturnInfo'] = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']);
     #---------------------------------------------------------------------------
@@ -36,7 +40,7 @@ switch(ValueOf($DomainOrder)){
 					'TargetGroupID'	=> 3100000,
 					'TargetUserID'	=> 100,
 					'PriorityID'	=> 'Low',
-					'Message'	=> trim(Strip_Tags($Clause['Text'])),
+					'Message'	=> Trim(Strip_Tags($Clause['Text'])),
 					'UserID'	=> $DomainOrder['UserID'],
 					'Flags'		=> 'CloseOnSee'
 					);
