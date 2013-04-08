@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Sergey Sedov (for www.host-food.ru) from Tasks/DomainsForSuspend*/
 /******************************************************************************/
@@ -12,7 +11,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Where = "`StatusID` = 'Active' AND `ExpirationDate` - UNIX_TIMESTAMP() <= 0 AND UNIX_TIMESTAMP() - `StatusDate` > 86400";
 #-------------------------------------------------------------------------------
-$DomainOrders = DB_Select('DomainsOrdersOwners',Array('ID','OrderID','UserID'),Array('Where'=>$Where,'Limits'=>Array(0,$Params['ItemPerIteration'])));
+$DomainOrders = DB_Select('DomainsOrdersOwners',Array('ID','OrderID','UserID','CONCAT(`DomainName`,".",(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`)) AS `DomainName`'),Array('Where'=>$Where,'Limits'=>Array(0,$Params['ItemPerIteration'])));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrders)){
   case 'error':
@@ -23,7 +22,7 @@ switch(ValueOf($DomainOrders)){
   case 'array':
     #---------------------------------------------------------------------------
     foreach($DomainOrders as $DomainOrder){
-      Debug( SPrintF("[Tasks/GC/SetSuspendExpiredDomains]: Блокировка домена #%d.",$DomainOrder['OrderID']) );
+      Debug( SPrintF("[Tasks/GC/SetSuspendExpiredDomains]: Блокировка домена %s; #%d.",$DomainOrder['DomainName'],$DomainOrder['OrderID']) );
       #----------------------------------TRANSACTION----------------------------
       if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Tasks/GC/SetSuspendExpiredDomains'))))
         return ERROR | @Trigger_Error(500);
@@ -35,7 +34,7 @@ switch(ValueOf($DomainOrders)){
 	  $Event = Array(
 	  			'UserID'	=> $DomainOrder['UserID'],
 				'PriorityID'	=> 'Billing',
-				'Text'		=> SPrintF('Заказ домена #%d не был продлен до окончания срока регистрации. Заказ заблокирован.',$DomainOrder['OrderID'])
+				'Text'		=> SPrintF('Заказ домена #%d (%s) не был продлен до окончания срока регистрации. Заказ заблокирован.',$DomainOrder['OrderID'],$DomainOrder['OrderID'])
 	                );
           $Event = Comp_Load('Events/EventInsert',$Event);
           if(!$Event)
