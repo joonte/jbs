@@ -55,7 +55,7 @@ case 'array':
 						$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
 						$NoBody = new Tag('NOBODY');
 						$NoBody->AddHTML(SPrintF($Parse,$Order['Name'],$Number,$Order['DaysRemainded']));
-						$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ServiceOrderPay',{OrderID:%u});",$Order['ID'])),'[оплатить]')));
+						$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ServiceOrderPay',{ServiceOrderID:%u});",$Order['ID'])),'[оплатить]')));
 						#-------------------------------------------------------------------------
 						$Result[] = $NoBody;
 					}
@@ -232,7 +232,7 @@ case 'array':
 					$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
 					$NoBody = new Tag('NOBODY');
 					$NoBody->AddHTML(SPrintF($Parse,$Order['Name'],$Number));
-					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ServiceOrderPay',{OrderID:%u});",$Order['ID'])),'[оплатить]')));
+					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ServiceOrderPay',{ServiceOrderID:%u});",$Order['ID'])),'[оплатить]')));
 					#-------------------------------------------------------------------------
 					$Result[] = $NoBody;
 				}
