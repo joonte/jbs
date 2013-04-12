@@ -131,27 +131,66 @@ foreach($Registrators as $NowReg){
 						if(!$Event)
 							return ERROR | @Trigger_Error(500);
 					}else{
-						Debug(SPrintF('comp/Tasks/GC/DomainsFindOdd]: Домен %s / %s, в биллинге есть, но его статус несоответствует критериям выборки',$DomainOdd,$NowReg['Name']));
+						#-------------------------------------------------------------------------------
+						Debug(SPrintF('comp/Tasks/GC/DomainsFindOdd]: Домен %s/%s, в биллинге есть, но его статус не соответствует критериям выборки',$DomainOdd,$NowReg['Name']));
+						#-------------------------------------------------------------------------------
 						# JBS-595 - проверяем не на переносе ли он - возможно перенеос завершился успешно
 						$Where[] = "`StatusID` = 'OnTransfer' OR `StatusID` = 'ForTransfer'";	# сама Where задана выше, тут тока условие добавляем
-						#-----------------------------------------------------------
-						$Count = DB_Count(Array('DomainsOrdersOwners','DomainsSchemes'),Array('Where'=>$Where));
-						if(Is_Error($Count))
+						#-------------------------------------------------------------------------------
+						$IsTransfer = DB_Select(Array('DomainsOrdersOwners','DomainsSchemes'),Array('ID'),Array('Where'=>$Where));
+						#-------------------------------------------------------------------------------
+						switch(ValueOf($IsTransfer)){
+						case 'error':
 							return ERROR | @Trigger_Error(500);
-						#-----------------------------------------------------------
-						if($Count){
+						case 'exception':
+							# небыл на переносе
+							break;
+						case 'array':
+							#-------------------------------------------------------------------------------
 							$Message = SPrintF('Домен %s успешно перенесён к регистратору %s',$DomainOdd,$NowReg['Name']);
+							#-------------------------------------------------------------------------------
 							Debug(SPrintF('[comp/Tasks/GC/DomainsFindOdd]: %s',$Message));
-							#-----------------------------------------------------------
-							$Event = Array('Text' => $Message,'PriorityID' => 'Notice','IsReaded' => FALSE);
-							$Event = Comp_Load('Events/EventInsert', $Event);
-							if(!$Event)
+							#-------------------------------------------------------------------------------
+							# TODO подправляем регистратора, т.к. у меня первый же перенос - задание на перенос
+							# одному регистратору, а домен перенесли к другому...
+							#$IsUpdate = DB_Update('DomainsOrders',Array('SchemeID'=>'надо достать тариф?'),Array('ID'=>$IsTransfer['ID']));
+							#if(Is_Error($IsUpdate))
+							#	return ERROR | @Trigger_Error(500);
+							#-------------------------------------------------------------------------------
+							# ставим статус "Активен"
+							$Comp = Comp_Load(
+									'www/API/StatusSet',
+									Array(
+										'ModeID'        => 'DomainsOrders',
+										'StatusID'      => 'Active',
+										'RowsIDs'       => $IsTransfer['ID'],
+										'Comment'       => $Message
+										)
+									);
+							#-------------------------------------------------------------------------------
+							switch(ValueOf($Comp)){
+							case 'error':
 								return ERROR | @Trigger_Error(500);
-						}					
+							case 'exception':
+								return ERROR | @Trigger_Error(400);
+							case 'array':
+								#-------------------------------------------------------------------------------
+								$Event = Array('Text' => $Message,'PriorityID' => 'Notice','IsReaded' => FALSE);
+								#-------------------------------------------------------------------------------
+								$Event = Comp_Load('Events/EventInsert', $Event);
+								if(!$Event)
+									return ERROR | @Trigger_Error(500);
+								#-------------------------------------------------------------------------------
+							default:
+								return ERROR | @Trigger_Error(101);
+							}
+						default:
+							return ERROR | @Trigger_Error(101);
+						}
 					}
 				}
 			}
-			#-----------------------------------------------------------
+			#-------------------------------------------------------------------------------
 			# лишние в биллинге
 			$DomainsOdd = Array_Diff($BillDomains,$RegDomains['Domains']);
 			if(SizeOf($DomainsOdd) > 0){
