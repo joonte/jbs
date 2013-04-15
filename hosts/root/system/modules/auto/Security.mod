@@ -35,7 +35,7 @@ if(Count($Args) > 0){
     #---------------------------------------------------------------------------
     $Arg = &$Args[$ArgID];
     #---------------------------------------------------------------------------
-    Debug(SPrintF('[Security module]: (%s) = (%s)',$ArgID,$Arg?$Arg:'EMPTY'));
+    Debug(SPrintF('[Security module]: (%s) = (%s)',$ArgID,$Arg?(Is_Array($Arg)?'Array':$Arg):'EMPTY'));
     #---------------------------------------------------------------------------
     if(Is_Array($Arg)){
       #-------------------------------------------------------------------------
@@ -43,7 +43,7 @@ if(Count($Args) > 0){
         #-----------------------------------------------------------------------
         $Element = &$Arg[$Key];
         #-----------------------------------------------------------------------
-        Debug(SPrintF('[Security module]: проверка параметра (%s [%s]) = (%s)',$ArgID,$Key,$Element));
+        Debug(SPrintF('[Security module]: проверка параметра (%s [%s]) = (%s)',$ArgID,$Key,Is_Array($Element)?'Array':$Element));
         #-----------------------------------------------------------------------
         if(Is_Scalar($Element) && Preg_Match($Template,$Element))
           return ERROR | @Trigger_Error(600);

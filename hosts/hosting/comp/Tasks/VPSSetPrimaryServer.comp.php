@@ -49,9 +49,10 @@ default:
 $GLOBALS['TaskReturnInfo'] = Array();
 #-------------------------------------------------------------------------
 foreach($VPSServersGroups as $VPSServersGroup){
-	Debug("[comp/Tasks/VPSSetPrimaryServer]: processing VPS group #" . $VPSServersGroup['ID'] . ", " . $VPSServersGroup['Name']);
+	Debug(SPrintF("[comp/Tasks/VPSSetPrimaryServer]: processing VPS group #%s, %s",$VPSServersGroup['ID'],$VPSServersGroup['Name']));
 	# выбираем все сервера этой группы, где стоит галка про автобалансировку
-	$VPSServers = DB_Select('VPSServers',Array('*'),Array('Where'=>"`IsAutoBalancing` = 'yes' AND `SystemID` != 'NullSystem' AND `ServersGroupID` = " . $VPSServersGroup['ID']));
+	$Where = Array("`IsAutoBalancing` = 'yes'","`SystemID` != 'NullSystem'",SPrintF('`ServersGroupID` = %u',$VPSServersGroup['ID']));
+	$VPSServers = DB_Select('VPSServers',Array('*'),Array('Where'=>$Where));
 	switch(ValueOf($VPSServers)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
@@ -84,19 +85,19 @@ foreach($VPSServersGroups as $VPSServersGroup){
 			case 'error':
 				return ERROR | @Trigger_Error(500);
 			default:
-				Debug("[comp/Tasks/VPSSetPrimaryServer]: Usage value = " . $Usage);
+				Debug(SPrintF('[comp/Tasks/VPSSetPrimaryServer]: Usage value = %s',$Usage));
 				# кладём в массив
 				$LA[$iVPSServer['ID']] =  $Usage / $iVPSServer['BalancingFactor'];
 			}
 		}	# enf foreach VPSServers
-		Debug(print_r($LA, true));
+		#Debug(print_r($LA, true));
 		#-------------------------------------------------------------------------
 		#-------------------------------------------------------------------------
 		# находим наименьшее значение в массиве
 		$MaxLA    = Max($LA);
 		foreach ($LA as $key => $value)
 		{
-			Debug("[comp/Tasks/VPSSetPrimaryServer]: $key => $value ");
+			Debug(SPrintF('[comp/Tasks/VPSSetPrimaryServer]: %s => %s',$key,$value));
 		        if($value <= $MaxLA){
 				$ServerID = $key;
 				$MaxLA = $value;

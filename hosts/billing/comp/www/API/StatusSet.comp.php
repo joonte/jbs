@@ -37,7 +37,7 @@ if(IsSet($Args['IsNotNotify'])){
 	$IsNotNotify	= false;
 }
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/www/API/StatusSet]: ModeID = %s; StatusID = %s; RowsIDs = %s; Comment = %s; IsNoTrigger = %s; IsNotNotify = %s',$ModeID,$StatusID,$RowsIDs,$Comment,$IsNoTrigger,$IsNotNotify));
+#Debug(SPrintF('[comp/www/API/StatusSet]: ModeID = %s; StatusID = %s; RowsIDs = %s; Comment = %s; IsNoTrigger = %s; IsNotNotify = %s',$ModeID,$StatusID,Is_Array($RowsIDs)?'Array':$RowsIDs,$Comment,$IsNoTrigger,$IsNotNotify));
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------

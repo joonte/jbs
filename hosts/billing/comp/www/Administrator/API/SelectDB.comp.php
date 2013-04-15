@@ -18,7 +18,7 @@ $Conditions =   (array) @$Args['Conditions'];
 $SortOn     =   (array) @$Args['SortOn'];
 $IsDesc     = (boolean) @$Args['IsDesc'];
 $Limits     =   (array) @$Args['Limits'];
-Debug(print_r($Conditions,true));
+#Debug(print_r($Conditions,true));
 #-------------------------------------------------------------------------------
 if(!$TableID)
   return new gException('WRONG_TABLE_ID','Неверное имя таблицы');

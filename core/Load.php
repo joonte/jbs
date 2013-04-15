@@ -41,7 +41,7 @@ Ignore_User_Abort(TRUE); # Если пользователь закрыл сое
  * Defines system constants.
  */
 
-if(!Define('VERSION', '##VERSION##'))
+if(!Define('VERSION', 'v2.5.15'))
   Exit('[JBs core]: не удалось определить константу (VERSION)');
 
 /**
@@ -182,7 +182,7 @@ function Debug($message) {
 
     if(isset($_SERVER["REMOTE_PORT"])){$r_port = $_SERVER["REMOTE_PORT"];}else{$r_port = "console";}
 
-    $message = SPrintF('[%s.%02u][%s] %s', $date, $micro * 100, $r_port, $message);
+    $message = SPrintF('[%s.%02u][%s] %s', $date, $micro * 100, $r_port, Is_Array($message)?'Array':$message);
 
     $__SYSLOG[] = $message;
 

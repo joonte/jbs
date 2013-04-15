@@ -239,7 +239,7 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
       return new gException('REGISTRATOR_ERROR_1',$Result['error_code']);
     }else{
       foreach(Array_Keys($Result['answer']) as $Key)
-      Debug("[RegRu_Answer::Domain_Register]: " . $Key . " - " . $Result['answer'][$Key]);
+        Debug(SPrintF("[RegRu_Answer::Domain_Register]: %s => %s",$Key,$Result['answer'][$Key]));
       #---------------------------------------------------------------------------
       if($Result['answer']['dname'] == $Domain){
         return Array('TicketID'=>(integer)$Result['answer']['service_id']);
