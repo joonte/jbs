@@ -9,7 +9,7 @@ $__args_list = Array('HostingOrder');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-Debug(SPrintF('[comp/Triggers/Statuses/HostingOrders/Waiting]: HostingOrder = %s',print_r($HostingOrder,true)));
+#Debug(SPrintF('[comp/Triggers/Statuses/HostingOrders/Waiting]: HostingOrder = %s',print_r($HostingOrder,true)));
 #-------------------------------------------------------------------------------
 $UserID = $GLOBALS['__USER']['ID'];
 #-------------------------------------------------------------------------------
