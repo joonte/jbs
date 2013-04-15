@@ -9,7 +9,7 @@ $__args_list = Array('VPSOrder');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-Debug(SPrintF('[comp/Triggers/Statuses/VPSOrders/Waiting]: VPSOrder = %s',print_r($VPSOrder,true)));
+#Debug(SPrintF('[comp/Triggers/Statuses/VPSOrders/Waiting]: VPSOrder = %s',print_r($VPSOrder,true)));
 #-------------------------------------------------------------------------------
 $UserID = $GLOBALS['__USER']['ID'];
 #-------------------------------------------------------------------------------

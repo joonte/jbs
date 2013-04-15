@@ -9,7 +9,7 @@ $__args_list = Array('ServiceOrder');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-Debug(SPrintF('[comp/Triggers/Statuses/ServiceOrders/Waiting]: ServiceOrder = %s',print_r($ServiceOrder,true)));
+#Debug(SPrintF('[comp/Triggers/Statuses/Orders/Waiting]: ServiceOrder = %s',print_r($ServiceOrder,true)));
 #-------------------------------------------------------------------------------
 $UserID = $GLOBALS['__USER']['ID'];
 #-------------------------------------------------------------------------------

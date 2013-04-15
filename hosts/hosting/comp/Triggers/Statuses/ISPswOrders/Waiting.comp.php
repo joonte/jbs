@@ -9,7 +9,7 @@ $__args_list = Array('ISPswOrder');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-Debug(SPrintF('[comp/Triggers/Statuses/ISPswOrders/Waiting]: ISPswOrder = %s',print_r($ISPswOrder,true)));
+#Debug(SPrintF('[comp/Triggers/Statuses/ISPswOrders/Waiting]: ISPswOrder = %s',print_r($ISPswOrder,true)));
 #-------------------------------------------------------------------------------
 $UserID = $GLOBALS['__USER']['ID'];
 #-------------------------------------------------------------------------------

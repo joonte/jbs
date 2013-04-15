@@ -9,7 +9,7 @@ $__args_list = Array('DSOrder');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-Debug(SPrintF('[comp/Triggers/Statuses/DSOrders/Waiting]: DSOrder = %s',print_r($DSOrder,true)));
+#Debug(SPrintF('[comp/Triggers/Statuses/DSOrders/Waiting]: DSOrder = %s',print_r($DSOrder,true)));
 #-------------------------------------------------------------------------------
 $UserID = $GLOBALS['__USER']['ID'];
 #-------------------------------------------------------------------------------

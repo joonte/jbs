@@ -9,7 +9,7 @@ $__args_list = Array('DomainOrder');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-Debug(SPrintF('[comp/Triggers/Statuses/DomainOrders/Waiting]: DomainOrder = %s',print_r($DomainOrder,true)));
+#Debug(SPrintF('[comp/Triggers/Statuses/DomainOrders/Waiting]: DomainOrder = %s',print_r($DomainOrder,true)));
 #-------------------------------------------------------------------------------
 $UserID = $GLOBALS['__USER']['ID'];
 #-------------------------------------------------------------------------------

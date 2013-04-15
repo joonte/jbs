@@ -9,7 +9,7 @@ $__args_list = Array('ExtraIPOrder');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-Debug(SPrintF('[comp/Triggers/Statuses/ExtraIPOrders/Waiting]: ExtraIPOrder = %s',print_r($ExtraIPOrder,true)));
+#Debug(SPrintF('[comp/Triggers/Statuses/ExtraIPOrders/Waiting]: ExtraIPOrder = %s',print_r($ExtraIPOrder,true)));
 #-------------------------------------------------------------------------------
 $UserID = $GLOBALS['__USER']['ID'];
 #-------------------------------------------------------------------------------
