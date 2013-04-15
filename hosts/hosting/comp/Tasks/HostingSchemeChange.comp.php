@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -61,7 +60,7 @@ switch(ValueOf($HostingOrder)){
 	    #-------------------------------------------------------------------
 	    $GLOBALS['TaskReturnInfo'] = Array($Server->Settings['Address'],$HostingOrder['Login'],$HostingOrder['SchemeName'],$HostingNewScheme['Name']);
             #-------------------------------------------------------------------
-	    Debug("[comp/Tasks/HostingSchemeChange]: " . print_r($HostingNewScheme,true));
+	    #Debug(SPrintF("[comp/Tasks/HostingSchemeChange]: HostingNewScheme = %s",print_r($HostingNewScheme,true)));
             $SchemeChange = $Server->SchemeChange($HostingOrder['Login'],$HostingNewScheme);
             #-------------------------------------------------------------------
             switch(ValueOf($SchemeChange)){
