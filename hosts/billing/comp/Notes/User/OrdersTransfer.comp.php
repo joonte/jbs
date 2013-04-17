@@ -13,7 +13,7 @@ $Where = Array(
 		'`ToUserID` = @local.__USER_ID',
 		'`IsExecuted` = "no"'
 		);
-$IOrdersTransfer = DB_Select('OrdersTransfer',Array('*','(SELECT `NameShort` FROM `Services` WHERE `Services`.`ID` = `OrdersTransfer`.`ServiceID`) AS `Name`','(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `OrdersTransfer`.`ServiceID`) AS `Code`'),Array('Where'=>$Where));
+$IOrdersTransfer = DB_Select('OrdersTransfer',Array('*','(SELECT `NameShort` FROM `Services` WHERE `Services`.`ID` = `OrdersTransfer`.`ServiceID`) AS `NameShort`','(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `OrdersTransfer`.`ServiceID`) AS `Code`'),Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($IOrdersTransfer)){
 case 'error':
@@ -64,6 +64,15 @@ case 'array':
 			#return ERROR | @Trigger_Error(400);
 			#-------------------------------------------------------------------------------
 		case 'array':
+			#-------------------------------------------------------------------------------
+			$OrderID = Comp_Load('Formats/Order/Number',$Order['OrderID']);
+			if(Is_Error($OrderID))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			$Params = Array('User'=>$User,'OrdersTransfer'=>$OrdersTransfer,'Order'=>$Order,'OrderID'=>$OrderID);
+			#-------------------------------------------------------------------------------
+			$NoBody = new Tag('NOBODY');
+			#-------------------------------------------------------------------------------
 			# No more...
 			break;
 			#-------------------------------------------------------------------------------
@@ -84,19 +93,15 @@ case 'array':
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
-			# нету подходящих профилей
-			$Path = System_Element('templates/modules/OrdersTransfer.Contracts.html');
-			if(Is_Error($Path))
-				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
-			$NoBody = new Tag('NOBODY');
-			$NoBody->AddHTML(SPrintF($Parse,$User['Email'],$OrdersTransfer['Name'],$Order['OrderID']));
+			# нету подходящих профилей
+			$NoBody->AddHTML(TemplateReplace('OrdersTransfer.Contracts',$Params));
 			$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>"javascript:ShowWindow('/ContractMake');"),'[создать договор]')));
 			#-------------------------------------------------------------------------------
 			$Result[] = $NoBody;
 			#-------------------------------------------------------------------------------
 			return $Result;
+			#-------------------------------------------------------------------------------
 		case 'array':
 			# No more...
 			break;
@@ -105,13 +110,7 @@ case 'array':
 		}
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Path = System_Element('templates/modules/OrdersTransfer.Message.html');
-		if(Is_Error($Path))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		$Parse = SPrintF('<NOBODY>%s</NOBODY>',Trim(IO_Read($Path)));
-		$NoBody = new Tag('NOBODY');
-		$NoBody->AddHTML(SPrintF($Parse,$User['Email'],$OrdersTransfer['Name'],$Order['OrderID']));
+		$NoBody->AddHTML(TemplateReplace('OrdersTransfer.Message',$Params));
 		$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/API/OrdersTransfer',{OrdersTransferID:%u});",$OrdersTransfer['ID'])),'[принять заказ]')));
 		#-------------------------------------------------------------------------------
 		$Result[] = $NoBody;
