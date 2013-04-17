@@ -1,13 +1,13 @@
 <?php
 
 #-------------------------------------------------------------------------------
-/** @author Великодный В.В. (Joonte Ltd.) */
+/** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/Server.class.php')))
+if(Is_Error(System_Load('classes/Server.class.php','libs/TemplateReplace.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -249,13 +249,7 @@ foreach(Array_Keys($TUsages) as $ServerID){
 						break;
 					case 'array':
 						#-------------------------------------------------------------------------------
-						# готовим текст сообщения
-						$Replace = Array_ToLine($Params,'%');
-						$Message = Trim(Strip_Tags($Clause['Text']));
-						#-------------------------------------------------------------------------------
-						foreach(Array_Keys($Replace) as $Key)
-							$Message = Str_Replace($Key,$Replace[$Key],$Message);
-						#-------------------------------------------------------------------------------
+						# готовим тикет
 						$ITicket = Array(
 								'Theme'		=> $Clause['Title'],
 								'PriorityID'	=> 'Low',
@@ -263,7 +257,7 @@ foreach(Array_Keys($TUsages) as $ServerID){
 								'TargetGroupID'	=> 3100000,
 								'TargetUserID'	=> 100,
 								'UserID'	=> $HostingOrder['UserID'],
-								'Message'	=> $Message
+								'Message'	=> TemplateReplace(Strip_Tags($Clause['Text']),$Params,FALSE)
 								);
 						#-------------------------------------------------------------------------------
 						$IsAdd = Comp_Load('www/API/TicketEdit',$ITicket);
