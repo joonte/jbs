@@ -128,6 +128,9 @@ switch(ValueOf($ISPswOrder)){
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
               $IBasket = Array('OrderID'=>$ISPswOrder['OrderID'],'Comment'=>SPrintF('Тариф: %s, с %s по %s',$ISPswScheme['Name'],$sDate,$tDate),'Amount'=>$DaysPay,'Summ'=>$CostPay);
+	      #-----------------------------------------------------------------
+	      if($ISPswScheme['ConsiderTypeID'] == 'Upon')
+	        $IBasket = Array('OrderID'=>$ISPswOrder['OrderID'],'Comment'=>SPrintF('Тариф: %s',$ISPswScheme['Name']),'Amount'=>'9999','Summ'=>$CostPay);
               #-----------------------------------------------------------------
               $Count = DB_Count('Basket',Array('Where'=>SPrintF('`OrderID` = %u',$ISPswOrder['OrderID'])));
               if(Is_Error($Count))
