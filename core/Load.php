@@ -41,7 +41,7 @@ Ignore_User_Abort(TRUE); # Если пользователь закрыл сое
  * Defines system constants.
  */
 
-if(!Define('VERSION', 'v2.5.15'))
+if(!Define('VERSION', '##VERSION##'))
   Exit('[JBs core]: не удалось определить константу (VERSION)');
 
 /**
