@@ -48,7 +48,7 @@ if($LastID){
 #---------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];
 #---------------------------------------------------------------------------
-if($__USER['IsAdmin'])
+if(!$__USER['IsAdmin'])
 	$Where[] = SPrintF('`UserID` = %u',$__USER['ID']);
 #---------------------------------------------------------------------------
 $UserInfo = "(SELECT CONCAT(FROM_UNIXTIME(`CreateDate`,'%Y-%m-%d / %H:%i:%s / '),`Email`,' / ',`Name`) FROM `Users` WHERE `Users`.`ID` = `Events`.`UserID`)";
