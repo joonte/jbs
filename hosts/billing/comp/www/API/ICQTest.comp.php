@@ -21,7 +21,7 @@ $Executor = DB_Select('Users','Sign',Array('UNIQ','ID'=>100));
 if(!Is_Array($Executor))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Tasks/ICQ',NULL,$UIN,TemplateReplace('www.API.ICQTest',Array('User'=>$GLOBALS['__USER'],'Executor'=>$Executor,'Service'=>'Jabber'),FALSE),$GLOBALS['__USER']['ID']);
+$Comp = Comp_Load('Tasks/ICQ',NULL,$UIN,TemplateReplace('www.API.ICQTest',Array('User'=>$GLOBALS['__USER'],'Executor'=>$Executor,'Service'=>'ICQ'),FALSE),$GLOBALS['__USER']['ID']);
 if(Is_Error($Comp))
 	return new gException('ERROR_MESSAGE_SEND','Не удалось отправить сообщение');
 #-------------------------------------------------------------------------------
