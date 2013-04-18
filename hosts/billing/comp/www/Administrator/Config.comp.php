@@ -96,7 +96,7 @@ function Config_Read($Array,$Path = Array(),$Level = 1){
           return ERROR | @Trigger_Error(101);
       }
     }else
-      $Comp = new Tag('SPAN',Array('class'=>'NodeParam','onclick'=>SPrintF("Value = prompt('Значение1:',this.innerHTML.XMLUnEscape());if(Value != null){ ConfigChange('%s',Value); this.innerHTML = Value; }",$StringPath)),$Element != ''?$Element:'[EMPTY]');
+      $Comp = new Tag('SPAN',Array('class'=>'NodeParam','onclick'=>SPrintF("Value = prompt('Значение1:',this.innerHTML.XMLUnEscape());if(Value != null){ ConfigChange('%s',Value); this.innerHTML = Value; }",$StringPath)),Is_Array($Element)?'[EMPTY]':(($Element == '')?'[EMPTY]':$Element));
     #---------------------------------------------------------------------------
     if(Is_Array($Element) && Count($Element)){
       #-------------------------------------------------------------------------
