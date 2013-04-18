@@ -48,7 +48,7 @@ switch(ValueOf($DomainOrder)){
         }
         #-----------------------------------------------------------------------
         #-----------------------------------------------------------------------
-	if(!$__USER['ID']['IsAdmin'])
+	if(!$__USER['IsAdmin'])
 	  if(!In_Array($DomainOrder['StatusID'],Array('Active','Suspended','OnDelegating','ForProlong','OnProlong','ForNsChange')))
             return new gException('WE_NOT_OWN_THIS_ORDER','Можно смотреть информацию только по доменам зарегистрированным у нас');
         #-----------------------------------------------------------------------
