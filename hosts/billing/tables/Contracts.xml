@@ -33,6 +33,7 @@
   <PatternOut>
    <Args>
     <Patterns>
+     <!-- ****************************************************************** -->
      <Yesterday>
       <Name>Договоры за вчера</Name>
       <Where>`StatusDate` &gt; BEGIN_DAY() - 86400</Where>
@@ -67,6 +68,12 @@
       <Name>Заключенные договоры</Name>
       <Where>`StatusID` = 'Complite'</Where>
      </Complite>
+     <!-- ****************************************************************** -->
+     <NegativeBallance>
+      <Name>С отрицательным балансом</Name>
+      <Where>`Balance` &lt; 0</Where>
+     </NegativeBallance>
+     <!-- ****************************************************************** -->
     </Patterns>
     <ActiveID>Week</ActiveID>
    </Args>
