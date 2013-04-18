@@ -212,16 +212,8 @@ switch(ValueOf($VPSOrder)){
               $Table[] = Array('Всего к оплате',$Comp);
               #-----------------------------------------------------------------
               $Div = new Tag('DIV',Array('align'=>'right','class'=>'Standard'));
-#-------------------------------------------------------------------------------
-$Parse = <<<EOD
-<NOBODY>
- <SPAN>C </SPAN>
- <A href="/Clause?ClauseID=Contracts/Enclosures/Types/VPSRules/Content" target="blank">условиями</A>
- <SPAN> оказания услуг ознакомлен</SPAN>
-</NOBODY>
-EOD;
-#-------------------------------------------------------------------------------
-              $Div->AddHTML($Parse);
+              #-------------------------------------------------------------------------------
+	      $Div->AddHTML(TemplateReplace('www.ServiceOrderPay',Array('ServiceCode'=>'VPS')));
               #-----------------------------------------------------------------
               $Table[] = $Div;
               #-----------------------------------------------------------------

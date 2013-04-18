@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -45,16 +44,10 @@ switch(ValueOf($Basket)){
   case 'error':
     return ERROR | @Trigger_Error(500);
   case 'exception':
-$Parse = <<<EOD
-<NOBODY>
- <SPAN>Корзина заказов пуста. Для заказа новых услуг перейдите в раздел </SPAN>
- <A style="font-size:14px;font-weight:bold;" href="/ServicesOrders">[услуги]</A>
-</NOBODY>
-EOD;
     #---------------------------------------------------------------------------
     $NoBody = new Tag('NOBODY');
     #---------------------------------------------------------------------------
-    $NoBody->AddHTML($Parse);
+    $NoBody->AddHTML(TemplateReplace('www.Basket'));
     #---------------------------------------------------------------------------
     $Comp = Comp_Load('Information',$NoBody,'Notice');
     if(Is_Error($Comp))

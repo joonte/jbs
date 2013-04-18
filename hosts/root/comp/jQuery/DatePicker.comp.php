@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -11,7 +10,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(Is_Null($Time))
-  $Time = Time();
+	$Time = Time();
 #-------------------------------------------------------------------------------
 $Links = Links();
 # Коллекция ссылок
@@ -22,28 +21,10 @@ if(!Comp_IsLoaded('jQuery/DatePicker')){
   $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{others/jQuery/ui.core.js}')));
   $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{others/jQuery/ui.datepicker.js}')));
   #$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{others/jQuery/datepicker-ru.js}')));
-#-------------------------------------------------------------------------------
-$Parse = <<<EOD
-//------------------------------------------------------------------------------
-function DatePickerBeforeShow(Field){
-  //----------------------------------------------------------------------------
-  document.getElementById('ui-datepicker-div').style.zIndex = GetMaxZIndex() + 1;
-  //----------------------------------------------------------------------------
-  //Field.value = (Field.value - TimezoneOffset)*1000;
-}
-//------------------------------------------------------------------------------
-function DatePickerOnClose(){
-  //----------------------------------------------------------------------------
-  //this.value = (this.value/1000) + TimezoneOffset;
-}
-//------------------------------------------------------------------------------
-function DatePickerSelect(Field,sDate,UniqID){
-  //----------------------------------------------------------------------------
-  document.getElementById(UniqID).innerHTML = $.datepicker.parseDate('[yy/mm/dd]',sDate).ToStringDate();
-}
-EOD;
-#-------------------------------------------------------------------------------
-  $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript'),SPrintF($Parse,Date('Z'))));
+  #-------------------------------------------------------------------------------
+  #Debug(TemplateReplace('jQuery.DatePicker',Array(),FALSE));
+  $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript'),TemplateReplace('jQuery.DatePicker',Array(),FALSE)));
+  #-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 $UniqID = UniqID();

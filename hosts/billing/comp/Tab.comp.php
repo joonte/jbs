@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -16,29 +15,7 @@ if(Is_Error($XML))
 #-------------------------------------------------------------------------------
 $Items = $XML['Items'];
 #-------------------------------------------------------------------------------
-$Parse = <<<EOD
-<TABLE cellspacing="0" cellpadding="0" width="100%">
- <TR>
-  <TD>
-   <TABLE cellspacing="0" cellpadding="0" width="100%">
-    <TR>
-     <TD>
-      <TABLE id="TabMenu" cellspacing="0" cellpadding="0" />
-     </TD>
-    </TR>
-    <TR height="2">
-     <TD style="background-image:url(SRC:{Images/TabLine.png});" />
-    </TR>
-   </TABLE>
-  </TD>
- </TR>
- <TR>
-  <TD id="TabInto" />
- </TR>
-</TABLE>
-EOD;
-#-------------------------------------------------------------------------------
-$DOM = new DOM($Parse);
+$DOM = new DOM(TemplateReplace('Tab.Table1'));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('TabInto',$Child);
 #-------------------------------------------------------------------------------
@@ -49,21 +26,7 @@ foreach($Items as $Item){
   $Td = new Tag('TD');
   #-----------------------------------------------------------------------------
   $Prefix = ($Item['IsActive']?'Active':'UnActive');
-#-------------------------------------------------------------------------------
-$Parse = <<<EOD
-<TABLE cellspacing="0" cellpadding="0">
- <TR>
-  <TD width="10">
-   <IMG id="TabLeft" style="display:block;" width="10" height="25" src="SRC:{Images/TabLeft%s.gif}" />
-  </TD>
-  <TD id="TabCenter" style="white-space:nowrap;background-image:url(SRC:{Images/TabCenter%s.png});">%s</TD>
-  <TD width="10">
-   <IMG id="TabRight" style="display:block;" width="10" height="25" src="SRC:{Images/TabRight%s.gif}" />
-  </TD>
- </TR>
-</TABLE>
-EOD;
-#-------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------
   $A = new Tag('A',Array('href'=>$Item['Href']),$Item['Text']);
   #-----------------------------------------------------------------------------
   if(IsSet($Item['Prompt'])){
@@ -81,7 +44,7 @@ EOD;
     UnSet($Links[$LinkID]);
   }
   #-----------------------------------------------------------------------------
-  $Td->AddHTML(SPrintF($Parse,$Prefix,$Prefix,$A->ToXMLString(),$Prefix,$Prefix));
+  $Td->AddHTML(TemplateReplace('Tab.Table2',Array('Prefix'=>$Prefix,'Href'=>($A->ToXMLString()))));
   #-----------------------------------------------------------------------------
   $Tr->AddChild($Td);
 }

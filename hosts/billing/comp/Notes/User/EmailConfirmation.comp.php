@@ -18,7 +18,7 @@ if(!CacheManager::isEnabled())
 if($GLOBALS['__USER']['EmailConfirmed'] < 1 /* пусть просто подтверждают... */){
 	#-------------------------------------------------------------------------------
 	$NoBody = new Tag('NOBODY');
-	$NoBody->AddHTML(TemplateReplace('EmailConfirmation',Array('User'=>$GLOBALS['__USER'])));
+	$NoBody->AddHTML(TemplateReplace('Notes.User.EmailConfirmation',Array('User'=>$GLOBALS['__USER'])));
 	$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>"javascript:ShowWindow('/UserPersonalDataChange');"),'[Мои настройки]')));
 	#-------------------------------------------------------------------------------
 	$Result[] = $NoBody;

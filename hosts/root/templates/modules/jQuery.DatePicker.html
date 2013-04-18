@@ -1,0 +1,20 @@
+/** @author Alex Keda, for www.host-food.ru  */
+
+//------------------------------------------------------------------------------
+function DatePickerBeforeShow(Field){
+  //----------------------------------------------------------------------------
+  document.getElementById('ui-datepicker-div').style.zIndex = GetMaxZIndex() + 1;
+  //----------------------------------------------------------------------------
+  //Field.value = (Field.value - TimezoneOffset)*1000;
+}
+//------------------------------------------------------------------------------
+function DatePickerOnClose(){
+  //----------------------------------------------------------------------------
+  //this.value = (this.value/1000) + TimezoneOffset;
+}
+//------------------------------------------------------------------------------
+function DatePickerSelect(Field,sDate,UniqID){
+  //----------------------------------------------------------------------------
+  document.getElementById(UniqID).innerHTML = $.datepicker.parseDate('[yy/mm/dd]',sDate).ToStringDate();
+}
+

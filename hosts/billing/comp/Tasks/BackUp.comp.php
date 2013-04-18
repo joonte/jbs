@@ -54,9 +54,7 @@ if(!File_Exists($Folder)){
 #-------------------------------------------------------------------------------
 $File = SPrintF('%s/%s.sql',$Folder,Date('D'));
 #-------------------------------------------------------------------------------
-$Command = <<<EOD
-mysqldump --host=%s --port=%u --user=%s --password=%s --quote-names -r %s %s 2>&1
-EOD;
+$Command = 'mysqldump --host=%s --port=%u --user=%s --password=%s --quote-names -r %s %s 2>&1';
 #-------------------------------------------------------------------------------
 $Command = SPrintF($Command,$DBConnection['Server'],$DBConnection['Port'],$DBConnection['User'],$DBConnection['Password'],$File,$DBConnection['DbName']);
 #-------------------------------------------------------------------------------

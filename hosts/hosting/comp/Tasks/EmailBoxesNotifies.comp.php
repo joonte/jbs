@@ -83,15 +83,8 @@ switch(ValueOf($HostingServers)){
                         if($Usage > 80){
 			  #-------------------------------------------------------
 			  $NotifyedCount++;
-#-------------------------------------------------------------------------------
-$Message = <<<EOD
-Вас беспокоет почтовая система.
-Уведомляем Вас, о том, что оканчивается квота для Вашего почтового ящика %s.
-На данный момент Ваш почтовый ящик заполнен на %u%%.
-Пожалуйста, примите меры, иначе Ваш почтовый ящик будет заполнен и Вы не сможете принимать сообщения.
-EOD;
-#-------------------------------------------------------------------------------
-                          $IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'Email','Params'=>Array($Email,'Квота почтового ящика',SPrintF($Message,$Email,$Usage),Implode("\n",$Heads))));
+                          #-------------------------------------------------------------------------------
+                          $IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'Email','Params'=>Array($Email,'Квота почтового ящика',TemplateReplace('Tasks.EmailBoxesNotifies',Array('Email'=>$Email,'Usage'=>$Usage),FALSE),Implode("\n",$Heads))));
                           #-----------------------------------------------------
                           switch(ValueOf($IsAdd)){
                             case 'error':

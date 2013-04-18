@@ -95,7 +95,7 @@ case 'array':
 		case 'exception':
 			#-------------------------------------------------------------------------------
 			# нету подходящих профилей
-			$NoBody->AddHTML(TemplateReplace('OrdersTransfer.Contracts',$Params));
+			$NoBody->AddHTML(TemplateReplace('Notes.User.OrdersTransfer.Contracts',$Params));
 			$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>"javascript:ShowWindow('/ContractMake');"),'[создать договор]')));
 			#-------------------------------------------------------------------------------
 			$Result[] = $NoBody;
@@ -110,7 +110,7 @@ case 'array':
 		}
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$NoBody->AddHTML(TemplateReplace('OrdersTransfer.Message',$Params));
+		$NoBody->AddHTML(TemplateReplace('Notes.User.OrdersTransfer.Message',$Params));
 		$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/API/OrdersTransfer',{OrdersTransferID:%u});",$OrdersTransfer['ID'])),'[принять заказ]')));
 		#-------------------------------------------------------------------------------
 		$Result[] = $NoBody;

@@ -33,22 +33,10 @@ foreach(Array_Keys($Items) as $ItemID){
   $Prefix = ($Item['IsActive']?'Active':'UnActive');
   #-----------------------------------------------------------------------------
   $IsPick = (!$Item['IsActive'] && IsSet($Item['Pick']));
-#-------------------------------------------------------------------------------
-$Parse = <<<EOD
-<TABLE border="0" width="100%%" height="100%%" cellspacing="0" cellpadding="0">
-  <TR>
-   <TD height="5" width="10" style="background-image:url(SRC:{Images/MenuLeftLeft%s.png});" />
-   <TD rowspan="2" id="MenuLeftCenter" style="padding-top:5px;padding-bottom:5px;background-image:url(SRC:{Images/MenuLeftCenter%s.png});" />
-  </TR>
-  <TR>
-   <TD height="5" style="background-image:url(SRC:{Images/MenuLeftLeft%s.png});background-position:left bottom;" />
-  </TR>
-</TABLE>
-EOD;
-#-------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------
   $LeftPrefix = ($IsPick?SPrintF('%sPick',$Prefix):$Prefix);
   #-----------------------------------------------------------------------------
-  $DOM = new DOM(SPrintF($Parse,$LeftPrefix,$Prefix,$LeftPrefix));
+  $DOM = new DOM(TemplateReplace('Menus.Left',Array('LeftPrefix'=>$LeftPrefix,'Prefix'=>$Prefix)));
   #-----------------------------------------------------------------------------
   $Text = $Item['Text'];
   #-----------------------------------------------------------------------------

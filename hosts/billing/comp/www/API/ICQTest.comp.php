@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -13,28 +12,19 @@ $Args = Args();
 $UIN = (integer) @$Args['UIN'];
 #-------------------------------------------------------------------------------
 if(!$UIN)
-  return new gException('UIN_NOT_FILLED','Номер ICQ не указан');
+	return new gException('UIN_NOT_FILLED','Номер ICQ не указан');
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Executor = DB_Select('Users','Sign',Array('UNIQ','ID'=>100));
 if(!Is_Array($Executor))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Message = <<<EOD
-Уважаемый %s!
-Если Вы видите данное сообщение, значит уведомления для Вас через службу ICQ в
-нашей биллинговой системе успешно настроены!
-
-%s
-EOD;
+$Comp = Comp_Load('Tasks/ICQ',NULL,$UIN,TemplateReplace('www.API.ICQTest',Array('User'=>$GLOBALS['__USER'],'Executor'=>$Executor,'Service'=>'Jabber'),FALSE),$GLOBALS['__USER']['ID']);
+if(Is_Error($Comp))
+	return new gException('ERROR_MESSAGE_SEND','Не удалось отправить сообщение');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Tasks/ICQ',NULL,$UIN,SPrintF($Message,$GLOBALS['__USER']['Name'],$Executor['Sign']),$GLOBALS['__USER']['ID']);
-if(Is_Error($Comp)){
-  #-----------------------------------------------------------------------------
-  return new gException('ERROR_MESSAGE_SEND','Не удалось отправить сообщение');
-}
 #-------------------------------------------------------------------------------
 return Array('Status'=>'Ok');
 #-------------------------------------------------------------------------------

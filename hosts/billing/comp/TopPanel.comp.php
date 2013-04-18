@@ -145,22 +145,8 @@ if(!IsSet($GLOBALS['__USER'])){
     $Td = new Tag('TD',Array('valign'=>'bottom'));
     #---------------------------------------------------------------------------
     $Prefix = ($Item['IsActive']?'Active':'UnActive');
-#-------------------------------------------------------------------------------
-$Parse = <<<EOD
-<TABLE id="TopPanel" cellspacing="0" cellpadding="0">
- <TR>
-  <TD width="10">
-   <IMG id="TopPanelTabLeft" style="display:block;" width="10" height="25" />
-  </TD>
-  <TD id="TopPanelTabCenter" style="white-space:nowrap;" />
-  <TD width="10">
-   <IMG id="TopPanelTabRight" style="display:block;" width="10" height="25" />
-  </TD>
- </TR>
-</TABLE>
-EOD;
-#-------------------------------------------------------------------------------
-    $Section = new DOM($Parse);
+    #---------------------------------------------------------------------------
+    $Section = new DOM(TemplateReplace('TopPanel'));
     #---------------------------------------------------------------------------
     $Section->AddAttribs('TopPanelTabLeft',Array('src'=>SPrintF('SRC:{Images/TopPanelTabLeft%s.png}',$Prefix)));
     #---------------------------------------------------------------------------

@@ -41,39 +41,9 @@ $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'S
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{others/jQuery/core.js}')));
 $DOM->AddChild('Head',new Tag('LINK',Array('rel'=>'stylesheet','type'=>'text/css','href'=>'SRC:{others/jQuery/smoothness/jquery-ui-custom.css}')));
 #-------------------------------------------------------------------------------
-$Parse = <<<EOD
-<TABLE id="Window" style="display:none;position:absolute;left:-1000;top:-1000;" cellspacing="0" cellpadding="0">
- <TR>
-  <TD>
-   <TABLE class="WindowHeader" width="100%%" cellspacing="0" cellpadding="0">
-    <TR>
-     <TD class="WindowTitle" id="WindowTitle" />
-     <TD width="20">
-      <BUTTON class="Transparent" title="Закрыть окно" onclick="HideWindow();">
-       <IMG src="SRC:{Images/Icons/Close.gif}" width="15" height="15" alt="Закрыть" border="0" />
-      </BUTTON>
-     </TD>
-    </TR>
-   </TABLE>
-  </TD>
- </TR>
- <TR>
-  <TD id="WindowBody" style="padding:5px;" />
- </TR>
-</TABLE>
-EOD;
+$DOM->AddHTML('Floating',TemplateReplace('Triggers.DOM.Before.Base.TABLE'));
 #-------------------------------------------------------------------------------
-$DOM->AddHTML('Floating',$Parse);
-#-------------------------------------------------------------------------------
-$Parse = <<<EOD
-<DIV id="AutoComplite" style="display:none;position:absolute;top:-1000;left:-1000;">
- <SELECT id="AutoCompliteSelect" size="4">
-  <OPTION value="NoResult">Default</OPTION>
- </SELECT>
-</DIV>
-EOD;
-#-------------------------------------------------------------------------------
-$DOM->AddHTML('Floating',$Parse);
+$DOM->AddHTML('Floating',TemplateReplace('Triggers.DOM.Before.Base.DIV'));
 #-------------------------------------------------------------------------------
 if(IsSet($_COOKIE['Eval'])){
   #-----------------------------------------------------------------------------

@@ -1,8 +1,7 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
-/** @author Великодный В.В. (Joonte Ltd.) */
+/** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
 Eval(COMP_INIT);
@@ -13,28 +12,19 @@ $Args = Args();
 $JabberID = (string) @$Args['JabberID'];
 #-------------------------------------------------------------------------------
 if(!$JabberID)
-  return new gException('JabberID_NOT_FILLED','Jabber ID не указан');
+	return new gException('JabberID_NOT_FILLED','Jabber ID не указан');
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Executor = DB_Select('Users','Sign',Array('UNIQ','ID'=>100));
 if(!Is_Array($Executor))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Message = <<<EOD
-Уважаемый %s!
-Если Вы видите данное сообщение, значит уведомления для Вас через службу Jabber в
-нашей биллинговой системе успешно настроены!
-
-%s
-EOD;
+$Comp = Comp_Load('Tasks/Jabber',NULL,$JabberID,TemplateReplace('www.API.ICQTest',Array('User'=>$GLOBALS['__USER'],'Executor'=>$Executor,'Service'=>'Jabber'),FALSE),'Тестовое сообщение через Jabber',$GLOBALS['__USER']['ID']);
+if(Is_Error($Comp))
+	return new gException('ERROR_MESSAGE_SEND','Не удалось отправить сообщение');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Tasks/Jabber',NULL,$JabberID,SPrintF($Message,$GLOBALS['__USER']['Name'],$Executor['Sign']),'Тестовое сообщение через Jabber',$GLOBALS['__USER']['ID']);
-if(Is_Error($Comp)){
-  #-----------------------------------------------------------------------------
-  return new gException('ERROR_MESSAGE_SEND','Не удалось отправить сообщение');
-}
 #-------------------------------------------------------------------------------
 return Array('Status'=>'Ok');
 #-------------------------------------------------------------------------------

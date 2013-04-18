@@ -59,15 +59,9 @@ switch(ValueOf($Invoice)){
     #---------------------------------------------------------------------------
     switch($Args['action']){
       case 'Check':
-#-------------------------------------------------------------------------------
-$Result = <<<EOD
-<?xml version="1.0" encoding="windows-1251"?>
-<response performedDatetime="%s">
-	<result code="0" action="Check" shopId="%s" invoiceId="%s" />
-</response>
-EOD;
-#-------------------------------------------------------------------------------
-	return SPrintF(trim($Result),$Date,$Args['shopId'],$Args['invoiceId']);
+        #-------------------------------------------------------------------------------
+	return TemplateReplace('www.Merchant.Yandex',Array('Args'=>$Args,'Date'=>$Date),FALSE);
+	#-------------------------------------------------------------------------------
       case 'PaymentSuccess':
         #-----------------------------------------------------------------------
         $Comp = Comp_Load('Users/Init',100);
@@ -82,15 +76,9 @@ EOD;
           case 'exception':
             return ERROR | @Trigger_Error(400);
           case 'array':
-#-------------------------------------------------------------------------------
-$Result = <<<EOD
-<?xml version="1.0" encoding="windows-1251"?>
-<response performedDatetime="%s">
-	<result code="0" action="PaymentSuccess" shopId="%s" invoiceId="%s" />
-</response>
-EOD;
-#-------------------------------------------------------------------------------
-            return SPrintF(trim($Result),$Date,$Args['shopId'],$Args['invoiceId']);
+            #-------------------------------------------------------------------------------
+	    return TemplateReplace('www.Merchant.Yandex',Array('Args'=>$Args,'Date'=>$Date),FALSE);
+	    #-------------------------------------------------------------------------------
           default:
             return ERROR | @Trigger_Error(101);
         }

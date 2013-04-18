@@ -1,0 +1,20 @@
+<!-- 
+/** @author Alex Keda, for www.host-food.ru  */
+-->
+
+<DIV id="Upload" style="display:none;position:absolute;top:-1000;left:-1000;">
+ <IFRAME name="UploadIframe" id="UploadIframe" onload="if(typeof UploadIframeOnLoad != 'undefined') UploadIframeOnLoad();" src="about:blank" style="display:none;">-</IFRAME>
+ <FORM id="UploadForm" name="UploadForm" action="/API/Upload" target="UploadIframe" method="POST" enctype="multipart/form-data">
+  <TABLE class="Upload" width="5" cellspacing="5">
+   <TR>
+    <TD>
+     <INPUT type="file" name="Upload" size="15" onchange="UploadProgress();" />
+    </TD>
+    <TD>
+     <INPUT type="button" onclick="UploadHide();" value="Закрыть" />
+    </TD>
+   </TR>
+  </TABLE>
+ </FORM>
+</DIV>
+

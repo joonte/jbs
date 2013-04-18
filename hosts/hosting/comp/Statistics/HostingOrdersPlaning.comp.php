@@ -24,8 +24,7 @@ $NoBody = new Tag('NOBODY');
 #-------------------------------------------------------------------------------
 $NoBody->AddChild(new Tag('P','Данный вид аналитики позволяет произвести планирование будущих поступлений по заказам хостинга, продление которых предполагается в будущем.'));
 #-------------------------------------------------------------------------------
-$Query = <<<EOD
-CREATE TEMPORARY TABLE `%s`(
+$Query = "CREATE TEMPORARY TABLE `%s`(
   `ID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `OrderID`        int(11),
   `Customer`       text,
@@ -36,8 +35,7 @@ CREATE TEMPORARY TABLE `%s`(
   `CostDay`        float(6,2),
   `ContractID`     int(11),
   `Balance`        float(7,2)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8
-EOD;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8";
 #-------------------------------------------------------------------------------
 $UniqID = UniqID('ID');
 #-------------------------------------------------------------------------------

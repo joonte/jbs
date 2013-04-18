@@ -38,7 +38,7 @@ case 'array':
 		# параметры для замены в шаблонах
 		$Params = Array('Order'=>$Order,'Number'=>$Number);
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/Notes/User/NoticeOrders]: service "%s", status "%s", days %s, order #%s',$Order['Code'],$Order['StatusID'],$Order['DaysRemainded'],$Number));
+		#Debug(SPrintF('[comp/Notes/User/NoticeOrders]: service "%s", status "%s", days %s, order #%s',$Order['Code'],$Order['StatusID'],$Order['DaysRemainded'],$Number));
 		#-------------------------------------------------------------------------------
 		if($Order['StatusID'] == 'Active' && ($Order['DaysRemainded'] < 15 || Is_Null($Order['DaysRemainded']))){
 			# проверяем как скоро заканчивается, и, не надо ли уведомлять о окончании
@@ -53,7 +53,7 @@ case 'array':
 					if($Order['Code'] == 'Default' && $Order['ConsiderType'] != 'Upon'){
 						#-------------------------------------------------------------------------------
 						$NoBody = new Tag('NOBODY');
-						$NoBody->AddHTML(TemplateReplace('NoticeOrders.Active.Default',$Params));
+						$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Active.Default',$Params));
 						$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ServiceOrderPay',{ServiceOrderID:%u});",$Order['ID'])),'[оплатить]')));
 						#-------------------------------------------------------------------------------
 						$Result[] = $NoBody;
@@ -74,7 +74,7 @@ case 'array':
 							$Params['DomainOrder'] = $DomainOrder;
 							#-------------------------------------------------------------------------------
 							$NoBody = new Tag('NOBODY');
-							$NoBody->AddHTML(TemplateReplace('NoticeOrders.Active.Domains',$Params));
+							$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Active.Domains',$Params));
 							$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DomainOrderPay',{DomainOrderID:%u});",$DomainOrder['ID'])),'[оплатить]')));
 							#-------------------------------------------------------------------------
 							$Result[] = $NoBody;
@@ -107,11 +107,11 @@ case 'array':
 							#-------------------------------------------------------------------------
 							if($ISPswOrder['IsProlong'] == 'yes'){
 								#-------------------------------------------------------------------------------
-								$NoBody->AddHTML(TemplateReplace('NoticeOrders.Active.ISPsw.IsProlong',$Params));
+								$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Active.ISPsw.IsProlong',$Params));
 								$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ISPswOrderPay',{ISPswOrderID:%u});",$ISPswOrder['ID'])),'[оплатить]')));
 							}else{
 								#-------------------------------------------------------------------------------
-								$NoBody->AddHTML(TemplateReplace('NoticeOrders.Active.ISPsw.IsNoProlong',$Params));
+								$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Active.ISPsw.IsNoProlong',$Params));
 								$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ISPswOrderSchemeChange',{ISPswOrderID:%u});",$ISPswOrder['ID'])),'[сменить тариф]')));
 							}
 							#-------------------------------------------------------------------------
@@ -137,7 +137,7 @@ case 'array':
 							$Params['DSOrder'] = $DSOrder;
 							#-------------------------------------------------------------------------------
 							$NoBody = new Tag('NOBODY');
-							$NoBody->AddHTML(TemplateReplace('NoticeOrders.Active.DS',$Params));
+							$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Active.DS',$Params));
 							$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DSOrderPay',{OrderID:%u});",$Order['ID'])),'[оплатить]')));
 							#-------------------------------------------------------------------------
 							$Result[] = $NoBody;
@@ -182,12 +182,12 @@ case 'array':
 				#-------------------------------------------------------------------------
 				if($ServiceOrder['IsProlong'] == 'yes'){
 					#-------------------------------------------------------------------------------
-					$NoBody->AddHTML(TemplateReplace('NoticeOrders.Active.Hosting.IsProlong',$Params));
+					$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Active.Hosting.IsProlong',$Params));
 					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/%sOrderPay',{%sOrderID:%u});",$Order['Code'],$Order['Code'],$ServiceOrder['ID'])),'[оплатить]')));
 					#-------------------------------------------------------------------------
 				}else{
 					#-------------------------------------------------------------------------------
-					$NoBody->AddHTML(TemplateReplace('NoticeOrders.Active.Hosting.IsNoProlong',$Params));
+					$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Active.Hosting.IsNoProlong',$Params));
 					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/%sOrderSchemeChange',{%sOrderID:%u});",$Order['Code'],$Order['Code'],$ServiceOrder['ID'])),'[сменить тариф]')));
 					#-------------------------------------------------------------------------
 				}
@@ -207,7 +207,7 @@ case 'array':
 				if($Order['Code'] == 'Default'){
 					#-------------------------------------------------------------------------------
 					$NoBody = new Tag('NOBODY');
-					$NoBody->AddHTML(TemplateReplace('NoticeOrders.Suspended.Default',$Params));
+					$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Suspended.Default',$Params));
 					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ServiceOrderPay',{ServiceOrderID:%u});",$Order['ID'])),'[оплатить]')));
 					#-------------------------------------------------------------------------
 					$Result[] = $NoBody;
@@ -228,7 +228,7 @@ case 'array':
 						$Params['DomainOrder'] = $DomainOrder;
 						#-------------------------------------------------------------------------------
 						$NoBody = new Tag('NOBODY');
-						$NoBody->AddHTML(TemplateReplace('NoticeOrders.Suspended.Domains',$Params));
+						$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Suspended.Domains',$Params));
 						$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DomainOrderPay',{DomainOrderID:%u});",$DomainOrder['ID'])),'[оплатить]')));
 						#-------------------------------------------------------------------------
 						$Result[] = $NoBody;
@@ -257,12 +257,12 @@ case 'array':
 						#-------------------------------------------------------------------------
 						if($ISPswOrder['IsProlong'] == 'yes'){
 							#-------------------------------------------------------------------------------
-							$NoBody->AddHTML(TemplateReplace('NoticeOrders.Suspended.ISPsw.IsProlong',$Params));
+							$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Suspended.ISPsw.IsProlong',$Params));
 							$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ISPswOrderPay',{ISPswOrderID:%u});",$ISPswOrder['ID'])),'[оплатить]')));
 							#-------------------------------------------------------------------------------
 						}else{
 							#-------------------------------------------------------------------------------
-							$NoBody->AddHTML(TemplateReplace('NoticeOrders.Suspended.ISPsw.IsNoProlong',$Params));
+							$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Suspended.ISPsw.IsNoProlong',$Params));
 							$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("/Tickets")),'[систему тикетов]')));
 							#-------------------------------------------------------------------------------
 						}
@@ -289,7 +289,7 @@ case 'array':
 						$Params['DSOrder'] = $DSOrder;
 						#-------------------------------------------------------------------------------
 						$NoBody = new Tag('NOBODY');
-						$NoBody->AddHTML(TemplateReplace('NoticeOrders.Suspended.DS',$Params));
+						$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Suspended.DS',$Params));
 						$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DSOrderPay',{OrderID:%u});",$Order['ID'])),'[оплатить]')));
 						#-------------------------------------------------------------------------
 						$Result[] = $NoBody;
@@ -331,12 +331,12 @@ case 'array':
 				#-------------------------------------------------------------------------
 				if($ServiceOrder['IsProlong'] == 'yes'){
 					#-------------------------------------------------------------------------------
-					$NoBody->AddHTML(TemplateReplace('NoticeOrders.Suspended.Hosting.IsProlong',$Params));
+					$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Suspended.Hosting.IsProlong',$Params));
 					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/%sOrderPay',{%sOrderID:%u});",$Order['Code'],$Order['Code'],$ServiceOrder['ID'])),'[оплатить]')));
 					#-------------------------------------------------------------------------------
 				}else{
 					#-------------------------------------------------------------------------------
-					$NoBody->AddHTML(TemplateReplace('NoticeOrders.Suspended.Hosting.IsNoProlong',$Params));
+					$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Suspended.Hosting.IsNoProlong',$Params));
 					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("/Tickets")),'[систему тикетов]')));
 					#-------------------------------------------------------------------------------
 				}
@@ -356,7 +356,7 @@ case 'array':
 				if($Order['Code'] == 'Default'){
 					#-------------------------------------------------------------------------------
 					$NoBody = new Tag('NOBODY');
-					$NoBody->AddHTML(TemplateReplace('NoticeOrders.Waiting.Default',$Params));
+					$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Waiting.Default',$Params));
 					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ServiceOrderPay',{OrderID:%u});",$Order['ID'])),'[оплатить]')));
 					#-------------------------------------------------------------------------
 					$Result[] = $NoBody;
@@ -377,7 +377,7 @@ case 'array':
 						$Params['DomainOrder'] = $DomainOrder;
 						#-------------------------------------------------------------------------------
 						$NoBody = new Tag('NOBODY');
-						$NoBody->AddHTML(TemplateReplace('NoticeOrders.Waiting.Domains',$Params));
+						$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Waiting.Domains',$Params));
 						$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DomainOrderPay',{DomainOrderID:%u});",$DomainOrder['ID'])),'[оплатить]')));
 						#-------------------------------------------------------------------------
 						$Result[] = $NoBody;
@@ -403,7 +403,7 @@ case 'array':
 						$Params['ISPswOrder'] = $ISPswOrder;
 						#-------------------------------------------------------------------------------
 						$NoBody = new Tag('NOBODY');
-						$NoBody->AddHTML(TemplateReplace('NoticeOrders.Waiting.ISPsw',$Params));
+						$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Waiting.ISPsw',$Params));
 						$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ISPswOrderPay',{ISPswOrderID:%u});",$ISPswOrder['ID'])),'[оплатить]')));
 						#-------------------------------------------------------------------------------
 						$Result[] = $NoBody;
@@ -429,7 +429,7 @@ case 'array':
 						$Params['DSOrder'] = $DSOrder;
 						#-------------------------------------------------------------------------------
 						$NoBody = new Tag('NOBODY');
-						$NoBody->AddHTML(TemplateReplace('NoticeOrders.Waiting.DS',$Params));
+						$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Waiting.DS',$Params));
 						$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DSOrderPay',{OrderID:%u});",$Order['ID'])),'[оплатить]')));
 						#-------------------------------------------------------------------------
 						$Result[] = $NoBody;
@@ -467,7 +467,7 @@ case 'array':
 				}
 				#-------------------------------------------------------------------------
 				$NoBody = new Tag('NOBODY');
-				$NoBody->AddHTML(TemplateReplace('NoticeOrders.Waiting.Hosting',$Params));
+				$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Waiting.Hosting',$Params));
 				$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/%sOrderPay',{%sOrderID:%u});",$Order['Code'],$Order['Code'],$ServiceOrder['ID'])),'[оплатить]')));
 				#-------------------------------------------------------------------------
 				$Result[] = $NoBody;
@@ -489,7 +489,7 @@ case 'array':
 					$Params['DomainOrder'] = $DomainOrder;
 					#-------------------------------------------------------------------------------
 					$NoBody = new Tag('NOBODY');
-					$NoBody->AddHTML(TemplateReplace('NoticeOrders.ClaimForRegister',$Params));
+					$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.ClaimForRegister',$Params));
 					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DomainSelectOwner',{DomainOrderID:%u});",$DomainOrder['ID'])),'[определить]')));
 					#-------------------------------------------------------------------------
 					$Result[] = $NoBody;
@@ -518,7 +518,7 @@ case 'array':
 				#-------------------------------------------------------------------------
 				if(In_Array($DomainOrder['Name'],Array('ru','su','рф'))){
 					#-------------------------------------------------------------------------------
-					$NoBody->AddHTML(TemplateReplace('NoticeOrders.ForTransfer.USSR',$Params));
+					$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.ForTransfer.USSR',$Params));
 					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DomainOrderPay',{DomainOrderID:%u});",$DomainOrder['ID'])),'[оплатить]')));
 					#-------------------------------------------------------------------------
 				}else{
@@ -531,12 +531,12 @@ case 'array':
 						#------------------------------------------------------------------------------
 						$Params['Summ'] = $Summ;
 						#-------------------------------------------------------------------------------
-						$NoBody->AddHTML(TemplateReplace('NoticeOrders.ForTransfer.bourgeois.AuthInfo',$Params));
+						$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.ForTransfer.bourgeois.AuthInfo',$Params));
 						$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DomainOrderPay',{DomainOrderID:%u});",$DomainOrder['ID'])),'[оплатить]')));
 						#-------------------------------------------------------------------------
 					}else{
 						#-------------------------------------------------------------------------------
-						$NoBody->AddHTML(TemplateReplace('NoticeOrders.ForTransfer.bourgeois.NoAuthInfo',$Params));
+						$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.ForTransfer.bourgeois.NoAuthInfo',$Params));
 						$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/DomainAuthInfoInput',{DomainOrderID:%u});",$DomainOrder['ID'])),'[ввести пароль домена]')));
 					#-------------------------------------------------------------------------
 					}
@@ -568,7 +568,7 @@ case 'array':
 				#-------------------------------------------------------------------------------
 				if(In_Array($DomainOrder['Name'],Array('ru','su','рф'))){
 					#-------------------------------------------------------------------------------
-					$NoBody->AddHTML(TemplateReplace('NoticeOrders.OnTransfer.USSR',$Params));
+					$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.OnTransfer.USSR',$Params));
 					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("/Tickets")),'[систему тикетов]')));
 					#-------------------------------------------------------------------------------
 					$Result[] = $NoBody;

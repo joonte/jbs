@@ -30,16 +30,14 @@ if(Is_Error(System_Load('libs/Http.php')))
 #-------------------------------------------------------------------------------
 # исключаем отменённые счета, если число минут не кратно 5 (исполняться это будет редко - раз в час, примерно)
 $Where = Array(
-		"`PaymentSystemID`='QIWI'",
-		"`StatusID`!='Payed'",
+		"`PaymentSystemID` = 'QIWI'",
+		"`StatusID` != 'Payed'",
 		SPrintF('(UNIX_TIMESTAMP() - `CreateDate`) < (%u * 3600)', $Settings['Send']['lifetime']),
 		);
-if(date('i', time())%5 == 0){
-	Debug("[Tasks/QIWI]: processing QIWI with rejected invoices");
-}else{
-	$Where[] = "`StatusID`!='Rejected'";
-	Debug("[Tasks/QIWI]: processing QIWI without rejected invoices");
-}
+#-------------------------------------------------------------------------------
+if(date('i', time())%5 != 0)
+	$Where[] = "`StatusID` != 'Rejected'";
+#-------------------------------------------------------------------------------
 # выбираем счета QIWI где дней < 45 и статус отличается от "оплачен"
 $Items = DB_Select('Invoices',Array('ID','Summ','StatusID'),Array('SortOn'=>'CreateDate', 'IsDesc'=>TRUE, 'Where'=>$Where));
 #-------------------------------------------------------------------------------
@@ -50,7 +48,6 @@ switch(ValueOf($Items)){
 		# No more...
 		break;
 	case 'array':
-		#Debug(print_r($Items, true));
 		#---------------------------------------------------------------------------
 		$bill_list = "";
 		foreach($Items as $Item){
@@ -59,22 +56,12 @@ switch(ValueOf($Items)){
 			$bill_list .= "\t\t" . SPrintF('<bill txn-id="%s"/>', $Item['ID']) . "\n";
 			#-------------------------------------------------------------------------
 			$NumInvoices++;
+			#-------------------------------------------------------------------------------
 		}
 		# create request
-		$Result = <<<EOD
-<?xml version="1.0" encoding="utf-8"?>
-<request>
-	<protocol-version>4.00</protocol-version>
-	<request-type>33</request-type>
-	<extra name="password">%s</extra>
-	<terminal-id>%s</terminal-id>
-	<bills-list>
-	%s
-	</bills-list>
-</request>
-EOD;
-		$Result = SPrintF(trim($Result), $Settings['Hash'], $Settings['Send']['from'], $bill_list);
-		#Debug("[Tasks/QIWI]: " . $Send);
+		$Result = TemplateReplace('Tasks.QIWI',Array('Settings'=>$Settings,'bill_list'=>$bill_list),FALSE);
+		#Debug(SPrintF('[Tasks/QIWI]: Result = %s',print_r($Result,true)));
+		#-------------------------------------------------------------------------------
 		# calculate encrypt key
 		$passwordMD5 = md5($Settings['Hash'], true);
 		$salt = md5($Settings['Send']['from'] . bin2hex($passwordMD5), true);
@@ -120,7 +107,7 @@ EOD;
 			$result = array();
 			foreach ($xml->{'bills-list'}->children() as $bill) {
 				#-------------------------------------------------------------------------
-				Debug("[Tasks/QIWI]: status for #" . $bill['id'] . " = '" . $bill['status'] . "', summ = " . $bill['sum']);
+				#Debug("[Tasks/QIWI]: status for #" . $bill['id'] . " = '" . $bill['status'] . "', summ = " . $bill['sum']);
 				if($bill['status'] == 60){
 					#-------------------------------------------------------------------------
 					$Invoice = DB_Select('Invoices',Array('ID','Summ'),Array('UNIQ','ID'=>$bill['id']));
@@ -136,7 +123,7 @@ EOD;
 						#-------------------------------------------------------------------------
 						if($summ == $bill['sum']){
 							#-------------------------------------------------------------------------
-							Debug("[Tasks/QIWI]: summ compare success for #" . $Invoice['ID']);
+							#Debug("[Tasks/QIWI]: summ compare success for #" . $Invoice['ID']);
 							#-------------------------------------------------------------------------
 							$Comp = Comp_Load('Users/Init',100);
 							if(Is_Error($Comp))
@@ -158,7 +145,7 @@ EOD;
 							case 'exception':
 								return ERROR | @Trigger_Error(400);
 							case 'array':
-								Debug("[Tasks/QIWI]: Payment #$InvoiceID success");
+								#Debug("[Tasks/QIWI]: Payment #$InvoiceID success");
 								break;
 							default:
 								return ERROR | @Trigger_Error(101);
