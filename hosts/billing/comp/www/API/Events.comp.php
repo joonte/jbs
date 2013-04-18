@@ -48,10 +48,12 @@ if($LastID){
 #---------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];
 #---------------------------------------------------------------------------
-if(!$__USER['IsAdmin'])
-  $Where[] = SPrintF('`UserID` = %u',$__USER['ID']);
+if($__USER['IsAdmin'])
+	$Where[] = SPrintF('`UserID` = %u',$__USER['ID']);
 #---------------------------------------------------------------------------
-$Events = DB_Select('Events',Array('ID','Text',"(SELECT CONCAT(FROM_UNIXTIME(`CreateDate`,'%Y-%m-%d / %H:%i:%s / '),`Name`,' [',`Email`,']') FROM `Users` WHERE `Users`.`ID` = `Events`.`UserID`) as `UserInfo`",'PriorityID'),Array('SortOn'=>'ID','Where'=>$Where));
+$UserInfo = "(SELECT CONCAT(FROM_UNIXTIME(`CreateDate`,'%Y-%m-%d / %H:%i:%s / '),`Email`,' / ',`Name`) FROM `Users` WHERE `Users`.`ID` = `Events`.`UserID`)";
+#---------------------------------------------------------------------------
+$Events = DB_Select('Events',Array('ID','Text',SPrintF('%s AS `UserInfo`',$UserInfo),'PriorityID'),Array('SortOn'=>'ID','Where'=>$Where));
 #---------------------------------------------------------------------------
 switch(ValueOf($Events)){
 case 'error':
