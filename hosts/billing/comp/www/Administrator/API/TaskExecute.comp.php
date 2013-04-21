@@ -211,6 +211,16 @@ switch(ValueOf($Task)){
     if(Is_Error($FreeLock))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------------
+    $Tmp = System_Element('tmp');
+    if(Is_Error($Tmp))
+      return ERROR | @Trigger_Error(500);
+    #-------------------------------------------------------------------------------
+    $fp = fopen(SPrintF('%s/TaskLastExecute.txt',$Tmp), 'w');
+    fwrite($fp, Date('YmdGis'));
+    fclose($fp);
+    #-------------------------------------------------------------------------------
+    #-------------------------------------------------------------------------------
     return Array('Status'=>'Ok');
   default:
     return ERROR | @Trigger_Error(101);

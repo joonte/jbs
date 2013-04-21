@@ -59,7 +59,7 @@ else
 	do
 		if test -f $dir/host.ini
 		then
-			eval `cat $dir/host.ini | grep 'HostsIDs=' | awk -F ',' '{print $1}'`
+			eval `cat $dir/host.ini | grep 'HostsIDs=' | awk -F ',' '{print $1}' | tr -d '"' `
 			echo $HostsIDs > $TmpFile
 		fi
 	done
@@ -80,11 +80,28 @@ RootDir=`dirname $RootDir`
 
 #------------------------------------------------
 #------------------------------------------------
+marker="$RootDir/hosts/$HostsID/tmp/TaskLastExecute.txt"
 # проверяем, запущен скрипт или нет
 if [ ! `ps auxww | grep "sh demon.sh $HostsID" | grep -v grep | wc -l` -gt 0 ]
 then
+	rm -f $marker
 	# let Mortal Combat begin! =)
 	sh demon.sh $HostsID $RootDir >> $RootDir/demon.log &
+fi
+
+#------------------------------------------------
+#------------------------------------------------
+# проверяем, как давно выполнялось последнее задание
+if test -f $marker
+then
+	executed=`cat $marker`
+	if [ `date +%Y%m%d%H%M%S` -ge `expr $executed + 3600` ]
+	then
+		echo "" >> $RootDir/demon.log
+		echo "`date +%Y-%m-%d` in `date +%H:%M:%S`: php-cgi auto killed, no executed tasks more than one hour" >> $RootDir/demon.log
+		echo "" >> $RootDir/demon.log
+		killall php-cgi
+	fi
 fi
 
 # delete tmp file
