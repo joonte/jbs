@@ -95,7 +95,7 @@ fi
 if test -f $marker
 then
 	executed=`cat $marker`
-	if [ `date +%Y%m%d%H%M%S` -ge `expr $executed + 3600` ]
+	if [ `date -v-1h +%Y%m%d%H%M%S` -ge $executed ]
 	then
 		echo "" >> $RootDir/demon.log
 		echo "`date +%Y-%m-%d` in `date +%H:%M:%S`: php-cgi auto killed, no executed tasks more than one hour" >> $RootDir/demon.log
