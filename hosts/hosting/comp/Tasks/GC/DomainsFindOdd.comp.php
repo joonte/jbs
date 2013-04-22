@@ -132,12 +132,12 @@ foreach($Registrators as $NowReg){
 							return ERROR | @Trigger_Error(500);
 					}else{
 						#-------------------------------------------------------------------------------
-						Debug(SPrintF('comp/Tasks/GC/DomainsFindOdd]: Домен %s/%s, в биллинге есть, но его статус не соответствует критериям выборки',$DomainOdd,$NowReg['Name']));
+						Debug(SPrintF('[comp/Tasks/GC/DomainsFindOdd]: Домен %s/%s, в биллинге есть, но его статус не соответствует критериям выборки',$DomainOdd,$NowReg['Name']));
 						#-------------------------------------------------------------------------------
 						# JBS-595 - проверяем не на переносе ли он - возможно перенеос завершился успешно
 						$Where[] = "`StatusID` = 'OnTransfer' OR `StatusID` = 'ForTransfer'";	# сама Where задана выше, тут тока условие добавляем
 						#-------------------------------------------------------------------------------
-						$IsTransfer = DB_Select(Array('DomainsOrdersOwners','DomainsSchemes'),Array('ID'),Array('Where'=>$Where));
+						$IsTransfer = DB_Select(Array('DomainsOrdersOwners','DomainsSchemes'),Array('`DomainsOrdersOwners`.`ID` AS `ID`'),Array('Where'=>$Where));
 						#-------------------------------------------------------------------------------
 						switch(ValueOf($IsTransfer)){
 						case 'error':
