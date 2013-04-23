@@ -109,12 +109,15 @@ $Table->AddHTML(SPrintF($String,$User['ID'],$Comp,($EnterDate < 600?'OnLine':'Of
 $FileLength = GetUploadedFileSize('EdesksMessages', $MessageID);
 #-------------------------------------------------------------------------------
 if((integer)$FileLength){
+  $DivLeft = new Tag('DIV',Array('class'=>'LeftDiv','ID'=>''),'[удалить]');
   #-----------------------------------------------------------------------------
   $Span = new Tag('SPAN',SPrintF('%s (%01.2f Кб.)',$FileName,$FileLength/1024));
   #-----------------------------------------------------------------------------
   $A = new Tag('A',Array('href'=>SPrintF('/FileDownload?TypeID=EdesksMessages&FileID=%s',$MessageID)),'[скачать]');
   #-----------------------------------------------------------------------------
-  $Td = new Tag('TD',Array('class'=>'Standard','style'=>'background-color:#FCE5CC;','colspan'=>2,'align'=>'right'),$Span,$A);
+  $DivRight = new Tag('DIV',Array('class'=>'RightDiv','ID'=>''),$Span,$A);
+  #-----------------------------------------------------------------------------
+  $Td = new Tag('TD',Array('class'=>'Standard','style'=>'background-color:#FCE5CC;','colspan'=>2,'align'=>'right'),new Tag('DIV',$DivLeft,$DivRight));
   #-----------------------------------------------------------------------------
   $Table->AddChild(new Tag('TR',$Td));
 }

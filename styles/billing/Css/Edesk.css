@@ -33,6 +33,16 @@ td.EdeskMessageInfo div.LeftDiv {
 /*    color:            blue;*/
 }
 /* ------------------------- */
+td.Standard div.RightDiv {
+    float:            right;
+}
+/* ------------------------- */
+td.Standard div.LeftDiv {
+    float:            left;
+    cursor:           pointer;
+/*    color:            blue;*/
+}
+/* ------------------------- */
 td.EdeskMessageInfo div.RightDiv {
     float:            right;
 }

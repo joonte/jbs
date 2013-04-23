@@ -20,6 +20,7 @@ $TicketID		= (integer) @$Args['TicketID'];
 $Message		=  (string) @$Args['Message'];
 $Flags			=  (string) @$Args['Flags'];
 $OpenTicketUserID	= (integer) @$Args['OpenTicketUserID'];
+$UserID			= (integer) @$Args['UserID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 	return ERROR | @Trigger_Error(500);
@@ -43,7 +44,8 @@ if($Flags == 'NotVisible'){
 	$NotVisible = TRUE;
 }
 #-------------------------------------------------------------------------------
-if(StrLen($Flags) < 2){$Flags = "No";}
+if(StrLen($Flags) < 2)
+	$Flags = 'No';
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
@@ -81,7 +83,7 @@ switch(ValueOf($Ticket)){
           #---------------------------------------------------------------------
           $ITicketMessage = Array(
             #-------------------------------------------------------------------
-            'UserID'  => $__USER['ID'],
+            'UserID'  => ($UserID > 0 && $__USER['IsAdmin'])?$UserID:$__USER['ID'],
             'EdeskID' => $Ticket['ID'],
             'Content' => $Message
           );
