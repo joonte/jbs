@@ -56,71 +56,36 @@ switch(ValueOf($Group)){
 #-------------------------------------------------------------------------------
 $Text = Comp_Load('Edesks/Text',Array('String'=>$Content,'IsLockText'=>($OwnerID != @$GLOBALS['__USER']['ID'])));
 if(Is_Error($Text))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$EnterDate = Comp_Load('Formats/Date/Remainder',(Time() - $User['EnterDate']));
+if(Is_Error($EnterDate))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Delete = ($__USER['IsAdmin'])?SPrintF('<a onclick="ShowConfirm(\'Вы подтверждаете удаление сообщения?\',\'AjaxCall(\\\'/API/EdeskMessageDelete\\\',{MessageID:%u},\\\'Удаление сообщения\\\',\\\'GetURL(document.location);\\\');\');" onmouseover="PromptShow(event,\'Удалить это сообщение\',this);">[удалить]</a>',$MessageID):' ';
+#-------------------------------------------------------------------------------
+$BgColor = (!$IsVisible)?'FFE4E1':(($UserID != $OwnerID)?'FFFFFF':'FDF6D3');
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table = new Tag('TABLE',Array('class'=>'EdeskMessage','cellspacing'=>5,'height'=>'100%','width'=>'100%'));
 #-------------------------------------------------------------------------------
-$String = <<<EOD
-<NOBODY>
- <TR>
-  <TD rowspan="2" valign="top" width="90">
-   <IMG class="UserFoto" alt="Персональная фотография" height="110" width="90" src="/UserFoto?UserID=%u" />
-   <TABLE width="100%%" cellspacing="0" cellpadding="0">
-    <TR>
-     <TD style="font-size:10px;">%s</TD>
-     <TD width="51">
-      <IMG alt="Статус пользователя" height="21" width="51" src="SRC:{Images/Icons/%s.gif}" style="margin-top:5px;"/>
-     </TD>
-    </TR>
-   </TABLE>
-  </TD>
-  <TD height="25" class="EdeskMessageInfo">
-   <DIV>
-    <DIV id="" class="LeftDiv">%s</DIV>
-    <DIV id="" class="RightDiv">Сообщение №%06u | %s | %s [%s]</DIV>
-   </DIV>
-  </TD>
- </TR>
- <TR>
-  <TD height="100" class="EdeskMessageContent" style="background-color:#%s;">
-    <SPAN>%s</SPAN>
-   <HR />
-   <PRE style="font-size:10px;">%s</PRE>
-  </TD>
- </TR>
-</NOBODY>
-EOD;
+$Params = Array('User'=>$User,'EnterDate'=>$EnterDate,'Status'=>((Time() - $User['EnterDate']) < 600?'OnLine':'OffLine'),'Delete'=>$Delete,'MessageID'=>SPrintF('%06u',$MessageID),'CreateDate'=>$CreateDate,'Group'=>$Group,'BgColor'=>$BgColor,'Text'=>$Text);
 #-------------------------------------------------------------------------------
-$EnterDate = Time() - $User['EnterDate'];
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load('Formats/Date/Remainder',$EnterDate);
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-if($__USER['IsAdmin']){$Delete = SPrintF('<a onclick="ShowConfirm(\'Вы подтверждаете удаление?\',\'AjaxCall(\\\'/API/EdeskMessageDelete\\\',{MessageID:%u},\\\'Удаление сообщения\\\',\\\'GetURL(document.location);\\\');\');" onmouseover="PromptShow(event,\'Удалить это сообщение\',this);">[удалить]</a>',$MessageID);}else{$Delete = '';}
-#-------------------------------------------------------------------------------
-$BgColor = ($UserID != $OwnerID?'FFFFFF':'FDF6D3');
-if(!$IsVisible)
-	$BgColor = 'FFE4E1';
-#-------------------------------------------------------------------------------
-$Table->AddHTML(SPrintF($String,$User['ID'],$Comp,($EnterDate < 600?'OnLine':'OffLine'),$Delete,$MessageID,$CreateDate,$User['Name'],$Group['Name'],$BgColor,$Text,$User['Sign']));
+$Table->AddHTML(TemplateReplace('Edesks.Message.TABLE',$Params));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $FileLength = GetUploadedFileSize('EdesksMessages', $MessageID);
 #-------------------------------------------------------------------------------
 if((integer)$FileLength){
-  $DivLeft = new Tag('DIV',Array('class'=>'LeftDiv','ID'=>''),'[удалить]');
-  #-----------------------------------------------------------------------------
-  $Span = new Tag('SPAN',SPrintF('%s (%01.2f Кб.)',$FileName,$FileLength/1024));
-  #-----------------------------------------------------------------------------
-  $A = new Tag('A',Array('href'=>SPrintF('/FileDownload?TypeID=EdesksMessages&FileID=%s',$MessageID)),'[скачать]');
-  #-----------------------------------------------------------------------------
-  $DivRight = new Tag('DIV',Array('class'=>'RightDiv','ID'=>''),$Span,$A);
-  #-----------------------------------------------------------------------------
-  $Td = new Tag('TD',Array('class'=>'Standard','style'=>'background-color:#FCE5CC;','colspan'=>2,'align'=>'right'),new Tag('DIV',$DivLeft,$DivRight));
-  #-----------------------------------------------------------------------------
-  $Table->AddChild(new Tag('TR',$Td));
+	#-------------------------------------------------------------------------------
+	$Delete = ($__USER['IsAdmin'])?SPrintF('<a onclick="ShowConfirm(\'Вы подтверждаете удаление файла?\',\'AjaxCall(\\\'/Administrator/API/FileDelete\\\',{Table:\\\'EdesksMessages\\\',ID:%u},\\\'Удаление файла\\\',\\\'GetURL(document.location);\\\');\');" onmouseover="PromptShow(event,\'Удалить это вложение\',this);">[удалить]</a>',$MessageID):' ';
+	#-------------------------------------------------------------------------------
+	$Params = Array('Delete'=>$Delete,'FileName'=>$FileName,'FileSize'=>SPrintF('%01.2f',$FileLength/1024),'MessageID'=>$MessageID);
+	#-------------------------------------------------------------------------------
+	$Table->AddHTML(TemplateReplace('Edesks.Message.Uploaded',$Params));
+	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!Comp_IsLoaded('Edesks/Message')){
   #-----------------------------------------------------------------------------
