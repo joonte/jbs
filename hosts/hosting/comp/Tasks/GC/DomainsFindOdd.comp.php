@@ -134,56 +134,81 @@ foreach($Registrators as $NowReg){
 						#-------------------------------------------------------------------------------
 						Debug(SPrintF('[comp/Tasks/GC/DomainsFindOdd]: Домен %s/%s, в биллинге есть, но его статус не соответствует критериям выборки',$DomainOdd,$NowReg['Name']));
 						#-------------------------------------------------------------------------------
-						# JBS-595 - проверяем не на переносе ли он - возможно перенеос завершился успешно
-						$Where[] = "`StatusID` = 'OnTransfer' OR `StatusID` = 'ForTransfer'";	# сама Where задана выше, тут тока условие добавляем
+						# JBS-595 - проверяем не на переносе ли он - возможно перенеос завершился успешноa
+						$Columns = Array('`DomainsOrdersOwners`.`ID` AS `ID`','StatusID','ExpirationDate','`DomainsOrdersOwners`.`UserID` AS `UserID`');
 						#-------------------------------------------------------------------------------
-						$IsTransfer = DB_Select(Array('DomainsOrdersOwners','DomainsSchemes'),Array('`DomainsOrdersOwners`.`ID` AS `ID`'),Array('Where'=>$Where));
+						$IsTransfer = DB_Select(Array('DomainsOrdersOwners','DomainsSchemes'),$Columns,Array('UNIQ','Where'=>$Where));
 						#-------------------------------------------------------------------------------
 						switch(ValueOf($IsTransfer)){
 						case 'error':
 							return ERROR | @Trigger_Error(500);
 						case 'exception':
-							# небыл на переносе
+							Debug(SPrintF('[comp/Tasks/GC/DomainsFindOdd]: Домен %s, регистратор не соответсвует %s',$DomainOdd,$NowReg['Name']));
 							break;
 						case 'array':
 							#-------------------------------------------------------------------------------
-							$Message = SPrintF('Домен %s успешно перенесён к регистратору %s',$DomainOdd,$NowReg['Name']);
-							#-------------------------------------------------------------------------------
-							Debug(SPrintF('[comp/Tasks/GC/DomainsFindOdd]: %s',$Message));
-							#-------------------------------------------------------------------------------
-							# TODO подправляем регистратора, т.к. у меня первый же перенос - задание на перенос
-							# одному регистратору, а домен перенесли к другому...
-							#$IsUpdate = DB_Update('DomainsOrders',Array('SchemeID'=>'надо достать тариф?'),Array('ID'=>$IsTransfer['ID']));
-							#if(Is_Error($IsUpdate))
-							#	return ERROR | @Trigger_Error(500);
-							#-------------------------------------------------------------------------------
-							# ставим статус "Активен"
-							$Comp = Comp_Load(
-									'www/API/StatusSet',
-									Array(
-										'ModeID'        => 'DomainsOrders',
-										'StatusID'      => 'Active',
-										'RowsIDs'       => $IsTransfer['ID'],
-										'Comment'       => $Message
-										)
-									);
-							#-------------------------------------------------------------------------------
-							switch(ValueOf($Comp)){
-							case 'error':
+							$Comp = Comp_Load('www/Administrator/API/DomainOrderWhoIsUpdate',Array('DomainOrderID'=>$IsTransfer['ID']));
+							if(Is_Error($Comp))
 								return ERROR | @Trigger_Error(500);
-							case 'exception':
-								return ERROR | @Trigger_Error(400);
-							case 'array':
+							#-------------------------------------------------------------------------------
+							if(In_Array($IsTransfer['StatusID'],Array('ForTransfer','OnTransfer')) || ($IsTransfer['StatusID'] == 'Deleted' && $IsTransfer['ExpirationDate'] > Time() + 90 * 24 * 3600)){
 								#-------------------------------------------------------------------------------
-								$Event = Array('Text' => $Message,'PriorityID' => 'Notice','IsReaded' => FALSE);
+								if($IsTransfer['StatusID'] == 'Deleted'){
+									#-------------------------------------------------------------------------------
+									$Message = SPrintF('Домен %s, регистратор %s, продлён без использования биллинга',$DomainOdd,$NowReg['Name']);
+									#-------------------------------------------------------------------------------
+								}else{
+									#-------------------------------------------------------------------------------
+									$Message = SPrintF('Домен %s успешно перенесён к регистратору %s',$DomainOdd,$NowReg['Name']);
+									#-------------------------------------------------------------------------------
+								}
 								#-------------------------------------------------------------------------------
-								$Event = Comp_Load('Events/EventInsert', $Event);
-								if(!$Event)
+								Debug(SPrintF('[comp/Tasks/GC/DomainsFindOdd]: %s',$Message));
+								#-------------------------------------------------------------------------------
+								# TODO подправляем регистратора, т.к. у меня первый же перенос - задание на перенос
+								# одному регистратору, а домен перенесли к другому...
+								#$IsUpdate = DB_Update('DomainsOrders',Array('SchemeID'=>'надо достать тариф?'),Array('ID'=>$IsTransfer['ID']));
+								#if(Is_Error($IsUpdate))
+								#	return ERROR | @Trigger_Error(500);
+								#-------------------------------------------------------------------------------
+								# ставим статус "Активен"
+								$Comp = Comp_Load(
+										'www/API/StatusSet',
+										Array(
+											'ModeID'        => 'DomainsOrders',
+											'StatusID'      => 'Active',
+											'RowsIDs'       => $IsTransfer['ID'],
+											'Comment'       => $Message
+											)
+										);
+								#-------------------------------------------------------------------------------
+								switch(ValueOf($Comp)){
+								case 'error':
 									return ERROR | @Trigger_Error(500);
+								case 'exception':
+									return ERROR | @Trigger_Error(400);
+								case 'array':
+									#-------------------------------------------------------------------------------
+									$Event = Array('Text'=>$Message,'PriorityID'=>'Notice','IsReaded'=>FALSE,'UserID'=>$IsTransfer['UserID']);
+									#-------------------------------------------------------------------------------
+									$Event = Comp_Load('Events/EventInsert', $Event);
+									if(!$Event)
+										return ERROR | @Trigger_Error(500);
+									#-------------------------------------------------------------------------------
+									break;
+									#-------------------------------------------------------------------------------
+								default:
+									return ERROR | @Trigger_Error(101);
+								}
 								#-------------------------------------------------------------------------------
-							default:
-								return ERROR | @Trigger_Error(101);
+							}else{
+								#-------------------------------------------------------------------------------
+								Debug(SPrintF('[comp/Tasks/GC/DomainsFindOdd]: Домен %s ещё не удалён у регистратора',$DomainOdd));
+								#-------------------------------------------------------------------------------
 							}
+							#-------------------------------------------------------------------------------
+							break;
+							#-------------------------------------------------------------------------------
 						default:
 							return ERROR | @Trigger_Error(101);
 						}
