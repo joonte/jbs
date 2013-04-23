@@ -52,7 +52,17 @@ $attachmentsDir = SPrintF('%s/hosts/%s/tmp/imap',SYSTEM_PATH,HOST_ID);
 if(!File_Exists($attachmentsDir))
 	MkDir($attachmentsDir, 0700, true);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $mailbox = new ImapMailbox($Server, $Settings['CheckEmailLogin'], $Settings['CheckEmailPassword'],$attachmentsDir);
+#-------------------------------------------------------------------------------
+switch(ValueOf($mailbox)){
+case 'error':
+	return 3600;
+case 'exception':
+	return 3600;
+default:
+	break;
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $GLOBALS['TaskReturnInfo'][] = SPrintF('%s messages',SizeOf($mailbox->searchMailbox()));
@@ -98,6 +108,7 @@ foreach($Mails as $mailId){
 	#-------------------------------------------------------------------------------
 	# перебираем аттачменты
 	UnSet($_FILES);
+	UnSet($Hash);
 	#-------------------------------------------------------------------------------
 	$Files = $mail->attachments;
 	#-------------------------------------------------------------------------------
