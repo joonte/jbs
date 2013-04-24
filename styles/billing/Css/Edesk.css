@@ -30,21 +30,13 @@ td.EdeskMessageInfo {
 td.EdeskMessageInfo div.LeftDiv {
     float:            left;
     cursor:           pointer;
-/*    color:            blue;*/
-}
-/* ------------------------- */
-td.Standard div.RightDiv {
-    float:            right;
-}
-/* ------------------------- */
-td.Standard div.LeftDiv {
-    float:            left;
-    cursor:           pointer;
-/*    color:            blue;*/
 }
 /* ------------------------- */
 td.EdeskMessageInfo div.RightDiv {
     float:            right;
+    overflow:         hidden;
+    white-space:      nowrap;
+
 }
 /* ------------------------- */
 td.EdeskMessageContent {
@@ -56,3 +48,14 @@ td.EdeskMessageContent {
 table.EdeskMessage {
     border-bottom:    1px solid #DCDCDC;
 }
+/* ------------------------- */
+td.Standard div.RightDiv {
+    float:            right;
+}
+/* ------------------------- */
+td.Standard div.LeftDiv {
+    float:            left;
+    cursor:           pointer;
+}
+/* ------------------------- */
+
