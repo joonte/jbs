@@ -212,7 +212,8 @@ foreach(Array_Keys($TUsages) as $ServerID){
 			if($SUsage > $HostingOrder['QuotaCPU']*$Settings['LockRatio']	// вчера превышали
 			&& $BUsage > $HostingOrder['QuotaCPU']*$Settings['LockRatio']	// всё время превышали
 			&& $BUsage > $Settings['LockBeginFrom']				// всё время - больше чем порог блокировки
-			&& $Settings['LockOverlimits']){				// разрешено блокироват
+			&& $Settings['LockOverlimits']					// разрешено блокироват
+			&& Date('d')%$Settings['LockDays'] == 0){			// разрешено лочить именно в этот день
 				#-------------------------------------------------------------------------------
 				Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: Надо лочить: Login = %s; SUsage = %s; BUsage = %s; QuotaCPU = %s',$HostingOrder['Login'],$SUsage,$BUsage,$HostingOrder['QuotaCPU']));
 				#-------------------------------------------------------------------------------
