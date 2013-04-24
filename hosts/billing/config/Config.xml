@@ -149,8 +149,8 @@
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Invoices>
-  <AllowConditionally>0</AllowConditionally>
-  <EventOnNegativeBalance>0</EventOnNegativeBalance>
+ <AllowConditionally>0</AllowConditionally>
+ <EventOnNegativeBalance>0</EventOnNegativeBalance>
  <PaymentSystems>
   <PayMaster>
    <Name>PayMaster</Name>
@@ -857,22 +857,26 @@
   <Email>
    <Name>Эл. почта</Name>
    <IsActive>1</IsActive>
+   <IsEvent>1</IsEvent>
   </Email>
   <!-- ********************************************************************* -->
   <ICQ>
    <Name>ICQ пейджинг</Name>
    <IsActive>1</IsActive>
+   <IsEvent>1</IsEvent>
   </ICQ>
   <!-- ********************************************************************* -->
   <Jabber>
    <Name>Jabber пейджинг</Name>
    <IsActive>0</IsActive>
+   <IsEvent>1</IsEvent>
   </Jabber>
   <!-- ********************************************************************* -->
   <SMS>
    <Name>SMS сообщения</Name>
    <IsActive>0</IsActive>
    <Provider>SMSC</Provider>
+   <IsEvent>1</IsEvent>
   </SMS>
  </Methods>
 </Notifies>
