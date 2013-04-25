@@ -261,6 +261,7 @@ button.Transparent,input.Transparent {
 /* ------------------------- */
 button.Standard {
     padding: 0px;
+    cursor:  pointer;
 }
 /* ------------------------- */
 img {
