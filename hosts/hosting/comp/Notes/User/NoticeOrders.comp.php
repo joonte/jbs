@@ -569,7 +569,6 @@ case 'array':
 				if(In_Array($DomainOrder['Name'],Array('ru','su','рф'))){
 					#-------------------------------------------------------------------------------
 					$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.OnTransfer.USSR',$Params));
-					$NoBody->AddChild(new Tag('STRONG',new Tag('A',Array('href'=>SPrintF("/Tickets")),'[систему тикетов]')));
 					#-------------------------------------------------------------------------------
 					$Result[] = $NoBody;
 					#-------------------------------------------------------------------------------
