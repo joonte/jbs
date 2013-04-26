@@ -228,7 +228,7 @@ foreach($Registrators as $NowReg){
 							'`DomainsSchemes`.`ID` = `SchemeID`',
 							SPrintF('`DomainsSchemes`.`RegistratorID` = %u',$NowReg['ID'])
 							);
-					$DomainOrder = DB_Select(Array('DomainsOrdersOwners','DomainsSchemes'),Array('StatusDate','`DomainsOrdersOwners`.`ID` AS `ID`','`DomainsOrdersOwners`.`UserID` AS `UserID`'),Array('UNIQ','Where'=>$Where));
+					$DomainOrder = DB_Select(Array('DomainsOrdersOwners','DomainsSchemes'),Array('StatusID','StatusDate','`DomainsOrdersOwners`.`ID` AS `ID`','`DomainsOrdersOwners`.`UserID` AS `UserID`'),Array('UNIQ','Where'=>$Where));
 					#-----------------------------------------------------------
 					switch(ValueOf($DomainOrder)){
 					case 'error':
@@ -265,17 +265,23 @@ foreach($Registrators as $NowReg){
 						return ERROR | @Trigger_Error(400);
 					case 'array':
 						#-----------------------------------------------------------
-						$Event = Array(
-								'UserID'	=> $DomainOrder['UserID'],
-								'PriorityID'	=> 'Error',
-								'Text'		=> SPrintF('Заказ домена %s не найден у регистратора %s. Статус заказа изменен на "Удален".',$DomainOdd,$NowReg['Name']),
-								'IsReaded'	=> FALSE
-								);
-						$Event = Comp_Load('Events/EventInsert',$Event);
-						if(!$Event)
-							return ERROR | @Trigger_Error(500);
+						if($DomainOrder['StatusID'] != 'Suspended'){
+							#-----------------------------------------------------------
+							$Event = Array(
+									'UserID'	=> $DomainOrder['UserID'],
+									'PriorityID'	=> 'Error',
+									'Text'		=> SPrintF('Заказ домена %s не найден у регистратора %s. Статус заказа изменен на "Удален".',$DomainOdd,$NowReg['Name']),
+									'IsReaded'	=> FALSE
+									);
+							#-----------------------------------------------------------
+							$Event = Comp_Load('Events/EventInsert',$Event);
+							if(!$Event)
+								return ERROR | @Trigger_Error(500);
+							#-----------------------------------------------------------
+						}
 						#-----------------------------------------------------------
 						break;
+						#-----------------------------------------------------------
 					default:
 						return ERROR | @Trigger_Error(101);
 					}
