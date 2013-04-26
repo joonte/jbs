@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
@@ -25,40 +24,64 @@ case 'exception':
 	Debug("[comp/Tasks/GC/DomainPathRegisterNotify]: нет доменов где владелец не определён более 30 дней");
 	return TRUE;
 case 'array':
+	#-------------------------------------------------------------------------------
 	foreach($Tasks as $Task){
 		#-------------------------------------------------------------------------------
 		$Params = (array)$Task['Params'];
 		#-------------------------------------------------------------------------------
-		$Columns = Array('DomainName','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','UserID');
+		$Columns = Array('ID','DomainName','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','UserID');
 		#-------------------------------------------------------------------------------
 		$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','ID'=>$Params['ID']));
 		switch(ValueOf($DomainOrder)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
+			#-------------------------------------------------------------------------------
 			# TODO проверить, может быть имеет смысл вешать событие, с указанием номера таска...
 			return new gException('DOMAIN_ORDER_NOT_FOUND','Заказ домена не найден');
+			#-------------------------------------------------------------------------------
 		case 'array':
+			#-------------------------------------------------------------------------------
+			# ставим домену статус "удалён"
+			$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Deleted','RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Владелец домена не определён более 30 дней'));
+			#-------------------------------------------------------------------------------
+			switch(ValueOf($Comp)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				return ERROR | @Trigger_Error(400);
+			case 'array':
+				# No more...
+				break;
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
+			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			$Event = Array(
 					'UserID'        => $DomainOrder['UserID'],
 					'PriorityID'    => 'Hosting',
-					'Text'          => SPrintF('Владелец домена %s.%s не определён более 30 дней',$DomainOrder['DomainName'],$DomainOrder['DomainZone']),
-					'IsReaded'      => FALSE
+					'Text'          => SPrintF('Владелец домена %s.%s не определён более 30 дней, заказ автоматически удалён',$DomainOrder['DomainName'],$DomainOrder['DomainZone'])
 					);
 			$Event = Comp_Load('Events/EventInsert',$Event);
+			#-------------------------------------------------------------------------------
 			if(!$Event)
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-		break;
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
 		default:
 			return ERROR | @Trigger_Error(101);
 		}
 		#-------------------------------------------------------------------------------
 	}
+	#-------------------------------------------------------------------------------
 	return TRUE;
+	#-------------------------------------------------------------------------------
 default:
 	return ERROR | @Trigger_Error(101);
 }
-
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 ?>

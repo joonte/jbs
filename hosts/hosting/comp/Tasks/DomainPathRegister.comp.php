@@ -66,14 +66,14 @@ switch(ValueOf($DomainOrder)){
       $Event = Array(
       			'UserID'	=> $DomainOrder['UserID'],
 			'PriorityID'	=> 'Warning',
-			'Text'		=> SPrintF('Владелец для заказа домена (%s.%s) не определён. Ожидание перед повтором проверки 6 часов',$DomainOrder['DomainName'],$DomainOrder['DomainZone'])
+			'Text'		=> SPrintF('Владелец для заказа домена (%s.%s) не определён. Ожидание перед повтором проверки 1 сутки',$DomainOrder['DomainName'],$DomainOrder['DomainZone'])
                     );
       $Event = Comp_Load('Events/EventInsert',$Event);
       if(!$Event)
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
       #-------------------------------------------------------------------------
-      return 6 * 3600;
+      return 24 * 3600;
     }
     #---------------------------------------------------------------------------
     $Registrator = DB_Select('Registrators','TypeID',Array('UNIQ','ID'=>$DomainOrder['RegistratorID']));
