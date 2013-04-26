@@ -526,6 +526,9 @@
   <DomainsOrdersWhoIsUpdate>
    <Name>Синхронизация доменов с базой WhoIs</Name>
    <Params type="array" />
+   <ExecuteTime>05:00</ExecuteTime>
+   <ExecutePeriod>00:02</ExecutePeriod>
+   <Limit>5</Limit>
    <IsActive>1</IsActive>
   </DomainsOrdersWhoIsUpdate>
   <!-- ********************************************************************* -->

@@ -10,6 +10,24 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('libs/WhoIs.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Config = Config();
+#------------------------------------------------------------------------------
+$Settings = $Config['Tasks']['Types']['DomainsOrdersWhoIsUpdate'];
+#------------------------------------------------------------------------------
+# если неактивна, то через день запуск
+if(!$Settings['IsActive'])
+	return 24*3600;
+#------------------------------------------------------------------------------
+$ExecutePeriod = Comp_Load('Formats/Task/ExecuteTime',Array('ExecutePeriod'=>$Settings['ExecutePeriod'],'DefaultTime'=>120));
+if(Is_Error($ExecutePeriod))
+	return ERROR | @Trigger_Error(500);
+#------------------------------------------------------------------------------
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecuteTime'=>$Settings['ExecuteTime'],'DefaultTime'=>MkTime(5,0,0,Date('n'),Date('j')+1,Date('Y'))));
+if(Is_Error($ExecuteTime))
+	return ERROR | @Trigger_Error(500);
+#------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Where = Array(
 		"`StatusID` = 'Active' OR `StatusID` = 'ForTransfer' OR `StatusID` = 'OnTransfer'",
 		"UNIX_TIMESTAMP() - 86400 > `UpdateDate`",
@@ -17,7 +35,7 @@ $Where = Array(
 		);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','DomainName','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) AS `DomainZone`');
-$DomainOrders = DB_Select('DomainsOrders',$Columns,Array('Where'=>$Where,'Limits'=>Array(0,5),'SortOn'=>'UpdateDate'));
+$DomainOrders = DB_Select('DomainsOrders',$Columns,Array('Where'=>$Where,'Limits'=>Array(0,$Settings['Limit']),'SortOn'=>'UpdateDate'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrders)){
 case 'error':
@@ -43,7 +61,7 @@ case 'array':
 	#-------------------------------------------------------------------------------
 case 'true':
 	#-------------------------------------------------------------------------------
-	# domain not found ....
+
 	break;
 	#-------------------------------------------------------------------------------
 default:
@@ -58,7 +76,7 @@ if(Is_Error($Count))
 $GLOBALS['TaskReturnInfo'][] = SPrintF('estimated: %s domains',$Count);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return ($Count?120:MkTime(5,0,0,Date('n'),Date('j')+1,Date('Y')));
+return ($Count?$ExecutePeriod:$ExecuteTime);
 #-------------------------------------------------------------------------------
 
 ?>
