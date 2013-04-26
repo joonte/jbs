@@ -72,8 +72,9 @@ default:
 $Count = DB_Count('DomainsOrders',Array('Where'=>$Where));
 if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);
-#Debug("[comp/Tasks/DomainsOrdersWhoIsUpdate]: TaskReturnInfo = " . print_r($GLOBALS['TaskReturnInfo'], true));
-$GLOBALS['TaskReturnInfo'][] = SPrintF('estimated: %s domains',$Count);
+#-------------------------------------------------------------------------------
+if($Count)
+	$GLOBALS['TaskReturnInfo'][] = SPrintF('estimated: %s domains',$Count);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return ($Count?$ExecutePeriod:$ExecuteTime);
