@@ -35,7 +35,7 @@ $Where = Array(
 		);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','DomainName','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) AS `DomainZone`');
-$DomainOrders = DB_Select('DomainsOrders',$Columns,Array('Where'=>$Where,'Limits'=>Array(0,$Settings['Limit']),'SortOn'=>'UpdateDate'));
+$DomainOrders = DB_Select('DomainsOrders',$Columns,Array('Where'=>$Where,'Limits'=>Array(0,$Settings['Limit']),'SortOn'=>Array('UpdateDate','DomainName')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrders)){
 case 'error':
