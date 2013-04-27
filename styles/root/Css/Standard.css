@@ -357,6 +357,7 @@ span.NodeParam {
     background-color: #FFFFFF;
     border:           1px solid #969696;
     padding:          2px;
+    cursor:           pointer;
 }
 
 input[type=text],
