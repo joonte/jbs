@@ -2328,12 +2328,9 @@ DELETE FROM `Services` WHERE `ID` IN(10000,20000,30000,40000,50000,51000);
 INSERT INTO `Services` (`ID`, `GroupID`, `UserID`, `ServicesGroupID`, `Name`, `NameShort`, `Code`, `Item`, `Measure`, `ConsiderTypeID`, `CostOn`, `Cost`, `IsHidden`, `IsProtected`, `IsActive`, `IsProlong`, `SortID`) VALUES
 (10000, 2000000, 1, 1000, 'Поддержка заказа хостинга', 'Хостинг', 'Hosting', 'Хостинг', 'дн.', 'Daily', 0.00, 0.00, 'no', 'yes', 'yes', 'yes', 10),
 (20000, 2000000, 1, 1000, 'Поддержка заказа домена', 'Домены', 'Domains', 'Домены', 'год', 'Yearly', 0.00, 0.00, 'no', 'yes', 'yes', 'yes', 20),
-(30000, 2000000, 1, 1000, 'Поддержка заказа виртуального сервера', 'Виртуальный сервер', 'VPS', 'VPS', 'дн.', 'Daily', 0.00, 0.00, 'no', 'yes', 'yes', 'yes', 20);
-INSERT INTO `Services` (`ID`, `GroupID`, `UserID`, `ServicesGroupID`, `Name`, `NameShort`, `Code`, `Item`, `Emblem`, `Measure`, `ConsiderTypeID`, `CostOn`, `Cost`, `IsHidden`, `IsProtected`, `IsActive`, `IsProlong`, `SortID`) VALUES
-(40000, 2000000, 1, 1000, 'Поддержка заказа выделенного сервера', 'Выделенный сервер', 'DS', 'DS', 'дн.', 'Daily', 0.00, 0.00, 'no', 'yes', 'yes', 'yes', 30);
-INSERT INTO `Services` (`ID`, `GroupID`, `UserID`, `ServicesGroupID`, `Name`, `NameShort`, `Code`, `Item`, `Emblem`, `Measure`, `ConsiderTypeID`, `CostOn`, `Cost`, `IsHidden`, `IsProtected`, `IsActive`, `IsProlong`, `SortID`) VALUES
-(50000, 2000000, 1, 1100, 'Поддержка заказа дополнительного IP адреса', 'IP адрес', 'ExtraIP', 'IP адреса', 'дн.', 'Daily', 0.00, 0.00, 'no', 'yes', 'yes', 'yes', 10);
-INSERT INTO `Services` (`ID`, `GroupID`, `UserID`, `ServicesGroupID`, `Name`, `NameShort`, `Code`, `Item`, `Emblem`, `Measure`, `ConsiderTypeID`, `CostOn`, `Cost`, `IsHidden`, `IsProtected`, `IsActive`, `IsProlong`, `SortID`) VALUES
+(30000, 2000000, 1, 1000, 'Поддержка заказа виртуального сервера', 'Виртуальный сервер', 'VPS', 'VPS', 'дн.', 'Daily', 0.00, 0.00, 'no', 'yes', 'yes', 'yes', 20),
+(40000, 2000000, 1, 1000, 'Поддержка заказа выделенного сервера', 'Выделенный сервер', 'DS', 'DS', 'дн.', 'Daily', 0.00, 0.00, 'no', 'yes', 'yes', 'yes', 30),
+(50000, 2000000, 1, 1100, 'Поддержка заказа дополнительного IP адреса', 'IP адрес', 'ExtraIP', 'IP адреса', 'дн.', 'Daily', 0.00, 0.00, 'no', 'yes', 'yes', 'yes', 10),
 (51000, 2000000, 1, 1100, 'Заказ программного обеспечения ISPsystems', 'ПО ISPsystem', 'ISPsw', 'Лицензии ISPsystem', 'дн.', 'Daily', 0.00, 0.00, 'no', 'yes', 'yes', 'yes', 20);
 
 UNLOCK TABLES;
