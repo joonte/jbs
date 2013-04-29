@@ -9,8 +9,8 @@ $__args_list = Array('InvoiceID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/DOM.class.php','libs/Wizard.php')))
-  return ERROR | @Trigger_Error(500);
+if(Is_Error(System_Load('classes/DOM.class.php','libs/Wizard.php','libs/Upload.php')))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Invoice = DB_Select('Invoices',Array('ID','CreateDate','ContractID','PaymentSystemID','Summ'),Array('UNIQ','ID'=>$InvoiceID));
 #-------------------------------------------------------------------------------
@@ -232,9 +232,11 @@ switch(ValueOf($Invoice)){
               $Document = Str_Replace(SPrintF('%%%s%%',$LinkID),$Text?$Text:'-',$Document);
             }
             #-------------------------------------------------------------------
-            $IsUpdate = DB_Update('Invoices',Array('Document'=>$Document),Array('ID'=>$InvoiceID));
-            if(Is_Error($IsUpdate))
-              return ERROR | @Trigger_Error(500);
+            #$IsUpdate = DB_Update('Invoices',Array('Document'=>$Document),Array('ID'=>$InvoiceID));
+            #if(Is_Error($IsUpdate))
+            #  return ERROR | @Trigger_Error(500);
+            if(!SaveUploadedFile('Invoices', $InvoiceID, $Document))
+              return new gException('CANNOT_SAVE_UPLOADED_FILE','Не удалось сохранить загруженный файл');
             #-------------------------------------------------------------------
             return TRUE;
           default:

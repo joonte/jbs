@@ -13,8 +13,9 @@ $InvoiceID = (integer) @$Args['InvoiceID'];
 $IsStamp   = (boolean) @$Args['IsStamp'];
 $IsTIFF    = (boolean) @$Args['IsTIFF'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/HTMLDoc.php')))
-  return ERROR | @Trigger_Error(500);
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/HTMLDoc.php','libs/Upload.php')))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','Document');
 #-------------------------------------------------------------------------------
@@ -38,7 +39,11 @@ switch(ValueOf($Invoice)){
         return ERROR | @Trigger_Error(700);
       case 'true':
         #-----------------------------------------------------------------------
-        $Document = $Invoice['Document'];
+	if(!GetUploadedFileSize('Invoices',$Invoice['ID']))
+		Debug(SPrintF('[comp/www/InvoiceDownload]: файл отсутствует ID = %s',$Invoice['ID']));
+	#-------------------------------------------------------------------------------
+	$File = GetUploadedFile('Invoices',$Invoice['ID']);
+	$Document = $File['Data'];
         #-----------------------------------------------------------------------
         $DOM = new DOM($Document);
         #-----------------------------------------------------------------------
