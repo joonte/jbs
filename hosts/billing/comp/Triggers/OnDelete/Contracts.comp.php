@@ -13,14 +13,30 @@ if(Is_Error(System_Load('libs/Upload.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($Contract['StatusID'] != 'Breaked'){
-	#-----------------------------------------------------------------------------
-	$Comp = Comp_Load('Formats/Invoice/Number',$Contract['ID']);
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-----------------------------------------------------------------------------
-	return new gException('CONTRACT_IS_NOT_BREAKED',SPrintF('Договор №%s должен быть расторгнут для возможности удаления',$Comp));
-}
+$Number = Comp_Load('Formats/Invoice/Number',$Contract['ID']);
+if(Is_Error($Number))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($Contract['StatusID'] != 'Breaked')
+	return new gException('CONTRACT_IS_NOT_BREAKED',SPrintF('Договор #%s должен быть расторгнут для возможности удаления',$Number));
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# проверяем наличие любых счетов
+$Count = DB_Count('InvoicesOwners',Array('Where'=>SPrintF("`ContractID` = %u",$Contract['ID'])));
+if($Count)
+	return new gException('CONTRACT_HAVE_INVOICES',SPrintF('Договор #%s не может быть удален, поскольку на него есть счета на оплату',$Number));
+#-------------------------------------------------------------------------------
+# проверяем наличие оплаченных счетов
+$Count = DB_Count('InvoicesOwners',Array('Where'=>SPrintF("`StatusID` = 'Payed' AND `ContractID` = %u",$Contract['ID'])));
+if($Count)
+	return new gException('CONTRACT_HAVE_PAYED_INVOICES',SPrintF('Договор #%s не может быть удален, поскольку на него есть оплаченные счета',$Number));
+#-------------------------------------------------------------------------------
+# проверяем наличие заказов
+$Count = DB_Count('OrdersOwners',Array('Where'=>SPrintF("`ContractID` = %u",$Contract['ID'])));
+if($Count)
+	return new gException('CONTRACT_HAVE_INVOICES',SPrintF('Договор #%s не может быть удален, поскольку на нём есть заказанные услуги',$Number));
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IsDelete = DB_Delete('MotionDocuments',Array('Where'=>SPrintF('`ContractID` = %u',$Contract['ID'])));
 if(Is_Error($IsDelete))
@@ -28,6 +44,7 @@ if(Is_Error($IsDelete))
 #-------------------------------------------------------------------------------
 if(!DeleteUploadedFile('Contracts', $Contract['ID']))
         return new gException('CANNOT_DELETE_FILE','Не удалось удалить связанный файл');
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;
 #-------------------------------------------------------------------------------
