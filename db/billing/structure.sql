@@ -1,5 +1,24 @@
 SET FOREIGN_KEY_CHECKS=0;
 
+
+--
+-- Структура таблицы `ClausesGroups`
+--
+DROP TABLE IF EXISTS `ClausesGroups`;
+CREATE TABLE IF NOT EXISTS `ClausesGroups` (
+	`ID` int(11) NOT NULL AUTO_INCREMENT,
+	`PublicDate` int(11) NOT NULL,
+	`ChangedDate` int(11) NOT NULL,
+	`AuthorID` int(11) NOT NULL,
+	`EditorID` int(11) NOT NULL,
+	`Name` varchar(1023),
+	`Notice` text,
+	`IsProtected` enum('no','yes') DEFAULT 'no',
+	`IsPublish` enum('no','yes') DEFAULT 'no',
+	PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 --
 -- Table structure for table `ClausesRating`
 --

@@ -166,6 +166,16 @@ SELECT
 FROM
   `Clauses`;
 #-------------------------------------------------------------------------------
+DROP VIEW IF EXISTS `ClausesGroupsOwners`;
+DROP TABLE IF EXISTS `ClausesGroupsOwners`;
+CREATE
+  VIEW `ClausesGroupsOwners` AS
+SELECT
+  `ClausesGroups`.*,
+  `ClausesGroups`.`AuthorID` as `UserID`
+FROM
+  `ClausesGroups`;
+#-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `ClausesFilesOwners`;
 DROP TABLE IF EXISTS `ClausesFilesOwners`;
 CREATE
