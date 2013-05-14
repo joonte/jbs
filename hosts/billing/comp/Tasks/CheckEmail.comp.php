@@ -298,14 +298,14 @@ foreach($Mails as $mailId){
 	# имеем 2 ситуации, задан или не задан $MessageID - соответственно, добавление в тикет или создание тикета
 	if(IsSet($MessageID)){
 		#-------------------------------------------------------------------------------
-		$NewUserID = (($IsUser)?$User['ID']:100);
+		#$NewUserID = (($IsUser)?$User['ID']:100);
 		#-------------------------------------------------------------------------------
 		# снимаем флаг у треда
 		$IsUpdate = DB_Update('Edesks',Array('Flags'=>'No'),Array('ID'=>$Edesk['EdeskID']));
 		if(Is_Error($IsUpdate))
 			return ERROR | @Trigger_Error(500);
 		# либо от существующего юзера, либо от гостя - определяемся по владельцу треда
-		$GLOBALS['__USER']['ID'] = $NewUserID;
+		#$GLOBALS['__USER']['ID'] = $NewUserID;
 		#-------------------------------------------------------------------------------
 		$Params = Array('Message'=>$Message,'TicketID'=>$Edesk['EdeskID'],'UserID'=>($IsUser)?$User['ID']:10);
 		#-------------------------------------------------------------------------------
