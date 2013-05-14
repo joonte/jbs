@@ -2334,8 +2334,6 @@ INSERT INTO `Services` (`ID`, `GroupID`, `UserID`, `ServicesGroupID`, `Name`, `N
 
 UNLOCK TABLES;
 
-SET FOREIGN_KEY_CHECKS=1;
-
 -- SEPARATOR
 /* added by serge 2011-09-05 in 16:00 MSK for domain transfer*/
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.101domain.ru</P>';
@@ -2461,5 +2459,8 @@ VALUES (7,100,100,'no','no','no','Registrators/CENTROHOST/external','Транс�
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.getname.ru</P>';
 INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
 VALUES (7,100,100,'no','no','no','Registrators/ELVIS/external','Трансфер внешний. ELVIS.',@Text);
+
+-- SEPARATOR
+SET FOREIGN_KEY_CHECKS=1;
 
 

@@ -2112,7 +2112,7 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses` `GroupID`,(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
 VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/WebMoneyZ','Шаблон платежной системы WebMoneyZ',@Text);
 
 -- SEPARATOR
