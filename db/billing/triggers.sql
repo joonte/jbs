@@ -149,6 +149,18 @@ CREATE DEFINER = CURRENT_USER TRIGGER `ClausesOnInsert` BEFORE INSERT ON `Clause
 |
 DELIMITER ;
 #-------------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS `ClausesGroupsOnInsert`;
+DELIMITER |
+CREATE DEFINER = CURRENT_USER TRIGGER `ClausesGroupsOnInsert` BEFORE INSERT ON `ClausesGroups`
+  FOR EACH ROW BEGIN
+    IF NEW.`PublicDate` = 0
+      THEN
+        SET NEW.`PublicDate` = UNIX_TIMESTAMP();
+    END IF;
+  END;
+|
+DELIMITER ;
+#-------------------------------------------------------------------------------
 DROP TRIGGER IF EXISTS `ClausesFilesOnInsert`;
 DELIMITER |
 CREATE DEFINER = CURRENT_USER TRIGGER `ClausesFilesOnInsert` BEFORE INSERT ON `ClausesFiles`

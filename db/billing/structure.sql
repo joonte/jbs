@@ -15,9 +15,13 @@ CREATE TABLE IF NOT EXISTS `ClausesGroups` (
 	`Notice` text,
 	`IsProtected` enum('no','yes') DEFAULT 'no',
 	`IsPublish` enum('no','yes') DEFAULT 'no',
-	PRIMARY KEY (`ID`)
+	PRIMARY KEY (`ID`),
+	KEY `ClausesGroupsPublicDate` (`PublicDate`),
+	KEY `ClausesGroupsAuthorID` (`AuthorID`),
+	KEY `ClausesGroupsEditorID` (`EditorID`),
+	CONSTRAINT `ClausesGroupsAuthorID` FOREIGN KEY (`AuthorID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT `ClausesGroupsEditorID` FOREIGN KEY (`EditorID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 --
 -- Table structure for table `ClausesRating`
@@ -59,6 +63,7 @@ CREATE TABLE `ClausesFiles` (
 DROP TABLE IF EXISTS `Clauses`;
 CREATE TABLE `Clauses` (
   `ID` int(11) NOT NULL auto_increment,
+  `GroupID` INT(11) DEFAULT '1',
   `PublicDate` int(11) default '0',
   `ChangedDate` int(11) default '0',
   `AuthorID` int(11) default '1',
@@ -71,14 +76,16 @@ CREATE TABLE `Clauses` (
   `IsPublish` enum('no','yes') default 'yes',
   `Text` longtext,
   PRIMARY KEY  (`ID`),
+  KEY `ClausesGroupID` (`GroupID`),
   KEY `ClausesPublicDate` (`PublicDate`),
-  KEY (`Partition`),
   KEY `ClausesAuthorID` (`AuthorID`),
-  CONSTRAINT `ClausesAuthorID` FOREIGN KEY (`AuthorID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   KEY `ClausesEditorID` (`EditorID`),
-  CONSTRAINT `ClausesEditorID` FOREIGN KEY (`EditorID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  KEY `ClausesPartition` (`Partition`)
+  KEY `ClausesPartition` (`Partition`),
+  CONSTRAINT `ClausesGroupID` FOREIGN KEY (`GroupID`) REFERENCES `ClausesGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `ClausesAuthorID` FOREIGN KEY (`AuthorID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `ClausesEditorID` FOREIGN KEY (`EditorID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 --
 -- Table structure for table `Invoices`

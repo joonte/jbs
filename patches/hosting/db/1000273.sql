@@ -11,7 +11,12 @@ CREATE TABLE IF NOT EXISTS `ClausesGroups` (
 	`Notice` text,
 	`IsProtected` enum('no','yes') DEFAULT 'no',
 	`IsPublish` enum('no','yes') DEFAULT 'no',
-	PRIMARY KEY (`ID`)
+	PRIMARY KEY (`ID`),
+	KEY `ClausesGroupsPublicDate` (`PublicDate`),
+	KEY `ClausesGroupsAuthorID` (`AuthorID`),
+	KEY `ClausesGroupsEditorID` (`EditorID`),
+	CONSTRAINT `ClausesGroupsAuthorID` FOREIGN KEY (`AuthorID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT `ClausesGroupsEditorID` FOREIGN KEY (`EditorID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- SEPARATOR
@@ -47,4 +52,9 @@ INSERT INTO `ClausesGroups` (`ID`,`PublicDate`,`ChangedDate`,`AuthorID`,`EditorI
 -- SEPARATOR
 INSERT INTO `ClausesGroups` (`ID`,`PublicDate`,`ChangedDate`,`AuthorID`,`EditorID`,`Name`,`Notice`,`IsProtected`,`IsPublish`)
 	VALUES (11,UNIX_TIMESTAMP(),UNIX_TIMESTAMP(),100,100,'Кнопки тикетницы','Кнопки быстрого ответа в тикетнице','yes','yes');
+
+-- SEPARATOR
+ALTER TABLE `Clauses` ADD `GroupID` INT(11) NOT NULL DEFAULT '1' AFTER `ID`, ADD KEY `ClausesGroupID` (`GroupID`);
+-- SEPARATOR
+ALTER TABLE `Clauses` ADD CONSTRAINT `ClausesGroupID` FOREIGN KEY (`GroupID`) REFERENCES `ClausesGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE ;
 
