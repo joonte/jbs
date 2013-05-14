@@ -58,3 +58,39 @@ ALTER TABLE `Clauses` ADD `GroupID` INT(11) NOT NULL DEFAULT '1' AFTER `ID`, ADD
 -- SEPARATOR
 ALTER TABLE `Clauses` ADD CONSTRAINT `ClausesGroupID` FOREIGN KEY (`GroupID`) REFERENCES `ClausesGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE ;
 
+-- SEPARATOR
+UPDATE `Clauses` SET `GroupID` = 1 WHERE `Partition` = 'User/Panel';
+-- SEPARATOR
+UPDATE `Clauses` SET `GroupID` = 4 WHERE `Partition` = '/Documents';
+-- SEPARATOR
+UPDATE `Clauses` SET `GroupID` = 8 WHERE `Partition` = '/Help/Services/Paying';
+-- SEPARATOR
+UPDATE `Clauses` SET `GroupID` = 2 WHERE `Partition` = 'News';
+-- SEPARATOR
+UPDATE `Clauses` SET `GroupID` = 1 WHERE `Partition` = '/Contacts';
+-- SEPARATOR
+UPDATE `Clauses` SET `GroupID` = 8 WHERE `Partition` = '/Help/Services/QIWIPhone';
+
+
+-- SEPARATOR
+UPDATE `Clauses` SET `GroupID` = 2 WHERE `Partition` LIKE '%News%';
+-- SEPARATOR
+UPDATE `Clauses` SET `GroupID` = 4 WHERE `Partition` LIKE 'Contracts%';
+-- SEPARATOR
+UPDATE `Clauses` SET `GroupID` = 3 WHERE `Partition` LIKE '%Agreement%';
+-- SEPARATOR
+UPDATE `Clauses` SET `GroupID` = 5 WHERE `Partition` LIKE 'Envelope%';
+-- SEPARATOR
+UPDATE `Clauses` SET `GroupID` = 6 WHERE `Partition` LIKE 'Invoices/%';
+-- SEPARATOR
+UPDATE `Clauses` SET `GroupID` = 7 WHERE `Partition` LIKE 'Registrators/%';
+-- SEPARATOR
+UPDATE `Clauses` SET `GroupID` = 9 WHERE `Partition` LIKE 'Header:%';
+-- SEPARATOR
+UPDATE `Clauses` SET `GroupID` = 10 WHERE `Partition` LIKE 'CreateTicket/%';
+-- SEPARATOR
+UPDATE `Clauses` SET `GroupID` = 10 WHERE `Partition` LIKE '/Administrator/ButtonsNew:%';
+-- SEPARATOR
+UPDATE `Clauses` SET `GroupID` = 11 WHERE `Partition` LIKE '/Administrator/Buttons:%';
+
+

@@ -1,6 +1,8 @@
 SET NAMES 'utf8';
 SET FOREIGN_KEY_CHECKS=0;
 
+-- SEPARATOR
+
 DELETE FROM `Groups` WHERE `ID` IN (1,2000000,3000000,3100000,3200000,3300000,4000000);
 LOCK TABLES `Groups` WRITE;
 INSERT INTO `Groups`
@@ -16,6 +18,8 @@ VALUES
 (4000000,1,'Система',NULL,'no','no','Группа всех клиентов');
 UNLOCK TABLES;
 
+-- SEPARATOR
+
 DELETE FROM `Users` WHERE `ID` IN (1,10,50,100,200,300);
 LOCK TABLES `Users` WRITE;
 INSERT INTO `Users`
@@ -28,6 +32,8 @@ VALUES
 (200,2000000,'Клиент',MD5('nopassword'),'client@company.com','С уважением, Клиент.','no','yes',''),
 (300,3000000,'Сайт компании','e02f7b992578cd299e3e3edaed120689','site@company.com','С уважением, сайт ООО \"Компания\".','no','yes','Пользователь с доступом только к API, используется для работы сайта');
 UNLOCK TABLES;
+
+-- SEPARATOR
 
 DELETE FROM `Tasks` WHERE `ID` IN(1,2,3,4,5,6,7,8,9,11,12,13);
 LOCK TABLES `Tasks` WRITE;
@@ -46,22 +52,24 @@ VALUES
 (11,1,'CaclulatePartnersReward','[]','yes'),
 (12,1,'GC','[]','yes'),
 (13,1,'CheckEmail','[]','yes');
-
 UNLOCK TABLES;
+
+-- SEPARATOR
 
 DELETE FROM `Clauses` WHERE `Partition` IN ('User/Panel','/Help/Services/Paying','News','/Contacts');
 INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsXML`,`IsDOM`,`IsProtected`,`Partition`,`Title`,`Text`)
+  (`GroupID`,`AuthorID`,`EditorID`,`IsXML`,`IsDOM`,`IsProtected`,`Partition`,`Title`,`Text`)
 VALUES
-(100,100,'yes','no','yes','User/Panel','Рекламная панель','<P />'),
-(100,100,'yes','yes','yes','/Documents','Шаблоны документов','<NOBODY><p>Всем физическим лицам услуги предоставляются на основании договора Публичной Оферты в соответствии с Гражданским Кодексом РФ. Безусловным принятием условий договора Публичной Оферты считается осуществление платежа в счет оплаты услуг. Если Вы физическое лицо, то Вам не надо заключать отдельный договор в письменном виде.</p>
+(1,100,100,'yes','no','yes','User/Panel','Рекламная панель','<P />'),
+(4,100,100,'yes','yes','yes','/Documents','Шаблоны документов','<NOBODY><p>Всем физическим лицам услуги предоставляются на основании договора Публичной Оферты в соответствии с Гражданским Кодексом РФ. Безусловным принятием условий договора Публичной Оферты считается осуществление платежа в счет оплаты услуг. Если Вы физическое лицо, то Вам не надо заключать отдельный договор в письменном виде.</p>
 <p>Условия могут быть изменены Исполнителем в одностороннем порядке. Новая редакция Условий вступает в силу по истечении 3 (трех) дней с момента ее размещения на WEB-сервере Исполнителя, если иное не предусмотрено новой редакцией Условий. Исполнитель уведомляет пользователей об изменении Условий по электронной почте не позднее, чем за 3 дня до вступления изменений в силу.</p>
 <BR />
 <COMP path="Clauses/Menu" args="Contracts%/Content"> [шаблоны документов] </COMP></NOBODY>'),
-(100,100,'yes','no','yes','/Help/Services/Paying','Продление услуг','<TABLE width=\"400\">\n <TR>\n  <TD>\n   <SPAN>Для продления услуги, найдите необходимый заказ в списке заказов. Напротив заказа нажмите кнопку <IMG width=\"22\" height=\"22\" src=\"/styles/billing/Images/Icons/Pay.gif\" /> и дальше следуйте инструкциям системы.</SPAN>\n  </TD>\n  <TD>\n  </TD>\n </TR>\n</TABLE>\n'),
-(100,100,'yes','no','yes','News','Запуск биллинговой системы','<P>На нашем хостинге успешно запущена новая биллинговая система JBs от компании Joonte Software. Теперь заказывать еще проще и быстрее!</P>'),
-(100,100,'yes','no','yes','/Contacts','Контакты','<NOBODY>\n <H1>Адрес офиса</H1>\n <P>000000, г. Москва, ул. Ленина, д. 10, офис 100.</P>\n <H1>Офисный телефон</H1>\n <P>\n  <SPAN>+7 (495) 00-00-00 (понедельник - пятница с 10:00 до 18:00).</SPAN>\n </P>\n <H1>Консультации online!</H1>\n <P>Вы можете обратится по организационным вопросам через ICQ:</P>\n <UL class=\"Standard\" style=\"list-style-type:none;list-style-image:none;\">\n  <LI>\n   <IMG width=\"16\" height=\"16\" src=\"/StatusICQ?UIN=000000\" />\n   <SPAN>000000 - Иванов Иван Иванович;</SPAN>\n  </LI>\n  <LI>\n   <IMG width=\"16\" height=\"16\" src=\"/StatusICQ?UIN=000000\" />\n   <SPAN>000000 - Иванов Иван Иванович.</SPAN>\n  </LI>\n </UL>\n <H1>Техническая поддержка</H1>\n <P>\n  <SPAN>По всем техническим вопросам просим Вас обращаться через специализированный </SPAN>\n  <A href=\"/Tickets\">центр поддержки</A>\n </P>\n');
+(8,100,100,'yes','no','yes','/Help/Services/Paying','Продление услуг','<TABLE width=\"400\">\n <TR>\n  <TD>\n   <SPAN>Для продления услуги, найдите необходимый заказ в списке заказов. Напротив заказа нажмите кнопку <IMG width=\"22\" height=\"22\" src=\"/styles/billing/Images/Icons/Pay.gif\" /> и дальше следуйте инструкциям системы.</SPAN>\n  </TD>\n  <TD>\n  </TD>\n </TR>\n</TABLE>\n'),
+(2,100,100,'yes','no','yes','News','Запуск биллинговой системы','<P>На нашем хостинге успешно запущена новая биллинговая система JBs от компании Joonte Software. Теперь заказывать еще проще и быстрее!</P>'),
+(1,100,100,'yes','no','yes','/Contacts','Контакты','<NOBODY>\n <H1>Адрес офиса</H1>\n <P>000000, г. Москва, ул. Ленина, д. 10, офис 100.</P>\n <H1>Офисный телефон</H1>\n <P>\n  <SPAN>+7 (495) 00-00-00 (понедельник - пятница с 10:00 до 18:00).</SPAN>\n </P>\n <H1>Консультации online!</H1>\n <P>Вы можете обратится по организационным вопросам через ICQ:</P>\n <UL class=\"Standard\" style=\"list-style-type:none;list-style-image:none;\">\n  <LI>\n   <IMG width=\"16\" height=\"16\" src=\"/StatusICQ?UIN=000000\" />\n   <SPAN>000000 - Иванов Иван Иванович;</SPAN>\n  </LI>\n  <LI>\n   <IMG width=\"16\" height=\"16\" src=\"/StatusICQ?UIN=000000\" />\n   <SPAN>000000 - Иванов Иван Иванович.</SPAN>\n  </LI>\n </UL>\n <H1>Техническая поддержка</H1>\n <P>\n  <SPAN>По всем техническим вопросам просим Вас обращаться через специализированный </SPAN>\n  <A href=\"/Tickets\">центр поддержки</A>\n </P>\n');
 
+-- SEPARATOR
 -- Шаблоны договоров
 
 set @Text = '<NOBODY>
@@ -130,10 +138,10 @@ set @Text = '<NOBODY>
  <DIV id="Footer">[подписи сторон]</DIV>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Juridical/Template','Шаблон договора исполнителя юридического лица',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+	VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Juridical/Template','Шаблон договора исполнителя юридического лица',@Text);
+
+-- SEPARATOR
 
 set @Text = '<NOBODY>
  <TABLE border="1" align="right" cellpadding="2">
@@ -205,10 +213,10 @@ set @Text = '<NOBODY>
  <DIV id="Footer">[подписи сторон]</DIV>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Individual/Template','Шаблон договора исполнителя индивидуального предпринимателя',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Individual/Template','Шаблон договора исполнителя индивидуального предпринимателя',@Text);
+
+-- SEPARATOR
 
 set @Text = '<NOBODY>
 <h2>1. Используемые термины</h2>
@@ -891,26 +899,25 @@ set @Text = '<NOBODY>
 </table>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Content','Базовый договор',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Content','Базовый договор',@Text);
 
+-- SEPARATOR
 -- Шаблоны договора индивидуального предпринимателя
 
 set @Text = '<P align="justify">Индивидуальный предприниматель "%Executor.CompanyName%", именуемый(ая) в дальнейшем "Исполнитель", действующий(ая) на основании Свидетельства серия %Executor.SvLine% №%Executor.SvNumber% от %Executor.SvDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с одной стороны, и Индивидуальный предприниматель "%Customer.CompanyName%", именуемый(ая) в дальнейшем "Заказчик", действующий(ая) на основании Свидетельства серия %Customer.SvLine% №%Customer.SvNumber% от %Customer.SvDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Individual/Agreement/Individual','Соглашение исполнителя индивидуального предпринимателя с индивидуальным предпринимателем',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Individual/Agreement/Individual','Соглашение исполнителя индивидуального предпринимателя с индивидуальным предпринимателем',@Text);
+
+-- SEPARATOR
 
 set @Text = '<P align="justify">%Executor.dPost% %Executor.dSourname% %Executor.dName% %Executor.dLastname% от имени %Executor.CompanyForm% "%Executor.CompanyName%", именуемое в дальнейшем "Исполнитель", действующий(ая) на основании %Executor.Basis% с одной стороны, и Индивидуальный предприниматель "%Customer.CompanyName%", именуемый(ая) в дальнейшем "Заказчик", действующий(ая) на основании Свидетельства серия %Customer.SvLine% №%Customer.SvNumber% от %Customer.SvDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Individual/Agreement/Juridical','Соглашение исполнителя юридического лица с индивидуальным предпринимателем',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4, 100,100,'yes','yes','yes','Contracts/Types/Individual/Agreement/Juridical','Соглашение исполнителя юридического лица с индивидуальным предпринимателем',@Text);
+
+-- SEPARATOR
 
 set @Text = '<FONT size="1">
  <TABLE border="1" width="100%" cellpadding="5">
@@ -961,10 +968,10 @@ set @Text = '<FONT size="1">
  </TABLE>
 </FONT>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Individual/Customer','Реквизиты клиента индивидуального предпринимателя',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Individual/Customer','Реквизиты клиента индивидуального предпринимателя',@Text);
+
+-- SEPARATOR
 
 set @Text = '<TABLE width="100%">
  <TR>
@@ -1023,10 +1030,10 @@ set @Text = '<TABLE width="100%">
  </TR>
 </TABLE>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Individual/Footer/Juridical','Подпись исполнителя индивидуального предпринимателя с юридическим лицом',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Individual/Footer/Juridical','Подпись исполнителя индивидуального предпринимателя с юридическим лицом',@Text);
+
+-- SEPARATOR
 
 set @Text = '<TABLE width="100%">
  <TR>
@@ -1085,27 +1092,23 @@ set @Text = '<TABLE width="100%">
  </TR>
 </TABLE>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Individual/Footer/Individual','Подпись исполнителя индивидульного предпринимателя лица с индивидуальным предпринимателем',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Individual/Footer/Individual','Подпись исполнителя индивидульного предпринимателя лица с индивидуальным предпринимателем',@Text);
 
+-- SEPARATOR
 -- Шаблоны договора юридического лица
-
 set @Text = '<P align="justify">Индивидуальный предприниматель "%Executor.CompanyName%", именуемый(ая) в дальнейшем "Исполнитель", действующий(ая) на основании Свидетельства серия %Executor.SvLine% №%Executor.SvNumber% от %Executor.SvDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с одной стороны, и %Customer.dPost% %Customer.dSourname% %Customer.dName% %Customer.dLastname% %Customer.CompanyForm% "%Customer.CompanyName%", именуемое в дальнейшем "Заказчик", действующий(ая) на основании %Customer.Basis%, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Juridical/Agreement/Individual','Соглашение исполнителя индивидуального предпринимателя с юридическим лицом',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`) 
+VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Juridical/Agreement/Individual','Соглашение исполнителя индивидуального предпринимателя с юридическим лицом',@Text);
 
+-- SEPARATOR
 set @Text = '<P align="justify">%Executor.dPost% %Executor.dSourname% %Executor.dName% %Executor.dLastname% от имени %Executor.CompanyForm% "%Executor.CompanyName%", именуемое в дальнейшем "Исполнитель", действующий(ая) на основании %Executor.Basis%, с одной стороны, и %Customer.dPost% %Customer.dSourname% %Customer.dName% %Customer.dLastname% от имени %Customer.CompanyForm% "%Customer.CompanyName%", именуемое в дальнейшем "Заказчик", действующий(ая) на основании %Customer.Basis%, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Juridical/Agreement/Juridical','Соглашение исполнителя юридического лица с юридическим лицом',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Juridical/Agreement/Juridical','Соглашение исполнителя юридического лица с юридическим лицом',@Text);
 
+-- SEPARATOR
 set @Text = '<FONT size="1">
  <TABLE border="1" width="100%" cellpadding="5">
   <TR>
@@ -1155,11 +1158,11 @@ set @Text = '<FONT size="1">
  </TABLE>
 </FONT>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Juridical/Customer','Реквизиты клиента юридического лица',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Juridical/Customer','Реквизиты клиента юридического лица',@Text);
 
+
+-- SEPARATOR
 set @Text = '<TABLE width="100%">
  <TR>
   <TD width="50%" valign="top">
@@ -1217,11 +1220,10 @@ set @Text = '<TABLE width="100%">
  </TR>
 </TABLE>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Juridical/Footer/Individual','Подпись исполнителя индивидуального предпринимателя с юридическим лицом',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Juridical/Footer/Individual','Подпись исполнителя индивидуального предпринимателя с юридическим лицом',@Text);
 
+-- SEPARATOR
 set @Text = '<TABLE width="100%">
  <TR>
   <TD width="50%" valign="top">
@@ -1279,27 +1281,24 @@ set @Text = '<TABLE width="100%">
  </TR>
 </TABLE>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Juridical/Footer/Juridical','Подпись исполнителя юридического лица с юридическим лицом',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Juridical/Footer/Juridical','Подпись исполнителя юридического лица с юридическим лицом',@Text);
 
+-- SEPARATOR
 -- Шаблоны договора физического лица
-
 set @Text = '<P align="justify">Индивидуальный предприниматель "%Executor.CompanyName%", именуемый(ая) в дальнейшем "Исполнитель", действующий(ая) на основании Свидетельства серия %Executor.SvLine% №%Executor.SvNumber% от %Executor.SvDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с одной стороны, и %Customer.Sourname% %Customer.Name% %Customer.Lastname%, именуемый(ая) в дальнейшем "Заказчик", паспорт %Customer.PasportLine% %Customer.PasportNum%, выданный %Customer.PasportWhom%, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Natural/Agreement/Individual','Соглашение исполнителя индивидуального предпринимателя с физическим лицом',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (3,100,100,'yes','yes','yes','Contracts/Types/Natural/Agreement/Individual','Соглашение исполнителя индивидуального предпринимателя с физическим лицом',@Text);
 
+
+-- SEPARATOR
 set @Text = '<P align="justify">%Executor.dPost% %Executor.dSourname% %Executor.dName% %Executor.dLastname% от имени %Executor.CompanyForm% "%Executor.CompanyName%", именуемое в дальнейшем "Исполнитель", действующий(ая) на основании %Executor.Basis%, с одной стороны, и %Customer.Sourname% %Customer.Name% %Customer.Lastname%, именуемый(ая) в дальнейшем "Заказчик", паспорт %Customer.PasportLine% %Customer.PasportNum%, выданный %Customer.PasportWhom%, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Natural/Agreement/Juridical','Соглашение исполнителя юридического лица с физическим лицом',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (3,100,100,'yes','yes','yes','Contracts/Types/Natural/Agreement/Juridical','Соглашение исполнителя юридического лица с физическим лицом',@Text);
 
+-- SEPARATOR
 set @Text = '<FONT size="1">
  <TABLE border="1" width="100%" cellpadding="5">
   <TR>
@@ -1325,11 +1324,11 @@ set @Text = '<FONT size="1">
  </TABLE>
 </FONT>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Natural/Customer','Реквизиты клиента физического лица',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Natural/Customer','Реквизиты клиента физического лица',@Text);
 
+
+-- SEPARATOR
 set @Text = '<TABLE width="100%">
  <TR>
   <TD width="50%" valign="top">
@@ -1386,11 +1385,11 @@ set @Text = '<TABLE width="100%">
  </TR>
 </TABLE>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Natural/Footer/Individual','Подпись исполнителя индивидуального предпринимателя с физическим лицом',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Natural/Footer/Individual','Подпись исполнителя индивидуального предпринимателя с физическим лицом',@Text);
 
+
+-- SEPARATOR
 set @Text = '<TABLE width="100%">
  <TR>
   <TD width="50%" valign="top">
@@ -1447,11 +1446,10 @@ set @Text = '<TABLE width="100%">
  </TR>
 </TABLE>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Natural/Footer/Juridical','Подпись исполнителя юридического лица с физическим лицом',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Natural/Footer/Juridical','Подпись исполнителя юридического лица с физическим лицом',@Text);
 
+-- SEPARATOR
 -- Шаблоны конвертов
 
 set @Text = '<TABLE border="0" width="100%">
@@ -1487,11 +1485,10 @@ set @Text = '<TABLE border="0" width="100%">
  </TR>
 </TABLE>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Envelopes/Envelope','Конверт получателя профиля почтового конверта',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (5,100,100,'yes','yes','yes','Envelopes/Envelope','Конверт получателя профиля почтового конверта',@Text);
 
+-- SEPARATOR
 set @Text = '<TABLE border="0" width="100%">
  <TR>
   <TD>
@@ -1525,11 +1522,10 @@ set @Text = '<TABLE border="0" width="100%">
  </TR>
 </TABLE>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Envelopes/Individual','Конверт получателя профиля индивидуального предпринимателя',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (5,100,100,'yes','yes','yes','Envelopes/Individual','Конверт получателя профиля индивидуального предпринимателя',@Text);
 
+-- SEPARATOR
 set @Text = '<TABLE border="0" width="100%">
  <TR>
   <TD>
@@ -1563,11 +1559,10 @@ set @Text = '<TABLE border="0" width="100%">
  </TR>
 </TABLE>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Envelopes/Juridical','Конверт получателя профиля юридического лица',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (5,100,100,'yes','yes','yes','Envelopes/Juridical','Конверт получателя профиля юридического лица',@Text);
 
+-- SEPARATOR
 set @Text = '<TABLE border="0" width="100%">
  <TR>
   <TD>
@@ -1601,11 +1596,11 @@ set @Text = '<TABLE border="0" width="100%">
  </TR>
 </TABLE>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Envelopes/Natural','Конверт получателя профиля физического лица',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (5,100,100,'yes','yes','yes','Envelopes/Natural','Конверт получателя профиля физического лица',@Text);
 
+
+-- SEPARATOR
 set @Text = '<NOBODY>
  <TABLE border="0" height="100%" width="100%">
   <TR>
@@ -1669,11 +1664,10 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Envelopes/Juridical/Template','Шаблон конверта исполнителя юридического лица',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (5,100,100,'yes','yes','yes','Envelopes/Juridical/Template','Шаблон конверта исполнителя юридического лица',@Text);
 
+-- SEPARATOR
 set @Text = '<NOBODY>
  <TABLE border="0" height="100%" width="100%">
   <TR>
@@ -1737,36 +1731,26 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Envelopes/Individual/Template','Шаблон конверта исполнителя индивидуального предпринимателя',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (5,100,100,'yes','yes','yes','Envelopes/Individual/Template','Шаблон конверта исполнителя индивидуального предпринимателя',@Text);
 
-
+-- SEPARATOR
 -- added by lissyara 2011-08-23 in 11:03 MSK for partner profile
 set @Text = '<P align="justify">Индивидуальный предприниматель "%Executor.CompanyName%", именуемый(ая) в дальнейшем "Исполнитель", действующий(ая) на основании Свидетельства серия %Executor.SvLine% №%Executor.SvNumber% от %Executor.SvDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с одной стороны, и %Customer.Sourname% %Customer.Name% %Customer.Lastname%, именуемый(ая) в дальнейшем "Заказчик", паспорт %Customer.PasportLine% %Customer.PasportNum%, выданный %Customer.PasportWhom%, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/NaturalPartner/Agreement/Individual','Соглашение исполнителя индивидуального предпринимателя с физическим лицом',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (3,100,100,'yes','yes','yes','Contracts/Types/NaturalPartner/Agreement/Individual','Соглашение исполнителя индивидуального предпринимателя с физическим лицом',@Text);
 
---
-
+-- SEPARATOR
 set @Text = '<P align="justify">%Executor.dPost% %Executor.dSourname% %Executor.dName% %Executor.dLastname% от имени %Executor.CompanyForm% "%Executor.CompanyName%", именуемое в дальнейшем "Исполнитель", действующий(ая) на основании %Executor.Basis%, с одной стороны, и %Customer.Sourname% %Customer.Name% %Customer.Lastname%, именуемый(ая) в дальнейшем "Заказчик", паспорт %Customer.PasportLine% %Customer.PasportNum%, выданный %Customer.PasportWhom%, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/NaturalPartner/Agreement/Juridical','Соглашение исполнителя юридического лица с физическим лицом',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (3,100,100,'yes','yes','yes','Contracts/Types/NaturalPartner/Agreement/Juridical','Соглашение исполнителя юридического лица с физическим лицом',@Text);
 
---
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (3,100,100,'yes','yes','yes','Contracts/Types/Natural/Agreement/Juridical','Соглашение исполнителя юридического лица с физическим лицом',@Text);
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/Natural/Agreement/Juridical','Соглашение исполнителя юридического лица с физическим лицом',@Text);
-
+-- SEPARATOR
 set @Text = '<FONT size="1">
  <TABLE border="1" width="100%" cellpadding="5">
   <TR>
@@ -1792,13 +1776,11 @@ set @Text = '<FONT size="1">
  </TABLE>
 </FONT>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/NaturalPartner/Customer','Реквизиты клиента физического лица',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Types/NaturalPartner/Customer','Реквизиты клиента физического лица',@Text);
 
---
 
+-- SEPARATOR
 set @Text = '<TABLE width="100%">
  <TR>
   <TD width="50%" valign="top">
@@ -1856,12 +1838,11 @@ set @Text = '<TABLE width="100%">
 </TABLE>';
 
 INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+  (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
 VALUES
-(100,100,'yes','yes','yes','Contracts/Types/NaturalPartner/Footer/Juridical','Подпись исполнителя юридического лица с физическим лицом',@Text);
+(4,100,100,'yes','yes','yes','Contracts/Types/NaturalPartner/Footer/Juridical','Подпись исполнителя юридического лица с физическим лицом',@Text);
 
---
-
+-- SEPARATOR
 set @Text = '<TABLE width="100%">
  <TR>
   <TD width="50%" valign="top">
@@ -1918,15 +1899,12 @@ set @Text = '<TABLE width="100%">
  </TR>
 </TABLE>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Types/NaturalPartner/Footer/Individual','Подпись исполнителя индивидуального предпринимателя с физическим лицом',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Types/NaturalPartner/Footer/Individual','Подпись исполнителя индивидуального предпринимателя с физическим лицом',@Text);
 
 
-
+-- SEPARATOR
 -- Шаблоны приложений
-
 set @Text = '<NOBODY>
  <TABLE border="1" align="right" cellspacing="2">
   <TR>
@@ -1940,13 +1918,11 @@ set @Text = '<NOBODY>
  <DIV id="Footer">[подписи сторон]</DIV>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Enclosures/Template','Шаблон приложения к договору',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Enclosures/Template','Шаблон приложения к договору',@Text);
 
+-- SEPARATOR
 -- Шаблоны счетов платежных систем
-
 set @Text = '<TABLE border="1" cellpadding="5" cellspacing="0">
  <THEAD>
   <TR bgcolor="#DCDCDC">
@@ -1976,11 +1952,11 @@ set @Text = '<TABLE border="1" cellpadding="5" cellspacing="0">
  </TFOOT>
 </TABLE>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/Services','Шаблон таблицы услуг',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/Services','Шаблон таблицы услуг',@Text);
 
+
+-- SEPARATOR
 set @Text = '<NOBODY>
  <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
@@ -1999,11 +1975,11 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/Egold','Шаблон платежной системы Egold',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/Egold','Шаблон платежной системы Egold',@Text);
 
+
+-- SEPARATOR
 set @Text = '<NOBODY>
  <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
@@ -2020,11 +1996,10 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/InOffice','Шаблон платежной системы оплата в офисе',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/InOffice','Шаблон платежной системы оплата в офисе',@Text);
 
+-- SEPARATOR
 set @Text = '<NOBODY>
  <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
@@ -2043,11 +2018,10 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/Moneybookers','Шаблон платежной системы Moneybookers',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/Moneybookers','Шаблон платежной системы Moneybookers',@Text);
 
+-- SEPARATOR
 set @Text = '<NOBODY>
  <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
@@ -2066,11 +2040,10 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/RBKMoney','Шаблон платежной системы RBKMoney',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/RBKMoney','Шаблон платежной системы RBKMoney',@Text);
 
+-- SEPARATOR
 set @Text = '<NOBODY>
  <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
@@ -2089,11 +2062,11 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/ROBOKASSA','Шаблон платежной системы ROBOKASSA',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/ROBOKASSA','Шаблон платежной системы ROBOKASSA',@Text);
 
+
+-- SEPARATOR
 set @Text = '<NOBODY>
  <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
@@ -2114,12 +2087,11 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/PayMaster','Шаблон платежной системы PayMaster',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/PayMaster','Шаблон платежной системы PayMaster',@Text);
 
 
+-- SEPARATOR
 set @Text = '<NOBODY>
  <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
@@ -2140,32 +2112,28 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/WebMoneyZ','Шаблон платежной системы WebMoneyZ',@Text);
+INSERT INTO `Clauses` `GroupID`,(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/WebMoneyZ','Шаблон платежной системы WebMoneyZ',@Text);
 
+-- SEPARATOR
 set @Text = '<P>@link:Invoices/PaymentSystems/WebMoneyZ</P>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/WebMoneyR','Шаблон платежной системы WebMoneyR',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/WebMoneyR','Шаблон платежной системы WebMoneyR',@Text);
 
+-- SEPARATOR
 set @Text = '<P>@link:Invoices/PaymentSystems/WebMoneyZ</P>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/WebMoneyE','Шаблон платежной системы WebMoneyE',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/WebMoneyE','Шаблон платежной системы WebMoneyE',@Text);
 
+-- SEPARATOR
 set @Text = '<P>@link:Invoices/PaymentSystems/WebMoneyZ</P>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/WebMoneyU','Шаблон платежной системы WebMoneyU',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/WebMoneyU','Шаблон платежной системы WebMoneyU',@Text);
 
+-- SEPARATOR
 set @Text = '<NOBODY>
  <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
@@ -2184,11 +2152,10 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/Yandex','Шаблон платежной системы Yandex',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/Yandex','Шаблон платежной системы Yandex',@Text);
 
+-- SEPARATOR
 set @Text = '<NOBODY>
  <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
@@ -2207,11 +2174,10 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/ZPayment','Шаблон платежной системы ZPayment',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/ZPayment','Шаблон платежной системы ZPayment',@Text);
 
+-- SEPARATOR
 set @Text = '<NOBODY>
  <DIV id="Logo">[логотип]</DIV>
  <P>
@@ -2286,11 +2252,11 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/Individual/Individual','Шаблон платежной системы индивидуальный предприниматель исполнителя индивидуального предпринимателя',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/Individual/Individual','Шаблон платежной системы индивидуальный предприниматель исполнителя индивидуального предпринимателя',@Text);
 
+
+-- SEPARATOR
 set @Text = '<NOBODY>
  <DIV id="Logo">[логотип]</DIV>
  <P>
@@ -2365,11 +2331,11 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/Individual/Juridical','Шаблон платежной системы индивидуальный предприниматель исполнителя юридического лица',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/Individual/Juridical','Шаблон платежной системы индивидуальный предприниматель исполнителя юридического лица',@Text);
 
+
+-- SEPARATOR
 set @Text = '<NOBODY>
  <DIV id="Logo">[логотип]</DIV>
  <P>
@@ -2444,11 +2410,10 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/Juridical/Individual','Шаблон платежной системы юридического лица исполнителя индивидуального предпринимателя',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/Juridical/Individual','Шаблон платежной системы юридического лица исполнителя индивидуального предпринимателя',@Text);
 
+-- SEPARATOR
 set @Text = '<NOBODY>
  <DIV id="Logo">[логотип]</DIV>
  <P>
@@ -2523,11 +2488,10 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/Juridical/Juridical','Шаблон платежной системы юридического лица исполнителя юридического лица',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/Juridical/Juridical','Шаблон платежной системы юридического лица исполнителя юридического лица',@Text);
 
+-- SEPARATOR
 set @Text = '<NOBODY>
  <H1>Платежное поручение</H1>
  <TABLE border="1" cellpadding="5" cellspacing="0">
@@ -2634,11 +2598,10 @@ set @Text = '<NOBODY>
  </P>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/Natural/Individual','Шаблон платежной системы физического лица исполнителя индивидуального предпринимателя',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/Natural/Individual','Шаблон платежной системы физического лица исполнителя индивидуального предпринимателя',@Text);
 
+-- SEPARATOR
 set @Text = '<NOBODY>
  <H1>Платежное поручение</H1>
  <TABLE border="1" cellpadding="5" cellspacing="0">
@@ -2745,11 +2708,10 @@ set @Text = '<NOBODY>
  </P>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/Natural/Juridical','Шаблон платежной системы физического лица исполнителя юридического лица',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/Natural/Juridical','Шаблон платежной системы физического лица исполнителя юридического лица',@Text);
 
+-- SEPARATOR
 set @Text = '<NOBODY>
  <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
@@ -2766,11 +2728,10 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 -- SEPARATOR
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsXML`,`IsDOM`,`IsProtected`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Invoices/PaymentSystems/2Checkout','Шаблон платежной системы 2Checkout',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsXML`,`IsDOM`,`IsProtected`,`Partition`,`Title`,`Text`)
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/2Checkout','Шаблон платежной системы 2Checkout',@Text);
 
+-- SEPARATOR
 set @Text = '<NOBODY>
 <SPAN>Ваша ссылка как партнера:</SPAN>
  <SPAN class="Standard">http://demo.joonte.com/Index?OwnerID=%__USER.ID%</SPAN>
@@ -2779,47 +2740,58 @@ set @Text = '<NOBODY>
  Обратите внимание, что для начисления используется договор с профилем &quot;Партнёрская программа&quot;. Если он у вас отсутствует, создайте его в разделе &quot;<A href="/Contracts">Мой офис → Договоры</A>&quot;.<BR /><BR /></SPAN>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Header:/DependUsers','Информация по партнерской программе',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (9,100,100,'yes','yes','yes','Header:/DependUsers','Информация по партнерской программе',@Text);
 
+-- SEPARATOR
 /* added by lissyara 2011-06-22 in 15:22 MSK */
- INSERT INTO `Clauses` (`PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
-(1306440000, 1306492981, 100, 100, 'Invoices/PaymentSystems/W1', 'Шаблон платежной системы Wallet One', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер кошелька\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.WMI_MERCHANT_ID%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
+ INSERT INTO `Clauses` (`GroupID`,`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
+(6,100,100,'Invoices/PaymentSystems/W1', 'Шаблон платежной системы Wallet One', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер кошелька\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.WMI_MERCHANT_ID%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
 
-INSERT INTO `Clauses` (`PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
-(1306353600, 0, 100, 100, 'Invoices/PaymentSystems/MailRu', 'Шаблон платежной системы MailRu', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер магазина\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.shop_id%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
+-- SEPARATOR
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
+(6, 100, 100, 'Invoices/PaymentSystems/MailRu', 'Шаблон платежной системы MailRu', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер магазина\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.shop_id%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
 
-INSERT INTO `Clauses` (`PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
-(1307536932, 0, 100, 100, 'Invoices/PaymentSystems/QIWI', 'Шаблон платежной системы QIWI', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер магазина\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.from%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
+-- SEPARATOR
+INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
+(6, 100, 100, 'Invoices/PaymentSystems/QIWI', 'Шаблон платежной системы QIWI', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер магазина\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.from%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
 
-INSERT INTO `Clauses` (`PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
-(1307635655, 0, 100, 100, '/Help/Services/QIWIPhone', 'Необходимо ввести номер телефона', 'yes', 'yes', 'yes', '<TABLE width="400">\r\n <TR>\r\n  <TD>\r\n   <SPAN>Для оплаты при помощи платёжной системы QIWI, вам необходимо ввести номер телефона, в <a title="Мои настройки" href="javascript:ShowWindow(''/UserPersonalDataChange'');">[разделе Ваших настроек]</a>.</SPAN>\r\n  </TD>\r\n  <TD>\r\n  </TD>\r\n </TR>\r\n</TABLE>', 'yes');
+-- SEPARATOR
+INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
+(8, 100, 100, '/Help/Services/QIWIPhone', 'Необходимо ввести номер телефона', 'yes', 'yes', 'yes', '<TABLE width="400">\r\n <TR>\r\n  <TD>\r\n   <SPAN>Для оплаты при помощи платёжной системы QIWI, вам необходимо ввести номер телефона, в <a title="Мои настройки" href="javascript:ShowWindow(''/UserPersonalDataChange'');">[разделе Ваших настроек]</a>.</SPAN>\r\n  </TD>\r\n  <TD>\r\n  </TD>\r\n </TR>\r\n</TABLE>', 'yes');
 
-INSERT INTO `Clauses` (`PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
-(1310673600, 1310732693, 100, 100, 'CreateTicket/DOMAIN_OWNER_NOT_DEFINED', 'Определить владельца для домена', 'yes', 'yes', 'yes', 'yes', '<NOBODY>Для завершения регистрации домена Вам необходимо определить его владельца.<BR />\nДля этого, пройдите в раздел<BR />\n[color=green]Услуги -> Домены -> Мои заказы[/color]<BR />\nи нажмите соответствующую кнопку напротив заказа домена.</NOBODY>\n');
+-- SEPARATOR
+INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
+(10, 100, 100, 'CreateTicket/DOMAIN_OWNER_NOT_DEFINED', 'Определить владельца для домена', 'yes', 'yes', 'yes', 'yes', '<NOBODY>Для завершения регистрации домена Вам необходимо определить его владельца.<BR />\nДля этого, пройдите в раздел<BR />\n[color=green]Услуги -> Домены -> Мои заказы[/color]<BR />\nи нажмите соответствующую кнопку напротив заказа домена.</NOBODY>\n');
 
-INSERT INTO `Clauses` (`ID`, `PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
-(217, 1352145600, 1352184464, 100, 100, 'CreateTicket/ERROR_DOMAIN_REGISTER', 'Ошибка регистрации домена', 'no', 'yes', 'no', 'yes', 'Здравствуйте. При регистрации заказанного вами домена, произошла ошибка, из-за того, что Вы ввели неверные паспортные данные в профиль.<BR />\nДля успешной регистрации доменного имени необходимо ввести корректные паспортные данные.<BR />\nОбратите внимание, что паспортные данные проверяет робот вышестоящего регистратора, и ошибочные он не пропустит.<BR />\nИсправить данные можно тут: [color=green]Мой офис -> Профили[/color]');
+-- SEPARATOR
+INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
+(10, 100, 100, 'CreateTicket/ERROR_DOMAIN_REGISTER', 'Ошибка регистрации домена', 'no', 'yes', 'no', 'yes', 'Здравствуйте. При регистрации заказанного вами домена, произошла ошибка, из-за того, что Вы ввели неверные паспортные данные в профиль.<BR />\nДля успешной регистрации доменного имени необходимо ввести корректные паспортные данные.<BR />\nОбратите внимание, что паспортные данные проверяет робот вышестоящего регистратора, и ошибочные он не пропустит.<BR />\nИсправить данные можно тут: [color=green]Мой офис -> Профили[/color]');
 
 
-
+-- SEPARATOR
 /* added by lissyara 2011-09-11 in 19:09 MSK */
-INSERT INTO `Clauses` (`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
-(100, 100, 'Header:/Administrator/Update', 'Инструкция по обновлению биллинга', 'yes', 'yes', 'no', 'yes', '<table class="Warning">\n <tbody>\n  <tr>\n   <td>\n    <ul type="square">\n     <li>Продукт предоставляется &quot;как есть&quot;.\n     </li>\n     <li>Все обновления вы выполняете на свой страх и риск - если у вас всё работает, и функционал вас устраивает — ничего не обновляйте.\n     </li>\n     <li>Разработчики не несут ответственности за простой вашей системы, и за недополученную прибыль.\n     </li>\n     <li>В случае любых проблем при обновлении, скопируйте вывод программы обновления (при необходимости, удалив из него пароли и прочую секретную информацию), и создайте тему на официальном <a href="http://forum.joonte.com/" target="_blank">форуме поддержки биллинговой системы</a>.\n     </li>\n    <li> <strong>Всегда</strong> делайте полную копию базы и всех файлов биллинга <strong>до</strong> обновления. </li></ul>\n   </td>\n  </tr>\n </tbody>\n</table><br />');
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
+(9,100, 100, 'Header:/Administrator/Update', 'Инструкция по обновлению биллинга', 'yes', 'yes', 'no', 'yes', '<table class="Warning">\n <tbody>\n  <tr>\n   <td>\n    <ul type="square">\n     <li>Продукт предоставляется &quot;как есть&quot;.\n     </li>\n     <li>Все обновления вы выполняете на свой страх и риск - если у вас всё работает, и функционал вас устраивает — ничего не обновляйте.\n     </li>\n     <li>Разработчики не несут ответственности за простой вашей системы, и за недополученную прибыль.\n     </li>\n     <li>В случае любых проблем при обновлении, скопируйте вывод программы обновления (при необходимости, удалив из него пароли и прочую секретную информацию), и создайте тему на официальном <a href="http://forum.joonte.com/" target="_blank">форуме поддержки биллинговой системы</a>.\n     </li>\n    <li> <strong>Всегда</strong> делайте полную копию базы и всех файлов биллинга <strong>до</strong> обновления. </li></ul>\n   </td>\n  </tr>\n </tbody>\n</table><br />');
 
+-- SEPARATOR
 /* added by lissyara 2011-09-21 in 11:13 MSK */
-INSERT INTO `Clauses` (`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
-(100, 100, 'Header:/Administrator/ISPswOrders', 'Предупреждение для раздела софта от ISPsystem', 'no', 'yes', 'no', 'yes', '<table class="Warning">\n <tbody>\n  <tr>\n   <td>\n    Данная возможность является экспериментальной. Разработчики не дают никаких гарантий, что работа этого раздела будет корректной, и полностью функциональной.<br />\n    <br />\n    На данный момент, работает заказ &quot;внутренних&quot; лицензий, из расчёта что реально в ISPsystems заказываются вечные. Реализован пробный период (тариф с нулевой ценой без продления), смена тарифа, блокировка, удаление. До заказа лицензии ищется свободная по базе, если такая есть - используется она, а не новая.<br />\n    <br />\n    <strong>Учтите, что при последующих обновлениях могут быть удалены [а скорей всего и будут - т.к. структура таблиц раздела будет меняться] какие-то данные из этого раздела, в том числе из его таблиц в БД.</strong>\n   </td>\n  </tr>\n </tbody>\n</table><br />');
-/* added by lissyara 2011-09-21 in 19:28 MSK */
-INSERT INTO `Clauses` (`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
-(100, 100, 'Header:/Administrator/ISPswSchemes', 'Тарифы на ПО ISPsystem', 'no', 'yes', 'no', 'yes', '<table class="Warning">\n <tbody>\n  <tr>\n   <td>\n    Даннный раздел используется для создания, удаления, изменения тарифных планов на программное обеспечение компании ISPsystem\n   </td>\n  </tr>\n </tbody>\n</table><br />');
-INSERT INTO `Clauses` (`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
-(100, 100, 'Header:/Administrator/ISPswGroups', 'Группы ПО ISPsystem', 'no', 'yes', 'no', 'yes', '<table class="Warning">\n <tbody>\n  <tr>\n   <td>\n    Группы ПО используются для объединения тарифных планов.<br />\n    <br />\n    Например, для возможности создания триального заказа, и дальнейшего перехода на обычный тарифный план - оба тарифа необходимо объединить в одну группу.\n   </td>\n  </tr>\n </tbody>\n</table><br />');
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
+(9,100, 100, 'Header:/Administrator/ISPswOrders', 'Предупреждение для раздела софта от ISPsystem', 'no', 'yes', 'no', 'yes', '<table class="Warning">\n <tbody>\n  <tr>\n   <td>\n    Данная возможность является экспериментальной. Разработчики не дают никаких гарантий, что работа этого раздела будет корректной, и полностью функциональной.<br />\n    <br />\n    На данный момент, работает заказ &quot;внутренних&quot; лицензий, из расчёта что реально в ISPsystems заказываются вечные. Реализован пробный период (тариф с нулевой ценой без продления), смена тарифа, блокировка, удаление. До заказа лицензии ищется свободная по базе, если такая есть - используется она, а не новая.<br />\n    <br />\n    <strong>Учтите, что при последующих обновлениях могут быть удалены [а скорей всего и будут - т.к. структура таблиц раздела будет меняться] какие-то данные из этого раздела, в том числе из его таблиц в БД.</strong>\n   </td>\n  </tr>\n </tbody>\n</table><br />');
 
+-- SEPARATOR
+/* added by lissyara 2011-09-21 in 19:28 MSK */
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
+(9,100, 100, 'Header:/Administrator/ISPswSchemes', 'Тарифы на ПО ISPsystem', 'no', 'yes', 'no', 'yes', '<table class="Warning">\n <tbody>\n  <tr>\n   <td>\n    Даннный раздел используется для создания, удаления, изменения тарифных планов на программное обеспечение компании ISPsystem\n   </td>\n  </tr>\n </tbody>\n</table><br />');
+
+-- SEPARATOR
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
+(9,100, 100, 'Header:/Administrator/ISPswGroups', 'Группы ПО ISPsystem', 'no', 'yes', 'no', 'yes', '<table class="Warning">\n <tbody>\n  <tr>\n   <td>\n    Группы ПО используются для объединения тарифных планов.<br />\n    <br />\n    Например, для возможности создания триального заказа, и дальнейшего перехода на обычный тарифный план - оба тарифа необходимо объединить в одну группу.\n   </td>\n  </tr>\n </tbody>\n</table><br />');
+
+-- SEPARATOR
 /* added by lissyara 2011-12-19 in 14:12 MSK */
-INSERT INTO `Clauses` (`ID`, `PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES (NULL, UNIX_TIMESTAMP(), '0', '100', '50', 'Invoices/PaymentSystems/InterKassa', 'Шаблон платежной системы ИнтерКасса', 'yes', 'yes', 'yes', '<NOBODY>
+INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`)
+VALUES (6,100,100,'Invoices/PaymentSystems/InterKassa', 'Шаблон платежной системы ИнтерКасса', 'yes', 'yes', 'yes', '<NOBODY>
  <H1>
   СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%
  </H1>
@@ -2858,42 +2830,47 @@ INSERT INTO `Clauses` (`ID`, `PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`
 </NOBODY>
 ', 'yes');
 
+-- SEPARATOR
 /* added by lissyara 2012-01-04 in 15:20 MSK */
 INSERT INTO `Clauses`
-(`AuthorID`,`EditorID`,`Partition`,`Title`,`IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`)
+(`GroupID`,`AuthorID`,`EditorID`,`Partition`,`Title`,`IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`)
 VALUES
-(100, 100, 'Header:/DependUsersStatistic', 'Информация о начислениях по партнёрской программе', 'no', 'yes', 'no', 'В данном разделе предоставлена информация о возможных начислениях в предыдущие периоды (&quot;возможных&quot; — потому, что начисления производятся лишь при наличии соответствующего партнёрского договора). Суммы могут незначительно отличаться от реальных, из-за округления.<br />\n<br />\nЗначения колонок:<br />\n<ul type="square">\n <li>\n  <strong>Год</strong>/<strong>Месяц</strong> — год/месяц начисления\n </li>\n <li>\n  <strong>Пользователей</strong> — число ваших рефералов, оплачивавших услуги в указанный период времени\n </li>\n <li>\n  <strong>Платежей</strong> — число платежей совершённых вашими рефералами\n </li>\n <li>\n  <strong>Сумма</strong> — сумма вашего партнёрского вознаграждения\n </li>\n</ul><br />', 'yes');
+(9,100, 100, 'Header:/DependUsersStatistic', 'Информация о начислениях по партнёрской программе', 'no', 'yes', 'no', 'В данном разделе предоставлена информация о возможных начислениях в предыдущие периоды (&quot;возможных&quot; — потому, что начисления производятся лишь при наличии соответствующего партнёрского договора). Суммы могут незначительно отличаться от реальных, из-за округления.<br />\n<br />\nЗначения колонок:<br />\n<ul type="square">\n <li>\n  <strong>Год</strong>/<strong>Месяц</strong> — год/месяц начисления\n </li>\n <li>\n  <strong>Пользователей</strong> — число ваших рефералов, оплачивавших услуги в указанный период времени\n </li>\n <li>\n  <strong>Платежей</strong> — число платежей совершённых вашими рефералами\n </li>\n <li>\n  <strong>Сумма</strong> — сумма вашего партнёрского вознаграждения\n </li>\n</ul><br />', 'yes');
 
+-- SEPARATOR
 /* added by lissyara 2012-01-28 in 13:51 MSK */
 INSERT INTO `Clauses`
-(`AuthorID`,`EditorID`,`Partition`,`Title`,`IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`)
+(`GroupID`,`AuthorID`,`EditorID`,`Partition`,`Title`,`IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`)
 VALUES
-(100, 100, '/User/Announcement', 'Объявление для клиентов', 'no', 'yes', 'yes', '<NOBODY>Обратите внимание, что сегодня, 2012-01-28, в период с 21:00 до 21:10 MSK в датацентре будут проводиться плановые технические работы. Возможны кратковременные перерывы в доступности ваших сайтов.</NOBODY>', 'no');
+(1,100, 100, '/User/Announcement', 'Объявление для клиентов', 'no', 'yes', 'yes', '<NOBODY>Обратите внимание, что сегодня, 2012-01-28, в период с 21:00 до 21:10 MSK в датацентре будут проводиться плановые технические работы. Возможны кратковременные перерывы в доступности ваших сайтов.</NOBODY>', 'no');
+
+-- SEPARATOR
 /* added by lissyara 2012-01-28 in 13:54 MSK */
 INSERT INTO `Clauses`
-(`AuthorID`,`EditorID`,`Partition`,`Title`,`IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`)
+(`GroupID`,`AuthorID`,`EditorID`,`Partition`,`Title`,`IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`)
 VALUES
-(100, 100, '/User/Announcement', 'Объявление для клиентов', 'no', 'yes', 'yes', '<NOBODY>Обратите внимание, что 2012-02-28, в период с 21:00 до 23:00 MSK будут проводиться плановые технические работы на сервере srv3.isp.su. В указанный период времени, ваши сайты будут недоступны.</NOBODY>', 'no');
+(1,100, 100, '/User/Announcement', 'Объявление для клиентов', 'no', 'yes', 'yes', '<NOBODY>Обратите внимание, что 2012-02-28, в период с 21:00 до 23:00 MSK будут проводиться плановые технические работы на сервере srv3.isp.su. В указанный период времени, ваши сайты будут недоступны.</NOBODY>', 'no');
+
+-- SEPARATOR
 /* added by lissyara 2012-03-03 in 20:10 MSK, JBS-359 */
-INSERT INTO `Clauses` (`ID`, `PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
-('', 1307536932, 0, 100, 100, 'Invoices/PaymentSystems/EasyPay', 'Шаблон платежной системы EasyPay', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер Поставщика\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.EP_MerNo%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
+INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
+(6, 100, 100, 'Invoices/PaymentSystems/EasyPay', 'Шаблон платежной системы EasyPay', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер Поставщика\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.EP_MerNo%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
 
+-- SEPARATOR
 /* added by lissyara, 2012-09-25 in 14:37 MSK */
-INSERT INTO `Clauses` (`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES (100, 100, 'Contracts/Enclosures/Types/Tariffs/Content', 'Тарифы', 'yes', 'yes', 'yes', 'yes', '<NOBODY>\n <COMP path="Clauses/TariffList" args="NotUsed">\n [список тарифов]\n</COMP>\n</NOBODY>\n');
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES (1,100, 100, 'Contracts/Enclosures/Types/Tariffs/Content', 'Тарифы', 'yes', 'yes', 'yes', 'yes', '<NOBODY>\n <COMP path="Clauses/TariffList" args="NotUsed">\n [список тарифов]\n</COMP>\n</NOBODY>\n');
 
 
 
 
 UNLOCK TABLES;
-
+-- SEPARATOR
 DELETE FROM `Config` WHERE `Param` = 'Copyright';
-INSERT INTO `Config`
-  (`HostID`,`Param`,`Value`)
-VALUES
-('billing','Copyright','ООО "Компания" 2000-2012 г.');
+INSERT INTO `Config` (`HostID`,`Param`,`Value`)
+VALUES ('billing','Copyright','ООО "Компания" 2000-2012 г.');
 UNLOCK TABLES;
 
-
+-- SEPARATOR
 LOCK TABLES `ServicesGroups` WRITE;
 DELETE FROM `ServicesGroups` WHERE `ID` IN(1000);
 INSERT INTO `ServicesGroups`
@@ -2904,6 +2881,7 @@ VALUES
 (1100, 'Дополнительные услуги', 'yes', 'yes', 20);
 UNLOCK TABLES;
 
+-- SEPARATOR
 LOCK TABLES `Services` WRITE;
 DELETE FROM `Services` WHERE `ID` IN(1000,2000,3000);
 INSERT INTO `Services`
@@ -2916,6 +2894,7 @@ VALUES
 (4000,1000,2000000,1,'Возврат средств на реквизиты пользователя','Возврат на реквизиты','+','шт.','yes','yes','no');
 UNLOCK TABLES;
 
+-- SEPARATOR
 SET FOREIGN_KEY_CHECKS=1;
 
 ALTER TABLE `Users` AUTO_INCREMENT=2001;

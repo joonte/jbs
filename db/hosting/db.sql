@@ -374,11 +374,10 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Enclosures/Types/HostingRules/Content','Регламент предоставления услуг хостинга',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Enclosures/Types/HostingRules/Content','Регламент предоставления услуг хостинга',@Text);
 
+-- SEPARATOR
 set @Text = '<NOBODY>
  <P align="justify">Настоящий Регламент определяет порядок оказания услуг Исполнителем, своим Заказчикам по регистрации доменных имен, а так же, порядок использования таких услуг со стороны Заказчика или пользователя, порядок взаимодействия между Исполнителем и Заказчиком или пользователем, а также иные вопросы, не оговоренные явно в Договоре.</P>
  <H2>1. Термины и определения</H2>
@@ -788,16 +787,14 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses`
-  (`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'yes','yes','yes','Contracts/Enclosures/Types/DomainRules/Content','Регламент на услуги регистрации и продления доменов',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Enclosures/Types/DomainRules/Content','Регламент на услуги регистрации и продления доменов',@Text);
 
 
-
-
+-- SEPARATOR
 /* added by lissyara 2011-08-03 in 16:08 MSK */
-INSERT INTO `Clauses` (`ID`, `PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES (NULL, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), '100', '1', 'Contracts/Enclosures/Types/VPSRules/Content', 'Регламент предоставления услуг VPS', 'no', 'yes', 'yes', '<NOBODY>
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`)
+VALUES (4,100,100, 'Contracts/Enclosures/Types/VPSRules/Content', 'Регламент предоставления услуг VPS', 'no', 'yes', 'yes', '<NOBODY>
  <P align="justify">
  Настоящий Регламент определяет порядок оказания услуг Исполнителем, своим Заказчикам по размещению виртуального web-сервера на оборудовании исполнителя, а так же, порядок использования таких услуг со стороны Заказчика или пользователя, порядок взаимодействия между Исполнителем и Заказчиком или пользователем, а также иные вопросы, не оговоренные явно в Договоре.
 </P>
@@ -1446,10 +1443,11 @@ INSERT INTO `Clauses` (`ID`, `PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`
 ', 'yes');
 
 
+-- SEPARATOR
 /* added by lissyara 2011-12-07 in 16:02 MSK */
 DELETE FROM `Clauses` WHERE `Partition` = 'Contracts/Enclosures/Types/DSRules/Content';
-INSERT INTO `Clauses` (`ID`, `PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
-(231, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 100, 100, 'Contracts/Enclosures/Types/DSRules/Content', 'Регламент предоставления услуг аренды сервера', 'no', 'yes', 'yes', 'yes', '<NOBODY>
+INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`)
+VALUES (4, 100, 100, 'Contracts/Enclosures/Types/DSRules/Content', 'Регламент предоставления услуг аренды сервера', 'no', 'yes', 'yes', 'yes', '<NOBODY>
  <P align="justify">
  Настоящий Регламент определяет порядок оказания услуг Исполнителем, своим Заказчикам по размещению виртуального web-сервера на оборудовании исполнителя, а так же, порядок использования таких услуг со стороны Заказчика или пользователя, порядок взаимодействия между Исполнителем и Заказчиком или пользователем, а также иные вопросы, не оговоренные явно в Договоре.
 </P>
@@ -2010,9 +2008,10 @@ align="justify" width="95%">
 ');
 
 
-
+-- SEPARATOR
 /* added by lissyara 2012-02-24 in 11:21 MSK */
-INSERT INTO `Clauses` (`ID`, `PublicDate`, `ChangedDate`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES (NULL, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), '100', '1', 'Contracts/Enclosures/Types/ISPswRules/Content', 'Регламент предоставления услуг ПО ISPsystem', 'no', 'yes', 'yes', '<NOBODY>
+INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`)
+VALUES (4, 100, 100, 'Contracts/Enclosures/Types/ISPswRules/Content', 'Регламент предоставления услуг ПО ISPsystem', 'no', 'yes', 'yes', '<NOBODY>
 <H2>
 Приведенный ниже текст является публичной офертой.
 </H2>
@@ -2337,205 +2336,130 @@ UNLOCK TABLES;
 
 SET FOREIGN_KEY_CHECKS=1;
 
+-- SEPARATOR
 /* added by serge 2011-09-05 in 16:00 MSK for domain transfer*/
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.101domain.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/101DOMAIN/external','Трансфер внешний. 101DOMAIN.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/101DOMAIN/external','Трансфер внешний. 101DOMAIN.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://hosting.agava.ru/domains</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/AGAVA/external','Трансфер внешний. AGAVA.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/AGAVA/external','Трансфер внешний. AGAVA.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.beeline.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/BEELINE/external','Трансфер внешний. BEELINE.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/BEELINE/external','Трансфер внешний. BEELINE.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.r01.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/R01/external','Трансфер внешний. R01.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/R01/external','Трансфер внешний. R01.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.demos-internet.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/DEMOS/external','Трансфер внешний. DEMOS.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/DEMOS/external','Трансфер внешний. DEMOS.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.caravan.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/CARAVAN/external','Трансфер внешний. CARAVAN.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/CARAVAN/external','Трансфер внешний. CARAVAN.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.comstar.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/COMSTAR/external','Трансфер внешний. COMSTAR.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/COMSTAR/external','Трансфер внешний. COMSTAR.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.regplanet.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/CT/external','Трансфер внешний. CT.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/CT/external','Трансфер внешний. CT.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.naunet.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/NAUNET/external','Трансфер внешний. NAUNET.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/NAUNET/external','Трансфер внешний. NAUNET.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.netfox.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/NETFOX/external','Трансфер внешний. NETFOX.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/NETFOX/external','Трансфер внешний. NETFOX.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.webdrive.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/REGGI/external','Трансфер внешний. REGGI.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/REGGI/external','Трансфер внешний. REGGI.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.nic.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/RUCENTER/external','Трансфер внешний. RUCENTER.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/RUCENTER/external','Трансфер внешний. RUCENTER.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.nic.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/RUCENTRE/external','Трансфер внешний. RUCENTRE.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/RUCENTRE/external','Трансфер внешний. RUCENTRE.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.nic.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/RU-CENTER/external','Трансфер внешний. RU-CENTER.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/RU-CENTER/external','Трансфер внешний. RU-CENTER.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.reghost.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/REGHOST/external','Трансфер внешний. REGHOST.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/REGHOST/external','Трансфер внешний. REGHOST.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.reg.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/REGRU/external','Трансфер внешний. REGRU.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/REGRU/external','Трансфер внешний. REGRU.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.registrant.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/REGISTRANT/external','Трансфер внешний. REGISTRANT.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/REGISTRANT/external','Трансфер внешний. REGISTRANT.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.domenus.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/DOMENUS/external','Трансфер внешний. DOMENUS.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/DOMENUS/external','Трансфер внешний. DOMENUS.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.mastername.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/REGISTRATOR/external','Трансфер внешний. REGISTRATOR.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/REGISTRATOR/external','Трансфер внешний. REGISTRATOR.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.webnames.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/REGTIME/external','Трансфер внешний. REGTIME.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/REGTIME/external','Трансфер внешний. REGTIME.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.relcom.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/RELCOM/external','Трансфер внешний. RELCOM.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/RELCOM/external','Трансфер внешний. RELCOM.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.rtcomm.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/RTCOMM/external','Трансфер внешний. RTCOMM.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/RTCOMM/external','Трансфер внешний. RTCOMM.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.salenames.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/SALENAMES/external','Трансфер внешний. SALENAMES.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/SALENAMES/external','Трансфер внешний. SALENAMES.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.centrohost.ru</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/CENTROHOST/external','Трансфер внешний. CENTROHOST.',@Text);
 
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/CENTROHOST/external','Трансфер внешний. CENTROHOST.',@Text);
-
+-- SEPARATOR
 set @Text = '<P>Подробную информацию по переносу домена ищите на сайте регистратора http://www.getname.ru</P>';
-
-INSERT INTO
-`Clauses`
-(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES
-(100,100,'no','no','no','Registrators/ELVIS/external','Трансфер внешний. ELVIS.',@Text);
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/ELVIS/external','Трансфер внешний. ELVIS.',@Text);
 
 

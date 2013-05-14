@@ -18,20 +18,12 @@
 <!-- *********************************************************************** -->
 <Comps>
  <Before>
-  <PatternOut>
-   <Args>
-    <Patterns>
-     <News>
-      <Name>Новости</Name>
-      <Where>`Partition` = 'News'</Where>
-     </News>
-     <Contracts>
-      <Name>Шаблоны договоров и приложений</Name>
-      <Where>`Partition` LIKE 'Contracts%'</Where>
-     </Contracts>
-    </Patterns>
-    <ActiveID>Default</ActiveID>
-   </Args>
+   <PatternOut>
+<!--  <ClauseGroup> -->
+   <Comp>Clauses/SelectGroup</Comp>
+   <Args type="array" />
+<!--   <NoBlock />
+  </ClauseGroup> -->
   </PatternOut>
   <!-- ********************************************************************* -->
   <Search>
