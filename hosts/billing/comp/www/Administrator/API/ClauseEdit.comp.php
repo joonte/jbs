@@ -11,6 +11,7 @@ Eval(COMP_INIT);
 $Args = Args();
 #-------------------------------------------------------------------------------
 $ClauseID   = (integer) @$Args['ClauseID'];
+$GroupID    = (integer) @$Args['GroupID'];
 $PublicDate = (integer) @$Args['PublicDate'];
 $Partition  =  (string) @$Args['Partition'];
 $Title      =  (string) @$Args['Title'];
@@ -21,6 +22,10 @@ $Text       =  (string) @$Args['Text'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if($GroupID < 1)
+	return new gException('BAD_CATEGORY','Неправильная категория');
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$Partition)
   return new gException('PARTITION_IS_EMPTY','Введите раздел статьи');
@@ -66,45 +71,40 @@ if($IsXML){
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
 $Answer = Array('Status'=>'Ok');
+#------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Clause = Array(
+		'GroupID'	=> $GroupID,
+		'PublicDate'	=> $PublicDate,
+		'Partition'	=> $Partition,
+		'Title'		=> $Title,
+		'IsXML'		=> $IsXML,
+		'IsDOM'		=> $IsDOM,
+		'IsPublish'	=> $IsPublish,
+		'Text'		=> $Text,
+		);
 #-------------------------------------------------------------------------------
 if($ClauseID){
-  #-----------------------------------------------------------------------------
-  $UClause = Array(
-    #---------------------------------------------------------------------------
-    'PublicDate'  => $PublicDate,
-    'ChangedDate' => Time(),
-    'EditorID'    => $__USER['ID'],
-    'Partition'   => $Partition,
-    'Title'       => $Title,
-    'IsXML'       => $IsXML,
-    'IsDOM'       => $IsDOM,
-    'IsPublish'   => $IsPublish,
-    'Text'        => $Text,
-  );
-  #-----------------------------------------------------------------------------
-  $IsUpdate = DB_Update('Clauses',$UClause,Array('ID'=>$ClauseID));
-  if(Is_Error($IsUpdate))
-    return ERROR | @Trigger_Error(500);
+	#-----------------------------------------------------------------------------
+	$Clause['ChangedDate']	= Time();
+	$Clause['EditorID']	= $__USER['ID'];
+	#-------------------------------------------------------------------------------
+	$IsUpdate = DB_Update('Clauses',$Clause,Array('ID'=>$ClauseID));
+	if(Is_Error($IsUpdate))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
 }else{
-  #-----------------------------------------------------------------------------
-  $IClause = Array(
-    #---------------------------------------------------------------------------
-    'PublicDate' => $PublicDate,
-    'Partition'  => $Partition,
-    'AuthorID'   => $__USER['ID'],
-    'Title'      => $Title,
-    'IsXML'      => $IsXML,
-    'IsDOM'       => $IsDOM,
-    'IsPublish'  => $IsPublish,
-    'Text'       => $Text,
-  );
-  #-----------------------------------------------------------------------------
-  $ClauseID = DB_Insert('Clauses',$IClause);
-  if(Is_Error($ClauseID))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $Answer['ClauseID'] = $ClauseID;
+	#-------------------------------------------------------------------------------
+	$Clause['AuthorID']	= $__USER['ID'];
+	#-------------------------------------------------------------------------------
+	$ClauseID = DB_Insert('Clauses',$Clause);
+	if(Is_Error($ClauseID))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Answer['ClauseID'] = $ClauseID;
+	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $Answer;
 #-------------------------------------------------------------------------------
