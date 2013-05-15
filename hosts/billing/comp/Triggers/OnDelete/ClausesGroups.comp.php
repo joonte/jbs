@@ -10,7 +10,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 $Where = SPrintF("`IsProtected` = 'yes' AND `ID` = %u",$ClausesGroups['ID']);
-$Count = DB_Count('ClausesGroups',Array('Where'=>$Where));
+$Count = DB_Count('ClausesGroups',Array('Where' => $Where));
 #-------------------------------------------------------------------------------
 if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);

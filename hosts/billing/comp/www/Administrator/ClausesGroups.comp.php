@@ -32,10 +32,10 @@ if(Is_Error($Comp))
 $DOM->AddChild('Into',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Buttons/Standard',Array('onclick'=>"window.open('/Administrator/ClauseEdit','ClauseEdit',SPrintF('left=%u,top=%u,width=800,height=680,toolbar=0, scrollbars=1, location=0',(screen.width-800)/2,(screen.height-600)/2));"),'Новая статья','Add.gif');
+$Comp = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/Administrator/ClausesGroupEdit');"),'Добавить новую группу статей','Add.gif');
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 $Comp = Comp_Load('Buttons/Panel',Array('Comp'=>$Comp,'Name'=>'Новая группа статей'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
