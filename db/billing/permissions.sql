@@ -138,6 +138,10 @@ INSERT INTO `Permissions` (`Name`,`HostID`,`UserGroupID`,`UserID`,`OwnerGroupID`
 ('ClausesDelete','billing',1,1,4000000,1,1,'yes'),
 ('ClausesDelete','billing',3000000,100,1,1,2,'yes'),
 
+/* added by lissyara, 2013-05-15 in 13:51 for JBS-671 */
+('ClausesGroupsDelete','billing',1,1,4000000,1,1,'yes'),
+('ClausesGroupsDelete','billing',3000000,100,1,1,2,'yes'),
+
 ('OrdersDelete','billing',1,1,4000000,1,1,'yes'),
 ('OrdersDelete','billing',3000000,100,1,1,2,'yes'),
 

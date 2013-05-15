@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<XML>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>ClausesGroupsOwners</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>Name</ListElement>
+  <ListElement>Notice</ListElement>
+  <ListElement>IsPublish</ListElement>
+  <ListElement>IsProtected</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Группы статей не найдены</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <Before>
+  <!-- ********************************************************************* -->
+  <Search>
+   <Args>
+    <ColumnsIDs>
+     <ListElement>ID</ListElement>
+     <ListElement>AuthorID</ListElement>
+     <ListElement>EditorID</ListElement>
+     <ListElement>Name</ListElement>
+     <ListElement>Notice</ListElement>
+     <ListElement>Text</ListElement>
+    </ColumnsIDs>
+   </Args>
+  </Search>
+ </Before>
+ <!-- ********************************************************************** -->
+ <After>
+  <Data>
+   <Args>
+    <DataModeID>Vertical</DataModeID>
+   </Args>
+  </Data>
+  <!-- ********************************************************************* -->
+  <Delete>
+   <Args>
+    <Comment>Выбранные группы статей</Comment>
+    <Send>
+     <TableID>ClausesGroups</TableID>
+    </Send>
+   </Args>
+  </Delete>
+ </After>
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>UpdateDate</SortOn>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+ <SelectID>
+  <Args>
+   <TableID>ClausesGroups</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <!-- ********************************************************************** -->
+ <!--
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Standard</Comp>
+  <Args>
+   <ListElement>
+    <onclick>window.open('/Administrator/ClauseEdit?ClauseID=%ID%','ClauseEdit',SPrintF('left=%u,top=%u,width=800,height=680,toolbar=0, scrollbars=1, location=0',(screen.width-800)/2,(screen.height-600)/2));</onclick>
+   </ListElement>
+   <ListElement>Редактировать статью</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit> -->
+ <!-- ********************************************************************** -->
+ <PublicDate>
+  <Head>Дата публ.</Head>
+  <Comp>Formats/Date/Extended</Comp>
+  <Args>
+   <ListElement>%PublicDate%</ListElement>
+  </Args>
+ </PublicDate>
+ <!-- ********************************************************************** -->
+ <UpdateDate>
+  <Head>Дата изм.</Head>
+  <Comp>Formats/Date/Extended</Comp>
+  <Args>
+    <ListElement>%UpdateDate%</ListElement>
+  </Args>
+  <Alias>IF(`ChangedDate` > 0,`ChangedDate`,`PublicDate`)</Alias>
+ </UpdateDate>
+ <!-- ********************************************************************** -->
+ <Author>
+  <Head>Автор</Head>
+  <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `Clauses`.`AuthorID`)</Alias>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Author%</ListElement>
+   <Length>10</Length>
+  </Args>
+ </Author>
+ <!-- ********************************************************************** -->
+ <Editor>
+   <Head>Редактор</Head>
+   <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `Clauses`.`EditorID`)</Alias>
+   <Comp>Formats/String</Comp>
+   <Args>
+    <ListElement>%Editor%</ListElement>
+    <Length>10</Length>
+   </Args>
+ </Editor>
+ <!-- ********************************************************************** -->
+ <Name>
+  <Head>Имя</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Name%</ListElement>
+   <Length>45</Length>
+  </Args>
+ </Name>
+ <!-- ********************************************************************** -->
+ <Notice>
+  <Head>Описание</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Notice%</ListElement>
+   <Length>45</Length>
+   </Args>
+ </Notice>
+ <!-- ********************************************************************** -->
+ <IsPublish>
+  <Head>Опуб.</Head>
+  <Prompt>Группа статей опубликована</Prompt>
+  <Comp>Formats/Logic</Comp>
+  <Args>
+   <ListElement>%IsPublish%</ListElement>
+  </Args>
+ </IsPublish>
+ <!-- ********************************************************************** -->
+ <IsProtected>
+  <Head>Защ.</Head>
+  <Prompt>Группа статей защищена от удаления</Prompt>
+  <Comp>Formats/Logic</Comp>
+  <Args>
+   <ListElement>%IsProtected%</ListElement>
+  </Args>
+ </IsProtected>
+</Columns>
+<!-- *********************************************************************** -->
+<Sequence>
+ <ListElement>SelectID</ListElement>
+ <ListElement>UpdateDate</ListElement>
+ <ListElement>Name</ListElement>
+ <ListElement>Notice</ListElement>
+ <ListElement>IsPublish</ListElement>
+ <ListElement>IsProtected</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

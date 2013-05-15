@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <ListElement>
+  <Text>Статьи (функции CMS)</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/Clauses$</UniqID>
+  </Paths>
+  <Href>/Administrator/Clauses</Href>
+ </ListElement>
+ <ListElement>
+  <Text>Группы статей</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/ClausesGroups$</UniqID>
+  </Paths>
+  <Href>/Administrator/ClausesGroups</Href>
+ </ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

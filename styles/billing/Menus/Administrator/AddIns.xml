@@ -24,7 +24,7 @@
   <Text>Статьи (функции CMS)</Text>
   <Prompt>Функции CMS</Prompt>
   <Paths>
-   <UniqID>\/Administrator\/(Clauses|ClauseEdit)$</UniqID>
+   <UniqID>\/Administrator\/(Clauses|ClausesGroups|ClauseEdit)$</UniqID>
   </Paths>
   <Href>/Administrator/Clauses</Href>
   <Level>1</Level>
