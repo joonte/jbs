@@ -9,18 +9,23 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
-$ProfileID  = (integer) @$Args['ProfileID'];
-$TemplateID =  (string) @$Args['TemplateID'];
-$Simple     =  (string) @$Args['Simple'];
-$Window     =  (string) @$Args['Window'];
-$Agree      = (boolean) @$Args['Agree'];
+$ProfileID	= (integer) @$Args['ProfileID'];
+$TemplateID	=  (string) @$Args['TemplateID'];
+$Simple		=  (string) @$Args['Simple'];
+$Window		=  (string) @$Args['Window'];
+$Agree		= (boolean) @$Args['Agree'];
+$AgreeHandle	= (boolean) @$Args['AgreeHandle'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$Agree)
-  return new gException('NOT_AGREE','Вы не дали согласия на передачу информации');
+	return new gException('NOT_AGREE','Вы не дали согласия на передачу информации');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(!$AgreeHandle)
+	return new gException('NOT_AGREE_HANDLE','Вы не дали согласия на обработку ваших персональных данных');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];
