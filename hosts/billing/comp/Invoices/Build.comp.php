@@ -232,9 +232,6 @@ switch(ValueOf($Invoice)){
               $Document = Str_Replace(SPrintF('%%%s%%',$LinkID),$Text?$Text:'-',$Document);
             }
             #-------------------------------------------------------------------
-            #$IsUpdate = DB_Update('Invoices',Array('Document'=>$Document),Array('ID'=>$InvoiceID));
-            #if(Is_Error($IsUpdate))
-            #  return ERROR | @Trigger_Error(500);
             if(!SaveUploadedFile('Invoices', $InvoiceID, $Document))
               return new gException('CANNOT_SAVE_UPLOADED_FILE','Не удалось сохранить загруженный файл');
             #-------------------------------------------------------------------

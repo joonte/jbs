@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -15,7 +14,7 @@ $ProfileID = (integer) @$Args['ProfileID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Upload.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Profile = DB_Select('Profiles',Array('ID','UserID','CreateDate','TemplateID','LENGTH(`Document`) as `Length`','StatusID','StatusDate'),Array('UNIQ','ID'=>$ProfileID));
+$Profile = DB_Select('Profiles',Array('ID','UserID','CreateDate','TemplateID','StatusID','StatusDate'),Array('UNIQ','ID'=>$ProfileID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Profile)){
   case 'error':
@@ -96,9 +95,7 @@ switch(ValueOf($Profile)){
             $Table[] = 'Подтверждение введенных данных';
             #-------------------------------------------------------------------
 	    $FileLength = GetUploadedFileSize('Profiles', $ProfileID);
-            #$Document = $ProfileID?$Profile['Length']:0;
             #-------------------------------------------------------------------
-            #$Table[] = Array('Копия документа подтверждающего достоверность данных',$Document?new Tag('TD',Array('class'=>'Standard'),new Tag('SPAN',SPrintF('%01.2f Кб.',$Document/1024)),new Tag('A',Array('href'=>SPrintF("javascript:AjaxCall('/ProfileDocumentDownload',{ProfileID:%u},'Загрузка документа','document.location = \$Answer.Location');",$Profile['ID'])),'[скачать]')):'не загружены');
 	    $Table[] = Array('Копия документа подтверждающего достоверность данных',$FileLength?new Tag('TD',Array('class'=>'Standard'),new Tag('SPAN',SPrintF('%01.2f Кб.',$FileLength/1024)),new Tag('A',Array('href'=>SPrintF('/FileDownload?TypeID=Profiles&FileID=%s',$Profile['ID'])),'[скачать]')):'не загружены');
             #-------------------------------------------------------------------
             $Comp = Comp_Load('Statuses/State','Profiles',$Profile);

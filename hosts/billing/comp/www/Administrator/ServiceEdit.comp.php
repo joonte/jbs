@@ -11,8 +11,8 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ServiceID = (integer) @$Args['ServiceID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
-  return ERROR | @Trigger_Error(500);
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Upload.php')))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($ServiceID){
@@ -40,7 +40,6 @@ if($ServiceID){
 			'Name'			=> 'Новая нужная услуга',
 			'NameShort'		=> 'Новая услуга',
 			'Item'			=> 'Услуга',
-			'Emblem'		=> '',
 			'Measure'		=> 'шт.',
 			'ConsiderTypeID'	=> 'Upon',
 			'CostOn'		=> 10,
@@ -155,7 +154,7 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array('Раздел меню',$Comp);
 #-------------------------------------------------------------------------------
-$Emblem = MB_StrLen($Service['Emblem'],'ASCII');
+$Emblem = GetUploadedFileSize('Services', $Service['ID']);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Upload','Emblem',$Emblem?SPrintF('%01.2f Кб.',$Emblem/1024):'не загружена');
 if(Is_Error($Comp))

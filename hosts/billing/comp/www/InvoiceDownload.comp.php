@@ -17,9 +17,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','lib
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','UserID','Document');
-#-------------------------------------------------------------------------------
-$Invoice = DB_Select('InvoicesOwners',$Columns,Array('UNIQ','ID'=>$InvoiceID));
+$Invoice = DB_Select('InvoicesOwners',Array('ID','UserID'),Array('UNIQ','ID'=>$InvoiceID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Invoice)){
   case 'error':

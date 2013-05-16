@@ -15,7 +15,7 @@ $IsRemote  = (boolean) @$Args['IsRemote'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Upload.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Invoice = DB_Select('InvoicesOwners',Array('ID','UserID','PaymentSystemID','Document','IsPosted','StatusID','Summ'),Array('UNIQ','ID'=>$InvoiceID));
+$Invoice = DB_Select('InvoicesOwners',Array('ID','UserID','PaymentSystemID','IsPosted','StatusID','Summ'),Array('UNIQ','ID'=>$InvoiceID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Invoice)){
   case 'error':
@@ -82,7 +82,6 @@ switch(ValueOf($Invoice)){
             $DOM->AddChild('Into',new Tag('DIV',Array('class'=>'Title'),new Tag('CDATA',$PaymentSystem['Name']),$A));
           }
           #-----------------------------------------------------------------------
-          #$Document = new DOM($Invoice['Document']);
 	  $File = GetUploadedFile('Invoices',$Invoice['ID']);
 	  $Document = new DOM($File['Data']);
           #-----------------------------------------------------------------------

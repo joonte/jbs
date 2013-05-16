@@ -1,6 +1,5 @@
 SET FOREIGN_KEY_CHECKS=0;
 
-
 --
 -- Структура таблицы `ClausesGroups`
 --
@@ -98,7 +97,6 @@ CREATE TABLE `Invoices` (
   `ContractID` int(11) NOT NULL,
   `PaymentSystemID` char(50) default '',
   `Summ` decimal(11,2) default '0.00',
-  `Document` mediumblob,
   `IsPosted` enum('no','yes') default 'no',
   `StatusID` char(30) default 'UnSeted',
   `StatusDate` int(11) default '0',
@@ -153,7 +151,6 @@ CREATE TABLE `EdesksMessages` (
   `UserID` int(11) NOT NULL,
   `EdeskID` int(11) NOT NULL,
   `Content` text,
-  `FileData` mediumblob,
   `FileName` char(255) default '0',
   `IsNotify` ENUM('no','yes') NOT NULL DEFAULT 'no',
   `IsVisible` ENUM('yes','no') NOT NULL DEFAULT 'yes', 
@@ -181,7 +178,6 @@ CREATE TABLE `Contracts` (
   `Customer` char(255) default '',
   `IsUponConsider` enum('no','yes') default 'no',
   `Balance` decimal(11,2) default '0.00',
-  `Document` LONGBLOB,
   `StatusID` char(30) default 'UnSeted',
   `StatusDate` int(11) default '0',
   PRIMARY KEY  (`ID`),
@@ -201,7 +197,6 @@ CREATE TABLE `ContractsEnclosures` (
   `ContractID` int(11) NOT NULL,
   `Number` int(11) default '1',
   `TypeID` char(30) default '',
-  `Document` mediumblob,
   `StatusID` char(30) default 'UnSeted',
   `StatusDate` int(11) default '0',
   PRIMARY KEY  (`ID`),
@@ -312,7 +307,6 @@ CREATE TABLE `Profiles` (
   `TemplateID` char(30) default '',
   `IsDefault` enum('no','yes') default 'no',
   `Attribs` text,
-  `Document` mediumblob,
   `Format` char(10) default 'jpg',
   `StatusID` char(30) default 'UnSeted',
   `StatusDate` int(11) default '0',
@@ -362,7 +356,6 @@ CREATE TABLE `Users` (
   `OwnerID` int(11) NULL,
   `IsManaged` enum('no','yes') default 'no',
   `IsInheritGroup` enum('no','yes') default 'no',
-  `Foto` mediumblob,
   `Name` char(100) default '',
   `Watchword` char(40) default '',
   `UniqID` char(32) default 'no',
@@ -517,7 +510,6 @@ CREATE TABLE `Services` (
   `Code` char(255) default 'Default',
   `OperationSign` char(1) NOT NULL DEFAULT '-',
   `Item` char(255) default '',
-  `Emblem` mediumblob,
   `Measure` char(30) default '',
   `ConsiderTypeID` char(30) default 'Upon',
   `CostOn` decimal(11,2) default '0.00',

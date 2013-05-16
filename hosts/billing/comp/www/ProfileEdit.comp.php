@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -19,13 +18,13 @@ $Simple       =  (string) @$Args['Simple'];
 $Window       =  (string) @$Args['Window'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Tree.php','libs/Upload.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
 if($ProfileID){
   #-----------------------------------------------------------------------------
-  $Profile = DB_Select('Profiles',Array('ID','UserID','TemplateID','Attribs','LENGTH(`Document`) as `Length`','Format'),Array('UNIQ','ID'=>$ProfileID));
+  $Profile = DB_Select('Profiles',Array('ID','UserID','TemplateID','Attribs','Format'),Array('UNIQ','ID'=>$ProfileID));
   #-----------------------------------------------------------------------------
   switch(ValueOf($Profile)){
     case 'error':

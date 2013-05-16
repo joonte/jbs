@@ -28,7 +28,7 @@ if(Is_Error(System_Load('libs/Upload.php')))
 if(!GetUploadedFileSize('Services',$ServiceID)){
 	#-------------------------------------------------------------------------------
 	# нету файла по стандартным путям хранения файлов
-	$Service = DB_Select('Services',Array('Emblem','Code'),Array('UNIQ','ID'=>$ServiceID));
+	$Service = DB_Select('Services',Array('ID','Code'),Array('UNIQ','ID'=>$ServiceID));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Service)){
 	case 'error':
