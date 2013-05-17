@@ -71,6 +71,19 @@ UPDATE `Clauses` SET `GroupID` = 1 WHERE `Partition` = '/Contacts';
 -- SEPARATOR
 UPDATE `Clauses` SET `GroupID` = 8 WHERE `Partition` = '/Help/Services/QIWIPhone';
 
+-- SEPARATOR
+UPDATE `Clauses` SET `IsProtected` = 'yes' WHERE `Partition` = 'User/Panel';
+-- SEPARATOR
+UPDATE `Clauses` SET `IsProtected` = 'yes' WHERE `Partition` = '/Documents';
+-- SEPARATOR
+UPDATE `Clauses` SET `IsProtected` = 'yes' WHERE `Partition` = '/Help/Services/Paying';
+-- SEPARATOR
+UPDATE `Clauses` SET `IsProtected` = 'yes' WHERE `Partition` = 'News';
+-- SEPARATOR
+UPDATE `Clauses` SET `IsProtected` = 'yes' WHERE `Partition` = '/Contacts';
+-- SEPARATOR
+UPDATE `Clauses` SET `IsProtected` = 'yes' WHERE `Partition` = '/Help/Services/QIWIPhone';
+
 
 -- SEPARATOR
 UPDATE `Clauses` SET `GroupID` = 2 WHERE `Partition` LIKE '%News%';
@@ -92,5 +105,20 @@ UPDATE `Clauses` SET `GroupID` = 10 WHERE `Partition` LIKE 'CreateTicket/%';
 UPDATE `Clauses` SET `GroupID` = 10 WHERE `Partition` LIKE '/Administrator/ButtonsNew:%';
 -- SEPARATOR
 UPDATE `Clauses` SET `GroupID` = 11 WHERE `Partition` LIKE '/Administrator/Buttons:%';
+
+-- SEPARATOR
+UPDATE `Clauses` SET `IsProtected` = 'yes' WHERE `Partition` LIKE '%News%';
+-- SEPARATOR
+UPDATE `Clauses` SET `IsProtected` = 'yes' WHERE `Partition` LIKE 'Contracts%';
+-- SEPARATOR
+UPDATE `Clauses` SET `IsProtected` = 'yes' WHERE `Partition` LIKE '%Agreement%';
+-- SEPARATOR
+UPDATE `Clauses` SET `IsProtected` = 'yes' WHERE `Partition` LIKE 'Envelope%';
+-- SEPARATOR
+UPDATE `Clauses` SET `IsProtected` = 'yes' WHERE `Partition` LIKE 'Invoices/%';
+-- SEPARATOR
+UPDATE `Clauses` SET `IsProtected` = 'yes' WHERE `Partition` LIKE 'Registrators/%';
+-- SEPARATOR
+UPDATE `Clauses` SET `IsProtected` = 'yes' WHERE `Partition` LIKE 'CreateTicket/%';
 
 
