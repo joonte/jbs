@@ -1012,6 +1012,7 @@
    <DailyTasks>
     <!-- синхронизации -->
     <CheckUsersOnHostingServers>Синхронизация аккаунтов биллинга и серверов хостинга</CheckUsersOnHostingServers>
+    <CheckUsersOnVPSServers>Синхронизация аккаунтов биллинга и серверов VPS</CheckUsersOnVPSServers>
     <!-- проверка баллансов регистраторов/поставщиков -->
     <CheckBalance>Проверка балланса регистраторов, поставщиков</CheckBalance>
     <!-- Операции с заказами -->

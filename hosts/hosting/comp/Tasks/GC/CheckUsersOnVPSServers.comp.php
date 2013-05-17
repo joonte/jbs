@@ -7,27 +7,32 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/Server.class.php')))
-	return ERROR | @Trigger_Error(500);
+if(Is_Error(System_Load('classes/VPSServer.class.php')))
+  return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Config = Config();
 $ExcludeAccounts = $Config['Tasks']['Types']['GC']['ExcludeServerAccounts'];
 #-------------------------------------------------------------------------------
 $EAs = Array();
+#-------------------------------------------------------------------------------
 if(StrLen($ExcludeAccounts) < 1){
+	#-------------------------------------------------------------------------------
 	$EAs[] = Md5(time());
+	#-------------------------------------------------------------------------------
 }else{
+	#-------------------------------------------------------------------------------
 	$ExcludeAccounts = Explode(',',$ExcludeAccounts);
-	foreach ($ExcludeAccounts as &$value){
+	#-------------------------------------------------------------------------------
+	foreach ($ExcludeAccounts as &$value)
 		$EAs[] = Trim($value);
-	}
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$HostingServers = DB_Select('HostingServers',Array('ID','Address'));
+$VPSServers = DB_Select('VPSServers',Array('ID','Address'));
 #-------------------------------------------------------------------------------
-switch(ValueOf($HostingServers)){
+switch(ValueOf($VPSServers)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
@@ -35,11 +40,11 @@ case 'exception':
 	break;
 case 'array':
 	#---------------------------------------------------------------------------
-	foreach($HostingServers as $HostingServer){
+	foreach($VPSServers as $IVPSServer){
 		#-------------------------------------------------------------------------
-		$Server = new Server();
+		$VPSServer = new VPSServer();
 		#-------------------------------------------------------------------------
-		$IsSelected = $Server->Select((integer)$HostingServer['ID']);
+		$IsSelected = $VPSServer->Select((integer)$IVPSServer['ID']);
 		#-------------------------------------------------------------------------
 		switch(ValueOf($IsSelected)){
 		case 'error':
@@ -48,7 +53,7 @@ case 'array':
 			return ERROR | @Trigger_Error(400);
 		case 'true':
 			#---------------------------------------------------------------------
-			$Users = $Server->GetUsers();
+			$Users = $VPSServer->GetUsers();
 			#---------------------------------------------------------------------
 			switch(ValueOf($Users)){
 			case 'error':
@@ -64,10 +69,10 @@ case 'array':
 					$SUsers = Array();
 					#-----------------------------------------------------------------
 					$Where = Array(
-								SPrintF('`ServerID`=%u',$HostingServer['ID']),
+								SPrintF('`ServerID`=%u',$IVPSServer['ID']),
 								"`StatusID` = 'Active' OR `StatusID` = 'Suspended'"
 							);
-					$ServerUsers = DB_Select('HostingOrdersOwners',Array('UserID','Login'),Array('Where'=>$Where));
+					$ServerUsers = DB_Select('VPSOrdersOwners',Array('UserID','Login'),Array('Where'=>$Where));
 					switch(ValueOf($ServerUsers)){
 					case 'error':
 						return ERROR | @Trigger_Error(500);
@@ -76,8 +81,8 @@ case 'array':
 						# ненадо ничё вешать, так как сервер может быть новый, и кроме технических аккаунтов там ничего нет
 						#$Event = Array(
 						#		'UserID'        => 1,
-						#		'PriorityID'    => 'Hosting',
-						#		'Text'          => SPrintF('В биллинге, на сервере (%s) не обнаружено пользователей; на самом сервере обнаружено %u пользователей',$HostingServer['Address'],SizeOf($Users)),
+						#		'PriorityID'    => 'VPS',
+						#		'Text'          => SPrintF('В биллинге, на сервере (%s) не обнаружено пользователей; на самом сервере обнаружено %u пользователей',$IVPSServer['Address'],SizeOf($Users)),
 						#		'IsReaded'      => FALSE
 						#		);
 						#$Event = Comp_Load('Events/EventInsert',$Event);
@@ -90,8 +95,8 @@ case 'array':
 							if(!In_Array($ServerUser['Login'], $Users)){
 								$Event = Array(
 										'UserID'        => $ServerUser['UserID'],
-										'PriorityID'    => 'Hosting',
-										'Text'          => SPrintF('Пользователь (%s) не найден на сервере (%s)',$ServerUser['Login'],$HostingServer['Address']),
+										'PriorityID'    => 'VPS',
+										'Text'          => SPrintF('Пользователь (%s) не найден на сервере (%s)',$ServerUser['Login'],$IVPSServer['Address']),
 										'IsReaded'      => FALSE
 										);
 								$Event = Comp_Load('Events/EventInsert',$Event);
@@ -120,8 +125,8 @@ case 'array':
 							#-----------------------------------------------------------------
 							$Event = Array(
 									'UserID'        => 1,
-									'PriorityID'    => 'Hosting',
-									'Text'          => SPrintF('На сервере (%s) найден пользователь (%s) отсутствующий в биллинге',$HostingServer['Address'],$UserID),
+									'PriorityID'    => 'VPS',
+									'Text'          => SPrintF('На сервере (%s) найден пользователь (%s) отсутствующий в биллинге',$IVPSServer['Address'],$UserID),
 									'IsReaded'      => FALSE
 									);
 							$Event = Comp_Load('Events/EventInsert',$Event);
