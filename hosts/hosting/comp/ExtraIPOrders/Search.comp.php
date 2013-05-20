@@ -18,7 +18,7 @@ $Template = &$Links[$LinkID];
 /******************************************************************************/
 $Tr = new Tag('TR');
 #-------------------------------------------------------------------------------
-$ExtraIPSchemes = DB_Select('ExtraIPSchemes',Array('ID','Name','CostMonth',Array('SortOn'=>'Name'));
+$ExtraIPSchemes = DB_Select('ExtraIPSchemes',Array('ID','Name','CostMonth'),Array('SortOn'=>'Name'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($ExtraIPSchemes)){
   case 'error':
