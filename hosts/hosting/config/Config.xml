@@ -327,7 +327,7 @@
     <Port>1443</Port>
     <Protocol>ssl</Protocol>
     <PrefixAPI>partner_api.khtml</PrefixAPI>
-	<PrefixNic>R01</PrefixNic>
+    <PrefixNic>R01</PrefixNic>
     <JurName>ООО "Гарант-Парк-Телеком"</JurName>
    </Settings>
    <PersonID />
