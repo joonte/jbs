@@ -1044,11 +1044,13 @@
   <CheckEmail>
     <Name>Проверка почтового ящика</Name>
     <Params type="array" />
+    <ExecutePeriod>00:10</ExecutePeriod>
     <CheckEmailServer>pop.yandex.ru</CheckEmailServer>
     <CheckEmailLogin>admin@company.com</CheckEmailLogin>
     <CheckEmailPassword>1234567</CheckEmailPassword>
     <CheckEmailProtocol>pop3</CheckEmailProtocol>
-    <ExecutePeriod>00:10</ExecutePeriod>
+    <DeleteAutoreply>1</DeleteAutoreply>
+    <DeleteAutoreplyExclude>abuse@clean-mx.de</DeleteAutoreplyExclude>
     <UseSSL>0</UseSSL>
     <CutQuotes>1</CutQuotes>
     <CutSign>1</CutSign>
