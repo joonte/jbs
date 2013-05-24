@@ -633,16 +633,16 @@ function IspManager_Delete($Settings,$Login,$IsReseller = FALSE){
 	if(Is_Array($UsersList)){
 		#-----------------------------------------------------------------------------
 		# дропаем юзеров
+		$Array = Array();
 		foreach($UsersList as $ReslUser)
-			$DeleteList = $ReslUser['name'] . ', ';
-		#Debug("[system/libs/IspManager.php]: Users for delete = " . $DeleteList);
+			$Array[] = $ReslUser['name'];
 		#-----------------------------------------------------------------------------
 		$Request = Array(
 				'authinfo'      => $authinfo,
 				'func'		=> 'user.delete',
 				'out'		=> 'xml',
 				'su'		=> $Login,
-				'elid'		=> $DeleteList
+				'elid'		=> Implode(',',$Array)
 			);
 		#-----------------------------------------------------------------------------
 		$Response = Http_Send('/manager/ispmgr',$Http,$Request);
