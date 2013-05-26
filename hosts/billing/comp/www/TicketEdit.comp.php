@@ -44,11 +44,6 @@ if($UserID){
 $DOM->AddText('Title',$UserID?SPrintF('Новый запрос для [%s]',$User['Name']):'Новый запрос');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/TicketEdit.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/TicketFunctions.js}'));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
@@ -252,7 +247,7 @@ switch(ValueOf($Groups)){
       'Form/Input',
       Array(
         'type'    => 'button',
-        'onclick' => 'TicketEdit();',
+	'onclick' => "FormEdit('/API/TicketEdit','TicketEditForm','Добавление запроса');",
         'value'   => 'Добавить'
       )
     );
