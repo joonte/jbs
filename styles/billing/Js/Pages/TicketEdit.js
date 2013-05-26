@@ -48,9 +48,3 @@ function TicketEdit(){
   ShowProgress('Добавление запроса');
 }
 
-// stub written by lissyara 2011-07-15 in 11:30 MSK
-function quote($message) {
-	$message.value += '[quote] [/quote]';
-	$message.focus();
-}
-

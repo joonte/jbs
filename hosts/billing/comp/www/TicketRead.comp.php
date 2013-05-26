@@ -48,6 +48,10 @@ switch(ValueOf($Ticket)){
         $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/TicketRead.js}'));
         #-----------------------------------------------------------------------
         $DOM->AddChild('Head',$Script);
+        #-----------------------------------------------------------------------
+        $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/TicketFunctions.js}'));
+        #-----------------------------------------------------------------------
+        $DOM->AddChild('Head',$Script);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
         $DOM->AddText('Title',HtmlSpecialChars($Ticket['Theme']));
