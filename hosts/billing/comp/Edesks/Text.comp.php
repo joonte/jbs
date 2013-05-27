@@ -28,7 +28,7 @@ $String = Str_Replace('&quot;','"',HtmlSpecialChars($String));
 #-------------------------------------------------------------------------------
 # $String = Preg_Replace('/(http:\/\/[\/a-zA-Z0-9\.\-\_]+)/su','<A href="\\1" target="blank">\\1</A>',$String);
 #-------------------------------------------------------------------------------
-$String = Preg_Replace('/\[hidden\](.+)\[\/hidden\]/sU',$IsLockText?'<DIV class="LockText"><B style="font-size:11px;">Скрытый текст:</B>\\1</DIV>':'',$String);
+$String = Preg_Replace('/\[hidden\](.+)\[\/hidden\]/sU',$IsLockText?'<DIV class="LockText"><B style="font-size:11px;">Скрытый текст:<BR /></B>\\1</DIV>':'',$String);
 #-------------------------------------------------------------------------------
 $String = preg_replace( "#(^|\s|>)((http|https|news|ftp)://\w+[^\s\[\]\<]+)#i", !IsSet($Params['IsEmail'])?"\\1<A href=\"\\2\" target=\"blank\">\\2</A>":'\\1\\2',$String);
 #-------------------------------------------------------------------------------
