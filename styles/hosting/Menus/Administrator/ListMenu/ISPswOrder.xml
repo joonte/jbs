@@ -40,6 +40,12 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
+  <Text>Передать на другой аккаунт</Text>
+  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%Replace%",ServiceID:"51000"});</Href>
+  <Icon>OrdersTransfer.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
   <Text>Сменить IP адрес лицензии</Text>
   <Href>javascript:ShowWindow("/ISPswChangeIP",{ISPswOrderID:%Replace%});</Href>
   <Icon>Password.gif</Icon>

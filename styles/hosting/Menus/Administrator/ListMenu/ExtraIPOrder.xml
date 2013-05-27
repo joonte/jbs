@@ -32,6 +32,12 @@
   <Href>javascript:ShowWindow("/Administrator/ExtraIPCompensation",{ExtraIPOrderID:%Replace%});</Href>
   <Icon>Add.gif</Icon>
  </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Передать на другой аккаунт</Text>
+  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%Replace%",ServiceID:"50000"});</Href>
+  <Icon>OrdersTransfer.png</Icon>
+ </UniqID>
 </Items>
 <!-- *********************************************************************** -->
 </XML>

@@ -40,6 +40,12 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
+  <Text>Передать на другой аккаунт</Text>
+  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%Replace%",ServiceID:"30000"});</Href>
+  <Icon>OrdersTransfer.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
   <Text>Перезагрузить VPS</Text>
   <Href>javascript:ShowWindow("/VPSReboot",{VPSOrderID:%Replace%});</Href>
   <Icon>VPSReboot.png</Icon>

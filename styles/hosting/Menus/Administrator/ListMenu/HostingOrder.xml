@@ -40,6 +40,12 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
+  <Text>Передать на другой аккаунт</Text>
+  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%Replace%",ServiceID:"10000"});</Href>
+  <Icon>OrdersTransfer.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
   <Text>Управлять заказом хостинга</Text>
   <Href>javascript:HostingManage(%Replace%);</Href>
   <Icon>HostingManage.gif</Icon>
