@@ -938,6 +938,8 @@
     <FromID>Идентификатор отправителя</FromID>
     <SendedIDs>Кому уже отправлено</SendedIDs>
    </Params>
+   <ExecutePeriod>00:01</ExecutePeriod>
+   <Limit>10</Limit>
    <IsActive>1</IsActive>
   </Dispatch>
   <!-- ********************************************************************* -->

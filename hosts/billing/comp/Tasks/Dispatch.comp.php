@@ -10,6 +10,15 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 #Debug('[comp/Tasks/Dispatch]: ' . print_r($Task,true));
+$Config = Config();
+$Settings = $Config['Tasks']['Types']['Dispatch'];
+#-------------------------------------------------------------------------------
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecutePeriod'=>$Settings['ExecutePeriod']));
+if(Is_Error($ExecuteTime))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if(!$Settings['IsActive'])
+	return $ExecuteTime;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # смотрим количество сообщений в очереди
@@ -30,8 +39,8 @@ $Count = DB_Count('TasksOwners',Array('Where'=>$Where));
 if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if($Count > 9)
-	return (Time() + 60);
+if($Count > $Settings['Limit'] - 1)
+	return $ExecuteTime;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $SendToIDs = Explode(',',$Task['Params']['SendToIDs']);
@@ -42,7 +51,7 @@ $Replace = Array('Theme'=>$Task['Params']['Theme'],'Message'=>$Task['Params']['M
 #-------------------------------------------------------------------------------
 foreach($SendToIDs as $User){
 	# пропускаем циклы, если счётчик уже больше 10
-	if($Count > 9)
+	if($Count > $Settings['Limit'] - 1)
 		continue;
 	#-------------------------------------------------------------------------
 	Debug(SPrintF('[comp/Tasks/Dispatch]: send message to UserID = %s;',$User));
@@ -86,7 +95,7 @@ if(Is_Error($IsUpdate))
 $GLOBALS['TaskReturnInfo'] = Array(SPrintF('Sended: %u, estimated: %u, new: %u messages',SizeOf($SendedIDs),SizeOf($SendToIDs),$Count));
 #-------------------------------------------------------------------------------
 if(SizeOf($SendToIDs) > 0)
-	return (Time() + 60);
+	return $ExecuteTime;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;
