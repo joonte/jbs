@@ -54,6 +54,25 @@ switch(ValueOf($Group)){
     return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# проверяем наличие аттача
+$FileLength = GetUploadedFileSize('EdesksMessages', $MessageID);
+#-------------------------------------------------------------------------------
+if((integer)$FileLength){
+	#-------------------------------------------------------------------------------
+	# проверяем что это картика
+	$Extension = explode(".", StrToLower($FileName));
+	if(IsSet($Extension[1]) && In_Array($Extension[1],Array('png','gif','jpg','jpeg'))){
+		#-------------------------------------------------------------------------------
+		# добавляем к тексту превьюху
+		$Content = SPrintF("%s\n\n[image]%s://%s/FileDownload?TypeID=EdesksMessages&FileID=%u[/image]",$Content,Url_Scheme(),HOST_ID,$MessageID);
+		Debug(SPrintF('[comp/Edesks/Message]: message text = %s',print_r($Content,true)));
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Text = Comp_Load('Edesks/Text',Array('String'=>$Content,'IsLockText'=>($OwnerID != @$GLOBALS['__USER']['ID'])));
 if(Is_Error($Text))
 	return ERROR | @Trigger_Error(500);
@@ -69,12 +88,11 @@ $BgColor = (!$IsVisible)?'FFE4E1':(($UserID != $OwnerID)?'FFFFFF':'FDF6D3');
 #-------------------------------------------------------------------------------
 $Table = new Tag('TABLE',Array('class'=>'EdeskMessage','cellspacing'=>5,'height'=>'100%','width'=>'100%'));
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Params = Array('User'=>$User,'EnterDate'=>$EnterDate,'Status'=>((Time() - $User['EnterDate']) < 600?'OnLine':'OffLine'),'Delete'=>$Delete,'MessageID'=>SPrintF('%06u',$MessageID),'CreateDate'=>$CreateDate,'Group'=>$Group,'BgColor'=>$BgColor,'Text'=>$Text);
 #-------------------------------------------------------------------------------
 $Table->AddHTML(TemplateReplace('Edesks.Message.TABLE',$Params));
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$FileLength = GetUploadedFileSize('EdesksMessages', $MessageID);
 #-------------------------------------------------------------------------------
 if((integer)$FileLength){
 	#-------------------------------------------------------------------------------

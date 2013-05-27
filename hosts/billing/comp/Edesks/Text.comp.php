@@ -38,7 +38,8 @@ $String = Preg_Replace('/\[color=([a-z]+)\](.+)\[\/color\]/sU',!IsSet($Params['I
 #-------------------------------------------------------------------------------
 $String = Preg_Replace('/\[size=([0-9]+)\](.+)\[\/size\]/sU',!IsSet($Params['IsEmail'])?'<SPAN style="font-size:\\1px;">\\2</SPAN>':'\\2',$String);
 #-------------------------------------------------------------------------------
-$String = Preg_Replace("/\[image\](http|ftp|https):\/\/([\/a-zA-Z0-9\.\-\_]+)\[\/image\]/sU",!IsSet($Params['IsEmail'])?"<img class=\"TicketSmall\" src=\"\\1://\\2\" />":'\\1://\\2',$String);
+#$String = Preg_Replace("/\[image\](http|ftp|https):\/\/([\/a-zA-Z0-9\.\-\_\?\=\&]+)\[\/image\]/sU",!IsSet($Params['IsEmail'])?"<img class=\"TicketSmall\" src=\"\\1://\\2\" />":'\\1://\\2',$String);
+$String = Preg_Replace("/\[image\](http|ftp|https):\/\/(.+)\[\/image\]/sU",!IsSet($Params['IsEmail'])?"<img class=\"TicketSmall\" src=\"\\1://\\2\" />":'\\1://\\2',$String);
 #-------------------------------------------------------------------------------
 $String = Preg_Replace('/\[link](.+)\[\/link\]/sU',!IsSet($Params['IsEmail'])?'<A href="\\1" target="blank">\\1</A>':'\\1',$String);
 #-------------------------------------------------------------------------------
