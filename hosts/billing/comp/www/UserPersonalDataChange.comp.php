@@ -83,74 +83,113 @@ if(Is_Error($Comp))
 $NoBody = new Tag('NOBODY',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(CacheManager::isEnabled()){
-  $Config = Config();
-  #-------------------------------------------------------------------------------
-  if($Config['Notifies']['Methods']['Email']['IsActive']){
-    #-----------------------------------------------------------------------------
-    if($__USER['EmailConfirmed'] > 0){
-      $EmailConfirmed = Comp_Load('Formats/Date/Extended',$__USER['EmailConfirmed']);
-      if(Is_Error($Comp))
-        return ERROR | @Trigger_Error(500);
-      $Prompt = "Ваш почтовый адрес был подтверждён: " . $EmailConfirmed;
-    }else{
-      $Prompt = "Нажмите для подтверждения вашего почтового адреса";
+if (CacheManager::isEnabled()) {
+    $Config = Config();
+    #-------------------------------------------------------------------------------
+    if ($Config['Notifies']['Methods']['Email']['IsActive']) {
+	$Params = Array('onclick' => 'EmailConfirm();', 'type' => 'button');
+	#-----------------------------------------------------------------------------
+	if ($__USER['EmailConfirmed'] > 0) {
+	    $EmailConfirmed = Comp_Load('Formats/Date/Extended', $__USER['EmailConfirmed']);
+	    if (Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	    $Params['value'] = 'Подтвержден';
+	    $Params['prompt'] = "Ваш почтовый адрес был подтверждён: ".$EmailConfirmed;
+	    $Params['disabled'] = 'disabled';
+	}else {
+	    $Params['prompt'] = "Нажмите для подтверждения вашего почтового адреса";
+	    $Params['value'] = 'Подтвердить';
+	}
+	#-----------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input', $Params);
+	if (Is_Error($Comp))
+	    return ERROR | @Trigger_Error(500);
+	#-----------------------------------------------------------------------------
+	$NoBody->AddChild($Comp);
     }
     #-----------------------------------------------------------------------------
-    $Comp = Comp_Load(
-      'Form/Input',
-      Array(
-        'onclick' => 'EmailConfirm();',
-        'type'    => 'button',
-        'value'   => 'Подтвердить',
-        'prompt'	=> $Prompt
-      )
-    );
-    if(Is_Error($Comp))
-      return ERROR | @Trigger_Error(500);
-    #-----------------------------------------------------------------------------
-    $NoBody->AddChild($Comp);
-  }
-  #-----------------------------------------------------------------------------
+    $Table[] = Array('Электронный адрес', $NoBody);
 }
-#-------------------------------------------------------------------------------
-$Table[] = Array('Электронный адрес',$NoBody);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'name'   => 'Mobile',
-    'size'   => 25,
-    'type'   => 'text',
+	'Form/Input', Array(
+    'name' => 'Mobile',
+    'size' => 25,
+    'type' => 'text',
     'prompt' => $Messages['Prompts']['Mobile'],
-    'value'  => $__USER['Mobile']
-  )
+    'value' => $__USER['Mobile']
+	)
 );
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+if (Is_Error($Comp))
+    return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$NoBody = new Tag('NOBODY',$Comp);
+$NoBody = new Tag('NOBODY', $Comp);
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-if($Config['Notifies']['Methods']['SMS']['IsActive']){
-  #-----------------------------------------------------------------------------
-  $Comp = Comp_Load(
-    'Form/Input',
-    Array(
-      'onclick' => 'MobileConfirm();',
-      'type'    => 'button',
-      'value'   => 'Подтвердить'
-    )
-  );
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $NoBody->AddChild($Comp);
+if ($Config['Notifies']['Methods']['SMS']['IsActive']) {
+    #-----------------------------------------------------------------------------
+    $Params = Array('onclick' => 'MobileConfirm();', 'type' => 'button');
+    #-----------------------------------------------------------------------------
+    if ($__USER['MobileConfirmed'] > 0) {
+	$MobileConfirmed = Comp_Load('Formats/Date/Extended', $__USER['MobileConfirmed']);
+	if (Is_Error($Comp))
+	    return ERROR | @Trigger_Error(500);
+	$Params['value'] = 'Подтвержден';
+	$Params['disabled'] = 'disabled';
+	$Params['prompt'] = "Ваш мобильный телефон был подтверждён: ".$MobileConfirmed;
+    }else {
+	$Params['value'] = 'Подтвердить';
+	$Params['prompt'] = "Нажмите для получения кода подтверждения";
+    }
+    #-----------------------------------------------------------------------------
+    $Comp = Comp_Load('Form/Input', $Params);
+    if (Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+    #-----------------------------------------------------------------------------
+    $NoBody->AddChild($Comp);
 }
 #-------------------------------------------------------------------------------
-$Table[] = Array('Номер мобильного телефона',$NoBody);
+$Table[] = Array('Номер мобильного телефона', $NoBody);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if ($__USER['MobileConfirmed'] == 0) {
+    $Comp = Comp_Load(
+	    'Form/Input', Array(
+	'name' => 'MobileConfirmCode',
+	'size' => 25,
+	'type' => 'text',
+	'prompt' => $Messages['Prompts']['MobileConfirm'],
+	'value' => ''
+	    )
+    );
+    if (Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+    $NoBody = new Tag('NOBODY', $Comp);
+#-------------------------------------------------------------------------------
+    $Config = Config();
+#-------------------------------------------------------------------------------
+    if ($Config['Notifies']['Methods']['SMS']['IsActive']) {
+	#---------------------------------------------------------------------------
+	$Comp = Comp_Load(
+		'Form/Input', Array(
+	    'onclick' => 'MobileConfirmCheck();',
+	    'type' => 'button',
+	    'value' => 'Проверить',
+	    'prompt' => 'Нажмите для проверки вашего кода'
+		)
+	);
+	if (Is_Error($Comp))
+	    return ERROR | @Trigger_Error(500);
+	#---------------------------------------------------------------------------
+	$NoBody->AddChild($Comp);
+    }
+    #---------------------------------------------------------------------------
+    $Table[] = Array('Код подтверждения телефона', $NoBody);
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
@@ -170,20 +209,20 @@ $NoBody = new Tag('NOBODY',$Comp);
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-if($Config['Notifies']['Methods']['ICQ']['IsActive']){
-  #-----------------------------------------------------------------------------
-  $Comp = Comp_Load(
-    'Form/Input',
-    Array(
-      'onclick' => 'ICQTest();',
-      'type'    => 'button',
-      'value'   => 'Тест',
-    )
-  );
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $NoBody->AddChild($Comp);
+if ($Config['Notifies']['Methods']['ICQ']['IsActive']) {
+    #---------------------------------------------------------------------------
+    $Comp = Comp_Load(
+	'Form/Input', Array(
+	'onclick' => 'ICQTest();',
+	'type' => 'button',
+	'value' => 'Тест',
+	'prompt' => 'Отправить тестовое сообщение'
+	    )
+    );
+    if (Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+    #---------------------------------------------------------------------------
+    $NoBody->AddChild($Comp);
 }
 #-------------------------------------------------------------------------------
 $Table[] = Array('ICQ-номер',$NoBody);

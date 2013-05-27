@@ -1117,17 +1117,25 @@
 </JabberClient>
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
-<SMSC>
- <Server>smsc.ru</Server>
- <Login>login</Login>
- <Password>passwd</Password>
- <UseSSL>0</UseSSL>
- <Send>
-   <sender>Sender</sender>
-   <charset>utf-8</charset>
-   <translit>1</translit>
- </Send>
-</SMSC>
+<SMSGateway>
+	<Provider>SMSpilot</Provider>
+	<Sender>Hosting.ru</Sender>
+	<Key>API ключ</Key>
+	<Interval>300</Interval>
+	<lowBalance>0</lowBalance>
+	<Price>
+	    <ru>0.5</ru>
+	    <ua>1.0</ua>
+	    <sng>2.0</sng>
+	    <zone1>3.0</zone1>
+	    <zone2>4.0</zone2>
+	    <default>5.0</default>
+	</Price>
+	<Exceptions>
+	    <LimitPaidInvoices>100500</LimitPaidInvoices>
+	    <LimitSchemeID>0</LimitSchemeID>
+	</Exceptions>
+</SMSGateway>
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Edesks>
