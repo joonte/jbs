@@ -2,14 +2,17 @@
 /** @author Великодный В.В. (Joonte Ltd.) */
 //------------------------------------------------------------------------------
 function selectStars(e, $ticketId, $starId) {
-  for(var $i = 0; $i < 5; $i++) {
-    document.getElementById('star_'+$ticketId+'_'+$i).src = '/styles/billing/Images/Icons/DisableStar.png';
-  }
-
-  for(var $i = 0; $i <= $starId; $i++) {
-    document.getElementById('star_'+$ticketId+'_'+$i).src = '/styles/billing/Images/Icons/EnableStar.png';
-  }
+	//------------------------------------------------------------------------------
+	for(var $i = 0; $i < 5; $i++) {
+		document.getElementById('star_'+$ticketId+'_'+$i).src = '/styles/billing/Images/Icons/DisableStar.png';
+	}
+	//------------------------------------------------------------------------------
+	for(var $i = 0; $i <= $starId; $i++) {
+		document.getElementById('star_'+$ticketId+'_'+$i).src = '/styles/billing/Images/Icons/EnableStar.png';
+	}
+	//------------------------------------------------------------------------------
 }
+//------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 function quote($message) {
 	//------------------------------------------------------------------------------
@@ -84,9 +87,9 @@ function bb_code($Obj,$CodeBegin,$CodeEnd) {
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 function ctrlEnterEvent(e) {
-  if (e.ctrlKey && (e.keyCode == 10 || e.keyCode == 13)) {
-    TicketAddMessage();
-  }
+	if (e.ctrlKey && (e.keyCode == 10 || e.keyCode == 13)) {
+		TicketAddMessage();
+	}
 }
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
@@ -136,18 +139,22 @@ $(document).ready(function(){
 // автоматическое обновления фрейма с сообщениями
 function update_messages() {
 	//------------------------------------------------------------------------------
-	var $Form = document.forms['TicketReadForm'];
-	//------------------------------------------------------------------------------
-	$.ajax({
-		type:		'POST',
-		url:		'/TicketMessages',
-		data:		{TicketID: $Form.TicketID.value},
-		dataType:	"html",
-		success:	function(data) {
-			//alert("Debug: " + );
-			$("iframe").contents().find('#Body').html(data);
-		}
-	});
+	if(document.getElementById('LockPage' + 'Window')){
+		//------------------------------------------------------------------------------
+		var $Form = document.forms['TicketReadForm'];
+		//------------------------------------------------------------------------------
+		$.ajax({
+			type:		'POST',
+			url:		'/TicketMessages',
+			data:		{TicketID: $Form.TicketID.value},
+			dataType:	"html",
+			success:	function(data) {
+				//alert("Debug: " + );
+				$("iframe").contents().find('#Body').html(data);
+			}
+		});
+		//------------------------------------------------------------------------------
+	}
 	//------------------------------------------------------------------------------
 }
 //------------------------------------------------------------------------------
