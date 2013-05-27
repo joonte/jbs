@@ -364,6 +364,7 @@ CREATE TABLE `Users` (
   `ICQ` char(12) default '',
   `JabberID` CHAR(64) default '', 
   `Mobile` char(20) default '',
+  `MobileConfirmed` INT(12) default '0',
   `Rating` decimal(7,2) default '0.00',
   `Sign` char(255) default '',
   `EnterIP` char(20) default '-',
