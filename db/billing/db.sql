@@ -54,6 +54,42 @@ VALUES
 (13,1,'CheckEmail','[]','yes');
 UNLOCK TABLES;
 
+
+-- SEPARATOR
+INSERT INTO `ClausesGroups` (`ID`,`PublicDate`,`ChangedDate`,`AuthorID`,`EditorID`,`Name`,`Notice`,`IsProtected`,`IsPublish`)
+	VALUES (1,UNIX_TIMESTAMP(),UNIX_TIMESTAMP(),100,100,'Без категории','Статьи не вошедшие ни в какие категории','yes','yes');
+-- SEPARATOR
+INSERT INTO `ClausesGroups` (`ID`,`PublicDate`,`ChangedDate`,`AuthorID`,`EditorID`,`Name`,`Notice`,`IsProtected`,`IsPublish`)
+	VALUES (2,UNIX_TIMESTAMP(),UNIX_TIMESTAMP(),100,100,'Новости','Новости хостинга, RSS','yes','yes');
+-- SEPARATOR
+INSERT INTO `ClausesGroups` (`ID`,`PublicDate`,`ChangedDate`,`AuthorID`,`EditorID`,`Name`,`Notice`,`IsProtected`,`IsPublish`)
+	VALUES (3,UNIX_TIMESTAMP(),UNIX_TIMESTAMP(),100,100,'Соглашения','Шаблоны соглашений','yes','yes');
+-- SEPARATOR
+INSERT INTO `ClausesGroups` (`ID`,`PublicDate`,`ChangedDate`,`AuthorID`,`EditorID`,`Name`,`Notice`,`IsProtected`,`IsPublish`)
+	VALUES (4,UNIX_TIMESTAMP(),UNIX_TIMESTAMP(),100,100,'Договора','Шаблоны договоров','yes','yes');
+-- SEPARATOR
+INSERT INTO `ClausesGroups` (`ID`,`PublicDate`,`ChangedDate`,`AuthorID`,`EditorID`,`Name`,`Notice`,`IsProtected`,`IsPublish`)
+
+VALUES (5,UNIX_TIMESTAMP(),UNIX_TIMESTAMP(),100,100,'Конверты','Шаблоны конвертов','yes','yes');
+-- SEPARATOR
+INSERT INTO `ClausesGroups` (`ID`,`PublicDate`,`ChangedDate`,`AuthorID`,`EditorID`,`Name`,`Notice`,`IsProtected`,`IsPublish`)
+	VALUES (6,UNIX_TIMESTAMP(),UNIX_TIMESTAMP(),100,100,'Платёжные системы','Шаблоны счетов','yes','yes');
+-- SEPARATOR
+INSERT INTO `ClausesGroups` (`ID`,`PublicDate`,`ChangedDate`,`AuthorID`,`EditorID`,`Name`,`Notice`,`IsProtected`,`IsPublish`)
+	VALUES (7,UNIX_TIMESTAMP(),UNIX_TIMESTAMP(),100,100,'Регистраторы','Шаблоны писем о переносе доменов к регистраторам','yes','yes');
+-- SEPARATOR
+INSERT INTO `ClausesGroups` (`ID`,`PublicDate`,`ChangedDate`,`AuthorID`,`EditorID`,`Name`,`Notice`,`IsProtected`,`IsPublish`)
+	VALUES (8,UNIX_TIMESTAMP(),UNIX_TIMESTAMP(),100,100,'Подсказки','Подсказки платёжных систем и т.п.','yes','yes');
+-- SEPARATOR
+INSERT INTO `ClausesGroups` (`ID`,`PublicDate`,`ChangedDate`,`AuthorID`,`EditorID`,`Name`,`Notice`,`IsProtected`,`IsPublish`)
+	VALUES (9,UNIX_TIMESTAMP(),UNIX_TIMESTAMP(),100,100,'Описания страниц','Описания страниц биллинговой системы','yes','yes');
+-- SEPARATOR
+INSERT INTO `ClausesGroups` (`ID`,`PublicDate`,`ChangedDate`,`AuthorID`,`EditorID`,`Name`,`Notice`,`IsProtected`,`IsPublish`)
+	VALUES (10,UNIX_TIMESTAMP(),UNIX_TIMESTAMP(),100,100,'Шаблоны тикетов','Шаблоны для создания тикета','yes','yes');
+-- SEPARATOR
+INSERT INTO `ClausesGroups` (`ID`,`PublicDate`,`ChangedDate`,`AuthorID`,`EditorID`,`Name`,`Notice`,`IsProtected`,`IsPublish`)
+	VALUES (11,UNIX_TIMESTAMP(),UNIX_TIMESTAMP(),100,100,'Кнопки тикетницы','Кнопки быстрого ответа в тикетнице','yes','yes');
+
 -- SEPARATOR
 
 DELETE FROM `Clauses` WHERE `Partition` IN ('User/Panel','/Help/Services/Paying','News','/Contacts');
@@ -2112,7 +2148,7 @@ set @Text = '<NOBODY>
  </TABLE>
 </NOBODY>';
 
-INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+INSERT INTO `Clauses` `GroupID`,(`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
 VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/WebMoneyZ','Шаблон платежной системы WebMoneyZ',@Text);
 
 -- SEPARATOR
