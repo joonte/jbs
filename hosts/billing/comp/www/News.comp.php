@@ -39,7 +39,7 @@ if(IsSet($GLOBALS['__USER'])){
       return ERROR | @Trigger_Error(400);
     case 'true':
       #-------------------------------------------------------------------------
-      $Comp = Comp_Load('Buttons/Standard',Array('onclick'=>"window.open('/Administrator/ClauseEdit?Partition=News','ClauseEdit',SPrintF('left=%u,top=%u,width=800,height=680,toolbar=0, scrollbars=1, location=0',(screen.width-800)/2,(screen.height-600)/2));"),'Добавить новость','Add.gif');
+      $Comp = Comp_Load('Buttons/Standard',Array('onclick'=>SPrintF("window.open('/Administrator/ClauseEdit?GroupID=2&Partition=News\/%s\/%s','ClauseEdit',SPrintF('left=%%u,top=%%u,width=800,height=680,toolbar=0, scrollbars=1, location=0',(screen.width-800)/2,(screen.height-600)/2));",Date('Y-m-d'),Date('G:i:s'))),'Добавить новость','Add.gif');
       if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
@@ -57,7 +57,7 @@ if(IsSet($GLOBALS['__USER'])){
   }
 }
 #-------------------------------------------------------------------------------
-$Where = "`Partition` = 'News' AND `IsPublish` = 'yes'";
+$Where = "`GroupID` = 2 AND `IsPublish` = 'yes'";
 #-------------------------------------------------------------------------------
 $Items = DB_Select('Clauses','*',Array('Where'=>$Where,'IsDesc'=>TRUE,'SortOn'=>'PublicDate'));
 #-------------------------------------------------------------------------------

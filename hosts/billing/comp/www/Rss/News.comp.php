@@ -20,7 +20,7 @@ $Channel->AddChild(new Tag('language','ru'));
 $Channel->AddChild(new Tag('ttl',5));
 $Channel->AddChild(new Tag('managingEditor',$Email = SPrintF('rss@%s',HOST_ID)));
 #-------------------------------------------------------------------------------
-$Versions = DB_Select('Clauses',Array('ID','PublicDate','Title','Text'),Array('Limits'=>Array(0,20),'Where'=>"`Partition` = 'News'",'SortOn'=>'PublicDate','IsDesc'=>TRUE));
+$Versions = DB_Select('Clauses',Array('ID','PublicDate','Title','Text'),Array('Limits'=>Array(0,20),'Where'=>Array('`GroupID` = 2','`IsPublish` = "yes"'),'SortOn'=>'PublicDate','IsDesc'=>TRUE));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Versions)){
   case 'error':
