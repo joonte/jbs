@@ -30,16 +30,18 @@ $String = Str_Replace('&quot;','"',HtmlSpecialChars($String));
 #-------------------------------------------------------------------------------
 $String = Preg_Replace('/\[hidden\](.+)\[\/hidden\]/sU',$IsLockText?'<DIV class="LockText"><B style="font-size:11px;">Скрытый текст:<BR /></B>\\1</DIV>':'',$String);
 #-------------------------------------------------------------------------------
-$String = preg_replace( "#(^|\s|>)((http|https|news|ftp)://\w+[^\s\[\]\<]+)#i", !IsSet($Params['IsEmail'])?"\\1<A href=\"\\2\" target=\"blank\">\\2</A>":'\\1\\2',$String);
-#-------------------------------------------------------------------------------
 $String = Preg_Replace('/\[quote\](.+)\[\/quote\]/sU',!IsSet($Params['IsEmail'])?'<DIV class="QuoteText"><!-- <B style="font-size:11px;">Цитата:</B> -->\\1</DIV>':'\\1',$String);
 #-------------------------------------------------------------------------------
 $String = Preg_Replace('/\[color=([a-z]+)\](.+)\[\/color\]/sU',!IsSet($Params['IsEmail'])?'<SPAN style="color:\\1;">\\2</SPAN>':'\\2',$String);
 #-------------------------------------------------------------------------------
 $String = Preg_Replace('/\[size=([0-9]+)\](.+)\[\/size\]/sU',!IsSet($Params['IsEmail'])?'<SPAN style="font-size:\\1px;">\\2</SPAN>':'\\2',$String);
 #-------------------------------------------------------------------------------
-#$String = Preg_Replace("/\[image\](http|ftp|https):\/\/([\/a-zA-Z0-9\.\-\_\?\=\&]+)\[\/image\]/sU",!IsSet($Params['IsEmail'])?"<img class=\"TicketSmall\" src=\"\\1://\\2\" />":'\\1://\\2',$String);
+# JBS-697
+$String = Preg_Replace("#(^|\s|>)((http://)([a-zA-Z0-9][a-zA-Z0-9-]*\.)+([a-zA-Z]{2,4})(:\d{2,5})?(/[a-zA-Z/.0-9_]*)?(jpg|jpeg|gif|png|bmp)\b)#i","\\1[image]\\2[/image]",$String);
+#-------------------------------------------------------------------------------
 $String = Preg_Replace("/\[image\](http|ftp|https):\/\/(.+)\[\/image\]/sU",!IsSet($Params['IsEmail'])?"<img class=\"TicketSmall\" src=\"\\1://\\2\" />":'\\1://\\2',$String);
+#-------------------------------------------------------------------------------
+$String = preg_replace( "#(^|\s|>)((http|https|news|ftp)://\w+[^\s\[\]\<]+)#i", !IsSet($Params['IsEmail'])?"\\1<A href=\"\\2\" target=\"blank\">\\2</A>":'\\1\\2',$String);
 #-------------------------------------------------------------------------------
 $String = Preg_Replace('/\[link](.+)\[\/link\]/sU',!IsSet($Params['IsEmail'])?'<A href="\\1" target="blank">\\1</A>':'\\1',$String);
 #-------------------------------------------------------------------------------
