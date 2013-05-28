@@ -153,7 +153,7 @@ switch(ValueOf($Groups)){
     $Tr->AddChild(new Tag('NOBODY',new Tag('TD',Array('class'=>'Comment'),'Прикрепить файл'),new Tag('TD',$Comp)));
     #---------------------------------------------------------------------------
     if($GLOBALS['__USER']['IsAdmin']){ # is suppor
-      $Articles = DB_Select('Clauses','*',Array('Where'=>"`GroupID` = 10 AND `IsPublish` = 'yes'",'Order'=>'Partition'));
+      $Articles = DB_Select('Clauses','*',Array('Where'=>"`GroupID` = 10 AND `IsPublish` = 'yes'",'SortOn'=>'Partition'));
       #-----------------------------------------------------------------------
       switch(ValueOf($Articles)){
       case 'error':
