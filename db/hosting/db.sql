@@ -2316,9 +2316,15 @@ VALUES (4, 100, 100, 'Contracts/Enclosures/Types/ISPswRules/Content', 'Регл�
 ', 'yes');
 
 
+-- SEPARATOR
+/* added by lissyara, 2013-05-28 in 10:03 MSK, for JBS-674 */
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Enclosures/Types/ExtraIPRules/Content','Регламент предоставления услуги выделенного IP адреса','<NOBODY><P align="justify">
+Регламент предоставления услуги выделенного IP адреса полностью соответствует <a href="/Clause?ClauseID=Contracts/Enclosures/Types/HostingRules/Content">регламенту предоставления услуги хостинга</a>.
+</P></NOBODY>');
 
 
-
+-- SEPARATOR
 
 
 LOCK TABLES `Services` WRITE;
@@ -2331,8 +2337,6 @@ INSERT INTO `Services` (`ID`, `GroupID`, `UserID`, `ServicesGroupID`, `Name`, `N
 (40000, 2000000, 1, 1000, 'Поддержка заказа выделенного сервера', 'Выделенный сервер', 'DS', 'DS', 'дн.', 'Daily', 0.00, 0.00, 'no', 'yes', 'yes', 'yes', 30),
 (50000, 2000000, 1, 1100, 'Поддержка заказа дополнительного IP адреса', 'IP адрес', 'ExtraIP', 'IP адреса', 'дн.', 'Daily', 0.00, 0.00, 'no', 'yes', 'yes', 'yes', 10),
 (51000, 2000000, 1, 1100, 'Заказ программного обеспечения ISPsystems', 'ПО ISPsystem', 'ISPsw', 'Лицензии ISPsystem', 'дн.', 'Daily', 0.00, 0.00, 'no', 'yes', 'yes', 'yes', 20);
-
-UNLOCK TABLES;
 
 -- SEPARATOR
 /* added by serge 2011-09-05 in 16:00 MSK for domain transfer*/
@@ -2461,6 +2465,7 @@ INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`Is
 VALUES (7,100,100,'no','no','no','Registrators/ELVIS/external','Трансфер внешний. ELVIS.',@Text);
 
 -- SEPARATOR
+UNLOCK TABLES;
+-- SEPARATOR
 SET FOREIGN_KEY_CHECKS=1;
-
 
