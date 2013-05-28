@@ -1118,23 +1118,24 @@
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <SMSGateway>
-	<Provider>SMSpilot</Provider>
-	<Sender>Hosting.ru</Sender>
-	<Key>API ключ</Key>
-	<Interval>300</Interval>
-	<lowBalance>0</lowBalance>
-	<Price>
-	    <ru>0.5</ru>
-	    <ua>1.0</ua>
-	    <sng>2.0</sng>
-	    <zone1>3.0</zone1>
-	    <zone2>4.0</zone2>
-	    <default>5.0</default>
-	</Price>
-	<Exceptions>
-	    <LimitPaidInvoices>100500</LimitPaidInvoices>
-	    <LimitSchemeID>0</LimitSchemeID>
-	</Exceptions>
+	<SMSProvider>SMSpilot</SMSProvider>
+	<SMSSender>Hosting.ru</SMSSender>
+	<SMSKey>API ключ</SMSKey>
+	<SMSInterval>300</SMSInterval>
+	<SMSlowBalance>0</SMSlowBalance>
+	<SMSPrice>
+	    <SMSPriceRu>0.5</SMSPriceRu>
+	    <SMSPriceRu>0.5</SMSPriceRu>
+	    <SMSPriceUa>1.0</SMSPriceUa>
+	    <SMSPriceSng>2.0</SMSPriceSng>
+	    <SMSPriceZone1>3.0</SMSPriceZone1>
+	    <SMSPriceZone2>4.0</SMSPriceZone2>
+	    <SMSPriceDefault>5.0</SMSPriceDefault>
+	</SMSPrice>
+	<SMSExceptions>
+	    <SMSExceptionsPaidInvoices>100500</SMSExceptionsPaidInvoices>
+	    <SMSExceptionsSchemeID>0</SMSExceptionsSchemeID>
+	</SMSExceptions>
 </SMSGateway>
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->

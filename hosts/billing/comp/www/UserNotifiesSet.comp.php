@@ -17,6 +17,8 @@ $Links = &Links();
 # Коллекция ссылок
 $Links['DOM'] = &$DOM;
 #-------------------------------------------------------------------------------
+$__USER = $GLOBALS['__USER'];
+#-------------------------------------------------------------------------------
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -37,7 +39,7 @@ if ($Methods['SMS']['IsActive']) {
 	$Row2 = Array(new Tag('TD', Array('colspan' => 3, 'class' => 'Standard', 'style' => 'background-color:#FDF6D3;'), 'Для настройки SMS уведомлений, подтвердите свой номер телефона и пополните баланс.'));
     }
     else {
-	$Row2 = Array(new Tag('TD', Array('colspan' => 3, 'class' => 'Standard', 'style' => 'background-color:#FDF6D3;'), 'SMS уведомления платные, рекомендуем включать только --> \'Уведомления о блокировках заказа\'.'));
+	$Row2 = Array(new Tag('TD', Array('colspan' => 3, 'class' => 'Standard', 'style' => 'background-color:#FDF6D3;'), 'SMS уведомления платные, рекомендуем включать только --> \'Уведомления о блокировках заказов\'.'));
     }
 }
 #-------------------------------------------------------------------------------
@@ -59,6 +61,8 @@ foreach(Array_Keys($Methods) as $MethodID){
 #-------------------------------------------------------------------------------
 if ($Methods['SMS']['IsActive']) {
     $Table = Array($Row2, $Row);
+} else{
+    $Table = Array($Row);
 }
 #-------------------------------------------------------------------------------
 $Rows = DB_Select('Notifies','*',Array('Where'=>SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID'])));

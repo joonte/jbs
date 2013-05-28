@@ -17,6 +17,7 @@ $ICQ     =  (string) @$Args['ICQ'];
 $JabberID=  (string) @$Args['JabberID'];
 $Mobile  =  (string) @$Args['Mobile'];
 $IsClear = (boolean) @$Args['IsClear'];
+$CacheID2 = Md5('mobileconfirm'.$GLOBALS['__USER']['ID']);
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php','libs/Image.php')))
   return ERROR | @Trigger_Error(500);
@@ -34,7 +35,7 @@ $Email = StrToLower($Email);
 if(!Preg_Match($Regulars['Email'],$Email))
   return new gException('WRONG_EMAIL','Неверно указан электронный адрес');
 #-------------------------------------------------------------------------------
-$User = DB_Select('Users',Array('ID','Email'),Array('UNIQ','ID'=>$GLOBALS['__USER']['ID']));
+$User = DB_Select('Users',Array('ID','Email','Mobile'),Array('UNIQ','ID'=>$GLOBALS['__USER']['ID'])); 
 #-------------------------------------------------------------------------------
 switch(ValueOf($User)){
   case 'error':

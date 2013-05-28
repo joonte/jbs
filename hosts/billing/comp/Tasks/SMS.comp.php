@@ -28,19 +28,19 @@ if (!Isset($Config['SMSGateway']['SMSSender'])) {
     return ERROR | @Trigger_Error(500);
 }
 #-------------------------------------------------------------------------------
-if (!Isset($Config['SMSGateway']['Exceptions']['SMSExceptionsPaidInvoices'])) {
+if (!Isset($Config['SMSGateway']['SMSExceptions']['SMSExceptionsPaidInvoices'])) {
     return ERROR | @Trigger_Error(500);
 }
 #-------------------------------------------------------------------------------
-if (!Isset($Config['SMSGateway']['Exceptions']['SMSExceptionsSchemeID'])) {
+if (!Isset($Config['SMSGateway']['SMSExceptions']['SMSExceptionsSchemeID'])) {
     return ERROR | @Trigger_Error(500);
 }
 #-------------------------------------------------------------------------------
 $SMSProvider = $Config['SMSGateway']['SMSProvider'];
 $Key = $Config['SMSGateway']['SMSKey'];
 $SMSsender = $Config['SMSGateway']['SMSSender'];
-$LimitPaidInvoices = $Config['SMSGateway']['Exceptions']['SMSExceptionsPaidInvoices'];
-$LimitSchemeID = $Config['SMSGateway']['Exceptions']['SMSExceptionsSchemeID'];
+$LimitPaidInvoices = $Config['SMSGateway']['SMSExceptions']['SMSExceptionsPaidInvoices'];
+$LimitSchemeID = $Config['SMSGateway']['SMSExceptions']['SMSExceptionsSchemeID'];
 #-------------------------------------------------------------------------------
 $User = DB_Select('Users', Array('MobileConfirmed', 'GroupID'), Array('UNIQ', 'ID' => $ID));
 if (!Is_Array($User))
@@ -117,17 +117,17 @@ if (!isset($PaymentLock)) {
     }
     Debug(SPrintF('[comp/Tasks/SMS]: Страна определена (%s)', $MobileCountry));
     #-------------------------------------------------------------------------------
-    if (!Isset($Config['SMSGateway']['Price'][$MobileCountry])) {
+    if (!Isset($Config['SMSGateway']['SMSPrice'][$MobileCountry])) {
 	return ERROR | @Trigger_Error(500);
     }
     #-------------------------------------------------------------------------------
     if ($MessageLength <= 70) {
-	$SMSCost = Str_Replace(',', '.', $Config['SMSGateway']['Price'][$MobileCountry]);
+	$SMSCost = Str_Replace(',', '.', $Config['SMSGateway']['SMSPrice'][$MobileCountry]);
 	$SMSCount = 1;
     }
     else {
 	$SMSCount = ceil($MessageLength / 67);
-	$SMSCost = $SMSCount * Str_Replace(',', '.', $Config['SMSGateway']['Price'][$MobileCountry]);
+	$SMSCost = $SMSCount * Str_Replace(',', '.', $Config['SMSGateway']['SMSPrice'][$MobileCountry]);
     }
     #-------------------------------------------------------------------------------
     if ($FreeSMS === TRUE)
@@ -212,7 +212,7 @@ if (!IsSet($Links[$LinkID])) {
     $SMSBalanse = (integer) $SMS->balance;
     if ($SMSBalanse == 0 || $SMSBalanse < $SMSCost) {
 	if ($Config['Notifies']['Methods']['SMS']['IsEvent']) {
-	    $Event = Array('UserID' => $ID, 'PriorityID' => 'Error', 'Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), %s', $Mobile, 'недостаточно средств на шлюзе.'));
+	    $Event = Array('UserID' => $ID, 'PriorityID' => 'Error', 'Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), %s', $Mobile, 'временно нет средств на шлюзе.'));
 	    $Event = Comp_Load('Events/EventInsert', $Event);
 	    if (!$Event)
 		return ERROR | @Trigger_Error(500);
