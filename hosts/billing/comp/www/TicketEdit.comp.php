@@ -153,17 +153,14 @@ switch(ValueOf($Groups)){
     $Tr->AddChild(new Tag('NOBODY',new Tag('TD',Array('class'=>'Comment'),'Прикрепить файл'),new Tag('TD',$Comp)));
     #---------------------------------------------------------------------------
     if($GLOBALS['__USER']['IsAdmin']){ # is suppor
-      $Articles = DB_Select('Clauses','*',Array('Where'=>"`Partition` LIKE '/Administrator/ButtonsNew:%' AND `IsPublish`='yes'",'Order'=>'Partition'));
+      $Articles = DB_Select('Clauses','*',Array('Where'=>"`GroupID` = 10 AND `IsPublish` = 'yes'",'Order'=>'Partition'));
       #-----------------------------------------------------------------------
       switch(ValueOf($Articles)){
       case 'error':
         return ERROR | @Trigger_Error(500);
       case 'exception':
-        $A = new Tag('A',Array('title'=>'как добавить шаблоны быстрых ответов',
-                               'href'=>'http://wiki.joonte.com/index.php?title=TiketAnswerTemplate'),
-                               'шаблоны ответов');
-        $Td = new Tag('TD',$A);
-        $Tr->AddChild($Td);
+        $A = new Tag('A',Array('title'=>'как добавить шаблоны быстрых ответов','href'=>'http://wiki.joonte.com/index.php?title=TiketAnswerTemplate'),'шаблоны ответов');
+        $Tr->AddChild(new Tag('TD',$A));
         break;
       case 'array':
         #-------------------------------------------------------------------

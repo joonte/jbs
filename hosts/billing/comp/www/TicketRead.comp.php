@@ -105,52 +105,26 @@ switch(ValueOf($Ticket)){
         $Tr->AddChild(new Tag('NOBODY',new Tag('TD',Array('class'=>'Comment'),'Прикрепить файл'),new Tag('TD',$Comp)));
         #-----------------------------------------------------------------------
 	if($__USER['ID'] == $Ticket['UserID']){	# is ordinar user
-#		$Td = new Tag('TD');
-#		#-----------------------------------------------------------------------
-#		$VoteTitle = Array(
-#					'0'	=> 'Лучше бы не отвечали',
-#					'1'	=> 'Совсем плохо',
-#					'2'	=> 'Очень плохо',
-#					'3'	=> 'Плохо',
-#					'4'	=> 'Не очень хорошо',
-#					'5'	=> 'Нейтрально',
-#					'6'	=> 'Удовлетворительно',
-#					'7'	=> 'Хорошо',
-#					'8'	=> 'Очень хорошо',
-#					'9'	=> 'Отлично'
-#				);
-#		#-----------------------------------------------------------------------
-#		for ($i = 0; $i < 9; $i++) {
-#			#---------------------------------------------------------------------
-#			$Img = new Tag('IMG',
-#					Array(
-#						'id'		=>SPrintF('star_%d_%d', $Ticket['ID'], $i),
-#						'src'		=>'SRC:{Images/Icons/DisableStar.png}',
-#						'onMouseOver'	=> SPrintF('selectStars(event, %d, %d);',$Ticket['ID'], $i),
-#						'onClick'	=> SPrintF("AjaxCall('/API/TicketVote',{TicketID:%u,VoteBall:%u},'Оценка сообщения','ShowTick(\"Ваша оценка \'%s\' успешно сохранена\");');",$Ticket['ID'], $i + 1,$VoteTitle[$i]),
-#						'title'		=> $VoteTitle[$i]
-#					));
-#			$Td->AddChild($Img);
-#		}
-#		#-----------------------------------------------------------------------
-#		$Tr->AddChild($Td);
+		#-------------------------------------------------------------------------------
 		# add SeenByUser field
 		$IsUpdate = DB_Update('Edesks',Array('SeenByUser'=>Time()),Array('ID'=>$TicketID));
 		if(Is_Error($IsUpdate))
 			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
 	}else{	# is support
-		$Articles = DB_Select('Clauses','*',Array('Where'=>"`Partition` LIKE '/Administrator/Buttons:%' AND `IsPublish`='yes'",'Order'=>'Partition'));
-		#-----------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$Articles = DB_Select('Clauses','*',Array('Where'=>"`GroupID` = 11 AND `IsPublish` = 'yes'",'Order'=>'Partition'));
+		#-------------------------------------------------------------------------------
 		switch(ValueOf($Articles)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
-			$A = new Tag('A',Array('title'=>'как добавить шаблоны быстрых ответов',
-						'href'=>'http://wiki.joonte.com/index.php?title=TiketAnswerTemplate'),
-						'шаблоны ответов');
-			$Td = new Tag('TD',$A);
-			$Tr->AddChild($Td);
+			#-------------------------------------------------------------------------------
+			$A = new Tag('A',Array('title'=>'как добавить шаблоны быстрых ответов','href'=>'http://wiki.joonte.com/index.php?title=TiketAnswerTemplate'),'шаблоны ответов');
+			$Tr->AddChild(new Tag('TD',$A));
+			#-------------------------------------------------------------------------------
 			break;
+			#-------------------------------------------------------------------------------
 		case 'array':
 			#-------------------------------------------------------------------
 			foreach($Articles as $Article){
