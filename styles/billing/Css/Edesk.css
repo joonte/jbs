@@ -29,7 +29,6 @@ td.EdeskMessageInfo {
 /* see http://forum.lissyara.su/viewtopic.php?f=17&t=37569 */
 td.EdeskMessageInfo div.LeftDiv {
     float:            left;
-    cursor:           pointer;
 }
 /* ------------------------- */
 td.EdeskMessageInfo div.RightDiv {
@@ -55,7 +54,6 @@ td.Standard div.RightDiv {
 /* ------------------------- */
 td.Standard div.LeftDiv {
     float:            left;
-    cursor:           pointer;
 }
 /* ------------------------- */
 

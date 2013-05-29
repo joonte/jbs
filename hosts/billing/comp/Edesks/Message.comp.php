@@ -81,7 +81,7 @@ $EnterDate = Comp_Load('Formats/Date/Remainder',(Time() - $User['EnterDate']));
 if(Is_Error($EnterDate))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Delete = ($__USER['IsAdmin'])?SPrintF('<a onclick="ShowConfirm(\'Вы подтверждаете удаление сообщения?\',\'AjaxCall(\\\'/API/EdeskMessageDelete\\\',{MessageID:%u},\\\'Удаление сообщения\\\',\\\'GetURL(document.location);\\\');\');" onmouseover="PromptShow(event,\'Удалить это сообщение\',this);">[удалить]</a>',$MessageID):' ';
+$Delete = ($__USER['IsAdmin'])?SPrintF('<a style="cursor:pointer;" onclick="ShowConfirm(\'Вы подтверждаете удаление сообщения?\',\'AjaxCall(\\\'/API/EdeskMessageDelete\\\',{MessageID:%u},\\\'Удаление сообщения\\\',\\\'GetURL(document.location);\\\');\');" onmouseover="PromptShow(event,\'Удалить это сообщение\',this);">[удалить]</a>',$MessageID):' ';
 #-------------------------------------------------------------------------------
 $BgColor = (!$IsVisible)?'FFE4E1':(($UserID != $OwnerID)?'FFFFFF':'FDF6D3');
 #-------------------------------------------------------------------------------
@@ -159,7 +159,7 @@ if(IsSet($GLOBALS['__USER']) && Mb_StrLen($Content) < 1000){
       }
       #-----------------------------------------------------------------------
       $SPAN = new Tag('SPAN',$VoteMessage);
-      $Td = new Tag('TD',Array('colspan'=>2,'align'=>'left','style'=>'font-size:11px;'),$SPAN);
+      $Td = new Tag('TD',Array('colspan'=>2,'align'=>'left'),$SPAN);
       #-----------------------------------------------------------------------
       for ($i = 0; $i < 9; $i++) {
         #---------------------------------------------------------------------
@@ -192,7 +192,7 @@ if(IsSet($GLOBALS['__USER']) && Mb_StrLen($Content) < 1000){
 	case 'false':
 	  # не сотрудник, выводим всё
           #---------------------------------------------------------------------------
-	  $Td = new Tag('TD',Array('colspan'=>2,'align'=>'right','style'=>'font-size:11px;'));
+	  $Td = new Tag('TD',Array('colspan'=>2,'style'=>'font-size:11px;'),$A);
 	  # шукаем его заказы на услуги
 	  $Columns = Array('Item','Code','Name');
 	  $Where = Array('`Services`.`ID`=`OrdersOwners`.`ServiceID`',SPrintF('`OrdersOwners`.`UserID`=%s',$UserID));
@@ -250,11 +250,11 @@ if(IsSet($GLOBALS['__USER']) && Mb_StrLen($Content) < 1000){
 	  $Td->AddChild($UserLinks);
 	  #---------------------------------------------------------------------------
 	  # ссылка на редактирование
-	  $Td->AddChild($A);
+	  #$Td->AddChild($A);
           break;
         case 'true':
           # сотрудник, выводим тока редактирование
-          $Td = new Tag('TD',Array('colspan'=>2,'align'=>'right','style'=>'font-size:11px;'),$A);
+          $Td = new Tag('TD',Array('colspan'=>2,'style'=>'font-size:11px;'),$A);
           break;
         default:
           return ERROR | @Trigger_Error(101);

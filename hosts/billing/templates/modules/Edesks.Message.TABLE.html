@@ -3,6 +3,12 @@
 -->
 
 <TR>
+	<TD height="25" class="EdeskMessageInfo">
+		<DIV style="overflow: hidden; white-space: nowrap;">
+			<DIV id="" class="LeftDiv">Сообщение #%MessageID% | %CreateDate% | %User.Name% [%Group.Name%]</DIV>
+			<DIV id="" class="RightDiv">%Delete%</DIV>
+		</DIV>
+	</TD>
 	<TD rowspan="2" valign="top" width="90">
 		<IMG class="UserFoto" alt="Персональная фотография" height="110" width="90" src="/UserFoto?UserID=%User.ID%" />
 		<TABLE width="100%" cellspacing="0" cellpadding="0">
@@ -12,13 +18,8 @@
 			</TR>
 		</TABLE>
 	</TD>
-	<TD height="25" class="EdeskMessageInfo">
-		<DIV style="overflow: hidden; white-space: nowrap;">
-			<DIV id="" class="LeftDiv">%Delete%</DIV>
-			<DIV id="" class="RightDiv">Сообщение #%MessageID% | %CreateDate% | %User.Name% [%Group.Name%]</DIV>
-		</DIV>
-	</TD>
 </TR>
+
 <TR>
 	<TD height="100" class="EdeskMessageContent" style="background-color:#%BgColor%;">
 		<SPAN>%Text%</SPAN>
@@ -26,4 +27,6 @@
 		<PRE style="font-size:10px;">%User.Sign%</PRE>
 	</TD>
 </TR>
+
+
 
