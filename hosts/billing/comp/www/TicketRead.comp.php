@@ -290,16 +290,11 @@ switch(ValueOf($Ticket)){
         $Tr->AddChild(new Tag('TD'));
         #-----------------------------------------------------------------------
 	#-----------------------------------------------------------------------
-	$OnClick = 'TicketAddMessage();';
-	#-----------------------------------------------------------------------
-	if(IsSet($GLOBALS['__USER']['IsEmulate']))
-		$OnClick = "javascript:ShowConfirm('Вы действительно хотите написать в тикет от чужого имени?','TicketAddMessage();');";
-	#-----------------------------------------------------------------------
         $Comp = Comp_Load(
           'Form/Input',
           Array(
             'type'    => 'button',
-            'onclick' => $OnClick,
+            'onclick' => IsSet($GLOBALS['__USER']['IsEmulate'])?"javascript:ShowConfirm('Вы действительно хотите написать в тикет от чужого имени?','TicketAddMessage();');":'TicketAddMessage();',
             'value'   => 'Добавить'
           )
         );
