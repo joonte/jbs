@@ -128,6 +128,7 @@ switch(ValueOf($Ticket)){
 		case 'array':
 			#-------------------------------------------------------------------
 			foreach($Articles as $Article){
+				#-------------------------------------------------------------------------------
 				# prepare text: delete tags, begin/end space
 				$Text = trim(Strip_Tags($Article['Text']));
 				# delete space on string begin
@@ -140,42 +141,40 @@ switch(ValueOf($Ticket)){
 				$Text = Str_Replace("\n\n","\n",$Text);
 				# prepare for java script
 				$Text = Str_Replace("\n",'\\n',$Text);
-				# format: /Administrator/Buttons:SortOrder:ImageName.gif
+				# format: SortOrder:ImageName.gif
 				# button image, get image name
 				$Partition = explode(":", $Article['Partition']);
-				if(IsSet($Partition[2])){
-					# button image, get image extension
-					$Extension = explode(".", StrToLower($Partition[2]));
-				}else{
-					$Extension = '';
-				}
+				$Extension = IsSet($Partition[1])?Explode(".", StrToLower($Partition[1])):'';
+				#-------------------------------------------------------------------------------
 				# если есть чё-то после точки, и если оно похоже на расширение картинки, ставим это как картинку
-				if(IsSet($Extension[1]) && In_Array($Extension[1],Array('png','gif','jpg','jpeg'))){
-					$Image = $Partition[2];
-				}else{
-					# иначе - дефолтовую информационную картинку
-					$Image = 'Info.gif';
+				$Image = 'Info.gif'; #дефолтовую информационную картинку
+				if(IsSet($Extension[1]) && In_Array($Extension[1],Array('png','gif','jpg','jpeg')))
+					$Image = $Partition[1];
+				#-------------------------------------------------------------------------------
+				# делаем кнопку, если это системная кнопка или этого админа
+				if((!Preg_Match('/@/',$Partition[0]) && $Partition[0] < 2000) || StrToLower($Partition[0]) == StrToLower($__USER['Email'])){
+					#-------------------------------------------------------------------------------
+					$Comp = Comp_Load('Buttons/Standard',Array('onclick' => SPrintF("form.Message.value += '%s';",$Text),'style'=>'cursor: pointer;'),$Article['Title'],$Image);
+					if(Is_Error($Comp))
+						return ERROR | @Trigger_Error(500);
+					#-------------------------------------------------------------------------------
+					$Tr->AddChild(new Tag('TD',$Comp));
+					#-------------------------------------------------------------------------------
 				}
-				# делаем кнопку
-				$Comp = Comp_Load('Buttons/Standard',
-						Array('onclick'	=> "form.Message.value += '" . $Text . "';",'style'=>'cursor: pointer;'),
-						$Article['Title'],
-						$Image);
-				if(Is_Error($Comp))
-					return ERROR | @Trigger_Error(500);
-				$Td = new Tag('TD');
-				$Td->AddChild($Comp);
-				#$NoBody->AddChild(new Tag('TD',Array('width'=>25),$Comp));
-				$Tr->AddChild($Td);
+				#-------------------------------------------------------------------------------
 			}
+			#-------------------------------------------------------------------------------
 			break;
+			#-------------------------------------------------------------------------------
 		default:
 			return ERROR | @Trigger_Error(101);
 		}
+		#-------------------------------------------------------------------------------
 		# add SeenByPersonal/LastSeenBy fields
 		$IsUpdate = DB_Update('Edesks',Array('SeenByPersonal'=>Time(),'LastSeenBy'=>$__USER['ID']),Array('ID'=>$TicketID));
 		if(Is_Error($IsUpdate))
 			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
 	}
         #-----------------------------------------------------------------------
         $Table[] = new Tag('TABLE',$Tr);
