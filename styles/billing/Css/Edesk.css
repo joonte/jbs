@@ -24,7 +24,6 @@ td.EdeskMessageInfo {
     background-color: #F8F8F8;
     background-Image: url(../../root/Images/CaptionBg.png);
     padding:          5px;
-    text-align:       right;
 }
 /* see http://forum.lissyara.su/viewtopic.php?f=17&t=37569 */
 td.EdeskMessageInfo div.LeftDiv {

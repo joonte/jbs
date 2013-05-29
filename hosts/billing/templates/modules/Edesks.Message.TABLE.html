@@ -5,7 +5,7 @@
 <TR>
 	<TD height="25" class="EdeskMessageInfo">
 		<DIV style="overflow: hidden; white-space: nowrap;">
-			<DIV id="" class="LeftDiv">Сообщение #%MessageID% | %CreateDate% | %User.Name% [%Group.Name%]</DIV>
+			<DIV id="" class="LeftDiv">#%MessageID% | %CreateDate% | %User.Name% [%Group.Name%]</DIV>
 			<DIV id="" class="RightDiv">%Delete%</DIV>
 		</DIV>
 	</TD>
@@ -23,10 +23,16 @@
 <TR>
 	<TD height="100" class="EdeskMessageContent" style="background-color:#%BgColor%;">
 		<SPAN>%Text%</SPAN>
-		<HR />
+		<HR  size="1" />
 		<PRE style="font-size:10px;">%User.Sign%</PRE>
 	</TD>
 </TR>
-
-
+<!--
+<TR>
+	<TD colspan="2" style="font-size:11px;" class="EdeskMessageInfo">
+		%Links%
+	</TD>
+</TR>
+-->
+%File%
 
