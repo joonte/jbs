@@ -83,10 +83,10 @@ if(Is_Error($Comp))
 $NoBody = new Tag('NOBODY',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if (CacheManager::isEnabled()) {
+if(CacheManager::isEnabled()){
     $Config = Config();
     #-------------------------------------------------------------------------------
-    if ($Config['Notifies']['Methods']['Email']['IsActive']) {
+    if($Config['Notifies']['Methods']['Email']['IsActive']){
 	$Params = Array('onclick' => 'EmailConfirm();', 'type' => 'button');
 	#-----------------------------------------------------------------------------
 	if ($__USER['EmailConfirmed'] > 0) {
@@ -133,13 +133,16 @@ if ($Config['Notifies']['Methods']['SMS']['IsActive']) {
     $Params = Array('onclick' => 'MobileConfirm();', 'type' => 'button');
     #-----------------------------------------------------------------------------
     if ($__USER['MobileConfirmed'] > 0) {
+        #-------------------------------------------------------------------------------
 	$MobileConfirmed = Comp_Load('Formats/Date/Extended', $__USER['MobileConfirmed']);
 	if (Is_Error($Comp))
 	    return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
 	$Params['value'] = 'Подтвержден';
 	$Params['disabled'] = 'disabled';
-	$Params['prompt'] = "Ваш мобильный телефон был подтверждён: ".$MobileConfirmed;
-    }else {
+	$Params['prompt'] = SPrintF('Ваш мобильный телефон был подтверждён: %s',$MobileConfirmed);
+	#-------------------------------------------------------------------------------
+    }else{
 	$Params['value'] = 'Подтвердить';
 	$Params['prompt'] = "Нажмите для получения кода подтверждения";
     }
@@ -154,7 +157,7 @@ if ($Config['Notifies']['Methods']['SMS']['IsActive']) {
 $Table[] = Array('Номер мобильного телефона', $NoBody);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if ($__USER['MobileConfirmed'] == 0) {
+if ($__USER['MobileConfirmed'] == 0 && $Config['Notifies']['Methods']['SMS']['IsActive']){
     $Comp = Comp_Load(
 	    'Form/Input', Array(
 	'name' => 'MobileConfirmCode',
