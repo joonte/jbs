@@ -842,7 +842,7 @@
   </EdeskCreate>
   <!-- ********************************************************************* -->
   <EdeskMessageCreate>
-   <Name>Добавление нового сообщения в обсуждение</Name>
+   <Name>Новое сообщение в обсуждении</Name>
    <GroupID>1</GroupID>
   </EdeskMessageCreate>
   <!-- ********************************************************************* -->
@@ -1119,22 +1119,22 @@
 <!-- *********************************************************************** -->
 <SMSGateway>
 	<SMSProvider>SMSpilot</SMSProvider>
-	<SMSSender>Hosting.ru</SMSSender>
+	<SMSSender>isp.su</SMSSender>
 	<SMSKey>API ключ</SMSKey>
 	<SMSInterval>300</SMSInterval>
 	<SMSlowBalance>0</SMSlowBalance>
 	<SMSPrice>
-	    <SMSPriceRu>0.5</SMSPriceRu>
-	    <SMSPriceRu>0.5</SMSPriceRu>
-	    <SMSPriceUa>1.0</SMSPriceUa>
-	    <SMSPriceSng>2.0</SMSPriceSng>
-	    <SMSPriceZone1>3.0</SMSPriceZone1>
-	    <SMSPriceZone2>4.0</SMSPriceZone2>
-	    <SMSPriceDefault>5.0</SMSPriceDefault>
+		<SMSPriceRu>0.5</SMSPriceRu>
+		<SMSPriceRu>0.5</SMSPriceRu>
+		<SMSPriceUa>1.0</SMSPriceUa>
+		<SMSPriceSng>2.0</SMSPriceSng>
+		<SMSPriceZone1>3.0</SMSPriceZone1>
+		<SMSPriceZone2>4.0</SMSPriceZone2>
+		<SMSPriceDefault>5.0</SMSPriceDefault>
 	</SMSPrice>
 	<SMSExceptions>
-	    <SMSExceptionsPaidInvoices>100500</SMSExceptionsPaidInvoices>
-	    <SMSExceptionsSchemeID>0</SMSExceptionsSchemeID>
+		<SMSExceptionsPaidInvoices>100500</SMSExceptionsPaidInvoices>
+		<SMSExceptionsSchemeID>0</SMSExceptionsSchemeID>
 	</SMSExceptions>
 </SMSGateway>
 <!-- *********************************************************************** -->
