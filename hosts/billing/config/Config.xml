@@ -334,7 +334,7 @@
    <Name>QIWI</Name>
    <SystemDescription>Платёжная система использующая номер мобильного телефона в качестве номера кошелька. Большая сеть терминалов для оплаты.</SystemDescription>
    <Send>
-    <from />
+    <QIWIfrom />
     <to>auto</to>
     <summ>auto</summ>
     <com>Payment for invoice #</com>
