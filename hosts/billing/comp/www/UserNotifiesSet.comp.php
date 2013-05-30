@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -34,12 +33,11 @@ $Notifies = $Config['Notifies'];
 #-------------------------------------------------------------------------------
 $Methods = $Notifies['Methods'];
 #-------------------------------------------------------------------------------
-if ($Methods['SMS']['IsActive']) {
-    if ($__USER['MobileConfirmed'] == 0) {
-	$Row2 = Array(new Tag('TD', Array('colspan' => 3, 'class' => 'Standard', 'style' => 'background-color:#FDF6D3;'), 'Для настройки SMS уведомлений, подтвердите свой номер телефона и пополните баланс.'));
-    }
-    else {
-	$Row2 = Array(new Tag('TD', Array('colspan' => 3, 'class' => 'Standard', 'style' => 'background-color:#FDF6D3;'), 'SMS уведомления платные, рекомендуем включать только --> \'Уведомления о блокировках заказов\'.'));
+if($Methods['SMS']['IsActive']) {
+    if($__USER['MobileConfirmed'] == 0) {
+	$Row2 = Array(new Tag('TD', Array('colspan' => 5, 'class' => 'Standard', 'style' => 'background-color:#FDF6D3;'), 'Для настройки SMS уведомлений, подтвердите свой номер телефона и пополните баланс.'));
+    }else{
+	$Row2 = Array(new Tag('TD', Array('colspan' => 5, 'class' => 'Standard', 'style' => 'background-color:#FDF6D3;'), 'SMS уведомления платные, рекомендуем включать только --> \'Уведомления о блокировках заказов\'.'));
     }
 }
 #-------------------------------------------------------------------------------
@@ -59,9 +57,9 @@ foreach(Array_Keys($Methods) as $MethodID){
   $Row[] = new Tag('TD',Array('class'=>'Head'),$Method['Name']);
 }
 #-------------------------------------------------------------------------------
-if ($Methods['SMS']['IsActive']) {
+if($Methods['SMS']['IsActive']) {
     $Table = Array($Row2, $Row);
-} else{
+}else{
     $Table = Array($Row);
 }
 #-------------------------------------------------------------------------------
