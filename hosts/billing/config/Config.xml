@@ -1123,6 +1123,7 @@
 	<SMSKey>API ключ</SMSKey>
 	<SMSInterval>300</SMSInterval>
 	<SMSlowBalance>0</SMSlowBalance>
+	<CutSign>1</CutSign>
 	<SMSPrice>
 		<SMSPriceRu>0.5</SMSPriceRu>
 		<SMSPriceRu>0.5</SMSPriceRu>

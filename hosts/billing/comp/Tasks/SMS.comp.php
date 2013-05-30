@@ -19,19 +19,19 @@ $Settings = $Config['SMSGateway'];
 #-------------------------------------------------------------------------------
 $FreeSMS = FALSE;
 #-------------------------------------------------------------------------------
-if(!Isset($Settings['SMSProvider']))
+if(!IsSet($Settings['SMSProvider']))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if(!Isset($Settings['SMSKey']))
+if(!IsSet($Settings['SMSKey']))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if(!Isset($Settings['SMSSender']))
+if(!IsSet($Settings['SMSSender']))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if(!Isset($Settings['SMSExceptions']['SMSExceptionsPaidInvoices']))
+if(!IsSet($Settings['SMSExceptions']['SMSExceptionsPaidInvoices']))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if(!Isset($Settings['SMSExceptions']['SMSExceptionsSchemeID'])) {
+if(!IsSet($Settings['SMSExceptions']['SMSExceptionsSchemeID']))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -47,7 +47,7 @@ if ($User['MobileConfirmed'] == 0 && $Task != NULL)
 #-------------------------------------------------------------------------------
 // Если пользователь относится к группе 'Сотрудники' то плату не взымаем...
 #-------------------------------------------------------------------------------
-if ($User['GroupID'] == '3000000') {
+if($User['GroupID'] == '3000000'){
     $PaymentLock = true;
     $SMSCost = 0;
 }
@@ -79,12 +79,12 @@ if($Settings['SMSExceptions']['SMSExceptionsPaidInvoices'] >= 0){
 #-------------------------------------------------------------------------------
 // Проверяем пользователя на исключения оплаты, активные заказы хостинга.
 #-------------------------------------------------------------------------------
-if ($Settings['SMSExceptionsSchemeID'] != 0) {
+if ($Settings['SMSExceptions']['SMSExceptionsSchemeID'] != 0) {
     $OrderHostings = DB_Select('HostingOrdersOwners', 'SchemeID', Array('Where' => SPrintF('`UserID` = %u AND `StatusID` = \'Active\'', $UserID)));
     if (Is_Error($OrderHostings))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-    $LimitSchemeID = explode(',',$Settings['SMSExceptionsSchemeID']);
+    $LimitSchemeID = explode(',',$Settings['SMSExceptions']['SMSExceptionsSchemeID']);
     foreach ($OrderHostings as $OrderHosting) {
 	if (in_array((integer) $OrderHosting['SchemeID'], $LimitSchemeID)) {
 	    $FreeSMS = true;
@@ -94,7 +94,7 @@ if ($Settings['SMSExceptionsSchemeID'] != 0) {
     //Debug(print_r($LimitSchemeID, true));
 }
 #-------------------------------------------------------------------------------
-$MessageLength = mb_strlen($Message);
+$MessageLength = MB_StrLen($Message);
 Debug(SPrintF('[comp/Tasks/SMS]: Собщение (%s) Длинна (%s)', $Message, $MessageLength));
 #-------------------------------------------------------------------------------
 if (Is_Error(System_Load(SPrintF('classes/%s.class.php', $Settings['SMSProvider']))))
@@ -102,7 +102,7 @@ if (Is_Error(System_Load(SPrintF('classes/%s.class.php', $Settings['SMSProvider'
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/Tasks/SMS]: SMS шлюз (%s)', $Settings['SMSProvider']));
 Debug(SPrintF('[comp/Tasks/SMS]: API ключ (%s)', $Settings['SMSKey']));
-Debug(SPrintF('[comp/Tasks/SMS]: Отправитель (%s)', $Settings['SMSsender']));
+Debug(SPrintF('[comp/Tasks/SMS]: Отправитель (%s)', $Settings['SMSSender']));
 #-------------------------------------------------------------------------------
 if (!IsSet($PaymentLock)) {
     $Regulars = Regulars();
@@ -116,7 +116,7 @@ if (!IsSet($PaymentLock)) {
     }
     Debug(SPrintF('[comp/Tasks/SMS]: Страна определена (%s)', $MobileCountry));
     #-------------------------------------------------------------------------------
-    if (!Isset($Settings['SMSPrice'][$MobileCountry]))
+    if (!IsSet($Settings['SMSPrice'][$MobileCountry]))
 	return ERROR | @Trigger_Error(500);
     #-------------------------------------------------------------------------------
     if ($MessageLength <= 70) {
@@ -130,6 +130,7 @@ if (!IsSet($PaymentLock)) {
     #-------------------------------------------------------------------------------
     if ($FreeSMS === TRUE)
 	$SMSCost = 0;
+    #-------------------------------------------------------------------------------
     Debug(SPrintF('[comp/Tasks/SMS]: Стоимость сообщения (%s) всего частей (%s)', $SMSCost, $SMSCount));
     #-------------------------------------------------------------------------------
     if (!is_numeric($SMSCost))
@@ -175,7 +176,7 @@ if (!IsSet($Links[$LinkID])) {
     #-----------------------------------------------------------------------------
     $SMS = &$Links[$LinkID];
     #-----------------------------------------------------------------------------
-    $SMS = new $Settings['SMSProvider']($Settings['SMSKey'], $Settings['SMSsender']);
+    $SMS = new $Settings['SMSProvider']($Settings['SMSKey'], $Settings['SMSSender']);
     if (Is_Error($SMS))
 	return ERROR | @Trigger_Error(500);
     #-----------------------------------------------------------------------------
@@ -228,11 +229,12 @@ if (!IsSet($Links[$LinkID])) {
 $SMS = &$Links[$LinkID];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsMessage = $SMS->send((integer) $Mobile, $Message, $Settings['SMSsender']);
+$IsMessage = $SMS->send((integer) $Mobile, $Message, $Settings['SMSSender']);
 switch (ValueOf($IsMessage)) {
     case 'false':
 	#-------------------------------------------------------------------------
-	Debug("[comp/Tasks/SMS]: Неудачно, ошибка:'".$SMS->error."'");
+	Debug(SPrintF('[comp/Tasks/SMS]: Неудачно, ошибка: "%s"',$SMS->error));
+	#-------------------------------------------------------------------------------
 	if ($Config['Notifies']['Methods']['SMS']['IsEvent']) {
 	    $Event = Array('UserID' => $UserID, 'Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), %s', $Mobile, 'шлюз временно недоступен.'));
 	    $Event = Comp_Load('Events/EventInsert', $Event);
@@ -240,12 +242,12 @@ switch (ValueOf($IsMessage)) {
 		return ERROR | @Trigger_Error(500);
 	}
 	#-------------------------------------------------------------------------
-	if ($Task === NULL)
+	if($Task === NULL)
 	    return "Пожалуйста, попробуйте повторить попытку позже";
 	#-------------------------------------------------------------------------
 	UnSet($Links[$LinkID]);
 	return 300;
-    #-------------------------------------------------------------------------
+        #-------------------------------------------------------------------------
     case 'true':
 	Debug("[comp/Tasks/SMS]: Удачно, ответ шлюза:'".$SMS->success."'");
 	if (!IsSet($PaymentLock) && IsSet($After)) {

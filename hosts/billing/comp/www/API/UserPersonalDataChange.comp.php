@@ -143,15 +143,17 @@ switch(ValueOf($User)){
       }
     #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
-	if ($User['Mobile'] != $Mobile) {
-	    #-----------------------------------------------------------------------
-	    $Event = Array(
-		'UserID' => $GLOBALS['__USER']['ID'],
-		'PriorityID' => 'Billing',
-		'Text' => SPrintF('Пользователь сменил свой мобильный телефон с (%s) на (%s)', $User['Mobile'], $Mobile)
-	    );
-	    $Event = Comp_Load('Events/EventInsert', $Event);
-	    if (!$Event)
+    if ($User['Mobile'] != $Mobile) {
+	#-----------------------------------------------------------------------
+	$Message = ($User['Mobile'])?SPrintF('Смена контактного телефона %s -> %s',$User['Mobile'],$Mobile):SPrintF('Добавлен контактный телефон (%s)',$Mobile);
+	$Message = ($Mobile)?$Message:SPrintF('Удалён контактный телефон (%s)',$User['Mobile']);
+	$Event = Array(
+			'UserID'	=> $GLOBALS['__USER']['ID'],
+			'PriorityID'	=> 'Billing',
+			'Text'		=> $Message
+			);
+	$Event = Comp_Load('Events/EventInsert', $Event);
+	if(!$Event)
 		return ERROR | @Trigger_Error(500);
 	}
 	#---------------------------------------------------------------------------
