@@ -95,8 +95,8 @@ if(CacheManager::isEnabled()){
 		return ERROR | @Trigger_Error(500);
 	    $Params['value'] = 'Подтвержден';
 	    $Params['prompt'] = "Ваш почтовый адрес был подтверждён: ".$EmailConfirmed;
-	    $Params['disabled'] = 'disabled';
-	}else {
+	    #$Params['disabled'] = 'disabled'; # смена возможна ткоа час после подтверждения. как и переносы заказов.
+	}else{
 	    $Params['prompt'] = "Нажмите для подтверждения вашего почтового адреса";
 	    $Params['value'] = 'Подтвердить';
 	}

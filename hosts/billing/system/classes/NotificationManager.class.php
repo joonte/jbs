@@ -23,7 +23,7 @@ class NotificationManager {
                 return ERROR | @Trigger_Error(101);
         }
 
-        $User = DB_Select('Users',Array('ID','Name','Sign','ICQ','Email','Mobile','JabberID','UniqID','IsNotifies'),Array('UNIQ','ID'=>$msg->getTo()));
+        $User = DB_Select('Users',Array('ID','Name','Sign','ICQ','Email','Mobile','MobileConfirmed','JabberID','UniqID','IsNotifies'),Array('UNIQ','ID'=>$msg->getTo()));
         switch(ValueOf($User)) {
             case 'error':
               return ERROR | @Trigger_Error('[Email_Send]: не удалось выбрать получателя');
@@ -66,6 +66,11 @@ class NotificationManager {
             if (!$Notifies['Methods'][$MethodID]['IsActive'])
                 continue;
 
+            #-------------------------------------------------------------------------------
+	    # проверяем не SMS ли шлём, и подтверждён ли телефон
+	    if($MethodID == 'SMS' && $User['MobileConfirmed'] == 0)
+	      continue;
+            #-------------------------------------------------------------------------------
             $Count = DB_Count('Notifies', Array('Where' => SPrintF("`UserID` = %u AND `MethodID` = '%s' AND `TypeID` = '%s'", $msg->getTo(), $MethodID, $msg->getTemplate())));
             if (Is_Error($Count))
                 return ERROR | @Trigger_Error(500);
