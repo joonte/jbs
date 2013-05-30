@@ -37,7 +37,7 @@ if($Methods['SMS']['IsActive']) {
     if($__USER['MobileConfirmed'] == 0) {
 	$Row2 = Array(new Tag('TD', Array('colspan' => 5, 'class' => 'Standard', 'style' => 'background-color:#FDF6D3;'), 'Для настройки SMS уведомлений, подтвердите свой номер телефона и пополните баланс.'));
     }else{
-	$Row2 = Array(new Tag('TD', Array('colspan' => 5, 'class' => 'Standard', 'style' => 'background-color:#FDF6D3;'), 'SMS уведомления платные, рекомендуем включать только --> \'Уведомления о блокировках заказов\'.'));
+	$Row2 = Array(new Tag('TD', Array('colspan' => 5, 'class' => 'Standard', 'style' => 'background-color:#FDF6D3;'), 'SMS уведомления платные, рекомендуем включать только "Уведомления о блокировках заказов"'));
     }
 }
 #-------------------------------------------------------------------------------

@@ -42,20 +42,18 @@ if($Email){
 	#-------------------------------------------------------------------------------
 	$Theme = "Подтверждение Email адреса";
 	#-------------------------------------------------------------------------------
-	$Heads = "From: " . $Executor['Email'] . "\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit";
+	$Heads = SPrintF("From: %s\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit",$Executor['Email']);
 	#-------------------------------------------------------------------------------
 	$Confirm = md5($GLOBALS['__USER']['ID'] . MicroTime());
 	CacheManager::add($CacheID, $Confirm, 10*24*3600);
 	#-------------------------------------------------------------------------------
-	$Url = "http://" . HOST_ID . "/API/EmailConfirm?Confirm=" . $Confirm;
+	$Url = SPrintF('http://%s/API/EmailConfirm?Confirm=%s',HOST_ID,$Confirm);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	#Array('Task','Email','Theme','Message','Heads','ID');
 	$Comp = Comp_Load('Tasks/Email',NULL,$Email,$Theme,SPrintF($Message,$GLOBALS['__USER']['Name'],$Url,$Executor['Sign']),$Heads,$GLOBALS['__USER']['ID']);
-	if(Is_Error($Comp)){
-		#-----------------------------------------------------------------------------
+	if(Is_Error($Comp))
 		return new gException('ERROR_MESSAGE_SEND','Не удалось отправить сообщение');
-	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# SQL - set email in DB as unconfirmed, SET confirm code

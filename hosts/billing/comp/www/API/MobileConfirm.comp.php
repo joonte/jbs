@@ -13,10 +13,8 @@ $Config = Config();
 #-------------------------------------------------------------------------------
 $Settings = $Config['SMSGateway'];
 #-------------------------------------------------------------------------------
-if (!Isset($Settings['SMSInterval'])) {
+if(!Isset($Settings['SMSInterval']))
     return ERROR | @Trigger_Error(500);
-}
-$Interval = $Settings['SMSInterval'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Mobile = (string) @$Args['Mobile'];
@@ -36,14 +34,14 @@ if($Mobile){
     #---------------------------------------------------------------------------
     // Защита от агрессивно настроенных
     $Result2 = CacheManager::get($CacheID2);
-    if ($Result2 == 'block') {
-	if ($Interval >= 60) {
-	    $Interval = ceil($Interval / 60).' мин';
-	}
-	else {
-	    $Interval = $Interval.' сек';
-	}
-	return new gException('ERROR_SMS_SEND_INTERVAL', "Вы уже отправили SMS сообщение с кодом подтверждения  Новое сообщение вы сможете отправить только через $Interval");
+    if($Result2 == 'block'){
+      #-------------------------------------------------------------------------------
+      $Comp = Comp_Load('Formats/Date/Remainder',$Settings['SMSInterval']);
+      if(Is_Error($Comp))
+        return ERROR | @Trigger_Error(500);
+      #-------------------------------------------------------------------------------
+      return new gException('ERROR_SMS_SEND_INTERVAL', SPrintF("Вы уже отправили SMS сообщение с кодом подтверждения. Новое сообщение вы сможете отправить только через %s",$Comp));
+      #-------------------------------------------------------------------------------
     }
     #-------------------------------------------------------------------------------
     $Executor = DB_Select('Users', Array('Sign', 'Mobile', 'GroupID'), Array('UNIQ', 'ID' => 100));
@@ -55,9 +53,9 @@ if($Mobile){
     #-------------------------------------------------------------------------------
     $Message = SPrintF("Ваш проверочный код: %s%s",$Confirm,($Settings['CutSign'])?'':SPrintF('\r\n%s',$Executor['Sign']));
     $Comp = Comp_Load('Tasks/SMS', NULL, $Mobile, $Message, $GLOBALS['__USER']['ID']);
-    if ($Comp !== TRUE) {
+    if($Comp !== TRUE){
 	#-----------------------------------------------------------------------------
-	if (Is_String($Comp))
+	if(Is_String($Comp))
 	    return new gException('ERROR_SMS_SEND_WITH_TEXT', SPrintF('Не удалось отправить SMS сообщение с кодом подтверждения (%s)',$Comp));
 	#-----------------------------------------------------------------------------
 	return new gException('ERROR_SMS_SEND', 'Не удалось отправить SMS сообщение c кодом подтверждения');
@@ -66,10 +64,11 @@ if($Mobile){
     #-------------------------------------------------------------------------------
     #-------------------------------------------------------------------------------
     $IsUpdate = DB_Update('Users', Array('MobileConfirmed' => 0), Array('ID' => $GLOBALS['__USER']['ID']));
-    if (Is_Error($IsUpdate))
+    if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
     #-------------------------------------------------------------------------------
-    CacheManager::add($CacheID2, 'block', $Interval);
+    CacheManager::add($CacheID2, 'block', IntVal($Settings['SMSInterval']));
+    #-------------------------------------------------------------------------------
     return Array('Status' => 'Ok');
     #-------------------------------------------------------------------------------
 }else{

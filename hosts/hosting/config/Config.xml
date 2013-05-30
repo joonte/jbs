@@ -360,33 +360,33 @@
 <Notifies>
  <Types>
   <HostingOrdersActive>
-   <Name>Активация заказа хостинга</Name>
+   <Name>Активация заказа</Name>
    <Title>Заказы хостинга</Title>
    <GroupID>1</GroupID>
   </HostingOrdersActive>
   <!-- ********************************************************************* -->
   <HostingNoticeSuspend>
-   <Name>Блокировка заказа хостинга</Name>
+   <Name>Уведомление о блокировке заказа</Name>
    <GroupID>1</GroupID>
   </HostingNoticeSuspend>
   <!-- ********************************************************************* -->
   <HostingOrdersSuspended>
-   <Name>Блокировка заказа хостинга</Name>
+   <Name>Блокировка заказа</Name>
    <GroupID>1</GroupID>
   </HostingOrdersSuspended>
   <!-- ********************************************************************* -->
   <HostingNoticeDelete>
-   <Name>Удаление заказа хостинга</Name>
+   <Name>Уведомление о удалении заказа</Name>
    <GroupID>1</GroupID>
   </HostingNoticeDelete>
   <!-- ********************************************************************* -->
   <HostingOrdersDeleted>
-   <Name>Удаление заказа хостинга</Name>
+   <Name>Удаление заказа</Name>
    <GroupID>1</GroupID>
   </HostingOrdersDeleted>
   <!-- ********************************************************************* -->
   <HostingPasswordChange>
-   <Name>Смена пароля на заказ хостинга</Name>
+   <Name>Смена пароля на заказ</Name>
    <GroupID>1</GroupID>
   </HostingPasswordChange>
   <!-- ********************************************************************* -->
@@ -396,15 +396,14 @@
   </HostingCPUUsageNotice>
   <!-- ********************************************************************* -->
   <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
   <DomainsOrdersOnRegister>
    <Title>Заказы доменов</Title>
-   <Name>Заказ домена поступил на регистрацию</Name>
+   <Name>Домен поступил на регистрацию</Name>
    <GroupID>1</GroupID>
   </DomainsOrdersOnRegister>
   <!-- ********************************************************************* -->
   <DomainsOrdersActive>
-   <Name>Активация заказа домена</Name>
+   <Name>Активация заказа</Name>
    <GroupID>1</GroupID>
   </DomainsOrdersActive>
   <!-- ********************************************************************* -->
@@ -414,75 +413,102 @@
   </DomainNsChange>
   <!-- ********************************************************************* -->
   <DomainsNoticeSuspend>
-   <Name>Блокировка заказа домена</Name>
+   <Name>Уведомление о блокировке заказа</Name>
    <GroupID>1</GroupID>
   </DomainsNoticeSuspend>
   <!-- ********************************************************************* -->
   <DomainsOrdersSuspended>
-   <Name>Блокировка заказа домена</Name>
+   <Name>Блокировка заказа</Name>
    <GroupID>1</GroupID>
   </DomainsOrdersSuspended>
   <!-- ********************************************************************* -->
   <DomainsNoticeDelete>
-   <Name>Удаление заказа домена</Name>
+   <Name>Уведомление о удалении заказа</Name>
    <GroupID>1</GroupID>
   </DomainsNoticeDelete>
   <!-- ********************************************************************* -->
   <DomainsOrdersDeleted>
-   <Name>Удаление заказа домена</Name>
+   <Name>Удаление заказа</Name>
    <GroupID>1</GroupID>
   </DomainsOrdersDeleted>
   <!-- added by lissyara 2011-08-11 in 14:06 MSK *************************** -->
   <!-- ********************************************************************* -->
   <VPSOrdersActive>
-   <Name>Активация заказа VPS</Name>
-   <Title>Заказы VPS</Title>
+   <Name>Активация заказа</Name>
+   <Title>Заказы VPS (виртуальных серверов)</Title>
    <GroupID>1</GroupID>
   </VPSOrdersActive>
   <!-- ********************************************************************* -->
   <VPSNoticeSuspend>
-   <Name>Блокировка заказа VPS</Name>
+   <Name>Уведомление блокировке заказа</Name>
    <GroupID>1</GroupID>
   </VPSNoticeSuspend>
   <!-- ********************************************************************* -->
   <VPSOrdersSuspended>
-   <Name>Блокировка заказа VPS</Name>
+   <Name>Блокировка заказа</Name>
    <GroupID>1</GroupID>
   </VPSOrdersSuspended>
   <!-- ********************************************************************* -->
   <VPSNoticeDelete>
-   <Name>Удаление заказа VPS</Name>
+   <Name>Уведомление о удалении заказа</Name>
    <GroupID>1</GroupID>
   </VPSNoticeDelete>
   <!-- ********************************************************************* -->
   <VPSOrdersDeleted>
-   <Name>Удаление заказа VPS</Name>
+   <Name>Удаление заказа</Name>
    <GroupID>1</GroupID>
   </VPSOrdersDeleted>
   <!-- ********************************************************************* -->
   <VPSPasswordChange>
-   <Name>Смена пароля на заказ VPS</Name>
+   <Name>Смена пароля на заказ</Name>
    <GroupID>1</GroupID>
   </VPSPasswordChange>
   <!-- ********************************************************************* -->
   <!-- added by lissyara 2011-08-11 in 14:10 MSK *************************** -->
   <!-- ********************************************************************* -->
   <ExtraIPOrdersActive>
-   <Name>Активация заказа выделенного IP</Name>
+   <Name>Активация заказа</Name>
    <Title>Заказы выделенных IP адресов</Title>
    <GroupID>1</GroupID>
   </ExtraIPOrdersActive>
   <!-- ********************************************************************* -->
   <ExtraIPNoticeDelete>
-   <Name>Удаление заказа выделенного IP</Name>
+   <Name>Уведомление о удалении заказа</Name>
    <GroupID>1</GroupID>
   </ExtraIPNoticeDelete>
   <!-- ********************************************************************* -->
   <ExtraIPOrdersDeleted>
-   <Name>Удаление заказа выделенного IP</Name>
+   <Name>Удаление заказа</Name>
    <GroupID>1</GroupID>
   </ExtraIPOrdersDeleted>
   <!-- ********************************************************************* -->
+  <!-- added by lissyara 2011-08-11 in 14:06 MSK *************************** -->
+  <!-- ********************************************************************* -->
+  <ISPswOrdersActive>
+   <Name>Активация заказа</Name>
+   <Title>Заказы программного обеспечения ISPsystem</Title>
+   <GroupID>1</GroupID>
+  </ISPswOrdersActive>
+  <!-- ********************************************************************* -->
+  <ISPswNoticeSuspend>
+   <Name>Уведомление блокировке заказа</Name>
+   <GroupID>1</GroupID>
+  </ISPswNoticeSuspend>
+  <!-- ********************************************************************* -->
+  <ISPswOrdersSuspended>
+   <Name>Блокировка заказа</Name>
+   <GroupID>1</GroupID>
+  </ISPswOrdersSuspended>
+  <!-- ********************************************************************* -->
+  <ISPswNoticeDelete>
+   <Name>Уведомление о удалении заказа</Name>
+   <GroupID>1</GroupID>
+  </ISPswNoticeDelete>
+  <!-- ********************************************************************* -->
+  <ISPswOrdersDeleted>
+   <Name>Удаление заказа</Name>
+   <GroupID>1</GroupID>
+  </ISPswOrdersDeleted>
   <!-- ********************************************************************* -->
  </Types>
 </Notifies>
