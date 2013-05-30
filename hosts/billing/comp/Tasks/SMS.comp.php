@@ -1,4 +1,5 @@
 <?php
+
 #-------------------------------------------------------------------------------
 /** @author Rootden for Lowhosting.ru */
 /******************************************************************************/
@@ -103,7 +104,7 @@ Debug(SPrintF('[comp/Tasks/SMS]: SMS шлюз (%s)', $Settings['SMSProvider']));
 Debug(SPrintF('[comp/Tasks/SMS]: API ключ (%s)', $Settings['SMSKey']));
 Debug(SPrintF('[comp/Tasks/SMS]: Отправитель (%s)', $Settings['SMSsender']));
 #-------------------------------------------------------------------------------
-if (!isset($PaymentLock)) {
+if (!IsSet($PaymentLock)) {
     $Regulars = Regulars();
     $MobileCountry = 'SMSPriceDefault';
     $RegCountrys = array('SMSPriceRu' => $Regulars['SMSPriceRu'], 'SMSPriceUa' => $Regulars['SMSPriceUa'], 'SMSPriceSng' => $Regulars['SMSPriceSng'], 'SMSPriceZone1' => $Regulars['SMSPriceZone1'], 'SMSPriceZone2' => $Regulars['SMSPriceZone2']);
@@ -147,7 +148,7 @@ if (!isset($PaymentLock)) {
 	    }
 	}
 	#-------------------------------------------------------------------------------
-	if (!isset($ContractID) && !isset($After)) {
+	if (!IsSet($ContractID) && !IsSet($After)) {
 	    Debug("[comp/Tasks/SMS]: Недостаточно денежных средств на каком либо договоре клиента");
 	    if ($Config['Notifies']['Methods']['SMS']['IsEvent']) {
 		$Event = Array('UserID' => $UserID, 'PriorityID' => 'Error', 'Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), %s', $Mobile, 'недостаточно денежных средств.'));
@@ -204,7 +205,7 @@ if (!IsSet($Links[$LinkID])) {
 	default:
 	    return ERROR | @Trigger_Error(101);
     }
-    //Проверим баланс и отложим задачу в случае нехватки кредитов
+    // Проверим баланс и отложим задачу в случае нехватки кредитов
     #-------------------------------------------------------------------------
     $SMSBalanse = (integer) $SMS->balance;
     if ($SMSBalanse == 0 || $SMSBalanse < $SMSCost) {
@@ -247,7 +248,7 @@ switch (ValueOf($IsMessage)) {
     #-------------------------------------------------------------------------
     case 'true':
 	Debug("[comp/Tasks/SMS]: Удачно, ответ шлюза:'".$SMS->success."'");
-	if (!isset($PaymentLock) && isset($After)) {
+	if (!IsSet($PaymentLock) && IsSet($After)) {
 	    #------------------------------TRANSACTION--------------------------
 	    if (Is_Error(DB_Transaction($TransactionID = UniqID('PostingSMS'))))
 		return ERROR | @Trigger_Error(500);
