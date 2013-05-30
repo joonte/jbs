@@ -44,7 +44,7 @@ switch(ValueOf($Partners)){
           #---------------------------------------------------------------------
           foreach($Users as $User){
             #-------------------------------------------------------------------
-            $Table->AddChild(new Tag('TD',Array('class'=>'Separator','colspan'=>6),SPrintF('Клиент: %s (%s)',$User['Name'],$User['Email'])));
+            #$Table->AddChild(new Tag('TD',Array('class'=>'Separator','colspan'=>6),SPrintF('Клиент: %s (%s)',$User['Name'],$User['Email'])));
             #-------------------------------------------------------------------
             $Invoices = DB_Select('InvoicesOwners',Array('ID','CreateDate','((YEAR(FROM_UNIXTIME(`CreateDate`)) - 1970)*12 + MONTH(FROM_UNIXTIME(`CreateDate`))) as `Month`','(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `ContractID`) as `Customer`','PaymentSystemID','Summ','StatusID','StatusDate'),Array('SortOn'=>'CreateDate','Where'=>Array(SPrintF("`UserID` = %u",$User['ID']),SPrintF("`CreateDate` >= %u AND `CreateDate` <= %u",$StartDate,$FinishDate),"`IsPosted` = 'yes'")));
             #-------------------------------------------------------------------
@@ -52,9 +52,10 @@ switch(ValueOf($Partners)){
               case 'error':
                 return ERROR | @Trigger_Error(500);
               case 'exception':
-                $Table->AddChild(new Tag('TR',new Tag('TD',Array('class'=>'Standard','colspan'=>6,'style'=>'background-color:#FCE5CC;'),'Счета не найдены')));
+                #$Table->AddChild(new Tag('TR',new Tag('TD',Array('class'=>'Standard','colspan'=>6,'style'=>'background-color:#FCE5CC;'),'Счета не найдены')));
               break;
               case 'array':
+	        $Table->AddChild(new Tag('TD',Array('class'=>'Separator','colspan'=>6),SPrintF('Клиент: %s (%s)',$User['Name'],$User['Email'])));
                 #---------------------------------------------------------------
                 $Total = 0.00;
                 #---------------------------------------------------------------
