@@ -48,10 +48,11 @@ if($Mobile){
     if (!Is_Array($Executor))
 	return ERROR | @Trigger_Error(500);
     #-------------------------------------------------------------------------------
-    $Confirm = substr(md5($GLOBALS['__USER']['ID'].MicroTime()), 0, 5);
+    $Confirm = SubStr(Md5($GLOBALS['__USER']['ID'].MicroTime()), 0, 5);
     CacheManager::add($CacheID, $Confirm, 10 * 24 * 3600);
     #-------------------------------------------------------------------------------
-    $Message = SPrintF("Ваш проверочный код: %s%s",$Confirm,($Settings['CutSign'])?'':SPrintF('\r\n%s',$Executor['Sign']));
+    $GLOBALS['FreeSMS'] = TRUE;
+    $Message = SPrintF('Ваш проверочный код: %s%s',$Confirm,($Settings['CutSign'])?'':SPrintF('\r\n%s',$Executor['Sign']));
     $Comp = Comp_Load('Tasks/SMS', NULL, $Mobile, $Message, $GLOBALS['__USER']['ID']);
     if($Comp !== TRUE){
 	#-----------------------------------------------------------------------------

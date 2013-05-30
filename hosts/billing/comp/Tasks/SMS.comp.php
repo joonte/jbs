@@ -17,7 +17,7 @@ $Config = Config();
 #-------------------------------------------------------------------------------
 $Settings = $Config['SMSGateway'];
 #-------------------------------------------------------------------------------
-$FreeSMS = FALSE;
+$FreeSMS = IsSet($GLOBALS['FreeSMS'])?TRUE:FALSE;
 #-------------------------------------------------------------------------------
 if(!IsSet($Settings['SMSProvider']))
 	return ERROR | @Trigger_Error(500);
@@ -79,9 +79,9 @@ if ($Settings['SMSExceptions']['SMSExceptionsSchemeID'] != 0) {
     if (Is_Error($OrderHostings))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-    $LimitSchemeID = explode(',',$Settings['SMSExceptions']['SMSExceptionsSchemeID']);
+    $LimitSchemeID = Explode(',',$Settings['SMSExceptions']['SMSExceptionsSchemeID']);
     foreach ($OrderHostings as $OrderHosting) {
-	if (in_array((integer) $OrderHosting['SchemeID'], $LimitSchemeID)) {
+	if (In_Array((integer) $OrderHosting['SchemeID'], $LimitSchemeID)) {
 	    $FreeSMS = true;
 	    break;
 	}
@@ -114,21 +114,20 @@ if (!IsSet($PaymentLock)) {
     if (!IsSet($Settings['SMSPrice'][$MobileCountry]))
 	return ERROR | @Trigger_Error(500);
     #-------------------------------------------------------------------------------
-    if ($MessageLength <= 70) {
+    if($MessageLength <= 70){
 	$SMSCost = Str_Replace(',', '.', $Settings['SMSPrice'][$MobileCountry]);
 	$SMSCount = 1;
-    }
-    else {
-	$SMSCount = ceil($MessageLength / 67);
+    }else{
+	$SMSCount = Ceil($MessageLength / 67);
 	$SMSCost = $SMSCount * Str_Replace(',', '.', $Settings['SMSPrice'][$MobileCountry]);
     }
     #-------------------------------------------------------------------------------
-    if ($FreeSMS === TRUE)
+    if($FreeSMS)
 	$SMSCost = 0;
     #-------------------------------------------------------------------------------
     Debug(SPrintF('[comp/Tasks/SMS]: Стоимость сообщения (%s) всего частей (%s)', $SMSCost, $SMSCount));
     #-------------------------------------------------------------------------------
-    if (!is_numeric($SMSCost))
+    if (!Is_Numeric($SMSCost))
 	return ERROR | @Trigger_Error(500);
     #-------------------------------------------------------------------------
     if ($SMSCost > 0) {
@@ -153,8 +152,8 @@ if (!IsSet($PaymentLock)) {
 		    return ERROR | @Trigger_Error(500);
 	    }
 	    #-------------------------------------------------------------------------------
-	    if ($Task === NULL)
-		return "Недостаточно денежных средств на балансе. Стоимость: $SMSCost";
+	    if (Is_Null($Task))
+		return SPrintF('Недостаточно денежных средств на балансе. Стоимость: %s',$SMSCost);
 	    #-------------------------------------------------------------------------------
 	    return TRUE;
 	}
