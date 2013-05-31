@@ -257,7 +257,7 @@ switch (ValueOf($IsMessage)) {
 		#-----------------------------------------------------------------
 		'ContractID' => $ContractID,
 		'ServiceID' => '2000',
-		'Comment' => "За смс уведомление ($SMSCount шт)",
+		'Comment' => "SMS уведомление ($SMSCount шт)",
 		'Before' => $Contract['Balance'],
 		'After' => $After
 	    );

@@ -17,7 +17,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 #-------------------------------------------------------------------------------
 $Columns = Array(
 			'ID','RegisterDate','Name','GroupID','Email','EmailConfirmed',
-			'ICQ','Mobile','Sign','OwnerID','IsManaged','LayPayMaxDays',
+			'ICQ','Mobile','MobileConfirmed','Sign','OwnerID','IsManaged','LayPayMaxDays',
 			'LayPayMaxSumm','LayPayThreshold','EnterDate','EnterIP',
 			'Rating','IsActive','IsNotifies','IsHidden','IsProtected','AdminNotice',
 			'(SELECT COUNT(*) FROM `OrdersOwners` WHERE `OrdersOwners`.`UserID`=`Users`.`ID`) AS `NumOrders`',
@@ -82,13 +82,20 @@ switch(ValueOf($User)){
 		$Comp = Comp_Load('Formats/Date/Extended',$User['EmailConfirmed']);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
-		$Table[] = Array('Электронный адрес подтверждён',$Comp);
+		$Table[] = Array('Email подтверждён',$Comp);
 	}
         #-----------------------------------------------------------------------
 	#-----------------------------------------------------------------------
         $Table[] = Array('ICQ-номер',$User['ICQ']);
         #-----------------------------------------------------------------------
         $Table[] = Array('Номер мобильного телефона',$User['Mobile']);
+	#-------------------------------------------------------------------------------
+	if($User['MobileConfirmed'] > 0){
+		$Comp = Comp_Load('Formats/Date/Extended',$User['MobileConfirmed']);
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		$Table[] = Array('Телефон подтверждён',$Comp);
+	}
         #-----------------------------------------------------------------------
         $OwnerID = $User['OwnerID'];
         #-----------------------------------------------------------------------
