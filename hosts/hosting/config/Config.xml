@@ -362,6 +362,7 @@
   <HostingOrdersActive>
    <Name>Активация заказа</Name>
    <Title>Заказы хостинга</Title>
+   <Code>Hosting</Code>
    <GroupID>1</GroupID>
   </HostingOrdersActive>
   <!-- ********************************************************************* -->
@@ -399,6 +400,7 @@
   <DomainsOrdersOnRegister>
    <Title>Заказы доменов</Title>
    <Name>Домен поступил на регистрацию</Name>
+   <Code>Domains</Code>
    <GroupID>1</GroupID>
   </DomainsOrdersOnRegister>
   <!-- ********************************************************************* -->
@@ -436,6 +438,7 @@
   <VPSOrdersActive>
    <Name>Активация заказа</Name>
    <Title>Заказы VPS (виртуальных серверов)</Title>
+   <Code>VPS</Code>
    <GroupID>1</GroupID>
   </VPSOrdersActive>
   <!-- ********************************************************************* -->
@@ -468,6 +471,7 @@
   <DSOrdersActive>
    <Name>Активация заказа</Name>
    <Title>Заказы DS (выделенных серверов)</Title>
+   <Code>DS</Code>
    <GroupID>1</GroupID>
   </DSOrdersActive>
   <!-- ********************************************************************* -->
@@ -496,6 +500,7 @@
   <ExtraIPOrdersActive>
    <Name>Активация заказа</Name>
    <Title>Заказы выделенных IP адресов</Title>
+   <Code>ExtraIP</Code>
    <GroupID>1</GroupID>
   </ExtraIPOrdersActive>
   <!-- ********************************************************************* -->
@@ -514,6 +519,7 @@
   <ISPswOrdersActive>
    <Name>Активация заказа</Name>
    <Title>Заказы программного обеспечения ISPsystem</Title>
+   <Code>ISPsw</Code>
    <GroupID>1</GroupID>
   </ISPswOrdersActive>
   <!-- ********************************************************************* -->
