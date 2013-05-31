@@ -14,8 +14,13 @@ if(!CacheManager::isEnabled())
 	return $Result;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Config = Config();
+#-------------------------------------------------------------------------------
+$Settings = $Config['Interface']['Notes']['User']['EmailConfirmation'];
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 #if($GLOBALS['__USER']['EmailConfirmed'] < Time() - 365 * 24 * 3600 /* пусть раз в год подтверждают */){
-if($GLOBALS['__USER']['EmailConfirmed'] < 1 /* пусть просто подтверждают... */){
+if($GLOBALS['__USER']['EmailConfirmed'] < 1 && $Settings['EmailConfirmRequire']){
 	#-------------------------------------------------------------------------------
 	$NoBody = new Tag('NOBODY');
 	$NoBody->AddHTML(TemplateReplace('Notes.User.EmailConfirmation',Array('User'=>$GLOBALS['__USER'])));

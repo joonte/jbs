@@ -13,7 +13,13 @@ $Result = Array();
 if(!CacheManager::isEnabled())
 	return $Result;
 #-------------------------------------------------------------------------------
-if(Is_Numeric($GLOBALS['__USER']['Mobile']) && $GLOBALS['__USER']['MobileConfirmed'] < 1) {
+#-------------------------------------------------------------------------------
+$Config = Config();
+#-------------------------------------------------------------------------------
+$Settings = $Config['Interface']['Notes']['User']['MobileConfirmation'];
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(Is_Numeric($GLOBALS['__USER']['Mobile']) && $GLOBALS['__USER']['MobileConfirmed'] < 1 && $Settings['MobileConfirmRequire']){
 	#-------------------------------------------------------------------------------
 	$NoBody = new Tag('NOBODY');
 	$NoBody->AddHTML(TemplateReplace('Notes.User.MobileConfirmation', Array('User' => $GLOBALS['__USER'])));
@@ -24,7 +30,7 @@ if(Is_Numeric($GLOBALS['__USER']['Mobile']) && $GLOBALS['__USER']['MobileConfirm
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(!$GLOBALS['__USER']['Mobile']){
+if(!$GLOBALS['__USER']['Mobile'] && $Settings['MobileRequire']){
 	#-------------------------------------------------------------------------------
 	$NoBody = new Tag('NOBODY');
 	$NoBody->AddHTML(TemplateReplace('Notes.User.MobileConfirmation.NoMobile', Array('User' => $GLOBALS['__USER'])));
