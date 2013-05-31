@@ -64,7 +64,7 @@ switch(ValueOf($Items)){
 		#-------------------------------------------------------------------------------
 		# calculate encrypt key
 		$passwordMD5 = md5($Settings['Hash'], true);
-		$salt = md5($Settings['Send']['QIWIfrom'] . bin2hex($passwordMD5), true);
+		$salt = md5($Settings['Send']['from'] . bin2hex($passwordMD5), true);
 		$key = Str_Pad($passwordMD5, 24, '\0');
 		# XOR calculating
 		for ($i = 8; $i < 24; $i++) {
@@ -79,7 +79,7 @@ switch(ValueOf($Items)){
 		$pad = Str_Pad($Result, StrLen($Result) + $n, ' ');
 		# crypt message
 		$crypted = mcrypt_encrypt(MCRYPT_3DES, $key, $pad, MCRYPT_MODE_ECB, "\0\0\0\0\0\0\0\0");
-		$Result = "qiwi" . Str_Pad($Settings['Send']['QIWIfrom'], 10, "0", STR_PAD_LEFT) . "\n";
+		$Result = "qiwi" . Str_Pad($Settings['Send']['from'], 10, "0", STR_PAD_LEFT) . "\n";
 		$Result .= base64_encode($crypted);
 		# send message to QIWI server
 		$Http = Array('Protocol'=>'ssl','Port'=>'443','Address'=>'ishop.qiwi.ru','Host'=>'ishop.qiwi.ru');
