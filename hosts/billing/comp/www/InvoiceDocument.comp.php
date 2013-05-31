@@ -48,11 +48,11 @@ switch(ValueOf($Invoice)){
         #-----------------------------------------------------------------------
         $IsPayed = ($Invoice['IsPosted'] && $Invoice['StatusID'] != 'Conditionally');
 	#-----------------------------------------------------------------------
-	if($PaymentSystemID == 'QIWI' && strlen($GLOBALS['__USER']['Mobile']) < 10 && !$IsPayed){
-	  DEBUG("[comp/www/InvoiceDocument]: Incorrect user phone");
+	if($PaymentSystemID == 'QIWI' && StrLen($GLOBALS['__USER']['Mobile']) < 10 && !$IsPayed){
+	  DEBUG('[comp/www/InvoiceDocument]: Incorrect user phone');
 	  $Comp3 = Comp_Load('Clauses/Load','/Help/Services/QIWIPhone',TRUE);
 	  if(Is_Error($Comp3))
-	  return ERROR | @Trigger_Error(500);
+            return ERROR | @Trigger_Error(500);
 	  $DOM->AddText('Title',$Comp3['Title']);
 	  $DOM->AddChild('Into',$Comp3['DOM']);
 	}else{
