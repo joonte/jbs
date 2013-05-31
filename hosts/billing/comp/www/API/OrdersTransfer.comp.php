@@ -51,7 +51,7 @@ if(!$OrdersTransferID){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),Array('*'),Array('UNIQ','ID'=>$ServiceOrderID));
+	$Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),Array('*','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `UserID`) AS `Email`'),Array('UNIQ','ID'=>$ServiceOrderID));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Order)){
 	case 'error':
@@ -145,7 +145,7 @@ if(!$OrdersTransferID){
 	$Event = Array(
 			'UserID'	=> Array($Order['UserID'],$User['ID']),
 			'PriorityID'	=> 'Billing',
-			'Text'		=> SPrintF('Подана заявка на перенос заказа #%u (%s) с аккаунта (%s) на аккаунт (%s)',$Order['OrderID'],$Service['NameShort'],$__USER['Email'],$User['Email'])
+			'Text'		=> SPrintF('Подана заявка на перенос заказа #%u (%s) с аккаунта (%s) на аккаунт (%s)',$Order['OrderID'],$Service['NameShort'],$Order['Email'],$User['Email'])
 	);
 	#-------------------------------------------------------------------------------
 	$Event = Comp_Load('Events/EventInsert',$Event);
