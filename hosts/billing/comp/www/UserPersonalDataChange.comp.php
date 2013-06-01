@@ -113,16 +113,17 @@ if(CacheManager::isEnabled()){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
-	'Form/Input', Array(
-    'name' => 'Mobile',
-    'size' => 25,
-    'type' => 'text',
-    'prompt' => $Messages['Prompts']['Mobile'],
-    'value' => $__USER['Mobile']
-	)
-);
+		'Form/Input',
+		Array(
+			'name'	=> 'Mobile',
+			'size'	=> 25,
+			'type'	=> 'text',
+			'prompt'=> $Messages['Prompts']['Mobile'],
+			'value'	=> $__USER['Mobile']
+			)
+		);
 if (Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $NoBody = new Tag('NOBODY', $Comp);
 #-------------------------------------------------------------------------------
@@ -139,7 +140,7 @@ if ($Config['Notifies']['Methods']['SMS']['IsActive']) {
 	    return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$Params['value'] = 'Подтвержден';
-	$Params['disabled'] = 'disabled';
+	$Params['onclick']= "javascript:ShowAlert('Нет необходимости в повторном подтверждении вашего телефонного номера','Warning');";
 	$Params['prompt'] = SPrintF('Ваш мобильный телефон был подтверждён: %s',$MobileConfirmed);
 	#-------------------------------------------------------------------------------
     }else{
