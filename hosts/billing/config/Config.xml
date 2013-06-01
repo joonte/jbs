@@ -1383,6 +1383,10 @@
 				<ShowAnnouncement>1</ShowAnnouncement>
 			</Announcement>
 			<!-- *********************************************************************** -->
+			<Bonuses>
+				<CompleteBonuses>1</CompleteBonuses>
+			</Bonuses>
+			<!-- *********************************************************************** -->
 			<EmailConfirmation>
 				<EmailConfirmRequire>1</EmailConfirmRequire>
 			</EmailConfirmation>
