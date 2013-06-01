@@ -1,16 +1,14 @@
 <?php
 
 // SMSC.RU API (www.smsc.ru) версия 2.5 (22.10.2011)
-
+// rewritten by lissyara, 2013-06-01 in 18:07 MSK for www.host-food.ru
+#-------------------------------------------------------------------------------
 class SMSC {
-    private static $instance;
-
-    const SEND_CMD = "send";
-
-    private $https = false;
-
-    private $config;
-
+	#-------------------------------------------------------------------------------
+	private static $instance;
+	const SEND_CMD = "send";
+	private $https = false;
+	private $config;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	public function __construct($login = false, $password = false, $apikey = false, $sender = false, $charset = false) {
@@ -33,13 +31,12 @@ class SMSC {
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-    public static function get() {
-        if (!isset(self::$instance)) {
-            self::$instance = new SMSC();
-        }
-
-        return self::$instance;
-    }
+	public static function get() {
+		if (!isset(self::$instance)) {
+			self::$instance = new SMSC();
+		}
+		return self::$instance;
+	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	public function send($Mobile, $Message) {
@@ -83,7 +80,8 @@ class SMSC {
 		#-------------------------------------------------------------------------------
 		#Debug(SPrintF('[system/classes/SMSC.class.php]: result = %s',print_r($result,true)));
 	        return $result;
-    }
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	function execCmd($cmd, $arg = Array()){
@@ -131,58 +129,70 @@ class SMSC {
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-    /**
-     * @param  $url
-     * @return mixed|string
-     */
-    // Функция чтения URL. Для работы должно быть доступно:
-    // curl или fsockopen (только http) или включена опция allow_url_fopen для file_get_contents
-
-    function readUrl($url) {
-        $ret = "";
-        $post = strlen($url) > 2000;
-
-        if (function_exists("curl_init")) {
-            static $c = 0; // keepalive
-
-            if (!$c) {
-                $c = curl_init();
-                curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 10);
-                curl_setopt($c, CURLOPT_TIMEOUT, 10);
-                curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
-            }
-
-            if ($post) {
-                list($url, $post) = explode('?', $url, 2);
-                curl_setopt($c, CURLOPT_POST, true);
-                curl_setopt($c, CURLOPT_POSTFIELDS, $post);
-            }
-
-            curl_setopt($c, CURLOPT_URL, $url);
-
-            $ret = curl_exec($c);
-        }
-        elseif (!$this->https && function_exists("fsockopen"))
-        {
-            $m = parse_url($url);
-
-            $fp = @fsockopen($m["host"], 80, $errno, $errstr, 10);
-
-            if ($fp) {
-                fwrite($fp, ($post ? "POST $m[path]" : "GET $m[path]?$m[query]") . " HTTP/1.1\r\nHost: smsc.ru\r\nUser-Agent: PHP" . ($post ? "\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: " . strlen($m['query']) : "") . "\r\nConnection: Close\r\n\r\n" . ($post ? $m['query'] : ""));
-
-                while (!feof($fp))
-                    $ret = fgets($fp, 100);
-
-                fclose($fp);
-            }
-        }
-        else
-            $ret = file_get_contents($url);
-
-        return $ret;
-    }
+	/**
+	* @param  $url
+	* @return mixed|string
+	*/
+	// Функция чтения URL. Для работы должно быть доступно:
+	// curl или fsockopen (только http) или включена опция allow_url_fopen для file_get_contents
+	#-------------------------------------------------------------------------------
+	function readUrl($url) {
+		#-------------------------------------------------------------------------------
+		$ret = "";
+		$post = strlen($url) > 2000;
+		if (function_exists("curl_init")) {
+			#-------------------------------------------------------------------------------
+			static $c = 0; // keepalive
+			#-------------------------------------------------------------------------------
+			if (!$c) {
+				#-------------------------------------------------------------------------------
+				$c = curl_init();
+				curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 10);
+				curl_setopt($c, CURLOPT_TIMEOUT, 10);
+				curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+			if ($post) {
+				#-------------------------------------------------------------------------------
+				list($url, $post) = explode('?', $url, 2);
+				curl_setopt($c, CURLOPT_POST, true);
+				curl_setopt($c, CURLOPT_POSTFIELDS, $post);
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+			curl_setopt($c, CURLOPT_URL, $url);
+			$ret = curl_exec($c);
+			#-------------------------------------------------------------------------------
+		}elseif(!$this->https && function_exists("fsockopen")){
+			#-------------------------------------------------------------------------------
+			$m = parse_url($url);
+			$fp = @fsockopen($m["host"], 80, $errno, $errstr, 10);
+			#-------------------------------------------------------------------------------
+			if($fp) {
+				#-------------------------------------------------------------------------------
+				fwrite($fp, ($post ? "POST $m[path]" : "GET $m[path]?$m[query]") . " HTTP/1.1\r\nHost: smsc.ru\r\nUser-Agent: PHP" . ($post ? "\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: " . strlen($m['query']) : "") . "\r\nConnection: Close\r\n\r\n" . ($post ? $m['query'] : ""));
+				#-------------------------------------------------------------------------------
+				while(!feof($fp))
+					$ret = fgets($fp, 100);
+				#-------------------------------------------------------------------------------
+				fclose($fp);
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+		}else{
+			#-------------------------------------------------------------------------------
+			$ret = file_get_contents($url);
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		return $ret;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 
 ?>
