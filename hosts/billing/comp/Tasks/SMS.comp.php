@@ -90,7 +90,7 @@ if ($Settings['SMSExceptions']['SMSExceptionsSchemeID'] != 0) {
 }
 #-------------------------------------------------------------------------------
 $MessageLength = MB_StrLen($Message);
-Debug(SPrintF('[comp/Tasks/SMS]: Собщение (%s) Длинна (%s)', $Message, $MessageLength));
+Debug(SPrintF('[comp/Tasks/SMS]: длинна: %s, сообщение (%s)',$MessageLength,$Message));
 #-------------------------------------------------------------------------------
 if (Is_Error(System_Load(SPrintF('classes/%s.class.php', $Settings['SMSProvider']))))
 	return ERROR | @Trigger_Error(500);
@@ -125,31 +125,51 @@ if (!IsSet($PaymentLock)) {
     if($FreeSMS)
 	$SMSCost = 0;
     #-------------------------------------------------------------------------------
-    Debug(SPrintF('[comp/Tasks/SMS]: Стоимость сообщения (%s) всего частей (%s)', $SMSCost, $SMSCount));
+    $Comp = Comp_Load('Formats/Currency',$SMSCost);
+    if(Is_Error($Comp))
+      return ERROR | @Trigger_Error(500);
+    #-------------------------------------------------------------------------------
+    Debug(SPrintF('[comp/Tasks/SMS]: Стоимость сообщения (%s) всего частей (%s)', $Comp, $SMSCount));
     #-------------------------------------------------------------------------------
     if (!Is_Numeric($SMSCost))
 	return ERROR | @Trigger_Error(500);
     #-------------------------------------------------------------------------
-    if ($SMSCost > 0) {
-	$Contracts = DB_Select('Contracts', Array('TypeID', 'ID', 'Balance'), Array('Where' => SPrintF('`UserID` = %u', $UserID)));
-	if (!Is_Array($Contracts))
-	    return ERROR | @Trigger_Error(500);
+    if ($SMSCost > 0){
+    	#-------------------------------------------------------------------------------
+	$Where = Array(
+			SPrintF('`UserID` = %u', $UserID),
+			SPrintF('`Balance` >= %s', $SMSCost),
+			'`TypeID` != "NaturalPartner"',
+			);
 	#-------------------------------------------------------------------------------
-	foreach ($Contracts as $Contract) {
-	    if ($Contract['TypeID'] !== 'NaturalPartner' && $Contract['Balance'] >= $SMSCost) {
+	$Contract = DB_Select('Contracts', Array('TypeID', 'ID', 'Balance'), Array('UNIQ','Where'=>$Where,'Limits'=>Array('Start'=>0,'Length'=>1)));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Contract)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		#-------------------------------------------------------------------------------
 		$ContractID = $Contract['ID'];
 		(integer) $After = $Contract['Balance'] - $SMSCost;
+		#-------------------------------------------------------------------------------
 		break;
-	    }
+		#-------------------------------------------------------------------------------
+	default:
+		return ERROR | @Trigger_Error(100);
 	}
 	#-------------------------------------------------------------------------------
-	if (!IsSet($ContractID) && !IsSet($After)) {
-	    Debug("[comp/Tasks/SMS]: Недостаточно денежных средств на каком либо договоре клиента");
-	    if ($Config['Notifies']['Methods']['SMS']['IsEvent']) {
+	#-------------------------------------------------------------------------------
+	if(!IsSet($ContractID) && !IsSet($After)){
+	    Debug("[comp/Tasks/SMS]: Недостаточно денежных средств на любом договоре клиента");
+	    if ($Config['Notifies']['Methods']['SMS']['IsEvent']){
+	    	#-------------------------------------------------------------------------------
 		$Event = Array('UserID' => $UserID, 'PriorityID' => 'Error', 'Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), %s', $Mobile, 'недостаточно денежных средств.'));
 		$Event = Comp_Load('Events/EventInsert', $Event);
 		if (!$Event)
 		    return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
 	    }
 	    #-------------------------------------------------------------------------------
 	    if (Is_Null($Task))
@@ -187,7 +207,7 @@ if (!IsSet($Links[$LinkID])) {
 	    }
 	    UnSet($Links[$LinkID]);
 	    #-------------------------------------------------------------------------------
-	    if ($Task === NULL)
+	    if(Is_Null($Task))
 		return "Пожалуйста, попробуйте повторить попытку позже";
 	    #-------------------------------------------------------------------------
 	    return TRUE;
@@ -211,7 +231,7 @@ if (!IsSet($Links[$LinkID])) {
 		return ERROR | @Trigger_Error(500);
 	}
 	#-------------------------------------------------------------------------
-	if ($Task === NULL)
+	if (Is_Null($Task))
 	    return "Пожалуйста, попробуйте повторить попытку позже";
 	#-------------------------------------------------------------------------
 	UnSet($Links[$LinkID]);
@@ -236,7 +256,7 @@ switch (ValueOf($IsMessage)) {
 		return ERROR | @Trigger_Error(500);
 	}
 	#-------------------------------------------------------------------------
-	if($Task === NULL)
+	if(Is_Null($Task))
 	    return "Пожалуйста, попробуйте повторить попытку позже";
 	#-------------------------------------------------------------------------
 	UnSet($Links[$LinkID]);
@@ -269,7 +289,16 @@ switch (ValueOf($IsMessage)) {
 	    if (Is_Error(DB_Commit($TransactionID)))
 		return ERROR | @Trigger_Error(500);
 	    #-------------------------END TRANSACTION---------------------------
-	    Debug(SPrintF('[comp/Tasks/SMS]: Договор id (%s) баланс до оплаты (%s) после оплаты (%s)', $ContractID, $Contract['Balance'], $After));
+	    #-------------------------------------------------------------------------------
+            $Comp = Comp_Load('Formats/Currency',$Contract['Balance']);
+            if(Is_Error($Comp))
+               return ERROR | @Trigger_Error(500);
+            #-------------------------------------------------------------------------------
+            $Comp1 = Comp_Load('Formats/Currency',$After);
+            if(Is_Error($Comp1))
+              return ERROR | @Trigger_Error(500);
+            #-------------------------------------------------------------------------------
+	    Debug(SPrintF('[comp/Tasks/SMS]: Договор (%s) баланс до оплаты (%s) после оплаты (%s)', $ContractID, $Comp, $Comp1));
 	}
 	break;
     default:

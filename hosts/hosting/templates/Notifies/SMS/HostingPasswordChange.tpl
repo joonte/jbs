@@ -1,3 +1,1 @@
-Пароль заказа хостинга #{$OrderID|string_format:"%05u"} был успешно изменен {$smarty.now|date_format:"%d.%m.%Y"}.
-Логин: {$Login|default:'$Login'} Пароль: {$Password|default:'$Password'}
-
+{$smarty.now|date_format:"%d.%m.%Y"} изменён заказ хостинга; логин: {$Login|default:'$Login'} пароль: {$Password|default:'$Password'}
