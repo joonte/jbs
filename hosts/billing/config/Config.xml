@@ -1127,13 +1127,12 @@
 	<SMSlowBalance>0</SMSlowBalance>
 	<CutSign>1</CutSign>
 	<SMSPrice>
-		<SMSPriceRu>0.5</SMSPriceRu>
-		<SMSPriceRu>0.5</SMSPriceRu>
-		<SMSPriceUa>1.0</SMSPriceUa>
-		<SMSPriceSng>2.0</SMSPriceSng>
-		<SMSPriceZone1>3.0</SMSPriceZone1>
-		<SMSPriceZone2>4.0</SMSPriceZone2>
-		<SMSPriceDefault>5.0</SMSPriceDefault>
+		<SMSPriceRu>0.50</SMSPriceRu>
+		<SMSPriceUa>1.00</SMSPriceUa>
+		<SMSPriceSng>2.00</SMSPriceSng>
+		<SMSPriceZone1>3.00</SMSPriceZone1>
+		<SMSPriceZone2>4.00</SMSPriceZone2>
+		<SMSPriceDefault>5.00</SMSPriceDefault>
 	</SMSPrice>
 	<SMSExceptions>
 		<SMSExceptionsPaidInvoices>-1</SMSExceptionsPaidInvoices>
