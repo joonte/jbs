@@ -41,7 +41,25 @@ if($Methods['SMS']['IsActive']){
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
-		$Message = 'SMS уведомления платные, рекомендуем включать только "Уведомления о блокировках заказов"';
+		$Regulars = Regulars();
+		$MobileCountry = 'SMSPriceDefault';
+		$RegCountrys = array('SMSPriceRu' => $Regulars['SMSPriceRu'], 'SMSPriceUa' => $Regulars['SMSPriceUa'], 'SMSPriceSng' => $Regulars['SMSPriceSng'], 'SMSPriceZone1' => $Regulars['SMSPriceZone1'], 'SMSPriceZone2' => $Regulars['SMSPriceZone2']);
+		#-------------------------------------------------------------------------------
+		foreach ($RegCountrys as $RegCountryKey => $RegCountry)
+			if (Preg_Match($RegCountry, $__USER['Mobile']))
+				$MobileCountry = $RegCountryKey;
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/Tasks/SMS]: Страна определена (%s)', $MobileCountry));
+		#-------------------------------------------------------------------------------
+		if(!IsSet($Config['SMSGateway']['SMSPrice'][$MobileCountry]))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Formats/Currency',Str_Replace(',','.',$Config['SMSGateway']['SMSPrice'][$MobileCountry]));
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Message = SPrintF('SMS уведомления платные (%s), рекомендуем включать только "Уведомления о блокировках заказов"',$Comp);
 		# прочкать SMSExceptionsPaidInvoices, если надо - получить сумму счетов, надпись по итогам вывести
 		if($Config['SMSGateway']['SMSExceptions']['SMSExceptionsPaidInvoices'] >= 0){
 			#-------------------------------------------------------------------------------
@@ -76,6 +94,9 @@ if($Methods['SMS']['IsActive']){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
+	if($Config['SMSGateway']['SMSExceptions']['SMSExceptionsPaidInvoices'] == 0 && $__USER['MobileConfirmed'] > 0)
+		UnSet($Row2);
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -98,7 +119,7 @@ foreach(Array_Keys($Methods) as $MethodID){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Table = ($Methods['SMS']['IsActive'])?Array($Row2, $Row):Array($Row);
+$Table = IsSet($Row2)?Array($Row2, $Row):Array($Row);
 #-------------------------------------------------------------------------------
 $Rows = DB_Select('Notifies','*',Array('Where'=>SPrintF('`UserID` = %u',$__USER['ID'])));
 #-------------------------------------------------------------------------------

@@ -79,31 +79,37 @@ if($Settings['SMSExceptions']['SMSExceptionsPaidInvoices'] >= 0){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // Проверяем пользователя на исключения оплаты, активные заказы хостинга.
+// мегакостыль =) // commented by lissyara, 2013-06-01 in 15:47 MSK
 #-------------------------------------------------------------------------------
 if ($Settings['SMSExceptions']['SMSExceptionsSchemeID'] != 0) {
-    $OrderHostings = DB_Select('HostingOrdersOwners', 'SchemeID', Array('Where' => SPrintF('`UserID` = %u AND `StatusID` = \'Active\'', $UserID)));
-    if (Is_Error($OrderHostings))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-    $LimitSchemeID = Explode(',',$Settings['SMSExceptions']['SMSExceptionsSchemeID']);
-    foreach ($OrderHostings as $OrderHosting) {
-	if (In_Array((integer) $OrderHosting['SchemeID'], $LimitSchemeID)) {
-	    $FreeSMS = true;
-	    break;
+	#-------------------------------------------------------------------------------
+	$OrderHostings = DB_Select('HostingOrdersOwners', 'SchemeID', Array('Where' => SPrintF('`UserID` = %u AND `StatusID` = \'Active\'', $UserID)));
+	if (Is_Error($OrderHostings))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$LimitSchemeID = Explode(',',$Settings['SMSExceptions']['SMSExceptionsSchemeID']);
+	foreach ($OrderHostings as $OrderHosting) {
+		if (In_Array((integer) $OrderHosting['SchemeID'], $LimitSchemeID)) {
+			$FreeSMS = true;
+			break;
+		}
 	}
-    }
-    //Debug(print_r($LimitSchemeID, true));
+	#-------------------------------------------------------------------------------
+	//Debug(print_r($LimitSchemeID, true));
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $MessageLength = MB_StrLen($Message);
+#-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/Tasks/SMS]: длинна: %s, сообщение (%s)',$MessageLength,$Message));
+Debug(SPrintF('[comp/Tasks/SMS]: SMS шлюз (%s)', $Settings['SMSProvider']));
+#Debug(SPrintF('[comp/Tasks/SMS]: API ключ (%s)', $Settings['SMSKey']));
+Debug(SPrintF('[comp/Tasks/SMS]: Отправитель (%s)', $Settings['SMSSender']));
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if (Is_Error(System_Load(SPrintF('classes/%s.class.php', $Settings['SMSProvider']))))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/Tasks/SMS]: SMS шлюз (%s)', $Settings['SMSProvider']));
-Debug(SPrintF('[comp/Tasks/SMS]: API ключ (%s)', $Settings['SMSKey']));
-Debug(SPrintF('[comp/Tasks/SMS]: Отправитель (%s)', $Settings['SMSSender']));
 #-------------------------------------------------------------------------------
 if (!IsSet($PaymentLock)) {
     $Regulars = Regulars();
