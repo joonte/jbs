@@ -10,6 +10,11 @@ Eval(COMP_INIT);
 $Result = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Config = Config();
+#-------------------------------------------------------------------------------
+$Settings = $Config['Interface']['Notes']['User']['NoticeOrders'];
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Columns = Array(
 			'`ID`','`DaysRemainded`','`ExpirationDate`','StatusID',
 			'(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `Code`',
@@ -40,7 +45,7 @@ case 'array':
 		#-------------------------------------------------------------------------------
 		#Debug(SPrintF('[comp/Notes/User/NoticeOrders]: service "%s", status "%s", days %s, order #%s',$Order['Code'],$Order['StatusID'],$Order['DaysRemainded'],$Number));
 		#-------------------------------------------------------------------------------
-		if($Order['StatusID'] == 'Active' && ($Order['DaysRemainded'] < 15 || Is_Null($Order['DaysRemainded']))){
+		if($Order['StatusID'] == 'Active' && ($Order['DaysRemainded'] < 15 || Is_Null($Order['DaysRemainded'])) && $Settings['OrdersExpiring']){
 			# проверяем как скоро заканчивается, и, не надо ли уведомлять о окончании
 		
 			# заказы настриваемых услуг и сильно отличающихся от хостинга - обрабатываем отдельно
@@ -188,7 +193,7 @@ case 'array':
 				$Result[] = $NoBody;
 			}
 			#-------------------------------------------------------------------------
-		}elseif($Order['StatusID'] == 'Suspended'){
+		}elseif($Order['StatusID'] == 'Suspended' && $Settings['OrdersSuspended']){
 			# уведомляем что залочен, скоро будет удалён
 			#---------------------------------------------------------------------------
 			# заказы настриваемых услуг и сильно отличающихся от хостинга - обрабатываем отдельно
@@ -331,7 +336,7 @@ case 'array':
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------
-                }elseif($Order['StatusID'] == 'Waiting'){
+                }elseif($Order['StatusID'] == 'Waiting' && $Settings['OrdersWaiting']){
 			# уведомление о неоплаченном заказе
 			#---------------------------------------------------------------------------
 			# заказы настриваемых услуг и сильно отличающихся от хостинга - обрабатываем отдельно
@@ -455,7 +460,7 @@ case 'array':
 			}
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-		}elseif($Order['StatusID'] == 'ClaimForRegister'){
+		}elseif($Order['StatusID'] == 'ClaimForRegister' && $Settings['OrdersClaimForRegister']){
 			#-------------------------------------------------------------------------------
 			$Columns = Array('ID','PersonID','ProfileID','CONCAT(`DomainName`,".",(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`)) AS `DomainNameFull`');
 			$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
@@ -480,7 +485,7 @@ case 'array':
 			}
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-		}elseif($Order['StatusID'] == 'ForTransfer'){
+		}elseif($Order['StatusID'] == 'ForTransfer' && $Settings['OrdersForTransfer']){
 			#-------------------------------------------------------------------------------
 			$Columns = Array('ID','AuthInfo','DomainName','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) AS `Name`','(SELECT `CostTransfer` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) AS `CostTransfer`');
 			#-------------------------------------------------------------------------------
@@ -527,7 +532,7 @@ case 'array':
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 
-		}elseif($Order['StatusID'] == 'OnTransfer'){
+		}elseif($Order['StatusID'] == 'OnTransfer' && $Settings['OrdersOnTransfer']){
 			#-------------------------------------------------------------------------------
 			$Columns = Array('ID','AuthInfo','DomainName','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) AS `Name`','StatusDate');
 			$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));

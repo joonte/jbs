@@ -1378,6 +1378,10 @@
 	<Notes>
 		<!-- *********************************************************************** -->
 		<User>
+			<Announcement>
+				<ShowAnnouncement>1</ShowAnnouncement>
+			</Announcement>
+			<!-- *********************************************************************** -->
 			<EmailConfirmation>
 				<EmailConfirmRequire>1</EmailConfirmRequire>
 			</EmailConfirmation>
@@ -1395,6 +1399,24 @@
 				<ProfileOnFilling>1</ProfileOnFilling>
 			</Profiles>
 		</User>
+		<!-- *********************************************************************** -->
+		<Administrator>
+			<Announcement>
+				<ShowAnnouncement>1</ShowAnnouncement>
+			</Announcement>
+			<!-- *********************************************************************** -->
+			<CheckVersion>
+				<MakeCheckVersion>1</MakeCheckVersion>
+			</CheckVersion>
+			<!-- *********************************************************************** -->
+			<Events>
+				<ShowUnReaded>1</ShowUnReaded>
+			</Events>
+			<!-- *********************************************************************** -->
+			<Tasks>
+				<ShowUnExecuted>1</ShowUnExecuted>
+			</Tasks>
+		</Administrator>
 		<!-- *********************************************************************** -->
 	</Notes>
 	<!-- *********************************************************************** -->

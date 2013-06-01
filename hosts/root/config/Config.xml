@@ -20,4 +20,15 @@
  <DbName />
 </DBConnection>
 <!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<Interface>
+	<Notes>
+		<Administrator>
+			<CheckTablesEngines>
+				<MakeCheckTablesEngines>1</MakeCheckTablesEngines>
+			</CheckTablesEngines>
+		</Administrator>
+	</Notes>
+</Interface>
+<!-- *********************************************************************** -->
 </XML>

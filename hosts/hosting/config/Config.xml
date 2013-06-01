@@ -1254,4 +1254,23 @@
  </ISPswLicenses>
 </Statuses>
 <!-- *********************************************************************** -->
+<Interface>
+	<!-- *********************************************************************** -->
+	<Notes>
+		<!-- *********************************************************************** -->
+		<User>
+			<NoticeOrders>
+				<OrdersExpiring>1</OrdersExpiring>
+				<OrdersSuspended>1</OrdersSuspended>
+				<OrdersWaiting>1</OrdersWaiting>
+				<OrdersClaimForRegister>1</OrdersClaimForRegister>
+				<OrdersForTransfer>1</OrdersForTransfer>
+				<OrdersOnTransfer>1</OrdersOnTransfer>
+			</NoticeOrders>
+		</User>
+		<!-- *********************************************************************** -->
+	</Notes>
+	<!-- *********************************************************************** -->
+</Interface>
+<!-- *********************************************************************** -->
 </XML>
