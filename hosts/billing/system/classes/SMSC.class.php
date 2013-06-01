@@ -11,36 +11,28 @@ class SMSC {
 
     private $config;
 
-    public function __construct() {
-        $this->init();
-    }
-
-    private function init() {
-        $config = Config();
-
-        if (!isset($config['SMSC'])) {
-            throw new jException("SMSC configuration not found!");
-        }
-
-        $this->config = $config['SMSC'];
-
-        if (!isset($this->config['Server'])) {
-            throw new jException("SMSC 'Server' param not found!");
-        }
-
-        if (!isset($this->config['Login'])) {
-            throw new jException("SMSC 'Login' param not found!");
-        }
-
-        if (!isset($this->config['Password'])) {
-            throw new jException("SMSC 'Password' param not found!");
-        }
-
-        if (isset($this->config['UseSSL'])) {
-            $this->https = (boolean)$this->config['UseSSL'];
-        }
-    }
-
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	public function __construct($login = false, $password = false, $apikey = false, $sender = false, $charset = false) {
+		#-------------------------------------------------------------------------------
+		if($login)
+			$this->login = $login;
+		#-------------------------------------------------------------------------------
+	    	if($password)
+			$this->password = $password;
+		#-------------------------------------------------------------------------------
+		if ($apikey)
+			$this->apikey = $apikey;
+		#-------------------------------------------------------------------------------
+		if ($sender)
+			$this->sender = $sender;
+		#-------------------------------------------------------------------------------
+		if ($charset)
+			$this->charset = $charset;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
     public static function get() {
         if (!isset(self::$instance)) {
             self::$instance = new SMSC();
@@ -48,64 +40,97 @@ class SMSC {
 
         return self::$instance;
     }
-
-    public function send($Mobile, $Message) {
-        return $this->sendSmsCmd($Mobile, $Message);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	public function send($Mobile, $Message) {
+		#-------------------------------------------------------------------------------
+		$Result = $this->sendSmsCmd($Mobile, $Message);
+		if(Is_Array($Result)){
+			$this->success = SPrintF('id = %s; cnt = %s',$Result['id'],$Result['cnt']);;
+			return TRUE;
+		}
+		#-------------------------------------------------------------------------------
+		$this->error = print_r($Result,true);
+		return $Result;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	public function balance() {
+		#-------------------------------------------------------------------------------
+		$Result = $this->execCmd('balance');
+		$this->balance = $Result['balance'];
+		return true;
+		#Debug(SPrintF('[system/classes/SMSC.class.php]: balance = %s',print_r($balance,true)));
+		#-------------------------------------------------------------------------------
+	}
+    	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	private function sendSmsCmd($phones, $message, $translit = 0, $time = 0, $id = 0, $format = 0, $sender = false, $query = "") {
+		#-------------------------------------------------------------------------------
+		$urlParams = Array(
+					'mes'		=> $message,
+					'phones'	=> $phones,
+					'sender'	=> $this->sender
+				);
+		#-------------------------------------------------------------------------------
+		if(isSet($this->Send))
+			$urlParams = array_merge($urlParams, $this->Send);
+		#-------------------------------------------------------------------------------
+        	//Debug(print_r($params,true));
+        	$result = $this->execCmd(self::SEND_CMD, $urlParams);
+        	// (id, cnt, cost, balance) или (id, -error)
+		#-------------------------------------------------------------------------------
+		#Debug(SPrintF('[system/classes/SMSC.class.php]: result = %s',print_r($result,true)));
+	        return $result;
     }
-
-    private function sendSmsCmd($phones, $message, $translit = 0, $time = 0, $id = 0, $format = 0, $sender = false, $query = "") {
-        $params = Array(
-            "login" => $this->config["Login"],
-            "psw" => $this->config["Password"],
-            "mes" => $message,
-            "phones" => $phones,
-            "fmt" => 1
-        );
-
-        if (isSet($this->config['Send'])) {
-            $params = array_merge($params, $this->config['Send']);
-        }
-
-        //Debug(print_r($params,true));
-
-        $urlParams = "";
-
-        foreach ($params as $param => $value) {
-            $urlParams .= sprintf("%s=%s&", $param, urlencode($value));
-        }
-
-        $result = $this->execCmd(self::SEND_CMD, $urlParams);
-
-        // (id, cnt, cost, balance) или (id, -error)
-
-        if (Count($result) == 2 && $result[0] == "0") {
-            throw new jException(sprintf("Error while sending sms message! [id=%d, error=%s]",$result[0], $result[1]));
-        }
-
-        return $result;
-    }
-
-    function execCmd($cmd, $arg = "") {
-        $proto = $this->https ? "https" : "http";
-
-        $url = sPrintF("%s://%s/sys/%s.php?%s", $proto, $this->config["Server"], $cmd, $arg);
-        //Debug($url);
-
-        $i = 0;
-        do {
-            if ($i) { sleep(2); }
-
-            $ret = $this->readUrl($url);
-        }
-        while ($ret == "" && ++$i < 3);
-
-        if ($ret == "") {
-            throw new jException("Error reading URL: ".$url);
-        }
-
-        return explode(",", $ret);
-    }
-
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	function execCmd($cmd, $arg = Array()){
+		#-------------------------------------------------------------------------------
+		$proto = $this->https ? "https" : "http";
+		#-------------------------------------------------------------------------------
+		$params = Array(
+		        		'login'		=> $this->login,
+					'psw'		=> $this->password,
+					'charset'	=> 'utf-8',
+					'fmt'		=> 3,
+				);
+		#-------------------------------------------------------------------------------
+		$params = array_merge($params, $arg);
+	        $urlParams = "";
+		#-------------------------------------------------------------------------------
+		foreach ($params as $param => $value)
+			$urlParams .= sprintf("%s=%s&", $param, urlencode($value));
+		#-------------------------------------------------------------------------------
+	        $url = sPrintF("%s://smsc.ru/sys/%s.php?%s", $proto, $cmd, $urlParams);
+		#Debug(SPrintF('[system/classes/SMSC.class.php]: url = %s',$url));
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$i = 0;
+		do {
+			if ($i) { sleep(2); }
+			$ret = $this->readUrl($url);
+		}
+		#-------------------------------------------------------------------------------
+		while ($ret == "" && ++$i < 3);
+		if ($ret == "") {
+			throw new jException("Error reading URL: ".$url);
+		}
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$Result = Json_Decode($ret,TRUE);
+		if(IsSet($Result['error'])){
+			$this->error = SPrintF('error_code = %s; error = (%s)',$Result['error_code'],$Result['error']);
+			throw new jException(SPrintF('error_code = %s; error = (%s)',$Result['error_code'],$Result['error']));
+		}
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		return $Result;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
     /**
      * @param  $url
      * @return mixed|string

@@ -94,7 +94,7 @@ class SMSPilot {
     public $cost; // new in 1.8
     public $balance; // new in 1.8
 
-    public function __construct($login = false, $apikey = false, $from = false, $charset = false) {
+    public function __construct($login = false, $password = false, $apikey = false, $from = false, $charset = false) {
 
 	if ($apikey)
 	    $this->apikey = $apikey;
