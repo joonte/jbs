@@ -93,7 +93,7 @@ $MessageLength = MB_StrLen($Message);
 Debug(SPrintF('[comp/Tasks/SMS]: Собщение (%s) Длинна (%s)', $Message, $MessageLength));
 #-------------------------------------------------------------------------------
 if (Is_Error(System_Load(SPrintF('classes/%s.class.php', $Settings['SMSProvider']))))
-    return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/Tasks/SMS]: SMS шлюз (%s)', $Settings['SMSProvider']));
 Debug(SPrintF('[comp/Tasks/SMS]: API ключ (%s)', $Settings['SMSKey']));
@@ -170,7 +170,7 @@ if (!IsSet($Links[$LinkID])) {
     #-----------------------------------------------------------------------------
     $SMS = &$Links[$LinkID];
     #-----------------------------------------------------------------------------
-    $SMS = new $Settings['SMSProvider']($Settings['SMSKey'], $Settings['SMSSender']);
+    $SMS = new $Settings['SMSProvider']($Login = FALSE, $Settings['SMSKey'], $Settings['SMSSender']);
     if (Is_Error($SMS))
 	return ERROR | @Trigger_Error(500);
     #-----------------------------------------------------------------------------
