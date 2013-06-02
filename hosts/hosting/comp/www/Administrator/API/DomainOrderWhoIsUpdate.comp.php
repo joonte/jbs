@@ -80,9 +80,9 @@ switch(ValueOf($DomainOrder)){
 			'Text'          => SPrintF('Домен %s.%s является свободным, невозможно обновить информацию WhoIs',$DomainOrder['DomainName'],$DomainOrder['SchemeName']),
 			'IsReaded'      => FALSE
 			);
-	  $Event = Comp_Load('Events/EventInsert',$Event);
-          if(!$Event)
-             return ERROR | @Trigger_Error(500);
+#	  $Event = Comp_Load('Events/EventInsert',$Event);
+ #         if(!$Event)
+  #           return ERROR | @Trigger_Error(500);
 	  #-----------------------------------------------------------------------
 	  # update last whois update date
 	  $IsUpdate = DB_Update('DomainsOrders',Array('UpdateDate'=>Time()),Array('ID'=>$DomainOrder['ID']));
