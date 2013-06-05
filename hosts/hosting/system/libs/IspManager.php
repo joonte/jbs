@@ -629,26 +629,26 @@ function IspManager_Delete($Settings,$Login,$IsReseller = FALSE){
 		return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
 	#-----------------------------------------------------------------------------
 	$XML = $XML->ToArray('elem');
-	$UsersList = $XML['doc'];
-	if(Is_Array($UsersList)){
+	$Users = $XML['doc'];
+	if(Is_Array($Users)){
 		#-----------------------------------------------------------------------------
 		# дропаем юзеров
-		$Array = Array();
-		foreach($UsersList as $ReslUser)
-			$Array[] = $ReslUser['name'];
-		#-----------------------------------------------------------------------------
-		$Request = Array(
-				'authinfo'      => $authinfo,
-				'func'		=> 'user.delete',
-				'out'		=> 'xml',
-				'su'		=> $Login,
-				'elid'		=> Implode(',',$Array)
-			);
-		#-----------------------------------------------------------------------------
-		$Response = Http_Send('/manager/ispmgr',$Http,$Request);
-		if(Is_Error($Response))
-			return ERROR | @Trigger_Error('[IspManager_Delete]: не удалось соедениться с сервером');
-		# я так думаю, неважно чё он там ответил, если ответил...
+		foreach($Users as $User){
+			#-----------------------------------------------------------------------------
+			$Request = Array(
+					'authinfo'      => $authinfo,
+					'func'		=> 'user.delete',
+					'out'		=> 'xml',
+					'su'		=> $Login,
+					'elid'		=> $User['name']
+				);
+			#-----------------------------------------------------------------------------
+			$Response = Http_Send('/manager/ispmgr',$Http,$Request);
+			if(Is_Error($Response))
+				return ERROR | @Trigger_Error('[IspManager_Delete]: не удалось соедениться с сервером');
+			# я так думаю, неважно чё он там ответил, если ответил...
+			#-----------------------------------------------------------------------------
+		}
 		#-----------------------------------------------------------------------------
 	}
 	#-----------------------------------------------------------------------------
