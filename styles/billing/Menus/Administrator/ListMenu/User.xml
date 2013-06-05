@@ -35,7 +35,7 @@
   <Icon>Profiles.png</Icon>
  </UniqID>
  <UniqID>
-  <Text>Договоры</Text>
+  <Text>Договора</Text>
   <Href>/Administrator/Contracts?Search=%Email%&amp;PatternOutID=Default</Href>
   <Icon>TextQuote.gif</Icon>
  </UniqID>
