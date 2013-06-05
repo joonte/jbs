@@ -24,6 +24,16 @@ $Where = Array(
 $IsDelete = DB_Delete('Tasks',Array('Where'=>$Where));
 if(Is_Error($IsDelete))
 	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# костыль к рассыльщику SMS
+$Where = Array(
+		'`CreateDate` < UNIX_TIMESTAMP() - 24 * 3600',
+		"`TypeID` = 'SMS'"
+		);
+$IsDelete = DB_Delete('Tasks',Array('Where'=>$Where));
+if(Is_Error($IsDelete))
+	return ERROR | @Trigger_Error(500);
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # зачищаем таблицу ServersUpTime

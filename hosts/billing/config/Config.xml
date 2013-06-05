@@ -846,8 +846,13 @@
    <GroupID>1</GroupID>
   </EdeskMessageCreate>
   <!-- ********************************************************************* -->
-  <NotPayedInvoice>
+  <PartnersReneward>
    <Title>Прочее</Title>
+   <Name>Партнёрские начисления</Name>
+   <GroupID>1</GroupID>
+  </PartnersReneward>
+  <!-- ********************************************************************* -->
+  <NotPayedInvoice>
    <Name>Неоплаченные счета</Name>
    <GroupID>1</GroupID>
   </NotPayedInvoice>

@@ -116,6 +116,15 @@ if($Mobile){
 	    }
 	}
 	#-------------------------------------------------------------------------------
+	$Event = Array(
+			'UserID'        => $GLOBALS['__USER']['ID'],
+			'PriorityID'    => 'Billing',
+			'Text'          => SPrintF('Мобильный телефон (%s) успешно подтверждён',$GLOBALS['__USER']['Mobile'])
+			);
+	$Event = Comp_Load('Events/EventInsert',$Event);
+	if(!$Event)
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
 	# flush cache
 	$IsFlush = Comp_Load('www/CacheFlush',Array());
 	if(!$IsFlush)
