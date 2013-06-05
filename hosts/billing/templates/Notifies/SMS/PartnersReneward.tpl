@@ -1,1 +1,1 @@
-{$Message|default:'$Message'}
+Партнёрские начисления на сумму: {$Summ|default:'$Summ'}
