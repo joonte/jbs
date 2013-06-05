@@ -64,17 +64,20 @@ function WhoIs_Check($DomainName,$ZoneName){
   $Answer = CacheManager::get($CacheID);
   #-----------------------------------------------------------------------------
 	if(!$Answer){
+		#-------------------------------------------------------------------------------
+		$IDNAConverter = new IDNAConvert();
+		#-------------------------------------------------------------------------------
 		if($UseSystemApplication){
-			$IsExec = Exec(SPrintF('whois %s',$Domain),$Answer);
+			#-------------------------------------------------------------------------------
+			$IsExec = Exec(SPrintF('whois %s',$IDNAConverter->encode($Domain)),$Answer);
 			$Answer = Implode("\n",$Answer);
+			#-------------------------------------------------------------------------------
 		}else{
     #---------------------------------------------------------------------------
     $Socket = @FsockOpen($DomainZone['Server'],43,$nError,$sError,5);
     #---------------------------------------------------------------------------
     if(!$Socket)
       return ERROR | @Trigger_Error('[WhoIs_Check]: ошибка соединения с сервером WhoIs');
-    #---------------------------------------------------------------------------
-    $IDNAConverter = new IDNAConvert();
     #---------------------------------------------------------------------------
     if(!@Fputs($Socket,SPrintF("%s\r\n",$IDNAConverter->encode($Domain))))
       return ERROR | @Trigger_Error('[WhoIs_Check]: ошибка работы с серверов WhoIs');
