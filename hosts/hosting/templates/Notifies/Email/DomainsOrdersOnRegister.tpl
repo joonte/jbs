@@ -5,7 +5,7 @@
 {assign var=Theme value="Заказ домена ({$DomainName|default:'$DomainName'}.{$Name|default:'$Name'}) поступил на регистрацию" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
-Уведомляем Вас о том, что {$StatusDate|default:'$StatusDate'} Ваш заказ №{$OrderID|string_format:"%05u"} на регистрацию домена {$DomainName|default:'$DomainName'}.{$Name|default:'$Name'} был отправлен на регистрацию.
+Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ #{$OrderID|string_format:"%05u"} на регистрацию домена {$DomainName|default:'$DomainName'}.{$Name|default:'$Name'} был отправлен на регистрацию.
 {if isset($UploadID)}
 
 Для регистрации домена Вам необходимо загрузить документ подтверждающий личность. Для этого пройдите по ссылке:
