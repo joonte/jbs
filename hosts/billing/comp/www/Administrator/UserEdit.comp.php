@@ -11,10 +11,14 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $UserID = (integer) @$Args['UserID'];
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Messages = Messages();
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$User = DB_Select('Users',Array('ID','Email','Name','GroupID','OwnerID','IsManaged','IsInheritGroup','LayPayMaxDays','LayPayMaxSumm','LayPayThreshold','Rating','IsActive','IsNotifies','IsHidden','IsProtected','AdminNotice'),Array('UNIQ','ID'=>$UserID));
+$User = DB_Select('Users',Array('ID','Email','Mobile','Name','GroupID','OwnerID','IsManaged','IsInheritGroup','LayPayMaxDays','LayPayMaxSumm','LayPayThreshold','Rating','IsActive','IsNotifies','IsHidden','IsProtected','AdminNotice'),Array('UNIQ','ID'=>$UserID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($User)){
   case 'error':
@@ -72,6 +76,22 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Почтовый адрес',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+	'Form/Input',
+		Array(
+			'name'      => 'Mobile',
+			'size'      => 25,
+			'type'      => 'text',
+			'prompt'    => $Messages['Prompts']['Mobile'],
+			'value'     => $User['Mobile'],
+		)
+	);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Мобильный телефон',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
