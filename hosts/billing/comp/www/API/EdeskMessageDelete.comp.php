@@ -34,15 +34,6 @@ if(!$Count)
 	return new gException('MESSAGE_NOT_FOUND','Сообщение не найдено');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-# проверяем - не единственное ли это сообщение треда?
-$Count = DB_Count('EdesksMessages',Array('Where'=>SPrintF("`EdeskID` = (SELECT `EdeskID` FROM `EdesksMessages` WHERE `ID` = %u)",$MessageID)));
-if(Is_Error($Count))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-if($Count == 1)
-	return new gException('LAST_MESSAGE_IN_TRED','Это - последнее сообщение тикета. Необходимо удалять тикет.');
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 # выбираем текст тикета, и его тему - для записи события
 $EdeskMessage = DB_Select('EdesksOwners',Array('ID','Theme','Content'),Array('UNIQ','Where'=>SPrintF('`MessageID` = %u',$MessageID)));
 #-------------------------------------------------------------------------------
@@ -59,18 +50,39 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-#$IsDeleted = DB_Delete('EdesksMessages',Array('ID'=>$MessageID));
-#if(Is_Error($IsDeleted))
-#	return ERROR | @Trigger_Error(500);
-$Comp = Comp_Load('www/API/Delete',Array('TableID'=>'EdesksMessages','RowsIDs'=>$MessageID));
-if(Is_Error($Comp))
-	return new gException('CANNOT_DELETE_TABLE_ROW','Не удалось удалить выбранное сообщение');
+$Out = Array('Status'=>'Ok');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# проверяем - не единственное ли это сообщение треда?
+$Count = DB_Count('EdesksMessages',Array('Where'=>SPrintF("`EdeskID` = (SELECT `EdeskID` FROM `EdesksMessages` WHERE `ID` = %u)",$MessageID)));
+if(Is_Error($Count))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if($Count == 1){
+	#-------------------------------------------------------------------------------
+	#return new gException('LAST_MESSAGE_IN_TRED','Это - последнее сообщение тикета. Необходимо удалять тикет.');
+	$Comp = Comp_Load('www/API/Delete',Array('TableID'=>'Edesks','RowsIDs'=>$EdeskMessage['ID']));
+	if(Is_Error($Comp))
+		return new gException('CANNOT_DELETE_TABLE_ROW','Не удалось удалить тикет');
+	#-------------------------------------------------------------------------------
+	$Message = SPrintF('Удалён тикет #%u (%s)',$EdeskMessage['ID'],$EdeskMessage['Theme']);
+	#-------------------------------------------------------------------------------
+	$Out['Location'] = '/Administrator/Tickets';
+}else{
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('www/API/Delete',Array('TableID'=>'EdesksMessages','RowsIDs'=>$MessageID));
+	if(Is_Error($Comp))
+		return new gException('CANNOT_DELETE_TABLE_ROW','Не удалось удалить выбранное сообщение');
+	#-------------------------------------------------------------------------------
+	$Message = SPrintF('Удалено сообщение #%u, тикет #%u (%s), текст сообщения (%s...)',$MessageID,$EdeskMessage['ID'],$EdeskMessage['Theme'],SubStr($EdeskMessage['Content'],0,100));
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Event = Array(
 		'UserID'	=> $__USER['ID'],
 		'PriorityID'	=> 'Warning',
-		'Text'		=> SPrintF('Удалено сообщение #%u, тикет #%u (%s), текст сообщения (%s...)',$MessageID,$EdeskMessage['ID'],$EdeskMessage['Theme'],SubStr($EdeskMessage['Content'],0,100))
+		'Text'		=> $Message
 		);
 $Event = Comp_Load('Events/EventInsert',$Event);
 #-------------------------------------------------------------------------------
@@ -78,9 +90,8 @@ if(!$Event)
 	return ERROR | @Trigger_Error(500);
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
-return Array('Status'=>'Ok');
-
-
-
+# удалять могут тока админы. значит и локейшен туда же
+return $Out;
+#-------------------------------------------------------------------------------
 
 ?>
