@@ -60,12 +60,16 @@ $FileLength = GetUploadedFileSize('EdesksMessages', $MessageID);
 #-------------------------------------------------------------------------------
 if((integer)$FileLength){
 	#-------------------------------------------------------------------------------
-	# проверяем что это картика
-	$Extension = explode(".", StrToLower($FileName));
-	if(IsSet($Extension[1]) && In_Array($Extension[1],Array('png','gif','jpg','jpeg'))){
+	# проверяем наличие точки в имени (значит расширение определить удастся)
+	if(StrRIPos($FileName,'.')){
 		#-------------------------------------------------------------------------------
-		# добавляем к тексту превьюху
-		$Content = SPrintF("%s\n\n[image]%s://%s/FileDownload?TypeID=EdesksMessages&FileID=%u[/image]",$Content,Url_Scheme(),HOST_ID,$MessageID);
+		# проверяем что это картинка
+		if(In_Array(StrToLower(SubStr($FileName,StrRIPos($FileName,'.') + 1,4)),Array('png','gif','jpg','jpeg'))){
+			#-------------------------------------------------------------------------------
+			# добавляем к тексту превьюху
+			$Content = SPrintF("%s\n\n[image]%s://%s/FileDownload?TypeID=EdesksMessages&FileID=%u[/image]",$Content,Url_Scheme(),HOST_ID,$MessageID);
+			#-------------------------------------------------------------------------------
+		}
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
