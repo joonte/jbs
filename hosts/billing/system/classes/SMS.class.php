@@ -57,10 +57,12 @@ class SMS implements Dispatcher {
             'Params' => Array(
                 $recipient['Mobile'],
                 $message,
-                $recipient['ID']
+                $recipient['ID'],
+		($msg->getParam('ChargeFree'))?TRUE:FALSE
             )
         );
-
+        
+	#Debug(SPrintF('[system/classes/SMS.class.php]: msg = %s,',print_r($msg,true)));
         $result = Comp_Load('www/Administrator/API/TaskEdit',$taskParams);
         switch(ValueOf($result)) {
             case 'error':

@@ -930,6 +930,7 @@
     <Mobile>Номер мобильного телефона</Mobile>
     <Message>Сообщение</Message>
     <ID>Идентификатор пользователя</ID>
+    <ChargeFree>Сообщение бесплатное</ChargeFree>
    </Params>
    <IsActive>1</IsActive>
   </SMS>

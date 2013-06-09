@@ -42,7 +42,7 @@ switch(ValueOf($User)){
     if(Is_Error($IsUpdated))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
-    $IsSend = NotificationManager::sendMsg(new Message('UserPasswordRestore',(integer)$User['ID'],Array('Password'=>$Password)));
+    $IsSend = NotificationManager::sendMsg(new Message('UserPasswordRestore',(integer)$User['ID'],Array('Password'=>$Password,'ChargeFree'=>TRUE)));
     #---------------------------------------------------------------------------
     switch(ValueOf($IsSend)){
       case 'error':

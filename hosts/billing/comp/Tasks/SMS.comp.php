@@ -4,7 +4,7 @@
 /** @author Rootden for Lowhosting.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('Task', 'Mobile', 'Message', 'UserID');
+$__args_list = Array('Task', 'Mobile', 'Message', 'UserID', 'ChargeFree');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
@@ -20,8 +20,6 @@ $GLOBALS['TaskReturnInfo'] = $Mobile;
 $Config = Config();
 #-------------------------------------------------------------------------------
 $Settings = $Config['SMSGateway'];
-#-------------------------------------------------------------------------------
-$FreeSMS = IsSet($GLOBALS['FreeSMS'])?TRUE:FALSE;
 #-------------------------------------------------------------------------------
 if(!IsSet($Settings['SMSProvider']))
 	return ERROR | @Trigger_Error(500);
@@ -47,15 +45,14 @@ if(!IsSet($Settings['SMSExceptions']['SMSExceptionsSchemeID']))
 #-------------------------------------------------------------------------------
 $User = DB_Select('Users', Array('MobileConfirmed', 'GroupID'), Array('UNIQ', 'ID' => $UserID));
 if (!Is_Array($User))
-    return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // Если пользователь относится к группе 'Сотрудники' то плату не взымаем...
+# TODO: однако, надо через Tree_Entrance('Groups',3000000) искать
 #-------------------------------------------------------------------------------
-if($User['GroupID'] == '3000000'){
-	$PaymentLock = true;
-	$SMSCost = 0;
-}
+if($User['GroupID'] == '3000000')
+	$ChargeFree = TRUE;
 #-------------------------------------------------------------------------------
 // Проверяем пользователя на исключения оплаты, сумма оплаченных счетов.
 #-------------------------------------------------------------------------------
@@ -70,7 +67,7 @@ if($Settings['SMSExceptions']['SMSExceptionsPaidInvoices'] >= 0){
 	case 'array':
 		#-------------------------------------------------------------------------------
 		if($IsSelect['Summ'] >= $Settings['SMSExceptions']['SMSExceptionsPaidInvoices'])
-			$FreeSMS = true;
+			$ChargeFree = true;
 			//Debug(SPrintF('[comp/Tasks/SMS]: Оплаченных счетов (%s)', $IsSelect['Summ']));
 		#-------------------------------------------------------------------------------
 		break;
@@ -85,16 +82,16 @@ if($Settings['SMSExceptions']['SMSExceptionsPaidInvoices'] >= 0){
 // Проверяем пользователя на исключения оплаты, активные заказы хостинга.
 // мегакостыль =) // commented by lissyara, 2013-06-01 in 15:47 MSK
 #-------------------------------------------------------------------------------
-if ($Settings['SMSExceptions']['SMSExceptionsSchemeID'] != 0) {
+if($Settings['SMSExceptions']['SMSExceptionsSchemeID'] != 0){
 	#-------------------------------------------------------------------------------
-	$OrderHostings = DB_Select('HostingOrdersOwners', 'SchemeID', Array('Where' => SPrintF('`UserID` = %u AND `StatusID` = \'Active\'', $UserID)));
+	$OrderHostings = DB_Select('HostingOrdersOwners', 'SchemeID', Array('Where' => SPrintF('`UserID` = %u AND `StatusID` = "Active"', $UserID)));
 	if (Is_Error($OrderHostings))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$LimitSchemeID = Explode(',',$Settings['SMSExceptions']['SMSExceptionsSchemeID']);
-	foreach ($OrderHostings as $OrderHosting) {
-		if (In_Array((integer) $OrderHosting['SchemeID'], $LimitSchemeID)) {
-			$FreeSMS = true;
+	foreach($OrderHostings as $OrderHosting){
+		if(In_Array((integer) $OrderHosting['SchemeID'], $LimitSchemeID)){
+			$ChargeFree = true;
 			break;
 		}
 	}
@@ -115,49 +112,53 @@ if (Is_Error(System_Load(SPrintF('classes/%s.class.php', $Settings['SMSProvider'
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if (!IsSet($PaymentLock)) {
-    $Regulars = Regulars();
-    $MobileCountry = 'SMSPriceDefault';
-    $RegCountrys = array('SMSPriceRu' => $Regulars['SMSPriceRu'], 'SMSPriceUa' => $Regulars['SMSPriceUa'], 'SMSPriceSng' => $Regulars['SMSPriceSng'], 'SMSPriceZone1' => $Regulars['SMSPriceZone1'], 'SMSPriceZone2' => $Regulars['SMSPriceZone2']);
-    #-------------------------------------------------------------------------------
-    foreach ($RegCountrys as $RegCountryKey => $RegCountry) {
-	if (Preg_Match($RegCountry, $Mobile)) {
-	    $MobileCountry = $RegCountryKey;
-	}
-    }
-    Debug(SPrintF('[comp/Tasks/SMS]: Страна определена (%s)', $MobileCountry));
-    #-------------------------------------------------------------------------------
-    if (!IsSet($Settings['SMSPrice'][$MobileCountry]))
+$Regulars = Regulars();
+$MobileCountry = 'SMSPriceDefault';
+$RegCountrys = array('SMSPriceRu' => $Regulars['SMSPriceRu'], 'SMSPriceUa' => $Regulars['SMSPriceUa'], 'SMSPriceSng' => $Regulars['SMSPriceSng'], 'SMSPriceZone1' => $Regulars['SMSPriceZone1'], 'SMSPriceZone2' => $Regulars['SMSPriceZone2']);
+#-------------------------------------------------------------------------------
+foreach ($RegCountrys as $RegCountryKey => $RegCountry)
+	if (Preg_Match($RegCountry, $Mobile))
+		$MobileCountry = $RegCountryKey;
+Debug(SPrintF('[comp/Tasks/SMS]: Страна определена (%s)', $MobileCountry));
+#-------------------------------------------------------------------------------
+if (!IsSet($Settings['SMSPrice'][$MobileCountry]))
 	return ERROR | @Trigger_Error(500);
-    #-------------------------------------------------------------------------------
-    if($MessageLength <= 70){
+#-------------------------------------------------------------------------------
+if($MessageLength <= 70){
+	#-------------------------------------------------------------------------------
 	$SMSCost = Str_Replace(',', '.', $Settings['SMSPrice'][$MobileCountry]);
 	$SMSCount = 1;
-    }else{
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
 	$SMSCount = Ceil($MessageLength / 67);
+	#-------------------------------------------------------------------------------
 	# сообщение не может быть больше 10 частей... на самом деле, например у меня 
 	# телефон поддерживает максимум 6 частей...
 	if($SMSCount > 10){
 		Debug(SPrintF('[comp/Tasks/SMS]: Слишком длинное сообщеие (%s частей), не отправлено', $SMSCount));
 		return TRUE;
 	}
+	#-------------------------------------------------------------------------------
 	$SMSCost = $SMSCount * Str_Replace(',', '.', $Settings['SMSPrice'][$MobileCountry]);
-    }
-    #-------------------------------------------------------------------------------
-    if($FreeSMS)
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($ChargeFree)
 	$SMSCost = 0;
-    #-------------------------------------------------------------------------------
-    $Comp = Comp_Load('Formats/Currency',$SMSCost);
-    if(Is_Error($Comp))
-      return ERROR | @Trigger_Error(500);
-    #-------------------------------------------------------------------------------
-    Debug(SPrintF('[comp/Tasks/SMS]: Стоимость сообщения (%s) всего частей (%s)', $Comp, $SMSCount));
-    #-------------------------------------------------------------------------------
-    if (!Is_Numeric($SMSCost))
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Formats/Currency',$SMSCost);
+if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
-    #-------------------------------------------------------------------------
-    if ($SMSCost > 0){
-    	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+Debug(SPrintF('[comp/Tasks/SMS]: Стоимость сообщения (%s) всего частей (%s)', $Comp, $SMSCount));
+#-------------------------------------------------------------------------------
+if (!Is_Numeric($SMSCost))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------
+if ($SMSCost > 0){
+	#-------------------------------------------------------------------------------
 	$Where = Array(
 			SPrintF('`UserID` = %u', $UserID),
 			SPrintF('`Balance` >= %s', $SMSCost),
@@ -187,23 +188,26 @@ if (!IsSet($PaymentLock)) {
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if(!IsSet($ContractID) && !IsSet($After)){
-	    Debug("[comp/Tasks/SMS]: Недостаточно денежных средств на любом договоре клиента");
-	    if ($Config['Notifies']['Methods']['SMS']['IsEvent']){
-	    	#-------------------------------------------------------------------------------
-		$Event = Array('UserID' => $UserID, 'PriorityID' => 'Error', 'Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), %s', $Mobile, 'недостаточно денежных средств.'));
-		$Event = Comp_Load('Events/EventInsert', $Event);
-		if (!$Event)
-		    return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-	    }
-	    #-------------------------------------------------------------------------------
-	    if (Is_Null($Task))
-		return SPrintF('Недостаточно денежных средств на балансе. Стоимость: %s',$SMSCost);
-	    #-------------------------------------------------------------------------------
-	    return TRUE;
+		Debug("[comp/Tasks/SMS]: Недостаточно денежных средств на любом договоре клиента");
+		if($Config['Notifies']['Methods']['SMS']['IsEvent']){
+			#-------------------------------------------------------------------------------
+			$Event = Array('UserID' => $UserID, 'PriorityID' => 'Error', 'Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), недостаточно денежных средств на любом договоре клиента', $Mobile));
+			$Event = Comp_Load('Events/EventInsert', $Event);
+			if(!$Event)
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		if(Is_Null($Task))
+			return SPrintF('Недостаточно денежных средств на вашем балансе. Стоимость сообщения: %s',$SMSCost);
+		#-------------------------------------------------------------------------------
+		return TRUE;
+		#-------------------------------------------------------------------------------
 	}
-    }
+	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Links = &Links();
 #-------------------------------------------------------------------------------
@@ -302,7 +306,7 @@ case 'true':
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[comp/Tasks/SMS]: Отправка успешна, ответ шлюза: %s',$SMS->success));
 	#-------------------------------------------------------------------------------
-	if(!IsSet($PaymentLock) && IsSet($After)){
+	if(!$ChargeFree && IsSet($After)){
 		#------------------------------TRANSACTION--------------------------------------
 		if (Is_Error(DB_Transaction($TransactionID = UniqID('PostingSMS'))))
 			return ERROR | @Trigger_Error(500);
