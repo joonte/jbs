@@ -1,2 +1,2 @@
-Оканчивается срок блокировки Вашего заказа #{$OrderID|string_format:"%05u"} на хостинг домен.
-Дата удаления заказа {$ExpDate|date_format:"%d.%m.%Y"}
+{assign var=ExpDate value=$StatusDate + $Config.Tasks.Types.HostingForDelete.DeleteTimeout * 24 * 3600}
+{$ExpDate|date_format:"%d.%m.%Y"} будет удалён хостинг {$Login|default:'$Login'}, домен {$Domain|default:'$Domain'}
