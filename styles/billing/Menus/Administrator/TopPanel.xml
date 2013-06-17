@@ -48,7 +48,7 @@
    <Text>Центр поддержки</Text>
    <Prompt>Поддержка клиентов (тикет система)</Prompt>
    <Paths>
-    <UniqID>^\/Administrator\/(Tickets|Internal)$</UniqID>
+    <UniqID>^\/Administrator\/Tickets$</UniqID>
    </Paths>
    <Href>/Administrator/Tickets</Href>
    <Comp>Tickets/Icons/Administrator</Comp>

@@ -6,7 +6,7 @@
  <ID100>
   <Text>Сайт</Text>
   <Paths>
-   <UniqID>^\/(Clause|Index|Search|News|Documents|Logon|UserPasswordRestore|UserRegister|Clients|Partners|Edesks|EdeskMessages|Contacts)$</UniqID>
+   <UniqID>^\/(Clause|Index|Search|News|Documents|Logon|UserPasswordRestore|UserRegister|Clients|Partners|Contacts)$</UniqID>
   </Paths>
   <Href>/</Href>
  </ID100>

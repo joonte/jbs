@@ -93,14 +93,6 @@
   <Level>1</Level>
  </ListElement>
  <ListElement>
-  <Text>Обсуждения</Text>
-  <Paths>
-   <UniqID>^\/(Edesks|EdeskMessages)$</UniqID>
-  </Paths>
-  <Href>/Edesks</Href>
-  <Level>2</Level>
- </ListElement>
- <ListElement>
   <Text>Контакты</Text>
   <Prompt>Контактные данные администрации</Prompt>
   <Paths>
