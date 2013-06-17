@@ -84,7 +84,7 @@ $EnterDate = Comp_Load('Formats/Date/Remainder',(Time() - $User['EnterDate']));
 if(Is_Error($EnterDate))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Delete = ($__USER['IsAdmin'])?SPrintF('<a style="cursor:pointer;" onclick="ShowConfirm(\'Вы подтверждаете удаление сообщения?\',\'AjaxCall(\\\'/API/EdeskMessageDelete\\\',{MessageID:%u},\\\'Удаление сообщения\\\',\\\'GetURL(document.location);\\\');\');" onmouseover="PromptShow(event,\'Удалить это сообщение\',this);">[удалить]</a>',$MessageID):' ';
+$Delete = ($__USER['IsAdmin'])?SPrintF('<a href="JavaScript:ShowConfirm(\'Вы подтверждаете удаление сообщения?\',\'AjaxCall(\\\'/API/EdeskMessageDelete\\\',{MessageID:%u},\\\'Удаление сообщения\\\',\\\'GetURL(document.location);\\\');\');" onmouseover="PromptShow(event,\'Удалить это сообщение\',this);">[удалить]</a>',$MessageID):' ';
 #-------------------------------------------------------------------------------
 $BgColor = (!$IsVisible)?'FFE4E1':(($UserID != $OwnerID)?'FFFFFF':'FDF6D3');
 #-------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ $Params = Array('User'=>$User,'EnterDate'=>$EnterDate,'Status'=>((Time() - $User
 #-------------------------------------------------------------------------------
 if((integer)$FileLength){
 	#-------------------------------------------------------------------------------
-	$Delete = ($__USER['IsAdmin'])?SPrintF('<a style="cursor:pointer;" onclick="ShowConfirm(\'Вы подтверждаете удаление файла?\',\'AjaxCall(\\\'/Administrator/API/FileDelete\\\',{Table:\\\'EdesksMessages\\\',ID:%u},\\\'Удаление файла\\\',\\\'GetURL(document.location);\\\');\');" onmouseover="PromptShow(event,\'Удалить это вложение\',this);">[удалить]</a>',$MessageID):' ';
+	$Delete = ($__USER['IsAdmin'])?SPrintF('<a href="JavaScript:ShowConfirm(\'Вы подтверждаете удаление файла?\',\'AjaxCall(\\\'/Administrator/API/FileDelete\\\',{Table:\\\'EdesksMessages\\\',ID:%u},\\\'Удаление файла\\\',\\\'GetURL(document.location);\\\');\');" onmouseover="PromptShow(event,\'Удалить это вложение\',this);">[удалить]</a>',$MessageID):' ';
 	#-------------------------------------------------------------------------------
 	$Params2 = Array('Delete'=>$Delete,'FileName'=>$FileName,'FileSize'=>SPrintF('%01.2f',$FileLength/1024),'MessageID'=>$MessageID);
 	#-------------------------------------------------------------------------------
@@ -178,9 +178,9 @@ if(IsSet($GLOBALS['__USER']) /*&& Mb_StrLen($Content) < 1000*/){
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		$Params['Edit'] = $Span->ToXMLString();
+		#$Params['Links'] = $Span->ToXMLString();
 		#-------------------------------------------------------------------------------
-		UnSet($Span);
+		#UnSet($Span);
 		#-------------------------------------------------------------------------------
   	}else{	# $IsAdmin false->true
 		#-------------------------------------------------------------------------------
@@ -266,6 +266,7 @@ if(IsSet($GLOBALS['__USER']) /*&& Mb_StrLen($Content) < 1000*/){
 }
 #-------------------------------------------------------------------------------
 $Params['Links'] = IsSet($Span)?$Span->ToXMLString():'-';
+$Params['Edit'] = IsSet($Params['Edit'])?$Params['Edit']:'-';
 $Table = new Tag('TABLE',Array('class'=>'EdeskMessage','cellspacing'=>5,'height'=>'100%','width'=>'100%'));
 $Table->AddHTML(TemplateReplace(SPrintF('Edesks.Message.TABLE.%s',IsSet($_COOKIE['EdesksDisplay'])?$_COOKIE['EdesksDisplay']:'Left'),$Params));
 #-------------------------------------------------------------------------------
