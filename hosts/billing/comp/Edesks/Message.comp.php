@@ -64,7 +64,7 @@ if((integer)$FileLength){
 	if(StrRIPos($FileName,'.')){
 		#-------------------------------------------------------------------------------
 		# проверяем что это картинка
-		if(In_Array(StrToLower(SubStr($FileName,StrRIPos($FileName,'.') + 1,4)),Array('png','gif','jpg','jpeg'))){
+		if(!IsSet($_COOKIE['EdeskNoPreview']) && In_Array(StrToLower(SubStr($FileName,StrRIPos($FileName,'.') + 1,4)),Array('png','gif','jpg','jpeg'))){
 			#-------------------------------------------------------------------------------
 			# добавляем к тексту превьюху
 			$Content = SPrintF("%s\n\n[image]%s://%s/FileDownload?TypeID=EdesksMessages&FileID=%u[/image]",$Content,Url_Scheme(),HOST_ID,$MessageID);
@@ -89,12 +89,7 @@ $Delete = ($__USER['IsAdmin'])?SPrintF('<a style="cursor:pointer;" onclick="Show
 $BgColor = (!$IsVisible)?'FFE4E1':(($UserID != $OwnerID)?'FFFFFF':'FDF6D3');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Table = new Tag('TABLE',Array('class'=>'EdeskMessage','cellspacing'=>5,'height'=>'100%','width'=>'100%'));
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 $Params = Array('User'=>$User,'EnterDate'=>$EnterDate,'Status'=>((Time() - $User['EnterDate']) < 600?'OnLine':'OffLine'),'Delete'=>$Delete,'MessageID'=>SPrintF('%06u',$MessageID),'CreateDate'=>$CreateDate,'Group'=>$Group,'BgColor'=>$BgColor,'Text'=>$Text);
-#-------------------------------------------------------------------------------
-#$Table->AddHTML(TemplateReplace('Edesks.Message.TABLE',$Params));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if((integer)$FileLength){
@@ -111,8 +106,6 @@ if((integer)$FileLength){
 	$Params['File'] = '';
 	#-------------------------------------------------------------------------------
 }
-#-------------------------------------------------------------------------------
-$Table->AddHTML(TemplateReplace('Edesks.Message.TABLE',$Params));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!Comp_IsLoaded('Edesks/Message')){
@@ -189,7 +182,7 @@ if(IsSet($GLOBALS['__USER']) /*&& Mb_StrLen($Content) < 1000*/){
 		#-------------------------------------------------------------------------------
 		# ссылка на редактирование
 		$A = new Tag('A',Array('href'=>SPrintF("javascript:EdeskMessageEdit(%u,'%s');",$MessageID,AddcSlashes($Content,"\0\n\r\\\'"))),'[редактировать]');
-		$Span->AddChild($A);
+		$Params['Edit'] = $A->ToXMLString();
 		#-------------------------------------------------------------------------------
 		# дополнительно проверяем - не сотрудник ли это, для сотрудников не надо линки в подпись лепить
 		#Debug("[comp/Edesks/Message]: check for links, user id = " . (integer)$User['ID']);
@@ -243,7 +236,7 @@ if(IsSet($GLOBALS['__USER']) /*&& Mb_StrLen($Content) < 1000*/){
 			#-------------------------------------------------------------------------------
 			$InvoicesText = ($User['TotalPayments'] > 0)?SPrintF('[%s]',$User['TotalPayments']):'[Счета]';
 			#-------------------------------------------------------------------------------
-			$UserLinks = Comp_Load('Formats/String',$InvoicesText,10,SPrintF('/Administrator/Invoices?Search=%s&PatternOutID=Default',$User['Email']));
+			$UserLinks = Comp_Load('Formats/String',$InvoicesText,12,SPrintF('/Administrator/Invoices?Search=%s&PatternOutID=Default',$User['Email']));
 			if(Is_Error($UserLinks))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
@@ -270,7 +263,7 @@ if(IsSet($GLOBALS['__USER']) /*&& Mb_StrLen($Content) < 1000*/){
 #-------------------------------------------------------------------------------
 $Params['Links'] = $Span->ToXMLString();
 $Table = new Tag('TABLE',Array('class'=>'EdeskMessage','cellspacing'=>5,'height'=>'100%','width'=>'100%'));
-$Table->AddHTML(TemplateReplace('Edesks.Message.TABLE',$Params));
+$Table->AddHTML(TemplateReplace(SPrintF('Edesks.Message.TABLE.%s',IsSet($_COOKIE['EdesksDisplay'])?$_COOKIE['EdesksDisplay']:'Left'),$Params));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $Table;

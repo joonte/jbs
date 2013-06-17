@@ -10,6 +10,15 @@
   </Paths>
   <Href>javascript:ShowWindow('/UserPersonalDataChange');</Href>
  </ListElement>
+ <!-- *********************************************************************** -->
+ <ListElement>
+  <Text>Мои настройки</Text>
+  <Paths>
+   <UniqID>^\/UserPersonalSettings$</UniqID>
+  </Paths>
+  <Href>javascript:ShowWindow('/UserPersonalSettings');</Href>
+ </ListElement>
+ <!-- *********************************************************************** -->
  <ListElement>
   <Text>Смена пароля</Text>
   <Paths>
@@ -17,6 +26,7 @@
   </Paths>
   <Href>javascript:ShowWindow('/UserPasswordChange');</Href>
  </ListElement>
+ <!-- *********************************************************************** -->
  <ListElement>
   <Text>Уведомления</Text>
   <Paths>

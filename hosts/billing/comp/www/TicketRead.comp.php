@@ -143,7 +143,7 @@ switch(ValueOf($Ticket)){
 				$Text = Str_Replace("\n",'\\n',$Text);
 				# format: SortOrder:ImageName.gif
 				# button image, get image name
-				$Partition = explode(":", $Article['Partition']);
+				$Partition = Explode(":", $Article['Partition']);
 				$Extension = IsSet($Partition[1])?Explode(".", StrToLower($Partition[1])):'';
 				#-------------------------------------------------------------------------------
 				# если есть чё-то после точки, и если оно похоже на расширение картинки, ставим это как картинку
@@ -152,7 +152,7 @@ switch(ValueOf($Ticket)){
 					$Image = $Partition[1];
 				#-------------------------------------------------------------------------------
 				# делаем кнопку, если это системная кнопка или этого админа
-				if((!Preg_Match('/@/',$Partition[0]) && $Partition[0] < 2000) || StrToLower($Partition[0]) == StrToLower($__USER['Email'])){
+				if((!Preg_Match('/@/',$Partition[0]) && $Partition[0] < 2000 && !IsSet($_COOKIE['EdeskOnlyMyButtons'])) || StrToLower($Partition[0]) == StrToLower($__USER['Email'])){
 					#-------------------------------------------------------------------------------
 					$Comp = Comp_Load('Buttons/Standard',Array('onclick' => SPrintF("form.Message.value += '%s';",$Text),'style'=>'cursor: pointer;'),$Article['Title'],$Image);
 					if(Is_Error($Comp))

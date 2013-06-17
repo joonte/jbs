@@ -39,7 +39,13 @@ $String = Preg_Replace('/\[size=([0-9]+)\](.+)\[\/size\]/sU',!IsSet($Params['IsE
 # JBS-697
 $String = Preg_Replace("#(^|\s|>)((http://)([a-zA-Z0-9][a-zA-Z0-9-]*\.)+([a-zA-Z]{2,4})(:\d{2,5})?(/[a-zA-Z/.0-9_]*)?(jpg|jpeg|gif|png|bmp)\b)#i","\\1[image]\\2[/image]",$String);
 #-------------------------------------------------------------------------------
-$String = Preg_Replace("/\[image\](http|ftp|https):\/\/(.+)\[\/image\]/sU",!IsSet($Params['IsEmail'])?"<img class=\"TicketSmall\" src=\"\\1://\\2\" />":'\\1://\\2',$String);
+#-------------------------------------------------------------------------------
+if(IsSet($_COOKIE['EdeskNoPreview']) || IsSet($Params['IsEmail'])){
+	$String = Preg_Replace("/\[image\](http|ftp|https):\/\/(.+)\[\/image\]/sU",'\\1://\\2',$String);
+}else{
+	$String = Preg_Replace("/\[image\](http|ftp|https):\/\/(.+)\[\/image\]/sU","<img class=\"TicketSmall\" src=\"\\1://\\2\" />",$String);
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $String = preg_replace( "#(^|\s|>)((http|https|news|ftp)://\w+[^\s\[\]\<]+)#i", !IsSet($Params['IsEmail'])?"\\1<A href=\"\\2\" target=\"blank\">\\2</A>":'\\1\\2',$String);
 #-------------------------------------------------------------------------------
