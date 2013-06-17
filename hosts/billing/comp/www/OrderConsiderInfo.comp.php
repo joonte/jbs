@@ -173,7 +173,7 @@ if($IsConsiderManage){
 			'Form/Input',
 			Array(
 				'type'    => 'button',
-				'onclick' => "AjaxCall('/Administrator/API/OrderConsider',FormGet(form),'Сохрание способа учета','GetURL(document.location);');",
+				'onclick' => "AjaxCall('/Administrator/API/OrderConsider',FormGet(form),'Сохранение способа учета','GetURL(document.location);');",
 				'value'   => 'Сохранить'
 				)
 			);
@@ -193,7 +193,7 @@ if($IsConsiderManage){
 				'Form/Input',
 				Array(
 					'type'    => 'button',
-					'onclick' => "javascript:ShowConfirm('Вы действительно хотите осуществить возврат средств?','AjaxCall(\'/Administrator/API/OrderRestore\',FormGet(OrderConsiderInfoForm),\'Возвращение денег\',\'GetURL(document.location);\');');",
+					'onclick' => "javascript:ShowConfirm('Вы действительно хотите осуществить возврат средств?','AjaxCall(\'/Administrator/API/OrderRestore\',FormGet(OrderConsiderInfoForm),\'Возврат денег\',\'GetURL(document.location);\');');",
 					'value'   => SPrintF('Вернуть %s',$Comp)
 					)
 				);
