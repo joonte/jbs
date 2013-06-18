@@ -76,20 +76,28 @@ if((integer)$FileLength){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Params = Array('User'=>$User,'Status'=>((Time() - $User['EnterDate']) < 600?'OnLine':'OffLine'),'Delete'=>'','MessageID'=>SPrintF('%06u',$MessageID),'CreateDate'=>$CreateDate,'Group'=>$Group);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Text = Comp_Load('Edesks/Text',Array('String'=>$Content,'IsLockText'=>($OwnerID != @$GLOBALS['__USER']['ID'])));
 if(Is_Error($Text))
 	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Params['Text'] = $Text;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $EnterDate = Comp_Load('Formats/Date/Remainder',(Time() - $User['EnterDate']));
 if(Is_Error($EnterDate))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Delete = ($__USER['IsAdmin'])?SPrintF('<a href="JavaScript:ShowConfirm(\'Вы подтверждаете удаление сообщения?\',\'AjaxCall(\\\'/API/EdeskMessageDelete\\\',{MessageID:%u},\\\'Удаление сообщения\\\',\\\'GetURL(document.location);\\\');\');" onmouseover="PromptShow(event,\'Удалить это сообщение\',this);">[удалить]</a>',$MessageID):'-';
-#-------------------------------------------------------------------------------
-$BgColor = (!$IsVisible)?'FFE4E1':(($UserID != $OwnerID)?'FFFFFF':'FDF6D3');
+$Params['EnterDate'] = $EnterDate;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Params = Array('User'=>$User,'EnterDate'=>$EnterDate,'Status'=>((Time() - $User['EnterDate']) < 600?'OnLine':'OffLine'),'Delete'=>$Delete,'MessageID'=>SPrintF('%06u',$MessageID),'CreateDate'=>$CreateDate,'Group'=>$Group,'BgColor'=>$BgColor,'Text'=>$Text);
+$Params['BgColor'] = (!$IsVisible)?'FFE4E1':(($UserID != $OwnerID)?'FFFFFF':'FDF6D3');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($__USER['IsAdmin'])
+	$Params['Delete'] = SPrintF('<a href="JavaScript:EdeskMessageEdit(%u,\'%s\');">[редактировать]</a> | <a href="JavaScript:ShowConfirm(\'Вы подтверждаете удаление сообщения?\',\'AjaxCall(\\\'/API/EdeskMessageDelete\\\',{MessageID:%u},\\\'Удаление сообщения\\\',\\\'GetURL(document.location);\\\');\');" onmouseover="PromptShow(event,\'Удалить это сообщение\',this);">[удалить]</a>',$MessageID,AddcSlashes(HtmlSpecialChars($Content),"\0\n\r\\\'"),$MessageID);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if((integer)$FileLength){
@@ -185,10 +193,6 @@ if(IsSet($GLOBALS['__USER']) /*&& Mb_StrLen($Content) < 1000*/){
 		#-------------------------------------------------------------------------------
   	}else{	# $IsAdmin false->true
 		#-------------------------------------------------------------------------------
-		# ссылка на редактирование
-		$A = new Tag('A',Array('href'=>SPrintF("javascript:EdeskMessageEdit(%u,'%s');",$MessageID,AddcSlashes($Content,"\0\n\r\\\'"))),'[редактировать]');
-		$Params['Edit'] = $A->ToXMLString();
-		#-------------------------------------------------------------------------------
 		# дополнительно проверяем - не сотрудник ли это, для сотрудников не надо линки в подпись лепить
 		#Debug("[comp/Edesks/Message]: check for links, user id = " . (integer)$User['ID']);
 		$IsPermission = Permission_Check('/Administrator/',(integer)$User['ID']);
@@ -267,7 +271,6 @@ if(IsSet($GLOBALS['__USER']) /*&& Mb_StrLen($Content) < 1000*/){
 }
 #-------------------------------------------------------------------------------
 $Params['Links'] = IsSet($Span)?$Span->ToXMLString():'-';
-$Params['Edit'] = IsSet($Params['Edit'])?$Params['Edit']:'-';
 $Table = new Tag('TABLE',Array('class'=>'EdeskMessage','cellspacing'=>5,'height'=>'100%','width'=>'100%'));
 $Table->AddHTML(TemplateReplace(SPrintF('Edesks.Message.TABLE.%s',IsSet($_COOKIE['EdesksDisplay'])?$_COOKIE['EdesksDisplay']:'Left'),$Params));
 #-------------------------------------------------------------------------------
