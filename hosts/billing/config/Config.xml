@@ -1130,7 +1130,7 @@
 	<SMSPassword>password</SMSPassword>
 	<SMSKey>API ключ</SMSKey>
 	<SMSInterval>300</SMSInterval>
-	<SMSlowBalance>0</SMSlowBalance>
+	<BalanceLowLimit>0</BalanceLowLimit>
 	<CutSign>1</CutSign>
 	<SMSPrice>
 		<SMSPriceRu>0.50</SMSPriceRu>
