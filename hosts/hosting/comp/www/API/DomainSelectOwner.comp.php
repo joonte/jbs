@@ -48,8 +48,8 @@ switch(ValueOf($DomainOrder)){
         #-----------------------------------------------------------------------
         $StatusID = $DomainOrder['StatusID'];
         #-----------------------------------------------------------------------
-        if(!In_Array($StatusID,Array('Waiting','ClaimForRegister','ForContractRegister','ForRegister')))
-          return new gException('ORDER_NOT_CLAIM_STATUS','Владелец может быть определён, только для не зарегистрированных доменов и не поступивших на регистрацию');
+        if(!In_Array($StatusID,Array('Waiting','ClaimForRegister','ForContractRegister','ForRegister','ForTransfer')))
+          return new gException('ORDER_NOT_CLAIM_STATUS','Владелец может быть определён, только для не зарегистрированных доменов и не поступивших на регистрацию или перенос');
         #-----------------------------------------------------------------------
         $__USER = $GLOBALS['__USER'];
         #-----------------------------------------------------------------------
