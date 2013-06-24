@@ -68,11 +68,11 @@ switch(ValueOf($Registrators)){
 				#---------------------------------------------------------------
 				break;
 				case 'array':
-					Debug("[comp/Tasks/GC/CheckBalance]: Баланс: " . $Balance['Prepay']);
+					Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Регистратор (%s), баланс: %s',$NowReg['Name'],$Balance['Prepay']));
 					#-----------------------------------------------------------
-					if ((float)$Balance['Prepay'] < $NowReg['BalanceLowLimit']){
-						Debug("[comp/Tasks/GC/CheckBalance]: Баланс ниже порога уведомления!");
-						$Message .= SPrintF("Остаток на счете регистратора %s ниже допустимого минимума - %01.2f\n", $NowReg['Name'],$Balance['Prepay']);
+					if((float)$Balance['Prepay'] < $NowReg['BalanceLowLimit']){
+						Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Баланс (%s) ниже порога уведомления',$NowReg['Name']));
+						$Message .= SPrintF("Остаток на счете регистратора %s ниже допустимого минимума - %01.2f\n",$NowReg['Name'],$Balance['Prepay']);
 					}
 					#-----------------------------------------------------------
 					break;
@@ -90,43 +90,58 @@ switch(ValueOf($Registrators)){
 #-----------------------------------------------------------------------
 # баланс ISPsystem
 $ISPSettings = $Config['IspSoft']['Settings'];
+#-----------------------------------------------------------------------
 # проверяем - настроено ли соединение с испсисем
 if($ISPSettings['Password'] && $ISPSettings['BalanceLowLimit'] > 0){
+	#-----------------------------------------------------------------------
 	# получаем баланс
 	$Balances = IspSoft_Get_Balance($ISPSettings);
 	#Debug("[comp/Tasks/GC/CheckBalance]: " . print_r($Balances, true) );
+	#-----------------------------------------------------------------------
 	foreach($Balances as $Balance){
-		Debug("[comp/Tasks/GC/CheckBalance]: " . $Balance['name'] . " / " . $Balance['balance']);
+		#-----------------------------------------------------------------------
+		Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: %s / %s',$Balance['name'],$Balance['balance']));
+		#-----------------------------------------------------------------------
 		if($Balance['name'] == 'ISPsystem'){
+			#-----------------------------------------------------------------------
 			if($Balance['balance'] < $ISPSettings['BalanceLowLimit']){
+				#-----------------------------------------------------------------------
 				Debug("[comp/Tasks/GC/CheckBalance]: add to message: " . $Balance['name'] . " / " . $Balance['balance']);
 				$Message .= SPrintF("Остаток на счете ISPsystem ниже допустимого минимума - %01.2f евро. \n",$Balance['balance']);
+				#-----------------------------------------------------------------------
 			}
+			#-----------------------------------------------------------------------
 		}
+		#-----------------------------------------------------------------------
 	}
+	#-----------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # баланс SMS машинки
-$SMSSettings = $Config['SMSGateway'];
+$Settings = $Config['SMSGateway'];
 #-------------------------------------------------------------------------------
-if($Config['Notifies']['Methods']['SMS']['IsActive'] && $SMSSettings['BalanceLowLimit'] > 0){
+if($Config['Notifies']['Methods']['SMS']['IsActive'] && $Settings['BalanceLowLimit'] > 0){
+	#-------------------------------------------------------------------------------
+	if(Is_Error(System_Load(SPrintF('classes/%s.class.php', $Settings['SMSProvider']))))
+		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$SMS = new $Settings['SMSProvider']($Settings['SMSLogin'],$Settings['SMSPassword'],$Settings['SMSKey'],$Settings['SMSSender']);
 	if (Is_Error($SMS))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$IsAuth = $SMS->balance();
+	$IsAuth = $SMS->balance('rur');
 	#-------------------------------------------------------------------------------
         switch (ValueOf($IsAuth)){
 	case 'true':
 		#-------------------------------------------------------------------------------
-		$Balance = (integer)$SMS->balance;
+		$Balance = (double)$SMS->balance;
+		Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: баланс SMS шлюза "%s" равен: %s',$Settings['SMSProvider'],$Balance));
 		#-------------------------------------------------------------------------------
-		if($Balance < $SMSSettings['BalanceLowLimit']){
+		if($Balance < $Settings['BalanceLowLimit']){
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: SMS provider low balance = %s',$Balance));
-			$Message .= SPrintF("Остаток на счете SMS шлюза \"%s\" ниже допустимого минимума: %01.2f руб.\n",$SMSSettings['SMSProvider'],$Balance);
+			$Message .= SPrintF("Остаток на счете SMS шлюза \"%s\" ниже допустимого минимума: %01.2f руб.\n",$Settings['SMSProvider'],$Balance);
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
