@@ -33,9 +33,22 @@ if($Count){
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
+# бывает что заказ есть, а записи в таблице нет...
+if(!IsSet($Params['ServiceID']) || !IsSet($Params['SchemeID'])){
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[comp/Services/Orders/OrdersHistory]: не указаны ServiceID и SchemeID заказа #%s',$Params['OrderID']));
+	return Array('Status'=>'Ok');
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # проверяем, были ли такие же заказы
-$Count = DB_Count('OrdersHistory',Array('Where'=>Array(SPrintF('`UserID` = %u',$UserID),SPrintF('`ServiceID` = %u',$Params['ServiceID']),SPrintF('`SchemeID` = %u',$Params['SchemeID']))));
+$Where = Array(
+			SPrintF('`UserID` = %u',$UserID),
+			SPrintF('`ServiceID` = %u',$Params['ServiceID']),
+			SPrintF('`SchemeID` = %u',$Params['SchemeID'])
+		);
+$Count = DB_Count('OrdersHistory',Array('Where'=>$Where));
 if(Is_Error($Count))
 	return ERROR | Trigger_Error(500);
 #-------------------------------------------------------------------------------
