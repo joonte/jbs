@@ -487,7 +487,7 @@ case 'array':
 			#-------------------------------------------------------------------------------
 		}elseif($Order['StatusID'] == 'ForTransfer' && $Settings['OrdersForTransfer']){
 			#-------------------------------------------------------------------------------
-			$Columns = Array('ID','AuthInfo','DomainName','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) AS `Name`','(SELECT `CostTransfer` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) AS `CostTransfer`');
+			$Columns = Array('ID','AuthInfo','DomainName','ProfileID','PersonID','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) AS `Name`','(SELECT `CostTransfer` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) AS `CostTransfer`');
 			#-------------------------------------------------------------------------------
 			$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
 			switch(ValueOf($DomainOrder)){
@@ -506,26 +506,39 @@ case 'array':
 					$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.ForTransfer.USSR',$Params));
 					#-------------------------------------------------------------------------
 				}else{
-					# два варианта - зависит от наличия AuthInfo
-					if($DomainOrder['AuthInfo']){
+					#-------------------------------------------------------------------------
+					if(Is_Null($DomainOrder['ProfileID']) && !$DomainOrder['PersonID']){
 						#-------------------------------------------------------------------------
-						$Summ = Comp_Load('Formats/Currency',$DomainOrder['CostTransfer']);
-						if(Is_Error($Summ))
-							return ERROR | @Trigger_Error(500);
-						#------------------------------------------------------------------------------
-						$Params['Summ'] = $Summ;
-						#-------------------------------------------------------------------------------
-						$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.ForTransfer.bourgeois.AuthInfo',$Params));
+						# надо сказать чтобы определил владельца домена
+						$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.ForTransfer.SetOwner',$Params));
 						#-------------------------------------------------------------------------
 					}else{
-						#-------------------------------------------------------------------------------
-						$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.ForTransfer.bourgeois.NoAuthInfo',$Params));
-						#--------------------------------------------------------------------------------
+						#-------------------------------------------------------------------------
+						# два варианта - зависит от наличия AuthInfo
+						if($DomainOrder['AuthInfo']){
+							#-------------------------------------------------------------------------
+							$Summ = Comp_Load('Formats/Currency',$DomainOrder['CostTransfer']);
+							if(Is_Error($Summ))
+								return ERROR | @Trigger_Error(500);
+							#------------------------------------------------------------------------------
+							$Params['Summ'] = $Summ;
+							#-------------------------------------------------------------------------------
+							$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.ForTransfer.bourgeois.AuthInfo',$Params));
+							#-------------------------------------------------------------------------
+						}else{
+							#-------------------------------------------------------------------------------
+							$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.ForTransfer.bourgeois.NoAuthInfo',$Params));
+							#--------------------------------------------------------------------------------
+						}
+						#-------------------------------------------------------------------------
 					}
+					#-------------------------------------------------------------------------
 				}
 				#-------------------------------------------------------------------------
 				$Result[] = $NoBody;
+				#-------------------------------------------------------------------------
 				break;
+				#-------------------------------------------------------------------------
 			default:
 				return ERROR | @Trigger_Error(101);
 			}

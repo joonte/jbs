@@ -102,7 +102,7 @@ switch(ValueOf($DomainOrder)){
 	    $Event = Array(
                            'UserID'        => $__USER['ID'],
 			   'PriorityID'    => 'Hosting',
-			   'Text'          => SPrintF('Определён владелец для заказа домена %s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']),
+			   'Text'          => SPrintF('Определён владелец для заказа %sдомена %s.%s',($StatusID == "ForTransfer")?'на перенос ':'',$DomainOrder['DomainName'],$DomainOrder['DomainZone']),
 			   );
              $Event = Comp_Load('Events/EventInsert',$Event);
              if(!$Event)
@@ -126,12 +126,11 @@ switch(ValueOf($DomainOrder)){
 	    case 'array':
 	      # активируем задачи
 	      foreach($Tasks as $Task){
-	        #$Comp = Comp_Load('www/Administrator/API/TaskExecute',Array('TaskID'=>$Task['ID']));
-		#if(Is_Error($Comp))
-		#  return ERROR | @Trigger_Error(500);
+	        #-------------------------------------------------------------------------------
 		$IsUpdate = DB_Update('Tasks',Array('ExecuteDate'=>Time()),Array('ID'=>$Task['ID']));
 		if(Is_Error($IsUpdate))
 		  return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
 	      }
 	      break;
 	    default:
