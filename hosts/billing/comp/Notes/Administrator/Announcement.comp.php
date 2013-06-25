@@ -55,7 +55,7 @@ foreach($Announcements as $Announcement){
 	#-------------------------------------------------------------------------------
 	$Div->AddChild(new Tag('HR',Array('size'=>1)));
 	#-------------------------------------------------------------------------------
-	$Div->AddHTML($Announcement['Text']);
+	$Div->AddHTML(SPrintF('<SPAN>%s</SPAN>',$Announcement['Text']));
 	#-------------------------------------------------------------------------------
 	$Div->AddChild(new Tag('DIV',Array('align'=>'right'),new Tag('A',Array('href'=>SPrintF("javascript: var Window = window.open('/Administrator/ClauseEdit?ClauseID=%s','ClauseEdit',SPrintF('left=%%u,top=%%u,width=800,height=680,toolbar=0, scrollbars=1, location=0',(screen.width-800)/2,(screen.height-600)/2));",$Announcement['ID'])),'[редактировать]')));
 	#-------------------------------------------------------------------------------
