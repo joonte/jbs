@@ -67,7 +67,7 @@ function WebNames_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1N
 	$Result = Trim($Result['Body']);
 	#-------------------------------------------------------------------------------
 	if(Preg_Match('/Success:/',$Result))
-		return Array('TicketID'=>$Domain);
+		return Array('TicketID'=>SPrintF('%s.%s',$DomainName,$DomainZone));
 	#-------------------------------------------------------------------------------
 	if(Preg_Match('/Error:/',$Result))
 		return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
@@ -167,7 +167,7 @@ function WebNames_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID
   #-----------------------------------------------------------------------------
   $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[WebNames__Domain_Ns_Change]: не удалось выполнить запрос к серверу');
+    return ERROR | @Trigger_Error('[WebNames_Domain_Ns_Change]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
   $Result = Trim($Result['Body']);
   #-----------------------------------------------------------------------------
