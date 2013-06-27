@@ -357,6 +357,7 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'size'  => 10,
     'name'  => 'ncpu',
+    'prompt'=> 'количество/число процессоров выделыемых виртуальной машине',
     'value' => $VPSScheme['ncpu']
   )
 );
@@ -371,6 +372,7 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'size'  => 10,
     'name'  => 'cpu',
+    'prompt'=> 'частота каждого выделенного процессора',
     'value' => $VPSScheme['cpu']
   )
 );

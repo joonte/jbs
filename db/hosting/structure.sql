@@ -472,7 +472,7 @@ CREATE TABLE IF NOT EXISTS `VPSSchemes` (
 	`QuotaUsers` int(4) DEFAULT '0',
 	`disklimit` int(11) DEFAULT '0',
 	`ncpu` int(2) NOT NULL,
-	`cpu` float(7,2) DEFAULT '0.00',
+	`cpu` int(7) DEFAULT '0',
 	`mem` float(7,2) DEFAULT '0.00',
 	`bmem` float(7,2) DEFAULT '0.00',
 	`maxswap` float(7,2) NOT NULL,

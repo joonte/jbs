@@ -1,0 +1,3 @@
+
+ALTER TABLE `VPSSchemes` CHANGE `cpu` `cpu` INT(7) NULL DEFAULT '0';
+
