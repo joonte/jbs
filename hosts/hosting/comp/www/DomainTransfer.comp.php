@@ -75,7 +75,7 @@ if($StepID){
   if(!$DomainSchemeID)
     return new gException('DOMAIN_SCHEME_NOT_DEFINED','Доменная зона не выбрана');
   #-----------------------------------------------------------------------------
-  $Columns = Array('`DomainsSchemes`.`ID`','`DomainsSchemes`.`Name` as `Name`','IsActive','`Registrators`.`Name` as `RegistratorName`','`Registrators`.`TypeID` as `RegistratorTypeID`','Ns1Name','Ns2Name','Ns3Name','Ns4Name');
+  $Columns = Array('`DomainsSchemes`.`ID`','`DomainsSchemes`.`Name` as `Name`','IsActive','`Registrators`.`Name` as `RegistratorName`','`Registrators`.`TypeID` as `RegistratorTypeID`','Ns1Name','Ns2Name','Ns3Name','Ns4Name','DaysAfterTransfer','DaysBeforeTransfer');
   #-----------------------------------------------------------------------------
   $DomainScheme = DB_Select(Array('DomainsSchemes','Registrators'),$Columns,Array('UNIQ','Where'=>SPrintF('`DomainsSchemes`.`RegistratorID` = `Registrators`.`ID` AND `DomainsSchemes`.`ID` = %u',$DomainSchemeID)));
   #-----------------------------------------------------------------------------
@@ -105,8 +105,8 @@ if($StepID){
           #---------------------------------------------------------------------
 	  #Debug(SPrintF('[comp/www/DomainTransfer]: WhoIs = %s',print_r($WhoIs,true)));
 	  #---------------------------------------------------------------------
-	  if(($WhoIs['ExpirationDate'] - Time()) / 86400 < 60)
-	    return new gException('DOMAIN_NEED_PROLONG','Перенос домена невозможен менее чем за 60 дней до даты его продления. Для переноса, необходимо его продлить у текущего регистратора');
+	  if(($WhoIs['ExpirationDate'] - Time()) / 86400 < $DomainScheme['DaysBeforeTransfer'])
+	    return new gException('DOMAIN_NEED_PROLONG',SPrintF('Перенос домена невозможен менее чем за %s дней до даты его продления. Для переноса, необходимо его продлить у текущего регистратора',$DomainScheme['DaysBeforeTransfer']));
 	  #---------------------------------------------------------------------
           $Comp = Comp_Load(
             'Form/Input',

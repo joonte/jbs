@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -9,40 +8,42 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(Is_Error(System_Load('modules/Authorisation.mod')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Args = Args();
 #-------------------------------------------------------------------------------
-$DomainSchemeID = (integer) @$Args['DomainSchemeID'];
-$GroupID        = (integer) @$Args['GroupID'];
-$UserID         = (integer) @$Args['UserID'];
-$Name           =  (string) @$Args['Name'];
-$IsActive       = (boolean) @$Args['IsActive'];
-$IsProlong      = (boolean) @$Args['IsProlong'];
-$CostOrder      =   (float) @$Args['CostOrder'];
-$CostProlong    =   (float) @$Args['CostProlong'];
-$CostTransfer	=   (float) @$Args['CostTransfer'];
-$RegistratorID  =  (string) @$Args['RegistratorID'];
-$SortID         = (integer) @$Args['SortID'];
-$MinOrderYears  = (integer) @$Args['MinOrderYears'];
-$MaxActionYears = (integer) @$Args['MaxActionYears'];
-$MaxOrders	= (integer) @$Args['MaxOrders'];
-$DaysToProlong  = (integer) @$Args['DaysToProlong'];
+$DomainSchemeID		= (integer) @$Args['DomainSchemeID'];
+$GroupID		= (integer) @$Args['GroupID'];
+$UserID			= (integer) @$Args['UserID'];
+$Name			=  (string) @$Args['Name'];
+$IsActive		= (boolean) @$Args['IsActive'];
+$IsProlong		= (boolean) @$Args['IsProlong'];
+$CostOrder		=   (float) @$Args['CostOrder'];
+$CostProlong		=   (float) @$Args['CostProlong'];
+$CostTransfer		=   (float) @$Args['CostTransfer'];
+$RegistratorID		=  (string) @$Args['RegistratorID'];
+$SortID			= (integer) @$Args['SortID'];
+$MinOrderYears		= (integer) @$Args['MinOrderYears'];
+$MaxActionYears		= (integer) @$Args['MaxActionYears'];
+$MaxOrders		= (integer) @$Args['MaxOrders'];
+$DaysToProlong		= (integer) @$Args['DaysToProlong'];
+$DaysBeforeTransfer	= (integer) @$Args['DaysBeforeTransfer'];
+$DaysAfterTransfer	= (integer) @$Args['DaysAfterTransfer'];
 #-------------------------------------------------------------------------------
 $Name = Trim($Name,'.');
 #-------------------------------------------------------------------------------
 if(!Preg_Match('/^[A-Za-zРФрф0-9\-\.]+$/i',$Name))
-  return new gException('WRONG_DOMAIN_ZONE','Неверное имя доменной зоны');
+	return new gException('WRONG_DOMAIN_ZONE','Неверное имя доменной зоны');
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Registrators',Array('ID'=>$RegistratorID));
 if(Is_Error($Count))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if(!$Count)
-  return new gException('WRONG_REGISTRATOR','Неверный регистратор');
+	return new gException('WRONG_REGISTRATOR','Неверный регистратор');
 #-------------------------------------------------------------------------------
 $IDomainScheme = Array(
-  #-----------------------------------------------------------------------------
+  #---------------------a--------------------------------------------------------
   'GroupID'        => $GroupID,
   'UserID'         => $UserID,
   'Name'           => $Name,
@@ -56,7 +57,9 @@ $IDomainScheme = Array(
   'MinOrderYears'  => $MinOrderYears,
   'MaxActionYears' => $MaxActionYears,
   'MaxOrders'      => $MaxOrders,
-  'DaysToProlong'  => $DaysToProlong
+  'DaysToProlong'  => $DaysToProlong,
+  'DaysBeforeTransfer'	=> $DaysBeforeTransfer,
+  'DaysAfterTransfer'	=> $DaysAfterTransfer
 );
 #-------------------------------------------------------------------------------
 if($DomainSchemeID){

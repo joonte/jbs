@@ -47,6 +47,8 @@ if($DomainSchemeID){
     'MaxActionYears' => 1,
     'MaxOrders'      => 0,
     'DaysToProlong'  => 31,
+    'DaysBeforeTransfer'	=> 60,
+    'DaysAfterTransfer'		=> 60
   );
 }
 #-------------------------------------------------------------------------------
@@ -76,7 +78,7 @@ $Comp = Comp_Load(
   Array(
     'type'  => 'text',
     'name'  => 'Name',
-    'size'  => 15,
+    'size'  => 6,
     'value' => $DomainScheme['Name']
   )
 );
@@ -153,7 +155,7 @@ $Comp = Comp_Load(
   Array(
     'type'  => 'text',
     'name'  => 'SortID',
-    'size'  => 5,
+    'size'  => 6,
     'value' => $DomainScheme['SortID']
   )
 );
@@ -168,6 +170,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
+    'size'  => 6,
     'name'  => 'MinOrderYears',
     'value' => $DomainScheme['MinOrderYears']
   )
@@ -181,6 +184,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
+    'size'  => 6,
     'name'  => 'MaxActionYears',
     'value' => $DomainScheme['MaxActionYears']
   )
@@ -194,7 +198,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 5,
+    'size'  => 6,
     'name'  => 'DaysToProlong',
     'value' => $DomainScheme['DaysToProlong']
   )
@@ -209,7 +213,41 @@ $Comp = Comp_Load(
   'Form/Input',
      Array(
     'type'  => 'text',
-    'size'  => 5,
+    'size'  => 6,
+    'name'  => 'DaysBeforeTransfer',
+    'value' => $DomainScheme['DaysBeforeTransfer'],
+    'prompt'=> 'Многие регистраторы, ставят ограничение на возможность переноса домена, если домен скоро оканчивается'
+  )
+
+);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Перенос, дней до окончания',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+  'Form/Input',
+     Array(
+    'type'  => 'text',
+    'size'  => 6,
+    'name'  => 'DaysAfterTransfer',
+    'value' => $DomainScheme['DaysAfterTransfer'],
+    'prompt'=> 'Некоторые регистраторы, ставят ограничение на возможность переноса домена, сразу после его регистрации или продления. По прошествии указанного числа дней, перенос возможен'
+  )
+
+);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Перенос, дней после продления',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+  'Form/Input',
+     Array(
+    'type'  => 'text',
+    'size'  => 6,
     'name'  => 'MaxOrders',
     'value' => $DomainScheme['MaxOrders'],
     'prompt'=> 'Максимально возможное число заказов по данному тарифу, на каждого клиента. Используется для создания "триальных" тарифных планов. Для снятия ограничений, введите ноль.'

@@ -60,6 +60,8 @@ CREATE TABLE `DomainsSchemes` (
   `MaxActionYears` int(11) default '1',
   `MaxOrders` int(6) DEFAULT '0',
   `DaysToProlong` int(11) default '31',
+  `DaysBeforeTransfer` INT(3) DEFAULT '60',
+  `DaysAfterTransfer` INT(3) DEFAULT '60',
   PRIMARY KEY  (`ID`),
   KEY `DomainsSchemesGroupID` (`GroupID`),
   CONSTRAINT `DomainsSchemesGroupID` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
