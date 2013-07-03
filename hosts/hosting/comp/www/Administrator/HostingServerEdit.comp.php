@@ -44,7 +44,7 @@ if($HostingServerID){
     'NoRestartDelete'		=> FALSE,
     'NoRestartSchemeChange'	=> FALSE,
     'Address'			=> 'isp.su',
-    'Domain'			=> 'isp.su',
+    'Domain'			=> 'test.su',
     'Prefix'			=> 'h',
     'Port'			=> 80,
     'Protocol'			=> 'tcp',
@@ -76,7 +76,7 @@ if(Is_Error($DOM->Load('Window')))
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/HostingServerEdit.js}')));
 #-------------------------------------------------------------------------------
-$Title = ($HostingServerID?'Редактирование сервера':'Добавление сервера');
+$Title = ($HostingServerID?SPrintF('Редактирование сервера %s',$HostingServer['Address']):'Добавление нового сервера');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
