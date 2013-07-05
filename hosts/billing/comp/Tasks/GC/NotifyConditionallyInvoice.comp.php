@@ -189,68 +189,76 @@ foreach($Invoices as $Invoice){
     return ERROR | @Trigger_Error(500);
   #-------------------------------------------------------------------------
 }
-#-------------------------------------------------------------------
-#-------------------------------------------------------------------
-# 4. достаём все договора с отрицательным баллансом - добавляем в отчёт для бухов
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# 4. достаём все договора с отрицательным баллансом - добавляем в отчёт для бухов
 $Users = DB_Select('ContractsOwners',Array('DISTINCT(`UserID`) AS `UserID`','Balance','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `ContractsOwners`.`UserID`) AS `UserEmail`'),Array('GroupBy'=>'UserID', 'Where'=>'`Balance` < 0'));
 switch(ValueOf($Users)){
 case 'error':
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 case 'exception':
-  break;
+	break;
 case 'array':
-  #-------------------------------------------------------------------------------
-  foreach($Users as $User){
-    # добавляем в отчёт для бухгалтерии
-    $Out = $Out . SPrintF("Отрицательный балланс (%s) у клиента %s\n",$User['Balance'],$User['UserEmail']);
-    #-------------------------------------------------------------------------------
-    # шлём юзеру уведомление
-    $msg = new NegativeContractBalanceMsg($UserBalance = $User, (integer)$User['UserID']);
-    $IsSend = NotificationManager::sendMsg($msg);
-    #-------------------------------------------------------------------------
-    switch(ValueOf($IsSend)){
-    case 'true':
-      break;
-    #-------------------------------------------------------------------------
-    case 'exception':
-      $Event = Array(
-                    'UserID'		=> $User['UserID'],
-                    'PriorityID'	=> 'Billing',
-                    'Text'		=> 'Уведомление о отрицательном баллансе не отправлено. Не удалось оповестить пользователя ни одним из методов.'
-                    );
-      $Event = Comp_Load('Events/EventInsert',$Event);
-      if(!$Event)
-        return ERROR | @Trigger_Error(500);
-      break;
-      #-------------------------------------------------------------------------
-    default:
-      return ERROR | @Trigger_Error(500);
-    }
-    #-------------------------------------------------------------------------------
-    # вешаем событие
-    if($Config['Invoices']['EventOnNegativeBalance']){
-      #-------------------------------------------------------------------------
-      $Event = Array(
-                    'UserID'	=> $User['UserID'],
-                    'PriorityID'=> 'Billing',
-                    'Text'	=> SPrintF('У пользователя отрицательный баланс (%s)',$User['Balance']),
-	            'IsReaded'  => FALSE
-                    );
-      $Event = Comp_Load('Events/EventInsert',$Event);
-      #-------------------------------------------------------------------------
-      if(!$Event)
-        return ERROR | @Trigger_Error(500);
-      #-------------------------------------------------------------------------
-    }
-  }
-  break;
+	#-------------------------------------------------------------------------------
+	foreach($Users as $User){
+		#-------------------------------------------------------------------------------
+		# добавляем в отчёт для бухгалтерии
+		$Out = $Out . SPrintF("Отрицательный балланс (%s) у клиента %s\n",$User['Balance'],$User['UserEmail']);
+		#-------------------------------------------------------------------------------
+		# шлём юзеру уведомление
+		$UserBalance = $User;
+		$Summ = Comp_Load('Formats/Currency',$Users['Balance']);
+		if(Is_Error($Summ))
+			return ERROR | @Trigger_Error(500);
+		$UserBalance['Balance'] = $Summ;
+		#-------------------------------------------------------------------------------
+		$msg = new NegativeContractBalanceMsg($UserBalance = $User, (integer)$User['UserID']);
+		$IsSend = NotificationManager::sendMsg($msg);
+		#-------------------------------------------------------------------------
+		switch(ValueOf($IsSend)){
+		case 'true':
+			break;
+			#-------------------------------------------------------------------------
+			case 'exception':
+				$Event = Array(
+						'UserID'		=> $User['UserID'],
+						'PriorityID'	=> 'Billing',
+						'Text'		=> 'Уведомление о отрицательном баллансе не отправлено. Не удалось оповестить пользователя ни одним из методов.'
+						);
+			$Event = Comp_Load('Events/EventInsert',$Event);
+			if(!$Event)
+				return ERROR | @Trigger_Error(500);
+			break;
+			#-------------------------------------------------------------------------
+		default:
+			return ERROR | @Trigger_Error(500);
+		}
+		#-------------------------------------------------------------------------------
+		# вешаем событие
+		if($Config['Invoices']['EventOnNegativeBalance']){
+			#-------------------------------------------------------------------------
+			$Event = Array(
+					'UserID'	=> $User['UserID'],
+					'PriorityID'	=> 'Billing',
+					'Text'		=> SPrintF('У пользователя отрицательный баланс (%s)',$User['Balance']),
+					'IsReaded'	=> FALSE
+					);
+			$Event = Comp_Load('Events/EventInsert',$Event);
+			#-------------------------------------------------------------------------
+			if(!$Event)
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
 default:
-  return ERROR | @Trigger_Error(101);
- }
-
-#-------------------------------------------------------------------
-#-------------------------------------------------------------------
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # 5. Обновляем лимиты пользователя
 $Result = DB_Query('UPDATE `Users` SET `LayPayMaxSumm`=((SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID`=`Users`.`ID` AND `StatusID` = "Payed") / 10) WHERE ((SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID`=`Users`.`ID` AND `StatusID` = "Payed") / 10) > `LayPayMaxSumm`');
 if(Is_Error($Result))
