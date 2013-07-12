@@ -74,7 +74,7 @@ if($ShowButton && $AllowConditionally){
   $Comp1 = Comp_Load(
     'Form/Input',
     Array(
-      'onclick' => "AjaxCall('/API/InvoiceSetConditionally',FormGet(form),'Проведение условной оплаты',\"GetURL(document.location);\");",
+      'onclick' => "javascript:ShowConfirm('Вы действительно хотите воспользоваться услугами в долг? Данный счёт всё равно придётся оплачивать, иначе услуги будут заблокированы.','AjaxCall(\'/API/InvoiceSetConditionally\',FormGet(TableSuperForm),\'Проведение условной оплаты\',\'GetURL(document.location);\');');",
       'type'    => 'button',
       'value'   => 'Провести условно',
       'prompt'  => 'Счёт зачисляется "условно". В течение месяца вы должны его оплатить. Услугами вы сможете пользоваться сейчас.'
