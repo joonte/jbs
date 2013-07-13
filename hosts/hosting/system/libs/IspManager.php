@@ -1256,7 +1256,7 @@ function IspManager_Get_CPU_Usage($Settings,$TFilter){
 	$Elems = $XML['doc'];
 	#-------------------------------------------------------------------------------
 	if(IsSet($Elems['error']))
-		return new gException('GET_RESELLERS_ERROR',$Elems['error']);
+		return new gException('GET_TOTALRESOURCEUSAGE_ERROR',$Elems['error']);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# создаём выходной массив
