@@ -154,7 +154,11 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array('Раздел меню',$Comp);
 #-------------------------------------------------------------------------------
-$Emblem = GetUploadedFileSize('Services', $Service['ID']);
+if (isset($Service['ID'])) {
+    $Emblem = GetUploadedFileSize('Services',$Service['ID']);
+} else {
+    $Emblem = false;
+}
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Upload','Emblem',$Emblem?SPrintF('%01.2f Кб.',$Emblem/1024):'не загружена');
 if(Is_Error($Comp))
