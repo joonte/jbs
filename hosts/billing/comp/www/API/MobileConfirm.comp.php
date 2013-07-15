@@ -53,11 +53,11 @@ if($Mobile){
 	return ERROR | @Trigger_Error(500);
     #-------------------------------------------------------------------------------
     $Confirm = SubStr(Md5($GLOBALS['__USER']['ID'].MicroTime()), 0, 5);
-    CacheManager::add($CacheID, $Confirm, 10 * 24 * 3600);
+    CacheManager::add($CacheID, SPrintF('%s%s',$Confirm,$Mobile), 10*24*3600);
     #-------------------------------------------------------------------------------
     $Message = SPrintF('Ваш проверочный код: %s%s',$Confirm,($Settings['CutSign'])?'':SPrintF('\r\n%s',$Executor['Sign']));
     $Comp = Comp_Load('Tasks/SMS', NULL, $Mobile, $Message, $GLOBALS['__USER']['ID'], TRUE);
-    if($Comp !== TRUE){
+    if(!$Comp){
 	#-----------------------------------------------------------------------------
 	if(Is_String($Comp))
 	    return new gException('ERROR_SMS_SEND_WITH_TEXT', SPrintF('Не удалось отправить SMS сообщение с кодом подтверждения (%s)',$Comp));
@@ -80,11 +80,11 @@ if($Mobile){
     if (Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
     #-------------------------------------------------------------------------------
-    if (Empty($Confirm))
+    if(Empty($Confirm))
 	return new gException('ERROR_CODE_EMPTY', 'Введите код подтверждения полученный по SMS');
     #-------------------------------------------------------------------------------
     $Result = CacheManager::get($CacheID);
-    if ($Confirm == $Result) {
+    if(SPrintF('%s%s',$Confirm,$GLOBALS['__USER']['Mobile']) == $Result) {
 	#-------------------------------------------------------------------------------
 	$IsUpdate = DB_Update('Users', Array('MobileConfirmed' => Time()), Array('ID' => $GLOBALS['__USER']['ID']));
 	if (Is_Error($IsUpdate))
