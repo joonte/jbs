@@ -133,6 +133,10 @@ foreach(Array_Keys($TUsages) as $ServerID){
 	foreach(Array_Keys($TUsages[$ServerID]['BUsages']) as $Login)
 		$Array[] = SPrintF("'%s'",$Login);
 	#-------------------------------------------------------------------------------
+	# однако, массив может получиться пустой
+	if(SizeOf($Array) == 0)
+		continue;
+	#-------------------------------------------------------------------------------
 	$Where = SPrintF('`ServerID` = %u AND `Login` IN (%s)',$ServerID,Implode(',',$Array));
 	#-------------------------------------------------------------------------------
 	$Columns = Array(
