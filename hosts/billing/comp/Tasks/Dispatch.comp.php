@@ -26,10 +26,12 @@ $Config = &Config();
 #-------------------------------------------------------------------------------
 $Notifies = $Config['Notifies'];
 #-------------------------------------------------------------------------------
+$Methods = Explode(',',$Task['Params']['Methods']);
+#-------------------------------------------------------------------------------
 $iWhere = Array();
 #-------------------------------------------------------------------------------
 foreach(Array_Keys($Notifies['Methods']) as $MethodID){
-	if ($Notifies['Methods'][$MethodID]['IsActive'])
+	if($Notifies['Methods'][$MethodID]['IsActive'] && In_Array($MethodID,$Methods))
 		$iWhere[] = SPrintF("`TypeID` = '%s'",$MethodID);
 }
 #-------------------------------------------------------------------------------
@@ -57,7 +59,7 @@ foreach($SendToIDs as $User){
 	Debug(SPrintF('[comp/Tasks/Dispatch]: send message to UserID = %s;',$User));
 	#-------------------------------------------------------------------------
 	$msg = new DispatchMsg($Replace, (integer)$User, $Task['Params']['FromID']);
-	$IsSend = NotificationManager::sendMsg($msg);
+	$IsSend = NotificationManager::sendMsg($msg,$Methods);
 	#-------------------------------------------------------------------------
 	switch(ValueOf($IsSend)){
 	case 'error':
@@ -83,8 +85,8 @@ foreach($SendToIDs as $User){
 #Debug(SPrintF('[comp/Tasks/Dispatch]: SendToIDs = %s; SendedIDs = %s;',Implode(',',$SendToIDs),Implode(',',$SendedIDs)));
 #-------------------------------------------------------------------------------
 # сохраняем параметры задачи
-$Task['Params']['SendToIDs'] = Implode(',',$SendToIDs);
-$Task['Params']['SendedIDs'] = Implode(',',$SendedIDs);
+$Task['Params']['SendToIDs'] = Implode(',',Array_Filter($SendToIDs));
+$Task['Params']['SendedIDs'] = Implode(',',Array_Filter($SendedIDs));
 $UTasks = Array('Params'=>$Task['Params']);
 $IsUpdate = DB_Update('Tasks',$UTasks,Array('ID'=>$Task['ID']));
 #-------------------------------------------------------------------------------

@@ -943,6 +943,7 @@
     <Message>Сообщение</Message>
     <FromID>Идентификатор отправителя</FromID>
     <SendedIDs>Кому уже отправлено</SendedIDs>
+    <Methods>Методы</Methods>
    </Params>
    <ExecutePeriod>00:01</ExecutePeriod>
    <Limit>10</Limit>

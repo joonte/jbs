@@ -7,7 +7,7 @@
  *
  */
 class NotificationManager {
-    public static function sendMsg(Msg $msg) {
+    public static function sendMsg(Msg $msg, $Methods = Array()) {
         $Executor = Comp_Load('www/Administrator/API/ProfileCompile', Array('ProfileID' => 100));
         switch (ValueOf($Executor)) {
             case 'error':
@@ -56,14 +56,27 @@ class NotificationManager {
             default:
               return ERROR | @Trigger_Error(101);
         }
-
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
         $Config = Config();
 
         $Notifies = $Config['Notifies'];
-
+	#-------------------------------------------------------------------------------
+	# вариант когда методы не заданы - значит все доступные
+	if(SizeOf($Methods) == 0){
+		#-------------------------------------------------------------------------------
+		$Array = Array();
+		#-------------------------------------------------------------------------------
+		foreach (Array_Keys($Notifies['Methods']) as $MethodID)
+			$Array[] = $MethodID;
+		#-------------------------------------------------------------------------------
+		$Methods = $Array;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
         $sentMsgCnt = 0;
         foreach (Array_Keys($Notifies['Methods']) as $MethodID) {
-            if (!$Notifies['Methods'][$MethodID]['IsActive'])
+            if (!$Notifies['Methods'][$MethodID]['IsActive'] || !In_Array($MethodID,$Methods))
                 continue;
 
             #-------------------------------------------------------------------------------
