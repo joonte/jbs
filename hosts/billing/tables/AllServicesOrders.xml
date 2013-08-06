@@ -15,7 +15,7 @@
  <Comps>
   <After>
    <StatusSet />
-   <Delete />
+<!--   <Delete /> -->
   </After>
  </Comps>
  <Sequence />
@@ -93,6 +93,16 @@
   </Search>
  </Before>
  <!-- ********************************************************************** -->
+ <After>
+  <Delete>
+   <Args>
+    <Comment>Выбранные заказы</Comment>
+    <Send>
+     <TableID>Orders</TableID>
+    </Send>
+   </Args>
+  </Delete>
+ </After>
 </Comps>
 <!-- *********************************************************************** -->
 <Query>
