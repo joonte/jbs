@@ -8,11 +8,10 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 $Columns = Array(
-		'ID',
-		'UserID',
-		'(SELECT `Item` FROM `Services` WHERE `Services`.`ID` = `OrdersOwners`.`ServiceID`) AS `Item`',
-		'(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `OrdersOwners`.`ServiceID`) AS `Name`',
-		'ROUND((`ExpirationDate` - UNIX_TIMESTAMP())/86400) AS `DaysRemainded`'
+			'ID', 'UserID',
+			'(SELECT `Item` FROM `Services` WHERE `Services`.`ID` = `OrdersOwners`.`ServiceID`) AS `Item`',
+			'(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `OrdersOwners`.`ServiceID`) AS `Name`',
+			'ROUND((`ExpirationDate` - UNIX_TIMESTAMP())/86400) AS `DaysRemainded`'
 		);
 $Where = "(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) = 'Default' AND (SELECT `ConsiderTypeID` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) != 'Upon' AND `StatusID` = 'Active' AND ROUND((`ExpirationDate` - UNIX_TIMESTAMP())/86400) IN (1,3,5,7)";
 #-------------------------------------------------------------------------------

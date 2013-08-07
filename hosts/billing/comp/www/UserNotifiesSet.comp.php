@@ -146,7 +146,7 @@ $Code = 'Default';
 #-------------------------------------------------------------------------------
 foreach(Array_Keys($Types) as $TypeID){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/www/UserNotifiesSet]: TypeID = %s',$TypeID));
+	#Debug(SPrintF('[comp/www/UserNotifiesSet]: TypeID = %s',$TypeID));
 	$Type = $Types[$TypeID];
 	#-------------------------------------------------------------------------------
 	$Entrance = Tree_Entrance('Groups',(integer)$Type['GroupID']);
