@@ -73,46 +73,50 @@ case 'array':
 				#-------------------------------------------------------------------------------
 			}else{
 				#-------------------------------------------------------------------------------
-				$ProfileID = $DomainOrder['ProfileID'];
-				#-------------------------------------------------------------------------------
-				$Profile = DB_Select('Profiles',Array('TemplateID','Attribs'),Array('UNIQ','ID'=>$ProfileID));
-				#-------------------------------------------------------------------------------
-				switch(ValueOf($Profile)){
-				case 'error':
-					return ERROR | @Trigger_Error(500);
-				case 'exception':
-					return ERROR | @Trigger_Error(400);
-				case 'array':
+				if(!In_Array($DomainOrder['DomainZone'],Array('ru','su','рф'))){
 					#-------------------------------------------------------------------------------
-					# готовим поля профиля
-					$ProfileCompile = Comp_Load('www/Administrator/API/ProfileCompile',Array('ProfileID'=>$ProfileID));
+					$ProfileID = $DomainOrder['ProfileID'];
 					#-------------------------------------------------------------------------------
-					switch(ValueOf($ProfileCompile)){
+					$Profile = DB_Select('Profiles',Array('TemplateID','Attribs'),Array('UNIQ','ID'=>$ProfileID));
+					#-------------------------------------------------------------------------------
+					switch(ValueOf($Profile)){
 					case 'error':
 						return ERROR | @Trigger_Error(500);
 					case 'exception':
 						return ERROR | @Trigger_Error(400);
 					case 'array':
 						#-------------------------------------------------------------------------------
-						# страна должна быть кодом
-						if(IsSet($Profile['Attribs']['pCountry'])){$ProfileCompile['Attribs']['pCountry'] = $Profile['Attribs']['pCountry'];}
-						if(IsSet($Profile['Attribs']['PasportCountry'])){$ProfileCompile['Attribs']['PasportCountry'] = $Profile['Attribs']['PasportCountry'];}
-						if(IsSet($Profile['Attribs']['jCountry'])){$ProfileCompile['Attribs']['jCountry'] = $Profile['Attribs']['jCountry'];}
+						# готовим поля профиля
+						$ProfileCompile = Comp_Load('www/Administrator/API/ProfileCompile',Array('ProfileID'=>$ProfileID));
+						#-------------------------------------------------------------------------------
+						switch(ValueOf($ProfileCompile)){
+						case 'error':
+							return ERROR | @Trigger_Error(500);
+						case 'exception':
+							return ERROR | @Trigger_Error(400);
+						case 'array':
+							#-------------------------------------------------------------------------------
+							# страна должна быть кодом
+							if(IsSet($Profile['Attribs']['pCountry'])){$ProfileCompile['Attribs']['pCountry'] = $Profile['Attribs']['pCountry'];}
+							if(IsSet($Profile['Attribs']['PasportCountry'])){$ProfileCompile['Attribs']['PasportCountry'] = $Profile['Attribs']['PasportCountry'];}
+							if(IsSet($Profile['Attribs']['jCountry'])){$ProfileCompile['Attribs']['jCountry'] = $Profile['Attribs']['jCountry'];}
+							#-------------------------------------------------------------------------------
+							break;
+							#-------------------------------------------------------------------------------
+						default:
+							return ERROR | @Trigger_Error(101);
+						}
 						#-------------------------------------------------------------------------------
 						break;
 						#-------------------------------------------------------------------------------
-					default:
-						return ERROR | @Trigger_Error(101);
+						default:
+					return ERROR | @Trigger_Error(101);
 					}
 					#-------------------------------------------------------------------------------
-					break;
+					$Params['PersonID']	= $Profile['TemplateID'];
+					$Params['Person']	= $ProfileCompile['Attribs'];
 					#-------------------------------------------------------------------------------
-				default:
-					return ERROR | @Trigger_Error(101);
 				}
-				#-------------------------------------------------------------------------------
-				$Params['PersonID']	= $Profile['TemplateID'];
-				$Params['Person']	= $ProfileCompile['Attribs'];
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
