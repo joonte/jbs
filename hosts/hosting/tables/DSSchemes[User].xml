@@ -25,8 +25,30 @@
  </Conditions>
 </Source>
 <!-- *********************************************************************** -->
+<Columns>
+ <!-- ********************************************************************** -->
+ <DSOrder>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/DSOrder</ListElement>
+   <ListElement>
+    <DSSchemeID>%ID%</DSSchemeID>
+   </ListElement>
+   <ListElement>Новый заказ</ListElement>
+   <ListElement>Add.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </DSOrder>
+ <!-- ********************************************************************** -->
+</Columns>
+<!-- *********************************************************************** -->
 <Sequence>
  <ListElement>Info</ListElement>
+ <ListElement>DSOrder</ListElement>
  <ListElement>Name</ListElement>
  <ListElement>ServersGroup</ListElement>
  <ListElement>CostMonth</ListElement>

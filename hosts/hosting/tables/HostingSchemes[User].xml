@@ -25,8 +25,30 @@
  </Conditions>
 </Source>
 <!-- *********************************************************************** -->
+<Columns>
+ <!-- ********************************************************************** -->
+ <HostingOrder>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/HostingOrder</ListElement>
+   <ListElement>
+    <HostingSchemeID>%ID%</HostingSchemeID>
+   </ListElement>
+   <ListElement>Новый заказ</ListElement>
+   <ListElement>Add.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </HostingOrder>
+ <!-- ********************************************************************** -->
+</Columns>
+<!-- *********************************************************************** -->
 <Sequence>
  <ListElement>Info</ListElement>
+ <ListElement>HostingOrder</ListElement>
  <ListElement>Name</ListElement>
  <ListElement>ServersGroup</ListElement>
  <ListElement>CostMonth</ListElement>
