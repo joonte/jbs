@@ -49,7 +49,7 @@
   <Text>Обслуживание системы</Text>
   <Prompt>Поиск проблем, обновление системы, информация о лицензии</Prompt>
   <Paths>
-   <UniqID>^\/Administrator\/(Logs|UsersLogs|UpdateSystem|JBsLicense|BillingVersions)$</UniqID>
+   <UniqID>^\/Administrator\/(Logs|UsersLogs|OrdersHistory|UpdateSystem|JBsLicense|BillingVersions)$</UniqID>
   </Paths>
   <Href>/Administrator/Logs</Href>
   <Level>1</Level>

@@ -11,11 +11,18 @@
   <Href>/Administrator/Logs</Href>
  </ListElement>
  <ListElement>
-  <Text>Лог пользователей</Text>
+  <Text>Логи пользователей</Text>
   <Paths>
    <UniqID>^\/Administrator\/UsersLogs</UniqID>
   </Paths>
   <Href>/Administrator/UsersLogs</Href>
+ </ListElement>
+ <ListElement>
+  <Text>История заказов</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/OrdersHistory</UniqID>
+  </Paths>
+  <Href>/Administrator/OrdersHistory</Href>
  </ListElement>
  <ListElement>
   <Text>Обновление системы</Text>

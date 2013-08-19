@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Source>
+ <TableID>OrdersHistory</TableID>
+ <ColumnsIDs>
+  <ListElement>ID</ListElement>
+  <ListElement>Email</ListElement>
+  <ListElement>ServiceName</ListElement>
+  <ListElement>SchemeName</ListElement>
+  <ListElement>OrderID</ListElement>
+  <ListElement>CreateDate</ListElement>
+  <ListElement>StatusDate</ListElement>
+ </ColumnsIDs>
+ <Conditions>
+  <Message>Нет заказов</Message>
+ </Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+ <Before>
+  <DateSelect>
+   <Comp>Tables/Forms/DateSelect</Comp>
+   <Args>
+    <ListElement>CreateDate</ListElement>
+   </Args>
+   <NoBlock />
+  </DateSelect>
+  <!-- ********************************************************************* -->
+  <PatternOut>
+   <Args>
+    <Patterns>
+     <LastHour>
+      <Name>Заказы за последний час</Name>
+      <Where>`CreateDate` &gt; UNIX_TIMESTAMP() - 3600</Where>
+     </LastHour>
+     <!-- ****************************************************************** -->
+     <Today>
+      <Name>Заказы за сегодня</Name>
+      <Where>`CreateDate` &gt; BEGIN_DAY()</Where>
+     </Today>
+     <!-- ****************************************************************** -->
+     <Yesterday>
+      <Name>Заказы за вчера</Name>
+      <Where>`CreateDate` &gt; BEGIN_DAY() - 86400</Where>
+     </Yesterday>
+     <!-- ****************************************************************** -->
+     <Week>
+      <Name>Заказы за неделю</Name>
+      <Where>`CreateDate` &gt; BEGIN_DAY() - BEGIN_WEEK()</Where>
+     </Week>
+     <!-- ****************************************************************** -->
+     <Month>
+      <Name>Заказы за месяц</Name>
+      <Where>`CreateDate` &gt; BEGIN_DAY() - BEGIN_MONTH()</Where>
+     </Month>
+     <!-- ****************************************************************** -->
+     <Year>
+      <Name>Заказы за год</Name>
+      <Where>`CreateDate` &gt; BEGIN_DAY() - 365*24*3600</Where>
+     </Year>
+     <!-- ****************************************************************** -->
+    </Patterns>
+    <ActiveID>LastHour</ActiveID>
+   </Args>
+  </PatternOut>
+  <!-- ********************************************************************* -->
+  <Search>
+   <Args>
+    <ColumnsIDs>
+     <ListElement>UserID</ListElement>
+     <ListElement>Email</ListElement>
+     <ListElement>ServiceName</ListElement>
+     <ListElement>SchemeName</ListElement>
+     <ListElement>OrderID</ListElement>
+    </ColumnsIDs>
+   </Args>
+  </Search>
+  <!-- ********************************************************************* -->
+ </Before>
+ <!-- ********************************************************************** -->
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>CreateDate</SortOn>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+ <SelectID>
+  <Args>
+   <TableID>OrdersHistory</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <Email>
+  <Head>Email</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Email%</ListElement>
+   <Length>25</Length>
+  </Args>
+ </Email>
+ <!-- ********************************************************************** -->
+ <ServiceName>
+  <Head>Сервис</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%ServiceName%</ListElement>
+   <Length>25</Length>
+  </Args>
+ </ServiceName>
+ <!-- ********************************************************************** -->
+ <SchemeName>
+  <Head>Тариф</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%SchemeName%</ListElement>
+   <Length>25</Length>
+  </Args>
+ </SchemeName>
+ <!-- ********************************************************************** -->
+ <OrderID>
+  <Head>Номер заказа</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%OrderID%</ListElement>
+   <Length>25</Length>
+  </Args>
+ </OrderID>
+ <!-- ********************************************************************** -->
+ <CreateDate>
+  <Head>Дата создания</Head>
+  <Comp>Formats/Date/SQL</Comp>
+  <Args>
+   <ListElement>%CreateDate%</ListElement>
+  </Args>
+ </CreateDate>
+ <!-- ********************************************************************** -->
+ <StatusDate>
+  <Head>Дата изменения</Head>
+  <Comp>Formats/Date/SQL</Comp>
+  <Args>
+   <ListElement>%StatusDate%</ListElement>
+  </Args>
+ </StatusDate>
+ <!-- ********************************************************************** -->
+</Columns>
+<Sequence>
+ <ListElement>CreateDate</ListElement>
+ <ListElement>StatusDate</ListElement>
+ <ListElement>Email</ListElement>
+ <ListElement>ServiceName</ListElement>
+ <ListElement>SchemeName</ListElement>
+ <ListElement>OrderID</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>
