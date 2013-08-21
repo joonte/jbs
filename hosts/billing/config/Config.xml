@@ -962,6 +962,7 @@
    <Name>Процедура резервного копирования</Name>
    <Params type="array" />
    <IsActive>1</IsActive>
+   <ExecutePeriod>08:00</ExecutePeriod>
   </BackUp>
   <!-- ********************************************************************* -->
   <Sessions>
