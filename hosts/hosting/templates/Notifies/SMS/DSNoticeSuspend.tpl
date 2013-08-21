@@ -1,2 +1,6 @@
-Уведомляем Вас о том, что оканчивается срок аренды выделенного сервера, заказ #{$DSOrder.OrderID|string_format:"%05u"} IP адрес {$DSOrder.IP|default:'$DSOrder.IP'}
-До окончания заказа {$DSOrder.DaysRemainded|default:'$DSOrder.DaysRemainded'} дн.
+{*
+ *  Copyright © 2013 Alex Keda, for www.host-food.ru
+ *}
+
+Оканчивается срок аренды сервера, заказ #{$DSOrder.OrderID|string_format:"%05u"}; IP {$DSOrder.IP|default:'$DSOrder.IP'}. Осталось {$DSOrder.DaysRemainded|default:'$DSOrder.DaysRemainded'} дн.
+
