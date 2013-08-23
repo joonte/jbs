@@ -30,7 +30,7 @@ case 'array':
 			SPrintF('`RowID` = %u',$HostingOrderID)
 			);
 	#-------------------------------------------------------------------------------
-	$StatusesHistory = DB_Select('StatusesHistory','StatusID',Array('Where'=>$Where,'SortOn'=>'ID','IsDesc'=>TRUE));
+	$StatusesHistory = DB_Select('StatusesHistory','StatusID',Array('Where'=>$Where,'SortOn'=>'ID'));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($StatusesHistory)){
 	case 'error':
@@ -42,7 +42,7 @@ case 'array':
 		#-------------------------------------------------------------------------------
 		foreach($StatusesHistory as $Status){
 			#-------------------------------------------------------------------------------
-			#Debug(SPrintF('[comp/Tasks/HostingSchemeChange]: StatusID = %s',$Status['StatusID']));
+			Debug(SPrintF('[comp/Tasks/HostingSchemeChange]: StatusID = %s',$Status['StatusID']));
 			#-------------------------------------------------------------------------------
 			if(In_Array($Status['StatusID'],Array('Active','Suspended')))
 				$StatusID = $Status['StatusID'];
