@@ -217,10 +217,12 @@ switch(ValueOf($Groups)){
     $Comp = Comp_Load(
       'Form/TextArea',
       Array(
-        'name'  => 'Message',
-	'id'	=> 'Message',
-        'style' => 'width:100%;',
-        'rows'  => 10
+        'name'        => 'Message',
+	'id'          => 'Message',
+        'style'       => 'width:100%;',
+        'rows'        => 10,
+	'AutoFocus'   => 'yes',
+	'PlaceHolder' => 'Введите ваше сообщение'
       )
     );
     if(Is_Error($Comp))

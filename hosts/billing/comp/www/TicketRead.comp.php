@@ -14,7 +14,12 @@ $TicketID = (integer) @$Args['TicketID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Ticket = DB_Select('Edesks',Array('ID','UserID','Theme','UpdateDate','StatusID','SeenByPersonal','LastSeenBy','(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = (SELECT `GroupID` FROM `Users` WHERE `Users`.`ID` = `Edesks`.`UserID`)) as `IsDepartment`','Flags'),Array('UNIQ','ID'=>$TicketID));
+$Columns = Array(
+		'ID','UserID','Theme','UpdateDate','StatusID','SeenByPersonal','LastSeenBy','Flags',
+		'(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `Edesks`.`LastSeenBy`) AS `LastSeenByName`',
+		'(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = (SELECT `GroupID` FROM `Users` WHERE `Users`.`ID` = `Edesks`.`UserID`)) AS `IsDepartment`',
+		);
+$Ticket = DB_Select('Edesks',$Columns,Array('UNIQ','ID'=>$TicketID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Ticket)){
   case 'error':
@@ -182,10 +187,13 @@ switch(ValueOf($Ticket)){
 	#-----------------------------------------------------------------------
 	if($__USER['ID'] == $Ticket['UserID']){	# ordinar user
 		$color = "white";
+		$PlaceHolder = "Введите ваше сообщение";
 	}else{	# support
 		if($Ticket['LastSeenBy'] == $__USER['ID']){
 			$color = "white";
+			$PlaceHolder = "";
 		}else{
+			$PlaceHolder = (StrLen($Ticket['LastSeenByName']) > 0)?SPrintF('Тикет просматривается сотрудником %s',$Ticket['LastSeenByName']):'';
 			$TimePeriod = time() - $Ticket['SeenByPersonal'];
 			if($TimePeriod < 60){
 				$color = "lightcoral";
@@ -207,11 +215,13 @@ switch(ValueOf($Ticket)){
         $Comp = Comp_Load(
           'Form/TextArea',
           Array(
-            'name'	=> 'Message',
-	    'id'	=> 'Message',
-            'onkeypress'=> 'ctrlEnterEvent(event);',
-            'style'	=> SPrintF('background:%s; width:%u;',$color,Max(@$_COOKIE['wScreen']/1.5,630)),
-            'rows'	=> 5
+            'name'	 => 'Message',
+	    'id'	 => 'Message',
+            'OnKeyPress' => 'ctrlEnterEvent(event);',
+            'style'	 => SPrintF('background:%s; width:%u;',$color,Max(@$_COOKIE['wScreen']/1.5,630)),
+            'rows'       => 5,
+	    'AutoFocus'  => 'yes',
+	    'PlaceHolder'=> $PlaceHolder
           )
         );
         if(Is_Error($Comp))

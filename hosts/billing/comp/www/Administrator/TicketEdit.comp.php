@@ -103,9 +103,11 @@ switch(ValueOf($Ticket)){
     $Comp = Comp_Load(
       'Form/TextArea',
       Array(
-        'name'  => 'Theme',
-        'style' => 'width:100%;',
-        'rows'  => 5
+        'name'        => 'Theme',
+        'style'       => 'width:100%;',
+        'rows'        => 5,
+	'AutoFocus'   => 'yes',
+	'PlaceHolder' => 'Введите ваше сообщение'
       ),
       $Ticket['Theme']
     );
