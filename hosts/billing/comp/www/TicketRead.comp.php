@@ -206,6 +206,7 @@ switch(ValueOf($Ticket)){
 			}elseif($TimePeriod < 300){
 				$color = "gainsboro";
 			}else{
+				$PlaceHolder = '';
 				$color = "white";
 			}
 		}
