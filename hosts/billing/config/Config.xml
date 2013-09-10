@@ -1442,9 +1442,9 @@
 	</Notes>
 	<!-- *********************************************************************** -->
 	<Edesks>
-		<FoulLanguage>
+		<DenyFoulLanguage>
 			<IsActive>0</IsActive>
-		</FoulLanguage>
+		</DenyFoulLanguage>
 	</Edesks>
 	<!-- *********************************************************************** -->
 </Interface>

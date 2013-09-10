@@ -16,7 +16,7 @@ $__args_list = Array('Text');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-Debug(SPrintF('[comp/Formats/Edesk/Message/CheckFoul]: Text = %s',print_r($Text,true)));
+#Debug(SPrintF('[comp/Formats/Edesk/Message/CheckFoul]: Text = %s',print_r($Text,true)));
 #return TRUE;
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
@@ -35,14 +35,14 @@ $RuCharMap = array(
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 foreach(Preg_Split('/[\s,]+/',$Text) as $Word){
-	Debug(SPrintF('[comp/Formats/Edesk/Message/CheckFoul]: Word = "%s"',print_r($Word,true)));
+	#Debug(SPrintF('[comp/Formats/Edesk/Message/CheckFoul]: Word = "%s"',print_r($Word,true)));
 	#-------------------------------------------------------------------------------
 	$Word = Trim(Str_Replace($EnCharMap,$RuCharMap,StrToLower($Word)));
 	#-------------------------------------------------------------------------------
 	foreach(Preg_Split('/\n/', $Regulars['Fouls']) as $Foul){
 		#-------------------------------------------------------------------------------
 		$Foul = Trim($Foul);
-		Debug(SPrintF('[comp/Formats/Edesk/Message/CheckFoul]: Foul = "%s"',print_r($Foul,true)));
+		#Debug(SPrintF('[comp/Formats/Edesk/Message/CheckFoul]: Foul = "%s"',print_r($Foul,true)));
 		#-------------------------------------------------------------------------------
 		if(Preg_Match("/$Foul/u", $Word)){
 			return Array('Word'=>$Word);	# нецензурщина детектед
