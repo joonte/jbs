@@ -29,27 +29,64 @@ $Theme		= substr($Theme, 0, 127);
 $Message	= substr($Message, 0, 62000);
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('libs/Upload.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if(!$Theme)
-  return new gException('THEME_IS_EMPTY','Введите тему запроса');
+	return new gException('THEME_IS_EMPTY','Введите тему запроса');
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
 $Priorities = $Config['Edesks']['Priorities'];
 #-------------------------------------------------------------------------------
 if(!In_Array($PriorityID,Array_Keys($Priorities)))
-  return new gException('WRONG_PRIORITY','Неверный приоритет запроса');
+	return new gException('WRONG_PRIORITY','Неверный приоритет запроса');
 #-------------------------------------------------------------------------------
 if(!$Message)
-  return new gException('MESSAGE_IS_EMPTY','Введите сообщение запроса');
+	return new gException('MESSAGE_IS_EMPTY','Введите сообщение запроса');
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Groups',Array('ID'=>$TargetGroupID));
 if(Is_Error($Count))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if(!$Count)
-  return new gException('DEPARTAMENT_NOT_FOUND','Отдел запроса не найден');
+	return new gException('DEPARTAMENT_NOT_FOUND','Отдел запроса не найден');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($Config['Interface']['Edesks']['FoulLanguage']['IsActive']){
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Formats/Edesk/Message/CheckFoul',$Theme);
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Comp)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		return new gException('FoulLanguageDetected',SPrintF('В теме сообщения содержится нецензурное слово: %s',$Comp['Word']));
+	case 'true':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Formats/Edesk/Message/CheckFoul',$Message);
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Comp)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		return new gException('FoulLanguageDetected',SPrintF('В тексте сообщения содержится нецензурное слово: %s',$Comp['Word']));
+	case 'true':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $ITicket = Array(
   #-----------------------------------------------------------------------------
