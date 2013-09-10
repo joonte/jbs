@@ -313,6 +313,65 @@ foreach($Mails as $mailId){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
+	# added by lissyara, 2013-09-10 in 13:50, for JBS-724
+	if($Config['Interface']['Edesks']['DenyFoulLanguage']['IsActive'] && $Config['Interface']['Edesks']['DenyFoulLanguage']['IsEvent']){
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Formats/Edesk/Message/CheckFoul',$textPlain);
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($Comp)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return ERROR | @Trigger_Error(400);
+		case 'array':
+			#-------------------------------------------------------------------------------
+			$Event = Array(
+					'UserID'	=> ($IsUser)?$User['ID']:10,
+					'PriorityID'	=> 'Error',
+					'Text'		=> SPrintF('Удалено почтовое сообщение с нецензурной лексикой (%s) c адреса (%s)',$Comp['Word'],$fromAddress),
+					'IsReaded'	=> FALSE
+					);
+			$Event = Comp_Load('Events/EventInsert', $Event);
+			if(!$Event)
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+		case 'true':
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+		if($Subject){
+			#-------------------------------------------------------------------------------
+			$Comp = Comp_Load('Formats/Edesk/Message/CheckFoul',$Subject);
+			#-------------------------------------------------------------------------------
+			switch(ValueOf($Comp)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				return ERROR | @Trigger_Error(400);
+			case 'array':
+				#-------------------------------------------------------------------------------
+				$Event = Array(
+						'UserID'	=> ($IsUser)?$User['ID']:10,
+						'PriorityID'	=> 'Error',
+						'Text'		=> SPrintF('Удалено почтовое сообщение с нецензурной темой (%s) c адреса (%s)',$Comp['Word'],$fromAddress),
+						'IsReaded'	=> FALSE
+						);
+				$Event = Comp_Load('Events/EventInsert', $Event);
+				if(!$Event)
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+			case 'true':
+				break;
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if($Settings['SaveHeaders'])
 		$SaveHeaders = SPrintF("[hidden]\n%s[/hidden]\n",$mailbox->fetchHeader($mail->mId));
