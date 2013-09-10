@@ -17,7 +17,6 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 #Debug(SPrintF('[comp/Formats/Edesk/Message/CheckFoul]: Text = %s',print_r($Text,true)));
-#return TRUE;
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
 $EnCharMap = array(
@@ -39,12 +38,12 @@ foreach(Preg_Split('/[\s,]+/',$Text) as $Word){
 	#-------------------------------------------------------------------------------
 	$Word = Trim(Str_Replace($EnCharMap,$RuCharMap,StrToLower($Word)));
 	#-------------------------------------------------------------------------------
-	foreach(Preg_Split('/\n/', $Regulars['Fouls']) as $Foul){
+	foreach(Preg_Split('/\s+/', $Regulars['Fouls']) as $Foul){
 		#-------------------------------------------------------------------------------
 		$Foul = Trim($Foul);
-		#Debug(SPrintF('[comp/Formats/Edesk/Message/CheckFoul]: Foul = "%s"',print_r($Foul,true)));
+		Debug(SPrintF('[comp/Formats/Edesk/Message/CheckFoul]: Foul = "%s"',print_r($Foul,true)));
 		#-------------------------------------------------------------------------------
-		if(Preg_Match("/$Foul/u", $Word)){
+		if(Preg_Match($Foul, $Word)){
 			return Array('Word'=>$Word);	# нецензурщина детектед
 		}else{
 			continue;
