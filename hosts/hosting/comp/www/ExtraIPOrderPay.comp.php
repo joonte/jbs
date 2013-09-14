@@ -74,7 +74,7 @@ switch(ValueOf($ExtraIPOrder)){
         $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/ExtraIPOrderPay.js}')));
         #-----------------------------------------------------------------------
         if(!In_Array($ExtraIPOrder['StatusID'],Array('Waiting','Active','Suspended')))
-          return new gException('ORDER_CAN_NOT_PAY','Аренда сервера не может быть оплачена');
+          return new gException('ORDER_CAN_NOT_PAY','Выделенный IP адрес не может быть оплачен');
         #-----------------------------------------------------------------------
         $__USER = $GLOBALS['__USER'];
         #-----------------------------------------------------------------------
@@ -108,11 +108,11 @@ switch(ValueOf($ExtraIPOrder)){
             if($ExtraIPOrder['IsPayed']){
               #-----------------------------------------------------------------
               if(!$ExtraIPScheme['IsProlong'])
-                return new gException('SCHEME_NOT_ALLOW_PROLONG','Тарифный план аренды сервера не позволяет продление');
+                return new gException('SCHEME_NOT_ALLOW_PROLONG','Тарифный план выделенного IP адреса не позволяет продление');
             }else{
               #-----------------------------------------------------------------
               if(!$ExtraIPScheme['IsActive'])
-                return new gException('SCHEME_NOT_ACTIVE','Тарифный план аренды сервера не активен');
+                return new gException('SCHEME_NOT_ACTIVE','Тарифный план выделевыделенного IP адреса не активен');
             }
             #-------------------------------------------------------------------
             if($DaysPay){
@@ -401,7 +401,7 @@ switch(ValueOf($ExtraIPOrder)){
                       return ERROR | @Trigger_Error(500);
                   }
                   #---------------------------------------------------------------
-                  $Table[] = new Tag('TD',Array('class'=>'Separator','colspan'=>2),$Comp,new Tag('SPAN','Остаток денег на баансе (' . $ExtraIPOrder['ContractBalance'] . ' руб.)'));
+                  $Table[] = new Tag('TD',Array('class'=>'Separator','colspan'=>2),$Comp,new Tag('SPAN','Остаток денег на балансе (' . $ExtraIPOrder['ContractBalance'] . ' руб.)'));
                   #---------------------------------------------------------------
                   $Table[] = Array('Остатка на счету хватит на ',$DaysFromBallance . ' дней');
                   #---------------------------------------------------------------

@@ -41,10 +41,11 @@ foreach(Preg_Split('/[\s,]+/',$Text) as $Word){
 	foreach(Preg_Split('/\s+/', $Regulars['Fouls']) as $Foul){
 		#-------------------------------------------------------------------------------
 		$Foul = Trim($Foul);
-		Debug(SPrintF('[comp/Formats/Edesk/Message/CheckFoul]: Foul = "%s"',print_r($Foul,true)));
+		#Debug(SPrintF('[comp/Formats/Edesk/Message/CheckFoul]: Foul = "%s"',print_r($Foul,true)));
 		#-------------------------------------------------------------------------------
 		if(Preg_Match($Foul, $Word)){
 			return Array('Word'=>$Word);	# нецензурщина детектед
+			Debug(SPrintF('[comp/Formats/Edesk/Message/CheckFoul]: Foul found: "%s"',$Word));
 		}else{
 			continue;
 		}
