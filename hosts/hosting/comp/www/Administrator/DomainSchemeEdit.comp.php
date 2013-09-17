@@ -200,7 +200,8 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'size'  => 6,
     'name'  => 'DaysToProlong',
-    'value' => $DomainScheme['DaysToProlong']
+    'value' => $DomainScheme['DaysToProlong'],
+    'prompt'=> 'За сколько дней до окончания домена его можно продлевать'
   )
 );
 if(Is_Error($Comp))
