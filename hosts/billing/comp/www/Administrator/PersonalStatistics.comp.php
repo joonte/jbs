@@ -184,7 +184,7 @@ $Table = Array();
 #-------------------------------------------------------------------------------
 # строим шапочку таблицы
 $Span = new Tag('SPAN','Статистика за период с ' . Date('Y-m-d',$StartDate) . ' по ' . Date('Y-m-d',$FinishDate));
-$Td = new Tag('TD',Array('class'=>'Separator','colspan'=>7),$Span);
+$Td = new Tag('TD',Array('class'=>'Separator','colspan'=>8),$Span);
 $Tr = new Tag('TR');
 $Tr->AddChild($Td);
 $Table[] = $Tr;
@@ -213,6 +213,11 @@ return ERROR | @Trigger_Error(500);
 $Tr->AddChild(new Tag('TD',Array('class'=>'Head','align'=>'center'),$Comp));
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Formats/String','Ответов в тикеты',8);
+if(Is_Error($Comp))
+return ERROR | @Trigger_Error(500);
+$Tr->AddChild(new Tag('TD',Array('class'=>'Head','align'=>'center'),$Comp));
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Formats/String','Скрытых ответов в тикеты',8);
 if(Is_Error($Comp))
 return ERROR | @Trigger_Error(500);
 $Tr->AddChild(new Tag('TD',Array('class'=>'Head','align'=>'center'),$Comp));
@@ -297,8 +302,31 @@ foreach($UserIDs as $UserID){
 		# число ответов в тикетнице
                 $Where  = Array();
 		$Where[]= SPrintF('`UserID` = %u',$UserID);
+		$Where[]= '`IsVisible` = "yes"';
 		$Where[]= SPrintF('`CreateDate` BETWEEN %u AND %u',$StartDate,$FinishDate);
-		$Answers = DB_Select('EdesksMessagesOwners',Array('COUNT(*) AS Counter'),Array('UNIQ','Where'=>$Where));
+		$Answers= DB_Select('EdesksMessagesOwners',Array('COUNT(*) AS Counter'),Array('UNIQ','Where'=>$Where));
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($Answers)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return ERROR | @Trigger_Error(400);
+		case 'array':
+			$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard'),$Answers['Counter']));
+			if($Answers['Counter'] > 0)
+				$IsAdd = TRUE;
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		# число скрытых ответов в тикетнице
+                $Where  = Array();
+		$Where[]= SPrintF('`UserID` = %u',$UserID);
+		$Where[]= '`IsVisible` = "no"';
+		$Where[]= SPrintF('`CreateDate` BETWEEN %u AND %u',$StartDate,$FinishDate);
+		$Answers= DB_Select('EdesksMessagesOwners',Array('COUNT(*) AS Counter'),Array('UNIQ','Where'=>$Where));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($Answers)){
 		case 'error':
@@ -318,6 +346,7 @@ foreach($UserIDs as $UserID){
 		# сообщений с оценками
                 $Where  = Array();
 		$Where[]= SPrintF('`UserID` = %u',$UserID);
+		$Where[]= '`IsVisible` = "yes"';
 		$Where[]= '`VoteBall` > 0';
 		$Where[]= SPrintF('`CreateDate` BETWEEN %u AND %u',$StartDate,$FinishDate);
 		$NumVotes = DB_Select('EdesksMessagesOwners',Array('COUNT(*) AS Counter'),Array('UNIQ','Where'=>$Where));
@@ -345,6 +374,7 @@ foreach($UserIDs as $UserID){
                 $Where  = Array();
 		$Where[]= SPrintF('`UserID` = %u',$UserID);
 		$Where[]= '`VoteBall` > 0';
+		$Where[]= '`IsVisible` = "yes"';
 		$Where[]= SPrintF('`CreateDate` BETWEEN %u AND %u',$StartDate,$FinishDate);
 		$SumVotes = DB_Select('EdesksMessagesOwners',Array('SUM(`VoteBall`) AS VoteSumm'),Array('UNIQ','Where'=>$Where));
 		#-------------------------------------------------------------------------------
