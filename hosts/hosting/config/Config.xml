@@ -275,10 +275,10 @@
   <RegRu>
    <Name>RegRu</Name>
    <Settings>
-    <Address>www.reg.ru</Address>
+    <Address>api.reg.ru</Address>
     <Port>443</Port>
     <Protocol>ssl</Protocol>
-    <PrefixAPI>/api/regru</PrefixAPI>
+    <PrefixAPI>/api/regru2</PrefixAPI>
     <PrefixNic>REGRU</PrefixNic>
     <JurName>ООО "Регистратор доменных имён РЕГ.РУ"</JurName>
    </Settings>
