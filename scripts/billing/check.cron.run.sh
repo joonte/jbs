@@ -94,8 +94,16 @@ fi
 # проверяем, как давно выполнялось последнее задание
 if test -f $marker
 then
+	# определяем время на час назад, в разных системах по разному
+	if [ `uname` = "Linux" ]
+	then
+		params="date --date='1 hour ago'"
+	else
+		params="-v-1H"
+	fi
+
 	executed=`cat $marker`
-	if [ `date -v-1h +%Y%m%d%H%M%S` -ge $executed ]
+	if [ `date $params +%Y%m%d%H%M%S` -ge $executed ]
 	then
 		echo "" >> $RootDir/demon.log
 		echo "`date +%Y-%m-%d` in `date +%H:%M:%S`: php-cgi auto killed, no executed tasks more than one hour" >> $RootDir/demon.log
