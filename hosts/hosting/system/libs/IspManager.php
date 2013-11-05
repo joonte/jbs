@@ -57,7 +57,7 @@ function IspManager_Get_Domains($Settings){
 	if(Is_Array($Elems)){
 		#-------------------------------------------------------------------------------
 		foreach($Elems as $Elem)
-			if(!In_Array($Elem['owner'],$Resellers))
+			if(IsSet($Elem['owner']) && !In_Array($Elem['owner'],$Resellers))
 				$Resellers[] = $Elem['owner'];
 		#-------------------------------------------------------------------------------
 	}
