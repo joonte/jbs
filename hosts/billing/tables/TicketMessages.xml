@@ -10,6 +10,20 @@
  <IsDataMode>0</IsDataMode>
 </Appearance>
 <!-- *********************************************************************** -->
+<!--
+<Comps>
+ <After>
+  <ExtendedMenu>
+   <Comp>Menus/List</Comp>
+   <Args>
+   <Replace1>Administrator/ListMenu/Tickets.xml</Replace1>
+    <Replace>1234</Replace>
+   </Args>
+  </ExtendedMenu>
+ </After>
+</Comps>
+-->
+
 <Cut>
  <Comps>
   <Before>
@@ -21,6 +35,7 @@
   </After>
  </Comps>
 </Cut>
+
 <!-- *********************************************************************** -->
 <Column>
  <Cut>
