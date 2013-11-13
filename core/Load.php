@@ -180,9 +180,7 @@ function Debug($message) {
 
     List($micro, $seconds) = Explode(' ',MicroTime());
 
-    if(isset($_SERVER["REMOTE_PORT"])){$r_port = $_SERVER["REMOTE_PORT"];}else{$r_port = "console";}
-
-    $message = SPrintF('[%s.%02u][%s] %s', $date, $micro * 100, $r_port, Is_Array($message)?'Array':$message);
+    $message = SPrintF('[%s.%02u][%s] %s', $date, $micro * 100, IsSet($_SERVER["REMOTE_PORT"])?$_SERVER["REMOTE_PORT"]:"console", Is_Array($message)?'Array':$message);
 
     $__SYSLOG[] = $message;
 

@@ -1444,6 +1444,7 @@
 	<Edesks>
 		<DenyFoulLanguage>
 			<IsActive>0</IsActive>
+			<IsEmailActive>0</IsEmailActive>
 			<IsEvent>1</IsEvent>
 		</DenyFoulLanguage>
 	</Edesks>

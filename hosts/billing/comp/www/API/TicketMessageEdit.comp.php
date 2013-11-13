@@ -50,7 +50,8 @@ if(StrLen($Flags) < 2)
 	$Flags = 'No';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($Config['Interface']['Edesks']['DenyFoulLanguage']['IsActive'] && !IsSet($NotVisible)){
+$Settings = $Config['Interface']['Edesks']['DenyFoulLanguage'];
+if(($Settings['IsActive'] && !IsSet($NotVisible) && IsSet($_SERVER["REMOTE_PORT"])) || ($Settings['IsEmailActive'] && !IsSet($_SERVER["REMOTE_PORT"]))){
         #-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Formats/Edesk/Message/CheckFoul',$Message);
 	#-------------------------------------------------------------------------------

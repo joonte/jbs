@@ -52,7 +52,9 @@ if(!$Count)
 	return new gException('DEPARTAMENT_NOT_FOUND','Отдел запроса не найден');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($Config['Interface']['Edesks']['DenyFoulLanguage']['IsActive']){
+$Settings = $Config['Interface']['Edesks']['DenyFoulLanguage'];
+#-------------------------------------------------------------------------------
+if(($Settings['IsActive'] && IsSet($_SERVER["REMOTE_PORT"])) || ($Settings['IsEmailActive'] && !IsSet($_SERVER["REMOTE_PORT"]))){
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Formats/Edesk/Message/CheckFoul',$Theme);
 	#-------------------------------------------------------------------------------

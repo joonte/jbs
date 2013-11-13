@@ -314,7 +314,7 @@ foreach($Mails as $mailId){
 	}
 	#-------------------------------------------------------------------------------
 	# added by lissyara, 2013-09-10 in 13:50, for JBS-724
-	if($Config['Interface']['Edesks']['DenyFoulLanguage']['IsActive'] && $Config['Interface']['Edesks']['DenyFoulLanguage']['IsEvent']){
+	if($Config['Interface']['Edesks']['DenyFoulLanguage']['IsEmailActive'] && $Config['Interface']['Edesks']['DenyFoulLanguage']['IsEvent']){
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load('Formats/Edesk/Message/CheckFoul',$textPlain);
 		#-------------------------------------------------------------------------------
