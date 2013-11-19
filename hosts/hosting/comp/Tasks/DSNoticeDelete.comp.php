@@ -9,7 +9,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Where = "`StatusID` = 'Suspended' AND ROUND((`StatusDate` + 1296000 - UNIX_TIMESTAMP())/86400) IN (1,2,3,4,5,10)";
 #-------------------------------------------------------------------------------
-$DSOrders = DB_Select('DSOrdersOwners',Array('ID','UserID','IP','StatusDate'),Array('Where'=>$Where));
+$DSOrders = DB_Select('DSOrdersOwners',Array('ID','OrderID','UserID','IP','StatusDate'),Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DSOrders)){
   case 'error':
