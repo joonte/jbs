@@ -6,9 +6,9 @@ if(!Extension_Loaded('mcrypt'))
   $GLOBALS['__MESSAGES'][] = 'Модуль mcrypt не установлен. Функции шифрования могут работать не правильно. Пожалуйста, исправьте ошибку.';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function Crypt_Encode($String){
+function Crypt_Encode($String, $Key = HOST_ID){
   /****************************************************************************/
-  $__args_types = Array('string');
+  $__args_types = Array('string','string');
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
@@ -26,7 +26,7 @@ function Crypt_Encode($String){
       if(!$Iv)
         return ERROR | @Trigger_Error('[Crypt_Encode]: не удалось создать IV');
       #-------------------------------------------------------------------------
-      $Key = SubStr(HOST_ID,0,MCrypt_Enc_Get_Key_Size($Module));
+      $Key = SubStr($Key,0,MCrypt_Enc_Get_Key_Size($Module));
       #-------------------------------------------------------------------------
       $IsInit = @MCrypt_Generic_Init($Module,$Key,$Iv);
       if(!Is_Integer($IsInit))
@@ -41,9 +41,9 @@ function Crypt_Encode($String){
   return Base64_Encode($String);
 }
 #-------------------------------------------------------------------------------
-function Crypt_Decode($String){
+function Crypt_Decode($String,$Key = HOST_ID){
   /****************************************************************************/
-  $__args_types = Array('string');
+  $__args_types = Array('string','string');
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
@@ -65,7 +65,7 @@ function Crypt_Decode($String){
       if(!$Iv)
         return ERROR | @Trigger_Error('[Crypt_Decode]: не удалось создать IV');
       #-------------------------------------------------------------------------
-      $Key = SubStr(HOST_ID,0,MCrypt_Enc_Get_Key_Size($Module));
+      $Key = SubStr($Key,0,MCrypt_Enc_Get_Key_Size($Module));
       #-------------------------------------------------------------------------
       $IsInit = @MCrypt_Generic_Init($Module,$Key,$Iv);
       if(!Is_Integer($IsInit))
