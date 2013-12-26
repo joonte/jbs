@@ -456,7 +456,9 @@ class ImapMailbox {
 			}
 		}
 		if (!empty($params['charset'])){
-			$data = @iconv($params['charset'], $this->serverEncoding, $data);
+			if($params['charset'] != 'X-UNKNOWN'){
+				$data = @iconv($params['charset'], $this->serverEncoding, $data);
+			}
 		}
 
 		// attachments
@@ -503,7 +505,7 @@ class ImapMailbox {
 		$newString = '';
 		$elements = imap_mime_header_decode($string);
 		for ($i = 0; $i < count($elements); $i++) {
-			if ($elements[$i]->charset == 'default') {
+			if ($elements[$i]->charset == 'default' || $elements[$i]->charset == 'X-UNKNOWN') {
 				$elements[$i]->charset = 'iso-8859-1';
 			}
 			$newString .= @iconv($elements[$i]->charset, $charset, $elements[$i]->text);
