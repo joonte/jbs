@@ -160,7 +160,8 @@ function GetFileMimeType($Table,$ID){
 		#-------------------------------------------------------------------------------
 		#Debug(SPrintF('[system/libs/Upload]: get file type: %s',$Path['FilePath']));
 		#-------------------------------------------------------------------------------
-		return Mime_Content_Type($Path['FilePath']);
+		//return Mime_Content_Type($Path['FilePath']);
+		return FInfo_File(FInfo_Open(FILEINFO_MIME_TYPE),$Path['FilePath']);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
