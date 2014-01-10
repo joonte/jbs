@@ -908,6 +908,7 @@
     <Message>Сообщение</Message>
     <Heads>Заголовки</Heads>
     <ID>Идентификатор пользователя</ID>
+    <EmailAttachments>Вложения</EmailAttachments>
    </Params>
    <IsActive>1</IsActive>
   </Email>

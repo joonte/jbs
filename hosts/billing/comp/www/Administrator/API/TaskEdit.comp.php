@@ -66,7 +66,7 @@ if($TaskID){
   #-----------------------------------------------------------------------------
   $ParamsIDs = Array_Keys($Type['Params']);
   #-----------------------------------------------------------------------------
-  #Debug('[comp/www/Administrator/API/TaskEdit]: ' . print_r($Params,true));
+  #Debug(SPrintF('[comp/www/Administrator/API/TaskEdit]: Params = %s',print_r($Params,true)));
   #-----------------------------------------------------------------------------
   for($i=0;$i<Count($ParamsIDs);$i++)
     $dParams[$ParamsIDs[$i]] = (IsSet($Params[$i])?$Params[$i]:'не определено');

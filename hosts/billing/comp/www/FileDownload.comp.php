@@ -49,25 +49,7 @@ switch(ValueOf($FileData)){
 	if($TypeID == 'Profiles')	{$FileName = SPrintF('document_%s.%s',$FileData['ID'],$FileData['Format']);}
         #-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Ext = StrToLower(SubStr($FileName, -4));
-	#-------------------------------------------------------------------------------
-	if(StrPos($Ext, '.') !== FALSE)
-		$Ext = SubStr($Ext, StrPos($Ext, '.') + 1, StrLen($Ext));
-	#-------------------------------------------------------------------------------
-	$Types = Array(
-			'jpg'	=> 'image/jpeg',
-			'jpeg'	=> 'image/jpeg',
-			'gif'	=> 'image/gif',
-			'png'	=> 'image/png',
-			'bmp'	=> 'image/bmp',
-			'pdf'	=> 'application/pdf',
-			'tiff'	=> 'image/tiff',
-			'tif'	=> 'image/tiff',
-	);
-	#-------------------------------------------------------------------------------
-	$ContentType = IsSet($Types[$Ext])?$Types[$Ext]:'application/octetstream; charset=utf-8';
-	#-------------------------------------------------------------------------------
-        Header(SPrintF('Content-Type: %s',$ContentType));
+        Header(SPrintF('Content-Type: %s; charset=utf-8',GetFileMimeType($TypeID,$FileID)));
         Header(SPrintF('Content-Length: %u',$Length));
         Header(SPrintF('Content-Disposition: attachment; filename="%s";',$FileName));
         Header('Pragma: nocache');

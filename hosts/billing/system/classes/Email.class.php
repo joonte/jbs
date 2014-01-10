@@ -93,7 +93,11 @@ class Email implements Dispatcher {
 	$Params[] = $message;
 	$Params[] = Implode("\r\n", $emailHeads);
 	$Params[] = $recipient['ID'];
-
+	if($msg->getParam('EmailAttachments')){
+		$Params[] = $msg->getParam('EmailAttachments');
+	}else{
+		$Params[] = 'не определено';
+	}
         $taskParams = Array(
             'UserID' => $recipient['ID'],
             'TypeID' => 'Email',
