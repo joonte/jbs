@@ -7,8 +7,8 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('libs/Tree.php')))
-  return ERROR | @Trigger_Error(500);
+if(Is_Error(System_Load('libs/Tree.php','libs/Upload.php')))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Config = Config();
 $Settings = $Config['Tasks']['Types']['TicketsMessages'];
@@ -24,7 +24,7 @@ if(!$Settings['IsActive'])
 $MessagesCount = 0;
 #-------------------------------------------------------------------------------
 $Columns = Array(
-		'ID','UserID','EdeskID','SUBSTR(`Content`,1,4096) AS `Content`',
+		'ID','UserID','EdeskID','FileName','SUBSTR(`Content`,1,4096) AS `Content`',
 		'(SELECT `Theme` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `Theme`',
 		'(SELECT `TargetGroupID` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `TargetGroupID`',
 		'(SELECT `TargetUserID` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `TargetUserID`',
@@ -54,6 +54,34 @@ switch(ValueOf($Messages)){
       $TargetUserID = (integer)$Message['TargetUserID'];
       $TargetGroupID = (integer)$Message['TargetGroupID'];
       #-------------------------------------------------------------------------
+      $Upload = Upload_Get('TicketMessageFile',$Message['FileName']);
+      #---------------------------------------------------------------------
+      switch(ValueOf($Upload)){
+      case 'error':
+       	return ERROR | @Trigger_Error(500);
+      case 'exception':
+       	# No more...
+	break;
+      case 'array':
+  	#-----------------------------------------------------------------
+  	$Data = GetUploadedFile('EdesksMessages', $Message['ID']);
+       	#-----------------------------------------------------------------
+	$EmailAttachments = Array(
+				Array(
+					'Name'	=> $Upload['Name'],
+					'Size'	=> GetUploadedFileSize('EdesksMessages',$Message['ID']),
+					'Mime'	=> GetFileMimeType('EdesksMessages',$Message['ID']),
+					'Data'	=> Chunk_Split(Base64_Encode($Data['Data']))
+					),
+				);
+	#-----------------------------------------------------------------
+	break;
+	#-----------------------------------------------------------------
+      default:
+	return ERROR | @Trigger_Error(101);
+      }
+      #-------------------------------------------------------------------------------
+      #-------------------------------------------------------------------------------
       if($TargetGroupID != 1){
         #-----------------------------------------------------------------------
         $IsOwner = ($Message['UserID'] == ($OwnerID = $Message['OwnerID']));
@@ -63,10 +91,11 @@ switch(ValueOf($Messages)){
           if($TargetUserID != 100){
             #-------------------------------------------------------------------
             $msgParams = Array(
-                'TicketID'	=> $Message['EdeskID'],
-                'Theme'		=> $Message['Theme'],
-                'Message'	=> $Message['Content'],
-		'Message-ID'	=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID)
+                'TicketID'		=> $Message['EdeskID'],
+                'Theme'			=> $Message['Theme'],
+                'Message'		=> $Message['Content'],
+		'Message-ID'		=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
+		'EmailAttachments'	=> (IsSet($EmailAttachments)?$EmailAttachments:'не определено')
             );
 	    #-------------------------------------------------------------------
             $msg = new Message('ToTicketsMessages', $TargetUserID, $msgParams);
@@ -115,10 +144,11 @@ switch(ValueOf($Messages)){
                     foreach($Employers as $Employer){
                       #---------------------------------------------------------
                       $msgParams = Array(
-                          'TicketID'	=> $Message['EdeskID'],
-                          'Theme'	=> $Message['Theme'],
-                          'Message'	=> $Message['Content'],
-                          'Message-ID'	=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID)
+                          'TicketID'		=> $Message['EdeskID'],
+                          'Theme'		=> $Message['Theme'],
+                          'Message'		=> $Message['Content'],
+                          'Message-ID'		=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
+			  'EmailAttachments'	=> (IsSet($EmailAttachments)?$EmailAttachments:'не определено')
                       );
 		      #-------------------------------------------------------------------
                       $msg = new Message('ToTicketsMessages',(integer)$Employer['ID'], $msgParams);
@@ -166,19 +196,19 @@ switch(ValueOf($Messages)){
           }
           #---------------------------------------------------------------------
           $Message['Content'] = $String;
-          #---------------------------------------------------------------------
+	  #---------------------------------------------------------------------
           $msgParams = Array(
               'TicketID'	=> $Message['EdeskID'],
               'Theme'		=> $Message['Theme'],
               'Message'		=> $Message['Content'],
-              'Message-ID'	=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID)
+              'Message-ID'	=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
+	      'EmailAttachments'=> (IsSet($EmailAttachments)?$EmailAttachments:'не определено')
           );
+	  Debug(SPrintF('[comp/Tasks/TicketsMessages]: msgParams = %s',print_r($msgParams,true)));
           #-------------------------------------------------------------------
           if(StrLen($Message['NotifyEmail']) > 5)
             $msgParams['Recipient'] = $Message['NotifyEmail'];
 	  #-------------------------------------------------------------------
-	  #Debug(SPrintF('[comp/Tasks/TicketsMessages]: NotifyEmail = %s',$Message['NotifyEmail']));
-	  #Debug(SPrintF('[comp/Tasks/TicketsMessages]: msgParams = %s',print_r($msgParams,true)));
           #-------------------------------------------------------------------
           $msg = new FromTicketsMessagesMsg($msgParams, (integer)$OwnerID);
           $IsSend = NotificationManager::sendMsg($msg);
