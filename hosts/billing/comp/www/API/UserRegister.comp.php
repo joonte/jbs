@@ -71,7 +71,7 @@ $IUser = Array(
   'ICQ'             => $ICQ,
   'LayPayMaxDays'   => $Settings['LayPayMaxDays'],
   'LayPayMaxSumm'   => $Settings['LayPayMaxSumm'],
-  'LayPayThreshold' => $Settings['LayPayThreshold']
+  'LayPayThreshold' => $Settings['LayPayThreshold'],
 );
 #-------------------------------------------------------------------------------
 $Group = DB_Select('Groups','ID',Array('UNIQ','Where'=>"`IsDefault` = 'yes'"));

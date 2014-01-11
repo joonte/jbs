@@ -52,11 +52,11 @@ if($Mobile){
     if (!Is_Array($Executor))
 	return ERROR | @Trigger_Error(500);
     #-------------------------------------------------------------------------------
-    $Confirm = SubStr(Md5($GLOBALS['__USER']['ID'].MicroTime()), 0, 5);
+    $Confirm = rand(100000, 999999);
     CacheManager::add($CacheID, SPrintF('%s%s',$Confirm,$Mobile), 10*24*3600);
     #-------------------------------------------------------------------------------
     $Message = SPrintF('Ваш проверочный код: %s%s',$Confirm,($Settings['CutSign'])?'':SPrintF('\r\n%s',$Executor['Sign']));
-    $Comp = Comp_Load('Tasks/SMS', NULL, $Mobile, $Message, $GLOBALS['__USER']['ID'], TRUE);
+    $Comp = Comp_Load('Tasks/SMS',NULL,$Mobile,$Message,$GLOBALS['__USER']['ID'],TRUE,TRUE);
     if(!$Comp){
 	#-----------------------------------------------------------------------------
 	if(Is_String($Comp))
@@ -71,7 +71,7 @@ if($Mobile){
     if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
     #-------------------------------------------------------------------------------
-    CacheManager::add($CacheID2, 'block', IntVal($Settings['SMSInterval']));
+    CacheManager::add($CacheID2, 'block', IntVal($Settings['SMSInterval']) * 20);
     #-------------------------------------------------------------------------------
     return Array('Status' => 'Ok');
     #-------------------------------------------------------------------------------
