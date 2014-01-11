@@ -9,11 +9,25 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
-$EdesksDisplay		= (string) @$Args['EdesksDisplay'];
-$EdeskNoPreview		= (string) @$Args['EdeskNoPreview'];
-$EdeskOnlyMyButtons	= (string) @$Args['EdeskOnlyMyButtons'];
+$EdesksDisplay		=  (string) @$Args['EdesksDisplay'];
+$EdeskNoPreview		=  (string) @$Args['EdeskNoPreview'];
+$EdeskOnlyMyButtons	=  (string) @$Args['EdeskOnlyMyButtons'];
+$SMSBeginTime		= (integer) @$Args['SMSBeginTime'];
+$SMSEndTime		= (integer) @$Args['SMSEndTime'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/Session.class.php')))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$__USER = $GLOBALS['__USER'];
+#-------------------------------------------------------------------------------
+$Settings = $__USER['Params'];
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Settings['SMSTime'] = Array('SMSBeginTime'=>$SMSBeginTime,'SMSEndTime'=>$SMSEndTime);
+#-------------------------------------------------------------------------------
+$IsUpdate = DB_Update('Users',Array('Params'=>$Settings),Array('ID'=>$__USER['ID']));
+if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
