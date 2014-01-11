@@ -293,7 +293,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => 'UserPersonalDataChange();',
+    'onclick' => "javascript: if(form.Mobile.value.charAt(0) == 8){ ShowConfirm('С цифры 8 начинаются коды таких стран как Китай, Бангладеш и т.п. Вы уверены что ваш мобильный телефон относится именно к этой стране? Например код РФ: 7, Беларуси: 375, Украины: 380. Соответственно, обычный номер Российского мобильного телефона выглядит так: 79262223344. Вы всё ещё хотите сохранить свой телефонный номер в таком виде?','UserPersonalDataChange();'); }else{ UserPersonalDataChange();}",
     'value'   => 'Сохранить'
   )
 );
