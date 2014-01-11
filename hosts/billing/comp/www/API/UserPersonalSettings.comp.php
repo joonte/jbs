@@ -9,11 +9,12 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
-$EdesksDisplay		=  (string) @$Args['EdesksDisplay'];
-$EdeskNoPreview		=  (string) @$Args['EdeskNoPreview'];
-$EdeskOnlyMyButtons	=  (string) @$Args['EdeskOnlyMyButtons'];
-$SMSBeginTime		= (integer) @$Args['SMSBeginTime'];
-$SMSEndTime		= (integer) @$Args['SMSEndTime'];
+$EdesksDisplay			=  (string) @$Args['EdesksDisplay'];
+$EdeskNoPreview			=  (string) @$Args['EdeskNoPreview'];
+$EdeskOnlyMyButtons		=  (string) @$Args['EdeskOnlyMyButtons'];
+$NotSendEdeskFilesToEmail	= (boolean) @$Args['NotSendEdeskFilesToEmail'];
+$SMSBeginTime			= (integer) @$Args['SMSBeginTime'];
+$SMSEndTime			= (integer) @$Args['SMSEndTime'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/Session.class.php')))
 	return ERROR | @Trigger_Error(500);
@@ -25,6 +26,8 @@ $Settings = $__USER['Params'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Settings['SMSTime'] = Array('SMSBeginTime'=>$SMSBeginTime,'SMSEndTime'=>$SMSEndTime);
+#-------------------------------------------------------------------------------
+$Settings['NotSendEdeskFilesToEmail'] = $NotSendEdeskFilesToEmail;
 #-------------------------------------------------------------------------------
 $IsUpdate = DB_Update('Users',Array('Params'=>$Settings),Array('ID'=>$__USER['ID']));
 if(Is_Error($IsUpdate))

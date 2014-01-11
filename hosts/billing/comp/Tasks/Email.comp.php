@@ -21,14 +21,23 @@ $Message = SPrintF("%s\r\nContent-Transfer-Encoding: 8bit\r\nContent-Type: text/
 # достаём вложения, если они есть, и прикладываем к сообщению
 if(IsSet($Attachments) && SizeOf($Attachments) && Is_Array($Attachments)){
 	#-------------------------------------------------------------------------------
-	#Debug(SPrintF('[comp/Tasks/Email]: письмо содержит %u вложений',SizeOf($Attachments)));
+	# достаём данные юзера которому идёт письмо
+	$User = DB_Select('Users', Array('ID','Params'), Array('UNIQ', 'ID' => $ID));
+	if(!Is_Array($User))
+		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	foreach ($Attachments as $Attachment){
+	if(!IsSet($User['Params']['NotSendEdeskFilesToEmail']) || !$User['Params']['NotSendEdeskFilesToEmail']){
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/Tasks/Email]: обработка вложения (%s), размер (%s), тип (%s)',$Attachment['Name'],$Attachment['Size'],$Attachment['Mime']));
+		#Debug(SPrintF('[comp/Tasks/Email]: письмо содержит %u вложений',SizeOf($Attachments)));
 		#-------------------------------------------------------------------------------
-		$Message = SPrintF("%s%s\r\nContent-Disposition: attachment;\r\n\tfilename=\"%s\"\r\nContent-Transfer-Encoding: base64\r\nContent-Type: %s;\r\n\tname=\"%s\"\r\n\r\n%s",$Message,$Boundary,Mb_Encode_MimeHeader($Attachment['Name']),$Attachment['Mime'],Mb_Encode_MimeHeader($Attachment['Name']),$Attachment['Data']);
-		Debug(SPrintF('[comp/Tasks/Email]: %s',$Attachment['Data']));
+		foreach ($Attachments as $Attachment){
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/Tasks/Email]: обработка вложения (%s), размер (%s), тип (%s)',$Attachment['Name'],$Attachment['Size'],$Attachment['Mime']));
+			#-------------------------------------------------------------------------------
+			$Message = SPrintF("%s%s\r\nContent-Disposition: attachment;\r\n\tfilename=\"%s\"\r\nContent-Transfer-Encoding: base64\r\nContent-Type: %s;\r\n\tname=\"%s\"\r\n\r\n%s",$Message,$Boundary,Mb_Encode_MimeHeader($Attachment['Name']),$Attachment['Mime'],Mb_Encode_MimeHeader($Attachment['Name']),$Attachment['Data']);
+			Debug(SPrintF('[comp/Tasks/Email]: %s',$Attachment['Data']));
+			#-------------------------------------------------------------------------------
+		}
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------

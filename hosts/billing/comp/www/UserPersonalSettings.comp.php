@@ -47,6 +47,16 @@ if(IsSet($_COOKIE['EdeskNoPreview']))
 $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'EdeskNoPreview\'); return false;'),'Не отображать миниатюры изображений'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'NotSendEdeskFilesToEmail','prompt'=>'Не присылать прикрепленные к тикету файлы на почту'));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if(IsSet($Settings['NotSendEdeskFilesToEmail']) && $Settings['NotSendEdeskFilesToEmail'])
+	$Comp->AddAttribs(Array('checked'=>'true'));
+#-------------------------------------------------------------------------------
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'NotSendEdeskFilesToEmail\'); return false;'),'Не присылать вложения к тикетам на почту'),$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if($__USER['IsAdmin']){
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'EdeskOnlyMyButtons','prompt'=>'Не показывать кнопки относящиеся ко всем сотрудникам, показывать только свои'));
