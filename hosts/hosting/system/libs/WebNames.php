@@ -29,7 +29,8 @@ function WebNames_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1N
 			'password'           => $Settings['Password'],
 			'domain_name'        => SPrintF('%s.%s',$DomainName,$DomainZone),
 			'interface_revision' => 1,
-			'interface_lang'     => 'en'
+			'interface_lang'     => 'en',
+			'Hidden'             => $Settings['Password'],
 			#-------------------------------------------------------------------------------
 			);
 	#-------------------------------------------------------------------------------
@@ -101,7 +102,8 @@ function WebNames_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contr
     'domain_name'        => SPrintF('%s.%s',$DomainName,$DomainZone),
     'interface_revision' => 1,
     'interface_lang'     => 'en',
-    'period'             => $Years
+    'period'             => $Years,
+    'Hidden'             => $Settings['Password'],
   );
   #-----------------------------------------------------------------------------
   $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
@@ -141,7 +143,8 @@ function WebNames_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID
     'password'           => $Settings['Password'],
     'domain_name'        => SPrintF('%s.%s',$DomainName,$DomainZone),
     'interface_revision' => 1,
-    'interface_lang'     => 'en'
+    'interface_lang'     => 'en',
+    'Hidden'             => $Settings['Password'],
   );
   #-----------------------------------------------------------------------------
   $Query['ns0'] = $Ns1Name;
@@ -205,7 +208,8 @@ function WebNames_Check_Task($Settings,$TicketID){
     'password'           => $Settings['Password'],
     'domain_name'        => $TicketID,
     'interface_revision' => 1,
-    'interface_lang'     => 'en'
+    'interface_lang'     => 'en',
+    'Hidden'             => $Settings['Password'],
   );
   #-----------------------------------------------------------------------------
   $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
@@ -260,7 +264,8 @@ function WebNames_Get_Balance($Settings){
     'username'           => $Settings['Login'],
     'password'           => $Settings['Password'],
     'interface_revision' => 1,
-    'interface_lang'     => 'en'
+    'interface_lang'     => 'en',
+    'Hidden'             => $Settings['Password'],
   );
   #-----------------------------------------------------------------------------
   $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
@@ -308,7 +313,8 @@ function WebNames_Is_Available_Domain($Settings,$Domain){
       'username'           => $Settings['Login'],
       'password'           => $Settings['Password'],
       'interface_revision' => 1,
-      'interface_lang'     => 'en'
+      'interface_lang'     => 'en',
+      'Hidden'             => $Settings['Password'],
       );
     #-----------------------------------------------------------------------------
     $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
@@ -377,6 +383,7 @@ function WebNames_Change_Contact_Detail($Settings,$Domain,$Person){
                  'interface_revision' => 1,
                  'interface_lang'     => 'en',
                  'domain_name'        => $Domain,
+		 'Hidden'             => $Settings['Password'],
                 );
   #-------------------------------------------------------------------------------
   #-------------------------------------------------------------------------------
@@ -445,6 +452,7 @@ function WebNames_Get_Contact_Detail($Settings,$Domain){
                  'interface_revision' => 1,
                  'interface_lang'     => 'en',
                  'domain_name'        => $Domain,
+		 'Hidden'             => $Settings['Password'],
                 );
   #-------------------------------------------------------------------------------
   #-------------------------------------------------------------------------------
@@ -533,7 +541,8 @@ function WebNames_Get_List_Domains($Settings){
       'username'           => $Settings['Login'],
       'password'           => $Settings['Password'],
       'interface_revision' => 1,
-      'interface_lang'     => 'en'
+      'interface_lang'     => 'en',
+      'Hidden'             => $Settings['Password'],
       );
     #-----------------------------------------------------------------------------
     $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
@@ -611,7 +620,8 @@ function WebNames_Domain_Transfer($Settings,$DomainName,$DomainZone,$Params){
 			'domain_name'        => SPrintF('%s.%s',$DomainName,$DomainZone),
 			'notpaid'            => 0,
 			'period'             => 1,
-			'authinfo'           => $Params['AuthInfo']
+			'authinfo'           => $Params['AuthInfo'],
+			'Hidden'             => $Settings['Password'],
 		);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------

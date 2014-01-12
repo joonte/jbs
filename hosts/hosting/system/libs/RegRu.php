@@ -17,7 +17,8 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8'
+    'Charset'  => 'utf8',
+    'Hidden'   => $Settings['Password'],
 
   );
   #-----------------------------------------------------------------------------
@@ -30,7 +31,7 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
     'domain_name'           => $Domain,
     'enduser_ip'            => '127.0.0.1',	// see JBS-225
     'pay_type'              => 'prepay',
-    'private_person_flag'   => $IsPrivateWhoIs
+    'private_person_flag'   => $IsPrivateWhoIs,
   );
   #-----------------------------------------------------------------------------
   $Query['period'] = $Years;
@@ -266,7 +267,8 @@ function RegRu_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contract
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8'
+    'Charset'  => 'utf8',
+    'Hidden'   => $Settings['Password'],
   );
   #-----------------------------------------------------------------------------
   $Domain = Mb_StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone),'UTF-8');
@@ -275,7 +277,7 @@ function RegRu_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contract
     #---------------------------------------------------------------------------
     'username'              => $Settings['Login'],
     'password'              => $Settings['Password'],
-    'period'                => $Years
+    'period'                => $Years,
   );
   # Только для обеспечения совместимости со старым алгоритмом.
   # Удалить через 2-3 мес после релиза!!!
@@ -324,7 +326,8 @@ function RegRu_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID,$D
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8'
+    'Charset'  => 'utf8',
+    'Hidden'   => $Settings['Password'],
   );
   #-----------------------------------------------------------------------------
   $Domain = Mb_StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone),'UTF-8');
@@ -411,14 +414,15 @@ function RegRu_Check_Task($Settings,$TicketID){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8'
+    'Charset'  => 'utf8',
+    'Hidden'   => $Settings['Password'],
   );
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
     'username'              => $Settings['Login'],
     'password'              => $Settings['Password'],
-    'service_id'            => $TicketID
+    'service_id'            => $TicketID,
   );
   #-----------------------------------------------------------------------------
   $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/nop");
@@ -458,14 +462,15 @@ function RegRu_GetUploadID($Settings,$Domain){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8'
+    'Charset'  => 'utf8',
+    'Hidden'   => $Settings['Password'],
   );
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
     'username'              => $Settings['Login'],
     'password'              => $Settings['Password'],
-    'dname'                 => $Domain
+    'dname'                 => $Domain,
   );
   #-----------------------------------------------------------------------------
   $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/get_docs_upload_uri");
@@ -501,14 +506,15 @@ function RegRu_Get_Balance($Settings){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8'
+    'Charset'  => 'utf8',
+    'Hidden'   => $Settings['Password'],
   );
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
     'username'              => $Settings['Login'],
     'password'              => $Settings['Password'],
-    'currency'              => 'RUR'
+    'currency'              => 'RUR',
   );
   #----------------------------------------------------------------------------
   $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","user/get_balance");
@@ -545,14 +551,15 @@ function RegRu_Is_Available_Domain($Settings,$Domain){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8'
+    'Charset'  => 'utf8',
+    'Hidden'   => $Settings['Password'],
   );
   #----------------------------------------------------------------------------
   $Query = Array(
     #--------------------------------------------------------------------------
     'username'              => $Settings['Login'],
     'password'              => $Settings['Password'],
-    'dname'                 => $Domain
+    'dname'                 => $Domain,
   );
   #----------------------------------------------------------------------------
   $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","service/get_info");
@@ -612,7 +619,8 @@ function RegRu_Domain_Transfer($Settings,$DomainName,$DomainZone,$Param){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8'
+    'Charset'  => 'utf8',
+    'Hidden'   => $Settings['Password'],
 
   );
   #-----------------------------------------------------------------------------
@@ -624,7 +632,7 @@ function RegRu_Domain_Transfer($Settings,$DomainName,$DomainZone,$Param){
     'password'              => $Settings['Password'],
     'domain_name'           => $Domain,
     'enduser_ip'            => '77.73.25.114',
-    'period'                => '0'
+    'period'                => '0',
   );
   #-----------------------------------------------------------------------------
   if(In_Array($DomainZone,Array('ru','su','рф'))){
@@ -673,7 +681,8 @@ function RegRu_Change_Contact_Detail($Settings,$Domain,$Person){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8'
+    'Charset'  => 'utf8',
+    'Hidden'   => $Settings['Password'],
 
   );
   #-----------------------------------------------------------------------------
@@ -683,7 +692,7 @@ function RegRu_Change_Contact_Detail($Settings,$Domain,$Person){
     'password'              => $Settings['Password'],
     'domain_name'           => $Domain,
     'enduser_ip'            => '77.73.25.114',
-    'period'                => '0'
+    'period'                => '0',
   );
   #---------------------------------------------------------------------------
   $Settings['PrefixAPI'] = SprintF('https://api.reg.ru/api/regru2/%s','domain/update_contacts');
@@ -737,7 +746,8 @@ function RegRu_Get_Contact_Detail($Settings,$Domain){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8'
+    'Charset'  => 'utf8',
+    'Hidden'   => $Settings['Password'],
 
   );
   #-----------------------------------------------------------------------------
@@ -747,7 +757,7 @@ function RegRu_Get_Contact_Detail($Settings,$Domain){
     'password'              => $Settings['Password'],
     'domain_name'           => $Domain,
     'enduser_ip'            => '77.73.25.114',
-    'period'                => '0'
+    'period'                => '0',
   );
   #---------------------------------------------------------------------------
   $Settings['PrefixAPI'] = SprintF('https://api.reg.ru/api/regru2/%s','service/get_details');
@@ -803,14 +813,15 @@ function RegRu_Get_List_Domains($Settings){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8'
+    'Charset'  => 'utf8',
+    'Hidden'   => $Settings['Password'],
   );
   #----------------------------------------------------------------------------
   $Query = Array(
     #--------------------------------------------------------------------------
     'username'              => $Settings['Login'],
     'password'              => $Settings['Password'],
-    'servtype'              => 'domain'
+    'servtype'              => 'domain',
   );
   #----------------------------------------------------------------------------
   $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","service/get_list");
