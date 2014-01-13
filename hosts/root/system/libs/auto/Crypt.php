@@ -3,7 +3,7 @@
 /** @author Великодный В.В. (Joonte Ltd.) */
 #-------------------------------------------------------------------------------
 if(!Extension_Loaded('mcrypt'))
-  $GLOBALS['__MESSAGES'][] = 'Модуль mcrypt не установлен. Функции шифрования могут работать не правильно. Пожалуйста, исправьте ошибку.';
+	$GLOBALS['__MESSAGES'][] = 'Модуль mcrypt не установлен. Функции шифрования могут работать не правильно. Пожалуйста, исправьте ошибку.';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 function Crypt_Encode($String, $Key = HOST_ID){
@@ -27,6 +27,7 @@ function Crypt_Encode($String, $Key = HOST_ID){
         return ERROR | @Trigger_Error('[Crypt_Encode]: не удалось создать IV');
       #-------------------------------------------------------------------------
       $Key = SubStr($Key,0,MCrypt_Enc_Get_Key_Size($Module));
+      #Debug(SPrintF("[system/libs/auto/Crypt]: Encode Key = %s",$Key));
       #-------------------------------------------------------------------------
       $IsInit = @MCrypt_Generic_Init($Module,$Key,$Iv);
       if(!Is_Integer($IsInit))
@@ -36,6 +37,7 @@ function Crypt_Encode($String, $Key = HOST_ID){
     $String = @MCrypt_Generic($Module,$String);
     if(!Is_String($String))
       return ERROR | @Trigger_Error('[Crypt_Encode]: не удалось зашифровать данные');
+    #---------------------------------------------------------------------------
   }
   #-----------------------------------------------------------------------------
   return Base64_Encode($String);
@@ -66,6 +68,7 @@ function Crypt_Decode($String,$Key = HOST_ID){
         return ERROR | @Trigger_Error('[Crypt_Decode]: не удалось создать IV');
       #-------------------------------------------------------------------------
       $Key = SubStr($Key,0,MCrypt_Enc_Get_Key_Size($Module));
+      #Debug(SPrintF("[system/libs/auto/Crypt]: Decode Key = %s",$Key));
       #-------------------------------------------------------------------------
       $IsInit = @MCrypt_Generic_Init($Module,$Key,$Iv);
       if(!Is_Integer($IsInit))
@@ -77,6 +80,7 @@ function Crypt_Decode($String,$Key = HOST_ID){
       return ERROR | @Trigger_Error('[Crypt_Decode]: не удалось дешифровать данные');
     #---------------------------------------------------------------------------
     $String = Trim($String);
+    #---------------------------------------------------------------------------
   }
   #-----------------------------------------------------------------------------
   return $String;
