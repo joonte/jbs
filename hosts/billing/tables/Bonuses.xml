@@ -2,6 +2,16 @@
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
 <!-- *********************************************************************** -->
+<Appearance>
+ <Row>
+  <Comp>Bonuses/Color</Comp>
+  <Args>
+   <ListElement>%ExpirationDate%</ListElement>
+   <ListElement>%DaysRemainded%</ListElement>
+  </Args>
+ </Row>
+</Appearance>
+<!-- *********************************************************************** -->
 <Source>
  <TableID>Bonuses</TableID>
  <ColumnsIDs>
