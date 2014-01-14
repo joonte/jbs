@@ -7,7 +7,7 @@
 <Attribs>
  <Sourname>
   <Title>Общая информация</Title>
-  <Check>/^[А-ЯЁ]{1}[а-яё\-\w]{1,50}$/u</Check>
+  <Check>Sourname</Check>
   <Comment>Фамилия</Comment>
   <Example>Алибаба</Example>
   <Type>Input</Type>
@@ -20,7 +20,7 @@
  </Sourname>
  <!-- ********************************************************************** -->
  <Name>
-  <Check>/^[А-ЯЁ]{1}[а-яё\-\s]{1,50}$/u</Check>
+  <Check>Name</Check>
   <Comment>Имя</Comment>
   <Example>Василий</Example>
   <Type>Input</Type>
@@ -33,7 +33,7 @@
  </Name>
  <!-- ********************************************************************** -->
  <Lastname>
-  <Check>/^[А-ЯЁ]{1}[а-яё\-\s]{1,50}$/u</Check>
+  <Check>Lastname</Check>
   <Comment>Отчество</Comment>
   <Example>Алибабаевич</Example>
   <Type>Input</Type>
@@ -46,7 +46,7 @@
  </Lastname>
  <!-- ********************************************************************** -->
  <BornDate>
-  <Check>/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/u</Check>
+  <Check>BornDate</Check>
   <Comment>Дата рождения</Comment>
   <Example>18.03.1986</Example>
   <Type>Input</Type>
@@ -85,7 +85,7 @@
  <!-- ********************************************************************** -->
  <pCountry>
   <Title>Почтовый адрес</Title>
-  <Check>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Check>Country</Check>
   <Comment>Страна почтового адреса</Comment>
   <Example>Россия</Example>
   <Type>Select</Type>
@@ -127,7 +127,7 @@
  </pCountry>
  <!-- ********************************************************************** -->
  <pState>
-  <Check>/^[А-ЯёЁа-я\.\-\s\)\(]{1,60}$/u</Check>
+  <Check>State</Check>
   <Comment>Область / край почтового адреса</Comment>
   <Example>Московская обл.</Example>
   <Type>Input</Type>
@@ -140,7 +140,7 @@
  </pState>
  <!-- ********************************************************************** -->
  <pCity>
-  <Check>/^[А-ЯёЁа-я0-9\-\s]{1,100}$/u</Check>
+  <Check>City</Check>
   <Comment>Город почтового адреса</Comment>
   <Example>Москва</Example>
   <Type>Input</Type>
@@ -153,7 +153,7 @@
  </pCity>
  <!-- ********************************************************************** -->
  <pDistrict>
-  <Check>/^[А-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Check>District</Check>
   <Comment>Район почтового адреса</Comment>
   <Example>Ивановский</Example>
   <Type>Input</Type>
@@ -166,7 +166,7 @@
  </pDistrict>
  <!-- ********************************************************************** -->
  <pIndex>
-  <Check>/^[A-Za-z0-9\s]{3,10}$/u</Check>
+  <Check>Index</Check>
   <Comment>Почтовый индекс почтового адреса</Comment>
   <Example>101000</Example>
   <Type>Input</Type>
@@ -178,7 +178,7 @@
  </pIndex>
  <!-- ********************************************************************** -->
  <pType>
-  <Check>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Check>Type</Check>
   <Comment>Тип почтового адреса</Comment>
   <Example>Улица</Example>
   <Type>Select</Type>
@@ -206,7 +206,7 @@
  </pType>
  <!-- ********************************************************************** -->
  <pAddress>
-  <Check>/^[^\\]{1,150}$/u</Check>
+  <Check>Address</Check>
   <Comment>Улица, дом почтового адреса</Comment>
   <Example>Ленина, д. 51, кв. 7</Example>
   <Type>TextArea</Type>
@@ -233,7 +233,7 @@
  <!-- ********************************************************************** -->
  <BankName>
   <Title>Банковские реквизиты</Title>
-  <Check>/^.{1,100}$/u</Check>
+  <Check>BankName</Check>
   <Comment>Наименование банка</Comment>
   <Example>ООО "КБ Легион"</Example>
   <Type>Input</Type>

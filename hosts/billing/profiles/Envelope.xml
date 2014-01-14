@@ -6,7 +6,7 @@
 <!-- *********************************************************************** -->
 <Attribs>
  <pIndex>
-  <Check>/^[A-Za-z0-9\s]{3,10}$/u</Check>
+  <Check>Index</Check>
   <Comment>Почтовый индекс</Comment>
   <Example>101000</Example>
   <Type>Input</Type>
@@ -18,7 +18,7 @@
  </pIndex>
  <!-- ********************************************************************** -->
  <pCity>
-  <Check>/^[А-ЯёЁа-я0-9\-\s]{1,100}$/u</Check>
+  <Check>City</Check>
   <Comment>Город / населенный пункт</Comment>
   <Example>Москва</Example>
   <Type>Input</Type>
@@ -30,7 +30,7 @@
  </pCity>
  <!-- ********************************************************************** -->
  <pAddress>
-  <Check>/^[^\\]{1,150}$/u</Check>
+  <Check>Address</Check>
   <Comment>Улица, дом, квартира</Comment>
   <Example>ул. Ленина, д. 51, кв. 7</Example>
   <Type>TextArea</Type>
@@ -43,7 +43,7 @@
  </pAddress>
  <!-- ********************************************************************** -->
  <pRecipient>
-  <Check>/^[a-zA-Zа-яА-ЯёЁ\s\"]+$/u</Check>
+  <Check>Recipient</Check>
   <Comment>Получатель</Comment>
   <Example>Иванову Петру Викторовичу</Example>
   <Type>TextArea</Type>

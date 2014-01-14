@@ -81,7 +81,7 @@
  <!-- ********************************************************************** -->
  <dSourname>
   <Title>Директор</Title>
-  <Check>/^[А-ЯЁ]{1}[а-яё\-]{2,25}$/u</Check>
+  <Check>Sourname</Check>
   <Comment>Фамилия директора</Comment>
   <Example>Иванов</Example>
   <Type>Input</Type>
@@ -94,7 +94,7 @@
  </dSourname>
  <!-- ********************************************************************** -->
  <dName>
-  <Check>/^[А-ЯЁ]{1}[а-яё\-]{2,25}$/u</Check>
+  <Check>Name</Check>
   <Comment>Имя директора</Comment>
   <Example>Петр</Example>
   <Type>Input</Type>
@@ -107,7 +107,7 @@
  </dName>
  <!-- ********************************************************************** -->
  <dLastname>
-  <Check>/^[А-ЯЁ]{1}[а-яё\-]{2,25}$/u</Check>
+  <Check>Lastname</Check>
   <Comment>Отчество директора</Comment>
   <Example>Викторович</Example>
   <Type>Input</Type>
@@ -120,7 +120,7 @@
  </dLastname>
  <!-- ********************************************************************** -->
  <dBornDate>
-  <Check>/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/u</Check>
+  <Check>BornDate</Check>
   <IsDuty>1</IsDuty>
   <Comment>Дата рождения директора</Comment>
   <Example>18.03.1986</Example>
@@ -133,7 +133,7 @@
  </dBornDate>
  <!-- ********************************************************************** -->
  <dPasportLine>
-  <Check>/^[0-9a-zA-Zа-яА-ЯёЁ]{1,10}$/u</Check>
+  <Check>PasportLine</Check>
   <Comment>Серия паспорта директора</Comment>
   <Example>3422</Example>
   <Type>Input</Type>
@@ -145,7 +145,7 @@
  </dPasportLine>
  <!-- ********************************************************************** -->
  <dPasportNum>
-  <Check>/^[0-9a-zA-Z]{1,10}$/u</Check>
+  <Check>PasportNum</Check>
   <Comment>Номер паспорта директора</Comment>
   <Example>427789</Example>
   <Type>Input</Type>
@@ -157,7 +157,7 @@
  </dPasportNum>
  <!-- ********************************************************************** -->
  <dPasportWhom>
-  <Check>/^.{1,250}$/u</Check>
+  <Check>PasportWhom</Check>
   <Comment>Кем выдан паспорт директора</Comment>
   <Example>15 отделением милиции г. Москвы</Example>
   <Type>TextArea</Type>
@@ -170,7 +170,7 @@
  </dPasportWhom>
  <!-- ********************************************************************** -->
  <dPasportDate>
-  <Check>/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/u</Check>
+  <Check>PasportDate</Check>
   <Comment>Дата выдачи паспорта директора</Comment>
   <Example>01.06.2001</Example>
   <Type>Input</Type>
@@ -244,7 +244,7 @@
  <!-- ********************************************************************** -->
  <jCountry>
   <Title>Юридический адрес</Title>
-  <Check>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Check>Country</Check>
   <Comment>Страна юридического адреса</Comment>
   <Example>Россия</Example>
   <Type>Select</Type>
@@ -287,7 +287,7 @@
  </jCountry>
  <!-- ********************************************************************** -->
  <jState>
-  <Check>/^[А-ЯёЁа-я\.\-\s\)\(]{1,60}$/u</Check>
+  <Check>State</Check>
   <Comment>Область / край юридического адреса</Comment>
   <Example>Московская обл.</Example>
   <Type>Input</Type>
@@ -300,7 +300,7 @@
  </jState>
  <!-- ********************************************************************** -->
  <jCity>
-  <Check>/^[А-ЯёЁа-я0-9\-\s]{1,100}$/u</Check>
+  <Check>City</Check>
   <Comment>Город юридического адреса</Comment>
   <Example>Москва</Example>
   <Type>Input</Type>
@@ -313,7 +313,7 @@
  </jCity>
  <!-- ********************************************************************** -->
  <jDistrict>
-  <Check>/^[А-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Check>District</Check>
   <Comment>Район юридического адреса</Comment>
   <Example>Ивановский</Example>
   <Type>Input</Type>
@@ -326,7 +326,7 @@
  </jDistrict>
  <!-- ********************************************************************** -->
  <jIndex>
-  <Check>/^[A-Za-z0-9\s]{3,10}$/u</Check>
+  <Check>Index</Check>
   <Comment>Почтовый индекс юридического адреса</Comment>
   <Example>101000</Example>
   <Type>Input</Type>
@@ -339,7 +339,7 @@
  </jIndex>
  <!-- ********************************************************************** -->
  <jType>
-  <Check>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Check>Type</Check>
   <Comment>Тип юридического адреса</Comment>
   <Example>Улица</Example>
   <Type>Select</Type>
@@ -368,7 +368,7 @@
  </jType>
  <!-- ********************************************************************** -->
  <jAddress>
-  <Check>/^[^\\]{1,150}$/u</Check>
+  <Check>Address</Check>
   <Comment>Улица, дом юридического адреса</Comment>
   <Example>Ленина, д. 51, кв. 7</Example>
   <Type>TextArea</Type>
@@ -383,7 +383,7 @@
  <!-- ********************************************************************** -->
  <pCountry>
   <Title>Почтовый адрес</Title>
-  <Check>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Check>Country</Check>
   <Comment>Страна почтового адреса</Comment>
   <Example>Россия</Example>
   <Type>Select</Type>
@@ -421,7 +421,7 @@
  </pCountry>
  <!-- ********************************************************************** -->
  <pState>
-  <Check>/^[А-ЯёЁа-я\.\-\s\)\(]{1,60}$/u</Check>
+  <Check>State</Check>
   <Comment>Область / край почтового адреса</Comment>
   <Example>Московская обл.</Example>
   <Type>Input</Type>
@@ -434,7 +434,7 @@
  </pState>
  <!-- ********************************************************************** -->
  <pCity>
-  <Check>/^[А-ЯёЁа-я0-9\-\s]{1,100}$/u</Check>
+  <Check>City</Check>
   <Comment>Город почтового адреса</Comment>
   <Example>Москва</Example>
   <Type>Input</Type>
@@ -447,7 +447,7 @@
  </pCity>
  <!-- ********************************************************************** -->
  <pDistrict>
-  <Check>/^[А-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Check>District</Check>
   <Comment>Район почтового адреса</Comment>
   <Example>Ивановский</Example>
   <Type>Input</Type>
@@ -460,7 +460,7 @@
  </pDistrict>
  <!-- ********************************************************************** -->
  <pIndex>
-  <Check>/^[A-Za-z0-9\s]{3,10}$/u</Check>
+  <Check>Index</Check>
   <Comment>Почтовый индекс почтового адреса</Comment>
   <Example>101000</Example>
   <Type>Input</Type>
@@ -472,7 +472,7 @@
  </pIndex>
  <!-- ********************************************************************** -->
  <pType>
-  <Check>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Check>Type</Check>
   <Comment>Тип почтового адреса</Comment>
   <Example>Улица</Example>
   <Type>Select</Type>
@@ -500,7 +500,7 @@
  </pType>
  <!-- ********************************************************************** -->
  <pAddress>
-  <Check>/^[^\\]{1,150}$/u</Check>
+  <Check>Address</Check>
   <Comment>Улица, дом почтового адреса</Comment>
   <Example>Ленина, д. 51, кв. 7</Example>
   <Type>TextArea</Type>
@@ -514,7 +514,7 @@
  <!-- ********************************************************************** -->
  <BankName>
   <Title>Банковские реквизиты</Title>
-  <Check>/^.{1,100}$/u</Check>
+  <Check>BankName</Check>
   <Comment>Наименование банка</Comment>
   <Example>ООО "КБ Легион"</Example>
   <Type>Input</Type>

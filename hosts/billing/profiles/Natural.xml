@@ -7,7 +7,7 @@
 <Attribs>
  <Sourname>
   <Title>Общая информация</Title>
-  <Check>/^[А-ЯЁ]{1}[а-яё\-\w]{1,50}$/u</Check>
+  <Check>Sourname</Check>
   <Comment>Фамилия</Comment>
   <Example>Иванов</Example>
   <Type>Input</Type>
@@ -20,7 +20,7 @@
  </Sourname>
  <!-- ********************************************************************** -->
  <Name>
-  <Check>/^[А-ЯЁ]{1}[а-яё\-\s]{1,50}$/u</Check>
+  <Check>Name</Check>
   <Comment>Имя</Comment>
   <Example>Петр</Example>
   <Type>Input</Type>
@@ -33,7 +33,7 @@
  </Name>
  <!-- ********************************************************************** -->
  <Lastname>
-  <Check>/^[a-zA-Zа-яА-ЯёЁ\s\-]{1,50}$/u</Check>
+  <Check>Lastname</Check>
   <Comment>Отчество</Comment>
   <Example>Викторович</Example>
   <Type>Input</Type>
@@ -46,7 +46,7 @@
  </Lastname>
  <!-- ********************************************************************** -->
  <BornDate>
-  <Check>/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/u</Check>
+  <Check>BornDate</Check>
   <IsDuty>1</IsDuty>
   <Comment>Дата рождения</Comment>
   <Example>18.03.1986</Example>
@@ -109,7 +109,7 @@
  <!-- ********************************************************************** -->
  <PasportCountry>
   <Title>Паспортные данные</Title>
-  <Check>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Check>Country</Check>
   <Comment>Страна</Comment>
   <Example>Россия</Example>
   <Type>Select</Type>
@@ -151,7 +151,7 @@
  </PasportCountry>
  <!-- ********************************************************************** -->
  <PasportLine>
-  <Check>/^[0-9a-zA-Zа-яА-ЯёЁ\-]{1,10}$/u</Check>
+  <Check>PasportLine</Check>
   <Comment>Серия паспорта</Comment>
   <Example>3422</Example>
   <Type>Input</Type>
@@ -163,7 +163,7 @@
  </PasportLine>
  <!-- ********************************************************************** -->
  <PasportNum>
-  <Check>/^[0-9a-zA-Z]{1,10}$/u</Check>
+  <Check>PasportNum</Check>
   <Comment>Номер паспорта</Comment>
   <Example>427789</Example>
   <Type>Input</Type>
@@ -175,7 +175,7 @@
  </PasportNum>
  <!-- ********************************************************************** -->
  <PasportWhom>
-  <Check>/^.{5,250}$/u</Check>
+  <Check>PasportWhom</Check>
   <Comment>Паспорт выдан</Comment>
   <Example>15 отделением милиции г. Москвы</Example>
   <Type>TextArea</Type>
@@ -188,7 +188,7 @@
  </PasportWhom>
  <!-- ********************************************************************** -->
  <PasportDate>
-  <Check>/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/u</Check>
+  <Check>PasportDate</Check>
   <Comment>Дата выдачи паспорта</Comment>
   <Example>01.06.2001</Example>
   <Type>Input</Type>
@@ -201,7 +201,7 @@
  <!-- ********************************************************************** -->
  <pCountry>
   <Title>Почтовый адрес</Title>
-  <Check>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Check>Country</Check>
   <Comment>Страна</Comment>
   <Example>Россия</Example>
   <Type>Select</Type>
@@ -243,7 +243,7 @@
  </pCountry>
  <!-- ********************************************************************** -->
  <pState>
-  <Check>/^[А-ЯёЁа-я\.\-\s\)\(]{1,60}$/u</Check>
+  <Check>State</Check>
   <Comment>Область / край</Comment>
   <Example>Московская обл.</Example>
   <Type>Input</Type>
@@ -256,7 +256,7 @@
  </pState>
  <!-- ********************************************************************** -->
  <pCity>
-  <Check>/^[А-ЯёЁа-я0-9\-\s]{1,100}$/u</Check>
+  <Check>City</Check>
   <Comment>Город / населенный пункт</Comment>
   <Example>Москва</Example>
   <Type>Input</Type>
@@ -269,7 +269,7 @@
  </pCity>
  <!-- ********************************************************************** -->
  <pDistrict>
-  <Check>/^[А-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Check>District</Check>
   <Comment>Район</Comment>
   <Example>Ивановский</Example>
   <Type>Input</Type>
@@ -282,7 +282,7 @@
  </pDistrict>
  <!-- ********************************************************************** -->
  <pIndex>
-  <Check>/^[A-Za-z0-9\s]{3,10}$/u</Check>
+  <Check>Index</Check>
   <Comment>Почтовый индекс</Comment>
   <Example>101000</Example>
   <Type>Input</Type>
@@ -294,7 +294,7 @@
  </pIndex>
  <!-- ********************************************************************** -->
  <pType>
-  <Check>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Check>
+  <Check>Type</Check>
   <Comment>Тип адреса</Comment>
   <Example>Улица</Example>
   <Type>Select</Type>
@@ -322,7 +322,7 @@
  </pType>
  <!-- ********************************************************************** -->
  <pAddress>
-  <Check>/^[^\\]{1,150}$/u</Check>
+  <Check>Address</Check>
   <Comment>Адрес</Comment>
   <Example>Ленина, д. 51, кв. 7</Example>
   <Type>TextArea</Type>
@@ -335,7 +335,7 @@
  </pAddress>
  <!-- ********************************************************************** -->
  <pRecipient>
-  <Check>/^[a-zA-Zа-яА-ЯёЁ\s]+$/u</Check>
+  <Check>Recipient</Check>
   <Comment>Получатель</Comment>
   <Example>Иванову Петру Викторовичу</Example>
   <Type>TextArea</Type>
