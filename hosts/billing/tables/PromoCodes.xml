@@ -2,6 +2,15 @@
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
 <!-- *********************************************************************** -->
+<Appearance>
+ <Row>
+  <Comp>PromoCodes/Color</Comp>
+  <Args>
+   <ListElement>%ExpirationDate%</ListElement>
+  </Args>
+ </Row>
+</Appearance>
+<!-- *********************************************************************** -->
 <Source>
  <TableID>PromoCodes</TableID>
  <ColumnsIDs>
