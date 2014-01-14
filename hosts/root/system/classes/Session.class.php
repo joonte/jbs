@@ -34,7 +34,8 @@ public function Load(){
   if(Is_Error($Content))
     return ERROR | @Trigger_Error('[Session->Load]: не удалось прочитать файл сессии');
   #-----------------------------------------------------------------------------
-  $this->Data = @UnSerialize($Content);
+  #$this->Data = @UnSerialize($Content);
+  $this->Data = @JSON_Decode($Content,true);
   if($this->Data === FALSE)
     return ERROR | @Trigger_Error('[Session->Load]: не удалось восстановить данные из файла сессии');
   #-----------------------------------------------------------------------------
@@ -52,7 +53,8 @@ public function Save(){
   if(Is_Error($Tmp))
     return ERROR | @Trigger_Error('[Session->Save]: не удалось найти временную папку');
   #-----------------------------------------------------------------------------
-  $IsWrited = IO_Write(SPrintF('%s/sessions/%s',$Tmp,$SessionID),Serialize($this->Data),TRUE);
+  #$IsWrited = IO_Write(SPrintF('%s/sessions/%s',$Tmp,$SessionID),Serialize($this->Data),TRUE);
+  $IsWrited = IO_Write(SPrintF('%s/sessions/%s',$Tmp,$SessionID),JSON_Encode($this->Data),TRUE);
   if(Is_Error($IsWrited))
     return ERROR | @Trigger_Error('[Session->Save]: не удалось сохранить сессию');
   #-----------------------------------------------------------------------------

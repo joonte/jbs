@@ -36,11 +36,36 @@ switch(ValueOf($User)){
     if(!$Comp)
       return new gException('WRONG_PROTECT_CODE','Введенный Вами защитный код неверен, либо устарел. Пожалуйста, введите его заново.');
     #---------------------------------------------------------------------------
-    $Password = SubStr(md5(uniqid(rand(), true)), 0, 8);
+    $Password = SubStr(Md5(UniqID(Rand(), true)), 0, 8);
     #---------------------------------------------------------------------------
     $IsUpdated = DB_Update('Users',Array('Watchword'=>Md5($Password)),Array('ID'=>$User['ID']));
     if(Is_Error($IsUpdated))
       return ERROR | @Trigger_Error(500);
+    #-------------------------------------------------------------------------------
+    $Tmp = System_Element('tmp');
+    if(Is_Error($Tmp))
+      return ERROR | @Trigger_Error(500);
+    #---------------------------------------------------------------------------
+    #-----------------------------------------------------------------------------
+    # часть JBS-757 - грохаем старые сессии юзера
+    $Path = SPrintF('%s/sessions',$Tmp);
+    #---------------------------------------------------------------------------
+    if(File_Exists($Path)){
+      #-------------------------------------------------------------------------
+      $SessionIDsIDs = IO_Scan($Path);
+      if(Is_Error($SessionIDsIDs))
+        return ERROR | @Trigger_Error(500);
+      #-------------------------------------------------------------------------
+      foreach($SessionIDsIDs as $SessionID){
+        #-----------------------------------------------------------------------
+        if(Preg_Match(SPrintF('/^(REMEBMER|SESSION)%s/',MD5($User['ID'])),$SessionID)){
+          #-------------------------------------------------------------------
+          if(!@UnLink(SPrintF('%s/%s',$Path,$SessionID)))
+            return ERROR | @Trigger_Error(500);
+        }
+      }
+    }
+    #-----------------------------------------------------------------------------
     #---------------------------------------------------------------------------
     $IsSend = NotificationManager::sendMsg(new Message('UserPasswordRestore',(integer)$User['ID'],Array('Password'=>$Password,'ChargeFree'=>TRUE,'IsImmediately'=>TRUE)));
     #---------------------------------------------------------------------------
