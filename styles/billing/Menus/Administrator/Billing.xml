@@ -5,6 +5,7 @@
 <Items>
  <ListElement>
   <Text>Логи системы</Text>
+  <Prompt>Просмотр логов и журналов событий биллинговой системы</Prompt>
   <Paths>
    <UniqID>^\/Administrator\/Logs</UniqID>
   </Paths>
@@ -12,6 +13,7 @@
  </ListElement>
  <ListElement>
   <Text>Логи пользователей</Text>
+  <Prompt>Просмотр истории HTTP запросов к биллингу</Prompt>
   <Paths>
    <UniqID>^\/Administrator\/UsersLogs</UniqID>
   </Paths>
@@ -19,6 +21,7 @@
  </ListElement>
  <ListElement>
   <Text>История заказов</Text>
+  <Prompt>Список всех заказов сделанных клиентами</Prompt>
   <Paths>
    <UniqID>^\/Administrator\/OrdersHistory</UniqID>
   </Paths>
@@ -26,6 +29,7 @@
  </ListElement>
  <ListElement>
   <Text>Обновление системы</Text>
+  <Prompt>Обновление версии биллинговой системы</Prompt>
   <Paths>
    <UniqID>^\/Administrator\/UpdateSystem$</UniqID>
   </Paths>
@@ -33,6 +37,7 @@
  </ListElement>
  <ListElement>
   <Text>Версия биллинга</Text>
+  <Prompt>Инофрмация о версии и патчах биллинговой системы</Prompt>
   <Paths>
    <UniqID>^\/Administrator\/BillingVersions$</UniqID>
   </Paths>
