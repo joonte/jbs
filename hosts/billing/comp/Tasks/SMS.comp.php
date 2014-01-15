@@ -48,7 +48,7 @@ if(IsSet($User['Params']['SMSTime']) && !$IsImmediately){
 						#-------------------------------------------------------------------------------
 						# завтра пораньше
 						Debug(SPrintF('[comp/Tasks/SMS]: Перенос отправки сообщения (%u) на завтра, %s:00', $Mobile,$SMSTime['SMSBeginTime']));
-						$TransferTime = MkTime($SMSTime['SMSBeginTime'],0,0,Date('n'),Date('j')+1,Date('Y'));
+						$TransferTime = MkTime($SMSTime['SMSBeginTime'],0,0,Date('n'),Date('j'),Date('Y'));
 						#-------------------------------------------------------------------------------
 					}
 				}
@@ -56,7 +56,7 @@ if(IsSet($User['Params']['SMSTime']) && !$IsImmediately){
 			}else{
 				#-------------------------------------------------------------------------------
 				# период типа 21:00-8:00
-				if(Date('G') < $SMSTime['SMSBeginTime'] && Date('G') > $SMSTime['SMSEndTime']){
+				if(Date('G') < $SMSTime['SMSBeginTime'] && Date('G') >= $SMSTime['SMSEndTime']){
 					#-------------------------------------------------------------------------------
 					# время типа 12:00 - требуется перенос на SMSBeginTime, сегодня
 					Debug(SPrintF('[comp/Tasks/SMS]: Перенос отправки сообщения (%u) на %s:00', $Mobile,$SMSTime['SMSBeginTime']));
