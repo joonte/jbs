@@ -27,7 +27,7 @@ $UniqID = UniqID('ISPswSchemes');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # узнаём, есть ли возможность заказа внешних лицензий
-$UniqID2 = $UniqID . '_2';
+$UniqID2 = SPrintF('%s_2',$UniqID);
 $Comp = Comp_Load('Services/Schemes','ISPswSchemes',$__USER['ID'],Array('Name'),$UniqID2);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
@@ -279,267 +279,233 @@ if(!$StepID){
 	$DOM->AddChild('Into',$Form);
 	#-------------------------------------------------------------------------------
 }else{ # $StepID is not set -> is set
-
-
-
-
-# check, select or not some order
-if(!$VPSOrderID && !$DSOrderID && $IP == '0.0.0.0'){
-	return new gException('ISPsw_ORDER_NOT_SELECTED','Необходимо выбрать заказ к которому прикрепляется ПО');
-}
-# select used order
-# and check, select only one order or more
-$SelectCount = 0;
-if($VPSOrderID){
-	$SelectCount++;
-	$OrderType = "VPS";
-	$DependOrderID = $VPSOrderID;
-	$Columns = Array('`Login` AS `IP`');
-}
-if($DSOrderID){
-	$SelectCount++;
-	$OrderType = "DS";
-	$DependOrderID = $DSOrderID;
-	$Columns = Array('IP');
-}
-if($SelectCount > 1){
-	return new gException('ISPsw_SELECTED_MORE_THAN_ONE_ORDER','Лицензию можно прикрепить только к одному заказу. Выберите лишь один пункт.');
-}
-
-#-----------------------------------------------------------------------------
-#-----------------------------------------------------------------------------
-# надо проверять не на этом этапе, а после выбора тарифа
-# если IP != 0.0.0.0 то проверяем его в ISPsystem
-#if(Is_Error(System_Load('libs/IspSoft.php')))
-#	return ERROR | @Trigger_Error(500);
-#-----------------------------------------------------------------------------
-#$Config = Config();
-#$Settings = $Config['IspSoft']['Settings'];
-#if(IspSoft_Check_ISPsystem_IP($Settings, $ISPswInfo)){
-#	# OK
-#}else{
-#	return new gException('ISPsw_IP_ADDRESS_IN_USE','Для даного IP адреса уже есть лицензия такого типа. За более подробной информацией, обратитесь в службу поддержки пользователей.');
-#}
-#-----------------------------------------------------------------------------
-#-----------------------------------------------------------------------------
-# тупая проверка IP на валидность - на этом этапе больше ничего не проверить
-$IP = Long2IP(IP2Long($IP));
-
-
-#-----------------------------------------------------------------------------
-#-----------------------------------------------------------------------------
-## select IP for order - если он не задан явно
-if($IP == '0.0.0.0'){
-	$OrderInfo = DB_Select(SPrintF('%sOrdersOwners',$OrderType),$Columns,Array('ID'=>$DependOrderID,'UNIQ'));
-	switch(ValueOf($OrderInfo)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		return ERROR | @Trigger_Error(400);
+	#-------------------------------------------------------------------------------
+	# check, select or not some order
+	if(!$VPSOrderID && !$DSOrderID && ($IP == '0.0.0.0' || $IP === ''))
+		return new gException('ISPsw_ORDER_NOT_SELECTED','Необходимо выбрать заказ к которому прикрепляется ПО');
+	#-------------------------------------------------------------------------------
+	# select used order
+	# and check, select only one order or more
+	$SelectCount = 0;
+	#-------------------------------------------------------------------------------
+	if($VPSOrderID){
+		#-------------------------------------------------------------------------------
+		$SelectCount++;
+		$OrderType = "VPS";
+		$DependOrderID = $VPSOrderID;
+		$Columns = Array('`Login` AS `IP`');
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	if($DSOrderID){
+		#-------------------------------------------------------------------------------
+		$SelectCount++;
+		$OrderType = "DS";
+		$DependOrderID = $DSOrderID;
+		$Columns = Array('IP');
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	if($SelectCount > 1)
+		return new gException('ISPsw_SELECTED_MORE_THAN_ONE_ORDER','Лицензию можно прикрепить только к одному заказу. Выберите лишь один пункт.');
+	#-------------------------------------------------------------------------------
+	# тупая проверка IP на валидность - на этом этапе больше ничего не проверить
+	$IP = Long2IP(IP2Long($IP));
+	#-----------------------------------------------------------------------------
+	Debug(SPrintF('[comp/www/ISPswOrder]: IP = %s',$IP));
+	#-----------------------------------------------------------------------------
+	## select IP for order - если он не задан явно
+	if($IP == '0.0.0.0'){
+		#-------------------------------------------------------------------------------
+		$OrderInfo = DB_Select(SPrintF('%sOrdersOwners',$OrderType),$Columns,Array('ID'=>$DependOrderID,'UNIQ'));
+		switch(ValueOf($OrderInfo)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return ERROR | @Trigger_Error(400);
 		case 'array':
-		Debug(SPrintF("[comp/www/ISPswOrder]: OrderInfo found, IP = %s",$OrderInfo['IP']));
+			Debug(SPrintF("[comp/www/ISPswOrder]: OrderInfo found, IP = %s",$OrderInfo['IP']));
 		break;
-	default:
-		return ERROR | @Trigger_Error(101);
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+	}else{
+		#-----------------------------------------------------------------------------
+		# проверяем, не введён ли IP от VPS/DS юзера
+		$Columns = Array('`Login` AS `IP`','`ID` AS `DependOrderID`',"'VPS' AS `OrderType`");
+		$OrderInfo = DB_Select('VPSOrdersOwners',$Columns,Array('Where'=>SPrintF('`Login` = "%s" AND `UserID` = %u',$IP,$__USER['ID']),'UNIQ'));
+		switch(ValueOf($OrderInfo)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			$OrderInfo = Array('IP' => $IP);
+			break;
+		case 'array':
+			$IsInternal = TRUE;
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-----------------------------------------------------------------------------
 	}
-}else{
 	#-----------------------------------------------------------------------------
-	# проверяем, не введён ли IP от VPS/DS юзера
-	$Columns = Array('`Login` AS `IP`','`ID` AS `DependOrderID`',"'VPS' AS `OrderType`");
-	$OrderInfo = DB_Select('VPSOrdersOwners',$Columns,Array('Where'=>SPrintF('`Login` = "%s" AND `UserID` = %u',$IP,$__USER['ID']),'UNIQ'));
-	switch(ValueOf($OrderInfo)){
+	# IP заказа к которому надо прицепить лицензию
+	$Comp = Comp_Load(
+			'Form/Input',
+			Array(
+				'name'  => 'IP',
+				'type'  => 'hidden',
+				'value' => $OrderInfo['IP']
+				)
+			);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Form->AddChild($Comp);
+	#-----------------------------------------------------------------------------
+	#-----------------------------------------------------------------------------
+	# номер заказа к которому надо прицепить лицензию
+	$Comp = Comp_Load(
+			'Form/Input',
+			Array(
+				'name'  => 'DependOrderID',
+				'type'  => 'hidden',
+				'value' => $DependOrderID
+				)
+			);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Form->AddChild($Comp);
+	#-----------------------------------------------------------------------------
+	#-----------------------------------------------------------------------------
+	$Comp = Comp_Load(
+			'Form/Input',
+			Array(
+				'name'  => 'ContractID',
+				'type'  => 'hidden',
+				'value' => $ContractID
+				)
+			);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Form->AddChild($Comp);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Services/Schemes','ISPswSchemes',$__USER['ID'],Array('Name'),$UniqID);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------
+	$Columns = Array('ID','Name','Comment','CostMonth');
+	#-------------------------------------------------------------------------
+	Debug("[comp/www/ISPswOrder]: IP before WherePart = " . $IP);
+	#-----------------------------------------------------------------------------
+	$Where  = Array('`IsActive` = "yes"');
+	$Where[]= SPrintF('`IsInternal` = "%s"',((IsSet($IsInternal) || $IP == '0.0.0.0' || $IP == '')?'yes':'no'));
+	#-------------------------------------------------------------------------------	
+	$ISPswSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('SortID'),'Where'=>$Where));
+	switch(ValueOf($ISPswSchemes)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
-		$OrderInfo = Array('IP' => $IP);
-		break;
+		return new gException('ISPsw_SCHEMES_NOT_FOUND','Для указанного заказа нет возможности приобретения ПО ISPsystem. Обратитесь в службу поддержки пользователей.');
 	case 'array':
-		$IsInternal = TRUE;
+		#-------------------------------------------------------------------------------
+		$NoBody = new Tag('NOBODY');
+		#-------------------------------------------------------------------------------
+		$Tr = new Tag('TR');
+		#-------------------------------------------------------------------------------
+		$Tr->AddChild(new Tag('TD',Array('class'=>'Head','colspan'=>2),'Тариф'));
+		#-------------------------------------------------------------------------------
+		$Tr->AddChild(new Tag('TD',Array('class'=>'Head','align'=>'center'),'Цена в месяц'));
+		#-------------------------------------------------------------------------------
+		$Rows = Array($Tr);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		foreach($ISPswSchemes as $ISPswScheme){
+			#-------------------------------------------------------------------------------
+			$Comp = Comp_Load(
+					'Form/Input',
+					Array(
+						'name'  => 'ISPswSchemeID',
+						'type'  => 'radio',
+						'value' => $ISPswScheme['ID']
+						)
+					);
+			if(Is_Error($Comp))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			if($ISPswScheme['ID'] == $ISPswSchemeID)
+				#-------------------------------------------------------------------------------
+				$Comp->AddAttribs(Array('checked'=>'true'));
+				#-------------------------------------------------------------------------------
+				$Comment = $ISPswScheme['Comment'];
+				#-------------------------------------------------------------------------------
+				if($Comment)
+					$Rows[] = new Tag('TR',new Tag('TD',Array('colspan'=>2)),new Tag('TD',Array('colspan'=>2,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),$Comment));
+				#-------------------------------------------------------------------------------
+				$CostMonth = Comp_Load('Formats/Currency',$ISPswScheme['CostMonth']);
+				if(Is_Error($CostMonth))
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+				$Rows[] = new Tag(
+						'TR',
+						new Tag('TD',Array('width'=>20),$Comp),
+						new Tag('TD',Array('class'=>'Comment'),$ISPswScheme['Name']),
+						new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth)
+						);
+				#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Tables/Extended',$Rows,Array('align'=>'center'));
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Table[] = $Comp;
+		#-------------------------------------------------------------------------------
 		break;
+		#-------------------------------------------------------------------------------
 	default:
 		return ERROR | @Trigger_Error(101);
 	}
-	#-----------------------------------------------------------------------------
-}
-
-  #-----------------------------------------------------------------------------
-  # IP заказа к которому надо прицепить лицензию
-  $Comp = Comp_Load(
-    'Form/Input',
-    Array(
-      'name'  => 'IP',
-      'type'  => 'hidden',
-      'value' => $OrderInfo['IP']
-    )
-  );
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  $Form->AddChild($Comp);
-  #-----------------------------------------------------------------------------
-  #-----------------------------------------------------------------------------
-  # номер заказа к которому надо прицепить лицензию
-  $Comp = Comp_Load(
-    'Form/Input',
-    Array(
-      'name'  => 'DependOrderID',
-      'type'  => 'hidden',
-      'value' => $DependOrderID
-    )
-  );
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  $Form->AddChild($Comp);
-  #-----------------------------------------------------------------------------
-  #-----------------------------------------------------------------------------
-  $Comp = Comp_Load(
-    'Form/Input',
-    Array(
-      'name'  => 'ContractID',
-      'type'  => 'hidden',
-      'value' => $ContractID
-    )
-  );
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  $Form->AddChild($Comp);
-  #-----------------------------------------------------------------------------
-
-
-
-
-      #-------------------------------------------------------------------------
-      $Comp = Comp_Load('Services/Schemes','ISPswSchemes',$__USER['ID'],Array('Name'),$UniqID);
-      if(Is_Error($Comp))
-        return ERROR | @Trigger_Error(500);
-      #-------------------------------------------------------------------------
-      $Columns = Array('ID','Name','Comment','CostMonth');
-      #-------------------------------------------------------------------------
-      Debug("[comp/www/ISPswOrder]: IP before WherePart = " . $IP);
-      #-----------------------------------------------------------------------------
-      if(IsSet($IsInternal) || $IP == '0.0.0.0' || $IP == ''){
-      	$WherePart = " AND `IsInternal` = 'yes'";
-      }else{
-	$WherePart = " AND `IsInternal` = 'no'";
-      }
-      $ISPswSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('SortID'),'Where'=>"`IsActive` = 'yes'" . $WherePart));
-      #-------------------------------------------------------------------------
-      switch(ValueOf($ISPswSchemes)){
-        case 'error':
-          return ERROR | @Trigger_Error(500);
-        case 'exception':
-          return new gException('ISPsw_SCHEMES_NOT_FOUND','Для указанного заказа нет возможности приобретения ПО ISPsystem. Обратитесь в службу поддержки пользователей.');
-        case 'array':
-          #---------------------------------------------------------------------
-          $NoBody = new Tag('NOBODY');
-          #---------------------------------------------------------------------
-          $Tr = new Tag('TR');
-          #---------------------------------------------------------------------
-          $Tr->AddChild(new Tag('TD',Array('class'=>'Head','colspan'=>2),'Тариф'));
-          $Tr->AddChild(new Tag('TD',Array('class'=>'Head','align'=>'center'),'Цена в месяц'));
-          #---------------------------------------------------------------------
-          #---------------------------------------------------------------------
-          $Rows = Array($Tr);
-          #---------------------------------------------------------------------
-          #---------------------------------------------------------------------
-          foreach($ISPswSchemes as $ISPswScheme){
-            #-------------------------------------------------------------------
-            #-------------------------------------------------------------------
-            $Comp = Comp_Load(
-              'Form/Input',
-              Array(
-                'name'  => 'ISPswSchemeID',
-                'type'  => 'radio',
-                'value' => $ISPswScheme['ID']
-              )
-            );
-            if(Is_Error($Comp))
-              return ERROR | @Trigger_Error(500);
-            #-------------------------------------------------------------------
-            if($ISPswScheme['ID'] == $ISPswSchemeID)
-              $Comp->AddAttribs(Array('checked'=>'true'));
-            #-------------------------------------------------------------------
-            $Comment = $ISPswScheme['Comment'];
-            #-------------------------------------------------------------------
-            if($Comment)
-              $Rows[] = new Tag('TR',new Tag('TD',Array('colspan'=>2)),new Tag('TD',Array('colspan'=>2,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),$Comment));
-            #-------------------------------------------------------------------
-            $CostMonth = Comp_Load('Formats/Currency',$ISPswScheme['CostMonth']);
-            if(Is_Error($CostMonth))
-              return ERROR | @Trigger_Error(500);
-            #-------------------------------------------------------------------
-	    #-------------------------------------------------------------------
-            $Rows[] = new Tag('TR',
-	    			new Tag('TD',Array('width'=>20),$Comp),
-				new Tag('TD',Array('class'=>'Comment'),$ISPswScheme['Name']),
-				new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth)
+	#-------------------------------------------------------------------------------
+	$Div = new Tag('DIV',Array('align'=>'right'),'');
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load(
+			'Form/Input',
+			Array(
+				'type'    => 'button',
+				'onclick' => 'ISPswOrder();',
+				'value'   => 'Продолжить'
+				)
 			);
-          }
-          #---------------------------------------------------------------------
-          $Comp = Comp_Load('Tables/Extended',$Rows,Array('align'=>'center'));
-          if(Is_Error($Comp))
-            return ERROR | @Trigger_Error(500);
-          #---------------------------------------------------------------------
-          $Table[] = $Comp;
-          #---------------------------------------------------------------------
-          #---------------------------------------------------------------------
-        break;
-        default:
-          return ERROR | @Trigger_Error(101);
-      }
-
-
-
-
-# 
-
-
-
-
-
-
-
-
-
-
-
-      #-------------------------------------------------------------------------
-      $Div = new Tag('DIV',Array('align'=>'right'),'');
-      #-------------------------------------------------------------------------
-      $Comp = Comp_Load(
-        'Form/Input',
-        Array(
-          'type'    => 'button',
-          'onclick' => 'ISPswOrder();',
-          'value'   => 'Продолжить'
-        )
-      );
-      if(Is_Error($Comp))
-        return ERROR | @Trigger_Error(500);
-      #-------------------------------------------------------------------------
-      $Div->AddChild($Comp);
-      #-------------------------------------------------------------------------
-      $Table[] = $Div;
-      #-------------------------------------------------------------------------
-      $Comp = Comp_Load('Tables/Standard',$Table,Array('width'=>400));
-      if(Is_Error($Comp))
-        return ERROR | @Trigger_Error(500);
-      #-------------------------------------------------------------------------
-      $Form->AddChild($Comp);
-      #-------------------------------------------------------------------------
-      $DOM->AddChild('Into',$Form);
-
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Div->AddChild($Comp);
+	#-------------------------------------------------------------------------------
+	$Table[] = $Div;
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Tables/Standard',$Table,Array('width'=>400));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Form->AddChild($Comp);
+	#-------------------------------------------------------------------------------
+	$DOM->AddChild('Into',$Form);
+	#-------------------------------------------------------------------------------
 }	# end of $StepID is set
-
-
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Out = $DOM->Build(FALSE);
 #-------------------------------------------------------------------------------
 if(Is_Error($Out))
-  return ERROR | @Trigger_Error(500);
-#Debug("[comp/www/ISPswOrder]: EOF");
-#Debug(print_r($DOM, true));
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return Array('Status'=>'Ok','DOM'=>$DOM->Object);
 #-------------------------------------------------------------------------------
-
+#-------------------------------------------------------------------------------
 ?>
