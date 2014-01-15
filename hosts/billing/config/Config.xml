@@ -966,11 +966,6 @@
    <ExecutePeriod>08:00</ExecutePeriod>
   </BackUp>
   <!-- ********************************************************************* -->
-  <Sessions>
-   <Name>Сборщик устаревших сессий</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </Sessions>
   <!-- ********************************************************************* -->
   <Temp>
    <Name>Удаление временных файлов</Name>
@@ -1095,6 +1090,9 @@
    <TableTasksStoryPeriod>60</TableTasksStoryPeriod>
    <TableServersUpTimeStoryPeriod>186</TableServersUpTimeStoryPeriod>
    <TableRequestLogStoryPeriod>186</TableRequestLogStoryPeriod>
+   <!-- периоды уборщика сессий -->
+   <SessionTTL>3600</SessionTTL>
+   <RememberTTL>31</RememberTTL>
    <!-- задачи -->
    <DailyTasks>
     <!-- Операции со счетами -->
@@ -1110,6 +1108,8 @@
     <CheckConfigPermission>Проверка прав на конфигурационный файл</CheckConfigPermission>
     <!-- Уведомление о окончании услуг настроенных вручную -->
     <OrdersNoticeSuspend>Уведомление о окончании услуг</OrdersNoticeSuspend>
+    <!-- Сборщик устаревших сессий -->
+    <Sessions>Сборщик устаревших сессий</Sessions>
    </DailyTasks>
    <WeeklyTasks type="array" />
    <MonthlyTasks type="array" />
