@@ -41,14 +41,14 @@ if(IsSet($User['Params']['SMSTime']) && !$IsImmediately){
 					if(Date('G') < $SMSTime['SMSBeginTime']){
 						#-------------------------------------------------------------------------------
 						# сегодня попзже
-						Debug(SPrintF('[comp/Tasks/SMS]: Перенос отправки сообщения (%u) на %s:00', $Mobile,$SMSTime['SMSBeginTime']));
 						$TransferTime = MkTime($SMSTime['SMSBeginTime'],0,0,Date('n'),Date('j'),Date('Y'));
+						Debug(SPrintF('[comp/Tasks/SMS]: Перенос отправки сообщения (%u) на %s',$Mobile,Date('Y-m-d/H:i:s',$TransferTime)));
 						#-------------------------------------------------------------------------------
 					}else{
 						#-------------------------------------------------------------------------------
 						# завтра пораньше
-						Debug(SPrintF('[comp/Tasks/SMS]: Перенос отправки сообщения (%u) на завтра, %s:00', $Mobile,$SMSTime['SMSBeginTime']));
-						$TransferTime = MkTime($SMSTime['SMSBeginTime'],0,0,Date('n'),Date('j'),Date('Y'));
+						$TransferTime = MkTime($SMSTime['SMSBeginTime'],0,0,Date('n'),Date('j')+1,Date('Y'));
+						Debug(SPrintF('[comp/Tasks/SMS]: Перенос отправки сообщения (%u) на завтра, %s',$Mobile,Date('Y-m-d/H:i:s',$TransferTime)));
 						#-------------------------------------------------------------------------------
 					}
 				}
@@ -59,8 +59,8 @@ if(IsSet($User['Params']['SMSTime']) && !$IsImmediately){
 				if(Date('G') < $SMSTime['SMSBeginTime'] && Date('G') >= $SMSTime['SMSEndTime']){
 					#-------------------------------------------------------------------------------
 					# время типа 12:00 - требуется перенос на SMSBeginTime, сегодня
-					Debug(SPrintF('[comp/Tasks/SMS]: Перенос отправки сообщения (%u) на %s:00', $Mobile,$SMSTime['SMSBeginTime']));
 					$TransferTime = MkTime($SMSTime['SMSBeginTime'],0,0,Date('n'),Date('j'),Date('Y'));
+					Debug(SPrintF('[comp/Tasks/SMS]: Перенос отправки сообщения (%u) на %s', $Mobile,Date('Y-m-d/H:i:s',$TransferTime)));
 					#-------------------------------------------------------------------------------
 				}else{
 					# OK
@@ -76,9 +76,9 @@ if(IsSet($User['Params']['SMSTime']) && !$IsImmediately){
 #-------------------------------------------------------------------------------
 if($TransferTime){
 	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'] = SPrintF("transfer send to %s",Date('H:i',$TransferTime));
+	$GLOBALS['TaskReturnInfo'] = SPrintF("transfer send to %s",Date('Y-m-d/H:i:s',$TransferTime));
 	#-------------------------------------------------------------------------------
-	$Event = Array('UserID' => $UserID, 'PriorityID' => 'Billing', 'Text' => SPrintF('Отправка SMS сообщения для номера (%s) перенесена на %s, согласно клиентским настройкам',$Mobile,Date('H:i',$TransferTime)));
+	$Event = Array('UserID' => $UserID, 'PriorityID' => 'Billing', 'Text' => SPrintF('Отправка SMS сообщения для номера (%s) перенесена на (%s), согласно клиентским настройкам',$Mobile,Date('Y-m-d/H:i:s',$TransferTime)));
 	$Event = Comp_Load('Events/EventInsert', $Event);
 	if(!$Event)
 		return ERROR | @Trigger_Error(500);
