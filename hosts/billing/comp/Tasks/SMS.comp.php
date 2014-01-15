@@ -34,7 +34,7 @@ if(IsSet($User['Params']['SMSTime']) && !$IsImmediately){
 			# если обычный период, например 9:00-18:00
 			if($SMSTime['SMSBeginTime'] < $SMSTime['SMSEndTime']){
 				#-------------------------------------------------------------------------------
-				if(Date('G') > $SMSTime['SMSBeginTime'] && Date('G') < $SMSTime['SMSEndTime']){
+				if(Date('G') >= $SMSTime['SMSBeginTime'] && Date('G') < $SMSTime['SMSEndTime']){
 					# OK
 				}else{
 					#-------------------------------------------------------------------------------
