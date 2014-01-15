@@ -56,7 +56,7 @@ $Links = &Links();
 $Links['DOM'] = &$DOM;
 #-------------------------------------------------------------------------------
 if(Is_Error($DOM->Load('Base')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM->AddAttribs('MenuLeft',Array('args'=>'User/Services'));
 #-------------------------------------------------------------------------------
@@ -70,170 +70,216 @@ $Form = new Tag('FORM',Array('name'=>'ISPswOrderForm','onsubmit'=>'return false;
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-if($StepID){
-
-Debug("[comp/www/ISPswOrder]: StepID = $StepID");
-
-# intermediate step
-if($StepID == 1){
-
-$Table[] = new Tag('TD',Array('colspan'=>2,'width'=>300,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),'Необходимо выбрать заказ VPS или выделенного сервера, к которому будет прикреплена заказанная лицензия. Обратите внимание, что нужно выбрать что-то одно - одну лицензию нельзя прикрепить к нескольким услугам.');
-$OrderCount = 0;
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-# create select, using ContractID for VPSOrders
-$Columns = Array('ID','Login','(SELECT `Address` FROM `VPSServers` WHERE `VPSServers`.`ID` = `ServerID`) as `Address`');
-$VPSOrders = DB_Select('VPSOrdersOwners',$Columns,Array('Where'=>'`ContractID` = ' . $ContractID . " AND `StatusID` = 'Active'"));
-switch(ValueOf($VPSOrders)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	# No more...
-	break;
-case 'array':
-	$Options = Array('Не использовать');
-	foreach($VPSOrders as $VPSOrder){
-		$VPSOrderID = $VPSOrder['ID'];
-		$Options[$VPSOrderID] = SPrintF('%s [%s]',$VPSOrder['Login'],$VPSOrder['Address']);
-		$OrderCount++;
+if(!$StepID){
+	#-------------------------------------------------------------------------------
+	$Contracts = DB_Select('Contracts',Array('ID','Customer'),Array('Where'=>SPrintF("`UserID` = %u AND `TypeID` != 'NaturalPartner'",$__USER['ID'])));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Contracts)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return new gException('CONTRACTS_NOT_FOUND','Система не обнаружила у Вас ни одного договора. Пожалуйста, перейдите в раздел [Мой офис -> Договоры] и сформируйте хотя бы 1 договор.');
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
 	}
-	$Comp = Comp_Load('Form/Select',Array('name'=>'VPSOrderID'),$Options);
+	#-------------------------------------------------------------------------------
+	$Options = Array();
+	#-------------------------------------------------------------------------------
+	foreach($Contracts as $Contract){
+		#-------------------------------------------------------------------------------
+		$Customer = $Contract['Customer'];
+		#-------------------------------------------------------------------------------
+		if(Mb_StrLen($Customer) > 20)
+			$Customer = SPrintF('%s...',Mb_SubStr($Customer,0,20));
+		#-------------------------------------------------------------------------------
+		$Options[$Contract['ID']] = $Customer;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Select',Array('name'=>'ContractID'),$Options,$ContractID);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
-	$Table[] = Array('Заказ виртуального сервера',$Comp);
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
-}
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-# create select, using ContractID for DSOrders
-$Columns = Array('ID','IP','(SELECT `Name` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `SchemeID`) as `Name`');
-$DSOrders = DB_Select('DSOrdersOwners',$Columns,Array('Where'=>'`ContractID` = ' . $ContractID . " AND `StatusID` = 'Active'"));
-switch(ValueOf($DSOrders)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	# No more...
-	break;
-case 'array':
-	$Options = Array('Не использовать');
-	foreach($DSOrders as $DSOrder){
-		$DSOrderID = $DSOrder['ID'];
-		$Options[$DSOrderID] = SPrintF('%s [%s]',$DSOrder['IP'],$DSOrder['Name']);
-		$OrderCount++;
+	#-------------------------------------------------------------------------------
+	$NoBody = new Tag('NOBODY',$Comp);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Window = JSON_Encode(Array('Url'=>'/ISPswOrder','Args'=>Array()));
+	#-------------------------------------------------------------------------------
+	$A = new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ContractMake',{Window:'%s'});",Base64_Encode($Window))),'[новый]');
+		#-------------------------------------------------------------------------------
+	$NoBody->AddChild($A);
+	#-------------------------------------------------------------------------------
+	$Table = Array(Array('Базовый договор',$NoBody));
+	#-------------------------------------------------------------------------------
+	$Table[] = new Tag('TD',Array('colspan'=>2,'width'=>300,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),'Необходимо выбрать заказ VPS или выделенного сервера, к которому будет прикреплена заказанная лицензия. Обратите внимание, что нужно выбрать что-то одно - одну лицензию нельзя прикрепить к нескольким услугам.');
+	#-------------------------------------------------------------------------------
+	$OrderCount = 0;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	# create select, using UserID for VPSOrders
+	$Columns = Array('ID','Login','(SELECT `Address` FROM `VPSServers` WHERE `VPSServers`.`ID` = `ServerID`) as `Address`');
+	#-------------------------------------------------------------------------------
+	$VPSOrders = DB_Select('VPSOrdersOwners',$Columns,Array('Where'=>SPrintF('`UserID` = %u AND `StatusID` = "Active"',$__USER['ID'])));
+	switch(ValueOf($VPSOrders)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		# No more...
+		break;
+	case 'array':
+	#-------------------------------------------------------------------------------
+		$Options = Array('Не использовать');
+		#-------------------------------------------------------------------------------
+		foreach($VPSOrders as $VPSOrder){
+			#-------------------------------------------------------------------------------
+			$VPSOrderID = $VPSOrder['ID'];
+			$Options[$VPSOrderID] = SPrintF('%s [%s]',$VPSOrder['Login'],$VPSOrder['Address']);
+			$OrderCount++;
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Form/Select',Array('name'=>'VPSOrderID'),$Options);
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Table[] = Array('Заказ виртуального сервера',$Comp);
+		#-------------------------------------------------------------------------------
+		break;
+		#-------------------------------------------------------------------------------
+	default:
+		return ERROR | @Trigger_Error(101);
 	}
-	$Comp = Comp_Load('Form/Select',Array('name'=>'DSOrderID'),$Options);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	# create select, using UserID for DSOrders
+	$Columns = Array('ID','IP','(SELECT `Name` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `SchemeID`) as `Name`');
+	$DSOrders = DB_Select('DSOrdersOwners',$Columns,Array('Where'=>SPrintF('`UserID` = %u AND `StatusID` = "Active"',$__USER['ID'])));
+	switch(ValueOf($DSOrders)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		# No more...
+		break;
+	case 'array':
+		#-------------------------------------------------------------------------------
+		$Options = Array('Не использовать');
+		#-------------------------------------------------------------------------------
+		foreach($DSOrders as $DSOrder){
+			#-------------------------------------------------------------------------------
+			$DSOrderID = $DSOrder['ID'];
+			$Options[$DSOrderID] = SPrintF('%s [%s]',$DSOrder['IP'],$DSOrder['Name']);
+			$OrderCount++;
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Form/Select',Array('name'=>'DSOrderID'),$Options);
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Table[] = Array('Заказ выделенного сервера',$Comp);
+		#-------------------------------------------------------------------------------
+		break;
+		#-------------------------------------------------------------------------------
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	# check - have it Owner some orders or not
+	if($OrderCount < 1){
+		#---------------------------------------------------------------------------
+		$Count = DB_Count('DSOrdersOwners',Array('Where'=>SPrintF('`UserID` = %u AND `StatusID` != "Active"',$__USER['ID'])));
+		if(Is_Error($Count))
+			return ERROR | @Trigger_Error(500);
+		#---------------------------------------------------------------------------
+		if($Count)
+			return new gException('ISPsw_OWNER_HAVE_INACTIVE_DS_ORDER','Заказанный вами выделенный сервер неактивен. Необходимо оплатить его размешение, или, если он уже оплачен, дождаться активации. После этого, вы сможете заказать лицензию на программное обеспечение ISPsystem.');
+		#---------------------------------------------------------------------------
+		#---------------------------------------------------------------------------
+		# если нет заказанных услуг - будет общее сообщение
+		# при условии, что нет тарифов на заказ внешних лицензий
+		if(!IsSet($AllowExternalOrder))
+			return new gException('ISPsw_OWNER_NOT_HAVE_ACTIVE_ORDERS','Выбранный профиль не имеет активных заказанных услуг. Выберите другой, или, закажите услугу хостинга, VPS или выделенного сервера. После этого, вы сможете заказать лицензию на программное обеспечение ISPsystem.');
+		#-------------------------------------------------------------------------------
+	}
+	#---------------------------------------------------------------------------
+	#---------------------------------------------------------------------------
+	if(IsSet($AllowExternalOrder)){
+		# окошко для ввода IP
+		$Comp = Comp_Load(
+				'Form/Input',
+				Array(
+					'name'   => 'IP',
+					'size'   => 25,
+					'type'   => 'text',
+					'prompt' => 'IP адрес для заказываемой лицензии. Будте внимательны, адрес можно менять лишь раз в месяц.',
+					'value'  => '0.0.0.0'
+				)
+			);
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------
+		$Table[] = 'Для лицензий, заказываемых не к нашим услугам - для ваших нужд';
+		$Table[] = Array('IP адрес лицензии',$Comp);
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+/*	$Comp = Comp_Load(
+			'Form/Input',
+			Array(
+				'name'  => 'ContractID',
+				'type'  => 'hidden',
+				'value' => $ContractID
+				)
+			);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
-	$Table[] = Array('Заказ выделенного сервера',$Comp);
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
-}
-
-# check - have it Owner some orders or not
-if($OrderCount < 1){
-#	# проверяем, может заказы есть но они не активны
-#	$Count = DB_Count('VPSOrdersOwners',Array('Where'=>"`ContractID` = " . $ContractID . " AND `StatusID` != 'Active'"));
-#	if(Is_Error($Count))
-#		return ERROR | @Trigger_Error(500);
-#	#---------------------------------------------------------------------------
-#	if($Count)
-#		return new gException('ISPsw_OWNER_HAVE_INACTIVE_VPS_ORDER','Заказанный вами виртуальный сервер неактивен. Необходимо его оплатить, или, если он уже оплачен, дождаться активации. После этого, вы сможете заказать лицензию на программное обеспечение ISPsystem.');
-	#---------------------------------------------------------------------------
-	#---------------------------------------------------------------------------
-	$Count = DB_Count('DSOrdersOwners',Array('Where'=>"`ContractID` = " . $ContractID . " AND `StatusID` != 'Active'"));
-	if(Is_Error($Count))
-		return ERROR | @Trigger_Error(500);
-	#---------------------------------------------------------------------------
-	if($Count)
-		return new gException('ISPsw_OWNER_HAVE_INACTIVE_DS_ORDER','Заказанный вами выделенный сервер неактивен. Необходимо оплатить его размешение, или, если он уже оплачен, дождаться активации. После этого, вы сможете заказать лицензию на программное обеспечение ISPsystem.');
-	#---------------------------------------------------------------------------
-	#---------------------------------------------------------------------------
-	# если нет заказанных услуг - будет общее сообщение
-	# при условии, что нет тарифов на заказ внешних лицензий
-	if(!IsSet($AllowExternalOrder))
-	  return new gException('ISPsw_OWNER_NOT_HAVE_ACTIVE_ORDERS','Выбранный профиль не имеет активных заказанных услуг. Выберите другой, или, закажите услугу хостинга, VPS или выделенного сервера. После этого, вы сможете заказать лицензию на программное обеспечение ISPsystem.');
-}
-#---------------------------------------------------------------------------
-#---------------------------------------------------------------------------
-if(IsSet($AllowExternalOrder)){
-	# окошко для ввода IP
+	#-------------------------------------------------------------------------------
+	$Form->AddChild($Comp);
+*/
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load(
 			'Form/Input',
 			Array(
-				'name'   => 'IP',
-				'size'   => 25,
-				'type'   => 'text',
-				'prompt' => 'IP адрес для заказываемой лицензии. Будте внимательны, адрес можно менять лишь раз в месяц.',
-				'value'  => '0.0.0.0'
-			)
-		);
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------
-	$Table[] = 'Для лицензий, заказываемых не к нашим услугам - для ваших нужд';
-	$Table[] = Array('IP адрес лицензии',$Comp);
-}
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-
-
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-  $Comp = Comp_Load(
-    'Form/Input',
-    Array(
-      'name'  => 'ContractID',
-      'type'  => 'hidden',
-      'value' => $ContractID
-    )
-  );
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  $Form->AddChild($Comp);
-
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-
-	$Comp = Comp_Load(
-				'Form/Input',
-				Array(	'type'    => 'button',
-					'name'    => 'Submit',
-					'onclick' => "ShowWindow('/ISPswOrder',FormGet(form));",
-					'value'   => 'Продолжить'
+				'type'    => 'button',
+				'name'    => 'Submit',
+				'onclick' => "ShowWindow('/ISPswOrder',FormGet(form));",
+				'value'   => 'Продолжить'
 				)
 			);
 	#---------------------------------------------------------------------
-          if(Is_Error($Comp))
-            return ERROR | @Trigger_Error(500);
-          #---------------------------------------------------------------------
-          $Table[] = $Comp;
-          #---------------------------------------------------------------------
-          $Comp = Comp_Load('Tables/Standard',$Table);
-          if(Is_Error($Comp))
-            return ERROR | @Trigger_Error(500);
-          #---------------------------------------------------------------------
-          $Form->AddChild($Comp);
-          #---------------------------------------------------------------------
-          $Comp = Comp_Load(
-            'Form/Input',
-            Array(
-              'name'  => 'StepID',
-              'value' => 2,
-              'type'  => 'hidden',
-            )
-          );
-          if(Is_Error($Comp))
-            return ERROR | @Trigger_Error(500);
-          #---------------------------------------------------------------------
-          $Form->AddChild($Comp);
-          #---------------------------------------------------------------------
-          $DOM->AddChild('Into',$Form);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#---------------------------------------------------------------------
+	$Table[] = $Comp;
+	#---------------------------------------------------------------------
+	$Comp = Comp_Load('Tables/Standard',$Table);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#---------------------------------------------------------------------
+	$Form->AddChild($Comp);
+	#---------------------------------------------------------------------
+	$Comp = Comp_Load(
+			'Form/Input',
+			Array(
+				'name'  => 'StepID',
+				'value' => 2,
+				'type'  => 'hidden',
+				)
+			);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#---------------------------------------------------------------------
+	$Form->AddChild($Comp);
+	#---------------------------------------------------------------------
+	$DOM->AddChild('Into',$Form);
+	#-------------------------------------------------------------------------------
+}else{ # $StepID is not set -> is set
 
-
-}else{ # $StepID 1 -> another
 
 
 
@@ -277,27 +323,43 @@ if($SelectCount > 1){
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 # тупая проверка IP на валидность - на этом этапе больше ничего не проверить
-$IP = long2ip(ip2long($IP));
+$IP = Long2IP(IP2Long($IP));
 
 
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 ## select IP for order - если он не задан явно
 if($IP == '0.0.0.0'){
-	$OrderInfo = DB_Select($OrderType . 'OrdersOwners',$Columns,Array('ID'=>$DependOrderID,'UNIQ'));
+	$OrderInfo = DB_Select(SPrintF('%sOrdersOwners',$OrderType),$Columns,Array('ID'=>$DependOrderID,'UNIQ'));
 	switch(ValueOf($OrderInfo)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
 		return ERROR | @Trigger_Error(400);
 		case 'array':
-		Debug("[comp/www/ISPswOrder]: OrderInfo found, IP = " . $OrderInfo['IP']);
+		Debug(SPrintF("[comp/www/ISPswOrder]: OrderInfo found, IP = %s",$OrderInfo['IP']));
 		break;
 	default:
 		return ERROR | @Trigger_Error(101);
 	}
 }else{
-	$OrderInfo = Array('IP' => $IP);
+	#-----------------------------------------------------------------------------
+	# проверяем, не введён ли IP от VPS/DS юзера
+	$Columns = Array('`Login` AS `IP`','`ID` AS `DependOrderID`',"'VPS' AS `OrderType`");
+	$OrderInfo = DB_Select('VPSOrdersOwners',$Columns,Array('Where'=>SPrintF('`Login` = "%s" AND `UserID` = %u',$IP,$__USER['ID']),'UNIQ'));
+	switch(ValueOf($OrderInfo)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		$OrderInfo = Array('IP' => $IP);
+		break;
+	case 'array':
+		$IsInternal = TRUE;
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-----------------------------------------------------------------------------
 }
 
   #-----------------------------------------------------------------------------
@@ -353,7 +415,8 @@ if($IP == '0.0.0.0'){
       $Columns = Array('ID','Name','Comment','CostMonth');
       #-------------------------------------------------------------------------
       Debug("[comp/www/ISPswOrder]: IP before WherePart = " . $IP);
-      if($IP == '0.0.0.0' || $IP == ''){
+      #-----------------------------------------------------------------------------
+      if(IsSet($IsInternal) || $IP == '0.0.0.0' || $IP == ''){
       	$WherePart = " AND `IsInternal` = 'yes'";
       }else{
 	$WherePart = " AND `IsInternal` = 'no'";
@@ -465,92 +528,9 @@ if($IP == '0.0.0.0'){
       #-------------------------------------------------------------------------
       $DOM->AddChild('Into',$Form);
 
-}	# end of $StepID is set, and $StepID != 1 or 2
+}	# end of $StepID is set
 
 
-}else{ # $StepID is set -> $StepID not set
-  #-----------------------------------------------------------------------------
-  #-----------------------------------------------------------------------------
-  $Contracts = DB_Select('Contracts',Array('ID','Customer'),Array('Where'=>SPrintF("`UserID` = %u AND `TypeID` != 'NaturalPartner'",$__USER['ID'])));
-  #-----------------------------------------------------------------------------
-  switch(ValueOf($Contracts)){
-    case 'error':
-      return ERROR | @Trigger_Error(500);
-    case 'exception':
-      return new gException('CONTRACTS_NOT_FOUND','Система не обнаружила у Вас ни одного договора. Пожалуйста, перейдите в раздел [Мой офис - Договоры] и сформируйте хотя бы 1 договор.');
-    case 'array':
-      #-------------------------------------------------------------------------
-      $Options = Array();
-      #-------------------------------------------------------------------------
-      foreach($Contracts as $Contract){
-        #-----------------------------------------------------------------------
-        $Customer = $Contract['Customer'];
-        #-----------------------------------------------------------------------
-        if(Mb_StrLen($Customer) > 20)
-          $Customer = SPrintF('%s...',Mb_SubStr($Customer,0,20));
-        #-----------------------------------------------------------------------
-        $Options[$Contract['ID']] = $Customer;
-      }
-      #-------------------------------------------------------------------------
-      $Comp = Comp_Load('Form/Select',Array('name'=>'ContractID'),$Options,$ContractID);
-      if(Is_Error($Comp))
-        return ERROR | @Trigger_Error(500);
-      #-------------------------------------------------------------------------
-      $NoBody = new Tag('NOBODY',$Comp);
-      #-------------------------------------------------------------------------
-      $Window = JSON_Encode(Array('Url'=>'/ISPswOrder','Args'=>Array()));
-      #-------------------------------------------------------------------------
-      $A = new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ContractMake',{Window:'%s'});",Base64_Encode($Window))),'[новый]');
-      #-------------------------------------------------------------------------
-      $NoBody->AddChild($A);
-      #-------------------------------------------------------------------------
-      $Table = Array(Array('Базовый договор',$NoBody));
-      #-------------------------------------------------------------------------
-      
-
-	$Comp = Comp_Load(
-				'Form/Input',
-				Array(	'type'    => 'button',
-					'name'    => 'Submit',
-					'onclick' => "ShowWindow('/ISPswOrder',FormGet(form));",
-					'value'   => 'Продолжить'
-				)
-			);
-	#---------------------------------------------------------------------
-          if(Is_Error($Comp))
-            return ERROR | @Trigger_Error(500);
-          #---------------------------------------------------------------------
-          $Table[] = $Comp;
-          #---------------------------------------------------------------------
-          $Comp = Comp_Load('Tables/Standard',$Table);
-          if(Is_Error($Comp))
-            return ERROR | @Trigger_Error(500);
-          #---------------------------------------------------------------------
-          $Form->AddChild($Comp);
-          #---------------------------------------------------------------------
-          $Comp = Comp_Load(
-            'Form/Input',
-            Array(
-              'name'  => 'StepID',
-              'value' => 1,
-              'type'  => 'hidden',
-            )
-          );
-          if(Is_Error($Comp))
-            return ERROR | @Trigger_Error(500);
-          #---------------------------------------------------------------------
-          $Form->AddChild($Comp);
-          #---------------------------------------------------------------------
-          $DOM->AddChild('Into',$Form);
-
-
-
-
-    break;
-    default:
-      return ERROR | @Trigger_Error(101);
-  }
-}
 #-------------------------------------------------------------------------------
 $Out = $DOM->Build(FALSE);
 #-------------------------------------------------------------------------------
