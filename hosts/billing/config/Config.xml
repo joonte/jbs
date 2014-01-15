@@ -1091,8 +1091,10 @@
    <TableServersUpTimeStoryPeriod>186</TableServersUpTimeStoryPeriod>
    <TableRequestLogStoryPeriod>186</TableRequestLogStoryPeriod>
    <!-- периоды уборщика сессий -->
-   <SessionTTL>3600</SessionTTL>
-   <RememberTTL>31</RememberTTL>
+   <Sessions>
+    <SessionTTL>3600</SessionTTL>
+    <RememberTTL>31</RememberTTL>
+   </Sessions>
    <!-- задачи -->
    <DailyTasks>
     <!-- Операции со счетами -->
