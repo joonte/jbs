@@ -78,14 +78,14 @@ $SMSTime = Array();
 for($i = 0; $i <= 23; $i++)
 	$SMSTime[$i] = SPrintF('%02d:00',$i);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SMSBeginTime','prompt'=>'Время (по Москве) начала рассылки SMS сообщений'),$SMSTime,(IsSet($Settings['SMSTime']['SMSBeginTime'])?$Settings['SMSTime']['SMSBeginTime']:0));
+$Comp = Comp_Load('Form/Select',Array('name'=>'SMSBeginTime','prompt'=>SPrintF('Время (%s) начала рассылки SMS сообщений',Date('T'))),$SMSTime,(IsSet($Settings['SMSTime']['SMSBeginTime'])?$Settings['SMSTime']['SMSBeginTime']:0));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Время начала рассылки',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SMSEndTime','prompt'=>'Время (по Москве) окончания рассылки SMS сообщений'),$SMSTime,(IsSet($Settings['SMSTime']['SMSEndTime'])?$Settings['SMSTime']['SMSEndTime']:0));
+$Comp = Comp_Load('Form/Select',Array('name'=>'SMSEndTime','prompt'=>SPrintF('Время (%s) окончания рассылки SMS сообщений',Date('T'))),$SMSTime,(IsSet($Settings['SMSTime']['SMSEndTime'])?$Settings['SMSTime']['SMSEndTime']:0));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
