@@ -1082,10 +1082,12 @@
    <IsActive>1</IsActive>
    <!-- Настройки -->
    <ItemPerIteration>5</ItemPerIteration>
-   <DaysBeforeNotice>14</DaysBeforeNotice>
-   <DaysBeforeDeleted>28</DaysBeforeDeleted>
-   <DaysBeforeErase>60</DaysBeforeErase>
-   <InactiveDaysForUser>365</InactiveDaysForUser>
+   <Invoices>
+    <DaysBeforeNotice>14</DaysBeforeNotice>
+    <DaysBeforeDeleted>28</DaysBeforeDeleted>
+    <DaysBeforeErase>60</DaysBeforeErase>
+    <InactiveDaysForUser>365</InactiveDaysForUser>
+   </Invoices>
    <!-- периоды хранения информации в таблицах, дней -->
    <TableTasksStoryPeriod>60</TableTasksStoryPeriod>
    <TableServersUpTimeStoryPeriod>186</TableServersUpTimeStoryPeriod>

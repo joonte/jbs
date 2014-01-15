@@ -9,7 +9,7 @@ $__args_list = Array('Params');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Where = SPrintF("`StatusID` = 'Rejected' AND `StatusDate` < UNIX_TIMESTAMP( ) - %d *86400", $Params['DaysBeforeErase']);
+$Where = SPrintF("`StatusID` = 'Rejected' AND `StatusDate` < UNIX_TIMESTAMP( ) - %d *86400", $Params['Invoices']['DaysBeforeErase']);
 #-------------------------------------------------------------------------------
 $Invoices = DB_Select('InvoicesOwners',Array('ID','UserID'),Array('SortOn'=>'CreateDate', 'IsDesc'=>TRUE, 'Where'=>$Where, 'Limits'=>Array(0,$Params['ItemPerIteration'])));
 switch(ValueOf($Invoices)){
@@ -32,7 +32,7 @@ switch(ValueOf($Invoices)){
         $Event = Array(
 			'UserID'	=> $Invoice['UserID'],
 			'PriorityID'	=> 'Billing',
-			'Text'		=> SPrintF('Отменённый счёт #%d автоматически удалён, оплата не поступила в течение %d дней.',$Invoice['ID'],$Params['DaysBeforeErase'])
+			'Text'		=> SPrintF('Отменённый счёт #%d автоматически удалён, оплата не поступила в течение %d дней.',$Invoice['ID'],$Params['Invoices']['DaysBeforeErase'])
 	              );
 	$Event = Comp_Load('Events/EventInsert',$Event);
 	if(!$Event)

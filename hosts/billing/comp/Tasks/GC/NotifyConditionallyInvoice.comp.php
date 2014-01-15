@@ -162,7 +162,7 @@ foreach($Invoices as $Invoice){
     $Event = Array(
                    'UserID'	=> $Invoice['UserID'],
                    'PriorityID'	=> 'Billing',
-                   'Text'	=> SPrintF('Уведомление о условно оплаченном счете #%d, неоплачен более %d дней',$Invoice['ID'],$Params['DaysBeforeNotice'])
+                   'Text'	=> SPrintF('Уведомление о условно оплаченном счете #%d, неоплачен более %d дней',$Invoice['ID'],$Params['Invoices']['DaysBeforeNotice'])
                   );
     $Event = Comp_Load('Events/EventInsert',$Event);
     if(!$Event)

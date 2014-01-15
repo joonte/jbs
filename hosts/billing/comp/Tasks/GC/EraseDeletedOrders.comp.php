@@ -42,7 +42,7 @@ if(!$Services || !Is_Array($Services)){
 for($i=0;$i<Count($Services);$i++){
   Debug( SPrintF("[Tasks/GC/EraseDeletedOrders]: Код текущей услуги - %s",$Services[$i]['Code']) );
   #-----------------------------------------------------------------------------
-  $Where = SPrintF("`StatusID` = 'Deleted' AND `StatusDate` < UNIX_TIMESTAMP( ) - %d *86400", $Params['DaysBeforeErase']);
+  $Where = SPrintF("`StatusID` = 'Deleted' AND `StatusDate` < UNIX_TIMESTAMP( ) - %d *86400", $Params['Invoices']['DaysBeforeErase']);
   #-----------------------------------------------------------------------------
   $Orders = DB_Select($Services[$i]['View'],Array('ID','OrderID','UserID'),Array('Where'=>$Where,'Limits'=>Array(0,$Params['ItemPerIteration'])));
   #-----------------------------------------------------------------------------
@@ -95,7 +95,7 @@ for($i=0;$i<Count($Services);$i++){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # JBS-604: удаляем удалённые
-$Where = SPrintF("`StatusID` = 'Deleted' AND `StatusDate` < UNIX_TIMESTAMP() - %d * 86400", $Params['DaysBeforeErase']);
+$Where = SPrintF("`StatusID` = 'Deleted' AND `StatusDate` < UNIX_TIMESTAMP() - %d * 86400", $Params['Invoices']['DaysBeforeErase']);
 #-------------------------------------------------------------------------------
 $Orders = DB_Select('OrdersOwners',Array('ID','UserID','ServiceID','(SELECT `NameShort` FROM `Services` WHERE `OrdersOwners`.`ServiceID`=`Services`.`ID`) AS `NameShort`','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `OrdersOwners`.`UserID`) as `Email`','(SELECT `Code` FROM `Services` WHERE `OrdersOwners`.`ServiceID`=`Services`.`ID`) AS `Code`'),Array('Where'=>$Where));
 #-------------------------------------------------------------------------------

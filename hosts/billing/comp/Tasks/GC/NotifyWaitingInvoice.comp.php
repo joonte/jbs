@@ -11,7 +11,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Where = Array(
 		"`StatusID` = 'Waiting'",
-		SPrintF('`StatusDate` BETWEEN (UNIX_TIMESTAMP() - (%d+1)*86400) AND (UNIX_TIMESTAMP() - %d*86400)',$Params['DaysBeforeNotice'],$Params['DaysBeforeNotice'])
+		SPrintF('`StatusDate` BETWEEN (UNIX_TIMESTAMP() - (%d+1)*86400) AND (UNIX_TIMESTAMP() - %d*86400)',$Params['Invoices']['DaysBeforeNotice'],$Params['Invoices']['DaysBeforeNotice'])
 		);
 #-------------------------------------------------------------------------------
 $Invoices = DB_Select('InvoicesOwners',Array('*'),Array('SortOn'=>'CreateDate','IsDesc'=>TRUE,'Where'=>$Where));
@@ -78,7 +78,7 @@ case 'array':
 			$Event = Array(
 					'UserID'	=> $Invoice['UserID'],
 					'PriorityID'	=> 'Billing',
-					'Text'		=> SPrintF('Уведомление о неоплаченном счете #%d, неоплачен более %d дней',$Invoice['ID'],$Params['DaysBeforeNotice'])
+					'Text'		=> SPrintF('Уведомление о неоплаченном счете #%d, неоплачен более %d дней',$Invoice['ID'],$Params['Invoices']['DaysBeforeNotice'])
 					);
 			$Event = Comp_Load('Events/EventInsert',$Event);
 			#-------------------------------------------------------------------------------

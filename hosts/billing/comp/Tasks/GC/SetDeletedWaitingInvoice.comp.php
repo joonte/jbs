@@ -10,7 +10,7 @@ $__args_list = Array('Params');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Where = SPrintF("`StatusID` = 'Waiting' AND `StatusDate` < UNIX_TIMESTAMP( ) - %d *86400", $Params['DaysBeforeDeleted']);
+$Where = SPrintF("`StatusID` = 'Waiting' AND `StatusDate` < UNIX_TIMESTAMP( ) - %d *86400", $Params['Invoices']['DaysBeforeDeleted']);
 #-------------------------------------------------------------------------------
 $Invoices = DB_Select('InvoicesOwners',Array('ID','UserID'),Array('SortOn'=>'CreateDate', 'IsDesc'=>TRUE, 'Where'=>$Where, 'Limits'=>Array(0,$Params['ItemPerIteration'])));
 switch(ValueOf($Invoices)){
@@ -26,14 +26,14 @@ switch(ValueOf($Invoices)){
       if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Tasks/GC/SetDeletedWaitingInvoice'))))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
-      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Invoices','StatusID'=>'Rejected','RowsIDs'=>$Invoice['ID'],'Comment'=>SPrintF('Автоматическая отмена счёта, неоплачен более %d дней', $Params['DaysBeforeDeleted'])));
+      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Invoices','StatusID'=>'Rejected','RowsIDs'=>$Invoice['ID'],'Comment'=>SPrintF('Автоматическая отмена счёта, неоплачен более %d дней', $Params['Invoices']['DaysBeforeDeleted'])));
       #-------------------------------------------------------------------------
       switch(ValueOf($Comp)){
       case 'array':
         $Event = Array(
       			'UserID'	=> $Invoice['UserID'],
 			'PriorityID'	=> 'Billing',
-			'Text'		=> SPrintF('Автоматическая отмена счёта #%d, неоплачен более %d дней',$Invoice['ID'],$Params['DaysBeforeDeleted'])
+			'Text'		=> SPrintF('Автоматическая отмена счёта #%d, неоплачен более %d дней',$Invoice['ID'],$Params['Invoices']['DaysBeforeDeleted'])
       		    );
         $Event = Comp_Load('Events/EventInsert',$Event);
         if(!$Event)

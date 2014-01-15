@@ -30,7 +30,7 @@ if(!$Services){
 for($i=0;$i<Count($Services);$i++){
   Debug(SPrintF("[Tasks/GC/SetDeletedWaitingOrders]: Код текущей услуги - %s",$Services[$i]['Code']));
   #-----------------------------------------------------------------------------
-  $Where = SPrintF("`StatusID` = 'Waiting' AND `StatusDate` < UNIX_TIMESTAMP() - %d * 86400", $Params['DaysBeforeDeleted']);
+  $Where = SPrintF("`StatusID` = 'Waiting' AND `StatusDate` < UNIX_TIMESTAMP() - %d * 86400", $Params['Invoices']['DaysBeforeDeleted']);
   #-----------------------------------------------------------------------------
   $Orders = DB_Select($Services[$i]['View'],Array('ID','OrderID','UserID'),Array('Where'=>$Where,'Limits'=>Array(0,$Params['ItemPerIteration'])));
   #-----------------------------------------------------------------------------
@@ -48,14 +48,14 @@ for($i=0;$i<Count($Services);$i++){
         if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Tasks/GC/SetDeletedWaitingOrders'))))
           return ERROR | @Trigger_Error(500);
         #-------------------------------------------------------------------------
-        $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>$Services[$i]['Table'],'StatusID'=>'Deleted','RowsIDs'=>$Order['ID'],'IsNoTrigger'=>'yes','Comment'=>SPrintF('Автоматическая отмена заказа, неоплачен более %d дней', $Params['DaysBeforeDeleted'])));
+        $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>$Services[$i]['Table'],'StatusID'=>'Deleted','RowsIDs'=>$Order['ID'],'IsNoTrigger'=>'yes','Comment'=>SPrintF('Автоматическая отмена заказа, неоплачен более %d дней', $Params['Invoices']['DaysBeforeDeleted'])));
         #-------------------------------------------------------------------------
         switch(ValueOf($Comp)){
           case 'array':
 	    $Event = Array(
 	    			'UserID'	=> $Order['UserID'],
 				'PriorityID'	=> 'Billing',
-				'Text'		=> SPrintF('Автоматическая отмена заказа (%s) #%d, неоплачен более %d дней.',$Services[$i]['Code'],$Order['OrderID'],$Params['DaysBeforeDeleted'])
+				'Text'		=> SPrintF('Автоматическая отмена заказа (%s) #%d, неоплачен более %d дней.',$Services[$i]['Code'],$Order['OrderID'],$Params['Invoices']['DaysBeforeDeleted'])
 	    		  );
 	   $Event = Comp_Load('Events/EventInsert',$Event);
 	   if(!$Event)
@@ -83,7 +83,7 @@ for($i=0;$i<Count($Services);$i++){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # JBS-604: помечаем как удалённые заказы на услуги настраиваемые вгучную
-$Where = SPrintF("`StatusID` = 'Waiting' AND `StatusDate` < UNIX_TIMESTAMP() - %d * 86400", $Params['DaysBeforeDeleted']);
+$Where = SPrintF("`StatusID` = 'Waiting' AND `StatusDate` < UNIX_TIMESTAMP() - %d * 86400", $Params['Invoices']['DaysBeforeDeleted']);
 #-------------------------------------------------------------------------------
 $Orders = DB_Select('OrdersOwners',Array('ID','UserID','ServiceID','(SELECT `NameShort` FROM `Services` WHERE `OrdersOwners`.`ServiceID`=`Services`.`ID`) AS `NameShort`','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `OrdersOwners`.`UserID`) as `Email`','(SELECT `Code` FROM `Services` WHERE `OrdersOwners`.`ServiceID`=`Services`.`ID`) AS `Code`'),Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
@@ -103,14 +103,14 @@ case 'array':
 		if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Tasks/GC/SetDeletedWaitingOrders'))))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------
-		$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Orders','StatusID'=>'Deleted','RowsIDs'=>$Order['ID'],'IsNoTrigger'=>'yes','Comment'=>SPrintF('Автоматическая отмена заказа, неоплачен более %d дней',$Params['DaysBeforeDeleted'])));
+		$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Orders','StatusID'=>'Deleted','RowsIDs'=>$Order['ID'],'IsNoTrigger'=>'yes','Comment'=>SPrintF('Автоматическая отмена заказа, неоплачен более %d дней',$Params['Invoices']['DaysBeforeDeleted'])));
 		#-------------------------------------------------------------------------
 		switch(ValueOf($Comp)){
 		case 'array':
 			$Event = Array(
 					'UserID'	=> $Order['UserID'],
 					'PriorityID'	=> 'Billing',
-					'Text'		=> SPrintF('Автоматическая отмена заказа (%s) #%d, неоплачен более %d дней.',$Order['NameShort'],$Order['ID'],$Params['DaysBeforeDeleted'])
+					'Text'		=> SPrintF('Автоматическая отмена заказа (%s) #%d, неоплачен более %d дней.',$Order['NameShort'],$Order['ID'],$Params['Invoices']['DaysBeforeDeleted'])
 					);
 			#-------------------------------------------------------------------------------
 			$Event = Comp_Load('Events/EventInsert',$Event);
