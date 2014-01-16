@@ -77,7 +77,7 @@ class Email implements Dispatcher {
 				SPrintF('From: %s', $sender['Email']),
 				'MIME-Version: 1.0',
 				'Content-Transfer-Encoding: 8bit',
-				SPrintF('Content-Type: multipart/mixed;%sboundary="----==--%s"',"\r\n\t",HOST_ID)
+				SPrintF('Content-Type: multipart/mixed; boundary="----==--%s"',HOST_ID)
 				);
         // added by lissyara 2013-02-13 in 15:45 MSK, for JBS-609
         if($msg->getParam('Message-ID'))

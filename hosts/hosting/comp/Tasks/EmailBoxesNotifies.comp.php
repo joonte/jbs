@@ -64,7 +64,7 @@ switch(ValueOf($HostingServers)){
                   break;
                   case 'array':
                     #-----------------------------------------------------------
-                    $Heads = Array(SPrintF('From: admin@%s',$HostingServer['Address']),'MIME-Version: 1.0','Content-Type: text/plain; charset=UTF-8','Content-Transfer-Encoding: 8bit');
+		    $Heads = Array(SPrintF('From: admin@%s',$HostingServer['Address']),'MIME-Version: 1.0','Content-Transfer-Encoding: 8bit',SPrintF('Content-Type: multipart/mixed; boundary="----==--%s"',HOST_ID));
                     #-----------------------------------------------------------
                     foreach($HostingOrders as $HostingOrder){
                       #---------------------------------------------------------

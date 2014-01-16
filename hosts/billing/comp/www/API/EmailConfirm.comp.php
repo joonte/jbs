@@ -42,7 +42,7 @@ if($Email){
 	#-------------------------------------------------------------------------------
 	$Theme = "Подтверждение Email адреса";
 	#-------------------------------------------------------------------------------
-	$Heads = SPrintF("From: %s\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit",$Executor['Email']);
+	$Heads = Array(SPrintF('From: %s',$Executor['Email']),'MIME-Version: 1.0','Content-Transfer-Encoding: 8bit',SPrintF('Content-Type: multipart/mixed; boundary="----==--%s"',HOST_ID));
 	#-------------------------------------------------------------------------------
 	$Confirm = md5($GLOBALS['__USER']['ID'] . MicroTime());
 	CacheManager::add($CacheID, $Confirm, 10*24*3600);
@@ -51,7 +51,7 @@ if($Email){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	#Array('Task','Email','Theme','Message','Heads','ID');
-	$Comp = Comp_Load('Tasks/Email',NULL,$Email,$Theme,SPrintF($Message,$GLOBALS['__USER']['Name'],$Url,$Executor['Sign']),$Heads,$GLOBALS['__USER']['ID']);
+	$Comp = Comp_Load('Tasks/Email',NULL,$Email,$Theme,SPrintF($Message,$GLOBALS['__USER']['Name'],$Url,$Executor['Sign']),Implode("\n",$Heads),$GLOBALS['__USER']['ID']);
 	if(Is_Error($Comp))
 		return new gException('ERROR_MESSAGE_SEND','Не удалось отправить сообщение');
 	#-------------------------------------------------------------------------------
