@@ -44,7 +44,7 @@ for($i=0;$i<Count($Services);$i++){
   #-----------------------------------------------------------------------------
   $Where = SPrintF("`StatusID` = 'Deleted' AND `StatusDate` < UNIX_TIMESTAMP( ) - %d *86400", $Params['Invoices']['DaysBeforeErase']);
   #-----------------------------------------------------------------------------
-  $Orders = DB_Select($Services[$i]['View'],Array('ID','OrderID','UserID'),Array('Where'=>$Where,'Limits'=>Array(0,$Params['ItemPerIteration'])));
+  $Orders = DB_Select($Services[$i]['View'],Array('ID','OrderID','UserID'),Array('Where'=>$Where,/*'Limits'=>Array(0,$Params['ItemPerIteration'])*/));
   #-----------------------------------------------------------------------------
   switch(ValueOf($Orders)){
     case 'error':

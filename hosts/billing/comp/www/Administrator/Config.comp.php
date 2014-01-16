@@ -32,6 +32,8 @@ $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
 function Config_Read($Array,$Path = Array(),$Level = 1){
+  # ASort added by lissyara for test purpose, 2014-01-16 in 15:22 MSK
+  ASort($Array);
   #-----------------------------------------------------------------------------
   static $Index = 1;
   #-----------------------------------------------------------------------------
