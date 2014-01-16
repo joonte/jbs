@@ -154,14 +154,16 @@ function DeleteUploadedFile($Table,$ID){
 #-------------------------------------------------------------------------------
 # added by lissyara, 2014-01-10 in 12:21 MSK, for JBS-JBS-748
 function GetFileMimeType($Table,$ID){
+	#-------------------------------------------------------------------------------
 	$Path = GetFilePath($Table, $ID);
 	#-------------------------------------------------------------------------------
 	if(File_Exists($Path['FilePath'])){
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF('[system/libs/Upload]: get file type: %s',$Path['FilePath']));
+		$Mime = FInfo_File(FInfo_Open(FILEINFO_MIME_TYPE),$Path['FilePath']);
+		Debug(SPrintF('[system/libs/Upload]: get file type: %s (%s)',$Path['FilePath'],$Mime));
 		#-------------------------------------------------------------------------------
 		//return Mime_Content_Type($Path['FilePath']);
-		return FInfo_File(FInfo_Open(FILEINFO_MIME_TYPE),$Path['FilePath']);
+		return $Mime;
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
