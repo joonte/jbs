@@ -11,7 +11,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Where = SPrintF("`StatusID` = 'Rejected' AND `StatusDate` < UNIX_TIMESTAMP( ) - %d *86400", $Params['Invoices']['DaysBeforeErase']);
 #-------------------------------------------------------------------------------
-$Invoices = DB_Select('InvoicesOwners',Array('ID','UserID'),Array('SortOn'=>'CreateDate', 'IsDesc'=>TRUE, 'Where'=>$Where, 'Limits'=>Array(0,$Params['ItemPerIteration'])));
+$Invoices = DB_Select('InvoicesOwners',Array('ID','UserID'),Array('SortOn'=>'CreateDate', 'IsDesc'=>TRUE, 'Where'=>$Where/*, 'Limits'=>Array(0,$Params['ItemPerIteration'])*/));
 switch(ValueOf($Invoices)){
   case 'error':
     return ERROR | @Trigger_Error(500);

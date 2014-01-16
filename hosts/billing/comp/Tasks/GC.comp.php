@@ -41,11 +41,10 @@ Debug(SPrintF("[Tasks/GC]: Массив задач: %s", Implode(', ', $TasksArr
 if($NowTask){
   $TaskCount = 0;
   # Формируем массив параметров для передачи в задачу
-  $TaskParams = Array();
-  foreach(Array_Keys($Settings) as $Key){
-    if(!Is_Array($Settings[$Key]))
-      $TaskParams[$Key] = $Settings[$Key];
-  }
+#  $TaskParams = Array();
+#  foreach(Array_Keys($Settings) as $Key){
+#    if(!Is_Array($Settings[$Key]))
+#      $TaskParams[$Key] = $Settings[$Key];
   #-----------------------------------------------------------------------------
   # Ищем обработчик и если он есть вызываем его
   if(!Is_Error(System_Element(SPrintF('comp/Tasks/GC/%s.comp.php', $NowTask)))){
@@ -57,8 +56,11 @@ if($NowTask){
     #---------------------------------------------------------------------------
     $Index = Count($__SYSLOG);
     #---------------------------------------------------------------------------
-    $Params = (array)$TaskParams;
-    Array_UnShift($Params,$TaskParams);
+#    $Params = (array)$TaskParams;
+#    Array_UnShift($Params,$TaskParams);
+#    Array_UnShift($Params,$Path = SPrintF('Tasks/GC/%s',$NowTask));
+    $Params = $Settings;
+    Array_UnShift($Params,$Settings);
     Array_UnShift($Params,$Path = SPrintF('Tasks/GC/%s',$NowTask));
     #---------------------------------------------------------------------------
     $Result = Call_User_Func_Array('Comp_Load',$Params);
