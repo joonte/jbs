@@ -62,6 +62,7 @@
 <!-- *********************************************************************** -->
 <Comps>
  <Before>
+  <!-- *********************************************************************** -->
   <PatternOut>
    <Comp>Tables/Forms/PatternOut</Comp>
    <Args>
@@ -89,8 +90,12 @@
   <Indexes1>
    <Comp>Tables/Forms/Indexes</Comp>
    <Args type="array" />
-   <NoBlock />
   </Indexes1>
+  <!-- *********************************************************************** -->
+  <AdministratorMenu>
+   <Comp>Tables/Forms/AdministratorMenu</Comp>
+   <Args type="array" />
+  </AdministratorMenu>
   <!-- ********************************************************************* -->
   <Data>
    <Comp>Tables/Forms/Data</Comp>
