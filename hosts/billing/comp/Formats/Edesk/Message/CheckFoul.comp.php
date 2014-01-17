@@ -41,7 +41,7 @@ $RuCharMap = array(
 foreach(Preg_Split('/[\s,]+/',$Text) as $Word){
 	#Debug(SPrintF('[comp/Formats/Edesk/Message/CheckFoul]: Word = "%s"',print_r($Word,true)));
 	#-------------------------------------------------------------------------------
-	$Word = Trim(Str_Replace($EnCharMap,$RuCharMap,StrToLower($Word)));
+	$Word = Trim(Str_Replace($EnCharMap,$RuCharMap,Mb_StrToLower($Word,'UTF-8')));
 	#-------------------------------------------------------------------------------
 	if(Mb_StrLen($Word) > $Settings['FoulMaxLength'])
 		continue;
