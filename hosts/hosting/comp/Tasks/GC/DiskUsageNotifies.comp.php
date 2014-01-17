@@ -20,6 +20,8 @@ if(!$Settings['IsActive'])
 	return TRUE;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$HostingServers = DB_Select('HostingServers',Array('ID','Address'));
+#-------------------------------------------------------------------------------
 switch(ValueOf($HostingServers)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
@@ -98,32 +100,32 @@ case 'exception':
 	break;
 case 'array':
 	#-------------------------------------------------------------------------------
-	foreach($HostingOrders as $User){
+	foreach($HostingOrders as $Order){
 		#-------------------------------------------------------------------------------
 		# выбираем тех кто лимит иеет, в лимит укладывается
-		if($Accounts[$User['Login']]['Limit'] > 0 && $Accounts[$User['Login']]['Limit'] >= $Accounts[$User['Login']]['Used']){
+		if($Accounts[$Order['Login']]['Limit'] > 0 && $Accounts[$Order['Login']]['Limit'] >= $Accounts[$Order['Login']]['Used']){
 			#-------------------------------------------------------------------------------
-			if(Ceil(($Accounts[$User['Login']]['Used']/$Accounts[$User['Login']]['Limit'])*100) > 90){
-				Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s used %s/%s',$User['Login'],$Accounts[$User['Login']]['Used'],$Accounts[$User['Login']]['Limit']));
+			if(Ceil(($Accounts[$Order['Login']]['Used']/$Accounts[$Order['Login']]['Limit'])*100) > 90){
+				Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s used %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
 			}
 		}
 		#-------------------------------------------------------------------------------
 		# выбираем с оверлимитом
-		if($Accounts[$User['Login']]['Limit'] > 0 && $Accounts[$User['Login']]['Limit'] < $Accounts[$User['Login']]['Used']){
-			Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s overlimit, used %s/%s',$User['Login'],$Accounts[$User['Login']]['Used'],$Accounts[$User['Login']]['Limit']));
+		if($Accounts[$Order['Login']]['Limit'] > 0 && $Accounts[$Order['Login']]['Limit'] < $Accounts[$Order['Login']]['Used']){
+			Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s overlimit, used %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
 		}
 		#-------------------------------------------------------------------------------
 		# без лимитов
-		if($Accounts[$User['Login']]['Limit'] < 0 ){
+		if($Accounts[$Order['Login']]['Limit'] < 0 ){
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s does not have disk limit',$User['Login']));
+			Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s does not have disk limit',$Order['Login']));
 			#-------------------------------------------------------------------------------
 			if($Settings['IsEventForNoLimits']){
 				#-------------------------------------------------------------------------------
 				$Event = Array(
-						'UserID'        => $User['ID'],
+						'UserID'        => $Order['UserID'],
 						'PriorityID'    => 'Warning',
-						'Text'          => SPrintF('Обнаружен заказ хостинга (%s) с отсутствующим лимитом на дисковое пространство',$User['Login']),
+						'Text'          => SPrintF('Обнаружен заказ хостинга (%s) с отсутствующим лимитом на дисковое пространство',$Order['Login']),
 						'IsReaded'      => FALSE
 						);
 				$Event = Comp_Load('Events/EventInsert',$Event);
