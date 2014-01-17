@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -9,7 +8,16 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(Is_Error(System_Load('libs/HTMLDoc.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Config = Config();
+#-------------------------------------------------------------------------------
+$Settings = $Config['Tasks']['Types']['WorksCompliteReports'];
+#-------------------------------------------------------------------------------
+if(!$Settings['IsActive'])
+	return MkTime(4,0,0,Date('n')+1,1,Date('Y'));
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $RegistrationMonth = (Date('Y') - 1970)*12 + Date('n') - 1;
 #-------------------------------------------------------------------------------
@@ -43,19 +51,23 @@ switch(ValueOf($Reports)){
           if($Contract['TypeID'] == 'Default' || !$Types[$Contract['TypeID']]['IsUsedMotionDocuments'])
             continue;
           #---------------------------------------------------------------------
-          $msg = new WorksCompliteReportMsg(Array('ContractID'=>$ContractID,'Month'=>$RegistrationMonth), (integer)$Report['UserID']);
-          $IsSend = NotificationManager::sendMsg($msg);
-          #---------------------------------------------------------------------
-          switch(ValueOf($IsSend)){
-            case 'error':
-              return ERROR | @Trigger_Error(500);
-            case 'exception':
-              # No more...
-            case 'true':
-              # No more...
-            break;
-            default:
-              return ERROR | @Trigger_Error(101);
+	  if($Settings['IsNotify']){
+	    #---------------------------------------------------------------------
+            $msg = new WorksCompliteReportMsg(Array('ContractID'=>$ContractID,'Month'=>$RegistrationMonth), (integer)$Report['UserID']);
+            $IsSend = NotificationManager::sendMsg($msg);
+            #---------------------------------------------------------------------
+            switch(ValueOf($IsSend)){
+              case 'error':
+                return ERROR | @Trigger_Error(500);
+              case 'exception':
+                # No more...
+              case 'true':
+                # No more...
+              break;
+              default:
+                return ERROR | @Trigger_Error(101);
+            }
+	    #---------------------------------------------------------------------
           }
           #---------------------------------------------------------------------
           $UniqID = SPrintF('Report:%u/%u',$ContractID,$Report['Month']);

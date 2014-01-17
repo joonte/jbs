@@ -997,6 +997,7 @@
    <Name>Формирование актов выполненных работ</Name>
    <Params type="array" />
    <IsActive>1</IsActive>
+   <IsNotify>1</IsNotify>
   </WorksCompliteReports>
   <!-- ********************************************************************* -->
   <CourseUpdate>
