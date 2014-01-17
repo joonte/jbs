@@ -108,11 +108,11 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('name'=>'IsMove','type'=>'checkbox','value'=>'yes','onclick'=>"form.FromID.disabled = checked; form.Flags.disabled = checked;",'prompt'=>'Переместить всё обсуждение пользователю'));
+$Comp = Comp_Load('Form/Input',Array('name'=>'IsMove','id'=>'IsMove','type'=>'checkbox','value'=>'yes','onclick'=>"form.FromID.disabled = checked; form.Flags.disabled = checked;",'prompt'=>'Переместить всё обсуждение пользователю'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsMove\'); return false;'),'Переместить'),$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>"ChangeCheckBox('IsMove'); document.getElementsByName('FromID')[0].disabled = document.getElementsByName('IsMove')[0].checked?true:false; document.getElementsByName('Flags')[0].disabled = document.getElementsByName('IsMove')[0].checked?true:false; return false;"),'Переместить'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
