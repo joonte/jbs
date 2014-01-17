@@ -19,6 +19,11 @@ Eval(COMP_INIT);
 #Debug(SPrintF('[comp/Formats/Edesk/Message/CheckFoul]: Text = %s',print_r($Text,true)));
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
+$Config = Config();
+#-------------------------------------------------------------------------------
+$Settings = $Config['Interface']['Edesks']['DenyFoulLanguage'];
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $EnCharMap = array(
 			"jo", "j", "c", "u", "k", "e", "n", "g", "sh", "sh", "z",
 			"h", "'", "f", "u", "v", "a", "p", "r", "o", "l", "d",
@@ -37,6 +42,9 @@ foreach(Preg_Split('/[\s,]+/',$Text) as $Word){
 	#Debug(SPrintF('[comp/Formats/Edesk/Message/CheckFoul]: Word = "%s"',print_r($Word,true)));
 	#-------------------------------------------------------------------------------
 	$Word = Trim(Str_Replace($EnCharMap,$RuCharMap,StrToLower($Word)));
+	#-------------------------------------------------------------------------------
+	if(Mb_StrLen($Word) > $Settings['FoulMaxLength'])
+		continue;
 	#-------------------------------------------------------------------------------
 	foreach(Preg_Split('/\s+/', $Regulars['Fouls']) as $Foul){
 		#-------------------------------------------------------------------------------

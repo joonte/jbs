@@ -1452,6 +1452,7 @@
 			<IsActive>0</IsActive>
 			<IsEmailActive>0</IsEmailActive>
 			<IsEvent>1</IsEvent>
+			<FoulMaxLength>20</FoulMaxLength>
 		</DenyFoulLanguage>
 	</Edesks>
 	<!-- *********************************************************************** -->
