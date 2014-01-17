@@ -71,7 +71,7 @@ $Positions = $Config['Edesks']['Flags'];
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
 		'Form/Select',
-		Array('name'=>'Flags'),
+		Array('name'=>'Flags','id'=>'Flags'),
 		$Positions,
 		'CloseOnSee'
 		);
@@ -95,7 +95,7 @@ case 'array':
 	foreach($Users as $User)
 		$Options[$User['ID']] = SPrintF('%s (%s)',$User['Name'],$User['Email']);
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Select',Array('name'=>'FromID'),$Options,100);
+	$Comp = Comp_Load('Form/Select',Array('name'=>'FromID','id'=>'FromID'),$Options,100);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -108,7 +108,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('name'=>'IsMove','type'=>'checkbox','value'=>'yes','prompt'=>'Переместить всё обсуждение пользователю'));
+$Comp = Comp_Load('Form/Input',Array('name'=>'IsMove','type'=>'checkbox','value'=>'yes','onclick'=>"form.FromID.disabled = checked; form.Flags.disabled = checked;",'prompt'=>'Переместить всё обсуждение пользователю'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ $Comp = Comp_Load(
 		'Form/Input',
 		Array(
 			'type'    => 'button',
-			'onclick' => "javascript:form.IsMove.checked?a='переместить':a='скопировать';ShowConfirm('Вы действительно хотите ' + a + ' данный тикет пользователю \"' + form.Email.value + '\"?','AjaxCall(\'/Administrator/API/TicketCopy\',FormGet(TicketCopyForm),\'Копирование тикета\',\'GetURL(document.location);\');');",
+			'onclick' => "javascript: form.IsMove.checked?a='переместить':a='скопировать';ShowConfirm('Вы действительно хотите ' + a + ' данный тикет пользователю \"' + form.Email.value + '\"?','AjaxCall(\'/Administrator/API/TicketCopy\',FormGet(TicketCopyForm),\'Копирование тикета\',\'GetURL(document.location);\');');",
 			'value'   => 'Скопировать/Переместить'
 			)
 		);
