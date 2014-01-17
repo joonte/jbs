@@ -105,15 +105,37 @@ case 'array':
 		# выбираем тех кто лимит иеет, в лимит укладывается
 		if($Accounts[$Order['Login']]['Limit'] > 0 && $Accounts[$Order['Login']]['Limit'] >= $Accounts[$Order['Login']]['Used']){
 			#-------------------------------------------------------------------------------
-			if(Ceil(($Accounts[$Order['Login']]['Used']/$Accounts[$Order['Login']]['Limit'])*100) > 90){
+			Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s used %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
+			#-------------------------------------------------------------------------------
+			if($Accounts[$Order['Login']]['Limit'] < $Accounts[$Order['Login']]['Used'])
+				Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s overlimit, used %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
+			#-------------------------------------------------------------------------------
+			if(Ceil(($Accounts[$Order['Login']]['Used']/$Accounts[$Order['Login']]['Limit'])*100) > $Settings['DiskUsageNotifiesPercent']){
+				#-------------------------------------------------------------------------------
 				Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s used %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
+				#-------------------------------------------------------------------------------
+				if($Settings['IsNotify']){
+					#-------------------------------------------------------------------------------
+					$IsSend = NotificationManager::sendMsg(new Message('DiskUsageNotice',(integer)$Order['UserID'],Array('Order'=>$Accounts[$Order['Login']])));
+					#-------------------------------------------------------------------------------
+					switch(ValueOf($IsSend)){
+					case 'error':
+						return ERROR | @Trigger_Error(500);
+					case 'exception':
+						# No more...
+					case 'true':
+						# No more...
+						break;
+					default:
+						return ERROR | @Trigger_Error(101);
+					}
+					#-------------------------------------------------------------------------------
+				}
+				#-------------------------------------------------------------------------------
 			}
+			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		# выбираем с оверлимитом
-		if($Accounts[$Order['Login']]['Limit'] > 0 && $Accounts[$Order['Login']]['Limit'] < $Accounts[$Order['Login']]['Used']){
-			Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s overlimit, used %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
-		}
 		#-------------------------------------------------------------------------------
 		# без лимитов
 		if($Accounts[$Order['Login']]['Limit'] < 0 ){
@@ -148,7 +170,5 @@ default:
 return TRUE;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-
-
 
 ?>
