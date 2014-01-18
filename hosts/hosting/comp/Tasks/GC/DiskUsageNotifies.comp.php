@@ -105,7 +105,7 @@ case 'array':
 		# выбираем тех кто лимит иеет, в лимит укладывается
 		if($Accounts[$Order['Login']]['Limit'] > 0 && $Accounts[$Order['Login']]['Limit'] >= $Accounts[$Order['Login']]['Used']){
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s used %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
+			#Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s used %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
 			#-------------------------------------------------------------------------------
 			if($Accounts[$Order['Login']]['Limit'] < $Accounts[$Order['Login']]['Used'])
 				Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s overlimit, used %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
@@ -116,7 +116,8 @@ case 'array':
 				#-------------------------------------------------------------------------------
 				if($Settings['IsNotify']){
 					#-------------------------------------------------------------------------------
-					$IsSend = NotificationManager::sendMsg(new Message('DiskUsageNotice',(integer)$Order['UserID'],Array('Order'=>$Accounts[$Order['Login']])));
+					$Array = Array('Login'=>$Order['Login'],'Used'=>$Accounts[$Order['Login']]['Used'],'Limit'=>$Accounts[$Order['Login']]['Limit']);
+					$IsSend = NotificationManager::sendMsg(new Message('DiskUsageNotice',(integer)$Order['UserID'],Array('Order'=>$Array)));
 					#-------------------------------------------------------------------------------
 					switch(ValueOf($IsSend)){
 					case 'error':
