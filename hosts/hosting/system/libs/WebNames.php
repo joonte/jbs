@@ -17,7 +17,8 @@ function WebNames_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1N
 			'Port'     => $Settings['Port'],
 			'Host'     => $Settings['Address'],
 			'Protocol' => $Settings['Protocol'],
-			'Charset'  => 'CP1251'
+			'Charset'  => 'CP1251',
+			'Hidden'   => $Settings['Password'],
 			#-------------------------------------------------------------------------------
 			);
 	#-----------------------------------------------------------------------------
@@ -30,7 +31,6 @@ function WebNames_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1N
 			'domain_name'        => SPrintF('%s.%s',$DomainName,$DomainZone),
 			'interface_revision' => 1,
 			'interface_lang'     => 'en',
-			'Hidden'             => $Settings['Password'],
 			#-------------------------------------------------------------------------------
 			);
 	#-------------------------------------------------------------------------------
@@ -91,7 +91,8 @@ function WebNames_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contr
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'CP1251'
+    'Charset'  => 'CP1251',
+    'Hidden'   => $Settings['Password'],
   );
   #-----------------------------------------------------------------------------
   $Query = Array(
@@ -103,7 +104,6 @@ function WebNames_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contr
     'interface_revision' => 1,
     'interface_lang'     => 'en',
     'period'             => $Years,
-    'Hidden'             => $Settings['Password'],
   );
   #-----------------------------------------------------------------------------
   $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
@@ -133,7 +133,8 @@ function WebNames_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'CP1251'
+    'Charset'  => 'CP1251',
+    'Hidden'   => $Settings['Password'],
   );
   #-----------------------------------------------------------------------------
   $Query = Array(
@@ -144,7 +145,6 @@ function WebNames_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID
     'domain_name'        => SPrintF('%s.%s',$DomainName,$DomainZone),
     'interface_revision' => 1,
     'interface_lang'     => 'en',
-    'Hidden'             => $Settings['Password'],
   );
   #-----------------------------------------------------------------------------
   $Query['ns0'] = $Ns1Name;
@@ -198,7 +198,8 @@ function WebNames_Check_Task($Settings,$TicketID){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'CP1251'
+    'Charset'  => 'CP1251',
+    'Hidden'   => $Settings['Password'],
   );
   #-----------------------------------------------------------------------------
   $Query = Array(
@@ -209,7 +210,6 @@ function WebNames_Check_Task($Settings,$TicketID){
     'domain_name'        => $TicketID,
     'interface_revision' => 1,
     'interface_lang'     => 'en',
-    'Hidden'             => $Settings['Password'],
   );
   #-----------------------------------------------------------------------------
   $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
@@ -255,7 +255,8 @@ function WebNames_Get_Balance($Settings){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'CP1251'
+    'Charset'  => 'CP1251',
+    'Hidden'   => $Settings['Password'],
   );
   #-----------------------------------------------------------------------------
   $Query = Array(
@@ -265,7 +266,6 @@ function WebNames_Get_Balance($Settings){
     'password'           => $Settings['Password'],
     'interface_revision' => 1,
     'interface_lang'     => 'en',
-    'Hidden'             => $Settings['Password'],
   );
   #-----------------------------------------------------------------------------
   $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
@@ -304,7 +304,8 @@ function WebNames_Is_Available_Domain($Settings,$Domain){
       'Port'     => $Settings['Port'],
       'Host'     => $Settings['Address'],
       'Protocol' => $Settings['Protocol'],
-      'Charset'  => 'CP1251'
+      'Charset'  => 'CP1251',
+      'Hidden'   => $Settings['Password'],
       );
     #-----------------------------------------------------------------------------
     $Query = Array(
@@ -314,7 +315,6 @@ function WebNames_Is_Available_Domain($Settings,$Domain){
       'password'           => $Settings['Password'],
       'interface_revision' => 1,
       'interface_lang'     => 'en',
-      'Hidden'             => $Settings['Password'],
       );
     #-----------------------------------------------------------------------------
     $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
@@ -373,7 +373,8 @@ function WebNames_Change_Contact_Detail($Settings,$Domain,$Person){
                 'Port'     => $Settings['Port'],
                 'Host'     => $Settings['Address'],
                 'Protocol' => $Settings['Protocol'],
-                'Charset'  => 'CP1251'
+                'Charset'  => 'CP1251',
+		'Hidden'   => $Settings['Password'],
                );
   #-------------------------------------------------------------------------------
   $Query = Array(
@@ -383,7 +384,6 @@ function WebNames_Change_Contact_Detail($Settings,$Domain,$Person){
                  'interface_revision' => 1,
                  'interface_lang'     => 'en',
                  'domain_name'        => $Domain,
-		 'Hidden'             => $Settings['Password'],
                 );
   #-------------------------------------------------------------------------------
   #-------------------------------------------------------------------------------
@@ -442,7 +442,8 @@ function WebNames_Get_Contact_Detail($Settings,$Domain){
                 'Port'     => $Settings['Port'],
                 'Host'     => $Settings['Address'],
                 'Protocol' => $Settings['Protocol'],
-                'Charset'  => 'CP1251'
+                'Charset'  => 'CP1251',
+		'Hidden'   => $Settings['Password'],
                );
   #-------------------------------------------------------------------------------
   $Query = Array(
@@ -452,7 +453,6 @@ function WebNames_Get_Contact_Detail($Settings,$Domain){
                  'interface_revision' => 1,
                  'interface_lang'     => 'en',
                  'domain_name'        => $Domain,
-		 'Hidden'             => $Settings['Password'],
                 );
   #-------------------------------------------------------------------------------
   #-------------------------------------------------------------------------------
@@ -532,7 +532,8 @@ function WebNames_Get_List_Domains($Settings){
       'Port'     => $Settings['Port'],
       'Host'     => $Settings['Address'],
       'Protocol' => $Settings['Protocol'],
-      'Charset'  => 'UTF-8'
+      'Charset'  => 'UTF-8',
+      'Hidden'   => $Settings['Password'],
       );
     #-----------------------------------------------------------------------------
     $Query = Array(
@@ -542,7 +543,6 @@ function WebNames_Get_List_Domains($Settings){
       'password'           => $Settings['Password'],
       'interface_revision' => 1,
       'interface_lang'     => 'en',
-      'Hidden'             => $Settings['Password'],
       );
     #-----------------------------------------------------------------------------
     $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
@@ -606,7 +606,8 @@ function WebNames_Domain_Transfer($Settings,$DomainName,$DomainZone,$Params){
 			'Port'     => $Settings['Port'],
 			'Host'     => $Settings['Address'],
 			'Protocol' => $Settings['Protocol'],
-			'Charset'  => 'CP1251'
+			'Charset'  => 'CP1251',
+			'Hidden'   => $Settings['Password'],
 			#-------------------------------------------------------------------------------
 			);
 	#-------------------------------------------------------------------------------
@@ -621,7 +622,6 @@ function WebNames_Domain_Transfer($Settings,$DomainName,$DomainZone,$Params){
 			'notpaid'            => 0,
 			'period'             => 1,
 			'authinfo'           => $Params['AuthInfo'],
-			'Hidden'             => $Settings['Password'],
 		);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
