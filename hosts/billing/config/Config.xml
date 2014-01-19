@@ -1454,6 +1454,7 @@
 			<IsEvent>1</IsEvent>
 			<FoulMaxLength>20</FoulMaxLength>
 		</DenyFoulLanguage>
+		<ShowTicketContextMenu>0</ShowTicketContextMenu>
 	</Edesks>
 	<!-- *********************************************************************** -->
 </Interface>
