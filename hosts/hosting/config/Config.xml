@@ -1082,6 +1082,11 @@
     <DiskUsageNotifiesPercent>90</DiskUsageNotifiesPercent>
     <IsEventForNoLimits>1</IsEventForNoLimits>
    </DiskUsageNotifiesSettings>
+   <!-- Уведомление o зканчивающейся квоте почтовых ящиков -->
+   <EmailBoxesNotifiesSettings>
+    <IsActive>1</IsActive>
+    <EmailBoxesNotifiesPercent>80</EmailBoxesNotifiesPercent>
+   </EmailBoxesNotifiesSettings>
    <!-- задачи -->
    <DailyTasks>
     <!-- синхронизации -->
@@ -1089,6 +1094,8 @@
     <CheckUsersOnVPSServers>Синхронизация аккаунтов биллинга и серверов VPS</CheckUsersOnVPSServers>
     <!-- уведомления о окончании дискового пространства на хостинге -->
     <DiskUsageNotifies>Уведомление о заканчивающемся месте на хостинге</DiskUsageNotifies>
+    <!-- Уведомление o зканчивающейся квоте почтовых ящиков -->
+    <EmailBoxesNotifies>Уведомление o зканчивающейся квоте почтовых ящиков</EmailBoxesNotifies>
     <!-- проверка баллансов регистраторов/поставщиков -->
     <CheckBalance>Проверка балланса регистраторов, поставщиков</CheckBalance>
     <!-- Операции с заказами -->
