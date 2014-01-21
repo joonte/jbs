@@ -2,7 +2,7 @@ SET NAMES 'utf8';
 SET FOREIGN_KEY_CHECKS=0;
 
 LOCK TABLES `Tasks` WRITE;
-DELETE FROM `Tasks` WHERE `ID` IN(51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,85,86);
+DELETE FROM `Tasks` WHERE `ID` IN(51,52,53,54,55,56,57,58,59,60,61,62,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,85,86);
 INSERT INTO `Tasks`
   (`ID`,`UserID`,`TypeID`,`Params`,`IsActive`)
 VALUES
@@ -18,7 +18,6 @@ VALUES
 (60,1,'HostingServersQuestioning','[]','yes'),
 (61,1,'ServersUpTime','[]','yes'),
 (62,1,'UpTimeAgregate','[]','yes'),
-(63,1,'EmailBoxesNotifies','[]','yes'),
 (64,1,'QIWI','[]','yes'),
 (65,1,'VPSSetPrimaryServer','[]','yes'),
 (67,1,'VPSNoticeSuspend','[]','yes'),
