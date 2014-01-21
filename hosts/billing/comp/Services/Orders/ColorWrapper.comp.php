@@ -12,10 +12,10 @@ Eval(COMP_INIT);
 
 # обвёртка для нештатных услуг
 if($OrderTypeCode == 'Default')
-	$OrderTypeCode = 'Services/';
+	$OrderTypeCode = '';
 #-------------------------------------------------------------------------------
 # грузим компонент
-$Comp = Comp_Load(SPrintF('Colors/%s',$OrderTypeCode),$StatusID);
+$Comp = Comp_Load(SPrintF('Colors/%sOrders',$OrderTypeCode),$StatusID);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
