@@ -29,7 +29,7 @@ case 'array':
 	#---------------------------------------------------------------------------
 	foreach($Orders as $Order){
 		#-------------------------------------------------------------------------
-		$IsSend = NotificationManager::sendMsg(new Message('OrdersNoticeSuspend',(integer)$Order['UserID'],Array('Order'=>$Order)));
+		$IsSend = NotificationManager::sendMsg(new Message('OrdersSuspend',(integer)$Order['UserID'],Array('Order'=>$Order)));
 		#-------------------------------------------------------------------------
 		switch(ValueOf($IsSend)){
 		case 'error':
