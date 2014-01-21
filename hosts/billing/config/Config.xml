@@ -1052,6 +1052,15 @@
    <IsActive>1</IsActive>
   </OrdersForSuspend>
   <!-- ********************************************************************* -->
+  <OrdersForDelete>
+   <Name>Заказы для удаления</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+   <StartHour>5</StartHour>
+   <StartMinutes>10</StartMinutes>
+   <DeleteTimeout>30</DeleteTimeout>
+  </OrdersForDelete>
+  <!-- ********************************************************************* -->
   <QIWI>
    <Name>Опрос сервера QIWI для получения статусов счетов</Name>
    <Params type="array" />
