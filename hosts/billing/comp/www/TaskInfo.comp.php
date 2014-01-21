@@ -88,7 +88,7 @@ switch(ValueOf($Task)){
           foreach(Array_Keys($Params) as $ParamID){
             if(Is_String($Params[$ParamID])){
               #-------------------------------------------------------------------
-              $Text = Str_Replace("\n",'<BR />',HtmlSpecialChars($Params[$ParamID]));
+              $Text = Str_Replace("\n",'<BR />',HtmlSpecialChars(Trim($Params[$ParamID])));
               #-------------------------------------------------------------------
               $Text = Preg_Replace('/(http\:\/\/[a-zA-Z0-9\/\:\?\&\=\@\-\.\;\_]+)/','<A href="\\1">[ссылка]</A>',$Text);
               #-------------------------------------------------------------------
