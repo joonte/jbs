@@ -61,6 +61,7 @@
    <IsActive>0</IsActive>
    <IsUsedMotionDocuments>0</IsUsedMotionDocuments>
    <IsUponConsider>0</IsUponConsider>
+   <DenyInvoicesWithOutServices>0</DenyInvoicesWithOutServices>
    <ProfileTemplateID />
    <Simple type="array" />
   </Default>
@@ -71,6 +72,7 @@
    <IsUsedMotionDocuments>0</IsUsedMotionDocuments>
    <IsUponConsider>0</IsUponConsider>
    <ProfileTemplateID>Natural</ProfileTemplateID>
+   <DenyInvoicesWithOutServices>0</DenyInvoicesWithOutServices>
    <Simple>
     <Sourname>1</Sourname>
     <Name>1</Name>
@@ -92,6 +94,7 @@
    <IsUsedMotionDocuments>1</IsUsedMotionDocuments>
    <IsUponConsider>0</IsUponConsider>
    <ProfileTemplateID>Juridical</ProfileTemplateID>
+   <DenyInvoicesWithOutServices>0</DenyInvoicesWithOutServices>
    <Simple>
     <CompanyForm>1</CompanyForm>
     <CompanyName>1</CompanyName>
@@ -110,6 +113,7 @@
    <IsUsedMotionDocuments>1</IsUsedMotionDocuments>
    <IsUponConsider>0</IsUponConsider>
    <ProfileTemplateID>Individual</ProfileTemplateID>
+   <DenyInvoicesWithOutServices>0</DenyInvoicesWithOutServices>
    <Simple>
     <CompanyName>1</CompanyName>
     <Email>1</Email>

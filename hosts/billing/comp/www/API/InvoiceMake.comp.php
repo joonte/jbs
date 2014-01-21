@@ -56,14 +56,15 @@ switch(ValueOf($Contract)){
 	#---------------------------------------------------------------------------
 	#---------------------------------------------------------------------------
 	if($Summ){
+		#-------------------------------------------------------------------------------
 		# check minimal summ
-		if($Summ < $PaymentSystem['MinimumPayment']){
+		if($Summ < $PaymentSystem['MinimumPayment'])
 			return new gException('PAYMENT_SYSTEM_MinimumPayment','Сумма платежа меньше, чем разрешено платёжной системой');
-		}
+		#-------------------------------------------------------------------------------
 		# check maximal summ
-		if($Summ > $PaymentSystem['MaximumPayment']){
+		if($Summ > $PaymentSystem['MaximumPayment'])
 			return new gException('PAYMENT_SYSTEM_MaximumPayment','Сумма платежа больше, чем разрешено платёжной системой');
-		}
+		#-------------------------------------------------------------------------------
 	}
 	#---------------------------------------------------------------------------
 	#---------------------------------------------------------------------------
@@ -86,6 +87,10 @@ switch(ValueOf($Contract)){
           case 'error':
             return ERROR | @Trigger_Error(500);
           case 'exception':
+	    #-------------------------------------------------------------------------------
+	    # реализация JBS-767
+            if($Config['Contracts']['Types'][$Contract['TypeID']]['DenyInvoicesWithOutServices'])
+	      return new gException('DENY_PAYMENT_WITHOUT_SERVICES',SPrintF('Для договора "%s" нельзя выписать счёт на пополнение балланса, но, вы можете продлить текущую услугу или заказать новую и оплатить конкретно её',$Config['Contracts']['Types'][$Contract['TypeID']]['Name']));
             #-------------------------------------------------------------------
             if(!$Summ)
               return new gException('SUMM_NOT_FILL','Сумма для зачисления не указана');

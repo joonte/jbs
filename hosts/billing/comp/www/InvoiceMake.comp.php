@@ -105,6 +105,9 @@ switch($StepID){
         $Options = Array();
         #-----------------------------------------------------------------------
         foreach($Contracts as $Contract){
+	  #-------------------------------------------------------------------------------
+	  if($Contract['TypeID'] == 'NaturalPartner')
+	    continue;
           #---------------------------------------------------------------------
           $Customer = $Contract['Customer'];
           #---------------------------------------------------------------------
@@ -195,11 +198,6 @@ switch($StepID){
           case 'true':
 	    #-------------------------------------------------------------------
 	    #-------------------------------------------------------------------
-	    if($Contract['TypeID'] == "NaturalPartner"){
-	    	return new gException('CANNOT_PAY_FOR_NaturalPartner','Данный тип договора нельзя пополнить напрямую');
-	    }
-	    #-------------------------------------------------------------------
-            #-------------------------------------------------------------------
             $Comp = Comp_Load(
               'Form/Input',
               Array(
@@ -220,7 +218,7 @@ switch($StepID){
               $PaymentSystems = $Config['Invoices']['PaymentSystems'];
 	      #-----------------------------------------------------------------
 	      #-----------------------------------------------------------------
-	      $Script = "var PayDesc = {}; ";
+	      $Script = Array('var PayDesc = {}');
 	      #-----------------------------------------------------------------
               #-----------------------------------------------------------------
               $Options = Array();
@@ -234,7 +232,7 @@ switch($StepID){
                 #---------------------------------------------------------------
                 $Options[$PaymentSystemID] = $PaymentSystem['Name'];
 		#---------------------------------------------------------------
-		$Script = $Script . "PayDesc['" . $PaymentSystemID . "'] = '" . $PaymentSystem['SystemDescription'] . "'; ";
+		$Script[] = SPrintF("PayDesc['%s'] = '%s'",$PaymentSystemID,$PaymentSystem['SystemDescription']);
               }
               #-----------------------------------------------------------------
               if(!Count($Options))
@@ -247,10 +245,10 @@ switch($StepID){
 	      }
 	      #-----------------------------------------------------------------
 	      #-----------------------------------------------------------------
-	      $Script = $Script . ' form.PaymentsDescription.value = PayDesc[value]; ';
+	      $Script[] = 'form.PaymentsDescription.value = PayDesc[value]';
 	      #-----------------------------------------------------------------
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Form/Select',Array('name'=>'PaymentSystemID','onchange'=>$Script,'prompt'=>'Список доступных платёжных систем','size'=>$WindowHeight),$Options);
+              $Comp = Comp_Load('Form/Select',Array('name'=>'PaymentSystemID','onchange'=>Implode(';',$Script),'prompt'=>'Список доступных платёжных систем','size'=>$WindowHeight),$Options);
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
@@ -315,7 +313,7 @@ switch($StepID){
               $Table[] = Array('Договор',SPrintF('%s - %s',$Customer,$Comp));
 	      #-----------------------------------------------------------------
 	      #-----------------------------------------------------------------
-	      $Script = "var PayDesc = {}; ";
+	      $Script = Array('var PayDesc = {}');
 	      #-----------------------------------------------------------------
               #-----------------------------------------------------------------
               $PaymentSystems = $Config['Invoices']['PaymentSystems'];
@@ -331,7 +329,7 @@ switch($StepID){
                 #---------------------------------------------------------------
                 $Options[$PaymentSystemID] = $PaymentSystem['Name'];
 		#---------------------------------------------------------------
-		$Script = $Script . "PayDesc['" . $PaymentSystemID . "'] = '" . $PaymentSystem['SystemDescription'] . "'; ";
+		$Script[] = SPrintF("PayDesc['%s'] = '%s'",$PaymentSystemID,$PaymentSystem['SystemDescription']);
               }
               #-----------------------------------------------------------------
               if(!Count($Options))
@@ -344,10 +342,10 @@ switch($StepID){
 	      }
 	      #-----------------------------------------------------------------
 	      #-----------------------------------------------------------------
-	      $Script = $Script . ' form.PaymentsDescription.value = PayDesc[value]; ';
+	      $Script[] = 'form.PaymentsDescription.value = PayDesc[value]';
 	      #-----------------------------------------------------------------
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Form/Select',Array('name'=>'PaymentSystemID','onchange'=>$Script,'prompt'=>'Список доступных платёжных систем','size'=>$WindowHeight),$Options);
+              $Comp = Comp_Load('Form/Select',Array('name'=>'PaymentSystemID','onchange'=>Implode(';',$Script),'prompt'=>'Список доступных платёжных систем','size'=>$WindowHeight),$Options);
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
