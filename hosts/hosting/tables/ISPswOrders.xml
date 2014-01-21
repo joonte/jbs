@@ -4,7 +4,7 @@
 <!-- *********************************************************************** -->
 <Appearance>
  <Row>
-  <Comp>ISPswOrders/Color</Comp>
+  <Comp>Colors/ISPswOrders</Comp>
   <Args>
    <ListElement>%StatusID%</ListElement>
   </Args>

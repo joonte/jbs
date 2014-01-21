@@ -4,7 +4,7 @@
 <!-- *********************************************************************** -->
 <Appearance>
  <Row>
-  <Comp>Events/Color</Comp>
+  <Comp>Colors/Events</Comp>
   <Args>
    <ListElement>%PriorityID%</ListElement>
    <ListElement>%IsReaded%</ListElement>

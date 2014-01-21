@@ -15,7 +15,7 @@ if($OrderTypeCode == 'Default')
 	$OrderTypeCode = 'Services/';
 #-------------------------------------------------------------------------------
 # грузим компонент
-$Comp = Comp_Load($OrderTypeCode . 'Orders/Color',$StatusID);
+$Comp = Comp_Load(SPrintF('Colors/%s',$OrderTypeCode),$StatusID);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

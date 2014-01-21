@@ -4,7 +4,7 @@
 <!-- *********************************************************************** -->
 <Appearance>
  <Row>
-  <Comp>Contracts/Postings/Color</Comp>
+  <Comp>Colors/Postings</Comp>
   <Args>
    <ListElement>%Summ%</ListElement>
   </Args>

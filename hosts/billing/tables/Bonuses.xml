@@ -4,7 +4,7 @@
 <!-- *********************************************************************** -->
 <Appearance>
  <Row>
-  <Comp>Bonuses/Color</Comp>
+  <Comp>Colors/Bonuses</Comp>
   <Args>
    <ListElement>%ExpirationDate%</ListElement>
    <ListElement>%DaysRemainded%</ListElement>

@@ -8,7 +8,6 @@ $__args_list = Array('StatusID');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
-#Debug(SPrintF('[comp/DomainsOrders/Color]: %s',$StatusID));
 switch($StatusID){
   case 'Waiting':
     $Color = 'F9E47D';

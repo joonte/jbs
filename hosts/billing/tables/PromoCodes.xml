@@ -4,7 +4,7 @@
 <!-- *********************************************************************** -->
 <Appearance>
  <Row>
-  <Comp>PromoCodes/Color</Comp>
+  <Comp>Colors/PromoCodes</Comp>
   <Args>
    <ListElement>%ExpirationDate%</ListElement>
   </Args>

@@ -85,7 +85,7 @@ switch(ValueOf($Partners)){
                     $Month = $Invoice['Month'];
                   }
                   #-------------------------------------------------------------
-                  $Comp = Comp_Load('Invoices/Color',$Invoice['StatusID']);
+                  $Comp = Comp_Load('Colors/Invoices',$Invoice['StatusID']);
                   if(Is_Error($Comp))
                     return ERROR | @Trigger_Error(500);
                   #-------------------------------------------------------------

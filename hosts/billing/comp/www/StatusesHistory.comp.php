@@ -86,12 +86,8 @@ switch(ValueOf($Row)){
 	      $Tr->AddChild(new Tag('TD',Array('class'=>'Standard'),$Comp));
 	      #-----------------------------------------------------------------
               #-----------------------------------------------------------------
-	      # костыли для JBS-512
-	      $Mode = $ModeID;
-              if($ModeID == 'ContractsEnclosures'){$Mode = 'Contracts/Enclosures';}
-              if($ModeID == 'Orders'){$Mode = 'Services/Orders';}
-	      #-----------------------------------------------------------------
-              $Comp = Comp_Load(SPrintF('%s/Color',$Mode),$StatusHistory['StatusID']);
+	      # для JBS-512
+              $Comp = Comp_Load(SPrintF('Colors/%s',$ModeID),$StatusHistory['StatusID']);
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-------------------------------------------------------------------------------

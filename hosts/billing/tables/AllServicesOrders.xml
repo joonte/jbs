@@ -4,7 +4,7 @@
 <!-- *********************************************************************** -->
 <Appearance>
 <Row>
-  <Comp>Services/Orders/ColorWrapper</Comp>
+  <Comp>Colors/Orders</Comp>
   <Args>
    <ListElement>%StatusID%</ListElement>
    <ListElement>%OrderTypeCode%</ListElement>

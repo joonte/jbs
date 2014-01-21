@@ -4,7 +4,7 @@
  <!-- *********************************************************************** -->
 <Appearance>
  <Row>
-  <Comp>Users/Color</Comp>
+  <Comp>Colors/Users</Comp>
   <Args>
    <ListElement>%OwnerID%</ListElement>
   </Args>

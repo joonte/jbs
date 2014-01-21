@@ -4,7 +4,7 @@
 <!-- *********************************************************************** -->
 <Appearance>
  <Row>
-  <Comp>Tasks/Color</Comp>
+  <Comp>Colors/Tasks</Comp>
   <Args>
    <ListElement>%Errors%</ListElement>
    <ListElement>%IsExecuted%</ListElement>

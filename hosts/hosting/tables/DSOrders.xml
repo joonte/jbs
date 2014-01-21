@@ -4,7 +4,7 @@
 <!-- *********************************************************************** -->
 <Appearance>
  <Row>
-  <Comp>DSOrders/Color</Comp>
+  <Comp>Colors/DSOrders</Comp>
   <Args>
    <ListElement>%StatusID%</ListElement>
   </Args>
