@@ -1037,6 +1037,15 @@
    <IsActive>0</IsActive>
   </ServiceSuspend>
   <!-- ********************************************************************* -->
+  <ServiceDelete>
+   <Name>Удалить услугу</Name>
+   <Params>
+    <Name>Название услуги</Name>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>0</IsActive>
+  </ServiceDelete>
+  <!-- ********************************************************************* -->
   <OrdersForSuspend>
    <Name>Заказы для блокировки</Name>
    <Params type="array" />
@@ -1099,6 +1108,7 @@
    <TableRequestLogStoryPeriod>186</TableRequestLogStoryPeriod>
    <!-- периоды уборщика сессий -->
    <Sessions>
+    <IsActive>1</IsActive>
     <SessionTTL>3600</SessionTTL>
     <RememberTTL>31</RememberTTL>
    </Sessions>
@@ -1301,6 +1311,7 @@
    <Name>Расторгнут</Name>
   </Breaked>
  </Contracts>
+ <!-- *********************************************************************** -->
  <ContractsEnclosures>
   <OnForming>
    <Name>На формировании</Name>
@@ -1315,6 +1326,7 @@
    <Name>Расторгнуто</Name>
   </Breaked>
  </ContractsEnclosures>
+ <!-- *********************************************************************** -->
  <Edesks>
   <Newest>
    <Name>Новый</Name>
@@ -1329,6 +1341,7 @@
    <Name>Закрыт</Name>
   </Closed>
  </Edesks>
+ <!-- *********************************************************************** -->
  <Invoices>
   <Rejected>
    <Name>Отменен</Name>
@@ -1343,6 +1356,7 @@
    <Name>Оплачен</Name>
   </Payed>
  </Invoices>
+ <!-- *********************************************************************** -->
  <MotionDocuments>
   <UnSet>
    <Name>Не определён</Name>
@@ -1363,6 +1377,7 @@
    <Name>Получен исполнителем</Name>
   </Received>
  </MotionDocuments>
+ <!-- *********************************************************************** -->
  <Orders>
   <Waiting>
    <Name>Ожидание оплаты</Name>
@@ -1383,6 +1398,7 @@
    <Name>Удален</Name>
   </Deleted>
  </Orders>
+ <!-- *********************************************************************** -->
  <Profiles>
   <OnFilling>
    <Name>На заполнении</Name>

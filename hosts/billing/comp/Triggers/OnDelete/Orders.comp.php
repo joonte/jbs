@@ -15,7 +15,7 @@ if(!In_Array($Order['StatusID'],Array('Waiting','Deleted'))){
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	return new gException('ORDER_CAN_NOT_DELETED',SPrintF('Заказ №%s не может быть удален, удалить можно только заказы в статусе "Удалён" или "Ожидает оплаты"',$Comp));
+	return new gException('ORDER_CAN_NOT_DELETED',SPrintF('Заказ #%s не может быть удален, удалить можно только заказы в статусе "Удалён" или "Ожидает оплаты"',$Comp));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
@@ -27,7 +27,26 @@ case 'error':
 case 'exception':
 	return $Comp;
 case 'array':
+	#-------------------------------------------------------------------------------
+        if(!$Service['IsNoActionDelete']){
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$ServiceOrder['UserID'],'TypeID'=>'ServiceDelete','Params'=>Array($Service['Name'],$ServiceOrder['ID'])));
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($Comp)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return ERROR | @Trigger_Error(400);
+		case 'array':
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
 	return TRUE;
+	#-------------------------------------------------------------------------------
 default:
 	return ERROR | @Trigger_Error(101);
 }
