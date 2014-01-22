@@ -1121,6 +1121,10 @@
     <SessionTTL>3600</SessionTTL>
     <RememberTTL>31</RememberTTL>
    </Sessions>
+   <!-- настройки обработки условно оплаченных счетов -->
+   <ConditionallyInvoicesSettings>
+    <DaysBeforeRejectConditionallyInvoice>14</DaysBeforeRejectConditionallyInvoice>
+   </ConditionallyInvoicesSettings>
    <!-- задачи -->
    <DailyTasks>
     <!-- Операции со счетами -->
