@@ -59,7 +59,11 @@ switch(ValueOf($Ticket)){
         $DOM->AddChild('Head',$Script);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-        $DOM->AddText('Title',HtmlSpecialChars($Ticket['Theme']));
+	$Comp = Comp_Load('Formats/Edesk/Number',$TicketID);
+	if(Is_Error($Comp))
+          return ERROR | @Trigger_Error(500);
+        #-------------------------------------------------------------------------------
+        $DOM->AddText('Title',HtmlSpecialChars(SPrintF('#%s | %s',$Comp,$Ticket['Theme'])));
         #-----------------------------------------------------------------------
         $Comp = Comp_Load(
           'Form/Input',
