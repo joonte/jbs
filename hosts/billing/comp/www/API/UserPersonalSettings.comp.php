@@ -13,6 +13,7 @@ $EdesksDisplay			=  (string) @$Args['EdesksDisplay'];
 $EdeskNoPreview			=  (string) @$Args['EdeskNoPreview'];
 $EdeskOnlyMyButtons		=  (string) @$Args['EdeskOnlyMyButtons'];
 $NotSendEdeskFilesToEmail	= (boolean) @$Args['NotSendEdeskFilesToEmail'];
+$NotCreateInvoicesAutomatically = (boolean) @$Args['NotCreateInvoicesAutomatically'];
 $SMSBeginTime			= (integer) @$Args['SMSBeginTime'];
 $SMSEndTime			= (integer) @$Args['SMSEndTime'];
 #-------------------------------------------------------------------------------
@@ -28,6 +29,7 @@ $Settings = $__USER['Params'];
 $Settings['SMSTime'] = Array('SMSBeginTime'=>$SMSBeginTime,'SMSEndTime'=>$SMSEndTime);
 #-------------------------------------------------------------------------------
 $Settings['NotSendEdeskFilesToEmail'] = $NotSendEdeskFilesToEmail;
+$Settings['NotCreateInvoicesAutomatically'] = $NotCreateInvoicesAutomatically;
 #-------------------------------------------------------------------------------
 $IsUpdate = DB_Update('Users',Array('Params'=>$Settings),Array('ID'=>$__USER['ID']));
 if(Is_Error($IsUpdate))

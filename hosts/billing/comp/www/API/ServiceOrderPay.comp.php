@@ -14,6 +14,7 @@ $Args = IsSet($Args)?$Args:Args();
 $ServiceOrderID = (integer) @$Args['ServiceOrderID'];
 $AmountPay      = (integer) @$Args['AmountPay'];
 $IsNoBasket     = (boolean) @$Args['IsNoBasket'];
+$IsUseBasket	= (boolean) @$Args['IsUseBasket'];
 $PayMessage     =  (string) @$Args['PayMessage'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
@@ -132,7 +133,7 @@ switch(ValueOf($ServiceOrder)){
             #-------------------------------------------------------------------
             $CostPay = Round($CostPay,2);
             #-------------------------------------------------------------------
-            if(!$IsNoBasket && $CostPay > $ServiceOrder['ContractBalance']){
+            if($IsUseBasket || (!$IsNoBasket && $CostPay > $ServiceOrder['ContractBalance'])){
               #-----------------------------------------------------------------
               if(Is_Error(DB_Roll($TransactionID)))
                 return ERROR | @Trigger_Error(500);
