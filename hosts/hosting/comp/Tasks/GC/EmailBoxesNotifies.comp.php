@@ -90,7 +90,7 @@ case 'array':
 								#-------------------------------------------------------------------------------
 								if($Usage > $Settings['EmailBoxesNotifiesPercent']){
 									#-------------------------------------------------------------------------------
-									$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'Email','Params'=>Array($Email,'Квота почтового ящика',TemplateReplace('Tasks.EmailBoxesNotifies',Array('Email'=>$Email,'Usage'=>$Usage),FALSE),Implode("\n",$Heads))));
+									$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'Email','Params'=>Array($Email,'Квота почтового ящика',TemplateReplace('Tasks.GC.EmailBoxesNotifies',Array('Email'=>$Email,'Usage'=>$Usage),FALSE),Implode("\n",$Heads))));
 									#-------------------------------------------------------------------------------
 									switch(ValueOf($IsAdd)){
 									case 'error':
