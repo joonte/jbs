@@ -16,6 +16,8 @@ $IsStamp	= (boolean) @$Args['IsStamp'];
 $IsTIFF		= (boolean) @$Args['IsTIFF'];
 $IsNoHeaders	= (boolean) @$Args['IsNoHeaders'];
 #-------------------------------------------------------------------------------
+#Debug(SPrintF('[comp/www/InvoiceDownload]: Args = %s',print_r($Args,true)));
+#-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/HTMLDoc.php','libs/Upload.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

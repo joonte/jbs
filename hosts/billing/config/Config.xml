@@ -1105,12 +1105,19 @@
    <IsActive>1</IsActive>
    <!-- Настройки -->
    <ItemPerIteration>5</ItemPerIteration>
+   <!-- обработка неоплаченных счетов -->
    <Invoices>
     <DaysBeforeNotice>14</DaysBeforeNotice>
     <DaysBeforeDeleted>28</DaysBeforeDeleted>
     <DaysBeforeErase>60</DaysBeforeErase>
     <InactiveDaysForUser>365</InactiveDaysForUser>
    </Invoices>
+   <!-- автоматическая выписка счетов на продление услуг -->
+   <CreateAndSendInvoicesSettings>
+    <IsActive>1</IsActive>
+    <CreateAndSendInvoicesDay>1</CreateAndSendInvoicesDay>
+    <CreateAndSendInvoicesPeriod>12</CreateAndSendInvoicesPeriod>
+   </CreateAndSendInvoicesSettings>
    <!-- периоды хранения информации в таблицах, дней -->
    <TableTasksStoryPeriod>60</TableTasksStoryPeriod>
    <TableServersUpTimeStoryPeriod>186</TableServersUpTimeStoryPeriod>
@@ -1132,6 +1139,7 @@
     <EraseDeletedInvoice>Удаление счетов в статусе Отменен</EraseDeletedInvoice>
     <SetDeletedWaitingInvoice>Отмена неоплаченных счетов</SetDeletedWaitingInvoice>
     <NotifyConditionallyInvoice>Уведомление о условно оплаченных счетах</NotifyConditionallyInvoice>
+    <CreateAndSendInvoices>Создание и отсылка счетов на почту</CreateAndSendInvoices>
     <!-- Удаление пользователей не заходивших в биллинг более года -->
     <EraseOldUsers>Удаление неактивных пользователей</EraseOldUsers>
     <!-- Очистка некоторых таблиц -->
