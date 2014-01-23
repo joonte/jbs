@@ -4,14 +4,17 @@
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
 /******************************************************************************/
+$__args_list = Array('Args');
+/******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Args = Args();
+$Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-$InvoiceID = (integer) @$Args['InvoiceID'];
-$IsStamp   = (boolean) @$Args['IsStamp'];
-$IsTIFF    = (boolean) @$Args['IsTIFF'];
+$InvoiceID	= (integer) @$Args['InvoiceID'];
+$IsStamp	= (boolean) @$Args['IsStamp'];
+$IsTIFF		= (boolean) @$Args['IsTIFF'];
+$IsNoHeaders	= (boolean) @$Args['IsNoHeaders'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/HTMLDoc.php','libs/Upload.php')))
 	return ERROR | @Trigger_Error(500);
@@ -108,10 +111,14 @@ switch(ValueOf($Invoice)){
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            Header(SPrintF('Content-Type: application/%s; charset=utf-8',$Extension));
-            Header(SPrintF('Content-Length: %u',$Length));
-            Header(SPrintF('Content-Disposition: attachment; filename="Invoice%s.%s";',$Comp,$Extension));
-            Header('Pragma: nocache');
+	    if(!$IsNoHeaders){
+	      #-------------------------------------------------------------------
+              Header(SPrintF('Content-Type: application/%s; charset=utf-8',$Extension));
+              Header(SPrintF('Content-Length: %u',$Length));
+              Header(SPrintF('Content-Disposition: attachment; filename="Invoice%s.%s";',$Comp,$Extension));
+              Header('Pragma: nocache');
+	      #-------------------------------------------------------------------
+	    }
             #-------------------------------------------------------------------
             return $File;
           default:

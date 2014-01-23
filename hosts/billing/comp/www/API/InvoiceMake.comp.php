@@ -4,14 +4,18 @@
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
 /******************************************************************************/
+$__args_list = Array('Args');
+/******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
+#Debug(SPrintF('[comp/www/API/InvoiceMake]: Args = %s',print_r($Args,true)));
 #-------------------------------------------------------------------------------
-$ContractID      = (integer) @$Args['ContractID'];
-$PaymentSystemID =  (string) @$Args['PaymentSystemID'];
-$Summ            =  (double) @$Args['Summ'];
+$ContractID	= (integer) @$Args['ContractID'];
+$PaymentSystemID=  (string) @$Args['PaymentSystemID'];
+$Summ		=  (double) @$Args['Summ'];
+$PayMessage	=  (string) @$Args['PayMessage'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
@@ -138,7 +142,7 @@ switch(ValueOf($Contract)){
             return ERROR | @Trigger_Error(101);
         }
         #-----------------------------------------------------------------------
-        $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Invoices','StatusID'=>'Waiting','RowsIDs'=>$InvoiceID,'Comment'=>'Счет успешно сформирован и ожидает оплаты'));
+        $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Invoices','StatusID'=>'Waiting','RowsIDs'=>$InvoiceID,'Comment'=>($PayMessage)?$PayMessage:'Счет успешно сформирован и ожидает оплаты'));
         #-----------------------------------------------------------------------
         switch(ValueOf($Comp)){
           case 'error':

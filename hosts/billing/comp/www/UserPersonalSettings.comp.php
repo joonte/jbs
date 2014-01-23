@@ -78,10 +78,66 @@ $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'NotCreateInvoic
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if(IsSet($Settings['NotCreateInvoicesAutomatically']))
+if(IsSet($Settings['NotCreateInvoicesAutomatically']) && $Settings['NotCreateInvoicesAutomatically'])
 	$Comp->AddAttribs(Array('checked'=>'true'));
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'NotCreateInvoicesAutomatically\'); return false;'),'Не выписывать счета автоматически'),$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# достаём список платтёжных систем
+$Contracts = DB_Select('Contracts',Array('TypeID'),Array('Where'=>SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID'])));
+switch(ValueOf($Contracts)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	$Array = Array('Natural');
+	break;
+case 'array':
+	$Array = Array();
+	foreach($Contracts as $Contract)
+		$Array[] = $Contract['TypeID'];
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+$Config = Config();
+#-------------------------------------------------------------------------------
+$ContractsTypes = $Config['Contracts']['Types'];
+#-------------------------------------------------------------------------------
+foreach(Array_Keys($ContractsTypes) as $Type){
+	#-------------------------------------------------------------------------------
+	#Debug(SPrintF('[comp/www/UserPersonalSettings]: Contracts = %s',print_r($Contracts,true)));
+	#-------------------------------------------------------------------------------
+	if(!$ContractsTypes[$Type]['IsActive'] || $Type == 'NaturalPartner' || !In_Array($Type,$Array))
+		continue;
+	#-------------------------------------------------------------------------------
+	$PaymentSystems = $Config['Invoices']['PaymentSystems'];
+	#-------------------------------------------------------------------------------
+	$Options = Array();
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($PaymentSystems) as $PaymentSystemID){
+		#-------------------------------------------------------------------------------
+		$PaymentSystem = $PaymentSystems[$PaymentSystemID];
+		#-------------------------------------------------------------------------------
+		if(!$PaymentSystem['IsActive'])
+			continue;
+		#-------------------------------------------------------------------------------
+		$Options[$PaymentSystemID] = $PaymentSystem['Name'];
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	if(Count($Options)){
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Form/Select',Array('name'=>SPrintF('CreateInvoicesAutomatically[%s]',$Type),'size'=>1),$Options,IsSet($Settings['CreateInvoicesAutomatically'][$Type])?$Settings['CreateInvoicesAutomatically'][$Type]:$Type);
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Table[] = Array(SPrintF('Выписывать счета для "%s" через',$ContractsTypes[$Type]['Name']),$Comp);
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Настройки SMS рассылок';
