@@ -14,6 +14,7 @@ $Args = IsSet($Args)?$Args:Args();
 $ISPswOrderID	= (integer) @$Args['ISPswOrderID'];
 $DaysPay        = (integer) @$Args['DaysPay'];
 $IsNoBasket     = (boolean) @$Args['IsNoBasket'];
+$IsUseBasket    = (boolean) @$Args['IsUseBasket'];
 $PayMessage     =  (string) @$Args['PayMessage'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
@@ -112,18 +113,18 @@ switch(ValueOf($ISPswOrder)){
 	    if($ISPswScheme['ConsiderTypeID'] == 'Upon')
 	      $CostPay = $ISPswScheme['CostMonth'];
             #-------------------------------------------------------------------
-            if(!$IsNoBasket && $CostPay > $ISPswOrder['ContractBalance']){
+            if($IsUseBasket || (!$IsNoBasket && $CostPay > $ISPswOrder['ContractBalance'])){
               #-----------------------------------------------------------------
               if(Is_Error(DB_Roll($TransactionID)))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
               $DaysRemainded = $ISPswOrder['DaysRemainded'];
               #-----------------------------------------------------------------
-              $sDate = Comp_Load('/Formats/Date/Simple',Time() + $DaysRemainded*86400);
+              $sDate = Comp_Load('Formats/Date/Simple',Time() + $DaysRemainded*86400);
               if(Is_Error($sDate))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
-              $tDate = Comp_Load('/Formats/Date/Simple',Time() + ($DaysRemainded + $DaysPay)*86400);
+              $tDate = Comp_Load('Formats/Date/Simple',Time() + ($DaysRemainded + $DaysPay)*86400);
               if(Is_Error($tDate))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------

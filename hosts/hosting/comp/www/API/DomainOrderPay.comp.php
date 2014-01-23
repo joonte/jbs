@@ -14,6 +14,7 @@ $Args = IsSet($Args)?$Args:Args();
 $DomainOrderID	= (integer) @$Args['DomainOrderID'];
 $YearsPay	= (integer) @$Args['YearsPay'];
 $IsNoBasket	= (boolean) @$Args['IsNoBasket'];
+$IsUseBasket    = (boolean) @$Args['IsUseBasket'];
 $PayMessage	=  (string) @$Args['PayMessage'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
@@ -86,7 +87,7 @@ switch(ValueOf($DomainOrder)){
             #-------------------------------------------------------------------
             $Columns = Array('(SELECT `SchemeID` FROM `HostingOrders` WHERE `HostingOrders`.`OrderID` = `Basket`.`OrderID`) as `SchemeID`','Amount');
             #-------------------------------------------------------------------
-            $IsUseBasket = FALSE;
+#            $IsUseBasket = FALSE;
             #-------------------------------------------------------------------
             $Basket = DB_Select('Basket',$Columns,Array('Where'=>SPrintF('(SELECT `ServiceID` FROM `Orders` WHERE `Orders`.`ID` = `OrderID`) = 10000 AND (SELECT `ContractID` FROM `Orders` WHERE `Orders`.`ID` = `OrderID`) = %u',$DomainOrder['ContractID'])));
             #-------------------------------------------------------------------
@@ -135,7 +136,7 @@ switch(ValueOf($DomainOrder)){
                           if(Is_Error($IsInsert))
                             return ERROR | @Trigger_Error(500);
                           #-----------------------------------------------------
-                          $IsUseBasket = TRUE;
+#                          $IsUseBasket = TRUE;
                         break;
                         default:
                           return ERROR | @Trigger_Error(101);
