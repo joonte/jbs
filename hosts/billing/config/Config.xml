@@ -907,6 +907,14 @@
  <!-- ********************************************************************** -->
  <Settings>
   <!-- ********************************************************************** -->
+  <EmailClient>
+   <EmailMethod>mail</EmailMethod>
+   <EmailLogin>joonte@joonte.ru</EmailLogin>
+   <Password>default</Password>
+   <EmailServer>mail.joonte.com</EmailServer>
+   <EmailPort>25</EmailPort>
+  </EmailClient>
+  <!-- ********************************************************************** -->
   <JabberClient>
    <JabberID>jabber@isp.su</JabberID>
    <Password>default</Password>
