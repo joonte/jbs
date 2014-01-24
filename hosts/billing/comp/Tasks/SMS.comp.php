@@ -93,7 +93,7 @@ $GLOBALS['TaskReturnInfo'] = $Mobile;
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-$Settings = $Config['SMSGateway'];
+$Settings = $Config['Notifies']['Settings']['SMSGateway'];
 #-------------------------------------------------------------------------------
 if(!IsSet($Settings['SMSProvider']))
 	return ERROR | @Trigger_Error(500);

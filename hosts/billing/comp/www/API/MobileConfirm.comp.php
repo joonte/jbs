@@ -11,7 +11,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-$Settings = $Config['SMSGateway'];
+$Settings = $Config['Notifies']['Settings']['SMSGateway'];
 #-------------------------------------------------------------------------------
 if(!Isset($Settings['SMSInterval']))
 	return ERROR | @Trigger_Error(500);

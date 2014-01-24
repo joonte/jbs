@@ -33,6 +33,8 @@ $Notifies = $Config['Notifies'];
 #-------------------------------------------------------------------------------
 $Methods = $Notifies['Methods'];
 #-------------------------------------------------------------------------------
+$SMSGateway = $Config['Notifies']['Settings']['SMSGateway'];
+#-------------------------------------------------------------------------------
 if($Methods['SMS']['IsActive']){
 	#-------------------------------------------------------------------------------
 	if($__USER['MobileConfirmed'] == 0){
@@ -51,17 +53,17 @@ if($Methods['SMS']['IsActive']){
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[comp/www/UserNotifiesSet]: Страна определена (%s)', $MobileCountry));
 		#-------------------------------------------------------------------------------
-		if(!IsSet($Config['SMSGateway']['SMSPrice'][$MobileCountry]))
+		if(!IsSet($SMSGateway['SMSPrice'][$MobileCountry]))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Formats/Currency',Str_Replace(',','.',$Config['SMSGateway']['SMSPrice'][$MobileCountry]));
+		$Comp = Comp_Load('Formats/Currency',Str_Replace(',','.',$SMSGateway['SMSPrice'][$MobileCountry]));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		$Message = SPrintF('SMS уведомления платные (%s), рекомендуем включать только "Уведомления о блокировках заказов"',$Comp);
 		# прочкать SMSExceptionsPaidInvoices, если надо - получить сумму счетов, надпись по итогам вывести
-		if($Config['SMSGateway']['SMSExceptions']['SMSExceptionsPaidInvoices'] >= 0){
+		if($SMSGateway['SMSExceptions']['SMSExceptionsPaidInvoices'] >= 0){
 			#-------------------------------------------------------------------------------
 			$IsSelect = DB_Select('InvoicesOwners','SUM(`Summ`) AS `Summ`',Array('UNIQ','Where'=>SPrintF('`UserID` = %u AND `IsPosted` = "yes"',$__USER['ID'])));
 			switch(ValueOf($IsSelect)){
@@ -76,11 +78,11 @@ if($Methods['SMS']['IsActive']){
 					return ERROR | @Trigger_Error(500);
 				Debug(SPrintF('[comp/www/UserNotifiesSet]: оплачено счетов на сумму (%s)', $Comp));
 				#-------------------------------------------------------------------------------
-				$Comp = Comp_Load('Formats/Currency',$Config['SMSGateway']['SMSExceptions']['SMSExceptionsPaidInvoices']);
+				$Comp = Comp_Load('Formats/Currency',$SMSGateway['SMSExceptions']['SMSExceptionsPaidInvoices']);
 				if(Is_Error($Comp))
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------
-				$Message = ($IsSelect['Summ'] >= $Config['SMSGateway']['SMSExceptions']['SMSExceptionsPaidInvoices'])?SPrintF('Сумма ваших оплаченных счетов больше %s, SMS для вас бесплатны',$Comp):$Message;
+				$Message = ($IsSelect['Summ'] >= $SMSGateway['SMSExceptions']['SMSExceptionsPaidInvoices'])?SPrintF('Сумма ваших оплаченных счетов больше %s, SMS для вас бесплатны',$Comp):$Message;
 				#-------------------------------------------------------------------------------
 				break;
 				#-------------------------------------------------------------------------------
@@ -94,7 +96,7 @@ if($Methods['SMS']['IsActive']){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	if($Config['SMSGateway']['SMSExceptions']['SMSExceptionsPaidInvoices'] == 0 && $__USER['MobileConfirmed'] > 0)
+	if($SMSGateway['SMSExceptions']['SMSExceptionsPaidInvoices'] == 0 && $__USER['MobileConfirmed'] > 0)
 		UnSet($Row2);
 	#-------------------------------------------------------------------------------
 }
