@@ -20,7 +20,7 @@ if (Is_Error(System_Load('classes/JabberClient.class.php')))
     return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Config = Config();
-$Settings = $Config['JabberClient'];
+$Settings = $Config['Notifies']['Settings']['JabberClient'];
 #-------------------------------------------------------------------------------
 $Links = &Links();
 $LinkID = Md5('JabberClient');
@@ -38,17 +38,17 @@ if (!IsSet($Links[$LinkID])) {
     );
 
     // TODO тут надо переделать, ошибки из функций не вернутся
-    Debug("[comp/Tasks/Jabber]: " . $JabberClient->get_log());
+    Debug(SPrintF('[comp/Tasks/Jabber]: %s',$JabberClient->get_log()));
     if (Is_Error($JabberClient))
         return ERROR | @Trigger_Error(500);
 
     $IsConnect = $JabberClient->connect();
-    Debug("[comp/Tasks/Jabber]: " . $JabberClient->get_log());
+    Debug(SPrintF('[comp/Tasks/Jabber]: %s',$JabberClient->get_log()));
     if (Is_Error($IsConnect))
         return ERROR | @Trigger_Error(500);
 
     $IsLogin = $JabberClient->login();
-    Debug("[comp/Tasks/Jabber]: " . $JabberClient->get_log());
+    Debug(SPrintF('[comp/Tasks/Jabber]: %s',$JabberClient->get_log()));
     if (Is_Error($IsLogin))
         return ERROR | @Trigger_Error(500);
 }
@@ -58,7 +58,7 @@ $JabberClient = &$Links[$LinkID];
 $IsMessage = $JabberClient->send_message($JabberID, $Message, $Theme);
 if(Is_Error($IsMessage)){
     UnSet($Links[$LinkID]);
-    Debug("[comp/Tasks/Jabber]: error sending message, error is '" . $JabberClient->get_log() . "'");
+    Debug(SPrintF('[comp/Tasks/Jabber]: error sending message, error is "%s"',$JabberClient->get_log()));
     return 3600;
 }
 #-------------------------------------------------------------------------------
@@ -78,6 +78,7 @@ if (!$Event)
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>
