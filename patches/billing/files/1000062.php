@@ -27,21 +27,40 @@ if(File_Exists($ConfigPath)){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(!IsSet($Config['JabberClient']) || !Is_Array($Config['JabberClient']))
-	return TRUE;
+if(IsSet($Config['JabberClient'])){
+	#-------------------------------------------------------------------------------
+	$JabberClient = $Config['JabberClient'];
+	Debug(SPrintF('[patches/billing/files/1000062.php]: JabberClient = %s',print_r($JabberClient,true)));
+	#-------------------------------------------------------------------------------
+	UnSet($Config['JabberClient']);
+	#-------------------------------------------------------------------------------
+	if(!IsSet($Config['Notifies']) || !Is_Array($Config['Notifies']))
+		$Config['Notifies'] = Array();
+	#-------------------------------------------------------------------------------
+	if(!IsSet($Config['Notifies']['Settings']) || !Is_Array($Config['Notifies']['Settings']))
+		$Config['Notifies']['Settings'] = Array();
+	#-------------------------------------------------------------------------------
+	$Config['Notifies']['Settings']['JabberClient'] = $JabberClient;
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
-$JabberClient = $Config['JabberClient'];
-Debug(SPrintF('[patches/billing/files/1000062.php]: JabberClient = %s',print_r($JabberClient,true)));
 #-------------------------------------------------------------------------------
-UnSet($Config['JabberClient']);
-#-------------------------------------------------------------------------------
-if(!IsSet($Config['Notifies']) || !Is_Array($Config['Notifies']))
-	$Config['Notifies'] = Array();
-#-------------------------------------------------------------------------------
-if(!IsSet($Config['Notifies']['Settings']) || !Is_Array($Config['Notifies']['Settings']))
-	$Config['Notifies']['Settings'] = Array();
-#-------------------------------------------------------------------------------
-$Config['Notifies']['Settings']['JabberClient'] = $JabberClient;
+if(IsSet($Config['IcqClient'])){
+	#-------------------------------------------------------------------------------
+	$IcqClient = $Config['IcqClient'];
+	Debug(SPrintF('[patches/billing/files/1000062.php]: IcqClient = %s',print_r($IcqClient,true)));
+	#-------------------------------------------------------------------------------
+	UnSet($Config['IcqClient']);
+	#-------------------------------------------------------------------------------
+	if(!IsSet($Config['Notifies']) || !Is_Array($Config['Notifies']))
+		$Config['Notifies'] = Array();
+	#-------------------------------------------------------------------------------
+	if(!IsSet($Config['Notifies']['Settings']) || !Is_Array($Config['Notifies']['Settings']))
+		$Config['Notifies']['Settings'] = Array();
+	#-------------------------------------------------------------------------------
+	$Config['Notifies']['Settings']['ICQClient'] = $IcqClient;
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $File = IO_Write($ConfigPath,To_XML_String($Config),TRUE);
