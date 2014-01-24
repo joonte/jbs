@@ -35,7 +35,7 @@ if(IsSet($Attachments) && SizeOf($Attachments) && Is_Array($Attachments)){
 			Debug(SPrintF('[comp/Tasks/Email]: обработка вложения (%s), размер (%s), тип (%s)',$Attachment['Name'],$Attachment['Size'],$Attachment['Mime']));
 			#-------------------------------------------------------------------------------
 			$Message = SPrintF("%s%s\r\nContent-Disposition: attachment;\r\n\tfilename=\"%s\"\r\nContent-Transfer-Encoding: base64\r\nContent-Type: %s;\r\n\tname=\"%s\"\r\n\r\n%s",$Message,$Boundary,Mb_Encode_MimeHeader($Attachment['Name']),$Attachment['Mime'],Mb_Encode_MimeHeader($Attachment['Name']),$Attachment['Data']);
-			Debug(SPrintF('[comp/Tasks/Email]: %s',$Attachment['Data']));
+			#Debug(SPrintF('[comp/Tasks/Email]: %s',$Attachment['Data']));
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ if(!$Config['Notifies']['Methods']['Email']['IsEvent'])
 #-------------------------------------------------------------------------------
 $Event = Array(
 		'UserID'=> $ID,
-		'Text'	=> SPrintF('Сообщение для (%s) по электронной почте с темой (%s) успешно отправлено',$Email,$Theme)
+		'Text'	=> SPrintF('Сообщение для (%s) с темой (%s) успешно отправлено по электронной почте',$Email,$Theme)
 		);
 $Event = Comp_Load('Events/EventInsert',$Event);
 #-------------------------------------------------------------------------------

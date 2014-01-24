@@ -921,6 +921,29 @@
    <Encoding>CP1251</Encoding>
   </ICQClient>
   <!-- *********************************************************************** -->
+  <SMSGateway>
+   <SMSProvider>SMSpilot</SMSProvider>
+   <SMSSender>isp.su</SMSSender>
+   <SMSLogin>login</SMSLogin>
+   <SMSPassword>password</SMSPassword>
+   <SMSKey>API ключ</SMSKey>
+   <SMSInterval>300</SMSInterval>
+   <BalanceLowLimit>0</BalanceLowLimit>
+   <CutSign>1</CutSign>
+   <SMSPrice>
+    <SMSPriceRu>0.50</SMSPriceRu>
+    <SMSPriceUa>1.00</SMSPriceUa>
+    <SMSPriceSng>2.00</SMSPriceSng>
+    <SMSPriceZone1>3.00</SMSPriceZone1>
+    <SMSPriceZone2>4.00</SMSPriceZone2>
+    <SMSPriceDefault>5.00</SMSPriceDefault>
+   </SMSPrice>
+   <SMSExceptions>
+    <SMSExceptionsPaidInvoices>-1</SMSExceptionsPaidInvoices>
+    <SMSExceptionsSchemeID>0</SMSExceptionsSchemeID>
+   </SMSExceptions>
+  </SMSGateway>
+  <!-- *********************************************************************** -->
  </Settings>
  <!-- *********************************************************************** -->
 </Notifies>
@@ -1183,30 +1206,6 @@
   </GC>
  </Types>
 </Tasks>
-<!-- *********************************************************************** -->
-<!-- *********************************************************************** -->
-<SMSGateway>
-	<SMSProvider>SMSpilot</SMSProvider>
-	<SMSSender>isp.su</SMSSender>
-	<SMSLogin>login</SMSLogin>
-	<SMSPassword>password</SMSPassword>
-	<SMSKey>API ключ</SMSKey>
-	<SMSInterval>300</SMSInterval>
-	<BalanceLowLimit>0</BalanceLowLimit>
-	<CutSign>1</CutSign>
-	<SMSPrice>
-		<SMSPriceRu>0.50</SMSPriceRu>
-		<SMSPriceUa>1.00</SMSPriceUa>
-		<SMSPriceSng>2.00</SMSPriceSng>
-		<SMSPriceZone1>3.00</SMSPriceZone1>
-		<SMSPriceZone2>4.00</SMSPriceZone2>
-		<SMSPriceDefault>5.00</SMSPriceDefault>
-	</SMSPrice>
-	<SMSExceptions>
-		<SMSExceptionsPaidInvoices>-1</SMSExceptionsPaidInvoices>
-		<SMSExceptionsSchemeID>0</SMSExceptionsSchemeID>
-	</SMSExceptions>
-</SMSGateway>
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Edesks>
