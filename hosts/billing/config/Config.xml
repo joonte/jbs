@@ -861,6 +861,14 @@
    <GroupID>1</GroupID>
   </NotPayedInvoice>
   <!-- ********************************************************************* -->
+  <CreateAndSendInvoices>
+   <Name>Автоматически выписанные счета</Name>
+   <GroupID>1</GroupID>
+   <ICQ>0</ICQ>
+   <Jabber>0</Jabber>
+   <SMS>0</SMS>
+  </CreateAndSendInvoices>
+  <!-- ********************************************************************* -->
   <OrdersSuspend>
    <Title>Заказы на прочие услуги</Title>
    <Name>Другие заказанные услуги</Name>

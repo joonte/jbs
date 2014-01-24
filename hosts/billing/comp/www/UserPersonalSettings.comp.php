@@ -73,17 +73,6 @@ if($__USER['IsAdmin']){
 #-------------------------------------------------------------------------------
 $Table[] = 'Настройки автоматической выписки счетов';
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'NotCreateInvoicesAutomatically','prompt'=>'Не выписывать счета на продление услуг в автоматическом режиме. Также, регулируется настройками автопродления - счета выписываются только при включенном автопродлении услуги'));
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-if(IsSet($Settings['NotCreateInvoicesAutomatically']) && $Settings['NotCreateInvoicesAutomatically'])
-	$Comp->AddAttribs(Array('checked'=>'true'));
-#-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'NotCreateInvoicesAutomatically\'); return false;'),'Не выписывать счета автоматически'),$Comp);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 # достаём список платтёжных систем
 $Contracts = DB_Select('Contracts',Array('TypeID'),Array('Where'=>SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID'])));
 switch(ValueOf($Contracts)){
@@ -104,6 +93,11 @@ default:
 $Config = Config();
 #-------------------------------------------------------------------------------
 $ContractsTypes = $Config['Contracts']['Types'];
+#-------------------------------------------------------------------------------
+$Rows = Array();
+#-------------------------------------------------------------------------------
+$Js1 = Array();
+$Js2 = Array();
 #-------------------------------------------------------------------------------
 foreach(Array_Keys($ContractsTypes) as $Type){
 	#-------------------------------------------------------------------------------
@@ -129,15 +123,36 @@ foreach(Array_Keys($ContractsTypes) as $Type){
 	#-------------------------------------------------------------------------------
 	if(Count($Options)){
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Select',Array('name'=>SPrintF('CreateInvoicesAutomatically[%s]',$Type),'size'=>1),$Options,IsSet($Settings['CreateInvoicesAutomatically'][$Type])?$Settings['CreateInvoicesAutomatically'][$Type]:$Type);
+		$Comp = Comp_Load('Form/Select',Array('name'=>SPrintF('CreateInvoicesAutomatically[%s]',$Type),'id'=>$Type,'size'=>1),$Options,IsSet($Settings['CreateInvoicesAutomatically'][$Type])?$Settings['CreateInvoicesAutomatically'][$Type]:$Type);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$Table[] = Array(SPrintF('Выписывать счета для "%s" через',$ContractsTypes[$Type]['Name']),$Comp);
+		if(IsSet($Settings['NotCreateInvoicesAutomatically']) && $Settings['NotCreateInvoicesAutomatically'])
+			$Comp->AddAttribs(Array('disabled'=>'true'));
+		#-------------------------------------------------------------------------------
+		# добавим после чекбокса, так логичней
+		$Rows[] = Array(SPrintF('Выписывать счета для "%s" через',$ContractsTypes[$Type]['Name']),$Comp);
+		# куски JS
+		$Js1[] = SPrintF("form.%s.disabled = checked",$Type);
+		$Js2[] = SPrintF("document.getElementById('%s').disabled = document.getElementById('NotCreateInvoicesAutomatically').checked?true:false;",$Type);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'NotCreateInvoicesAutomatically','id'=>'NotCreateInvoicesAutomatically','prompt'=>'Не выписывать счета на продление услуг в автоматическом режиме. Также, регулируется настройками автопродления - счета выписываются только при включенном автопродлении услуги','onclick'=>Implode(';',$Js1)));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if(IsSet($Settings['NotCreateInvoicesAutomatically']) && $Settings['NotCreateInvoicesAutomatically'])
+	$Comp->AddAttribs(Array('checked'=>'true'));
+#-------------------------------------------------------------------------------
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>SPrintF("ChangeCheckBox('NotCreateInvoicesAutomatically'); %s; return false;",Implode(';',$Js2))),'Не выписывать счета автоматически'),$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+foreach($Rows as $Row)
+	$Table[] = $Row;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Настройки SMS рассылок';

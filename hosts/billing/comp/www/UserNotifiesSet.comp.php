@@ -49,7 +49,7 @@ if($Methods['SMS']['IsActive']){
 			if (Preg_Match($RegCountry, $__USER['Mobile']))
 				$MobileCountry = $RegCountryKey;
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/Tasks/SMS]: Страна определена (%s)', $MobileCountry));
+		Debug(SPrintF('[comp/www/UserNotifiesSet]: Страна определена (%s)', $MobileCountry));
 		#-------------------------------------------------------------------------------
 		if(!IsSet($Config['SMSGateway']['SMSPrice'][$MobileCountry]))
 			return ERROR | @Trigger_Error(500);
@@ -202,7 +202,8 @@ foreach(Array_Keys($Types) as $TypeID){
 				Array(
 					'name'	=> SPrintF('%s[]',$MethodID),
 					'type'	=> 'checkbox',
-					'value'	=> $TypeID
+					'value'	=> $TypeID,
+					'prompt'=> (IsSet($Type[$MethodID]) && !$Type[$MethodID])?'Данная настройка отключена администратором':'Настройка уведомления'
 					)
 				);
 		if(Is_Error($Comp))
@@ -211,12 +212,16 @@ foreach(Array_Keys($Types) as $TypeID){
 		// Если телефон не подтвержден то не выводить активными галочки для смс.
 		if($MethodID == 'SMS' && $__USER['MobileConfirmed'] == 0){
 			#-------------------------------------------------------------------------------
-			$Comp->AddAttribs(Array('disabled' => 'true'));
+			$Comp->AddAttribs(Array('disabled'=>'true'));
 			#-------------------------------------------------------------------------------
 		}else{
+			#Debug(SPrintF('[comp/www/UserNotifiesSet]: ', $MobileCountry));
 			#-------------------------------------------------------------------------------
-			if (!In_Array($TypeID, $uNotifies[$MethodID]))
-				$Comp->AddAttribs(Array('checked' => 'true'));
+			if(IsSet($Type[$MethodID]) && !$Type[$MethodID])
+				$Comp->AddAttribs(Array('disabled'=>'true'));
+			#-------------------------------------------------------------------------------
+			if(!In_Array($TypeID,$uNotifies[$MethodID]))
+				$Comp->AddAttribs(Array('checked'=>'true'));
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
