@@ -11,6 +11,7 @@
   </Paths>
   <Href>/Administrator/Logs</Href>
  </ListElement>
+ <!-- *********************************************************************** -->
  <ListElement>
   <Text>Логи пользователей</Text>
   <Prompt>Просмотр истории HTTP запросов к биллингу</Prompt>
@@ -19,6 +20,7 @@
   </Paths>
   <Href>/Administrator/UsersLogs</Href>
  </ListElement>
+ <!-- *********************************************************************** -->
  <ListElement>
   <Text>История заказов</Text>
   <Prompt>Список всех заказов сделанных клиентами</Prompt>
@@ -27,6 +29,16 @@
   </Paths>
   <Href>/Administrator/OrdersHistory</Href>
  </ListElement>
+ <!-- *********************************************************************** -->
+ <ListElement>
+  <Text>История перемещений</Text>
+  <Prompt>История переносов заказов услуг между аккаунтами клиентов биллинга</Prompt>
+  <Paths>
+   <UniqID>^\/Administrator\/OrdersTransfer</UniqID>
+  </Paths>
+  <Href>/Administrator/OrdersTransfer</Href>
+ </ListElement>
+ <!-- *********************************************************************** -->
  <ListElement>
   <Text>Обновление системы</Text>
   <Prompt>Обновление версии биллинговой системы</Prompt>
@@ -35,6 +47,7 @@
   </Paths>
   <Href>/Administrator/UpdateSystem</Href>
  </ListElement>
+ <!-- *********************************************************************** -->
  <ListElement>
   <Text>Версия биллинга</Text>
   <Prompt>Инофрмация о версии и патчах биллинговой системы</Prompt>

@@ -165,6 +165,20 @@
   <Alias>(SELECT `Email` FROM `Users` WHERE `UserID` = `Users`.`ID`)</Alias>
  </Owner>
  <!-- ********************************************************************** -->
+ <Owner1>
+  <Head>Пользователь</Head>
+  <Prompt>Владелец объекта</Prompt>
+  <Comp>Users/Smart</Comp>
+  <Args>
+   <UserID>%UserID1%</UserID>
+   <Length>10</Length>
+  </Args>
+<!--  <Attribs>
+   <style>border: 1px solid #475B8A;</style>
+  </Attribs> -->
+  <Alias>(SELECT `Email` FROM `Users` WHERE `UserID` = `Users`.`ID`)</Alias>
+ </Owner1>
+ <!-- ********************************************************************** -->
  <Status>
   <Head>Статус</Head>
   <Alias>StatusID</Alias>
