@@ -97,7 +97,7 @@ then
 	# определяем время на час назад, в разных системах по разному
 	if [ `uname` = "Linux" ]
 	then
-		params="date --date='1 hour ago'"
+		params="--date='1 hour ago'"
 	else
 		params="-v-1H"
 	fi
