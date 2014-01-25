@@ -1,0 +1,3 @@
+
+ALTER TABLE `OrdersFields` CHANGE `Value` `Value` MEDIUMTEXT DEFAULT NULL;
+

@@ -108,8 +108,6 @@ switch(ValueOf($Service)){
             #-------------------------------------------------------------------
             foreach($ServiceFields as $ServiceField){
               #-----------------------------------------------------------------
-              $ServiceFieldID = $ServiceField['ID'];
-              #-----------------------------------------------------------------
               $FieldID = SPrintF('ID%u',$ServiceField['ID']);
               #-----------------------------------------------------------------
               switch($ServiceField['TypeID']){
@@ -203,7 +201,7 @@ switch(ValueOf($Service)){
                   return ERROR | @Trigger_Error(101);
               }
               #-----------------------------------------------------------------
-              $Table[] = Array(SPrintF($ServiceField['IsDuty']?'*%s':'%s',$ServiceField['Name']),$Comp);
+              $Table[] = Array(SPrintF($ServiceField['IsDuty']?'*%s':'%s',SPrintF('%s (не более 12Mb)',$ServiceField['Name'])),$Comp);
             }
             #-------------------------------------------------------------------
             $Comp = Comp_Load(
