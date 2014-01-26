@@ -59,7 +59,7 @@ case 'exception':
 case 'array':
 	#-------------------------------------------------------------------------------
 	# есть рефералы
-	$TableName = UniqID($GLOBALS['__USER']['ID']);
+	$TableName = SPrintF('InvoicesOwners%s',UniqID($GLOBALS['__USER']['ID']));
 	$Array = Array();
 	#-------------------------------------------------------------------------------
 	foreach($Referalls as $Referall)
