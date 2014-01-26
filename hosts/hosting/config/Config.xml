@@ -1072,43 +1072,47 @@
    <IsActive>1</IsActive>
   </UpTimeAgregate>
   <!-- ********************************************************************* -->
+  <!-- ********************************************************************* -->
   <GC>
-   <!-- список аккаунтов-исключений при опросе серверов -->
-   <ExcludeServerAccounts />
-   <!-- настройки уведомлений о окончании места -->
+   <!-- ********************************************************************* -->
+   <CheckUsersOnHostingServersSettings>
+    <IsActive>1</IsActive>
+    <ExcludeServerAccounts />
+   </CheckUsersOnHostingServersSettings>
+   <!-- ********************************************************************* -->
+   <CheckUsersOnVPSServersSettings>
+    <IsActive>1</IsActive>
+    <ExcludeServerAccounts />
+   </CheckUsersOnVPSServersSettings>
+   <!-- ********************************************************************* -->
    <DiskUsageNotifiesSettings>
     <IsActive>1</IsActive>
     <IsNotify>1</IsNotify>
     <DiskUsageNotifiesPercent>90</DiskUsageNotifiesPercent>
     <IsEventForNoLimits>1</IsEventForNoLimits>
    </DiskUsageNotifiesSettings>
-   <!-- Уведомление o заканчивающейся квоте почтовых ящиков -->
+   <!-- ********************************************************************* -->
    <EmailBoxesNotifiesSettings>
     <IsActive>1</IsActive>
     <EmailBoxesNotifiesPercent>80</EmailBoxesNotifiesPercent>
    </EmailBoxesNotifiesSettings>
+   <!-- ********************************************************************* -->
    <!-- задачи -->
    <DailyTasks>
-    <!-- синхронизации -->
     <CheckUsersOnHostingServers>Синхронизация аккаунтов биллинга и серверов хостинга</CheckUsersOnHostingServers>
     <CheckUsersOnVPSServers>Синхронизация аккаунтов биллинга и серверов VPS</CheckUsersOnVPSServers>
-    <!-- уведомления о окончании дискового пространства на хостинге -->
     <DiskUsageNotifies>Уведомление о заканчивающемся месте на хостинге</DiskUsageNotifies>
-    <!-- Уведомление o заканчивающейся квоте почтовых ящиков -->
     <EmailBoxesNotifies>Уведомление o заканчивающейся квоте почтовых ящиков</EmailBoxesNotifies>
-    <!-- проверка баллансов регистраторов/поставщиков -->
     <CheckBalance>Проверка балланса регистраторов, поставщиков</CheckBalance>
-    <!-- Операции с заказами -->
     <EraseDeletedOrders>Удаление заказов в статусе Удален</EraseDeletedOrders>
     <SetDeletedWaitingOrders>Отмена неоплаченных заказов</SetDeletedWaitingOrders>
-    <!-- Операции с доменами -->
     <DomainsAutoProlongation>Автопродление истекающих доменов</DomainsAutoProlongation>
     <SetSuspendExpiredDomains>Блокировка просроченных доменов</SetSuspendExpiredDomains>
     <DomainPathRegisterNotify>Уведомления о доменах с неопределёнными владельцами</DomainPathRegisterNotify>
     <DeleteDomainsForTransfer>Удаление доменов в статусе &quot;Для переноса&quot;</DeleteDomainsForTransfer>
     <DomainsFindOdd>Поиск доменов отсутствующих в биллинге/у регистратора</DomainsFindOdd>
-    <!-- синхронизация аккаунтов -->
    </DailyTasks>
+   <!-- ********************************************************************* -->
   </GC>
  </Types>
 </Tasks>

@@ -492,7 +492,7 @@
   <!-- ********************************************************************* -->
   <ROBOKASSA>
    <Name>ROBOKASSA</Name>
-   <SystemDescription>Система электронных платежей в сети Интернет. Первый автоматизированный центр обмена электронных денег и приема интернет платежей</SystemDescription>
+   <SystemDescription>Оплата любыми способами - все виды электронных денег, VISA, MasterCard, Maestro, оплата через SMS, терминалы, электронный банкинг и много других способов</SystemDescription>
    <Send>
     <Culture>ru</Culture>
     <MrchLogin />
@@ -1154,7 +1154,9 @@
     <IsActive>0</IsActive>
   </CheckEmail>
   <!-- ********************************************************************* -->
+  <!-- ********************************************************************* -->
   <GC>
+   <!-- ********************************************************************* -->
    <Name>Сборщик мусора</Name>
    <Params>
     <NowTask>Текущая задача</NowTask>
@@ -1163,6 +1165,7 @@
    <IsActive>1</IsActive>
    <!-- Настройки -->
    <ItemPerIteration>5</ItemPerIteration>
+   <!-- ********************************************************************* -->
    <!-- обработка неоплаченных счетов -->
    <Invoices>
     <DaysBeforeNotice>14</DaysBeforeNotice>
@@ -1170,26 +1173,28 @@
     <DaysBeforeErase>60</DaysBeforeErase>
     <InactiveDaysForUser>365</InactiveDaysForUser>
    </Invoices>
-   <!-- автоматическая выписка счетов на продление услуг -->
+   <!-- ********************************************************************* -->
    <CreateAndSendInvoicesSettings>
     <IsActive>1</IsActive>
     <CreateAndSendInvoicesDay>1</CreateAndSendInvoicesDay>
     <CreateAndSendInvoicesPeriod>12</CreateAndSendInvoicesPeriod>
    </CreateAndSendInvoicesSettings>
+   <!-- ********************************************************************* -->
    <!-- периоды хранения информации в таблицах, дней -->
    <TableTasksStoryPeriod>60</TableTasksStoryPeriod>
    <TableServersUpTimeStoryPeriod>186</TableServersUpTimeStoryPeriod>
    <TableRequestLogStoryPeriod>186</TableRequestLogStoryPeriod>
-   <!-- периоды уборщика сессий -->
+   <!-- ********************************************************************* -->
    <Sessions>
     <IsActive>1</IsActive>
     <SessionTTL>3600</SessionTTL>
     <RememberTTL>31</RememberTTL>
    </Sessions>
-   <!-- настройки обработки условно оплаченных счетов -->
+   <!-- ********************************************************************* -->
    <ConditionallyInvoicesSettings>
     <DaysBeforeRejectConditionallyInvoice>14</DaysBeforeRejectConditionallyInvoice>
    </ConditionallyInvoicesSettings>
+   <!-- ********************************************************************* -->
    <!-- задачи -->
    <DailyTasks>
     <!-- Операции со счетами -->
