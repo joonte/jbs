@@ -4,12 +4,12 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('ServiceOrderID','ServiceID','ServiceCode');
+$__args_list = Array('ServiceOrderID','ServiceID','ServiceCode','IsNotFound');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-#Debug(SPrintF('[Services/Orders/SearchOrderID]: ServiceOrderID = %s; ServiceID = %s; ServiceCode = %s',$ServiceOrderID,$ServiceID,$ServiceCode));
+#Debug(SPrintF('[Services/Orders/SearchOrderID]: ServiceOrderID = %s; ServiceID = %s; ServiceCode = %s; IsNotFound = %s',$ServiceOrderID,$ServiceID,$ServiceCode,print_r($IsNotFound,true)));
 if(!$ServiceOrderID)
 	return ERROR | @Trigger_Error(401);
 #-------------------------------------------------------------------------------
@@ -52,7 +52,12 @@ switch(ValueOf($Order)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
+	#-------------------------------------------------------------------------------
+	if($IsNotFound)
+		return "00000";
+	#-------------------------------------------------------------------------------
 	return ERROR | @Trigger_Error(400);
+	#-------------------------------------------------------------------------------
 case 'array':
 	#-------------------------------------------------------------------------------
 	CacheManager::add($CacheID,$Order['OrderID'],24*3600);

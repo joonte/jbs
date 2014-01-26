@@ -104,6 +104,7 @@
    <ListElement>%ServiceOrderID%</ListElement>
    <ListElement>%ServiceID%</ListElement>
    <ListElement>%Code%</ListElement>
+   <ListElement>1</ListElement>
   </Args>
  </OrderID>
  <!-- ********************************************************************** -->
