@@ -11,7 +11,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Where = "`StatusID` = 'Active' AND `ExpirationDate` - UNIX_TIMESTAMP() <= 0 AND UNIX_TIMESTAMP() - `StatusDate` > 86400";
 #-------------------------------------------------------------------------------
-$DomainOrders = DB_Select('DomainsOrdersOwners',Array('ID','OrderID','UserID','CONCAT(`DomainName`,".",(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`)) AS `DomainName`'),Array('Where'=>$Where,/*'Limits'=>Array(0,$Params['ItemPerIteration'])*/));
+$DomainOrders = DB_Select('DomainsOrdersOwners',Array('ID','OrderID','UserID','CONCAT(`DomainName`,".",(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`)) AS `DomainName`'),Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrders)){
   case 'error':

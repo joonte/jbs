@@ -21,7 +21,6 @@ $Columns = Array(
 		'(SELECT `IsProlong` FROM `DomainsSchemes` WHERE `DomainsOrdersOwners`.`SchemeID`=`DomainsSchemes`.`ID`) AS `IsProlong`'
 		);
 #-------------------------------------------------------------------------------
-#$DomainOrders = DB_Select('DomainsOrdersOwners',$Columns,Array('Where'=>$Where,'Limits'=>Array(0,$Params['ItemPerIteration'])));
 $DomainOrders = DB_Select('DomainsOrdersOwners',$Columns,Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrders)){

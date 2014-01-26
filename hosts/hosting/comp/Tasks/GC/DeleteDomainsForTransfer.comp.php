@@ -19,7 +19,7 @@ $Columns = Array(
                  '(SELECT `Name` FROM `RegistratorsOwners` WHERE `DomainsOrdersOwners`.`RegistratorID` = `RegistratorsOwners`.`ID`) AS `RegistratorName`'
                 );
 #-------------------------------------------------------------------------------
-$DomainOrders = DB_Select('DomainsOrdersOwners',$Columns,Array('Where'=>$Where,/*'Limits'=>Array(0,$Params['ItemPerIteration'])*/));
+$DomainOrders = DB_Select('DomainsOrdersOwners',$Columns,Array('Where'=>$Where));
 switch(ValueOf($DomainOrders)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
