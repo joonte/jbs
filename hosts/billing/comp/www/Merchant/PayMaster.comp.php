@@ -73,6 +73,7 @@ $LMI_PAYMENT_SYSTEMs = Array(
 				80	=> 'WebMoney KKB e-money Тест',
 				81	=> 'Онлайн-банкинг',
 				82	=> 'Ростелеком',
+				92	=> 'Пластиковые карты',
 			    );
 #-------------------------------------------------------------------------------
 $PS = SPrintF('%s / %s',((IsSet($LMI_PAYMENT_SYSTEMs[$Args['LMI_PAYMENT_SYSTEM']]))?$LMI_PAYMENT_SYSTEMs[$Args['LMI_PAYMENT_SYSTEM']]:'LMI_PAYMENT_SYSTEM'),$Args['LMI_PAYMENT_SYSTEM']);
