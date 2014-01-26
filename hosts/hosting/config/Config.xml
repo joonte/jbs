@@ -126,15 +126,15 @@
    </Settings>
   </NullSystem>
   <!-- ********************************************************************* -->
-  <VdsManager>
-   <Name>VDSmanager</Name>
+  <VdsManager4>
+   <Name>VdsManager4</Name>
     <Settings>
     <Port>443</Port>
     <Protocol>ssl</Protocol>
     <Theme>sirius</Theme>
     <Language>ru</Language>
    </Settings>
-  </VdsManager>
+  </VdsManager4>
  </Systems>
  <!-- ********************************************************************** -->
  <IsNoDomain>1</IsNoDomain>

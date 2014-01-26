@@ -129,9 +129,9 @@ switch(ValueOf($VPSScheme)){
         return ERROR | @Trigger_Error(101);
     }
     #---------------------------------------------------------------------------
-    if(In_Array('VdsManager',$SystemsIDs)){
+    if(In_Array('VdsManager4',$SystemsIDs)){
       #-------------------------------------------------------------------------
-      $Table[] = 'Ограничения для VDSmanager';
+      $Table[] = 'Ограничения для VdsManager4';
       #-------------------------------------------------------------------------
       $dns = "не используются";
       if($VPSScheme['extns'] == 'dnsprovider'){$dns = "провайдера";}
