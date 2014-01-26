@@ -7,7 +7,7 @@ if(Is_Error(System_Load('libs/Http.php')))
 #-------------------------------------------------------------------------------
 Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
 #-------------------------------------------------------------------------------
-function IspManager_Logon($Settings,$Params){
+function IspManager4_Logon($Settings,$Params){
   /****************************************************************************/
   $__args_types = Array('array','array');
   #-----------------------------------------------------------------------------
@@ -16,7 +16,7 @@ function IspManager_Logon($Settings,$Params){
   return Array('Url'=>$Params['Url'],'Args'=>Array('lang'=>$Settings['Language'],'theme'=>$Settings['Theme'],'checkcookie'=>'no','username'=>$Params['Login'],'password'=>$Params['Password'],'func'=>'auth'));
 }
 #-------------------------------------------------------------------------------
-function IspManager_Get_Domains($Settings){
+function IspManager4_Get_Domains($Settings){
 	/****************************************************************************/
 	$__args_types = Array('array');
 	#-----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ function IspManager_Get_Domains($Settings){
 				$Resellers[] = $Elem['owner'];
 		#-------------------------------------------------------------------------------
 	}
-	#Debug(SPrintF('[system/libs/IspManager.php]: Resellers = %s',print_r($Resellers,true)));
+	#Debug(SPrintF('[system/libs/IspManager4.php]: Resellers = %s',print_r($Resellers,true)));
 	#-----------------------------------------------------------------------------
 	#-----------------------------------------------------------------------------
 	$Owners = Array();
@@ -73,7 +73,7 @@ function IspManager_Get_Domains($Settings){
 				$Owners[$Elem['name']] = $Elem['owner'];
 		#-------------------------------------------------------------------------------
 	}
-	#Debug(SPrintF('[system/libs/IspManager.php]: Owners = %s',print_r($Owners,true)));
+	#Debug(SPrintF('[system/libs/IspManager4.php]: Owners = %s',print_r($Owners,true)));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# строим выхлопной массив
@@ -217,13 +217,13 @@ function IspManager_Get_Domains($Settings){
 		#---------------------------------------------------------------------------
 	}
 
-	#Debug(SPrintF('[system/libs/IspManager.php]: UsersList = %s',print_r($Users,true)));
+	#Debug(SPrintF('[system/libs/IspManager4.php]: UsersList = %s',print_r($Users,true)));
 	return $Users;
 	#-----------------------------------------------------------------------------
 }
 #-----------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function IspManager_Get_Users($Settings){
+function IspManager4_Get_Users($Settings){
   /****************************************************************************/
   $__args_types = Array('array');
   #-----------------------------------------------------------------------------
@@ -335,7 +335,7 @@ function IspManager_Get_Users($Settings){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function IspManager_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,$Email,$PersonID = 'Default',$Person = Array()){
+function IspManager4_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,$Email,$PersonID = 'Default',$Person = Array()){
   /****************************************************************************/
   $__args_types = Array('array','string','string','string','string','array','string','string','array');
   #-----------------------------------------------------------------------------
@@ -435,7 +435,7 @@ function IspManager_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme
   
   $Response = Http_Send('/manager/ispmgr',$Http,$Request);
   if(Is_Error($Response))
-    return ERROR | @Trigger_Error('[IspManager_Create]: не удалось соедениться с сервером');
+    return ERROR | @Trigger_Error('[IspManager4_Create]: не удалось соедениться с сервером');
   
   $Response = Trim($Response['Body']);
   
@@ -460,13 +460,13 @@ function IspManager_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme
           #-----------------------------------------------------------------------------
           $Response = Http_Send('/manager/ispmgr',$Http,$Request);
           if(Is_Error($Response))
-            return ERROR | @Trigger_Error('[IspManager_Create]: не удалось соедениться с сервером');
+            return ERROR | @Trigger_Error('[IspManager4_Create]: не удалось соедениться с сервером');
   }
   #-----------------------------------------------------------------------------
   return TRUE;
 }
 #-------------------------------------------------------------------------------
-function IspManager_Active($Settings,$Login,$IsReseller = FALSE){
+function IspManager4_Active($Settings,$Login,$IsReseller = FALSE){
   /****************************************************************************/
   $__args_types = Array('array','string','boolean');
   #-----------------------------------------------------------------------------
@@ -485,7 +485,7 @@ function IspManager_Active($Settings,$Login,$IsReseller = FALSE){
   #-----------------------------------------------------------------------------
   $Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.enable':'user.enable','elid'=>$Login));
   if(Is_Error($Response))
-    return ERROR | @Trigger_Error('[IspManager_Activate]: не удалось соедениться с сервером');
+    return ERROR | @Trigger_Error('[IspManager4_Activate]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
   $Response = Trim($Response['Body']);
   #-----------------------------------------------------------------------------
@@ -510,13 +510,13 @@ function IspManager_Active($Settings,$Login,$IsReseller = FALSE){
           #-----------------------------------------------------------------------------
           $Response = Http_Send('/manager/ispmgr',$Http,$Request);
           if(Is_Error($Response))
-            return ERROR | @Trigger_Error('[IspManager_Activate]: не удалось соедениться с сервером');
+            return ERROR | @Trigger_Error('[IspManager4_Activate]: не удалось соедениться с сервером');
   }
   #-----------------------------------------------------------------------------
   return TRUE;
 }
 #-------------------------------------------------------------------------------
-function IspManager_Suspend($Settings,$Login,$IsReseller = FALSE){
+function IspManager4_Suspend($Settings,$Login,$IsReseller = FALSE){
   /****************************************************************************/
   $__args_types = Array('array','string','boolean');
   #-----------------------------------------------------------------------------
@@ -535,7 +535,7 @@ function IspManager_Suspend($Settings,$Login,$IsReseller = FALSE){
   #-----------------------------------------------------------------------------
   $Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.disable':'user.disable','elid'=>$Login));
   if(Is_Error($Response))
-    return ERROR | @Trigger_Error('[IspManager_Suspend]: не удалось соедениться с сервером');
+    return ERROR | @Trigger_Error('[IspManager4_Suspend]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
   $Response = Trim($Response['Body']);
   #-----------------------------------------------------------------------------
@@ -560,13 +560,13 @@ function IspManager_Suspend($Settings,$Login,$IsReseller = FALSE){
           #-----------------------------------------------------------------------------
           $Response = Http_Send('/manager/ispmgr',$Http,$Request);
           if(Is_Error($Response))
-            return ERROR | @Trigger_Error('[IspManager_Suspend]: не удалось соедениться с сервером');
+            return ERROR | @Trigger_Error('[IspManager4_Suspend]: не удалось соедениться с сервером');
   }
   #-----------------------------------------------------------------------------
   return TRUE;
 }
 #-------------------------------------------------------------------------------
-function IspManager_Delete($Settings,$Login,$IsReseller = FALSE){
+function IspManager4_Delete($Settings,$Login,$IsReseller = FALSE){
   /****************************************************************************/
   $__args_types = Array('array','string','boolean');
   #-----------------------------------------------------------------------------
@@ -645,7 +645,7 @@ function IspManager_Delete($Settings,$Login,$IsReseller = FALSE){
 			#-----------------------------------------------------------------------------
 			$Response = Http_Send('/manager/ispmgr',$Http,$Request);
 			if(Is_Error($Response))
-				return ERROR | @Trigger_Error('[IspManager_Delete]: не удалось соедениться с сервером');
+				return ERROR | @Trigger_Error('[IspManager4_Delete]: не удалось соедениться с сервером');
 			# я так думаю, неважно чё он там ответил, если ответил...
 			#-----------------------------------------------------------------------------
 		}
@@ -656,7 +656,7 @@ function IspManager_Delete($Settings,$Login,$IsReseller = FALSE){
   #-----------------------------------------------------------------------------
   $Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.delete':'user.delete','elid'=>$Login));
   if(Is_Error($Response))
-    return ERROR | @Trigger_Error('[IspManager_Delete]: не удалось соедениться с сервером');
+    return ERROR | @Trigger_Error('[IspManager4_Delete]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
   $Response = Trim($Response['Body']);
   #-----------------------------------------------------------------------------
@@ -681,13 +681,13 @@ function IspManager_Delete($Settings,$Login,$IsReseller = FALSE){
           #-----------------------------------------------------------------------------
           $Response = Http_Send('/manager/ispmgr',$Http,$Request);
           if(Is_Error($Response))
-            return ERROR | @Trigger_Error('[IspManager_Delete]: не удалось соедениться с сервером');
+            return ERROR | @Trigger_Error('[IspManager4_Delete]: не удалось соедениться с сервером');
   }
   #-----------------------------------------------------------------------------
   return TRUE;
 }
 #-------------------------------------------------------------------------------
-function IspManager_Scheme_Change($Settings,$Login,$HostingScheme){
+function IspManager4_Scheme_Change($Settings,$Login,$HostingScheme){
   /****************************************************************************/
   $__args_types = Array('array','string','array');
   #-----------------------------------------------------------------------------
@@ -755,7 +755,7 @@ function IspManager_Scheme_Change($Settings,$Login,$HostingScheme){
   #-----------------------------------------------------------------------------
   $Response = Http_Send('/manager/ispmgr',$Http,$Request);
   if(Is_Error($Response))
-    return ERROR | @Trigger_Error('[IspManager_Scheme_Change]: не удалось соедениться с сервером');
+    return ERROR | @Trigger_Error('[IspManager4_Scheme_Change]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
   $Response = Trim($Response['Body']);
   #-----------------------------------------------------------------------------
@@ -780,13 +780,13 @@ function IspManager_Scheme_Change($Settings,$Login,$HostingScheme){
           #-----------------------------------------------------------------------------
           $Response = Http_Send('/manager/ispmgr',$Http,$Request);
           if(Is_Error($Response))
-            return ERROR | @Trigger_Error('[IspManager_Scheme_Change]: не удалось соедениться с сервером');
+            return ERROR | @Trigger_Error('[IspManager4_Scheme_Change]: не удалось соедениться с сервером');
   }
   #-----------------------------------------------------------------------------
   return TRUE;
 }
 #-------------------------------------------------------------------------------
-function IspManager_Password_Change($Settings,$Login,$Password,$IsReseller = FALSE){
+function IspManager4_Password_Change($Settings,$Login,$Password,$IsReseller = FALSE){
   /****************************************************************************/
   $__args_types = Array('array','string','string','boolean');
   #-----------------------------------------------------------------------------
@@ -819,13 +819,13 @@ function IspManager_Password_Change($Settings,$Login,$Password,$IsReseller = FAL
   #-----------------------------------------------------------------------------
   $Response = Http_Send('/manager/ispmgr',$Http,$Request);
   if(Is_Error($Response))
-    return ERROR | @Trigger_Error('[IspManager_Password_Change]: не удалось соедениться с сервером');
+    return ERROR | @Trigger_Error('[IspManager4_Password_Change]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
   $Response = Trim($Response['Body']);
   #-----------------------------------------------------------------------------
   $XML = String_XML_Parse($Response);
   if(Is_Exception($XML))
-    return ERROR | @Trigger_Error('[IspManager_Password_Change]: неверный ответ от сервера');
+    return ERROR | @Trigger_Error('[IspManager4_Password_Change]: неверный ответ от сервера');
   #-----------------------------------------------------------------------------
   $XML = $XML->ToArray();
   #-----------------------------------------------------------------------------
@@ -837,7 +837,7 @@ function IspManager_Password_Change($Settings,$Login,$Password,$IsReseller = FAL
   return TRUE;
 }
 #-------------------------------------------------------------------------------
-function IspManager_Get_Email_Boxes($Settings){
+function IspManager4_Get_Email_Boxes($Settings){
   /****************************************************************************/
   $__args_types = Array('array');
   #-----------------------------------------------------------------------------
@@ -872,7 +872,7 @@ function IspManager_Get_Email_Boxes($Settings){
     return new gException('BOXES_NOT_FOUND','Почтовых доменов не обнаружено');
   #-----------------------------------------------------------------------------
   if(IsSet($Result['error']))
-    return ERROR | @Trigger_Error('[IspManager_Get_Email_Boxes]: не удалось получить список почтовых ящиков');
+    return ERROR | @Trigger_Error('[IspManager4_Get_Email_Boxes]: не удалось получить список почтовых ящиков');
   #-----------------------------------------------------------------------------
   $Domains = Array();
   #-----------------------------------------------------------------------------
@@ -907,7 +907,7 @@ function IspManager_Get_Email_Boxes($Settings){
     return new gException('BOXES_NOT_FOUND','Почтовых ящиков не обнаружено');
   #-----------------------------------------------------------------------------
   if(IsSet($Result['error']))
-    return ERROR | @Trigger_Error('[IspManager_Get_Email_Boxes]: не удалось получить список почтовых ящиков');
+    return ERROR | @Trigger_Error('[IspManager4_Get_Email_Boxes]: не удалось получить список почтовых ящиков');
   #-----------------------------------------------------------------------------
   foreach($Result as $Box){
     #---------------------------------------------------------------------------
@@ -944,7 +944,7 @@ function IspManager_Get_Email_Boxes($Settings){
 
 # added by lissyara 2011-08-08 in 11:25 MSK
 
-function IspManager_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
+function IspManager4_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
         /****************************************************************************/
         $__args_types = Array('array','string','string','string','string','string');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
@@ -988,18 +988,18 @@ function IspManager_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
                 return new gException('IP_ADD_CREATE_ERROR','Не удалось добавить IP адрес');
         #-----------------------------------------------------------------------------
         #-----------------------------------------------------------------------------
-        #Debug("[system/libs/IspManager]: to hosting order added IP = " . $Doc['ip']);
+        #Debug("[system/libs/IspManager4]: to hosting order added IP = " . $Doc['ip']);
         #-----------------------------------------------------------------------------
 	$IsUpdate = DB_Update('ExtraIPOrders',Array('Login'=>$Doc['ip']),Array('ID'=>$ID));
         if(Is_Error($IsUpdate))
-                return ERROR | @Trigger_Error('[IspManager_AddIP]: не удалось прописать IP адрес для заказа хостинга ' . $Login);
+                return ERROR | @Trigger_Error('[IspManager4_AddIP]: не удалось прописать IP адрес для заказа хостинга ' . $Login);
         #-----------------------------------------------------------------------------
         return TRUE;
 }
 
 # added by lissyara 2011-08-10 in 10:13 MSK
 #-------------------------------------------------------------------------------
-function IspManager_DeleteIP($Settings,$ExtraIP){
+function IspManager4_DeleteIP($Settings,$ExtraIP){
 	/****************************************************************************/
         $__args_types = Array('array','string');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
@@ -1030,7 +1030,7 @@ function IspManager_DeleteIP($Settings,$ExtraIP){
         );
         $Response = Http_Send('/manager/ispmgr',$Http,$Request);
         if(Is_Error($Response))
-                return ERROR | @Trigger_Error('[IspManager_DeleteIP]: не удалось соедениться с сервером');
+                return ERROR | @Trigger_Error('[IspManager4_DeleteIP]: не удалось соедениться с сервером');
         $Response = Trim($Response['Body']);
         $XML = String_XML_Parse($Response);
         if(Is_Exception($XML))
@@ -1074,7 +1074,7 @@ function IspManager_DeleteIP($Settings,$ExtraIP){
 			#-----------------------------------------------------------------------------
                         if($Domain['ip'] == $ExtraIP){
 				#-----------------------------------------------------------------------------
-                                #Debug("[system/libs/IspManager.php]: on IP " . $ExtraIP . " found domain " . $Domain['name']);
+                                #Debug("[system/libs/IspManager4.php]: on IP " . $ExtraIP . " found domain " . $Domain['name']);
                                 # get domain settings
                                 # func=wwwdomain.edit&elid=ffffff.ru
                                 $Request = Array(
@@ -1087,7 +1087,7 @@ function IspManager_DeleteIP($Settings,$ExtraIP){
 				#-----------------------------------------------------------------------------
                                 $Response = Http_Send('/manager/ispmgr',$Http,$Request);
                                 if(Is_Error($Response))
-                                        return ERROR | @Trigger_Error('[IspManager_DeleteIP]: не удалось соедениться с сервером');
+                                        return ERROR | @Trigger_Error('[IspManager4_DeleteIP]: не удалось соедениться с сервером');
 				#-----------------------------------------------------------------------------
                                 $Response = Trim($Response['Body']);
 				#-----------------------------------------------------------------------------
@@ -1120,21 +1120,21 @@ function IspManager_DeleteIP($Settings,$ExtraIP){
 				#-----------------------------------------------------------------------------
                                 $Response = Http_Send('/manager/ispmgr',$Http,$Request);
                                 if(Is_Error($Response))
-                                        return ERROR | @Trigger_Error('[IspManager_DeleteIP]: не удалось соедениться с сервером');
+                                        return ERROR | @Trigger_Error('[IspManager4_DeleteIP]: не удалось соедениться с сервером');
 				#-----------------------------------------------------------------------------
                                 $Response = $Response['Body'];
 				#-----------------------------------------------------------------------------
                                 $XML = String_XML_Parse($Response);
 				#-----------------------------------------------------------------------------
                                 if(Is_Exception($XML))
-                                        return ERROR | @Trigger_Error('[IspManager_DeleteIP]: неверный ответ от сервера');
+                                        return ERROR | @Trigger_Error('[IspManager4_DeleteIP]: неверный ответ от сервера');
 				#-----------------------------------------------------------------------------
                                 $XML = $XML->ToArray();
 				#-----------------------------------------------------------------------------
                                 $Doc = $XML['doc'];
 				#-----------------------------------------------------------------------------
                                 if(IsSet($Doc['error']))
-                                        return new gException('IspManager_DeleteIP','Не удалось изменить IP для домена' . $Domain['name']);
+                                        return new gException('IspManager4_DeleteIP','Не удалось изменить IP для домена' . $Domain['name']);
 				#-----------------------------------------------------------------------------
                         }
 			#-----------------------------------------------------------------------------
@@ -1155,7 +1155,7 @@ function IspManager_DeleteIP($Settings,$ExtraIP){
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/manager/ispmgr',$Http,$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[IspManager_DeleteIP]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[IspManager4_DeleteIP]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
         $Response = Trim($Response['Body']);
         $XML = String_XML_Parse($Response);
@@ -1176,7 +1176,7 @@ function IspManager_DeleteIP($Settings,$ExtraIP){
 #-------------------------------------------------------------------------------
 # added by lissyara 2013-03-07 in 13:47 MSK
 #-------------------------------------------------------------------------------
-function IspManager_Get_CPU_Usage($Settings,$TFilter){
+function IspManager4_Get_CPU_Usage($Settings,$TFilter){
 	/****************************************************************************/
         $__args_types = Array('array','string');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
@@ -1219,7 +1219,7 @@ function IspManager_Get_CPU_Usage($Settings,$TFilter){
 				$Resellers[] = $Elem['owner'];
 		#-------------------------------------------------------------------------------
 	}
-	#Debug(SPrintF('[system/libs/IspManager.php]: Resellers = %s',print_r($Resellers,true)));
+	#Debug(SPrintF('[system/libs/IspManager4.php]: Resellers = %s',print_r($Resellers,true)));
 	#-----------------------------------------------------------------------------
 	#-----------------------------------------------------------------------------
 	$Owners = Array();
@@ -1231,7 +1231,7 @@ function IspManager_Get_CPU_Usage($Settings,$TFilter){
 				$Owners[$Elem['name']] = $Elem['owner'];
 		#-------------------------------------------------------------------------------
 	}
-	#Debug(SPrintF('[system/libs/IspManager.php]: Owners = %s',print_r($Owners,true)));
+	#Debug(SPrintF('[system/libs/IspManager4.php]: Owners = %s',print_r($Owners,true)));
 	#-------------------------------------------------------------------------------
 	# /manager/ispmgr?func=totalresourceusage&tfilter=2013-03-01%20-%202013-03-07&out=xml
 	$Request = Array(
@@ -1243,7 +1243,7 @@ function IspManager_Get_CPU_Usage($Settings,$TFilter){
 	#-------------------------------------------------------------------------------
         $Response = Http_Send('/manager/ispmgr',$Http,$Request);
         if(Is_Error($Response))
-                return ERROR | @Trigger_Error('[IspManager_Get_CPU_Usage]: не удалось соедениться с сервером');
+                return ERROR | @Trigger_Error('[IspManager4_Get_CPU_Usage]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
         $Response = Trim($Response['Body']);
 	#-------------------------------------------------------------------------------
@@ -1278,7 +1278,7 @@ function IspManager_Get_CPU_Usage($Settings,$TFilter){
 			$Out[$Reseller][$Key] = 0;
 		#-------------------------------------------------------------------------------
 	}
-	#Debug(SPrintF('[system/libs/IspManager.php]: Elem = %s',print_r($Out,true)));
+	#Debug(SPrintF('[system/libs/IspManager4.php]: Elem = %s',print_r($Out,true)));
 	#-------------------------------------------------------------------------------
 	# перебираем все данные по нагрузке
 	foreach($Elems as $Elem){
@@ -1308,7 +1308,7 @@ function IspManager_Get_CPU_Usage($Settings,$TFilter){
 # added by lissyara 2014-01-16 in 10:46 MSK, for JBS-764
 #-----------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function IspManager_Get_Disk_Usage($Settings){
+function IspManager4_Get_Disk_Usage($Settings){
 	/****************************************************************************/
 	$__args_types = Array('array');
 	#-----------------------------------------------------------------------------
@@ -1359,7 +1359,7 @@ function IspManager_Get_Disk_Usage($Settings){
 				#-----------------------------------------------------------------------------
 				if(!IsSet($User['disk'])){
 					#-----------------------------------------------------------------------------
-					Debug(SPrintF('[system/libs/IspManager.php]: user (%s) does not have disk limit',$User['name']));
+					Debug(SPrintF('[system/libs/IspManager4.php]: user (%s) does not have disk limit',$User['name']));
 					$User['disk']['limit'] = -1;
 					$User['disk']['used'] = -1;
 					#-----------------------------------------------------------------------------

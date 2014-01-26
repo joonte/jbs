@@ -34,7 +34,7 @@ if($ISPswGroupID){
   $ISPswGroup = Array(
     #---------------------------------------------------------------------------
     'Name'       => 'Lite Internal',
-    'Comment'    => 'ISPmanager Lite для клиентов VPS/DS',
+    'Comment'    => 'ISPmanager Lite 5 для клиентов VPS/DS',
     'SortID'     => 10
   );
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -11,7 +10,7 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','classes/Server.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$HostingServers = DB_Select('HostingServers',Array('ID','Address'),Array('Where'=>"`SystemID` = 'IspManager'"));
+$HostingServers = DB_Select('HostingServers',Array('ID','Address'),Array('Where'=>"`SystemID` = 'IspManager4'"));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingServers)){
   case 'error':

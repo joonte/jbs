@@ -178,12 +178,12 @@ case 'array':
 		#---------------------------------------------------------------------------
 		foreach($Doc as $License){
 			if($License['id'] == $ISPswLicense['elid']){
-				Debug("[comp/Tasks/ISPswCheckLicenses]: license #" . $ISPswLicense['elid'] . " found in ISPmanager billing");
+				Debug("[comp/Tasks/ISPswCheckLicenses]: license #" . $ISPswLicense['elid'] . " found in ISPsystem billing");
 				$IsExists = true;
 			}
 		}
 		if(!$IsExists){
-			Debug("[comp/Tasks/ISPswCheckLicenses]: license #" . $ISPswLicense['elid'] . " not found in ISPmanager billing");
+			Debug("[comp/Tasks/ISPswCheckLicenses]: license #" . $ISPswLicense['elid'] . " not found in ISPsystem billing");
 			$Event = Array(
 					'UserID'	=> 100,
 					'PriorityID'	=> 'Error',

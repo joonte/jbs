@@ -62,8 +62,8 @@
    </Settings>
   </Cpanel>
   <!-- ********************************************************************* -->
-  <IspManager>
-   <Name>ISPmanager</Name>
+  <IspManager4>
+   <Name>IspManager4</Name>
    <Settings>
     <Port>443</Port>
     <Protocol>ssl</Protocol>
@@ -71,7 +71,7 @@
     <Language>ru</Language>
     <Url>https://isp.su:1500/</Url>
    </Settings>
-  </IspManager>
+  </IspManager4>
   <!-- ********************************************************************* -->
   <Plesk>
    <Name>Plesk</Name>
