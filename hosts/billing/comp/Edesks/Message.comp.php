@@ -164,7 +164,8 @@ if(IsSet($GLOBALS['__USER']) /*&& Mb_StrLen($Content) < 1000*/){
 						'8'     => 'Отлично'
 					);
 			#-------------------------------------------------------------------------------
-			$VoteMessage = SPrintF('Пожалуйста, оцените ответ сотрудника [%s]: ',($VoteBall > 0)?$VoteTitle[($VoteBall - 1)]:'без оценки');
+			$VoteMessage = SPrintF('%s:',($VoteBall > 0)?'Вы оценили этот ответ':'Оцените ответ сотрудника');
+			#($VoteBall > 0)?$VoteTitle[($VoteBall - 1)]:'без оценки');
 			#-------------------------------------------------------------------------------
 			$Span->AddChild(new Tag('SPAN',$VoteMessage));
 			#-------------------------------------------------------------------------------
@@ -172,8 +173,8 @@ if(IsSet($GLOBALS['__USER']) /*&& Mb_StrLen($Content) < 1000*/){
 				#-------------------------------------------------------------------------------
 			        $Img = new Tag('IMG',
 						Array(
-							'id'            =>SPrintF('star_%d_%d', $MessageID, $i),
-							'src'           =>'SRC:{Images/Icons/DisableStar.png}',
+							'id'            => SPrintF('star_%d_%d', $MessageID, $i),
+							'src'           => SPrintF('SRC:{Images/Icons/%sStar.png}',($VoteBall > 0)?(($i < $VoteBall)?'Enable':'Disable'):'Disable'),
 							'onMouseOver'   => SPrintF('selectStars(event, %d, %d);PromptShow(event,\'%s\',this);',$MessageID, $i, $VoteTitle[$i]),
 							'onClick'       => SPrintF("AjaxCall('/API/TicketVote',{MessageID:%u,VoteBall:%u},'Оценка сообщения','ShowTick(\"Ваша оценка \'%s\' успешно сохранена\");');",$MessageID,$i+1,$VoteTitle[$i]),
 							#'title'         => $VoteTitle[$i],
