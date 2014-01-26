@@ -9,16 +9,17 @@ $__args_list = Array('Params');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-$GC = $Config['Tasks']['Types']['GC'];
+$Settings = $Config['Tasks']['Types']['GC']['CleanTablesSettings'];
+#-------------------------------------------------------------------------------
+if(!$Settings['IsActive'])
+	return TRUE;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # зачищаем таблицу задач
 $Where = Array(
-		SPrintF('`ExecuteDate` < UNIX_TIMESTAMP() - %u',$GC['TableTasksStoryPeriod'] * 24 * 3600),'`UserID` != 1',
+		SPrintF('`ExecuteDate` < UNIX_TIMESTAMP() - %u',$Settings['TableTasksStoryPeriod'] * 24 * 3600),'`UserID` != 1',
 		"`TypeID` != 'Dispatch'"
 		);
 $IsDelete = DB_Delete('Tasks',Array('Where'=>$Where));
@@ -37,14 +38,14 @@ if(Is_Error($IsDelete))
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # зачищаем таблицу ServersUpTime
-$Where = SPrintF('`TestDate` < UNIX_TIMESTAMP() - %u',$GC['TableServersUpTimeStoryPeriod'] * 24 * 3600);
+$Where = SPrintF('`TestDate` < UNIX_TIMESTAMP() - %u',$Settings['TableServersUpTimeStoryPeriod'] * 24 * 3600);
 $IsDelete = DB_Delete('ServersUpTime',Array('Where'=>$Where));
 if(Is_Error($IsDelete))
 	return ERROR | @Trigger_Error(500);
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # зачищаем таблицу RequestLog
-$Where = SPrintF('`CreateDate` < UNIX_TIMESTAMP() - %u',$GC['TableRequestLogStoryPeriod'] * 24 * 3600);
+$Where = SPrintF('`CreateDate` < UNIX_TIMESTAMP() - %u',$Settings['TableRequestLogStoryPeriod'] * 24 * 3600);
 $IsDelete = DB_Delete('RequestLog',Array('Where'=>$Where));
 if(Is_Error($IsDelete))
 	return ERROR | @Trigger_Error(500);

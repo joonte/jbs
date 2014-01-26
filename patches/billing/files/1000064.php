@@ -29,7 +29,7 @@ if(File_Exists($ConfigPath)){
 #-------------------------------------------------------------------------------
 $GC = $Config['Tasks']['Types']['GC'];
 #-------------------------------------------------------------------------------
-$Items = Array('DaysBeforeNotice','DaysBeforeDeleted','DaysBeforeErase');
+$Items = Array('TableTasksStoryPeriod','TableServersUpTimeStoryPeriod','TableRequestLogStoryPeriod','InactiveDaysForUser');
 #-------------------------------------------------------------------------------
 foreach($Items as $Item){
 	#-------------------------------------------------------------------------------
@@ -40,10 +40,10 @@ foreach($Items as $Item){
 		#-------------------------------------------------------------------------------
 		UnSet($GC[$Item]);
 		#-------------------------------------------------------------------------------
-		if(!IsSet($GC['Invoices']) || !Is_Array($GC['Invoices'])){
-			$GC['Invoices'] = Array($Item=>$Value);
+		if(!IsSet($GC['CleanTablesSettings']) || !Is_Array($GC['CleanTablesSettings'])){
+			$GC['CleanTablesSettings'] = Array($Item=>$Value);
 		}else{
-			$GC['Invoices'][$Item] = $Value;
+			$GC['CleanTablesSettings'][$Item] = $Value;
 		}
 		#-------------------------------------------------------------------------------
 	}

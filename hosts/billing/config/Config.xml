@@ -1171,7 +1171,6 @@
     <DaysBeforeNotice>14</DaysBeforeNotice>
     <DaysBeforeDeleted>28</DaysBeforeDeleted>
     <DaysBeforeErase>60</DaysBeforeErase>
-    <InactiveDaysForUser>365</InactiveDaysForUser>
    </Invoices>
    <!-- ********************************************************************* -->
    <CreateAndSendInvoicesSettings>
@@ -1180,10 +1179,13 @@
     <CreateAndSendInvoicesPeriod>12</CreateAndSendInvoicesPeriod>
    </CreateAndSendInvoicesSettings>
    <!-- ********************************************************************* -->
-   <!-- периоды хранения информации в таблицах, дней -->
-   <TableTasksStoryPeriod>60</TableTasksStoryPeriod>
-   <TableServersUpTimeStoryPeriod>186</TableServersUpTimeStoryPeriod>
-   <TableRequestLogStoryPeriod>186</TableRequestLogStoryPeriod>
+   <CleanTablesSettings>
+    <IsActive>1</IsActive>
+    <TableTasksStoryPeriod>60</TableTasksStoryPeriod>
+    <TableServersUpTimeStoryPeriod>186</TableServersUpTimeStoryPeriod>
+    <TableRequestLogStoryPeriod>186</TableRequestLogStoryPeriod>
+    <InactiveDaysForUser>365</InactiveDaysForUser>
+   </CleanTablesSettings>
    <!-- ********************************************************************* -->
    <Sessions>
     <IsActive>1</IsActive>
@@ -1206,7 +1208,7 @@
     <!-- Удаление пользователей не заходивших в биллинг более года -->
     <EraseOldUsers>Удаление неактивных пользователей</EraseOldUsers>
     <!-- Очистка некоторых таблиц -->
-    <CleanSomeTables>Очистка некоторых таблиц</CleanSomeTables>
+    <CleanTables>Очистка таблиц</CleanTables>
     <!-- проверка прав на конфигурационный файл биллинговой системы -->
     <CheckConfigPermission>Проверка прав на конфигурационный файл</CheckConfigPermission>
     <!-- Уведомление о окончании услуг настроенных вручную -->
