@@ -17,6 +17,12 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
+  <Text>Передать на другой аккаунт</Text>
+  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%Replace%",ServiceID:"FALSE"});</Href>
+  <Icon>OrdersTransfer.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
   <Text>Настройки автопродления</Text>
   <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%Replace%"});</Href>
   <Icon>AutoProlong.png</Icon>

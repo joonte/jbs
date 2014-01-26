@@ -53,7 +53,7 @@ case 'array':
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		# достаём данные заказа
-		$Order = DB_Select(SPrintF('%sOrdersOwners',$OrdersTransfer['Code']),Array('*'),Array('UNIQ','ID'=>$OrdersTransfer['ServiceOrderID']));
+		$Order = DB_Select(SPrintF('%sOrdersOwners',($OrdersTransfer['Code'] == 'Default')?'':$OrdersTransfer['Code']),Array('*'),Array('UNIQ','ID'=>$OrdersTransfer['ServiceOrderID']));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($Order)){
 		case 'error':
@@ -65,11 +65,11 @@ case 'array':
 			#-------------------------------------------------------------------------------
 		case 'array':
 			#-------------------------------------------------------------------------------
-			$OrderID = Comp_Load('Formats/Order/Number',$Order['OrderID']);
+			$OrderID = Comp_Load('Formats/Order/Number',IsSet($Order['OrderID'])?$Order['OrderID']:$Order['ID']);
 			if(Is_Error($OrderID))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$Params = Array('User'=>$User,'OrdersTransfer'=>$OrdersTransfer,'Order'=>$Order,'OrderID'=>$OrderID);
+			$Params = Array('User'=>$User,'OrdersTransfer'=>$OrdersTransfer,'Order'=>$Order,'OrderID'=>IsSet($Order['OrderID'])?$Order['OrderID']:$Order['ID']);
 			#-------------------------------------------------------------------------------
 			$NoBody = new Tag('NOBODY');
 			#-------------------------------------------------------------------------------
