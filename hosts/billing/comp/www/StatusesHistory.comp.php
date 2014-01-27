@@ -96,7 +96,7 @@ switch(ValueOf($Row)){
 	      $Tr->AddChild(new Tag('TD',$Style,$Statuses[$StatusHistory['StatusID']]['Name']));
 	      #-----------------------------------------------------------------
 	      #-----------------------------------------------------------------
-	      $Initiator = $GLOBALS['__USER']['IsAdmin']?$StatusHistory['Initiator']:preg_replace('/\s(\(\H+\))$/', '', $StatusHistory['Initiator']);
+	      $Initiator = $GLOBALS['__USER']['IsAdmin']?$StatusHistory['Initiator']:Preg_Replace('/\s(\(\H+\))$/', '', $StatusHistory['Initiator']);
 	      #-----------------------------------------------------------------
 	      $Tr->AddChild(new Tag('TD',Array('class'=>'Standard'),$Initiator));
               #-----------------------------------------------------------------
