@@ -1167,13 +1167,15 @@
    <!-- ********************************************************************* -->
    <!-- обработка неоплаченных счетов -->
    <Invoices>
-    <DaysBeforeNotice>14</DaysBeforeNotice>
-    <DaysBeforeDeleted>28</DaysBeforeDeleted>
+    <DaysBeforeNotice>7</DaysBeforeNotice>
+    <DaysBeforeDeleted>14</DaysBeforeDeleted>
     <DaysBeforeErase>60</DaysBeforeErase>
    </Invoices>
    <!-- ********************************************************************* -->
    <CreateAndSendInvoicesSettings>
     <IsActive>1</IsActive>
+    <CreateAndSendInvoicesSendOnlyNatural>1</CreateAndSendInvoicesSendOnlyNatural>
+    <CreateAndSendInvoicesSendEmptyMail>0</CreateAndSendInvoicesSendEmptyMail>
     <CreateAndSendInvoicesDay>1</CreateAndSendInvoicesDay>
     <CreateAndSendInvoicesPeriod>12</CreateAndSendInvoicesPeriod>
    </CreateAndSendInvoicesSettings>

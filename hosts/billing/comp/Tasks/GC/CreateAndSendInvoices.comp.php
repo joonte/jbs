@@ -222,13 +222,42 @@ case 'array':
 				#-------------------------------------------------------------------------------
 				$PaymentSystemID = $Order['Params']['CreateInvoicesAutomatically'][$Basket['TypeID']];
 				#-------------------------------------------------------------------------------
-			}elseif(IsSet($PaymentSystems[$Basket['TypeID']])){
-				#-------------------------------------------------------------------------------
-				$PaymentSystemID = $Basket['TypeID'];
-				#-------------------------------------------------------------------------------
+
 			}else{
 				#-------------------------------------------------------------------------------
-				$PaymentSystemID = $Array[0];
+				# выбираем тип патёжной системы, которой был оплачен последний счёт юзера, по этому договору
+				$Invoice = DB_Select('InvoicesOwners',Array('PaymentSystemID'),Array('Where'=>SPrintF('`StatusID` = "Payed" AND `ContractID` = %s AND `UserID` = %s',$Basket['ContractID'],$Order['UserID']),'Limit'=>Array('Start'=>0,'Length'=>1),'SortOn'=>'StatusDate','IsDesc'=>TRUE));
+				#-------------------------------------------------------------------------------
+				switch(ValueOf($Invoice)){
+				case 'error':
+					return ERROR | @Trigger_Error(500);
+				case 'exception':
+					# No more...
+					break;
+				case 'array':
+					#-------------------------------------------------------------------------------
+					if(IsSet($PaymentSystems[$Invoice['PaymentSystemID']]))
+						$PaymentSystemID = $Invoice['PaymentSystemID'];
+					#-------------------------------------------------------------------------------
+					break;
+					#-------------------------------------------------------------------------------
+				default:
+					return ERROR | @Trigger_Error(101);
+				}
+				#-------------------------------------------------------------------------------
+				if(!IsSet($PaymentSystemID)){
+					#-------------------------------------------------------------------------------
+					if(IsSet($PaymentSystems[$Basket['TypeID']])){
+						#-------------------------------------------------------------------------------
+						$PaymentSystemID = $Basket['TypeID'];
+						#-------------------------------------------------------------------------------
+					}else{
+						#-------------------------------------------------------------------------------
+						$PaymentSystemID = $Array[0];
+						#-------------------------------------------------------------------------------
+					}
+					#-------------------------------------------------------------------------------
+				}
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
@@ -238,46 +267,62 @@ case 'array':
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[comp/www/CreateAndSendInvoices]: юзеру (%s) выписан счёт (%s)',$Order['Email'],$Comp['InvoiceID']));
 			#-------------------------------------------------------------------------------
-			# TODO надо исключить вложение в писем счетов на вебмани и прочее - их нельзя напярмую оплачивать
-			$Attachments[] = $Comp['InvoiceID'];
+			# надо исключить вложение в писем счетов на вебмани и прочее - их нельзя напярмую оплачивать
+			if(!$Settings['CreateAndSendInvoicesOnlyNatural']){
+				#-------------------------------------------------------------------------------
+				$Attachments[] = $Comp['InvoiceID'];
+				#-------------------------------------------------------------------------------
+			}elseif($Settings['CreateAndSendInvoicesOnlyNatural'] && $PaymentSystemID == $Basket['TypeID']){
+				#-------------------------------------------------------------------------------
+				$Attachments[] = $Comp['InvoiceID'];
+				#-------------------------------------------------------------------------------
+			}
 			#-------------------------------------------------------------------------------
 		}
+		#-------------------------------------------------------------------------------
+		UnSet($PaymentSystemID);
 		#-------------------------------------------------------------------------------
 		#Debug(SPrintF('[comp/www/CreateAndSendInvoices]: Attachments = %s',print_r($Attachments,true)));
 		#-------------------------------------------------------------------------------
-		# перебираем файлы, генерим письмо
-		$EmailAttachments = Array();
-		foreach($Attachments as $InvoiceID){
+		# а вложений, в принципе, может и не быть. тогда слать ничё не надо - задача как раз слать счета
+		if(SizeOf($Attachments) > 0 || $Settings['CreateAndSendInvoicesSendEmptyMail']){
 			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load('www/InvoiceDownload',Array('InvoiceID'=>$InvoiceID,'IsStamp'=>TRUE,'IsNoHeaders'=>TRUE));
-			if(Is_Error($Comp))
+			# перебираем файлы, генерим письмо
+			$EmailAttachments = Array();
+			#-------------------------------------------------------------------------------
+			foreach($Attachments as $InvoiceID){
+				#-------------------------------------------------------------------------------
+				$Comp = Comp_Load('www/InvoiceDownload',Array('InvoiceID'=>$InvoiceID,'IsStamp'=>TRUE,'IsNoHeaders'=>TRUE));
+				if(Is_Error($Comp))
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+				$EmailAttachments[] = Array(
+								'Name'	=> SPrintF('Invoice_%s.pdf',$InvoiceID),
+								'Size'	=> StrLen($Comp),
+								'Mime'	=> 'application/pdf; charset=utf-8',
+								'Data'	=> Chunk_Split(Base64_Encode($Comp))
+								);
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			# а вложений, в принципе, может и не быть ... 
+			$msgParams = Array('EmailAttachments'=>(SizeOf($EmailAttachments) > 0)?$EmailAttachments:'не определено');
+			#-------------------------------------------------------------------------------
+			$msg = new Message('CreateAndSendInvoices', $Order['UserID'], $msgParams);
+			$IsSend = NotificationManager::sendMsg($msg);
+			#-------------------------------------------------------------------------------
+			switch(ValueOf($IsSend)){
+			case 'error':
 				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				return ERROR | @Trigger_Error(400);
+			case 'true':
+				break;
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
 			#-------------------------------------------------------------------------------
-			$EmailAttachments[] = Array(
-							'Name'	=>SPrintF('Invoice_%s.pdf',$InvoiceID),
-							'Size'	=>StrLen($Comp),
-							'Mime'	=>'application/pdf; charset=utf-8',
-							'Data'	=> Chunk_Split(Base64_Encode($Comp))
-							);
-			#-------------------------------------------------------------------------------
-		}
-		#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		# а вложений, в принципе, может и не быть ...  
-		$msgParams = Array('EmailAttachments'=>(SizeOf($EmailAttachments) > 0)?$EmailAttachments:'не определено');
-		#-------------------------------------------------------------------------------
-		$msg = new Message('CreateAndSendInvoices', $Order['UserID'], $msgParams);
-		$IsSend = NotificationManager::sendMsg($msg);
-		#-------------------------------------------------------------------------------
-		switch(ValueOf($IsSend)){
-		case 'error':
-			return ERROR | @Trigger_Error(500);
-		case 'exception':
-			return ERROR | @Trigger_Error(400);
-		case 'true':
-			break;
-		default:
-			return ERROR | @Trigger_Error(101);
 		}
 		#-------------------------------------------------------------------------------
 	}
