@@ -183,7 +183,7 @@ case 'array':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
 			# соскакиваем - по какой-то причине в корзину ничё не уложилось
-			continue;
+			continue 2;
 		case 'array':
 			#---------------------------------------------------------------------------
 			break;
