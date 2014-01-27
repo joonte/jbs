@@ -29,7 +29,7 @@ if(File_Exists($ConfigPath)){
 #-------------------------------------------------------------------------------
 $GC = $Config['Tasks']['Types']['GC'];
 #-------------------------------------------------------------------------------
-$Items = Array('TableTasksStoryPeriod','TableServersUpTimeStoryPeriod','TableRequestLogStoryPeriod','InactiveDaysForUser');
+$Items = Array('TableTasksStoryPeriod','TableServersUpTimeStoryPeriod','TableRequestLogStoryPeriod');
 #-------------------------------------------------------------------------------
 foreach($Items as $Item){
 	#-------------------------------------------------------------------------------

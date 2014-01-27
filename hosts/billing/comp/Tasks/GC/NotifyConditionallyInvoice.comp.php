@@ -12,7 +12,12 @@ Eval(COMP_INIT);
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-$Settings = $Params['ConditionallyInvoicesSettings'];
+$Settings = $Config['Tasks']['Types']['GC']['NotifyConditionallyInvoiceSettings'];
+#-------------------------------------------------------------------------------
+if(!$Settings['IsActive'])
+	return TRUE;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # выхлоп для сотрудников бухгалтерии
 $Out = "";
 #-------------------------------------------------------------------------------
@@ -163,7 +168,7 @@ foreach($Invoices as $Invoice){
     $Event = Array(
                    'UserID'	=> $Invoice['UserID'],
                    'PriorityID'	=> 'Billing',
-                   'Text'	=> SPrintF('Уведомление о условно оплаченном счете #%d, неоплачен более %d дней',$Invoice['ID'],$Params['Invoices']['DaysBeforeNotice'])
+                   'Text'	=> SPrintF('Уведомление о условно оплаченном счете #%d, неоплачен более %d дней',$Invoice['ID'],$Settings['DaysBeforeNotice'])
                   );
     $Event = Comp_Load('Events/EventInsert',$Event);
     if(!$Event)

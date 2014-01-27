@@ -1183,8 +1183,12 @@
     <TableTasksStoryPeriod>60</TableTasksStoryPeriod>
     <TableServersUpTimeStoryPeriod>186</TableServersUpTimeStoryPeriod>
     <TableRequestLogStoryPeriod>186</TableRequestLogStoryPeriod>
-    <InactiveDaysForUser>365</InactiveDaysForUser>
    </CleanTablesSettings>
+   <!-- ********************************************************************* -->
+   <EraseOldUsersSettings>
+    <IsActive>1</IsActive>
+    <InactiveDaysForUser>365</InactiveDaysForUser>
+   </EraseOldUsersSettings>
    <!-- ********************************************************************* -->
    <Sessions>
     <IsActive>1</IsActive>
@@ -1192,9 +1196,11 @@
     <RememberTTL>31</RememberTTL>
    </Sessions>
    <!-- ********************************************************************* -->
-   <ConditionallyInvoicesSettings>
+   <NotifyConditionallyInvoiceSettings>
+    <IsActive>1</IsActive>
+    <DaysBeforeNotice>7</DaysBeforeNotice>
     <DaysBeforeRejectConditionallyInvoice>14</DaysBeforeRejectConditionallyInvoice>
-   </ConditionallyInvoicesSettings>
+   </NotifyConditionallyInvoiceSettings>
    <!-- ********************************************************************* -->
    <!-- задачи -->
    <DailyTasks>
