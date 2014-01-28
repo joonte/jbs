@@ -44,18 +44,26 @@ switch(ValueOf($HostingServers)){
         $Service = Explode('=',$Service);
         #-----------------------------------------------------------------------
         $ServiceName = Current($Service);
+	#-----------------------------------------------------------------------
+	$Port = IntVal(Next($Service));
         #-----------------------------------------------------------------------
-        $IsConnected = Is_Resource(@FsockOpen($HostingServer['Address'],IntVal(Next($Service)),$nError,$sError,$Settings['SocketTimeout']));
+	#Debug(SPrintF('[comp/Tasks/ServersUpTime]: connect to %s:%u',$HostingServer['Address'],$Port));
+	#-----------------------------------------------------------------------
+	$Socket = @FsockOpen($HostingServer['Address'],$Port,$nError,$sError,$Settings['SocketTimeout']);
         #-----------------------------------------------------------------------
-        if(!$IsConnected)
+        if(!Is_Resource($Socket)){
+	  #-----------------------------------------------------------------------
+	  #Debug(SPrintF('[comp/Tasks/ServersUpTime]: cannot connect %s:%u with error: %s (%s)',$HostingServer['Address'],$Port,$sError,$nError));
           $IsOK = FALSE;
+	  #-----------------------------------------------------------------------
+	}
         #----------------------------------------------------------------------- 
         $IPage = Array(
           #---------------------------------------------------------------------
           'TestDate' => Time(),
           'ServerID' => $HostingServer['ID'],
           'Service'  => Trim($ServiceName),
-          'UpTime'   => ($IsConnected?100:0),
+          'UpTime'   => (Is_Resource($Socket)?100:0),
           'Day'      => Date('d'),
           'Month'    => Date('m'),
           'Year'     => Date('Y')
@@ -64,6 +72,10 @@ switch(ValueOf($HostingServers)){
         $IsInsert = DB_Insert('ServersUpTime',$IPage);
         if(Is_Error($IsInsert))
           return ERROR | @Trigger_Error(500);
+	#-----------------------------------------------------------------------
+	if(Is_Resource($Socket))
+	  FClose($Socket);
+	#-----------------------------------------------------------------------
       }
       #-------------------------------------------------------------------------
       $IsUpdate = DB_Update('HostingServers',Array('TestDate'=>Time(),'IsOK'=>$IsOK),Array('ID'=>$HostingServer['ID']));
