@@ -33,7 +33,7 @@ public function Connect($Server = 'login.icq.com',$Port = 5190){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $this->Socket = @Fsockopen($Server,$Port);
+  $this->Socket = @FsockOpen($Server,$Port);
   if(!$this->IsConnected())
     return ERROR | @Trigger_Error('[IcqClient->Connect]: не удалось соединиться с сервером');
   #-----------------------------------------------------------------------------
@@ -234,6 +234,9 @@ private function SendTo($Reguest,$IsWait = TRUE){
   $Fwrite = @Fwrite($this->Socket,$Reguest);
   if(!$Fwrite)
     return ERROR | @Trigger_Error('[IcqClient->SendTo]: не удалось записать в сокет');
+  #-----------------------------------------------------------------------------
+  # added by lissyara, 2012-01-04 in 08:42:54 MSK, for JBS-130
+  Stream_Set_TimeOut($this->Socket,120);
   #-----------------------------------------------------------------------------
   if(!$IsWait)
     return TRUE;
