@@ -7,6 +7,18 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
+$Config = Config();
+#-------------------------------------------------------------------------------
+$Settings = $Config['Tasks']['Types']['ServersUpTime'];
+#-------------------------------------------------------------------------------
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecutePeriod'=>$Settings['ExecutePeriod']));
+if(Is_Error($ExecuteTime))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if(!$Settings['IsActive'])
+	return 3600;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $HostingServers = DB_Select('HostingServers',Array('ID','Address','Port','Services'),Array('SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingServers)){
@@ -33,7 +45,7 @@ switch(ValueOf($HostingServers)){
         #-----------------------------------------------------------------------
         $ServiceName = Current($Service);
         #-----------------------------------------------------------------------
-        $IsConnected = Is_Resource(@FsockOpen($HostingServer['Address'],IntVal(Next($Service)),$nError,$sError,0x5));
+        $IsConnected = Is_Resource(@FsockOpen($HostingServer['Address'],IntVal(Next($Service)),$nError,$sError,$Settings['SocketTimeout']));
         #-----------------------------------------------------------------------
         if(!$IsConnected)
           $IsOK = FALSE;
@@ -64,7 +76,7 @@ switch(ValueOf($HostingServers)){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return 600;
+return $ExecuteTime;
 #-------------------------------------------------------------------------------
 
 ?>

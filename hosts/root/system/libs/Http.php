@@ -106,13 +106,15 @@ function Http_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
   if(Is_Error($Tmp))
     return ERROR | @Trigger_Error('[Http_Send]: не удалось определить путь временной директории');
   #-----------------------------------------------------------------------------
+  $Config = Config();
+  #-----------------------------------------------------------------------------
   $Address = $Default['Address'];
   #-----------------------------------------------------------------------------
   Debug(SPrintF('[Http_Send]: соединяемся с (%s)',$Address));
   #-----------------------------------------------------------------------------
   # https://bugs.php.net/bug.php?id=52913
   # пришлось заменить: $Address -> $Default['Host']
-  $Socket = @FsockOpen(SPrintF('%s://%s',$Protocol = $Default['Protocol'],$Default['Host'] /*$Address*/),$Port = $Default['Port'],$nError,$sError,10);
+  $Socket = @FsockOpen(SPrintF('%s://%s',$Protocol = $Default['Protocol'],$Default['Host'] /*$Address*/),$Port = $Default['Port'],$nError,$sError,$Config['Other']['Libs']['Http']['SocketTimeout']);
   if(!Is_Resource($Socket)){
     #---------------------------------------------------------------------------
     $IsWrite = IO_Write(SPrintF('%s/logs/http-send.log',$Tmp),SPrintF("%s://%s:%u ошибка соединения\n\n",$Protocol,$Address,$Port));
@@ -122,8 +124,10 @@ function Http_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
     return ERROR | @Trigger_Error('[Http_Send]: не удалось соединиться с удаленным хостом');
   }
   #-----------------------------------------------------------------------------
+  #-----------------------------------------------------------------------------
   # added by lissyara, 2012-01-04 in 08:42:54 MSK, for JBS-130
-  Stream_Set_TimeOut($Socket, 60);
+  Stream_Set_TimeOut($Socket, $Config['Other']['Libs']['Http']['StreamTimeout']);
+  #-----------------------------------------------------------------------------
   #-----------------------------------------------------------------------------
   $Charset = $Default['Charset'];
   #-----------------------------------------------------------------------------
@@ -172,6 +176,9 @@ function Http_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
   #-----------------------------------------------------------------------------
   if(!@Fwrite($Socket,$Query))
     return ERROR | @Trigger_Error('[Http_Send]: не удалось записать в сокет');
+  #-----------------------------------------------------------------------------
+  # added by lissyara, 2014-01-28 in 14:19:08 MSK, for JBS-130
+  Stream_Set_TimeOut($Socket, $Config['Other']['Libs']['Http']['StreamTimeout']);
   #-----------------------------------------------------------------------------
   $Receive = '';
   #-----------------------------------------------------------------------------
