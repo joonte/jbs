@@ -32,7 +32,9 @@ $Where = Array(
 			/* нет договоров с баллансом больше нуля */
 			'(SELECT SUM(`Balance`) FROM `ContractsOwners` WHERE `UserID` = `Users`.`ID`) = 0',
 			/* нет рефералов */
-			'(SELECT COUNT(*) FROM `Users` WHERE `OwnerID` = `Users`.`ID`) = 0'
+			'(SELECT COUNT(*) FROM `Users` WHERE `OwnerID` = `Users`.`ID`) = 0',
+			/* нет свежих потстов в тикетницу */
+			SPrintF('(SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `OwnerID` = `Users`.`ID`) < UNIX_TIMESTAMP() - %u * 24 * 3600',$Settings['InactiveDaysForUser']),
 		);
 #-------------------------------------------------------------------------------
 $Users = DB_Select('Users', Array('ID','Email','Name'),Array('Where'=>$Where));
