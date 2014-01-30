@@ -232,6 +232,7 @@ foreach($Mails as $mailId){
 		Debug(SPrintF('[comp/Tasks/CheckEmail]: AutoReply from: "%s", header: "%s"',$fromAddress,$AutoReply));
 		$mailbox->deleteMessage($mail->mId, TRUE);
 		UnSet($AutoReply);
+		UnSet($IsDelete);
 		continue;
 		#-------------------------------------------------------------------------------
 	}
