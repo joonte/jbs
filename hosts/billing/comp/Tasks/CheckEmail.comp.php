@@ -318,7 +318,7 @@ foreach($Mails as $mailId){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	if($Settings['CreateNewUserAccounts']){
+	if($Settings['CreateNewUserAccounts'] && !$IsUser){
 		#-------------------------------------------------------------------------------
 		#Name Password Email
 		$Array = Explode('@',$fromAddress);
