@@ -1,21 +1,25 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
+/******************************************************************************/
+/******************************************************************************/
+$__args_list = Array('Args');
 /******************************************************************************/
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Args = Args();
+$Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-$Email    =  (string) @$Args['Email'];
-$Password =  (string) @$Args['Password'];
-$Name     =  (string) @$Args['Name'];
-$ICQ      =  (string) @$Args['ICQ'];
-$Protect  = (integer) @$Args['Protect'];
-$Eval     =  (string) @$Args['Eval'];
+$Email		=  (string) @$Args['Email'];
+$Password	=  (string) @$Args['Password'];
+$Name		=  (string) @$Args['Name'];
+$ICQ		=  (string) @$Args['ICQ'];
+$Protect	= (integer) @$Args['Protect'];
+$Message	=  (string) @$Args['Message'];
+$IsInternal	= (boolean) @$Args['IsInternal'];
+$Eval		=  (string) @$Args['Eval'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('classes/Session.class.php')))
   return ERROR | @Trigger_Error(500);
@@ -156,7 +160,7 @@ switch(ValueOf($Comp)){
         #-----------------------------------------------------------------------
 	$Event = Array(
 			'UserID'	=> 1,
-			'Text'		=> SPrintF('Зарегистрирован новый пользователь (%s)',$Email)
+			'Text'		=> SPrintF('%s (%s)',($Message)?$Message:'Зарегистрирован новый пользователь',$Email)
 		      );
 	$Event = Comp_Load('Events/EventInsert',$Event);
 	if(!$Event)
@@ -165,6 +169,9 @@ switch(ValueOf($Comp)){
         if(Is_Error(DB_Commit($TransactionID)))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
+	if($IsInternal)
+		return Array('Status'=>'Ok','ID'=>$UserID);
+	#-----------------------------------------------------------------------
         $SessionID = (IsSet($_COOKIE['SessionID']) && StrLen($_COOKIE['SessionID'])?$_COOKIE['SessionID']:UniqID('SESSION'));
         #-----------------------------------------------------------------------
         $Session = new Session($SessionID);

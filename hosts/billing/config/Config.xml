@@ -1152,6 +1152,7 @@
     <SaveHeaders>0</SaveHeaders>
     <DeletePersonalEmails>0</DeletePersonalEmails>
     <IsActive>0</IsActive>
+    <CreateNewUserAccounts>1</CreateNewUserAccounts>
   </CheckEmail>
   <!-- ********************************************************************* -->
   <!-- ********************************************************************* -->

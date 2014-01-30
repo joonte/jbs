@@ -44,7 +44,7 @@ switch(ValueOf($User)){
     return ERROR | @Trigger_Error(400);
   case 'array':
     #---------------------------------------------------------------------------
-    if($User['Email'] != $Email){
+    if(StrToLower($User['Email']) != $Email){
       #-------------------------------------------------------------------------
       $Count = DB_Count('Users',Array('Where'=>SPrintF("`Email` = '%s'",$Email)));
       if(Is_Error($Count)){
