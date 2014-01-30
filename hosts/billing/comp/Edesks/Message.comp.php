@@ -86,7 +86,7 @@ if(Is_Error($Text))
 $Params['Text'] = $Text;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$EnterDate = Comp_Load('Formats/Date/Remainder',(Time() - $User['EnterDate']));
+$EnterDate = Comp_Load('Formats/Date/Remainder',($User['EnterDate'])?(Time() - $User['EnterDate']):0);
 if(Is_Error($EnterDate))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
