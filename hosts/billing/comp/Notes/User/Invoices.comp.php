@@ -19,7 +19,7 @@ if(!$Settings['UnPaidInvoicesReminders'])
 	return $Result;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Where = Array("`UserID` = @local.__USER_ID","`StatusID` = 'Waiting'");
+$Where = Array("`UserID` = @local.__USER_ID","`StatusID` = 'Waiting' OR `StatusID` = 'Conditionally'");
 #-------------------------------------------------------------------------------
 $Invoices = DB_Select('InvoicesOwners','*',Array('Where'=>$Where));
 switch(ValueOf($Invoices)){
@@ -73,7 +73,7 @@ case 'array':
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$NoBody = new Tag('NOBODY');
-		$NoBody->AddHTML(TemplateReplace('Notes.User.Invoices',$Params));
+		$NoBody->AddHTML(TemplateReplace(SPrintF('Notes.User.Invoices.%s',$Invoice['StatusID']),$Params));
 		$Result[] = $NoBody;
 		UnSet($NoBody);
 	}
