@@ -9,12 +9,7 @@ $__args_list = Array('Args');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-#-------------------------------------------------------------------------------
-if(!IsSet($Args)){
-	if(Is_Error(System_Load('modules/Authorisation.mod')))
-		return ERROR | @Trigger_Error(500);
-	$Args = Args();
-}
+$Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 $TicketID		= (integer) @$Args['TicketID'];
 $Message		=  (string) @$Args['Message'];
@@ -80,7 +75,7 @@ switch(ValueOf($Ticket)){
     return ERROR | @Trigger_Error(400);
   case 'array':
     #---------------------------------------------------------------------------
-    $IsPermission = Permission_Check('TicketEdit',(integer)$__USER['ID'],(integer)$Ticket['UserID']);
+    $IsPermission = Permission_Check('TicketEdit',(integer)(($UserID > 0 && $__USER['IsAdmin'])?$__USER['IsAdmin']:$__USER['ID']),(integer)$Ticket['UserID']);
     #---------------------------------------------------------------------------
     switch(ValueOf($IsPermission)){
       case 'error':
@@ -164,7 +159,7 @@ switch(ValueOf($Ticket)){
             return ERROR | @Trigger_Error(500);
           #---------------------------------------------------------------------
 	  $Event = Array(
-	  			'UserID'	=> $__USER['ID'],
+	  			'UserID'	=> ($UserID > 0)?$UserID:$__USER['ID'],
 				'PriorityID'	=> 'Billing',
 				'Text'		=> SPrintF('Добавлено новое сообщение к запросу в службу поддержки с темой (%s)',$Ticket['Theme'])
 	                );

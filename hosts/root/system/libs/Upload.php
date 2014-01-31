@@ -37,7 +37,7 @@ function Upload_Get($Name,$Hash = FALSE){
   if(Is_Error($Names))
     return ERROR | @Trigger_Error('[Upload_Get]: не удалось прочитать файл имен');
   #-----------------------------------------------------------------------------
-  $Names = UnSerialize($Names);
+  $Names = JSON_Decode($Names,TRUE);
   #-----------------------------------------------------------------------------
   $Name = (IsSet($Names[$Hash])?$Names[$Hash]:'Default');
   #-----------------------------------------------------------------------------
