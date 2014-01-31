@@ -76,6 +76,7 @@ $IUser = Array(
   'LayPayMaxDays'   => $Settings['LayPayMaxDays'],
   'LayPayMaxSumm'   => $Settings['LayPayMaxSumm'],
   'LayPayThreshold' => $Settings['LayPayThreshold'],
+  'Params'          => ($IsInternal)?Array('IsAutoRegistered'=>TRUE):Array(),
 );
 #-------------------------------------------------------------------------------
 $Group = DB_Select('Groups','ID',Array('UNIQ','Where'=>"`IsDefault` = 'yes'"));
@@ -91,6 +92,7 @@ switch(ValueOf($Group)){
   default:
     return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Is_Error(DB_Transaction($TransactionID = UniqID('UserRegister'))))
   return ERROR | @Trigger_Error(500);
