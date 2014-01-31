@@ -75,7 +75,7 @@ switch(ValueOf($Ticket)){
     return ERROR | @Trigger_Error(400);
   case 'array':
     #---------------------------------------------------------------------------
-    $IsPermission = Permission_Check('TicketEdit',(integer)(($UserID > 0 && $__USER['IsAdmin'])?$__USER['IsAdmin']:$__USER['ID']),(integer)$Ticket['UserID']);
+    $IsPermission = Permission_Check('TicketEdit',(integer)(($UserID > 0 && $__USER['IsAdmin'])?$UserID:$__USER['ID']),(integer)$Ticket['UserID']);
     #---------------------------------------------------------------------------
     switch(ValueOf($IsPermission)){
       case 'error':
