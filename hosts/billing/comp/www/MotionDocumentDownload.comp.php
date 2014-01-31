@@ -12,29 +12,36 @@ $Args = Args();
 $MotionDocumentID = (integer) @$Args['MotionDocumentID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/HTMLDoc.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Config = Config();
+#-------------------------------------------------------------------------------
+$Settings = $Config['Other']['MotionDocumentDownload'];
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $MotionDocument = DB_Select('MotionDocuments','AjaxCall',Array('UNIQ','ID'=>$MotionDocumentID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($MotionDocument)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return new gException('DOCUMENT_NOT_FOUND','Документ не найден');
-  case 'array':
-    #---------------------------------------------------------------------------
-    $AjaxCall = $MotionDocument['AjaxCall'];
-    #---------------------------------------------------------------------------
-    if($GLOBALS['__USER']['IsAdmin']){
-      $AjaxCall['Args']['IsStamp'] = 0;
-    }else{
-      $AjaxCall['Args']['IsStamp'] = 1;
-    }
-    #---------------------------------------------------------------------------
-    return Array('Status'=>'Ok','AjaxCall'=>$AjaxCall);
-  default:
-    return ERROR | @Trigger_Error(101);
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('DOCUMENT_NOT_FOUND','Документ не найден');
+case 'array':
+	#-------------------------------------------------------------------------------
+	$AjaxCall = $MotionDocument['AjaxCall'];
+	#-------------------------------------------------------------------------------
+	if($GLOBALS['__USER']['IsAdmin'])
+		$AjaxCall['Args']['IsStamp'] = $Settings['IsStampAdmin'];
+	#-------------------------------------------------------------------------------
+	if(!$GLOBALS['__USER']['IsAdmin'])
+		$AjaxCall['Args']['IsStamp'] = $Settings['IsStampUser'];
+	#-------------------------------------------------------------------------------
+	return Array('Status'=>'Ok','AjaxCall'=>$AjaxCall);
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-
+#-------------------------------------------------------------------------------
 ?>
