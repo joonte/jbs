@@ -48,8 +48,7 @@ switch(ValueOf($Invoice)){
     if(Is_Error($Comp))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
-    $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Invoices','StatusID'=>'Payed','RowsIDs'=>$Invoice['ID'],
-       'Comment'=>'Автоматическое зачисление '.'['.$Args['PaymentMethod'].'/'.$Args['IncCurrLabel'].']'));
+    $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Invoices','StatusID'=>'Payed','RowsIDs'=>$Invoice['ID'],'Comment'=>SPrintF('Автоматическое зачисление [%s/%s]',$Args['PaymentMethod'],$Args['IncCurrLabel'])));
     #---------------------------------------------------------------------------
     switch(ValueOf($Comp)){
       case 'error':

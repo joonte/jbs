@@ -67,6 +67,11 @@ switch(ValueOf($DomainOrder)){
               if(!$DomainScheme['IsProlong'])
                 return new gException('SCHEME_NOT_ALLOW_PROLONG','Тарифный план заказа домена не позволяет продление');
               #-----------------------------------------------------------------
+              $DaysToProlong = $DomainScheme['DaysToProlong'];
+              #---------------------------------------------------------------
+              if(($ExpirationDate - Time())/86400 > $DaysToProlong && $StatusID != 'ForTransfer')
+                 return new gException('PROLONG_IS_EARLY',SPrintF('Заказ домена может быть продлен только за %u дн. до окончания',$DaysToProlong));
+              #---------------------------------------------------------------
               if($YearsPay < $DomainScheme['MinOrderYears'])
                 return new gException('YEARS_PAY_MIN_ORDER_YEARS','Кол-во лет оплаты меньше, чем допустимое значение лет заказа, определённое в тарифном плане');
               #-----------------------------------------------------------------
