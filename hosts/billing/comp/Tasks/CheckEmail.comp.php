@@ -96,7 +96,7 @@ foreach($Mails as $mailId){
 	if(IsSet($mail->replyTo)){
 		#-------------------------------------------------------------------------------
 		foreach(Array_Keys($mail->replyTo) as $replyToAddr)
-			if($fromAddress != $replyToAddr)
+			if($fromAddress != StrToLower($replyToAddr))
 				$replyTo[] = StrToLower($replyToAddr);
 		#-------------------------------------------------------------------------------
 	}
@@ -324,7 +324,11 @@ foreach($Mails as $mailId){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	if($Settings['CreateNewUserAccounts'] && !$IsUser){
+	$Regulars = Regulars();
+	if(!Preg_Match($Regulars['Email'],$fromAddress))
+		Debug(SPrintF('[comp/Tasks/CheckEmail]: неверный fromAddress = %s',$fromAddress));
+	#-------------------------------------------------------------------------------
+	if($Settings['CreateNewUserAccounts'] && !$IsUser && Preg_Match($Regulars['Email'],$fromAddress)){
 		#-------------------------------------------------------------------------------
 		#Name Password Email
 		$Array = Explode('@',$fromAddress);
@@ -449,7 +453,7 @@ foreach($Mails as $mailId){
 			$NewUserID = 10;
 			#-------------------------------------------------------------------------------
 			$Params['Message']	= $Message;
-			$Params['NotifyEmail']	= $fromAddress;
+			$Params['NotifyEmail']	= Implode(',',$replyTo);
 			#-------------------------------------------------------------------------------
 		}else{
 			#-------------------------------------------------------------------------------
