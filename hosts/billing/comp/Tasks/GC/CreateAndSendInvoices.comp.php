@@ -28,6 +28,7 @@ $Columns = Array(
 			'(SELECT `Item` FROM `Services` WHERE `Services`.`ID` = `OrdersOwners`.`ServiceID`) AS `Item`',
 			'(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `OrdersOwners`.`ServiceID`) AS `Name`',
 			'(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `OrdersOwners`.`ServiceID`) AS `Code`',
+			'(SELECT `ID` FROM `Services` WHERE `Services`.`ID` = `OrdersOwners`.`ServiceID`) AS `ServiceID`',
 			'(SELECT `ConsiderTypeID` FROM `Services` WHERE `Services`.`ID` = `OrdersOwners`.`ServiceID`) AS `ConsiderTypeID`',
 			'ROUND((`ExpirationDate` - UNIX_TIMESTAMP())/86400) AS `Remainded`'
 		);
@@ -119,6 +120,23 @@ case 'array':
 			#-------------------------------------------------------------------------------
 			if(!$UOrder['IsAutoProlong'])
 				continue;
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			# проверка не выписан ли уже неоплаченный счёт на эту услугу
+			$Where = SPrintF("`InvoicesItems`.`InvoiceID` = `Invoices`.`ID` AND `Invoices`.`StatusID` = 'Waiting' AND `InvoicesItems`.`ServiceID` = %u AND `InvoicesItems`.`OrderID` = %u",$UOrder['ServiceID'],$UOrder['ID']);
+			#-------------------------------------------------------------------------------
+			$Count = DB_Count(Array('Invoices','InvoicesItems'),Array('Where'=>$Where));
+			if(Is_Error($Count))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			if($Count){
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/www/CreateAndSendInvoices]: юзер (%s), уже есть счёт на %s/#%u',$Order['Email'],$UOrder['Code'],$UOrder['ID']));
+				#-------------------------------------------------------------------------------
+				continue;
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			#Debug(SPrintF('[comp/www/CreateAndSendInvoices]: юзер (%s), необходимо продлить (%s) заказ #%u',$Order['Email'],$UOrder['Code'],$UOrder['ID']));
 			#-------------------------------------------------------------------------------
