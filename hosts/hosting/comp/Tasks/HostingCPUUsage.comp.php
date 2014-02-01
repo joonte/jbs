@@ -337,7 +337,7 @@ if($LockedCount > 0 || $NotifyedCount > 0)
 	$GLOBALS['TaskReturnInfo'] = Array(SPrintF('Notifyed: %s',$NotifyedCount),SPrintF('Locked: %s',$LockedCount));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: ExecuteTime = %s',print_r($ExecuteTime,true)));
+#Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: ExecuteTime = %s',print_r($ExecuteTime,true)));
 return $ExecuteTime;
 #-------------------------------------------------------------------------------
 ?>

@@ -688,10 +688,9 @@
   <HostingForDelete>
    <Name>Заказы на хостинг для удаления</Name>
    <Params type="array" />
+   <ExecuteTime>1:10</ExecuteTime>
    <IsActive>1</IsActive>
-   <StartHour>1</StartHour>
-   <StartMinutes>10</StartMinutes>
-   <DeleteTimeout>20</DeleteTimeout>
+   <HostingDeleteTimeout>20</HostingDeleteTimeout>
   </HostingForDelete>
   <!-- ********************************************************************* -->
   <HostingSchemeChange>
