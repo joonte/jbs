@@ -13,7 +13,7 @@ $Settings = $Config['Tasks']['Types']['HostingForDelete'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # достаём время выполнения
-$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecuteTime'=>$Settings['ExecuteTime'],'ExecuteDays'=>$Settings['ExecuteDays'],'DefaultTime'=>MkTime(1,10,0,Date('n'),Date('j')+1,Date('Y'))));
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecuteTime'=>$Settings['ExecuteTime'],'ExecuteDays'=>@$Settings['ExecuteDays'],'DefaultTime'=>MkTime(1,10,0,Date('n'),Date('j')+1,Date('Y'))));
 if(Is_Error($ExecuteTime))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -21,7 +21,7 @@ if(!$Settings['IsActive'])
 	return 3600;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Where = SPrintF("`StatusID` = 'Suspended' AND `StatusDate` + $DeleteTimeout - UNIX_TIMESTAMP() <= 0",$Settings['HostingDeleteTimeout'] * 24 * 3600);
+$Where = SPrintF("`StatusID` = 'Suspended' AND `StatusDate` + %s - UNIX_TIMESTAMP() <= 0",$Settings['HostingDeleteTimeout'] * 24 * 3600);
 #-------------------------------------------------------------------------------
 $HostingOrders = DB_Select('HostingOrders','ID',Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
