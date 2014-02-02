@@ -425,8 +425,8 @@ class ImapMailbox {
 		$name = preg_replace('~[^-a-zA-Z0-9_\.]+~u', '-', $name);
 		// trim begin/end '-'
 		$name = trim($name, "-");
-		if(preg_match('/^\.[\w]+$/',$name))
-			$name = SPrintF('%s%s',Md5(MicroTime()),$name);
+		#if(preg_match('/^\.[\w]+$/',$name))
+		#	$name = SPrintF('%s%s',Md5(MicroTime()),$name);
 
 		return $name;
 	}

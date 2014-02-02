@@ -27,7 +27,7 @@ function Upload_Get($Name,$Hash = FALSE){
   $Path = SPrintF('%s/%s',$Uploads,$Hash);
   #-----------------------------------------------------------------------------
   if(!File_Exists($Path))
-    return new gException('FILE_NOT_FOUND','Файл не неайден на сервере');
+    return new gException('FILE_NOT_FOUND','Файл не найден на сервере');
   #-----------------------------------------------------------------------------
   $Data = IO_Read($Path);
   if(Is_Error($Data))
@@ -48,19 +48,20 @@ function Upload_Get($Name,$Hash = FALSE){
 #-------------------------------------------------------------------------------
 # added by lissyara, 2011-12-02 in 13:41 MSK, for JBS-210
 function SaveUploadedFile($Table, $ID, $File){
+	#-------------------------------------------------------------------------------
         $FilePaths = GetFilePath($Table, $ID);
         # создаём директорию
-        if(!file_exists($FilePaths['FileDir'])){
-                if(!mkdir($FilePaths['FileDir'], 0700, true)){
+        if(!file_exists($FilePaths['FileDir']))
+                if(!mkdir($FilePaths['FileDir'], 0700, true))
                         return new gException('CANNOT_CREATE_DIRECTORY','Не удалось создать директорию для сохранения файла');
-                }
-        }
+	#-------------------------------------------------------------------------------
         # сохраняем файл
         $fp = fopen($FilePaths['FilePath'], 'w');
         fwrite($fp, $File);
         fclose($fp);
-
+	#-------------------------------------------------------------------------------
         return TRUE;
+	#-------------------------------------------------------------------------------
 }
 
 #-------------------------------------------------------------------------------
