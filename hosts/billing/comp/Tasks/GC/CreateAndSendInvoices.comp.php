@@ -244,7 +244,7 @@ case 'array':
 			}else{
 				#-------------------------------------------------------------------------------
 				# выбираем тип патёжной системы, которой был оплачен последний счёт юзера, по этому договору
-				$Invoice = DB_Select('InvoicesOwners',Array('PaymentSystemID'),Array('Where'=>SPrintF('`StatusID` = "Payed" AND `ContractID` = %s AND `UserID` = %s',$Basket['ContractID'],$Order['UserID']),'Limit'=>Array('Start'=>0,'Length'=>1),'SortOn'=>'StatusDate','IsDesc'=>TRUE));
+				$Invoice = DB_Select('InvoicesOwners',Array('PaymentSystemID'),Array('UNIQ','Where'=>SPrintF('`StatusID` = "Payed" AND `ContractID` = %s AND `UserID` = %s',$Basket['ContractID'],$Order['UserID']),'Limits'=>Array('Start'=>0,'Length'=>1),'SortOn'=>'StatusDate','IsDesc'=>TRUE));
 				#-------------------------------------------------------------------------------
 				switch(ValueOf($Invoice)){
 				case 'error':
@@ -253,6 +253,7 @@ case 'array':
 					# No more...
 					break;
 				case 'array':
+					#Debug(SPrintF('[comp/www/CreateAndSendInvoices]: Invoice = %s',print_r($Invoice,true)));
 					#-------------------------------------------------------------------------------
 					if(IsSet($PaymentSystems[$Invoice['PaymentSystemID']]))
 						$PaymentSystemID = $Invoice['PaymentSystemID'];
@@ -286,11 +287,11 @@ case 'array':
 			Debug(SPrintF('[comp/www/CreateAndSendInvoices]: юзеру (%s) выписан счёт (%s)',$Order['Email'],$Comp['InvoiceID']));
 			#-------------------------------------------------------------------------------
 			# надо исключить вложение в писем счетов на вебмани и прочее - их нельзя напярмую оплачивать
-			if(!$Settings['CreateAndSendInvoicesOnlyNatural']){
+			if(!$Settings['CreateAndSendInvoicesSendOnlyNatural']){
 				#-------------------------------------------------------------------------------
 				$Attachments[] = $Comp['InvoiceID'];
 				#-------------------------------------------------------------------------------
-			}elseif($Settings['CreateAndSendInvoicesOnlyNatural'] && $PaymentSystemID == $Basket['TypeID']){
+			}elseif($Settings['CreateAndSendInvoicesSendOnlyNatural'] && $PaymentSystemID == $Basket['TypeID']){
 				#-------------------------------------------------------------------------------
 				$Attachments[] = $Comp['InvoiceID'];
 				#-------------------------------------------------------------------------------
