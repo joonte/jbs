@@ -147,7 +147,9 @@ if((Count($Errors) && !$GLOBALS['__USER']['IsAdmin']) || ($GLOBALS['__USER']['Is
     $Parent = $Exception;
   }
   #-----------------------------------------------------------------------------
-  return new gException('FIELDS_WRONG_FILLED','Не верно заполнены поля',$Exception);
+  if(IsSet($Exception))
+    return new gException('FIELDS_WRONG_FILLED','Не верно заполнены поля',$Exception);
+  #-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 $Replace = Array_ToLine($Attribs,'%');
