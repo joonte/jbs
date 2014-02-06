@@ -135,6 +135,16 @@
     <Language>ru</Language>
    </Settings>
   </VdsManager4>
+ <!-- ********************************************************************* -->
+ <VmManager5>
+  <Name>VmManager5</Name>
+  <Settings>
+   <Port>1500</Port>
+   <Protocol>ssl</Protocol>
+   <Theme>Orion</Theme>
+   <Language>ru</Language>
+  </Settings>
+ </VmManager5>
  </Systems>
  <!-- ********************************************************************** -->
  <IsNoDomain>1</IsNoDomain>
