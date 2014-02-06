@@ -18,7 +18,7 @@ $AgreeHandle	= (boolean) @$Args['AgreeHandle'];
 $CheckFields	= (boolean) @$Args['CheckFields'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$GLOBALS['__USER']['IsAdmin']){
@@ -132,7 +132,7 @@ foreach(Array_Keys($Params) as $AttribID){
 #-------------------------------------------------------------------------------
 if((Count($Errors) && !$GLOBALS['__USER']['IsAdmin']) || ($GLOBALS['__USER']['IsAdmin'] && $CheckFields)){
   #-----------------------------------------------------------------------------
-  $Attribs = $Template['Attribs'];
+  $Attribs1 = $Template['Attribs'];
   #-----------------------------------------------------------------------------
   $Parent = NULL;
   #-----------------------------------------------------------------------------
@@ -140,7 +140,7 @@ if((Count($Errors) && !$GLOBALS['__USER']['IsAdmin']) || ($GLOBALS['__USER']['Is
   #-----------------------------------------------------------------------------
   foreach($Errors as $AttribID){
     #---------------------------------------------------------------------------
-    $Attrib = $Attribs[$AttribID];
+    $Attrib = $Attribs1[$AttribID];
     #---------------------------------------------------------------------------
     $Exception = new gException(StrToUpper($AttribID),$Attrib['Comment'],$Parent);
     #---------------------------------------------------------------------------
