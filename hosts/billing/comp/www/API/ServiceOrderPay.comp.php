@@ -18,7 +18,7 @@ $IsUseBasket	= (boolean) @$Args['IsUseBasket'];
 $PayMessage     =  (string) @$Args['PayMessage'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','ContractID','UserID','ServiceID','IsPayed','ExpirationDate','Keys','StatusID','(SELECT `Balance` FROM `Contracts` WHERE `Contracts`.`ID` = `ContractID`) as `ContractBalance`');
 #-------------------------------------------------------------------------------
@@ -186,7 +186,7 @@ switch(ValueOf($ServiceOrder)){
                     'ServiceID'  => $Service['ID'],
                     'Comment'    => $ServiceOrder['Keys'],
                     'Amount'     => $AmountPay,
-                    'Cost'       => $CostPay,
+                    'Cost'       => $Cost,
                     'Discont'    => 0
                   );
                   #-------------------------------------------------------------
