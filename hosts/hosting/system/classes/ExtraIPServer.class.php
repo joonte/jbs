@@ -63,7 +63,7 @@ public function AddIP(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Server->GetDomains]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[Server->AddIP]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -83,7 +83,7 @@ public function DeleteIP(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Server->GetDomains]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[Server->DeleteIP]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
