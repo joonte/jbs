@@ -218,7 +218,7 @@ foreach($Mails as $mailId){
 			#-------------------------------------------------------------------------------
 			foreach($Emails as $Email){
 				#-------------------------------------------------------------------------------
-				if($Email == $fromAddress){
+				if(Trim($Email) == $fromAddress){
 					#-------------------------------------------------------------------------------
 					Debug(SPrintF('[comp/Tasks/CheckEmail]: Excluded AutoReply from: "%s", header: "%s"',$fromAddress,$AutoReply));
 					$IsDelete = FALSE;
