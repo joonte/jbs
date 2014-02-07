@@ -16,6 +16,11 @@ if(Is_Error(System_Load('libs/IspSoft.php','libs/Http.php')))
 $Config = Config();
 $Settings = $Config['IspSoft']['Settings'];
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(!$Config['Tasks']['Types']['GC']['ISPswCheckLicensesSettings'])
+	return TRUE;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # достаём лицензии с сайта ispsystem
 $Doc = IspSoft_Get_List_Licenses($Settings);
 # проверяем, что вернулось
@@ -24,8 +29,9 @@ case 'array':
 	# all OK
 	break;
 default:
-	return(time() + 3600);
+	return TRUE;
 }
+#-------------------------------------------------------------------------------
 #Debug("[comp/Tasks/ISPswCheckLicenses]: Doc = " . print_r($Doc, true));
 # перебираем лицензии
 foreach($Doc as $License){
@@ -42,15 +48,17 @@ foreach($Doc as $License){
 	if($License['status'] == 5){$StatusID = "OnCreate";}
 	#---------------------------------------------------------------
 	# проверяем наличие лицензии с таким идентификатором в биллинге
-	$ISPswLic = DB_Select('ISPswLicenses',Array('ID','elid','ip','StatusID'),Array('UNIQ','Where'=>'`elid`=' . $License['id']));
+	$ISPswLic = DB_Select('ISPswLicenses',Array('ID','elid','ip','StatusID'),Array('UNIQ','Where'=>SPrintF('`elid`=%u',$License['id'])));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($ISPswLic)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	case 'exception':
+		#-------------------------------------------------------------------------------
 		# нет такой лицензии в нашем биллинге
-		Debug("[comp/Tasks/ISPswCheckLicenses]: not found license #" . $License['id']);
+		Debug(SPrintF('[comp/Tasks/ISPswCheckLicenses]: not found license #%s',$License['id']));
+		#-------------------------------------------------------------------------------
 		$Event = Array(
 				'UserID'	=> 100,
 				'PriorityID'	=> 'Error',
@@ -79,11 +87,13 @@ foreach($Doc as $License){
 			);
 		if(Is_Error($IsInsert))
 			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
 		break;
-	#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 	case 'array';
+		#-------------------------------------------------------------------------------
 		# лицензия в биллинге есть
-		Debug("[comp/Tasks/ISPswCheckLicenses]: found license #" . $License['id']);
+		Debug(SPrintF('[comp/Tasks/ISPswCheckLicenses]: found license #%u',$License['id']));
 		#-------------------------------------------------------------------------------
 		# сравниваем IP адреса в биллинге ISPsystem и у нас
 		if($License['ip'] != $ISPswLic['ip']){
@@ -123,7 +133,7 @@ foreach($Doc as $License){
 						'ExpireDate'	=> $ExpireDate
 					),
 					Array(
-						'Where'		=> "`elid` = " . $License['id']
+						'Where'		=> SPrintF('`elid` = %u',$License['id'])
 					)
 				);
 		if(Is_Error($IsUpdate))
@@ -136,7 +146,7 @@ foreach($Doc as $License){
 							'IsNoTrigger'   => TRUE,
 							'StatusID'      => $StatusID,
 							'RowsIDs'       => $ISPswLic['ID'],
-							'Comment'       => 'Изменение статуса в биллинге ISPsystem [' . $ISPswLic['StatusID'] . '->' . $StatusID . ']'
+							'Comment'       => SPrintF('Изменение статуса в биллинге ISPsystem [%s->%s]',$ISPswLic['StatusID'],$StatusID)
 						)
 					);
 			#-------------------------------------------------------------------------
@@ -146,8 +156,11 @@ foreach($Doc as $License){
 			case 'exception':
 				return ERROR | @Trigger_Error(400);
 			case 'array':
-				Debug("[comp/Tasks/ISPswCheckLicenses]: changed status for license #" . $License['id'] . " " . $ISPswLic['StatusID'] . "->" . $StatusID);
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/ISPswCheckLicenses]: changed status for license #%u %s->%s',$License['id'],$ISPswLic['StatusID'],$StatusID));
+				#-------------------------------------------------------------------------------
 				break;
+				#-------------------------------------------------------------------------------
 			default:
 				return ERROR | @Trigger_Error(101);
 
@@ -159,7 +172,8 @@ foreach($Doc as $License){
 	}
 }	# end foreach
 
-# 
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # перебираем локальные, находим те которых нет в испсистем - вешаем уведомления об этом
 $ISPswLicenses = DB_Select('ISPswLicenses',Array('ID','elid'));
 #-------------------------------------------------------------------------------
@@ -174,38 +188,52 @@ case 'array':
 	$GLOBALS['TaskReturnInfo'] = SPrintF('Local licenses: %u',SizeOf($ISPswLicenses));
 	#---------------------------------------------------------------------------
 	foreach($ISPswLicenses as $ISPswLicense){
+		#-------------------------------------------------------------------------------
 		$IsExists = false;
 		#---------------------------------------------------------------------------
 		foreach($Doc as $License){
+			#-------------------------------------------------------------------------------
 			if($License['id'] == $ISPswLicense['elid']){
-				Debug("[comp/Tasks/ISPswCheckLicenses]: license #" . $ISPswLicense['elid'] . " found in ISPsystem billing");
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/ISPswCheckLicenses]: license #%u found in ISPsystem billing',$ISPswLicense['elid']));
+				#-------------------------------------------------------------------------------
 				$IsExists = true;
+				#-------------------------------------------------------------------------------
 			}
+			#-------------------------------------------------------------------------------
 		}
+		#-------------------------------------------------------------------------------
 		if(!$IsExists){
-			Debug("[comp/Tasks/ISPswCheckLicenses]: license #" . $ISPswLicense['elid'] . " not found in ISPsystem billing");
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/Tasks/ISPswCheckLicenses]: license #%u not found in ISPsystem billing',$ISPswLicense['elid']));
+			#-------------------------------------------------------------------------------
 			$Event = Array(
 					'UserID'	=> 100,
 					'PriorityID'	=> 'Error',
-					'Text'		=> "Найдена лицензия на ПО, отсутствующая в биллинге ISPsystem #" . $ISPswLicense['elid'],
+					'Text'		=> SPrintF('В локальной БД обнаружена лицензия отсутствующая в биллинге ISPsystem #%u',$ISPswLicense['elid']),
 					'IsReaded'	=> FALSE
 				);
 			$Event = Comp_Load('Events/EventInsert',$Event);
 			if(!$Event)
 				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
 		}
+		#-------------------------------------------------------------------------------
 	}
+	#-------------------------------------------------------------------------------
 	break;
+	#-------------------------------------------------------------------------------
 default:
 	return ERROR | @Trigger_Error(101);
 }	# end of VPSSchemes
-
+#-------------------------------------------------------------------------------
 
 # помечаем в локальной базе как свободные те которые уже больше 30 дней свободны (или 31?)
 
-
-return MkTime(4,35,0,Date('n'),Date('j')+1,Date('Y'));
-
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+return TRUE;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>

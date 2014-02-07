@@ -1054,14 +1054,6 @@
    <IsActive>1</IsActive>
   </ISPswDelete>
   <!-- ********************************************************************* -->
-  <ISPswCheckLicenses>
-   <Name>Синхронизация лицензий с ISPsystem</Name>
-   <Params>
-    <Params type="array" />
-   </Params>
-   <IsActive>1</IsActive>
-  </ISPswCheckLicenses>
-  <!-- ********************************************************************* -->
   <!-- ********************************************************************* -->
   <EmailBoxesNotifies>
    <Name>Уведомления об окончании квоты почтовых ящиков</Name>
@@ -1108,6 +1100,10 @@
     <EmailBoxesNotifiesPercent>80</EmailBoxesNotifiesPercent>
    </EmailBoxesNotifiesSettings>
    <!-- ********************************************************************* -->
+   <ISPswCheckLicensesSettings>
+    <IsActive>1</IsActive>
+   </ISPswCheckLicensesSettings>
+   <!-- ********************************************************************* -->
    <!-- задачи -->
    <DailyTasks>
     <CheckUsersOnHostingServers>Синхронизация аккаунтов биллинга и серверов хостинга</CheckUsersOnHostingServers>
@@ -1122,6 +1118,7 @@
     <DomainPathRegisterNotify>Уведомления о доменах с неопределёнными владельцами</DomainPathRegisterNotify>
     <DeleteDomainsForTransfer>Удаление доменов в статусе &quot;Для переноса&quot;</DeleteDomainsForTransfer>
     <DomainsFindOdd>Поиск доменов отсутствующих в биллинге/у регистратора</DomainsFindOdd>
+    <ISPswCheckLicenses>Синхронизация лицензий с ISPsystem</ISPswCheckLicenses>
    </DailyTasks>
    <!-- ********************************************************************* -->
   </GC>
