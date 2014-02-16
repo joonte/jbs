@@ -267,7 +267,7 @@ if(IsSet($Service['Code']) && $Service['Code'] == 'Default'){
 					'name'  => SPrintF('Statuses[%s][Script]',$StatusID),
 					'size'  => 30,
 					'value' => @$Service['Params']['Statuses'][$StatusID]['Script'],
-					'prompt'=> SPrintF('Скрипт исполняемый при установке статуса "%s". Пустое поле - не выполнять никаких скриптов.',$Statuses[$StatusID]['Name'])
+					'prompt'=> SPrintF('Скрипт исполняемый при установке статуса "%s". Если имя начинается с символа "/", путь считается полным, иначе скрипт ищется в директории "%s/hosts/%s/scripts/" (возможно создание субдиректорий и указание относительных путей). Скрипты с расширением ".php" выполняются через include(), остальные - через exec() (соответственно, файлы должны быть исполняемыми). Пустое поле - не выполнять никаких скриптов.',$Statuses[$StatusID]['Name'],SYSTEM_PATH,HOST_ID)
 					)
 				);
 		if(Is_Error($Comp))

@@ -1074,7 +1074,7 @@
     <Name>Название услуги</Name>
     <ID>Идентификатор заказа</ID>
    </Params>
-   <IsActive>0</IsActive>
+   <IsActive>1</IsActive>
   </ServiceCreate>
   <!-- ********************************************************************* -->
   <ServiceProlong>

@@ -196,12 +196,14 @@ switch(ValueOf($Service)){
                   if(Is_Error($Comp))
                     return ERROR | @Trigger_Error(500);
                   #-------------------------------------------------------------
+		  $SizeText = ' (не более 12Mb)';
+		  #-------------------------------------------------------------
                 break;
                 default:
                   return ERROR | @Trigger_Error(101);
               }
               #-----------------------------------------------------------------
-              $Table[] = Array(SPrintF($ServiceField['IsDuty']?'*%s':'%s',SPrintF('%s (не более 12Mb)',$ServiceField['Name'])),$Comp);
+              $Table[] = Array(SPrintF($ServiceField['IsDuty']?'*%s':'%s',SPrintF('%s%s',$ServiceField['Name'],IsSet($SizeText)?$SizeText:'')),$Comp);
             }
             #-------------------------------------------------------------------
             $Comp = Comp_Load(

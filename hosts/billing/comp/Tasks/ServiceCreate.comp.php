@@ -9,18 +9,80 @@ $__args_list = Array('Task','ServiceName','ServiceOrderID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Orders','StatusID'=>'Active','RowsIDs'=>$ServiceOrderID));
+# выбираем данные сервиса
+$Order = DB_Select('Orders',Array('ServiceID','Keys','(SELECT `Params` FROM `Services` WHERE `Orders`.`ServiceID` = `Services`.`ID`) AS `Params`'),Array('UNIQ','ID'=>$ServiceOrderID));
 #-------------------------------------------------------------------------------
-switch(ValueOf($Comp)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return ERROR | @Trigger_Error(400);
-  case 'array':
-    return TRUE;
-  default:
-    return ERROR | @Trigger_Error(101);
+switch(ValueOf($Order)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Settings = $Order['Params']['Statuses']['OnCreate'];
+#-------------------------------------------------------------------------------
+# проверяем, надо ли выполнять задачу
+if(IsSet($Settings['IsNoAction']) && !$Settings['IsNoAction'])
+	return TRUE;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(IsSet($Settings['Script']) && Mb_StrLen(Trim($Settings['Script'])) > 0){
+	#-------------------------------------------------------------------------------
+	$File = Trim($Settings['Script']);
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[comp/Tasks/ServiceCreate]: Script = %s',$File));
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	# находим полный путь к файлу
+	if(SubStr($File,0,1) != '/')
+		$File = SPrintF('%s/hosts/%s/scripts/%s',SYSTEM_PATH,HOST_ID,$File);
+	#-------------------------------------------------------------------------------
+	# проверяем наличие файла по этому пути
+	if(!File_Exists($File))
+		return new gException('FILE_NOT_FOUND',SPrintF("Файл '%s' не найден",$File));
+	#-------------------------------------------------------------------------------
+	# в зависимости от расширения, скрипт выполняем по разному
+	$PathInfo = PathInfo($File);
+	#-------------------------------------------------------------------------------
+	if(Mb_StrToLower($PathInfo['extension']) == 'php'){
+		#-------------------------------------------------------------------------------
+		Include($File);
+		#$Comp = Comp_Load('www/API/HostingOrderPay',Array('HostingOrderID'=>$HostingOrder['ID'],'DaysPay'=>$Item['Amount']));
+		#   if(Is_Error($Comp))
+		#          return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		$Out = Exec(SPrintF('"%s" "OnCreate" "%s" "%s" 2>&1',$File,$ServiceOrderID,$Order['Keys']));
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/Tasks/ServiceCreate]: exec return = %s',print_r($Out,true)));
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Orders','StatusID'=>'Active','RowsIDs'=>$ServiceOrderID));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Comp)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		return TRUE;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+return new gException('NEED_MANUAL_ACTION','Задачу необходимо выполнять вручную, администратору');
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>
