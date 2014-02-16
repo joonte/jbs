@@ -29,7 +29,10 @@ $IsConditionally	= (boolean) @$Args['IsConditionally'];
 $IsNoActionProlong	= (boolean) @$Args['IsNoActionProlong'];
 $IsNoActionSuspend	= (boolean) @$Args['IsNoActionSuspend'];
 $IsNoActionDelete	= (boolean) @$Args['IsNoActionDelete'];
+$Statuses		=   (array) @$Args['Statuses'];
 $SortID			= (integer) @$Args['SortID'];
+#-------------------------------------------------------------------------------
+Debug(SPrintF('[comp/www/Administrator/API/ServiceEdit]: Statuses = %s',print_r($Statuses,true)));
 #-------------------------------------------------------------------------------
 $IService = Array(
 		#-------------------------------------------------------------------------------

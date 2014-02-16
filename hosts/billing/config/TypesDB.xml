@@ -92,5 +92,9 @@
 	see http://jira.joonte.com/browse/JBS-714 -->
 <ChargeFree>Logic</ChargeFree>
 <!-- *********************************************************************** -->
+<!-- added by lissyara 2014-02-16 in 00:43 MSK
+	see http://jira.joonte.com/browse/JBS-779 -->
+<IsNoAction>Logic</IsNoAction>
+<!-- *********************************************************************** -->
 </XML>
 
