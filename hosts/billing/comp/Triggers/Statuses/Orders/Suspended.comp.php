@@ -9,7 +9,7 @@ $__args_list = Array('ServiceOrder');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Service = DB_Select('Services',Array('Name','IsNoActionSuspend'),Array('UNIQ','ID'=>$ServiceOrder['ServiceID']));
+$Service = DB_Select('Services',Array('Name','Params'),Array('UNIQ','ID'=>$ServiceOrder['ServiceID']));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Service)){
 case 'error':
@@ -18,7 +18,7 @@ case 'exception':
 	return ERROR | @Trigger_Error(400);
 case 'array':
 	#-------------------------------------------------------------------------------
-	if(!$Service['IsNoActionSuspend']){
+	if(!IsSet($Service['Params']['Statuses']['Suspended']['IsNoAction']) || !$Service['Params']['Statuses']['Suspended']['IsNoAction']){
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$ServiceOrder['UserID'],'TypeID'=>'ServiceSuspend','Params'=>Array($Service['Name'],$ServiceOrder['ID'])));
 		#-------------------------------------------------------------------------------

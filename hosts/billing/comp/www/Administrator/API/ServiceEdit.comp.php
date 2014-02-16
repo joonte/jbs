@@ -26,9 +26,6 @@ $Cost			=   (float) @$Args['Cost'];
 $IsActive		= (boolean) @$Args['IsActive'];
 $IsProlong		= (boolean) @$Args['IsProlong'];
 $IsConditionally	= (boolean) @$Args['IsConditionally'];
-$IsNoActionProlong	= (boolean) @$Args['IsNoActionProlong'];
-$IsNoActionSuspend	= (boolean) @$Args['IsNoActionSuspend'];
-$IsNoActionDelete	= (boolean) @$Args['IsNoActionDelete'];
 $Statuses		=   (array) @$Args['Statuses'];
 $SortID			= (integer) @$Args['SortID'];
 #-------------------------------------------------------------------------------
@@ -49,10 +46,9 @@ $IService = Array(
 		'IsActive'		=> $IsActive,
 		'IsProlong'		=> $IsProlong,
 		'IsConditionally'	=> $IsConditionally,
-		'IsNoActionProlong'	=> $IsNoActionProlong,
-		'IsNoActionSuspend'	=> $IsNoActionSuspend,
-		'IsNoActionDelete'	=> $IsNoActionDelete,
+		'Params'		=> Array('Statuses'=>$Statuses),
 		'SortID'		=> $SortID
+		#-------------------------------------------------------------------------------
 		);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

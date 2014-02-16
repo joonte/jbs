@@ -28,7 +28,7 @@ case 'exception':
 	return $Comp;
 case 'array':
 	#-------------------------------------------------------------------------------
-	$Service = DB_Select('Services',Array('Name','IsNoActionDelete'),Array('UNIQ','ID'=>$ServiceOrder['ServiceID']));
+	$Service = DB_Select('Services',Array('Name','Params'),Array('UNIQ','ID'=>$ServiceOrder['ServiceID']));
 	switch(ValueOf($Service)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);

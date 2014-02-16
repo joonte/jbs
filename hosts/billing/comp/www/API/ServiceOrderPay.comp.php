@@ -52,7 +52,7 @@ switch(ValueOf($ServiceOrder)){
         if(!In_Array($StatusID,Array('Waiting','Active','Suspended')))
           return new gException('SERVICE_ORDER_CAN_NOT_PAY','Заказ не может быть оплачен');
         #-----------------------------------------------------------------------
-        $Service = DB_Select('Services',Array('ID','ConsiderTypeID','Measure','CostOn','Cost','IsActive','IsProlong','IsNoActionProlong'),Array('UNIQ','ID'=>$ServiceOrder['ServiceID']));
+        $Service = DB_Select('Services',Array('ID','ConsiderTypeID','Measure','CostOn','Cost','IsActive','IsProlong','Params'),Array('UNIQ','ID'=>$ServiceOrder['ServiceID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($Service)){
           case 'error':
@@ -179,20 +179,22 @@ switch(ValueOf($ServiceOrder)){
                   #-------------------------------------------------------------
                   $CurrentMonth = (Date('Y') - 1970)*12 + (integer)Date('n');
                   #-------------------------------------------------------------
-                  $IWorkComplite = Array(
-                    #-----------------------------------------------------------
-                    'ContractID' => $ServiceOrder['ContractID'],
-                    'Month'      => $CurrentMonth,
-                    'ServiceID'  => $Service['ID'],
-                    'Comment'    => $ServiceOrder['Keys'],
-                    'Amount'     => $AmountPay,
-                    'Cost'       => $Cost,
-                    'Discont'    => 0
-                  );
-                  #-------------------------------------------------------------
-                  $IsInsert = DB_Insert('WorksComplite',$IWorkComplite);
-                  if(Is_Error($IsInsert))
-                    return ERROR | Trigger_Error(500);
+		  # TODO к первой единице оплаты надо прибавить цену инсталляции
+		    #-------------------------------------------------------------
+                    $IWorkComplite = Array(
+                      #-----------------------------------------------------------
+                      'ContractID' => $ServiceOrder['ContractID'],
+                      'Month'      => $CurrentMonth,
+                      'ServiceID'  => $Service['ID'],
+                      'Comment'    => $ServiceOrder['Keys'],
+                      'Amount'     => $AmountPay,
+                      'Cost'       => $Cost,
+                      'Discont'    => 0
+                    );
+                    #-------------------------------------------------------------
+                    $IsInsert = DB_Insert('WorksComplite',$IWorkComplite);
+                    if(Is_Error($IsInsert))
+                      return ERROR | Trigger_Error(500);
                   #-------------------------------------------------------------
                   $ExpirationDate = $ServiceOrder['ExpirationDate'];
                   #-------------------------------------------------------------
@@ -232,7 +234,7 @@ switch(ValueOf($ServiceOrder)){
                     #-------------------------------------------------------------
                     $NewStatusID = 'OnProlong';
                     #-------------------------------------------------------------
-                    if($Service['IsNoActionProlong'])
+                    if(IsSet($Service['Params']['Statuses']['OnProlong']['IsNoAction']) && $Service['Params']['Statuses']['OnProlong']['IsNoAction'])
                       $NewStatusID = 'Active';
                     #-------------------------------------------------------------
                   }

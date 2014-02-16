@@ -17,7 +17,7 @@ case 'exception':
 	return $Comp;
 case 'array':
 	#-------------------------------------------------------------------------------
-	$Service = DB_Select('Services',Array('Name','IsNoActionDelete'),Array('UNIQ','ID'=>$ServiceOrder['ServiceID']));
+	$Service = DB_Select('Services',Array('Name','Params'),Array('UNIQ','ID'=>$ServiceOrder['ServiceID']));
 	switch(ValueOf($Service)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
@@ -25,7 +25,7 @@ case 'array':
 		return ERROR | @Trigger_Error(400);
 	case 'array':
 		#-------------------------------------------------------------------------------
-        	if(!$Service['IsNoActionDelete']){
+        	if(!IsSet($Service['Params']['Statuses']['Deleted']['IsNoAction']) || !$Service['Params']['Statuses']['Deleted']['IsNoAction']){
 			#-------------------------------------------------------------------------------
 			$Comp = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$ServiceOrder['UserID'],'TypeID'=>'ServiceDelete','Params'=>Array($Service['Name'],$ServiceOrder['ID'])));
 			#-------------------------------------------------------------------------------
