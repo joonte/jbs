@@ -1529,6 +1529,7 @@
 			<FoulMaxLength>20</FoulMaxLength>
 		</DenyFoulLanguage>
 		<ShowTicketContextMenu>0</ShowTicketContextMenu>
+		<ThemeMinimumLength>4</ThemeMinimumLength>
 	</Edesks>
 	<!-- *********************************************************************** -->
 </Interface>

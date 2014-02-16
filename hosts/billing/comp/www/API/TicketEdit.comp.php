@@ -8,12 +8,8 @@ $__args_list = Array('Args');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
+$Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-if(!IsSet($Args)){
-	if(Is_Error(System_Load('modules/Authorisation.mod')))
-		return ERROR | @Trigger_Error(500);
-	$Args = Args();
-}
 #-------------------------------------------------------------------------------
 $Theme         =  (string) @$Args['Theme'];
 $TargetGroupID = (integer) @$Args['TargetGroupID'];
@@ -28,13 +24,18 @@ $NotifyEmail   =  (string) @$Args['NotifyEmail'];
 $Theme		= substr($Theme, 0, 127);
 $Message	= substr($Message, 0, 62000);
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/Upload.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Config = Config();
 #-------------------------------------------------------------------------------
 if(!$Theme)
 	return new gException('THEME_IS_EMPTY','Введите тему запроса');
 #-------------------------------------------------------------------------------
-$Config = Config();
+if(Mb_StrLen($Theme) < $Config['Interface']['Edesks']['ThemeMinimumLength'])
+	return new gException('THEME_IS_TOO_SHORT','Некорректная тема запроса');
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Priorities = $Config['Edesks']['Priorities'];
 #-------------------------------------------------------------------------------

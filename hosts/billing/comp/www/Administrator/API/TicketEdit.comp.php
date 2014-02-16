@@ -14,8 +14,8 @@ $Theme		=  (string) @$Args['Theme'];
 $PriorityID	=  (string) @$Args['PriorityID'];
 $TargetGroupID	= (integer) @$Args['TargetGroupID'];
 $TargetUserID	= (integer) @$Args['TargetUserID'];
-$Flags		= (string) @$Args['Flags'];
-$NotifyEmail	= (string) @$Args['NotifyEmail'];
+$Flags		=  (string) @$Args['Flags'];
+$NotifyEmail	=  (string) @$Args['NotifyEmail'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
