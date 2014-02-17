@@ -10,7 +10,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 # выбираем данные сервиса
-$Order = DB_Select('Orders',Array('ServiceID','Keys','(SELECT `Params` FROM `Services` WHERE `Orders`.`ServiceID` = `Services`.`ID`) AS `Params`'),Array('UNIQ','ID'=>$ServiceOrderID));
+$Order = DB_Select('OrdersOwners',Array('ServiceID','Keys','UserID','(SELECT `Params` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) AS `Params`','(SELECT `NameShort` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) AS `NameShort`'),Array('UNIQ','ID'=>$ServiceOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Order)){
 case 'error':
@@ -22,6 +22,11 @@ case 'array':
 default:
 	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Number = Comp_Load('Formats/Order/Number',$ServiceOrderID);
+if(Is_Error($Number))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Settings = $Order['Params']['Statuses']['OnCreate'];
@@ -52,20 +57,20 @@ if(IsSet($Settings['Script']) && Mb_StrLen(Trim($Settings['Script'])) > 0){
 	if(Mb_StrToLower($PathInfo['extension']) == 'php'){
 		#-------------------------------------------------------------------------------
 		Include($File);
-		#$Comp = Comp_Load('www/API/HostingOrderPay',Array('HostingOrderID'=>$HostingOrder['ID'],'DaysPay'=>$Item['Amount']));
-		#   if(Is_Error($Comp))
-		#          return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
-		$Out = Exec(SPrintF('"%s" "OnCreate" "%s" "%s" 2>&1',$File,$ServiceOrderID,$Order['Keys']));
+		Exec(SPrintF('"%s" "OnCreate" "%s" "%s" 2>&1',$File,$Number,$Order['Keys']),$Out,$ReturnValue);
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/Tasks/ServiceCreate]: exec return = %s',print_r($Out,true)));
+		Debug(SPrintF('[comp/Tasks/ServiceActive]: exec return code = %s, Out = %s',$ReturnValue,print_r($Out,true)));
+		#-------------------------------------------------------------------------------
+		if($ReturnValue != 0)
+			return new gException('ERROR_EXECUTE_COMMAND','Произошла ошибка при выполнении команды назначенной статусу');
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Orders','StatusID'=>'Active','RowsIDs'=>$ServiceOrderID));
+	$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Orders','StatusID'=>'Active','RowsIDs'=>$ServiceOrderID,'Comment'=>'Заказ успешно создан','IsNoTrigger'=>TRUE));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Comp)){
 	case 'error':
@@ -73,7 +78,20 @@ if(IsSet($Settings['Script']) && Mb_StrLen(Trim($Settings['Script'])) > 0){
 	case 'exception':
 		return ERROR | @Trigger_Error(400);
 	case 'array':
+		#-------------------------------------------------------------------------------
+		$Event = Array(
+				'UserID'        => $Order['UserID'],
+				'PriorityID'    => 'Hosting',
+				'Text'          => SPrintF('Заказ #%s на услугу (%s) успешно создан',$Number,$Order['NameShort'])
+				);
+		$Event = Comp_Load('Events/EventInsert',$Event);
+		if(!$Event)
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$GLOBALS['TaskReturnInfo'] = Array($Order['NameShort'],SprintF('#%s',$Number),$Settings['Script']);
+		#-------------------------------------------------------------------------------
 		return TRUE;
+		#-------------------------------------------------------------------------------
 	default:
 		return ERROR | @Trigger_Error(101);
 	}

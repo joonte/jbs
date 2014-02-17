@@ -1077,13 +1077,22 @@
    <IsActive>1</IsActive>
   </ServiceCreate>
   <!-- ********************************************************************* -->
+  <ServiceActive>
+   <Name>Активация услуги</Name>
+   <Params>
+    <Name>Название услуги</Name>
+    <ID>Идентификатор заказа</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </ServiceActive>
+  <!-- ********************************************************************* -->
   <ServiceProlong>
    <Name>Продление услуги</Name>
    <Params>
     <Name>Название услуги</Name>
     <ID>Идентификатор заказа</ID>
    </Params>
-   <IsActive>0</IsActive>
+   <IsActive>1</IsActive>
   </ServiceProlong>
   <!-- ********************************************************************* -->
   <ServiceSuspend>
@@ -1092,7 +1101,7 @@
     <Name>Название услуги</Name>
     <ID>Идентификатор заказа</ID>
    </Params>
-   <IsActive>0</IsActive>
+   <IsActive>1</IsActive>
   </ServiceSuspend>
   <!-- ********************************************************************* -->
   <ServiceDelete>
@@ -1101,7 +1110,7 @@
     <Name>Название услуги</Name>
     <ID>Идентификатор заказа</ID>
    </Params>
-   <IsActive>0</IsActive>
+   <IsActive>1</IsActive>
   </ServiceDelete>
   <!-- ********************************************************************* -->
   <OrdersForSuspend>
@@ -1435,6 +1444,7 @@
  <Orders>
   <Waiting>
    <Name>Ожидание оплаты</Name>
+   <IsNoAction>1</IsNoAction>
   </Waiting>
   <OnCreate>
    <Name>На создании</Name>
