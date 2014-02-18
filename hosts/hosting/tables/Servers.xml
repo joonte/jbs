@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Cut>
+	<Comps>
+		<Before>
+			<PatternOut />
+			<Search />
+		</Before>
+	</Comps>
+</Cut>
+<!-- *********************************************************************** -->
+<Source>
+	<TableID>Servers</TableID>
+	<ColumnsIDs>
+		<ListElement>ID</ListElement>
+		<ListElement>Address</ListElement>
+		<ListElement>Port</ListElement>
+		<ListElement>IsDefault</ListElement>
+		<ListElement>IsActive</ListElement>
+	</ColumnsIDs>
+	<Conditions>
+		<Message>Серверов не обнаружено.</Message>
+	</Conditions>
+</Source>
+<!-- *********************************************************************** -->
+<Comps>
+	<After>
+		<Delete>
+			<Args>
+				<Comment>Выбранные сервера</Comment>
+				<Send>
+					<TableID>Servers</TableID>
+				</Send>
+			</Args>
+		</Delete>
+	</After>
+</Comps>
+<!-- *********************************************************************** -->
+<Query>
+	<SortOn>Address</SortOn>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+	<SelectID>
+		<Args>
+			<TableID>Servers</TableID>
+		</Args>
+	</SelectID>
+	<!-- ********************************************************************** -->
+	<Edit>
+		<IsSorted>0</IsSorted>
+		<Comp>Buttons/Window</Comp>
+		<Args>
+			<ListElement>/Administrator/ServerEdit</ListElement>
+			<ListElement>
+				<ServerID>%ID%</ServerID>
+			</ListElement>
+			<ListElement>Редактировать сервер</ListElement>
+			<ListElement>Edit.gif</ListElement>
+		</Args>
+		<Attribs>
+			<class>TableSuperStandard</class>
+			<style>width:22px;</style>
+		</Attribs>
+	</Edit>
+	<!-- ********************************************************************** -->
+	<ServersGroup>
+		<Head>Группа серверов</Head>
+		<Comp>Formats/String</Comp>
+		<Args>
+			<ListElement>%ServersGroup%</ListElement>
+			<Length>40</Length>
+		</Args>
+		<Alias>(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`)</Alias>
+	</ServersGroup>
+	<!-- ********************************************************************** -->
+	<Address>
+		<Head>Адрес</Head>
+	</Address>
+	<!-- ********************************************************************** -->
+	<Port>
+		<Head>Port</Head>
+	</Port>
+	<!-- ********************************************************************** -->
+	<IsDefault>
+		<Head>Осн. в гр.</Head>
+		<Prompt>Новые аккаунты, в данной группе серверов, будут создаваться на данном сервере</Prompt>
+		<Comp>Formats/Logic</Comp>
+		<Args>
+			<ListElement>%IsDefault%</ListElement>
+		</Args>
+	</IsDefault>
+</Columns>
+<!-- ********************************************************************** -->
+<!-- ********************************************************************** -->
+<Sequence>
+<ListElement>SelectID</ListElement>
+ <ListElement>Edit</ListElement>
+ <ListElement>ServersGroup</ListElement>
+ <ListElement>Address</ListElement>
+ <ListElement>Port</ListElement>
+ <ListElement>IsDefault</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

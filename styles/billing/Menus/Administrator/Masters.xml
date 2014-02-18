@@ -27,6 +27,22 @@
   <Href>/Administrator/Config</Href>
   <Level>1</Level>
  </ID300>
+ <ID400>
+  <Text>Группы серверов</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/ServersGroups$</UniqID>
+  </Paths>
+  <Href>/Administrator/ServersGroups</Href>
+  <Level>1</Level>
+ </ID400>
+ <ID500>
+  <Text>Сервера</Text>
+  <Paths>
+   <UniqID>^\/Administrator\/Servers$</UniqID>
+  </Paths>
+  <Href>/Administrator/Servers</Href>
+  <Level>1</Level>
+ </ID500>
 </Items>
 <!-- *********************************************************************** -->
 </XML>
