@@ -160,7 +160,9 @@ switch(ValueOf($User)){
                   if(Is_Error($IsLoad))
                     return ERROR | @Trigger_Error(500);
                   #-----------------------------------------------------------------------
-                  Debug("[Users/Init]: visible UserID = $UserID; RootID = " . @$Session->Data['RootID']);
+		  if($UserID != @$Session->Data['RootID'])
+                    Debug("[Users/Init]: visible UserID = $UserID; RootID = " . @$Session->Data['RootID']);
+		  #-------------------------------------------------------------------------------
 		  if(IsSet($Session->Data['RootID'])){
                     if($UserID != @$Session->Data['RootID']){
                       # юзер шарится не под самим собой
@@ -173,7 +175,10 @@ switch(ValueOf($User)){
 		  }else{
 		    $UserID = $User['ID'];
 		  }
-		  Debug("[Users/Init]: real UserID = $UserID; RootID = " . @$Session->Data['RootID']);
+		  #-------------------------------------------------------------------------------
+		  if($UserID != @$Session->Data['RootID'])
+		    Debug("[Users/Init]: real UserID = $UserID; RootID = " . @$Session->Data['RootID']);
+		  #-------------------------------------------------------------------------------
                   $IsUpdated = DB_Update('Users',Array('EnterDate'=>Time(),'EnterIP'=>$_SERVER['REMOTE_ADDR']),Array('ID'=>$UserID));
                   if(Is_Error($IsUpdated))
                     return ERROR | @Trigger_Error(500);

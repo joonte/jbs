@@ -10,7 +10,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 # выбираем данные сервиса
-$Order = DB_Select('OrdersOwners',Array('ServiceID','Keys','UserID','(SELECT `Params` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) AS `Params`','(SELECT `NameShort` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) AS `NameShort`'),Array('UNIQ','ID'=>$ServiceOrderID));
+$Order = DB_Select('OrdersOwners',Array('ServiceID','Keys','UserID','(SELECT `Params` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) AS `Params`','(SELECT `NameShort` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) AS `NameShort`','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `OrdersOwners`.`UserID`) AS `Email`'),Array('UNIQ','ID'=>$ServiceOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Order)){
 case 'error':
@@ -60,7 +60,7 @@ if(IsSet($Settings['Script']) && Mb_StrLen(Trim($Settings['Script'])) > 0){
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
-		Exec(SPrintF('"%s" "Suspended" "%s" "%s" 2>&1',$File,$Number,$Order['Keys']),$Out,$ReturnValue);
+		Exec(SPrintF('"%s" "%s" "Suspended" "%s" "%s" 2>&1',$File,$Order['Email'],$Number,$Order['Keys']),$Out,$ReturnValue);
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[comp/Tasks/ServiceActive]: exec return code = %s, Out = %s',$ReturnValue,print_r($Out,true)));
 		#-------------------------------------------------------------------------------
