@@ -1,3 +1,24 @@
+
+DROP VIEW IF EXISTS `ServersGroupsOwners`;
+DROP TABLE IF EXISTS `ServersGroupsOwners`;
+CREATE
+  VIEW `ServersGroupsOwners` AS
+SELECT
+  `ServersGroups`.*,
+  100 as `UserID`
+FROM
+  `ServersGroups`;
+#-------------------------------------------------------------------------------
+DROP VIEW IF EXISTS `ServersOwners`;
+DROP TABLE IF EXISTS `ServersOwners`;
+CREATE
+  VIEW `ServersOwners` AS
+SELECT
+  `Servers`.*,
+  100 as `UserID`
+FROM
+  `Servers`;
+#-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `HostingOrdersOwners`;
 DROP TABLE IF EXISTS `HostingOrdersOwners`;
 CREATE
