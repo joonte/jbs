@@ -15,8 +15,11 @@
 	<TableID>Servers</TableID>
 	<ColumnsIDs>
 		<ListElement>ID</ListElement>
+		<ListElement>TemplateID</ListElement>
+		<ListElement>Protocol</ListElement>
 		<ListElement>Address</ListElement>
 		<ListElement>Port</ListElement>
+		<ListElement>PrefixAPI</ListElement>
 		<ListElement>IsDefault</ListElement>
 		<ListElement>IsActive</ListElement>
 	</ColumnsIDs>
@@ -67,22 +70,44 @@
 	</Edit>
 	<!-- ********************************************************************** -->
 	<ServersGroup>
-		<Head>Группа серверов</Head>
+		<Head>Группа</Head>
 		<Comp>Formats/String</Comp>
 		<Args>
 			<ListElement>%ServersGroup%</ListElement>
 			<Length>40</Length>
 		</Args>
-		<Alias>(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`)</Alias>
+		<Alias>IF(ISNULL(`ServersGroupID`),'не назначена',(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`))</Alias>
 	</ServersGroup>
+	<!-- ********************************************************************** -->
+	<Service>
+		<Head>Сервис</Head>
+		<Comp>Formats/String</Comp>
+		<Args>
+			<ListElement>%Service%</ListElement>
+			<Length>40</Length>
+		</Args>
+		<Alias>IF(ISNULL(`ServiceID`),'без сервиса',(SELECT `Item` FROM `Services` WHERE `Services`.`ID` = `Servers`.`ServiceID`))</Alias>
+	</Service>
+	<!-- ********************************************************************** -->
+	<TemplateID>
+		<Head>Шаблон</Head>
+	</TemplateID>
 	<!-- ********************************************************************** -->
 	<Address>
 		<Head>Адрес</Head>
 	</Address>
 	<!-- ********************************************************************** -->
 	<Port>
-		<Head>Port</Head>
+		<Head>Порт</Head>
 	</Port>
+	<!-- ********************************************************************** -->
+	<Protocol>
+		<Head>Прот.</Head>
+	</Protocol>
+	<!-- ********************************************************************** -->
+	<PrefixAPI>
+		<Head>API</Head>
+	</PrefixAPI>
 	<!-- ********************************************************************** -->
 	<IsDefault>
 		<Head>Осн. в гр.</Head>
@@ -92,16 +117,30 @@
 			<ListElement>%IsDefault%</ListElement>
 		</Args>
 	</IsDefault>
+	<!-- ********************************************************************** -->
+	<IsActive>
+		<Head>Акт.</Head>
+		<Prompt>Сервер активен - будет участвовать в опросах, на нём будут работать сервисы, создаваться новые аккаунты и т.п.</Prompt>
+		<Comp>Formats/Logic</Comp>
+		<Args>
+			<ListElement>%IsActive%</ListElement>
+		</Args>
+	</IsActive>
 </Columns>
 <!-- ********************************************************************** -->
 <!-- ********************************************************************** -->
 <Sequence>
-<ListElement>SelectID</ListElement>
- <ListElement>Edit</ListElement>
- <ListElement>ServersGroup</ListElement>
- <ListElement>Address</ListElement>
- <ListElement>Port</ListElement>
- <ListElement>IsDefault</ListElement>
+	<ListElement>SelectID</ListElement>
+	<ListElement>Edit</ListElement>
+	<ListElement>ServersGroup</ListElement>
+	<ListElement>Service</ListElement>
+	<ListElement>TemplateID</ListElement>
+	<ListElement>Protocol</ListElement>
+	<ListElement>Address</ListElement>
+	<ListElement>Port</ListElement>
+	<ListElement>PrefixAPI</ListElement>
+	<ListElement>IsDefault</ListElement>
+	<ListElement>IsActive</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
 </XML>

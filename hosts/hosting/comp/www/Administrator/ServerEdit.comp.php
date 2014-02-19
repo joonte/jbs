@@ -24,7 +24,7 @@ $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
 if($ServerID){
 	#-------------------------------------------------------------------------------
-	$Server = DB_Select('Servers',Array('ID','ServiceID','(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `Code`','Params'),Array('UNIQ','ID'=>$ServerID));
+	$Server = DB_Select('Servers',Array('*','(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `Code`'),Array('UNIQ','ID'=>$ServerID));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Server)){
 	case 'error':
@@ -33,7 +33,9 @@ if($ServerID){
 		return ERROR | @Trigger_Error(400);
 	case 'array':
 		#-------------------------------------------------------------------------------
-		$TemplateID = $Server['Code'];
+		$TemplateID = $Server['TemplateID'];
+		#-------------------------------------------------------------------------------
+		$ServiceID = $Server['ServiceID'];
 		#-------------------------------------------------------------------------------
 		break;
 		#-------------------------------------------------------------------------------
@@ -46,6 +48,7 @@ if($ServerID){
 	$Server = Array(
 			'ServersGroupID'	=> 0,
 			'IsDefault'		=> TRUE,
+			'IsActive'		=> TRUE,
 			'Protocol'		=> 'ssl',
 			'Address'		=> 'srv1.isp.su',
 			'Port'			=> 443,
@@ -237,6 +240,16 @@ if(!$TemplateID){
 	$Table[] = Array('Группа серверов',$Comp);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('name'=>'IsActive','type'=>'checkbox','value'=>'yes'));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	if($Server['IsActive'])
+		$Comp->AddAttribs(Array('checked'=>'yes'));
+	#-------------------------------------------------------------------------------
+	$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsActive\'); return false;'),'Активен'),$Comp);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Form/Input',Array('name'=>'IsDefault','type'=>'checkbox','value'=>'yes'));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
@@ -370,7 +383,7 @@ if(!$TemplateID){
 		#-------------------------------------------------------------------------------
 		if($ServerID){
 			#-------------------------------------------------------------------------------
-			$Value = (string)@$Server['Attribs'][$AttribID];
+			$Value = (string)@$Server['Params'][$AttribID];
 			#-------------------------------------------------------------------------------
 		}else{
 			#-------------------------------------------------------------------------------
@@ -394,9 +407,17 @@ if(!$TemplateID){
 			#-------------------------------------------------------------------------------
 			$Params['value'] = $Value;
 			#-------------------------------------------------------------------------------
+			# костыль для чекбоксов - у них всегда одно значение
+			if(IsSet($Attrib['Attribs']['type']) && $Attrib['Attribs']['type'] == 'checkbox')
+				$Params['value'] = 'yes';
+			#-------------------------------------------------------------------------------
 			$Comp = Comp_Load('Form/Input',$Params);
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(101);
+			#-------------------------------------------------------------------------------
+			# костыль для чекбоксов - у них дополнительный параметр "checked", если задано значение
+			if(IsSet($Attrib['Attribs']['type']) && $Attrib['Attribs']['type'] == 'checkbox' && $Value)
+				$Comp->AddAttribs(Array('checked'=>'yes'));
 			#-------------------------------------------------------------------------------
 			break;
 			#-------------------------------------------------------------------------------

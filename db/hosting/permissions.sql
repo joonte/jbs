@@ -230,7 +230,14 @@ VALUES
 
 /* added by lissyara, for JBS-353, 2012-03-19 in 16:30 MSK */
 ('DomainsOrdersChangeContactData','hosting',1,1,4000000,1,1,'yes'),
-('DomainsOrdersChangeContactData','hosting',3000000,100,1,1,2,'yes')
+('DomainsOrdersChangeContactData','hosting',3000000,100,1,1,2,'yes'),
+
+/* added by lissyara, for JBS-422 */
+('ServersGroupsDelete','hosting',1,1,4000000,1,1,'no'),
+('ServersGroupsDelete','hosting',3000000,100,1,1,2,'yes'),
+('ServersDelete','hosting',1,1,4000000,1,1,'no'),
+('ServersDelete','hosting',3000000,100,1,1,2,'yes')
+
 
 ;
 

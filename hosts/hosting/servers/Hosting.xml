@@ -40,15 +40,15 @@
 		<Comment>Приоритет балансировки</Comment>
 		<Type>Input</Type>
 		<Attribs>
-			<prompt>Число, может быть дробным (разделитель - точка). Используется для определения приоритета сервера, при балансировке. Может задаваться по числу процессоров, или, как какой-то абстрактный множитель, по производительности сервера.</prompt>
+			<prompt>Число, может быть дробным (разделитель - точка). Используется для определения приоритета сервера, при балансировке. Может задаваться по числу процессоров (ядер), или, как какой-то абстрактный множитель, по производительности сервера.</prompt>
 			<type>text</type>
 		</Attribs>
 		<IsDuty>1</IsDuty>
-		<Value />
+		<Value>4.0</Value>
 	</BalancingFactor>
 	<!-- *********************************************************************** -->
 	<IsAutoBalancing>
-		<Check>*</Check>
+		<Check>Address</Check>
 		<Comment>Автобалансировка</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
@@ -60,12 +60,13 @@
 			<type>checkbox</type>
 		</Attribs>
 		<IsDuty>0</IsDuty>
-		<Value />
+		<Value>yes</Value>
 	</IsAutoBalancing>
 	<!-- *********************************************************************** -->
 	<NoRestartCreate>
-		<Check>*</Check>
-		<Comment>Не перезапускать apache, Create</Comment>
+		<Title>Параметры перезапуска веб сервера</Title>
+		<Check>Address</Check>
+		<Comment>Не перезапускать при Create</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
 			<onclick>ChangeCheckBox('NoRestartCreate'); return false;</onclick>
@@ -75,12 +76,12 @@
 			<type>checkbox</type>
 		</Attribs>
 		<IsDuty>0</IsDuty>
-		<Value />
+		<Value>yes</Value>
 	</NoRestartCreate>
 	<!-- *********************************************************************** -->
 	<NoRestartActive>
-		<Check>*</Check>
-		<Comment>Не перезапускать apache, Active</Comment>
+		<Check>Address</Check>
+		<Comment>Не перезапускать при Active</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
 			<onclick>ChangeCheckBox('NoRestartActive'); return false;</onclick>
@@ -90,12 +91,12 @@
 			<type>checkbox</type>
 		</Attribs>
 		<IsDuty>0</IsDuty>
-		<Value />
+		<Value>yes</Value>
 	</NoRestartActive>
 	<!-- *********************************************************************** -->
 	<NoRestartSuspend>
-		<Check>*</Check>
-		<Comment>Не перезапускать apache, Suspend</Comment>
+		<Check>Address</Check>
+		<Comment>Не перезапускать при Suspend</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
 			<onclick>ChangeCheckBox('NoRestartSuspend'); return false;</onclick>
@@ -105,12 +106,12 @@
 			<type>checkbox</type>
 		</Attribs>
 		<IsDuty>0</IsDuty>
-		<Value />
+		<Value>yes</Value>
 	</NoRestartSuspend>
 	<!-- *********************************************************************** -->
 	<NoRestartDelete>
-		<Check>*</Check>
-		<Comment>Не перезапускать apache, Delete</Comment>
+		<Check>Address</Check>
+		<Comment>Не перезапускать при Delete</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
 			<onclick>ChangeCheckBox('NoRestartDelete'); return false;</onclick>
@@ -120,12 +121,12 @@
 			<type>checkbox</type>
 		</Attribs>
 		<IsDuty>0</IsDuty>
-		<Value />
+		<Value>yes</Value>
 	</NoRestartDelete>
 	<!-- *********************************************************************** -->
 	<NoRestartSchemeChange>
-		<Check>*</Check>
-		<Comment>Не перезапускать apache, SchemeChange</Comment>
+		<Check>Address</Check>
+		<Comment>Не перезапускать при SchemeChange</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
 			<onclick>ChangeCheckBox('NoRestartSchemeChange'); return false;</onclick>
@@ -135,13 +136,13 @@
 			<type>checkbox</type>
 		</Attribs>
 		<IsDuty>0</IsDuty>
-		<Value />
+		<Value>yes</Value>
 	</NoRestartSchemeChange>
 	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
 	<Domain>
 		<Title>Пользовательские аккаунты</Title>
-		<Check>DomainName</Check>
+		<Check>Domain</Check>
 		<Comment>Доменный адрес</Comment>
 		<Type>Input</Type>
 		<Attribs>
@@ -191,7 +192,7 @@
 	</Language>
 	<!-- *********************************************************************** -->
 	<Url>
-		<Check>/^[a-zA-Z0-9\.\-]{1,32}$/u</Check>
+		<Check>Address</Check>
 		<Comment>Адрес входа для клиентов</Comment>
 		<Type>Input</Type>
 		<Attribs>
@@ -199,7 +200,7 @@
 			<type>text</type>
 		</Attribs>
 		<IsDuty>1</IsDuty>
-		<Value>http://isp.su/manage</Value>
+		<Value>https://srv1.isp.su/manager/ispmgr</Value>
 	</Url>
 	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
