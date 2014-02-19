@@ -247,6 +247,13 @@ div.Margin {
     margin: 0px 40px 0px 40px;
 }
 /* ------------------------- */
+textarea{
+    border:	1px solid silver;
+    padding:	3px;
+    width:      240px;
+}
+/* ------------------------- */
+
 textarea.Duty, input.Duty {
     background-color: #FDF6D3;
     border:           1px solid #F5D227;
@@ -367,6 +374,7 @@ input[type=text],
 input[type=password] {
     border:  1px solid silver;
     padding: 3px;
+    width:   240px;
 }
 /* ------------------------- */
 /* see http://forum.joonte.com/viewtopic.php?f=4&t=1191#p5674 */

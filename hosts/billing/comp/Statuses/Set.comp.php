@@ -37,7 +37,7 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array('Статус',$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('name'=>'Comment','size'=>20));
+$Comp = Comp_Load('Form/Input',Array('name'=>'Comment','type'=>'text'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

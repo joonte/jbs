@@ -1,3 +1,4 @@
+-- SET FOREIGN_KEY_CHECKS=0;
 
 --
 -- Table structure for table `HostingServersGroups`
@@ -33,6 +34,7 @@ CREATE TABLE `Servers` (
 	`Login` char(60) default '',			-- логин для входа на сервер
 	`Password` char(255) default '',		-- пароль для входа на сервер
 	`Params` LONGTEXT,				-- набор переменных необходимых для взаимодействия с сервером
+	`Notice` TEXT,					-- примечание к серверу
 	`SortID` int(11) default '10',			-- поле для сортировки
 	PRIMARY KEY(`ID`),
 	/* внешний ключ на таблицу групп серверов */
