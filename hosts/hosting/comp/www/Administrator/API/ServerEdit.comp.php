@@ -11,7 +11,6 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ServerID	= (integer) @$Args['ServerID'];
 $TemplateID	=  (string) @$Args['TemplateID'];
-$ServiceID	= (integer) @$Args['ServiceID'];
 $Window		=  (string) @$Args['Window'];
 $ServersGroupID	= (integer) @$Args['ServersGroupID'];
 
@@ -49,7 +48,6 @@ if(!$Password)
 #-------------------------------------------------------------------------------
 $UServer = Array(
 			'TemplateID'	=> $TemplateID,
-			'ServiceID'	=> ($ServiceID)?$ServiceID:NULL,
 			'ServersGroupID'=> ($ServersGroupID)?$ServersGroupID:NULL,
 			'IsActive'	=> $IsActive,
 			'IsDefault'	=> $IsDefault,

@@ -9,10 +9,14 @@ DROP TABLE IF EXISTS `ServersGroups`;
 CREATE TABLE `ServersGroups` (
 	`ID` int(11) NOT NULL AUTO_INCREMENT,	-- идентификатор группы
 	`Name` char(30) NOT NULL,		-- имя группы
+	`ServiceID` int(11) NULL,		-- ссылка на сервис (или NULL, если группа не относится к сервису)
 	`FunctionID` char(30) default '',	-- принцип определения того кто IsDefault
 	`Comment` char(255) default '',		-- комментарий к группе
 	`SortID` int(11) default '10',		-- поле для сортировки
-	PRIMARY KEY(`ID`)			-- первичный ключ
+	PRIMARY KEY(`ID`),			-- первичный ключ
+	/* внешний ключ на таблицу сервисов */
+	KEY `ServersServersGroupID` (`ServersGroupID`),
+	CONSTRAINT `ServersServersGroupID` FOREIGN KEY (`ServersGroupID`) REFERENCES `ServersGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -23,7 +27,6 @@ DROP TABLE IF EXISTS `Servers`;
 CREATE TABLE `Servers` (
 	`ID` int(11) NOT NULL AUTO_INCREMENT,		-- идентификатор сервера
 	`TemplateID` char(64) default '',		-- шаблон для сервера
-	`ServiceID` int(11) NULL,			-- ссылка на сервис (или NULL, если сервер не относится к сервису)
 	`ServersGroupID` int(11) NULL,			-- группа серверов
 	`IsActive` enum('no','yes') default 'yes',	-- активен ли сервер
 	`IsDefault` enum('no','yes') default 'no',	-- этот сервер используется "по-умолчанию"
@@ -39,10 +42,7 @@ CREATE TABLE `Servers` (
 	PRIMARY KEY(`ID`),
 	/* внешний ключ на таблицу групп серверов */
 	KEY `ServersServersGroupID` (`ServersGroupID`),
-	CONSTRAINT `ServersServersGroupID` FOREIGN KEY (`ServersGroupID`) REFERENCES `ServersGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-	/* внешний ключ на таблицу сервисов */
-	KEY `ServersServiceID` (`ServiceID`),
-	CONSTRAINT `ServersServiceID` FOREIGN KEY (`ServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+	CONSTRAINT `ServersServersGroupID` FOREIGN KEY (`ServersGroupID`) REFERENCES `ServersGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

@@ -81,6 +81,16 @@
 		</Args>
 	</FunctionID>
 	<!-- ********************************************************************** -->
+	<Service>
+		<Head>Сервис</Head>
+		<Comp>Formats/String</Comp>
+		<Args>
+			<ListElement>%Service%</ListElement>
+			<Length>40</Length>
+		</Args>
+		<Alias>IF(ISNULL(`ServiceID`),'без сервиса',(SELECT `Item` FROM `Services` WHERE `Services`.`ID` = `ServersGroups`.`ServiceID`))</Alias>
+	</Service>
+	<!-- ********************************************************************** -->
 	<Comment>
 		<Head>Комментарий</Head>
 		<Comp>Formats/String</Comp>
@@ -110,6 +120,7 @@
 	<ListElement>SelectID</ListElement>
 	<ListElement>Edit</ListElement>
 	<ListElement>Name</ListElement>
+	<ListElement>Service</ListElement>
 	<ListElement>Comment</ListElement>
 	<ListElement>FunctionID</ListElement>
 	<ListElement>Servers</ListElement>

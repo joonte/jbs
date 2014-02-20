@@ -79,16 +79,6 @@
 		<Alias>IF(ISNULL(`ServersGroupID`),'не назначена',(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`))</Alias>
 	</ServersGroup>
 	<!-- ********************************************************************** -->
-	<Service>
-		<Head>Сервис</Head>
-		<Comp>Formats/String</Comp>
-		<Args>
-			<ListElement>%Service%</ListElement>
-			<Length>40</Length>
-		</Args>
-		<Alias>IF(ISNULL(`ServiceID`),'без сервиса',(SELECT `Item` FROM `Services` WHERE `Services`.`ID` = `Servers`.`ServiceID`))</Alias>
-	</Service>
-	<!-- ********************************************************************** -->
 	<TemplateID>
 		<Head>Шаблон</Head>
 	</TemplateID>
@@ -133,7 +123,6 @@
 	<ListElement>SelectID</ListElement>
 	<ListElement>Edit</ListElement>
 	<ListElement>ServersGroup</ListElement>
-	<ListElement>Service</ListElement>
 	<ListElement>TemplateID</ListElement>
 	<ListElement>Protocol</ListElement>
 	<ListElement>Address</ListElement>

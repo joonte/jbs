@@ -14,6 +14,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ServersGroupID	= (integer) @$Args['ServersGroupID'];
 $Name		=  (string) @$Args['Name'];
+$ServiceID	= (integer) @$Args['ServiceID'];
 $FunctionID	=  (string) @$Args['FunctionID'];
 $Comment	=  (string) @$Args['Comment'];
 $SortID		= (integer) @$Args['SortID'];
@@ -34,10 +35,11 @@ if(!$Comment)
 $Answer = Array('Status'=>'Ok');
 #-------------------------------------------------------------------------------
 $IServersGroup = Array(
-			'Name'       => $Name,
-			'FunctionID' => $FunctionID,
-			'Comment'    => $Comment,
-			'SortID'     => $SortID
+			'Name'		=> $Name,
+			'ServiceID'	=> ($ServiceID)?$ServiceID:NULL,
+			'FunctionID'	=> $FunctionID,
+			'Comment'	=> $Comment,
+			'SortID'	=> $SortID
 			);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
