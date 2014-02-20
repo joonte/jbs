@@ -430,7 +430,7 @@ foreach($Mails as $mailId){
 		# постим от админа, т.к. пост может идти от другого юзера в ответ на...
 		$GLOBALS['__USER']['ID'] = 100;
 		#-------------------------------------------------------------------------------
-		$Params = Array('Message'=>$Message,'TicketID'=>$Edesk['EdeskID'],'UserID'=>($IsUser)?$User['ID']:10);
+		$Params = Array('Message'=>$Message,'TicketID'=>$Edesk['EdeskID'],'UserID'=>(($IsUser)?$User['ID']:10));
 		#-------------------------------------------------------------------------------
 		if(IsSet($Hash))
 			$Params['TicketMessageFile'] = $Hash;
