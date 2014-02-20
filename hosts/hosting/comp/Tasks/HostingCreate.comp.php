@@ -85,7 +85,7 @@ switch(ValueOf($HostingOrder)){
               }
             }
             #-------------------------------------------------------------------
-            $IsCreate = Call_User_Func_Array(Array($Server,'Create'),$Args);
+            $IsCreate = Call_User_Func_Array(Array($ClassHostingServer,'Create'),$Args);
             #-------------------------------------------------------------------
             switch(ValueOf($IsCreate)){
               case 'error':
