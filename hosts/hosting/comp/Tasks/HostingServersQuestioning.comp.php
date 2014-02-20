@@ -7,7 +7,7 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/Server.class.php')))
+if(Is_Error(System_Load('classes/HostingServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $HostingServers = DB_Select('HostingServers',Array('ID','Address'),Array('SortOn'=>'Address'));
@@ -24,11 +24,11 @@ switch(ValueOf($HostingServers)){
     #---------------------------------------------------------------------------
     foreach($HostingServers as $HostingServer){
       #-------------------------------------------------------------------------
-      $Server = new Server();
+      $ClassHostingServer = new HostingServer();
       #-------------------------------------------------------------------------
-      $IsSelected = $Server->Select((integer)$HostingServer['ID']);
+      $IsSelected = $ClassHostingServer->Select((integer)$HostingServer['ID']);
       #-------------------------------------------------------------------------
-      $GLOBALS['TaskReturnInfo'][] = $Server->Settings['Address'];
+      $GLOBALS['TaskReturnInfo'][] = $ClassHostingServer->Settings['Address'];
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSelected)){
         case 'error':
@@ -37,7 +37,7 @@ switch(ValueOf($HostingServers)){
           return ERROR | @Trigger_Error(400);
         case 'true':
           #---------------------------------------------------------------------
-          $Users = $Server->GetDomains();
+          $Users = $ClassHostingServer->GetDomains();
           #---------------------------------------------------------------------
           switch(ValueOf($Users)){
             case 'error':

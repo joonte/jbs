@@ -11,7 +11,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $HostingOrderID = (integer) @$Args['HostingOrderID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/Server.class.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/HostingServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','ServerID','Login','Password','StatusID','(SELECT `Url` FROM `HostingServers` WHERE `HostingServers`.`ID` = `HostingOrdersOwners`.`ServerID`) as `Url`');
@@ -41,9 +41,9 @@ switch(ValueOf($HostingOrder)){
         return ERROR | @Trigger_Error(700);
       case 'true':
         #-----------------------------------------------------------------------
-        $Server = new Server();
+        $ClassHostingServer = new HostingServer();
         #-----------------------------------------------------------------------
-        $IsSelected = $Server->Select((integer)$HostingOrder['ServerID']);
+        $IsSelected = $ClassHostingServer->Select((integer)$HostingOrder['ServerID']);
         #-----------------------------------------------------------------------
         switch(ValueOf($IsSelected)){
           case 'error':
@@ -52,7 +52,7 @@ switch(ValueOf($HostingOrder)){
             return ERROR | @Trigger_Error(400);
           case 'true':
             #-------------------------------------------------------------------
-            $IsLogon = $Server->Logon(Array('Login'=>$HostingOrder['Login'],'Password'=>$HostingOrder['Password'],'Url'=>$HostingOrder['Url']));
+            $IsLogon = $ClassHostingServer->Logon(Array('Login'=>$HostingOrder['Login'],'Password'=>$HostingOrder['Password'],'Url'=>$HostingOrder['Url']));
             #-------------------------------------------------------------------
             switch(ValueOf($IsLogon)){
               case 'error':

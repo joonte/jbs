@@ -276,7 +276,8 @@ if(!$TemplateID){
 				'type'	=> 'text',
 				'name'	=> 'Address',
 				'prompt'=> 'Используется для связи с сервером',
-				'value'	=> $Server['Address']
+				'value'	=> $Server['Address'],
+				'style'	=> 'width: 100%;',
 				)
 			);
 	if(Is_Error($Comp))
@@ -292,7 +293,8 @@ if(!$TemplateID){
 				'type'  => 'text',
 				'name'  => 'Port',
 				'prompt'=> 'Порт на который устанавливать соединение с сервером (для SSL - обычно 443, для HTTP - 80)',
-				'value' => $Server['Port']
+				'value' => $Server['Port'],
+				'style' => 'width: 100%;',
 				)
 			);
 	if(Is_Error($Comp))
@@ -308,7 +310,8 @@ if(!$TemplateID){
 				'type'  => 'text',
 				'name'  => 'PrefixAPI',
 				'prompt'=> 'Префикс для API софта используемого на сервере',
-				'value' => $Server['PrefixAPI']
+				'value' => $Server['PrefixAPI'],
+				'style' => 'width: 100%;',
 				)
 			);
 	if(Is_Error($Comp))
@@ -323,7 +326,8 @@ if(!$TemplateID){
 				'class'	=> 'Duty',
 				'prompt'=> 'Имя администратора или реселлера имеющего права на создание новых клиентов, на сервере, через систему управления',
 				'name'	=> 'Login',
-				'value'	=> $Server['Login']
+				'value'	=> $Server['Login'],
+				'style' => 'width: 100%;',
 				)
 			);
 	if(Is_Error($Comp))
@@ -338,7 +342,8 @@ if(!$TemplateID){
 				'class' => 'Duty',
 				'type'  => ($ServerID?'password':'text'),
 				'name'  => 'Password',
-				'value' => $Server['Password']
+				'value' => $Server['Password'],
+				'style' => 'width: 100%;',
 				)
 			);
 	if(Is_Error($Comp))
@@ -354,7 +359,8 @@ if(!$TemplateID){
 				Array(
 					'name'  => 'ServerID',
 					'type'  => 'hidden',
-					'value' => $Server['ID']
+					'value' => $Server['ID'],
+					'style' => 'width: 100%;',
 					)
 				);
 		if(Is_Error($Comp))

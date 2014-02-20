@@ -9,7 +9,7 @@ $__args_list = Array('Params');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/Server.class.php')))
+if(Is_Error(System_Load('classes/HostingServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -32,9 +32,9 @@ case 'array':
 	#-------------------------------------------------------------------------------
 	foreach($HostingServers as $HostingServer){
 		#-------------------------------------------------------------------------
-		$Server = new Server();
+		$ClassHostingServer = new HostingServer();
 		#-------------------------------------------------------------------------
-		$IsSelected = $Server->Select((integer)$HostingServer['ID']);
+		$IsSelected = $ClassHostingServer->Select((integer)$HostingServer['ID']);
 		#-------------------------------------------------------------------------
 		switch(ValueOf($IsSelected)){
 		case 'error':
@@ -47,7 +47,7 @@ case 'array':
 			return ERROR | @Trigger_Error(101);
 		}
 		#---------------------------------------------------------------------
-		$Accounts = $Server->GetDiskUsage();
+		$Accounts = $ClassHostingServer->GetDiskUsage();
 		#---------------------------------------------------------------------
 		switch(ValueOf($Accounts)){
 		case 'error':

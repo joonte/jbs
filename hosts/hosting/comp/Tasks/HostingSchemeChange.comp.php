@@ -9,7 +9,7 @@ $__args_list = Array('Task','HostingOrderID','HostingSchemeID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/Server.class.php')))
+if(Is_Error(System_Load('classes/HostingServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $HostingOrder = DB_Select('HostingOrdersOwners',Array('ID','UserID','OrderID','SchemeID','ServerID','Login','(SELECT `Name` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`OldSchemeID`) as `SchemeName`'),Array('UNIQ','ID'=>$HostingOrderID));
@@ -91,9 +91,9 @@ case 'array':
 		}
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Server = new Server();
+		$ClassHostingServer = new HostingServer();
 		#-------------------------------------------------------------------------------
-		$IsSelected = $Server->Select((integer)$HostingOrder['ServerID']);
+		$IsSelected = $ClassHostingServer->Select((integer)$HostingOrder['ServerID']);
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($IsSelected)){
 		case 'error':
@@ -102,10 +102,10 @@ case 'array':
 			return ERROR | @Trigger_Error(400);
 		case 'true':
 			#-------------------------------------------------------------------------------
-			$GLOBALS['TaskReturnInfo'] = Array($Server->Settings['Address'],$HostingOrder['Login'],$HostingOrder['SchemeName'],$HostingNewScheme['Name']);
+			$GLOBALS['TaskReturnInfo'] = Array($ClassHostingServer->Settings['Address'],$HostingOrder['Login'],$HostingOrder['SchemeName'],$HostingNewScheme['Name']);
 			#-------------------------------------------------------------------------------
 			#Debug(SPrintF("[comp/Tasks/HostingSchemeChange]: HostingNewScheme = %s",print_r($HostingNewScheme,true)));
-			$SchemeChange = $Server->SchemeChange($HostingOrder['Login'],$HostingNewScheme);
+			$SchemeChange = $ClassHostingServer->SchemeChange($HostingOrder['Login'],$HostingNewScheme);
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($SchemeChange)){
 			case 'error':
@@ -156,7 +156,7 @@ case 'array':
 					$Event = Array(
 							'UserID'	=> $HostingOrder['UserID'],
 							'PriorityID'	=> 'Hosting',
-							'Text'		=> SPrintF('Успешно изменён тарифный план (%s->%s) заказа на хостинг [%s], сервер (%s)',$HostingOrder['SchemeName'],$HostingNewScheme['Name'],$HostingOrder['Login'],$Server->Settings['Address']),
+							'Text'		=> SPrintF('Успешно изменён тарифный план (%s->%s) заказа на хостинг [%s], сервер (%s)',$HostingOrder['SchemeName'],$HostingNewScheme['Name'],$HostingOrder['Login'],$ClassHostingServer->Settings['Address']),
 							);
 					$Event = Comp_Load('Events/EventInsert',$Event);
 					if(!$Event)

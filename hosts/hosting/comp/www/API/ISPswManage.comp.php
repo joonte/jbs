@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ISPswOrderID = (integer) @$Args['ISPswOrderID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/Server.class.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/HostingServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','ServerID','Login','Password','StatusID');
@@ -42,9 +42,9 @@ switch(ValueOf($ISPswOrder)){
         return ERROR | @Trigger_Error(700);
       case 'true':
         #-----------------------------------------------------------------------
-        $Server = new Server();
+        $ClassHostingServer = new HostingServer();
         #-----------------------------------------------------------------------
-        $IsSelected = $Server->Select((integer)$ISPswOrder['ServerID']);
+        $IsSelected = $ClassHostingServer->Select((integer)$ISPswOrder['ServerID']);
         #-----------------------------------------------------------------------
         switch(ValueOf($IsSelected)){
           case 'error':
@@ -53,7 +53,7 @@ switch(ValueOf($ISPswOrder)){
             return ERROR | @Trigger_Error(400);
           case 'true':
             #-------------------------------------------------------------------
-            $IsLogon = $Server->Logon($ISPswOrder['Login'],$ISPswOrder['Password']);
+            $IsLogon = $ClassHostingServer->Logon($ISPswOrder['Login'],$ISPswOrder['Password']);
             #-------------------------------------------------------------------
             switch(ValueOf($IsLogon)){
               case 'error':

@@ -9,7 +9,7 @@ $__args_list = Array('Task','HostingOrderID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/Server.class.php')))
+if(Is_Error(System_Load('classes/HostingServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','ServerID','Login','Domain','(SELECT `IsReselling` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`) as `IsReselling`','(SELECT `Name` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`) as `SchemeName`');
@@ -22,9 +22,9 @@ switch(ValueOf($HostingOrder)){
     return ERROR | @Trigger_Error(400);
   case 'array':
     #---------------------------------------------------------------------------
-    $Server = new Server();
+    $ClassHostingServer = new HostingServer();
     #---------------------------------------------------------------------------
-    $IsSelected = $Server->Select((integer)$HostingOrder['ServerID']);
+    $IsSelected = $ClassHostingServer->Select((integer)$HostingOrder['ServerID']);
     #---------------------------------------------------------------------------
     switch(ValueOf($IsSelected)){
       case 'error':
@@ -33,7 +33,7 @@ switch(ValueOf($HostingOrder)){
         return ERROR | @Trigger_Error(400);
       case 'true':
         #-----------------------------------------------------------------------
-        $IsDelete = $Server->Delete($HostingOrder['Login'],$HostingOrder['IsReselling']);
+        $IsDelete = $ClassHostingServer->Delete($HostingOrder['Login'],$HostingOrder['IsReselling']);
         #-----------------------------------------------------------------------
         switch(ValueOf($IsDelete)){
           case 'error':
@@ -45,13 +45,13 @@ switch(ValueOf($HostingOrder)){
 	    $Event = Array(
 	    			'UserID'	=> $HostingOrder['UserID'],
 				'PriorityID'	=> 'Hosting',
-				'Text'		=> SPrintF('Заказ хостинга логин [%s], домен (%s), тариф (%s) успешно удален с сервера (%s)',$HostingOrder['Login'],$HostingOrder['Domain'],$HostingOrder['SchemeName'],$Server->Settings['Address'])
+				'Text'		=> SPrintF('Заказ хостинга логин [%s], домен (%s), тариф (%s) успешно удален с сервера (%s)',$HostingOrder['Login'],$HostingOrder['Domain'],$HostingOrder['SchemeName'],$ClassHostingServer->Settings['Address'])
 	                  );
             $Event = Comp_Load('Events/EventInsert',$Event);
             if(!$Event)
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-	    $GLOBALS['TaskReturnInfo'] = Array($Server->Settings['Address'],$HostingOrder['Login'],$HostingOrder['SchemeName']);
+	    $GLOBALS['TaskReturnInfo'] = Array($ClassHostingServer->Settings['Address'],$HostingOrder['Login'],$HostingOrder['SchemeName']);
             #-------------------------------------------------------------------
             return TRUE;
           default:

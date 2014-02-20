@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 #-------------------------------------------------------------------------------
-class Server{
+class HostingServer{
 # Тип системы сервера
 public $SystemID = 'Default';
 # Параметры связи с сервером
@@ -18,7 +18,7 @@ public function Select($ServerID){
   #-----------------------------------------------------------------------------
   switch(ValueOf($Settings)){
     case 'error':
-      return ERROR | @Trigger_Error('[Server->Select]: не удалось выбрать сервер');
+      return ERROR | @Trigger_Error('[HostingServer->Select]: не удалось выбрать сервер');
     case 'exception':
       return new gException('SERVER_NOT_FOUND','Указаный сервер не найден');
     case 'array':
@@ -28,7 +28,7 @@ public function Select($ServerID){
       $this->Settings = $Settings;
       #-------------------------------------------------------------------------
       if(Is_Error(System_Load(SPrintF('libs/%s.php',$this->SystemID))))
-        @Trigger_Error('[Server->Select]: не удалось загрузить целевую библиотеку');
+        @Trigger_Error('[HostingServer->Select]: не удалось загрузить целевую библиотеку');
       #-------------------------------------------------------------------------
       return TRUE;
     default:
@@ -49,7 +49,7 @@ public function Logon(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Server->UserLogin]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[HostingServer->UserLogin]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -67,7 +67,7 @@ public function GetDomains(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Server->GetDomains]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[HostingServer->GetDomains]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -85,7 +85,7 @@ public function GetUsers(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Server->GetUsers]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[HostingServer->GetUsers]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -103,7 +103,7 @@ public function Create(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Server->Create]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[HostingServer->Create]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -121,7 +121,7 @@ public function Active(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Server->Active]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[HostingServer->Active]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -139,7 +139,7 @@ public function Suspend(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Server->Suspend]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[HostingServer->Suspend]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -157,7 +157,7 @@ public function Delete(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Server->Delete]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[HostingServer->Delete]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -175,7 +175,7 @@ public function SchemeChange(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Server->SchemeChange]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[HostingServer->SchemeChange]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -193,7 +193,7 @@ public function PasswordChange(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Server->PasswordChange]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[HostingServer->PasswordChange]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -211,7 +211,7 @@ public function GetEmailBoxes(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Server->GetEmailBoxes]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[HostingServer->GetEmailBoxes]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -230,7 +230,7 @@ public function GetCPUUsage(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Server->GetCPUUsage]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[HostingServer->GetCPUUsage]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -249,7 +249,7 @@ public function GetDiskUsage(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Server->GetDiskUsage]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[HostingServer->GetDiskUsage]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }

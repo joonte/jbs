@@ -9,7 +9,7 @@ $__args_list = Array('Task','HostingOrderID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/Server.class.php')))
+if(Is_Error(System_Load('classes/HostingServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $HostingOrder = DB_Select('HostingOrdersOwners',Array('ID','UserID','ServerID','Login','Domain','SchemeID','Password','(SELECT `ProfileID` FROM `Contracts` WHERE `Contracts`.`ID` = `HostingOrdersOwners`.`ContractID`) as `ProfileID`'),Array('UNIQ','ID'=>$HostingOrderID));
@@ -21,9 +21,9 @@ switch(ValueOf($HostingOrder)){
     return ERROR | @Trigger_Error(400);
   case 'array':
     #---------------------------------------------------------------------------
-    $Server = new Server();
+    $ClassHostingServer = new HostingServer();
     #---------------------------------------------------------------------------
-    $IsSelected = $Server->Select((integer)$HostingOrder['ServerID']);
+    $IsSelected = $ClassHostingServer->Select((integer)$HostingOrder['ServerID']);
     #---------------------------------------------------------------------------
     switch(ValueOf($IsSelected)){
       case 'error':
@@ -41,7 +41,7 @@ switch(ValueOf($HostingOrder)){
             return ERROR | @Trigger_Error(400);
           case 'array':
             #-------------------------------------------------------------------
-            $IPsPool = Explode("\n",$Server->Settings['IPsPool']);
+            $IPsPool = Explode("\n",$ClassHostingServer->Settings['IPsPool']);
             #-------------------------------------------------------------------
             $IP = $IPsPool[Rand(0,Count($IPsPool) - 1)];
             #-------------------------------------------------------------------
@@ -106,13 +106,13 @@ switch(ValueOf($HostingOrder)){
 		    $Event = Array(
 		    		    'UserID'	=> $HostingOrder['UserID'],
 				    'PriorityID'=> 'Hosting',
-				    'Text'	=> SPrintF('Заказ хостинга логин [%s], домен (%s) успешно создан на сервере (%s) с тарифным планом (%s), идентификатор пакета (%s)',$HostingOrder['Login'],$HostingOrder['Domain'],$Server->Settings['Address'],$HostingScheme['Name'],$HostingScheme['PackageID'])
+				    'Text'	=> SPrintF('Заказ хостинга логин [%s], домен (%s) успешно создан на сервере (%s) с тарифным планом (%s), идентификатор пакета (%s)',$HostingOrder['Login'],$HostingOrder['Domain'],$ClassHostingServer->Settings['Address'],$HostingScheme['Name'],$HostingScheme['PackageID'])
 				  );
 		    $Event = Comp_Load('Events/EventInsert',$Event);
 		    if(!$Event)
 		      return ERROR | @Trigger_Error(500);
                     #-----------------------------------------------------------
-                    $GLOBALS['TaskReturnInfo'] = Array($Server->Settings['Address'],$HostingOrder['Login'],$HostingScheme['Name']);
+                    $GLOBALS['TaskReturnInfo'] = Array($ClassHostingServer->Settings['Address'],$HostingOrder['Login'],$HostingScheme['Name']);
 		    #-----------------------------------------------------------
                     return TRUE;
                   default:

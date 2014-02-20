@@ -12,7 +12,7 @@ $Args = Args();
 $HostingOrderID = (integer) @$Args['HostingOrderID'];
 $Password       =  (string) @$Args['Password'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/Server.class.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/HostingServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
@@ -50,9 +50,9 @@ switch(ValueOf($HostingOrder)){
         return ERROR | @Trigger_Error(700);
       case 'true':
         #-----------------------------------------------------------------------
-        $Server = new Server();
+        $ClassHostingServer = new HostingServer();
         #-----------------------------------------------------------------------
-        $IsSelected = $Server->Select((integer)$HostingOrder['ServerID']);
+        $IsSelected = $ClassHostingServer->Select((integer)$HostingOrder['ServerID']);
         #-----------------------------------------------------------------------
         switch(ValueOf($IsSelected)){
           case 'error':
@@ -61,7 +61,7 @@ switch(ValueOf($HostingOrder)){
             return ERROR | @Trigger_Error(400);
           case 'true':
             #-------------------------------------------------------------------
-            $PasswordChange = $Server->PasswordChange($HostingOrder['Login'],$Password,$HostingOrder['IsReselling']);
+            $PasswordChange = $ClassHostingServer->PasswordChange($HostingOrder['Login'],$Password,$HostingOrder['IsReselling']);
             #-------------------------------------------------------------------
             switch(ValueOf($PasswordChange)){
               case 'error':

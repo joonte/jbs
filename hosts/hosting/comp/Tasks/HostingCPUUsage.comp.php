@@ -7,7 +7,7 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/Server.class.php')))
+if(Is_Error(System_Load('classes/HostingServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -53,9 +53,9 @@ foreach($HostingServers as $HostingServer){
 	$TUsages[$HostingServer['ID']] = Array();
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Server = new Server();
+	$ClassHostingServer = new HostingServer();
 	#-------------------------------------------------------------------------------
-	$IsSelected = $Server->Select((integer)$HostingServer['ID']);
+	$IsSelected = $ClassHostingServer->Select((integer)$HostingServer['ID']);
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($IsSelected)){
 	case 'error':
