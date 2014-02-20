@@ -250,7 +250,7 @@ div.Margin {
 textarea{
     border:	1px solid silver;
     padding:	3px;
-    width:      240px;
+    width:      100%;
 }
 /* ------------------------- */
 

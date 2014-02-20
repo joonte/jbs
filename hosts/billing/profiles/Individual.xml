@@ -13,7 +13,6 @@
   <Type>TextArea</Type>
   <Attribs>
    <rows>3</rows>
-   <cols>29</cols>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -25,7 +24,7 @@
   <Example>770110725987</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -37,7 +36,7 @@
   <Example>632946014</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>0</IsDuty>
   <Value />
@@ -49,7 +48,7 @@
   <Example>37</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -61,7 +60,7 @@
   <Example>020283930</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -73,7 +72,7 @@
   <Example>12.03.2005</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -86,7 +85,7 @@
   <Example>Иванов</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
    <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
   </Attribs>
   <IsDuty>1</IsDuty>
@@ -99,7 +98,7 @@
   <Example>Петр</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
    <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
   </Attribs>
   <IsDuty>1</IsDuty>
@@ -112,7 +111,7 @@
   <Example>Викторович</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
    <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
   </Attribs>
   <IsDuty>1</IsDuty>
@@ -126,7 +125,7 @@
   <Example>18.03.1986</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -138,7 +137,7 @@
   <Example>3422</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -150,7 +149,7 @@
   <Example>427789</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -163,7 +162,6 @@
   <Type>TextArea</Type>
   <Attribs>
    <rows>3</rows>
-   <cols>29</cols>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -175,7 +173,7 @@
   <Example>01.06.2001</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -188,7 +186,7 @@
   <Example>+7 495 7558899</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -200,7 +198,7 @@
    <Example>+7 926 7558899</Example>
    <Type>Input</Type>
    <Attribs>
-    <size>25</size>
+    <type>text</type>
    </Attribs>
    <IsDuty>1</IsDuty>
    <Value />
@@ -212,7 +210,7 @@
   <Example>+7 495 7558899</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>0</IsDuty>
   <Value />
@@ -224,7 +222,7 @@
   <Example>alexander@yandex.ru</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value>%Email%</Value>
@@ -236,7 +234,7 @@
   <Example>http://www.super.com</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>0</IsDuty>
   <Value />
@@ -292,7 +290,7 @@
   <Example>Московская обл.</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
    <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));var Form = document.forms.ProfileEditForm;if(!Form.pState.value) Form.pState.value = Form.jState.value;</onblur>
   </Attribs>
   <IsDuty>1</IsDuty>
@@ -305,7 +303,7 @@
   <Example>Москва</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
    <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));var Form = document.forms.ProfileEditForm;if(!Form.pCity.value) Form.pCity.value = value;</onblur>
   </Attribs>
   <IsDuty>1</IsDuty>
@@ -318,7 +316,7 @@
   <Example>Ивановский</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
    <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
   </Attribs>
   <IsDuty>0</IsDuty>
@@ -331,7 +329,7 @@
   <Example>101000</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
    <onblur>var Form = document.forms.ProfileEditForm;if(!Form.pIndex.value) Form.pIndex.value = Form.jIndex.value;</onblur>
   </Attribs>
   <IsDuty>1</IsDuty>
@@ -374,7 +372,6 @@
   <Type>TextArea</Type>
   <Attribs>
    <rows>3</rows>
-   <cols>29</cols>
    <onblur>var Form = document.forms.ProfileEditForm;if(!Form.pAddress.value) Form.pAddress.value = Form.jAddress.value;</onblur>
   </Attribs>
   <IsDuty>1</IsDuty>
@@ -426,7 +423,7 @@
   <Example>Московская обл.</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
    <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
   </Attribs>
   <IsDuty>1</IsDuty>
@@ -439,7 +436,7 @@
   <Example>Москва</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
    <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
   </Attribs>
   <IsDuty>1</IsDuty>
@@ -452,7 +449,7 @@
   <Example>Ивановский</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
    <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
   </Attribs>
   <IsDuty>0</IsDuty>
@@ -465,7 +462,7 @@
   <Example>101000</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -506,7 +503,6 @@
   <Type>TextArea</Type>
   <Attribs>
    <rows>3</rows>
-   <cols>29</cols>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -519,7 +515,7 @@
   <Example>ООО "КБ Легион"</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -531,7 +527,7 @@
   <Example>544959119</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -543,7 +539,7 @@
   <Example>40701256800030000589</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -555,7 +551,7 @@
   <Example>30101810500000000444</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>25</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />

@@ -11,7 +11,7 @@
   <Example>101000</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>20</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -23,7 +23,7 @@
   <Example>Москва</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>20</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -36,7 +36,6 @@
   <Type>TextArea</Type>
   <Attribs>
    <rows>3</rows>
-   <cols>23</cols>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value>ул. </Value>
@@ -49,7 +48,6 @@
   <Type>TextArea</Type>
   <Attribs>
    <rows>3</rows>
-   <cols>23</cols>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />

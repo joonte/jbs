@@ -45,9 +45,9 @@ switch(ValueOf($AdminNotice)){
     $Comp = Comp_Load(
       'Form/TextArea',
       Array(
-       'name' => 'AdminNotice',
-       'cols' => 60,
-       'rows' => 10
+       'name'	=> 'AdminNotice',
+       'style'	=> 'width: 400px',
+       'rows'	=> 10
       ),
       $AdminNotice['AdminNotice']
     );

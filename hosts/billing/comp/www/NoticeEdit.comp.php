@@ -48,9 +48,9 @@ switch(ValueOf($UserNotice)){
     $Comp = Comp_Load(
       'Form/TextArea',
       Array(
-       'name' => 'UserNotice',
-       'cols' => 60,
-       'rows' => 10
+       'name'	=> 'UserNotice',
+       'style'  => 'width: 400px',
+       'rows'	=> 10
       ),
       $UserNotice['UserNotice']
     );

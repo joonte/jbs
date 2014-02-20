@@ -11,7 +11,7 @@
   <Example>Креативная группа "ТриТон"</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>35</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -35,7 +35,7 @@
   <Example>http://www.triton-studio.ru</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>35</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -47,7 +47,7 @@
   <Example>http://www.joonte.com/Logo.png</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>35</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -59,7 +59,7 @@
   <Example>г. Иваново</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>35</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value>г. </Value>
@@ -71,7 +71,7 @@
   <Example>+7 495 7558899</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>35</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>0</IsDuty>
   <Value />
@@ -84,7 +84,6 @@
   <Type>TextArea</Type>
   <Attribs>
    <rows>5</rows>
-   <cols>40</cols>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />

@@ -11,7 +11,7 @@
   <Example>Joonte</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>35</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -23,7 +23,7 @@
   <Example>http://www.joonte.com</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>35</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -35,7 +35,7 @@
   <Example>http://www.joonte.com/Icon.png</Example>
   <Type>Input</Type>
   <Attribs>
-   <size>35</size>
+   <type>text</type>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
@@ -48,7 +48,6 @@
   <Type>TextArea</Type>
   <Attribs>
    <rows>5</rows>
-   <cols>40</cols>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />

@@ -56,10 +56,10 @@ $Table = Array('Общие параметры');
 $Comp = Comp_Load(
   'Form/Input',
   Array(
-    'name'  => 'Theme',
-    'size'  => 65,
-    'type'  => 'text',
-    'prompt'=> "Краткое описание Вашей проблемы или вопроса.\nНапример: Проблемы с почтой"
+    'name'	=> 'Theme',
+    'style'	=> 'width: 100%',
+    'type'	=> 'text',
+    'prompt'	=> "Краткое описание Вашей проблемы или вопроса.\nНапример: Проблемы с почтой"
   )
 );
 if(Is_Error($Comp))
