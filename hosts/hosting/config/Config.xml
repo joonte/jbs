@@ -1162,19 +1162,19 @@
    <!-- ********************************************************************* -->
    <!-- задачи -->
    <DailyTasks>
-    <CheckUsersOnHostingServers>Синхронизация аккаунтов биллинга и серверов хостинга</CheckUsersOnHostingServers>
-    <CheckUsersOnVPSServers>Синхронизация аккаунтов биллинга и серверов VPS</CheckUsersOnVPSServers>
-    <DiskUsageNotifies>Уведомление о заканчивающемся месте на хостинге</DiskUsageNotifies>
-    <EmailBoxesNotifies>Уведомление o заканчивающейся квоте почтовых ящиков</EmailBoxesNotifies>
-    <CheckBalance>Проверка балланса регистраторов, поставщиков</CheckBalance>
     <EraseDeletedOrders>Удаление заказов в статусе Удален</EraseDeletedOrders>
     <SetDeletedWaitingOrders>Отмена неоплаченных заказов</SetDeletedWaitingOrders>
+    <CheckBalance>Проверка балланса регистраторов, поставщиков</CheckBalance>
+    <ISPswCheckLicenses>Синхронизация лицензий с ISPsystem</ISPswCheckLicenses>
+    <CheckUsersOnVPSServers>Синхронизация аккаунтов биллинга и серверов VPS</CheckUsersOnVPSServers>
+    <CheckUsersOnHostingServers>Синхронизация аккаунтов биллинга и серверов хостинга</CheckUsersOnHostingServers>
+    <DiskUsageNotifies>Уведомление о заканчивающемся месте на хостинге</DiskUsageNotifies>
+    <EmailBoxesNotifies>Уведомление o заканчивающейся квоте почтовых ящиков</EmailBoxesNotifies>
     <DomainsAutoProlongation>Автопродление истекающих доменов</DomainsAutoProlongation>
     <SetSuspendExpiredDomains>Блокировка просроченных доменов</SetSuspendExpiredDomains>
     <DomainPathRegisterNotify>Уведомления о доменах с неопределёнными владельцами</DomainPathRegisterNotify>
     <DeleteDomainsForTransfer>Удаление доменов в статусе &quot;Для переноса&quot;</DeleteDomainsForTransfer>
     <DomainsFindOdd>Поиск доменов отсутствующих в биллинге/у регистратора</DomainsFindOdd>
-    <ISPswCheckLicenses>Синхронизация лицензий с ISPsystem</ISPswCheckLicenses>
    </DailyTasks>
    <!-- ********************************************************************* -->
   </GC>
