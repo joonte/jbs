@@ -87,7 +87,7 @@
 			<ListElement>%ServersGroup%</ListElement>
 			<Length>40</Length>
 		</Args>
-		<Alias>IF(ISNULL(`ServersGroupID`),'не назначена',(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`))</Alias>
+		<Alias>IF(ISNULL(`ServersGroupID`),'-',(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`))</Alias>
 	</ServersGroup>
 	<!-- ********************************************************************** -->
 	<TemplateID>
@@ -130,7 +130,7 @@
 	<!-- ********************************************************************** -->
 	<SortID>
 		<Args>
-			<TableID>ServersGroups</TableID>
+			<TableID>Servers</TableID>
 		</Args>
 	</SortID>
 	<!-- ********************************************************************** -->
