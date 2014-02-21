@@ -242,19 +242,6 @@
  </Balancing>
 </DS>
 <!-- *********************************************************************** -->
-<IspSoft>
- <Name>IspSystems</Name>
- <Settings>
-  <VisibleName>ЗАО "ИСПсистем"</VisibleName>
-  <Address>my.ispsystem.com</Address>
-  <Port>443</Port>
-  <Protocol>ssl</Protocol>
-  <PrefixAPI>/manager/billmgr</PrefixAPI>
-  <Login />
-  <Password />
-  <BalanceLowLimit />
- </Settings>
-</IspSoft>
 <!-- *********************************************************************** -->
 <Domains>
  <Registrators>

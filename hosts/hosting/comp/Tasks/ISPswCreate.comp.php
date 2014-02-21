@@ -15,12 +15,8 @@ if(Is_Error(System_Load('libs/IspSoft.php','libs/Server.php')))
 #-------------------------------------------------------------------------------
 $Settings = SelectServerSettingsByService(51000);
 #-------------------------------------------------------------------------------
-if(!Is_Array($Settings)){
-	#-------------------------------------------------------------------------------
-	$Exception =  new gException('BILLMANAGER_SETTINGS_NOT_FOUND_2','Дополнения -> Мастера настройки -> Сервера');
-	return new gException('BILLMANAGER_SETTINGS_NOT_FOUND_1','Для создания группы ПО необходимо создать группу серверов для сервиса ISPsw, а также активный сервер входящий в эту группу. Для этого, пройдите в следующий раздел биллинговой системы:',$Exception);
-	#-------------------------------------------------------------------------------
-}
+if(!Is_Array($Settings))
+	return SelectServerErrorMessage(51000);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $ISPswOrder = DB_Select('ISPswOrdersOwners',Array('*','(SELECT `ProfileID` FROM `Contracts` WHERE `Contracts`.`ID` = `ISPswOrdersOwners`.`ContractID`) as `ProfileID`'),Array('UNIQ','ID'=>$ISPswOrderID));
