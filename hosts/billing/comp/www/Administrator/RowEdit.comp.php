@@ -81,7 +81,7 @@ switch(ValueOf($Row)){
         #-----------------------------------------------------------------------
         if(Preg_Match('/(int|float)/',$TypeID)){
           #---------------------------------------------------------------------
-          $Comp = Comp_Load('Form/Input',Array('name'=>$ColumnID,'value'=>(string)$Value));
+          $Comp = Comp_Load('Form/Input',Array('name'=>$ColumnID,'type'=>'text','style'=>'width: 100%;','value'=>(string)$Value));
           if(Is_Error($Comp))
             return ERROR | @Trigger_Error(500);
         }else{

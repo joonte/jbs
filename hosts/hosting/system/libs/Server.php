@@ -4,7 +4,43 @@
 /** @author Alex Keda, for www.host-food.ru */
 #-------------------------------------------------------------------------------
 
+function SelectServerErrorMessage($ServiceID){
+	#-------------------------------------------------------------------------------
+	$Service = DB_Select('Services',Array('ID','Code','Name'),Array('UNIQ','ID'=>IntVal($ServiceID)));
+	switch(ValueOf($Service)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return new gException('SERVICE_NOT_FOUND',SPrintF('Сервис (%s) не существует',$ServiceID));
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$Exception =  new gException('SETTINGS_NOT_FOUND_2','Дополнения -> Мастера настройки -> Сервера');
+	#-------------------------------------------------------------------------------
+	$Message = SPrintF('Для работы (%s) необходимо создать группу серверов для этого сервиса, а также активный сервер входящий в эту группу. Чтобы сделать это, пройдите в следующий раздел биллинговой системы:',$Service['Name'],$Service['Name']);
+	return new gException('SETTINGS_NOT_FOUND_1',$Message,$Exception);
+	#-------------------------------------------------------------------------------
+}
+
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 function SelectServerSettingsByService($ServiceID){
+	#-------------------------------------------------------------------------------
+	$Service = DB_Select('Services',Array('ID','Code','Name'),Array('UNIQ','ID'=>IntVal($ServiceID)));
+	switch(ValueOf($Service)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return new gException('SERVICE_NOT_FOUND',SPrintF('Сервис (%s) не существует',$ServiceID));
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$ServersGroup = DB_Select('ServersGroups','*',Array('UNIQ','Where'=>SPrintF('`ServiceID` = %u',$ServiceID),'Limits'=>Array(0,1),'SortOn'=>'SortID'));
 	#-------------------------------------------------------------------------------

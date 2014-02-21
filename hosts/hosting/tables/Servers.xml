@@ -32,6 +32,7 @@
 		<ListElement>PrefixAPI</ListElement>
 		<ListElement>IsDefault</ListElement>
 		<ListElement>IsActive</ListElement>
+		<ListElement>SortID</ListElement>
 	</ColumnsIDs>
 	<Conditions>
 		<Message>Серверов не обнаружено.</Message>
@@ -52,7 +53,7 @@
 </Comps>
 <!-- *********************************************************************** -->
 <Query>
-	<SortOn>Address</SortOn>
+	<SortOn>ServersGroup</SortOn>
 </Query>
 <!-- *********************************************************************** -->
 <Columns>
@@ -126,6 +127,13 @@
 			<ListElement>%IsActive%</ListElement>
 		</Args>
 	</IsActive>
+	<!-- ********************************************************************** -->
+	<SortID>
+		<Args>
+			<TableID>ServersGroups</TableID>
+		</Args>
+	</SortID>
+	<!-- ********************************************************************** -->
 </Columns>
 <!-- ********************************************************************** -->
 <!-- ********************************************************************** -->
@@ -140,6 +148,7 @@
 	<ListElement>PrefixAPI</ListElement>
 	<ListElement>IsDefault</ListElement>
 	<ListElement>IsActive</ListElement>
+	<ListElement>SortID</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
 </XML>
