@@ -13,17 +13,26 @@ $ISPswOrderID	= (integer) @$Args['ISPswOrderID'];
 $LicenseID	= (integer) @$Args['LicenseID'];
 $IP		=  (string) @$Args['IP'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','libs/IspSoft.php')))
-  return ERROR | @Trigger_Error(500);
+if(Is_Error(System_Load('modules/Authorisation.mod','libs/IspSoft.php','libs/Server.php')))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 # get config values
 $Config = Config();
-$Settings = $Config['IspSoft']['Settings'];
 #-------------------------------------------------------------------------------
+$Regulars = Regulars();
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Regulars = Regulars();
+$Settings = SelectServerSettingsByService(51000);
+#-------------------------------------------------------------------------------
+if(!Is_Array($Settings)){
+	#-------------------------------------------------------------------------------
+	$Exception =  new gException('BILLMANAGER_SETTINGS_NOT_FOUND_2','Дополнения -> Мастера настройки -> Сервера');
+	return new gException('BILLMANAGER_SETTINGS_NOT_FOUND_1','Для создания группы ПО необходимо создать группу серверов для сервиса ISPsw, а также активный сервер входящий в эту группу. Для этого, пройдите в следующий раздел биллинговой системы:',$Exception);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!Preg_Match($Regulars['IP'],$IP))
   return new gException('WRONG_PASSWORD','Неверно указан новый IP адрес');
