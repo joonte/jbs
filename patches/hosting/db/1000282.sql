@@ -1,7 +1,7 @@
 SET FOREIGN_KEY_CHECKS=0;
 
 --
--- Table structure for table `HostingServersGroups`
+-- Table structure for table `ServersGroups`
 --
 
 DROP TABLE IF EXISTS `ServersGroups`;
@@ -21,7 +21,7 @@ CREATE TABLE `ServersGroups` (
 -- SEPARATOR
 
 --
--- Table structure for table `HostingServers`
+-- Table structure for table `Servers`
 --
 
 DROP TABLE IF EXISTS `Servers`;
@@ -46,4 +46,9 @@ CREATE TABLE `Servers` (
 	CONSTRAINT `ServersServersGroupID` FOREIGN KEY (`ServersGroupID`) REFERENCES `ServersGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- SEPARATOR
+ALTER TABLE `Orders` ADD `ServerID` int(11) NOT NULL AFTER `ServiceID`, ADD KEY `OrdersServerID` (`ServerID`);
+
+-- SEPARATOR
+ALTER TABLE `Orders` ADD CONSTRAINT `OrdersServerID` FOREIGN KEY (`ServerID`) REFERENCES `Servers` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE ;
 

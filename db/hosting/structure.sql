@@ -2,7 +2,7 @@ SET FOREIGN_KEY_CHECKS=0;
 
 
 --
--- Table structure for table `HostingServersGroups`
+-- Table structure for table `ServersGroups`
 --
 
 DROP TABLE IF EXISTS `ServersGroups`;
@@ -20,7 +20,7 @@ CREATE TABLE `ServersGroups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `HostingServers`
+-- Table structure for table `Servers`
 --
 
 DROP TABLE IF EXISTS `Servers`;

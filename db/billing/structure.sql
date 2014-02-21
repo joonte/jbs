@@ -421,6 +421,7 @@ CREATE TABLE `Orders` (
   `OrderDate` int(11) default '0',
   `ContractID` int(11) NOT NULL,
   `ServiceID` int(11) NOT NULL,
+  `ServerID` int(11) NULL,
   `IsAutoProlong` ENUM('no','yes') default 'yes', 
   `ExpirationDate` int(11) default '0',
   `Keys` char(255) default '',
@@ -434,7 +435,9 @@ CREATE TABLE `Orders` (
   KEY `OrdersContractID` (`ContractID`),
   CONSTRAINT `OrdersContractID` FOREIGN KEY (`ContractID`) REFERENCES `Contracts` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   KEY `OrdersServiceID` (`ServiceID`),
-  CONSTRAINT `OrdersServiceID` FOREIGN KEY (`ServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `OrdersServiceID` FOREIGN KEY (`ServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `OrdersServerID` (`ServerID`),
+  CONSTRAINT `OrdersServerID` FOREIGN KEY (`ServerID`) REFERENCES `Servers` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
