@@ -70,7 +70,7 @@ foreach($HostingServers as $HostingServer){
 	#-------------------------------------------------------------------------------
 	# достаём за период
 	$TFilter = SPrintF('%s - %s',date('Y-m-d',time() - $Settings['PeriodToLock']*24*3600),date('Y-m-d',time() - 24*3600));
-	$BUsages = Call_User_Func_Array(Array($Server,'GetCPUUsage'),Array($TFilter));
+	$BUsages = Call_User_Func_Array(Array($ClassHostingServer,'GetCPUUsage'),Array($TFilter));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($BUsages)){
 	case 'error':
@@ -88,7 +88,7 @@ foreach($HostingServers as $HostingServer){
 	#-------------------------------------------------------------------------------
 	# достаём за вчера
 	$TFilter = SPrintF('%s - %s',date('Y-m-d',time() - 24*3600),date('Y-m-d',time() - 24*3600));
-	$SUsages = Call_User_Func_Array(Array($Server,'GetCPUUsage'),Array($TFilter));
+	$SUsages = Call_User_Func_Array(Array($ClassHostingServer,'GetCPUUsage'),Array($TFilter));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($SUsages)){
 	case 'error':
