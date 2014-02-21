@@ -2,6 +2,16 @@
 <!-- @author Alex Keda, for www.host-food.ru -->
 <XML>
 <!-- *********************************************************************** -->
+<Appearance>
+	<Row>
+		<Comp>Colors/Servers</Comp>
+		<Args>
+			<ListElement>%IsActive%</ListElement>
+			<ListElement>%IsDefault%</ListElement>
+		</Args>
+	</Row>
+</Appearance>
+<!-- *********************************************************************** -->
 <Cut>
 	<Comps>
 		<Before>
