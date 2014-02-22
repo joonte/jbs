@@ -47,7 +47,7 @@ CREATE TABLE `Servers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- SEPARATOR
-ALTER TABLE `Orders` ADD `ServerID` int(11) NOT NULL AFTER `ServiceID`, ADD KEY `OrdersServerID` (`ServerID`);
+ALTER TABLE `Orders` ADD `ServerID` int(11) NULL AFTER `ServiceID`, ADD KEY `OrdersServerID` (`ServerID`);
 
 -- SEPARATOR
 ALTER TABLE `Orders` ADD CONSTRAINT `OrdersServerID` FOREIGN KEY (`ServerID`) REFERENCES `Servers` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE ;
