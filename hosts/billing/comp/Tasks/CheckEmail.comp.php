@@ -7,6 +7,10 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
+if(Is_Error(System_Load('classes/ImapMailbox.php','libs/StripTagsSmart.php','libs/Server.php')))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
 $Settings = $Config['Tasks']['Types']['CheckEmail'];
@@ -23,8 +27,21 @@ if(!$Settings['IsActive'])
 	return 3600;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/ImapMailbox.php','libs/StripTagsSmart.php')))
+$ServerSettings = SelectServerSettingsByTemplate('EmailClient');
+switch(ValueOf($ServerSettings)){
+case 'error':
 	return ERROR | @Trigger_Error(500);
+case 'exception':
+	#-------------------------------------------------------------------------------
+	$GLOBALS['TaskReturnInfo'] = 'server with template: EmailClient, params: IsActive, IsDefault is not found';
+	#-------------------------------------------------------------------------------
+	return $ExecuteTime;
+	#-------------------------------------------------------------------------------
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $GLOBALS['TaskReturnInfo'] = Array();
@@ -45,7 +62,7 @@ if(!$Count){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Server = SPrintF("{%s/%s/%s}INBOX",$Settings['CheckEmailServer'],$Settings['CheckEmailProtocol'],$Settings['UseSSL']?'ssl/novalidate-cert':'notls');
+$Server = SPrintF("{%s/%s/%s}INBOX",$ServerSettings['Address'],$ServerSettings['Params']['Method'],($ServerSettings['Protocol'] == 'ssl')?'ssl/novalidate-cert':'notls');
 #-------------------------------------------------------------------------------
 $attachmentsDir = SPrintF('%s/hosts/%s/tmp/imap',SYSTEM_PATH,HOST_ID);
 #-------------------------------------------------------------------------------
@@ -55,7 +72,7 @@ if(!File_Exists($attachmentsDir))
 #-------------------------------------------------------------------------------
 try{
 	#-------------------------------------------------------------------------------
-	$mailbox = new ImapMailbox($Server, $Settings['CheckEmailLogin'], $Settings['CheckEmailPassword'],$attachmentsDir);
+	$mailbox = new ImapMailbox($Server,$ServerSettings['Login'],$ServerSettings['Password'],$attachmentsDir);
 	#-------------------------------------------------------------------------------
 }catch(Exception $e){
 	#-------------------------------------------------------------------------------

@@ -75,7 +75,7 @@ if(IsSet($Config['IspSoft'])){
 		$Server = Array('TemplateID'=>'ISPsw','ServersGroupID'=>$ServersGroupID,'IsActive'=>TRUE,'IsDefault'=>TRUE,'Protocol'=>'ssl','Address'=>'my.ispsystem.com','Port'=>443,'PrefixAPI'=>'/manager/billmgr','Login'=>(IsSet($IspSoft['Settings']['Login'])?$IspSoft['Settings']['Login']:'root'),'Password'=>$IspSoft['Settings']['Password'],'Params'=>Array('BalanceLowLimit'=>(IsSet($IspSoft['Settings']['BalanceLowLimit'])?$IspSoft['Settings']['BalanceLowLimit']:'250'),'Monitoring'=>'HTTPS=443'),'Notice'=>'Используется специально созданная учётная запись','SortID'=>51000);
 		#-------------------------------------------------------------------------------
 		$IsInsert = DB_Insert('Servers',$Server);
-		if(Is_Error($ServersGroupID))
+		if(Is_Error($IsInsert))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 	}

@@ -69,7 +69,7 @@ function SelectServerSettings($ServersGroupID){
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Settings)){
 	case 'error':
-		return ERROR | @Trigger_Error('[Server->SelectServer]: не удалось выбрать сервер');
+		return ERROR | @Trigger_Error('[Server->SelectServerSettings]: не удалось выбрать сервер');
 	case 'exception':
 		return new gException('SERVER_NOT_FOUND','В данной группе нет серверов активных + по-умолчанию');
 	case 'array':
@@ -90,5 +90,23 @@ function SelectServerSettings($ServersGroupID){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+function SelectServerSettingsByTemplate($TemplateID){
+	#-------------------------------------------------------------------------------
+	$Where = Array(SPrintF('`TemplateID` = "%s"',$TemplateID),'`IsActive` = "yes"','`IsDefault` = "yes"');
+	#-------------------------------------------------------------------------------
+	$Settings = DB_Select('Servers','*',Array('UNIQ','Where'=>$Where));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Settings)){
+	case 'error':
+		return ERROR | @Trigger_Error('[Server->SelectServerSettingsByTemplate]: не удалось выбрать сервер');
+	case 'exception':
+		return new gException('SERVER_NOT_FOUND','В данной группе нет серверов активных + по-умолчанию');
+	case 'array':
+		return $Settings;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+}
 
 
