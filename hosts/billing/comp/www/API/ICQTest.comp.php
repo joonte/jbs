@@ -22,8 +22,17 @@ if(!Is_Array($Executor))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tasks/ICQ',NULL,$UIN,TemplateReplace('www.API.ICQTest',Array('User'=>$GLOBALS['__USER'],'Executor'=>$Executor,'Service'=>'ICQ'),FALSE),$GLOBALS['__USER']['ID']);
-if(Is_Error($Comp))
+#-------------------------------------------------------------------------------
+switch(ValueOf($Comp)){
+case 'error':
 	return new gException('ERROR_MESSAGE_SEND','Не удалось отправить сообщение');
+case 'exception':
+	#-------------------------------------------------------------------------------
+	return $Comp;
+	#-------------------------------------------------------------------------------
+default:
+	break;
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return Array('Status'=>'Ok');

@@ -922,12 +922,6 @@
    <Port>5222</Port>
    <UseSSL>1</UseSSL>
   </JabberClient>
-  <!-- ********************************************************************** -->
-  <ICQClient>
-   <Uin>000000,000000,000000</Uin>
-   <Password>default</Password>
-   <Encoding>CP1251</Encoding>
-  </ICQClient>
   <!-- *********************************************************************** -->
   <SMSGateway>
    <SMSProvider>SMSpilot</SMSProvider>

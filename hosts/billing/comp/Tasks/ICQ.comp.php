@@ -12,12 +12,30 @@ Debug(SPrintF('[comp/Tasks/ICQ]: отправка ICQ сообщения для 
 #-------------------------------------------------------------------------------
 $GLOBALS['TaskReturnInfo'] = $UIN;
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/WebIcqLite.class.php')))
+if(Is_Error(System_Load('classes/WebIcqLite.class.php','libs/Server.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Config = Config();
 #-------------------------------------------------------------------------------
-$Settings = $Config['Notifies']['Settings']['ICQClient'];
+$Settings = SelectServerSettingsByTemplate('ICQ');
+#-------------------------------------------------------------------------------
+switch(ValueOf($Settings)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	#-------------------------------------------------------------------------------
+	$GLOBALS['TaskReturnInfo'] = 'server with template: ICQ, params: IsActive, IsDefault not found';
+	#-------------------------------------------------------------------------------
+	if(IsSet($GLOBALS['IsCron']))
+		return 3600;
+	#-------------------------------------------------------------------------------
+	return $Settings;
+	#-------------------------------------------------------------------------------
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Links = &Links();
 #-------------------------------------------------------------------------------
@@ -33,7 +51,7 @@ if(!IsSet($Links[$LinkID])){
   if(Is_Error($WebIcqLite))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
-  $MasterUin = Explode(',',$Settings['Uin']);
+  $MasterUin = Explode(',',$Settings['Login']);
   #-----------------------------------------------------------------------------
   $MasterUin = $MasterUin[Rand(0,Count($MasterUin)-1)];
   #-----------------------------------------------------------------------------
@@ -66,7 +84,7 @@ if(!IsSet($Links[$LinkID])){
 #-------------------------------------------------------------------------------
 $WebIcqLite = &$Links[$LinkID];
 #-------------------------------------------------------------------------------
-$Message = Mb_Convert_Encoding($Message,$Settings['Encoding']);
+$Message = Mb_Convert_Encoding($Message,$Settings['Params']['Encoding']);
 # переводы строк
 $Message = Str_Replace("\r","",$Message);
 $Message = Str_Replace("\n","\n\r",$Message);
@@ -81,6 +99,8 @@ if(Is_Error($IsMessage)){
   return 3600;
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Config = Config();
 #-------------------------------------------------------------------------------
 if(!$Config['Notifies']['Methods']['ICQ']['IsEvent'])
 	return TRUE;
