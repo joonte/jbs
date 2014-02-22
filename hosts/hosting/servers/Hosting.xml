@@ -267,26 +267,6 @@
 		<Value>localhost</Value>
 	</MySQL>
 	<!-- *********************************************************************** -->
-	<!-- *********************************************************************** -->
-	<Monitoring>
-		<Title>Служба мониторинга</Title>
-		<Check>Address</Check>
-		<Comment>Сервисы</Comment>
-		<Type>TextArea</Type>
-		<Attribs>
-			<rows>6</rows>
-			<prompt>Какие сервисы необходимо мониторить на данном сервере</prompt>
-			<type>text</type>
-		</Attribs>
-		<IsDuty>0</IsDuty>
-		<Value>HTTP=80
-HTTPS=443
-FTP=21
-MySQL=3306
-SMTP=25
-POP=110
-IMAP=143</Value>
-	</Monitoring>
 </Attribs>
 <!-- *********************************************************************** -->
 </XML>

@@ -18,20 +18,6 @@
 		<Value />
 	</BalanceLowLimit>
 	<!-- *********************************************************************** -->
-	<!-- *********************************************************************** -->
-	<Monitoring>
-		<Title>Служба мониторинга</Title>
-		<Check>Address</Check>
-		<Comment>Сервисы</Comment>
-		<Type>TextArea</Type>
-		<Attribs>
-			<rows>6</rows>
-			<prompt>Какие сервисы необходимо мониторить на данном сервере</prompt>
-			<type>text</type>
-		</Attribs>
-		<IsDuty>0</IsDuty>
-		<Value>HTTPS=443</Value>
-	</Monitoring>
 </Attribs>
 <!-- *********************************************************************** -->
 </XML>

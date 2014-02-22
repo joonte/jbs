@@ -22,6 +22,7 @@ $Port		= (integer) @$Args['Port'];
 $PrefixAPI	=  (string) @$Args['PrefixAPI'];
 $Login		=  (string) @$Args['Login'];
 $Password	=  (string) @$Args['Password'];
+$Monitoring	=  (string) @$Args['Monitoring'];
 $Notice		=  (string) @$Args['Notice'];
 $SortID		= (integer) @$Args['SortID'];
 #-------------------------------------------------------------------------------
@@ -44,6 +45,7 @@ if(!$Login)
 #-------------------------------------------------------------------------------
 if(!$Password)
 	return new gException('NO_SERVER_PASSWORD','Не указан пароль для входа на сервер');
+#-------------------------------------------------------------------------------
 if(!$IsActive && $IsDefault)
 	return new gException('DEFAULT_INACTIVE_SERVER','Неактивный сервер не может быть сервером по-умолчанию');
 #-------------------------------------------------------------------------------
@@ -59,6 +61,7 @@ $UServer = Array(
 			'PrefixAPI'	=> $PrefixAPI,
 			'Login'		=> $Login,
 			'Password'	=> $Password,
+			'Monitoring'	=> $Monitoring,
 			'Notice'	=> $Notice,
 			'SortID'	=> $SortID
 		);
@@ -168,12 +171,16 @@ if($IsDefault){
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$Count = DB_Count('Servers',Array('Where'=>SPrintF("`ServersGroupID` = %u AND `IsDefault` = 'yes'",$ServersGroupID)));
-	if(Is_Error($Count))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	if(!$Count)
-		$IsDefault = TRUE;
+	if($ServersGroupID){
+		#-------------------------------------------------------------------------------
+		$Count = DB_Count('Servers',Array('Where'=>SPrintF("`ServersGroupID` = %u AND `IsDefault` = 'yes'",$ServersGroupID)));
+		if(Is_Error($Count))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		if(!$Count)
+			$UServer['IsDefault'] = TRUE;
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
