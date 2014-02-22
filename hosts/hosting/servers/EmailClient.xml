@@ -33,7 +33,10 @@
 			<type>text</type>
 		</Attribs>
 		<IsDuty>0</IsDuty>
-		<Value>POP=110</Value>
+		<Value>POP3=110
+POP3S=995
+IMAP4=143
+IMAP4S=993</Value>
 	</Monitoring>
 	<!-- *********************************************************************** -->
 </Attribs>
