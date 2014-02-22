@@ -33,7 +33,7 @@ case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
 	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'] = 'server with template: EmailClient, params: IsActive, IsDefault is not found';
+	$GLOBALS['TaskReturnInfo'] = 'server with template: EmailClient, params: IsActive, IsDefault not found';
 	#-------------------------------------------------------------------------------
 	return $ExecuteTime;
 	#-------------------------------------------------------------------------------

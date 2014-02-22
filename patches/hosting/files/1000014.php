@@ -30,7 +30,7 @@ if(File_Exists($ConfigPath)){
 if(IsSet($Config['Tasks']['Types']['CheckEmail']['CheckEmailLogin'])){
 	#-------------------------------------------------------------------------------
 	$CheckEmail = $Config['Tasks']['Types']['CheckEmail'];
-	Debug(SPrintF('[patches/billing/files/1000062.php]: CheckEmail = %s',print_r($CheckEmail,true)));
+	Debug(SPrintF('[patches/hosting/files/1000014.php]: CheckEmail = %s',print_r($CheckEmail,true)));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$IsDelete = DB_Delete('Servers',Array('Where'=>'`TemplateID` = "EmailClient"'));
@@ -49,10 +49,10 @@ if(IsSet($Config['Tasks']['Types']['CheckEmail']['CheckEmailLogin'])){
 			'Password'	=> (IsSet($CheckEmail['CheckEmailPassword'])?$CheckEmail['CheckEmailPassword']:''),
 			'Params'	=> Array(
 						'Method'=>(IsSet($CheckEmail['CheckEmailProtocol'])?$CheckEmail['CheckEmailProtocol']:'pop3'),
-						'Monitoring'=>"POP3=110\nPOP3S=995\nIMAP4=143\nIMAP4S=993"
 						),
 			'Notice'	=> 'Используется учётная запись от которой шлёт сообщения биллинг (пользователь с идентификатором 100)',
-			'SortID'	=> 100000
+			'SortID'	=> 100000,
+			'Monitoring'	=> "POP3=110\nPOP3S=995\nIMAP4=143\nIMAP4S=993"
 			);
 	#-------------------------------------------------------------------------------
 	$IsInsert = DB_Insert('Servers',$Server);
