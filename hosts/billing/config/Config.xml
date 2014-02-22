@@ -915,14 +915,6 @@
    <EmailPort>25</EmailPort>
   </EmailClient>
   <!-- ********************************************************************** -->
-  <JabberClient>
-   <JabberID>jabber@isp.su</JabberID>
-   <Password>default</Password>
-   <Server>jabber.isp.su</Server>
-   <Port>5222</Port>
-   <UseSSL>1</UseSSL>
-  </JabberClient>
-  <!-- *********************************************************************** -->
   <SMSGateway>
    <SMSProvider>SMSpilot</SMSProvider>
    <SMSSender>isp.su</SMSSender>

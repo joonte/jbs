@@ -16,11 +16,30 @@ Debug(SPrintF('[comp/Tasks/Jabber]: отправка Jabber сообщения �
 #-------------------------------------------------------------------------------
 $GLOBALS['TaskReturnInfo'] = $JabberID;
 #-------------------------------------------------------------------------------
-if (Is_Error(System_Load('classes/JabberClient.class.php')))
-    return ERROR | @Trigger_Error(500);
+if(Is_Error(System_Load('classes/JabberClient.class.php','libs/Server.php')))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Config = Config();
-$Settings = $Config['Notifies']['Settings']['JabberClient'];
+#-------------------------------------------------------------------------------
+$Settings = SelectServerSettingsByTemplate('Jabber');
+#-------------------------------------------------------------------------------
+switch(ValueOf($Settings)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	#-------------------------------------------------------------------------------
+	$GLOBALS['TaskReturnInfo'] = 'server with template: Jabber, params: IsActive, IsDefault not found';
+	#-------------------------------------------------------------------------------
+	if(IsSet($GLOBALS['IsCron']))
+		return 3600;
+	#-------------------------------------------------------------------------------
+	return $Settings;
+	#-------------------------------------------------------------------------------
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Links = &Links();
 $LinkID = Md5('JabberClient');
@@ -30,11 +49,11 @@ if (!IsSet($Links[$LinkID])) {
     $JabberClient = &$Links[$LinkID];
 
     $JabberClient = new JabberClient(
-        $Settings['Server'],
+        $Settings['Address'],
         $Settings['Port'],
-        $Settings['JabberID'],
+        $Settings['Login'],
         $Settings['Password'],
-        $Settings['UseSSL']
+        ($Settings['Protocol'] == 'ssl')?TRUE:FALSE
     );
 
     // TODO тут надо переделать, ошибки из функций не вернутся
@@ -62,6 +81,8 @@ if(Is_Error($IsMessage)){
     return 3600;
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Config = Config();
 #-------------------------------------------------------------------------------
 if(!$Config['Notifies']['Methods']['Jabber']['IsEvent'])
 	return TRUE;
