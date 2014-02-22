@@ -1062,12 +1062,6 @@
    <IsNotify>1</IsNotify>
   </WorksCompliteReports>
   <!-- ********************************************************************* -->
-  <CourseUpdate>
-   <Name>Обновление курсов валют</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </CourseUpdate>
-  <!-- ********************************************************************* -->
   <ServiceCreate>
    <Name>Создание услуги</Name>
    <Params>
@@ -1197,6 +1191,10 @@
     <TableRequestLogStoryPeriod>186</TableRequestLogStoryPeriod>
    </CleanTablesSettings>
    <!-- ********************************************************************* -->
+   <CourseUpdateSettings>
+    <IsActive>1</IsActive>
+   </CourseUpdateSettings>
+   <!-- ********************************************************************* -->
    <EraseOldUsersSettings>
     <IsActive>1</IsActive>
     <InactiveDaysForUser>365</InactiveDaysForUser>
@@ -1216,6 +1214,8 @@
    <!-- ********************************************************************* -->
    <!-- задачи -->
    <DailyTasks>
+    <!-- курсы валют с сайта цекнтробанка -->
+    <CourseUpdate>Обновление курсов валют</CourseUpdate>
     <!-- Операции со счетами -->
     <NotifyWaitingInvoice>Уведомление о неоплаченных счетах</NotifyWaitingInvoice>
     <EraseDeletedInvoice>Удаление счетов в статусе Отменен</EraseDeletedInvoice>

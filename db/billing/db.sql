@@ -35,7 +35,7 @@ UNLOCK TABLES;
 
 -- SEPARATOR
 
-DELETE FROM `Tasks` WHERE `ID` IN(2,3,4,5,6,7,8,9,11,12,13,14);
+DELETE FROM `Tasks` WHERE `ID` IN(2,3,4,5,6,7,9,11,12,13,14);
 LOCK TABLES `Tasks` WRITE;
 INSERT INTO `Tasks`
   (`ID`,`UserID`,`TypeID`,`Params`,`IsActive`)
@@ -46,7 +46,6 @@ VALUES
 (5,1,'TicketsMessages','[]','yes'),
 (6,1,'WorksComplite','[]','yes'),
 (7,1,'WorksCompliteReports','[]','yes'),
-(8,1,'CourseUpdate','[]','yes'),
 (9,1,'OrdersForSuspend','[]','yes'),
 (11,1,'CaclulatePartnersReward','[]','yes'),
 (12,1,'GC','[]','yes'),
