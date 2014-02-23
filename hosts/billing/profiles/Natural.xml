@@ -145,6 +145,7 @@
   </Options>
   <Attribs>
    <size>1</size>
+   <style>width: 100%;</style>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value>RU</Value>
@@ -236,6 +237,7 @@
   </Options>
   <Attribs>
    <size>1</size>
+   <style>width: 100%;</style>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value>RU</Value>
@@ -315,6 +317,7 @@
   </Options>
   <Attribs>
    <size>1</size>
+   <style>width: 100%;</style>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value>Street</Value>

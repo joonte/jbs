@@ -161,6 +161,7 @@
   </Options>
   <Attribs>
    <size>1</size>
+   <style>width: 100%;</style>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value>Director</Value>
@@ -284,6 +285,7 @@
   <Attribs>
    <size>1</size>
    <onblur>var Form = document.forms.ProfileEditForm;if(Form.pCountry.value == 'RU') Form.pCountry.value = Form.jCountry.value;</onblur>
+   <style>width: 100%;</style>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value>RU</Value>
@@ -365,6 +367,7 @@
   <Attribs>
    <size>1</size>
    <onblur>var Form = document.forms.ProfileEditForm;if(Form.pType.value == 'Street') Form.pType.value = Form.jType.value;</onblur>
+   <style>width: 100%;</style>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value>Street</Value>
@@ -417,6 +420,7 @@
   </Options>
   <Attribs>
    <size>1</size>
+   <style>width: 100%;</style>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value>RU</Value>
@@ -496,6 +500,7 @@
   </Options>
   <Attribs>
    <size>1</size>
+   <style>width: 100%;</style>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value>Street</Value>

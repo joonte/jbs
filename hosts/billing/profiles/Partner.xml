@@ -24,7 +24,9 @@
    <DisignStudio>Дизайнерская студия</DisignStudio>
    <None>Не указан</None>
   </Options>
-  <Attribs type="array" />
+  <Attribs>
+   <style>width: 100%;</style>
+  </Attribs>
   <IsDuty>1</IsDuty>
   <Value>DisignStudio</Value>
  </Type>
