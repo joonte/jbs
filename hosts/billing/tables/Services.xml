@@ -132,6 +132,15 @@
   </Args>
  </IsConditionally>
  <!-- ********************************************************************** -->
+ <Orders>
+  <Head>Кол. зак.</Head>
+  <Prompt>Кол-во заказов на данный сервис</Prompt>
+  <Alias>(SELECT COUNT(*) FROM `Orders` WHERE `Services`.`ID` = `Orders`.`ServiceID`)</Alias>
+  <Attribs>
+   <style>text-align:right;</style>
+  </Attribs>
+ </Orders>
+ <!-- ********************************************************************** -->
  <SortID>
   <Args>
    <TableID>Services</TableID>
@@ -148,6 +157,7 @@
  <ListElement>IsProtected</ListElement>
  <ListElement>IsActive</ListElement>
  <ListElement>IsConditionally</ListElement>
+ <ListElement>Orders</ListElement>
  <ListElement>SortID</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
