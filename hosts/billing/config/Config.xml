@@ -905,35 +905,6 @@
   </SMS>
  </Methods>
  <!-- ********************************************************************** -->
- <Settings>
-  <!-- ********************************************************************** -->
-  <EmailClient>
-   <EmailMethod>mail</EmailMethod>
-   <EmailLogin>joonte@joonte.ru</EmailLogin>
-   <Password>default</Password>
-   <EmailServer>mail.joonte.com</EmailServer>
-   <EmailPort>25</EmailPort>
-  </EmailClient>
-  <!-- ********************************************************************** -->
-  <SMSGateway>
-   <SMSInterval>300</SMSInterval>
-   <CutSign>1</CutSign>
-   <SMSPrice>
-    <SMSPriceRu>0.50</SMSPriceRu>
-    <SMSPriceUa>1.00</SMSPriceUa>
-    <SMSPriceSng>2.00</SMSPriceSng>
-    <SMSPriceZone1>3.00</SMSPriceZone1>
-    <SMSPriceZone2>4.00</SMSPriceZone2>
-    <SMSPriceDefault>5.00</SMSPriceDefault>
-   </SMSPrice>
-   <SMSExceptions>
-    <SMSExceptionsPaidInvoices>-1</SMSExceptionsPaidInvoices>
-    <SMSExceptionsSchemeID>0</SMSExceptionsSchemeID>
-   </SMSExceptions>
-  </SMSGateway>
-  <!-- *********************************************************************** -->
- </Settings>
- <!-- *********************************************************************** -->
 </Notifies>
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->

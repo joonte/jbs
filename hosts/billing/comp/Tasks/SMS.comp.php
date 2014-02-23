@@ -118,27 +118,22 @@ $GLOBALS['TaskReturnInfo'] = $Mobile;
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-$Settings = $Config['Notifies']['Settings']['SMSGateway'];
-#-------------------------------------------------------------------------------
 if(!IsSet($ServerSettings['Params']['Provider']))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($ServerSettings['Params']['Provider'] == 'SMSpilot' && !IsSet($ServerSettings['Params']['ApiKey']))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if(!IsSet($Settings['SMSLogin']))
+if(!IsSet($ServerSettings['Login']))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if(!IsSet($Settings['SMSPassword']))
+if(!IsSet($ServerSettings['Password']))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if(!IsSet($ServerSettings['Params']['Sender']))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if(!IsSet($Settings['SMSExceptions']['SMSExceptionsPaidInvoices']))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-if(!IsSet($Settings['SMSExceptions']['SMSExceptionsSchemeID']))
+if(!IsSet($ServerSettings['Params']['ExceptionsSchemeID']))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -150,7 +145,7 @@ if($User['GroupID'] == '3000000')
 #-------------------------------------------------------------------------------
 // Проверяем пользователя на исключения оплаты, сумма оплаченных счетов.
 #-------------------------------------------------------------------------------
-if($Settings['SMSExceptions']['SMSExceptionsPaidInvoices'] >= 0){
+if(FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']) >= 0){
 	#-------------------------------------------------------------------------------
 	$IsSelect = DB_Select('InvoicesOwners','SUM(`Summ`) AS `Summ`',Array('UNIQ','Where'=>SPrintF('`UserID` = %u AND `IsPosted` = "yes"',$UserID)));
 	switch(ValueOf($IsSelect)){
@@ -160,7 +155,7 @@ if($Settings['SMSExceptions']['SMSExceptionsPaidInvoices'] >= 0){
 		return ERROR | @Trigger_Error(400);
 	case 'array':
 		#-------------------------------------------------------------------------------
-		if($IsSelect['Summ'] >= $Settings['SMSExceptions']['SMSExceptionsPaidInvoices'])
+		if($IsSelect['Summ'] >= FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']))
 			$ChargeFree = true;
 			//Debug(SPrintF('[comp/Tasks/SMS]: Оплаченных счетов (%s)', $IsSelect['Summ']));
 		#-------------------------------------------------------------------------------
@@ -176,13 +171,13 @@ if($Settings['SMSExceptions']['SMSExceptionsPaidInvoices'] >= 0){
 // Проверяем пользователя на исключения оплаты, активные заказы хостинга.
 // мегакостыль =) // commented by lissyara, 2013-06-01 in 15:47 MSK
 #-------------------------------------------------------------------------------
-if($Settings['SMSExceptions']['SMSExceptionsSchemeID'] != 0){
+if($ServerSettings['Params']['ExceptionsSchemeID'] != 0){
 	#-------------------------------------------------------------------------------
 	$OrderHostings = DB_Select('HostingOrdersOwners', 'SchemeID', Array('Where' => SPrintF('`UserID` = %u AND `StatusID` = "Active"', $UserID)));
 	if (Is_Error($OrderHostings))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$LimitSchemeID = Explode(',',$Settings['SMSExceptions']['SMSExceptionsSchemeID']);
+	$LimitSchemeID = Explode(',',$ServerSettings['Params']['ExceptionsSchemeID']);
 	foreach($OrderHostings as $OrderHosting){
 		if(In_Array((integer) $OrderHosting['SchemeID'], $LimitSchemeID)){
 			$ChargeFree = true;
@@ -207,20 +202,20 @@ if (Is_Error(System_Load(SPrintF('classes/%s.class.php', $ServerSettings['Params
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
-$MobileCountry = 'SMSPriceDefault';
-$RegCountrys = array('SMSPriceRu' => $Regulars['SMSPriceRu'], 'SMSPriceUa' => $Regulars['SMSPriceUa'], 'SMSPriceSng' => $Regulars['SMSPriceSng'], 'SMSPriceZone1' => $Regulars['SMSPriceZone1'], 'SMSPriceZone2' => $Regulars['SMSPriceZone2']);
+$MobileCountry = 'PriceDefault';
+$RegCountrys = array('PriceRu' => $Regulars['SMSPriceRu'], 'PriceUa' => $Regulars['SMSPriceUa'], 'PriceSng' => $Regulars['SMSPriceSng'], 'PriceZone1' => $Regulars['SMSPriceZone1'], 'PriceZone2' => $Regulars['SMSPriceZone2']);
 #-------------------------------------------------------------------------------
 foreach ($RegCountrys as $RegCountryKey => $RegCountry)
 	if (Preg_Match($RegCountry, $Mobile))
 		$MobileCountry = $RegCountryKey;
 Debug(SPrintF('[comp/Tasks/SMS]: Страна определена (%s)', $MobileCountry));
 #-------------------------------------------------------------------------------
-if (!IsSet($Settings['SMSPrice'][$MobileCountry]))
+if (!IsSet($ServerSettings['Params'][$MobileCountry]))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($MessageLength <= 70){
 	#-------------------------------------------------------------------------------
-	$SMSCost = Str_Replace(',', '.', $Settings['SMSPrice'][$MobileCountry]);
+	$SMSCost = Str_Replace(',', '.', $ServerSettings['Params'][$MobileCountry]);
 	$SMSCount = 1;
 	#-------------------------------------------------------------------------------
 }else{
@@ -234,7 +229,7 @@ if($MessageLength <= 70){
 		return TRUE;
 	}
 	#-------------------------------------------------------------------------------
-	$SMSCost = $SMSCount * Str_Replace(',', '.', $Settings['SMSPrice'][$MobileCountry]);
+	$SMSCost = $SMSCount * Str_Replace(',', '.', $ServerSettings['Params'][$MobileCountry]);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------

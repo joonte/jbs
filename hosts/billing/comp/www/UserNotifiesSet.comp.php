@@ -7,7 +7,7 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Tree.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Tree.php','libs/Server.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM = new DOM();
@@ -33,7 +33,23 @@ $Notifies = $Config['Notifies'];
 #-------------------------------------------------------------------------------
 $Methods = $Notifies['Methods'];
 #-------------------------------------------------------------------------------
-$SMSGateway = $Config['Notifies']['Settings']['SMSGateway'];
+#-------------------------------------------------------------------------------
+$ServerSettings = SelectServerSettingsByTemplate('SMS');
+#-------------------------------------------------------------------------------
+switch(ValueOf($ServerSettings)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	#-------------------------------------------------------------------------------
+	if($Methods['SMS']['IsActive'])
+		return $ServerSettings;
+	#-------------------------------------------------------------------------------
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($Methods['SMS']['IsActive']){
 	#-------------------------------------------------------------------------------
@@ -44,8 +60,14 @@ if($Methods['SMS']['IsActive']){
 	}else{
 		#-------------------------------------------------------------------------------
 		$Regulars = Regulars();
-		$MobileCountry = 'SMSPriceDefault';
-		$RegCountrys = array('SMSPriceRu' => $Regulars['SMSPriceRu'], 'SMSPriceUa' => $Regulars['SMSPriceUa'], 'SMSPriceSng' => $Regulars['SMSPriceSng'], 'SMSPriceZone1' => $Regulars['SMSPriceZone1'], 'SMSPriceZone2' => $Regulars['SMSPriceZone2']);
+		$MobileCountry = 'PriceDefault';
+		$RegCountrys = array(
+					'PriceRu'	=> $Regulars['SMSPriceRu'],
+					'PriceUa'	=> $Regulars['SMSPriceUa'],
+					'PriceSng'	=> $Regulars['SMSPriceSng'],
+					'PriceZone1'	=> $Regulars['SMSPriceZone1'],
+					'PriceZone2'	=> $Regulars['SMSPriceZone2']
+					);
 		#-------------------------------------------------------------------------------
 		foreach ($RegCountrys as $RegCountryKey => $RegCountry)
 			if (Preg_Match($RegCountry, $__USER['Mobile']))
@@ -53,17 +75,17 @@ if($Methods['SMS']['IsActive']){
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[comp/www/UserNotifiesSet]: Страна определена (%s)', $MobileCountry));
 		#-------------------------------------------------------------------------------
-		if(!IsSet($SMSGateway['SMSPrice'][$MobileCountry]))
+		if(!IsSet($ServerSettings['Params'][$MobileCountry]))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Formats/Currency',Str_Replace(',','.',$SMSGateway['SMSPrice'][$MobileCountry]));
+		$Comp = Comp_Load('Formats/Currency',Str_Replace(',','.',$ServerSettings['Params'][$MobileCountry]));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		$Message = SPrintF('SMS уведомления платные (%s), рекомендуем включать только "Уведомления о блокировках заказов"',$Comp);
 		# прочкать SMSExceptionsPaidInvoices, если надо - получить сумму счетов, надпись по итогам вывести
-		if($SMSGateway['SMSExceptions']['SMSExceptionsPaidInvoices'] >= 0){
+		if(FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']) >= 0){
 			#-------------------------------------------------------------------------------
 			$IsSelect = DB_Select('InvoicesOwners','SUM(`Summ`) AS `Summ`',Array('UNIQ','Where'=>SPrintF('`UserID` = %u AND `IsPosted` = "yes"',$__USER['ID'])));
 			switch(ValueOf($IsSelect)){
@@ -78,11 +100,11 @@ if($Methods['SMS']['IsActive']){
 					return ERROR | @Trigger_Error(500);
 				Debug(SPrintF('[comp/www/UserNotifiesSet]: оплачено счетов на сумму (%s)', $Comp));
 				#-------------------------------------------------------------------------------
-				$Comp = Comp_Load('Formats/Currency',$SMSGateway['SMSExceptions']['SMSExceptionsPaidInvoices']);
+				$Comp = Comp_Load('Formats/Currency',FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']));
 				if(Is_Error($Comp))
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------
-				$Message = ($IsSelect['Summ'] >= $SMSGateway['SMSExceptions']['SMSExceptionsPaidInvoices'])?SPrintF('Сумма ваших оплаченных счетов больше %s, SMS для вас бесплатны',$Comp):$Message;
+				$Message = ($IsSelect['Summ'] >= FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']))?SPrintF('Сумма ваших оплаченных счетов больше %s, SMS для вас бесплатны',$Comp):$Message;
 				#-------------------------------------------------------------------------------
 				break;
 				#-------------------------------------------------------------------------------
@@ -96,7 +118,7 @@ if($Methods['SMS']['IsActive']){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	if($SMSGateway['SMSExceptions']['SMSExceptionsPaidInvoices'] == 0 && $__USER['MobileConfirmed'] > 0)
+	if(FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']) == 0 && $__USER['MobileConfirmed'] > 0)
 		UnSet($Row2);
 	#-------------------------------------------------------------------------------
 }

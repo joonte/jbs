@@ -9,11 +9,29 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(Is_Error(System_Load('libs/Server.php')))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$ServerSettings = SelectServerSettingsByTemplate('SMS');
+#-------------------------------------------------------------------------------
+switch(ValueOf($ServerSettings)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $ServerSettings;
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-$Settings = $Config['Notifies']['Settings']['SMSGateway'];
 #-------------------------------------------------------------------------------
-if(!Isset($Settings['SMSInterval']))
+if(!IsSet($ServerSettings['Params']['Interval']))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -40,7 +58,7 @@ if($Mobile){
     $Result2 = CacheManager::get($CacheID2);
     if($Result2 == 'block'){
       #-------------------------------------------------------------------------------
-      $Comp = Comp_Load('Formats/Date/Remainder',$Settings['SMSInterval']);
+      $Comp = Comp_Load('Formats/Date/Remainder',$ServerSettings['Params']['Interval']);
       if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------------
@@ -55,7 +73,7 @@ if($Mobile){
     $Confirm = rand(100000, 999999);
     CacheManager::add($CacheID, SPrintF('%s%s',$Confirm,$Mobile), 10*24*3600);
     #-------------------------------------------------------------------------------
-    $Message = SPrintF('Ваш проверочный код: %s%s',$Confirm,($Settings['CutSign'])?'':SPrintF('\r\n%s',$Executor['Sign']));
+    $Message = SPrintF('Ваш проверочный код: %s%s',$Confirm,($ServerSettings['Params']['CutSign'])?'':SPrintF('\r\n%s',$Executor['Sign']));
     $Comp = Comp_Load('Tasks/SMS',NULL,$Mobile,$Message,$GLOBALS['__USER']['ID'],TRUE,TRUE);
     if(!$Comp){
 	#-----------------------------------------------------------------------------
@@ -71,7 +89,7 @@ if($Mobile){
     if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
     #-------------------------------------------------------------------------------
-    CacheManager::add($CacheID2, 'block', IntVal($Settings['SMSInterval']) * 20);
+    CacheManager::add($CacheID2, 'block', IntVal($ServerSettings['Params']['Interval']) * 20);
     #-------------------------------------------------------------------------------
     return Array('Status' => 'Ok');
     #-------------------------------------------------------------------------------

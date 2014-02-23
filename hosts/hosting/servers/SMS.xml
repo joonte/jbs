@@ -62,6 +62,141 @@
 		<Value />
 	</BalanceLowLimit>
 	<!-- *********************************************************************** -->
+	<Interval>
+		<Check>/^[0-9]{1,4}$/u</Check>
+		<Comment>Интервал</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Через какой период времени можно отправлять новую SMS с кодом подтверждения</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>300</Value>
+	</Interval>
+	<!-- *********************************************************************** -->
+        <CutSign>
+		<Check>Address</Check>
+		<Comment>Вырезать подпись</Comment>
+		<CommentAttribs>
+			<style>cursor:pointer;</style>
+			<onclick>ChangeCheckBox('CutSign'); return false;</onclick>
+			<prompt>Убирать "подпись" в сообщении. Иногда, она довольно большая и просто не нужна.</prompt>
+		</CommentAttribs>
+		<Type>Input</Type>
+		<Attribs>
+			<type>checkbox</type>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>yes</Value>
+	</CutSign>
+	<!-- *********************************************************************** -->
+	<PriceRu>
+		<Title>Стоимость SMS собщений</Title>
+		<Check>/^[0-9\.]{1,6}$/u</Check>
+		<Comment>Россия</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Цена SMS для телефонов Российской Федерации</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>0.50</Value>
+	</PriceRu>
+	<!-- *********************************************************************** -->
+	<PriceUa>
+		<Check>/^[0-9\.]{1,6}$/u</Check>
+		<Comment>Украина</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Цена SMS для телефонов Украины</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>1.00</Value>
+	</PriceUa>
+	<!-- *********************************************************************** -->
+	<PriceSng>
+		<Check>/^[0-9\.]{1,6}$/u</Check>
+		<Comment>СНГ</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Цена SMS для телефонов СНГ (почти вся территория СССР)</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>2.00</Value>
+	</PriceSng>
+	<!-- *********************************************************************** -->
+	<PriceZone1>
+		<Check>/^[0-9\.]{1,6}$/u</Check>
+		<Comment>Зона 1</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Цена SMS для телефонов зоны 2</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>3.00</Value>
+	</PriceZone1>
+	<!-- *********************************************************************** -->
+	<PriceZone2>
+		<Check>/^[0-9\.]{1,6}$/u</Check>
+		<Comment>СНГ</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Цена SMS для телефонов зоны 2</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>4.00</Value>
+	</PriceZone2>
+	<!-- *********************************************************************** -->
+	<PriceDefault>
+		<Check>/^[0-9\.]{1,6}$/u</Check>
+		<Comment>Прочее</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Цена для всех остальных, чей телефон не входит ни в одну из явно перечисленных зон</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>5.00</Value>
+	</PriceDefault>
+	<!-- *********************************************************************** -->
+	<ExceptionsPaidInvoices>
+		<Title>Исключения</Title>
+		<Check>/^[0-9\.\-]{1,7}$/u</Check>
+		<Comment>Сумма счетов</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>При какой сумме оплаченных счетов, за отправленные SMS сообщения не будет взиматься оплата. Чтобы оплата взималась всегда, введите значение -1, чтобы не взималась никогда, введите 0</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>-1</Value>
+	</ExceptionsPaidInvoices>
+	<!-- *********************************************************************** -->
+	<ExceptionsSchemeID>
+		<Check>/^[0-9\,]{1,64}$/u</Check>
+		<Comment>Идентификаторы тарифов</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Список (через запятую) цифровых идентификаторов тарифов хостинга, при наличии которых SMS будут бесплатными</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>0</Value>
+	</ExceptionsSchemeID>
+	<!-- *********************************************************************** -->
 </Attribs>
 <!-- *********************************************************************** -->
 </XML>

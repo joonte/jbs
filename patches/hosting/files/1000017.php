@@ -53,6 +53,16 @@ if(IsSet($Config['Notifies']['Settings']['SMSGateway'])){
 						'ApiKey'	=> (IsSet($SMSGateway['SMSKey'])?$SMSGateway['SMSKey']:''),
 						'Sender'	=> (IsSet($SMSGateway['SMSSender'])?$SMSGateway['SMSSender']:''),
 						'BalanceLowLimit'=>(IsSet($SMSGateway['BalanceLowLimit'])?$SMSGateway['BalanceLowLimit']:''),
+						'Interval'	=> (IsSet($SMSGateway['SMSInterval'])?$SMSGateway['SMSInterval']:'300'),
+						'CutSign'	=> (IsSet($SMSGateway['CutSign'])?TRUE:FALSE),
+						'PriceRu'	=> (IsSet($SMSGateway['SMSPriceRu'])?$SMSGateway['SMSPriceRu']:'0.50'),
+						'PriceUa'	=> (IsSet($SMSGateway['SMSPriceUa'])?$SMSGateway['SMSPriceUa']:'1.00'),
+						'PriceSng'	=> (IsSet($SMSGateway['SMSPriceSng'])?$SMSGateway['SMSPriceSng']:'2.00'),
+						'PriceZone1'	=> (IsSet($SMSGateway['SMSPriceZone1'])?$SMSGateway['SMSPriceZone1']:'3.00'),
+						'PriceZone2'	=> (IsSet($SMSGateway['SMSPriceZone2'])?$SMSGateway['SMSPriceZone2']:'4.00'),
+						'PriceDefault'	=> (IsSet($SMSGateway['SMSPriceDefault'])?$SMSGateway['SMSPriceDefault']:'5.00'),
+						'ExceptionsPaidInvoices'=>(IsSet($SMSGateway['SMSExceptionsPaidInvoices'])?$SMSGateway['SMSExceptionsPaidInvoices']:'-1'),
+						'ExceptionsSchemeID'=>(IsSet($SMSGateway['SMSExceptionsSchemeID'])?$SMSGateway['SMSExceptionsSchemeID']:'0,0'),
 						),
 			'SortID'	=> 100000,
 			'Monitoring'	=> 'HTTP=80'
@@ -63,12 +73,7 @@ if(IsSet($Config['Notifies']['Settings']['SMSGateway'])){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	UnSet($Config['Notifies']['Settings']['SMSGateway']['SMSLogin']);
-	UnSet($Config['Notifies']['Settings']['SMSGateway']['SMSPassword']);
-	UnSet($Config['Notifies']['Settings']['SMSGateway']['SMSProvider']);
-	UnSet($Config['Notifies']['Settings']['SMSGateway']['SMSKey']);
-	UnSet($Config['Notifies']['Settings']['SMSGateway']['SMSSender']);
-	UnSet($Config['Notifies']['Settings']['SMSGateway']['BalanceLowLimit']);
+	UnSet($Config['Notifies']['Settings']['SMSGateway']);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
