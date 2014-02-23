@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Attribs>
+	<!-- *********************************************************************** -->
+	<Provider>
+		<Title>Прочие настройки</Title>
+		<Check>/^[^\\]{1,32}$/u</Check>
+		<Comment>Оператор SMS шлюза</Comment>
+		<Type>Select</Type>
+		<Options>
+			<SMSpilot>SMS Пилот</SMSpilot>
+			<SMSC>SMS-центр</SMSC>
+		</Options>
+		<Attribs>
+			<prompt>Какой оператор используется для отправки SMS</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+			<size>1</size>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>SMSpilot</Value>
+	</Provider>
+	<!-- *********************************************************************** -->
+	<ApiKey>
+		<Check>/^[^\\]{64,64}$/u</Check>
+		<Comment>Ключ для доступа к API</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Ключ используется для доступа к API шлюза SMS (используется у шлюза SMSpilot)</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value />
+	</ApiKey>
+	<!-- *********************************************************************** -->
+	<Sender>
+		<Check>/^[^\\]{3,11}$/u</Check>
+		<Comment>Отправитель</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>От чьего имени будут отправляться SMS: текст от 3 до 11 символов, либо, номер телефона</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>MegaHoster</Value>
+	</Sender>
+	<!-- *********************************************************************** -->
+	<BalanceLowLimit>
+		<Check>/^[0-9]{1,4}$/u</Check>
+		<Comment>Минимальная сумма</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>При снижении балланса счёта у оператора ниже этой суммы, группе &quot;Бухгалтерия&quot; (при её отсутствии - всем сотрудникам) будут отсылаться уведомления о необходимости пополнения счёта. Для отключения уведомлений, введите ноль</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value />
+	</BalanceLowLimit>
+	<!-- *********************************************************************** -->
+</Attribs>
+<!-- *********************************************************************** -->
+</XML>

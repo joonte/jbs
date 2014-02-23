@@ -18,6 +18,7 @@
 		<Check>/^[A-Za-zА-Яа-я0-9\-]{2,25}$/u</Check>
 		<Attribs>
 			<size>1</size>
+			<style>width: 100%;</style>
 		</Attribs>
 		<IsDuty>1</IsDuty>
 		<Value>Director</Value>

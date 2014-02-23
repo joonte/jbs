@@ -104,6 +104,18 @@ if($ServerID){
 		#-------------------------------------------------------------------------------
 		break;
 		#-------------------------------------------------------------------------------
+	case 'SMS':
+		#-------------------------------------------------------------------------------
+		$Server['Protocol']	= 'tcp';
+		$Server['Address']	= 'smspilot.ru';
+		$Server['Port']		= 80;
+		$Server['PrefixAPI']	= '/api.php';
+		$Server['Login']	= 'vasiliy.alibabaevich';
+		$Server['Monitoring']	= "HTTP=80";
+		$Server['Notice']	= '';
+		#-------------------------------------------------------------------------------
+		break;
+		#-------------------------------------------------------------------------------
 	default:
 		break;
 	}
@@ -168,7 +180,7 @@ if(!$TemplateID){
 	if(!Count($Options))
 		return new gException('TEMPLATES_NOT_DEFINED','Шаблоны не определены');
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Select',Array('name'=>'TemplateID'),$Options);
+	$Comp = Comp_Load('Form/Select',Array('name'=>'TemplateID','style'=>'width: 100%;'),$Options);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -239,7 +251,7 @@ if(!$TemplateID){
 		foreach($ServersGroups as $ServersGroup)
 			$Options[$ServersGroup['ID']] = $ServersGroup['Name'];
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Select',Array('name'=>'ServersGroupID','prompt'=>'Группа серверов, в которую входит сервер'),$Options,$Server['ServersGroupID']);
+	$Comp = Comp_Load('Form/Select',Array('name'=>'ServersGroupID','prompt'=>'Группа серверов, в которую входит сервер','style'=>'width: 100%;'),$Options,$Server['ServersGroupID']);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -283,7 +295,7 @@ if(!$TemplateID){
 	#-------------------------------------------------------------------------------
 	$Table[] = 'Параметры соединения';
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Select',Array('name'=>'Protocol'),Array('ssl'=>'ssl','tcp'=>'tcp'),$Server['Protocol']);
+	$Comp = Comp_Load('Form/Select',Array('name'=>'Protocol','style'=>'width: 100%;'),Array('ssl'=>'ssl','tcp'=>'tcp'),$Server['Protocol']);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

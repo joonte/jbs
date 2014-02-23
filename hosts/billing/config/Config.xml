@@ -916,13 +916,7 @@
   </EmailClient>
   <!-- ********************************************************************** -->
   <SMSGateway>
-   <SMSProvider>SMSpilot</SMSProvider>
-   <SMSSender>isp.su</SMSSender>
-   <SMSLogin>login</SMSLogin>
-   <SMSPassword>password</SMSPassword>
-   <SMSKey>API ключ</SMSKey>
    <SMSInterval>300</SMSInterval>
-   <BalanceLowLimit>0</BalanceLowLimit>
    <CutSign>1</CutSign>
    <SMSPrice>
     <SMSPriceRu>0.50</SMSPriceRu>

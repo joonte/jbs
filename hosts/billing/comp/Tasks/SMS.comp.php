@@ -9,6 +9,31 @@ $__args_list = Array('Task', 'Mobile', 'Message', 'UserID', 'ChargeFree', 'IsImm
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
+if(Is_Error(System_Load('libs/Server.php')))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$ServerSettings = SelectServerSettingsByTemplate('SMS');
+#-------------------------------------------------------------------------------
+switch(ValueOf($ServerSettings)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	#-------------------------------------------------------------------------------
+	$GLOBALS['TaskReturnInfo'] = 'server with template: SMS, params: IsActive, IsDefault not found';
+	#-------------------------------------------------------------------------------
+	if(IsSet($GLOBALS['IsCron']))
+		return 3600;
+	#-------------------------------------------------------------------------------
+	return $ServerSettings;
+	#-------------------------------------------------------------------------------
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # проверяем, можно ли отправлять в заданное время
 $User = DB_Select('Users', Array('MobileConfirmed','GroupID','Params'), Array('UNIQ', 'ID' => $UserID));
 if(!Is_Array($User))
@@ -18,7 +43,7 @@ $IsImmediately = (IsSet($IsImmediately)?$IsImmediately:FALSE);
 #-------------------------------------------------------------------------------
 $TransferTime = FALSE;
 #-------------------------------------------------------------------------------
-# возможно, параметры не заданф/требуется немедленная отправка - время не опредлеяем
+# возможно, параметры не заданы/требуется немедленная отправка - время не опредлеяем
 if(IsSet($User['Params']['SMSTime']) && !$IsImmediately){
 	#-------------------------------------------------------------------------------
 	$SMSTime = $User['Params']['SMSTime'];
@@ -95,10 +120,10 @@ $Config = Config();
 #-------------------------------------------------------------------------------
 $Settings = $Config['Notifies']['Settings']['SMSGateway'];
 #-------------------------------------------------------------------------------
-if(!IsSet($Settings['SMSProvider']))
+if(!IsSet($ServerSettings['Params']['Provider']))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if(!IsSet($Settings['SMSKey']))
+if($ServerSettings['Params']['Provider'] == 'SMSpilot' && !IsSet($ServerSettings['Params']['ApiKey']))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if(!IsSet($Settings['SMSLogin']))
@@ -107,7 +132,7 @@ if(!IsSet($Settings['SMSLogin']))
 if(!IsSet($Settings['SMSPassword']))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if(!IsSet($Settings['SMSSender']))
+if(!IsSet($ServerSettings['Params']['Sender']))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if(!IsSet($Settings['SMSExceptions']['SMSExceptionsPaidInvoices']))
@@ -172,12 +197,12 @@ if($Settings['SMSExceptions']['SMSExceptionsSchemeID'] != 0){
 $MessageLength = MB_StrLen($Message);
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/Tasks/SMS]: длинна: %s, сообщение (%s)',$MessageLength,$Message));
-Debug(SPrintF('[comp/Tasks/SMS]: SMS шлюз (%s)', $Settings['SMSProvider']));
-#Debug(SPrintF('[comp/Tasks/SMS]: API ключ (%s)', $Settings['SMSKey']));
-Debug(SPrintF('[comp/Tasks/SMS]: Отправитель (%s)', $Settings['SMSSender']));
+Debug(SPrintF('[comp/Tasks/SMS]: SMS шлюз (%s)', $ServerSettings['Params']['Provider']));
+#Debug(SPrintF('[comp/Tasks/SMS]: API ключ (%s)', $ServerSettings['Params']['ApiKey']));
+Debug(SPrintF('[comp/Tasks/SMS]: Отправитель (%s)', $ServerSettings['Params']['Sender']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if (Is_Error(System_Load(SPrintF('classes/%s.class.php', $Settings['SMSProvider']))))
+if (Is_Error(System_Load(SPrintF('classes/%s.class.php', $ServerSettings['Params']['Provider']))))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -280,7 +305,7 @@ if ($SMSCost > 0){
 #-------------------------------------------------------------------------------
 $Links = &Links();
 #-------------------------------------------------------------------------------
-$LinkID = Md5($Settings['SMSProvider']);
+$LinkID = Md5($ServerSettings['Params']['Provider']);
 #-------------------------------------------------------------------------------
 if(!IsSet($Links[$LinkID])){
 	#-------------------------------------------------------------------------------
@@ -288,7 +313,7 @@ if(!IsSet($Links[$LinkID])){
 	#-------------------------------------------------------------------------------
 	$SMS = &$Links[$LinkID];
 	#-------------------------------------------------------------------------------
-	$SMS = new $Settings['SMSProvider']($Settings['SMSLogin'],$Settings['SMSPassword'],$Settings['SMSKey'],$Settings['SMSSender']);
+	$SMS = new $ServerSettings['Params']['Provider']($ServerSettings['Login'],$ServerSettings['Password'],$ServerSettings['Params']['ApiKey'],$ServerSettings['Params']['Sender']);
 	if (Is_Error($SMS))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -350,7 +375,7 @@ if(!IsSet($Links[$LinkID])){
 $SMS = &$Links[$LinkID];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsMessage = $SMS->send((integer) $Mobile, $Message, $Settings['SMSSender']);
+$IsMessage = $SMS->send((integer) $Mobile, $Message,$ServerSettings['Params']['Sender']);
 switch (ValueOf($IsMessage)) {
 case 'false':
 	#-------------------------------------------------------------------------------

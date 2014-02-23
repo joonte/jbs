@@ -16,6 +16,7 @@
 		<Attribs>
 			<size>1</size>
 			<prompt>Протокол используемый для подключения к почтовому серверу. Тестировался только pop3, с почтой на Яндексе.</prompt>
+			<style>width: 100%;</style>
 		</Attribs>
 		<IsDuty>1</IsDuty>
 		<Value>pop3</Value>

@@ -14,7 +14,7 @@
 			<type>text</type>
 			<style>width: 100%;</style>
 		</Attribs>
-		<IsDuty>0</IsDuty>
+		<IsDuty>1</IsDuty>
 		<Value />
 	</BalanceLowLimit>
 	<!-- *********************************************************************** -->
