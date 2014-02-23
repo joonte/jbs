@@ -135,38 +135,49 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # баланс SMS машинки
-$Settings = $Config['Notifies']['Settings']['SMSGateway'];
+$ServerSettings = SelectServerSettingsByTemplate('SMS');
 #-------------------------------------------------------------------------------
-if($Config['Notifies']['Methods']['SMS']['IsActive'] && $Settings['BalanceLowLimit'] > 0){
+switch(ValueOf($ServerSettings)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	break;
+case 'array':
 	#-------------------------------------------------------------------------------
-	if(Is_Error(System_Load(SPrintF('classes/%s.class.php', $Settings['SMSProvider']))))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	$SMS = new $Settings['SMSProvider']($Settings['SMSLogin'],$Settings['SMSPassword'],$Settings['SMSKey'],$Settings['SMSSender']);
-	if (Is_Error($SMS))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	$IsAuth = $SMS->balance('rur');
-	#-------------------------------------------------------------------------------
-        switch (ValueOf($IsAuth)){
-	case 'true':
+	if($ServerSettings['Params']['BalanceLowLimit'] > 0){
 		#-------------------------------------------------------------------------------
-		$Balance = (double)$SMS->balance;
-		Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: баланс SMS шлюза "%s" равен: %s',$Settings['SMSProvider'],$Balance));
+		if(Is_Error(System_Load(SPrintF('classes/%s.class.php', $ServerSettings['Params']['Provider']))))
+			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		if($Balance < $Settings['BalanceLowLimit']){
+		$SMS = new $ServerSettings['Params']['Provider']($ServerSettings['Login'],$ServerSettings['Password'],$ServerSettings['Params']['ApiKey'],$ServerSettings['Params']['Sender']);
+		if (Is_Error($SMS))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$IsAuth = $SMS->balance('rur');
+		#-------------------------------------------------------------------------------
+	        switch (ValueOf($IsAuth)){
+		case 'true':
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: SMS provider low balance = %s',$Balance));
-			$Message .= SPrintF("Остаток на счете SMS шлюза \"%s\" ниже допустимого минимума: %01.2f руб.\n",$Settings['SMSProvider'],$Balance);
+			$Balance = (double)$SMS->balance;
+			Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: баланс SMS шлюза "%s" равен: %s',$ServerSettings['Params']['Provider'],$Balance));
 			#-------------------------------------------------------------------------------
+			if($Balance < $ServerSettings['Params']['BalanceLowLimit']){
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: SMS provider low balance = %s',$Balance));
+				$Message .= SPrintF("Остаток на счете SMS шлюза \"%s\" ниже допустимого минимума: %01.2f руб.\n",$ServerSettings['Params']['Provider'],$Balance);
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		default:
+			break;
 		}
 		#-------------------------------------------------------------------------------
-		break;
-		#-------------------------------------------------------------------------------
-	default:
-		break;
 	}
-	#-------------------------------------------------------------------------------
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
