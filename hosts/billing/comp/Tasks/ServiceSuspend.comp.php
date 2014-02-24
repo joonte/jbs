@@ -66,9 +66,9 @@ if(IsSet($Settings['Script']) && Mb_StrLen(Trim($Settings['Script'])) > 0){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	Exec(SPrintF('"%s" "%s" "Active" "%s" "%s" "%s" 2>&1',$File,$Order['Email'],$Number,$Order['Keys']),$Out,$ReturnValue,(Is_Array($Server)?Base64_Encode(JSON_Encode($Server)):'server not exists'));
+	Exec(SPrintF('"%s" "%s" "Suspended" "%s" "%s" "%s" 2>&1',$File,$Order['Email'],$Number,$Order['Keys'],(Is_Array($Server)?Base64_Encode(JSON_Encode($Server)):'server not exists')),$Out,$ReturnValue);
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Tasks/ServiceActive]: exec return code = %s, Out = %s',$ReturnValue,print_r($Out,true)));
+	Debug(SPrintF('[comp/Tasks/ServiceSuspend]: exec return code = %s, Out = %s',$ReturnValue,print_r($Out,true)));
 	#-------------------------------------------------------------------------------
 	if($ReturnValue != 0)
 		return new gException('ERROR_EXECUTE_COMMAND','Произошла ошибка при выполнении команды назначенной статусу');

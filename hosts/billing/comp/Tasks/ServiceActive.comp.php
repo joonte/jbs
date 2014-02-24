@@ -66,7 +66,7 @@ if(IsSet($Settings['Script']) && Mb_StrLen(Trim($Settings['Script'])) > 0){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	Exec(SPrintF('"%s" "%s" "Active" "%s" "%s" "%s" 2>&1',$File,$Order['Email'],$Number,$Order['Keys']),$Out,$ReturnValue,(Is_Array($Server)?Base64_Encode(JSON_Encode($Server)):'server not exists'));
+	Exec(SPrintF('"%s" "%s" "Active" "%s" "%s" "%s" 2>&1',$File,$Order['Email'],$Number,$Order['Keys'],(Is_Array($Server)?Base64_Encode(JSON_Encode($Server)):'server not exists')),$Out,$ReturnValue);
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[comp/Tasks/ServiceActive]: exec return code = %s, Out = %s',$ReturnValue,print_r($Out,true)));
 	#-------------------------------------------------------------------------------
