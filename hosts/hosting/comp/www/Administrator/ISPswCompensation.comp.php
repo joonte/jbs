@@ -81,7 +81,7 @@ if($ISPswOrderID){
       foreach($ISPswGroups as $ISPswGroup)
         $Options[$ISPswGroup['ID']] = $ISPswGroup['Name'];
       #-------------------------------------------------------------------------
-      $Comp = Comp_Load('Form/Select',Array('name'=>'ISPswSchemeID'),$Options);
+      $Comp = Comp_Load('Form/Select',Array('name'=>'ISPswSchemeID','style'=>'width: 100%;'),$Options);
       if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
@@ -98,7 +98,8 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'name'  => 'DaysReserved',
     'size'  => 5,
-    'value' => 10
+    'value' => 10,
+    'style' => 'width: 100%;'
   )
 );
 if(Is_Error($Comp))

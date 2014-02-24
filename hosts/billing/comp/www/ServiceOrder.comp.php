@@ -119,7 +119,8 @@ switch(ValueOf($Service)){
                       'name'   => $FieldID,
                       'type'   => 'text',
                       'prompt' => $ServiceField['Prompt'],
-                      'value'  => $ServiceField['Default']
+                      'value'  => $ServiceField['Default'],
+		      'style'  => 'width: 100%;'
                     )
                   );
                   if(Is_Error($Comp))
@@ -134,7 +135,7 @@ switch(ValueOf($Service)){
                       'name'   => $FieldID,
                       'rows'   => 4,
                       'prompt' => $ServiceField['Prompt'],
-                      'cols'   => 25
+                      'cols'   => 25,
                     ),
                     $ServiceField['Default']
                   );
@@ -170,7 +171,7 @@ switch(ValueOf($Service)){
                       $Alternatives[Current($Option)] = Next($Option);
                   }                  
                   #-------------------------------------------------------------
-                  $Comp = Comp_Load('Form/Select',Array('prompt'=>$ServiceField['Prompt'],'name'=>$FieldID),$Alternatives,$ServiceField['Default']);
+                  $Comp = Comp_Load('Form/Select',Array('prompt'=>$ServiceField['Prompt'],'name'=>$FieldID,'style'=>'width: 100%;'),$Alternatives,$ServiceField['Default']);
                   if(Is_Error($Comp))
                     return ERROR | @Trigger_Error(500);
                   #-------------------------------------------------------------

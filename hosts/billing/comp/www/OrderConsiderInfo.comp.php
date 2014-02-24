@@ -133,7 +133,7 @@ for($i=0;$i<Count($OrdersConsider);$i++){
 					Array(
 						'type'  => 'text',
 						'name'  => SPrintF('OrdersConsider[%u][]',$i),
-						'size'  => 6,
+						'style' => 'width: 80px',
 						'value' => $ConsiderItem[$ParamID]
 						)
 					);
