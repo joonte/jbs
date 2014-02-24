@@ -1,7 +1,7 @@
 <?php
 
 #-------------------------------------------------------------------------------
-/** @author Великодный В.В. (Joonte Ltd.) */
+/** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
 $__args_list = Array('Task','ServiceName','ServiceOrderID');
@@ -10,7 +10,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 # выбираем данные сервиса
-$Order = DB_Select('OrdersOwners',Array('ServiceID','Keys','UserID','(SELECT `Params` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) AS `Params`','(SELECT `NameShort` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) AS `NameShort`','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `OrdersOwners`.`UserID`) AS `Email`'),Array('UNIQ','ID'=>$ServiceOrderID));
+$Order = DB_Select('OrdersOwners',Array('*','(SELECT `Params` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) AS `Params`','(SELECT `NameShort` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) AS `NameShort`','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `OrdersOwners`.`UserID`) AS `Email`'),Array('UNIQ','ID'=>$ServiceOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Order)){
 case 'error':
@@ -51,23 +51,27 @@ if(IsSet($Settings['Script']) && Mb_StrLen(Trim($Settings['Script'])) > 0){
 	if(!File_Exists($File))
 		return new gException('FILE_NOT_FOUND',SPrintF("Файл '%s' не найден",$File));
 	#-------------------------------------------------------------------------------
-	# в зависимости от расширения, скрипт выполняем по разному
-	$PathInfo = PathInfo($File);
 	#-------------------------------------------------------------------------------
-	if(Mb_StrToLower($PathInfo['extension']) == 'php'){
-		#-------------------------------------------------------------------------------
-		Include($File);
-		#-------------------------------------------------------------------------------
-	}else{
-		#-------------------------------------------------------------------------------
-		Exec(SPrintF('"%s" "%s" "Deleted" "%s" "%s" 2>&1',$File,$Order['Email'],$Number,$Order['Keys']),$Out,$ReturnValue);
-		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/Tasks/ServiceActive]: exec return code = %s, Out = %s',$ReturnValue,print_r($Out,true)));
-		#-------------------------------------------------------------------------------
-		if($ReturnValue != 0)
-			return new gException('ERROR_EXECUTE_COMMAND','Произошла ошибка при выполнении команды назначенной статусу');
-		#-------------------------------------------------------------------------------
+	$Server = DB_Select('Servers',Array('*'),Array('UNIQ','ID'=>$Order['ServerID']));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Server)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		break;
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
 	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	Exec(SPrintF('"%s" "%s" "Active" "%s" "%s" "%s" 2>&1',$File,$Order['Email'],$Number,$Order['Keys']),$Out,$ReturnValue,(Is_Array($Server)?Base64_Encode(JSON_Encode($Server)):'server not exists'));
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[comp/Tasks/ServiceActive]: exec return code = %s, Out = %s',$ReturnValue,print_r($Out,true)));
+	#-------------------------------------------------------------------------------
+	if($ReturnValue != 0)
+		return new gException('ERROR_EXECUTE_COMMAND','Произошла ошибка при выполнении команды назначенной статусу');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Event = Array(
