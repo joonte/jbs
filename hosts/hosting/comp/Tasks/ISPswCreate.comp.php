@@ -9,17 +9,11 @@ $__args_list = Array('Task','ISPswOrderID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('libs/IspSoft.php','libs/Server.php')))
+if(Is_Error(System_Load('libs/IspSoft.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Settings = SelectServerSettingsByService(51000);
-#-------------------------------------------------------------------------------
-if(!Is_Array($Settings))
-	return SelectServerErrorMessage(51000);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$ISPswOrder = DB_Select('ISPswOrdersOwners',Array('*','(SELECT `ProfileID` FROM `Contracts` WHERE `Contracts`.`ID` = `ISPswOrdersOwners`.`ContractID`) as `ProfileID`'),Array('UNIQ','ID'=>$ISPswOrderID));
+$ISPswOrder = DB_Select('ISPswOrdersOwners',Array('*','(SELECT `ProfileID` FROM `Contracts` WHERE `Contracts`.`ID` = `ISPswOrdersOwners`.`ContractID`) as `ProfileID`','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `ISPswOrdersOwners`.`OrderID`) AS `ServerID`'),Array('UNIQ','ID'=>$ISPswOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($ISPswOrder)){
   case 'error':
@@ -27,7 +21,22 @@ switch(ValueOf($ISPswOrder)){
   case 'exception':
     return ERROR | @Trigger_Error(400);
   case 'array':
-        #-----------------------------------------------------------------------
+  	#-------------------------------------------------------------------------------
+  	$Server = DB_Select('Servers','*',Array('UNIQ','ID'=>$ISPswOrder['ServerID']));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Server)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		Debug(SPrintF('[comp/Tasks/ISPswCreate]: found server: Address = %s; ID = %s',$Server['Address'],$Server['ID']));
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
         $ISPswScheme = DB_Select('ISPswSchemes','*',Array('UNIQ','ID'=>$ISPswOrder['SchemeID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($ISPswScheme)){
@@ -62,11 +71,11 @@ switch(ValueOf($ISPswOrder)){
 	      return ERROR | @Trigger_Error(500);
 	    #-------------------------------------------------------------------
             if($License){
-	      Debug("[comp/Tasks/ISPswCreate]: found free license, elid = " . $License['elid']);
+	      Debug(SPrintF('[comp/Tasks/ISPswCreate]: found free license, elid = %s',$License['elid']));
 	      $ISPswScheme['elid'] = $License['elid'];
 	      $ISPswScheme['LicenseID'] = $License['LicenseID'];
 	      # меняем IP лицензии
-	      $Change_IP = IspSoft_Change_IP($Settings,$ISPswScheme);
+	      $Change_IP = IspSoft_Change_IP($Server,$ISPswScheme);
 	      if(Is_Error($Change_IP)){
 	        return ERROR | @Trigger_Error(500);
 	      }else{
@@ -80,13 +89,13 @@ switch(ValueOf($ISPswOrder)){
 		#-------------------------------------------------------------------
               }
 	      # разблокируем
-	      if(!IspSoft_UnLock($Settings,$ISPswScheme))
+	      if(!IspSoft_UnLock($Server,$ISPswScheme))
 	         return ERROR | @Trigger_Error(500);
               # всё путём, лицензия создана
               $IsCreate = $License;
 	    }else{
 	      # свободная лицензия не найдена, надо заказывать
-	      $IsCreate = IspSoft_Create($Settings,$ISPswScheme);
+	      $IsCreate = IspSoft_Create($Server,$ISPswScheme);
 	      if(Is_Error($IsCreate))
 	        return ERROR | @Trigger_Error(500);
 	    }

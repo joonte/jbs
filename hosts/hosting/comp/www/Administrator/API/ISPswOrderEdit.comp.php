@@ -14,11 +14,27 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ISPswOrderID   = (integer) @$Args['ISPswOrderID'];
 $ContractID     = (integer) @$Args['ContractID'];
+$ServerID	= (integer) @$Args['ServerID'];
 $IP             =  (string) @$Args['IP'];
 $LicenseID	= (integer) @$Args['LicenseID'];
 $SchemeID       = (integer) @$Args['SchemeID'];
 $DaysReserved   = (integer) @$Args['DaysReserved'];
 $IsCreate       = (boolean) @$Args['IsCreate'];
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Server = DB_Select('Servers',Array('ID'),Array('UNIQ','ID'=>$ServerID));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Server)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('SERVER_NOT_FOUND','Сервер размещения не найден');
+case 'array':
+	# No more...
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $ISPswScheme = DB_Select('ISPswSchemes',Array('*'),Array('UNIQ','ID'=>$SchemeID));
@@ -72,7 +88,7 @@ if($ISPswOrderID){
 $IISPswOrder = Array(
   #-----------------------------------------------------------------------------
   'IP'       => $IP,
-  'SchemeID' => $ISPswScheme['ID']
+  'SchemeID' => $ISPswScheme['ID'],
 );
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -100,7 +116,7 @@ if($ISPswOrderID){
     break;
     case 'array':
       #-------------------------------------------------------------------------
-      $IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID),Array('ID'=>$ISPswOrder['OrderID']));
+      $IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID']),Array('ID'=>$ISPswOrder['OrderID']));
       if(Is_Error($IsUpdate))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
@@ -114,7 +130,7 @@ if($ISPswOrderID){
   }
 }else{
   #-----------------------------------------------------------------------------
-  $OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServiceID'=>51000,'IsPayed'=>TRUE));
+  $OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID'],'ServiceID'=>51000,'IsPayed'=>TRUE));
   if(Is_Error($OrderID))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------

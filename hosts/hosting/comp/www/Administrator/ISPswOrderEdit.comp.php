@@ -16,7 +16,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 #-------------------------------------------------------------------------------
 if($ISPswOrderID){
   #-----------------------------------------------------------------------------
-  $ISPswOrder = DB_Select('ISPswOrdersOwners',Array('*'),Array('UNIQ','ID'=>$ISPswOrderID));
+  $ISPswOrder = DB_Select('ISPswOrdersOwners',Array('*','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `ISPswOrdersOwners`.`OrderID`) AS `ServerID`'),Array('UNIQ','ID'=>$ISPswOrderID));
   #-----------------------------------------------------------------------------
   switch(ValueOf($ISPswOrder)){
     case 'error':
@@ -37,7 +37,8 @@ if($ISPswOrderID){
     'ContractID'=> 0,
     'IP'        => '0.0.0.0',
     'LicenseID'	=> 0,
-    'SchemeID'  => 1
+    'SchemeID'  => 1,
+    'ServerID'	=> 1
   );
 }
 #-------------------------------------------------------------------------------
@@ -99,27 +100,31 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array('Тарифный план',$Comp);
 #-------------------------------------------------------------------------------
-$Servers = DB_Select('ISPswGroups',Array('ID','Address'),Array('SortOn'=>'Address'));
+#-------------------------------------------------------------------------------
+$Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>'`TemplateID` = "ISPsw"','SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Servers)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return new gException('SERVERS_NOT_FOUND','Сервера не найдены');
-  case 'array':
-    # No more...
-  break;
-  default:
-    return ERROR | @Trigger_Error(101);
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('SERVERS_NOT_FOUND','Сервера не найдены');
+case 'array':
+	# No more...
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
 $Options = Array();
 #-------------------------------------------------------------------------------
 foreach($Servers as $Server)
-  $Options[$Server['ID']] = $Server['Address'];
+	$Options[$Server['ID']] = $Server['Address'];
 #-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Select',Array('name'=>'ServerID','style'=>'width: 100%;'),$Options,$ISPswOrder['ServerID']);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
+$Table[] = Array('Сервер размещения',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$ISPswOrderID){
@@ -130,7 +135,8 @@ if(!$ISPswOrderID){
       'type'  => 'text',
       'size'  => 5,
       'name'  => 'DaysReserved',
-      'value' => 31
+      'value' => 31,
+      'style' => 'width: 100%;'
     )
   );
   if(Is_Error($Comp))
@@ -138,7 +144,7 @@ if(!$ISPswOrderID){
   #-----------------------------------------------------------------------------
   $Table[] = Array('Дней до окончания',$Comp);
   #-----------------------------------------------------------------------------
-  $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsCreate','value'=>'yes'));
+  $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsCreate','value'=>'yes','style'=>'width: 100%;'));
   if(Is_Error($Comp))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
@@ -153,7 +159,8 @@ $Comp = Comp_Load(
 		'type'  => 'text',
 		'name'  => 'IP',
 		'value' => $ISPswOrder['IP'],
-		'prompt'=> 'IP адрес на который заказана (будет заказана) лицензия'
+		'prompt'=> 'IP адрес на который заказана (будет заказана) лицензия',
+		'style'	=> 'width: 100%;'
 		)
 	);
 if(Is_Error($Comp))
@@ -168,7 +175,8 @@ $Comp = Comp_Load(
 		'type'  => 'text',
 		'name'  => 'LicenseID',
 		'value' => $ISPswOrder['LicenseID'],
-		'prompt'=> 'Внутренний идентификатор лицензии. Если лицензии ещё нет, то оставить пустым. (Не elid! Можно посмотреть через редактирование лицензии)'
+		'prompt'=> 'Внутренний идентификатор лицензии. Если лицензии ещё нет, то оставить пустым. (Не elid! Можно посмотреть через редактирование лицензии)',
+		'style'	=> 'width: 100%;'
 		)
 	);
 if(Is_Error($Comp))

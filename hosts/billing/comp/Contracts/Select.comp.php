@@ -19,7 +19,8 @@ $Comp = Comp_Load(
     'name'    => $UniqID,
     'onfocus' => "value='';",
     'onclick' => SPrintF("AutoComplite(this,GetPosition(this),'/Administrator/AutoComplite/ContractID',function(Text,Value){form.%s.value = Text;form.%s.value = Value;});",$UniqID,$Name),
-    'type'    => 'text'
+    'type'    => 'text',
+    'style'   => 'width: 100%;'
   )
 );
 if(Is_Error($Comp))

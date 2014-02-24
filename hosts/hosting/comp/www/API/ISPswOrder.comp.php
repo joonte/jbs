@@ -16,9 +16,9 @@ if(Is_Error(System_Load('modules/Authorisation.mod','libs/IspSoft.php','libs/Ser
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Settings = SelectServerSettingsByService(51000);
+$ServerSettings = SelectServerSettingsByService(51000);
 #-------------------------------------------------------------------------------
-if(!Is_Array($Settings))
+if(!Is_Array($ServerSettings))
 	return SelectServerErrorMessage(51000);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ switch(ValueOf($ISPswScheme)){
 			'ISPtype'	=> $ISPswScheme['ISPtype'],
       		);
       #-----------------------------------------------------------------------------
-      if(IspSoft_Check_ISPsystem_IP($Settings, $ISPswInfo)){
+      if(IspSoft_Check_ISPsystem_IP($ServerSettings, $ISPswInfo)){
       	#OK
       }else{
         return new gException('ISPsw_IP_ADDRESS_IN_USE','Для указанного IP адреса [' . $IP . '] уже есть лицензия такого типа. За более подробной информацией, обратитесь в службу поддержки пользователей.');
@@ -142,7 +142,7 @@ switch(ValueOf($ISPswScheme)){
                   }
                 }
                 #---------------------------------------------------------------
-                $OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>51000));
+                $OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>51000,'ServerID'=>$ServerSettings['ID']));
                 if(Is_Error($OrderID))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
