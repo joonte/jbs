@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -13,8 +12,15 @@ $Args = Args();
 $ServiceID  = (integer) @$Args['ServiceID'];
 $ContractID = (integer) @$Args['ContractID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
-  return ERROR | @Trigger_Error(500);
+if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php','libs/Server.php')))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$ServerSettings = SelectServerSettingsByService($ServiceID);
+#-------------------------------------------------------------------------------
+if(!Is_Array($ServerSettings))
+	$ServerSettings = Array('ID'=>NULL);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Service = DB_Select('Services',Array('ID','Name','IsActive'),Array('UNIQ','ID'=>$ServiceID));
 #-------------------------------------------------------------------------------
@@ -53,7 +59,7 @@ switch(ValueOf($Service)){
             if(Is_Error(DB_Transaction($TransactionID = UniqID('ServiceOrder'))))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $ServiceOrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>$ServiceID));
+            $ServiceOrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>$ServiceID,'ServerID'=>$ServerSettings['ID']));
             if(Is_Error($ServiceOrderID))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------

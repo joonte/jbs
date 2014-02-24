@@ -128,6 +128,15 @@
 		</Args>
 	</IsActive>
 	<!-- ********************************************************************** -->
+	<Orders>
+		<Head>Кол. зак.</Head>
+		<Prompt>Кол-во заказов находящихся на данном сервере</Prompt>
+		<Alias>(SELECT COUNT(*) FROM `Orders` WHERE `Servers`.`ID` = `Orders`.`ServerID`)</Alias>
+		<Attribs>
+			<style>text-align:right;</style>
+		</Attribs>
+	</Orders>
+	<!-- ********************************************************************** -->
 	<SortID>
 		<Args>
 			<TableID>Servers</TableID>
@@ -148,6 +157,7 @@
 	<ListElement>PrefixAPI</ListElement>
 	<ListElement>IsDefault</ListElement>
 	<ListElement>IsActive</ListElement>
+	<ListElement>Orders</ListElement>
 	<ListElement>SortID</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->

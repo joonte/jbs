@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -15,7 +14,7 @@ $ServiceOrderID = (integer) @$Args['ServiceOrderID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','UserID','OrderDate','ContractID','ExpirationDate','StatusID','StatusDate','(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `ServiceName`','IsAutoProlong');
+$Columns = Array('ID','UserID','OrderDate','ContractID','ExpirationDate','StatusID','StatusDate','(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `ServiceName`','(SELECT `Address` FROM `Servers` WHERE `OrdersOwners`.`ServerID` = `Servers`.`ID`) AS `Address`','IsAutoProlong');
 #-------------------------------------------------------------------------------
 $ServiceOrder = DB_Select('OrdersOwners',$Columns,Array('UNIQ','ID'=>$ServiceOrderID));
 #-------------------------------------------------------------------------------
@@ -155,6 +154,9 @@ switch(ValueOf($ServiceOrder)){
           default:
             return ERROR | @Trigger_Error(101);
         }
+	#-------------------------------------------------------------------------------
+	if($ServiceOrder['Address'])
+		$Table[] = Array('Адрес сервера',$ServiceOrder['Address']);
 	#-----------------------------------------------------------------------
 	#-----------------------------------------------------------------------
 	$Table[] = 'Прочее';

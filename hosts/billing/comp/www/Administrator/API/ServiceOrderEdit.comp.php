@@ -14,6 +14,7 @@ $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 $ServiceOrderID	= (integer) @$Args['ServiceOrderID'];
 $ContractID	= (integer) @$Args['ContractID'];
+$ServerID	= (integer) @$Args['ServerID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 	return ERROR | @Trigger_Error(500);
@@ -21,6 +22,14 @@ if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 #-------------------------------------------------------------------------------
 if(!$ServiceOrderID)
 	return new gException('ServiceOrderID_NOT_FOUND','Не указан идентификатор заказа на услугу');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Count = DB_Count('Servers',Array('ID'=>$ServerID));
+if(Is_Error($Count))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if(!$Count)
+	return new gException('SERVER_NOT_FOUND','Сервер не найден');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Order = DB_Select('OrdersOwners',Array('UserID','ContractID','ServiceID','(SELECT `NameShort` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `NameShort`'),Array('UNIQ','ID'=>$ServiceOrderID));
@@ -205,7 +214,7 @@ foreach($ServiceOrderFields as $ServiceOrderField){
 if(!Count($Keys))
 $Keys[] = '-';
 #-------------------------------------------------------------------------------
-$IsUpdate = DB_Update('Orders',Array('Keys'=>Implode(', ',$Keys)),Array('ID'=>$ServiceOrderID));
+$IsUpdate = DB_Update('Orders',Array('Keys'=>Implode(', ',$Keys),'ServerID'=>$ServerID),Array('ID'=>$ServiceOrderID));
 if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

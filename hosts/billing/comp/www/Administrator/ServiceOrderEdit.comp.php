@@ -19,7 +19,7 @@ if(!$ServiceOrderID)
 	return new gException('ServiceOrderID_NOT_FOUND','Не указан идентификатор заказа на услугу');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Order = DB_Select('OrdersOwners',Array('UserID','ContractID','ServiceID','(SELECT `NameShort` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `NameShort`'),Array('UNIQ','ID'=>$ServiceOrderID));
+$Order = DB_Select('OrdersOwners',Array('*','(SELECT `NameShort` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `NameShort`'),Array('UNIQ','ID'=>$ServiceOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Order)){
 case 'error':
@@ -80,6 +80,46 @@ default:
 #-------------------------------------------------------------------------------
 $Table[] = 'Параметры заказа';
 #-------------------------------------------------------------------------------
+$ServersGroup = DB_Select('ServersGroups',Array('*'),Array('UNIQ','Where'=>SPrintF('`ServiceID` = %u',$Order['ServiceID']),'Limits'=>Array(0,1),'SortOn'=>'SortID'));
+#-------------------------------------------------------------------------------
+switch(ValueOf($ServersGroup)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	$Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>SPrintF('`ServersGroupID` = %u',$ServersGroup['ID']),'SortOn'=>'Address'));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Servers)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		break;
+	case 'array':
+		# No more...
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$Options = Array();
+	#-------------------------------------------------------------------------------
+	foreach($Servers as $Server)
+		$Options[$Server['ID']] = $Server['Address'];
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Select',Array('name'=>'ServerID','style'=>'width: 100%;'),$Options,$Order['ServerID']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array('Сервер размещения',$Comp);
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 foreach($ServiceOrderFields as $ServiceOrderField){
 	#-------------------------------------------------------------------------------
@@ -109,7 +149,7 @@ foreach($ServiceOrderFields as $ServiceOrderField){
 					'type'   => 'text',
 					'prompt' => $ServiceField['Prompt'],
 					'value'  => $ServiceOrderField['Value'],
-					'size'   => 34
+					'style'  => 'width: 100%;'
 					)
 				);
 		if(Is_Error($Comp))
@@ -168,7 +208,7 @@ foreach($ServiceOrderFields as $ServiceOrderField){
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Select',Array('prompt'=>$ServiceField['Prompt'],'name'=>$FieldID),$Alternatives,$ServiceOrderField['Value']);
+		$Comp = Comp_Load('Form/Select',Array('prompt'=>$ServiceField['Prompt'],'name'=>$FieldID,'style'=>'width: 100%;'),$Alternatives,$ServiceOrderField['Value']);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
@@ -199,13 +239,15 @@ foreach($ServiceOrderFields as $ServiceOrderField){
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
+		$SizeText = ' (не более 12Mb)';
+		#-------------------------------------------------------------------------------
 		break;
 		#-------------------------------------------------------------------------------
 	default:
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
-	$Table[] = Array(SPrintF($ServiceField['IsDuty']?'*%s':'%s',SPrintF('%s (не более 12Mb)',$ServiceField['Name'])),$Comp);
+	$Table[] = Array(SPrintF($ServiceField['IsDuty']?'*%s':'%s',SPrintF('%s%s',$ServiceField['Name'],IsSet($SizeText)?$SizeText:'')),$Comp);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
