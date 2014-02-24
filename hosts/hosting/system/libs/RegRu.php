@@ -925,7 +925,7 @@ function RegRu_Get_List_Domains($Settings){
     }
   }
   #----------------------------------------------------------------------------
-  if(SizeOf($Out) > 0){
+  if(IsSet($Out) && SizeOf($Out) > 0){
     return Array('Status'=>'true','Domains'=>$Out);
   }else{
     return Array('Status'=>'false','ErrorText'=>'No domains on account');
