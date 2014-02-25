@@ -48,7 +48,7 @@ case 'array':
 		return ERROR | @Trigger_Error(400);
 	case 'array':
 		#-------------------------------------------------------------------------------
-		$SchemeChange = IspSoft_Scheme_Change($Settings,$ISPswNewScheme);
+		$SchemeChange = IspSoft_Scheme_Change($Server,$ISPswNewScheme);
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($SchemeChange)){
 		case 'error':

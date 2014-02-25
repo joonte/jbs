@@ -56,11 +56,11 @@ case 'array':
 		$ISPswScheme['LicenseID']= $ISPswOrder['LicenseID'];
 		#-------------------------------------------------------------------------------
 		# блокируем
-		if(!IspSoft_Lock($Settings,$ISPswScheme))
+		if(!IspSoft_Lock($Server,$ISPswScheme))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		# удаляем
-		if(!IspSoft_Delete($Settings,$ISPswScheme))
+		if(!IspSoft_Delete($Server,$ISPswScheme))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		$Event = Array(
