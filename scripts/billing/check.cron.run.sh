@@ -108,7 +108,7 @@ then
 		echo "" >> $RootDir/demon.log
 		echo "`date +%Y-%m-%d` in `date +%H:%M:%S`: php-cgi auto killed, no executed tasks more than one hour" >> $RootDir/demon.log
 		echo "" >> $RootDir/demon.log
-		killall php-cgi
+		killall `basename $PHP_BIN`
 	fi
 fi
 
