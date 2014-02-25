@@ -32,6 +32,7 @@
 		<ListElement>PrefixAPI</ListElement>
 		<ListElement>IsDefault</ListElement>
 		<ListElement>IsActive</ListElement>
+		<ListElement>AdminNotice</ListElement>
 		<ListElement>SortID</ListElement>
 	</ColumnsIDs>
 	<Conditions>
@@ -110,6 +111,16 @@
 		<Head>API</Head>
 	</PrefixAPI>
 	<!-- ********************************************************************** -->
+	<AdminNotice>
+		<Head>-</Head>
+		<Comp>Notice</Comp>
+		<Args>
+			<ListElement>Servers</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>%AdminNotice%</ListElement>
+		</Args>
+	</AdminNotice>
+	<!-- ********************************************************************** -->
 	<IsDefault>
 		<Head>Осн. в гр.</Head>
 		<Prompt>Новые аккаунты, в данной группе серверов, будут создаваться на данном сервере</Prompt>
@@ -152,6 +163,7 @@
 	<ListElement>ServersGroup</ListElement>
 	<ListElement>TemplateID</ListElement>
 	<ListElement>Protocol</ListElement>
+	<ListElement>AdminNotice</ListElement>
 	<ListElement>Address</ListElement>
 	<ListElement>Port</ListElement>
 	<ListElement>PrefixAPI</ListElement>

@@ -50,7 +50,7 @@ if(IsSet($Config['Tasks']['Types']['CheckEmail']['CheckEmailLogin'])){
 			'Params'	=> Array(
 						'Method'=>(IsSet($CheckEmail['CheckEmailProtocol'])?$CheckEmail['CheckEmailProtocol']:'pop3'),
 						),
-			'Notice'	=> 'Используется учётная запись от которой шлёт сообщения биллинг (пользователь с идентификатором 100)',
+			'AdminNotice'	=> 'Используется учётная запись от которой шлёт сообщения биллинг (пользователь с идентификатором 100)',
 			'SortID'	=> 100000,
 			'Monitoring'	=> "POP3=110\nPOP3S=995\nIMAP4=143\nIMAP4S=993"
 			);

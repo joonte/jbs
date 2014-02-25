@@ -23,7 +23,7 @@ $PrefixAPI	=  (string) @$Args['PrefixAPI'];
 $Login		=  (string) @$Args['Login'];
 $Password	=  (string) @$Args['Password'];
 $Monitoring	=  (string) @$Args['Monitoring'];
-$Notice		=  (string) @$Args['Notice'];
+$AdminNotice		=  (string) @$Args['AdminNotice'];
 $SortID		= (integer) @$Args['SortID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ $UServer = Array(
 			'Login'		=> $Login,
 			'Password'	=> $Password,
 			'Monitoring'	=> $Monitoring,
-			'Notice'	=> $Notice,
+			'AdminNotice'	=> $AdminNotice,
 			'SortID'	=> $SortID
 		);
 #-------------------------------------------------------------------------------
