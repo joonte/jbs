@@ -20,8 +20,8 @@ fi
 
 if [ `basename $PHP_BIN` = "php-cgi" ]
 then
-	$PHP_BIN
+	$PHP_BIN -d output_buffering=0
 else
-	$PHP_BIN $2/core/Load.php
+	$PHP_BIN -d output_buffering=0 $2/core/Load.php
 fi
 
