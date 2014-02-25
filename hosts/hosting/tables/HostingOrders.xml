@@ -155,7 +155,7 @@
  <!-- ********************************************************************** -->
  <Number>
   <Head>Номер</Head>
-  <Comp>Formats/Order/AddNotice</Comp>
+  <Comp>Formats/Order/Notice</Comp>
   <Args>
    <ListElement>Orders</ListElement>
    <ListElement>%OrderID%</ListElement>
@@ -164,7 +164,6 @@
    <ListElement>10</ListElement>
    <ListElement>%AdminNotice%</ListElement>
    <ListElement>%UserNotice%</ListElement>
-   <ListElement>%UserID%</ListElement>
   </Args>
   <Alias>ID</Alias>
   <Attribs>
