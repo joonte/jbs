@@ -18,4 +18,10 @@ if [ "$PHP_BIN" = "" ]
     echo "Use php in ($PHP_BIN)"
 fi
 
-$PHP_BIN 2>&1
+if [ `basename $PHP_BIN` = "php-cgi" ]
+then
+	$PHP_BIN
+else
+	$PHP_BIN $2/core/Load.php
+fi
+
