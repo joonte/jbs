@@ -30,10 +30,9 @@ $Methods = Explode(',',$Task['Params']['Methods']);
 #-------------------------------------------------------------------------------
 $iWhere = Array();
 #-------------------------------------------------------------------------------
-foreach(Array_Keys($Notifies['Methods']) as $MethodID){
+foreach(Array_Keys($Notifies['Methods']) as $MethodID)
 	if($Notifies['Methods'][$MethodID]['IsActive'] && In_Array($MethodID,$Methods))
 		$iWhere[] = SPrintF("`TypeID` = '%s'",$MethodID);
-}
 #-------------------------------------------------------------------------------
 $Where = SPrintF("(%s) AND `IsExecuted` = 'no'",Implode(' OR ',$iWhere));
 $Count = DB_Count('TasksOwners',Array('Where'=>$Where));
