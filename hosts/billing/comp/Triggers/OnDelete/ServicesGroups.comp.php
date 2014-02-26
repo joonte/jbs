@@ -1,7 +1,7 @@
 <?php
 
 #-------------------------------------------------------------------------------
-/** @author Великодный В.В. (Joonte Ltd.) */
+/** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
 $__args_list = Array('ServiceGroup');
@@ -10,15 +10,15 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if($ServiceGroup['IsProtected'])
-	return new gException('SERVICE_GROUP_IS_PROTECTED',SPrintF('Группа услуг (%s) защищена и не может быть удалена',$ServiceGroup['Name']));
+	return new gException('SERVICE_GROUP_IS_PROTECTED',SPrintF('Группа услуга (%s) защищена и не может быть удалена',$ServiceGroup['Name']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Count = DB_Count('Services',Array('Where'=>SPrintF('`ServicesGroupID` = %u',$ServiceGroup['ID'])));
+$Count = DB_Count('Services',Array('Where'=>SPrintF('`ServiceGroupID` = %u',$ServicesGroup['ID'])));
 if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Count)
-	return new gException('DELETE_DENIED',SPrintF('Удаление группы (%s) не возможно, %u сервис(ов) относятся к данной группе',$ServiceGroup['Name'],$Count));
+	return new gException('SERVICES_EXISTS',SPrintF('Группа (%s) не может быть удалена, поскольку в неё входит (%s) услуг',$ServiceGroup['Name'],$Count));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;
