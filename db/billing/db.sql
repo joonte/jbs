@@ -50,6 +50,7 @@ VALUES
 (8,1,'CaclulatePartnersReward','[]','yes'),
 (9,1,'OrdersForSuspend','[]','yes'),
 (10,1,'RecoveryProfiles','[]','yes'),
+(11,1,'RecoveryServers','[]','yes'),
 (13,1,'CheckEmail','[]','yes'),
 (14,1,'OrdersForDelete','[]','yes');
 UNLOCK TABLES;

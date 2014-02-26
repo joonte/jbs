@@ -985,6 +985,12 @@
    <IsActive>1</IsActive>
   </RecoveryProfiles>
   <!-- ********************************************************************* -->
+  <RecoveryServers>
+   <Name>Восстановление серверов</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </RecoveryServers>
+  <!-- ********************************************************************* -->
   <Temp>
    <Name>Удаление временных файлов</Name>
    <Params type="array" />

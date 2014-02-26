@@ -9,7 +9,7 @@ $__args_list = Array('Task');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Count = DB_Count('Profiles');
+$Count = DB_Count('Servers');
 if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -17,9 +17,9 @@ if($Count){
 	#-------------------------------------------------------------------------------
 	for($i=0;$i<$Count;$i+=10){
 		#-------------------------------------------------------------------------------
-		$Profiles = DB_Select('Profiles',Array('ID','TemplateID','Attribs'),Array('Limits'=>Array('Start'=>$i,'Length'=>10)));
+		$Servers = DB_Select('Servers',Array('ID','TemplateID','Params'),Array('Limits'=>Array('Start'=>$i,'Length'=>10)));
 		#-------------------------------------------------------------------------------
-		switch(ValueOf($Profiles)){
+		switch(ValueOf($Servers)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
@@ -27,23 +27,29 @@ if($Count){
 			break;
 		case 'array':
 			#-------------------------------------------------------------------------------
-			foreach($Profiles as $Profile){
+			$Attribs = Array();
+			#-------------------------------------------------------------------------------
+			foreach($Servers as $Server){
 				#-------------------------------------------------------------------------------
-				$Attribs = $Profile['Attribs'];
+				$Attribs = $Server['Params'];
 				#-------------------------------------------------------------------------------
-				$Template = System_XML(SPrintF('profiles/%s.xml',$Profile['TemplateID']));
+				$Template = System_XML(SPrintF('servers/%s.xml',$Server['TemplateID']));
 				if(Is_Error($Template))
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------
-				foreach(Array_Keys($Template['Attribs']) as $AttribID)
-					if(!IsSet($Attribs[$AttribID]))
-						$Attribs[$AttribID] = $Template['Attribs'][$AttribID]['Value'];
+				if(IsSet($Template['Attribs'])){
+					#-------------------------------------------------------------------------------
+					foreach(Array_Keys($Template['Attribs']) as $AttribID)
+						if(!IsSet($Attribs[$AttribID]))
+							$Attribs[$AttribID] = $Template['Attribs'][$AttribID]['Value'];
+					#-------------------------------------------------------------------------------
+					foreach(Array_Keys($Attribs) as $AttribID)
+						if(!IsSet($Template['Attribs'][$AttribID]))
+							UnSet($Attribs[$AttribID]);
+					#-------------------------------------------------------------------------------
+				}
 				#-------------------------------------------------------------------------------
-				foreach(Array_Keys($Attribs) as $AttribID)
-					if(!IsSet($Template['Attribs'][$AttribID]))
-						UnSet($Attribs[$AttribID]);
-				#-------------------------------------------------------------------------------
-				$IsUpdate = DB_Update('Profiles',Array('Attribs'=>$Attribs),Array('ID'=>$Profile['ID']));
+				$IsUpdate = DB_Update('Servers',Array('Params'=>$Attribs),Array('ID'=>$Server['ID']));
 				if(Is_Error($IsUpdate))
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------
@@ -60,14 +66,14 @@ if($Count){
 	#-------------------------------------------------------------------------------
         $Event = Array(
 			'UserID'        => 100,
-			'PriorityID'    => 'Billing',
-			'Text'          => SPrintF('Успешно восстановлено %u профилей',$Count)
+			'PriorityID'    => 'Hosting',
+			'Text'          => SPrintF('Успешно восстановлено %u серверов',$Count)
 			);
 	$Event = Comp_Load('Events/EventInsert',$Event);
 	if(!$Event)
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'] = SPrintF('Recovered: %u profiles',$Count);
+	$GLOBALS['TaskReturnInfo'] = SPrintF('Recovered: %u servers',$Count);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------

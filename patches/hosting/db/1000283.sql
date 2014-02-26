@@ -10,4 +10,8 @@ UPDATE `Tasks` SET `ID` = 8 WHERE `TypeID` = 'CaclulatePartnersReward';
 DELETE FROM `Tasks` WHERE `ID` = 10;
 -- SEPARATOR
 INSERT INTO `Tasks` (`ID`,`UserID`,`TypeID`,`Params`,`IsActive`) VALUES (10,1,'RecoveryProfiles','[]','yes');
+-- SEPARATOR
+DELETE FROM `Tasks` WHERE `ID` = 11;
+-- SEPARATOR
+INSERT INTO `Tasks` (`ID`,`UserID`,`TypeID`,`Params`,`IsActive`) VALUES (11,1,'RecoveryServers','[]','yes');
 
