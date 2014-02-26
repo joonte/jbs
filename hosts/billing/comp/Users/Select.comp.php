@@ -36,6 +36,7 @@ switch(ValueOf($User)){
         'type'    => 'text',
         'value'   => SPrintF('%s (%s)',$User['Email'],$User['Name']),
 	'prompt'  => $Prompt?$Prompt:'Для поиска пользователя введите первые буквы его имени или email адреса',
+	'style'   => 'width:100%'
       )
     );
     if(Is_Error($Comp))

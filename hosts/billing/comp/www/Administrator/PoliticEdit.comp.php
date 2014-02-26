@@ -100,7 +100,7 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'FromServiceID','onchange'=>SPrintF("GetSchemes(this.value,'FromSchemeID','%s');",$Politic['FromSchemeID'])),$ServicesOptions,$Politic['FromServiceID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'FromServiceID','onchange'=>SPrintF("GetSchemes(this.value,'FromSchemeID','%s');",$Politic['FromSchemeID']),'style'=>'width:100%'),$ServicesOptions,$Politic['FromServiceID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -109,7 +109,7 @@ $Table[] = Array('Оплачиваемый сервис',$Comp);
 #-------------------------------------------------------------------------------
 $SchemesOptions = Array('Любой тариф');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'FromSchemeID','id'=>'FromSchemeID','disabled'=>TRUE),$SchemesOptions,$Politic['FromSchemeID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'FromSchemeID','id'=>'FromSchemeID','disabled'=>TRUE,'style'=>'width:100%'),$SchemesOptions,$Politic['FromSchemeID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -135,21 +135,21 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'FromSchemesGroupID'),$Options,$Politic['FromSchemesGroupID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'FromSchemesGroupID','style'=>'width:100%'),$Options,$Politic['FromSchemesGroupID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Оплачиваемая группа тарифов',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ToServiceID','onchange'=>SPrintF("GetSchemes(this.value,'ToSchemeID','%s');",$Politic['ToSchemeID'])),$ServicesOptions,$Politic['ToServiceID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ToServiceID','onchange'=>SPrintF("GetSchemes(this.value,'ToSchemeID','%s');",$Politic['ToSchemeID']),'style'=>'width:100%'),$ServicesOptions,$Politic['ToServiceID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Скидка на сервис',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ToSchemeID','id'=>'ToSchemeID','disabled'=>TRUE),$SchemesOptions,$Politic['ToSchemeID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ToSchemeID','id'=>'ToSchemeID','disabled'=>TRUE,'style'=>'width:100%'),$SchemesOptions,$Politic['ToSchemeID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -175,7 +175,7 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ToSchemesGroupID'),$Options,$Politic['ToSchemesGroupID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ToSchemesGroupID','style'=>'width:100%'),$Options,$Politic['ToSchemesGroupID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -195,7 +195,8 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'name'  => 'DaysPay',
     'value' => $Politic['DaysPay'],
-    'prompt'=> 'Сколько дней надо оплатить, чтобы политика сработала'
+    'prompt'=> 'Сколько дней надо оплатить, чтобы политика сработала',
+    'style' => 'width:100%'
   )
 );
 if(Is_Error($Comp))
@@ -210,7 +211,8 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'name'  => 'DaysDiscont',
     'value' => $Politic['DaysDiscont'],
-    'prompt'=> 'На какой срок выдаётся бонус - дни, годы, штуки - в зависимости от типа учёта. Ноль - на число дней оплаты.'
+    'prompt'=> 'На какой срок выдаётся бонус - дни, годы, штуки - в зависимости от типа учёта. Ноль - на число дней оплаты.',
+    'style' => 'width:100%'
   )
 );
 if(Is_Error($Comp))
@@ -224,7 +226,8 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'name'  => 'Discont',
     'value' => $Politic['Discont']*100,
-    'prompt'=> 'Число от 5 до 100'
+    'prompt'=> 'Число от 5 до 100',
+    'style' => 'width:100%'
   )
 );
 if(Is_Error($Comp))
@@ -239,7 +242,8 @@ $Comp = Comp_Load(
 	'name'  => 'Comment',
 	'style' => 'width:100%;',
 	'rows'  => 5,
-	'prompt'=> 'Цель/причина создания этой скидки клиенту'
+	'prompt'=> 'Цель/причина создания этой скидки клиенту',
+	'style' => 'width:100%'
 	),
    $Politic['Comment']
 );

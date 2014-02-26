@@ -78,7 +78,8 @@ if(!$PromoCodeID){
 				'type'  => 'text',
 				'name'  => 'Code',
 				'value' => $PromoCode['Code'],
-				'prompt'=> 'Английские буквы и цифры, дефисы и подчёркивания'
+				'prompt'=> 'Английские буквы и цифры, дефисы и подчёркивания',
+				'style' => 'width:100%'
 				)
 			);
 	#-------------------------------------------------------------------------------
@@ -118,7 +119,7 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ServiceID','onchange'=>SPrintF("GetSchemes(this.value,'SchemeID','%s');",$PromoCode['SchemeID'])),$Options,$PromoCode['ServiceID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ServiceID','onchange'=>SPrintF("GetSchemes(this.value,'SchemeID','%s');",$PromoCode['SchemeID']),'style'=>'width:100%'),$Options,$PromoCode['ServiceID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -127,7 +128,7 @@ $Table[] = Array('Сервис',$Comp);
 #-------------------------------------------------------------------------------
 $Options = Array('Любой тариф');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID','id'=>'SchemeID','disabled'=>TRUE),$Options,$PromoCode['SchemeID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID','id'=>'SchemeID','disabled'=>TRUE,'style'=>'width:100%'),$Options,$PromoCode['SchemeID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -153,7 +154,7 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SchemesGroupID'),$Options,$PromoCode['SchemesGroupID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'SchemesGroupID','style'=>'width:100%'),$Options,$PromoCode['SchemesGroupID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -173,7 +174,8 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'name'  => 'DaysDiscont',
     'value' => $PromoCode['DaysDiscont'],
-    'prompt'=> 'На какой срок выдаётся скидка - дни, годы, штуки - в зависимости от типа учёта'
+    'prompt'=> 'На какой срок выдаётся скидка - дни, годы, штуки - в зависимости от типа учёта',
+    'style' => 'width:100%'
   )
 );
 if(Is_Error($Comp))
@@ -188,7 +190,8 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'name'  => 'Discont',
     'value' => $PromoCode['Discont']*100,
-    'prompt'=> 'Число от 5 до 100'
+    'prompt'=> 'Число от 5 до 100',
+    'style' => 'width:100%'
   )
 );
 if(Is_Error($Comp))
@@ -203,7 +206,8 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'name'  => 'MaxAmount',
     'value' => $PromoCode['MaxAmount'],
-    'prompt'=> 'Сколько раз можно ввести этот промокод'
+    'prompt'=> 'Сколько раз можно ввести этот промокод',
+    'style' => 'width:100%'
   )
 );
 if(Is_Error($Comp))
@@ -221,6 +225,7 @@ $Comp = Comp_Load(
 			'name'		=> 'UseOwnerID',
 			'type'		=> 'checkbox',
 			'onclick'	=> "form.SearchOwnerID.disabled = !checked; form.ForceOwner.disabled = !checked;",
+			'style'		=> 'width:100%'
 		)
 	);
 if(Is_Error($Comp))
@@ -237,7 +242,8 @@ $Comp = Comp_Load(
 		Array(
 			'name'		=> 'ForceOwner',
 			'type'		=> 'checkbox',
-			'prompt'	=> 'Если пользователь уже чей-то реферал, менять реферала на указанного'
+			'prompt'	=> 'Если пользователь уже чей-то реферал, менять реферала на указанного',
+			'style'		=> 'width:100%'
 		)
 	);
 if(Is_Error($Comp))

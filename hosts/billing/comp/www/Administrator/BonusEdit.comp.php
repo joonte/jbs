@@ -96,7 +96,7 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ServiceID','onchange'=>SPrintF("GetSchemes(this.value,'SchemeID','%s');",$Bonus['SchemeID'])),$Options,$Bonus['ServiceID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ServiceID','onchange'=>SPrintF("GetSchemes(this.value,'SchemeID','%s');",$Bonus['SchemeID']),'style'=>'width:100%'),$Options,$Bonus['ServiceID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ $Table[] = Array('Сервис',$Comp);
 #-------------------------------------------------------------------------------
 $Options = Array('Любой тариф');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID','id'=>'SchemeID','disabled'=>TRUE),$Options,$Bonus['SchemeID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID','id'=>'SchemeID','disabled'=>TRUE,'style'=>'width:100%'),$Options,$Bonus['SchemeID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -131,7 +131,7 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SchemesGroupID'),$Options,$Bonus['SchemesGroupID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'SchemesGroupID','style'=>'width:100%'),$Options,$Bonus['SchemesGroupID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -151,7 +151,8 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'name'  => 'DaysReserved',
     'value' => $Bonus['DaysReserved'],
-    'prompt'=> 'Число дней выданной скидки. Для доменов - это года, для дополнительных услуг - дни, года, штуки.'
+    'prompt'=> 'Число дней выданной скидки. Для доменов - это года, для дополнительных услуг - дни, года, штуки.',
+    'style' => 'width:100%',
   )
 );
 if(Is_Error($Comp))
@@ -165,7 +166,8 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'name'  => 'DaysRemainded',
     'value' => $Bonus['DaysRemainded'],
-    'prompt'=> 'Сколько дней/лет/штук скидки осталось неизрасходованными'
+    'prompt'=> 'Сколько дней/лет/штук скидки осталось неизрасходованными',
+    'style' => 'width:100%',
   )
 );
 if(Is_Error($Comp))
@@ -179,7 +181,8 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'name'  => 'Discont',
     'value' => $Bonus['Discont']*100,
-    'prompt'=> 'Число от 5 до 100'
+    'prompt'=> 'Число от 5 до 100',
+    'style' => 'width:100%',
   )
 );
 if(Is_Error($Comp))
