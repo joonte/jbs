@@ -89,8 +89,12 @@ if($Backup && !Preg_Match('/^Windows/',Php_UName('s'))){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsUpdate = DB_Update('Tasks',Array('IsActive'=>TRUE,'IsExecuted'=>FALSE),Array('Where'=>'`TypeID` = "RecoveryProfiles"'));
-if(Is_Error($IsUpdate))
+$IsDelete = DB_Delete('Tasks',Array('ID'=>10));
+if(Is_Error($IsDelete))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$IsInsert = DB_Insert('Tasks',Array('ID'=>10,'UserID'=>1,'TypeID'=>'RecoveryProfiles','Params'=>Array(),'IsActive'=>TRUE));
+if(Is_Error($IsInsert))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
