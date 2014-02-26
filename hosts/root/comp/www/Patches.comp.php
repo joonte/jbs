@@ -89,7 +89,7 @@ if($Backup && !Preg_Match('/^Windows/',Php_UName('s'))){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsUpdate = DB_Update('Tasks',Array('IsActive'=>TRUE),Array('Where'=>'`TypeID` = "RecoveryProfiles"'));
+$IsUpdate = DB_Update('Tasks',Array('IsActive'=>TRUE,'IsExecuted'=>FALSE),Array('Where'=>'`TypeID` = "RecoveryProfiles"'));
 if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
