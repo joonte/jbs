@@ -80,7 +80,7 @@ if(Count($UsersIDs)){
           Array(
             'name'  => 'UsersIDs[]',
             'type'  => 'hidden',
-            'value' => $User['ID']
+            'value' => $User['ID'],
           )
         );
         if(Is_Error($Comp))
@@ -247,7 +247,7 @@ switch(ValueOf($Users)){
       'Form/Input',
       Array(
         'name'  => 'Theme',
-        'size'  => 50,
+        'style' => 'width:100%',
         'type'  => 'text'
       )
     );
