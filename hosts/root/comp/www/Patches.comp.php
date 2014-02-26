@@ -88,58 +88,11 @@ if($Backup && !Preg_Match('/^Windows/',Php_UName('s'))){
   echo "\n\n";
 }
 #-------------------------------------------------------------------------------
-$Count = DB_Count('Profiles');
-if(Is_Error($Count))
-  return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if($Count){
-  #-----------------------------------------------------------------------------
-  echo "\n\n-- Восстановление профилей\n\n";
-  #-----------------------------------------------------------------------------
-  for($i=0;$i<$Count;$i+=10){
-    #---------------------------------------------------------------------------
-    $Profiles = DB_Select('Profiles',Array('ID','TemplateID','Attribs'),Array('Limits'=>Array('Start'=>$i,'Length'=>10)));
-    #---------------------------------------------------------------------------
-    switch(ValueOf($Profiles)){
-      case 'error':
-        return ERROR | @Trigger_Error(500);
-      case 'exception':
-        # No more...
-      break;
-      case 'array':
-        #-----------------------------------------------------------------------
-        foreach($Profiles as $Profile){
-          #---------------------------------------------------------------------
-          $Attribs = $Profile['Attribs'];
-          #---------------------------------------------------------------------
-          $Template = System_XML(SPrintF('profiles/%s.xml',$Profile['TemplateID']));
-          if(Is_Error($Template))
-            return ERROR | @Trigger_Error(500);
-          #---------------------------------------------------------------------
-          foreach(Array_Keys($Template['Attribs']) as $AttribID){
-            #-------------------------------------------------------------------
-            if(!IsSet($Attribs[$AttribID]))
-              $Attribs[$AttribID] = $Template['Attribs'][$AttribID]['Value'];
-          }
-          #---------------------------------------------------------------------
-          foreach(Array_Keys($Attribs) as $AttribID){
-            #-------------------------------------------------------------------
-            if(!IsSet($Template['Attribs'][$AttribID]))
-              UnSet($Attribs[$AttribID]);
-          }
-          #---------------------------------------------------------------------
-          $IsUpdate = DB_Update('Profiles',Array('Attribs'=>$Attribs),Array('ID'=>$Profile['ID']));
-          if(Is_Error($IsUpdate))
-            return ERROR | @Trigger_Error(500);
-        }
-      break;
-      default:
-        return ERROR | @Trigger_Error(101);
-    }
-  }
-  #-----------------------------------------------------------------------------
-  echo SPrintF("Восстановлено %u профилей\n",$Count);
-}
+$IsUpdate = DB_Update('Tasks',Array('IsActive'=>TRUE),Array('Where'=>'`TypeID` = "RecoveryProfiles"'));
+if(Is_Error($IsUpdate))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $HostsIDs = Array_Reverse($GLOBALS['HOST_CONF']['HostsIDs']);
 #-------------------------------------------------------------------------------

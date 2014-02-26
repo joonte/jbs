@@ -19,8 +19,8 @@ if(!$Settings['IsActive'])
 #-------------------------------------------------------------------------------
 # зачищаем таблицу задач
 $Where = Array(
-		SPrintF('`ExecuteDate` < UNIX_TIMESTAMP() - %u',$Settings['TableTasksStoryPeriod'] * 24 * 3600),'`UserID` != 1',
-		"`TypeID` != 'Dispatch'"
+		SPrintF('`ExecuteDate` < UNIX_TIMESTAMP() - %u',$Settings['TableTasksStoryPeriod'] * 24 * 3600),
+		'`UserID` != 1','`TypeID` != "Dispatch"'
 		);
 $IsDelete = DB_Delete('Tasks',Array('Where'=>$Where));
 if(Is_Error($IsDelete))

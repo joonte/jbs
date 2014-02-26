@@ -979,6 +979,11 @@
    <ExecutePeriod>08:00</ExecutePeriod>
   </BackUp>
   <!-- ********************************************************************* -->
+  <RecoveryProfiles>
+   <Name>Восстановление профилей</Name>
+   <Params type="array" />
+   <IsActive>1</IsActive>
+  </RecoveryProfiles>
   <!-- ********************************************************************* -->
   <Temp>
    <Name>Удаление временных файлов</Name>
