@@ -134,6 +134,9 @@ foreach($Mails as $mailId){
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[comp/Tasks/CheckEmail]: tmp_name = %s; FileName = %s',$Files[$FileName],$FileName));
 		#-------------------------------------------------------------------------------
+		if(FileSize($Files[$FileName]) == 0)
+			continue;
+		#-------------------------------------------------------------------------------
 		$FileData = Array(
 					'size'		=> FileSize($Files[$FileName]),
 					'error'		=> 0,
