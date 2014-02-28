@@ -4,8 +4,21 @@
 <!-- *********************************************************************** -->
 <Attribs>
 	<!-- *********************************************************************** -->
+	<PrefixAPI>
+		<Title>Прочие настройки</Title>
+		<Check>Address</Check>
+		<Comment>Префикс API</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Окончание URL адреса по которому необходимо обращаться к BillManager</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>/manager/billmgr</Value>
+	</PrefixAPI>
+	<!-- *********************************************************************** -->
 	<BalanceLowLimit>
-		<Title>Порог уведомления о баллансе</Title>
 		<Check>/^[0-9]{1,4}$/u</Check>
 		<Comment>Минимальная сумма</Comment>
 		<Type>Input</Type>

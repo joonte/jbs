@@ -29,7 +29,6 @@
 		<ListElement>Protocol</ListElement>
 		<ListElement>Address</ListElement>
 		<ListElement>Port</ListElement>
-		<ListElement>PrefixAPI</ListElement>
 		<ListElement>IsDefault</ListElement>
 		<ListElement>IsActive</ListElement>
 		<ListElement>AdminNotice</ListElement>
@@ -107,10 +106,6 @@
 		<Head>Прот.</Head>
 	</Protocol>
 	<!-- ********************************************************************** -->
-	<PrefixAPI>
-		<Head>API</Head>
-	</PrefixAPI>
-	<!-- ********************************************************************** -->
 	<AdminNotice>
 		<Head>-</Head>
 		<Comp>Notice</Comp>
@@ -166,7 +161,6 @@
 	<ListElement>AdminNotice</ListElement>
 	<ListElement>Address</ListElement>
 	<ListElement>Port</ListElement>
-	<ListElement>PrefixAPI</ListElement>
 	<ListElement>IsDefault</ListElement>
 	<ListElement>IsActive</ListElement>
 	<ListElement>Orders</ListElement>

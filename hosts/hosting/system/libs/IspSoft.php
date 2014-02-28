@@ -108,7 +108,7 @@ function IspSoft_Create($Settings,$ISPswScheme){
 	'period'	=> $period,			# период на который заказываем
   );
   
-  $Response = Http_Send($Settings['PrefixAPI'],$Http,$Request);
+  $Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,$Request);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[IspSoft_Create]: не удалось соедениться с сервером');
   
@@ -173,7 +173,7 @@ function IspSoft_Change_IP($Settings,$ISPswScheme){
 	'elid'		=> $ISPswScheme['elid'],	# идентификатор лицензии
   );
   
-  $Response = Http_Send($Settings['PrefixAPI'],$Http,$Request);
+  $Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,$Request);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[IspSoft_Change_IP]: не удалось соедениться с сервером');
   
@@ -219,7 +219,7 @@ function IspSoft_UnLock($Settings,$ISPswScheme){
 	'elid'		=> $ISPswScheme['elid'],	# идентификатор лицензии
   );
   
-  $Response = Http_Send($Settings['PrefixAPI'],$Http,$Request);
+  $Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,$Request);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[IspSoft_UnLock]: не удалось соедениться с сервером');
   
@@ -265,7 +265,7 @@ function IspSoft_Lock($Settings,$ISPswScheme){
 	'elid'		=> $ISPswScheme['elid'],	# идентификатор лицензии
   );
   
-  $Response = Http_Send($Settings['PrefixAPI'],$Http,$Request);
+  $Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,$Request);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[IspSoft_Lock]: не удалось соедениться с сервером');
   
@@ -307,7 +307,7 @@ function IspSoft_Get_List_Licenses($Settings){
 			'out'		=> 'xml',	# Формат вывода
 			'func'		=> 'software',	# Целевая функция
 			);
-	$Response = Http_Send($Settings['PrefixAPI'],$Http,$Request);
+	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[IspSoft_Get_List_Licenses]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -442,7 +442,7 @@ function IspSoft_Get_Balance($Settings){
 			'out'		=> 'xml',		# Формат вывода
 			'func'		=> 'accountinfo',	# Целевая функция
 			);
-	$Response = Http_Send($Settings['PrefixAPI'],$Http,$Request);
+	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[IspSoft_Get_Balance]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -490,7 +490,7 @@ function IspSoft_Check_ISPsystem_IP($Settings, $ISPswInfo){
 			'period'	=> $period,		# период на который заказываем
 			'ip'		=> $ISPswInfo['IP'],	# проверяемый адрес
 			);
-	$Response = Http_Send($Settings['PrefixAPI'],$Http,$Request);
+	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[IspSoft_Check_ISPsystem_IP]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------

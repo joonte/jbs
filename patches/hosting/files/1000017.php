@@ -45,7 +45,6 @@ if(IsSet($Config['Notifies']['Settings']['SMSGateway'])){
 			'Protocol'	=> 'tcp',
 			'Address'	=> 'smspilot.ru',
 			'Port'		=> 80,
-			'PrefixAPI'	=> '/api.php',
 			'Login'		=> (IsSet($SMSGateway['SMSLogin'])?$SMSGateway['SMSLogin']:''),
 			'Password'	=> (IsSet($SMSGateway['SMSPassword'])?$SMSGateway['SMSPassword']:''),
 			'Params'	=> Array(

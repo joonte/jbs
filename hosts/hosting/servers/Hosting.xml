@@ -24,6 +24,18 @@
 		<Value>Director</Value>
 	</SystemID>
 	<!-- *********************************************************************** -->
+	<PrefixAPI>
+		<Check>Address</Check>
+		<Comment>Префикс API</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Префикс используемого API</prompt>
+			<type>text</type>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>/manager/ispmgr</Value>
+	</PrefixAPI>
+	<!-- *********************************************************************** -->
 	<IP>
 		<Check>IP</Check>
 		<Comment>IP адрес</Comment>
@@ -65,7 +77,7 @@
 	</IsAutoBalancing>
 	<!-- *********************************************************************** -->
 	<NoRestartCreate>
-		<Title>Параметры перезапуска веб сервера</Title>
+		<Title>Параметры перезапуска веб сервера (только для ISPmanager)</Title>
 		<Check>Address</Check>
 		<Comment>Не перезапускать при Create</Comment>
 		<CommentAttribs>
@@ -77,7 +89,7 @@
 			<type>checkbox</type>
 		</Attribs>
 		<IsDuty>0</IsDuty>
-		<Value>yes</Value>
+		<Value />
 	</NoRestartCreate>
 	<!-- *********************************************************************** -->
 	<NoRestartActive>
@@ -92,7 +104,7 @@
 			<type>checkbox</type>
 		</Attribs>
 		<IsDuty>0</IsDuty>
-		<Value>yes</Value>
+		<Value />
 	</NoRestartActive>
 	<!-- *********************************************************************** -->
 	<NoRestartSuspend>
@@ -137,7 +149,7 @@
 			<type>checkbox</type>
 		</Attribs>
 		<IsDuty>0</IsDuty>
-		<Value>yes</Value>
+		<Value />
 	</NoRestartSchemeChange>
 	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->

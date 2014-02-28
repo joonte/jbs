@@ -19,11 +19,10 @@ $IsDefault	= (boolean) @$Args['IsDefault'];
 $Protocol	=  (string) @$Args['Protocol'];
 $Address	=  (string) @$Args['Address'];
 $Port		= (integer) @$Args['Port'];
-$PrefixAPI	=  (string) @$Args['PrefixAPI'];
 $Login		=  (string) @$Args['Login'];
 $Password	=  (string) @$Args['Password'];
 $Monitoring	=  (string) @$Args['Monitoring'];
-$AdminNotice		=  (string) @$Args['AdminNotice'];
+$AdminNotice	=  (string) @$Args['AdminNotice'];
 $SortID		= (integer) @$Args['SortID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -58,7 +57,6 @@ $UServer = Array(
 			'Protocol'	=> $Protocol,
 			'Address'	=> $Address,
 			'Port'		=> $Port,
-			'PrefixAPI'	=> $PrefixAPI,
 			'Login'		=> $Login,
 			'Password'	=> $Password,
 			'Monitoring'	=> $Monitoring,

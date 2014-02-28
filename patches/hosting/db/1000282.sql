@@ -34,7 +34,6 @@ CREATE TABLE `Servers` (
 	`Protocol` enum('tcp','ssl') default 'tcp',	-- протокол для связи с сервером
 	`Address` char(30) default '',			-- адрес сервера
 	`Port` int(5) default '80',			-- порт сервера
-	`PrefixAPI` char(127) default '',		-- преффикс используемого API
 	`Login` char(60) default '',			-- логин для входа на сервер
 	`Password` char(255) default '',		-- пароль для входа на сервер
 	`Params` LONGTEXT,				-- набор переменных необходимых для взаимодействия с сервером

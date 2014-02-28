@@ -50,7 +50,6 @@ if($ServerID){
 			'Protocol'		=> 'ssl',
 			'Address'		=> 'srv1.isp.su',
 			'Port'			=> 443,
-			'PrefixAPI'		=> '/manager/ispmgr',
 			'Login'			=> 'root',
 			'Password'		=> '',
 			'Monitoring'		=> "HTTP=80\nHTTPS=443\nFTP=21\nMySQL=3306\nSMTP=25\nPOP=110\nIMAP=143",
@@ -64,7 +63,6 @@ if($ServerID){
 	case 'ISPsw':
 		#-------------------------------------------------------------------------------
 		$Server['Address']	= 'my.ispsystem.com';
-		$Server['PrefixAPI']	= '/manager/billmgr';
 		$Server['Login']	= 'vasiliy.alibabaevich';
 		$Server['Monitoring']	= "HTTP=80\nHTTPS=443";
 		$Server['AdminNotice']	= 'Используется учётная запись от которой шлёт сообщения биллинг (пользователь с идентификатором 100)';
@@ -76,7 +74,6 @@ if($ServerID){
 		$Server['Protocol']	= 'tcp';
 		$Server['Address']	= 'pop.yandex.ru';
 		$Server['Port']		= 110;
-		$Server['PrefixAPI']	= '';
 		$Server['Login']	= 'admin@company.com';
 		$Server['Monitoring']	= "POP3=110\nPOP3S=995\nIMAP4=143\nIMAP4S=993";
 		$Server['AdminNotice']	= 'Используется та же учётная запись от которой шлёт сообщения биллинг';
@@ -85,7 +82,6 @@ if($ServerID){
 		#-------------------------------------------------------------------------------
 		$Server['Address']	= 'login.icq.com';
 		$Server['Port']		= 5190;
-		$Server['PrefixAPI']	= '';
 		$Server['Login']	= '0000000,1111111,2222222';
 		$Server['Monitoring']	= "ICQ=5190";
 		$Server['AdminNotice']	= 'Можно указать несколько UIN в поле "Логин" перечислив их через запятую. Для отсылки будет выбираться случайный из них. Пароль должен быть одинаковым.';
@@ -97,7 +93,6 @@ if($ServerID){
 		$Server['Protocol']	= 'ssl';
 		$Server['Address']	= 'jabber.isp.su';
 		$Server['Port']		= 5222;
-		$Server['PrefixAPI']	= '';
 		$Server['Login']	= 'jabber@isp.su';
 		$Server['Monitoring']	= "Jabber=5222";
 		$Server['AdminNotice']	= '';
@@ -109,7 +104,6 @@ if($ServerID){
 		$Server['Protocol']	= 'tcp';
 		$Server['Address']	= 'smspilot.ru';
 		$Server['Port']		= 80;
-		$Server['PrefixAPI']	= '/api.php';
 		$Server['Login']	= 'vasiliy.alibabaevich';
 		$Server['Monitoring']	= "HTTP=80";
 		$Server['AdminNotice']	= '';
@@ -121,7 +115,6 @@ if($ServerID){
 		$Server['Protocol']	= 'ssl';
 		$Server['Address']	= 'www.joonte.com';
 		$Server['Port']		= 443;
-		$Server['PrefixAPI']	= '/path/to/api/';
 		$Server['Login']	= 'vasiliy.alibabaevich';
 		$Server['Monitoring']	= "HTTP=80\nHTTPS=443";
 		$Server['AdminNotice']	= '';
@@ -347,21 +340,6 @@ if(!$TemplateID){
 	#-------------------------------------------------------------------------------
 	$Table[] = Array('Порт',$Comp);
 	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load(
-			'Form/Input',
-			Array(
-				'type'  => 'text',
-				'name'  => 'PrefixAPI',
-				'prompt'=> 'Префикс для API софта используемого на сервере',
-				'value' => $Server['PrefixAPI'],
-				'style' => 'width: 100%;',
-				)
-			);
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	$Table[] = Array('Префикс API',$Comp);
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load(
 			'Form/Input',

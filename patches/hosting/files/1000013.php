@@ -72,7 +72,7 @@ if(IsSet($Config['IspSoft'])){
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Server = Array('TemplateID'=>'ISPsw','ServersGroupID'=>$ServersGroupID,'IsActive'=>TRUE,'IsDefault'=>TRUE,'Protocol'=>'ssl','Address'=>'my.ispsystem.com','Port'=>443,'PrefixAPI'=>'/manager/billmgr','Login'=>(IsSet($IspSoft['Settings']['Login'])?$IspSoft['Settings']['Login']:'root'),'Password'=>$IspSoft['Settings']['Password'],'Params'=>Array('BalanceLowLimit'=>(IsSet($IspSoft['Settings']['BalanceLowLimit'])?$IspSoft['Settings']['BalanceLowLimit']:'250')),'AdminNotice'=>'Используется специально созданная учётная запись','SortID'=>51000,'Monitoring'=>'HTTPS=443');
+		$Server = Array('TemplateID'=>'ISPsw','ServersGroupID'=>$ServersGroupID,'IsActive'=>TRUE,'IsDefault'=>TRUE,'Protocol'=>'ssl','Address'=>'my.ispsystem.com','Port'=>443,'Login'=>(IsSet($IspSoft['Settings']['Login'])?$IspSoft['Settings']['Login']:'root'),'Password'=>$IspSoft['Settings']['Password'],'Params'=>Array('BalanceLowLimit'=>(IsSet($IspSoft['Settings']['BalanceLowLimit'])?$IspSoft['Settings']['BalanceLowLimit']:'250'),'PrefixAPI'=>'/manager/billmgr'),'AdminNotice'=>'Используется специально созданная учётная запись','SortID'=>51000,'Monitoring'=>'HTTPS=443');
 		#-------------------------------------------------------------------------------
 		$IsInsert = DB_Insert('Servers',$Server);
 		if(Is_Error($IsInsert))
