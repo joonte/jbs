@@ -61,7 +61,7 @@ switch(ValueOf($HostingServers)){
     if(Is_Error($Comp))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
-    return Array('Title'=>'Мониторинг серверов','DOM'=>$Comp);
+    return Array('Title'=>'Мониторинг серверов хостинга','DOM'=>$Comp);
   default:
     return ERROR | @Trigger_Error(500);
 }

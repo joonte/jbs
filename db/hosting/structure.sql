@@ -37,7 +37,9 @@ CREATE TABLE `Servers` (
 	`Password` char(255) default '',		-- пароль для входа на сервер
 	`Params` LONGTEXT,				-- набор переменных необходимых для взаимодействия с сервером
 	`Monitoring` TEXT,				-- какие сервисы мониторить
-	`AdminNotice` TEXT,					-- примечание к серверу
+	`TestDate` int(11) default '0',			-- дата последнего тестирования мониторингом
+	`IsOK` enum('no','yes') default 'no',		-- с каким итогом был последний мониторинг
+	`AdminNotice` TEXT,				-- примечание к серверу
 	`SortID` int(11) default '10',			-- поле для сортировки
 	PRIMARY KEY(`ID`),
 	/* внешний ключ на таблицу групп серверов */
