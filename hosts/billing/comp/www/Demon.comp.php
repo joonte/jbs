@@ -89,16 +89,16 @@ while(TRUE){
 		case 'array':
 			#-------------------------------------------------------------------------------
 			$Tasks = $Tasks + $Task;
-			Debug(SPrintF('[comp/www/Cron]: Tasks = %s',print_r($Tasks,true)));
+			Debug(SPrintF('[comp/www/Demon]: Tasks = %s',print_r($Tasks,true)));
 			#-------------------------------------------------------------------------------
 			foreach ($Tasks as $Task){
-				Debug(SPrintF('[comp/www/Cron]: Task = %s',print_r($Task,true)));
+				Debug(SPrintF('[comp/www/Demon]: Task = %s',print_r($Task,true)));
 				#-------------------------------------------------------------------------------
 				$Number = Comp_Load('Formats/Task/Number',$Task['ID']);
 				if(Is_Error($Number))
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/www/Cron]: выполнение задания #%s',$Number));
+				Debug(SPrintF('[comp/www/Demon]: выполнение задания #%s',$Number));
 				#-------------------------------------------------------------------------------
 				$IsExecute = Comp_Load('www/Administrator/API/TaskExecute',Array('TaskID'=>$Task['ID']));
 				#-------------------------------------------------------------------------------
