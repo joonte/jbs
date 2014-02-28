@@ -65,6 +65,60 @@
 		<Hosting>
 			<Name>Сервер хостинга</Name>
 			<IsActive>1</IsActive>
+			<!-- *********************************************************************** -->
+			<SystemID>
+				<!-- *********************************************************************** -->
+				<NullSystem>
+					<Settings>
+						<Port>1000</Port>
+						<Protocol>tcp</Protocol>
+						<Url>http://isp.su/manage</Url>
+					</Settings>
+				</NullSystem>
+				<!-- ********************************************************************* -->
+				<Cpanel>
+					<!-- *********************************************************************** -->
+					<Settings>
+						<Port>2087</Port>
+						<Protocol>ssl</Protocol>
+						<Theme>x3</Theme>
+						<Language>default</Language>
+						<Url>https://isp.su:2083/login/</Url>
+					</Settings>
+				</Cpanel>
+				<!-- ********************************************************************* -->
+				<IspManager4>
+					<Settings>
+						<Port>443</Port>
+						<Protocol>ssl</Protocol>
+						<Theme>sirius</Theme>
+						<Language>ru</Language>
+						<Url>https://isp.su:1500/</Url>
+					</Settings>
+				</IspManager4>
+				<!-- ********************************************************************* -->
+				<Plesk>
+					<Settings>
+						<Port>8443</Port>
+						<Protocol>ssl</Protocol>
+						<Theme>default</Theme>
+						<Language>default</Language>
+						<Url>https://isp.su:8443/login_up.php3</Url>
+					</Settings>
+				</Plesk>
+				<!-- ********************************************************************* -->
+				<DirectAdmin>
+					<Settings>
+						<Port>2222</Port>
+						<Protocol>tcp</Protocol>
+						<Theme>default</Theme>
+						<Language>default</Language>
+						<Url>http://isp.su:2222/CMD_LOGIN</Url>
+					</Settings>
+				</DirectAdmin>
+				<!-- *********************************************************************** -->
+			</SystemID>
+			<!-- *********************************************************************** -->
 		</Hosting>
 		<!-- ********************************************************************* -->
 		<VPS>
