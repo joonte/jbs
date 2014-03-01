@@ -1,10 +1,9 @@
-SET FOREIGN_KEY_CHECKS=0;
-
 --
 -- Table structure for table `ServersGroups`
 --
 
 DROP TABLE IF EXISTS `ServersGroups`;
+-- SEPARATOR
 CREATE TABLE `ServersGroups` (
 	`ID` int(11) NOT NULL AUTO_INCREMENT,	-- идентификатор группы
 	`Name` char(30) NOT NULL,		-- имя группы
@@ -25,6 +24,7 @@ CREATE TABLE `ServersGroups` (
 --
 
 DROP TABLE IF EXISTS `Servers`;
+-- SEPARATOR
 CREATE TABLE `Servers` (
 	`ID` int(11) NOT NULL AUTO_INCREMENT,		-- идентификатор сервера
 	`TemplateID` char(64) default '',		-- шаблон для сервера
