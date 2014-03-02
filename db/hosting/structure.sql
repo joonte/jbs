@@ -15,8 +15,8 @@ CREATE TABLE `ServersGroups` (
 	`SortID` int(11) default '10',		-- поле для сортировки
 	PRIMARY KEY(`ID`),			-- первичный ключ
 	/* внешний ключ на таблицу сервисов */
-	KEY `ServersServersGroupID` (`ServersGroupID`),
-	CONSTRAINT `ServersServersGroupID` FOREIGN KEY (`ServersGroupID`) REFERENCES `ServersGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+	KEY `ServersGroupsServiceID` (`ServiceID`),
+	CONSTRAINT `ServersGroupsServiceID` FOREIGN KEY (`ServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
