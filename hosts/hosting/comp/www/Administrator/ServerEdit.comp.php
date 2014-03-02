@@ -216,6 +216,30 @@ if(!$TemplateID){
 	#-------------------------------------------------------------------------------
 	$DOM->AddText('Title',SPrintF('%s: %s',($ServerID)?'Редактирование':'Добавление',$Config['Servers']['Templates'][$TemplateID]['Name']));
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Template = $Config['Servers']['Templates'][$TemplateID];
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Template) as $Key){
+		#-------------------------------------------------------------------------------
+		if(Is_Array($Template[$Key])){
+			#-------------------------------------------------------------------------------
+			#Debug(SPrintF('[comp/www/Administrator/ServerEdit]: $Key = %s; $Template[$Key] = %s',$Key,print_r($Template[$Key],true)));
+			#-------------------------------------------------------------------------------
+			$Script = Array('var Settings = {};');
+			#-------------------------------------------------------------------------------
+			foreach(Array_Keys($Template[$Key]) as $SystemID)
+				$Script[] = SPrintF("Settings['%s'] = %s;",$SystemID,JSON_Encode($Template[$Key][$SystemID]['Settings']));
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			$Script[] = "function SettingsUpdate(){\nvar \$Form = document.forms['ServerEditForm'];\nvar \$System = Settings[\$Form.SystemID.value];\nfor(var i in \$System)\n\$Form[i].value = \$System[i];\n}";
+			$DOM->AddChild('Head',new Tag('SCRIPT',Implode("\n",$Script)));
+			Debug(SPrintF('[comp/www/Administrator/ServerEdit]: $Script = %s',print_r(Implode("\n",$Script),true)));
+		
+		}
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load(
 			'Form/Input',
 			Array(

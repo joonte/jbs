@@ -2,8 +2,6 @@
 <!-- @author Alex Keda, for www.host-food.ru -->
 <XML>
 <!-- *********************************************************************** -->
-<сознательная ошибка, чтоб не использовали>
-
 <Attribs>
 	<SystemID>
 		<Title>Общая информация</Title>
@@ -21,22 +19,12 @@
 		<Attribs>
 			<size>1</size>
 			<style>width: 100%;</style>
+			<onchange>SettingsUpdate();</onchange>
+			<prompt>Система управления используемая на сервере</prompt>
 		</Attribs>
 		<IsDuty>1</IsDuty>
-		<Value>Director</Value>
+		<Value>IspManager4</Value>
 	</SystemID>
-	<!-- *********************************************************************** -->
-	<PrefixAPI>
-		<Check>Address</Check>
-		<Comment>Префикс API</Comment>
-		<Type>Input</Type>
-		<Attribs>
-			<prompt>Префикс используемого API</prompt>
-			<type>text</type>
-		</Attribs>
-		<IsDuty>1</IsDuty>
-		<Value>/manager/ispmgr</Value>
-	</PrefixAPI>
 	<!-- *********************************************************************** -->
 	<IP>
 		<Check>IP</Check>
