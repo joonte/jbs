@@ -14,7 +14,6 @@
 			<Cpanel>Cpanel</Cpanel>
 			<NullSystem>Ручное управление</NullSystem>
 		</Options>
-		<IsDuty>1</IsDuty>
 		<Check>/^[A-Za-zА-Яа-я0-9\-]{2,25}$/u</Check>
 		<Attribs>
 			<size>1</size>
@@ -33,6 +32,7 @@
 		<Attribs>
 			<prompt>IPv4 адрес на который будут назначаться аккаунты клиентов</prompt>
 			<type>text</type>
+			<style>width: 100%;</style>
 		</Attribs>
 		<IsDuty>1</IsDuty>
 		<Value />
@@ -51,7 +51,7 @@
 	</BalancingFactor>
 	<!-- *********************************************************************** -->
 	<IsAutoBalancing>
-		<Check>Address</Check>
+		<Check>Char</Check>
 		<Comment>Автобалансировка</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
@@ -68,7 +68,7 @@
 	<!-- *********************************************************************** -->
 	<NoRestartCreate>
 		<Title>Параметры перезапуска веб сервера (только для ISPmanager)</Title>
-		<Check>Address</Check>
+		<Check>Char</Check>
 		<Comment>Не перезапускать при Create</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
@@ -83,7 +83,7 @@
 	</NoRestartCreate>
 	<!-- *********************************************************************** -->
 	<NoRestartActive>
-		<Check>Address</Check>
+		<Check>Char</Check>
 		<Comment>Не перезапускать при Active</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
@@ -98,7 +98,7 @@
 	</NoRestartActive>
 	<!-- *********************************************************************** -->
 	<NoRestartSuspend>
-		<Check>Address</Check>
+		<Check>Char</Check>
 		<Comment>Не перезапускать при Suspend</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
@@ -113,7 +113,7 @@
 	</NoRestartSuspend>
 	<!-- *********************************************************************** -->
 	<NoRestartDelete>
-		<Check>Address</Check>
+		<Check>Char</Check>
 		<Comment>Не перезапускать при Delete</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
@@ -128,7 +128,7 @@
 	</NoRestartDelete>
 	<!-- *********************************************************************** -->
 	<NoRestartSchemeChange>
-		<Check>Address</Check>
+		<Check>Char</Check>
 		<Comment>Не перезапускать при SchemeChange</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
@@ -151,6 +151,7 @@
 		<Attribs>
 			<prompt>Используется при создании служебных доменов для аккаунтов клиентов</prompt>
 			<type>text</type>
+			<style>width: 100%;</style>
 		</Attribs>
 		<IsDuty>1</IsDuty>
 		<Value>test.su</Value>
@@ -163,6 +164,7 @@
 		<Attribs>
 			<prompt>Используется при назначении имени пользовательского аккаунта. Имена аккаунтов для клиентов, с целью уникальности назначаются в виде: префикс00000, где 00000 - номер заказа, например: h10212</prompt>
 			<type>text</type>
+			<style>width: 100%;</style>
 		</Attribs>
 		<IsDuty>1</IsDuty>
 		<Value>h</Value>
@@ -177,6 +179,7 @@
 		<Attribs>
 			<prompt>Тема устанавливаемая клиенту при переходе в панель управления заказом хостинга</prompt>
 			<type>text</type>
+			<style>width: 100%;</style>
 		</Attribs>
 		<IsDuty>0</IsDuty>
 		<Value />
@@ -189,18 +192,20 @@
 		<Attribs>
 			<prompt>Язык устанавливаемый клиенту при переходе в панель управления заказом хостинга</prompt>
 			<type>text</type>
+			<style>width: 100%;</style>
 		</Attribs>
 		<IsDuty>1</IsDuty>
 		<Value>Default</Value>
 	</Language>
 	<!-- *********************************************************************** -->
 	<Url>
-		<Check>Address</Check>
+		<Check>Char</Check>
 		<Comment>Адрес входа для клиентов</Comment>
 		<Type>Input</Type>
 		<Attribs>
 			<prompt>На какой URL необходимо логинится клиентам для входа в панель управления заказом хостинга</prompt>
 			<type>text</type>
+			<style>width: 100%;</style>
 		</Attribs>
 		<IsDuty>1</IsDuty>
 		<Value>https://srv1.isp.su/manager/ispmgr</Value>
@@ -215,6 +220,7 @@
 		<Attribs>
 			<prompt>Сервер DNS на котором будут размещены доменные зоны клиентских сайтов</prompt>
 			<type>text</type>
+			<style>width: 100%;</style>
 		</Attribs>
 		<IsDuty>1</IsDuty>
 		<Value>ns1.isp.su</Value>
@@ -227,6 +233,7 @@
 		<Attribs>
 			<prompt>Сервер DNS на котором будут размещены доменные зоны клиентских сайтов</prompt>
 			<type>text</type>
+			<style>width: 100%;</style>
 		</Attribs>
 		<IsDuty>1</IsDuty>
 		<Value>ns2.isp.su</Value>
@@ -239,6 +246,7 @@
 		<Attribs>
 			<prompt>Сервер DNS на котором будут размещены доменные зоны клиентских сайтов</prompt>
 			<type>text</type>
+			<style>width: 100%;</style>
 		</Attribs>
 		<IsDuty>0</IsDuty>
 		<Value />
@@ -251,6 +259,7 @@
 		<Attribs>
 			<prompt>Сервер DNS на котором будут размещены доменные зоны клиентских сайтов</prompt>
 			<type>text</type>
+			<style>width: 100%;</style>
 		</Attribs>
 		<IsDuty>0</IsDuty>
 		<Value />
@@ -265,6 +274,7 @@
 		<Attribs>
 			<prompt>Имя хоста сервера баз данных MySQL. Если он расположен на той же машине, что и хостинг - то localhost</prompt>
 			<type>text</type>
+			<style>width: 100%;</style>
 		</Attribs>
 		<IsDuty>1</IsDuty>
 		<Value>localhost</Value>
