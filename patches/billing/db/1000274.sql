@@ -45,6 +45,5 @@ ALTER TABLE `Profiles` ADD KEY `ProfilesStatusDate` (`StatusDate`);
 ALTER TABLE `Users` ADD KEY `UsersEmail` (`Email`);
 -- SEPARATOR
 ALTER TABLE `Users` ADD KEY `UsersName` (`Name`);
--- SEPARATOR
 
 
