@@ -67,7 +67,7 @@ if(Is_Array($Services))
 	foreach($Services as $Service)
 		$Options[$Service['ID']] = SPrintF('%s (%s)',$Service['Code'],$Service['Item']);
 #-------------------------------------------------------------------------------
-$Services = Comp_Load('Form/Select',Array('name'=>'ServiceID'),$Options,$ServersGroup['ServiceID']);
+$Services = Comp_Load('Form/Select',Array('name'=>'ServiceID','style'=>'width: 100%;'),$Options,$ServersGroup['ServiceID']);
 if(Is_Error($Services))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -117,7 +117,7 @@ $Options = Array();
 foreach(Array_Keys($Functions) as $FunctionID)
 	$Options[$FunctionID] = $Functions[$FunctionID]['Name'];
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'FunctionID','prompt'=>'По какому принципу производить балансировку серверов в группе, если это актуально для данной группы'),$Options,$ServersGroup['FunctionID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'FunctionID','style'=>'width: 100%;','prompt'=>'По какому принципу производить балансировку серверов в группе, если это актуально для данной группы'),$Options,$ServersGroup['FunctionID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

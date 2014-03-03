@@ -6,7 +6,7 @@
 	<!-- *********************************************************************** -->
 	<PrefixAPI>
 		<Title>Прочие настройки</Title>
-		<Check>Address</Check>
+		<Check>Char</Check>
 		<Comment>Префикс API</Comment>
 		<Type>Input</Type>
 		<Attribs>

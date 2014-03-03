@@ -76,7 +76,7 @@
 	</Interval>
 	<!-- *********************************************************************** -->
         <CutSign>
-		<Check>Address</Check>
+		<Check>Char</Check>
 		<Comment>Вырезать подпись</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
