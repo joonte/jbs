@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Attribs>
+	<!-- *********************************************************************** -->
+	<Name>
+		<Title>Прочие настройки</Title>
+		<Check>Char</Check>
+		<Comment>Название</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Отображаемое имя вышестоящего регистратора</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value></Value>
+	</Name>
+	<!-- *********************************************************************** -->
+        <Registrator>
+		<Comment>Регистратор</Comment>
+		<Check>/^[A-Za-zА-Яа-я0-9\-]{2,25}$/u</Check>
+		<Type>Select</Type>
+		<Options>
+			<NullRegistrator>Ручная регистрация</NullRegistrator>
+			<WebNames>WebNames</WebNames>
+			<RegRu>RegRu</RegRu>
+			<NauNet>NauNet</NauNet>
+			<RuCenter>RuCenter</RuCenter>
+			<MasterName>MasterName</MasterName>
+			<LogicBoxes>LogicBoxes (beta)</LogicBoxes>
+			<Started>Started (beta)</Started>
+			<R01>R01 (beta)</R01>
+			<InternetBS>InternetBS (beta)</InternetBS>
+		</Options>
+		<Attribs>
+			<size>1</size>
+			<style>width: 100%;</style>
+			<onchange>SettingsUpdate();</onchange>
+			<prompt>Вышестоящий регистратор доменов</prompt>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>RegRu</Value>
+	</Registrator>
+	<!-- *********************************************************************** -->
+	<PrefixAPI>
+		<Check>Char</Check>
+		<Comment>Префикс API</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Окончание URL адреса по которому необходимо обращаться к регистратору</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value></Value>
+	</PrefixAPI>
+	<!-- *********************************************************************** -->
+	<ParentID>
+		<Check>Char</Check>
+		<Comment>Родительский номер</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Только для LogicBoxes</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value></Value>
+	</ParentID>
+	<!-- *********************************************************************** -->
+	<BalanceLowLimit>
+		<Check>/^[0-9]{1,4}$/u</Check>
+		<Comment>Минимальная сумма</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>При снижении балланса счёта у регистратора ниже этой суммы, группе &quot;Бухгалтерия&quot; (при её отсутствии - всем сотрудникам) будут отсылаться уведомления о необходимости пополнения счёта. Для отключения уведомлений, введите ноль</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>3000</Value>
+	</BalanceLowLimit>
+	<!-- *********************************************************************** -->
+	<PrefixNic>
+		<Title>Параметры трансфера доменов</Title>
+		<Check>Char</Check>
+		<Comment>Префикс nic-hdl</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Код регистратора, с него начинается поле &quot;registrar&quot; при просмотре информации WhoIs о домене</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value></Value>
+	</PrefixNic>
+	<!-- *********************************************************************** -->
+	<PartnerLogin>
+		<Check>Char</Check>
+		<Comment>Партнерский аккаунт</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Имя партнёрского аккаунта у регистратора (обычно, совпадает с логином)</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value></Value>
+	</PartnerLogin>
+	<!-- *********************************************************************** -->
+	<PartnerContract>
+		<Check>Char</Check>
+		<Comment>Партнерский договор</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Данные партнёрского договора - номер, иногда требуется и дата</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value></Value>
+	</PartnerContract>
+	<!-- *********************************************************************** -->
+	<JurName>
+		<Check>Char</Check>
+		<Comment>Официальное наименование</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Официальное наименование компании регистратора</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value></Value>
+	</JurName>
+	<!-- *********************************************************************** -->
+        <Ns1Name>
+		<Title>Сервера имен</Title>
+		<Check>DnsDomain</Check>
+		<Comment>Первичный</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Сервер DNS на котором будут размещены доменные зоны клиентских сайтов</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>ns1.isp.su</Value>
+	</Ns1Name>
+	<!-- *********************************************************************** -->
+	<Ns2Name>
+		<Check>DnsDomain</Check>
+		<Comment>Вторичный</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Сервер DNS на котором будут размещены доменные зоны клиентских сайтов</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>ns2.isp.su</Value>
+	</Ns2Name>
+	<!-- *********************************************************************** -->
+	<Ns3Name>
+		<Check>DnsDomain</Check>
+		<Comment>Дополнительный</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Сервер DNS на котором будут размещены доменные зоны клиентских сайтов</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value />
+	</Ns3Name>
+	<!-- *********************************************************************** -->
+	<Ns4Name>
+		<Check>DnsDomain</Check>
+		<Comment>Расширенный</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Сервер DNS на котором будут размещены доменные зоны клиентских сайтов</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value />
+	</Ns4Name>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<UseContractRegister>
+		<Check>Char</Check>
+		<Type>Hidden</Type>
+		<IsDuty>0</IsDuty>
+		<Value>0</Value>
+	</UseContractRegister>
+	<!-- *********************************************************************** -->
+	<IsSupportContracts>
+		<Check>Char</Check>
+		<Type>Hidden</Type>
+		<IsDuty>0</IsDuty>
+		<Value>0</Value>
+	</IsSupportContracts>
+	<!-- *********************************************************************** -->
+	<PersonID>
+		<Check>Char</Check>
+		<Type>Hidden</Type>
+		<IsDuty>0</IsDuty>
+		<Value />
+	</PersonID>
+	<!-- *********************************************************************** -->
+</Attribs>
+<!-- *********************************************************************** -->
+</XML>

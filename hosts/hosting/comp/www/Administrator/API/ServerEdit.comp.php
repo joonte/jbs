@@ -93,6 +93,8 @@ if(IsSet($Template['Attribs'])){
 		switch($Attrib['Type']){
 		case 'Input':
 			# No more...
+		case 'Hidden':
+			# No more...
 		case 'TextArea':
 			#-------------------------------------------------------------------------------
 			if($Value){
