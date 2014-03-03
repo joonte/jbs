@@ -451,7 +451,8 @@ foreach($Mails as $mailId){
 		if(Is_Error($IsUpdate))
 			return ERROR | @Trigger_Error(500);
 		# постим от админа, т.к. пост может идти от другого юзера в ответ на...
-		$GLOBALS['__USER']['ID'] = 100;
+		$GLOBALS['__USER']['ID']	= 100;
+		$GLOBALS['__USER']['IsAdmin']	= TRUE;
 		#-------------------------------------------------------------------------------
 		$Params = Array('Message'=>$Message,'TicketID'=>$Edesk['EdeskID'],'UserID'=>(($IsUser)?$User['ID']:10));
 		#-------------------------------------------------------------------------------
@@ -462,7 +463,8 @@ foreach($Mails as $mailId){
 		if(Is_Error($IsAdd))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$GLOBALS['__USER']['ID'] = 100;
+		$GLOBALS['__USER']['ID']	= 100;
+		$GLOBALS['__USER']['IsAdmin']	= FALSE;
 		#-------------------------------------------------------------------------------
 		$mailbox->deleteMessage($mail->mId, TRUE);
 		#-------------------------------------------------------------------------------
