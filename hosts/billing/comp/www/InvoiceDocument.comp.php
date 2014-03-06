@@ -82,6 +82,10 @@ switch(ValueOf($Invoice)){
             $DOM->AddChild('Into',new Tag('DIV',Array('class'=>'Title'),new Tag('CDATA',$PaymentSystem['Name']),$A));
           }
           #-----------------------------------------------------------------------
+	  # проверяем наличие файла
+	  if(!GetUploadedFileSize('Invoices',$Invoice['ID']))
+	          return new gException('INVOICE_NOT_BUILDED','Счёт не сформирован');
+          #-----------------------------------------------------------------------
 	  $File = GetUploadedFile('Invoices',$Invoice['ID']);
 	  $Document = new DOM($File['Data']);
           #-----------------------------------------------------------------------
