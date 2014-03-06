@@ -2,7 +2,7 @@ SET NAMES 'utf8';
 SET FOREIGN_KEY_CHECKS=0;
 
 LOCK TABLES `Tasks` WRITE;
-DELETE FROM `Tasks` WHERE `ID` IN(51,52,53,54,55,56,57,58,59,60,61,62,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,85,86);
+DELETE FROM `Tasks` WHERE `ID` IN(51,52,53,54,55,56,57,58,59,60,61,62,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,86);
 INSERT INTO `Tasks`
   (`ID`,`UserID`,`TypeID`,`Params`,`IsActive`)
 VALUES
@@ -36,7 +36,6 @@ VALUES
 (82,1,'ISPswConsider','[]','yes'),
 (83,1,'ISPswNoticeDelete','[]','yes'),
 (84,1,'ISPswForDelete','[]','yes'),
-(85,1,'ISPswCheckLicenses','[]','yes'),
 (86,1,'HostingSetPrimaryServer','[]','yes')
 ;
 
