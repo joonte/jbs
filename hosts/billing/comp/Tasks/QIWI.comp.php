@@ -108,7 +108,7 @@ switch(ValueOf($Items)){
 			foreach ($xml->{'bills-list'}->children() as $bill) {
 				#-------------------------------------------------------------------------
 				#Debug("[Tasks/QIWI]: status for #" . $bill['id'] . " = '" . $bill['status'] . "', summ = " . $bill['sum']);
-				if($bill['status'] == 60){
+				if($bill['status'] == 60 && IsSet($bill['id'])){
 					#-------------------------------------------------------------------------
 					$Invoice = DB_Select('Invoices',Array('ID','Summ'),Array('UNIQ','ID'=>$bill['id']));
 					switch(ValueOf($Invoice)){
