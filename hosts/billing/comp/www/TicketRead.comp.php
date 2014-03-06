@@ -122,7 +122,7 @@ switch(ValueOf($Ticket)){
 		#-------------------------------------------------------------------------------
 	}else{	# is support
 		#-------------------------------------------------------------------------------
-		$Articles = DB_Select('Clauses','*',Array('Where'=>"`GroupID` = 11 AND `IsPublish` = 'yes'",'SortOn'=>'Partition'));
+		$Articles = DB_Select('Clauses','*',Array('Where'=>"`GroupID` = 11 AND `IsPublish` = 'yes'",'SortOn'=>'`Partition`'));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($Articles)){
 		case 'error':
