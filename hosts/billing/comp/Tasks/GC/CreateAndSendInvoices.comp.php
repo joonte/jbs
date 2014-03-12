@@ -219,6 +219,9 @@ case 'array':
 			if(In_Array($Basket['ContractID'],$Contracts))
 				continue;
 			#-------------------------------------------------------------------------------
+			if($Basket['TypeID'] == 'NaturalPartner')
+				continue;
+			#-------------------------------------------------------------------------------
 			$Contracts[] = $Basket['ContractID'];
 			#-------------------------------------------------------------------------------
 			#Debug(SPrintF('[comp/www/CreateAndSendInvoices]: юзер (%s) обработка корзины по договору (%s)',$Order['Email'],$Basket['ContractID']));
