@@ -7,7 +7,7 @@
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ №{$OrderID|string_format:"%05u"} на виртуальный выделенный сервер (VPS) был успешно активирован.
 
 Данные для доступа к панели управления VPS сервером:
-  * Адрес панели управления: {$Server.Url|default:'$Server.Url'}
+  * Адрес панели управления: {$Server.Params.Url|default:'$Server.Params.Url'}
   * Логин в панель управления: {$Login|default:'$Login'}
   * Пароль панели управления: {$Password|default:'$Password'}
 
@@ -22,8 +22,8 @@
   * Пароль панели ISPmanger: {$Password|default:'$Password'}
 
 Сервера имён:
-  * Первичный сервер имён: {$Server.Ns1Name|default:'$Server.Ns1Name'}
-  * Вторичный сервер имён: {$Server.Ns2Name|default:'$Server.Ns2Name'}
+  * Первичный сервер имён: {$Server.Params.Ns1Name|default:'$Server.Params.Ns1Name'}
+  * Вторичный сервер имён: {$Server.Params.Ns2Name|default:'$Server.Params.Ns2Name'}
 
 
 Сохраните эти данные в надежном месте, они потребуются для дальнейшей работы.

@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('classes/VPSServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$VPSOrder = DB_Select('VPSOrdersOwners',Array('ID','UserID','ServerID','Login','Domain','SchemeID','Password','(SELECT `ProfileID` FROM `Contracts` WHERE `Contracts`.`ID` = `VPSOrdersOwners`.`ContractID`) as `ProfileID`'),Array('UNIQ','ID'=>$VPSOrderID));
+$VPSOrder = DB_Select('VPSOrdersOwners',Array('ID','UserID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`','Login','Domain','SchemeID','Password','(SELECT `ProfileID` FROM `Contracts` WHERE `Contracts`.`ID` = `VPSOrdersOwners`.`ContractID`) as `ProfileID`'),Array('UNIQ','ID'=>$VPSOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($VPSOrder)){
   case 'error':
@@ -41,9 +41,9 @@ switch(ValueOf($VPSOrder)){
             return ERROR | @Trigger_Error(400);
           case 'array':
             #-------------------------------------------------------------------
-            $VPSScheme['disktempl'] = (StrLen($VPSScheme['disktempl']) > 0)?$VPSScheme['disktempl']:$VPSServer->Settings['disktempl'];
+            $VPSScheme['disktempl'] = (StrLen($VPSScheme['disktempl']) > 0)?$VPSScheme['disktempl']:$VPSServer->Settings['Params']['DiskTemplate'];
             #-------------------------------------------------------------------
-            $IPsPool = Explode("\n",$VPSServer->Settings['IPsPool']);
+            $IPsPool = Explode("\n",$VPSServer->Settings['Params']['IPsPool']);
             #-------------------------------------------------------------------
             $IP = $IPsPool[Rand(0,Count($IPsPool) - 1)];
             #-------------------------------------------------------------------
