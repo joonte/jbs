@@ -10,8 +10,8 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
-$ContractID      = (integer) @$Args['ContractID'];
-$VPSSchemeID = (integer) @$Args['VPSSchemeID'];
+$ContractID	= (integer) @$Args['ContractID'];
+$VPSSchemeID	= (integer) @$Args['VPSSchemeID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
@@ -55,16 +55,16 @@ switch(ValueOf($VPSScheme)){
             return ERROR | @Trigger_Error(700);
           case 'true':
             #-------------------------------------------------------------------
-            $VPSServer = DB_Select('VPSServers',Array('ID','Domain','Prefix'),Array('Where'=>SPrintF("`ServersGroupID` = %u AND `IsDefault` = 'yes'",$VPSScheme['ServersGroupID'])));
+            $Server = DB_Select('Servers',Array('ID','Params'),Array('Where'=>SPrintF("`ServersGroupID` = %u AND `IsDefault` = 'yes'",$VPSScheme['ServersGroupID'])));
             #-------------------------------------------------------------------
-            switch(ValueOf($VPSServer)){
+            switch(ValueOf($Server)){
               case 'error':
                 return ERROR | @Trigger_Error(500);
               case 'exception':
                 return new gException('SERVER_NOT_DEFINED','Сервер размещения не определён');
               case 'array':
                 #---------------------------------------------------------------
-                $VPSServer = Current($VPSServer);
+                $Server = Current($Server);
                 #---------------------------------------------------------------
                 $Password = SubStr(Md5(UniqID()),0,12);
                 #-------------------------TRANSACTION---------------------------
@@ -94,20 +94,19 @@ switch(ValueOf($VPSScheme)){
                   }
                 }
                 #---------------------------------------------------------------
-                $OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>30000));
+                $OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServerID'=>$Server['ID'],'ServiceID'=>30000));
                 if(Is_Error($OrderID))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Login = SPrintF('%s%s',$VPSServer['Prefix'],$OrderID);
+                $Login = SPrintF('%s%s',$Server['Params']['Prefix'],$OrderID);
                 #---------------------------------------------------------------
                 $IVPSOrder = Array(
                   #-------------------------------------------------------------
                   'OrderID'  => $OrderID,
                   'SchemeID' => $VPSScheme['ID'],
-                  'ServerID' => $VPSServer['ID'],
                   'Login'    => $Login,
                   'Password' => $Password,
-		  'Domain'   => $Login . '.' . $VPSServer['Domain'],
+		  'Domain'   => SPrintF('%s.%s',$Login,$Server['Params']['Domain']),
                 );
                 #---------------------------------------------------------------
                 $VPSOrderID = DB_Insert('VPSOrders',$IVPSOrder);

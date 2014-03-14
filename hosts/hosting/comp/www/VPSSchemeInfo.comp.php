@@ -50,7 +50,7 @@ switch(ValueOf($VPSScheme)){
     $Table[] = Array('Цена за установку',$Comp);
     #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
-    $ServersGroup = DB_Select('VPSServersGroups','*',Array('UNIQ','ID'=>$VPSScheme['ServersGroupID']));
+    $ServersGroup = DB_Select('ServersGroups','*',Array('UNIQ','ID'=>$VPSScheme['ServersGroupID']));
     if(!Is_Array($ServersGroup))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
@@ -112,9 +112,9 @@ switch(ValueOf($VPSScheme)){
     #---------------------------------------------------------------------------
     $SystemsIDs = Array();
     #---------------------------------------------------------------------------
-    $VPSServers = DB_Select('VPSServers','SystemID',Array('Where'=>SPrintF('`ServersGroupID` = %u',$VPSScheme['ServersGroupID']),'GroupBy'=>'SystemID'));
+    $Servers = DB_Select('Servers','Params',Array('Where'=>SPrintF('`ServersGroupID` = %u',$VPSScheme['ServersGroupID'])));
     #---------------------------------------------------------------------------
-    switch(ValueOf($VPSServers)){
+    switch(ValueOf($Servers)){
       case 'error':
         return ERROR | @Trigger_Error(500);
       case 'exception':
@@ -122,8 +122,8 @@ switch(ValueOf($VPSScheme)){
       break;
       case 'array':
         #-----------------------------------------------------------------------
-        foreach($VPSServers as $VPSServer)
-          $SystemsIDs[] = $VPSServer['SystemID'];
+        foreach($Servers as $Server)
+          $SystemsIDs[] = $Server['Params']['SystemID'];
       break;
       default:
         return ERROR | @Trigger_Error(101);

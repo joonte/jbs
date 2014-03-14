@@ -183,7 +183,7 @@
    <ListElement>%Scheme%</ListElement>
    <Length>10</Length>
   </Args>
-  <Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `VPSServersGroups` WHERE `VPSServersGroups`.`ID` = `VPSSchemes`.`ServersGroupID`),')') FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`)</Alias>
+  <Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `VPSSchemes`.`ServersGroupID`),')') FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`)</Alias>
  </Scheme>
  <!-- ********************************************************************** -->
  <Expiration>

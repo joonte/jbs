@@ -15,7 +15,7 @@ $VPSOrderID = (integer) @$Args['VPSOrderID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/VPSServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','UserID','ServerID','Login','Password','StatusID');
+$Columns = Array('ID','UserID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`','Login','Password','StatusID');
 #-------------------------------------------------------------------------------
 $VPSOrder = DB_Select('VPSOrdersOwners',$Columns,Array('UNIQ','ID'=>$VPSOrderID));
 #-------------------------------------------------------------------------------

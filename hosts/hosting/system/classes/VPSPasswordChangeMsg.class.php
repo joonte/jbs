@@ -12,7 +12,7 @@ class VPSPasswordChangeMsg extends Message {
     }
 
     public function getParams() {
-        $Server = DB_Select('VPSServers', Array('Address', 'Url', 'Ns1Name', 'Ns2Name'), Array('UNIQ', 'ID' => $this->params['ServerID']));
+        $Server = DB_Select('Servers', Array('Address', 'Params'), Array('UNIQ', 'ID' => $this->params['ServerID']));
         if (!Is_Array($Server))
             return ERROR | @Trigger_Error(500);
 

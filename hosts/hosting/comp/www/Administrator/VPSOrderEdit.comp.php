@@ -16,7 +16,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 #-------------------------------------------------------------------------------
 if($VPSOrderID){
   #-----------------------------------------------------------------------------
-  $VPSOrder = DB_Select('VPSOrdersOwners',Array('UserID','ContractID','ServerID','Domain','Login','Password','SchemeID'),Array('UNIQ','ID'=>$VPSOrderID));
+  $VPSOrder = DB_Select('VPSOrdersOwners',Array('UserID','ContractID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`','Domain','Login','Password','SchemeID'),Array('UNIQ','ID'=>$VPSOrderID));
   #-----------------------------------------------------------------------------
   switch(ValueOf($VPSOrder)){
     case 'error':
@@ -72,7 +72,7 @@ $Comp = Comp_Load('Services/Schemes','VPSSchemes',$VPSOrder['UserID'],Array('Nam
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$VPSSchemes = DB_Select($UniqID,Array('ID','Name','CostMonth',SPrintF('(SELECT `Name` FROM `VPSServersGroups` WHERE `%s`.`ServersGroupID` = `VPSServersGroups`.`ID`) as `ServersGroupName`',$UniqID)),Array('SortOn'=>'SortID'));
+$VPSSchemes = DB_Select($UniqID,Array('ID','Name','CostMonth',SPrintF('(SELECT `Name` FROM `ServersGroups` WHERE `%s`.`ServersGroupID` = `ServersGroups`.`ID`) as `ServersGroupName`',$UniqID)),Array('SortOn'=>'SortID'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($VPSSchemes)){
   case 'error':
@@ -95,13 +95,13 @@ foreach($VPSSchemes as $VPSScheme){
   $Options[$VPSScheme['ID']] = SPrintF('%s, %s, %s',$VPSScheme['Name'],$VPSScheme['ServersGroupName'],$Comp);
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID'),$Options,$VPSOrder['SchemeID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID','style'=>'width: 100%;'),$Options,$VPSOrder['SchemeID']);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Тарифный план',$Comp);
 #-------------------------------------------------------------------------------
-$Servers = DB_Select('VPSServers',Array('ID','Address'),Array('SortOn'=>'Address'));
+$Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) = 30000','SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Servers)){
   case 'error':
@@ -120,7 +120,7 @@ $Options = Array();
 foreach($Servers as $Server)
   $Options[$Server['ID']] = $Server['Address'];
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ServerID'),$Options,$VPSOrder['ServerID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ServerID','style'=>'width: 100%;'),$Options,$VPSOrder['ServerID']);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -131,7 +131,8 @@ $Comp = Comp_Load(
   Array(
     'type'  => 'text',
     'name'  => 'Domain',
-    'value' => $VPSOrder['Domain']
+    'value' => $VPSOrder['Domain'],
+    'style' => 'width: 100%;'
   )
 );
 if(Is_Error($Comp))
@@ -147,7 +148,8 @@ if(!$VPSOrderID){
       'type'  => 'text',
       'size'  => 5,
       'name'  => 'DaysReserved',
-      'value' => 31
+      'value' => 31,
+      'style' => 'width: 100%;'
     )
   );
   if(Is_Error($Comp))
@@ -169,7 +171,8 @@ $Comp = Comp_Load(
   Array(
     'type'  => 'text',
     'name'  => 'Login',
-    'value' => $VPSOrder['Login']
+    'value' => $VPSOrder['Login'],
+    'style' => 'width: 100%;'
   )
 );
 if(Is_Error($Comp))
@@ -182,7 +185,8 @@ $Comp = Comp_Load(
   Array(
     'type'  => 'text',
     'name'  => 'Password',
-    'value' => $VPSOrder['Password']
+    'value' => $VPSOrder['Password'],
+    'style' => 'width: 100%;'
   )
 );
 if(Is_Error($Comp))

@@ -166,24 +166,9 @@ CREATE VIEW `VPSOrdersOwners` AS select
 -- SEPARATOR
 DROP VIEW IF EXISTS `VPSServersOwners`;
 DROP TABLE IF EXISTS `VPSServersOwners`;
-CREATE
-	VIEW `VPSServersOwners` AS
-SELECT
-	`VPSServers`.*,
-	100 as `UserID`
-FROM
-	`VPSServers`;
-
 -- SEPARATOR
 DROP VIEW IF EXISTS `VPSServersGroupsOwners`;
 DROP TABLE IF EXISTS `VPSServersGroupsOwners`;
-CREATE
-	VIEW `VPSServersGroupsOwners` AS
-SELECT
-	`VPSServersGroups`.*,
-	100 as `UserID`
-FROM
-	`VPSServersGroups`;
 -- SEPARATOR
 DROP VIEW IF EXISTS `VPSBonusesOwners`;
 -- SEPARATOR
@@ -196,7 +181,6 @@ DROP TABLE IF EXISTS `VPSPoliticsOwners`;
 -- SEPARATOR
 DROP VIEW IF EXISTS `VPSDomainsPoliticsOwners`;
 DROP TABLE IF EXISTS `VPSDomainsPoliticsOwners`;
-CREATE VIEW `VPSDomainsPoliticsOwners` AS select `VPSDomainsPolitics`.* from `VPSDomainsPolitics`;
 
 -- SEPARATOR
 DROP VIEW IF EXISTS `VPSSchemesOwners`;

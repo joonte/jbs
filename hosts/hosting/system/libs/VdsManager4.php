@@ -15,7 +15,7 @@ function VdsManager4_Logon($Settings,$Login,$Password){
 	#-----------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/
-	return Array('Url'=>SPrintF('https://%s/manager/vdsmgr',$Settings['Address']),'Args'=>Array('lang'=>$Settings['Language'],'theme'=>$Settings['Theme'],'checkcookie'=>'no','username'=>$Login,'password'=>$Password,'func'=>'auth'));
+	return Array('Url'=>SPrintF('https://%s/manager/vdsmgr',$Settings['Address']),'Args'=>Array('lang'=>$Settings['Params']['Language'],'theme'=>$Settings['Params']['Theme'],'checkcookie'=>'no','username'=>$Login,'password'=>$Password,'func'=>'auth'));
 }
 
 #-------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ function VdsManager4_Create($Settings,$Login,$Password,$Domain,$IP,$VPSScheme,$E
   #-----------------------------------------------------------------------------
   $Http = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -118,7 +118,7 @@ function VdsManager4_Active($Settings,$Login,$IsReseller = FALSE){
 	#-----------------------------------------------------------------------------
 	$Http = Array(
 		#---------------------------------------------------------------------------
-		'Address'  => $Settings['IP'],
+		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
@@ -158,7 +158,7 @@ function VdsManager4_Suspend($Settings,$Login,$IsReseller = FALSE){
 	#-----------------------------------------------------------------------------
 	$Http = Array(
 	#---------------------------------------------------------------------------
-		'Address'  => $Settings['IP'],
+		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
@@ -198,7 +198,7 @@ function VdsManager4_Delete($Settings,$Login,$IsReseller = FALSE){
 	#-----------------------------------------------------------------------------
 	$Http = Array(
 		#---------------------------------------------------------------------------
-		'Address'  => $Settings['IP'],
+		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
@@ -239,7 +239,7 @@ function VdsManager4_Scheme_Change($Settings,$Login,$VPSScheme){
   #-----------------------------------------------------------------------------
   $Http = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -326,7 +326,7 @@ function VdsManager4_Password_Change($Settings,$Login,$Password,$IsReseller = FA
         #---------------------------------------------------------------------------
         $Http = Array(
         #---------------------------------------------------------------------------
-                'Address'  => $Settings['IP'],
+                'Address'  => $Settings['Params']['IP'],
                 'Port'     => $Settings['Port'],
                 'Host'     => $Settings['Address'],
                 'Protocol' => $Settings['Protocol'],
@@ -366,7 +366,7 @@ function VdsManager4_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
 	#-----------------------------------------------------------------------------
 	$Http = Array(
 		#---------------------------------------------------------------------------
-		'Address'  => $Settings['IP'],
+		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
@@ -433,7 +433,7 @@ function VdsManager4_DeleteIP($Settings,$ExtraIP){
 	#-----------------------------------------------------------------------------
 	$Http = Array(
 		#---------------------------------------------------------------------------
-		'Address'  => $Settings['IP'],
+		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
@@ -483,7 +483,7 @@ function VdsManager4_MainUsage($Settings){
 	#-----------------------------------------------------------------------------
 	$Http = Array(
 		#---------------------------------------------------------------------------
-		'Address'  => $Settings['IP'],
+		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
@@ -550,7 +550,7 @@ function VdsManager4_CheckIsActive($Settings,$Login){
 	#-----------------------------------------------------------------------------
 	$Http = Array(
 		#---------------------------------------------------------------------------
-		'Address'  => $Settings['IP'],
+		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
@@ -605,7 +605,7 @@ function VdsManager4_Reboot($Settings,$Login){
 	#-----------------------------------------------------------------------------
 	$Http = Array(
 	#---------------------------------------------------------------------------
-		'Address'  => $Settings['IP'],
+		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
@@ -647,7 +647,7 @@ function VdsManager4_Get_Users($Settings){
 	#-----------------------------------------------------------------------------
 	$Http = Array(
 	#---------------------------------------------------------------------------
-		'Address'  => $Settings['IP'],
+		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],

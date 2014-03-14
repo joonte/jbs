@@ -159,7 +159,7 @@
    <ListElement>%ServersGroup%</ListElement>
    <Length>10</Length>
   </Args>
-  <Alias>(SELECT `Name` FROM `VPSServersGroups` WHERE `VPSServersGroups`.`ID` = `ServersGroupID`)</Alias>
+  <Alias>(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`)</Alias>
  </ServersGroup>
  <!-- ********************************************************************** -->
  <disklimit>

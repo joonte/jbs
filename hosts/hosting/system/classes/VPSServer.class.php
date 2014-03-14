@@ -16,7 +16,7 @@ public function Select($ServerID){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Settings = DB_Select('VPSServers','*',Array('UNIQ','ID'=>$ServerID));
+  $Settings = DB_Select('Servers','*',Array('UNIQ','ID'=>$ServerID));
   #-----------------------------------------------------------------------------
   switch(ValueOf($Settings)){
     case 'error':
@@ -25,7 +25,7 @@ public function Select($ServerID){
       return new gException('SERVER_NOT_FOUND','Указаный сервер не найден');
     case 'array':
       #-------------------------------------------------------------------------
-      $this->SystemID = $Settings['SystemID'];
+      $this->SystemID = $Settings['Params']['SystemID'];
       #-------------------------------------------------------------------------
       $this->Settings = $Settings;
       #-------------------------------------------------------------------------

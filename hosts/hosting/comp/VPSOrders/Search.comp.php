@@ -18,7 +18,7 @@ $Template = &$Links[$LinkID];
 /******************************************************************************/
 $Tr = new Tag('TR');
 #-------------------------------------------------------------------------------
-$VPSSchemes = DB_Select('VPSSchemes',Array('ID','Name','CostMonth','(SELECT `Name` FROM `VPSServersGroups` WHERE `VPSSchemes`.`ServersGroupID` = `VPSServersGroups`.`ID`) as `ServersGroupName`'),Array('SortOn'=>'SortID'));
+$VPSSchemes = DB_Select('VPSSchemes',Array('ID','Name','CostMonth','(SELECT `Name` FROM `ServersGroups` WHERE `VPSSchemes`.`ServersGroupID` = `ServersGroups`.`ID`) as `ServersGroupName`'),Array('SortOn'=>'SortID'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($VPSSchemes)){
   case 'error':
@@ -70,7 +70,7 @@ switch(ValueOf($VPSSchemes)){
     return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$VPSServers = DB_Select('VPSServers',Array('ID','Address'),Array('SortOn'=>'Address'));
+$VPSServers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) = 30000','SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($VPSServers)){
   case 'error':
@@ -104,7 +104,7 @@ switch(ValueOf($VPSServers)){
     $AddingWhere = &$Template['Source']['Adding']['Where'];
     #---------------------------------------------------------------------------
     if($ServerID != 'Default')
-      $AddingWhere[] = SPrintF('`ServerID` = %u',$ServerID);
+      $AddingWhere[] = SPrintF('(SELECT `ServerID` FROM `OrdersOwners` WHERE `VPSOrdersOwners`.`OrderID` = `OrdersOwners`.`ID`) = %u',$ServerID);
     #---------------------------------------------------------------------------
     $Comp = Comp_Load('Form/Select',Array('name'=>'ServerID','onchange'=>'TableSuperReload();'),$Options,$ServerID);
     if(Is_Error($Comp))

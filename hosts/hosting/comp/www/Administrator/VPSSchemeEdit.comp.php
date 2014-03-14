@@ -143,18 +143,18 @@ $Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Стоимость подкл�
 #-------------------------------------------------------------------------------
 $Options = Array();
 #-------------------------------------------------------------------------------
-$ServersGroups = DB_Select('VPSServersGroups','*');
+$ServersGroups = DB_Select('ServersGroups','*',Array('Where'=>'`ServiceID` = 30000'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($ServersGroups)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return new gException('SERVERS_GROUPS_NOT_FOUND','Группы серверов не найдены');
-  case 'array':
-    # No more...
-  break;
-  default:
-    return ERROR | @Trigger_Error(101);
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('SERVERS_GROUPS_NOT_FOUND','Группы серверов не найдены');
+case 'array':
+	# No more...
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
 $Options = Array();

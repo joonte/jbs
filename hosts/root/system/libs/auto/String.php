@@ -38,7 +38,7 @@ function String_Xml_Parse($String,$IsUseCache = TRUE){
     #---------------------------------------------------------------------------
     $ByteIndex = Xml_Get_Current_Byte_Index($XmlParser);
     #---------------------------------------------------------------------------
-    Debug(Mb_SubStr($String,$ByteIndex-100,$ByteIndex+100));
+    Debug(SPrintF('[system/libs/auto/String.php]: %s',Mb_SubStr($String,$ByteIndex-100,$ByteIndex+100)));
     #---------------------------------------------------------------------------
     $Buffer = Mb_SubStr($String,0,$ByteIndex);
     #---------------------------------------------------------------------------

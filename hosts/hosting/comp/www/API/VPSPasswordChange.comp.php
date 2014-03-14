@@ -23,7 +23,7 @@ $Regulars = Regulars();
 if(!Preg_Match($Regulars['Password'],$Password))
   return new gException('WRONG_PASSWORD','Неверно указан новый пароль');
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','OrderID','UserID','ServerID','Login','Domain','StatusID','(SELECT `IsReselling` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`) as `IsReselling`');
+$Columns = Array('ID','OrderID','UserID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`','Login','Domain','StatusID','(SELECT `IsReselling` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`) as `IsReselling`');
 #-------------------------------------------------------------------------------
 $VPSOrder = DB_Select('VPSOrdersOwners',$Columns,Array('UNIQ','ID'=>$VPSOrderID));
 #-------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ switch(ValueOf($VPSOrder)){
               case 'error':
                 return new gException('SERVER_QUERY_ERROR','Ошибка запроса на сервер');
               case 'exception':
-                return new gException('PASSWORD_CHANGE_ERROR','Ошибка смены пароля',$PasswordChange);
+                return new gException('PASSWORD_CHANGE_ERROR','Ошибка изменения пароля',$PasswordChange);
               case 'true':
                 #---------------------------------------------------------------
                 $IsUpdate = DB_Update('VPSOrders',Array('Password'=>$Password),Array('ID'=>$VPSOrder['ID']));
@@ -76,7 +76,7 @@ switch(ValueOf($VPSOrder)){
                 #---------------------------------------------------------------
                 $VPSOrder['Password'] = $Password;
                 #-------------------------------------------------------------------------------
-                $Server = DB_Select('VPSServers',Array('Address','Url','Ns1Name','Ns2Name'),Array('UNIQ','ID'=>$VPSOrder['ServerID']));
+                $Server = DB_Select('Servers',Array('Address','Params'),Array('UNIQ','ID'=>$VPSOrder['ServerID']));
                 if(!Is_Array($Server))
                   return ERROR | @Trigger_Error(500);
                 #-------------------------------------------------------------------------------

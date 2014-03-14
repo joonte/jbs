@@ -487,14 +487,6 @@ ALTER TABLE `ServersUpTime` ADD INDEX ( `ServerID` );
 
 /* VPS values added by lissyara 2011-06-22 in 15:43 MSK */
 
-CREATE TABLE IF NOT EXISTS `VPSServersGroups` (
-	`ID` int(11) NOT NULL AUTO_INCREMENT,
-	`Name` char(30) NOT NULL,
-	`FunctionID` char(30) DEFAULT '',
-	`Comment` char(255) DEFAULT '',
-	`SortID` int(11) DEFAULT '10',
-	PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 -- SEPARATOR
 CREATE TABLE IF NOT EXISTS `VPSSchemes` (
 	`ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -539,49 +531,11 @@ CREATE TABLE IF NOT EXISTS `VPSSchemes` (
 	PRIMARY KEY (`ID`),
 	KEY `VPSSchemesGroupID` (`GroupID`),
 	KEY `VPSSchemesUserID` (`UserID`),
-	KEY `VPSSchemesServersGroupID` (`ServersGroupID`)
+	KEY `VPSSchemesServersGroupID` (`ServersGroupID`),
+	CONSTRAINT `VPSSchemesServersGroupID` FOREIGN KEY (`ServersGroupID`) REFERENCES `ServersGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- SEPARATOR
-
-
-CREATE TABLE IF NOT EXISTS `VPSServers` (
-	`ID` int(11) NOT NULL AUTO_INCREMENT,
-	`SystemID` char(30) DEFAULT '',
-	`ServersGroupID` int(11) NOT NULL,
-	`IsDefault` enum('no','yes') DEFAULT 'no',
-	`IsAutoBalancing` enum('no','yes') DEFAULT 'yes',
-	`BalancingFactor` DOUBLE NOT NULL DEFAULT '1', 
-	`Domain` char(30) DEFAULT '',
-	`Prefix` char(30) DEFAULT 'h',
-	`Address` char(30) DEFAULT '',
-	`Port` int(5) DEFAULT '80',
-	`Protocol` enum('tcp','ssl') DEFAULT 'tcp',
-	`Login` char(60) DEFAULT '',
-	`Password` char(255) DEFAULT '',
-	`IP` char(60) DEFAULT '127.0.0.1',
-	`IPsPool` text,
-	`Theme` char(30) DEFAULT '',
-	`Language` char(30) DEFAULT 'ru',
-	`Url` char(60) DEFAULT '',
-	`Ns1Name` char(30) DEFAULT '',
-	`Ns2Name` char(30) DEFAULT '',
-	`Ns3Name` char(30) DEFAULT '',
-	`Ns4Name` char(30) DEFAULT '',
-	`Services` text,
-	`TestDate` int(11) DEFAULT '0',
-	`IsOK` enum('no','yes') DEFAULT 'no',
-	`Notice` text,
-	PRIMARY KEY (`ID`),
-	KEY `VPSServersServersGroupID` (`ServersGroupID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
--- SEPARATOR
-ALTER TABLE `VPSServers`
-	ADD CONSTRAINT `VPSServersServersGroupID` FOREIGN KEY (`ServersGroupID`) REFERENCES `VPSServersGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-
--- SEPARATOR
-
 
 CREATE TABLE IF NOT EXISTS `VPSOrders` (
 	`ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -590,7 +544,6 @@ CREATE TABLE IF NOT EXISTS `VPSOrders` (
 	`OldSchemeID` int(11) DEFAULT NULL,
 	`Domain` char(255) DEFAULT '',
 	`Parked` text,
-	`ServerID` int(11) NOT NULL,
 	`Login` char(20) DEFAULT '',
 	`Password` char(64) DEFAULT '',
 	`ConsiderDay` int(11) DEFAULT '0',
@@ -599,40 +552,16 @@ CREATE TABLE IF NOT EXISTS `VPSOrders` (
 	PRIMARY KEY (`ID`),
 	KEY `VPSOrdersOrderID` (`OrderID`),
 	KEY `VPSOrdersSchemeID` (`SchemeID`),
-	KEY `VPSOrdersServerID` (`ServerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 -- SEPARATOR
 ALTER TABLE `VPSOrders`
 ADD CONSTRAINT `VPSOrdersOrderID` FOREIGN KEY (`OrderID`) REFERENCES `Orders` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `VPSOrdersSchemeID` FOREIGN KEY (`SchemeID`) REFERENCES `VPSSchemes` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `VPSOrdersServerID` FOREIGN KEY (`ServerID`) REFERENCES `VPSServers` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `VPSOrdersSchemeID` FOREIGN KEY (`SchemeID`) REFERENCES `VPSSchemes` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 -- SEPARATOR
 /* join to one Politics table */
 DROP TABLE IF EXISTS `VPSPolitics`;
-
--- SEPARATOR
-CREATE TABLE IF NOT EXISTS `VPSDomainsPolitics` (
-	`ID` int(11) NOT NULL AUTO_INCREMENT,
-	`UserID` int(11) NOT NULL,
-	`GroupID` int(11) NOT NULL,
-	`SchemeID` int(11) DEFAULT NULL,
-	`DomainsSchemesGroupID` int(11) NOT NULL,
-	`DaysPay` int(11) DEFAULT '365',
-	`Discont` float(11,2) DEFAULT '0.00',
-	PRIMARY KEY (`ID`),
-	KEY `VPSDomainsPoliticsGroupID` (`GroupID`),
-	KEY `VPSDomainsPoliticsUserID` (`UserID`),
-	KEY `VPSDomainsPoliticsSchemeID` (`SchemeID`),
-	KEY `VPSDomainsPoliticsDomainsSchemesGroupID` (`DomainsSchemesGroupID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
--- SEPARATOR
-ALTER TABLE `VPSDomainsPolitics`
-	ADD CONSTRAINT `VPSDomainsPoliticsDomainsSchemesGroupID` FOREIGN KEY (`DomainsSchemesGroupID`) REFERENCES `DomainsSchemesGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-	ADD CONSTRAINT `VPSDomainsPoliticsGroupID` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-	ADD CONSTRAINT `VPSDomainsPoliticsSchemeID` FOREIGN KEY (`SchemeID`) REFERENCES `VPSSchemes` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-	ADD CONSTRAINT `VPSDomainsPoliticsUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- SEPARATOR
 

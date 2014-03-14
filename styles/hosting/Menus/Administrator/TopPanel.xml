@@ -5,7 +5,7 @@
 <Items>
  <ID600>
   <Paths>
-   <UniqID>^\/Administrator\/(HostingOrders|HostingSchemes|HostingServersGroups|HostingServers|DomainOrders|DomainSchemes|DomainBonuses|DomainRegistrators|VPSOrders|VPSSchemes|VPSDomainsPolitics|VPSServersGroups|VPSServers|DSOrders|DSSchemes|DSDomainsPolitics|DSServersGroups|ExtraIPOrders|ExtraIPSchemes|ISPswOrders|ISPswSchemes|ISPswGroups|ISPswLicenses)$</UniqID>
+   <UniqID>^\/Administrator\/(HostingOrders|HostingSchemes|HostingServersGroups|HostingServers|DomainOrders|DomainSchemes|DomainBonuses|DomainRegistrators|VPSOrders|VPSSchemes|VPSDomainsPolitics|DSOrders|DSSchemes|DSDomainsPolitics|DSServersGroups|ExtraIPOrders|ExtraIPSchemes|ISPswOrders|ISPswSchemes|ISPswGroups|ISPswLicenses)$</UniqID>
   </Paths>
  </ID600>
 </Items>

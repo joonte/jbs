@@ -22,7 +22,7 @@ $SchemeID       = (integer) @$Args['SchemeID'];
 $DaysReserved   = (integer) @$Args['DaysReserved'];
 $IsCreate       = (boolean) @$Args['IsCreate'];
 #-------------------------------------------------------------------------------
-$Count = DB_Count('VPSServers',Array('ID'=>$ServerID));
+$Count = DB_Count('Servers',Array('ID'=>$ServerID));
 if(Is_Error($Count))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ if(!Preg_Match($Regulars['Domain'],$Domain))
 if(!$Login)
   return new gException('LOGIN_NOT_FILLED','Логин пользователя не указан');
 #-------------------------------------------------------------------------------
-$Server = DB_Select('VPSServers',Array('ID','ServersGroupID'),Array('UNIQ','ID'=>$ServerID));
+$Server = DB_Select('Servers',Array('ID','ServersGroupID'),Array('UNIQ','ID'=>$ServerID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Server)){
   case 'error':
@@ -104,7 +104,6 @@ if($VPSOrderID){
 #-------------------------------------------------------------------------------
 $IVPSOrder = Array(
   #-----------------------------------------------------------------------------
-  'ServerID' => $Server['ID'],
   'Domain'   => $Domain,
   'Login'    => $Login,
   'Password' => $Password,
@@ -123,7 +122,7 @@ if($VPSOrderID){
     break;
     case 'array':
       #-------------------------------------------------------------------------
-      $IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID),Array('ID'=>$VPSOrder['OrderID']));
+      $IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID']),Array('ID'=>$VPSOrder['OrderID']));
       if(Is_Error($IsUpdate))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
@@ -137,7 +136,7 @@ if($VPSOrderID){
   }
 }else{
   #-----------------------------------------------------------------------------
-  $OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServiceID'=>30000,'IsPayed'=>TRUE));
+  $OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID'],'ServiceID'=>30000,'IsPayed'=>TRUE));
   if(Is_Error($OrderID))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------

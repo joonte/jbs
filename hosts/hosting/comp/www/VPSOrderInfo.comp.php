@@ -23,13 +23,10 @@ $VPSOrderID = (integer) @$Args['VPSOrderID'];
 $Columns = Array(
 			'*',
 			'(SELECT `Name` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`) as `Scheme`',
-			'(SELECT `Name` FROM `VPSServersGroups` WHERE `VPSServersGroups`.`ID` = (SELECT `ServersGroupID` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`)) as `ServersGroupName`',
-			'(SELECT `Ns1Name` FROM `VPSServers` WHERE `VPSServers`.`ID` = `VPSOrdersOwners`.`ServerID`) as `Ns1Name`',
-			'(SELECT `Ns2Name` FROM `VPSServers` WHERE `VPSServers`.`ID` = `VPSOrdersOwners`.`ServerID`) as `Ns2Name`',
-			'(SELECT `Ns3Name` FROM `VPSServers` WHERE `VPSServers`.`ID` = `VPSOrdersOwners`.`ServerID`) as `Ns3Name`',
-			'(SELECT `Ns4Name` FROM `VPSServers` WHERE `VPSServers`.`ID` = `VPSOrdersOwners`.`ServerID`) as `Ns4Name`',
-			'(SELECT `IsAutoProlong` FROM `Orders` WHERE `VPSOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',
-			'(SELECT (SELECT `Code` FROM `Services` WHERE `Orders`.`ServiceID` = `Services`.`ID`) FROM `Orders` WHERE `VPSOrdersOwners`.`OrderID` = `Orders`.`ID`) AS `Code`'
+			'(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = (SELECT `ServersGroupID` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`)) as `ServersGroupName`',
+			'(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`',
+			'(SELECT `IsAutoProlong` FROM `OrdersOwners` WHERE `VPSOrdersOwners`.`OrderID`=`OrdersOwners`.`ID`) AS `IsAutoProlong`',
+			'(SELECT (SELECT `Code` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) FROM `OrdersOwners` WHERE `VPSOrdersOwners`.`OrderID` = `OrdersOwners`.`ID`) AS `Code`'
 		);
 #-------------------------------------------------------------------------------
 $VPSOrder = DB_Select('VPSOrdersOwners',$Columns,Array('UNIQ','ID'=>$VPSOrderID));
@@ -90,7 +87,7 @@ switch(ValueOf($VPSOrder)){
         #-----------------------------------------------------------------------
         $Table[] = 'Параметры доступа';
         #-----------------------------------------------------------------------
-        $Server = DB_Select('VPSServers',Array('Url','Address'),Array('UNIQ','ID'=>$VPSOrder['ServerID']));
+        $Server = DB_Select('ServersOwners',Array('Address','Params'),Array('UNIQ','ID'=>$VPSOrder['ServerID']));
         if(!Is_Array($Server))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
@@ -105,7 +102,7 @@ switch(ValueOf($VPSOrder)){
         if(Is_Error($Comp))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
-        $Div = new Tag('DIV',new Tag('SPAN',Array('class'=>'Standard'),$Server['Url']),$Comp);
+        $Div = new Tag('DIV',new Tag('SPAN',Array('class'=>'Standard'),$Server['Params']['Url']),$Comp);
         #-----------------------------------------------------------------------
         $Table[] = Array('Адрес панели управления',$Div);
         #-----------------------------------------------------------------------
@@ -117,30 +114,15 @@ switch(ValueOf($VPSOrder)){
         #-----------------------------------------------------------------------
         $Table[] = 'Именные сервера';
         #-----------------------------------------------------------------------
-        $Table[] = Array('Первичный сервер',$VPSOrder['Ns1Name']);
+        $Table[] = Array('Первичный сервер',$Server['Params']['Ns1Name']);
         #-----------------------------------------------------------------------
-        $Table[] = Array('Вторичный сервер',$VPSOrder['Ns2Name']);
+        $Table[] = Array('Вторичный сервер',$Server['Params']['Ns2Name']);
         #-----------------------------------------------------------------------
-        $Ns3Name = $VPSOrder['Ns3Name'];
+        if($Server['Params']['Ns3Name'])
+          $Table[] = Array('Дополнительный сервер',$Server['Params']['Ns3Name']);
         #-----------------------------------------------------------------------
-        if($Ns3Name)
-          $Table[] = Array('Дополнительный сервер',$Ns3Name);
-        #-----------------------------------------------------------------------
-        $Ns4Name = $VPSOrder['Ns4Name'];
-        #-----------------------------------------------------------------------
-        if($Ns4Name)
-          $Table[] = Array('Расширенный сервер',$Ns4Name);
-        #-----------------------------------------------------------------------
-#        $Parked = $VPSOrder['Parked'];
-#        #-----------------------------------------------------------------------
-#        if($Parked){
-#          #---------------------------------------------------------------------
-#          $Parked = Explode(',',$Parked);
-#          #---------------------------------------------------------------------
-#          $Table[] = 'Опрос сервера';
-#          #---------------------------------------------------------------------
-#          $Table[] = Array('Паркованные домены',new Tag('PRE',Array('class'=>'Standard'),Implode("\n",$Parked)));
-#        }
+        if($Server['Params']['Ns4Name'])
+          $Table[] = Array('Расширенный сервер',$Server['Params']['Ns4Name']);
         #-----------------------------------------------------------------------
 	#-----------------------------------------------------------------------
 	$Table[] = 'Прочее';

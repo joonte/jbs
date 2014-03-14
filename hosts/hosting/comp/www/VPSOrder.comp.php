@@ -171,7 +171,7 @@ if($StepID){
       if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
-      $Columns = Array('ID','Name','ServersGroupID','Comment','CostMonth','CostInstall','disklimit','ncpu','cpu','mem','(SELECT `Name` FROM `VPSServersGroups` WHERE `VPSServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupName`','(SELECT `Comment` FROM `VPSServersGroups` WHERE `VPSServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupComment`','(SELECT `SortID` FROM `VPSServersGroups` WHERE `VPSServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupSortID`');
+      $Columns = Array('ID','Name','ServersGroupID','Comment','CostMonth','CostInstall','disklimit','ncpu','cpu','mem','(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupName`','(SELECT `Comment` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupComment`','(SELECT `SortID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupSortID`');
       #-------------------------------------------------------------------------
       $VPSSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('ServersGroupSortID','SortID'),'Where'=>"`IsActive` = 'yes'"));
       #-------------------------------------------------------------------------

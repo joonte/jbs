@@ -107,9 +107,6 @@ VALUES
 ('VPSServersDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
 ('VPSServersDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
 
-('VPSDomainsPoliticsDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
-('VPSDomainsPoliticsDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
-
 /* values for DS added by lissyara 2011-06-14 in 21:42 MSK */
 ('DSOrdersRead', 'hosting', 1, 1, 4000000, 1, 1, 'yes'),
 ('DSOrdersRead', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),

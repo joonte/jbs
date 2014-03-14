@@ -15,7 +15,7 @@ $NewSchemeID    = (integer) @$Args['NewSchemeID'];
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','UserID','SchemeID','(SELECT `ServersGroupID` FROM `VPSServers` WHERE `VPSServers`.`ID` = `VPSOrdersOwners`.`ServerID`) as `ServersGroupID`','StatusID','StatusDate');
+$Columns = Array('ID','UserID','SchemeID','(SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`)) AS `ServersGroupID`','StatusID','StatusDate');
 #-------------------------------------------------------------------------------
 $VPSOrder = DB_Select('VPSOrdersOwners',$Columns,Array('UNIQ','ID'=>$VPSOrderID));
 #-------------------------------------------------------------------------------

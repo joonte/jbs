@@ -71,7 +71,7 @@ $Regulars = Regulars();
 if(!Preg_Match('/^[A-Za-zА-ЯёЁа-я0-9\s\.\-]+$/u',$Name))
   return new gException('WRONG_SCHEME_NAME','Неверное имя тарифа');
 #-------------------------------------------------------------------------------
-$Count = DB_Count('VPSServersGroups',Array('ID'=>$ServersGroupID));
+$Count = DB_Count('ServersGroups',Array('ID'=>$ServersGroupID));
 if(Is_Error($Count))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
