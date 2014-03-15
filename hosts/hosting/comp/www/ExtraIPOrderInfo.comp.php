@@ -37,7 +37,12 @@ switch(ValueOf($ExtraIPOrder)){
   case 'array':
     # Select Depend Order Info
     if($ExtraIPOrder['OrderType'] == "Hosting" || $ExtraIPOrder['OrderType'] == "VPS"){
+    	#-------------------------------------------------------------------------------
 	$Columns = Array('*','(SELECT `Address` FROM `' . $ExtraIPOrder['OrderType'] . 'Servers` WHERE `' . $ExtraIPOrder['OrderType'] . 'OrdersOwners`.`ServerID` = `' . $ExtraIPOrder['OrderType'] . 'Servers`.`ID`) AS Address');
+	#-------------------------------------------------------------------------------
+	if($ExtraIPOrder['OrderType'] == "VPS")
+		$Columns = Array('*','(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`)) AS `Address`');
+	#-------------------------------------------------------------------------------
 	$ExtraIPDepend = DB_Select($ExtraIPOrder['OrderType'] . 'OrdersOwners',$Columns,Array('UNIQ','ID'=>$ExtraIPOrder['DependOrderID']));
 	switch(ValueOf($ExtraIPDepend)){
 	case 'error':
