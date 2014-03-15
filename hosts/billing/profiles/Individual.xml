@@ -318,7 +318,7 @@
   <Type>Input</Type>
   <Attribs>
    <type>text</type>
-   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));var Form = document.forms.ProfileEditForm;if(!Form.pDistrict.value) Form.pDistrict.value = value;</onblur>
   </Attribs>
   <IsDuty>0</IsDuty>
   <Value />
