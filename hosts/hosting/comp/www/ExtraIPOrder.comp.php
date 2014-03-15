@@ -93,7 +93,7 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # create select, using ContractID for VPSOrders
-$Columns = Array('ID','Login','(SELECT `Address` FROM `VPSServers` WHERE `VPSServers`.`ID` = `ServerID`) as `Address`');
+$Columns = Array('ID','Login','(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`)) AS `Address`');
 $VPSOrders = DB_Select('VPSOrdersOwners',$Columns,Array('Where'=>$Where));
 switch(ValueOf($VPSOrders)){
 case 'error':
@@ -221,7 +221,8 @@ if($VPSOrderID){
 	$SelectCount++;
 	$OrderType = "VPS";
 	$DependOrderID = $VPSOrderID;
-	$Columns = Array('(SELECT `ServersGroupID` FROM `' . $OrderType . 'Servers` WHERE `' . $OrderType . 'Servers`.`ID` = `' . $OrderType . 'OrdersOwners`.`ServerID`) as `ServersGroupID`');
+	$Columns = Array('(SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`)) AS `ServersGroupID`');
+	#$Columns = Array('(SELECT `ServersGroupID` FROM `' . $OrderType . 'Servers` WHERE `' . $OrderType . 'Servers`.`ID` = `' . $OrderType . 'OrdersOwners`.`ServerID`) as `ServersGroupID`');
 }
 if($DSOrderID){
 	$SelectCount++;

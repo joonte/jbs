@@ -54,7 +54,7 @@ switch(ValueOf($ExtraIPOrder)){
               return ERROR | @Trigger_Error(400);
             case 'array':
               #-------------------------------------------------------------------
-              $IPsPool = Explode("\n",$ExtraIPServer->Settings['IPsPool']);
+              $IPsPool = Explode("\n",$ExtraIPServer->Settings['Params']['IPsPool']);
               #-------------------------------------------------------------------
               $IP = $IPsPool[Rand(0,Count($IPsPool) - 1)];
               #-------------------------------------------------------------------

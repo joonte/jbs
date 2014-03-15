@@ -120,7 +120,7 @@ if(!$StepID){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# create select, using UserID for VPSOrders
-	$Columns = Array('ID','Login','(SELECT `Address` FROM `VPSServers` WHERE `VPSServers`.`ID` = `ServerID`) as `Address`');
+	$Columns = Array('ID','Login','(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`)) AS `Address`');
 	#-------------------------------------------------------------------------------
 	$VPSOrders = DB_Select('VPSOrdersOwners',$Columns,Array('Where'=>SPrintF('`UserID` = %u AND `StatusID` = "Active"',$__USER['ID'])));
 	switch(ValueOf($VPSOrders)){

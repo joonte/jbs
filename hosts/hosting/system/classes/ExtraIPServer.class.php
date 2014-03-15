@@ -14,15 +14,26 @@ public function FindSystem($ExtraIPOrderID,$OrderType,$DependOrderID){
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/
 	/* find server */
-	$Columns = '(SELECT `SystemID` FROM `' . $OrderType . 'Servers` WHERE `' . $OrderType . 'Orders`.`ServerID` = `' . $OrderType . 'Servers`.`ID`) AS ``';
-	$OrderServer = DB_Select($OrderType . 'Orders',Array('ServerID','Login'),Array('UNIQ','ID'=>$DependOrderID));
+	Debug(SPrintF('[system/classes/ExtraIPServer]: OrderType = %s',$OrderType));
+	if($OrderType == 'Hosting'){
+		#-------------------------------------------------------------------------------
+		$Columns = Array('ServerID','Login');
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		$Columns = Array('(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`','Login');
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	$OrderServer = DB_Select($OrderType . 'OrdersOwners',$Columns,Array('UNIQ','ID'=>$DependOrderID));
 	switch(ValueOf($OrderServer)){
 	case 'error':
 		return ERROR | @Trigger_Error('[Server->Select]: ошибка поиска зависимого заказа');
 	case 'exception':
 		return new gException('DEPEND_ORDER_NOT_FOUND','Не найден заказ к которому необходимо добавить/удалить IP адрес');
 	case 'array':
-		$SysInfo = DB_Select($OrderType . 'Servers','*',Array('UNIQ','ID'=>$OrderServer['ServerID']));
+		$Table = ($OrderType == 'VPS')?'':$OrderType;
+		$SysInfo = DB_Select($Table . 'Servers','*',Array('UNIQ','ID'=>$OrderServer['ServerID']));
 		switch(ValueOf($SysInfo)){
 		case 'error':
 			return ERROR | @Trigger_Error('[Server->Select]: не удалось выбрать сервер');
@@ -33,8 +44,8 @@ public function FindSystem($ExtraIPOrderID,$OrderType,$DependOrderID){
 			#-------------------------------------------------------------------------
 			# add User Login on server
 			$SysInfo['UserLogin'] = $OrderServer['Login'];
-			Debug("[system/classes/ExtraIPServer]: found ICS: " . $SysInfo['SystemID']);
-			$this->SystemID = $SysInfo['SystemID'];
+			Debug("[system/classes/ExtraIPServer]: found ICS: " . ($OrderType == 'VPS')?$SysInfo['Params']['SystemID']:$SysInfo['SystemID']);
+			$this->SystemID = ($OrderType == 'VPS')?$SysInfo['Params']['SystemID']:$SysInfo['SystemID'];
 			$this->Settings = $SysInfo;
 			if(Is_Error(System_Load(SPrintF('libs/%s.php',$this->SystemID))))
 				@Trigger_Error('[Server->Select]: не удалось загрузить целевую библиотеку');

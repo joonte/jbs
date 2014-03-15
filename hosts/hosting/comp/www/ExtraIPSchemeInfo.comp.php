@@ -94,7 +94,7 @@ switch(ValueOf($ExtraIPScheme)){
     #-------------------------------------------------------------------------------
     # VPS
     if($ExtraIPScheme['VPSGroupID'] > 0){
-	$vGroups = DB_Select('VPSServersGroups','*',Array('UNIQ','ID'=>$ExtraIPScheme['VPSGroupID']));
+	$vGroups = DB_Select('ServersGroups','*',Array('UNIQ','ID'=>$ExtraIPScheme['VPSGroupID']));
 	switch(ValueOf($vGroups)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);

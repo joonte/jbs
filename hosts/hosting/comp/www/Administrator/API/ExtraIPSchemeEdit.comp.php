@@ -65,7 +65,7 @@ if($HostingGroupID > 0){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($VPSGroupID > 0){
-	$Count = DB_Count('VPSServersGroups',Array('ID'=>$VPSGroupID));
+	$Count = DB_Count('ServersGroups',Array('ID'=>$VPSGroupID));
 	if(Is_Error($Count))
 		return ERROR | @Trigger_Error(500);
 	if(!$Count)

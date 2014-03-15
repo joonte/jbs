@@ -278,7 +278,7 @@ switch(ValueOf($hGroups)){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # VPS
-$vGroups = DB_Select('VPSServersGroups','*');
+$vGroups = DB_Select('ServersGroups','*',Array('Where'=>'`ServiceID` = 30000'));
 switch(ValueOf($vGroups)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
