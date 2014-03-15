@@ -9,7 +9,7 @@ if(Is_Error(System_Load('libs/Http.php')))
 Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
 
 #-------------------------------------------------------------------------------
-function VdsManager4_Logon($Settings,$Login,$Password){
+function VmManager5_Logon($Settings,$Login,$Password){
 	/****************************************************************************/
 	$__args_types = Array('array','string','string');
 	#-----------------------------------------------------------------------------
@@ -20,7 +20,7 @@ function VdsManager4_Logon($Settings,$Login,$Password){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VdsManager4_Create($Settings,$Login,$Password,$Domain,$IP,$VPSScheme,$Email,$PersonID = 'Default',$Person = Array()){
+function VmManager5_Create($Settings,$Login,$Password,$Domain,$IP,$VPSScheme,$Email,$PersonID = 'Default',$Person = Array()){
   /****************************************************************************/
   $__args_types = Array('array','string','string','string','string','array','string','string','array');
   #-----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ function VdsManager4_Create($Settings,$Login,$Password,$Domain,$IP,$VPSScheme,$E
   
   $Response = Http_Send('/manager/vdsmgr',$Http,$Request);
   if(Is_Error($Response))
-    return ERROR | @Trigger_Error('[VdsManager4_Create]: не удалось соедениться с сервером');
+    return ERROR | @Trigger_Error('[VmManager5_Create]: не удалось соедениться с сервером');
   
   $Response = Trim($Response['Body']);
   
@@ -97,18 +97,18 @@ function VdsManager4_Create($Settings,$Login,$Password,$Domain,$IP,$VPSScheme,$E
   if(IsSet($Doc['error']))
     return new gException('ACCOUNT_CREATE_ERROR','Не удалось создать заказ виртуального сервера');
   #-----------------------------------------------------------------------------
-  Debug("[system/libs/VdsManager4]: VPS order created with IP = " . $Doc['ip']);
+  Debug("[system/libs/VmManager5]: VPS order created with IP = " . $Doc['ip']);
   #-----------------------------------------------------------------------------
   $IsQuery = DB_Query("UPDATE `VPSOrders` SET `Login`='" . $Doc['ip'] . "' WHERE `Login`='" . $Login . "'");
   if(Is_Error($IsQuery))
-        return ERROR | @Trigger_Error('[VdsManager4_Create]: не удалось прописать IP адрес для виртуального сервера');
+        return ERROR | @Trigger_Error('[VmManager5_Create]: не удалось прописать IP адрес для виртуального сервера');
   #-----------------------------------------------------------------------------
   return TRUE;
 }
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VdsManager4_Active($Settings,$Login,$IsReseller = FALSE){
+function VmManager5_Active($Settings,$Login,$IsReseller = FALSE){
 	/****************************************************************************/
 	$__args_types = Array('array','string','boolean');
 	#-----------------------------------------------------------------------------
@@ -127,7 +127,7 @@ function VdsManager4_Active($Settings,$Login,$IsReseller = FALSE){
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/manager/vdsmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'user.enable':'vds.enable','elid'=>$Login));
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VdsManager4_Activate]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_Activate]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-----------------------------------------------------------------------------
@@ -148,7 +148,7 @@ function VdsManager4_Active($Settings,$Login,$IsReseller = FALSE){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VdsManager4_Suspend($Settings,$Login,$IsReseller = FALSE){
+function VmManager5_Suspend($Settings,$Login,$IsReseller = FALSE){
 	/****************************************************************************/
 	$__args_types = Array('array','string','boolean');
 	#-----------------------------------------------------------------------------
@@ -167,7 +167,7 @@ function VdsManager4_Suspend($Settings,$Login,$IsReseller = FALSE){
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/manager/vdsmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'user.disable':'vds.disable','elid'=>$Login));
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VdsManager4_Suspend]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_Suspend]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-----------------------------------------------------------------------------
@@ -188,7 +188,7 @@ function VdsManager4_Suspend($Settings,$Login,$IsReseller = FALSE){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VdsManager4_Delete($Settings,$Login,$IsReseller = FALSE){
+function VmManager5_Delete($Settings,$Login,$IsReseller = FALSE){
 	/****************************************************************************/
 	$__args_types = Array('array','string','boolean');
 	#-----------------------------------------------------------------------------
@@ -207,7 +207,7 @@ function VdsManager4_Delete($Settings,$Login,$IsReseller = FALSE){
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/manager/vdsmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'user.delete':'vds.delete','elid'=>$Login));
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VdsManager4_Delete]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_Delete]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-----------------------------------------------------------------------------
@@ -229,7 +229,7 @@ function VdsManager4_Delete($Settings,$Login,$IsReseller = FALSE){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VdsManager4_Scheme_Change($Settings,$Login,$VPSScheme){
+function VmManager5_Scheme_Change($Settings,$Login,$VPSScheme){
   /****************************************************************************/
   $__args_types = Array('array','string','array');
   #-----------------------------------------------------------------------------
@@ -282,7 +282,7 @@ function VdsManager4_Scheme_Change($Settings,$Login,$VPSScheme){
   #-----------------------------------------------------------------------------
   $Response = Http_Send('/manager/vdsmgr',$Http,$Request);
   if(Is_Error($Response))
-    return ERROR | @Trigger_Error('[VdsManager4_Scheme_Change]: не удалось соедениться с сервером');
+    return ERROR | @Trigger_Error('[VmManager5_Scheme_Change]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
   $Response = Trim($Response['Body']);
   #-----------------------------------------------------------------------------
@@ -302,7 +302,7 @@ function VdsManager4_Scheme_Change($Settings,$Login,$VPSScheme){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VdsManager4_Password_Change($Settings,$Login,$Password,$IsReseller = FALSE){
+function VmManager5_Password_Change($Settings,$Login,$Password,$IsReseller = FALSE){
 	/****************************************************************************/
 	$__args_types = Array('array','string','string','boolean');
 	#-----------------------------------------------------------------------------
@@ -335,13 +335,13 @@ function VdsManager4_Password_Change($Settings,$Login,$Password,$IsReseller = FA
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/manager/vdsmgr',$Http,$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VdsManager4_Password_Change]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_Password_Change]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
 	$Response = $Response['Body'];
 	#-----------------------------------------------------------------------------
 	$XML = String_XML_Parse($Response);
 	if(Is_Exception($XML))
-		return ERROR | @Trigger_Error('[VdsManager4_Password_Change]: неверный ответ от сервера');
+		return ERROR | @Trigger_Error('[VmManager5_Password_Change]: неверный ответ от сервера');
 	#-----------------------------------------------------------------------------
 	$XML = $XML->ToArray();
 	#-----------------------------------------------------------------------------
@@ -356,7 +356,7 @@ function VdsManager4_Password_Change($Settings,$Login,$Password,$IsReseller = FA
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # added by lissyara 2011-08-09 in 09:55 MSK
-function VdsManager4_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
+function VmManager5_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
 	/****************************************************************************/
         $__args_types = Array('array','string','string','string','string','string');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
@@ -395,7 +395,7 @@ function VdsManager4_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/manager/vdsmgr',$Http,$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VdsManager4_AddIP]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_AddIP]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
         $Response = Trim($Response['Body']);
         $XML = String_XML_Parse($Response);
@@ -409,11 +409,11 @@ function VdsManager4_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
         if(IsSet($Doc['error']))
                 return new gException('AddIP_ERROR','Не удалось добавить IP для виртуального сервера');
         #-----------------------------------------------------------------------------
-        Debug("[system/libs/VdsManager4]: to VPS added IP = " . $Doc['ip']);
+        Debug("[system/libs/VmManager5]: to VPS added IP = " . $Doc['ip']);
         #-----------------------------------------------------------------------------
         $IsQuery = DB_Query("UPDATE `ExtraIPOrders` SET `Login`='" . $Doc['ip'] . "' WHERE `ID`='" . $ID . "'");
         if(Is_Error($IsQuery))
-                return ERROR | @Trigger_Error('[VdsManager4_Create]: не удалось прописать IP адрес для виртуального сервера');
+                return ERROR | @Trigger_Error('[VmManager5_Create]: не удалось прописать IP адрес для виртуального сервера');
         #-----------------------------------------------------------------------------
 	#-----------------------------------------------------------------------------
 	return TRUE;
@@ -423,7 +423,7 @@ function VdsManager4_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
 # added by lissyara 2011-08-09 in 13:03 MSK
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VdsManager4_DeleteIP($Settings,$ExtraIP){
+function VmManager5_DeleteIP($Settings,$ExtraIP){
 	/****************************************************************************/
         $__args_types = Array('array','string');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
@@ -452,7 +452,7 @@ function VdsManager4_DeleteIP($Settings,$ExtraIP){
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/manager/vdsmgr',$Http,$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VdsManager4_DeleteIP]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_DeleteIP]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
         $Response = Trim($Response['Body']);
         $XML = String_XML_Parse($Response);
@@ -474,7 +474,7 @@ function VdsManager4_DeleteIP($Settings,$ExtraIP){
 # added by lissyara 2011-10-07 in 10:28 MSK
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VdsManager4_MainUsage($Settings){
+function VmManager5_MainUsage($Settings){
 	/****************************************************************************/
         $__args_types = Array('array');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
@@ -500,7 +500,7 @@ function VdsManager4_MainUsage($Settings){
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/manager/vdsmgr',$Http,$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VdsManager4_MainUsage]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_MainUsage]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
         $Response = Trim($Response['Body']);
         $XML = String_XML_Parse($Response);
@@ -510,7 +510,7 @@ function VdsManager4_MainUsage($Settings){
         $XML = $XML->ToArray('elem');
         $Doc = $XML['doc'];
         if(IsSet($Doc['error']))
-                return new gException('VdsManager4_MainUsage','Не удалось получить нагрузку сервера');
+                return new gException('VmManager5_MainUsage','Не удалось получить нагрузку сервера');
         #---------------------------------------------------------------------------
         # перебираем, складываем
         $Out = Array(
@@ -532,7 +532,7 @@ function VdsManager4_MainUsage($Settings){
         $Out['swapu'] = $Out['swapu'] / SizeOf($Doc);
         $Out['disk0'] = $Out['disk0'] / SizeOf($Doc);
         
-        Debug("[system/libs/VdsManager4.php]: usage for " . $Settings['Address'] . " is " . $Out['cpuu'] ."/". $Out['memu'] ."/". $Out['swapu'] ."/". $Out['disk0']);
+        Debug("[system/libs/VmManager5.php]: usage for " . $Settings['Address'] . " is " . $Out['cpuu'] ."/". $Out['memu'] ."/". $Out['swapu'] ."/". $Out['disk0']);
         return ($Out['cpuu'] + $Out['memu'] + $Out['swapu'] + $Out['disk0']);
 	#-----------------------------------------------------------------------------
 }
@@ -540,7 +540,7 @@ function VdsManager4_MainUsage($Settings){
 # added by lissyara, 2012-02-02 in 21:53 MSK
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VdsManager4_CheckIsActive($Settings,$Login){
+function VmManager5_CheckIsActive($Settings,$Login){
 	/****************************************************************************/
 	$__args_types = Array('array','string');
 	#-----------------------------------------------------------------------------
@@ -559,7 +559,7 @@ function VdsManager4_CheckIsActive($Settings,$Login){
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/manager/vdsmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vds'));
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VdsManager4_CheckIsActive]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_CheckIsActive]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-----------------------------------------------------------------------------
@@ -580,7 +580,7 @@ function VdsManager4_CheckIsActive($Settings,$Login){
 		if($VPS['ip'] == $Login){
 			if(IsSet($VPS['disabled'])){
 				if(IsSet($VPS['admdown'])){
-					Debug(SPrintF("[system/libs/VdsManager4]: %s is disabled by administrator",$Login));
+					Debug(SPrintF("[system/libs/VmManager5]: %s is disabled by administrator",$Login));
 					return FALSE;
 				}
 			}
@@ -588,14 +588,14 @@ function VdsManager4_CheckIsActive($Settings,$Login){
 	}
 	#-----------------------------------------------------------------------------
 	# not found, or enabled
-	Debug(SPrintF("[system/libs/VdsManager4]: %s is enabled, disabled not by administrator, or not found",$Login));
+	Debug(SPrintF("[system/libs/VmManager5]: %s is enabled, disabled not by administrator, or not found",$Login));
 	return TRUE;
 }
 
 # added by lissyara, 2012-02-03 in 09:59 MSK
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VdsManager4_Reboot($Settings,$Login){
+function VmManager5_Reboot($Settings,$Login){
 	/****************************************************************************/
 	$__args_types = Array('array','string');
 	#-----------------------------------------------------------------------------
@@ -614,7 +614,7 @@ function VdsManager4_Reboot($Settings,$Login){
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/manager/vdsmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vds.reboot','elid'=>$Login));
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VdsManager4_Reboot]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_Reboot]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-----------------------------------------------------------------------------
@@ -637,7 +637,7 @@ function VdsManager4_Reboot($Settings,$Login){
 # added by lissyara, 2013-05-17 in 09:53 MSK, for JBS-280
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VdsManager4_Get_Users($Settings){
+function VmManager5_Get_Users($Settings){
 	/****************************************************************************/
 	$__args_types = Array('array','string');
 	#-----------------------------------------------------------------------------
@@ -656,7 +656,7 @@ function VdsManager4_Get_Users($Settings){
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/manager/vdsmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vds'));
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VdsManager4_Get_Users]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_Get_Users]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-----------------------------------------------------------------------------
