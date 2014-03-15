@@ -551,7 +551,7 @@ CREATE TABLE IF NOT EXISTS `VPSOrders` (
 	`StatusDate` int(11) DEFAULT '0',
 	PRIMARY KEY (`ID`),
 	KEY `VPSOrdersOrderID` (`OrderID`),
-	KEY `VPSOrdersSchemeID` (`SchemeID`),
+	KEY `VPSOrdersSchemeID` (`SchemeID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 -- SEPARATOR
 ALTER TABLE `VPSOrders`
