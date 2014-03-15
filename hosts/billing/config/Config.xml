@@ -720,7 +720,7 @@
     <pay_for>auto</pay_for>
    </Send>
    <Comp>OnPay</Comp>
-   <Cpp>http://secure.onpay.ru/pay/MerchantLogin</Cpp>
+   <Cpp>https://secure.onpay.ru/pay/MerchantLogin</Cpp>
    <MerchantLogin>MerchantLogin</MerchantLogin>
    <MerchantPass>MerchantPass</MerchantPass>
    <ContractsTypes>
