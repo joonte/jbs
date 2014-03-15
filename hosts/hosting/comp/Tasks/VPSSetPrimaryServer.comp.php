@@ -116,7 +116,7 @@ foreach($ServersGroups as $ServersGroup){
 				Debug(SPrintF('[comp/Tasks/VPSSetPrimaryServer]: Usage value = %s',$Usage));
 				#-------------------------------------------------------------------------------
 				# кладём в массив
-				$LA[$iServer['ID']] =  $Usage / $iServer['BalancingFactor'];
+				$LA[$iServer['ID']] =  $Usage / $iServer['Params']['BalancingFactor'];
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------

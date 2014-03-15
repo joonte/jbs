@@ -12,6 +12,8 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ContractID	= (integer) @$Args['ContractID'];
 $VPSSchemeID	= (integer) @$Args['VPSSchemeID'];
+$DiskTemplate   =  (string) @$Args['DiskTemplate'];
+$ServerID	= (integer) @$Args['ServerID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
@@ -55,7 +57,9 @@ switch(ValueOf($VPSScheme)){
             return ERROR | @Trigger_Error(700);
           case 'true':
             #-------------------------------------------------------------------
-            $Server = DB_Select('Servers',Array('ID','Params'),Array('Where'=>SPrintF("`ServersGroupID` = %u AND `IsDefault` = 'yes'",$VPSScheme['ServersGroupID'])));
+	    $Where = ($ServerID)?SPrintF('`ID` = %u',$ServerID):SPrintF("`ServersGroupID` = %u AND `IsDefault` = 'yes'",$VPSScheme['ServersGroupID']);
+	    #-------------------------------------------------------------------
+            $Server = DB_Select('Servers',Array('ID','Params'),Array('Where'=>$Where));
             #-------------------------------------------------------------------
             switch(ValueOf($Server)){
               case 'error':
@@ -94,7 +98,7 @@ switch(ValueOf($VPSScheme)){
                   }
                 }
                 #---------------------------------------------------------------
-                $OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServerID'=>$Server['ID'],'ServiceID'=>30000));
+                $OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServerID'=>$Server['ID'],'Params'=>Array('DiskTemplate'=>$DiskTemplate),'ServiceID'=>30000));
                 if(Is_Error($OrderID))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------

@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -10,12 +9,13 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
-$ContractID      =  (string) @$Args['ContractID'];
-$VPSSchemeID     = (integer) @$Args['VPSSchemeID'];
-$StepID          = (integer) @$Args['StepID'];
+$ContractID	=  (string) @$Args['ContractID'];
+$VPSSchemeID	= (integer) @$Args['VPSSchemeID'];
+$StepID		= (integer) @$Args['StepID'];
+$DiskTemplate	=  (string) @$Args['DiskTemplate'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/WhoIs.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM = new DOM();
 #-------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ $Links = &Links();
 $Links['DOM'] = &$DOM;
 #-------------------------------------------------------------------------------
 if(Is_Error($DOM->Load('Base')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM->AddAttribs('MenuLeft',Array('args'=>'User/Services'));
 #-------------------------------------------------------------------------------
@@ -33,99 +33,166 @@ $DOM->AddText('Title','Заказ виртуального сервера');
 $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/VPSOrder.js}'));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------тариф-------------
 $Form = new Tag('FORM',Array('name'=>'VPSOrderForm','onsubmit'=>'return false;'));
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
 if($StepID){
-  #-----------------------------------------------------------------------------
-  $Comp = Comp_Load(
-    'Form/Input',
-    Array(
-      'name'  => 'ContractID',
-      'type'  => 'hidden',
-      'value' => $ContractID
-    )
-  );
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $Form->AddChild($Comp);
-  #-----------------------------------------------------------------------------
-  $Regulars = Regulars();
-  #-----------------------------------------------------------------------------
-  if(!$VPSSchemeID)
-    return new gException('VPS_SCHEME_NOT_DEFINED','Тарифный план не выбран');
-  #-----------------------------------------------------------------------------
-  $VPSScheme = DB_Select('VPSSchemes',Array('ID','Name','IsActive'),Array('UNIQ','ID'=>$VPSSchemeID));
-  #-----------------------------------------------------------------------------
-  switch(ValueOf($VPSScheme)){
-    case 'error':
-      return ERROR | @Trigger_Error(500);
-    case 'exception':
-      return ERROR | @Trigger_Error(400);
-    case 'array':
-      #-------------------------------------------------------------------------
-      if(!$VPSScheme['IsActive'])
-        return new gException('SCHEME_NOT_ACTIVE','Выбранный тарифный план заказа VPS не активен');
-      #-------------------------------------------------------------------------
-      $Table = Array(Array('Тарифный план',$VPSScheme['Name']));
-      #-------------------------------------------------------------------------
-      $Comp = Comp_Load(
-        'Form/Input',
-        Array(
-          'name'  => 'VPSSchemeID',
-          'type'  => 'hidden',
-          'value' => $VPSScheme['ID']
-        )
-      );
-      if(Is_Error($Comp))
-        return ERROR | @Trigger_Error(500);
-      #-------------------------------------------------------------------------
-      $Form->AddChild($Comp);
-      #-------------------------------------------------------------------------
-      $Rows = Array();
-      #-------------------------------------------------------------------------
-#      $Comp = Comp_Load(
- #       'Form/Input',
- #       Array(
- #         'type'    => 'button',
- #         'onclick' => SPrintF("ShowWindow('/VPSOrder',{VPSSchemeID:%u,Domain:'%s'});",$VPSScheme['ID'],$Domain),
- #         'value'   => 'Изменить домен'
- #       )
- #     );
- #     if(Is_Error($Comp))
- #       return ERROR | @Trigger_Error(500);
-      #-------------------------------------------------------------------------
-    $Div = new Tag('DIV',Array('align'=>'right'),'');
-      #-------------------------------------------------------------------------
-      $Comp = Comp_Load(
-        'Form/Input',
-        Array(
-          'type'    => 'button',
-          'onclick' => 'VPSOrder();',
-          'value'   => 'Продолжить'
-        )
-      );
-      if(Is_Error($Comp))
-        return ERROR | @Trigger_Error(500);
-      #-------------------------------------------------------------------------
-      $Div->AddChild($Comp);
-      #-------------------------------------------------------------------------
-      $Table[] = $Div;
-      #-------------------------------------------------------------------------
-      $Comp = Comp_Load('Tables/Standard',$Table,Array('width'=>400));
-      if(Is_Error($Comp))
-        return ERROR | @Trigger_Error(500);
-      #-------------------------------------------------------------------------
-      $Form->AddChild($Comp);
-      #-------------------------------------------------------------------------
-      $DOM->AddChild('Into',$Form);
-    break;
-    default:
-      return ERROR | @Trigger_Error(101);
-  }
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load(
+			'Form/Input',
+			Array(
+				'name'  => 'ContractID',
+				'type'  => 'hidden',
+				'value' => $ContractID
+				)
+			);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Form->AddChild($Comp);
+	#-------------------------------------------------------------------------------
+	$Regulars = Regulars();
+	#-------------------------------------------------------------------------------
+	if(!$VPSSchemeID)
+		return new gException('VPS_SCHEME_NOT_DEFINED','Тарифный план не выбран');
+	#-------------------------------------------------------------------------------
+	$VPSScheme = DB_Select('VPSSchemes',Array('ID','Name','IsActive'),Array('UNIQ','ID'=>$VPSSchemeID));
+	#-----------------------------------------------------------------------------
+	switch(ValueOf($VPSScheme)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		#-------------------------------------------------------------------------------
+		if(!$VPSScheme['IsActive'])
+			return new gException('SCHEME_NOT_ACTIVE','Выбранный тарифный план заказа VPS не активен');
+		#-------------------------------------------------------------------------------
+		$Table = Array(Array('Тарифный план',$VPSScheme['Name']));
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load(
+				'Form/Input',
+				Array(
+					'name'  => 'VPSSchemeID',
+					'type'  => 'hidden',
+					'value' => $VPSScheme['ID']
+					)
+				);
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Form->AddChild($Comp);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$VPSScheme = DB_Select('VPSSchemes',Array('ID','Name','ServersGroupID','IsActive'),Array('UNIQ','ID'=>$VPSSchemeID));
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($VPSScheme)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return new gException('SCHEME_NOT_FOUND','Выбранный тарифный план заказа виртуального сервера не найден');
+		case 'array':
+			#-------------------------------------------------------------------------------
+			$Server = DB_Select('Servers',Array('ID','Params'),Array('UNIQ','Where'=>SPrintF("`ServersGroupID` = %u AND `IsDefault` = 'yes'",$VPSScheme['ServersGroupID'])));
+			#-------------------------------------------------------------------------------
+			switch(ValueOf($Server)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				return new gException('SERVER_NOT_DEFINED','Сервер размещения не определён');
+			case 'array':
+				#-------------------------------------------------------------------------------
+				$Comp = Comp_Load(
+						'Form/Input',
+						Array(
+							'name'  => 'ServerID',
+							'type'  => 'hidden',
+							'value' => $Server['ID']
+							)
+						);
+				if(Is_Error($Comp))
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+				$Form->AddChild($Comp);
+				#-------------------------------------------------------------------------------
+				#-------------------------------------------------------------------------------
+				#Debug(SPrintF('[comp/www/VPSOrder]: DiskTemplate = %s',print_r(Explode("\n",$Server['Params']['DiskTemplate']),true)));
+				$Array = Array();
+				#-------------------------------------------------------------------------------
+				foreach(Explode("\n",$Server['Params']['DiskTemplate']) as $Line){
+					#-------------------------------------------------------------------------------
+					Debug(SPrintF('[comp/www/VPSOrder]: Line = %s',$Line));
+					$Template = Explode('=',$Line);
+					#-------------------------------------------------------------------------------
+					$Array[$Template[0]] = IsSet($Template[1])?$Template[1]:$Template[0];
+					#-------------------------------------------------------------------------------
+				}
+				#-------------------------------------------------------------------------------
+				$Comp = Comp_Load('Form/Select',Array('name'=>'DiskTemplate','style'=>'width: 100%;'),$Array,$DiskTemplate);
+				if(Is_Error($Comp))
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+				$Table[] = Array('Шаблон диска',$Comp);
+				#-------------------------------------------------------------------------------
+				break;
+				#-------------------------------------------------------------------------------
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$Rows = Array();
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load(
+				'Form/Input',
+				Array(
+					'type'    => 'button',
+					'onclick' => SPrintF("ShowWindow('/VPSOrder',{VPSSchemeID:%u,DiskTemplate:document.forms.VPSOrderForm.DiskTemplate.value,ServerID:%u});",$VPSScheme['ID'],$Server['ID']),
+					'value'   => 'Изменить тариф'
+					)
+				);
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Div = new Tag('DIV',Array('align'=>'right'),$Comp);
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load(
+				'Form/Input',
+				Array(
+					'type'    => 'button',
+					'onclick' => 'VPSOrder();',
+					'value'   => 'Продолжить'
+					)
+				);
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Div->AddChild($Comp);
+		#-------------------------------------------------------------------------------
+		$Table[] = $Div;
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Tables/Standard',$Table,Array('width'=>400));
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Form->AddChild($Comp);
+		#-------------------------------------------------------------------------------
+		$DOM->AddChild('Into',$Form);
+		#-------------------------------------------------------------------------------
+		break;
+		#-------------------------------------------------------------------------------
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
 }else{
   #-----------------------------------------------------------------------------
   $__USER = $GLOBALS['__USER'];
@@ -298,23 +365,25 @@ if($StepID){
           #---------------------------------------------------------------------
           $Table[] = $Comp;
           #---------------------------------------------------------------------
-#          $Comp = Comp_Load(
-#            'Form/Input',
-#            Array(
-#              'type'    => 'button',
-#              'name'    => 'Submit',
-#              'onclick' => "ShowWindow('/VPSOrder',FormGet(form));",
-#              'value'   => 'Продолжить'
-#            )
-#          );
-	   $Comp = Comp_Load(
-	     'Form/Input',
-	     Array(
-	       'type'    => 'button',
-	       'onclick' => 'VPSOrder();',
-	       'value'   => 'Продолжить'
-	     )
-	  );
+          $Comp = Comp_Load(
+            'Form/Input',
+            Array(
+              'type'    => 'button',
+              'name'    => 'Submit',
+              'onclick' => "ShowWindow('/VPSOrder',FormGet(form));",
+              'value'   => 'Продолжить'
+            )
+          );
+
+
+#$Comp = Comp_Load(
+#	     'Form/Input',
+#	     Array(
+#	       'type'    => 'button',
+#	       'onclick' => 'VPSOrder();',
+#	       'value'   => 'Продолжить'
+#	     )
+#	  );
 
           if(Is_Error($Comp))
             return ERROR | @Trigger_Error(500);
@@ -332,6 +401,20 @@ if($StepID){
             Array(
               'name'  => 'StepID',
               'value' => 1,
+              'type'  => 'hidden',
+            )
+          );
+          if(Is_Error($Comp))
+            return ERROR | @Trigger_Error(500);
+          #---------------------------------------------------------------------
+          $Form->AddChild($Comp);
+	  #---------------------------------------------------------------------
+	  #---------------------------------------------------------------------
+          $Comp = Comp_Load(
+            'Form/Input',
+            Array(
+              'name'  => 'DiskTemplate',
+              'value' => $DiskTemplate,
               'type'  => 'hidden',
             )
           );

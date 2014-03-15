@@ -25,6 +25,7 @@ $Columns = Array(
 			'(SELECT `Name` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`) as `Scheme`',
 			'(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = (SELECT `ServersGroupID` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`)) as `ServersGroupName`',
 			'(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`',
+			'(SELECT `Params` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `Params`',
 			'(SELECT `IsAutoProlong` FROM `OrdersOwners` WHERE `VPSOrdersOwners`.`OrderID`=`OrdersOwners`.`ID`) AS `IsAutoProlong`',
 			'(SELECT (SELECT `Code` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) FROM `OrdersOwners` WHERE `VPSOrdersOwners`.`OrderID` = `OrdersOwners`.`ID`) AS `Code`'
 		);
@@ -132,6 +133,9 @@ switch(ValueOf($VPSOrder)){
 		return ERROR | @Trigger_Error(500);
 	#-----------------------------------------------------------------------
 	$Table[] = Array('Автопродление',$Comp);
+	#-----------------------------------------------------------------------
+	#-----------------------------------------------------------------------
+	$Table[] = Array('Дисковый шаблон',IsSet($VPSOrder['Params']['DiskTemplate'])?$VPSOrder['Params']['DiskTemplate']:'по умолчанию');
 	#-----------------------------------------------------------------------
 	#-----------------------------------------------------------------------
         $Comp = Comp_Load('Statuses/State','VPSOrders',$VPSOrder);

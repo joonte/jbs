@@ -429,6 +429,7 @@ CREATE TABLE `Orders` (
   `DaysRemainded` INT(11) NOT NULL,
   `StatusID` char(30) default 'UnSeted',
   `StatusDate` int(11) default '0',
+  `Params` LONGTEXT NOT NULL,
   `UserNotice` TEXT NOT NULL,
   `AdminNotice` TEXT NOT NULL,
   PRIMARY KEY  (`ID`),

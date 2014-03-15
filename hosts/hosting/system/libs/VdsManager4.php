@@ -20,9 +20,9 @@ function VdsManager4_Logon($Settings,$Login,$Password){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VdsManager4_Create($Settings,$Login,$Password,$Domain,$IP,$VPSScheme,$Email,$PersonID = 'Default',$Person = Array()){
+function VdsManager4_Create($Settings,$VPSOrder,$IP,$VPSScheme){
   /****************************************************************************/
-  $__args_types = Array('array','string','string','string','string','array','string','string','array');
+  $__args_types = Array('array','array','string','array');
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
@@ -40,7 +40,7 @@ function VdsManager4_Create($Settings,$Login,$Password,$Domain,$IP,$VPSScheme,$E
   $IsReselling = $VPSScheme['IsReselling'];
   #-----------------------------------------------------------------------------
   $IDNA = new Net_IDNA_php5();
-  $Domain = $IDNA->encode($Domain);
+  $Domain = $IDNA->encode($VPSOrder['Domain']);
   #-----------------------------------------------------------------------------
   $Request = Array(
     #---------------------------------------------------------------------------
@@ -49,9 +49,9 @@ function VdsManager4_Create($Settings,$Login,$Password,$Domain,$IP,$VPSScheme,$E
     'func'            => ($IsReselling?'user.edit':'vds.edit'), # Целевая функция
     'sok'             => 'yes',				# Значение параметра должно быть равно "yes"
     'id'              => 'auto',			# Идентификатор. Параметр зависим от возможности vdsid
-    'name'            => ($IsReselling?$Login:$Domain), # Имя пользователя (реселлера)
-    'passwd'          => $Password,			# Пароль
-    'confirm'         => $Password,			# Подтверждение
+    'name'            => ($IsReselling?$VPSOrder['Login']:$VPSOrder['Domain']), # Имя пользователя (реселлера)
+    'passwd'          => $VPSOrder['Password'],			# Пароль
+    'confirm'         => $VPSOrder['Password'],			# Подтверждение
     'ip'              => 'auto',			# IP-адрес
     'vdspreset'       => $VPSScheme['PackageID'],	# Шаблон
     #---------------------------------------------------------------------------
@@ -66,7 +66,7 @@ function VdsManager4_Create($Settings,$Login,$Password,$Domain,$IP,$VPSScheme,$E
     'desc'            => $VPSScheme['maxdesc'],		# открытых файлов
     'proc'            => $VPSScheme['proc'],		# процессов
     'ipcount'         => $VPSScheme['ipalias'],		# дополнительных IP
-    'disktempl'       => $VPSScheme['disktempl'],	# шаблон диска
+    'disktempl'       => $VPSOrder['DiskTemplate'],	# шаблон диска
     'extns'           => $VPSScheme['extns'],		# DNS
     'limitpvtdns'     => $VPSScheme['limitpvtdns'],	# ограничение на число доменов собственных DNS
     'limitpubdns'     => $VPSScheme['limitpubdns'],	# ограничение на число доменов DNS провайдера
@@ -97,10 +97,10 @@ function VdsManager4_Create($Settings,$Login,$Password,$Domain,$IP,$VPSScheme,$E
   if(IsSet($Doc['error']))
     return new gException('ACCOUNT_CREATE_ERROR','Не удалось создать заказ виртуального сервера');
   #-----------------------------------------------------------------------------
-  Debug("[system/libs/VdsManager4]: VPS order created with IP = " . $Doc['ip']);
+  Debug(SPrintF('[system/libs/VdsManager4]: VPS order created with IP = %s',$Doc['ip']));
   #-----------------------------------------------------------------------------
-  $IsQuery = DB_Query("UPDATE `VPSOrders` SET `Login`='" . $Doc['ip'] . "' WHERE `Login`='" . $Login . "'");
-  if(Is_Error($IsQuery))
+  $IsUpdate = DB_Update('VPSOrders',Array('Login'=>$Doc['ip']),Array('Where'=>SPrintF('`Login` = "%s"',$VPSOrder['Login'])));
+  if(Is_Error($IsUpdate))
         return ERROR | @Trigger_Error('[VdsManager4_Create]: не удалось прописать IP адрес для виртуального сервера');
   #-----------------------------------------------------------------------------
   return TRUE;

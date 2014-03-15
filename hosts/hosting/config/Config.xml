@@ -124,6 +124,41 @@
 		<VPS>
 			<Name>Сервер VPS</Name>
 			<IsActive>1</IsActive>
+			<!-- *********************************************************************** -->
+			<SystemID>
+				<!-- *********************************************************************** -->
+				<NullSystem>
+					<Name>Ручное управление</Name>
+					<Settings>
+						<Port>1000</Port>
+						<Protocol>tcp</Protocol>
+					</Settings>
+				</NullSystem>
+				<!-- ********************************************************************* -->
+				<VdsManager4>
+					<Name>VdsManager4</Name>
+					<Settings>
+						<Port>443</Port>
+						<Protocol>ssl</Protocol>
+						<Theme>sirius</Theme>
+						<Language>ru</Language>
+						<DiskTemplate>FreeBSD-9-ISPmanager</DiskTemplate>
+						<Url>http://vds01.isp.su/manager/</Url>
+					</Settings>
+				</VdsManager4>
+				<!-- ********************************************************************* -->
+				<VmManager5>
+					<Name>VmManager5</Name>
+					<Settings>
+						<Port>1500</Port>
+						<Protocol>ssl</Protocol>
+						<Theme>Orion</Theme>
+						<Language>ru</Language>
+					</Settings>
+				</VmManager5>
+				<!-- *********************************************************************** -->
+			</SystemID>
+			<!-- *********************************************************************** -->
 		</VPS>
 		<!-- ********************************************************************* -->
 		<Domains>
