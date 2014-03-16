@@ -44,8 +44,9 @@ public function FindSystem($ExtraIPOrderID,$OrderType,$DependOrderID){
 			#-------------------------------------------------------------------------
 			# add User Login on server
 			$SysInfo['UserLogin'] = $OrderServer['Login'];
-			Debug("[system/classes/ExtraIPServer]: found ICS: " . ($OrderType == 'VPS')?$SysInfo['Params']['SystemID']:$SysInfo['SystemID']);
-			$this->SystemID = ($OrderType == 'VPS')?$SysInfo['Params']['SystemID']:$SysInfo['SystemID'];
+			Debug(SPrintF('[system/classes/ExtraIPServer]: OrderType = %s',$OrderType));
+			Debug(SPrintF('[system/classes/ExtraIPServer]: found ICS: %s',(($OrderType != 'VPS')?$SysInfo['SystemID']:$SysInfo['Params']['SystemID'])));
+			$this->SystemID = ($OrderType != 'VPS')?$SysInfo['SystemID']:$SysInfo['Params']['SystemID'];
 			$this->Settings = $SysInfo;
 			if(Is_Error(System_Load(SPrintF('libs/%s.php',$this->SystemID))))
 				@Trigger_Error('[Server->Select]: не удалось загрузить целевую библиотеку');
