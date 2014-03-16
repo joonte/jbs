@@ -278,7 +278,7 @@ if(!$TemplateID){
 	#-------------------------------------------------------------------------------
 	$Table[] = 'Общие параметры';
 	#-------------------------------------------------------------------------------
-	$ServersGroups = DB_Select('ServersGroups',Array('ID','Name'));
+	$ServersGroups = DB_Select('ServersGroups',Array('ID','Name','(SELECT `Code` FROM `Services` WHERE `ServersGroups`.`ServiceID` = `Services`.`ID`) AS `Code`'));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($ServersGroups)){
 	case 'error':
@@ -297,7 +297,7 @@ if(!$TemplateID){
 	#-------------------------------------------------------------------------------
 	if(Is_Array($ServersGroups))
 		foreach($ServersGroups as $ServersGroup)
-			$Options[$ServersGroup['ID']] = $ServersGroup['Name'];
+			$Options[$ServersGroup['ID']] = SPrintF('[%s] %s',($ServersGroup['Code'])?$ServersGroup['Code']:'любой сервис',$ServersGroup['Name']);
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Form/Select',Array('name'=>'ServersGroupID','prompt'=>'Группа серверов, в которую входит сервер','style'=>'width: 100%;'),$Options,$Server['ServersGroupID']);
 	if(Is_Error($Comp))
