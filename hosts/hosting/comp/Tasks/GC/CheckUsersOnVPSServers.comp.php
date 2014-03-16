@@ -74,7 +74,7 @@ case 'array':
 					$SUsers = Array();
 					#-----------------------------------------------------------------
 					$Where = Array(
-								SPrintF('`ServerID`=%u',$iServer['ID']),
+								SPrintF('(SELECT `ServerID` FROM `OrdersOwners` WHERE `VPSOrdersOwners`.`OrderID` = `OrdersOwners`.`ID`) = %u',$iServer['ID']),
 								"`StatusID` = 'Active' OR `StatusID` = 'Suspended'"
 							);
 					$ServerUsers = DB_Select('VPSOrdersOwners',Array('UserID','Login'),Array('Where'=>$Where));
