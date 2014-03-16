@@ -96,7 +96,7 @@ foreach($DomainsSchemes as $DomainScheme){
   $Options[$DomainScheme['ID']] = SPrintF('%s, %s, %s',$DomainScheme['Name'],$DomainScheme['RegistatorName'],$Comp);
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID'),$Options,$DomainOrder['SchemeID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID','style'=>'width: 100%;'),$Options,$DomainOrder['SchemeID']);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

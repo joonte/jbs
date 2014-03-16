@@ -95,7 +95,7 @@ foreach($HostingSchemes as $HostingScheme){
   $Options[$HostingScheme['ID']] = SPrintF('%s, %s, %s',$HostingScheme['Name'],$HostingScheme['ServersGroupName'],$Comp);
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID'),$Options,$HostingOrder['SchemeID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID','style'=>'width: 100%;'),$Options,$HostingOrder['SchemeID']);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -120,7 +120,7 @@ $Options = Array();
 foreach($Servers as $Server)
   $Options[$Server['ID']] = $Server['Address'];
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ServerID'),$Options,$HostingOrder['ServerID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ServerID','style'=>'width: 100%;'),$Options,$HostingOrder['ServerID']);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

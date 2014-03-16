@@ -113,7 +113,7 @@ foreach($ExtraIPSchemes as $ExtraIPScheme){
   $Options[$ExtraIPScheme['ID']] = SPrintF('%s, %s',$ExtraIPScheme['Name'],$Comp);
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID'),$Options,$ExtraIPOrder['SchemeID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID','style'=>'width: 100%;'),$Options,$ExtraIPOrder['SchemeID']);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -151,7 +151,8 @@ $Comp = Comp_Load(
   Array(
     'type'  => 'text',
     'name'  => 'Login',
-    'value' => $ExtraIPOrder['Login']
+    'value' => $ExtraIPOrder['Login'],
+    'style' => 'width: 100%;'
   )
 );
 if(Is_Error($Comp))
@@ -165,7 +166,7 @@ $Options = Array(
 		'DS'		=> 'Выделенный сервер',
 		'Manual'	=> 'Без заказа'
 		);
-$Comp = Comp_Load('Form/Select',Array('name'=>'OrderType'),$Options,$ExtraIPOrder['OrderType']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'OrderType','style'=>'width: 100%;'),$Options,$ExtraIPOrder['OrderType']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 $Table[] = Array('Тип заказа',$Comp);
@@ -176,7 +177,8 @@ $Comp = Comp_Load(
   Array(
     'type'  => 'text',
     'name'  => 'DependOrder',
-    'value' => $ExtraIPOrder['DependOrder']
+    'value' => $ExtraIPOrder['DependOrder'],
+    'style' => 'width: 100%;'
   )
 );
 if(Is_Error($Comp))
