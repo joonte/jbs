@@ -545,6 +545,7 @@ CREATE TABLE IF NOT EXISTS `VPSOrders` (
 	`Domain` char(255) DEFAULT '',
 	`Parked` text,
 	`Login` char(20) DEFAULT '',
+	`IP` char(60) default '',
 	`Password` char(64) DEFAULT '',
 	`ConsiderDay` int(11) DEFAULT '0',
 	`StatusID` char(30) DEFAULT 'UnSeted',

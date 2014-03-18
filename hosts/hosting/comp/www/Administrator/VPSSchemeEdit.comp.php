@@ -184,14 +184,14 @@ $Table[] = 'Описание тарифа';
 #-------------------------------------------------------------------------------
 $Table[] = $Comp;
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsReselling','value'=>'yes'));
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+#$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsReselling','value'=>'yes'));
+#if(Is_Error($Comp))
+#  return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if($VPSScheme['IsReselling'])
-  $Comp->AddAttribs(Array('checked'=>'yes'));
+#if($VPSScheme['IsReselling'])
+#  $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsReselling\'); return false;'),'Права реселлера'),$Comp);
+#$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsReselling\'); return false;'),'Права реселлера'),$Comp);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes'));
 if(Is_Error($Comp))
@@ -309,33 +309,33 @@ $Table[] = Array('Порядок сортировки',$Comp);
 #-------------------------------------------------------------------------------
 $Table[] = '-Общие ограничения';
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'size'  => 10,
-    'name'  => 'vdslimit',
-    'value' => $VPSScheme['vdslimit']
-  )
-);
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+#$Comp = Comp_Load(
+#  'Form/Input',
+#  Array(
+#    'type'  => 'text',
+#    'size'  => 10,
+#    'name'  => 'vdslimit',
+#    'value' => $VPSScheme['vdslimit']
+#  )
+#);
+#if(Is_Error($Comp))
+#  return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Число VDS (для реселлеров)'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Все системы')),$Comp);
+#$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Число VDS (для реселлеров)'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Все системы')),$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'size'  => 10,
-    'name'  => 'QuotaUsers',
-    'value' => $VPSScheme['QuotaUsers']
-  )
-);
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+#$Comp = Comp_Load(
+#  'Form/Input',
+#  Array(
+#    'type'  => 'text',
+#    'size'  => 10,
+#    'name'  => 'QuotaUsers',
+#    'value' => $VPSScheme['QuotaUsers']
+#  )
+#);
+#if(Is_Error($Comp))
+#  return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Число пользователей (для реселлеров)'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Все системы')),$Comp);
+#$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Число пользователей (для реселлеров)'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Все системы')),$Comp);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',

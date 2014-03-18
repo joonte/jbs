@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('classes/VPSServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$VPSOrder = DB_Select('VPSOrdersOwners',Array('ID','UserID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`','Login','Domain','(SELECT `IsReselling` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`) as `IsReselling`','(SELECT `Name` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`) as `SchemeName`'),Array('UNIQ','ID'=>$VPSOrderID));
+$VPSOrder = DB_Select('VPSOrdersOwners',Array('ID','UserID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`','Login','Domain','(SELECT `Name` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`) as `SchemeName`'),Array('UNIQ','ID'=>$VPSOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($VPSOrder)){
   case 'error':
@@ -32,7 +32,7 @@ switch(ValueOf($VPSOrder)){
         return ERROR | @Trigger_Error(400);
       case 'true':
         #-----------------------------------------------------------------------
-        $IsDelete = $VPSServer->Delete($VPSOrder['Login'],$VPSOrder['IsReselling']);
+        $IsDelete = $VPSServer->Delete($VPSOrder['Login']);
         #-----------------------------------------------------------------------
         switch(ValueOf($IsDelete)){
           case 'error':

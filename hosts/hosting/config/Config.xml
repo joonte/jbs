@@ -154,6 +154,8 @@
 						<Protocol>ssl</Protocol>
 						<Theme>Orion</Theme>
 						<Language>ru</Language>
+						<DiskTemplate>FreeBSD-10-amd64</DiskTemplate>
+						<Url>https://vds01.isp.su:1500/vmmgr</Url>
 					</Settings>
 				</VmManager5>
 				<!-- *********************************************************************** -->

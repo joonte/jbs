@@ -33,7 +33,7 @@ if(!$Count){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # перебираем группы серверов, ищщем те где есть сервера для автобалансировки
-$ServersGroups = DB_Select('ServersGroups',Array('*'),Array('Where'=>'`ServiceID` = 30000'));
+$ServersGroups = DB_Select('ServersGroups',Array('*'),Array('Where'=>'`ServiceID` = 30000 AND `FunctionID` != "NotDefined"'));
 switch(ValueOf($ServersGroups)){
 case 'error':
 	return ERROR | @Trigger_Error(500);

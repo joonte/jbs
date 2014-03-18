@@ -13,7 +13,7 @@ if(Is_Error(System_Load('classes/VPSServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array(
-		'ID','UserID','Login','Domain','SchemeID','Password',
+		'ID','OrderID','UserID','Login','IP','Domain','SchemeID','Password',
 		'(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`',
 		'(SELECT `Params` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `Params`',
 		'(SELECT `ProfileID` FROM `Contracts` WHERE `Contracts`.`ID` = `VPSOrdersOwners`.`ContractID`) AS `ProfileID`'
@@ -50,8 +50,9 @@ case 'array':
 			if(IsSet($VPSOrder['Params']['DiskTemplate'])){
 				#-------------------------------------------------------------------------------
 				foreach(Explode("\n",$VPSServer->Settings['Params']['DiskTemplate']) as $Line){
+					#Debug(SPrintF('[comp/Tasks/VPSCreate]: Line = (%s)',print_r($Line,true)));
 					#-------------------------------------------------------------------------------
-					$Template = Explode('=',$Line);
+					$Template = Explode('=',Trim($Line));
 					#-------------------------------------------------------------------------------
 					if($Template[0] == $VPSOrder['Params']['DiskTemplate'])
 						$DiskTemplate = $Template[0];

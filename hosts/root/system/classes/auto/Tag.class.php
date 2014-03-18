@@ -180,7 +180,7 @@ function ToArray(){
     if(IsSet($this->Attribs['type']))
       $Type = $this->Attribs['type'];
     #---------------------------------------------------------------------------
-    SetType($Result,$Type);
+    @SetType($Result,$Type);
   }
   #-----------------------------------------------------------------------------
   return $Result;

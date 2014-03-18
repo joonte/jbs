@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('classes/VPSServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$VPSOrder = DB_Select('VPSOrdersOwners',Array('ID','Domain','UserID','OrderID','SchemeID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`','Login','(SELECT `Name` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`OldSchemeID`) as `SchemeName`'),Array('UNIQ','ID'=>$VPSOrderID));
+$VPSOrder = DB_Select('VPSOrdersOwners',Array('ID','Login','Password','Domain','UserID','OrderID','SchemeID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`','Login','(SELECT `Name` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`OldSchemeID`) as `SchemeName`'),Array('UNIQ','ID'=>$VPSOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($VPSOrder)){
   case 'error':
@@ -47,7 +47,7 @@ switch(ValueOf($VPSOrder)){
 	    #-------------------------------------------------------------------
 	    $GLOBALS['TaskReturnInfo'] = Array($VPSServer->Settings['Address'],$VPSOrder['Login'],$VPSOrder['SchemeName'],$VPSNewScheme['Name']);
             #-------------------------------------------------------------------
-            $SchemeChange = $VPSServer->SchemeChange($VPSOrder['Login'],$VPSNewScheme);
+            $SchemeChange = $VPSServer->SchemeChange($VPSOrder,$VPSNewScheme);
             #-------------------------------------------------------------------
             switch(ValueOf($SchemeChange)){
               case 'error':

@@ -15,7 +15,7 @@ $NewSchemeID    = (integer) @$Args['NewSchemeID'];
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','UserID','SchemeID','(SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`)) AS `ServersGroupID`','StatusID','StatusDate');
+$Columns = Array('ID','UserID','SchemeID','(SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`)) AS `ServersGroupID`','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`)) AS `Params`','StatusID','StatusDate');
 #-------------------------------------------------------------------------------
 $VPSOrder = DB_Select('VPSOrdersOwners',$Columns,Array('UNIQ','ID'=>$VPSOrderID));
 #-------------------------------------------------------------------------------
@@ -85,8 +85,12 @@ switch(ValueOf($VPSOrder)){
                 #---------------------------------------------------------------
                 if($OldScheme['disklimit'] > $NewScheme['disklimit']){
                   #-------------------------------------------------------------
+                  if($VPSOrder['Params']['SystemID'] == 'VmManager5')
+                    return new gException('CANNOT_RESIZE_DISK','Система виртуализации KVM не предусматривает уменьшения размера диска. Изменить тариф в меньшую сторону невозможно.');
+		  #-------------------------------------------------------------
                   if(!$__USER['IsAdmin'])
                     return new gException('QUOTA_DISK_ERROR','Для смены тарифа обратитесь в Центр Поддержки');
+		  #-------------------------------------------------------------
                 }
                 #---------------------------------------------------------------
                 if($VPSOrder['ServersGroupID'] != $NewScheme['ServersGroupID'])

@@ -96,6 +96,7 @@
      <ListElement>OrderID</ListElement>
      <ListElement>UserID</ListElement>
      <ListElement>Login</ListElement>
+     <ListElement>IP</ListElement>
      <ListElement>(SELECT `Name` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`)</ListElement>
      <ListElement>AdminNotice</ListElement>
     </ColumnsIDs>
@@ -176,6 +177,15 @@
    </Attribs>
  </Login>
  <!-- ********************************************************************** -->
+ <IP>
+   <Head>IP</Head>
+   <Prompt>IP адрес виртуального сервера</Prompt>
+    <Alias>IF(ISNULL(`IP`),'-',`IP`)</Alias>
+   <Attribs>
+     <style>text-align:right;</style>
+   </Attribs>
+ </IP>
+ <!-- ********************************************************************** -->
  <Scheme>
   <Head>Тариф</Head>
   <Comp>Formats/String</Comp>
@@ -208,6 +218,7 @@
  <ListElement>ExtendedMenu</ListElement>
  <ListElement>Number</ListElement>
  <ListElement>Login</ListElement>
+ <ListElement>IP</ListElement>
  <ListElement>Owner</ListElement>
  <ListElement>Scheme</ListElement>
  <ListElement>Expiration</ListElement>

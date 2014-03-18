@@ -37,7 +37,7 @@ function VdsManager4_Create($Settings,$VPSOrder,$IP,$VPSScheme){
     'Hidden'   => $authinfo
   );
   #-----------------------------------------------------------------------------
-  $IsReselling = $VPSScheme['IsReselling'];
+  $IsReselling = FALSE;
   #-----------------------------------------------------------------------------
   $IDNA = new Net_IDNA_php5();
   $Domain = $IDNA->encode($VPSOrder['Domain']);
@@ -99,7 +99,7 @@ function VdsManager4_Create($Settings,$VPSOrder,$IP,$VPSScheme){
   #-----------------------------------------------------------------------------
   Debug(SPrintF('[system/libs/VdsManager4]: VPS order created with IP = %s',$Doc['ip']));
   #-----------------------------------------------------------------------------
-  $IsUpdate = DB_Update('VPSOrders',Array('Login'=>$Doc['ip']),Array('Where'=>SPrintF('`Login` = "%s"',$VPSOrder['Login'])));
+  $IsUpdate = DB_Update('VPSOrders',Array('Login'=>$Doc['ip'],'IP'=>$Doc['ip']),Array('ID'=>$VPSOrder['ID']));
   if(Is_Error($IsUpdate))
         return ERROR | @Trigger_Error('[VdsManager4_Create]: не удалось прописать IP адрес для виртуального сервера');
   #-----------------------------------------------------------------------------
@@ -148,9 +148,9 @@ function VdsManager4_Active($Settings,$Login,$IsReseller = FALSE){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VdsManager4_Suspend($Settings,$Login,$IsReseller = FALSE){
+function VdsManager4_Suspend($Settings,$Login,$VPSScheme){
 	/****************************************************************************/
-	$__args_types = Array('array','string','boolean');
+	$__args_types = Array('array','string','array');
 	#-----------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/
@@ -165,7 +165,7 @@ function VdsManager4_Suspend($Settings,$Login,$IsReseller = FALSE){
 		'Hidden'   => $authinfo
 	);
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/manager/vdsmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'user.disable':'vds.disable','elid'=>$Login));
+	$Response = Http_Send('/manager/vdsmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vds.disable','elid'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VdsManager4_Suspend]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -229,9 +229,9 @@ function VdsManager4_Delete($Settings,$Login,$IsReseller = FALSE){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VdsManager4_Scheme_Change($Settings,$Login,$VPSScheme){
+function VdsManager4_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
   /****************************************************************************/
-  $__args_types = Array('array','string','array');
+  $__args_types = Array('array','array','array');
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
@@ -246,7 +246,7 @@ function VdsManager4_Scheme_Change($Settings,$Login,$VPSScheme){
     'Hidden'   => $authinfo
   );
   #-----------------------------------------------------------------------------
-  $IsReselling = $VPSScheme['IsReselling'];
+  $IsReselling = FALSE;
   #-----------------------------------------------------------------------------
   $Request = Array(
     #---------------------------------------------------------------------------
@@ -256,7 +256,7 @@ function VdsManager4_Scheme_Change($Settings,$Login,$VPSScheme){
     'sok'             => 'yes',				# Значение параметра должно быть равно "yes"
     'name'            => $VPSScheme['Domain'],		# Имя пользователя (реселлера)
     'vdspreset'       => $VPSScheme['PackageID'],	# Шаблон
-    'elid'            => $Login,			# кому меняем
+    'elid'            => $VPSOrder['Login'],		# кому меняем
     #---------------------------------------------------------------------------
     'disk'            => $VPSScheme['disklimit'],	# Диск
     'ncpu'            => $VPSScheme['ncpu'],		# число процессоров
@@ -295,16 +295,16 @@ function VdsManager4_Scheme_Change($Settings,$Login,$VPSScheme){
   $Doc = $XML['doc'];
   #-----------------------------------------------------------------------------
   if(IsSet($Doc['error']))
-    return new gException('SCHEME_CHANGE_ERROR','Не удалось изменить тарифный план для заказа хостинга');
+    return new gException('SCHEME_CHANGE_ERROR','Не удалось изменить тарифный план для заказа VPS');
   #-----------------------------------------------------------------------------
   return TRUE;
 }
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VdsManager4_Password_Change($Settings,$Login,$Password,$IsReseller = FALSE){
+function VdsManager4_Password_Change($Settings,$Login,$Password){
 	/****************************************************************************/
-	$__args_types = Array('array','string','string','boolean');
+	$__args_types = Array('array','string','string','array');
 	#-----------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/

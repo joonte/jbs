@@ -61,7 +61,7 @@ switch(ValueOf($VPSOrder)){
             return ERROR | @Trigger_Error(400);
           case 'true':
             #-------------------------------------------------------------------
-            $PasswordChange = $VPSServer->PasswordChange($VPSOrder['Login'],$Password,$VPSOrder['IsReselling']);
+            $PasswordChange = $VPSServer->PasswordChange($VPSOrder['Login'],$Password,$VPSOrder);
             #-------------------------------------------------------------------
             switch(ValueOf($PasswordChange)){
               case 'error':

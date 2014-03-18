@@ -28,7 +28,7 @@
 		<Comment>IP адрес</Comment>
 		<Type>Input</Type>
 		<Attribs>
-			<prompt>IPv4 адрес на который будут назначаться аккаунты клиентов</prompt>
+			<prompt>IPv4 адрес сервера</prompt>
 			<type>text</type>
 			<style>width: 100%;</style>
 		</Attribs>
@@ -85,12 +85,12 @@
 		<Comment>Префикс имени аккаунта</Comment>
 		<Type>Input</Type>
 		<Attribs>
-			<prompt>Используется при назначении имени пользовательского аккаунта. Имена аккаунтов для клиентов, с целью уникальности назначаются в виде: префикс00000, где 00000 - номер заказа, например: h10212</prompt>
+			<prompt>Используется при назначении имени пользовательского аккаунта. Имена аккаунтов для клиентов, с целью уникальности назначаются в виде: префикс00000, где 00000 - номер заказа, например: v10212</prompt>
 			<type>text</type>
 			<style>width: 100%;</style>
 		</Attribs>
 		<IsDuty>1</IsDuty>
-		<Value>h</Value>
+		<Value>v</Value>
 	</Prefix>
 	<!-- *********************************************************************** -->
 	<DiskTemplate>
@@ -119,7 +119,7 @@
 		<Comment>Тема</Comment>
 		<Type>Input</Type>
 		<Attribs>
-			<prompt>Тема устанавливаемая клиенту при переходе в панель управления заказом хостинга</prompt>
+			<prompt>Тема устанавливаемая клиенту при переходе в панель управления заказом VPS</prompt>
 			<type>text</type>
 			<style>width: 100%;</style>
 		</Attribs>
@@ -132,7 +132,7 @@
 		<Comment>Язык</Comment>
 		<Type>Input</Type>
 		<Attribs>
-			<prompt>Язык устанавливаемый клиенту при переходе в панель управления заказом хостинга</prompt>
+			<prompt>Язык устанавливаемый клиенту при переходе в панель управления заказом VPS</prompt>
 			<type>text</type>
 			<style>width: 100%;</style>
 		</Attribs>
@@ -145,7 +145,7 @@
 		<Comment>Адрес входа для клиентов</Comment>
 		<Type>Input</Type>
 		<Attribs>
-			<prompt>На какой URL необходимо логинится клиентам для входа в панель управления заказом хостинга</prompt>
+			<prompt>На какой URL необходимо логинится клиентам для входа в панель управления заказом VPS</prompt>
 			<type>text</type>
 			<style>width: 100%;</style>
 		</Attribs>

@@ -17,6 +17,7 @@ $ContractID     = (integer) @$Args['ContractID'];
 $ServerID       =  (string) @$Args['ServerID'];
 $Domain         =  (string) @$Args['Domain'];
 $Login          =  (string) @$Args['Login'];
+$IP		=  (string) @$Args['IP'];
 $Password       =  (string) @$Args['Password'];
 $SchemeID       = (integer) @$Args['SchemeID'];
 $DaysReserved   = (integer) @$Args['DaysReserved'];
@@ -24,18 +25,21 @@ $IsCreate       = (boolean) @$Args['IsCreate'];
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Servers',Array('ID'=>$ServerID));
 if(Is_Error($Count))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if(!$Count)
-  return new gException('SERVER_NOT_FOUND','Сервер не найден');
+	return new gException('SERVER_NOT_FOUND','Сервер не найден');
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
 if(!Preg_Match($Regulars['Domain'],$Domain))
-  return new gException('WRONG_DOMAIN','Неверный домен');
+	return new gException('WRONG_DOMAIN','Неверный домен');
 #-------------------------------------------------------------------------------
 if(!$Login)
-  return new gException('LOGIN_NOT_FILLED','Логин пользователя не указан');
+	return new gException('LOGIN_NOT_FILLED','Логин пользователя не указан');
+#-------------------------------------------------------------------------------
+if(!Preg_Match($Regulars['IP'],$IP))
+	return new gException('WRONG_IP','Неверный IP адрес');
 #-------------------------------------------------------------------------------
 $Server = DB_Select('Servers',Array('ID','ServersGroupID'),Array('UNIQ','ID'=>$ServerID));
 #-------------------------------------------------------------------------------
@@ -106,6 +110,7 @@ $IVPSOrder = Array(
   #-----------------------------------------------------------------------------
   'Domain'   => $Domain,
   'Login'    => $Login,
+  'IP'       => $IP,
   'Password' => $Password,
   'SchemeID' => $VPSScheme['ID']
 );
