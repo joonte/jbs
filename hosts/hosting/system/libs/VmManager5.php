@@ -96,7 +96,6 @@ function VmManager5_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 			'user'			=> $VmUserID,
 			'vcpu'			=> $VPSScheme['ncpu'],
 			'vmi'			=> SPrintF('ISPsystem__%s',Trim($VPSOrder['DiskTemplate'])),
-			#&vmnote=
 			'vsize'			=> $VPSScheme['disklimit'],
 			);
 	#-------------------------------------------------------------------------------
@@ -927,7 +926,7 @@ function VmManager5_Get_Users($Settings){
 		if(!IsSet($User['name']))
 			continue;
 		#---------------------------------------------------------------------------
-		#if($User['owner'] == $Settings['Login'])
+		if($User['name'] != $Settings['Login'])
 			$Result[] = $User['name'];
 		#-----------------------------------------------------------------------------
 	}

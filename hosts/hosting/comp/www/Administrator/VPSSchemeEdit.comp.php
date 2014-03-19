@@ -55,6 +55,7 @@ if($VPSSchemeID){
     'vdslimit'		=> 1,
     'disklimit'         => 999,
     'maxdesc'	        => 1000,
+    'blkiotune'		=> 500,
     'maxswap'	        => 10,
     'traf'	        => 1000000,
     'chrate'		=> 8,
@@ -65,7 +66,6 @@ if($VPSSchemeID){
     'bmem'		=> 128,
     'proc'              => 64,
     'ipalias'		=> 0,
-    'disktempl'         => '',
     'extns'		=> 'dnsprovider',
     'limitpvtdns'	=> 256,
     'limitpubdns'	=> 256,
@@ -168,30 +168,6 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array('Группа серверов',$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/TextArea',
-  Array(
-    'name'  => 'Comment',
-    'style' => 'width:100%;',
-    'rows'  => 3
-  ),
-  $VPSScheme['Comment']
-);
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = 'Описание тарифа';
-#-------------------------------------------------------------------------------
-$Table[] = $Comp;
-#-------------------------------------------------------------------------------
-#$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsReselling','value'=>'yes'));
-#if(Is_Error($Comp))
-#  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-#if($VPSScheme['IsReselling'])
-#  $Comp->AddAttribs(Array('checked'=>'yes'));
-#-------------------------------------------------------------------------------
-#$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsReselling\'); return false;'),'Права реселлера'),$Comp);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes'));
 if(Is_Error($Comp))
@@ -235,7 +211,8 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'size'  => 5,
     'name'  => 'MinDaysPay',
-    'value' => $VPSScheme['MinDaysPay']
+    'value' => $VPSScheme['MinDaysPay'],
+    'style' => 'width: 100%;',
   )
 );
 if(Is_Error($Comp))
@@ -251,7 +228,8 @@ $Comp = Comp_Load(
      'size'  => 5,
      'name'  => 'MinDaysProlong',
      'value' => $VPSScheme['MinDaysProlong'],
-     'prompt'=> 'Минимальное число дней, на которое можно продлевать заказ'
+     'prompt'=> 'Минимальное число дней, на которое можно продлевать заказ',
+     'style' => 'width: 100%;',
   )
 );
 if(Is_Error($Comp))
@@ -266,7 +244,8 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'size'  => 5,
     'name'  => 'MaxDaysPay',
-    'value' => $VPSScheme['MaxDaysPay']
+    'value' => $VPSScheme['MaxDaysPay'],
+    'style' => 'width: 100%;',
   )
 );
 if(Is_Error($Comp))
@@ -282,7 +261,8 @@ $Comp = Comp_Load(
     'size'  => 5,
     'name'  => 'MaxOrders',
     'value' => $VPSScheme['MaxOrders'],
-    'prompt'=> 'Максимально возможное число заказов по данному тарифу, на каждого клиента. Используется для создания "триальных" тарифных планов. Для снятия ограничений, введите ноль.'
+    'prompt'=> 'Максимально возможное число заказов по данному тарифу, на каждого клиента. Используется для создания "триальных" тарифных планов. Для снятия ограничений, введите ноль',
+    'style' => 'width: 100%;',
   )
 );
 if(Is_Error($Comp))
@@ -291,15 +271,14 @@ if(Is_Error($Comp))
 $Table[] = Array('Максимальное кол-во заказов',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-
-
 $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
     'name'  => 'SortID',
     'size'  => 5,
-    'value' => $VPSScheme['SortID']
+    'value' => $VPSScheme['SortID'],
+    'style' => 'width: 100%;',
   )
 );
 if(Is_Error($Comp))
@@ -309,41 +288,14 @@ $Table[] = Array('Порядок сортировки',$Comp);
 #-------------------------------------------------------------------------------
 $Table[] = '-Общие ограничения';
 #-------------------------------------------------------------------------------
-#$Comp = Comp_Load(
-#  'Form/Input',
-#  Array(
-#    'type'  => 'text',
-#    'size'  => 10,
-#    'name'  => 'vdslimit',
-#    'value' => $VPSScheme['vdslimit']
-#  )
-#);
-#if(Is_Error($Comp))
-#  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-#$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Число VDS (для реселлеров)'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Все системы')),$Comp);
-#-------------------------------------------------------------------------------
-#$Comp = Comp_Load(
-#  'Form/Input',
-#  Array(
-#    'type'  => 'text',
-#    'size'  => 10,
-#    'name'  => 'QuotaUsers',
-#    'value' => $VPSScheme['QuotaUsers']
-#  )
-#);
-#if(Is_Error($Comp))
-#  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-#$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Число пользователей (для реселлеров)'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Все системы')),$Comp);
-#-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
     'size'  => 10,
     'name'  => 'disklimit',
-    'value' => $VPSScheme['disklimit']
+    'value' => $VPSScheme['disklimit'],
+    'style' => 'width: 100%;',
   )
 );
 if(Is_Error($Comp))
@@ -358,7 +310,8 @@ $Comp = Comp_Load(
     'size'  => 10,
     'name'  => 'ncpu',
     'prompt'=> 'количество/число процессоров выделыемых виртуальной машине',
-    'value' => $VPSScheme['ncpu']
+    'value' => $VPSScheme['ncpu'],
+    'style' => 'width: 100%;',
   )
 );
 if(Is_Error($Comp))
@@ -373,7 +326,8 @@ $Comp = Comp_Load(
     'size'  => 10,
     'name'  => 'cpu',
     'prompt'=> 'частота каждого выделенного процессора',
-    'value' => $VPSScheme['cpu']
+    'value' => $VPSScheme['cpu'],
+    'style' => 'width: 100%;',
   )
 );
 if(Is_Error($Comp))
@@ -389,7 +343,8 @@ $Comp = Comp_Load(
     'size'  => 10,
     'name'  => 'mem',
     'value' => $VPSScheme['mem'],
-    'prompt'=> 'сколько оперативной памяти выделить машине'
+    'prompt'=> 'сколько оперативной памяти выделить машине',
+    'style' => 'width: 100%;',
   )
 );
 if(Is_Error($Comp))
@@ -403,82 +358,10 @@ $Comp = Comp_Load(
   Array(
     'type'  => 'text',
     'size'  => 10,
-    'name'  => 'bmem',
-    'value' => $VPSScheme['bmem'],
-    'prompt'=> 'количество дополнительной оперативной памяти, которое может использовать виртуальная машина, при наличии свободной оперативной памяти на хост-машине'
-  )
-);
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Burstable RAM'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Все системы')),$Comp);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'size'  => 10,
-    'name'  => 'maxswap',
-    'value' => $VPSScheme['maxswap']
-  )
-);
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Свап'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Все системы')),$Comp);
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'size'  => 10,
-    'name'  => 'maxdesc',
-    'value' => $VPSScheme['maxdesc'],
-    'prompt'=> 'Максимальное количество открытых файлов'
-  )
-);
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Число дескрипторов'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Все системы')),$Comp);
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'size'  => 10,
-    'name'  => 'proc',
-    'value' => $VPSScheme['proc']
-  )
-);
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Число процессов'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Все системы')),$Comp);
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-	'Form/Input',
-	Array(
-		'type'  => 'text',
-		'size'  => 10,
-		'name'  => 'traf',
-		'value' => $VPSScheme['traf']
-	)
-);
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Месячный трафик, Mb'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Все системы')),$Comp);
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'size'  => 10,
     'name'  => 'chrate',
     'value' => $VPSScheme['chrate'],
-    'prompt'=> 'Ограничение скорости канала, в мегабитах'
+    'prompt'=> 'Ограничение скорости канала, в мегабитах',
+    'style' => 'width: 100%;',
   )
 );
 if(Is_Error($Comp))
@@ -487,25 +370,88 @@ if(Is_Error($Comp))
 $Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Скорость канала, MBit/s'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Все системы')),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Table[] = '-Ограничения для VdsManager4';
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load(
-		'Form/Input',
-		Array(
-			'type'  => 'text',
-			'name'  => 'disktempl',
-			'value' => $VPSScheme['disktempl'],
-			'prompt'=> 'Шаблон используемый при создании VPS, если тут не указано, используется соответствующее поле из настроек сервера'
-			)
-		);
+  'Form/Input',
+  Array(
+    'type'  => 'text',
+    'size'  => 10,
+    'name'  => 'bmem',
+    'value' => $VPSScheme['bmem'],
+    'prompt'=> 'количество дополнительной оперативной памяти, которое может использовать виртуальная машина, при наличии свободной оперативной памяти на хост-машине',
+    'style' => 'width: 100%;',
+  )
+);
+if(Is_Error($Comp))
+  return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Burstable RAM',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+  'Form/Input',
+  Array(
+    'type'  => 'text',
+    'size'  => 10,
+    'name'  => 'maxswap',
+    'value' => $VPSScheme['maxswap'],
+    'style' => 'width: 100%;',
+  )
+);
+if(Is_Error($Comp))
+  return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Файл подкачки (swap)',$Comp);
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+  'Form/Input',
+  Array(
+    'type'  => 'text',
+    'size'  => 10,
+    'name'  => 'maxdesc',
+    'value' => $VPSScheme['maxdesc'],
+    'prompt'=> 'Максимальное количество открытых файлов',
+    'style' => 'width: 100%;',
+  )
+);
+if(Is_Error($Comp))
+  return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Число дескрипторов',$Comp);
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+  'Form/Input',
+  Array(
+    'type'  => 'text',
+    'size'  => 10,
+    'name'  => 'proc',
+    'value' => $VPSScheme['proc'],
+    'style' => 'width: 100%;',
+  )
+);
+if(Is_Error($Comp))
+  return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Число процессов',$Comp);
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+	'Form/Input',
+	Array(
+		'type'  => 'text',
+		'size'  => 10,
+		'name'  => 'traf',
+		'value' => $VPSScheme['traf'],
+		'style' => 'width: 100%;',
+	)
+);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Шаблон диска',$Comp);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Table[] = '-Ограничения для VdsManager4';
+$Table[] = Array('Месячный трафик, Mb',$Comp);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',
-	Array('name'=>'extns'),
+	Array('name'=>'extns','style'=>'width: 100%;'),
 	Array('dnsnone'=>'нет','dnsprovider'=>'провайдера','dnsprivate'=>'собственные'),
 	$VPSScheme['extns']);
 if(Is_Error($Comp))
@@ -520,7 +466,8 @@ $Comp = Comp_Load(
     'size'  => 12,
     'name'  => 'limitpvtdns',
     'value' => $VPSScheme['limitpvtdns'],
-    'prompt'=> 'Лимит приватных DNS. Параметр зависим от возможности DnsLimits. Используется для ограничения числа создаваемых доменов.'
+    'prompt'=> 'Лимит приватных DNS. Параметр зависим от возможности DnsLimits. Используется для ограничения числа создаваемых доменов',
+    'style' => 'width: 100%;',
   )
 );
 if(Is_Error($Comp))
@@ -536,7 +483,8 @@ $Comp = Comp_Load(
     'size'  => 12,
     'name'  => 'limitpubdns',
     'value' => $VPSScheme['limitpubdns'],
-    'prompt'=> 'Лимит DNS провайдера. Параметр зависим от возможности DnsLimits. Используется для ограничения числа создаваемых доменов.'
+    'prompt'=> 'Лимит DNS провайдера. Параметр зависим от возможности DnsLimits. Используется для ограничения числа создаваемых доменов',
+    'style' => 'width: 100%;',
   )
 );
 if(Is_Error($Comp))
@@ -546,12 +494,47 @@ $Table[] = Array('Ограничение DNS провайдера',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',
-	Array('name'=>'backup'),
+	Array('name'=>'backup','style'=>'width: 100%;',),
 	Array('bnone'=>'не делается','bday'=>'ежедневно','bweek'=>'еженедельно','bmonth'=>'ежемесячно'),
 	$VPSScheme['backup']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 $Table[] = Array('Резервное копирование',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Table[] = '-Ограничения для VmManager 5';
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+		'Form/Input',
+		Array(
+			'type'  => 'text',
+			'name'  => 'blkiotune',
+			'value' => $VPSScheme['blkiotune'],
+			'prompt'=> 'Вес cgroups на дисковые операции. Позволяет понизить либо повысить приоритет по сравнению с остальными виртуальными машинами. Стандартное значение: 500',
+			'style' => 'width: 100%;',
+			)
+		);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Вес использования дискового I/O',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+  'Form/TextArea',
+  Array(
+    'name'  => 'Comment',
+    'style' => 'width:100%;',
+    'rows'  => 3
+  ),
+  $VPSScheme['Comment']
+);
+if(Is_Error($Comp))
+  return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = 'Описание тарифа';
+#-------------------------------------------------------------------------------
+$Table[] = $Comp;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Div = new Tag('DIV',Array('align'=>'right'));
