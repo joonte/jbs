@@ -45,7 +45,14 @@ foreach($Services as $Service){
 	#-------------------------------------------------------------------------------
 	# достаём тарифы
 	$Where = Array("`IsActive` = 'yes'",'`GroupID` = 1');
-	$Tariffs = DB_Select(SPrintF('%sSchemesOwners',$Service['Code']),Array('ID','Name','CostMonth','CostDay'),Array('Where'=>$Where,'SortOn'=>'SortID'));
+	#-------------------------------------------------------------------------------
+	$Columns = Array('ID','Name','CostMonth','CostDay');
+	#-------------------------------------------------------------------------------
+	if($Service['Code'] == 'ISPsw')
+		$Columns[] = 'ConsiderTypeID';
+	#-------------------------------------------------------------------------------
+	$Tariffs = DB_Select(SPrintF('%sSchemesOwners',$Service['Code']),$Columns,Array('Where'=>$Where,'SortOn'=>'SortID'));
+	#-------------------------------------------------------------------------------
 	switch(ValueOf($Tariffs)){
 	case 'error':
 		#return ERROR | @Trigger_Error(500);
@@ -85,6 +92,10 @@ foreach($Services as $Service){
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
+			if(IsSet($Tariff['ConsiderTypeID']) && $Tariff['ConsiderTypeID'] == 'Upon')
+				$Comp = SPrintF('%s (единоразово)',$Comp);
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/Clauses/TariffList]: ConsiderTypeID = %s',IsSet($Tariff['ConsiderTypeID'])?$Tariff['ConsiderTypeID']:'not set'));
 			$Tr->AddChild(new Tag('TD',Array('align'=>'left','class'=>'Standard'),new Tag('SPAN',$Comp)));
 			#-------------------------------------------------------------------------------
 			$Table[] = $Tr;
