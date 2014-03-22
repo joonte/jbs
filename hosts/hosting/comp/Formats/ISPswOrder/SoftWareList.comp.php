@@ -50,7 +50,15 @@ $ISPswList =  Array(
 			'3541:2308'	=> 'ISPmanager Lite 5 / 1 месяц',
 			'3541:2309'	=> 'ISPmanager Lite 5 / 1 год',
 			'3541:2310'	=> 'ISPmanager Lite 5 / вечная',
-			
+			// added by lissyara, 2014-03-22 in 19:23 MSK
+			'3045:1898'	=> 'VMmanager 5 Basic / триал',
+			'3045:1899'	=> 'VMmanager 5 Basic / 1 месяц',
+			'3045:1900'	=> 'VMmanager 5 Basic / 1 год',
+			'3045:1901'	=> 'VMmanager 5 Basic / вечная',
+			'2891:1814'	=> 'IPmanager 5 / триал',
+			'2891:1815'	=> 'IPmanager 5 / 1 месяц',
+			'2891:1816'	=> 'IPmanager 5 / 1 год',
+			'2891:1817'	=> 'IPmanager 5 / вечная',
 	);
 
 
