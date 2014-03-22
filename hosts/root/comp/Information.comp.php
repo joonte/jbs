@@ -11,13 +11,11 @@ Eval(COMP_INIT);
 /******************************************************************************/
 if($MessageID){
 	#-------------------------------------------------------------------------------
-	$Div = new Tag('DIV',Array('style'=>'background-color: #FEFAE4; border: 1px solid #F07D00; padding: 0px 4px 4px 4px;','id'=>$MessageID));
+	$Div = new Tag('DIV',Array('class'=>'Note','id'=>$MessageID));
 	#-------------------------------------------------------------------------------
 	$Span = new Tag('SPAN',Array('title'=>'Закрыть'),'x');
 	#-------------------------------------------------------------------------------
-	$OnClick = SPrintF('javascript:var ws=new Date(); ws.setDate(7+ws.getDate()); document.cookie="%s=hidden; path=/; expires="+ ws.toGMTString(); $(\'#%s\').slideUp();',$MessageID,$MessageID);
-	#-------------------------------------------------------------------------------
-	$Div->AddChild(new Tag('DIV',Array('style'=>'cursor: pointer; text-align: right;','OnClick'=>$OnClick),$Span));
+	$Div->AddChild(new Tag('DIV',Array('style'=>'cursor: pointer; text-align: right;','OnClick'=>SPrintF('JavaScript: HideNote("%s");',$MessageID)),$Span));
 	#-------------------------------------------------------------------------------
 	$Div->{Is_Object($Adding)?'AddChild':'AddText'}($Adding);
 	#-------------------------------------------------------------------------------
