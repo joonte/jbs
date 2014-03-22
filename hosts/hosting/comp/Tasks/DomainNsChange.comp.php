@@ -25,6 +25,13 @@ switch(ValueOf($DomainOrder)){
     #---------------------------------------------------------------------------
     $GLOBALS['TaskReturnInfo'] = Array(SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']),$DomainOrder['Ns1Name'],$DomainOrder['Ns2Name']);
     #---------------------------------------------------------------------------
+    if($DomainOrder['Ns3Name'])
+      $GLOBALS['TaskReturnInfo'][] = $DomainOrder['Ns3Name'];
+    #---------------------------------------------------------------------------
+    if($DomainOrder['Ns4Name'])
+      $GLOBALS['TaskReturnInfo'][] = $DomainOrder['Ns4Name'];
+    #---------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     $Registrator = new Registrator();
     #---------------------------------------------------------------------------
     $IsSelected = $Registrator->Select((integer)$DomainOrder['RegistratorID']);
@@ -113,10 +120,18 @@ switch(ValueOf($DomainOrder)){
                 return 300;
               case 'array':
                 #---------------------------------------------------------------
+		$Array = Array($DomainOrder['Ns1Name'],$DomainOrder['Ns2Name']);
+		#---------------------------------------------------------------
+                if($DomainOrder['Ns3Name'])
+                  $Array[] = $DomainOrder['Ns3Name'];
+                #---------------------------------------------------------------------------
+                if($DomainOrder['Ns4Name'])
+                  $Array[] = $DomainOrder['Ns4Name'];
+                #---------------------------------------------------------------------------
 		$Event = Array(
 				'UserID'	=> $DomainOrder['UserID'],
 				'PriorityID'	=> 'Billing',
-				'Text'		=> SPrintF('Именные сервера для заказа домена (%s.%s) успешно изменены на (%s, %s)',$DomainOrder['DomainName'],$DomainOrder['DomainZone'],$DomainOrder['Ns1Name'],$DomainOrder['Ns2Name']),
+				'Text'		=> SPrintF('Именные сервера для заказа домена (%s.%s) успешно изменены на (%s)',$DomainOrder['DomainName'],$DomainOrder['DomainZone'],Implode(', ',$Array)),
 				'PriorityID'	=> 'Notice'
 		              );
                 $Event = Comp_Load('Events/EventInsert',$Event);
