@@ -119,7 +119,7 @@ if(File_Exists($Logs)){
   $NoBody->AddChild($IFrame);
 }else{
   #-----------------------------------------------------------------------------
-  $Comp = Comp_Load('Information','Логи системы пока еще не ведуться.','Notice');
+  $Comp = Comp_Load('Information','Логи системы пока еще не ведутся.','Notice');
   if(Is_Error($Comp))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
