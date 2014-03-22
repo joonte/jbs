@@ -13,9 +13,15 @@ if($MessageID){
 	#-------------------------------------------------------------------------------
 	$Div = new Tag('DIV',Array('class'=>'Note','id'=>$MessageID));
 	#-------------------------------------------------------------------------------
-	$Span = new Tag('SPAN',Array('title'=>'Закрыть'),'x');
+	$Img = new Tag('IMG',Array('alt'=>'Закрыть','align'=>'center','height'=>10,'width'=>10,'src'=>'SRC:{Images/Icons/Close.gif}','border'=>0));
 	#-------------------------------------------------------------------------------
-	$Div->AddChild(new Tag('DIV',Array('style'=>'cursor: pointer; text-align: right;','OnClick'=>SPrintF('JavaScript: HideNote("%s");',$MessageID)),$Span));
+	$Button = new Tag('BUTTON',Array('class'=>'Transparent','style'=>'cursor: pointer;','onclick'=>SPrintF('JavaScript: HideNote(\'%s\');',$MessageID)),$Img);
+	#-------------------------------------------------------------------------------
+	$Div->AddChild(new Tag('DIV',Array('style'=>'text-align: right;'),$Button));
+	#-------------------------------------------------------------------------------
+	#$Span = new Tag('SPAN',Array('title'=>'Закрыть'),new Tag('B','x'));
+	#-------------------------------------------------------------------------------
+	#$Div->AddChild(new Tag('DIV',Array('style'=>'cursor: pointer; text-align: right;','OnClick'=>SPrintF('JavaScript: HideNote("%s");',$MessageID)),$Span));
 	#-------------------------------------------------------------------------------
 	$Div->{Is_Object($Adding)?'AddChild':'AddText'}($Adding);
 	#-------------------------------------------------------------------------------
