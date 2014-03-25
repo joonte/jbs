@@ -50,7 +50,7 @@ if(IsSet($GLOBALS['__USER'])){
 			#-------------------------------------------------------------------------------
 			foreach($Notes as $Note){
 				#-------------------------------------------------------------------------------
-				$MessageID = SPrintF('note_%s',SubStr(Md5(JSON_Encode($Note)),0,6));
+				$MessageID = SPrintF('note_%s_%s',$GLOBALS['__USER']['ID'],SubStr(Md5(JSON_Encode($Note)),0,6));
 				#-------------------------------------------------------------------------------
 				if(IsSet($_COOKIE[$MessageID]))
 					continue;
