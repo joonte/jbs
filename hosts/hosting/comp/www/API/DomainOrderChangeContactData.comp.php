@@ -19,7 +19,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainsOrdersOwners','*',Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainsOrdersOwners',Array('*','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`'),Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
   case 'error':
@@ -111,7 +111,7 @@ switch(ValueOf($DomainOrder)){
               return ERROR | @Trigger_Error(101);
             }
             #---------------------------------------------------------------------------
-            $ChangeContactDetail = $Registrator->ChangeContactDetail($Domain,$Person);
+            $ChangeContactDetail = $Registrator->ChangeContactDetail($Domain,$DomainOrder['DomainZone'],$Person);
             switch(ValueOf($ChangeContactDetail)){
             case 'error':
               return ERROR | @Trigger_Error(500);
