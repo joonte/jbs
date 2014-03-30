@@ -2536,7 +2536,7 @@ set @Text = '<NOBODY>
   <TR>
    <TD width="150" rowspan="6" valign="top">ИЗВЕЩЕНИЕ</TD>
    <TD width="500">
-    <SPAN>Индивидуальный предприниматель "%Executor.CompanyName%", ИНН: %Executor.Inn%, расc. счет: %Executor.BankAccount%</SPAN>
+    <SPAN>Индивидуальный предприниматель "%Executor.CompanyName%", ИНН: %Executor.Inn%, расс. счет: %Executor.BankAccount%</SPAN>
     <BR />
     <SPAN>в %Executor.BankName%, БИК: %Executor.Bik%, корр. счет: %Executor.Kor%</SPAN>
    </TD>
@@ -2584,7 +2584,7 @@ set @Text = '<NOBODY>
   <TR>
    <TD width="150" rowspan="6" valign="top">КВИТАНЦИЯ</TD>
    <TD width="500">
-    <SPAN>Индивидуальный предприниматель "%Executor.CompanyName%", ИНН: %Executor.Inn%, расc. счет: %Executor.BankAccount%</SPAN>
+    <SPAN>Индивидуальный предприниматель "%Executor.CompanyName%", ИНН: %Executor.Inn%, расс. счет: %Executor.BankAccount%</SPAN>
     <BR />
     <SPAN>в %Executor.BankName%, БИК: %Executor.Bik%, корр. счет: %Executor.Kor%</SPAN>
    </TD>
@@ -2646,7 +2646,7 @@ set @Text = '<NOBODY>
   <TR>
    <TD width="150" rowspan="6" valign="top">ИЗВЕЩЕНИЕ</TD>
    <TD width="500">
-    <SPAN>%Executor.CompanyForm% "%Executor.CompanyName%", ИНН: %Executor.Inn%, расc. счет: %Executor.BankAccount%</SPAN>
+    <SPAN>%Executor.CompanyForm% "%Executor.CompanyName%", ИНН: %Executor.Inn%, расс. счет: %Executor.BankAccount%</SPAN>
     <BR />
     <SPAN>в %Executor.BankName%, БИК: %Executor.Bik%, корр. счет: %Executor.Kor%</SPAN>
    </TD>
@@ -2694,7 +2694,7 @@ set @Text = '<NOBODY>
   <TR>
    <TD width="150" rowspan="6" valign="top">КВИТАНЦИЯ</TD>
    <TD width="500">
-    <SPAN>%Executor.CompanyForm% "%Executor.CompanyName%", ИНН: %Executor.Inn%, расc. счет: %Executor.BankAccount%</SPAN>
+    <SPAN>%Executor.CompanyForm% "%Executor.CompanyName%", ИНН: %Executor.Inn%, расс. счет: %Executor.BankAccount%</SPAN>
     <BR />
     <SPAN>в %Executor.BankName%, БИК: %Executor.Bik%, корр. счет: %Executor.Kor%</SPAN>
    </TD>
