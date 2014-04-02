@@ -50,7 +50,7 @@
     <Patterns>
      <NeedReaded>
       <Name>Необходимые для прочтения</Name>
-      <Where>`IsReaded` != 'yes'</Where>
+      <Where>`IsReaded` = 'no'</Where>
      </NeedReaded>
      <!-- ****************************************************************** -->
      <Yesterday>
