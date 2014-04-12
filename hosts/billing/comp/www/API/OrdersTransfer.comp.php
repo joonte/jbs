@@ -212,7 +212,7 @@ if(!$OrdersTransferID){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
-			return new gException('CONTRACTS_NOT_FOUND','Система не обнаружила у Вас ни одного договора. Пожалуйста, перейдите в раздел [Мой офис - Договоры] и сформируйте хотя бы 1 договор.');
+			return new gException('CONTRACTS_NOT_FOUND','Система не обнаружила у Вас ни одного договора. Пожалуйста, перейдите в раздел [Мой офис - Договора] и сформируйте хотя бы 1 договор.');
 		case 'array':
 			# No more...
 			break;

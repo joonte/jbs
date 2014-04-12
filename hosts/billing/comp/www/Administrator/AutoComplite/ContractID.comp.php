@@ -26,7 +26,7 @@ switch(ValueOf($Contracts)){
   case 'error':
     return ERROR | @Trigger_Error(500);
   case 'exception':
-    return new gException('NO_RESULT','Договоры не найдены');
+    return new gException('NO_RESULT','Договора не найдены');
   case 'array':
     #---------------------------------------------------------------------------
     $Result = Array();

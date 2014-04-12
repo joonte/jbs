@@ -12,7 +12,7 @@
   <Level>1</Level>
  </ListElement>
  <ListElement>
-  <Text>Договоры</Text>
+  <Text>Договора</Text>
   <Paths>
    <UniqID>^\/Administrator\/Contracts$</UniqID>
   </Paths>
