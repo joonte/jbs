@@ -9,7 +9,10 @@ $__args_list = Array('Params');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Settings = $Params['CreateAndSendInvoicesSettings'];
+$Config = Config();
+#-------------------------------------------------------------------------------
+$Settings = $Config['Tasks']['Types']['GC']['CreateAndSendInvoicesSettings'];
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$Settings['IsActive'])
 	return TRUE;
@@ -284,8 +287,20 @@ case 'array':
 			}
 			#-------------------------------------------------------------------------------
 			$Comp = Comp_Load('www/API/InvoiceMake',Array('ContractID'=>$Basket['ContractID'],'PaymentSystemID'=>$PaymentSystemID,'PayMessage'=>'Автоматическое выставление счёта на продление услуг'));
-			if(Is_Error($Comp))
+			#-------------------------------------------------------------------------------
+			switch(ValueOf($Comp)){
+			case 'error':
 				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				break 2;
+			case 'array':
+				break;
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
+			#-------------------------------------------------------------------------------
+			#if(Is_Error($Comp))
+			#	return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[comp/www/CreateAndSendInvoices]: юзеру (%s) выписан счёт (%s)',$Order['Email'],$Comp['InvoiceID']));
 			#-------------------------------------------------------------------------------
