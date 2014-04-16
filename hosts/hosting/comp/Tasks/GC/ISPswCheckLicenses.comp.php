@@ -194,7 +194,7 @@ case 'exception':
 	break;
 case 'array':
 	#---------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'][] = SPrintF('Local licenses: %u',SizeOf($ISPswLicenses));
+	$GLOBALS['TaskReturnInfo'] = Array($GLOBALS['TaskReturnInfo'],SPrintF('Local licenses: %u',SizeOf($ISPswLicenses)));
 	#---------------------------------------------------------------------------
 	foreach($ISPswLicenses as $ISPswLicense){
 		#-------------------------------------------------------------------------------
