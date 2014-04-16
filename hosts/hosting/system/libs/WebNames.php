@@ -585,7 +585,7 @@ function WebNames_Get_List_Domains($Settings){
     # Domain f-box59.ru; Status N; CreationDate 2010-02-23; ExpirationDate 2012-02-23; FutureExpDate ;
     $DomainInfo = Explode(" ",$Domain);
     # добавляем домен в выхлоп, если он есть вообще
-    if(StrLen(Trim($DomainInfo[1])) > 3){
+    if(IsSet($DomainInfo[1]) && StrLen(Trim($DomainInfo[1])) > 3){
       $Out[] = Str_Replace(';','',StrToLower(Trim($DomainInfo[1])));
     }
   }
