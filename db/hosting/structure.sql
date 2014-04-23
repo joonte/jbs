@@ -199,7 +199,7 @@ CREATE TABLE `HostingSchemes` (
   `QuotaEmailDomains` int(3) default '0',
   `QuotaUsersDBs` int(3) default '0',
   `QuotaCPU` float(7) default '0',
-  `MaxExecutionTime` float(7,2) default '0.00',
+  `MaxExecutionTime` INT(9) default '0.00',
   `QuotaMEM` float(7,2) default '0.00',
   `QuotaPROC` int(4) default '0',
   `QuotaMPMworkers` INT(2) NOT NULL DEFAULT '1',
