@@ -22,12 +22,14 @@ $Request = Array('date_req'=>SPrintF('%s/%s/%s',Date('d'),Date('m'),Date('Y')));
 #-------------------------------------------------------------------------------
 $Http = Array('Address'=>'www.cbr.ru','Host'=>'www.cbr.ru','Port'=>'80');
 #-------------------------------------------------------------------------------
-$Response = Http_Send('/scripts/XML_daily.asp',$Http,$Request);
+#$Response = Http_Send('/scripts/XML_daily.asp',$Http,$Request);
+$Response = Http_Send('/scripts/XML_daily_eng.asp',$Http,$Request);
 if(Is_Error($Response))
 	return TRUE;
 #-------------------------------------------------------------------------------
 if(!Preg_Match('/HTTP\/1\.1\s200/',$Response['Heads']))
 	return TRUE;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $XML = String_XML_Parse($Response['Body']);
 if(Is_Exception($XML))
