@@ -65,7 +65,7 @@ case 'array':
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Select',Array('name'=>'TargetGroupID'),$Options,$Ticket['TargetGroupID']);
+	$Comp = Comp_Load('Form/Select',Array('name'=>'TargetGroupID','style'=>'width:100%;'),$Options,$Ticket['TargetGroupID']);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -79,7 +79,7 @@ default:
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'PriorityID'),$Config['Edesks']['Priorities'],$Ticket['PriorityID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'PriorityID','style'=>'width:100%;'),$Config['Edesks']['Priorities'],$Ticket['PriorityID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ case 'array':
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Select',Array('name'=>'TargetUserID'),$Options,$Ticket['TargetUserID']);
+	$Comp = Comp_Load('Form/Select',Array('name'=>'TargetUserID','style'=>'width:100%;'),$Options,$Ticket['TargetUserID']);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -123,7 +123,7 @@ $Positions = $Config['Edesks']['Flags'];
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
 		'Form/Select',
-		Array('name'=>'Flags','id'=>'Flags'),
+		Array('name'=>'Flags','id'=>'Flags','style'=>'width:100%;'),
 		$Positions,
 		$Ticket['Flags']
 );
@@ -138,7 +138,7 @@ $Comp = Comp_Load(
 		Array(
 			'type'   => 'text',
 			'name'   => 'NotifyEmail',
-			'size'   => 30,
+			'style'  => 'width:100%;',
 			'value'  => $Ticket['NotifyEmail'],
 			'prompt' => 'Адрес на который будут отсылаться уведомления о новых ответах в тикете. Если в поле стоит почтовый адрес, то уведомления на адрес того на кого назнечен тикет не отсылаются. Допускается ввод нескольких адресов, разделённых запятыми'
 			)

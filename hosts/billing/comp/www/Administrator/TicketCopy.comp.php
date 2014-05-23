@@ -59,7 +59,7 @@ $Comp = Comp_Load(
 		Array(
 			'type'   => 'text',
 			'name'   => 'Email',
-			'size'   => 30,
+			'style'  => 'width:100%;',
 			'value'  => '',
 			'prompt' => 'Почтовый адрес (логин в биллинге) пользователя'
 			)
@@ -76,7 +76,7 @@ $Positions = $Config['Edesks']['Flags'];
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
 		'Form/Select',
-		Array('name'=>'Flags','id'=>'Flags'),
+		Array('name'=>'Flags','id'=>'Flags','style'=>'width:100%;'),
 		$Positions,
 		'CloseOnSee'
 		);
@@ -100,7 +100,7 @@ case 'array':
 	foreach($Users as $User)
 		$Options[$User['ID']] = SPrintF('%s (%s)',$User['Name'],$User['Email']);
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Select',Array('name'=>'FromID','id'=>'FromID'),$Options,100);
+	$Comp = Comp_Load('Form/Select',Array('name'=>'FromID','id'=>'FromID','style'=>'width:100%;'),$Options,100);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
