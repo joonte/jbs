@@ -368,7 +368,7 @@ if(!IsSet($Links[$LinkID])){
 $SMS = &$Links[$LinkID];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsMessage = $SMS->send((integer) $Mobile, $Message,$ServerSettings['Params']['Sender']);
+$IsMessage = $SMS->send($Mobile, $Message,$ServerSettings['Params']['Sender']);
 switch (ValueOf($IsMessage)) {
 case 'false':
 	#-------------------------------------------------------------------------------
