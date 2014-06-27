@@ -35,7 +35,7 @@ function IspManager4_Get_Domains($Settings){
 			);
 	#-------------------------------------------------------------------------------
 	# достаём список пользователей/реселлеров
-	$Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
+	$Response = Http_Send('/manager/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ function IspManager4_Get_Domains($Settings){
 	$Users = Array();
 	#-------------------------------------------------------------------------------
 	# достаём список www доменов
-	$Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'wwwdomain'));
+	$Response = Http_Send('/manager/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'wwwdomain'));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -125,7 +125,7 @@ function IspManager4_Get_Domains($Settings){
 	#-----------------------------------------------------------------------------
 	#-----------------------------------------------------------------------------
 	# достаём DNS домены
-	$Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'domain'));
+	$Response = Http_Send('/manager/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'domain'));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -172,7 +172,7 @@ function IspManager4_Get_Domains($Settings){
 	#-----------------------------------------------------------------------------
 	#-----------------------------------------------------------------------------
 	# достаём Email домены
-	$Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'emaildomain'));
+	$Response = Http_Send('/manager/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'emaildomain'));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -241,7 +241,7 @@ function IspManager4_Get_Users($Settings){
     'IsLoggin' => FALSE
   );
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
+  $Response = Http_Send('/manager/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
   if(Is_Error($Response))
     return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -273,7 +273,7 @@ function IspManager4_Get_Users($Settings){
   }
   #-----------------------------------------------------------------------------
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'reseller'));
+  $Response = Http_Send('/manager/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'reseller'));
   if(Is_Error($Response))
     return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -301,7 +301,7 @@ function IspManager4_Get_Users($Settings){
   }
   #-----------------------------------------------------------------------------
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'mgradmin'));
+  $Response = Http_Send('/manager/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'mgradmin'));
   if(Is_Error($Response))
     return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -363,7 +363,7 @@ function IspManager4_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
                     'elid'          => $Login
 		   );
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/manager/ispmgr',$Http,$Request);
+  $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
   if(Is_Error($Response))
     return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -433,7 +433,7 @@ function IspManager4_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
     $Request['userlimit'] = $HostingScheme['QuotaUsers']; # Пользователи
   }
   
-  $Response = Http_Send('/manager/ispmgr',$Http,$Request);
+  $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[IspManager4_Create]: не удалось соедениться с сервером');
   
@@ -458,7 +458,7 @@ function IspManager4_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
             'func'     => 'restart'
           );
           #-----------------------------------------------------------------------------
-          $Response = Http_Send('/manager/ispmgr',$Http,$Request);
+          $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
           if(Is_Error($Response))
             return ERROR | @Trigger_Error('[IspManager4_Create]: не удалось соедениться с сервером');
   }
@@ -483,7 +483,7 @@ function IspManager4_Active($Settings,$Login,$IsReseller = FALSE){
     'Hidden'   => $authinfo
   );
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.enable':'user.enable','elid'=>$Login));
+  $Response = Http_Send('/manager/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.enable':'user.enable','elid'=>$Login));
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[IspManager4_Activate]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -508,7 +508,7 @@ function IspManager4_Active($Settings,$Login,$IsReseller = FALSE){
             'func'     => 'restart'
           );
           #-----------------------------------------------------------------------------
-          $Response = Http_Send('/manager/ispmgr',$Http,$Request);
+          $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
           if(Is_Error($Response))
             return ERROR | @Trigger_Error('[IspManager4_Activate]: не удалось соедениться с сервером');
   }
@@ -533,7 +533,7 @@ function IspManager4_Suspend($Settings,$Login,$IsReseller = FALSE){
     'Hidden'   => $authinfo
   );
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.disable':'user.disable','elid'=>$Login));
+  $Response = Http_Send('/manager/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.disable':'user.disable','elid'=>$Login));
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[IspManager4_Suspend]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -558,7 +558,7 @@ function IspManager4_Suspend($Settings,$Login,$IsReseller = FALSE){
             'func'     => 'restart'
           );
           #-----------------------------------------------------------------------------
-          $Response = Http_Send('/manager/ispmgr',$Http,$Request);
+          $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
           if(Is_Error($Response))
             return ERROR | @Trigger_Error('[IspManager4_Suspend]: не удалось соедениться с сервером');
   }
@@ -592,7 +592,7 @@ function IspManager4_Delete($Settings,$Login,$IsReseller = FALSE){
                     'elid'          => $Login
 		   );
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/manager/ispmgr',$Http,$Request);
+  $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
   if(Is_Error($Response))
     return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -619,7 +619,7 @@ function IspManager4_Delete($Settings,$Login,$IsReseller = FALSE){
 			'su'            => $Login
 		);
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/manager/ispmgr',$Http,$Request);
+	$Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -643,7 +643,7 @@ function IspManager4_Delete($Settings,$Login,$IsReseller = FALSE){
 					'elid'		=> $User['name']
 				);
 			#-----------------------------------------------------------------------------
-			$Response = Http_Send('/manager/ispmgr',$Http,$Request);
+			$Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
 			if(Is_Error($Response))
 				return ERROR | @Trigger_Error('[IspManager4_Delete]: не удалось соедениться с сервером');
 			# я так думаю, неважно чё он там ответил, если ответил...
@@ -654,7 +654,7 @@ function IspManager4_Delete($Settings,$Login,$IsReseller = FALSE){
 	#-----------------------------------------------------------------------------
   }
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.delete':'user.delete','elid'=>$Login));
+  $Response = Http_Send('/manager/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.delete':'user.delete','elid'=>$Login));
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[IspManager4_Delete]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -679,7 +679,7 @@ function IspManager4_Delete($Settings,$Login,$IsReseller = FALSE){
             'func'     => 'restart'
           );
           #-----------------------------------------------------------------------------
-          $Response = Http_Send('/manager/ispmgr',$Http,$Request);
+          $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
           if(Is_Error($Response))
             return ERROR | @Trigger_Error('[IspManager4_Delete]: не удалось соедениться с сервером');
   }
@@ -753,7 +753,7 @@ function IspManager4_Scheme_Change($Settings,$Login,$HostingScheme){
   else
     $Request['userlimit'] = $HostingScheme['QuotaUsers']; # Пользователи
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/manager/ispmgr',$Http,$Request);
+  $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[IspManager4_Scheme_Change]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -778,7 +778,7 @@ function IspManager4_Scheme_Change($Settings,$Login,$HostingScheme){
             'func'     => 'restart'
           );
           #-----------------------------------------------------------------------------
-          $Response = Http_Send('/manager/ispmgr',$Http,$Request);
+          $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
           if(Is_Error($Response))
             return ERROR | @Trigger_Error('[IspManager4_Scheme_Change]: не удалось соедениться с сервером');
   }
@@ -817,7 +817,7 @@ function IspManager4_Password_Change($Settings,$Login,$Password,$IsReseller = FA
     'confirm'  => $Password,
   );
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/manager/ispmgr',$Http,$Request);
+  $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[IspManager4_Password_Change]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -854,7 +854,7 @@ function IspManager4_Get_Email_Boxes($Settings){
     'Hidden'   => $authinfo
   );
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'emaildomain'));
+  $Response = Http_Send('/manager/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'emaildomain'));
   if(Is_Error($Response))
     return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -889,7 +889,7 @@ function IspManager4_Get_Email_Boxes($Settings){
     $Domains[$Domain['name']] = Array('Owner'=>$Owner,'Boxes'=>Array());
   }
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'email'));
+  $Response = Http_Send('/manager/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'email'));
   if(Is_Error($Response))
     return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -971,7 +971,7 @@ function IspManager4_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
                 'owner'         => $Login,
                 'type'          => StrToLower($AddressType)
         );
-        $Response = Http_Send('/manager/ispmgr', $Http, $Request);
+        $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
         if(Is_Error($Response))
                 return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
         #-----------------------------------------------------------------------------
@@ -1028,7 +1028,7 @@ function IspManager4_DeleteIP($Settings,$ExtraIP){
                 'out'           => 'xml',
                 'elid'          => $ExtraIP
         );
-        $Response = Http_Send('/manager/ispmgr',$Http,$Request);
+        $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
         if(Is_Error($Response))
                 return ERROR | @Trigger_Error('[IspManager4_DeleteIP]: не удалось соедениться с сервером');
         $Response = Trim($Response['Body']);
@@ -1050,7 +1050,7 @@ function IspManager4_DeleteIP($Settings,$ExtraIP){
                         'out'           => 'xml',
                         'su'            => $Settings['UserLogin']
                 );
-                $Response = Http_Send('/manager/ispmgr',$Http,$Request);
+                $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
                 if(Is_Error($Response))
                         return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 		#-----------------------------------------------------------------------------
@@ -1085,7 +1085,7 @@ function IspManager4_DeleteIP($Settings,$ExtraIP){
                                         'su'            => $Settings['UserLogin']
                                 );
 				#-----------------------------------------------------------------------------
-                                $Response = Http_Send('/manager/ispmgr',$Http,$Request);
+                                $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
                                 if(Is_Error($Response))
                                         return ERROR | @Trigger_Error('[IspManager4_DeleteIP]: не удалось соедениться с сервером');
 				#-----------------------------------------------------------------------------
@@ -1118,7 +1118,7 @@ function IspManager4_DeleteIP($Settings,$ExtraIP){
                                 # change IP to shared
                                 $Request['ip']  = $Settings['IP'];
 				#-----------------------------------------------------------------------------
-                                $Response = Http_Send('/manager/ispmgr',$Http,$Request);
+                                $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
                                 if(Is_Error($Response))
                                         return ERROR | @Trigger_Error('[IspManager4_DeleteIP]: не удалось соедениться с сервером');
 				#-----------------------------------------------------------------------------
@@ -1153,7 +1153,7 @@ function IspManager4_DeleteIP($Settings,$ExtraIP){
         );
         #Debug(var_export($Settings, true));
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/manager/ispmgr',$Http,$Request);
+	$Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[IspManager4_DeleteIP]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -1193,7 +1193,7 @@ function IspManager4_Get_CPU_Usage($Settings,$TFilter){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# достаём список пользователей/реселлеров
-	$Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
+	$Response = Http_Send('/manager/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -1241,7 +1241,7 @@ function IspManager4_Get_CPU_Usage($Settings,$TFilter){
 			'tfilter'	=> $TFilter
 			);
 	#-------------------------------------------------------------------------------
-        $Response = Http_Send('/manager/ispmgr',$Http,$Request);
+        $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
         if(Is_Error($Response))
                 return ERROR | @Trigger_Error('[IspManager4_Get_CPU_Usage]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -1331,7 +1331,7 @@ function IspManager4_Get_Disk_Usage($Settings){
 	# перебираем функции
 	foreach(Array('user','reseller') as $Func){
 		#-----------------------------------------------------------------------------
-		$Response = Http_Send('/manager/ispmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$Func));
+		$Response = Http_Send('/manager/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$Func));
 		if(Is_Error($Response))
 			return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 		#-----------------------------------------------------------------------------

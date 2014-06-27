@@ -51,7 +51,7 @@ function VmManager5_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 			'confirm'		=> $VPSOrder['Password'],
 			);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/vmmgr',$Http,$Request);
+	$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_Create]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -99,7 +99,7 @@ function VmManager5_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 			'vsize'			=> $VPSScheme['disklimit'],
 			);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/vmmgr',$Http,$Request);
+	$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_Create]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -129,7 +129,7 @@ function VmManager5_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 			'elid'			=> $VmID,
 			);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/vmmgr',$Http,$Request);
+	$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_Create]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -179,7 +179,7 @@ function VmManager5_Active($Settings,$Login){
 			'Hidden'   => $authinfo
 			);
 	#------------------------------------------------------------------------------
-	$Response = Http_Send('/vmmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
+	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_Active]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -201,7 +201,7 @@ function VmManager5_Active($Settings,$Login){
 		if(!IsSet($VM['id']))
 			continue;
 		#-------------------------------------------------------------------------------
-		$Response = Http_Send('/vmmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.start','elid'=>$VM['id']));
+		$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.start','elid'=>$VM['id']));
 		if(Is_Error($Response))
 			return ERROR | @Trigger_Error('[VmManager5_Active]: не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
@@ -243,7 +243,7 @@ function VmManager5_Suspend($Settings,$Login,$VPSScheme){
 			'Hidden'   => $authinfo
 			);
 	#------------------------------------------------------------------------------
-	$Response = Http_Send('/vmmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
+	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_Suspend]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -265,7 +265,7 @@ function VmManager5_Suspend($Settings,$Login,$VPSScheme){
 		if(!IsSet($VM['id']))
 			continue;
 		#-------------------------------------------------------------------------------
-		$Response = Http_Send('/vmmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.stop','elid'=>$VM['id']));
+		$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.stop','elid'=>$VM['id']));
 		if(Is_Error($Response))
 			return ERROR | @Trigger_Error('[VmManager5_Suspend]: не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
@@ -307,7 +307,7 @@ function VmManager5_Delete($Settings,$Login){
 			'Hidden'   => $authinfo
 			);
 	#------------------------------------------------------------------------------
-	$Response = Http_Send('/vmmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
+	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_Delete]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -329,7 +329,7 @@ function VmManager5_Delete($Settings,$Login){
 		if(!IsSet($VM['id']))
 			continue;
 		#-------------------------------------------------------------------------------
-		$Response = Http_Send('/vmmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.delete','elid'=>$VM['id']));
+		$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.delete','elid'=>$VM['id']));
 		if(Is_Error($Response))
 			return ERROR | @Trigger_Error('[VmManager5_Delete]: не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
@@ -349,7 +349,7 @@ function VmManager5_Delete($Settings,$Login){
 	}
 	#------------------------------------------------------------------------------
 	#------------------------------------------------------------------------------
-	$Response = Http_Send('/vmmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
+	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_Delete]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -378,7 +378,7 @@ function VmManager5_Delete($Settings,$Login){
 	if(!IsSet($VmUserID))
 		return new gException('VmManager5_Delete',SPrintF('Не удалось найти пользователя (%s)',$Login));
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/vmmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user.delete','elid'=>$VmUserID));
+	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user.delete','elid'=>$VmUserID));
 	#-------------------------------------------------------------------------------
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_Delete]: не удалось соедениться с сервером');
@@ -422,7 +422,7 @@ function VmManager5_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 			'Hidden'   => $authinfo
 			);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/vmmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$VPSOrder['Login']));
+	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$VPSOrder['Login']));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_Delete]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -460,7 +460,7 @@ function VmManager5_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 				'elid'			=> $VM['id'],
 				);
 		#-------------------------------------------------------------------------------
-		$Response = Http_Send('/vmmgr',$Http,$Request);
+		$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
 		if(Is_Error($Response))
 			return ERROR | @Trigger_Error('[VmManager5_Scheme_Change]: не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
@@ -479,7 +479,7 @@ function VmManager5_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		# меняем размер диска
-		$Response = Http_Send('/vmmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.volume','elid'=>$VM['id']));
+		$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.volume','elid'=>$VM['id']));
 		if(Is_Error($Response))
 			return ERROR | @Trigger_Error('[VmManager5_Delete]: не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
@@ -500,7 +500,7 @@ function VmManager5_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 			if(!IsSet($Volume['id']))
 				continue;
 			#-------------------------------------------------------------------------------
-			$Response = Http_Send('/vmmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.volume.edit','size'=>$VPSScheme['disklimit'],'elid'=>$Volume['id'],'plid'=>$VM['id'],'sok'=>'ok'));
+			$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.volume.edit','size'=>$VPSScheme['disklimit'],'elid'=>$Volume['id'],'plid'=>$VM['id'],'sok'=>'ok'));
 			#-------------------------------------------------------------------------------
 			$Response = Trim($Response['Body']);
 			#-------------------------------------------------------------------------------
@@ -551,7 +551,7 @@ function VmManager5_Password_Change($Settings,$Login,$Password,$VPSOrder){
 			'Hidden'	=> SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
 			);
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/vmmgr',$Http,$Request);
+	$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_Password_Change]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -614,7 +614,7 @@ function VmManager5_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
         );
         #Debug(var_export($Settings, true));
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/vmmgr',$Http,$Request);
+	$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_AddIP]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -671,7 +671,7 @@ function VmManager5_DeleteIP($Settings,$ExtraIP){
         );
         #Debug(var_export($Settings, true));
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/vmmgr',$Http,$Request);
+	$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_DeleteIP]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -722,7 +722,7 @@ function VmManager5_MainUsage($Settings){
         );
         #Debug(var_export($Settings, true));
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/vmmgr',$Http,$Request);
+	$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_MainUsage]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -781,7 +781,7 @@ function VmManager5_CheckIsActive($Settings,$Login){
 		'Hidden'   => $authinfo
 	);
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/vmmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm'));
+	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm'));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_CheckIsActive]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -831,7 +831,7 @@ function VmManager5_Reboot($Settings,$Login){
 			'Hidden'   => $authinfo
 			);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/vmmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
+	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_Reboot]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -854,7 +854,7 @@ function VmManager5_Reboot($Settings,$Login){
 			continue;
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Response = Http_Send('/vmmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.restart','elid'=>$VM['id']));
+		$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.restart','elid'=>$VM['id']));
 		if(Is_Error($Response))
 			return ERROR | @Trigger_Error('[VmManager5_Reboot]: не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
@@ -899,7 +899,7 @@ function VmManager5_Get_Users($Settings){
 		'Hidden'   => $authinfo
 	);
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/vmmgr',$Http,Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
+	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_Get_Users]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
