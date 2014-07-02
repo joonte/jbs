@@ -515,6 +515,7 @@ CREATE TABLE `Services` (
   `NameShort` CHAR(32) default '', 
   `Code` char(255) default 'Default',
   `OperationSign` char(1) NOT NULL DEFAULT '-',
+  `PartnersRewardPercent` DOUBLE NOT NULL DEFAULT '-1',
   `Item` char(255) default '',
   `Measure` char(30) default '',
   `ConsiderTypeID` char(30) default 'Upon',

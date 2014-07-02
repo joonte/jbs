@@ -98,7 +98,7 @@ $Options = Array();
 foreach($ServicesGroups as $ServiceGroup)
   $Options[$ServiceGroup['ID']] = $ServiceGroup['Name'];
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ServicesGroupID'),$Options,$Service['ServicesGroupID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ServicesGroupID','style'=>'width:240px;'),$Options,$Service['ServicesGroupID']);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -186,7 +186,7 @@ $Options = Array();
 foreach($Types as $TypeID=>$Type)
   $Options[$TypeID] = $Type['Name'];
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ConsiderTypeID'),$Options,$Service['ConsiderTypeID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ConsiderTypeID','style'=>'width:240px;',),$Options,$Service['ConsiderTypeID']);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -206,6 +206,7 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array('Стоимость подключения',$Comp);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Attribs = Array('name'=>'Cost','value'=>SPrintF('%01.2f',$Service['Cost']));
 #-------------------------------------------------------------------------------
 if($IsProtected)
@@ -216,6 +217,25 @@ if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Цена единицы',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Config = Config();
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+		'Form/Input',
+		Array(
+			'type'  => 'text',
+			'name'  => 'PartnersRewardPercent',
+			'size'  => 30,
+			'value' => $Service['PartnersRewardPercent'],
+			'prompt'=> SPrintF('Процент начисляемый по партнёрской программе, при оплате этой услуги. 0 - не начислять, -1 - начислять процент используемый по умолчанию (%s%%)',$Config['Tasks']['Types']['CaclulatePartnersReward']['PartnersRewardPercent'])
+			)
+		);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Партнёрские отчисления, %',$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes'));
 if(Is_Error($Comp))

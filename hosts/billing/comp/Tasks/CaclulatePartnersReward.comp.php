@@ -23,7 +23,7 @@ if(!$Settings['IsActive'])
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # vars
-$total_summ = 0;
+$TotalSumm = 0;
 $MessageToAdmins = "Начисления по реферальной программе за прошлый месяц:\n\n";
 $MonthsNames = Array('Декабрь','Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь');
 $PreviousTime = MkTime(4,0,0,Date('n')-1,5,Date('Y'));
@@ -67,11 +67,35 @@ case 'array':
 			break;
 		case 'array':
 			#-------------------------------------------------------------------------------
-			Debug("[comp/Tasks/CaclulatePartnersReward]: For owner [" . $Owner['Email'] . "] found #" . $Contracts['ID'] . " contract with type " . $Contracts['TypeID']);
+			Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: For owner [%s] found #%u contract with type %s',$Owner['Email'],$Contracts['ID'],$Contracts['TypeID']));
+			#-------------------------------------------------------------------------------
+			# выбираем значения партнёрских процентов по каждой услуге
+			# требует такого патча на базу:
+			#-------------------------------------------------------------------------------
+			$PartnerPercents = Array();
+			#-------------------------------------------------------------------------------
+			$Services = DB_Select('Services','*');
+			switch(ValueOf($Services)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				return ERROR | @Trigger_Error(400);
+			case 'array':
+				#-------------------------------------------------------------------------------
+				foreach($Services as $Service)
+					$PartnerPercents[$Service['ID']] = ($Service['PartnersRewardPercent'] < 0)?$Settings['PartnersRewardPercent']:$Service['PartnersRewardPercent'];
+				#------------------------------------------------------------------------------- 
+				break;
+				#-------------------------------------------------------------------------------
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
 			$MessageToUser = "За прошедший месяц, вам перечислено от ваших рефералов:\n\n";
 			$TotalSummToUser = 0;
-			# Select depend users complites works
 			#-------------------------------------------------------------------------------
+			# Select depend users complites works
 			$Query = "SELECT `WorksCompliteOwners`.* FROM `WorksCompliteOwners`,`Users` WHERE `Users`.`ID`=`WorksCompliteOwners`.`UserID` AND `Users`.`OwnerID`=%s AND `Month`=%s";
 			$Result = DB_Query(SPrintF($Query, $Owner['DistinctOwnerID'], $PreviousMonth));
 			#-------------------------------------------------------------------------------
@@ -85,9 +109,9 @@ case 'array':
 			foreach($Rows as $Row){
 				Debug("[comp/Tasks/CaclulatePartnersReward]: Processing user #" . $Row['UserID'] . " with owner [" . $Owner['Email'] . "]");
 				# calculate user Reward
-				$Reward = round(($Row['Amount'] * $Row['Cost'] - $Row['Amount'] * $Row['Cost'] * $Row['Discont']) * $Settings['PartnersRewardPercent'] / 100, 2);
+				$Reward = Round(($Row['Amount'] * $Row['Cost'] - $Row['Amount'] * $Row['Cost'] * $Row['Discont']) * $PartnerPercents[$Row['ServiceID']] / 100, 2); 
 				# to admins
-				$total_summ = $total_summ + $Reward;
+				$TotalSumm = $TotalSumm + $Reward;
 				#-------------------------------------------------------------------------------
 				if($Reward > 0){
 					Debug("[comp/Tasks/CaclulatePartnersReward]: Reward for [" . $Owner['Email'] . "] from #" . $Row['UserID'] . ' = ' . $Reward);
@@ -155,11 +179,12 @@ case 'array':
 default:
 	return ERROR | @Trigger_Error(101);
 }
-
-$MessageToAdmins .= "\nИтого: " . SPrintF('%01.2f',$total_summ) . " рублей";
-Debug("[comp/Tasks/CaclulatePartnersReward]: Total reward summ = " . $total_summ);
-Debug("[comp/Tasks/CaclulatePartnersReward]: Admin message = " . $MessageToAdmins);
-
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+$MessageToAdmins .= SPrintF("\nИтого: %01.2f рублей", $TotalSumm);
+Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: Total reward summ = %s',$TotalSumm));
+Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: Admin message = %s',$MessageToAdmins));
+#-------------------------------------------------------------------
 # search all personal
 $Entrance = Tree_Entrance('Groups',3000000);
 #-------------------------------------------------------------------
@@ -187,7 +212,7 @@ case 'array':
 			# select real users
 			if($Employer['ID'] > 2000 || $Employer['ID'] == 100){
 				Debug("[comp/Tasks/CaclulatePartnersReward]: Need send messages to #" . (integer)$Employer['ID']);
-				$IsSend = NotificationManager::sendMsg(new Message('PartnersReneward',(integer)$Employer['ID'],Array('Theme'=>$Theme,'Message'=>$MessageToAdmins,'Summ'=>SPrintF('%01.2f',$total_summ))));
+				$IsSend = NotificationManager::sendMsg(new Message('PartnersReneward',(integer)$Employer['ID'],Array('Theme'=>$Theme,'Message'=>$MessageToAdmins,'Summ'=>SPrintF('%01.2f',$TotalSumm))));
 				#---------------------------------------------------------
 				switch(ValueOf($IsSend)){
 				case 'error':
