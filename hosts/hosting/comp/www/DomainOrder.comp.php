@@ -159,6 +159,13 @@ if($StepID){
           $Form->AddChild($Comp);
           #---------------------------------------------------------------------
           $Table[] = Array('Доменное имя',SPrintF('%s.%s | %s',$DomainName,$DomainScheme['Name'],$DomainScheme['RegistratorName']));
+	  #---------------------------------------------------------------------
+	  #---------------------------------------------------------------------
+          $Comp = Comp_Load('Form/Input',Array('name'=>'IsPrivateWhoIs','type'=>'checkbox','value'=>'yes','checked'=>'yes','prompt'=>'Если галочка установлена, то в тех доменных зонах, где поддерживается полное или частичное сокрытие данных владельца домена (ru,su,рф,com ....), они будут скрыты при просмотре информации о домене в сервисе WhoIs.'));
+          if(Is_Error($Comp))
+            return ERROR | @Trigger_Error(500);
+	  $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPrivateWhoIs\'); return false;'),'Скрыть данные в WhoIs'),$Comp);
+	  #---------------------------------------------------------------------
           #---------------------------------------------------------------------
           $Config = Config();
           #---------------------------------------------------------------------
@@ -168,7 +175,7 @@ if($StepID){
             #-------------------------------------------------------------------
             $Columns = Array('ID','Login','(SELECT `Address` FROM `HostingServers` WHERE `HostingServers`.`ID` = `ServerID`) as `Address`','(SELECT `Ns1Name` FROM `HostingServers` WHERE `HostingServers`.`ID` = `ServerID`) as `Ns1Name`','(SELECT `Ns2Name` FROM `HostingServers` WHERE `HostingServers`.`ID` = `ServerID`) as `Ns2Name`');
             #-------------------------------------------------------------------
-            $HostingOrders = DB_Select('HostingOrdersOwners',$Columns,Array('Where'=>SPrintF('`UserID` = %u',$__USER['ID'])));
+            $HostingOrders = DB_Select('HostingOrdersOwners',$Columns,Array('Where'=>Array(SPrintF('`UserID` = %u',$__USER['ID']),"`StatusID` IN ('Active','Suspended','Waiting')")));
             #-------------------------------------------------------------------
             switch(ValueOf($HostingOrders)){
               case 'error':
@@ -178,7 +185,7 @@ if($StepID){
               break;
               case 'array':
                 #---------------------------------------------------------------
-                $Table[] = new Tag('TD',Array('colspan'=>2,'width'=>300,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),'Если данный домен будет использоваться совместно с заказом хостинга, Вы можете указать это следующим параметром.');
+                $Table[] = new Tag('TD',Array('colspan'=>2,'width'=>300,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),'Если данный домен будет использоваться совместно с заказом хостинга, выберите нужный заказ из списка:');
                 #---------------------------------------------------------------
                 $Options = Array('Не использовать');
                 #---------------------------------------------------------------
@@ -206,12 +213,6 @@ if($StepID){
             }
             #-------------------------------------------------------------------
             $Table[] = new Tag('TD',Array('colspan'=>2,'width'=>300,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),'Для успешной регистрации, домен должен быть настроен на используемых именных серверах. Для этого в панели управления хостингом необходимо добавить домен как дополнительный или паркованный.');
-            #-------------------------------------------------------------------
-	    $Comp = Comp_Load('Form/Input',Array('name'=>'IsPrivateWhoIs','type'=>'checkbox','value'=>'yes','checked'=>'yes','prompt'=>'Если галочка установлена, то в тех доменных зонах, где поддерживается полное или частичное сокрытие данных владельца домена (ru,su,рф,com ....), они будут скрыты при просмотре информации о домене в сервисе WhoIs.'));
-            if(Is_Error($Comp))
-              return ERROR | @Trigger_Error(500);
-            #-------------------------------------------------------------------
-            $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPrivateWhoIs\'); return false;'),'Скрыть данные в WhoIs'),$Comp);
             #-------------------------------------------------------------------
             $Messages = Messages();
             #-------------------------------------------------------------------
