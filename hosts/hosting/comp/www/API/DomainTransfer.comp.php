@@ -70,7 +70,7 @@ switch(ValueOf($Contract)){
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
             if($Count)
-              return new gException('DOMAIN_ORDER_EXISTS','Домен уже находиться в списке заказов');
+              return new gException('DOMAIN_ORDER_EXISTS','Домен уже находится в списке заказов');
             #-------------------------------------------------------------------
             $WhoIs = WhoIs_Check($DomainName,$DomainScheme['Name']);
             #-------------------------------------------------------------------

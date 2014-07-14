@@ -79,7 +79,7 @@ switch(ValueOf($DomainScheme)){
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
     if($Count)
-      return new gException('DOMAIN_ORDER_EXISTS','Домен уже находиться в вашем списке заказов');
+      return new gException('DOMAIN_ORDER_EXISTS','Домен уже находится в вашем списке заказов');
     #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
     $Count = DB_Count('DomainsOrdersOwners',Array('Where'=>SPrintF("`DomainName` = '%s' AND (SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) = '%s'",$DomainName,$DomainScheme['Name'])));
@@ -87,7 +87,7 @@ switch(ValueOf($DomainScheme)){
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
     if($Count)
-      return new gException('DOMAIN_ORDER_EXISTS','Домен уже находиться в списке заказов другого пользователя');
+      return new gException('DOMAIN_ORDER_EXISTS','Домен уже находится в списке заказов другого пользователя');
     #---------------------------------------------------------------------------
     $IsCheck = WhoIs_Check($DomainName,$DomainScheme['Name']);
     #---------------------------------------------------------------------------
