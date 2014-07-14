@@ -32,7 +32,19 @@
 </Source>
 <!-- *********************************************************************** -->
 <Comps>
- <Before>
+	<Before>
+		<PatternOut>
+			<Args>
+				<Patterns>
+					<Active>
+						<Name>Активные</Name>
+						<Where>`ExpirationDate` &gt; UNIX_TIMESTAMP()  AND `DaysRemainded` > 0</Where>
+					</Active>
+				</Patterns>
+				<ActiveID>Active</ActiveID>
+			</Args>
+		</PatternOut>
+		<!-- *********************************************************************** -->
   <Search>
    <Args>
     <ColumnsIDs>
