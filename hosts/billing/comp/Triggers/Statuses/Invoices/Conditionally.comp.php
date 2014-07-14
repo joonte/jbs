@@ -21,7 +21,7 @@ if($Count)
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($Invoice['IsPosted'])
-  return TRUE;
+	return TRUE;
 #----------------------------------TRANSACTION----------------------------------
 if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Triggers/Statuses/Invoices/Payed'))))
   return ERROR | @Trigger_Error(500);
