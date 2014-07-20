@@ -16,6 +16,7 @@ $Message		=  (string) @$Args['Message'];
 $Flags			=  (string) @$Args['Flags'];
 $OpenTicketUserID	= (integer) @$Args['OpenTicketUserID'];
 $UserID			= (integer) @$Args['UserID'];
+$MaxID			= (integer) @$Args['MaxID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 	return ERROR | @Trigger_Error(500);
@@ -28,6 +29,27 @@ $Config = Config();
 #-------------------------------------------------------------------------------
 if(IsSet($__USER['IsEmulate']) && $__USER['ID'] != $OpenTicketUserID)
 	return new gException('DENY_WRITE_MESSAGE_FROM_ANOTHER_USER','Нельзя писать сообщения от имени другого пользователя');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($__USER['IsAdmin']){
+	#-------------------------------------------------------------------------------
+	$MaxMessageID = DB_Select('EdesksMessagesOwners','MAX(`ID`) AS `MaxMessageID`',Array('UNIQ','Where'=>SPrintF('`EdeskID` = %u',$TicketID)));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($MaxMessageID)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	if($MaxID != $MaxMessageID['MaxMessageID'])
+		return new gException('TICKET_HAVE_NEW_MESSAGES','С момента открытия, в тикет были добавлены новые сообщения. Скопируйте сообщение, откройте тикет заново, вставьте сообщение. Если были добавлены аттачменты - не забудте снова их добавить ');
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # truncate $Theme & $Message
