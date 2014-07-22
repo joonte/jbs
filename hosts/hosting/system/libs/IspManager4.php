@@ -392,7 +392,7 @@ function IspManager4_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
     'name'            => $Login, # Имя пользователя (реселлера)
     'passwd'          => $Password, # Пароль
     'confirm'         => $Password, # Подтверждение
-    'domain'          => $Domain, # Домен
+    #'domain'          => $Domain, # Домен
     'ip'              => ($IsReselling?'noassign':$IP), # IP-адрес
     'preset'          => $HostingScheme['PackageID'], # Шаблон
     'email'           => $Email,
@@ -425,7 +425,10 @@ function IspManager4_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
     'mysqluserconnectlimit' => $HostingScheme['mysqluserconnectlimit'],   # Одновременных соединений к MySQL
     'mailrate'              => $HostingScheme['mailrate']       # ограничение на письма, в час
   );
-  
+  #-------------------------------------------------------------------------------
+  if($HostingScheme['QuotaWWWDomains'])
+  	$Request['domain'] = $Domain; # Домен
+	#-------------------------------------------------------------------------------
   if(!$IsReselling) {
     $Request['owner'] = $Settings['Login']; # Владелец
   }
