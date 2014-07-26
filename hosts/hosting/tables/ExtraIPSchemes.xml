@@ -156,6 +156,15 @@
   </Args>
  </IsActive>
  <!-- ********************************************************************** -->
+	<Orders>
+		<Head>Кол. зак.</Head>
+		<Prompt>Кол-во активных заказов данного тарифа</Prompt>
+		<Alias>(SELECT COUNT(*) FROM `ExtraIPOrders` WHERE `ExtraIPSchemes`.`ID` = `ExtraIPOrders`.`SchemeID` AND `ExtraIPOrders`.`StatusID` = 'Active')</Alias>
+		<Attribs>
+			<style>text-align:right;</style>
+		</Attribs>
+	</Orders>
+	<!-- *********************************************************************** -->
  <SortID>
   <Args>
    <TableID>ExtraIPSchemes</TableID>
@@ -173,6 +182,7 @@
  <ListElement>CostMonth</ListElement>
  <ListElement>CostInstall</ListElement>
  <ListElement>IsActive</ListElement>
+ <ListElement>Orders</ListElement>
  <ListElement>SortID</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->

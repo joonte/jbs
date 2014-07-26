@@ -160,6 +160,15 @@
   </Args>
  </IsActive>
  <!-- ********************************************************************** -->
+	<Orders>
+		<Head>Кол. зак.</Head>
+		<Prompt>Кол-во активных заказов данного тарифа</Prompt>
+		<Alias>(SELECT COUNT(*) FROM `ISPswOrders` WHERE `ISPswSchemes`.`ID` = `ISPswOrders`.`SchemeID` AND `ISPswOrders`.`StatusID` = 'Active')</Alias>
+		<Attribs>
+			<style>text-align:right;</style>
+		</Attribs>
+	</Orders>
+	<!-- *********************************************************************** -->
  <SortID>
   <Args>
    <TableID>ISPswSchemes</TableID>
@@ -180,6 +189,7 @@
  <ListElement>User</ListElement>
  <ListElement>CostMonth</ListElement>
  <ListElement>IsActive</ListElement>
+ <ListElement>Orders</ListElement>
  <ListElement>SortID</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->

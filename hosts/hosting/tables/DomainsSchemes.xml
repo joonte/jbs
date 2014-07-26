@@ -163,6 +163,15 @@
   </Args>
  </IsActive>
  <!-- ********************************************************************** -->
+	<Orders>
+		<Head>Кол. зак.</Head>
+		<Prompt>Кол-во активных заказов данного тарифа</Prompt>
+		<Alias>(SELECT COUNT(*) FROM `DomainsOrders` WHERE `DomainsSchemes`.`ID` = `DomainsOrders`.`SchemeID` AND `DomainsOrders`.`StatusID` = 'Active')</Alias>
+		<Attribs>
+			<style>text-align:right;</style>
+		</Attribs>
+	</Orders>
+	<!-- ********************************************************************** -->
  <SortID>
   <Args>
    <TableID>DomainsSchemes</TableID>
@@ -181,6 +190,7 @@
  <ListElement>CostTransfer</ListElement>
  <ListElement>Registrator</ListElement>
  <ListElement>IsActive</ListElement>
+ <ListElement>Orders</ListElement>
  <ListElement>SortID</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->

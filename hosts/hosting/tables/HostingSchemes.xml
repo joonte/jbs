@@ -1,62 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Source>
- <TableID>HostingSchemes</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>CostMonth</ListElement>
-  <ListElement>QuotaDisk</ListElement>
-  <ListElement>QuotaEmail</ListElement>
-  <ListElement>QuotaDomains</ListElement>
-  <ListElement>QuotaDBs</ListElement>
-  <ListElement>QuotaFTP</ListElement>
-  <ListElement>mailrate</ListElement>
-  <ListElement>IsActive</ListElement>
-  <ListElement>SortID</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Message>Тарифов на хостинг не обнаружено.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <PatternOut>
-   <Args>
-    <Patterns>
-     <ListElement>
-      <Name>Индивидуальные тарифы</Name>
-      <Where>`UserID` != 1</Where>
-     </ListElement>
-    </Patterns>
-    <ActiveID>Default</ActiveID>
-   </Args>
-  </PatternOut>
-  <!-- ********************************************************************* -->
-  <Search>
-   <Args>
-    <ColumnsIDs>
-     <ListElement>UserID</ListElement>
-     <ListElement>GroupID</ListElement>
-     <ListElement>Name</ListElement>
-    </ColumnsIDs>
-   </Args>
-  </Search>
- </Before>
- <!-- ********************************************************************** -->
- <After>
-  <Delete>
-   <Args>
-    <Comment>Выбранные тарифы</Comment>
-    <Send>
-     <TableID>HostingSchemes</TableID>
-    </Send>
-   </Args>
-  </Delete>
- </After>
-</Comps>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>HostingSchemes</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>CostMonth</ListElement>
+			<ListElement>QuotaDisk</ListElement>
+			<ListElement>QuotaEmail</ListElement>
+			<ListElement>QuotaDomains</ListElement>
+			<ListElement>QuotaDBs</ListElement>
+			<ListElement>QuotaFTP</ListElement>
+			<ListElement>mailrate</ListElement>
+			<ListElement>IsActive</ListElement>
+			<ListElement>SortID</ListElement>
+		</ColumnsIDs>
+	<Conditions>
+		<Message>Тарифов на хостинг не обнаружено.</Message>
+	</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<PatternOut>
+				<Args>
+					<Patterns>
+						<ListElement>
+							<Name>Индивидуальные тарифы</Name>
+							<Where>`UserID` != 1</Where>
+						</ListElement>
+					</Patterns>
+					<ActiveID>Default</ActiveID>
+				</Args>
+			</PatternOut>
+			<!-- ********************************************************************* -->
+			<Search>
+				<Args>
+					<ColumnsIDs>
+						<ListElement>UserID</ListElement>
+						<ListElement>GroupID</ListElement>
+						<ListElement>Name</ListElement>
+					</ColumnsIDs>
+				</Args>
+			</Search>
+		</Before>
+		<!-- ********************************************************************** -->
+		<After>
+			<Delete>
+				<Args>
+					<Comment>Выбранные тарифы</Comment>
+					<Send>
+						<TableID>HostingSchemes</TableID>
+					</Send>
+				</Args>
+			</Delete>
+		</After>
+	</Comps>
+
 <!-- *********************************************************************** -->
 <Query>
  <SortOn>SortID</SortOn>
@@ -216,27 +217,37 @@
    <ListElement>%IsActive%</ListElement>
   </Args>
  </IsActive>
- <!-- ********************************************************************** -->
- <SortID>
-  <Args>
-   <TableID>HostingSchemes</TableID>
-  </Args>
- </SortID>
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>Info</ListElement>
- <ListElement>Edit</ListElement>
- <ListElement>Name</ListElement>
- <ListElement>Group</ListElement>
- <ListElement>User</ListElement>
- <ListElement>ServersGroup</ListElement>
- <ListElement>CostMonth</ListElement>
- <ListElement>QuotaDisk</ListElement>
- <ListElement>IsActive</ListElement>
- <ListElement>OrderLink</ListElement>
- <ListElement>SortID</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+		<!-- ********************************************************************** -->
+		<Orders>
+			<Head>Кол. зак.</Head>
+			<Prompt>Кол-во активных заказов данного тарифа</Prompt>
+			<Alias>(SELECT COUNT(*) FROM `HostingOrders` WHERE `HostingSchemes`.`ID` = `HostingOrders`.`SchemeID` AND `HostingOrders`.`StatusID` = 'Active')</Alias>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</Orders>
+		<!-- *********************************************************************** -->
+		<SortID>
+			<Args>
+				<TableID>HostingSchemes</TableID>
+			</Args>
+		</SortID>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Info</ListElement>
+		<ListElement>Edit</ListElement>
+		<ListElement>Name</ListElement>
+		<ListElement>Group</ListElement>
+		<ListElement>User</ListElement>
+		<ListElement>ServersGroup</ListElement>
+		<ListElement>CostMonth</ListElement>
+		<ListElement>QuotaDisk</ListElement>
+		<ListElement>IsActive</ListElement>
+		<ListElement>OrderLink</ListElement>
+		<ListElement>Orders</ListElement>
+		<ListElement>SortID</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

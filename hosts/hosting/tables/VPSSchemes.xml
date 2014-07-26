@@ -206,6 +206,15 @@
   </Args>
  </IsActive>
  <!-- ********************************************************************** -->
+	<Orders>
+		<Head>Кол. зак.</Head>
+		<Prompt>Кол-во активных заказов данного тарифа</Prompt>
+		<Alias>(SELECT COUNT(*) FROM `VPSOrders` WHERE `VPSSchemes`.`ID` = `VPSOrders`.`SchemeID` AND `VPSOrders`.`StatusID` = 'Active')</Alias>
+		<Attribs>
+			<style>text-align:right;</style>
+		</Attribs>
+	</Orders>
+	<!-- *********************************************************************** -->
  <SortID>
   <Args>
    <TableID>VPSSchemes</TableID>
@@ -228,6 +237,7 @@
  <ListElement>proc</ListElement>
  <ListElement>IsActive</ListElement>
  <ListElement>OrderLink</ListElement>
+ <ListElement>Orders</ListElement>
  <ListElement>SortID</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
