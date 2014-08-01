@@ -1148,6 +1148,11 @@
     <TableRequestLogStoryPeriod>186</TableRequestLogStoryPeriod>
    </CleanTablesSettings>
    <!-- ********************************************************************* -->
+   <CloseEdesksSettings>
+    <IsActive>1</IsActive>
+    <CloseEdesksDays>90</CloseEdesksDays>
+   </CloseEdesksSettings>
+   <!-- ********************************************************************* -->
    <CourseUpdateSettings>
     <IsActive>1</IsActive>
    </CourseUpdateSettings>
@@ -1189,6 +1194,8 @@
     <OrdersNoticeSuspend>Уведомление о окончании услуг</OrdersNoticeSuspend>
     <!-- Сборщик устаревших сессий -->
     <Sessions>Сборщик устаревших сессий</Sessions>
+    <!-- закрытие старых непросматриваемых тикетов -->
+    <CloseEdesks>Закрытие старых тикетов</CloseEdesks>
    </DailyTasks>
    <WeeklyTasks type="array" />
    <MonthlyTasks type="array" />
