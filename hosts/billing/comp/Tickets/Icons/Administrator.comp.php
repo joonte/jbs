@@ -1,8 +1,7 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
-/** @author Великодный В.В. (Joonte Ltd.) */
+/** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
 $__args_list = Array('Adding');
@@ -16,96 +15,36 @@ $CacheID = Md5(SPrintF('%s:%u',$__FILE__,$__USER['ID']));
 #-------------------------------------------------------------------------------
 $Result = CacheManager::get($CacheID);
 if($Result)
-  return $Result;
+	return $Result;
 #-------------------------------------------------------------------------------
 $NoBody = new Tag('NOBODY');
 #-------------------------------------------------------------------------------
-$Query = $Where = Array("`StatusID` != 'Closed'","(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = `Edesks`.`TargetGroupID`) = 'yes'");
 #-------------------------------------------------------------------------------
-$Query[] = "(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = (SELECT `GroupID` FROM `Users` WHERE `Users`.`ID` = `Edesks`.`UserID`)) = 'no'";
+$Where = Array(
+		"`StatusID` = 'Working' OR `StatusID` = 'Newest'",
+		"(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = `Edesks`.`TargetGroupID`) = 'yes'",
+		"(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = (SELECT `GroupID` FROM `Users` WHERE `Users`.`ID` = `Edesks`.`UserID`)) = 'no'"
+		);
 #-------------------------------------------------------------------------------
-$Tickets = DB_Select('Edesks','*',Array('Where'=>Implode(' AND ',$Query)));
+$Count = DB_Count('Edesks',Array('Where'=>$Where));
+if(Is_Error($Count))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-switch(ValueOf($Tickets)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    # No more...
-  break;
-  case 'array':
-    #---------------------------------------------------------------------------
-    foreach($Tickets as $Ticket){
-      #-------------------------------------------------------------------------
-      $IsQuery = DB_Query(SPrintF('SELECT EDESKS_MESSAGES(%u,%u) as `Count`',$Ticket['ID'],$__USER['ID']));
-      if(Is_Error($IsQuery))
-        return ERROR | @Trigger_Error(500);
-      #-------------------------------------------------------------------------
-      $Rows = MySQL::Result($IsQuery);
-      if(Is_Error($Rows))
-        return ERROR | @Trigger_Error(500);
-      #-------------------------------------------------------------------------
-      $Row = Current($Rows);
-      #-------------------------------------------------------------------------
-      if($Row['Count']){
-        #-----------------------------------------------------------------------
-        $NoBody->AddChild(new Tag('A',Array('href'=>'/Administrator/Tickets','class'=>'Image'),new Tag('IMG',Array('alt'=>'Новые сообщения','border'=>0,'width'=>13,'height'=>9,'src'=>'SRC:{Images/Icons/Message1.gif}'))));
-        #-----------------------------------------------------------------------
-        break;
-      }
-    }
-  break;
-  default:
-    return ERROR | @Trigger_Error(101);
-}
+if($Count)
+	$NoBody->AddChild(new Tag('A',Array('href'=>'/Administrator/Tickets','class'=>'Image'),new Tag('IMG',Array('alt'=>'Новые сообщения','border'=>0,'width'=>13,'height'=>9,'src'=>'SRC:{Images/Icons/Message1.gif}'))));
 #-------------------------------------------------------------------------------
-$Query = $Where;
-#-------------------------------------------------------------------------------
-$Query[] = "(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = (SELECT `GroupID` FROM `Users` WHERE `Users`.`ID` = `Edesks`.`UserID`)) = 'yes'";
-#-------------------------------------------------------------------------------
-$Tickets = DB_Select('Edesks','*',Array('Where'=>Implode(' AND ',$Query)));
-#-------------------------------------------------------------------------------
-switch(ValueOf($Tickets)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    # No more...
-  break;
-  case 'array':
-    #---------------------------------------------------------------------------
-    $__USER = $GLOBALS['__USER'];
-    #---------------------------------------------------------------------------
-    foreach($Tickets as $Ticket){
-      #-------------------------------------------------------------------------
-      $IsQuery = DB_Query(SPrintF('SELECT EDESKS_MESSAGES(%u,%u) as `Count`',$Ticket['ID'],$__USER['ID']));
-      if(Is_Error($IsQuery))
-        return ERROR | @Trigger_Error(500);
-      #-------------------------------------------------------------------------
-      $Rows = MySQL::Result($IsQuery);
-      if(Is_Error($Rows))
-        return ERROR | @Trigger_Error(500);
-      #-------------------------------------------------------------------------
-      $Row = Current($Rows);
-      #-------------------------------------------------------------------------
-      if($Row['Count']){
-        #-----------------------------------------------------------------------
-        $NoBody->AddChild(new Tag('A',Array('href'=>'/Administrator/Internal','class'=>'Image'),new Tag('IMG',Array('alt'=>'Новые сообщения','border'=>0,'width'=>13,'height'=>9,'src'=>'SRC:{Images/Icons/Message2.gif}'))));
-        #-----------------------------------------------------------------------
-        break;
-      }
-    }
-  break;
-  default:
-    return ERROR | @Trigger_Error(101);
-}
 #-------------------------------------------------------------------------------
 if(Count($NoBody->Childs)){
-  #-----------------------------------------------------------------------------
-  $NoBody->AddChild(new Tag('SPAN',$Adding));
-  #-----------------------------------------------------------------------------
-  $Adding = $NoBody;
+	#-------------------------------------------------------------------------------
+	$NoBody->AddChild(new Tag('SPAN',$Adding));
+	#-------------------------------------------------------------------------------
+	$Adding = $NoBody;
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 CacheManager::add($CacheID,$Adding,60);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $Adding;
 #-------------------------------------------------------------------------------

@@ -1,8 +1,7 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
-/** @author Великодный В.В. (Joonte Ltd.) */
+/** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
 $__args_list = Array('Adding');
@@ -11,38 +10,17 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(IsSet($GLOBALS['__USER'])){
-  #-----------------------------------------------------------------------------
-  $__USER = $GLOBALS['__USER'];
-  #-----------------------------------------------------------------------------
-  $Tickets = DB_Select('Edesks','ID',Array('Where'=>SPrintF("`StatusID` != 'Closed' AND `UserID` = %u AND (SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = `Edesks`.`TargetGroupID`) = 'yes'",$__USER['ID'])));
-  #-----------------------------------------------------------------------------
-  switch(ValueOf($Tickets)){
-    case 'error':
-      return ERROR | @Trigger_Error(500);
-    case 'exception':
-      # No more...
-    break;
-    case 'array':
-      #-------------------------------------------------------------------------
-      foreach($Tickets as $Ticket){
-        #-----------------------------------------------------------------------
-        $IsQuery = DB_Query(SPrintF('SELECT EDESKS_MESSAGES(%u,%u) as `Count`',$Ticket['ID'],$__USER['ID']));
-        if(Is_Error($IsQuery))
-          return ERROR | @Trigger_Error(500);
-        #-----------------------------------------------------------------------
-        $Rows = MySQL::Result($IsQuery);
-        if(Is_Error($Rows))
-          return ERROR | @Trigger_Error(500);
-        #-----------------------------------------------------------------------
-        $Row = Current($Rows);
-        #-----------------------------------------------------------------------
-        if($Row['Count'])
-          return new Tag('NOBODY',new Tag('IMG',Array('alt'=>'Новые сообщения','width'=>13,'height'=>9,'src'=>'SRC:{Images/Icons/Message1.gif}')),$Adding);
-      }
-    break;
-    default:
-      return ERROR | @Trigger_Error(101);
-  }
+	#-------------------------------------------------------------------------------
+	$__USER = $GLOBALS['__USER'];
+	#-------------------------------------------------------------------------------
+	$Count = DB_Count('Edesks',Array('Where'=>SPrintF("`StatusID` != 'Closed' AND `UserID` = %u AND (SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = `Edesks`.`TargetGroupID`) = 'yes'",$__USER['ID'])));
+	#-------------------------------------------------------------------------------
+	if(Is_Error($Count))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+        if($Count)
+		return new Tag('NOBODY',new Tag('IMG',Array('alt'=>'Новые сообщения','width'=>13,'height'=>9,'src'=>'SRC:{Images/Icons/Message1.gif}')),$Adding);
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 return $Adding;
