@@ -33,21 +33,25 @@ if(IsSet($__USER['IsEmulate']) && $__USER['ID'] != $OpenTicketUserID)
 #-------------------------------------------------------------------------------
 if($__USER['IsAdmin']){
 	#-------------------------------------------------------------------------------
-	$MaxMessageID = DB_Select('EdesksMessagesOwners','MAX(`ID`) AS `MaxMessageID`',Array('UNIQ','Where'=>SPrintF('`EdeskID` = %u',$TicketID)));
-	#-------------------------------------------------------------------------------
-	switch(ValueOf($MaxMessageID)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		return ERROR | @Trigger_Error(400);
-	case 'array':
-		break;
-	default:
-		return ERROR | @Trigger_Error(101);
+	if(!IsSet($GLOBALS['IsCron'])){
+		#-------------------------------------------------------------------------------
+		$MaxMessageID = DB_Select('EdesksMessagesOwners','MAX(`ID`) AS `MaxMessageID`',Array('UNIQ','Where'=>SPrintF('`EdeskID` = %u',$TicketID)));
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($MaxMessageID)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return ERROR | @Trigger_Error(400);
+		case 'array':
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+		if($MaxID != $MaxMessageID['MaxMessageID'])
+			return new gException('TICKET_HAVE_NEW_MESSAGES','С момента открытия, в тикет были добавлены новые сообщения. Скопируйте сообщение, откройте тикет заново, вставьте сообщение. Если были добавлены аттачменты - не забудте снова их добавить ');
+		#-------------------------------------------------------------------------------
 	}
-	#-------------------------------------------------------------------------------
-	if($MaxID != $MaxMessageID['MaxMessageID'])
-		return new gException('TICKET_HAVE_NEW_MESSAGES','С момента открытия, в тикет были добавлены новые сообщения. Скопируйте сообщение, откройте тикет заново, вставьте сообщение. Если были добавлены аттачменты - не забудте снова их добавить ');
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
