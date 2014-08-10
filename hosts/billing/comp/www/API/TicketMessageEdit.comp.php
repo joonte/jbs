@@ -35,7 +35,7 @@ if($__USER['IsAdmin']){
 	#-------------------------------------------------------------------------------
 	if(!IsSet($GLOBALS['IsCron'])){
 		#-------------------------------------------------------------------------------
-		$MaxMessageID = DB_Select('EdesksMessagesOwners','MAX(`ID`) AS `MaxMessageID`',Array('UNIQ','Where'=>SPrintF('`EdeskID` = %u',$TicketID)));
+		$MaxMessageID = DB_Select('EdesksMessagesOwners',Array('MAX(`ID`) AS `MaxMessageID`','UserID'),Array('UNIQ','Where'=>SPrintF('`EdeskID` = %u',$TicketID)));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($MaxMessageID)){
 		case 'error':
@@ -48,7 +48,7 @@ if($__USER['IsAdmin']){
 			return ERROR | @Trigger_Error(101);
 		}
 		#-------------------------------------------------------------------------------
-		if($MaxID != $MaxMessageID['MaxMessageID'])
+		if($MaxID != $MaxMessageID['MaxMessageID'] && $MaxMessageID['UserID'] != $__USER['ID'])
 			return new gException('TICKET_HAVE_NEW_MESSAGES','С момента открытия, в тикет были добавлены новые сообщения. Скопируйте сообщение, откройте тикет заново, вставьте сообщение. Если были добавлены аттачменты - не забудте снова их добавить ');
 		#-------------------------------------------------------------------------------
 	}
