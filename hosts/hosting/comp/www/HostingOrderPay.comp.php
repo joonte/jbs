@@ -73,6 +73,8 @@ switch(ValueOf($HostingOrder)){
         #-----------------------------------------------------------------------
         $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/HostingOrderPay.js}')));
         #-----------------------------------------------------------------------
+	if($HostingOrder['StatusID'] == 'Deleted')
+		return new gException('DELETED_ORDER_CAN_NOT_PAY','Заказ хостинга не может быть оплачен, так как он уже удалён. Обратитесь в службу поддержки, возможно сохранился архив ваших данных и его можно будет восстановить (потребуется сделать новый заказ хостинга)');
         if(!In_Array($HostingOrder['StatusID'],Array('Waiting','Active','Suspended')))
           return new gException('ORDER_CAN_NOT_PAY','Заказ хостинга не может быть оплачен');
         #-----------------------------------------------------------------------
