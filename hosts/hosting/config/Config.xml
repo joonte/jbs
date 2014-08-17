@@ -1407,7 +1407,6 @@
    <!-- задачи -->
    <DailyTasks>
     <EraseDeletedOrders>Удаление заказов в статусе Удален</EraseDeletedOrders>
-    <SetDeletedWaitingOrders>Отмена неоплаченных заказов</SetDeletedWaitingOrders>
     <CheckBalance>Проверка балланса регистраторов, поставщиков</CheckBalance>
     <ISPswCheckLicenses>Синхронизация лицензий с ISPsystem</ISPswCheckLicenses>
     <CheckUsersOnVPSServers>Синхронизация аккаунтов биллинга и серверов VPS</CheckUsersOnVPSServers>

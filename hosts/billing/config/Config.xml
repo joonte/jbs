@@ -1130,7 +1130,7 @@
    <Invoices>
     <DaysBeforeNotice>7</DaysBeforeNotice>
     <DaysBeforeDeleted>14</DaysBeforeDeleted>
-    <DaysBeforeErase>60</DaysBeforeErase>
+    <DaysBeforeErase>90</DaysBeforeErase>
    </Invoices>
    <!-- ********************************************************************* -->
    <CreateAndSendInvoicesSettings>
@@ -1174,6 +1174,10 @@
     <DaysBeforeRejectConditionallyInvoice>14</DaysBeforeRejectConditionallyInvoice>
    </NotifyConditionallyInvoiceSettings>
    <!-- ********************************************************************* -->
+   <SetDeletedWaitingOrdersSettings>
+    <IsActive>1</IsActive>
+    <DaysBeforeDeleted>182</DaysBeforeDeleted>
+   </SetDeletedWaitingOrdersSettings>
    <!-- задачи -->
    <DailyTasks>
     <!-- курсы валют с сайта цекнтробанка -->
@@ -1196,6 +1200,8 @@
     <Sessions>Сборщик устаревших сессий</Sessions>
     <!-- закрытие старых непросматриваемых тикетов -->
     <CloseEdesks>Закрытие старых тикетов</CloseEdesks>
+    <!-- удаление неоплаченных заказов -->
+    <SetDeletedWaitingOrders>Отмена неоплаченных заказов</SetDeletedWaitingOrders>
    </DailyTasks>
    <WeeklyTasks type="array" />
    <MonthlyTasks type="array" />
