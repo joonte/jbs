@@ -75,6 +75,11 @@
       <Name>Не активные пользователи</Name>
       <Where>`IsActive` = 'no'</Where>
      </UnActive>
+     <!-- ****************************************************************** -->
+     <UnStandardPrimaryGroup>
+      <Name>C нестандартной основной группой</Name>
+      <Where>`GroupID` != '2000000'</Where>
+     </UnStandardPrimaryGroup>
     </Patterns>
     <ActiveID>Week</ActiveID>
    </Args>
