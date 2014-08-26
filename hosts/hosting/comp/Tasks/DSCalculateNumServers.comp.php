@@ -21,7 +21,7 @@ if(!$Settings['IsActive'])
 	return 24*3600;
 #-------------------------------------------------------------------------------
 # select all SchemeID
-$UpdateSchemes = DB_Select('DSSchemes',Array('`ID` AS `SchemeID`','NumServers','IsCalculateNumServers'),Array('Where'=>'1',));
+$UpdateSchemes = DB_Select('DSSchemes',Array('`ID` AS `SchemeID`','NumServers','IsCalculateNumServers'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($UpdateSchemes)){
 case 'error':
@@ -29,29 +29,36 @@ case 'error':
 case 'exception':
 	#-------------------------------------------------------------------------------
 	# no servers ...
-	return (time() + 3600);
+	return (Time() + 3600);
 	#-------------------------------------------------------------------------------
 case 'array':
 	#-------------------------------------------------------------------------------
 	foreach($UpdateSchemes as $UpdateScheme){
 		#-------------------------------------------------------------------------------
 		# get UsedServers
-		$Where = "`SchemeID` = " . $UpdateScheme['SchemeID'] . " AND (`StatusID` = 'Active' OR `StatusID` = 'Suspended' OR `StatusID` = 'Frozen' OR `StatusID` = 'OnCreate')";
+		$Where = Array(
+				SPrintF('`SchemeID` = %u',$UpdateScheme['SchemeID']),
+				"`StatusID` = 'Active' OR `StatusID` = 'Suspended' OR `StatusID` = 'Frozen' OR `StatusID` = 'OnCreate'"
+				);
 		#-------------------------------------------------------------------------------
-		$NumUsed = DB_Select('DSOrders', Array('COUNT(*) AS `Used`'), Array('UNIQ', 'Where'=>$Where));
+		$IsSelect = DB_Select('DSOrders', Array('COUNT(*) AS `Used`'), Array('UNIQ', 'Where'=>$Where));
+		if(Is_Error($IsSelect))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		#Debug(SPrintF('[comp/Tasks/DSCalculateNumServers]: SchemeID = %s; Used = %s',$UpdateScheme['SchemeID'],$IsSelect['Used']));
 		#-------------------------------------------------------------------------------
 		# check config for tariff
-		if($UpdateScheme['IsCalculateNumServers'] == "yes"){
+		if($UpdateScheme['IsCalculateNumServers']){
 			#-------------------------------------------------------------------------------
 			# compare number servers
-			if($UpdateScheme['NumServers'] < $NumUsed['Used'])
-				return ERROR | @Trigger_Error("[comp/DSOrders/DSCalculateNumServers]: error, NumServers < UsedServers (" . $UpdateScheme['NumServers'] . " < " . $NumUsed['Used'] . ")");
+			if($UpdateScheme['NumServers'] < $IsSelect['Used'])
+				return ERROR | @Trigger_Error(SPrintF("[comp/DSOrders/DSCalculateNumServers]: error, NumServers (%u) < UsedServers (%u)",$UpdateScheme['NumServers'],$IsSelect['Used']));
 			#-------------------------------------------------------------------------------
 			# update number servers
-			$IsQuery = DB_Query("UPDATE `DSSchemes` SET `RemainServers`=(`NumServers` - " . $NumUsed['Used'] . ") WHERE `ID`='" . $UpdateScheme['SchemeID'] . "'");
-			#-------------------------------------------------------------------------------
-			if(Is_Error($IsQuery))
+			$IsUpdate = DB_Update('DSSchemes',Array('RemainServers'=>($UpdateScheme['NumServers'] - $IsSelect['Used'])),Array('ID'=>$UpdateScheme['SchemeID']));
+			if(Is_Error($IsUpdate))
 				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			# check RemainServers for this scheme - if it '0' - disable tariff
 			$RemainServers = DB_Select('DSSchemes',Array('NumServers','RemainServers','IsCalculateNumServers'),Array('UNIQ','ID'=>$UpdateScheme['SchemeID']));
@@ -63,10 +70,10 @@ case 'array':
 				return ERROR | @Trigger_Error(400);
 			case 'array':
 				#-------------------------------------------------------------------------------
-				if($RemainServers['RemainServers'] == "0"){
+				if($RemainServers['RemainServers'] < 1){
 					#-------------------------------------------------------------------------------
-					$IsQuery = DB_Query("UPDATE `DSSchemes` SET `IsActive`='no' WHERE `ID`='" . $UpdateScheme['SchemeID'] . "'");
-					if(Is_Error($IsQuery))
+					$IsUpdate = DB_Update('DSSchemes',Array('IsActive'=>FALSE),Array('ID'=>$UpdateScheme['SchemeID']));
+					if(Is_Error($IsUpdate))
 						return ERROR | @Trigger_Error(500);
 					#-------------------------------------------------------------------------------
 				}
@@ -75,10 +82,14 @@ case 'array':
 				#-------------------------------------------------------------------------------
 			default:
 				return ERROR | @Trigger_Error(101);
-			}	
+			}
+			#-------------------------------------------------------------------------------
 		}
+		#-------------------------------------------------------------------------------
 	}
+	#-------------------------------------------------------------------------------
 	break;
+	#-------------------------------------------------------------------------------
 default:
 	return ERROR | @Trigger_Error(101);
 }
@@ -86,5 +97,5 @@ default:
 #-------------------------------------------------------------------------------
 return $ExecuteTime;
 #-------------------------------------------------------------------------------
-
+#-------------------------------------------------------------------------------
 ?>
