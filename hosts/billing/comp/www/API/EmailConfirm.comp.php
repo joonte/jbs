@@ -94,12 +94,12 @@ if($Email){
 			if(Is_Error($IsUpdate))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$DOM->AddAttribs('Body',Array('onload'=>"ShowAlert('Почтовый адрес успешно подтверждён.','Ok');"));
+			$DOM->AddAttribs('Body',Array('onload'=>"ShowAlert('Почтовый адрес подтверждён.','Ok');"));
 			#-------------------------------------------------------------------------------
 			$Event = Array(
 					'UserID'	=> $GLOBALS['__USER']['ID'],
 					'PriorityID'	=> 'Billing',
-					'Text'		=> SPrintF('Почтовый адрес (%s) успешно подтверждён',$GLOBALS['__USER']['Email'])
+					'Text'		=> SPrintF('Почтовый адрес (%s) подтверждён',$GLOBALS['__USER']['Email'])
 					);
 			$Event = Comp_Load('Events/EventInsert',$Event);
 			if(!$Event)

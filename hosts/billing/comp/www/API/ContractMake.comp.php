@@ -139,7 +139,7 @@ if($TypeID != "NaturalPartner"){
 	   $Event = Array(
 	   			'UserID'	=> $__USER['ID'],
 				'PriorityID'	=> 'Billing',
-				'Text'		=> SPrintF('Сформирован новый договор №%s, тип (%s), заказчик (%s)',$Number,$Type['Name'],$dContract['Customer'])
+				'Text'		=> SPrintF('Сформирован договор №%s, тип (%s), заказчик (%s)',$Number,$Type['Name'],$dContract['Customer'])
 	   		 );
 	   $Event = Comp_Load('Events/EventInsert',$Event);
            if(!$Event)

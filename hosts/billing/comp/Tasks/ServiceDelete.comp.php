@@ -77,7 +77,7 @@ if(IsSet($Settings['Script']) && Mb_StrLen(Trim($Settings['Script'])) > 0){
 	$Event = Array(
 			'UserID'        => $Order['UserID'],
 			'PriorityID'    => 'Hosting',
-			'Text'          => SPrintF('Заказ #%s на услугу (%s) успешно создан',$Number,$Order['NameShort'])
+			'Text'          => SPrintF('Заказ #%s на услугу (%s) удалён',$Number,$Order['NameShort'])
 			);
 	$Event = Comp_Load('Events/EventInsert',$Event);
 	if(!$Event)

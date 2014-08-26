@@ -74,7 +74,7 @@ switch(ValueOf($DSOrder)){
                 return $IsCreate;
               case 'true':
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DSOrders','StatusID'=>'Active','RowsIDs'=>$DSOrder['ID'],'Comment'=>'Заказ успешно создан на сервере'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DSOrders','StatusID'=>'Active','RowsIDs'=>$DSOrder['ID'],'Comment'=>'Заказ создан на сервере'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':
@@ -86,7 +86,7 @@ switch(ValueOf($DSOrder)){
 		    $Event = Array(
 		    			'UserID'	=> $DSOrder['UserID'],
 					'PriorityID'	=> 'Billing',
-					'Text'		=> SPrintF('Арендованный сервер, IP %s, тариф %s, идаентификатор %s, успешно включен',$DSOrder['IP'],$DSScheme['Name'],$DSScheme['PackageID'])
+					'Text'		=> SPrintF('Арендованный сервер, IP %s, тариф %s, идаентификатор %s, включен',$DSOrder['IP'],$DSScheme['Name'],$DSScheme['PackageID'])
 		                  );
                     $Event = Comp_Load('Events/EventInsert',$Event);
                     if(!$Event)

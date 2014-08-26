@@ -142,7 +142,7 @@ switch(ValueOf($Contract)){
             return ERROR | @Trigger_Error(101);
         }
         #-----------------------------------------------------------------------
-        $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Invoices','StatusID'=>'Waiting','RowsIDs'=>$InvoiceID,'Comment'=>($PayMessage)?$PayMessage:'Счет успешно сформирован и ожидает оплаты'));
+        $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Invoices','StatusID'=>'Waiting','RowsIDs'=>$InvoiceID,'Comment'=>($PayMessage)?$PayMessage:'Счет сформирован и ожидает оплаты'));
         #-----------------------------------------------------------------------
         switch(ValueOf($Comp)){
           case 'error':
@@ -165,7 +165,7 @@ switch(ValueOf($Contract)){
 	    $Event = Array(
 	    			'UserID'	=> $Contract['UserID'],
 				'PriorityID'	=> 'Billing',
-				'Text'		=> SPrintF('Выписан новый счет №%s по договору (%s), платежная система (%s), сумма (%s)',$Number,$Contract['Customer'],$PaymentSystem['Name'],$Summ)
+				'Text'		=> SPrintF('Выписан счёт №%s по договору (%s), платежная система (%s), сумма (%s)',$Number,$Contract['Customer'],$PaymentSystem['Name'],$Summ)
 	    		  );
 	    $Event = Comp_Load('Events/EventInsert',$Event);
 	    if(!$Event)

@@ -221,7 +221,7 @@ switch(ValueOf($Comp)){
       $Event = Array(
 			'UserID'	=> $__USER['ID'],
 			'PriorityID'	=> 'Billing',
-			'Text'		=> SPrintF('Создан новый запрос в службу поддержки с темой (%s)',$Theme)
+			'Text'		=> SPrintF('Создан запрос в службу поддержки с темой (%s)',$Theme)
       		    );
       $Event = Comp_Load('Events/EventInsert',$Event);
       if(!$Event)

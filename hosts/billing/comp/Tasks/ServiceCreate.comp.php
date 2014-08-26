@@ -74,7 +74,7 @@ if(IsSet($Settings['Script']) && Mb_StrLen(Trim($Settings['Script'])) > 0){
 		return new gException('ERROR_EXECUTE_COMMAND','Произошла ошибка при выполнении команды назначенной статусу');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Orders','StatusID'=>'Active','RowsIDs'=>$ServiceOrderID,'Comment'=>'Заказ успешно создан','IsNoTrigger'=>TRUE));
+	$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Orders','StatusID'=>'Active','RowsIDs'=>$ServiceOrderID,'Comment'=>'Заказ создан','IsNoTrigger'=>TRUE));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Comp)){
 	case 'error':
@@ -86,7 +86,7 @@ if(IsSet($Settings['Script']) && Mb_StrLen(Trim($Settings['Script'])) > 0){
 		$Event = Array(
 				'UserID'        => $Order['UserID'],
 				'PriorityID'    => 'Hosting',
-				'Text'          => SPrintF('Заказ #%s на услугу (%s) успешно создан',$Number,$Order['NameShort'])
+				'Text'          => SPrintF('Создан заказ #%s на услугу (%s)',$Number,$Order['NameShort'])
 				);
 		$Event = Comp_Load('Events/EventInsert',$Event);
 		if(!$Event)

@@ -144,7 +144,7 @@ case 'array':
 				#-------------------------------------------------------------------------------
 				case 'true':
 					#-------------------------------------------------------------------------------
-					$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'HostingOrders','StatusID'=>$StatusID,'RowsIDs'=>$HostingOrderID,'Comment'=>IsSet($Message)?$Message:'Тарифный план успешно изменен'));
+					$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'HostingOrders','StatusID'=>$StatusID,'RowsIDs'=>$HostingOrderID,'Comment'=>IsSet($Message)?$Message:'Тарифный план изменен'));
 					#-------------------------------------------------------------------------------
 					switch(ValueOf($Comp)){
 					case 'error':

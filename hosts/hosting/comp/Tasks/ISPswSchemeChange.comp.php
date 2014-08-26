@@ -86,7 +86,7 @@ case 'array':
 			#-------------------------------------------------------------------------------
 		case 'true':
 			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ISPswOrders','StatusID'=>'Active','RowsIDs'=>$ISPswOrderID,'Comment'=>'Тарифный план успешно изменен'));
+			$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ISPswOrders','StatusID'=>'Active','RowsIDs'=>$ISPswOrderID,'Comment'=>'Тарифный план изменен'));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($Comp)){
 			case 'error':
@@ -98,7 +98,7 @@ case 'array':
 				$Event = Array(
 						'UserID'	=> $ISPswOrder['UserID'],
 						'PriorityID'	=> 'Hosting',
-						'Text'	=> SPrintF('Тарифный план заказа ПО ISPsystem (%s) успешно изменён на (%s)',$ISPswOrder['IP'],$ISPswNewScheme['Name']),
+						'Text'	=> SPrintF('Тарифный план заказа ПО ISPsystem (%s) изменён на (%s)',$ISPswOrder['IP'],$ISPswNewScheme['Name']),
 						);
 				$Event = Comp_Load('Events/EventInsert',$Event);
 				if(!$Event)

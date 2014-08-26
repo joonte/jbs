@@ -2,10 +2,10 @@
  *  Joonte Billing System
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
-{assign var=Theme value="Пароль для заказа хостинга [{$Login|default:'$Login'}] успешно изменен" scope=global}
+{assign var=Theme value="Пароль для заказа хостинга [{$Login|default:'$Login'}] изменен" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
-Уведомляем Вас о том, что {$smarty.now|date_format:"%d.%m.%Y"} пароль на Ваш заказ хостинга №{$OrderID|string_format:"%05u"} был успешно изменен.
+Уведомляем Вас о том, что {$smarty.now|date_format:"%d.%m.%Y"} пароль на Ваш заказ хостинга №{$OrderID|string_format:"%05u"} был изменен.
 
 Ваши новые данные для доступа к аккаунту на сервере:
   * Адрес панели управления:

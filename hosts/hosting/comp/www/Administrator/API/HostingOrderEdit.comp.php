@@ -157,7 +157,7 @@ if($HostingOrderID){
   if(Is_Error($IsUpdate))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
-  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'HostingOrders','StatusID'=>($IsCreate?'OnCreate':'Active'),'RowsIDs'=>$HostingOrderID,'IsNoTrigger'=>!$IsCreate,'Comment'=>'Заказ хостинга успешно добавлен'));
+  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'HostingOrders','StatusID'=>($IsCreate?'OnCreate':'Active'),'RowsIDs'=>$HostingOrderID,'IsNoTrigger'=>!$IsCreate,'Comment'=>'Заказ хостинга добавлен'));
   #-----------------------------------------------------------------------------
   switch(ValueOf($Comp)){
     case 'error':

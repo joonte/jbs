@@ -40,7 +40,7 @@ switch(ValueOf($IsUpdate)){
     $Event = Array(
 			'UserID'	=> $Invoice['UserID'],
 			'PriorityID'	=> 'Billing',
-			'Text'		=> SPrintF('Счет №%s, на сумму %s, платежная система (%s), успешно оплачен',$Number,$Invoice['Summ'],$PaymentSystemName)
+			'Text'		=> SPrintF('Оплачен счет №%s, на сумму %s, платежная система (%s)',$Number,$Invoice['Summ'],$PaymentSystemName)
                   );
     $Event = Comp_Load('Events/EventInsert',$Event);
     if(!$Event)

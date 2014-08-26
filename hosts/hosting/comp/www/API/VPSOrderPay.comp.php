@@ -183,7 +183,7 @@ switch(ValueOf($VPSOrder)){
                   switch($StatusID){
                     case 'Waiting':
                       #---------------------------------------------------------
-                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'OnCreate','RowsIDs'=>$VPSOrderID,'Comment'=>'Заказ успешно оплачен'));
+                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'OnCreate','RowsIDs'=>$VPSOrderID,'Comment'=>'Заказ оплачен'));
                       #---------------------------------------------------------
                       switch(ValueOf($Comp)){
                         case 'error':
@@ -200,7 +200,7 @@ switch(ValueOf($VPSOrder)){
                       #---------------------------------------------------------
 		      # вариант автопродления может быть только когда заказ ещё активен
 		      if(!$PayMessage)
-		        $PayMessage = "Заказ успешно оплачен";
+		        $PayMessage = "Заказ оплачен";
 		      #---------------------------------------------------------
                       $Comp = Comp_Load('www/API/StatusSet',Array('IsNotNotify'=>TRUE,'ModeID'=>'VPSOrders','StatusID'=>'Active','RowsIDs'=>$VPSOrderID,'Comment'=>$PayMessage));
                       #---------------------------------------------------------
@@ -217,7 +217,7 @@ switch(ValueOf($VPSOrder)){
                       }
                     case 'Suspended':
                       #---------------------------------------------------------
-                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'Active','RowsIDs'=>$VPSOrderID,'Comment'=>'Заказ успешно оплачен и будет активирован'));
+                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'Active','RowsIDs'=>$VPSOrderID,'Comment'=>'Заказ оплачен и будет активирован'));
                       #---------------------------------------------------------
                       switch(ValueOf($Comp)){
                         case 'error':
@@ -271,7 +271,7 @@ switch(ValueOf($VPSOrder)){
 		  $Event = Array(
 		  		'UserID'	=> $VPSOrder['UserID'],
 				'PriorityID'	=> 'Billing',
-				'Text'		=> SPrintF('Заказ VPS логин (%s), тариф (%s) успешно оплачен на период %u дн.',$VPSOrder['Login'],$VPSScheme['Name'],$DaysPay)
+				'Text'		=> SPrintF('Заказ VPS логин (%s), тариф (%s) оплачен на период %u дн.',$VPSOrder['Login'],$VPSScheme['Name'],$DaysPay)
 		                );
                   $Event = Comp_Load('Events/EventInsert',$Event);
                   if(!$Event)

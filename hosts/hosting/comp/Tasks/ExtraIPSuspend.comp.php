@@ -44,7 +44,7 @@ switch(ValueOf($ExtraIPOrder)){
 	    $Event = Array(
 	    			'UserID'	=> $ExtraIPOrder['UserID'],
 				'PriorityID'	=> 'Billing',
-				'Text'		=> SPrintF('Заказ ExtraIP логин (%s), домен (%s) успешно заблокирован на сервере (%s)',$ExtraIPOrder['Login'],$ExtraIPOrder['Domain'],$ExtraIPServer->Settings['Address'])
+				'Text'		=> SPrintF('Заказ ExtraIP логин (%s), домен (%s) заблокирован на сервере (%s)',$ExtraIPOrder['Login'],$ExtraIPOrder['Domain'],$ExtraIPServer->Settings['Address'])
 	    		  );
             $Event = Comp_Load('Events/EventInsert',$Event);
             if(!$Event)

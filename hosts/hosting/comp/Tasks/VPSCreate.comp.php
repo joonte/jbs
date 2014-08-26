@@ -102,7 +102,7 @@ case 'array':
 					return ERROR | @Trigger_Error(101);
 				}
 				#-------------------------------------------------------------------------------
-				$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'Active','RowsIDs'=>$VPSOrder['ID'],'Comment'=>'Заказ успешно создан на сервере'));
+				$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'Active','RowsIDs'=>$VPSOrder['ID'],'Comment'=>'Заказ создан на сервере'));
 				#-------------------------------------------------------------------------------
 				switch(ValueOf($Comp)){
 				case 'error':
@@ -114,7 +114,7 @@ case 'array':
 					$Event = Array(
 							'UserID'	=> $VPSOrder['UserID'],
 							'PriorityID'	=> 'Hosting',
-							'Text'		=> SPrintF('Заказ VPS [%s] успешно создан на сервере (%s) с тарифным планом (%s), идентификатор пакета (%s)',$VPS_IP['Login'],$VPSServer->Settings['Address'],$VPSScheme['Name'],$VPSScheme['PackageID'])
+							'Text'		=> SPrintF('Заказ VPS [%s] создан на сервере (%s) с тарифным планом (%s), идентификатор пакета (%s)',$VPS_IP['Login'],$VPSServer->Settings['Address'],$VPSScheme['Name'],$VPSScheme['PackageID'])
 							);
 					$Event = Comp_Load('Events/EventInsert',$Event);
 					if(!$Event)

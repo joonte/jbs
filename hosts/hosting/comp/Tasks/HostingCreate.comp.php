@@ -94,7 +94,7 @@ switch(ValueOf($HostingOrder)){
                 return $IsCreate;
               case 'true':
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'HostingOrders','StatusID'=>'Active','RowsIDs'=>$HostingOrder['ID'],'Comment'=>'Заказ успешно создан на сервере'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'HostingOrders','StatusID'=>'Active','RowsIDs'=>$HostingOrder['ID'],'Comment'=>'Заказ создан на сервере'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':
@@ -106,7 +106,7 @@ switch(ValueOf($HostingOrder)){
 		    $Event = Array(
 		    		    'UserID'	=> $HostingOrder['UserID'],
 				    'PriorityID'=> 'Hosting',
-				    'Text'	=> SPrintF('Заказ хостинга логин [%s], домен (%s) успешно создан на сервере (%s) с тарифным планом (%s), идентификатор пакета (%s)',$HostingOrder['Login'],$HostingOrder['Domain'],$ClassHostingServer->Settings['Address'],$HostingScheme['Name'],$HostingScheme['PackageID'])
+				    'Text'	=> SPrintF('Заказ хостинга логин [%s], домен (%s) создан на сервере (%s) с тарифным планом (%s), идентификатор пакета (%s)',$HostingOrder['Login'],$HostingOrder['Domain'],$ClassHostingServer->Settings['Address'],$HostingScheme['Name'],$HostingScheme['PackageID'])
 				  );
 		    $Event = Comp_Load('Events/EventInsert',$Event);
 		    if(!$Event)

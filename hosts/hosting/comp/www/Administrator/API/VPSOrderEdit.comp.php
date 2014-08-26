@@ -161,7 +161,7 @@ if($VPSOrderID){
   if(Is_Error($IsUpdate))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
-  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>($IsCreate?'OnCreate':'Active'),'RowsIDs'=>$VPSOrderID,'IsNoTrigger'=>!$IsCreate,'Comment'=>'Заказ на VPS успешно добавлен'));
+  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>($IsCreate?'OnCreate':'Active'),'RowsIDs'=>$VPSOrderID,'IsNoTrigger'=>!$IsCreate,'Comment'=>'Заказ на VPS добавлен'));
   #-----------------------------------------------------------------------------
   switch(ValueOf($Comp)){
     case 'error':

@@ -131,14 +131,14 @@ switch(ValueOf($DomainOrder)){
 		$Event = Array(
 				'UserID'	=> $DomainOrder['UserID'],
 				'PriorityID'	=> 'Billing',
-				'Text'		=> SPrintF('Именные сервера для заказа домена (%s.%s) успешно изменены на (%s)',$DomainOrder['DomainName'],$DomainOrder['DomainZone'],Implode(', ',$Array)),
+				'Text'		=> SPrintF('Именные сервера для заказа домена (%s.%s) изменены на (%s)',$DomainOrder['DomainName'],$DomainOrder['DomainZone'],Implode(', ',$Array)),
 				'PriorityID'	=> 'Notice'
 		              );
                 $Event = Comp_Load('Events/EventInsert',$Event);
                 if(!$Event)
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Active','RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Именные сервера успешно изменены'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Active','RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Именные сервера изменены'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':

@@ -159,7 +159,7 @@ switch(ValueOf($ISPswOrder)){
 			return ERROR | @Trigger_Error(500);
 		#-----------------------------------------------------------------------
 		#-----------------------------------------------------------------------
-		$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ISPswOrders','StatusID'=>'Active','RowsIDs'=>$ISPswOrder['ID'],'Comment'=>"IP адрес лицензии успешно изменён [" . $ISPswOrder['IP'] . "->" . $IP . "]"));
+		$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ISPswOrders','StatusID'=>'Active','RowsIDs'=>$ISPswOrder['ID'],'Comment'=>"IP адрес лицензии изменён [" . $ISPswOrder['IP'] . "->" . $IP . "]"));
 		#---------------------------------------------------------------
 		switch(ValueOf($Comp)){
 		case 'error':
@@ -171,7 +171,7 @@ switch(ValueOf($ISPswOrder)){
 			$Event = Array(
 					'UserID'	=> $ISPswOrder['UserID'],
 					'PriorityID'	=> 'Hosting',
-					'Text'		=> SPrintF('IP адрес лицензии успешно изменён [%s->%s]',$ISPswOrder['IP'],$IP),
+					'Text'		=> SPrintF('IP адрес лицензии изменён [%s->%s]',$ISPswOrder['IP'],$IP),
 					);
 			$Event = Comp_Load('Events/EventInsert',$Event);
 			if(!$Event)

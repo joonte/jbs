@@ -120,7 +120,7 @@ switch(ValueOf($DomainOrder)){
                 if(Is_Error($IsUpdate))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'OnRegister','RowsIDs'=>$DomainOrderID,'Comment'=>'Регистратор успешно принял заявку на регистрацию'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'OnRegister','RowsIDs'=>$DomainOrderID,'Comment'=>'Регистратор принял заявку на регистрацию'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':
@@ -154,7 +154,7 @@ switch(ValueOf($DomainOrder)){
                 if(Is_Error($IsUpdate))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Active','RowsIDs'=>$DomainOrderID,'Comment'=>'Доменное имя успешно зарегистрированно'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Active','RowsIDs'=>$DomainOrderID,'Comment'=>'Доменное имя зарегистрированно'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':

@@ -90,7 +90,7 @@ if(!$Config['Notifies']['Methods']['Jabber']['IsEvent'])
 #-------------------------------------------------------------------------------
 $Event = Array(
 	'UserID'=> $ID,
-	'Text'	=> SPrintF('Сообщение для (%s) через службу Jabber успешно отправлено', $JabberID)
+	'Text'	=> SPrintF('Сообщение для (%s) через службу Jabber отправлено', $JabberID)
 );
 $Event = Comp_Load('Events/EventInsert', $Event);
 #-------------------------------------------------------------------------------

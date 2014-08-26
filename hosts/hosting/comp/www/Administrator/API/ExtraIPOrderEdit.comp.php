@@ -160,7 +160,7 @@ if($ExtraIPOrderID){
   if(Is_Error($IsUpdate))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
-  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ExtraIPOrders','StatusID'=>($IsCreate?'OnCreate':'Active'),'RowsIDs'=>$ExtraIPOrderID,'IsNoTrigger'=>!$IsCreate,'Comment'=>'Заказ на ExtraIP успешно добавлен'));
+  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ExtraIPOrders','StatusID'=>($IsCreate?'OnCreate':'Active'),'RowsIDs'=>$ExtraIPOrderID,'IsNoTrigger'=>!$IsCreate,'Comment'=>'Заказ на ExtraIP добавлен'));
   #-----------------------------------------------------------------------------
   switch(ValueOf($Comp)){
     case 'error':

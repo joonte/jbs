@@ -275,7 +275,7 @@ switch(ValueOf($DomainScheme)){
                 if(Is_Error($DomainOrderID))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Waiting','RowsIDs'=>$DomainOrderID,'Comment'=>'Заказ успешно создан и ожидает оплаты'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Waiting','RowsIDs'=>$DomainOrderID,'Comment'=>'Заказ создан и ожидает оплаты'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':

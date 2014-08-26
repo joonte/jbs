@@ -45,7 +45,7 @@ switch(ValueOf($ExtraIPOrder)){
 	    $Event = Array(
 	    			'UserID'	=> $ExtraIPOrder['UserID'],
 				'PriorityID'	=> 'Billing',
-				'Text'		=> SPrintF('Заказ выделенного IP (%s), успешно удален с сервера (%s)',$ExtraIPOrder['Login'],$ExtraIPServer->Settings['Address'])
+				'Text'		=> SPrintF('Заказ выделенного IP (%s), удален с сервера (%s)',$ExtraIPOrder['Login'],$ExtraIPServer->Settings['Address'])
 	    		   );
             $Event = Comp_Load('Events/EventInsert',$Event);
             if(!$Event)

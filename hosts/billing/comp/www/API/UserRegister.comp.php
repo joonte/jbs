@@ -162,7 +162,7 @@ switch(ValueOf($Comp)){
         #-----------------------------------------------------------------------
 	$Event = Array(
 			'UserID'	=> 1,
-			'Text'		=> SPrintF('%s (%s)',($Message)?$Message:'Зарегистрирован новый пользователь',$Email)
+			'Text'		=> SPrintF('%s (%s)',($Message)?$Message:'Зарегистрирован пользователь',$Email)
 		      );
 	$Event = Comp_Load('Events/EventInsert',$Event);
 	if(!$Event)

@@ -108,7 +108,7 @@ switch(ValueOf($ISPswOrder)){
                 return $IsCreate;
               case 'array':
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ISPswOrders','StatusID'=>'Active','RowsIDs'=>$ISPswOrder['ID'],'Comment'=>'ПО успешно заказано'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ISPswOrders','StatusID'=>'Active','RowsIDs'=>$ISPswOrder['ID'],'Comment'=>'ПО заказано'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':
@@ -124,7 +124,7 @@ switch(ValueOf($ISPswOrder)){
 		    $Event = Array(
 		    			'UserID'	=> $ISPswOrder['UserID'],
 					'PriorityID'	=> 'Hosting',
-					'Text'		=> SPrintF('Заказ ПО ISPsystem успешно осуществлён, тарифный план (%s), идентификатор пакета (%s)',$ISPswScheme['Name'],$ISPswScheme['PackageID'])
+					'Text'		=> SPrintF('Заказ ПО ISPsystem осуществлён, тарифный план (%s), идентификатор пакета (%s)',$ISPswScheme['Name'],$ISPswScheme['PackageID'])
 		    		  );
 		    $Event = Comp_Load('Events/EventInsert',$Event);
                     if(!$Event)

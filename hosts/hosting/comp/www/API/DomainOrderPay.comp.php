@@ -297,7 +297,7 @@ switch(ValueOf($DomainOrder)){
                     return ERROR | @Trigger_Error(500);
                   #-------------------------------------------------------------
 		  if(!$PayMessage)
-                    $PayMessage = "Заказ успешно оплачен";
+                    $PayMessage = "Заказ оплачен";
 		  #-------------------------------------------------------------
 		  #-------------------------------------------------------------
 		  $NewStatusID = 'ForProlong';
@@ -316,9 +316,9 @@ switch(ValueOf($DomainOrder)){
                       return ERROR | @Trigger_Error(400);
                     case 'array':
                       #---------------------------------------------------------
-		      $Text = SPrintF('Заказ домена (%s.%s) успешно оплачен на период %u лет',$DomainOrder['DomainName'],$DomainScheme['Name'],$YearsPay);
+		      $Text = SPrintF('Заказ домена (%s.%s) оплачен на период %u лет',$DomainOrder['DomainName'],$DomainScheme['Name'],$YearsPay);
 		      if($StatusID == 'ForTransfer')
-                        $Text = SPrintF('Заявка на перенос домена (%s.%s) успешно оплачена',$DomainOrder['DomainName'],$DomainScheme['Name']);
+                        $Text = SPrintF('Заявка на перенос домена (%s.%s) оплачена',$DomainOrder['DomainName'],$DomainScheme['Name']);
 		      #---------------------------------------------------------
 		      $Event = Array(
 		                       'UserID'		=> $DomainOrder['UserID'],

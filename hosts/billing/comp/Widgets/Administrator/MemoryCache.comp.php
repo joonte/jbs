@@ -23,7 +23,7 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'button',
-    'onclick' => "AjaxCall('/CacheFlush',null,'Очищение памяти','ShowTick(\"Кэш успешно очищен\");');",
+    'onclick' => "AjaxCall('/CacheFlush',null,'Очищение памяти','ShowTick(\"Кэш очищен\");');",
     'value'   => 'Очистить память'
   )
 );

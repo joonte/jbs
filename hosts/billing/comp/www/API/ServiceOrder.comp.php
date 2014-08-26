@@ -63,7 +63,7 @@ switch(ValueOf($Service)){
             if(Is_Error($ServiceOrderID))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Orders','StatusID'=>'Waiting','RowsIDs'=>$ServiceOrderID,'Comment'=>'Заказ успешно создан и ожидает оплаты'));
+            $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Orders','StatusID'=>'Waiting','RowsIDs'=>$ServiceOrderID,'Comment'=>'Заказ создан и ожидает оплаты'));
             #-------------------------------------------------------------------
             switch(ValueOf($Comp)){
               case 'error':

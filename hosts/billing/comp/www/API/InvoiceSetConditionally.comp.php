@@ -172,6 +172,5 @@ if(!$Event)
 # выходим
 return Array('Status'=>'Ok');
 
-#return new gException('END_OF_FILE','Тестирование прошло успешно');
 
 ?>

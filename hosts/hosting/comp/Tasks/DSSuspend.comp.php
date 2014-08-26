@@ -44,7 +44,7 @@ switch(ValueOf($DSOrder)){
 	    $Event = Array(
 	    			'UserID'	=> $DSOrder['UserID'],
 				'PriorityID'	=> 'Billing',
-				'Text'		=> SPrintF('Арендованный сервер, IP %s, успешно выключен',$DSOrder['IP'])
+				'Text'		=> SPrintF('Выключен арендованный сервер, IP %s',$DSOrder['IP'])
 	                  );
             $Event = Comp_Load('Events/EventInsert',$Event);
             if(!$Event)

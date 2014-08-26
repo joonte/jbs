@@ -62,7 +62,7 @@ case 'array':
 		$Event = Array(
 				'UserID'	=> $ISPswOrder['UserID'],
 				'PriorityID'	=> 'Billing',
-				'Text'		=> SPrintF('Заказ ПО ISPsystem (%s), IP адрес (%s) успешно активирован',$ISPswScheme['Name'],$ISPswOrder['IP'])
+				'Text'		=> SPrintF('Заказ ПО ISPsystem (%s), IP адрес (%s) активирован',$ISPswScheme['Name'],$ISPswOrder['IP'])
 			      );
 		$Event = Comp_Load('Events/EventInsert',$Event);
 		if(!$Event)

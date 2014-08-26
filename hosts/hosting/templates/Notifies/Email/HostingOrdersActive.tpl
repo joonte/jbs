@@ -2,10 +2,10 @@
  *  Joonte Billing System
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
-{assign var=Theme value="Заказ хостинга [{$Login|default:'$Login'}] успешно активирован" scope=global}
+{assign var=Theme value="Заказ хостинга [{$Login|default:'$Login'}] активирован" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
-Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ №{$OrderID|string_format:"%05u"} на хостинг был успешно активирован.
+Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ №{$OrderID|string_format:"%05u"} на хостинг был активирован.
 
 Ваши данные для доступа к аккаунту на сервере:
   * Адрес панели управления:

@@ -150,7 +150,7 @@ if($ISPswOrderID){
   if(Is_Error($IsUpdate))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
-  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ISPswOrders','StatusID'=>($IsCreate?'OnCreate':'Active'),'RowsIDs'=>$ISPswOrderID,'IsNoTrigger'=>!$IsCreate,'Comment'=>'Заказ ПО ISPsystem успешно добавлен'));
+  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ISPswOrders','StatusID'=>($IsCreate?'OnCreate':'Active'),'RowsIDs'=>$ISPswOrderID,'IsNoTrigger'=>!$IsCreate,'Comment'=>'Заказ ПО ISPsystem добавлен'));
   #-----------------------------------------------------------------------------
   switch(ValueOf($Comp)){
     case 'error':

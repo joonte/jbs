@@ -183,7 +183,7 @@ switch(ValueOf($ExtraIPOrder)){
                   switch($StatusID){
                     case 'Waiting':
                       #---------------------------------------------------------
-                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ExtraIPOrders','StatusID'=>'OnCreate','RowsIDs'=>$ExtraIPOrderID,'Comment'=>'Заказ успешно оплачен'));
+                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ExtraIPOrders','StatusID'=>'OnCreate','RowsIDs'=>$ExtraIPOrderID,'Comment'=>'Заказ оплачен'));
                       #---------------------------------------------------------
                       switch(ValueOf($Comp)){
                         case 'error':
@@ -200,7 +200,7 @@ switch(ValueOf($ExtraIPOrder)){
                       #---------------------------------------------------------
 		      # вариант автопродления может быть только когда заказ ещё активен
 		      if(!$PayMessage)
-                        $PayMessage = "Заказ успешно оплачен";
+                        $PayMessage = "Заказ оплачен";
                       #---------------------------------------------------------
                       $Comp = Comp_Load('www/API/StatusSet',Array('IsNotNotify'=>TRUE,'ModeID'=>'ExtraIPOrders','StatusID'=>'Active','RowsIDs'=>$ExtraIPOrderID,'Comment'=>$PayMessage));
                       #---------------------------------------------------------
@@ -217,7 +217,7 @@ switch(ValueOf($ExtraIPOrder)){
                       }
                     case 'Suspended':
                       #---------------------------------------------------------
-                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ExtraIPOrders','StatusID'=>'Active','RowsIDs'=>$ExtraIPOrderID,'Comment'=>'Заказ успешно оплачен и будет активирован'));
+                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ExtraIPOrders','StatusID'=>'Active','RowsIDs'=>$ExtraIPOrderID,'Comment'=>'Заказ оплачен и будет активирован'));
                       #---------------------------------------------------------
                       switch(ValueOf($Comp)){
                         case 'error':
@@ -271,7 +271,7 @@ switch(ValueOf($ExtraIPOrder)){
 		  $Event = Array(
 		  			'UserID'	=> $ExtraIPOrder['UserID'],
 					'PriorityID'	=> 'Billing',
-					'Text'		=> SPrintF('Заказ ExtraIP (%s) успешно оплачен на период %u дн.',$ExtraIPScheme['Name'], $DaysPay)
+					'Text'		=> SPrintF('Заказ ExtraIP (%s) оплачен на период %u дн.',$ExtraIPScheme['Name'], $DaysPay)
 		                );
                   $Event = Comp_Load('Events/EventInsert',$Event);
                   if(!$Event)

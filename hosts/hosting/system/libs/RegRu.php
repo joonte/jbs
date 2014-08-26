@@ -726,6 +726,7 @@ function RegRu_Domains_Accept($Settings){
 			$Query['dname']		= $Domains[$DomainID];
 			$Query['id']		= $DomainID;
 			$Query['action_type']	= 'accept';
+			$Query['action']	= 'accept';
 			#-------------------------------------------------------------------------------
 			$Result = Http_Send($Settings['PrefixAPI'],$Http,Array(),$Query);
 			if(Is_Error($Result))
@@ -736,8 +737,9 @@ function RegRu_Domains_Accept($Settings){
 			$Result = Json_Decode($Result,TRUE);
 			#---------------------------------------------------------------------------
 			if($Result['result'] == 'success')
-				if($Result['answer']['domains']['result'] == 'accepted')
-					Debug(SPrintF('[system/libs/RegRu.php]: домен %s успешно перенесён на аккаунт',$Domains[$DomainID]));
+				if(IsSet($Result['answer']['domains']['result']))
+					if($Result['answer']['domains']['result'] == 'accepted')
+						Debug(SPrintF('[system/libs/RegRu.php]: домен %s перенесён на аккаунт',$Domains[$DomainID]));
 			#---------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------

@@ -31,7 +31,7 @@ $Comp = Comp_Load('Buttons/Standard',Array('onclick'=>SPrintF("GetURL('/Administ
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Buttons/Panel',Array('Comp'=>$Comp,'Name'=>'Добавить новый тариф в группу'));
+$Comp = Comp_Load('Buttons/Panel',Array('Comp'=>$Comp,'Name'=>'Добавить тариф в группу'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

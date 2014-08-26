@@ -176,7 +176,7 @@ if(IsSet($GLOBALS['__USER']) /*&& Mb_StrLen($Content) < 1000*/){
 							'id'            => SPrintF('star_%d_%d', $MessageID, $i),
 							'src'           => SPrintF('SRC:{Images/Icons/%sStar.png}',($VoteBall > 0)?(($i < $VoteBall)?'Enable':'Disable'):'Disable'),
 							'onMouseOver'   => SPrintF('selectStars(event, %d, %d);PromptShow(event,\'%s\',this);',$MessageID, $i, $VoteTitle[$i]),
-							'onClick'       => SPrintF("AjaxCall('/API/TicketVote',{MessageID:%u,VoteBall:%u},'Оценка сообщения','ShowTick(\"Ваша оценка \'%s\' успешно сохранена\");');",$MessageID,$i+1,$VoteTitle[$i]),
+							'onClick'       => SPrintF("AjaxCall('/API/TicketVote',{MessageID:%u,VoteBall:%u},'Оценка сообщения','ShowTick(\"Ваша оценка \'%s\' сохранена\");');",$MessageID,$i+1,$VoteTitle[$i]),
 							#'title'         => $VoteTitle[$i],
 							'style'		=> 'cursor: pointer;'
 						));

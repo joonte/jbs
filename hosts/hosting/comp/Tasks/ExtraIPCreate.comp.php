@@ -99,7 +99,7 @@ switch(ValueOf($ExtraIPOrder)){
 		    return ERROR | @Trigger_Error(101);
 		  }
                   #---------------------------------------------------------------
-                  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ExtraIPOrders','StatusID'=>'Active','RowsIDs'=>$ExtraIPOrder['ID'],'Comment'=>'Дополнительный IP успешно добавлен'));
+                  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ExtraIPOrders','StatusID'=>'Active','RowsIDs'=>$ExtraIPOrder['ID'],'Comment'=>'Дополнительный IP добавлен'));
                   #---------------------------------------------------------------
                   switch(ValueOf($Comp)){
                     case 'error':
@@ -111,7 +111,7 @@ switch(ValueOf($ExtraIPOrder)){
 		      $Event = Array(
 		      			'UserID'	=> $ExtraIPOrder['UserID'],
 					'PriorityID'	=> 'Billing',
-					'Text'		=> SPrintF('На сервере (%s) для логина (%s) успешно добавлен дополнительный IP (%s) c обратной зоной (%s)',$ExtraIPServer->Settings['Address'],$DependOrder['Login'],$ExtraIP['Login'],$DependOrder['Domain'])
+					'Text'		=> SPrintF('На сервере (%s) для логина (%s) добавлен дополнительный IP (%s) c обратной зоной (%s)',$ExtraIPServer->Settings['Address'],$DependOrder['Login'],$ExtraIP['Login'],$DependOrder['Domain'])
 		                    );
                       $Event = Comp_Load('Events/EventInsert',$Event);
                       if(!$Event)

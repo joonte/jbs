@@ -124,7 +124,7 @@ if($DSOrderID){
   if(Is_Error($IsUpdate))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
-  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DSOrders','StatusID'=>($IsCreate?'OnCreate':'Active'),'RowsIDs'=>$DSOrderID,'IsNoTrigger'=>!$IsCreate,'Comment'=>'Заказ на DS успешно добавлен'));
+  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DSOrders','StatusID'=>($IsCreate?'OnCreate':'Active'),'RowsIDs'=>$DSOrderID,'IsNoTrigger'=>!$IsCreate,'Comment'=>'Заказ на выделенный сервер добавлен'));
   #-----------------------------------------------------------------------------
   switch(ValueOf($Comp)){
     case 'error':

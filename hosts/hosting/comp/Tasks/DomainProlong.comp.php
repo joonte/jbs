@@ -87,7 +87,7 @@ switch(ValueOf($DomainOrder)){
                 return 300;
               case 'array':
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Active','RowsIDs'=>$DomainOrderID,'Comment'=>'Доменное имя успешно продлено'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Active','RowsIDs'=>$DomainOrderID,'Comment'=>'Доменное имя продлено'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':

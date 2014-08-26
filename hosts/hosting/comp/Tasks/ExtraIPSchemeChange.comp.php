@@ -82,7 +82,7 @@ switch(ValueOf($ExtraIPOrder)){
                 }
               case 'true':
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ExtraIPOrders','StatusID'=>'Active','RowsIDs'=>$ExtraIPOrderID,'Comment'=>'Тарифный план успешно изменен'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ExtraIPOrders','StatusID'=>'Active','RowsIDs'=>$ExtraIPOrderID,'Comment'=>'Тарифный план изменен'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':

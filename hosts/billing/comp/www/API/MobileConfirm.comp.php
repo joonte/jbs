@@ -136,7 +136,7 @@ if($Mobile){
 	$Event = Array(
 			'UserID'        => $GLOBALS['__USER']['ID'],
 			'PriorityID'    => 'Billing',
-			'Text'          => SPrintF('Мобильный телефон (%s) успешно подтверждён',$GLOBALS['__USER']['Mobile'])
+			'Text'          => SPrintF('Мобильный телефон (%s) подтверждён',$GLOBALS['__USER']['Mobile'])
 			);
 	$Event = Comp_Load('Events/EventInsert',$Event);
 	if(!$Event)
