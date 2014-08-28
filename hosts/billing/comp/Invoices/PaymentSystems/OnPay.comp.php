@@ -16,6 +16,7 @@ $Settings = $Config['Invoices']['PaymentSystems']['OnPay'];
 $Send = $Settings['Send'];
 #-------------------------------------------------------------------------------
 $Send['pay_for'] = $InvoiceID;
+$Send['f'] = 11;
 
 if(@$_SERVER['HTTPS'] != "") $http_protocol = "https"; else $http_protocol = "http";
 $Send['url_success'] = "{$http_protocol}://{$_SERVER['SERVER_NAME']}/Accounts";
