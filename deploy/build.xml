@@ -2,7 +2,7 @@
 
 <project name="Joonte Billing System" description="Deploy of JBS" default="deploy" >
     <property name="versionPrefix" value="v" />
-    <property name="version" value="2.5.24" />
+    <property name="version" value="2.5.25" />
     <property name="versionPostfix" value="-release" />
 
     <property name="tmpDir" value="/tmp/joonte" />
