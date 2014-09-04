@@ -14,7 +14,7 @@ $ContractID = (integer) @$Args['ContractID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Contract = DB_Select('Contracts',Array('CreateDate','UserID','IsUponConsider','ProfileID'),Array('UNIQ','ID'=>$ContractID));
+$Contract = DB_Select('Contracts',Array('ID','CreateDate','UserID','IsUponConsider','ProfileID'),Array('UNIQ','ID'=>$ContractID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Contract)){
   case 'error':
@@ -32,7 +32,11 @@ switch(ValueOf($Contract)){
     if(Is_Error($DOM->Load('Window')))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
-    $DOM->AddText('Title','Изменение договора');
+	$Number = Comp_Load('Formats/Contract/Number',$Contract['ID']);
+	if(Is_Error($Number))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+    $DOM->AddText('Title',SPrintF('Изменение договора #%s',$Number));
     #---------------------------------------------------------------------------
     $Table = Array();
     #---------------------------------------------------------------------------
@@ -48,7 +52,7 @@ switch(ValueOf($Contract)){
     #---------------------------------------------------------------------------
     $Table[] = Array('Дата заключения',$Comp);
     #---------------------------------------------------------------------------
-    $Comp = Comp_Load('Form/Select',Array('name'=>'IsUponConsider'),Array('По факту','Ежемесячный'),$Contract['IsUponConsider']);
+    $Comp = Comp_Load('Form/Select',Array('name'=>'IsUponConsider','style'=>'width:100%'),Array('По факту','Ежемесячный'),$Contract['IsUponConsider']);
     if(Is_Error($Comp))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
@@ -79,7 +83,7 @@ switch(ValueOf($Contract)){
           $Options[$Profile['ID']] = $Name;
         }
         #-----------------------------------------------------------------------
-        $Comp = Comp_Load('Form/Select',Array('name'=>'ProfileID'),$Options,$Contract['ProfileID']);
+        $Comp = Comp_Load('Form/Select',Array('name'=>'ProfileID','style'=>'width:100%'),$Options,$Contract['ProfileID']);
         if(Is_Error($Comp))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
