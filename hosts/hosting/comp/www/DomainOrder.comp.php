@@ -386,11 +386,16 @@ if($StepID){
       foreach($Contracts as $Contract){
         #-----------------------------------------------------------------------
         $Customer = $Contract['Customer'];
+	#-------------------------------------------------------------------------------
+	$Number = Comp_Load('Formats/Contract/Number',$Contract['ID']);
+	if(Is_Error($Number))
+		return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
         if(Mb_StrLen($Customer) > 20)
           $Customer = SPrintF('%s...',Mb_SubStr($Customer,0,20));
-        #-----------------------------------------------------------------------
-        $Options[$Contract['ID']] = $Customer;
+	#-------------------------------------------------------------------------------
+	$Options[$Contract['ID']] = SPrintF('#%s / %s',$Number,$Customer);
+	#-------------------------------------------------------------------------------
       }
       #-------------------------------------------------------------------------
       $Comp = Comp_Load('Form/Select',Array('name'=>'ContractID'),$Options,$ContractID);
