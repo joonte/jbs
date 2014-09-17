@@ -449,11 +449,11 @@ if($StepID){
           #---------------------------------------------------------------------
           if($Config['Hosting']['IsNoDomain']){
             #-------------------------------------------------------------------
-            $Comp = Comp_Load('Form/Input',Array('name'=>'IsNoDomain','type'=>'checkbox','onclick'=>"form.Domain.disabled=checked;form.Submit.onclick=(checked?function(){HostingOrder();}:function(){ShowWindow('/HostingOrder',FormGet(form));});"));
+            $Comp = Comp_Load('Form/Input',Array('name'=>'IsNoDomain','type'=>'checkbox','onclick'=>"form.Domain.disabled=checked;form.Submit.onclick=(checked?function(){HostingOrder();}:function(){ShowWindow('/HostingOrder',FormGet(form));});form.Submit1.onclick=(checked?function(){HostingOrder();}:function(){ShowWindow('/HostingOrder',FormGet(form));});"));
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-	    $OnClick = "ChangeCheckBox('IsNoDomain'); document.getElementsByName('Domain')[0].disabled = document.getElementsByName('IsNoDomain')[0].checked?true:false; document.getElementsByName('Submit')[0].onclick = (document.getElementsByName('IsNoDomain')[0].checked?function(){HostingOrder();}:function(){ShowWindow('/HostingOrder',FormGet(form));});";
+	    $OnClick = "ChangeCheckBox('IsNoDomain'); document.getElementsByName('Domain')[0].disabled = document.getElementsByName('IsNoDomain')[0].checked?true:false; document.getElementsByName('Submit')[0].onclick = (document.getElementsByName('IsNoDomain')[0].checked?function(){HostingOrder();}:function(){ShowWindow('/HostingOrder',FormGet(form));}); document.getElementsByName('Submit1')[0].onclick = (document.getElementsByName('IsNoDomain')[0].checked?function(){HostingOrder();}:function(){ShowWindow('/HostingOrder',FormGet(form));});";
             $NoBody->AddChild(new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px; cursor:pointer;','onclick'=>$OnClick),'Заказать хостинг без домена')));
           }
           #---------------------------------------------------------------------
@@ -475,7 +475,7 @@ if($StepID){
 				'Form/Input',
 				Array(
 					'type'    => 'button',
-					'name'    => 'Submit',
+					'name'    => 'Submit1',
 					'onclick' => "ShowWindow('/HostingOrder',FormGet(form));",
 					'value'   => 'Продолжить'
 					)
