@@ -2463,6 +2463,20 @@ INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`Is
 VALUES (7,100,100,'no','no','no','Registrators/ELVIS/external','Трансфер внешний. ELVIS.',@Text);
 
 -- SEPARATOR
+set @Text = '<P>Шаблоны писем на смену обслуживающего партнера (данные нашего партнерского аккаунта указаны выше):<BR />
+для юридических лиц:		http://www.reg.ru/docs/letters/dom_transfer_acc_org_ru.rtf<BR />
+для физических лиц и ИП:	http://www.reg.ru/docs/letters/dom_transfer_acc_pers_ru.rtf</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/REGRU/internal','Трансфер внутренний. REGRU.',@Text);
+
+-- SEPARATOR
+set @Text = '<P>Администратору домена следует прислать копию паспорта (если администратор — физическое лицо) или заявление на официальном бланке организации с печатью и подписью руководителя (для юридических лиц) на e-mail support@webnames.ru (в отсканированном виде) или по факсу +7 846 9799038, и сообщить о своем желании передать свой домен под сопровождение нового партнера указав наш логин и номер договора (данные были указаны выше).<BR />
+<BR />Перенос домена на наш аккаунт может занять у регистратора до 5 рабочих дней. В переносе может быть отказано на основании причин, указанных в правилах регистрации доменов.</P>';
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (7,100,100,'no','no','no','Registrators/REGTIME/Internal','Трансфер внутренний. REGTIME.',@Text);
+
+
+-- SEPARATOR
 INSERT INTO `Clauses` (`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
 (100, 100, 'CreateTicket/LOCK_OVERLIMITS', 'Аккаунт заблокирован за превышение использования CPU', 'no', 'yes', 'yes', 'yes', '<NOBODY>
 <P>Уведомляем Вас о том, что ваш аккаунт %Login%, паркованный домен %Domain%, превысил использование процессорного времени, определённое вашим тарифом "%Scheme%". Поскольку превышения были систематические, и наши предыдущие уведомления вы проигнорировали - мы вынуждены заблокировать ваш аккаунт.
