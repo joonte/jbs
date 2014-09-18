@@ -85,6 +85,15 @@
   <Head>Логин</Head>
  </Login>
  <!-- ********************************************************************** -->
+	<Orders>
+		<Head>Кол. зак.</Head>
+		<Prompt>Кол-во активных заказов данного регистратора</Prompt>
+		<Alias>(SELECT COUNT(*) FROM `DomainsOrders` WHERE `DomainsOrders`.`SchemeID` IN (SELECT `ID` FROM  `DomainsSchemes` WHERE `RegistratorID` = `Registrators`.`ID`))</Alias>
+		<Attribs>
+			<style>text-align:right;</style>
+		</Attribs>
+	</Orders>
+	<!-- ********************************************************************** -->
  <SortID>
   <Args>
    <TableID>HostingSchemes</TableID>
@@ -98,6 +107,7 @@
  <ListElement>Address</ListElement>
  <ListElement>Port</ListElement>
  <ListElement>Login</ListElement>
+ <ListElement>Orders</ListElement>
  <ListElement>SortID</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
