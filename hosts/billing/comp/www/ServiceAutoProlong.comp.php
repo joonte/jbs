@@ -97,7 +97,23 @@ if(Is_Error($DOM->Load('Window')))
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',SPrintF('Настройки автопродления, услуга "%s"',$Service['Name']));
 #-------------------------------------------------------------------------------
-$Table = Array(SPrintF('Настройки автопродления, услуга "%s", заказ #%u',$Service['NameShort'],$Order['OrderID']));
+#-------------------------------------------------------------------------------
+$Number = Comp_Load('Formats/Order/Number',$Order['OrderID']);
+if(Is_Error($Number))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Table = Array(SPrintF('Настройки автопродления, услуга "%s", заказ #%s',$Service['NameShort'],$Number));
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('name'=>'IsAutoProlong','type'=>'checkbox','value'=>'yes'));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if($Order['IsAutoProlong'])
+	$Comp->AddAttribs(Array('checked'=>'yes'));
+#-------------------------------------------------------------------------------
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsAutoProlong\'); return false;'),SPrintF('Автопродление услуги "%s", заказ #%s',$Service['NameShort'],$Number)),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
@@ -105,13 +121,13 @@ $Comp = Comp_Load(
 		Array(
 			'type'    => 'button',
 			'onclick' => "AjaxCall('/API/ServiceAutoProlongation',FormGet(form),'Сохрание настроек','GetURL(document.location);');",
-			'value'   => (($Order['IsAutoProlong'])?'Отключить':'Включить')
+			'value'   => 'Сохранить'
 			)
 		);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(SPrintF('Автопродление %s',(($Order['IsAutoProlong'])?'[включено]':'[выключено]')), $Comp);
+$Table[] = $Comp;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Standard',$Table);
