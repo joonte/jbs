@@ -1506,6 +1506,7 @@
 		</DenyFoulLanguage>
 		<ShowTicketContextMenu>0</ShowTicketContextMenu>
 		<ThemeMinimumLength>4</ThemeMinimumLength>
+		<AutoAssignToLastAnswerEmployee>1</AutoAssignToLastAnswerEmployee>
 	</Edesks>
 	<!-- *********************************************************************** -->
 </Interface>
