@@ -1207,7 +1207,7 @@ function IspManager4_DeleteIP($Settings,$ExtraIP){
 			if(IsSet($Doc['error']))
 				return new gException('IspManager4_DeleteIP',SPrintF('Не удалось изменить IP для email домена %s',$Domain['name']));
 			#-----------------------------------------------------------------------------
-			if($Doc['ip'] == $ExtraIP){
+			if(IsSet($Doc['ip']) && $Doc['ip'] == $ExtraIP){
 				#-----------------------------------------------------------------------------
                                 # change settings
 				$Request = Array(
