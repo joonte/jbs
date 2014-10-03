@@ -81,7 +81,7 @@ switch(ValueOf($Groups)){
     foreach($Groups as $Group)
       $Options[$Group['ID']] = SPrintF('%s (%s)',$Group['Name'],$Group['Comment']);
     #---------------------------------------------------------------------------
-    $Comp = Comp_Load('Form/Select',Array('name'=>'TargetGroupID'),$Options);
+    $Comp = Comp_Load('Form/Select',Array('name'=>'TargetGroupID','style'=>'width: 100%'),$Options);
     if(Is_Error($Comp))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
@@ -107,7 +107,7 @@ switch(ValueOf($Groups)){
             $Options[$WorkerID] = $Worker['Name'];
           }
           #---------------------------------------------------------------------
-          $Comp = Comp_Load('Form/Select',Array('name'=>'TargetUserID'),$Options,$GLOBALS['__USER']['ID']);
+          $Comp = Comp_Load('Form/Select',Array('name'=>'TargetUserID','style'=>'width: 100%'),$Options,$GLOBALS['__USER']['ID']);
           if(Is_Error($Comp))
             return ERROR | @Trigger_Error(500);
           #---------------------------------------------------------------------
@@ -122,7 +122,7 @@ switch(ValueOf($Groups)){
     #---------------------------------------------------------------------------
     $Priorities = $Config['Edesks']['Priorities'];
     #---------------------------------------------------------------------------
-    $Comp = Comp_Load('Form/Select',Array('name'=>'PriorityID'),$Priorities);
+    $Comp = Comp_Load('Form/Select',Array('name'=>'PriorityID','style'=>'width: 100%'),$Priorities);
     if(Is_Error($Comp))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------

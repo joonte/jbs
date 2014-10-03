@@ -94,7 +94,7 @@ for($Month=$CurrentMonth;$Month > $CurrentMonth-24;$Month--){
   $Options[$Month] = $Comp;
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'Month'),$Options,$WorkComplite['Month']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'Month','style'=>'width: 100%'),$Options,$WorkComplite['Month']);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -114,7 +114,7 @@ switch(ValueOf($Services)){
     foreach($Services as $Service)
       $Options[$Service['ID']] = $Service['Name'];
     #---------------------------------------------------------------------------
-    $Comp = Comp_Load('Form/Select',Array('name'=>'ServiceID'),$Options,$WorkComplite['ServiceID']);
+    $Comp = Comp_Load('Form/Select',Array('name'=>'ServiceID','style'=>'width: 100%'),$Options,$WorkComplite['ServiceID']);
     if(Is_Error($Comp))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
