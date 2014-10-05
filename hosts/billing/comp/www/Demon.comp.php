@@ -94,6 +94,11 @@ while(TRUE){
 			foreach ($Tasks as $Task){
 				#Debug(SPrintF('[comp/www/Demon]: Task = %s',print_r($Task,true)));
 				#-------------------------------------------------------------------------------
+				$GLOBALS['__USER']['ID'] = 100;
+				$Comp = Comp_Load('Users/Init',100);
+				if(Is_Error($Comp))
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
 				$Number = Comp_Load('Formats/Task/Number',$Task['ID']);
 				if(Is_Error($Number))
 					return ERROR | @Trigger_Error(500);
