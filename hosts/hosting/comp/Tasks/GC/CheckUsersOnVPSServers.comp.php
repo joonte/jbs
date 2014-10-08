@@ -100,7 +100,7 @@ case 'array':
 							if(!In_Array($ServerUser['Login'], $Users)){
 								$Event = Array(
 										'UserID'        => $ServerUser['UserID'],
-										'PriorityID'    => 'VPS',
+										'PriorityID'    => 'Warning',
 										'Text'          => SPrintF('Пользователь (%s) не найден на сервере (%s)',$ServerUser['Login'],$iServer['Address']),
 										'IsReaded'      => FALSE
 										);
@@ -130,7 +130,7 @@ case 'array':
 							#-----------------------------------------------------------------
 							$Event = Array(
 									'UserID'        => 1,
-									'PriorityID'    => 'VPS',
+									'PriorityID'    => 'Warning',
 									'Text'          => SPrintF('На сервере (%s) найден пользователь (%s) отсутствующий в биллинге',$iServer['Address'],$UserID),
 									'IsReaded'      => FALSE
 									);
