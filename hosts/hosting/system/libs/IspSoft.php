@@ -440,7 +440,7 @@ function IspSoft_Get_Balance($Settings){
 	$Request = Array(
 			'authinfo'	=> $authinfo,		# авторизационная информация
 			'out'		=> 'xml',		# Формат вывода
-			'func'		=> 'accountinfo',	# Целевая функция
+			'func'		=> 'subaccount',	# Целевая функция
 			);
 	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
 	if(Is_Error($Response))
@@ -456,7 +456,9 @@ function IspSoft_Get_Balance($Settings){
 	if(IsSet($Doc['error']))
 		return new gException('[IspSoft_Get_Balance]','Не удалось получить баланс аккаунтов');
 	#---------------------------------------------------------------------------
+	#---------------------------------------------------------------------------
 	return $Doc;
+	#---------------------------------------------------------------------------
 }
 
 #-------------------------------------------------------------------------------

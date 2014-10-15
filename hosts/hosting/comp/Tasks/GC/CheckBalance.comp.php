@@ -104,19 +104,20 @@ case 'exception':
 			#-------------------------------------------------------------------------------
 			# получаем баланс
 			$Balances = IspSoft_Get_Balance($Settings);
-			#Debug("[comp/Tasks/GC/CheckBalance]: " . print_r($Balances, true) );
+			Debug("[comp/Tasks/GC/CheckBalance]: " . print_r($Balances, true) );
 			#-------------------------------------------------------------------------------
 			foreach($Balances as $Balance){
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: %s / %s',$Balance['name'],$Balance['balance']));
-				#-------------------------------------------------------------------------------
-				if($Balance['name'] == 'ISPsystem'){
+				if(IsSet($Balance['project']) && $Balance['project'] == 'ISPsystem'){
 					#-------------------------------------------------------------------------------
-					if($Balance['balance'] < $Settings['Params']['BalanceLowLimit']){
+					Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: %s / %s',$Balance['project'],$Balance['balance']));
+					#-------------------------------------------------------------------------------
+					#-------------------------------------------------------------------------------
+					if((double)$Balance['balance'] < $Settings['Params']['BalanceLowLimit']){
 						#-------------------------------------------------------------------------------
 						Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: add to message: %s / %s',$Balance['name'],$Balance['balance']));
 						#-------------------------------------------------------------------------------
-						$Message .= SPrintF("Остаток на счете ISPsystem ниже допустимого минимума - %01.2f евро. \n",$Balance['balance']);
+						$Message .= SPrintF("Остаток на счете ISPsystem ниже допустимого минимума - %s \n",$Balance['balance']);
 						#-------------------------------------------------------------------------------
 					}
 					#-------------------------------------------------------------------------------
