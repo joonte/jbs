@@ -376,7 +376,8 @@ case 'false':
 	#-------------------------------------------------------------------------------
 	if ($Config['Notifies']['Methods']['SMS']['IsEvent']) {
 		#-------------------------------------------------------------------------------
-		$Event = Array('UserID' => $UserID,'PriorityID' => 'Error','Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), %s', $Mobile, 'шлюз временно недоступен.'));
+		#$Event = Array('UserID' => $UserID,'PriorityID' => 'Error','Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), %s', $Mobile, 'шлюз временно недоступен.'));
+		$Event = Array('UserID' => $UserID,'PriorityID' => 'Error','Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), причина (%s)',$Mobile,$SMS->error));
 		$Event = Comp_Load('Events/EventInsert', $Event);
 		if (!$Event)
 			return ERROR | @Trigger_Error(500);
