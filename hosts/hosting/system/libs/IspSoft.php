@@ -483,6 +483,7 @@ function IspSoft_Check_ISPsystem_IP($Settings, $ISPswInfo){
 	list($price, $period) = explode(":", $ISPswInfo['ISPtype']);
 	#-----------------------------------------------------------------------------
 	# authinfo=USER:PASSWD&out=xml&func=software.licinfo&sok=ok&price=7&period=8&ip=111.222.111.222
+	# authinfo=USER:PASSWD&out=xml&func=soft.checkip&pricelist=7&period=1&ip=82.145.17.16
 	$Request = Array(
 			'authinfo'	=> $authinfo,		# авторизационная информация
 			'out'		=> 'xml',		# Формат вывода

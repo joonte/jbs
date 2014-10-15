@@ -912,7 +912,9 @@ DROP TABLE IF EXISTS `ISPswLicenses`;
 
 CREATE TABLE IF NOT EXISTS `ISPswLicenses` (
 	`ID` int(9) NOT NULL AUTO_INCREMENT,
-	`ISPtype` char(12) NOT NULL,
+	`pricelist_id` int(12) NOT NULL,
+	`period` VARCHAR(32) NOT NULL,
+	`addon` INT(4) NOT NULL,
 	`IP` char(64) NOT NULL,
 	`elid` int(12) NOT NULL,
 	`IsInternal` enum('yes','no') NOT NULL DEFAULT 'yes',

@@ -91,6 +91,10 @@ foreach($Doc as $License){
 		$IsInsert = DB_Insert(
 				'ISPswLicenses',
 				Array(
+					'pricelist_id'	=> $License['pricelist_id'],
+					'period'	=> $License['period'],
+					# TODO надо доделать. дёргать название параметра, проверять его наличие и вписывать сюда значение
+					#'addon'
 					'IP'		=> $License['ip'],
 					'elid'		=> $License['id'],
 					'IsInternal'	=> 'no',	# TODO надо бы по IP определять
@@ -145,6 +149,9 @@ foreach($Doc as $License){
 		$IsUpdate = DB_Update(
 					'ISPswLicenses',
 					Array(
+						'pricelist_id'  => $License['pricelist_id'],
+						'period'        => $License['period'],
+						# TODO addon
 						'IP'		=> $License['ip'],
 						'ISPname'	=> (IsSet($License['licname'])?$License['licname']:'Имя не задано'),
 						'UpdateDate'	=> time(),
@@ -212,7 +219,8 @@ case 'exception':
 	break;
 case 'array':
 	#---------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'] = Array($GLOBALS['TaskReturnInfo'],SPrintF('Local licenses: %u',SizeOf($ISPswLicenses)));
+	if(IsSet($GLOBALS['TaskReturnInfo']))
+		$GLOBALS['TaskReturnInfo'] = Array($GLOBALS['TaskReturnInfo'],SPrintF('Local licenses: %u',SizeOf($ISPswLicenses)));
 	#---------------------------------------------------------------------------
 	foreach($ISPswLicenses as $ISPswLicense){
 		#-------------------------------------------------------------------------------
