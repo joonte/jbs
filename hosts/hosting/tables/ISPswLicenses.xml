@@ -15,7 +15,9 @@
  <TableID>ISPswLicenses</TableID>
  <ColumnsIDs>
   <ListElement>ID</ListElement>
-  <ListElement>ISPtype</ListElement>
+  <ListElement>pricelist_id</ListElement>
+  <ListElement>period</ListElement>
+  <ListElement>addon</ListElement>
   <ListElement>IP</ListElement>
   <ListElement>elid</ListElement>
   <ListElement>IsInternal</ListElement>
@@ -67,7 +69,6 @@
   <Search>
    <Args>
     <ColumnsIDs>
-     <ListElement>ISPtype</ListElement>
      <ListElement>IP</ListElement>
      <ListElement>elid</ListElement>
     </ColumnsIDs>
@@ -161,46 +162,67 @@
   <Head>Флаг</Head>
   <Prompt>Флаг установленный на лицензию</Prompt>
  </Flag>
- <!-- ********************************************************************** -->
- <IsInternal>
-  <Head>Внутр.</Head>
-  <Prompt>Внутренняя лицензия</Prompt>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsInternal%</ListElement>
-  </Args>
- </IsInternal>
- <!-- ********************************************************************** -->
- <IsUsed>
-  <Head>Исп.</Head>
-  <Prompt>Лицензия используется в заказах</Prompt>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsUsed%</ListElement>
-  </Args>
- </IsUsed>
- <!-- ********************************************************************** -->
- <ISPtype>
-  <Head>Тип</Head>
-  <Prompt>Тип лицензии в нашем биллинге</Prompt>
-  <Comp>Formats/ISPswOrder/SoftWareList</Comp>
-  <Args>
-   <ListElement>1</ListElement>
-   <ListElement>%ISPtype%</ListElement>
-  </Args>
- </ISPtype>
+
+	<!-- ********************************************************************** -->
+	<IsInternal>
+		<Head>Вн.</Head>
+		<Prompt>Внутренняя лицензия</Prompt>
+		<Comp>Formats/Logic</Comp>
+		<Args>
+			<ListElement>%IsInternal%</ListElement>
+		</Args>
+	</IsInternal>
+	<!-- ********************************************************************** -->
+	<IsUsed>
+		<Head>Исп.</Head>
+		<Prompt>Лицензия используется в заказах</Prompt>
+		<Comp>Formats/Logic</Comp>
+		<Args>
+			<ListElement>%IsUsed%</ListElement>
+		</Args>
+	</IsUsed>
+	<!-- ********************************************************************** -->
+	<pricelist_id>
+		<Head>Тип</Head>
+		<Prompt>Тип лицензии в нашем биллинге</Prompt>
+		<Comp>Formats/ISPswOrder/SoftWareList</Comp>
+		<Args>
+			<ListElement>1</ListElement>
+			<ListElement>%pricelist_id%</ListElement>
+		</Args>
+	</pricelist_id>
+	<!-- *********************************************************************** -->
+	<period>
+		<Head>Пер.</Head>
+		<Prompt>На какой срок заказана лицензия: триал, число месяцев или вечная</Prompt>
+		<Comp>Formats/ISPswOrder/SoftWareList</Comp>
+		<Args>
+			<ListElement>1</ListElement>
+			<ListElement>%pricelist_id%</ListElement>
+			<ListElement>%period%</ListElement>
+		</Args>
+	</period>
+	<!-- *********************************************************************** -->
+	<addon>
+		<Head>Узл.</Head>
+		<Prompt>Количество узлов кластера</Prompt>
+	</addon>
+	<!-- *********************************************************************** -->
 </Columns>
+<!-- *********************************************************************** -->
 <Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>Edit</ListElement>
- <ListElement>elid</ListElement>
- <ListElement>IP</ListElement>
- <ListElement>ISPtype</ListElement>
- <ListElement>ISPname</ListElement>
- <ListElement>IsInternal</ListElement>
- <ListElement>IsUsed</ListElement>
- <ListElement>Status</ListElement>
- <ListElement>Flag</ListElement>
+	<ListElement>SelectID</ListElement>
+	<ListElement>Edit</ListElement>
+	<ListElement>elid</ListElement>
+	<ListElement>IP</ListElement>
+	<ListElement>pricelist_id</ListElement>
+	<ListElement>period</ListElement>
+	<ListElement>addon</ListElement>
+	<ListElement>ISPname</ListElement>
+	<ListElement>IsInternal</ListElement>
+	<ListElement>IsUsed</ListElement>
+	<ListElement>Status</ListElement>
+	<ListElement>Flag</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
 </XML>

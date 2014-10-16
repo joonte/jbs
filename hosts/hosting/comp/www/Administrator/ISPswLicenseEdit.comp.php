@@ -12,22 +12,23 @@ $Args = Args();
 $ISPswLicenseID = (integer) @$Args['ISPswLicenseID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-  #-----------------------------------------------------------------------------
-  $ISPswLicense = DB_Select('ISPswLicensesOwners',Array('*'),Array('UNIQ','ID'=>$ISPswLicenseID));
-  #-----------------------------------------------------------------------------
-  switch(ValueOf($ISPswLicense)){
-    case 'error':
-      return ERROR | @Trigger_Error(500);
-    case 'exception':
-      return ERROR | @Trigger_Error(400);
-    case 'array':
-      # No more...
-    break;
-    default:
-      return ERROR | @Trigger_Error(101);
-  }
+#-------------------------------------------------------------------------------
+$ISPswLicense = DB_Select('ISPswLicensesOwners',Array('*'),Array('UNIQ','ID'=>$ISPswLicenseID));
+#-------------------------------------------------------------------------------
+switch(ValueOf($ISPswLicense)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	# No more...
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $DOM = new DOM();
 #-------------------------------------------------------------------------------
@@ -36,7 +37,7 @@ $Links = &Links();
 $Links['DOM'] = &$DOM;
 #-------------------------------------------------------------------------------
 if(Is_Error($DOM->Load('Window')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Редактирование информации о лицензии');
 #-------------------------------------------------------------------------------
@@ -65,11 +66,17 @@ $Table[] = Array('Дата создания лицензии',$Comp);
 # UpdateDate
 # время_изменения + 31_день - время_сейчас
 $m_time = $ISPswLicense['StatusDate'] + 31 * 24 * 3600 - Time();
+#-------------------------------------------------------------------------------
 if($m_time > 0){
+	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Formats/Date/Remainder', $m_time);
+	#-------------------------------------------------------------------------------
 }else{
+	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Formats/Date/Remainder', 0);
+	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -109,18 +116,34 @@ $Options = Comp_Load('Formats/ISPswOrder/SoftWareList');
 if(Is_Error($Options))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ISPtype'),$Options,$ISPswLicense['ISPtype']);
+Debug(SPrintF('[comp/www/Administrator/ISPswSchemeEdit]: Options = %s',print_r($Options,true)));
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Select',Array('name'=>'pricelist_id','style'=>'width:100%;'),$Options['pricelist_id'],$ISPswLicense['pricelist_id']);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Тип лицензии',$Comp);
-
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Select',Array('name'=>'period','style'=>'width:100%;','prompt'=>'На какой срок заказывается лицензия: триал, число месяев, вечная'),$Options['period'],$ISPswLicense['period']);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Период заказа',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'addon','style'=>'width:100%;','value'=>$ISPswLicense['addon'],'prompt'=>'На какое число узлов кластера покупается лицензия. Если не знаете что тут писать - оставьте единицу'));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Число узлов кластера',$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
 		'Form/Input',
 		Array(
 			'type'	=> 'text',
-			'size'	=> 30,
+			'style'	=> 'width:100%;',
 			'name'	=> 'Flag',
 			'value' => $ISPswLicense['Flag']
 		)
