@@ -50,6 +50,21 @@ foreach($Doc as $License){
 	if(!IsSet($License['expiredate']))
 		continue;
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	# достаём addon этого софта
+	$Comp = Comp_Load('Formats/ISPswOrder/SoftWareList',TRUE,$License['pricelist_id'],TRUE,TRUE);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	#Debug(SPrintF('[comp/Tasks/ISPswCheckLicenses]: IP = %s; elid = %u; addon = %s',$License['ip'],$License['id'],$Comp));
+	$addon = 1;
+	#-------------------------------------------------------------------------------
+	if($Comp)
+		if(IsSet($License[$Comp]))
+			$addon = $License[$Comp];
+	#-------------------------------------------------------------------------------
+	#Debug(SPrintF('[comp/Tasks/ISPswCheckLicenses]: addon name = %s; addon value = %s',$Comp,$addon));
+	#-------------------------------------------------------------------------------
 	#----------------------------------TRANSACTION----------------------------------
 	if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Tasks/GC/ISPswCheckLicenses'))))
 		return ERROR | @Trigger_Error(500);
@@ -87,14 +102,14 @@ foreach($Doc as $License){
 		if(!$Event)
 			return ERROR | @Trigger_Error(500);
 		#---------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 		# вносим лицензию в БД
 		$IsInsert = DB_Insert(
 				'ISPswLicenses',
 				Array(
 					'pricelist_id'	=> $License['pricelist_id'],
 					'period'	=> $License['period'],
-					# TODO надо доделать. дёргать название параметра, проверять его наличие и вписывать сюда значение
-					#'addon'
+					'addon'		=> $addon,
 					'IP'		=> $License['ip'],
 					'elid'		=> $License['id'],
 					'IsInternal'	=> 'no',	# TODO надо бы по IP определять
@@ -103,6 +118,7 @@ foreach($Doc as $License){
 					'StatusID'	=> $StatusID,
 					'CreateDate'	=> time(),
 					'UpdateDate'	=> time(),
+					'StatusDate'	=> StrToTime($License['ip_change_date']),
 					'ExpireDate'	=> $ExpireDate,
 					'Flag'		=> 'Locked'
 				)
@@ -145,16 +161,18 @@ foreach($Doc as $License){
 			}
 		}
 		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 		# обновляем данные лицензии
 		$IsUpdate = DB_Update(
 					'ISPswLicenses',
 					Array(
 						'pricelist_id'  => $License['pricelist_id'],
 						'period'        => $License['period'],
-						# TODO addon
+						'addon'		=> $addon,
 						'IP'		=> $License['ip'],
 						'ISPname'	=> (IsSet($License['licname'])?$License['licname']:'Имя не задано'),
 						'UpdateDate'	=> time(),
+						'StatusDate'	=> StrToTime($License['ip_change_date']),
 						'ExpireDate'	=> $ExpireDate
 					),
 					Array(

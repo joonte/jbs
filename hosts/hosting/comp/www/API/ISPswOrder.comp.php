@@ -70,7 +70,7 @@ if(!$ISPswScheme['IsInternal']){
 # проверка - есть ли заказ от этого пользователя на этот IP
 if($ISPswScheme['IsInternal']){
 	#-------------------------------------------------------------------------------
-	$Count = DB_Count('ISPswOrdersOwners',Array('Where'=>SPrintF("`IP` = '%s' AND `StatusID` != 'Deleted' AND `UserID` = %s AND (SELECT `SoftWareGroup` FROM `ISPswSchemes` WHERE `ISPswOrdersOwners`.`SchemeID` = `ISPswSchemes`.`ID`) = ",$IP,$__USER['ID'],$ISPswScheme['SoftWareGroup'])));
+	$Count = DB_Count('ISPswOrdersOwners',Array('Where'=>SPrintF("`IP` = '%s' AND `StatusID` != 'Deleted' AND `UserID` = %u AND (SELECT `SoftWareGroup` FROM `ISPswSchemes` WHERE `ISPswOrdersOwners`.`SchemeID` = `ISPswSchemes`.`ID`) = %u",$IP,$__USER['ID'],$ISPswScheme['SoftWareGroup'])));
 	if(Is_Error($Count))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
