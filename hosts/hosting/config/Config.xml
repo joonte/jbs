@@ -1573,18 +1573,23 @@
  <ISPswLicenses>
   <Waiting>
    <Name>Ожидание оплаты</Name>
+   <status>1</status>
   </Waiting>
   <OnCreate>
    <Name>На создании</Name>
+   <status>4</status>
   </OnCreate>
   <Active>
    <Name>Активна</Name>
+   <status>2</status>
   </Active>
   <Suspended>
    <Name>Заблокирована</Name>
+   <status>3</status>
   </Suspended>
   <Deleted>
    <Name>Удалена</Name>
+   <status>4</status>
   </Deleted>
  </ISPswLicenses>
 </Statuses>
