@@ -42,7 +42,7 @@ default:
 #-------------------------------------------------------------------------------
 $UserID = (integer)$User['ID'];
 #-------------------------------------------------------------------------------
-$IsUpdate = DB_Update('Users',Array('Watchword'=>Md5($Password),'UniqID'=>UniqID()),Array('ID'=>$UserID));
+$IsUpdate = DB_Update('Users',Array('Watchword'=>Md5($Password),'UniqID'=>Md5(SPrintF('%s.%s,',UniqID(),Rand(0,1000000)))),Array('ID'=>$UserID));
 if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
