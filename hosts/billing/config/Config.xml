@@ -342,7 +342,8 @@
     <to>auto</to>
     <summ>auto</summ>
     <com>Payment for invoice #</com>
-    <LifeTime>1075</LifeTime>
+    <BillLifeTime>60</BillLifeTime>
+    <UseSSL>1</UseSSL>
     <check_agt>false</check_agt>
     <txn_id>auto</txn_id>
    </Send>

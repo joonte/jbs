@@ -32,7 +32,7 @@ if(Is_Error(System_Load('libs/Http.php')))
 $Where = Array(
 		"`PaymentSystemID` = 'QIWI'",
 		"`StatusID` != 'Payed'",
-		SPrintF('(UNIX_TIMESTAMP() - `CreateDate`) < (%u * 3600)', $Settings['Send']['LifeTime']),
+		SPrintF('(UNIX_TIMESTAMP() - `CreateDate`) < (%u * 24*3600)', $Settings['Send']['BillLifeTime']),
 		);
 #-------------------------------------------------------------------------------
 # каждую 5 минуту проверяем и отменённые счета
@@ -101,7 +101,7 @@ case 'array':
 	$Result .= base64_encode($crypted);
 	#-------------------------------------------------------------------------------
 	# send message to QIWI server
-	$Http = Array('Protocol'=>'tcp','Port'=>'80','Address'=>'ishop.qiwi.ru','Host'=>'ishop.qiwi.ru');
+	$Http = Array('Protocol'=>($Settings['Send']['UseSSL'])?'ssl':'tcp','Port'=>($Settings['Send']['UseSSL'])?'443':'80','Address'=>'ishop.qiwi.ru','Host'=>'ishop.qiwi.ru');
 	#-------------------------------------------------------------------------------
 	$Send = Http_Send('/xml',$Http,Array(),$Result,Array('Content-type: text/xml; encoding=utf-8'));
 	#-------------------------------------------------------------------------------
