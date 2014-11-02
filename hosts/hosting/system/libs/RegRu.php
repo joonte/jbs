@@ -751,7 +751,7 @@ function RegRu_Domains_Accept($Settings){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function RegRu_Change_Contact_Detail($Settings,$Domain,$Person){
+function RegRu_Change_Contact_Detail($Settings,$Domain,$DomainZone,$Person){
   /****************************************************************************/
   $__args_types = Array('array','string','array');
   #-----------------------------------------------------------------------------

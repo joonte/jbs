@@ -111,7 +111,7 @@ switch(ValueOf($DomainOrder)){
               return ERROR | @Trigger_Error(101);
             }
             #---------------------------------------------------------------------------
-            $ChangeContactDetail = $Registrator->ChangeContactDetail($Domain,$Person);
+            $ChangeContactDetail = $Registrator->ChangeContactDetail($Domain,$DomainOrder['DomainZone'],$Person);
             switch(ValueOf($ChangeContactDetail)){
             case 'error':
               return ERROR | @Trigger_Error(500);
