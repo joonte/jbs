@@ -1487,6 +1487,10 @@
 				<ShowAnnouncement>1</ShowAnnouncement>
 			</Announcement>
 			<!-- *********************************************************************** -->
+			<CheckUserID>
+				<MakeCheckUserID>1</MakeCheckUserID>
+			</CheckUserID>
+			<!-- *********************************************************************** -->
 			<Events>
 				<ShowUnReaded>1</ShowUnReaded>
 			</Events>
