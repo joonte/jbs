@@ -42,6 +42,7 @@ if($ServiceID){
 			'Item'			=> 'Услуга',
 			'Measure'		=> 'шт.',
 			'ConsiderTypeID'	=> 'Upon',
+			'PartnersRewardPercent'	=> -1,
 			'CostOn'		=> 10,
 			'Cost'			=> 10,
 			'IsProtected'		=> FALSE,
