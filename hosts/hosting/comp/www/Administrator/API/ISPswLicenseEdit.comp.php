@@ -14,9 +14,9 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ISPswLicenseID	= (integer) @$Args['ISPswLicenseID'];
 $Flag		=  (string) @$Args['Flag'];
-$pricelist_id	= (integer) @$Args['pricelist_id'];
-$period		=  (string) @$Args['period'];
-$addon		= (integer) @$Args['addon'];
+#$pricelist_id	= (integer) @$Args['pricelist_id'];
+#$period	=  (string) @$Args['period'];
+#$addon		= (integer) @$Args['addon'];
 $IsInternal	= (boolean) @$Args['IsInternal'];
 $IsUsed		= (boolean) @$Args['IsUsed'];
 #-------------------------------------------------------------------------------
@@ -30,9 +30,9 @@ if(!$Count)
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IISPswLicense = Array(
-			'pricelist_id'	=> $pricelist_id,
-			'period'	=> $period,
-			'addon'		=> $addon,
+			#'pricelist_id'	=> $pricelist_id,
+			#'period'	=> $period,
+			#'addon'	=> $addon,
 			'Flag'		=> $Flag,
 			'IsInternal'	=> $IsInternal,
 			'IsUsed'	=> $IsUsed,
