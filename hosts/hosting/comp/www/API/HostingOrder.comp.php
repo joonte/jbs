@@ -82,16 +82,16 @@ switch(ValueOf($HostingScheme)){
 	      $Where = SPrintF("`ServersGroupID` = %u AND `IsDefault` = 'yes'",$HostingScheme['ServersGroupID']);
 	    }
 	    #-------------------------------------------------------------------
-            $HostingServer = DB_Select('HostingServers',Array('ID','Domain','Prefix'),Array('Where'=>$Where));
+            $Server = DB_Select('Servers',Array('ID','Params'),Array('Where'=>$Where));
             #-------------------------------------------------------------------
-            switch(ValueOf($HostingServer)){
+            switch(ValueOf($Server)){
               case 'error':
                 return ERROR | @Trigger_Error(500);
               case 'exception':
                 return new gException('SERVER_NOT_DEFINED','Сервер размещения не определён');
               case 'array':
                 #---------------------------------------------------------------
-                $HostingServer = Current($HostingServer);
+                $Server = Current($Server);
                 #---------------------------------------------------------------
                 $Password = SubStr(Md5(UniqID()),0,12);
                 #-------------------------TRANSACTION---------------------------
@@ -121,20 +121,19 @@ switch(ValueOf($HostingScheme)){
                   }
                 }
                 #---------------------------------------------------------------
-                $OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>10000));
+                $OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>10000,'ServerID'=>$Server['ID']));
                 if(Is_Error($OrderID))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Login = SPrintF('%s%s',$HostingServer['Prefix'],$OrderID);
+                $Login = SPrintF('%s%s',$Server['Params']['Prefix'],$OrderID);
                 #---------------------------------------------------------------
                 if($DomainTypeID == 'None')
-                  $Domain = SPrintF('%s.%s',$Login,$HostingServer['Domain']);
+                  $Domain = SPrintF('%s.%s',$Login,$Server['Params']['Domain']);
                 #---------------------------------------------------------------
                 $IHostingOrder = Array(
                   #-------------------------------------------------------------
                   'OrderID'  => $OrderID,
                   'SchemeID' => $HostingScheme['ID'],
-                  'ServerID' => $HostingServer['ID'],
                   'Domain'   => $Domain,
                   'Login'    => $Login,
                   'Password' => $Password,

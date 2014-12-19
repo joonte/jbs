@@ -13,17 +13,17 @@ $HostingOrderID = (integer) @$Args['HostingOrderID'];
 $Password       =  (string) @$Args['Password'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/HostingServer.class.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
 if(!Preg_Match($Regulars['Password'],$Password))
-  return new gException('WRONG_PASSWORD','Неверно указан новый пароль');
+	return new gException('WRONG_PASSWORD','Неверно указан новый пароль');
 #-------------------------------------------------------------------------------
 if(StrLen($Password) > 15)
 	return new gException('BAD_PASSWORD_LENGTH','Слишком длинный пароль. Максимум - 15 символов.');
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','OrderID','UserID','ServerID','Login','Domain','StatusID','(SELECT `IsReselling` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`) as `IsReselling`');
+$Columns = Array('ID','OrderID','UserID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`) AS `ServerID`','Login','Domain','StatusID','(SELECT `IsReselling` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`) as `IsReselling`');
 #-------------------------------------------------------------------------------
 $HostingOrder = DB_Select('HostingOrdersOwners',$Columns,Array('UNIQ','ID'=>$HostingOrderID));
 #-------------------------------------------------------------------------------

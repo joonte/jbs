@@ -20,9 +20,9 @@ if(!$Settings['IsActive'])
 	return TRUE;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$HostingServers = DB_Select('HostingServers',Array('ID','Address'));
+$Servers = DB_Select('Servers','*',Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 10000','SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
-switch(ValueOf($HostingServers)){
+switch(ValueOf($Servers)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
@@ -30,11 +30,11 @@ case 'exception':
 	break;
 case 'array':
 	#-------------------------------------------------------------------------------
-	foreach($HostingServers as $HostingServer){
+	foreach($Servers as $Server){
 		#-------------------------------------------------------------------------
-		$ClassHostingServer = new HostingServer();
+		$ClassHostingServer = new Server();
 		#-------------------------------------------------------------------------
-		$IsSelected = $ClassHostingServer->Select((integer)$HostingServer['ID']);
+		$IsSelected = $ClassHostingServer->Select((integer)$Server['ID']);
 		#-------------------------------------------------------------------------
 		switch(ValueOf($IsSelected)){
 		case 'error':

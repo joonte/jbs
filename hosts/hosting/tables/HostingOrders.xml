@@ -178,7 +178,7 @@
    <ListElement>%Scheme%</ListElement>
    <Length>10</Length>
   </Args>
-  <Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `HostingServersGroups` WHERE `HostingServersGroups`.`ID` = `HostingSchemes`.`ServersGroupID`),')') FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`)</Alias>
+  <Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `HostingSchemes`.`ServersGroupID`),')') FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`)</Alias>
  </Scheme>
  <!-- ********************************************************************** -->
  <Expiration>

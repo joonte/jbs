@@ -19,30 +19,14 @@
   </Paths>
   <Href>/Administrator/HostingSchemes</Href>
  </ListElement>
- <ListElement>
+<!-- <ListElement>
   <Text>Доменные политики</Text>
   <Prompt>Правила назначения бонусов на домены при оплате заказов на различные периоды</Prompt>
   <Paths>
    <UniqID>^\/Administrator\/HostingDomainsPolitics$</UniqID>
   </Paths>
   <Href>/Administrator/HostingDomainsPolitics</Href>
- </ListElement>
- <ListElement>
-  <Text>Группы серверов</Text>
-  <Prompt>Характеристики объединения серверов</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/HostingServersGroups$</UniqID>
-  </Paths>
-  <Href>/Administrator/HostingServersGroups</Href>
- </ListElement>
- <ListElement>
-  <Text>Серверы</Text>
-  <Prompt>Места размещения клиентов</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/HostingServers$</UniqID>
-  </Paths>
-  <Href>/Administrator/HostingServers</Href>
- </ListElement>
+ </ListElement> -->
 </Items>
 <!-- *********************************************************************** -->
 </XML>

@@ -125,20 +125,38 @@ $Regulars = Regulars();
 if(!Preg_Match('/^[A-Za-zА-ЯёЁа-я0-9\s\.\-]+$/u',$Name))
   return new gException('WRONG_SCHEME_NAME','Неверное имя тарифа');
 #-------------------------------------------------------------------------------
-$Count = DB_Count('HostingServersGroups',Array('ID'=>$ServersGroupID));
-if(Is_Error($Count))
-  return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if($HardServerID > 0){
-  $Count = DB_Count('HostingServers',Array('ID'=>$HardServerID));
-  if(Is_Error($Count))
-    return new gException('WRONG_HardServerID','Указанного сервера не существует');
-}else{
-  $HardServerID = NULL;
-}
+$Count = DB_Count('ServersGroups',Array('ID'=>$ServersGroupID));
+if(Is_Error($Count))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if(!$Count)
-  return new gException('SERVERS_GROUP_NOT_FOUND','Группа серверов не найдена');
+	return new gException('SERVERS_GROUP_NOT_FOUND','Группа серверов не найдена');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($HardServerID > 0){
+	#-------------------------------------------------------------------------------
+	$Count = DB_Count('Servers',Array('ID'=>$HardServerID));
+	if(Is_Error($Count))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	if(!$Count)
+		return new gException('WRONG_HardServerID','Указанного сервера не существует');
+	#-------------------------------------------------------------------------------
+	$Count = DB_Count('Servers',Array('Where'=>SPrintF('`ID` = %u AND `ServersGroupID` = %u',$HardServerID,$ServersGroupID)));
+	if(Is_Error($Count))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	if(!$Count)
+		return new gException('WRONG_HardServerID_Group','Указанный сервер размещения относится к другой группе серверов');
+
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
+	$HardServerID = NULL;
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$MinDaysPay)
   return new gException('MIN_DAYS_PAY_NOT_DEFINED','Минимальное кол-во дней оплаты не указано');

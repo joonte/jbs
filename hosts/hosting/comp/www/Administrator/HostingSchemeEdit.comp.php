@@ -192,7 +192,7 @@ $Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Стоимость месяц�
 #-------------------------------------------------------------------------------
 $Options = Array();
 #-------------------------------------------------------------------------------
-$ServersGroups = DB_Select('HostingServersGroups','*');
+$ServersGroups = DB_Select('ServersGroups','*',Array('Where'=>'`ServiceID` = 10000'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($ServersGroups)){
   case 'error':
@@ -211,7 +211,7 @@ $Options = Array();
 foreach($ServersGroups as $ServersGroup)
   $Options[$ServersGroup['ID']] = $ServersGroup['Name'];
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ServersGroupID','prompt'=>'Группа серверов, на которых будут размещаться заказы этого тарифа'),$Options,$HostingScheme['ServersGroupID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ServersGroupID','style'=>'width: 240px','prompt'=>'Группа серверов, на которых будут размещаться заказы этого тарифа'),$Options,$HostingScheme['ServersGroupID']);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -220,7 +220,7 @@ $Table[] = Array('Группа серверов',$Comp);
 #-------------------------------------------------------------------------------
 $Options = Array();
 #-------------------------------------------------------------------------------
-$Servers = DB_Select('HostingServers','*',Array('SortOn'=>'Address'));
+$Servers = DB_Select('Servers','*',Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 10000','SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Servers)){
   case 'error':
@@ -239,7 +239,7 @@ $Options = Array('0'=>'Любой сервер');
 foreach($Servers as $Server)
   $Options[$Server['ID']] = $Server['Address'];
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'HardServerID','prompt'=>'Для размещения всех заказов этого тарифа на определённом сервере - выберите его из списка. Обратите внимание, что сервер должен быть из той же группы серверов к которой относится тарифный план.'),$Options,$HostingScheme['HardServerID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'HardServerID','style'=>'width: 240px','prompt'=>'Для размещения всех заказов этого тарифа на определённом сервере - выберите его из списка. Обратите внимание, что сервер должен быть из той же группы серверов к которой относится тарифный план.'),$Options,$HostingScheme['HardServerID']);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

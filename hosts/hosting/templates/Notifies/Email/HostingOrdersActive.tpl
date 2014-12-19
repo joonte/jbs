@@ -9,7 +9,7 @@
 
 Ваши данные для доступа к аккаунту на сервере:
   * Адрес панели управления:
-      {$Server.Url|default:'$Server.Url'}
+      {$Server.Params.Url|default:'$Server.Params.Url'}
   * Логин:
       {$Login|default:'$Login'}
   * Пароль:
@@ -19,12 +19,12 @@
   * FTP, POP3, SMTP, IMAP:
       {$Server.Address|default:'$Server.Address'}
   * Сервер базы данных MySQL:
-      {$Server.MySQL|default:'$Server.MySQL'}
+      {$Server.Params.MySQL|default:'$Server.Params.MySQL'}
 Сервера имен:
   * Первичный сервер имен:
-      {$Server.Ns1Name|default:'$Server.Ns1Name'}
+      {$Server.Params.Ns1Name|default:'$Server.Params.Ns1Name'}
   * Вторичный сервер имен:
-      {$Server.Ns2Name|default:'$Server.Ns2Name'}
+      {$Server.Params.Ns2Name|default:'$Server.Params.Ns2Name'}
 
 Сохраните эти данные в надежном месте, они потребуются для дальнейшей работы.
 

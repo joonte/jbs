@@ -14,7 +14,7 @@ if(Is_Error(System_Load('libs/Tree.php')))
 #-------------------------------------------------------------------------------
 $User = DB_Select('Users',Array('ID','GroupID'),Array('UNIQ','ID'=>$UserID));
 #-------------------------------------------------------------------------------
-switch(ValueOf($User )){
+switch(ValueOf($User)){
   case 'error':
     return ERROR | @Trigger_Error(500);
   case 'exception':

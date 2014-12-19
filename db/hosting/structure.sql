@@ -131,7 +131,6 @@ CREATE TABLE `HostingOrders` (
   `OldSchemeID` int(11) default NULL,
   `Domain` char(255) default '',
   `Parked` text,
-  `ServerID` int(11) NOT NULL,
   `Login` char(20) default '',
   `Password` char(64) default '',
   `ConsiderDay` int(11) default '0',
@@ -141,9 +140,7 @@ CREATE TABLE `HostingOrders` (
   KEY `HostingOrdersOrderID` (`OrderID`),
   CONSTRAINT `HostingOrdersOrderID` FOREIGN KEY (`OrderID`) REFERENCES `Orders` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   KEY `HostingOrdersSchemeID` (`SchemeID`),
-  CONSTRAINT `HostingOrdersSchemeID` FOREIGN KEY (`SchemeID`) REFERENCES `HostingSchemes` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  KEY `HostingOrdersServerID` (`ServerID`),
-  CONSTRAINT `HostingOrdersServerID` FOREIGN KEY (`ServerID`) REFERENCES `HostingServers` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `HostingOrdersSchemeID` FOREIGN KEY (`SchemeID`) REFERENCES `HostingSchemes` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -270,68 +267,11 @@ CREATE TABLE `HostingSchemes` (
   KEY `HostingSchemesUserID` (`UserID`),
   CONSTRAINT `HostingSchemesUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   KEY `HostingSchemesServersGroupID` (`ServersGroupID`),
-  CONSTRAINT `HostingSchemesServersGroupID` FOREIGN KEY (`ServersGroupID`) REFERENCES `HostingServersGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `HostingSchemesServersGroupID` FOREIGN KEY (`ServersGroupID`) REFERENCES `ServersGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   KEY `HostingSchemesHardServerID` (`HardServerID`),
-  CONSTRAINT `HostingSchemesHardServerID` FOREIGN KEY (`HardServerID`) REFERENCES `HostingServers` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `HostingSchemesHardServerID` FOREIGN KEY (`HardServerID`) REFERENCES `Servers` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `HostingServersGroups`
---
-
-DROP TABLE IF EXISTS `HostingServersGroups`;
-CREATE TABLE `HostingServersGroups` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` char(30) NOT NULL,
-  `FunctionID` char(30) default '',
-  `Comment` char(255) default '',
-  `SortID` int(11) default '10',
-  PRIMARY KEY(`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `HostingServers`
---
-
-DROP TABLE IF EXISTS `HostingServers`;
-CREATE TABLE `HostingServers` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `SystemID` char(30) default '',
-  `ServersGroupID` int(11) NOT NULL,
-  `IsDefault` enum('no','yes') default 'no',
-  `IsAutoBalancing` ENUM('yes','no') DEFAULT 'yes',
-  `BalancingFactor` DOUBLE NOT NULL DEFAULT '1',
-  `NoRestartCreate` ENUM('yes','no') DEFAULT 'no',
-  `NoRestartActive` ENUM('yes','no') DEFAULT 'no',
-  `NoRestartSuspend` ENUM('yes','no') DEFAULT 'no',
-  `NoRestartDelete` ENUM('yes','no') DEFAULT 'no',
-  `NoRestartSchemeChange` ENUM('yes','no') DEFAULT 'no',
-  `Domain` char(30) default '',
-  `Prefix` char(30) default 'h',
-  `Address` char(30) default '',
-  `Port` int(5) default '80',
-  `Protocol` enum('tcp','ssl') default 'tcp',
-  `Login` char(60) default '',
-  `Password` char(255) default '',
-  `IP` char(60) default '127.0.0.1',
-  `IPsPool` text,
-  `Theme` char(30) default '',
-  `Language` char(30) default 'ru',
-  `Url` char(60) default '',
-  `Ns1Name` char(30) default '',
-  `Ns2Name` char(30) default '',
-  `Ns3Name` char(30) default '',
-  `Ns4Name` char(30) default '',
-  `MySQL` char(30) default '',
-  `Services` text,
-  `TestDate` int(11) default '0',
-  `IsOK` enum('no','yes') default 'no',
-  `Notice` text,
-  PRIMARY KEY(`ID`),
-  KEY `HostingServersServersGroupID` (`ServersGroupID`),
-  CONSTRAINT `HostingServersServersGroupID` FOREIGN KEY (`ServersGroupID`) REFERENCES `HostingServersGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 --
 -- Table structure for table `Registrators`

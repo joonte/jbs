@@ -13,7 +13,7 @@ function Plesk_Logon($Settings,$Params){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  return Array('Url'=>$Params['Url'],'Args'=>Array('login_name'=>$Params['Login'],'passwd'=>$Params['Password']));
+  return Array('Url'=>$Settings['Params']['Url'],'Args'=>Array('login_name'=>$Params['Login'],'passwd'=>$Params['Password']));
 }
 #-------------------------------------------------------------------------------
 function Plesk_Get_Domains($Settings){

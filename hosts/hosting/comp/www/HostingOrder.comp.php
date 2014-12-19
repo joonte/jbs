@@ -434,7 +434,12 @@ if($StepID){
       if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
-      $Columns = Array('ID','Name','ServersGroupID','Comment','CostMonth','QuotaDisk','QuotaEmail','QuotaDomains','QuotaDBs','(SELECT `Name` FROM `HostingServersGroups` WHERE `HostingServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupName`','(SELECT `Comment` FROM `HostingServersGroups` WHERE `HostingServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupComment`','(SELECT `SortID` FROM `HostingServersGroups` WHERE `HostingServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupSortID`');
+      $Columns = Array(
+      			'ID','Name','ServersGroupID','Comment','CostMonth','QuotaDisk','QuotaEmail','QuotaDomains','QuotaDBs',
+			'(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupName`',
+			'(SELECT `Comment` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupComment`',
+			'(SELECT `SortID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupSortID`'
+			);
       #-------------------------------------------------------------------------
       $HostingSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('ServersGroupSortID','SortID'),'Where'=>"`IsActive` = 'yes'"));
       #-------------------------------------------------------------------------

@@ -38,6 +38,20 @@
 		<Value />
 	</IP>
 	<!-- *********************************************************************** -->
+        <IPsPool>
+		<Check>Text</Check>
+		<Comment>Пул IP адресов</Comment>
+		<Type>TextArea</Type>
+		<Attribs>
+			<prompt>IP адрес для создания нового заказа выбирается случайным образом из перечисленных тут адресов</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+			<rows>5</rows>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value />
+	</IPsPool>
+	<!-- *********************************************************************** -->
 	<BalancingFactor>
 		<Check>/^[0-9\.]{1,32}$/u</Check>
 		<Comment>Приоритет балансировки</Comment>

@@ -26,6 +26,7 @@ CREATE
 SELECT
   `HostingOrders`.*,
   (SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `HostingOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
+  `OrdersOwners`.`ServerID`,
   `OrdersOwners`.`OrderDate`,
   `OrdersOwners`.`UserID`,
   `OrdersOwners`.`ContractID`,
@@ -92,23 +93,9 @@ FROM
 #-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `HostingServersGroupsOwners`;
 DROP TABLE IF EXISTS `HostingServersGroupsOwners`;
-CREATE
-  VIEW `HostingServersGroupsOwners` AS
-SELECT
-  `HostingServersGroups`.*,
-  100 as `UserID`
-FROM
-  `HostingServersGroups`;
 #-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `HostingServersOwners`;
 DROP TABLE IF EXISTS `HostingServersOwners`;
-CREATE
-  VIEW `HostingServersOwners` AS
-SELECT
-  `HostingServers`.*,
-  100 as `UserID`
-FROM
-  `HostingServers`;
 #-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `RegistratorsOwners`;
 DROP TABLE IF EXISTS `RegistratorsOwners`;
@@ -157,6 +144,7 @@ DROP TABLE IF EXISTS `VPSOrdersOwners`;
 CREATE VIEW `VPSOrdersOwners` AS select
 	`VPSOrders`.*,
 	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `VPSOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
+	`OrdersOwners`.`ServerID`,
 	`OrdersOwners`.`OrderDate` AS `OrderDate`,
 	`OrdersOwners`.`UserID` AS `UserID`,
 	`OrdersOwners`.`ContractID` AS `ContractID`,

@@ -18,7 +18,7 @@ $Template = &$Links[$LinkID];
 /******************************************************************************/
 $Tr = new Tag('TR');
 #-------------------------------------------------------------------------------
-$HostingSchemes = DB_Select('HostingSchemes',Array('ID','Name','CostMonth','(SELECT `Name` FROM `HostingServersGroups` WHERE `HostingSchemes`.`ServersGroupID` = `HostingServersGroups`.`ID`) as `ServersGroupName`'),Array('SortOn'=>'SortID'));
+$HostingSchemes = DB_Select('HostingSchemes',Array('ID','Name','CostMonth','(SELECT `Name` FROM `ServersGroups` WHERE `HostingSchemes`.`ServersGroupID` = `ServersGroups`.`ID`) as `ServersGroupName`'),Array('SortOn'=>'SortID'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingSchemes)){
   case 'error':
@@ -70,9 +70,9 @@ switch(ValueOf($HostingSchemes)){
     return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$HostingServers = DB_Select('HostingServers',Array('ID','Address'),Array('SortOn'=>'Address'));
+$Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) = 10000','SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
-switch(ValueOf($HostingServers)){
+switch(ValueOf($Servers)){
   case 'error':
     return ERROR | @Trigger_Error(500);
   case 'exception':
@@ -84,7 +84,7 @@ switch(ValueOf($HostingServers)){
     #---------------------------------------------------------------------------
     $Options['Default'] = 'Не указан';
     #---------------------------------------------------------------------------
-    foreach($HostingServers as $HostingServer)
+    foreach($Servers as $HostingServer)
       $Options[$HostingServer['ID']] = $HostingServer['Address'];
     #---------------------------------------------------------------------------
     $ServerID = 'Default';
@@ -104,7 +104,7 @@ switch(ValueOf($HostingServers)){
     $AddingWhere = &$Template['Source']['Adding']['Where'];
     #---------------------------------------------------------------------------
     if($ServerID != 'Default')
-      $AddingWhere[] = SPrintF('`ServerID` = %u',$ServerID);
+      $AddingWhere[] = SPrintF('(SELECT `ServerID` FROM `OrdersOwners` WHERE `HostingOrdersOwners`.`OrderID` = `OrdersOwners`.`ID`) = %u',$ServerID);
     #---------------------------------------------------------------------------
     $Comp = Comp_Load('Form/Select',Array('name'=>'ServerID','onchange'=>'TableSuperReload();'),$Options,$ServerID);
     if(Is_Error($Comp))

@@ -45,14 +45,14 @@ switch(ValueOf($HostingScheme)){
     $Table[] = Array('Цена 1 дн.',$Comp);
     #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
-    $ServersGroup = DB_Select('HostingServersGroups','*',Array('UNIQ','ID'=>$HostingScheme['ServersGroupID']));
+    $ServersGroup = DB_Select('ServersGroups','*',Array('UNIQ','ID'=>$HostingScheme['ServersGroupID']));
     if(!Is_Array($ServersGroup))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
     $Table[] = Array('Группа серверов',$ServersGroup['Name']);
     #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
-    $HardServer = DB_Select('HostingServers','*',Array('UNIQ','ID'=>$HostingScheme['HardServerID']));
+    $HardServer = DB_Select('Servers','*',Array('UNIQ','ID'=>$HostingScheme['HardServerID']));
     if(!Is_Array($HardServer)){
       $HardServerName = 'Любой сервер группы';
     }else{
@@ -133,9 +133,9 @@ switch(ValueOf($HostingScheme)){
     #---------------------------------------------------------------------------
     $SystemsIDs = Array();
     #---------------------------------------------------------------------------
-    $HostingServers = DB_Select('HostingServers','SystemID',Array('Where'=>SPrintF('`ServersGroupID` = %u',$HostingScheme['ServersGroupID']),'GroupBy'=>'SystemID'));
+    $Servers = DB_Select('Servers','Params',Array('Where'=>SPrintF('`ServersGroupID` = %u',$HostingScheme['ServersGroupID'])));
     #---------------------------------------------------------------------------
-    switch(ValueOf($HostingServers)){
+    switch(ValueOf($Servers)){
       case 'error':
         return ERROR | @Trigger_Error(500);
       case 'exception':
@@ -143,8 +143,8 @@ switch(ValueOf($HostingScheme)){
       break;
       case 'array':
         #-----------------------------------------------------------------------
-        foreach($HostingServers as $HostingServer)
-          $SystemsIDs[] = $HostingServer['SystemID'];
+        foreach($Servers as $Server)
+	  $SystemsIDs[] = $Server['Params']['SystemID'];
       break;
       default:
         return ERROR | @Trigger_Error(101);

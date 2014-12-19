@@ -12,36 +12,38 @@ $Args = Args();
 $HostingOrderID = (integer) @$Args['HostingOrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingOrderID){
-  #-----------------------------------------------------------------------------
-  $HostingOrder = DB_Select('HostingOrdersOwners',Array('UserID','ContractID','ServerID','Domain','Login','Password','SchemeID'),Array('UNIQ','ID'=>$HostingOrderID));
-  #-----------------------------------------------------------------------------
-  switch(ValueOf($HostingOrder)){
-    case 'error':
-      return ERROR | @Trigger_Error(500);
-    case 'exception':
-      return ERROR | @Trigger_Error(400);
-    case 'array':
-      # No more...
-    break;
-    default:
-      return ERROR | @Trigger_Error(101);
-  }
+	#-------------------------------------------------------------------------------
+	$HostingOrder = DB_Select('HostingOrdersOwners',Array('UserID','ContractID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`) AS `ServerID`','Domain','Login','Password','SchemeID'),Array('UNIQ','ID'=>$HostingOrderID));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($HostingOrder)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		# No more...
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
 }else{
-  #-----------------------------------------------------------------------------
-  $HostingOrder = Array(
-    #---------------------------------------------------------------------------
-    'UserID' => 100,
-    'ContractID' => 0,
-    'ServerID'   => 1,
-    'Domain'     => 'domain.com',
-    'Login'      => 'login',
-    'Password'   => UniqID(),
-    'SchemeID'   => 1
-  );
+	#-------------------------------------------------------------------------------
+	$HostingOrder = Array(
+				'UserID'	=> 100,
+				'ContractID'	=> 0,
+				'ServerID'	=> 1,
+				'Domain'	=> 'example.su',
+				'Login'		=> 'login',
+				'Password'	=> UniqID(),
+				'SchemeID'	=> 1
+			);
+	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $DOM = new DOM();
 #-------------------------------------------------------------------------------
@@ -70,59 +72,61 @@ $UniqID = UniqID('HostingSchemes');
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Services/Schemes','HostingSchemes',$HostingOrder['UserID'],Array('Name','ServersGroupID'),$UniqID);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$HostingSchemes = DB_Select($UniqID,Array('ID','Name','CostMonth',SPrintF('(SELECT `Name` FROM `HostingServersGroups` WHERE `%s`.`ServersGroupID` = `HostingServersGroups`.`ID`) as `ServersGroupName`',$UniqID)),Array('SortOn'=>'SortID'));
+$HostingSchemes = DB_Select($UniqID,Array('ID','Name','CostMonth',SPrintF('(SELECT `Name` FROM `ServersGroups` WHERE `%s`.`ServersGroupID` = `ServersGroups`.`ID`) as `ServersGroupName`',$UniqID)),Array('SortOn'=>'SortID'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingSchemes)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return new gException('SERVERS_NOT_FOUND','Тарифы не определены');
-  case 'array':
-    # No more...
-  break;
-  default:
-    return ERROR | @Trigger_Error(101);
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('SERVERS_NOT_FOUND','Тарифы не определены');
+case 'array':
+	# No more...
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
 foreach($HostingSchemes as $HostingScheme){
-  #-----------------------------------------------------------------------------
-  $Comp = Comp_Load('Formats/Currency',$HostingScheme['CostMonth']);
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $Options[$HostingScheme['ID']] = SPrintF('%s, %s, %s',$HostingScheme['Name'],$HostingScheme['ServersGroupName'],$Comp);
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Formats/Currency',$HostingScheme['CostMonth']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Options[$HostingScheme['ID']] = SPrintF('%s, %s, %s',$HostingScheme['Name'],$HostingScheme['ServersGroupName'],$Comp);
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'SchemeID','style'=>'width: 100%;'),$Options,$HostingOrder['SchemeID']);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Тарифный план',$Comp);
 #-------------------------------------------------------------------------------
-$Servers = DB_Select('HostingServers',Array('ID','Address'),Array('SortOn'=>'Address'));
+#-------------------------------------------------------------------------------
+$Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) = 10000','SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Servers)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return new gException('SERVERS_NOT_FOUND','Сервера не найдены');
-  case 'array':
-    # No more...
-  break;
-  default:
-    return ERROR | @Trigger_Error(101);
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('SERVERS_NOT_FOUND','Сервера не найдены');
+case 'array':
+	# No more...
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
 $Options = Array();
 #-------------------------------------------------------------------------------
 foreach($Servers as $Server)
-  $Options[$Server['ID']] = $Server['Address'];
+	$Options[$Server['ID']] = $Server['Address'];
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'ServerID','style'=>'width: 100%;'),$Options,$HostingOrder['ServerID']);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Сервер размещения',$Comp);
 #-------------------------------------------------------------------------------

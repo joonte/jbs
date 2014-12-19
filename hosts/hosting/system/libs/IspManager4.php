@@ -8,13 +8,15 @@ if(Is_Error(System_Load('libs/Http.php')))
 Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
 #-------------------------------------------------------------------------------
 function IspManager4_Logon($Settings,$Params){
-  /****************************************************************************/
-  $__args_types = Array('array','array');
-  #-----------------------------------------------------------------------------
-  $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
-  /****************************************************************************/
-  return Array('Url'=>$Params['Url'],'Args'=>Array('lang'=>$Settings['Language'],'theme'=>$Settings['Theme'],'checkcookie'=>'no','username'=>$Params['Login'],'password'=>$Params['Password'],'func'=>'auth'));
+	/******************************************************************************/
+	$__args_types = Array('array','array');
+	#-------------------------------------------------------------------------------
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/******************************************************************************/
+	return Array('Url'=>$Settings['Params']['Url'],'Args'=>Array('lang'=>$Settings['Params']['Language'],'theme'=>$Settings['Params']['Theme'],'checkcookie'=>'no','username'=>$Params['Login'],'password'=>$Params['Password'],'func'=>'auth'));
+	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 function IspManager4_Get_Domains($Settings){
 	/****************************************************************************/
@@ -26,7 +28,7 @@ function IspManager4_Get_Domains($Settings){
 	#-----------------------------------------------------------------------------
 	$Http = Array(
 			#---------------------------------------------------------------------------
-			'Address'  => $Settings['IP'],
+			'Address'  => $Settings['Params']['IP'],
 			'Port'     => $Settings['Port'],
 			'Host'     => $Settings['Address'],
 			'Protocol' => $Settings['Protocol'],
@@ -233,7 +235,7 @@ function IspManager4_Get_Users($Settings){
   #-----------------------------------------------------------------------------
   $Http = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -345,7 +347,7 @@ function IspManager4_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
   #-----------------------------------------------------------------------------
   $Http = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -479,7 +481,7 @@ function IspManager4_Active($Settings,$Login,$IsReseller = FALSE){
   #-----------------------------------------------------------------------------
   $Http = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -529,7 +531,7 @@ function IspManager4_Suspend($Settings,$Login,$IsReseller = FALSE){
   #-----------------------------------------------------------------------------
   $Http = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -579,7 +581,7 @@ function IspManager4_Delete($Settings,$Login,$IsReseller = FALSE){
   #-----------------------------------------------------------------------------
   $Http = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -700,7 +702,7 @@ function IspManager4_Scheme_Change($Settings,$Login,$HostingScheme){
   #-----------------------------------------------------------------------------
   $Http = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -717,7 +719,7 @@ function IspManager4_Scheme_Change($Settings,$Login,$HostingScheme){
     'elid'            => $Login, # Уникальный идентификатор
     'sok'             => 'yes', # Значение параметра должно быть равно "yes"
     'name'            => $Login, # Имя пользователя (реселлера)
-    'ip'              => ($IsReselling?'noassign':$Settings['IP']), # IP-адрес
+    'ip'              => ($IsReselling?'noassign':$Settings['Params']['IP']), # IP-адрес
     'preset'          => $HostingScheme['PackageID'], # Шаблон
     #---------------------------------------------------------------------------
     'disklimit'       => $HostingScheme['QuotaDisk'], # Диск
@@ -799,7 +801,7 @@ function IspManager4_Password_Change($Settings,$Login,$Password,$IsReseller = FA
   #-----------------------------------------------------------------------------
   $Http = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -850,7 +852,7 @@ function IspManager4_Get_Email_Boxes($Settings){
   #-----------------------------------------------------------------------------
   $Http = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -955,7 +957,7 @@ function IspManager4_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
         $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
         #-----------------------------------------------------------------------------
         $Http = Array(
-                'Address'  => $Settings['IP'],
+                'Address'  => $Settings['Params']['IP'],
                 'Port'     => $Settings['Port'],
                 'Host'     => $Settings['Address'],
                 'Protocol' => $Settings['Protocol'],
@@ -1012,7 +1014,7 @@ function IspManager4_DeleteIP($Settings,$ExtraIP){
 	#-----------------------------------------------------------------------------
 	$Http = Array(
 		#---------------------------------------------------------------------------
-		'Address'  => $Settings['IP'],
+		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
@@ -1289,7 +1291,7 @@ function IspManager4_Get_CPU_Usage($Settings,$TFilter){
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
 	$Http = Array(
-			'Address'  => $Settings['IP'],
+			'Address'  => $Settings['Params']['IP'],
 			'Port'     => $Settings['Port'],
 			'Host'     => $Settings['Address'],
 			'Protocol' => $Settings['Protocol'],
@@ -1423,7 +1425,7 @@ function IspManager4_Get_Disk_Usage($Settings){
 	#-----------------------------------------------------------------------------
 	$Http = Array(
 			#---------------------------------------------------------------------------
-			'Address'  => $Settings['IP'],
+			'Address'  => $Settings['Params']['IP'],
 			'Port'     => $Settings['Port'],
 			'Host'     => $Settings['Address'],
 			'Protocol' => $Settings['Protocol'],

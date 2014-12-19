@@ -58,12 +58,6 @@ VALUES
 ('DomainsBonusesDelete','hosting',1,1,4000000,1,1,'no'),
 ('DomainsBonusesDelete','hosting',3000000,100,1,1,2,'yes'),
 
-('HostingServersGroupsDelete','hosting',1,1,4000000,1,1,'no'),
-('HostingServersGroupsDelete','hosting',3000000,100,1,1,2,'yes'),
-
-('HostingServersDelete','hosting',1,1,4000000,1,1,'no'),
-('HostingServersDelete','hosting',3000000,100,1,1,2,'yes'),
-
 ('RegistratorsDelete','hosting',1,1,4000000,1,1,'no'),
 ('RegistratorsDelete','hosting',3000000,100,1,1,2,'yes'),
 

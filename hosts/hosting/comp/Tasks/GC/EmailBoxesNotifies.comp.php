@@ -22,9 +22,9 @@ if(!$Settings['IsActive'])
 	return TRUE;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$HostingServers = DB_Select('HostingServers',Array('ID','Address'));
+$Servers = DB_Select('Servers','*',Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 10000','SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
-switch(ValueOf($HostingServers)){
+switch(ValueOf($Servers)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
@@ -32,11 +32,11 @@ case 'exception':
 	break;
 case 'array':
 	#-------------------------------------------------------------------------------
-	foreach($HostingServers as $HostingServer){
+	foreach($Servers as $Server){
 		#-------------------------------------------------------------------------------
-		$ClassHostingServer = new HostingServer();
+		$ClassHostingServer = new Server();
 		#-------------------------------------------------------------------------------
-		$IsSelected = $ClassHostingServer->Select((integer)$HostingServer['ID']);
+		$IsSelected = $ClassHostingServer->Select((integer)$Server['ID']);
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($IsSelected)){
 		case 'error':
@@ -62,7 +62,7 @@ case 'array':
 					foreach(Array_Keys($Users) as $UserID)
 						$Array[] = SPrintF("'%s'",$UserID);
 					#-------------------------------------------------------------------------------
-					$Where = SPrintF('`ServerID` = %u AND `Login` IN (%s)',$HostingServer['ID'],Implode(',',$Array));
+					$Where = SPrintF('`ServerID` = %u AND `Login` IN (%s)',$Server['ID'],Implode(',',$Array));
 					#-------------------------------------------------------------------------------
 					$HostingOrders = DB_Select('HostingOrdersOwners',Array('ID','UserID','Login'),Array('Where'=>$Where));
 					#-------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ case 'array':
 						break;
 					case 'array':
 						#-------------------------------------------------------------------------------
-						$Heads = Array(SPrintF('From: admin@%s',$HostingServer['Address']),'MIME-Version: 1.0','Content-Transfer-Encoding: 8bit',SPrintF('Content-Type: multipart/mixed; boundary="----==--%s"',HOST_ID));
+						$Heads = Array(SPrintF('From: admin@%s',$Server['Address']),'MIME-Version: 1.0','Content-Transfer-Encoding: 8bit',SPrintF('Content-Type: multipart/mixed; boundary="----==--%s"',HOST_ID));
 						#-------------------------------------------------------------------------------
 						foreach($HostingOrders as $HostingOrder){
 							#-------------------------------------------------------------------------------

@@ -19,76 +19,79 @@ if(!$Settings['IsActive'])
 	return 3600;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$HostingServers = DB_Select('HostingServers',Array('ID','Address','Port','Services'),Array('SortOn'=>'Address'));
+$Servers = DB_Select('Servers',Array('ID','Address','Port','Monitoring'),Array('SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
-switch(ValueOf($HostingServers)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    # No more..
-  break;
-  case 'array':
-    #---------------------------------------------------------------------------
-    $GLOBALS['TaskReturnInfo'] = Array();
-    #---------------------------------------------------------------------------
-    foreach($HostingServers as $HostingServer){
-      #-------------------------------------------------------------------------
-      $GLOBALS['TaskReturnInfo'][] = $HostingServer['Address'];
-      #-------------------------------------------------------------------------
-      $IsOK = TRUE;
-      #-------------------------------------------------------------------------
-      $Services = Preg_Split('/\n+/',$HostingServer['Services']);
-      #-------------------------------------------------------------------------
-      foreach($Services as $Service){
-        #-----------------------------------------------------------------------
-        $Service = Explode('=',$Service);
-        #-----------------------------------------------------------------------
-        $ServiceName = Current($Service);
-	#-----------------------------------------------------------------------
-	$Port = IntVal(Next($Service));
-        #-----------------------------------------------------------------------
-	#Debug(SPrintF('[comp/Tasks/ServersUpTime]: connect to %s:%u',$HostingServer['Address'],$Port));
-	#-----------------------------------------------------------------------
-	$Socket = @FsockOpen($HostingServer['Address'],$Port,$nError,$sError,$Settings['SocketTimeout']);
-        #-----------------------------------------------------------------------
-        if(!Is_Resource($Socket)){
-	  #-----------------------------------------------------------------------
-	  #Debug(SPrintF('[comp/Tasks/ServersUpTime]: cannot connect %s:%u with error: %s (%s)',$HostingServer['Address'],$Port,$sError,$nError));
-          $IsOK = FALSE;
-	  #-----------------------------------------------------------------------
+switch(ValueOf($Servers)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $ExecuteTime;
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(500);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$GLOBALS['TaskReturnInfo'] = Array();
+#-------------------------------------------------------------------------------
+foreach($Servers as $Server){
+	#-------------------------------------------------------------------------------
+	$GLOBALS['TaskReturnInfo'][] = $Server['Address'];
+	#-------------------------------------------------------------------------------
+	$IsOK = TRUE;
+	#-------------------------------------------------------------------------------
+	if(StrLen($Server['Monitoring']) < 3)
+		continue;
+	#-------------------------------------------------------------------------------
+	$Services = Preg_Split('/\n+/',$Server['Monitoring']);
+	#-------------------------------------------------------------------------------
+	foreach($Services as $Service){
+		#-------------------------------------------------------------------------------
+		$Service = Explode('=',$Service);
+		#-------------------------------------------------------------------------------
+		$ServiceName = Current($Service);
+		#-------------------------------------------------------------------------------
+		$Port = IntVal(Next($Service));
+		#-------------------------------------------------------------------------------
+		#Debug(SPrintF('[comp/Tasks/ServersUpTime]: connect to %s:%u',$Server['Address'],$Port));
+		#-------------------------------------------------------------------------------
+		$Socket = @FsockOpen($Server['Address'],$Port,$nError,$sError,$Settings['SocketTimeout']);
+		#-------------------------------------------------------------------------------
+		if(!Is_Resource($Socket)){
+			#-------------------------------------------------------------------------------
+			#Debug(SPrintF('[comp/Tasks/ServersUpTime]: cannot connect %s:%u with error: %s (%s)',$Server['Address'],$Port,$sError,$nError));
+			$IsOK = FALSE;
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		$IPage = Array(
+				'TestDate'	=> Time(),
+				'ServerID'	=> $Server['ID'],
+				'Service'	=> Trim($ServiceName),
+				'UpTime'	=> (Is_Resource($Socket)?100:0),
+				'Day'		=> Date('d'),
+				'Month'		=> Date('m'),
+				'Year'		=> Date('Y')
+				);
+		#-------------------------------------------------------------------------------
+		$IsInsert = DB_Insert('ServersUpTime',$IPage);
+		if(Is_Error($IsInsert))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		if(Is_Resource($Socket))
+			FClose($Socket);
+		#-------------------------------------------------------------------------------
 	}
-        #----------------------------------------------------------------------- 
-        $IPage = Array(
-          #---------------------------------------------------------------------
-          'TestDate' => Time(),
-          'ServerID' => $HostingServer['ID'],
-          'Service'  => Trim($ServiceName),
-          'UpTime'   => (Is_Resource($Socket)?100:0),
-          'Day'      => Date('d'),
-          'Month'    => Date('m'),
-          'Year'     => Date('Y')
-        );
-        #-----------------------------------------------------------------------
-        $IsInsert = DB_Insert('ServersUpTime',$IPage);
-        if(Is_Error($IsInsert))
-          return ERROR | @Trigger_Error(500);
-	#-----------------------------------------------------------------------
-	if(Is_Resource($Socket))
-	  FClose($Socket);
-	#-----------------------------------------------------------------------
-      }
-      #-------------------------------------------------------------------------
-      $IsUpdate = DB_Update('HostingServers',Array('TestDate'=>Time(),'IsOK'=>$IsOK),Array('ID'=>$HostingServer['ID']));
-      if(Is_Error($IsUpdate))
-        return ERROR | @Trigger_Error(500);
-    }
-  break;
-  default:
-    return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$IsUpdate = DB_Update('Servers',Array('TestDate'=>Time(),'IsOK'=>$IsOK),Array('ID'=>$Server['ID']));
+	if(Is_Error($IsUpdate))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $ExecuteTime;
 #-------------------------------------------------------------------------------
-
+#-------------------------------------------------------------------------------
 ?>

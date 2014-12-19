@@ -35,9 +35,9 @@ if(StrLen($Settings['ExcludeServerAccounts']) < 1){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$HostingServers = DB_Select('HostingServers',Array('ID','Address'));
+$Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 10000','SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
-switch(ValueOf($HostingServers)){
+switch(ValueOf($Servers)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
@@ -45,11 +45,11 @@ case 'exception':
 	break;
 case 'array':
 	#---------------------------------------------------------------------------
-	foreach($HostingServers as $HostingServer){
+	foreach($Servers as $Server){
 		#-------------------------------------------------------------------------
-		$ClassHostingServer = new HostingServer();
+		$ClassHostingServer = new Server();
 		#-------------------------------------------------------------------------
-		$IsSelected = $ClassHostingServer->Select((integer)$HostingServer['ID']);
+		$IsSelected = $ClassHostingServer->Select((integer)$Server['ID']);
 		#-------------------------------------------------------------------------
 		switch(ValueOf($IsSelected)){
 		case 'error':
@@ -74,7 +74,7 @@ case 'array':
 					$SUsers = Array();
 					#-----------------------------------------------------------------
 					$Where = Array(
-								SPrintF('`ServerID`=%u',$HostingServer['ID']),
+								SPrintF('`ServerID`=%u',$Server['ID']),
 								"`StatusID` = 'Active' OR `StatusID` = 'Suspended'"
 							);
 					$ServerUsers = DB_Select('HostingOrdersOwners',Array('UserID','Login'),Array('Where'=>$Where));
@@ -87,7 +87,7 @@ case 'array':
 						#$Event = Array(
 						#		'UserID'        => 1,
 						#		'PriorityID'    => 'Hosting',
-						#		'Text'          => SPrintF('В биллинге, на сервере (%s) не обнаружено пользователей; на самом сервере обнаружено %u пользователей',$HostingServer['Address'],SizeOf($Users)),
+						#		'Text'          => SPrintF('В биллинге, на сервере (%s) не обнаружено пользователей; на самом сервере обнаружено %u пользователей',$Server['Address'],SizeOf($Users)),
 						#		'IsReaded'      => FALSE
 						#		);
 						#$Event = Comp_Load('Events/EventInsert',$Event);
@@ -101,7 +101,7 @@ case 'array':
 								$Event = Array(
 										'UserID'        => $ServerUser['UserID'],
 										'PriorityID'    => 'Warning',
-										'Text'          => SPrintF('Пользователь (%s) не найден на сервере (%s)',$ServerUser['Login'],$HostingServer['Address']),
+										'Text'          => SPrintF('Пользователь (%s) не найден на сервере (%s)',$ServerUser['Login'],$Server['Address']),
 										'IsReaded'      => FALSE
 										);
 								$Event = Comp_Load('Events/EventInsert',$Event);
@@ -131,7 +131,7 @@ case 'array':
 							$Event = Array(
 									'UserID'        => 1,
 									'PriorityID'    => 'Warning',
-									'Text'          => SPrintF('На сервере (%s) найден пользователь (%s) отсутствующий в биллинге',$HostingServer['Address'],$UserID),
+									'Text'          => SPrintF('На сервере (%s) найден пользователь (%s) отсутствующий в биллинге',$Server['Address'],$UserID),
 									'IsReaded'      => FALSE
 									);
 							$Event = Comp_Load('Events/EventInsert',$Event);

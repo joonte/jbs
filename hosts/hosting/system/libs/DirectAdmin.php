@@ -13,7 +13,7 @@ function DirectAdmin_Logon($Settings,$Params){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  return Array('Url'=>$Params['Url'],'Args'=>Array('username'=>$Params['Login'],'password'=>$Params['Password'],'LOGOUT_URL'=>@$_SERVER['HTTP_REFERER']));
+  return Array('Url'=>$Settings['Params']['Url'],'Args'=>Array('username'=>$Params['Login'],'password'=>$Params['Password'],'LOGOUT_URL'=>@$_SERVER['HTTP_REFERER']));
 }
 #-------------------------------------------------------------------------------
 function DirectAdmin_Get_Domains($Settings){

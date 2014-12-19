@@ -8,7 +8,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(Is_Error(System_Load('modules/Authorisation.mod')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Args = Args();
 #-------------------------------------------------------------------------------
@@ -22,35 +22,35 @@ $SchemeID       = (integer) @$Args['SchemeID'];
 $DaysReserved   = (integer) @$Args['DaysReserved'];
 $IsCreate       = (boolean) @$Args['IsCreate'];
 #-------------------------------------------------------------------------------
-$Count = DB_Count('HostingServers',Array('ID'=>$ServerID));
+$Count = DB_Count('Servers',Array('ID'=>$ServerID));
 if(Is_Error($Count))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if(!$Count)
-  return new gException('SERVER_NOT_FOUND','Сервер не найден');
+	return new gException('SERVER_NOT_FOUND','Сервер не найден');
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
 if(!Preg_Match($Regulars['Domain'],$Domain))
-  return new gException('WRONG_DOMAIN','Неверный домен');
+	return new gException('WRONG_DOMAIN','Неверный домен');
 #-------------------------------------------------------------------------------
 if(!$Login)
-  return new gException('LOGIN_NOT_FILLED','Логин пользователя не указан');
+	return new gException('LOGIN_NOT_FILLED','Логин пользователя не указан');
 #-------------------------------------------------------------------------------
-$Server = DB_Select('HostingServers',Array('ID','ServersGroupID'),Array('UNIQ','ID'=>$ServerID));
+$Server = DB_Select('Servers',Array('ID','ServersGroupID'),Array('UNIQ','ID'=>$ServerID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Server)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return new gException('SERVER_NOT_FOUND','Сервер размещения не найден');
-  break;
-  case 'array':
-    # No more...
-  break;
-  default:
-    return ERROR | @Trigger_Error(101);
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('SERVER_NOT_FOUND','Сервер размещения не найден');
+case 'array':
+	# No more...
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $HostingScheme = DB_Select('HostingSchemes',Array('ID','ServersGroupID','CostDay'),Array('UNIQ','ID'=>$SchemeID));
 #-------------------------------------------------------------------------------
@@ -103,38 +103,37 @@ if($HostingOrderID){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IHostingOrder = Array(
-  #-----------------------------------------------------------------------------
-  'ServerID' => $Server['ID'],
-  'Domain'   => $Domain,
-  'Login'    => $Login,
-  'Password' => $Password,
-  'SchemeID' => $HostingScheme['ID']
-);
+			'Domain'	=> $Domain,
+			'Login'		=> $Login,
+			'Password'	=> $Password,
+			'SchemeID'	=> $HostingScheme['ID']
+			);
 #-------------------------------------------------------------------------------
 if($HostingOrderID){
-  #-----------------------------------------------------------------------------
-  $HostingOrder = DB_Select('HostingOrders','OrderID',Array('UNIQ','ID'=>$HostingOrderID));
-  #-----------------------------------------------------------------------------
-  switch(ValueOf($HostingOrder)){
-    case 'error':
-      return ERROR | @Trigger_Error(500);
-    case 'exception':
-      return new gException('HOSTING_ORDER_NOT_FOUND','Заказ на хостинг не найден');
-    break;
-    case 'array':
-      #-------------------------------------------------------------------------
-      $IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID),Array('ID'=>$HostingOrder['OrderID']));
-      if(Is_Error($IsUpdate))
-        return ERROR | @Trigger_Error(500);
-      #-------------------------------------------------------------------------
-      $IsUpdate = DB_Update('HostingOrders',$IHostingOrder,Array('ID'=>$HostingOrderID));
-      if(Is_Error($IsUpdate))
-        return ERROR | @Trigger_Error(500);
-      #-------------------------------------------------------------------------
-    break;
-    default:
-      return ERROR | @Trigger_Error(101);
-  }
+	#-------------------------------------------------------------------------------
+	$HostingOrder = DB_Select('HostingOrders','OrderID',Array('UNIQ','ID'=>$HostingOrderID));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($HostingOrder)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return new gException('HOSTING_ORDER_NOT_FOUND','Заказ на хостинг не найден');
+	case 'array':
+		#-------------------------------------------------------------------------------
+		$IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID']),Array('ID'=>$HostingOrder['OrderID']));
+		if(Is_Error($IsUpdate))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$IsUpdate = DB_Update('HostingOrders',$IHostingOrder,Array('ID'=>$HostingOrderID));
+		if(Is_Error($IsUpdate))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		break;
+		#-------------------------------------------------------------------------------
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
 }else{
   #-----------------------------------------------------------------------------
   $OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServiceID'=>10000,'IsPayed'=>TRUE));

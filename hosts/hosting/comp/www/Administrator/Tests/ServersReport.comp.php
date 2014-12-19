@@ -10,9 +10,9 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','classes/HostingServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$HostingServers = DB_Select('HostingServers',Array('ID','Address'),Array('Where'=>"`SystemID` = 'IspManager4'"));
+$Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>"`SystemID` = 'IspManager4'"));
 #-------------------------------------------------------------------------------
-switch(ValueOf($HostingServers)){
+switch(ValueOf($Servers)){
   case 'error':
     return ERROR | @Trigger_Error(500);
   case 'exception':
@@ -20,11 +20,11 @@ switch(ValueOf($HostingServers)){
   break;
   case 'array':
     #---------------------------------------------------------------------------
-    foreach($HostingServers as $HostingServer){
+    foreach($Servers as $Server){
       #-------------------------------------------------------------------------
-      $ClassHostingServer = new HostingServer();
+      $ClassHostingServer = new Server();
       #-------------------------------------------------------------------------
-      $IsSelected = $ClassHostingServer->Select((integer)$HostingServer['ID']);
+      $IsSelected = $ClassHostingServer->Select((integer)$Server['ID']);
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSelected)){
         case 'error':

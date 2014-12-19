@@ -23,13 +23,11 @@ $HostingOrderID = (integer) @$Args['HostingOrderID'];
 $Columns = Array(
 			'*',
 			'(SELECT `Name` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`) as `Scheme`',
-			'(SELECT `Name` FROM `HostingServersGroups` WHERE `HostingServersGroups`.`ID` = (SELECT `ServersGroupID` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`)) as `ServersGroupName`',
-			'(SELECT `Ns1Name` FROM `HostingServers` WHERE `HostingServers`.`ID` = `HostingOrdersOwners`.`ServerID`) as `Ns1Name`',
-			'(SELECT `Ns2Name` FROM `HostingServers` WHERE `HostingServers`.`ID` = `HostingOrdersOwners`.`ServerID`) as `Ns2Name`',
-			'(SELECT `Ns3Name` FROM `HostingServers` WHERE `HostingServers`.`ID` = `HostingOrdersOwners`.`ServerID`) as `Ns3Name`',
-			'(SELECT `Ns4Name` FROM `HostingServers` WHERE `HostingServers`.`ID` = `HostingOrdersOwners`.`ServerID`) as `Ns4Name`',
+			'(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = (SELECT `ServersGroupID` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`)) as `ServersGroupName`',
+			'(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`) AS `ServerID`',
+			'(SELECT `Params` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`) AS `Params`',
 			'(SELECT `IsAutoProlong` FROM `Orders` WHERE `HostingOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',
-			'(SELECT (SELECT `Code` FROM `Services` WHERE `Orders`.`ServiceID` = `Services`.`ID`) FROM `Orders` WHERE `HostingOrdersOwners`.`OrderID` = `Orders`.`ID`) AS `Code`'
+			'(SELECT (SELECT `Code` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) FROM `OrdersOwners` WHERE `HostingOrdersOwners`.`OrderID` = `OrdersOwners`.`ID`) AS `Code`'
 		);
 #-------------------------------------------------------------------------------
 $HostingOrder = DB_Select('HostingOrdersOwners',$Columns,Array('UNIQ','ID'=>$HostingOrderID));
@@ -90,7 +88,7 @@ switch(ValueOf($HostingOrder)){
         #-----------------------------------------------------------------------
         $Table[] = 'Параметры доступа';
         #-----------------------------------------------------------------------
-        $Server = DB_Select('HostingServers',Array('Url','Address'),Array('UNIQ','ID'=>$HostingOrder['ServerID']));
+	$Server = DB_Select('ServersOwners',Array('Address','Params'),Array('UNIQ','ID'=>$HostingOrder['ServerID']));
         if(!Is_Array($Server))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
@@ -105,7 +103,7 @@ switch(ValueOf($HostingOrder)){
         if(Is_Error($Comp))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
-        $Div = new Tag('DIV',new Tag('SPAN',Array('class'=>'Standard'),$Server['Url']),$Comp);
+        $Div = new Tag('DIV',new Tag('SPAN',Array('class'=>'Standard'),$Server['Params']['Url']),$Comp);
         #-----------------------------------------------------------------------
         $Table[] = Array('Адрес панели управления',$Div);
         #-----------------------------------------------------------------------
@@ -117,16 +115,16 @@ switch(ValueOf($HostingOrder)){
         #-----------------------------------------------------------------------
         $Table[] = 'Именные сервера';
         #-----------------------------------------------------------------------
-        $Table[] = Array('Первичный сервер',$HostingOrder['Ns1Name']);
+        $Table[] = Array('Первичный сервер',$Server['Params']['Ns1Name']);
         #-----------------------------------------------------------------------
-        $Table[] = Array('Вторичный сервер',$HostingOrder['Ns2Name']);
+        $Table[] = Array('Вторичный сервер',$Server['Params']['Ns2Name']);
         #-----------------------------------------------------------------------
-        $Ns3Name = $HostingOrder['Ns3Name'];
+        $Ns3Name = $Server['Params']['Ns3Name'];
         #-----------------------------------------------------------------------
         if($Ns3Name)
           $Table[] = Array('Дополнительный сервер',$Ns3Name);
         #-----------------------------------------------------------------------
-        $Ns4Name = $HostingOrder['Ns4Name'];
+        $Ns4Name = $Server['Params']['Ns4Name'];
         #-----------------------------------------------------------------------
         if($Ns4Name)
           $Table[] = Array('Расширенный сервер',$Ns4Name);

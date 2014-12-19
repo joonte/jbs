@@ -13,7 +13,7 @@ function Cpanel_Logon($Settings,$Params){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  return Array('Url'=>$Params['Url'],'Args'=>Array('user'=>$Params['Login'],'pass'=>$Params['Password']));
+  return Array('Url'=>$Settings['Params']['Url'],'Args'=>Array('user'=>$Params['Login'],'pass'=>$Params['Password']));
 }
 #-------------------------------------------------------------------------------
 function Cpanel_Get_Domains($Settings){

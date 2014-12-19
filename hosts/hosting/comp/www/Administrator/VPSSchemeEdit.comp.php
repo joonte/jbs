@@ -162,7 +162,7 @@ $Options = Array();
 foreach($ServersGroups as $ServersGroup)
   $Options[$ServersGroup['ID']] = $ServersGroup['Name'];
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ServersGroupID'),$Options,$VPSScheme['ServersGroupID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ServersGroupID','style'=>'width: 240px',),$Options,$VPSScheme['ServersGroupID']);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
