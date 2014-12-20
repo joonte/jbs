@@ -34,7 +34,7 @@ if(Is_Array($HostingServersGroups)){
 	#-------------------------------------------------------------------------------
 	$iServersGroups = Array();
 	#-------------------------------------------------------------------------------
-	$ServersGroups = DB_Select('ServersGroups','ID',Array('Where'=>'`ServiceID` = 30000'));
+	$ServersGroups = DB_Select('ServersGroups','ID',Array('Where'=>'`ServiceID` = 10000'));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($ServersGroups)){
 	case 'error':
