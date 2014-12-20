@@ -173,7 +173,7 @@ if($StepID){
             #-------------------------------------------------------------------
             $DOM->AddAttribs('Body',Array('onload'=>'IsNewNs();'));
             #-------------------------------------------------------------------
-            $Columns = Array('ID','Login','(SELECT `Address` FROM `HostingServers` WHERE `HostingServers`.`ID` = `ServerID`) as `Address`','(SELECT `Ns1Name` FROM `HostingServers` WHERE `HostingServers`.`ID` = `ServerID`) as `Ns1Name`','(SELECT `Ns2Name` FROM `HostingServers` WHERE `HostingServers`.`ID` = `ServerID`) as `Ns2Name`');
+            $Columns = Array('ID','Login','(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`) as `Address`','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`) as `Params`');
             #-------------------------------------------------------------------
             $HostingOrders = DB_Select('HostingOrdersOwners',$Columns,Array('Where'=>Array(SPrintF('`UserID` = %u',$__USER['ID']),"`StatusID` IN ('Active','Suspended','Waiting')")));
             #-------------------------------------------------------------------
@@ -195,7 +195,7 @@ if($StepID){
                   #-------------------------------------------------------------
                   $HostingOrderID = $HostingOrder['ID'];
                   #-------------------------------------------------------------
-                  $Script[] = SPrintF("HostingOrders[%u] = {Ns1Name:'%s',Ns2Name:'%s'}",$HostingOrderID,$HostingOrder['Ns1Name'],$HostingOrder['Ns2Name']);
+                  $Script[] = SPrintF("HostingOrders[%u] = {Ns1Name:'%s',Ns2Name:'%s'}",$HostingOrderID,$HostingOrder['Params']['Ns1Name'],$HostingOrder['Params']['Ns2Name']);
                   #-------------------------------------------------------------
                   $Options[$HostingOrderID] = SPrintF('%s (%s)',$HostingOrder['Login'],$HostingOrder['Address']);
                 }

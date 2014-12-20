@@ -108,6 +108,7 @@ switch(ValueOf($DomainScheme)){
         if($HostingOrderID){
           #---------------------------------------------------------------------
           $Columns = Array('ID','(SELECT `Ns1Name` FROM `HostingServers` WHERE `HostingServers`.`ID` = `ServerID`) as `Ns1Name`','(SELECT `Ns2Name` FROM `HostingServers` WHERE `HostingServers`.`ID` = `ServerID`) as `Ns2Name`');
+	  $Columns = Array('ID','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`) as `Params`');
           #---------------------------------------------------------------------
           $HostingOrder = DB_Select('HostingOrdersOwners',$Columns,Array('UNIQ','ID'=>$HostingOrderID));
           #---------------------------------------------------------------------
@@ -118,8 +119,8 @@ switch(ValueOf($DomainScheme)){
               return new gException('HOSTING_ORDER_NOT_FOUND','Заказ хостинга не найден');
             case 'array':
               #-----------------------------------------------------------------
-              $Ns1Name = $HostingOrder['Ns1Name'];
-              $Ns2Name = $HostingOrder['Ns2Name'];
+              $Ns1Name = $HostingOrder['Params']['Ns1Name'];
+              $Ns2Name = $HostingOrder['Params']['Ns2Name'];
             break;
             default:
               return ERROR | @Trigger_Error(101);
