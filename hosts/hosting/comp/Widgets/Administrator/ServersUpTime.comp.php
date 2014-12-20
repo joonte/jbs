@@ -21,10 +21,6 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Config = Config();
-#-------------------------------------------------------------------------------
-$Systems = $Config['Hosting']['Systems'];
-#-------------------------------------------------------------------------------
 $Rows = Array();
 #-------------------------------------------------------------------------------
 $ServersGroupName = UniqID();
@@ -35,9 +31,9 @@ foreach($Servers as $Server){
 	#-------------------------------------------------------------------------------
 	if($Server['ServersGroupName'] != $ServersGroupName){
 		#-------------------------------------------------------------------------------
-		$ServersGroupName = $Server['ServersGroupName'];
+		$ServersGroupName = !Is_Null($Server['ServersGroupName'])?$Server['ServersGroupName']:'-';
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Formats/String',$Server['ServersGroupComment'],40);
+		$Comp = Comp_Load('Formats/String',(!Is_Null($Server['ServersGroupComment'])?$Server['ServersGroupComment']:'-'),40);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------

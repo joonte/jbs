@@ -455,7 +455,7 @@ function IspManager4_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
   if(IsSet($Doc['error']))
     return new gException('ACCOUNT_CREATE_ERROR','Не удалось создать заказ хостинга');
   #-----------------------------------------------------------------------------
-  if(!$Settings['NoRestartCreate']){
+  if(!$Settings['Params']['NoRestartCreate']){
           $Request = Array(
             #---------------------------------------------------------------------------
             'authinfo' => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
@@ -505,7 +505,7 @@ function IspManager4_Active($Settings,$Login,$IsReseller = FALSE){
   if(IsSet($Doc['error']))
     return new gException('ACCOUNT_ACTIVATE_ERROR','Не удалось активировать заказ хостинга');
   #-----------------------------------------------------------------------------
-  if(!$Settings['NoRestartActive']){
+  if(!$Settings['Params']['NoRestartActive']){
           $Request = Array(
             #---------------------------------------------------------------------------
             'authinfo' => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
@@ -555,7 +555,7 @@ function IspManager4_Suspend($Settings,$Login,$IsReseller = FALSE){
   if(IsSet($Doc['error']))
     return new gException('ACCOUNT_SUSPEND_ERROR','Не удалось заблокировать заказ хостинга');
   #-----------------------------------------------------------------------------
-  if(!$Settings['NoRestartSuspend']){
+  if(!$Settings['Params']['NoRestartSuspend']){
           $Request = Array(
             #---------------------------------------------------------------------------
             'authinfo' => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
@@ -676,7 +676,7 @@ function IspManager4_Delete($Settings,$Login,$IsReseller = FALSE){
   if(IsSet($Doc['error']))
     return new gException('ACCOUNT_DELETE_ERROR','Не удалось удалить заказ хостинга');
   #-----------------------------------------------------------------------------
-  if(!$Settings['NoRestartDelete']){
+  if(!$Settings['Params']['NoRestartDelete']){
           $Request = Array(
             #---------------------------------------------------------------------------
             'authinfo' => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
@@ -775,7 +775,7 @@ function IspManager4_Scheme_Change($Settings,$Login,$HostingScheme){
   if(IsSet($Doc['error']))
     return new gException('SCHEME_CHANGE_ERROR','Не удалось изменить тарифный план для заказа хостинга');
   #-----------------------------------------------------------------------------
-  if(!$Settings['NoRestartSchemeChange']){
+  if(!$Settings['Params']['NoRestartSchemeChange']){
           $Request = Array(
             #---------------------------------------------------------------------------
             'authinfo' => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),

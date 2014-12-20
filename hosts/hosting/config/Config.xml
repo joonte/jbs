@@ -360,149 +360,27 @@
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Hosting>
- <Systems>
-  <NullSystem>
-   <Name>Ручное управление</Name>
-   <Settings>
-    <Port>1000</Port>
-    <Protocol>tcp</Protocol>
-    <Url>http://isp.su/manage</Url>
-   </Settings>
-  </NullSystem>
-  <!-- ********************************************************************* -->
-  <Cpanel>
-   <Name>cPanel</Name>
-   <Settings>
-    <Port>2087</Port>
-    <Protocol>ssl</Protocol>
-    <Theme>x3</Theme>
-    <Language>default</Language>
-    <Url>https://isp.su:2083/login/</Url>
-   </Settings>
-  </Cpanel>
-  <!-- ********************************************************************* -->
-  <IspManager4>
-   <Name>IspManager4</Name>
-   <Settings>
-    <Port>443</Port>
-    <Protocol>ssl</Protocol>
-    <Theme>sirius</Theme>
-    <Language>ru</Language>
-    <Url>https://isp.su:1500/</Url>
-   </Settings>
-  </IspManager4>
-  <!-- ********************************************************************* -->
-  <Plesk>
-   <Name>Plesk</Name>
-   <Settings>
-    <Port>8443</Port>
-    <Protocol>ssl</Protocol>
-    <Theme>default</Theme>
-    <Language>default</Language>
-    <Url>https://isp.su:8443/login_up.php3</Url>
-   </Settings>
-  </Plesk>
-  <!-- ********************************************************************* -->
-  <DirectAdmin>
-   <Name>DirectAdmin</Name>
-   <Settings>
-    <Port>2222</Port>
-    <Protocol>tcp</Protocol>
-    <Theme>default</Theme>
-    <Language>default</Language>
-    <Url>http://isp.su:2222/CMD_LOGIN</Url>
-   </Settings>
-  </DirectAdmin>
- </Systems>
- <!-- ********************************************************************** -->
- <IsNoDomain>1</IsNoDomain>
- <!-- ********************************************************************** -->
- <Balancing>
-  <Functions>
-   <NotDefined>
-    <Name>Без балансировки</Name>
-   </NotDefined>
-   <ByAllCapacity>
-    <Name>Активные и блокированные аккаунты</Name>
-   </ByAllCapacity>
-   <ByActiveCapacity>
-    <Name>Только по активным аккаунтам</Name>
-   </ByActiveCapacity>
-   <ByRandom>
-    <Name>Случайным образом</Name>
-   </ByRandom>
-  </Functions>
- </Balancing>
+	<IsNoDomain>1</IsNoDomain>
 </Hosting>
+<!-- *********************************************************************** -->
 <!-- ********************************************************************** -->
 <VPS>
- <Systems>
-  <NullSystem>
-   <Name>Ручное управление</Name>
-   <Settings>
-    <Port>1000</Port>
-    <Protocol>tcp</Protocol>
-   </Settings>
-  </NullSystem>
-  <!-- ********************************************************************* -->
-  <VdsManager4>
-   <Name>VdsManager4</Name>
-    <Settings>
-    <Port>443</Port>
-    <Protocol>ssl</Protocol>
-    <Theme>sirius</Theme>
-    <Language>ru</Language>
-   </Settings>
-  </VdsManager4>
- <!-- ********************************************************************* -->
- <VmManager5>
-  <Name>VmManager5</Name>
-  <Settings>
-   <Port>1500</Port>
-   <Protocol>ssl</Protocol>
-   <Theme>Orion</Theme>
-   <Language>ru</Language>
-  </Settings>
- </VmManager5>
- </Systems>
- <!-- ********************************************************************** -->
- <IsNoDomain>1</IsNoDomain>
- <!-- ********************************************************************** -->
- <Balancing>
-  <Functions>
-   <NotDefined>
-    <Name>Не определена</Name>
-   </NotDefined>
-   <ByCapacity>
-    <Name>По загрузке</Name>
-   </ByCapacity>
-  </Functions>
- </Balancing>
+	<IsNoDomain>1</IsNoDomain>
 </VPS>
 <!-- ********************************************************************** -->
+<!-- *********************************************************************** -->
 <DS>
- <Systems>
-  <NullSystem>
-   <Name>Ручное управление</Name>
-   <Settings>
-    <Port>1000</Port>
-    <Protocol>tcp</Protocol>
-   </Settings>
-  </NullSystem>
- </Systems>
- <!-- ********************************************************************** -->
- <IsNoDomain>1</IsNoDomain>
- <!-- ********************************************************************** -->
- <Balancing>
-  <Functions>
-   <NotDefined>
-    <Name>Не определена</Name>
-   </NotDefined>
-   <ByCapacity>
-    <Name>По загрузке</Name>
-   </ByCapacity>
-  </Functions>
- </Balancing>
+	<Systems>
+		<NullSystem>
+			<Name>Ручное управление</Name>
+			<Settings>
+				<Port>1000</Port>
+				<Protocol>tcp</Protocol>
+			</Settings>
+		</NullSystem>
+	</Systems>
+	<!-- *********************************************************************** -->
+	<IsNoDomain>1</IsNoDomain>
 </DS>
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
