@@ -24,9 +24,9 @@ if(!$Settings['IsActive'])
 	return $ExecuteTime;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$HostingServers = DB_Select('HostingServers',Array('ID','Address'));
+$Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 10000','SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
-switch(ValueOf($HostingServers)){
+switch(ValueOf($Servers)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
@@ -44,18 +44,18 @@ $LockedCount = 0;
 $TUsages = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-foreach($HostingServers as $HostingServer){
+foreach($Servers as $Server){
 	#-------------------------------------------------------------------------------
 	# костыль, чтоб ткоа один сервер
-	#if($HostingServer['ID'] != 16)
+	#if($Server['ID'] != 16)
 	#	continue;
 	#-------------------------------------------------------------------------------
-	$TUsages[$HostingServer['ID']] = Array();
+	$TUsages[$Server['ID']] = Array();
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$ClassHostingServer = new HostingServer();
 	#-------------------------------------------------------------------------------
-	$IsSelected = $ClassHostingServer->Select((integer)$HostingServer['ID']);
+	$IsSelected = $ClassHostingServer->Select((integer)$Server['ID']);
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($IsSelected)){
 	case 'error':
@@ -84,7 +84,7 @@ foreach($HostingServers as $HostingServer){
 	}
 	#Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: BUsage = %s',print_r($BUsages,true)));
 	#-------------------------------------------------------------------------------
-	$TUsages[$HostingServer['ID']]['BUsages'] = $BUsages;
+	$TUsages[$Server['ID']]['BUsages'] = $BUsages;
 	#-------------------------------------------------------------------------------
 	# достаём за вчера
 	$TFilter = SPrintF('%s - %s',date('Y-m-d',time() - 24*3600),date('Y-m-d',time() - 24*3600));
@@ -101,7 +101,7 @@ foreach($HostingServers as $HostingServer){
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
-	$TUsages[$HostingServer['ID']]['SUsages'] = $SUsages;
+	$TUsages[$Server['ID']]['SUsages'] = $SUsages;
 	#Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: SUsage = %s',print_r($SUsages,true)));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -115,9 +115,9 @@ foreach($HostingServers as $HostingServer){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	$TUsages[$HostingServer['ID']]['ServerUsage'] = $ServerUsage;
+	$TUsages[$Server['ID']]['ServerUsage'] = $ServerUsage;
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: %s: utime = %s%%, stime = %s%%, всего = %s%%',$HostingServer['Address'],Round(($ServerUsage['utime']*100/(24*3600)),2),Round(($ServerUsage['stime']*100/(24*3600)),2),Round((($ServerUsage['utime'] + $ServerUsage['stime'])*100/(24*3600)),2)));
+	Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: %s: utime = %s%%, stime = %s%%, всего = %s%%',$Server['Address'],Round(($ServerUsage['utime']*100/(24*3600)),2),Round(($ServerUsage['stime']*100/(24*3600)),2),Round((($ServerUsage['utime'] + $ServerUsage['stime'])*100/(24*3600)),2)));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 }
@@ -143,7 +143,7 @@ foreach(Array_Keys($TUsages) as $ServerID){
 			'ID','Login','UserID','Domain',
 			'(SELECT `QuotaCPU` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`) as `QuotaCPU`',
 			'(SELECT `Name` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`) as `Scheme`',
-			'(SELECT `Url` FROM `HostingServers` WHERE `HostingServers`.`ID` = `HostingOrdersOwners`.`ServerID`) as `Url`'
+			'(SELECT `Url` FROM `Servers` WHERE `Servers`.`ID` = `HostingOrdersOwners`.`ServerID`) as `Url`'
 			);
 	#-------------------------------------------------------------------------------
 	$HostingOrders = DB_Select('HostingOrdersOwners',$Columns,Array('Where'=>$Where));
