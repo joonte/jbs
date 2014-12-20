@@ -84,8 +84,8 @@ switch(ValueOf($Servers)){
     #---------------------------------------------------------------------------
     $Options['Default'] = 'Не указан';
     #---------------------------------------------------------------------------
-    foreach($Servers as $HostingServer)
-      $Options[$HostingServer['ID']] = $HostingServer['Address'];
+    foreach($Servers as $Server)
+      $Options[$Server['ID']] = $erver['Address'];
     #---------------------------------------------------------------------------
     $ServerID = 'Default';
     #---------------------------------------------------------------------------
