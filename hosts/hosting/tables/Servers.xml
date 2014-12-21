@@ -169,6 +169,24 @@
 		</Attribs>
 	</Orders>
 	<!-- ********************************************************************** -->
+	<Reputation>
+		<Head>-</Head>
+		<Comp>Servers/Reputation</Comp>
+		<Args>
+			<ListElement>%Address%</ListElement>
+		</Args>
+	</Reputation>
+	<!-- ********************************************************************** -->
+	<IsOK>
+		<Head>-</Head>
+		<Comp>Servers/IsOK</Comp>
+		<Args>
+			<ListElement>%IsOK%</ListElement>
+			<ListElement>%ID%</ListElement>
+		</Args>
+		<Alias>IsOK</Alias>
+	</IsOK>
+	<!-- ********************************************************************** -->
 	<SortID>
 		<Args>
 			<TableID>Servers</TableID>
@@ -190,6 +208,8 @@
 	<ListElement>IsDefault</ListElement>
 	<ListElement>IsActive</ListElement>
 	<ListElement>Orders</ListElement>
+	<ListElement>Reputation</ListElement>
+	<ListElement>IsOK</ListElement>
 	<ListElement>SortID</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
