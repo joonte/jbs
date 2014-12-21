@@ -40,6 +40,32 @@
 </Source>
 <!-- *********************************************************************** -->
 <Comps>
+	<Before>
+<!--
+		<Search>
+			<Args>
+				<ColumnsIDs>
+					<ListElement>ID</ListElement>
+					<ListElement>TemplateID</ListElement>
+					<ListElement>Address</ListElement>
+					<ListElement>Port</ListElement>
+					<ListElement>Login</ListElement>
+					<ListElement>AdminNotice</ListElement>
+					<ListElement>(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`)</ListElement>
+					<ListElement>(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`)</ListElement>
+					<ListElement>(SELECT `Comment` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`)</ListElement>
+				</ColumnsIDs>
+			</Args>
+		</Search>
+-->
+		<!-- ********************************************************************* -->
+		<ServersSearch>
+			<Comp>Servers/Search</Comp>
+			<Args type="array" />
+			<NoBlock />
+		</ServersSearch>
+	</Before>
+	<!-- *********************************************************************** -->
 	<After>
 		<Delete>
 			<Args>
