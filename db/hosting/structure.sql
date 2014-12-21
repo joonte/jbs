@@ -38,7 +38,7 @@ CREATE TABLE `Servers` (
 	`Params` LONGTEXT,				-- набор переменных необходимых для взаимодействия с сервером
 	`Monitoring` TEXT,				-- какие сервисы мониторить
 	`TestDate` int(11) default '0',			-- дата последнего тестирования мониторингом
-	`IsOK` enum('no','yes') default 'no',		-- с каким итогом был последний мониторинг
+	`IsOK` int(3) NULL DEFAULT NULL,			-- с каким итогом был последний мониторинг
 	`AdminNotice` TEXT,				-- примечание к серверу
 	`SortID` int(11) default '10',			-- поле для сортировки
 	PRIMARY KEY(`ID`),
@@ -596,7 +596,7 @@ CREATE TABLE IF NOT EXISTS `DSServers` (
 	`Ns4Name` char(30) DEFAULT '',
 	`Services` text,
 	`TestDate` int(11) DEFAULT '0',
-	`IsOK` enum('no','yes') DEFAULT 'no',
+	`IsOK` int(3) NULL DEFAULT NULL,
 	`Notice` text,
 	PRIMARY KEY (`ID`),
 	KEY `DSServersServersGroupID` (`ServersGroupID`)
@@ -753,7 +753,6 @@ CREATE TABLE IF NOT EXISTS `ExtraIPs` (
   `Ns4Name` char(30) DEFAULT '',
   `Services` text,
   `TestDate` int(11) DEFAULT '0',
-  `IsOK` enum('no','yes') DEFAULT 'no',
   `Notice` text,
   PRIMARY KEY (`ID`),
   KEY `ExtraIPssGroupID` (`sGroupID`)

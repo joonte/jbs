@@ -231,7 +231,7 @@ foreach($ServersGroups as $ServersGroup){
 		#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		$GLOBALS['TaskReturnInfo'][] = SPrintF('%s=%s',$ServersGroup['Name'],$SN[$ServerID]);
+		$GLOBALS['TaskReturnInfo'][] = SPrintF('%s=>%s',$ServersGroup['Name'],$SN[$ServerID]);
 		#-------------------------------------------------------------------------------
 		break;
 	default:

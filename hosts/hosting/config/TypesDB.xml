@@ -68,7 +68,9 @@
 <!-- Registrators -->
 <Password>Crypt</Password>
 <!-- HostingServers -->
+<!-- переделано на цифровые значения, см. JBS-887
 <IsOK>Logic</IsOK>
+-->
 <!-- *********************************************************************** -->
 <!-- added by lissyara, 2011-07-05 in 09:48 MSK -->
 <IsCalculateNumServers>Logic</IsCalculateNumServers>

@@ -11,7 +11,14 @@ Eval(COMP_INIT);
 /******************************************************************************/
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return new Tag('IMG',Array('alt'=>'+','class'=>'Button','onclick'=>SPrintF("ShowWindow('/Administrator/ServerUpTimeInfo',{ServerID:%u});",$ID),'width'=>16,'height'=>16,'src'=>SPrintF('SRC:{/Images/Icons/%s.gif}',$IsOK?'Yes':'No')));
+$Image = 'No.gif';
+if($IsOK > 98)
+	$Image = 'Yes.gif';
+#-------------------------------------------------------------------------------
+
+
+
+return new Tag('IMG',Array('alt'=>'+','class'=>'Button','onmouseover'=>SPrintF("PromptShow(event,'%s%%',this);",$IsOK),'onclick'=>SPrintF("ShowWindow('/Administrator/ServerUpTimeInfo',{ServerID:%u});",$ID),'width'=>16,'height'=>16,'src'=>SPrintF('SRC:{/Images/Icons/%s}',$Image)));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 

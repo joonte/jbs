@@ -39,8 +39,6 @@ foreach($Servers as $Server){
 	#-------------------------------------------------------------------------------
 	$GLOBALS['TaskReturnInfo'][] = $Server['Address'];
 	#-------------------------------------------------------------------------------
-	$IsOK = TRUE;
-	#-------------------------------------------------------------------------------
 	if(StrLen($Server['Monitoring']) < 3)
 		continue;
 	#-------------------------------------------------------------------------------
@@ -61,7 +59,6 @@ foreach($Servers as $Server){
 		if(!Is_Resource($Socket)){
 			#-------------------------------------------------------------------------------
 			#Debug(SPrintF('[comp/Tasks/ServersUpTime]: cannot connect %s:%u with error: %s (%s)',$Server['Address'],$Port,$sError,$nError));
-			$IsOK = FALSE;
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
@@ -84,7 +81,20 @@ foreach($Servers as $Server){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	$IsUpdate = DB_Update('Servers',Array('TestDate'=>Time(),'IsOK'=>$IsOK),Array('ID'=>$Server['ID']));
+	# рассчиытваем значение IsOK
+	$UpTimes = DB_Select('ServersUpTime',Array('(SUM(`UpTime`*`Count`)/SUM(`Count`)) as `UpTime`'),Array('UNIQ','Where'=>SPrintF('`TestDate` > UNIX_TIMESTAMP() - 7 * 24 * 60 *60  AND `ServerID` = %u',$Server['ID'])));
+	switch(ValueOf($Server)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$IsUpdate = DB_Update('Servers',Array('TestDate'=>Time(),'IsOK'=>Round($UpTimes['UpTime'])),Array('ID'=>$Server['ID']));
 	if(Is_Error($IsUpdate))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

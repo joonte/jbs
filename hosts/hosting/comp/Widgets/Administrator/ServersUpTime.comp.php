@@ -52,9 +52,11 @@ foreach($Servers as $Server){
 	$Row[] = new Tag('TD',Array('class'=>'Standard'),$Server['TemplateID']);
 	$Row[] = new Tag('TD',Array('class'=>'Standard','align'=>'center'),SPrintF('%01.2f%%',$Server['UpTime']));
 	#-------------------------------------------------------------------------------
-	$Img = new Tag('IMG',Array('alt'=>'+','class'=>'Button','onclick'=>SPrintF("ShowWindow('/Administrator/ServerUpTimeInfo',{ServerID:%u});",$Server['ID']),'width'=>16,'height'=>16,'src'=>SPrintF('SRC:{/Images/Icons/%s.gif}',$Server['IsOK']?'Yes':'No')));
+	$Comp = Comp_Load('Servers/IsOK',$Server['IsOK'],$Server['ID']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Row[] = new Tag('TD',Array('align'=>'center'),$Img);
+	$Row[] = new Tag('TD',Array('align'=>'center'),$Comp);
 	#-------------------------------------------------------------------------------
 	$Rows[] = $Row;
 	#-------------------------------------------------------------------------------
