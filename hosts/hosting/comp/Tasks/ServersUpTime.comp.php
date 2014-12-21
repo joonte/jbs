@@ -39,64 +39,73 @@ foreach($Servers as $Server){
 	#-------------------------------------------------------------------------------
 	$GLOBALS['TaskReturnInfo'][] = $Server['Address'];
 	#-------------------------------------------------------------------------------
-	if(StrLen($Server['Monitoring']) < 3)
-		continue;
-	#-------------------------------------------------------------------------------
-	$Services = Preg_Split('/\n+/',$Server['Monitoring']);
-	#-------------------------------------------------------------------------------
-	foreach($Services as $Service){
+	if(StrLen($Server['Monitoring']) > 3){
 		#-------------------------------------------------------------------------------
-		$Service = Explode('=',$Service);
+		$Services = Preg_Split('/\n+/',$Server['Monitoring']);
 		#-------------------------------------------------------------------------------
-		$ServiceName = Current($Service);
-		#-------------------------------------------------------------------------------
-		$Port = IntVal(Next($Service));
-		#-------------------------------------------------------------------------------
-		#Debug(SPrintF('[comp/Tasks/ServersUpTime]: connect to %s:%u',$Server['Address'],$Port));
-		#-------------------------------------------------------------------------------
-		$Socket = @FsockOpen($Server['Address'],$Port,$nError,$sError,$Settings['SocketTimeout']);
-		#-------------------------------------------------------------------------------
-		if(!Is_Resource($Socket)){
+		foreach($Services as $Service){
 			#-------------------------------------------------------------------------------
-			#Debug(SPrintF('[comp/Tasks/ServersUpTime]: cannot connect %s:%u with error: %s (%s)',$Server['Address'],$Port,$sError,$nError));
+			$Service = Explode('=',$Service);
+			#-------------------------------------------------------------------------------
+			$ServiceName = Current($Service);
+			#-------------------------------------------------------------------------------
+			$Port = IntVal(Next($Service));
+			#-------------------------------------------------------------------------------
+			#Debug(SPrintF('[comp/Tasks/ServersUpTime]: connect to %s:%u',$Server['Address'],$Port));
+			#-------------------------------------------------------------------------------
+			$Socket = @FsockOpen($Server['Address'],$Port,$nError,$sError,$Settings['SocketTimeout']);
+			#-------------------------------------------------------------------------------
+			if(!Is_Resource($Socket)){
+				#-------------------------------------------------------------------------------
+				#Debug(SPrintF('[comp/Tasks/ServersUpTime]: cannot connect %s:%u with error: %s (%s)',$Server['Address'],$Port,$sError,$nError));
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+			$IPage = Array(
+					'TestDate'	=> Time(),
+					'ServerID'	=> $Server['ID'],
+					'Service'	=> Trim($ServiceName),
+					'UpTime'	=> (Is_Resource($Socket)?100:0),
+					'Day'		=> Date('d'),
+					'Month'		=> Date('m'),
+					'Year'		=> Date('Y')
+					);
+			#-------------------------------------------------------------------------------
+			$IsInsert = DB_Insert('ServersUpTime',$IPage);
+			if(Is_Error($IsInsert))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			if(Is_Resource($Socket))
+				FClose($Socket);
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		$IPage = Array(
-				'TestDate'	=> Time(),
-				'ServerID'	=> $Server['ID'],
-				'Service'	=> Trim($ServiceName),
-				'UpTime'	=> (Is_Resource($Socket)?100:0),
-				'Day'		=> Date('d'),
-				'Month'		=> Date('m'),
-				'Year'		=> Date('Y')
-				);
-		#-------------------------------------------------------------------------------
-		$IsInsert = DB_Insert('ServersUpTime',$IPage);
-		if(Is_Error($IsInsert))
+		# рассчиытваем значение IsOK
+		$UpTimes = DB_Select('ServersUpTime',Array('(SUM(`UpTime`*`Count`)/SUM(`Count`)) as `UpTime`'),Array('UNIQ','Where'=>SPrintF('`TestDate` > UNIX_TIMESTAMP() - %u * 24 * 60 *60  AND `ServerID` = %u',($Settings['DaysAgregate'])?$Settings['DaysAgregate']:1,$Server['ID'])));
+		switch(ValueOf($Server)){
+		case 'error':
 			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return ERROR | @Trigger_Error(400);
+		case 'array':
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
 		#-------------------------------------------------------------------------------
-		if(Is_Resource($Socket))
-			FClose($Socket);
+	}else{
+		#-------------------------------------------------------------------------------
+		$IsOK = TRUE;
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	# рассчиытваем значение IsOK
-	$UpTimes = DB_Select('ServersUpTime',Array('(SUM(`UpTime`*`Count`)/SUM(`Count`)) as `UpTime`'),Array('UNIQ','Where'=>SPrintF('`TestDate` > UNIX_TIMESTAMP() - 7 * 24 * 60 *60  AND `ServerID` = %u',$Server['ID'])));
-	switch(ValueOf($Server)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		return ERROR | @Trigger_Error(400);
-	case 'array':
-		break;
-	default:
-		return ERROR | @Trigger_Error(101);
-	}
+	$IsOK = IsSet($IsOK)?NULL:Round($UpTimes['UpTime']);
 	#-------------------------------------------------------------------------------
-	$IsUpdate = DB_Update('Servers',Array('TestDate'=>Time(),'IsOK'=>Round($UpTimes['UpTime'])),Array('ID'=>$Server['ID']));
+	$IsUpdate = DB_Update('Servers',Array('TestDate'=>Time(),'IsOK'=>$IsOK),Array('ID'=>$Server['ID']));
 	if(Is_Error($IsUpdate))
 		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	UnSet($IsOK);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------

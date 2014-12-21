@@ -1245,6 +1245,7 @@
    <IsActive>1</IsActive>
    <SocketTimeout>5</SocketTimeout>
    <ExecutePeriod>00:10</ExecutePeriod>
+   <DaysAgregate>7</DaysAgregate>
   </ServersUpTime>
   <!-- ********************************************************************* -->
   <UpTimeAgregate>
