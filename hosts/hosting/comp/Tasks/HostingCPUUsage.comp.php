@@ -143,7 +143,7 @@ foreach(Array_Keys($TUsages) as $ServerID){
 			'ID','Login','UserID','Domain',
 			'(SELECT `QuotaCPU` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`) as `QuotaCPU`',
 			'(SELECT `Name` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`) as `Scheme`',
-			'(SELECT `Url` FROM `Servers` WHERE `Servers`.`ID` = `HostingOrdersOwners`.`ServerID`) as `Url`'
+			'(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `HostingOrdersOwners`.`ServerID`) as `Params`'
 			);
 	#-------------------------------------------------------------------------------
 	$HostingOrders = DB_Select('HostingOrdersOwners',$Columns,Array('Where'=>$Where));
@@ -181,7 +181,7 @@ foreach(Array_Keys($TUsages) as $ServerID){
 					'STime'			=> $TUsages[$ServerID]['SUsages'][$HostingOrder['Login']]['stime'],
 					'QuotaCPU'		=> $HostingOrder['QuotaCPU'],
 					'QuotaCPUTime'		=> $HostingOrder['QuotaCPU'] * 24 * 60 * 60 / 100,
-					'Url'			=> $HostingOrder['Url'],
+					'Url'			=> $HostingOrder['Params']['Url'],
 					'PeriodToLock'		=> $Settings['PeriodToLock'],
 					'UnLockOverlimits'	=> $Settings['UnLockOverlimits'],
 					'UnLockOverlimitsTime'	=> $Settings['UnLockOverlimitsTime'],
