@@ -65,6 +65,18 @@
 		<Value>4.0</Value>
 	</BalancingFactor>
 	<!-- *********************************************************************** -->
+	<BalancingFactorAuto>
+		<Check>/^[0-9\.]{1,32}$/u</Check>
+		<Comment>Автоматически выставляемый приоритет балансировки</Comment>
+		<Type>Hidden</Type>
+		<Attribs>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>4.0</Value>
+	</BalancingFactorAuto>
+	<!-- *********************************************************************** -->
 	<IsAutoBalancing>
 		<Check>Char</Check>
 		<Comment>Автобалансировка</Comment>
