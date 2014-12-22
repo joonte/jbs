@@ -9,87 +9,115 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
-$ContractID      = (integer) @$Args['ContractID'];
-$Domain          =  (string) @$Args['Domain'];
-$HostingSchemeID = (integer) @$Args['HostingSchemeID'];
-$DomainTypeID    =  (string) @$Args['DomainTypeID'];
-$DomainName      =  (string) @$Args['DomainName'];
-$DomainSchemeID  = (integer) @$Args['DomainSchemeID'];
+$ContractID	= (integer) @$Args['ContractID'];
+$Domain		=  (string) @$Args['Domain'];
+$HostingSchemeID= (integer) @$Args['HostingSchemeID'];
+$DomainTypeID	=  (string) @$Args['DomainTypeID'];
+$DomainName	=  (string) @$Args['DomainName'];
+$DomainSchemeID	= (integer) @$Args['DomainSchemeID'];
+$ServerAttrib	=  (string) @$Args['ServerAttrib'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
 if($DomainTypeID != 'None'){
-  #-----------------------------------------------------------------------------
-  $Domain = Mb_StrToLower($Domain,'UTF-8');
-  #-----------------------------------------------------------------------------
-  if(Preg_Match('/^www\.(.+)$/',$Domain,$Mathces))
-    $Domain = Next($Mathces);
-  #-----------------------------------------------------------------------------
-  if(!Preg_Match($Regulars['Domain'],$Domain))
-    return new gException('WRONG_DOMAIN','Неверный домен');
-  #-----------------------------------------------------------------------------
-  $Count = DB_Count('HostingOrders',Array('Where'=>SPrintF("(`Domain` LIKE '%%%s%%' OR `Parked` LIKE '%%%s%%') AND `StatusID` != 'Waiting'",$Domain,$Domain)));
-  if(Is_Error($Count))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  if($Count)
-    return new gException('DOMAIN_ALREADY_EXISTS','Доменное имя уже используется для одного из заказов хостинга');
+	#-------------------------------------------------------------------------------
+	$Domain = Mb_StrToLower($Domain,'UTF-8');
+	#-------------------------------------------------------------------------------
+	if(Preg_Match('/^www\.(.+)$/',$Domain,$Mathces))
+		$Domain = Next($Mathces);
+	#-------------------------------------------------------------------------------
+	if(!Preg_Match($Regulars['Domain'],$Domain))
+		return new gException('WRONG_DOMAIN','Неверный домен');
+	#-------------------------------------------------------------------------------
+	$Count = DB_Count('HostingOrders',Array('Where'=>SPrintF("(`Domain` LIKE '%%%s%%' OR `Parked` LIKE '%%%s%%') AND `StatusID` != 'Waiting'",$Domain,$Domain)));
+	if(Is_Error($Count))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	if($Count)
+		return new gException('DOMAIN_ALREADY_EXISTS','Доменное имя уже используется для одного из заказов хостинга');
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if(!$HostingSchemeID)
-  return new gException('HOSTING_SCHEME_NOT_DEFINED','Тарифный план не выбран');
+	return new gException('HOSTING_SCHEME_NOT_DEFINED','Тарифный план не выбран');
 #-------------------------------------------------------------------------------
 $HostingScheme = DB_Select('HostingSchemes',Array('ID','Name','ServersGroupID','HardServerID','IsActive'),Array('UNIQ','ID'=>$HostingSchemeID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingScheme)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return new gException('SCHEME_NOT_FOUND','Выбранный тарифный план заказа хостинга не найден');
-  case 'array':
-    #---------------------------------------------------------------------------
-    if(!$HostingScheme['IsActive'])
-      return new gException('SCHEME_NOT_ACTIVE','Выбранный тарифный план заказа хостинга не активен');
-    #---------------------------------------------------------------------------
-    $Contract = DB_Select('Contracts',Array('ID','UserID'),Array('UNIQ','ID'=>$ContractID));
-    #---------------------------------------------------------------------------
-    switch(ValueOf($Contract)){
-      case 'error':
-        return ERROR | @Trigger_Error(500);
-      case 'exception':
-        return new gException('CONTRACT_NOT_FOUND','Договор не найден');
-      case 'array':
-        #-----------------------------------------------------------------------
-        $__USER = $GLOBALS['__USER'];
-        #-----------------------------------------------------------------------
-        $IsPermission = Permission_Check('ContractRead',(integer)$__USER['ID'],(integer)$Contract['UserID']);
-        #-----------------------------------------------------------------------
-        switch(ValueOf($IsPermission)){
-          case 'error':
-            return ERROR | @Trigger_Error(500);
-          case 'exception':
-            return ERROR | @Trigger_Error(400);
-          case 'false':
-            return ERROR | @Trigger_Error(700);
-          case 'true':
-            #-------------------------------------------------------------------
-	    if($HostingScheme['HardServerID']){
-              $Where = SPrintF("`ID` = %u",$HostingScheme['HardServerID']);
-	    }else{
-	      $Where = SPrintF("`ServersGroupID` = %u AND `IsDefault` = 'yes'",$HostingScheme['ServersGroupID']);
-	    }
-	    #-------------------------------------------------------------------
-            $Server = DB_Select('Servers',Array('ID','Params'),Array('Where'=>$Where));
-            #-------------------------------------------------------------------
-            switch(ValueOf($Server)){
-              case 'error':
-                return ERROR | @Trigger_Error(500);
-              case 'exception':
-                return new gException('SERVER_NOT_DEFINED','Сервер размещения не определён');
-              case 'array':
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('SCHEME_NOT_FOUND','Выбранный тарифный план заказа хостинга не найден');
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+if(!$HostingScheme['IsActive'])
+	return new gException('SCHEME_NOT_ACTIVE','Выбранный тарифный план заказа хостинга не активен');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Contract = DB_Select('Contracts',Array('ID','UserID'),Array('UNIQ','ID'=>$ContractID));
+#---------------------------------------------------------------------------
+switch(ValueOf($Contract)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('CONTRACT_NOT_FOUND','Договор не найден');
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$__USER = $GLOBALS['__USER'];
+#-------------------------------------------------------------------------------
+$IsPermission = Permission_Check('ContractRead',(integer)$__USER['ID'],(integer)$Contract['UserID']);
+#-------------------------------------------------------------------------------
+switch(ValueOf($IsPermission)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'false':
+	return ERROR | @Trigger_Error(700);
+case 'true':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($HostingScheme['HardServerID']){
+	#-------------------------------------------------------------------------------
+	$Where = SPrintF("`ID` = %u",$HostingScheme['HardServerID']);
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
+	$Where = SPrintF("`ServersGroupID` = %u AND `IsDefault` = 'yes'",$HostingScheme['ServersGroupID']);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+$Server = DB_Select('Servers',Array('ID','Params'),Array('Where'=>$Where));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Server)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('SERVER_NOT_DEFINED','Сервер размещения не определён');
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+
                 #---------------------------------------------------------------
                 $Server = Current($Server);
                 #---------------------------------------------------------------
@@ -253,18 +281,6 @@ switch(ValueOf($HostingScheme)){
                   default:
                     return ERROR | @Trigger_Error(101);
                 }
-              default:
-                return ERROR | @Trigger_Error(101);
-            }
-          default:
-            return ERROR | @Trigger_Error(101);
-        }
-      default:
-        return ERROR | @Trigger_Error(101);
-    }
-  default:
-    return ERROR | @Trigger_Error(101);
-}
 #-------------------------------------------------------------------------------
 
 ?>

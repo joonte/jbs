@@ -14,7 +14,6 @@ $HostingSchemeID= (integer) @$Args['HostingSchemeID'];
 $Domain		=  (string) @$Args['Domain'];
 $IsNoDomain	= (boolean) @$Args['IsNoDomain'];
 $StepID		= (integer) @$Args['StepID'];
-
 $DomainTypeID	=  (string) @$Args['DomainTypeID'];
 $DomainName	=  (string) @$Args['DomainName'];
 $DomainSchemeID	= (integer) @$Args['DomainSchemeID'];
@@ -45,7 +44,10 @@ $Config = Config();
 #-------------------------------------------------------------------------------
 if($StepID){
 	#-------------------------------------------------------------------------------
-	if($StepID == 2){
+	if($StepID == 2 || !$Domain){
+		#-------------------------------------------------------------------------------
+		if(!$HostingSchemeID)
+			return new gException('HOSTING_SCHEME_NOT_DEFINED','Тарифный план не выбран');
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load('Form/Input',Array('name'=>'ContractID','type'=>'hidden','value'=>$ContractID));
 		if(Is_Error($Comp))
@@ -83,9 +85,83 @@ if($StepID){
 		$Form->AddChild($Comp);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$DOM->AddAttribs('Body',Array('onload'=>'HostingOrder();'));
-
-
+		$HostingScheme = DB_Select('HostingSchemes',Array('ID','Name'),Array('UNIQ','ID'=>$HostingSchemeID));
+		switch(ValueOf($HostingScheme)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return new gException('SCHEME_NOT_FOUND','Выбранный тариф не найден');
+		case 'array':
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+		$Table = Array('Дополнительные параметры заказа');
+		$Table[] = Array('Тарифный план',$HostingScheme['Name']);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$Servers = DB_Select('Servers',Array('ID','Params'),Array('Where'=>SPrintF('`ServersGroupID` = (SELECT `ServersGroupID` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = %u)',$HostingSchemeID),'SortOn'=>'Address'));
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($Servers)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return new gException('SERVERS_NOT_FOUND','Серверы на хостинг не настроены');
+		case 'array':
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+		$Options = Array('0'=>'Всё равно');
+		#-------------------------------------------------------------------------------
+		foreach($Servers as $Server)
+			if($Server['Params']['ServerAttrib'])
+				if(!IsSet($Options[$Server['Params']['ServerAttrib']]))
+					$Options[$Server['Params']['ServerAttrib']] = $Server['Params']['ServerAttrib'];
+		#-------------------------------------------------------------------------------
+		if(SizeOf($Options) < 2){
+			#-------------------------------------------------------------------------------
+			$DOM->AddAttribs('Body',Array('onload'=>'HostingOrder();'));
+			#-------------------------------------------------------------------------------
+		}else{
+			#-------------------------------------------------------------------------------
+			$Comp = Comp_Load('Form/Select',Array('name'=>'ServerAttrib','style'=>'width: 100%;'),$Options);
+			if(Is_Error($Comp))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			$Table[] = Array('Параметр',$Comp);
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load(
+				'Form/Input',
+				Array(
+					'type'		=> 'button',
+					'onclick'	=> SPrintF("ShowWindow('/HostingOrder',{HostingSchemeID:%u,Domain:'%s'});",$HostingScheme['ID'],$Domain),
+					'value'		=> 'Изменить домен/тариф'
+					)
+				);
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Div = new Tag('DIV',Array('align'=>'right'),$Comp);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"HostingOrder();",'value'=>'Продолжить'));
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Div->AddChild($Comp);
+		#-------------------------------------------------------------------------------
+		$Table[] = $Div;
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Tables/Standard',$Table,Array('width'=>400));
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
 		$Form->AddChild($Comp);
 		#-------------------------------------------------------------------------------
 		$DOM->AddChild('Into',$Form);
@@ -340,6 +416,14 @@ if($StepID){
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('name'=>'StepID','value'=>2,'type'=>'hidden'));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Form->AddChild($Comp);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load(
 			'Form/Input',
 			Array(
@@ -353,7 +437,8 @@ if($StepID){
 	#-------------------------------------------------------------------------------
 	$Div = new Tag('DIV',Array('align'=>'right'),$Comp);
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>'HostingOrder();','value'=>'Продолжить'));
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"ShowWindow('/HostingOrder',FormGet(form));",'value'=>'Продолжить'));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -446,11 +531,11 @@ if($StepID){
 		#-------------------------------------------------------------------------------
 		if($Config['Hosting']['IsNoDomain']){
 			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load('Form/Input',Array('name'=>'IsNoDomain','type'=>'checkbox','onclick'=>"form.Domain.disabled=checked;form.Submit.onclick=(checked?function(){HostingOrder();}:function(){ShowWindow('/HostingOrder',FormGet(form));});form.Submit1.onclick=(checked?function(){HostingOrder();}:function(){ShowWindow('/HostingOrder',FormGet(form));});"));
+			$Comp = Comp_Load('Form/Input',Array('name'=>'IsNoDomain','type'=>'checkbox','onclick'=>"form.Domain.disabled = checked;form.StepID.value = document.getElementsByName('IsNoDomain')[0].checked?2:1;"));
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$OnClick = "ChangeCheckBox('IsNoDomain'); document.getElementsByName('Domain')[0].disabled = document.getElementsByName('IsNoDomain')[0].checked?true:false; document.getElementsByName('Submit')[0].onclick = (document.getElementsByName('IsNoDomain')[0].checked?function(){HostingOrder();}:function(){ShowWindow('/HostingOrder',FormGet(form));}); document.getElementsByName('Submit1')[0].onclick = (document.getElementsByName('IsNoDomain')[0].checked?function(){HostingOrder();}:function(){ShowWindow('/HostingOrder',FormGet(form));});";
+			$OnClick = "ChangeCheckBox('IsNoDomain'); document.getElementsByName('Domain')[0].disabled = document.getElementsByName('IsNoDomain')[0].checked?true:false; document.getElementsByName('StepID')[0].value = document.getElementsByName('IsNoDomain')[0].checked?2:1;";
 			#-------------------------------------------------------------------------------
 			$NoBody->AddChild(new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px; cursor:pointer;','onclick'=>$OnClick),'Заказать хостинг без домена')));
 			#-------------------------------------------------------------------------------
