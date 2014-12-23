@@ -184,14 +184,20 @@
   <Alias>(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID` = `Users`.`ID` AND `InvoicesOwners`.`IsPosted` = 'yes')</Alias>
  </Invoices>
  <!-- ********************************************************************** -->
- <Orders>
-  <Head>Кол. зак.</Head>
-  <Prompt>Кол-во оплаченных заказов</Prompt>
-  <Alias>(SELECT COUNT(*) FROM `OrdersOwners` WHERE `OrdersOwners`.`UserID` = `Users`.`ID` AND `OrdersOwners`.`IsPayed` = 'yes')</Alias>
-  <Attribs>
-   <align>right</align>
-  </Attribs>
- </Orders>
+	<Orders>
+		<Head>Кол. зак.</Head>
+		<Prompt>Кол-во оплаченных заказов</Prompt>
+		<Alias>(SELECT COUNT(*) FROM `OrdersOwners` WHERE `OrdersOwners`.`UserID` = `Users`.`ID` AND `OrdersOwners`.`IsPayed` = 'yes')</Alias>
+		<Attribs>
+			<align>right</align>
+		</Attribs>
+		<Comp>Formats/String</Comp>
+		<Args>
+			<ListElement>%Orders%</ListElement>
+			<Length>20</Length>
+			<Url>/Administrator/ServicesOrders?Search=%Email%&amp;PatternOutID=Default</Url>
+		</Args>
+	</Orders>
 </Columns>
 <!-- *********************************************************************** -->
 <Sequence>
