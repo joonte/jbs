@@ -154,7 +154,15 @@
 	<IsActive>
 		<Head>Акт.</Head>
 		<Prompt>Сервер активен - будет участвовать в опросах, на нём будут работать сервисы, создаваться новые аккаунты и т.п.</Prompt>
-		<Comp>Formats/Logic</Comp>
+		<Comp>BooleanEdit</Comp>
+<!--
+     	<Args>
+			<ListElement>Servers</ListElement>
+			<ListElement>IsActive</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>%IsActive%</ListElement>
+		</Args>
+-->
 		<Args>
 			<ListElement>%IsActive%</ListElement>
 		</Args>
