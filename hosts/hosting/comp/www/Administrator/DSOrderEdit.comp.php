@@ -131,6 +131,7 @@ $Comp = Comp_Load(
 	Array(
 		'type'	=> 'text',
 		'name'	=> 'IP',
+		'style'	=> 'width: 100%;',
 		'value'	=> $DSOrder['IP']
 	)
 );
