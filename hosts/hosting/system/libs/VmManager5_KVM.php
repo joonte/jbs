@@ -8,7 +8,7 @@ if(Is_Error(System_Load('libs/Http.php')))
 #-------------------------------------------------------------------------------
 Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
 #-------------------------------------------------------------------------------
-function VmManager5_Logon($Settings,$Login,$Password){
+function VmManager5_KVM_Logon($Settings,$Login,$Password){
 	/****************************************************************************/
 	$__args_types = Array('array','string','string');
 	#-----------------------------------------------------------------------------
@@ -19,7 +19,7 @@ function VmManager5_Logon($Settings,$Login,$Password){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VmManager5_Create($Settings,$VPSOrder,$IP,$VPSScheme){
+function VmManager5_KVM_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 	/******************************************************************************/
 	$__args_types = Array('array','array','string','array');
 	#-------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ function VmManager5_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 	#-------------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VmManager5_Create]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Create]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-------------------------------------------------------------------------------
@@ -101,7 +101,7 @@ function VmManager5_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 	#-------------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VmManager5_Create]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Create]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-------------------------------------------------------------------------------
@@ -131,7 +131,7 @@ function VmManager5_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 	#-------------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VmManager5_Create]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Create]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-------------------------------------------------------------------------------
@@ -149,11 +149,11 @@ function VmManager5_Create($Settings,$VPSOrder,$IP,$VPSScheme){
         if(!IsSet($Doc['ip']))
 		return new gException('VM_IP_MISSING','Отсутствует IP созданной виртуальной машины');
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[system/libs/VmManager5]: VPS order created with IP = %s',$Doc['ip']));
+	Debug(SPrintF('[system/libs/VmManager5_KVM]: VPS order created with IP = %s',$Doc['ip']));
 	#-------------------------------------------------------------------------------
 	$IsUpdate = DB_Update('VPSOrders',Array('IP'=>$Doc['ip']),Array('ID'=>$VPSOrder['ID']));
 	if(Is_Error($IsUpdate))
-		return ERROR | @Trigger_Error('[VmManager5_Create]: не удалось прописать IP адрес для виртуального сервера');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Create]: не удалось прописать IP адрес для виртуального сервера');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return TRUE;
@@ -163,7 +163,7 @@ function VmManager5_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VmManager5_Active($Settings,$Login){
+function VmManager5_KVM_Active($Settings,$Login){
 	/******************************************************************************/
 	$__args_types = Array('array','string');
 	#-------------------------------------------------------------------------------
@@ -181,7 +181,7 @@ function VmManager5_Active($Settings,$Login){
 	#------------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VmManager5_Active]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Active]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-------------------------------------------------------------------------------
@@ -193,17 +193,17 @@ function VmManager5_Active($Settings,$Login){
 	#-------------------------------------------------------------------------------
 	$Doc = $XML['doc'];
 	if(IsSet($Doc['error']))
-		return new gException('VmManager5_Active','Не удалось получить список виртуальных машин');
+		return new gException('VmManager5_KVM_Active','Не удалось получить список виртуальных машин');
 	#-------------------------------------------------------------------------------
 	foreach($Doc as $VM){
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF('[system/libs/VmManager5]: VM = %s',print_r($VM,true)));
+		#Debug(SPrintF('[system/libs/VmManager5_KVM]: VM = %s',print_r($VM,true)));
 		if(!IsSet($VM['id']))
 			continue;
 		#-------------------------------------------------------------------------------
 		$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.start','elid'=>$VM['id']));
 		if(Is_Error($Response))
-			return ERROR | @Trigger_Error('[VmManager5_Active]: не удалось соедениться с сервером');
+			return ERROR | @Trigger_Error('[VmManager5_KVM_Active]: не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
 		$Response = Trim($Response['Body']);
 		#-------------------------------------------------------------------------------
@@ -227,7 +227,7 @@ function VmManager5_Active($Settings,$Login){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VmManager5_Suspend($Settings,$Login,$VPSScheme){
+function VmManager5_KVM_Suspend($Settings,$Login,$VPSScheme){
 	/******************************************************************************/
 	$__args_types = Array('array','string','array');
 	#-------------------------------------------------------------------------------
@@ -245,7 +245,7 @@ function VmManager5_Suspend($Settings,$Login,$VPSScheme){
 	#------------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VmManager5_Suspend]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Suspend]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-------------------------------------------------------------------------------
@@ -257,17 +257,17 @@ function VmManager5_Suspend($Settings,$Login,$VPSScheme){
 	#-------------------------------------------------------------------------------
 	$Doc = $XML['doc'];
 	if(IsSet($Doc['error']))
-		return new gException('VmManager5_Suspend','Не удалось получить список виртуальных машин');
+		return new gException('VmManager5_KVM_Suspend','Не удалось получить список виртуальных машин');
 	#-------------------------------------------------------------------------------
 	foreach($Doc as $VM){
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF('[system/libs/VmManager5]: VM = %s',print_r($VM,true)));
+		#Debug(SPrintF('[system/libs/VmManager5_KVM]: VM = %s',print_r($VM,true)));
 		if(!IsSet($VM['id']))
 			continue;
 		#-------------------------------------------------------------------------------
 		$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.stop','elid'=>$VM['id']));
 		if(Is_Error($Response))
-			return ERROR | @Trigger_Error('[VmManager5_Suspend]: не удалось соедениться с сервером');
+			return ERROR | @Trigger_Error('[VmManager5_KVM_Suspend]: не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
 		$Response = Trim($Response['Body']);
 		#-------------------------------------------------------------------------------
@@ -291,7 +291,7 @@ function VmManager5_Suspend($Settings,$Login,$VPSScheme){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VmManager5_Delete($Settings,$Login){
+function VmManager5_KVM_Delete($Settings,$Login){
 	/******************************************************************************/
 	$__args_types = Array('array','string','array');
 	#-------------------------------------------------------------------------------
@@ -309,7 +309,7 @@ function VmManager5_Delete($Settings,$Login){
 	#------------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VmManager5_Delete]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Delete]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-------------------------------------------------------------------------------
@@ -321,17 +321,17 @@ function VmManager5_Delete($Settings,$Login){
 	#-------------------------------------------------------------------------------
 	$Doc = $XML['doc'];
 	if(IsSet($Doc['error']))
-		return new gException('VmManager5_Delete','Не удалось получить список виртуальных машин');
+		return new gException('VmManager5_KVM_Delete','Не удалось получить список виртуальных машин');
 	#-------------------------------------------------------------------------------
 	foreach($Doc as $VM){
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF('[system/libs/VmManager5]: VM = %s',print_r($VM,true)));
+		#Debug(SPrintF('[system/libs/VmManager5_KVM]: VM = %s',print_r($VM,true)));
 		if(!IsSet($VM['id']))
 			continue;
 		#-------------------------------------------------------------------------------
 		$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.delete','elid'=>$VM['id']));
 		if(Is_Error($Response))
-			return ERROR | @Trigger_Error('[VmManager5_Delete]: не удалось соедениться с сервером');
+			return ERROR | @Trigger_Error('[VmManager5_KVM_Delete]: не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
 		$Response = Trim($Response['Body']);
 		#-------------------------------------------------------------------------------
@@ -351,7 +351,7 @@ function VmManager5_Delete($Settings,$Login){
 	#------------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VmManager5_Delete]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Delete]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-------------------------------------------------------------------------------
@@ -363,7 +363,7 @@ function VmManager5_Delete($Settings,$Login){
 	#-------------------------------------------------------------------------------
 	$Doc = $XML['doc'];
 	if(IsSet($Doc['error']))
-		return new gException('VmManager5_Delete','Не удалось получить список пользователей');
+		return new gException('VmManager5_KVM_Delete','Не удалось получить список пользователей');
 	#------------------------------------------------------------------------------
 	foreach($Doc as $User){
 		#------------------------------------------------------------------------------
@@ -376,12 +376,12 @@ function VmManager5_Delete($Settings,$Login){
 	}
 	#-------------------------------------------------------------------------------
 	if(!IsSet($VmUserID))
-		return new gException('VmManager5_Delete',SPrintF('Не удалось найти пользователя (%s)',$Login));
+		return new gException('VmManager5_KVM_Delete',SPrintF('Не удалось найти пользователя (%s)',$Login));
 	#-------------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user.delete','elid'=>$VmUserID));
 	#-------------------------------------------------------------------------------
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VmManager5_Delete]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Delete]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-------------------------------------------------------------------------------
@@ -406,7 +406,7 @@ function VmManager5_Delete($Settings,$Login){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VmManager5_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
+function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 	/******************************************************************************/
 	$__args_types = Array('array','array','array');
 	#-------------------------------------------------------------------------------
@@ -424,7 +424,7 @@ function VmManager5_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 	#-------------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$VPSOrder['Login']));
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VmManager5_Delete]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Delete]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-------------------------------------------------------------------------------
@@ -436,11 +436,11 @@ function VmManager5_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 	#-------------------------------------------------------------------------------
 	$Doc = $XML['doc'];
 	if(IsSet($Doc['error']))
-		return new gException('VmManager5_Delete','Не удалось получить список виртуальных машин');
+		return new gException('VmManager5_KVM_Delete','Не удалось получить список виртуальных машин');
 	#-------------------------------------------------------------------------------
 	foreach($Doc as $VM){
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF('[system/libs/VmManager5]: VM = %s',print_r($VM,true)));
+		#Debug(SPrintF('[system/libs/VmManager5_KVM]: VM = %s',print_r($VM,true)));
 		if(!IsSet($VM['id']))
 			continue;
 		#-------------------------------------------------------------------------------
@@ -462,7 +462,7 @@ function VmManager5_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 		#-------------------------------------------------------------------------------
 		$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
 		if(Is_Error($Response))
-			return ERROR | @Trigger_Error('[VmManager5_Scheme_Change]: не удалось соедениться с сервером');
+			return ERROR | @Trigger_Error('[VmManager5_KVM_Scheme_Change]: не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
 		$Response = Trim($Response['Body']);
 		#-------------------------------------------------------------------------------
@@ -481,7 +481,7 @@ function VmManager5_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 		# меняем размер диска
 		$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.volume','elid'=>$VM['id']));
 		if(Is_Error($Response))
-			return ERROR | @Trigger_Error('[VmManager5_Delete]: не удалось соедениться с сервером');
+			return ERROR | @Trigger_Error('[VmManager5_KVM_Delete]: не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
 		$Response = Trim($Response['Body']);
 		#-------------------------------------------------------------------------------
@@ -493,7 +493,7 @@ function VmManager5_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 		#-------------------------------------------------------------------------------
 		$Doc = $XML['doc'];
 		if(IsSet($Doc['error']))
-			return new gException('VmManager5_Delete','Не удалось получить список дисков виртуальных машин');
+			return new gException('VmManager5_KVM_Delete','Не удалось получить список дисков виртуальных машин');
 		#-------------------------------------------------------------------------------
 		foreach($Doc as $Volume){
 			#-------------------------------------------------------------------------------
@@ -527,7 +527,7 @@ function VmManager5_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VmManager5_Password_Change($Settings,$Login,$Password,$VPSOrder){
+function VmManager5_KVM_Password_Change($Settings,$Login,$Password,$VPSOrder){
 	/****************************************************************************/
 	$__args_types = Array('array','string','string','array');
 	#-----------------------------------------------------------------------------
@@ -553,13 +553,13 @@ function VmManager5_Password_Change($Settings,$Login,$Password,$VPSOrder){
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VmManager5_Password_Change]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Password_Change]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
 	$Response = $Response['Body'];
 	#-----------------------------------------------------------------------------
 	$XML = String_XML_Parse($Response);
 	if(Is_Exception($XML))
-		return ERROR | @Trigger_Error('[VmManager5_Password_Change]: неверный ответ от сервера');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Password_Change]: неверный ответ от сервера');
 	#-----------------------------------------------------------------------------
 	$XML = $XML->ToArray();
 	#-----------------------------------------------------------------------------
@@ -577,7 +577,7 @@ function VmManager5_Password_Change($Settings,$Login,$Password,$VPSOrder){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # added by lissyara 2011-08-09 in 09:55 MSK
-function VmManager5_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
+function VmManager5_KVM_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
 	/****************************************************************************/
         $__args_types = Array('array','string','string','string','string','string');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
@@ -616,7 +616,7 @@ function VmManager5_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VmManager5_AddIP]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_AddIP]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
         $Response = Trim($Response['Body']);
         $XML = String_XML_Parse($Response);
@@ -630,11 +630,11 @@ function VmManager5_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
         if(IsSet($Doc['error']))
                 return new gException('AddIP_ERROR','Не удалось добавить IP для виртуального сервера');
         #-----------------------------------------------------------------------------
-        Debug("[system/libs/VmManager5]: to VPS added IP = " . $Doc['ip']);
+        Debug("[system/libs/VmManager5_KVM]: to VPS added IP = " . $Doc['ip']);
         #-----------------------------------------------------------------------------
         $IsQuery = DB_Query("UPDATE `ExtraIPOrders` SET `Login`='" . $Doc['ip'] . "' WHERE `ID`='" . $ID . "'");
         if(Is_Error($IsQuery))
-                return ERROR | @Trigger_Error('[VmManager5_AddIP]: не удалось прописать IP адрес для виртуального сервера');
+                return ERROR | @Trigger_Error('[VmManager5_KVM_AddIP]: не удалось прописать IP адрес для виртуального сервера');
         #-----------------------------------------------------------------------------
 	#-----------------------------------------------------------------------------
 	return TRUE;
@@ -644,7 +644,7 @@ function VmManager5_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
 # added by lissyara 2011-08-09 in 13:03 MSK
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VmManager5_DeleteIP($Settings,$ExtraIP){
+function VmManager5_KVM_DeleteIP($Settings,$ExtraIP){
 	/****************************************************************************/
         $__args_types = Array('array','string');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
@@ -673,7 +673,7 @@ function VmManager5_DeleteIP($Settings,$ExtraIP){
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VmManager5_DeleteIP]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_DeleteIP]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
         $Response = Trim($Response['Body']);
         $XML = String_XML_Parse($Response);
@@ -695,7 +695,7 @@ function VmManager5_DeleteIP($Settings,$ExtraIP){
 # added by lissyara 2011-10-07 in 10:28 MSK
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VmManager5_MainUsage($Settings){
+function VmManager5_KVM_MainUsage($Settings){
 	/****************************************************************************/
         $__args_types = Array('array');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
@@ -724,7 +724,7 @@ function VmManager5_MainUsage($Settings){
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VmManager5_MainUsage]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_MainUsage]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
         $Response = Trim($Response['Body']);
         $XML = String_XML_Parse($Response);
@@ -734,7 +734,7 @@ function VmManager5_MainUsage($Settings){
         $XML = $XML->ToArray('elem');
         $Doc = $XML['doc'];
         if(IsSet($Doc['error']))
-                return new gException('VmManager5_MainUsage','Не удалось получить нагрузку сервера');
+                return new gException('VmManager5_KVM_MainUsage','Не удалось получить нагрузку сервера');
         #---------------------------------------------------------------------------
         # перебираем, складываем
         $Out = Array(
@@ -756,7 +756,7 @@ function VmManager5_MainUsage($Settings){
         $Out['swapu'] = $Out['swapu'] / SizeOf($Doc);
         $Out['disk0'] = $Out['disk0'] / SizeOf($Doc);
         
-        Debug("[system/libs/VmManager5.php]: usage for " . $Settings['Address'] . " is " . $Out['cpuu'] ."/". $Out['memu'] ."/". $Out['swapu'] ."/". $Out['disk0']);
+        Debug("[system/libs/VmManager5_KVM.php]: usage for " . $Settings['Address'] . " is " . $Out['cpuu'] ."/". $Out['memu'] ."/". $Out['swapu'] ."/". $Out['disk0']);
         return ($Out['cpuu'] + $Out['memu'] + $Out['swapu'] + $Out['disk0']);
 	#-----------------------------------------------------------------------------
 }
@@ -764,7 +764,7 @@ function VmManager5_MainUsage($Settings){
 # added by lissyara, 2012-02-02 in 21:53 MSK
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VmManager5_CheckIsActive($Settings,$Login){
+function VmManager5_KVM_CheckIsActive($Settings,$Login){
 	/****************************************************************************/
 	$__args_types = Array('array','string');
 	#-----------------------------------------------------------------------------
@@ -783,7 +783,7 @@ function VmManager5_CheckIsActive($Settings,$Login){
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm'));
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VmManager5_CheckIsActive]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_CheckIsActive]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-----------------------------------------------------------------------------
@@ -808,14 +808,14 @@ function VmManager5_CheckIsActive($Settings,$Login){
 						return FALSE;
 	#-----------------------------------------------------------------------------
 	# not found, or enabled
-	Debug(SPrintF("[system/libs/VmManager5]: %s is enabled, disabled not by administrator, or not found",$Login));
+	Debug(SPrintF("[system/libs/VmManager5_KVM]: %s is enabled, disabled not by administrator, or not found",$Login));
 	return TRUE;
 }
 
 # added by lissyara, 2012-02-03 in 09:59 MSK
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VmManager5_Reboot($Settings,$Login){
+function VmManager5_KVM_Reboot($Settings,$Login){
 	/******************************************************************************/
 	$__args_types = Array('array','string');
 	#-------------------------------------------------------------------------------
@@ -833,7 +833,7 @@ function VmManager5_Reboot($Settings,$Login){
 	#-------------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VmManager5_Reboot]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Reboot]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-------------------------------------------------------------------------------
@@ -845,18 +845,18 @@ function VmManager5_Reboot($Settings,$Login){
 	#-------------------------------------------------------------------------------
 	$Doc = $XML['doc'];
 	if(IsSet($Doc['error']))
-		return new gException('VmManager5_Reboot','Не удалось получить список виртуальных машин');
+		return new gException('VmManager5_KVM_Reboot','Не удалось получить список виртуальных машин');
 	#-------------------------------------------------------------------------------
 	foreach($Doc as $VM){
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF('[system/libs/VmManager5]: VM = %s',print_r($VM,true)));
+		#Debug(SPrintF('[system/libs/VmManager5_KVM]: VM = %s',print_r($VM,true)));
 		if(!IsSet($VM['id']))
 			continue;
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.restart','elid'=>$VM['id']));
 		if(Is_Error($Response))
-			return ERROR | @Trigger_Error('[VmManager5_Reboot]: не удалось соедениться с сервером');
+			return ERROR | @Trigger_Error('[VmManager5_KVM_Reboot]: не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
 		$Response = Trim($Response['Body']);
 		#-------------------------------------------------------------------------------
@@ -882,7 +882,7 @@ function VmManager5_Reboot($Settings,$Login){
 # added by lissyara, 2013-05-17 in 09:53 MSK, for JBS-280
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VmManager5_Get_Users($Settings){
+function VmManager5_KVM_Get_Users($Settings){
 	/****************************************************************************/
 	$__args_types = Array('array','string');
 	#-----------------------------------------------------------------------------
@@ -901,7 +901,7 @@ function VmManager5_Get_Users($Settings){
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VmManager5_Get_Users]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Get_Users]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-----------------------------------------------------------------------------

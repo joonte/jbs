@@ -88,7 +88,7 @@ switch(ValueOf($VPSOrder)){
                 #---------------------------------------------------------------
                 $Table = $Options = Array();
                 #---------------------------------------------------------------
-		if($VPSOrder['Params']['SystemID'] == 'VmManager5')
+		if($VPSOrder['Params']['SystemID'] == 'VmManager5_KVM')
                   $Table[] = new Tag('TD',Array('colspan'=>2,'width'=>300,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),'Обращаем ваше внимание, что ваш виртуальный сервер использует тип виртуализации KVM. В связи с этим, изменение тарифного плана возможно только в большую сторону, уменьшить размер диска - невозможно.');
 		#---------------------------------------------------------------
                 foreach($VPSSchemes as $VPSScheme)

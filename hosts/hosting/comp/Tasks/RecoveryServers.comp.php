@@ -41,7 +41,7 @@ if($Count){
 					#-------------------------------------------------------------------------------
 					foreach(Array_Keys($Template['Attribs']) as $AttribID)
 						if(!IsSet($Attribs[$AttribID]))
-							$Attribs[$AttribID] = $Template['Attribs'][$AttribID]['Value'];
+							$Attribs[$AttribID] = Trim($Template['Attribs'][$AttribID]['Value']);
 					#-------------------------------------------------------------------------------
 					foreach(Array_Keys($Attribs) as $AttribID)
 						if(!IsSet($Template['Attribs'][$AttribID]))

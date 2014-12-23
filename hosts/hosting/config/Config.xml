@@ -147,8 +147,8 @@
 					</Settings>
 				</VdsManager4>
 				<!-- ********************************************************************* -->
-				<VmManager5>
-					<Name>VmManager5</Name>
+				<VmManager5_KVM>
+					<Name>VmManager5_KVM</Name>
 					<Settings>
 						<Port>1500</Port>
 						<Protocol>ssl</Protocol>
@@ -157,7 +157,7 @@
 						<DiskTemplate>FreeBSD-10-amd64</DiskTemplate>
 						<Url>https://vds01.isp.su:1500/vmmgr</Url>
 					</Settings>
-				</VmManager5>
+				</VmManager5_KVM>
 				<!-- *********************************************************************** -->
 			</SystemID>
 			<!-- *********************************************************************** -->
