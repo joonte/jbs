@@ -198,7 +198,7 @@ switch(ValueOf($ServersGroups)){
   case 'error':
     return ERROR | @Trigger_Error(500);
   case 'exception':
-    return new gException('SERVERS_GROUPS_NOT_FOUND','Группы серверов не найдены. Необходимо добавить группу серверов для сервиса "VPS", в разделе "Дополнения -> Мастера настройки -> Сервера"');
+    return new gException('SERVERS_GROUPS_NOT_FOUND','Группы серверов не найдены. Необходимо добавить группу серверов для сервиса "Hosting", в разделе "Дополнения -> Мастера настройки -> Сервера"');
   case 'array':
     # No more...
   break;

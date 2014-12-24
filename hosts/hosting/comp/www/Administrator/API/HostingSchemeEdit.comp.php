@@ -111,7 +111,7 @@ if(Is_Error($Count))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if(!$Count)
-  return new gException('GROUP_NOT_FOUND','Группа не найден');
+  return new gException('GROUP_NOT_FOUND','Группа не найдена');
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Users',Array('ID'=>$UserID));
 if(Is_Error($Count))
