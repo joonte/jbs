@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>DNSmanagerSchemes</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>CostMonth</ListElement>
+			<ListElement>DomainLimit</ListElement>
+			<ListElement>IsActive</ListElement>
+			<ListElement>SortID</ListElement>
+		</ColumnsIDs>
+	<Conditions>
+		<Message>Тарифов на DNSmanager не обнаружено.</Message>
+	</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<PatternOut>
+				<Args>
+					<Patterns>
+						<ListElement>
+							<Name>Индивидуальные тарифы</Name>
+							<Where>`UserID` != 1</Where>
+						</ListElement>
+					</Patterns>
+					<ActiveID>Default</ActiveID>
+				</Args>
+			</PatternOut>
+			<!-- ********************************************************************* -->
+			<Search>
+				<Args>
+					<ColumnsIDs>
+						<ListElement>UserID</ListElement>
+						<ListElement>GroupID</ListElement>
+						<ListElement>Name</ListElement>
+					</ColumnsIDs>
+				</Args>
+			</Search>
+		</Before>
+		<!-- ********************************************************************** -->
+		<After>
+			<Delete>
+				<Args>
+					<Comment>Выбранные тарифы</Comment>
+					<Send>
+						<TableID>DNSmanagerSchemes</TableID>
+					</Send>
+				</Args>
+			</Delete>
+		</After>
+	</Comps>
+
+<!-- *********************************************************************** -->
+<Query>
+ <SortOn>SortID</SortOn>
+ <IsDesc>0</IsDesc>
+</Query>
+<!-- *********************************************************************** -->
+<Columns>
+ <SelectID>
+  <Args>
+   <TableID>DNSmanagerSchemes</TableID>
+  </Args>
+ </SelectID>
+ <!-- ********************************************************************** -->
+ <Info>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/DNSmanagerSchemeInfo</ListElement>
+   <ListElement>
+    <DNSmanagerSchemeID>%ID%</DNSmanagerSchemeID>
+   </ListElement>
+   <ListElement>Дополнительная информация</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Info>
+ <!-- ********************************************************************** -->
+ <Edit>
+  <IsSorted>0</IsSorted>
+  <Comp>Buttons/Window</Comp>
+  <Args>
+   <ListElement>/Administrator/DNSmanagerSchemeEdit</ListElement>
+   <ListElement>
+    <DNSmanagerSchemeID>%ID%</DNSmanagerSchemeID>
+   </ListElement>
+   <ListElement>Редактировать тариф</ListElement>
+   <ListElement>Edit.gif</ListElement>
+  </Args>
+  <Attribs>
+   <class>TableSuperStandard</class>
+   <style>width:22px;</style>
+  </Attribs>
+ </Edit>
+ <!-- ********************************************************************** -->
+ <Name>
+  <Head>Тариф</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Name%</ListElement>
+   <Length>10</Length>
+  </Args>
+  <Alias>CONCAT(IF(`IsReselling` = 'yes','*',''),`Name`)</Alias>
+ </Name>
+ <!-- ********************************************************************** -->
+ <Group>
+  <Head>Группа</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%Group%</ListElement>
+   <Length>15</Length>
+  </Args>
+  <Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `GroupID`)</Alias>
+ </Group>
+ <!-- ********************************************************************** -->
+ <User>
+  <Head>Польз.</Head>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%User%</ListElement>
+   <Length>15</Length>
+  </Args>
+  <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `UserID`)</Alias>
+ </User>
+ <!-- ********************************************************************** -->
+ <CostMonth>
+  <Head>Цена</Head>
+  <Prompt>Цена в рублях за 1 месяц</Prompt>
+  <Comp>Formats/Currency</Comp>
+  <Args>
+   <ListElement>%CostMonth%</ListElement>
+  </Args>
+<!--  <Attribs>
+   <style>text-align:right;</style>
+  </Attribs> -->
+ </CostMonth>
+ <!-- ********************************************************************** -->
+ <ServersGroup>
+  <Head>Гр. серв.</Head>
+  <Prompt>Расположение сервера размещения</Prompt>
+  <Comp>Formats/String</Comp>
+  <Args>
+   <ListElement>%ServersGroup%</ListElement>
+   <Length>10</Length>
+  </Args>
+  <Alias>(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`)</Alias>
+ </ServersGroup>
+ <!-- ********************************************************************** -->
+ <OrderLink>
+  <Head>Ссылка</Head>
+  <Prompt>Ссылка на заказ этого тарифа, для сайта</Prompt>
+  <Comp>Formats/Order/OrderLink</Comp>
+  <Args>
+   <SchemeID>%ID%</SchemeID>
+   <Code>DNSmanager</Code>
+  </Args>
+ </OrderLink>
+ <!-- ********************************************************************** -->
+<DomainLimit>
+	<Head>Доменов</Head>
+	<Prompt>Ограничение на число доменов, создаваемых на вторичном сервере DNS</Prompt>
+
+</DomainLimit>
+ <!-- ********************************************************************** -->
+ <IsActive>
+  <Head>Актив.</Head>
+  <Prompt>Тариф активен?</Prompt>
+  <Comp>Formats/Logic</Comp>
+  <Args>
+   <ListElement>%IsActive%</ListElement>
+  </Args>
+ </IsActive>
+		<!-- ********************************************************************** -->
+		<Orders>
+			<Head>Кол. зак.</Head>
+			<Prompt>Кол-во активных заказов данного тарифа</Prompt>
+			<Alias>(SELECT COUNT(*) FROM `DNSmanagerOrders` WHERE `DNSmanagerSchemes`.`ID` = `DNSmanagerOrders`.`SchemeID` AND `DNSmanagerOrders`.`StatusID` = 'Active')</Alias>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</Orders>
+		<!-- *********************************************************************** -->
+		<SortID>
+			<Args>
+				<TableID>DNSmanagerSchemes</TableID>
+			</Args>
+		</SortID>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Info</ListElement>
+		<ListElement>Edit</ListElement>
+		<ListElement>Name</ListElement>
+		<ListElement>Group</ListElement>
+		<ListElement>User</ListElement>
+		<ListElement>ServersGroup</ListElement>
+		<ListElement>CostMonth</ListElement>
+		<ListElement>IsActive</ListElement>
+		<ListElement>OrderLink</ListElement>
+		<ListElement>Orders</ListElement>
+		<ListElement>SortID</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
+</XML>

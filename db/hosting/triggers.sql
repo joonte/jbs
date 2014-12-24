@@ -353,3 +353,43 @@ CREATE DEFINER = CURRENT_USER TRIGGER `OrdersConsiderOnDeleted` AFTER DELETE ON 
 |
 DELIMITER ;
 
+
+# added by lissyara, 2014-12-24 in 13:01 MSK
+#-------------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS `DNSmanagerSchemesOnInsert`;
+DELIMITER |
+CREATE DEFINER = CURRENT_USER TRIGGER `DNSmanagerSchemesOnInsert` BEFORE INSERT ON `DNSmanagerSchemes`
+	FOR EACH ROW BEGIN
+		IF NEW.`CreateDate` = 0
+		THEN
+			SET NEW.`CreateDate` = UNIX_TIMESTAMP();
+		END IF;
+	END;
+|
+DELIMITER ;
+
+#-------------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS `DNSmanagerOrdersOnDelete`;
+DELIMITER |
+CREATE DEFINER = CURRENT_USER TRIGGER `DNSmanagerOrdersOnDelete` AFTER DELETE ON `DNSmanagerOrders`
+	FOR EACH ROW BEGIN
+		DELETE FROM `Orders` WHERE `ID` = OLD.`OrderID`;
+	END;
+|
+DELIMITER ;
+
+#-------------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS `UpdateDNSmanagerStatus`;
+DELIMITER |
+CREATE DEFINER = CURRENT_USER TRIGGER `UpdateDNSmanagerStatus` AFTER UPDATE ON `DNSmanagerOrders`
+	FOR EACH ROW BEGIN
+		UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate` WHERE `ID` = NEW.`OrderID`;
+	END;
+|
+DELIMITER ;
+
+
+
+
+
+

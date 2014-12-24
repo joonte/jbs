@@ -359,3 +359,34 @@ SELECT
 FROM
 	`ISPswSchemes`;
 
+/* added by lissyara, 2014-12-24 in 12:52 MSK */
+-- SEPARATOR
+DROP VIEW IF EXISTS `DNSmanagerOrdersOwners`;
+DROP TABLE IF EXISTS `DNSmanagerOrdersOwners`;
+CREATE
+	VIEW `DNSmanagerOrdersOwners` AS
+SELECT
+	`DNSmanagerOrders`.*,
+	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `DNSmanagerOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
+	`OrdersOwners`.`ServerID`,
+	`OrdersOwners`.`OrderDate`,
+	`OrdersOwners`.`UserID`,
+	`OrdersOwners`.`ContractID`,
+	`OrdersOwners`.`AdminNotice`
+FROM
+	`DNSmanagerOrders` LEFT JOIN `OrdersOwners` ON (`DNSmanagerOrders`.`OrderID` = `OrdersOwners`.`ID`);
+
+-- SEPARATOR
+
+DROP VIEW IF EXISTS `DNSmanagerSchemesOwners`;
+DROP TABLE IF EXISTS `DNSmanagerSchemesOwners`;
+CREATE
+	VIEW `DNSmanagerSchemesOwners` AS
+SELECT
+	`DNSmanagerSchemes`.*
+FROM
+	`DNSmanagerSchemes`;
+
+
+
+

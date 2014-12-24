@@ -70,6 +70,39 @@ VALUES
 ('HostingDomainsPoliticsDelete','hosting',1,1,4000000,1,1,'no'),
 ('HostingDomainsPoliticsDelete','hosting',3000000,100,1,1,2,'yes'),
 
+
+/* values for VPS added by lissyara 2014-12-24 in 12:58 MSK */
+('DNSmanagerOrdersRead','hosting',1,1,4000000,1,1,'yes'),
+('DNSmanagerOrdersRead','hosting',3000000,100,1,1,2,'yes'),
+
+('DNSmanagerOrdersPay','hosting',1,1,4000000,1,1,'yes'),
+('DNSmanagerOrdersPay','hosting',3000000,100,1,1,2,'yes'),
+
+('DNSmanagerOrdersSchemeChange','hosting',1,1,4000000,1,1,'yes'),
+('DNSmanagerOrdersSchemeChange','hosting',3000000,100,1,1,2,'yes'),
+
+('DNSmanagerManage','hosting',1,1,4000000,1,1,'yes'),
+('DNSmanagerManage','hosting',3000000,100,1,1,2,'yes'),
+
+('DNSmanagerOrdersConsider','hosting',1,1,4000000,1,1,'no'),
+('DNSmanagerOrdersConsider','hosting',3000000,100,1,1,2,'yes'),
+
+('DNSmanagerOrdersStatusSet','hosting',1,1,4000000,1,1,'no'),
+('DNSmanagerOrdersStatusSet','hosting',3000000,100,1,1,2,'yes'),
+
+('DomainsOrdersStatusSet','hosting',1,1,4000000,1,1,'no'),
+('DomainsOrdersStatusSet','hosting',3000000,100,1,1,2,'yes'),
+
+('DNSmanagerOrdersDelete','hosting',1,1,4000000,1,1,'yes'),
+('DNSmanagerOrdersDelete','hosting',3000000,100,1,1,2,'yes'),
+
+('DNSmanagerSchemesDelete','hosting',1,1,4000000,1,1,'no'),
+('DNSmanagerSchemesDelete','hosting',3000000,100,1,1,2,'yes'),
+
+('DNSmanagerDomainsPoliticsDelete','hosting',1,1,4000000,1,1,'no'),
+('DNSmanagerDomainsPoliticsDelete','hosting',3000000,100,1,1,2,'yes'),
+
+
 /* values for VPS added by lissyara 2011-06-14 in 21:42 MSK */
 ('VPSOrdersRead', 'hosting', 1, 1, 4000000, 1, 1, 'yes'),
 ('VPSOrdersRead', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),

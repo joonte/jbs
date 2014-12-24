@@ -319,6 +319,46 @@
 			</Registrator>
 			<!-- ********************************************************************* -->
 		</Domains>
+		<!-- *********************************************************************** -->
+		<DNSmanager>
+			<Name>Сервер DNS</Name>
+			<IsActive>1</IsActive>
+			<!-- *********************************************************************** -->
+			<SystemID>
+				<!-- *********************************************************************** -->
+				<NullSystem>
+					<Settings>
+						<Port>1000</Port>
+						<Protocol>tcp</Protocol>
+						<Url>http://dns0.isp.su/manage</Url>
+					</Settings>
+				</NullSystem>
+				<!-- ********************************************************************* -->
+				<DNSmanager4>
+					<Settings>
+						<Port>443</Port>
+						<Protocol>ssl</Protocol>
+						<Theme>sirius</Theme>
+						<Language>ru</Language>
+						<Url>https://dns0.isp.su/manager/dnsmgr</Url>
+					</Settings>
+				</DNSmanager4>
+				<!-- ********************************************************************* -->
+				<DNSmanager5>
+					<Settings>
+						<Port>1500</Port>
+						<Protocol>ssl</Protocol>
+                                                <Theme>Orion</Theme>
+						<Language>ru</Language>
+						<Url>https://dns0.isp.su:1500/dnsmgr</Url>
+					</Settings>
+				</DNSmanager5>
+				<!-- ********************************************************************* -->
+			</SystemID>
+			<!-- *********************************************************************** -->
+		</DNSmanager>
+		<!-- ********************************************************************* -->
+
 		<!-- ********************************************************************* -->
 		<ISPsw>
 			<Name>Биллинг ISPsystem</Name>
@@ -1471,6 +1511,27 @@
    <status>4</status>
   </Deleted>
  </ISPswLicenses>
+ <!-- *********************************************************************** -->
+ <DNSmanagerOrders>
+  <Waiting>
+   <Name>Ожидание оплаты</Name>
+  </Waiting>
+  <OnCreate>
+   <Name>На создании</Name>
+  </OnCreate>
+  <Active>
+   <Name>Активен</Name>
+  </Active>
+  <SchemeChange>
+   <Name>На смене тарифа</Name>
+  </SchemeChange>
+  <Suspended>
+   <Name>Заблокирован</Name>
+  </Suspended>
+  <Deleted>
+   <Name>Удален</Name>
+  </Deleted>
+ </DNSmanagerOrders>
 </Statuses>
 <!-- *********************************************************************** -->
 <Interface>

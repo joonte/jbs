@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+ <UniqID>
+  <Text>Дополнительная информация</Text>
+  <Href>javascript:ShowWindow("/DNSmanagerOrderInfo",{DNSmanagerOrderID:"%Replace%"});</Href>
+  <Icon>Info.gif</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Сменить тарифный план</Text>
+  <Href>javascript:ShowWindow("/DNSmanagerOrderSchemeChange",{DNSmanagerOrderID:%Replace%});</Href>
+  <Icon>SchemeChange.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Редактировать заказ хостинга</Text>
+  <Href>javascript:ShowWindow("/Administrator/DNSmanagerOrderEdit",{DNSmanagerOrderID:"%Replace%"});</Href>
+  <Icon>Edit.gif</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Учёт заказа</Text>
+  <Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%Replace%",ServiceID:"52000"});</Href>
+  <Icon>OrderConsiderInfo.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Настройки автопродления</Text>
+  <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%Replace%",ServiceID:"52000"});</Href>
+  <Icon>AutoProlong.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Компенсировать время</Text>
+  <Href>javascript:ShowWindow("/Administrator/DNSmanagerCompensation",{DNSmanagerOrderID:%Replace%});</Href>
+  <Icon>Add.gif</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Передать на другой аккаунт</Text>
+  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%Replace%",ServiceID:"52000"});</Href>
+  <Icon>OrdersTransfer.png</Icon>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Управлять заказом хостинга</Text>
+  <Href>javascript:DNSmanagerManage(%Replace%);</Href>
+  <Icon>DNSmanagerManage.gif</Icon>
+  <JavaScript>DNSmanagerManage.js</JavaScript>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
+  <Text>Сменить пароль от аккаунта</Text>
+  <Href>javascript:ShowWindow("/DNSmanagerPasswordChange",{DNSmanagerOrderID:%Replace%});</Href>
+  <Icon>Password.gif</Icon>
+ </UniqID>
+</Items>
+<!-- *********************************************************************** -->
+</XML>
