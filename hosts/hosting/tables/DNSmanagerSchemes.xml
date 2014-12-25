@@ -162,20 +162,31 @@
   </Args>
  </OrderLink>
  <!-- ********************************************************************** -->
-<DomainLimit>
-	<Head>Доменов</Head>
-	<Prompt>Ограничение на число доменов, создаваемых на вторичном сервере DNS</Prompt>
 
-</DomainLimit>
- <!-- ********************************************************************** -->
- <IsActive>
-  <Head>Актив.</Head>
-  <Prompt>Тариф активен?</Prompt>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsActive%</ListElement>
-  </Args>
- </IsActive>
+		<!-- ********************************************************************** -->
+		<Reseller>
+			<Head>Реселлер</Head>
+			<Prompt>Реселлер, от которого будут создаваться аккаунты</Prompt>
+		</Reseller>
+		<!-- ********************************************************************** -->
+		<ViewArea>
+			<Head>Область</Head>
+			<Prompt>Область DNS (view)</Prompt>
+		</ViewArea>
+		<!-- ********************************************************************** -->
+		<DomainLimit>
+			<Head>Доменов</Head>
+			<Prompt>Ограничение на число доменов, создаваемых на вторичном сервере DNS</Prompt>
+		</DomainLimit>
+		<!-- ********************************************************************** -->
+		<IsActive>
+			<Head>Актив.</Head>
+			<Prompt>Тариф активен?</Prompt>
+			<Comp>Formats/Logic</Comp>
+			<Args>
+				<ListElement>%IsActive%</ListElement>
+			</Args>
+		</IsActive>
 		<!-- ********************************************************************** -->
 		<Orders>
 			<Head>Кол. зак.</Head>
@@ -204,6 +215,9 @@
 		<ListElement>CostMonth</ListElement>
 		<ListElement>IsActive</ListElement>
 		<ListElement>OrderLink</ListElement>
+		<ListElement>Reseller</ListElement>
+		<ListElement>ViewArea</ListElement>
+		<ListElement>DomainLimit</ListElement>
 		<ListElement>Orders</ListElement>
 		<ListElement>SortID</ListElement>
 	</Sequence>

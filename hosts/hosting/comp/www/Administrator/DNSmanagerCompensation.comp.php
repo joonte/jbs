@@ -35,7 +35,7 @@ $Table = Array();
 #-------------------------------------------------------------------------------
 if($DNSmanagerOrderID){
 	#-------------------------------------------------------------------------------
-	$DNSmanagerOrder = DB_Select('DNSmanagerOrdersOwners',Array('ID','Login','Domain','StatusID'),Array('UNIQ','ID'=>$DNSmanagerOrderID));
+	$DNSmanagerOrder = DB_Select('DNSmanagerOrdersOwners',Array('ID','Login','StatusID'),Array('UNIQ','ID'=>$DNSmanagerOrderID));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($DNSmanagerOrder)){
 	case 'error':
@@ -47,7 +47,7 @@ if($DNSmanagerOrderID){
 		if($DNSmanagerOrder['StatusID'] != 'Active')
 			return new gException('HOSTING_ORDER_NOT_ACTIVE','Заказ вторичного DNS не активен');
 		#-------------------------------------------------------------------------------
-		$Table[] = Array('Заказ вторичного DNS',SPrintF('%s (%s)',$DNSmanagerOrder['Login'],$DNSmanagerOrder['Domain']));
+		$Table[] = Array('Заказ вторичного DNS',$DNSmanagerOrder['Login']);
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load(
 				'Form/Input',

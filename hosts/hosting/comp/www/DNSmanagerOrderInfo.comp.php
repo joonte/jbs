@@ -4,19 +4,36 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
+$__args_list = Array('Args');
+/******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Args = Args();
+if(Is_Null($Args)){
+	#-----------------------------------------------------------------------------
+	if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
-$DNSmanagerSchemeID = (string) @$Args['DNSmanagerSchemeID'];
+$Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
-	return ERROR | @Trigger_Error(500);
+$DNSmanagerOrderID = (integer) @$Args['DNSmanagerOrderID'];
 #-------------------------------------------------------------------------------
-$DNSmanagerScheme = DB_Select('DNSmanagerSchemes','*',Array('UNIQ','ID'=>$DNSmanagerSchemeID));
 #-------------------------------------------------------------------------------
-switch(ValueOf($DNSmanagerScheme)){
+$Columns = Array(
+			'*',
+			'(SELECT `Name` FROM `DNSmanagerSchemes` WHERE `DNSmanagerSchemes`.`ID` = `DNSmanagerOrdersOwners`.`SchemeID`) as `Scheme`',
+			'(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = (SELECT `ServersGroupID` FROM `DNSmanagerSchemes` WHERE `DNSmanagerSchemes`.`ID` = `DNSmanagerOrdersOwners`.`SchemeID`)) as `ServersGroupName`',
+			'(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) AS `ServerID`',
+			'(SELECT `Params` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) AS `Params`',
+			'(SELECT `IsAutoProlong` FROM `Orders` WHERE `DNSmanagerOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',
+			'(SELECT (SELECT `Code` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) FROM `OrdersOwners` WHERE `DNSmanagerOrdersOwners`.`OrderID` = `OrdersOwners`.`ID`) AS `Code`'
+		);
+#-------------------------------------------------------------------------------
+$DNSmanagerOrder = DB_Select('DNSmanagerOrdersOwners',$Columns,Array('UNIQ','ID'=>$DNSmanagerOrderID));
+#-------------------------------------------------------------------------------
+switch(ValueOf($DNSmanagerOrder)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
@@ -25,7 +42,24 @@ case 'array':
 	break;
 default:
 	return ERROR | @Trigger_Error(101);
-
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$__USER = $GLOBALS['__USER'];
+#-------------------------------------------------------------------------------
+$IsPermission = Permission_Check('DNSmanagerOrdersRead',(integer)$__USER['ID'],(integer)$DNSmanagerOrder['UserID']);
+#-------------------------------------------------------------------------------
+switch(ValueOf($IsPermission)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'false':
+	return ERROR | @Trigger_Error(700);
+case 'true':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -38,103 +72,88 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DOM->AddText('Title','Тариф вторичного DNS');
+$DOM->AddText('Title','Заказ DNSmanager');
 #-------------------------------------------------------------------------------
 $Table = Array('Общая информация');
 #-------------------------------------------------------------------------------
-$Table[] = Array('Название тарифа',$DNSmanagerScheme['Name']);
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load('Formats/Currency',$DNSmanagerScheme['CostDay']);
+$Comp = Comp_Load('Formats/Order/Number',$DNSmanagerOrder['OrderID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Цена 1 дн.',$Comp);
+$Table[] = Array('Номер',$Comp);
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$ServersGroup = DB_Select('ServersGroups','*',Array('UNIQ','ID'=>$DNSmanagerScheme['ServersGroupID']));
-if(!Is_Array($ServersGroup))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array('Группа серверов',$ServersGroup['Name']);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$HardServerName = 'Любой сервер группы';
-#-------------------------------------------------------------------------------
-$HardServer = DB_Select('Servers','*',Array('UNIQ','ID'=>$DNSmanagerScheme['HardServerID']));
-switch(ValueOf($DNSmanagerScheme)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	return ERROR | @Trigger_Error(400);
-case 'array':
-	#-------------------------------------------------------------------------------
-	$HardServerName = $HardServer['Address'];
-	#-------------------------------------------------------------------------------
-	break;
-	#-------------------------------------------------------------------------------
-default:
-	return ERROR | @Trigger_Error(101);
-}
-#-------------------------------------------------------------------------------
-$Table[] = Array('Сервер размещения',$HardServerName);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load('Formats/Logic',$DNSmanagerScheme['IsReselling']);
+$Comp = Comp_Load('Formats/Date/Extended',$DNSmanagerOrder['OrderDate']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Права реселлера',$Comp);
+$Table[] = Array('Дата заказа',$Comp);
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load('Formats/Logic',$DNSmanagerScheme['IsActive']);
+$Comp = Comp_Load('Formats/Contract/Number',$DNSmanagerOrder['ContractID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Тариф активен',$Comp);
+$Table[] = Array('Договор №',$Comp);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Тарифный план',SPrintF('%s (%s)',$DNSmanagerOrder['Scheme'],$DNSmanagerOrder['ServersGroupName']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Formats/Logic',$DNSmanagerScheme['IsProlong']);
+$Table[] = 'Параметры доступа';
+#-------------------------------------------------------------------------------
+$Server = DB_Select('ServersOwners',Array('Address','Params'),Array('UNIQ','ID'=>$DNSmanagerOrder['ServerID']));
+#-------------------------------------------------------------------------------
+if(!Is_Array($Server))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>SPrintF('DNSmanagerManage(%u);',$DNSmanagerOrder['ID']),'value'=>'Вход'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Возможность продления',$Comp);
+$Div = new Tag('DIV',new Tag('SPAN',Array('class'=>'Standard'),$Server['Params']['Url']),$Comp);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Адрес панели управления',$Div);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Логин',$DNSmanagerOrder['Login']);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Пароль',$DNSmanagerOrder['Password']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Formats/Logic',$DNSmanagerScheme['IsSchemeChange']);
+$Table[] = 'Прочее';
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Formats/Logic',$DNSmanagerOrder['IsAutoProlong']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Возможность смены тарифа',$Comp);
+$Table[] = Array('Автопродление',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($DNSmanagerScheme['MaxOrders'] > 0)
-	$Table[] = Array('Максимальное число заказов',$DNSmanagerScheme['MaxOrders']);
+$Comp = Comp_Load('Statuses/State','DNSmanagerOrders',$DNSmanagerOrder);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Table[] = 'Общие ограничения';
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-if($GLOBALS['__USER']['IsAdmin']){
-	#-------------------------------------------------------------------------------
-	if($DNSmanagerScheme['Reseller'])
-		$Table[] = Array('Реселлер',$DNSmanagerScheme['Reseller']);
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	if($DNSmanagerScheme['ViewArea'])
-		$Table[] = Array('Область DNS (view)',$DNSmanagerScheme['ViewArea']);
-	#-------------------------------------------------------------------------------
-}
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Table[] = Array('Число доменов',$DNSmanagerScheme['DomainLimit']);
-#-------------------------------------------------------------------------------
+$Table = Array_Merge($Table,$Comp);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Standard',$Table);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Into',$Comp);
+$Form = new Tag('FORM',Array('method'=>'POST','name'=>'OrderInfo'),$Comp);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'hidden','name'=>'OrderID','value'=>$DNSmanagerOrder['OrderID']));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Form->AddChild($Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'hidden','name'=>'DNSmanagerOrderID','value'=>$DNSmanagerOrder['ID']));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Form->AddChild($Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$DOM->AddChild('Into',$Form);
 #-------------------------------------------------------------------------------
 if(Is_Error($DOM->Build(FALSE)))
 	return ERROR | @Trigger_Error(500);
@@ -143,5 +162,4 @@ if(Is_Error($DOM->Build(FALSE)))
 return Array('Status'=>'Ok','DOM'=>$DOM->Object);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-
 ?>

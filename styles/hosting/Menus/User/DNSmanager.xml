@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Items>
+	<ListElement>
+		<Text>Мои заказы</Text>
+		<Paths>
+			<UniqID>^\/DNSmanagerOrders$</UniqID>
+		</Paths>
+		<Href>/DNSmanagerOrders</Href>
+	</ListElement>
+	<!-- *********************************************************************** -->
+	<ListElement>
+		<Text>Мои тарифы</Text>
+		<Paths>
+			<UniqID>^\/DNSmanagerSchemes$</UniqID>
+		</Paths>
+	<Href>/DNSmanagerSchemes</Href>
+	</ListElement>
+</Items>
+<!-- *********************************************************************** -->
+</XML>

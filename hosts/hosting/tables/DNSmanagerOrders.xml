@@ -17,7 +17,6 @@
   <ListElement>ID</ListElement>
   <ListElement>OrderID</ListElement>
   <ListElement>UserID</ListElement>
-  <ListElement>Parked</ListElement>
   <ListElement>DaysRemainded</ListElement>
   <ListElement>StatusID</ListElement>
   <ListElement>StatusDate</ListElement>
@@ -25,7 +24,7 @@
   <ListElement>(SELECT `AdminNotice` FROM `Orders` WHERE `DNSmanagerOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `AdminNotice`</ListElement>
  </ColumnsIDs>
  <Conditions>
-  <Message>Заказов на хостинг не обнаружено.</Message>
+  <Message>Заказов на вторичные DNS не обнаружено.</Message>
  </Conditions>
 </Source>
 <!-- *********************************************************************** -->
@@ -98,7 +97,6 @@
      <ListElement>UserID</ListElement>
      <ListElement>Login</ListElement>
      <ListElement>(SELECT `Name` FROM `DNSmanagerSchemes` WHERE `DNSmanagerSchemes`.`ID` = `DNSmanagerOrdersOwners`.`SchemeID`)</ListElement>
-     <ListElement>Parked</ListElement>
      <ListElement>AdminNotice</ListElement>
     </ColumnsIDs>
    </Args>

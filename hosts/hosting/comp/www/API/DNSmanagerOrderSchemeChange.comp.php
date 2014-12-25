@@ -68,7 +68,7 @@ case 'array':
 		case 'array':
 			#-------------------------------------------------------------------------------
 			if(!$OldScheme['IsSchemeChange'])
-				return new gException('SCHEME_NOT_ALLOW_SCHEME_CHANGE','Тарифный план заказа хостинга не позволяет смену тарифа');
+				return new gException('SCHEME_NOT_ALLOW_SCHEME_CHANGE','Тарифный план вторичный DNS не позволяет смену тарифа');
 			#-------------------------------------------------------------------------------
 			$NewScheme = DB_Select('DNSmanagerSchemes',Array('ID','ServersGroupID','IsSchemeChangeable','QuotaDisk','Name'),Array('UNIQ','ID'=>$NewSchemeID));
 			#-------------------------------------------------------------------------------

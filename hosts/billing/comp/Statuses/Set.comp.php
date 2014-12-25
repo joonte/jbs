@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -31,7 +30,7 @@ $Options = Array();
 foreach(Array_Keys($Statuses) as $StatusID)
   $Options[$StatusID] = $Statuses[$StatusID]['Name'];
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'StatusID'),$Options);
+$Comp = Comp_Load('Form/Select',Array('name'=>'StatusID','style'=>'width: 100%;'),$Options);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

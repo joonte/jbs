@@ -98,7 +98,7 @@
 		<Comment>Тема</Comment>
 		<Type>Input</Type>
 		<Attribs>
-			<prompt>Тема устанавливаемая клиенту при переходе в панель управления заказом хостинга</prompt>
+			<prompt>Тема устанавливаемая клиенту при переходе в панель управления заказом вторичного DNS</prompt>
 			<type>text</type>
 			<style>width: 100%;</style>
 		</Attribs>
@@ -111,7 +111,7 @@
 		<Comment>Язык</Comment>
 		<Type>Input</Type>
 		<Attribs>
-			<prompt>Язык устанавливаемый клиенту при переходе в панель управления заказом хостинга</prompt>
+			<prompt>Язык устанавливаемый клиенту при переходе в панель управления заказом вторичного DNS</prompt>
 			<type>text</type>
 			<style>width: 100%;</style>
 		</Attribs>
@@ -124,7 +124,7 @@
 		<Comment>Адрес входа для клиентов</Comment>
 		<Type>Input</Type>
 		<Attribs>
-			<prompt>На какой URL необходимо логинится клиентам для входа в панель управления заказом хостинга</prompt>
+			<prompt>На какой URL необходимо логинится клиентам для входа в панель управления заказом вторичного DNS</prompt>
 			<type>text</type>
 			<style>width: 100%;</style>
 		</Attribs>

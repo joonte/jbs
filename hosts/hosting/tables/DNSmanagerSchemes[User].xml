@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+	<!-- *********************************************************************** -->
+	<RootID>DNSmanagerSchemes</RootID>
+	<Cut>
+		<Comps>
+			<Before>
+				<PatternOut />
+				<Search />
+			</Before>
+			<After>
+				<Delete />
+			</After>
+		</Comps>
+		<Sequence />
+	</Cut>
+	<!-- *********************************************************************** -->
+	<Source>
+		<Conditions>
+			<Where>
+				<UniqID>(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH)) AND `IsActive` = 'yes'</UniqID>
+			</Where>
+			<Message>Для Вас не определены тарифы на вторичный DNS.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<DNSmanagerOrder>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/DNSmanagerOrder</ListElement>
+				<ListElement>
+					<DNSmanagerSchemeID>%ID%</DNSmanagerSchemeID>
+				</ListElement>
+				<ListElement>Новый заказ</ListElement>
+				<ListElement>Add.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</DNSmanagerOrder>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>Info</ListElement>
+		<ListElement>DNSmanagerOrder</ListElement>
+		<ListElement>Name</ListElement>
+		<ListElement>ServersGroup</ListElement>
+		<ListElement>CostMonth</ListElement>
+		<ListElement>DomainLimit</ListElement>	
+	</Sequence>
+	<!-- *********************************************************************** -->
+</XML>

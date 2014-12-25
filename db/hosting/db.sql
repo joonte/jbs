@@ -2318,6 +2318,13 @@ VALUES (4,100,100,'yes','yes','yes','Contracts/Enclosures/Types/ExtraIPRules/Con
 Регламент предоставления услуги выделенного IP адреса полностью соответствует <a href="/Clause?ClauseID=Contracts/Enclosures/Types/HostingRules/Content">регламенту предоставления услуги хостинга</a>.
 </P></NOBODY>');
 
+-- SEPARATOR
+/* added by lissyara, 2014-12-25 in 21:37 MSK */
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Enclosures/Types/DNSmanagerRules/Content','Регламент предоставления услуги вторичного DNS','<NOBODY><P align="justify">
+Регламент предоставления услуги вторичного сервера DNS (системы доменных имён) полностью соответствует <a href="/Clause?ClauseID=Contracts/Enclosures/Types/HostingRules/Content">регламенту предоставления услуги хостинга</a>.
+</P></NOBODY>');
+
 
 -- SEPARATOR
 

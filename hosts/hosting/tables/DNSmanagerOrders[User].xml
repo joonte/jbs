@@ -98,7 +98,7 @@
     <onclick>DNSmanagerManage(%ID%);</onclick>
    </ListElement>
    <ListElement>Управлять заказом DNSmanager</ListElement>
-   <ListElement>DNSmanagerManage.gif</ListElement>
+   <ListElement>HostingManage.gif</ListElement>
    <ListElement>DNSmanagerManage.js</ListElement>
   </Args>
   <Attribs>

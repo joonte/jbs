@@ -42,8 +42,8 @@
  <UniqID>
   <Text>Управлять заказом DNS</Text>
   <Href>javascript:DNSmanagerManage(%Replace%);</Href>
-  <Icon>DNSmanagerManage.gif</Icon>
-  <JavaScript>DNSmanagerManage.js</JavaScript>
+  <Icon>HostingManage.gif</Icon>
+  <JavaScript>HostingManage.js</JavaScript>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>

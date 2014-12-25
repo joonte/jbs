@@ -16,7 +16,7 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
-  <Text>Редактировать заказ хостинга</Text>
+  <Text>Редактировать заказ вторичного DNS</Text>
   <Href>javascript:ShowWindow("/Administrator/DNSmanagerOrderEdit",{DNSmanagerOrderID:"%Replace%"});</Href>
   <Icon>Edit.gif</Icon>
  </UniqID>
@@ -46,9 +46,9 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
-  <Text>Управлять заказом хостинга</Text>
+  <Text>Управлять заказом вторичного DNS</Text>
   <Href>javascript:DNSmanagerManage(%Replace%);</Href>
-  <Icon>DNSmanagerManage.gif</Icon>
+  <Icon>HostingManage.gif</Icon>
   <JavaScript>DNSmanagerManage.js</JavaScript>
  </UniqID>
  <!-- *********************************************************************** -->

@@ -1,4 +1,13 @@
 
+/* added by lissyara, 2014-12-25 in 21:37 MSK */
+INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (4,100,100,'yes','yes','yes','Contracts/Enclosures/Types/DNSmanagerRules/Content','Регламент предоставления услуги вторичного DNS','<NOBODY><P align="justify">
+Регламент предоставления услуги вторичного сервера DNS (системы доменных имён) полностью соответствует <a href="/Clause?ClauseID=Contracts/Enclosures/Types/HostingRules/Content">регламенту предоставления услуги хостинга</a>.
+</P></NOBODY>');
+
+
+-- SEPARATOR
+
 DELETE FROM `Services` WHERE `ID` = 52000;
 -- SEPARATOR
 
@@ -62,8 +71,6 @@ CREATE TABLE `DNSmanagerOrders` (
 	`OrderID` int(11) NOT NULL,
 	`SchemeID` int(11) NOT NULL,
 	`OldSchemeID` int(11) default NULL,
-	`Domain` char(255) default '',
-	`Parked` text,
 	`Login` char(20) default '',
 	`Password` char(64) default '',
 	`ConsiderDay` int(11) default '0',

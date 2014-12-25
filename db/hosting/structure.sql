@@ -285,8 +285,6 @@ CREATE TABLE `DNSmanagerOrders` (
 	`OrderID` int(11) NOT NULL,
 	`SchemeID` int(11) NOT NULL,
 	`OldSchemeID` int(11) default NULL,
-	`Domain` char(255) default '',
-	`Parked` text,
 	`Login` char(20) default '',
 	`Password` char(64) default '',
 	`ConsiderDay` int(11) default '0',
