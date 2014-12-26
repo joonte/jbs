@@ -128,7 +128,7 @@ case 'array':
 					$Event = Array(
 							'UserID'	=> $DNSmanagerOrder['UserID'],
 							'PriorityID'	=> 'Error',
-							'Text'		=> SPrintF('Не удалось сменить тарифный план заказу хостинга [%s] в автоматическом режиме, причина (%s)',$DNSmanagerOrder['Login'],$SchemeChange->String),
+							'Text'		=> SPrintF('Не удалось сменить тарифный план заказу вторичного DNS [%s] в автоматическом режиме, причина (%s)',$DNSmanagerOrder['Login'],$SchemeChange->String),
 							'IsReaded'	=> FALSE
 							);
 					#-------------------------------------------------------------------------------
@@ -156,7 +156,7 @@ case 'array':
 					$Event = Array(
 							'UserID'	=> $DNSmanagerOrder['UserID'],
 							'PriorityID'	=> 'Hosting',
-							'Text'		=> SPrintF('Успешно изменён тарифный план (%s->%s) заказа на хостинг [%s], сервер (%s)',$DNSmanagerOrder['SchemeName'],$DNSmanagerNewScheme['Name'],$DNSmanagerOrder['Login'],$ClassDNSmanagerServer->Settings['Address']),
+							'Text'		=> SPrintF('Успешно изменён тарифный план (%s->%s) заказа на вторичный DNS [%s], сервер (%s)',$DNSmanagerOrder['SchemeName'],$DNSmanagerNewScheme['Name'],$DNSmanagerOrder['Login'],$ClassDNSmanagerServer->Settings['Address']),
 							);
 					$Event = Comp_Load('Events/EventInsert',$Event);
 					if(!$Event)

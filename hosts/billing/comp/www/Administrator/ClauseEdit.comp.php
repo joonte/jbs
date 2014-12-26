@@ -109,7 +109,7 @@ case 'array':
 	foreach($ClausesGroups as $ClausesGroup)
 		$Options[$ClausesGroup['ID']] = $ClausesGroup['Name'];
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Select',Array('name'=>'GroupID'),$Options,$Clause['GroupID']);
+	$Comp = Comp_Load('Form/Select',Array('name'=>'GroupID','style'=>'width: 100%;'),$Options,$Clause['GroupID']);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -126,8 +126,8 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'name'  => 'Partition',
-    'size'  => 50,
-    'value' => $Clause['Partition']
+    'value' => $Clause['Partition'],
+    'style' =>'width: 100%;'
   )
 );
 if(Is_Error($Comp))
@@ -138,9 +138,9 @@ $Table[] = Array('Адрес статьи',$Comp);
 $Comp = Comp_Load(
   'Form/Input',
   Array(
-    'name'  => 'Title',
-    'size'  => 80,
-    'value' => $Clause['Title']
+    'name' => 'Title',
+    'value'=> $Clause['Title'],
+    'size' => 77
   )
 );
 if(Is_Error($Comp))

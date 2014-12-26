@@ -15,6 +15,12 @@ VALUES (4,100,100,'yes','yes','yes','Contracts/Enclosures/Types/DNSmanagerRules/
 Регламент предоставления услуги вторичного сервера DNS (системы доменных имён) полностью соответствует <a href="/Clause?ClauseID=Contracts/Enclosures/Types/HostingRules/Content">регламенту предоставления услуги хостинга</a>.
 </P></NOBODY>');
 
+-- SEPARATOR
+
+INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`)
+VALUES (9, 100, 100, 'Header:/DNSmanagerOrders', 'Дополнительная услуга - DNSmanager', 'no', 'yes', 'yes', 'yes', '<NOBODY>\n <TABLE class="Warning">\n  <TBODY>\n   <TR>\n    <TD>\n     <P>\n     Услуга &quot;DNSmanager&quot; необходима тем кто арендует у нас, или имеет свой выделенный сервер в датацентре - для поддержки DNS зон доменов (Большинство доменных зон требует чтобы у домена было как минимум два DNS сервера, находящихся в разных IP сетях /24 - а с VPS или выделенным сервером выдаётся лишь один IP адрес).\n    </P>\n     <P>\n     Обратите внимание, что при заказе сервера VPS, данная услуга заказывается автоматически, бесплатно.\n    </P>\n    </TD>\n   </TR>\n  </TBODY>\n </TABLE>\n <BR />\n</NOBODY>\n');
+
+
 
 -- SEPARATOR
 
