@@ -1307,6 +1307,11 @@
     <ExcludeServerAccounts />
    </CheckUsersOnHostingServersSettings>
    <!-- ********************************************************************* -->
+   <CheckUsersOnDNSmanagerServersSettings>
+    <IsActive>1</IsActive>
+    <ExcludeServerAccounts />
+   </CheckUsersOnDNSmanagerServersSettings>
+   <!-- ********************************************************************* -->
    <CheckUsersOnVPSServersSettings>
     <IsActive>1</IsActive>
     <ExcludeServerAccounts />
@@ -1370,14 +1375,14 @@
    <Params type="array" />
    <ExecuteTime>1:10</ExecuteTime>
    <IsActive>1</IsActive>
-   <HostingDeleteTimeout>20</HostingDeleteTimeout>
+   <DNSmanagerDeleteTimeout>20</DNSmanagerDeleteTimeout>
   </DNSmanagerForDelete>
   <!-- ********************************************************************* -->
   <DNSmanagerSchemeChange>
    <Name>Смена тарифного плана</Name>
    <Params>
     <ID>Идентификатор заказа</ID>
-    <HostingSchemeID>Идентификатор тарифа</HostingSchemeID>
+    <DNSmanagerSchemeID>Идентификатор тарифа</DNSmanagerSchemeID>
    </Params>
    <IsActive>1</IsActive>
   </DNSmanagerSchemeChange>

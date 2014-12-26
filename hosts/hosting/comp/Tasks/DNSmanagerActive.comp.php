@@ -13,7 +13,7 @@ if(Is_Error(System_Load('classes/DNSmanagerServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array(
-		'ID','UserID','Login'
+		'ID','UserID','Login',
 		'(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) AS `ServerID`',
 		'(SELECT `IsReselling` FROM `DNSmanagerSchemes` WHERE `DNSmanagerSchemes`.`ID` = `DNSmanagerOrdersOwners`.`SchemeID`) as `IsReselling`',
 		'(SELECT `Name` FROM `DNSmanagerSchemes` WHERE `DNSmanagerSchemes`.`ID` = `DNSmanagerOrdersOwners`.`SchemeID`) as `SchemeName`'
@@ -49,7 +49,7 @@ case 'array':
 			#-------------------------------------------------------------------------------
 			$Event = Array(
 					'UserID'	=> $DNSmanagerOrder['UserID'],
-					'PriorityID'	=> 'DNSmanager',
+					'PriorityID'	=> 'Hosting',
 					'Text'		=> SPrintF('Заказ вторичного DNS логин [%s], тариф (%s) активирован на сервере (%s)',$DNSmanagerOrder['Login'],$DNSmanagerOrder['SchemeName'],$ClassDNSmanagerServer->Settings['Address'])
 					);
 			$Event = Comp_Load('Events/EventInsert',$Event);

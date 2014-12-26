@@ -12,13 +12,7 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('classes/DNSmanagerServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array(
-		'ID','UserID','Login',
-		'(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) AS `ServerID`',
-		'(SELECT `IsReselling` FROM `DNSmanagerSchemes` WHERE `DNSmanagerSchemes`.`ID` = `DNSmanagerOrdersOwners`.`SchemeID`) as `IsReselling`',
-		'(SELECT `Name` FROM `DNSmanagerSchemes` WHERE `DNSmanagerSchemes`.`ID` = `DNSmanagerOrdersOwners`.`SchemeID`) as `SchemeName`'
-		);
-$DNSmanagerOrder = DB_Select('DNSmanagerOrdersOwners',$Columns,Array('UNIQ','ID'=>$DNSmanagerOrderID));
+$DNSmanagerOrder = DB_Select('DNSmanagerOrdersOwners',Array('ID','UserID','SchemeID','(SELECT `IsReselling` FROM `DNSmanagerSchemes` WHERE `DNSmanagerSchemes`.`ID` = `DNSmanagerOrdersOwners`.`SchemeID`) as `IsReselling`','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) AS `ServerID`','Login','(SELECT `Name` FROM `DNSmanagerSchemes` WHERE `DNSmanagerSchemes`.`ID` = `DNSmanagerOrdersOwners`.`SchemeID`) as `SchemeName`'),Array('UNIQ','ID'=>$DNSmanagerOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DNSmanagerOrder)){
 case 'error':
@@ -38,19 +32,19 @@ case 'array':
 		return ERROR | @Trigger_Error(400);
 	case 'true':
 		#-------------------------------------------------------------------------------
-		$IsDelete = $ClassDNSmanagerServer->Delete($DNSmanagerOrder['Login'],$DNSmanagerOrder['IsReselling']);
+		$IsSuspend = $ClassDNSmanagerServer->Suspend($DNSmanagerOrder['Login'],$DNSmanagerOrder['IsReselling']);
 		#-------------------------------------------------------------------------------
-		switch(ValueOf($IsDelete)){
+		switch(ValueOf($IsSuspend)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
-			return $IsDelete;
+			return $IsSuspend;
 		case 'true':
 			#-------------------------------------------------------------------------------
 			$Event = Array(
 					'UserID'	=> $DNSmanagerOrder['UserID'],
 					'PriorityID'	=> 'Hosting',
-					'Text'		=> SPrintF('Заказ вторичного DNS логин [%s], тариф (%s) удален с сервера (%s)',$DNSmanagerOrder['Login'],$DNSmanagerOrder['SchemeName'],$ClassDNSmanagerServer->Settings['Address'])
+					'Text'		=> SPrintF('Заказ вторичного DNS логин [%s], тариф (%s) заблокирован на сервере (%s)',$DNSmanagerOrder['Login'],$DNSmanagerOrder['SchemeName'],$ClassDNSmanagerServer->Settings['Address'])
 					);
 			$Event = Comp_Load('Events/EventInsert',$Event);
 			if(!$Event)

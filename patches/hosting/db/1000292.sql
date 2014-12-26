@@ -1,4 +1,14 @@
 
+
+DELETE FROM `Tasks` WHERE `ID` IN(91,92,93,94);
+-- SEPARATOR
+INSERT INTO `Tasks` (`ID`,`UserID`,`TypeID`,`Params`,`IsActive`) VALUES
+(91,1,'DNSmanagerNoticeSuspend','[]','yes'),
+(92,1,'DNSmanagerConsider','[]','yes'),
+(93,1,'DNSmanagerNoticeDelete','[]','yes'),
+(94,1,'DNSmanagerForDelete','[]','yes');
+
+-- SEPARATOR
 /* added by lissyara, 2014-12-25 in 21:37 MSK */
 INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
 VALUES (4,100,100,'yes','yes','yes','Contracts/Enclosures/Types/DNSmanagerRules/Content','Регламент предоставления услуги вторичного DNS','<NOBODY><P align="justify">

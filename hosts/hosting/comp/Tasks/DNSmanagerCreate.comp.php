@@ -79,7 +79,7 @@ case 'true':
 		#-------------------------------------------------------------------------------
 		$Event = Array(
 				'UserID'	=> $DNSmanagerOrder['UserID'],
-				'PriorityID'	=> 'DNSmanager',
+				'PriorityID'	=> 'Hosting',
 				'Text'		=> SPrintF('Заказ вторичного DNS логин [%s] создан на сервере (%s) с тарифным планом (%s), идентификатор пакета (%s)',$DNSmanagerOrder['Login'],$ClassDNSmanagerServer->Settings['Address'],$DNSmanagerScheme['Name'],$DNSmanagerScheme['PackageID'])
 				);
 		$Event = Comp_Load('Events/EventInsert',$Event);
