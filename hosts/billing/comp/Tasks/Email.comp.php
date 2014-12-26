@@ -9,7 +9,7 @@ $__args_list = Array('Task','Email','Theme','Message','Heads','ID','Attachments'
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('libs/Server.php')))
+if(Is_Error(System_Load('libs/Server.php','classes/SendMailSmtp.class.php')))
         return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -51,9 +51,9 @@ if(IsSet($Attachments) && SizeOf($Attachments) && Is_Array($Attachments)){
 $Message = SPrintF("%s\r\n\r\n%s--",$Message,$Boundary);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$ServerSettings = SelectServerSettingsByTemplate('Email');
+$Settings = SelectServerSettingsByTemplate('Email');
 #-------------------------------------------------------------------------------
-switch(ValueOf($ServerSettings)){
+switch(ValueOf($Settings)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
@@ -69,9 +69,14 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(Is_Array($ServerSettings)){
+if(Is_Array($Settings)){
 	#-------------------------------------------------------------------------------
-	return ERROR | @Trigger_Error('[comp/Tasks/Email]: функционал отправки через SMTP ещё не работает');
+	Debug(SPrintF('[comp/Tasks/Email]: отправка через SMTP'));
+	$mailSMTP = new SendMailSmtpClass($Settings['Login'],$Settings['Password'], SPrintF('%s://%s',$Settings['Protocol'],$Settings['Address']), '', $Settings['Port']);   
+	#-------------------------------------------------------------------------------
+	$IsMail = $mailSMTP->send($Email, $Theme, $Message, $Heads);
+	if(!$IsMail)
+		return ERROR | @Trigger_Error('[comp/Tasks/Email]: ошибка отправки почты через SMTP ');
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
