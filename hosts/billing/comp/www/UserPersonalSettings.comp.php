@@ -30,7 +30,7 @@ $Settings = $__USER['Params'];
 #-------------------------------------------------------------------------------
 $Table = Array('Настройки интерфейса, "Система поддержки пользователей" (Тикеты)');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'EdesksDisplay','prompt'=>'Как отображать в системе поддержки аватары и текст'),Array('Right'=>'Правое','Left'=>'Левое'),IsSet($_COOKIE['EdesksDisplay'])?$_COOKIE['EdesksDisplay']:'Left');
+$Comp = Comp_Load('Form/Select',Array('name'=>'EdesksDisplay','prompt'=>'Как отображать в системе поддержки аватары и текст','style'=>'width: 100%;'),Array('Right'=>'Правое','Left'=>'Левое'),IsSet($_COOKIE['EdesksDisplay'])?$_COOKIE['EdesksDisplay']:'Left');
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -162,14 +162,14 @@ $SMSTime = Array();
 for($i = 0; $i <= 23; $i++)
 	$SMSTime[$i] = SPrintF('%02d:00',$i);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SMSBeginTime','prompt'=>SPrintF('Время (%s) начала рассылки SMS сообщений',Date('T'))),$SMSTime,(IsSet($Settings['SMSTime']['SMSBeginTime'])?$Settings['SMSTime']['SMSBeginTime']:0));
+$Comp = Comp_Load('Form/Select',Array('name'=>'SMSBeginTime','style'=>'width: 100%;','prompt'=>SPrintF('Время (%s) начала рассылки SMS сообщений',Date('T'))),$SMSTime,(IsSet($Settings['SMSTime']['SMSBeginTime'])?$Settings['SMSTime']['SMSBeginTime']:0));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Время начала рассылки',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'SMSEndTime','prompt'=>SPrintF('Время (%s) окончания рассылки SMS сообщений',Date('T'))),$SMSTime,(IsSet($Settings['SMSTime']['SMSEndTime'])?$Settings['SMSTime']['SMSEndTime']:0));
+$Comp = Comp_Load('Form/Select',Array('name'=>'SMSEndTime','style'=>'width: 100%;','prompt'=>SPrintF('Время (%s) окончания рассылки SMS сообщений',Date('T'))),$SMSTime,(IsSet($Settings['SMSTime']['SMSEndTime'])?$Settings['SMSTime']['SMSEndTime']:0));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

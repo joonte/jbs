@@ -790,6 +790,40 @@
    <GroupID>1</GroupID>
   </ISPswOrdersDeleted>
   <!-- ********************************************************************* -->
+  <!-- added by lissyara 2014-12-26 in 16:41 MSK -->
+  <!-- ********************************************************************* -->
+  <DNSmanagerOrdersActive>
+   <Name>Активация заказа</Name>
+   <Title>Заказы на вторичные DNS сервера (DNSmanager)</Title>
+   <Code>DNSmanager</Code>
+   <GroupID>1</GroupID>
+  </DNSmanagerOrdersActive>
+  <!-- ********************************************************************* -->
+  <DNSmanagerNoticeSuspend>
+   <Name>Уведомление о блокировке заказа</Name>
+   <GroupID>1</GroupID>
+  </DNSmanagerNoticeSuspend>
+  <!-- ********************************************************************* -->
+  <DNSmanagerOrdersSuspended>
+   <Name>Блокировка заказа</Name>
+   <GroupID>1</GroupID>
+  </DNSmanagerOrdersSuspended>
+  <!-- ********************************************************************* -->
+  <DNSmanagerNoticeDelete>
+   <Name>Уведомление о удалении заказа</Name>
+   <GroupID>1</GroupID>
+  </DNSmanagerNoticeDelete>
+  <!-- ********************************************************************* -->
+  <DNSmanagerOrdersDeleted>
+   <Name>Удаление заказа</Name>
+   <GroupID>1</GroupID>
+  </DNSmanagerOrdersDeleted>
+  <!-- ********************************************************************* -->
+  <DNSmanagerPasswordChange>
+   <Name>Смена пароля на заказ</Name>
+   <GroupID>1</GroupID>
+  </DNSmanagerPasswordChange>
+  <!-- ********************************************************************* -->
  </Types>
 </Notifies>
 <!-- *********************************************************************** -->
