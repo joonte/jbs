@@ -115,7 +115,7 @@ case 'exception':
 					#-------------------------------------------------------------------------------
 					if((double)$Balance['balance'] < $Settings['Params']['BalanceLowLimit']){
 						#-------------------------------------------------------------------------------
-						Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: add to message: %s / %s',$Balance['name'],$Balance['balance']));
+						Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: add to message: %s / %s',$Balance['project'],$Balance['balance']));
 						#-------------------------------------------------------------------------------
 						$Message .= SPrintF("Остаток на счете ISPsystem ниже допустимого минимума - %s \n",$Balance['balance']);
 						#-------------------------------------------------------------------------------
