@@ -9,73 +9,106 @@ $__args_list = Array('Task');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Count = DB_Count('Servers');
-if(Is_Error($Count))
-	return ERROR | @Trigger_Error(500);
+$Count = 0;
 #-------------------------------------------------------------------------------
-if($Count){
+$GLOBALS['TaskReturnInfo'] = Array();
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Servers = DB_Select('Servers',Array('ID','TemplateID','Params'),Array('SortOn'=>Array('Address')));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Servers)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	# No more...
+	break;
+case 'array':
 	#-------------------------------------------------------------------------------
-	for($i=0;$i<$Count;$i+=10){
+	$Attribs = Array();
+	#-------------------------------------------------------------------------------
+	foreach($Servers as $Server){
 		#-------------------------------------------------------------------------------
-		$Servers = DB_Select('Servers',Array('ID','TemplateID','Params'),Array('Limits'=>Array('Start'=>$i,'Length'=>10)));
+		$Attribs = $Server['Params'];
 		#-------------------------------------------------------------------------------
-		switch(ValueOf($Servers)){
-		case 'error':
+		$Template = System_XML(SPrintF('servers/%s.xml',$Server['TemplateID']));
+		if(Is_Error($Template))
 			return ERROR | @Trigger_Error(500);
-		case 'exception':
-			# No more...
-			break;
-		case 'array':
+		#-------------------------------------------------------------------------------
+		if(IsSet($Template['Attribs'])){
 			#-------------------------------------------------------------------------------
-			$Attribs = Array();
+			foreach(Array_Keys($Template['Attribs']) as $AttribID)
+				if(!IsSet($Attribs[$AttribID]))
+					$Attribs[$AttribID] = Trim($Template['Attribs'][$AttribID]['Value']);
 			#-------------------------------------------------------------------------------
-			foreach($Servers as $Server){
-				#-------------------------------------------------------------------------------
-				$Attribs = $Server['Params'];
-				#-------------------------------------------------------------------------------
-				$Template = System_XML(SPrintF('servers/%s.xml',$Server['TemplateID']));
-				if(Is_Error($Template))
-					return ERROR | @Trigger_Error(500);
-				#-------------------------------------------------------------------------------
-				if(IsSet($Template['Attribs'])){
-					#-------------------------------------------------------------------------------
-					foreach(Array_Keys($Template['Attribs']) as $AttribID)
-						if(!IsSet($Attribs[$AttribID]))
-							$Attribs[$AttribID] = Trim($Template['Attribs'][$AttribID]['Value']);
-					#-------------------------------------------------------------------------------
-					foreach(Array_Keys($Attribs) as $AttribID)
-						if(!IsSet($Template['Attribs'][$AttribID]))
-							UnSet($Attribs[$AttribID]);
-					#-------------------------------------------------------------------------------
-				}
-				#-------------------------------------------------------------------------------
-				$IsUpdate = DB_Update('Servers',Array('Params'=>$Attribs),Array('ID'=>$Server['ID']));
-				if(Is_Error($IsUpdate))
-					return ERROR | @Trigger_Error(500);
-				#-------------------------------------------------------------------------------
-			}
+			foreach(Array_Keys($Attribs) as $AttribID)
+				if(!IsSet($Template['Attribs'][$AttribID]))
+					UnSet($Attribs[$AttribID]);
 			#-------------------------------------------------------------------------------
-			break;
-			#-------------------------------------------------------------------------------
-		default:
-			return ERROR | @Trigger_Error(101);
 		}
+		#-------------------------------------------------------------------------------
+		$IsUpdate = DB_Update('Servers',Array('Params'=>$Attribs),Array('ID'=>$Server['ID']));
+		if(Is_Error($IsUpdate))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Count++;
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-        $Event = Array(
-			'UserID'        => 100,
-			'PriorityID'    => 'Hosting',
-			'Text'          => SPrintF('Успешно восстановлено %u серверов',$Count)
-			);
+	$Event = Array('UserID'=>100,'PriorityID'=>'Hosting','Text'=>SPrintF('Успешно восстановлено %u серверов',$Count));
+	#-------------------------------------------------------------------------------
 	$Event = Comp_Load('Events/EventInsert',$Event);
 	if(!$Event)
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'] = SPrintF('Recovered: %u servers',$Count);
+	$GLOBALS['TaskReturnInfo'][] = SPrintF('Recovered: %u servers',$Count);
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# чопик для JBS-903
+$Count = 0;
+#-------------------------------------------------------------------------------
+$ServersGroups = DB_Select('ServersGroups',Array('ID','Params'),Array('SortOn'=>Array('SortID')));
+#-------------------------------------------------------------------------------
+switch(ValueOf($ServersGroups)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	# No more...
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	foreach($ServersGroups as $ServersGroup){
+		#-------------------------------------------------------------------------------
+		if(!IsSet($ServersGroup['Params']['Count']))
+				$ServersGroup['Params']['Count'] = 0;
+		#-------------------------------------------------------------------------------
+		$IsUpdate = DB_Update('ServersGroups',Array('Params'=>$ServersGroup['Params']),Array('ID'=>$ServersGroup['ID']));
+		if(Is_Error($IsUpdate))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Count++;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	$GLOBALS['TaskReturnInfo'][] = SPrintF('Recovered: %u servers groups',$Count);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(SizeOf($GLOBALS['TaskReturnInfo']) < 1)
+	UnSet($GLOBALS['TaskReturnInfo']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(IsSet($GLOBALS['IsCron']))
