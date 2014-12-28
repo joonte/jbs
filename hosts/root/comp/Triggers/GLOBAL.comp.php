@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 #Debug(SPrintF('[comp/Triggers/GLOBAL]: ModeID = %s; StatusID = %s; Order = %s',$Order['ModeID'],$Order['StatusID'],print_r($Order['Row'],true)));
 if(!IsSet($Order['Row']['ServerID']) || Is_Null($Order['Row']['ServerID'])){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Triggers/GLOBAL]: Для заказа OrderID = %u (%s) не задан сервер, невозможно определить сервис',$Order['Row']['OrderID'],$Order['ModeID']));
+	Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s) не задан сервер, невозможно определить сервис',$Order['ModeID']));
 	#-------------------------------------------------------------------------------
 	return TRUE;
 	#-------------------------------------------------------------------------------
