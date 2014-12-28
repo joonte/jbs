@@ -167,8 +167,9 @@ if(IsSet($ServersGroup['Params']['Count']) && $ServersGroup['Params']['Count'] >
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[comp/www/Administrator/ServersGroupEdit]: StatusID = %s',$StatusID));
 			#-------------------------------------------------------------------------------
-			if(!IsSet($Array[$StatusID]))
-				$Array[$StatusID] = $Statuses[$TypeID][$StatusID]['Name'];
+			if(Preg_Match('/Order/',$TypeID))
+				if(!IsSet($Array[$StatusID]))
+					$Array[$StatusID] = $Statuses[$TypeID][$StatusID]['Name'];
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
