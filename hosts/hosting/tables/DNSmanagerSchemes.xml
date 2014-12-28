@@ -9,6 +9,8 @@
 			<ListElement>CostMonth</ListElement>
 			<ListElement>DomainLimit</ListElement>
 			<ListElement>IsActive</ListElement>
+			<ListElement>Reseller</ListElement>
+			<ListElement>ViewArea</ListElement>
 			<ListElement>SortID</ListElement>
 		</ColumnsIDs>
 	<Conditions>
@@ -175,7 +177,7 @@
 		</ViewArea>
 		<!-- ********************************************************************** -->
 		<DomainLimit>
-			<Head>Доменов</Head>
+			<Head>Дом.</Head>
 			<Prompt>Ограничение на число доменов, создаваемых на вторичном сервере DNS</Prompt>
 		</DomainLimit>
 		<!-- ********************************************************************** -->
