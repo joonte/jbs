@@ -1,19 +1,22 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
+$__args_list = Array('Args');
+/******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Args = Args();
+$Args = IsSet($Args)?$Args:Args();
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $ContractID	= (integer) @$Args['ContractID'];
 $VPSSchemeID	= (integer) @$Args['VPSSchemeID'];
 $DiskTemplate   =  (string) @$Args['DiskTemplate'];
 $ServerID	= (integer) @$Args['ServerID'];
+$Comment	=  (string) @$Args['Comment'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
@@ -117,7 +120,7 @@ switch(ValueOf($VPSScheme)){
                 if(Is_Error($VPSOrderID))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'Waiting','RowsIDs'=>$VPSOrderID,'Comment'=>'Заказ создан и ожидает оплаты'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'Waiting','RowsIDs'=>$VPSOrderID,'Comment'=>($Comment)?$Comment:'Заказ создан и ожидает оплаты'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':

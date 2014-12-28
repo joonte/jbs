@@ -3,14 +3,18 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
+$__args_list = Array('Args');
+/******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Args = Args();
+$Args = IsSet($Args)?$Args:Args();
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $ContractID	= (integer) @$Args['ContractID'];
 $ISPswSchemeID	= (integer) @$Args['ISPswSchemeID'];
 $IP		=  (string) @$Args['IP'];
+$Comment	=  (string) @$Args['Comment'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/IspSoft.php','libs/Server.php')))
 	return ERROR | @Trigger_Error(500);
@@ -166,7 +170,7 @@ $ISPswOrderID = DB_Insert('ISPswOrders',$IISPswOrder);
 if(Is_Error($ISPswOrderID))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ISPswOrders','StatusID'=>'Waiting','RowsIDs'=>$ISPswOrderID,'Comment'=>'Заказ создан и ожидает оплаты'));
+$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ISPswOrders','StatusID'=>'Waiting','RowsIDs'=>$ISPswOrderID,'Comment'=>($Comment)?$Comment:'Заказ создан и ожидает оплаты'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Comp)){
 case 'error':

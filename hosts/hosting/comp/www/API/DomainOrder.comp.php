@@ -11,11 +11,13 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $DomainName     =  (string) @$Args['DomainName'];
 $DomainSchemeID = (integer) @$Args['DomainSchemeID'];
 $ContractID     = (integer) @$Args['ContractID'];
 $HostingOrderID = (integer) @$Args['HostingOrderID'];
 $IsPrivateWhoIs = (boolean) @$Args['IsPrivateWhoIs'];
+$Comment	=  (string) @$Args['Comment'];
 $Ns1Name        =  (string) @$Args['Ns1Name'];
 $Ns1IP          =  (string) @$Args['Ns1IP'];
 $Ns2Name        =  (string) @$Args['Ns2Name'];
@@ -276,7 +278,7 @@ switch(ValueOf($DomainScheme)){
                 if(Is_Error($DomainOrderID))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Waiting','RowsIDs'=>$DomainOrderID,'Comment'=>'Заказ создан и ожидает оплаты'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Waiting','RowsIDs'=>$DomainOrderID,'Comment'=>($Comment)?$Comment:'Заказ создан и ожидает оплаты'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':

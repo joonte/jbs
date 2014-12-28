@@ -9,12 +9,7 @@ $__args_list = Array('DNSmanagerOrder');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$ExecuteDate = Comp_Load('DNSmanagerOrders/SearchExecuteTime');
-if(Is_Error($ExecuteDate))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$DNSmanagerOrder['UserID'],'TypeID'=>'DNSmanagerSuspend','ExecuteDate'=>$ExecuteDate,'Params'=>Array($DNSmanagerOrder['ID'])));
+$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$DNSmanagerOrder['UserID'],'TypeID'=>'DNSmanagerSuspend','ExecuteDate'=>Time(),'Params'=>Array($DNSmanagerOrder['ID'])));
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsAdd)){
 case 'error':

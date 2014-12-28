@@ -30,12 +30,7 @@ if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$ExecuteDate = Comp_Load('DNSmanagerOrders/SearchExecuteTime');
-if(Is_Error($ExecuteDate))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$DNSmanagerOrder['UserID'],'TypeID'=>'DNSmanagerDelete','ExecuteDate'=>$ExecuteDate,'Params'=>Array($DNSmanagerOrderID)));
+$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$DNSmanagerOrder['UserID'],'TypeID'=>'DNSmanagerDelete','ExecuteDate'=>Time(),'Params'=>Array($DNSmanagerOrderID)));
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsAdd)){
   case 'error':

@@ -174,7 +174,7 @@ switch(ValueOf($HostingOrder)){
                   switch($StatusID){
                     case 'Waiting':
                       #---------------------------------------------------------
-                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'HostingOrders','StatusID'=>'OnCreate','RowsIDs'=>$HostingOrderID,'Comment'=>'Заказ оплачен'));
+                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'HostingOrders','StatusID'=>'OnCreate','RowsIDs'=>$HostingOrderID,'Comment'=>($PayMessage)?$PayMessage:'Заказ оплачен'));
                       #---------------------------------------------------------
                       switch(ValueOf($Comp)){
                         case 'error':
@@ -189,11 +189,7 @@ switch(ValueOf($HostingOrder)){
                       }
                     case 'Active':
                       #---------------------------------------------------------
-		      # вариант автопродления может быть только когда заказ ещё активен
-                      if(!$PayMessage)
-		        $PayMessage = "Заказ оплачен";
-		      #---------------------------------------------------------
-                      $Comp = Comp_Load('www/API/StatusSet',Array('IsNotNotify'=>TRUE,'ModeID'=>'HostingOrders','StatusID'=>'Active','RowsIDs'=>$HostingOrderID,'Comment'=>$PayMessage));
+                      $Comp = Comp_Load('www/API/StatusSet',Array('IsNotNotify'=>TRUE,'ModeID'=>'HostingOrders','StatusID'=>'Active','RowsIDs'=>$HostingOrderID,'Comment'=>($PayMessage)?$PayMessage:'Заказ оплачен'));
                       #---------------------------------------------------------
                       switch(ValueOf($Comp)){
                         case 'error':
@@ -208,7 +204,7 @@ switch(ValueOf($HostingOrder)){
                       }
                     case 'Suspended':
                       #---------------------------------------------------------
-                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'HostingOrders','StatusID'=>'Active','RowsIDs'=>$HostingOrderID,'Comment'=>'Заказ оплачен и будет активирован'));
+                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'HostingOrders','StatusID'=>'Active','RowsIDs'=>$HostingOrderID,'Comment'=>($PayMessage)?$PayMessage:'Заказ оплачен и будет активирован'));
                       #---------------------------------------------------------
                       switch(ValueOf($Comp)){
                         case 'error':

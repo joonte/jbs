@@ -174,7 +174,7 @@ switch(ValueOf($DNSmanagerOrder)){
                   switch($StatusID){
                     case 'Waiting':
                       #---------------------------------------------------------
-                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DNSmanagerOrders','StatusID'=>'OnCreate','RowsIDs'=>$DNSmanagerOrderID,'Comment'=>'Заказ оплачен'));
+                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DNSmanagerOrders','StatusID'=>'OnCreate','RowsIDs'=>$DNSmanagerOrderID,'Comment'=>($PayMessage)?$PayMessage:'Заказ оплачен'));
                       #---------------------------------------------------------
                       switch(ValueOf($Comp)){
                         case 'error':
@@ -189,11 +189,7 @@ switch(ValueOf($DNSmanagerOrder)){
                       }
                     case 'Active':
                       #---------------------------------------------------------
-		      # вариант автопродления может быть только когда заказ ещё активен
-                      if(!$PayMessage)
-		        $PayMessage = "Заказ оплачен";
-		      #---------------------------------------------------------
-                      $Comp = Comp_Load('www/API/StatusSet',Array('IsNotNotify'=>TRUE,'ModeID'=>'DNSmanagerOrders','StatusID'=>'Active','RowsIDs'=>$DNSmanagerOrderID,'Comment'=>$PayMessage));
+                      $Comp = Comp_Load('www/API/StatusSet',Array('IsNotNotify'=>TRUE,'ModeID'=>'DNSmanagerOrders','StatusID'=>'Active','RowsIDs'=>$DNSmanagerOrderID,'Comment'=>($PayMessage)?$PayMessage:'Заказ оплачен'));
                       #---------------------------------------------------------
                       switch(ValueOf($Comp)){
                         case 'error':
@@ -208,7 +204,7 @@ switch(ValueOf($DNSmanagerOrder)){
                       }
                     case 'Suspended':
                       #---------------------------------------------------------
-                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DNSmanagerOrders','StatusID'=>'Active','RowsIDs'=>$DNSmanagerOrderID,'Comment'=>'Заказ оплачен и будет активирован'));
+                      $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DNSmanagerOrders','StatusID'=>'Active','RowsIDs'=>$DNSmanagerOrderID,'Comment'=>($PayMessage)?$PayMessage:'Заказ оплачен и будет активирован'));
                       #---------------------------------------------------------
                       switch(ValueOf($Comp)){
                         case 'error':

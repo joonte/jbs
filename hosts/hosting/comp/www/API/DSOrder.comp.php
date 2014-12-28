@@ -1,17 +1,20 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
+$__args_list = Array('Args');
+/******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Args = Args();
+$Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-$ContractID      = (integer) @$Args['ContractID'];
-$DSSchemeID = (integer) @$Args['DSSchemeID'];
+#-------------------------------------------------------------------------------
+$ContractID	= (integer) @$Args['ContractID'];
+$DSSchemeID	= (integer) @$Args['DSSchemeID'];
+$Comment	=  (string) @$Args['Comment'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
@@ -97,7 +100,7 @@ switch(ValueOf($DSScheme)){
                 if(Is_Error($DSOrderID))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DSOrders','StatusID'=>'Waiting','RowsIDs'=>$DSOrderID,'Comment'=>'Заказ создан и ожидает оплаты'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DSOrders','StatusID'=>'Waiting','RowsIDs'=>$DSOrderID,'Comment'=>($Comment)?$Comment:'Заказ создан и ожидает оплаты'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':

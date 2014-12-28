@@ -296,9 +296,6 @@ switch(ValueOf($DomainOrder)){
                   if(Is_Error($IsUpdate))
                     return ERROR | @Trigger_Error(500);
                   #-------------------------------------------------------------
-		  if(!$PayMessage)
-                    $PayMessage = "Заказ оплачен";
-		  #-------------------------------------------------------------
 		  #-------------------------------------------------------------
 		  $NewStatusID = 'ForProlong';
 		  #-------------------------------------------------------------
@@ -307,7 +304,7 @@ switch(ValueOf($DomainOrder)){
 		  #-------------------------------------------------------------
 		  if($StatusID == 'ForTransfer')
 		    $NewStatusID = 'OnTransfer';
-                  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>$NewStatusID,'RowsIDs'=>$DomainOrder['ID'],'Comment'=>$PayMessage));
+                  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>$NewStatusID,'RowsIDs'=>$DomainOrder['ID'],'Comment'=>($PayMessage)?$PayMessage:'Заказ оплачен'));
                   #-------------------------------------------------------------
                   switch(ValueOf($Comp)){
                     case 'error':

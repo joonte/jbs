@@ -103,11 +103,12 @@ foreach($Rows as $Row){
 	if(!$IsNoTrigger){
 		#-------------------------------------------------------------------------------
 		# реализация JBS-903
-		$Path = SPrintF('Triggers/%s',$StatusID);
+		#$Path = SPrintF('Triggers/%s',$StatusID);
+		$Path = 'Triggers/GLOBAL';
 		#-------------------------------------------------------------------------------
 		if(!Is_Error(System_Element(SPrintF('comp/%s.comp.php',$Path)))){
 			#-------------------------------------------------------------------------------
-			$Results = Comp_Load($Path,Array('Row'=>$Row,'ModeID'=>$ModeID),COMP_ALL_HOSTS);
+			$Results = Comp_Load($Path,Array('Row'=>$Row,'ModeID'=>$ModeID,'StatusID'=>$StatusID),COMP_ALL_HOSTS);
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($Results)){
 			case 'error':

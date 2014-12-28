@@ -4,13 +4,17 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
+$__args_list = Array('Args');
+/******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Args = Args();
+$Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-$ContractID	= (integer) @$Args['ContractID'];
-$DNSmanagerSchemeID= (integer) @$Args['DNSmanagerSchemeID'];
+#-------------------------------------------------------------------------------
+$ContractID		= (integer) @$Args['ContractID'];
+$DNSmanagerSchemeID	= (integer) @$Args['DNSmanagerSchemeID'];
+$Comment		=  (string) @$Args['Comment'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
@@ -140,7 +144,7 @@ $DNSmanagerOrderID = DB_Insert('DNSmanagerOrders',$IDNSmanagerOrder);
 if(Is_Error($DNSmanagerOrderID))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DNSmanagerOrders','StatusID'=>'Waiting','RowsIDs'=>$DNSmanagerOrderID,'Comment'=>'Заказ создан и ожидает оплаты'));
+$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DNSmanagerOrders','StatusID'=>'Waiting','RowsIDs'=>$DNSmanagerOrderID,'Comment'=>($Comment)?$Comment:'Заказ создан и ожидает оплаты'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Comp)){
 case 'error':

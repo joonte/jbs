@@ -4,10 +4,13 @@
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
 /******************************************************************************/
+$__args_list = Array('Args');
+/******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Args = Args();
+$Args = IsSet($Args)?$Args:Args();
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $ContractID	= (integer) @$Args['ContractID'];
 $Domain		=  (string) @$Args['Domain'];
@@ -16,6 +19,7 @@ $DomainTypeID	=  (string) @$Args['DomainTypeID'];
 $DomainName	=  (string) @$Args['DomainName'];
 $DomainSchemeID	= (integer) @$Args['DomainSchemeID'];
 $ServerAttrib	=  (string) @$Args['ServerAttrib'];
+$Comment	=  (string) @$Args['Comment'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
@@ -226,7 +230,7 @@ $HostingOrderID = DB_Insert('HostingOrders',$IHostingOrder);
 if(Is_Error($HostingOrderID))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'HostingOrders','StatusID'=>'Waiting','RowsIDs'=>$HostingOrderID,'Comment'=>'Заказ создан и ожидает оплаты'));
+$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'HostingOrders','StatusID'=>'Waiting','RowsIDs'=>$HostingOrderID,'Comment'=>($Comment)?$Comment:'Заказ создан и ожидает оплаты'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Comp)){
 case 'error':

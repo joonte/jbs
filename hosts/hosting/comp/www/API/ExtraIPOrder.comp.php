@@ -4,15 +4,19 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
+$__args_list = Array('Args');
+/******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Args = Args();
+$Args = IsSet($Args)?$Args:Args();
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $ContractID	= (integer) @$Args['ContractID'];
 $ExtraIPSchemeID= (integer) @$Args['ExtraIPSchemeID'];
 $OrderType	=  (string) @$Args['OrderType'];	# тип заказа к которому цепляем IP
 $DependOrderID	= (integer) @$Args['DependOrderID'];	# номер заказа к которому цепляем IP
+$Comment	=  (string) @$Args['Comment'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
@@ -100,7 +104,7 @@ switch(ValueOf($ExtraIPScheme)){
                 if(Is_Error($ExtraIPOrderID))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ExtraIPOrders','StatusID'=>'Waiting','RowsIDs'=>$ExtraIPOrderID,'Comment'=>'Заказ создан и ожидает оплаты'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ExtraIPOrders','StatusID'=>'Waiting','RowsIDs'=>$ExtraIPOrderID,'Comment'=>($Comment)?$Comment:'Заказ создан и ожидает оплаты'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':
