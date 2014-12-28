@@ -21,7 +21,7 @@ $NoBody = new Tag('NOBODY');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Where = Array(
-		"`StatusID` = 'Working' OR `StatusID` = 'Newest'",
+		"`StatusID` = 'Working' OR `StatusID` = 'Newest'","`Flags` != 'CloseOnSee'",
 		"(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = `Edesks`.`TargetGroupID`) = 'yes'",
 		"(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = (SELECT `GroupID` FROM `Users` WHERE `Users`.`ID` = `Edesks`.`UserID`)) = 'no'"
 		);
