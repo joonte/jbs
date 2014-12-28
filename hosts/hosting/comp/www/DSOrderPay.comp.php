@@ -71,7 +71,7 @@ switch(ValueOf($DSOrder)){
         #-----------------------------------------------------------------------
         $DOM->AddText('Title',SPrintF('Оплата заказа сервера, %s',$DSOrder['IP']));
         #-----------------------------------------------------------------------
-        $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/DSOrderPay.js}')));
+        $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/OrderPay.js}')));
         #-----------------------------------------------------------------------
         if(!In_Array($DSOrder['StatusID'],Array('Waiting','Active','Suspended')))
           return new gException('ORDER_CAN_NOT_PAY','Аренда сервера не может быть оплачена');
@@ -240,7 +240,7 @@ switch(ValueOf($DSOrder)){
                 'Form/Input',
                 Array(
                   'type'    => 'button',
-                  'onclick' => 'DSOrderPay();',
+                  'onclick' => 'OrderPay("DS");',
                   'value'   => 'Продолжить'
                 )
               );
@@ -283,7 +283,7 @@ switch(ValueOf($DSOrder)){
               #-----------------------------------------------------------------
               $Script = Array('var Calendar = [];','var Periods = [];');
               #-----------------------------------------------------------------
-              $Years = $Periods = Array();;
+              $Years = $Periods = Array();
               #-----------------------------------------------------------------
               for($Year=Date('Y',$sTime);$Year<=Date('Y',$eTime);$Year++){
                 #---------------------------------------------------------------
@@ -338,7 +338,7 @@ switch(ValueOf($DSOrder)){
                 #---------------------------------------------------------------
                 $Table[] = new Tag('TD',Array('class'=>'Separator','colspan'=>2),$Comp,new Tag('SPAN','Выбор периода оплаты'));
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('Form/Select',Array('name'=>'Period','onchange'=>'PeriodUpdate();'),$Periods,12);
+                $Comp = Comp_Load('Form/Select',Array('name'=>'Period','onchange'=>'PeriodUpdate("DS");'),$Periods,12);
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
@@ -347,7 +347,7 @@ switch(ValueOf($DSOrder)){
               #-----------------------------------------------------------------
               $DOM->AddChild('Head',new Tag('SCRIPT',Implode("\n",$Script)));
               #-----------------------------------------------------------------
-              $DOM->AddAttribs('Body',Array('onload'=>'PeriodInit();'));
+              $DOM->AddAttribs('Body',Array('onload'=>'PeriodInit("DS");'));
               #-----------------------------------------------------------------
               if($IsPeriods){
                 #---------------------------------------------------------------
@@ -363,7 +363,7 @@ switch(ValueOf($DSOrder)){
               foreach($Years as $Year)
                 $Options[$Year] = $Year;
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Form/Select',Array('name'=>'Year','onchange'=>'CalendarUpdateMonth();'),$Options);
+              $Comp = Comp_Load('Form/Select',Array('name'=>'Year','onchange'=>'CalendarUpdateMonth("DS");'),$Options);
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
@@ -372,7 +372,7 @@ switch(ValueOf($DSOrder)){
               #-----------------------------------------------------------------
               $Div = new Tag('DIV',$Comp);
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Form/Select',Array('name'=>'Month','onchange'=>'CalendarUpdateDay();','value'=>'init'),Array('init'=>'-'));
+              $Comp = Comp_Load('Form/Select',Array('name'=>'Month','onchange'=>'CalendarUpdateDay("DS");','value'=>'init'),Array('init'=>'-'));
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------

@@ -71,7 +71,7 @@ switch(ValueOf($HostingOrder)){
         #-----------------------------------------------------------------------
         $DOM->AddText('Title',SPrintF('Оплата заказа хостинга, %s',$HostingOrder['Login']));
         #-----------------------------------------------------------------------
-        $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/HostingOrderPay.js}')));
+        $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/OrderPay.js}')));
         #-----------------------------------------------------------------------
 	if($HostingOrder['StatusID'] == 'Deleted')
 		return new gException('DELETED_ORDER_CAN_NOT_PAY','Заказ хостинга не может быть оплачен, так как он уже удалён. Обратитесь в службу поддержки, возможно сохранился архив ваших данных и его можно будет восстановить (потребуется сделать новый заказ хостинга)');
@@ -230,7 +230,7 @@ switch(ValueOf($HostingOrder)){
                 'Form/Input',
                 Array(
                   'type'    => 'button',
-                  'onclick' => 'HostingOrderPay();',
+                  'onclick' => 'OrderPay("Hosting");',
                   'value'   => 'Продолжить'
                 )
               );
@@ -328,7 +328,7 @@ switch(ValueOf($HostingOrder)){
                 #---------------------------------------------------------------
                 $Table[] = new Tag('TD',Array('class'=>'Separator','colspan'=>2),$Comp,new Tag('SPAN','Выбор периода оплаты'));
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('Form/Select',Array('name'=>'Period','onchange'=>'PeriodUpdate();'),$Periods,12);
+                $Comp = Comp_Load('Form/Select',Array('name'=>'Period','onchange'=>'PeriodUpdate("Hosting");'),$Periods,12);
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
@@ -337,7 +337,7 @@ switch(ValueOf($HostingOrder)){
               #-----------------------------------------------------------------
               $DOM->AddChild('Head',new Tag('SCRIPT',Implode("\n",$Script)));
               #-----------------------------------------------------------------
-              $DOM->AddAttribs('Body',Array('onload'=>'PeriodInit();'));
+              $DOM->AddAttribs('Body',Array('onload'=>'PeriodInit("Hosting");'));
               #-----------------------------------------------------------------
               if($IsPeriods){
                 #---------------------------------------------------------------
@@ -353,7 +353,7 @@ switch(ValueOf($HostingOrder)){
               foreach($Years as $Year)
                 $Options[$Year] = $Year;
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Form/Select',Array('name'=>'Year','onchange'=>'CalendarUpdateMonth();'),$Options);
+              $Comp = Comp_Load('Form/Select',Array('name'=>'Year','onchange'=>'CalendarUpdateMonth("Hosting");'),$Options);
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
@@ -362,7 +362,7 @@ switch(ValueOf($HostingOrder)){
               #-----------------------------------------------------------------
               $Div = new Tag('DIV',$Comp);
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Form/Select',Array('name'=>'Month','onchange'=>'CalendarUpdateDay();','value'=>'init'),Array('init'=>'-'));
+              $Comp = Comp_Load('Form/Select',Array('name'=>'Month','onchange'=>'CalendarUpdateDay("Hosting");','value'=>'init'),Array('init'=>'-'));
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------

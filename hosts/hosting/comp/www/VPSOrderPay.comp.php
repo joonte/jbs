@@ -71,7 +71,7 @@ switch(ValueOf($VPSOrder)){
         #-----------------------------------------------------------------------
         $DOM->AddText('Title',SPrintF('Оплата заказа VPS, %s',$VPSOrder['Login']));
         #-----------------------------------------------------------------------
-        $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/VPSOrderPay.js}')));
+        $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/OrderPay.js}')));
         #-----------------------------------------------------------------------
         if(!In_Array($VPSOrder['StatusID'],Array('Waiting','Active','Suspended')))
           return new gException('ORDER_CAN_NOT_PAY','Заказ виртуального сервера не может быть оплачен');
@@ -241,7 +241,7 @@ switch(ValueOf($VPSOrder)){
                 'Form/Input',
                 Array(
                   'type'    => 'button',
-                  'onclick' => 'VPSOrderPay();',
+                  'onclick' => 'OrderPay("VPS");',
                   'value'   => 'Продолжить'
                 )
               );
@@ -339,7 +339,7 @@ switch(ValueOf($VPSOrder)){
                 #---------------------------------------------------------------
                 $Table[] = new Tag('TD',Array('class'=>'Separator','colspan'=>2),$Comp,new Tag('SPAN','Выбор периода оплаты'));
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('Form/Select',Array('name'=>'Period','onchange'=>'PeriodUpdate();'),$Periods,12);
+                $Comp = Comp_Load('Form/Select',Array('name'=>'Period','onchange'=>'PeriodUpdate("VPS");'),$Periods,12);
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
@@ -348,7 +348,7 @@ switch(ValueOf($VPSOrder)){
               #-----------------------------------------------------------------
               $DOM->AddChild('Head',new Tag('SCRIPT',Implode("\n",$Script)));
               #-----------------------------------------------------------------
-              $DOM->AddAttribs('Body',Array('onload'=>'PeriodInit();'));
+              $DOM->AddAttribs('Body',Array('onload'=>'PeriodInit("VPS");'));
               #-----------------------------------------------------------------
               if($IsPeriods){
                 #---------------------------------------------------------------
@@ -364,7 +364,7 @@ switch(ValueOf($VPSOrder)){
               foreach($Years as $Year)
                 $Options[$Year] = $Year;
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Form/Select',Array('name'=>'Year','onchange'=>'CalendarUpdateMonth();'),$Options);
+              $Comp = Comp_Load('Form/Select',Array('name'=>'Year','onchange'=>'CalendarUpdateMonth("VPS");'),$Options);
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
@@ -373,7 +373,7 @@ switch(ValueOf($VPSOrder)){
               #-----------------------------------------------------------------
               $Div = new Tag('DIV',$Comp);
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Form/Select',Array('name'=>'Month','onchange'=>'CalendarUpdateDay();','value'=>'init'),Array('init'=>'-'));
+              $Comp = Comp_Load('Form/Select',Array('name'=>'Month','onchange'=>'CalendarUpdateDay("VPS");','value'=>'init'),Array('init'=>'-'));
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------

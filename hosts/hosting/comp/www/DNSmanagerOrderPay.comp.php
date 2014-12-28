@@ -71,7 +71,7 @@ switch(ValueOf($DNSmanagerOrder)){
         #-----------------------------------------------------------------------
         $DOM->AddText('Title',SPrintF('Оплата заказа вторичного DNS, %s',$DNSmanagerOrder['Login']));
         #-----------------------------------------------------------------------
-        $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/DNSmanagerOrderPay.js}')));
+        $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/OrderPay.js}')));
         #-----------------------------------------------------------------------
 	if($DNSmanagerOrder['StatusID'] == 'Deleted')
 		return new gException('DELETED_ORDER_CAN_NOT_PAY','Заказ вторичного DNS не может быть оплачен, так как он уже удалён.');
@@ -230,7 +230,7 @@ switch(ValueOf($DNSmanagerOrder)){
                 'Form/Input',
                 Array(
                   'type'    => 'button',
-                  'onclick' => 'DNSmanagerOrderPay();',
+                  'onclick' => 'OrderPay("DNSmanager");',
                   'value'   => 'Продолжить'
                 )
               );
@@ -328,7 +328,7 @@ switch(ValueOf($DNSmanagerOrder)){
                 #---------------------------------------------------------------
                 $Table[] = new Tag('TD',Array('class'=>'Separator','colspan'=>2),$Comp,new Tag('SPAN','Выбор периода оплаты'));
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('Form/Select',Array('name'=>'Period','onchange'=>'PeriodUpdate();'),$Periods,12);
+                $Comp = Comp_Load('Form/Select',Array('name'=>'Period','onchange'=>'PeriodUpdate("DNSmanager");'),$Periods,12);
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
@@ -337,7 +337,7 @@ switch(ValueOf($DNSmanagerOrder)){
               #-----------------------------------------------------------------
               $DOM->AddChild('Head',new Tag('SCRIPT',Implode("\n",$Script)));
               #-----------------------------------------------------------------
-              $DOM->AddAttribs('Body',Array('onload'=>'PeriodInit();'));
+              $DOM->AddAttribs('Body',Array('onload'=>'PeriodInit("DNSmanager");'));
               #-----------------------------------------------------------------
               if($IsPeriods){
                 #---------------------------------------------------------------
@@ -353,7 +353,7 @@ switch(ValueOf($DNSmanagerOrder)){
               foreach($Years as $Year)
                 $Options[$Year] = $Year;
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Form/Select',Array('name'=>'Year','onchange'=>'CalendarUpdateMonth();'),$Options);
+              $Comp = Comp_Load('Form/Select',Array('name'=>'Year','onchange'=>'CalendarUpdateMonth("DNSmanager");'),$Options);
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
@@ -362,7 +362,7 @@ switch(ValueOf($DNSmanagerOrder)){
               #-----------------------------------------------------------------
               $Div = new Tag('DIV',$Comp);
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Form/Select',Array('name'=>'Month','onchange'=>'CalendarUpdateDay();','value'=>'init'),Array('init'=>'-'));
+              $Comp = Comp_Load('Form/Select',Array('name'=>'Month','onchange'=>'CalendarUpdateDay("DNSmanager");','value'=>'init'),Array('init'=>'-'));
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------

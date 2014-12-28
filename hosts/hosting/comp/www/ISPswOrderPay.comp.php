@@ -71,7 +71,7 @@ switch(ValueOf($ISPswOrder)){
         #-----------------------------------------------------------------------
         $DOM->AddText('Title',SPrintF('Оплата заказа ПО ISPsystem, %s',$ISPswOrder['IP']));
         #-----------------------------------------------------------------------
-        $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/ISPswOrderPay.js}')));
+        $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/OrderPay.js}')));
         #-----------------------------------------------------------------------
         if(!In_Array($ISPswOrder['StatusID'],Array('Waiting','Active','Suspended')))
           return new gException('ORDER_CAN_NOT_PAY','Заказ ПО не может быть оплачен');
@@ -240,7 +240,7 @@ $DaysPay = 1;
                 'Form/Input',
                 Array(
                   'type'    => 'button',
-                  'onclick' => 'ISPswOrderPay();',
+                  'onclick' => 'OrderPay("ISPsw");',
                   'value'   => 'Продолжить'
                 )
               );
@@ -338,7 +338,7 @@ $DaysPay = 1;
                 #---------------------------------------------------------------
                 $Table[] = new Tag('TD',Array('class'=>'Separator','colspan'=>2),$Comp,new Tag('SPAN','Выбор периода оплаты'));
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('Form/Select',Array('name'=>'Period','onchange'=>'PeriodUpdate();'),$Periods,12);
+                $Comp = Comp_Load('Form/Select',Array('name'=>'Period','onchange'=>'PeriodUpdate("ISPsw");'),$Periods,12);
                 if(Is_Error($Comp))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
@@ -347,7 +347,7 @@ $DaysPay = 1;
               #-----------------------------------------------------------------
               $DOM->AddChild('Head',new Tag('SCRIPT',Implode("\n",$Script)));
               #-----------------------------------------------------------------
-              $DOM->AddAttribs('Body',Array('onload'=>'PeriodInit();'));
+              $DOM->AddAttribs('Body',Array('onload'=>'PeriodInit("ISPsw");'));
               #-----------------------------------------------------------------
               if($IsPeriods){
                 #---------------------------------------------------------------
@@ -363,7 +363,7 @@ $DaysPay = 1;
               foreach($Years as $Year)
                 $Options[$Year] = $Year;
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Form/Select',Array('name'=>'Year','onchange'=>'CalendarUpdateMonth();'),$Options);
+              $Comp = Comp_Load('Form/Select',Array('name'=>'Year','onchange'=>'CalendarUpdateMonth("ISPsw");'),$Options);
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
@@ -372,7 +372,7 @@ $DaysPay = 1;
               #-----------------------------------------------------------------
               $Div = new Tag('DIV',$Comp);
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Form/Select',Array('name'=>'Month','onchange'=>'CalendarUpdateDay();','value'=>'init'),Array('init'=>'-'));
+              $Comp = Comp_Load('Form/Select',Array('name'=>'Month','onchange'=>'CalendarUpdateDay("ISPsw");','value'=>'init'),Array('init'=>'-'));
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
