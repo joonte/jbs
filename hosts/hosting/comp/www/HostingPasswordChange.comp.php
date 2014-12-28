@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -55,7 +54,7 @@ switch(ValueOf($HostingOrder)){
         #-----------------------------------------------------------------------
         $DOM->AddChild('Head',$Script);
         #-----------------------------------------------------------------------
-        $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/HostingPasswordChange.js}'));
+        $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/PasswordChange.js}'));
         #-----------------------------------------------------------------------
         $DOM->AddChild('Head',$Script);
 	#-----------------------------------------------------------------------
@@ -70,13 +69,13 @@ switch(ValueOf($HostingOrder)){
             'name'    => 'IsPasswordCreate',
             'value'   => $Password,
             'type'    => 'checkbox',
-            'onclick' => 'PasswordMode();'
+            'onclick' => 'PasswordMode("Hosting");'
           )
         );
         if(Is_Error($Comp))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
-        $NoBody = new Tag('NOBODY',new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px; cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPasswordCreate\'); PasswordMode(); return false;'),'Вставить из примера')));
+        $NoBody = new Tag('NOBODY',new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px; cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPasswordCreate\'); PasswordMode("Hosting"); return false;'),'Вставить из примера')));
         #-----------------------------------------------------------------------
         $Messages = Messages();
         #-----------------------------------------------------------------------
@@ -114,7 +113,7 @@ switch(ValueOf($HostingOrder)){
           'Form/Input',
           Array(
             'type'    => 'button',
-            'onclick' => "if(PasswordCheck(this.form,'Password')){HostingPasswordChange();}",
+            'onclick' => "if(PasswordCheck(this.form,'Password')){PasswordChange('Hosting');}",
             'value'   => 'Сменить'
           )
         );

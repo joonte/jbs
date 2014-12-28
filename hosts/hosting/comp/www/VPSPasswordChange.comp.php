@@ -55,7 +55,7 @@ switch(ValueOf($VPSOrder)){
         #-----------------------------------------------------------------------
         $DOM->AddChild('Head',$Script);
         #-----------------------------------------------------------------------
-        $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/VPSPasswordChange.js}'));
+        $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/PasswordChange.js}'));
         #-----------------------------------------------------------------------
         $DOM->AddChild('Head',$Script);
 	#-----------------------------------------------------------------------
@@ -70,13 +70,13 @@ switch(ValueOf($VPSOrder)){
             'name'    => 'IsPasswordCreate',
             'value'   => $Password,
             'type'    => 'checkbox',
-            'onclick' => 'PasswordMode();'
+            'onclick' => 'PasswordMode("VPS");'
           )
         );
         if(Is_Error($Comp))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
-        $NoBody = new Tag('NOBODY',new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px; cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPasswordCreate\'); PasswordMode(); return false;'),'Вставить из примера')));
+        $NoBody = new Tag('NOBODY',new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px; cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPasswordCreate\'); PasswordMode("VPS"); return false;'),'Вставить из примера')));
         #-----------------------------------------------------------------------
         $Messages = Messages();
         #-----------------------------------------------------------------------
@@ -114,7 +114,7 @@ switch(ValueOf($VPSOrder)){
           'Form/Input',
           Array(
             'type'    => 'button',
-            'onclick' => "if(PasswordCheck(this.form,'Password')){VPSPasswordChange();}",
+            'onclick' => "if(PasswordCheck(this.form,'Password')){PasswordChange('VPS');}",
             'value'   => 'Сменить'
           )
         );

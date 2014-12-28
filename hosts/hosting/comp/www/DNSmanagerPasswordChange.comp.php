@@ -54,7 +54,7 @@ switch(ValueOf($DNSmanagerOrder)){
         #-----------------------------------------------------------------------
         $DOM->AddChild('Head',$Script);
         #-----------------------------------------------------------------------
-        $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/DNSmanagerPasswordChange.js}'));
+        $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/PasswordChange.js}'));
         #-----------------------------------------------------------------------
         $DOM->AddChild('Head',$Script);
 	#-----------------------------------------------------------------------
@@ -69,13 +69,13 @@ switch(ValueOf($DNSmanagerOrder)){
             'name'    => 'IsPasswordCreate',
             'value'   => $Password,
             'type'    => 'checkbox',
-            'onclick' => 'PasswordMode();'
+            'onclick' => 'PasswordMode("DNSmanager");'
           )
         );
         if(Is_Error($Comp))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
-        $NoBody = new Tag('NOBODY',new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px; cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPasswordCreate\'); PasswordMode(); return false;'),'Вставить из примера')));
+        $NoBody = new Tag('NOBODY',new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px; cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPasswordCreate\'); PasswordMode("DNSmanager"); return false;'),'Вставить из примера')));
         #-----------------------------------------------------------------------
         $Messages = Messages();
         #-----------------------------------------------------------------------
@@ -113,7 +113,7 @@ switch(ValueOf($DNSmanagerOrder)){
           'Form/Input',
           Array(
             'type'    => 'button',
-            'onclick' => "if(PasswordCheck(this.form,'Password')){DNSmanagerPasswordChange();}",
+            'onclick' => "if(PasswordCheck(this.form,'Password')){PasswordChange('DNSmanager');}",
             'value'   => 'Сменить'
           )
         );
