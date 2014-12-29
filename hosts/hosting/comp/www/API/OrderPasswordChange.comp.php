@@ -43,7 +43,7 @@ if(Is_Error(System_Load(SPrintF('classes/%sServer.class.php',$Service['Code'])))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),Array('ID','OrderID','UserID','Login','StatusID','ServerID'),Array('UNIQ','ID'=>$ServiceOrderID));
+$Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),Array('*'),Array('UNIQ','ID'=>$ServiceOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Order)){
 case 'error':
@@ -118,7 +118,9 @@ if(Is_Error($IsUpdate))
 #-------------------------------------------------------------------------------
 $Order['Password'] = $Password;
 #-------------------------------------------------------------------------------
-$msg = new OrderPasswordChangeMsg($Order,(integer)$Order['UserID']);
+$ClassName = SPrintF('%sPasswordChangeMsg',$Service['Code']);
+#-------------------------------------------------------------------------------
+$msg = new $ClassName($Order,(integer)$Order['UserID']);
 #-------------------------------------------------------------------------------
 $IsSend = NotificationManager::sendMsg($msg);
 #-------------------------------------------------------------------------------

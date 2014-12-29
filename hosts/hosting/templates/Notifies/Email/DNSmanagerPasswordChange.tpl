@@ -1,11 +1,11 @@
 {*
  *  Joonte Billing System
- *  Copyright © 2014 Alex Keda, for www.host-food.ru
+ *  Copyright © 2012 Vitaly Velikodnyy
  *}
-{assign var=Theme value="Пароль для заказа [{$Login|default:'$Login'}] изменен" scope=global}
+{assign var=Theme value="Пароль для заказа вторичного DNS [{$Login|default:'$Login'}] изменен" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
-Уведомляем Вас о том, что {$smarty.now|date_format:"%d.%m.%Y"} пароль на Ваш заказ №{$OrderID|string_format:"%05u"} был изменен.
+Уведомляем Вас о том, что {$smarty.now|date_format:"%d.%m.%Y"} пароль на Ваш заказ вторичного DNS №{$OrderID|string_format:"%05u"} был изменен.
 
 Ваши новые данные для доступа к аккаунту на сервере:
   * Адрес панели управления:
