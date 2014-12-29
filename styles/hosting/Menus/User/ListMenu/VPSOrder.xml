@@ -54,7 +54,7 @@
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Сменить пароль от аккаунта</Text>
-  <Href>javascript:ShowWindow("/VPSPasswordChange",{VPSOrderID:%Replace%});</Href>
+  <Href>javascript:ShowWindow("/OrderPasswordChange",{ServiceOrderID:%Replace%,ServiceID:"30000"});</Href>
   <Icon>Password.gif</Icon>
  </UniqID>
 </Items>
