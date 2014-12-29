@@ -45,7 +45,7 @@ default:
 # перебираем лицензии
 foreach($Doc as $License){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF("[comp/Tasks/ISPswCheckLicenses]: License = %s",print_r($License, true)));
+	#Debug(SPrintF("[comp/Tasks/ISPswCheckLicenses]: License = %s",print_r($License, true)));
 	#-------------------------------------------------------------------------------
 	if(!IsSet($License['expiredate']))
 		continue;
