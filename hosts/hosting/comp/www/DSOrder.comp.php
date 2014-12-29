@@ -205,7 +205,7 @@ if($StepID){
 	  $Tr->AddChild($Td);
 	  #---------------------------------------------------------------------
           #---------------------------------------------------------------------
-	  $Td = new Tag('TD',Array('class'=>'Head','align'=>'center'),new Tag('SPAN','Числ. проц.'),new Tag('SPAN',Array('style'=>'font-weight:bold;font-size:14px;'),'?'));
+	  $Td = new Tag('TD',Array('class'=>'Head','align'=>'center'),new Tag('SPAN','Проц.'),new Tag('SPAN',Array('style'=>'font-weight:bold;font-size:14px;'),'?'));
 	  $LinkID = UniqID('Prompt');
 	  $Links[$LinkID] = &$Td;
 	  $Comp = Comp_Load('Form/Prompt',$LinkID,'Число процессоров (сокетов)');
