@@ -1,0 +1,5 @@
+
+
+ALTER TABLE `ISPswLicenses` ADD `LicKey` VARCHAR(128) NOT NULL DEFAULT '' AFTER `elid` ;
+
+

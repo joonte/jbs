@@ -930,6 +930,7 @@ CREATE TABLE IF NOT EXISTS `ISPswLicenses` (
 	`addon` INT(12) NOT NULL DEFAULT '1',
 	`IP` char(64) NOT NULL,
 	`elid` int(12) NOT NULL,
+	`LicKey` VARCHAR(128) NOT NULL,
 	`IsInternal` enum('yes','no') NOT NULL DEFAULT 'yes',
 	`IsUsed` enum('yes','no') NOT NULL DEFAULT 'yes',
 	`ISPname` text,

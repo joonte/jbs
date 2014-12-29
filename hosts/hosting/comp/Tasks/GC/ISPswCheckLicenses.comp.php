@@ -45,7 +45,7 @@ default:
 # перебираем лицензии
 foreach($Doc as $License){
 	#-------------------------------------------------------------------------------
-	#Debug(SPrintF("[comp/Tasks/ISPswCheckLicenses]: License = %s",print_r($License, true)));
+	Debug(SPrintF("[comp/Tasks/ISPswCheckLicenses]: License = %s",print_r($License, true)));
 	#-------------------------------------------------------------------------------
 	if(!IsSet($License['expiredate']))
 		continue;
@@ -119,6 +119,7 @@ foreach($Doc as $License){
 					'addon'		=> $addon,
 					'IP'		=> $License['ip'],
 					'elid'		=> $License['id'],
+					'LicKey'	=> $License['lickey'],
 					'IsInternal'	=> 'no',	# TODO надо бы по IP определять
 					'IsUsed'	=> 'no',
 					'ISPname'	=> (IsSet($License['licname'])?$License['licname']:'Имя не задано'),
@@ -139,6 +140,22 @@ foreach($Doc as $License){
 		#-------------------------------------------------------------------------------
 		# лицензия в биллинге есть
 		Debug(SPrintF('[comp/Tasks/ISPswCheckLicenses]: found license #%u',$License['id']));
+		#-------------------------------------------------------------------------------
+		if(StrLen($License['lickey']) < 2 && $License['pricelist_id'] > 1000){
+			#-------------------------------------------------------------------------------
+			# у лицензии нет ключа. Вешаем ахтунг...
+			$Event = Array(
+					'UserID'	=> 100,
+					'PriorityID'	=> 'Error',
+					'Text'		=> SPrintF('Найдена лицензия ISPsystem 5 версии без ключа:  #%u, продукт (%s), период (%s), IP (%s)',$License['id'],$License['pricelist_id'],$License['period'],$License['ip']),
+					'IsReaded'	=> FALSE
+					);
+			$Event = Comp_Load('Events/EventInsert',$Event);
+			if(!$Event)
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		# сравниваем IP адреса в биллинге ISPsystem и у нас
 		if($License['ip'] != $ISPswLic['ip']){
@@ -173,6 +190,7 @@ foreach($Doc as $License){
 		$IsUpdate = DB_Update(
 					'ISPswLicenses',
 					Array(
+						'LicKey'	=> $License['lickey'],
 						'pricelist_id'  => $License['pricelist_id'],
 						'period'        => $License['period'],
 						'addon'		=> $addon,
