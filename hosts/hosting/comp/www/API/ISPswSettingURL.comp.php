@@ -28,12 +28,31 @@ if($id < 1)
 # ищщем в базе IP  с которого пришёл запрос, определяем VPS или DS на котором запущена лицензия
 $Where = Array(SPrintF('`IP` = "%s"',$IP),'`StatusID` IN ("Active","OnCreate","SchemeChange","Suspended")');
 #-------------------------------------------------------------------------------
-$VPSOrder = DB_Select('VPSOrdersOwners',Array('ID','SchemeID','UserID'),Array('UNIQ','Where'=>$Where));
-switch(ValueOf($VPSOrder)){
+$Order = DB_Select('VPSOrdersOwners',Array('ID','UserID'),Array('UNIQ','Where'=>$Where));
+switch(ValueOf($Order)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return new gException('VPS_NOT_FOUND','Заказ VPS не найден');
+	#-------------------------------------------------------------------------------
+	#return new gException('VPS_NOT_FOUND','Заказ VPS не найден');
+	#-------------------------------------------------------------------------------
+	$Where = Array(SPrintF('`IP` = "%s" OR `ExtraIP` LIKE "%%%s%%"',$IP,$IP),'`StatusID` IN ("Active","OnCreate","SchemeChange","Suspended")');
+	#-------------------------------------------------------------------------------
+	$Order = DB_Select('DSOrdersOwners',Array('ID','UserID'),Array('UNIQ','Where'=>$Where));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Order)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return new gException('VPS_NOT_FOUND','Заказ VPS/DS не найден');
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
 case 'array':
 	break;
 default:
@@ -41,10 +60,14 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+# если ничего не найдено, надо посмотреть по лицензии
+
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # TODO надо вытянуть номерки автосоздаваемых тарифов, и юзать их заказы
 #-------------------------------------------------------------------------------
 # по юзеру, которому принадлежит VPS находим заказы на DNSmanager
-$DNSmanagerOrders = DB_Select('DNSmanagerOrdersOwners',Array('*','(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`) AS `Address`'),Array('Where'=>SPrintF('`UserID` = %u',$VPSOrder['UserID']),'IsDesc'=>TRUE,'SortOn'=>'ID'));
+$DNSmanagerOrders = DB_Select('DNSmanagerOrdersOwners',Array('*','(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`) AS `Address`'),Array('Where'=>SPrintF('`UserID` = %u',$Order['UserID']),'IsDesc'=>TRUE,'SortOn'=>'ID'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DNSmanagerOrders)){
 case 'error':
