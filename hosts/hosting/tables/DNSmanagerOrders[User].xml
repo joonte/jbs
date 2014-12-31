@@ -111,9 +111,10 @@
   <IsSorted>0</IsSorted>
   <Comp>Buttons/Window</Comp>
   <Args>
-   <ListElement>/DNSmanagerPasswordChange</ListElement>
+   <ListElement>/OrderPasswordChange</ListElement>
    <ListElement>
-    <DNSmanagerOrderID>%ID%</DNSmanagerOrderID>
+    <ServiceOrderID>%ID%</ServiceOrderID>
+    <ServiceID>52000</ServiceID>
    </ListElement>
    <ListElement>Сменить пароль</ListElement>
    <ListElement>Password.gif</ListElement>

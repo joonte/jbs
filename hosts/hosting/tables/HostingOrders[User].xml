@@ -111,9 +111,10 @@
   <IsSorted>0</IsSorted>
   <Comp>Buttons/Window</Comp>
   <Args>
-   <ListElement>/HostingPasswordChange</ListElement>
+   <ListElement>/OrderPasswordChange</ListElement>
    <ListElement>
-    <HostingOrderID>%ID%</HostingOrderID>
+    <ServiceOrderID>%ID%</ServiceOrderID>
+    <ServiceID>10000</ServiceID>
    </ListElement>
    <ListElement>Сменить пароль</ListElement>
    <ListElement>Password.gif</ListElement>

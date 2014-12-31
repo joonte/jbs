@@ -111,9 +111,10 @@
   <IsSorted>0</IsSorted>
   <Comp>Buttons/Window</Comp>
   <Args>
-   <ListElement>/VPSPasswordChange</ListElement>
+   <ListElement>/OrderPasswordChange</ListElement>
    <ListElement>
-    <VPSOrderID>%ID%</VPSOrderID>
+    <ServiceOrderID>%ID%</ServiceOrderID>
+    <ServiceID>30000</ServiceID>
    </ListElement>
    <ListElement>Сменить пароль</ListElement>
    <ListElement>Password.gif</ListElement>
