@@ -42,7 +42,7 @@ Ignore_User_Abort(TRUE); # Если пользователь закрыл сое
  */
 
 if(!Define('VERSION', '##VERSION##'))
-  Exit('[JBs core]: не удалось определить константу (VERSION)');
+	Exit('[JBs core]: не удалось определить константу (VERSION)');
 
 /**
  * Defines SYSTEM_PATH constant.
