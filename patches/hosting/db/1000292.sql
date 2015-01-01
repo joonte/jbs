@@ -36,6 +36,7 @@ INSERT INTO `Services` (`ID`, `GroupID`, `UserID`, `ServicesGroupID`, `Name`, `N
 --
 
 DROP TABLE IF EXISTS `DNSmanagerSchemes`;
+-- SEPARATOR
 CREATE TABLE `DNSmanagerSchemes` (
 	`ID` int(11) NOT NULL auto_increment,
 	`CreateDate` int(11) default '0',
@@ -82,6 +83,7 @@ CREATE TABLE `DNSmanagerSchemes` (
 --
 
 DROP TABLE IF EXISTS `DNSmanagerOrders`;
+-- SEPARATOR
 CREATE TABLE `DNSmanagerOrders` (
 	`ID` int(11) NOT NULL auto_increment,
 	`OrderID` int(11) NOT NULL,
