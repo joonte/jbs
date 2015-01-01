@@ -46,6 +46,9 @@ function VmManager5_KVM_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 			'func'			=> 'user.edit',		# Целевая функция
 			'sok'			=> 'ok',
 			'allowcreatevm'		=> 'off',		# нет ограничений, нет смысла создавать неограниченных юзеров
+			'snapshot_limit'	=> 0,
+			'isolimitsize'		=> 1024,
+			'isolimitnum'		=> 2,
 			'name'			=> $VPSOrder['Login'],
 			'passwd'		=> $VPSOrder['Password'],
 			'confirm'		=> $VPSOrder['Password'],
@@ -81,20 +84,20 @@ function VmManager5_KVM_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 			'func'			=> 'vm.edit',		# Целевая функция
 			'sok'			=> 'ok',
 			'hostnode'		=> 'auto',
-			'blkiotune'		=> 500,			# этого пока нет в таблицах
+			'blkiotune'		=> Ceil($VPSScheme['blkiotune']),		# "вес" дисковых операций
 			'password'		=> $VPSOrder['Password'],
 			'confirm'		=> $VPSOrder['Password'],
-			'cputune'		=> Ceil($VPSScheme['cpu']),
-			'domain'		=> $VPSOrder['Domain'],
-			'family'		=> 'ipv4',		# пока IPv6 всё ещё теория
-			'inbound'		=> SPrintF('%u',$VPSScheme['chrate'] * 1024),
-			'outbound'		=> SPrintF('%u',$VPSScheme['chrate'] * 1024),
+			'cputune'		=> Ceil($VPSScheme['cpu']),			# "вес" процессорных операций
+			'domain'		=> $VPSOrder['Domain'],				# для обратной зоны
+			'family'		=> 'ipv4',					# пока IPv6 всё ещё теория
+			'inbound'		=> SPrintF('%u',$VPSScheme['chrate'] * 1024),	# в тарифе в мегабитах
+			'outbound'		=> SPrintF('%u',$VPSScheme['chrate'] * 1024),	# в тарифе в мегабитах
 			#'ip'			=> '1.2.3.4',
-			'iptype'		=> 'public',		# машина имеет доступ в инет
-			'mem'			=> Ceil($VPSScheme['mem']),
+			'iptype'		=> 'public',					# машина имеет доступ в инет
+			'mem'			=> Ceil($VPSScheme['mem']),			# рама
 			'name'			=> $VPSOrder['Login'],
 			'user'			=> $VmUserID,
-			'vcpu'			=> $VPSScheme['ncpu'],
+			'vcpu'			=> $VPSScheme['ncpu'],				# число процессоров
 			'vmi'			=> SPrintF('ISPsystem__%s',Trim($VPSOrder['DiskTemplate'])),
 			'vsize'			=> $VPSScheme['disklimit'],
 			);
@@ -527,7 +530,7 @@ function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VmManager5_KVM_Password_Change($Settings,$Login,$Password,$VPSOrder){
+function VmManager5_KVM_Password_Change($Settings,$Login,$Password){
 	/****************************************************************************/
 	$__args_types = Array('array','string','string','array');
 	#-----------------------------------------------------------------------------

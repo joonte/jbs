@@ -26,123 +26,132 @@ case 'error':
 case 'exception':
 	return ERROR | @Trigger_Error(400);
 case 'array':
-	#-------------------------------------------------------------------------------
-	$VPSServer = new VPSServer();
-	#-------------------------------------------------------------------------------
-	$IsSelected = $VPSServer->Select((integer)$VPSOrder['ServerID']);
-	#-------------------------------------------------------------------------------
-	switch(ValueOf($IsSelected)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		return ERROR | @Trigger_Error(400);
-	case 'true':
-		#-------------------------------------------------------------------------------
-		$VPSScheme = DB_Select('VPSSchemes','*',Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
-		#-------------------------------------------------------------------------------
-		switch(ValueOf($VPSScheme)){
-		case 'error':
-			return ERROR | @Trigger_Error(500);
-		case 'exception':
-			return ERROR | @Trigger_Error(400);
-		case 'array':
-			#-------------------------------------------------------------------------------
-			if(IsSet($VPSOrder['Params']['DiskTemplate'])){
-				#-------------------------------------------------------------------------------
-				foreach(Explode("\n",$VPSServer->Settings['Params']['DiskTemplate']) as $Line){
-					#Debug(SPrintF('[comp/Tasks/VPSCreate]: Line = (%s)',print_r($Line,true)));
-					#-------------------------------------------------------------------------------
-					$Template = Explode('=',Trim($Line));
-					#-------------------------------------------------------------------------------
-					if($Template[0] == $VPSOrder['Params']['DiskTemplate'])
-						$DiskTemplate = $Template[0];
-					#-------------------------------------------------------------------------------
-				}
-				#-------------------------------------------------------------------------------
-			}
-			#-------------------------------------------------------------------------------
-			if(!IsSet($DiskTemplate)){
-				#-------------------------------------------------------------------------------
-				$DiskTemplates = Explode("\n",$VPSServer->Settings['Params']['DiskTemplate']);
-				#-------------------------------------------------------------------------------
-				$DiskTemplate = Explode('=',$DiskTemplates[0]);
-				#-------------------------------------------------------------------------------
-			}
-			#-------------------------------------------------------------------------------
-			$VPSOrder['DiskTemplate'] = $DiskTemplate;
-			#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
-			$IPsPool = Explode("\n",$VPSServer->Settings['Params']['IPsPool']);
-			#-------------------------------------------------------------------------------
-			$IP = $IPsPool[Rand(0,Count($IPsPool) - 1)];
-			#-------------------------------------------------------------------------------
-			$Args = Array($VPSOrder,$IP,$VPSScheme);
-			#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
-			$IsCreate = Call_User_Func_Array(Array($VPSServer,'Create'),$Args);
-			#-------------------------------------------------------------------------------
-			switch(ValueOf($IsCreate)){
-			case 'error':
-				return ERROR | @Trigger_Error(500);
-			case 'exception':
-				return $IsCreate;
-			case 'true':
-				#-------------------------------------------------------------------------------
-				# достаём собсно адрес из БД
-				$VPS_IP = DB_Select('VPSOrdersOwners',Array('Login'),Array('UNIQ','ID'=>$VPSOrderID));
-				#-------------------------------------------------------------------------------
-				switch(ValueOf($VPS_IP)){
-				case 'error':
-					return ERROR | @Trigger_Error(500);
-				case 'exception':
-					return ERROR | @Trigger_Error(400);
-				case 'array':
-					break;
-				default:
-					return ERROR | @Trigger_Error(101);
-				}
-				#-------------------------------------------------------------------------------
-				$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'Active','RowsIDs'=>$VPSOrder['ID'],'Comment'=>'Заказ создан на сервере'));
-				#-------------------------------------------------------------------------------
-				switch(ValueOf($Comp)){
-				case 'error':
-					return ERROR | @Trigger_Error(500);
-				case 'exception':
-					return ERROR | @Trigger_Error(400);
-				case 'array':
-					#-------------------------------------------------------------------------------
-					$Event = Array(
-							'UserID'	=> $VPSOrder['UserID'],
-							'PriorityID'	=> 'Hosting',
-							'Text'		=> SPrintF('Заказ VPS [%s] создан на сервере (%s) с тарифным планом (%s), идентификатор пакета (%s)',$VPS_IP['Login'],$VPSServer->Settings['Address'],$VPSScheme['Name'],$VPSScheme['PackageID'])
-							);
-					$Event = Comp_Load('Events/EventInsert',$Event);
-					if(!$Event)
-						return ERROR | @Trigger_Error(500);
-					#-------------------------------------------------------------------------------
-					$GLOBALS['TaskReturnInfo'] = Array($VPSServer->Settings['Address'],$VPS_IP['Login'],$VPSScheme['Name']);
-					#-------------------------------------------------------------------------------
-					return TRUE;
-					#-------------------------------------------------------------------------------
-				default:
-					return ERROR | @Trigger_Error(101);
-				}
-				#-------------------------------------------------------------------------------
-			default:
-				return ERROR | @Trigger_Error(101);
-			}
-			#-------------------------------------------------------------------------------
-		default:
-			return ERROR | @Trigger_Error(101);
-		}
-		#-------------------------------------------------------------------------------
-	default:
-		return ERROR | @Trigger_Error(101);
-	}
-	#-------------------------------------------------------------------------------
+	break;
 default:
 	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$VPSServer = new VPSServer();
+#-------------------------------------------------------------------------------
+$IsSelected = $VPSServer->Select((integer)$VPSOrder['ServerID']);
+#-------------------------------------------------------------------------------
+switch(ValueOf($IsSelected)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'true':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$VPSScheme = DB_Select('VPSSchemes','*',Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
+#-------------------------------------------------------------------------------
+switch(ValueOf($VPSScheme)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(IsSet($VPSOrder['Params']['DiskTemplate'])){
+	#-------------------------------------------------------------------------------
+	foreach(Explode("\n",$VPSServer->Settings['Params']['DiskTemplate']) as $Line){
+		Debug(SPrintF('[comp/Tasks/VPSCreate]: Line = (%s)',print_r($Line,true)));
+		#-------------------------------------------------------------------------------
+		$Template = Explode('=',Trim($Line));
+		#-------------------------------------------------------------------------------
+		if($Template[0] == $VPSOrder['Params']['DiskTemplate'])
+			$DiskTemplate = $Template[0];
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+}
+Debug(SPrintF('[comp/Tasks/VPSCreate]: DiskTemplate = (%s)',IsSet($DiskTemplate)?$DiskTemplate:'не задан'));
+#-------------------------------------------------------------------------------
+if(!IsSet($DiskTemplate) || StrLen($DiskTemplate) < 2){
+	#-------------------------------------------------------------------------------
+	$DiskTemplates = Explode("\n",$VPSServer->Settings['Params']['DiskTemplate']);
+	#-------------------------------------------------------------------------------
+	$Template = Explode('=',Trim($DiskTemplates[0]));
+	#-------------------------------------------------------------------------------
+	$DiskTemplate = $Template[0];
+	#-------------------------------------------------------------------------------
+}
+Debug(SPrintF('[comp/Tasks/VPSCreate]: DiskTemplate = (%s)',print_r($DiskTemplate,true)));
+#-------------------------------------------------------------------------------
+$VPSOrder['DiskTemplate'] = $DiskTemplate;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$IPsPool = Explode("\n",$VPSServer->Settings['Params']['IPsPool']);
+#-------------------------------------------------------------------------------
+$IP = $IPsPool[Rand(0,Count($IPsPool) - 1)];
+#-------------------------------------------------------------------------------
+$Args = Array($VPSOrder,$IP,$VPSScheme);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$IsCreate = Call_User_Func_Array(Array($VPSServer,'Create'),$Args);
+#-------------------------------------------------------------------------------
+switch(ValueOf($IsCreate)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $IsCreate;
+case 'true':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+# достаём собсно адрес из БД
+$VPS_IP = DB_Select('VPSOrdersOwners',Array('Login'),Array('UNIQ','ID'=>$VPSOrderID));
+#-------------------------------------------------------------------------------
+switch(ValueOf($VPS_IP)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'Active','RowsIDs'=>$VPSOrder['ID'],'Comment'=>'Заказ создан на сервере'));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Comp)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+$Event = Array(
+		'UserID'	=> $VPSOrder['UserID'],
+		'PriorityID'	=> 'Hosting',
+		'Text'		=> SPrintF('Заказ VPS [%s] создан на сервере (%s) с тарифным планом (%s), идентификатор пакета (%s)',$VPS_IP['Login'],$VPSServer->Settings['Address'],$VPSScheme['Name'],$VPSScheme['PackageID'])
+		);
+$Event = Comp_Load('Events/EventInsert',$Event);
+if(!$Event)
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$GLOBALS['TaskReturnInfo'] = Array($VPSServer->Settings['Address'],$VPS_IP['Login'],$VPSScheme['Name']);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+return TRUE;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 ?>
