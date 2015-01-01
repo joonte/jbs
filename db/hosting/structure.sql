@@ -11,6 +11,7 @@ CREATE TABLE `ServersGroups` (
 	`Name` char(30) NOT NULL,		-- имя группы
 	`ServiceID` int(11) NULL,		-- ссылка на сервис (или NULL, если группа не относится к сервису)
 	`FunctionID` char(30) default '',	-- принцип определения того кто IsDefault
+	`Params` LONGTEXT NOT NULL,		-- дополнительные параметры группы серверов (зависимые услуги)
 	`Comment` char(255) default '',		-- комментарий к группе
 	`SortID` int(11) default '10',		-- поле для сортировки
 	PRIMARY KEY(`ID`),			-- первичный ключ
