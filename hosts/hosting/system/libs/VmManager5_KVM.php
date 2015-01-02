@@ -46,9 +46,9 @@ function VmManager5_KVM_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 			'func'			=> 'user.edit',		# Целевая функция
 			'sok'			=> 'ok',
 			'allowcreatevm'		=> 'off',		# нет ограничений, нет смысла создавать неограниченных юзеров
-			'snapshot_limit'	=> 0,
-			'isolimitsize'		=> 1024,
-			'isolimitnum'		=> 2,
+			'snapshot_limit'	=> $VPSScheme['snapshot_limit'],
+			'isolimitsize'		=> $VPSScheme['isolimitsize'],
+			'isolimitnum'		=> $VPSScheme['isolimitnum'],
 			'name'			=> $VPSOrder['Login'],
 			'passwd'		=> $VPSOrder['Password'],
 			'confirm'		=> $VPSOrder['Password'],
@@ -427,7 +427,7 @@ function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 	#-------------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$VPSOrder['Login']));
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[VmManager5_KVM_Delete]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Scheme_Change]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-------------------------------------------------------------------------------
@@ -439,7 +439,7 @@ function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 	#-------------------------------------------------------------------------------
 	$Doc = $XML['doc'];
 	if(IsSet($Doc['error']))
-		return new gException('VmManager5_KVM_Delete','Не удалось получить список виртуальных машин');
+		return new gException('VmManager5_KVM_Scheme_Change','Не удалось получить список виртуальных машин');
 	#-------------------------------------------------------------------------------
 	foreach($Doc as $VM){
 		#-------------------------------------------------------------------------------
@@ -453,7 +453,7 @@ function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 				'out'			=> 'xml',		# Формат вывода
 				'func'			=> 'vm.edit',		# Целевая функция
 				'sok'			=> 'ok',
-				'blkiotune'		=> 500,			# этого пока нет в таблицах
+				'blkiotune'		=> $VPSScheme['blkiotune'],
 				'cputune'		=> Ceil($VPSScheme['cpu']),
 				'inbound'		=> SPrintF('%u',$VPSScheme['chrate'] * 1024),
 				'outbound'		=> SPrintF('%u',$VPSScheme['chrate'] * 1024),
@@ -484,7 +484,7 @@ function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 		# меняем размер диска
 		$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm.volume','elid'=>$VM['id']));
 		if(Is_Error($Response))
-			return ERROR | @Trigger_Error('[VmManager5_KVM_Delete]: не удалось соедениться с сервером');
+			return ERROR | @Trigger_Error('[VmManager5_KVM_Scheme_Change]: не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
 		$Response = Trim($Response['Body']);
 		#-------------------------------------------------------------------------------
@@ -496,7 +496,7 @@ function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 		#-------------------------------------------------------------------------------
 		$Doc = $XML['doc'];
 		if(IsSet($Doc['error']))
-			return new gException('VmManager5_KVM_Delete','Не удалось получить список дисков виртуальных машин');
+			return new gException('VmManager5_KVM_Scheme_Change','Не удалось получить список дисков виртуальных машин');
 		#-------------------------------------------------------------------------------
 		foreach($Doc as $Volume){
 			#-------------------------------------------------------------------------------
@@ -536,8 +536,10 @@ function VmManager5_KVM_Password_Change($Settings,$Login,$Password){
 	#-----------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/
+	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
+	#-------------------------------------------------------------------------------
 	$Request = Array(
-			'authinfo'	=> SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
+			'authinfo'	=> $authinfo,
 			'out'		=> 'xml',
 			'func'		=> 'user.edit',
 	                'name'		=> $Login,
@@ -570,6 +572,61 @@ function VmManager5_KVM_Password_Change($Settings,$Login,$Password){
 	#-----------------------------------------------------------------------------
 	if(IsSet($Doc['error']))
 		return new gException('PASSWORD_CHANGE_ERROR','Не удалось изменить пароль для заказа виртуального сервера');
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
+	if(Is_Error($Response))
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Password_Change]: не удалось соедениться с сервером');
+	#-------------------------------------------------------------------------------
+	$Response = Trim($Response['Body']);
+	#-------------------------------------------------------------------------------
+	$XML = String_XML_Parse($Response);
+	if(Is_Exception($XML))
+		return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
+	#-------------------------------------------------------------------------------
+        $XML = $XML->ToArray('elem');
+	#-------------------------------------------------------------------------------
+	$Doc = $XML['doc'];
+	if(IsSet($Doc['error']))
+		return new gException('VmManager5_KVM_Password_Change','Не удалось получить список виртуальных машин');
+	#-------------------------------------------------------------------------------
+	foreach($Doc as $VM){
+		#-------------------------------------------------------------------------------
+		#Debug(SPrintF('[VmManager5_KVM_Password_Change]: VM = %s',print_r($VM,true)));
+		if(!IsSet($VM['id']))
+			continue;
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$Request = Array(
+				'authinfo'		=> $authinfo,
+				'out'			=> 'xml',		# Формат вывода
+				'func'			=> 'vm.chpasswd',	# Целевая функция
+				'sok'			=> 'ok',
+				'elid'			=> $VM['id'],
+				'password'		=> $Password,
+				'confirm'		=> $Password,
+				);
+		#-------------------------------------------------------------------------------
+		$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
+		if(Is_Error($Response))
+			return ERROR | @Trigger_Error('[VmManager5_KVM_Password_Change: не удалось соедениться с сервером');
+		#-------------------------------------------------------------------------------
+		$Response = Trim($Response['Body']);
+		#-------------------------------------------------------------------------------
+		$XML = String_XML_Parse($Response);
+		if(Is_Exception($XML))
+			return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
+		#-------------------------------------------------------------------------------
+		$XML = $XML->ToArray();
+		#-------------------------------------------------------------------------------
+		$Doc = $XML['doc'];
+		#-------------------------------------------------------------------------------
+		# не для все виртуалок можно так менять пасс
+		if(IsSet($Doc['error']))
+			Debug(SPrintF('[system/libs/VmManager5_KVM.php]: не удалось изменить пароль, возможно функция не поддерживается'));
+		#	return new gException('PASSWORD_CHANGE_ERROR','Не удалось изменить пароль для заказа VPS');
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return TRUE;
