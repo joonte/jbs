@@ -92,12 +92,13 @@ foreach($DNSmanagerOrders as $DNSmanagerOrder)
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # выдаём данные DNSmanager в ответе
-$XML = '<func name="slaveserver.edit"><arg name="username">%s</arg><arg name="password">%s</arg><arg name="url">%s</arg></func>';
+$XML = '<func name="%s"><arg name="username">%s</arg><arg name="password">%s</arg><arg name="url">%s</arg></func>';
 #-------------------------------------------------------------------------------
 $Array = Array();
 #-------------------------------------------------------------------------------
 foreach($Servers as $Server)
-	$Array[] = SPrintF($XML,$Server['Login'],$Server['Password'],$Server['Address']);
+	foreach(Array('slaveserver.edit','slave.edit') as $Func)
+		$Array[] = SPrintF($XML,$Func,$Server['Login'],$Server['Password'],$Server['Address']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Out = SPrintF('<?xml version="1.0" encoding="UTF-8"?><doc>%s</doc>',Implode('',$Array));
