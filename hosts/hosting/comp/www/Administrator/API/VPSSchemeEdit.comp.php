@@ -9,7 +9,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Args = Args();
 #-------------------------------------------------------------------------------
@@ -37,6 +37,9 @@ $vdslimit		= (integer) @$Args['vdslimit'];
 $disklimit		= (integer) @$Args['disklimit'];
 $maxdesc		= (integer) @$Args['maxdesc'];
 $blkiotune		= (integer) @$Args['blkiotune'];
+$isolimitsize		= (integer) @$Args['isolimitsize'];
+$isolimitnum		= (integer) @$Args['isolimitnum'];
+$snapshot_limit		= (integer) @$Args['snapshot_limit'];
 $maxswap		= (integer) @$Args['maxswap'];
 $traf			= (integer) @$Args['traf'];
 $chrate			= (integer) @$Args['chrate'];
@@ -112,6 +115,9 @@ $IVPSScheme = Array(
   'disklimit'           => $disklimit,
   'maxdesc'             => $maxdesc,
   'blkiotune'		=> $blkiotune,
+  'isolimitsize'	=> $isolimitsize,
+  'isolimitnum'		=> $isolimitnum,
+  'snapshot_limit'	=> $snapshot_limit,
   'maxswap'             => $maxswap,
   'traf'                => $traf,
   'chrate'              => $chrate,

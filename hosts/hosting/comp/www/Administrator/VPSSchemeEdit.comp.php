@@ -8,70 +8,75 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Args = Args();
 #-------------------------------------------------------------------------------
 $VPSSchemeID = (integer) @$Args['VPSSchemeID'];
 #-------------------------------------------------------------------------------
 if($VPSSchemeID){
-  #-----------------------------------------------------------------------------
-  $VPSScheme = DB_Select('VPSSchemes','*',Array('UNIQ','ID'=>$VPSSchemeID));
-  #-----------------------------------------------------------------------------
-  switch(ValueOf($VPSScheme)){
-    case 'error':
-      return ERROR | @Trigger_Error(500);
-    case 'exception':
-      return ERROR | @Trigger_Error(400);
-    case 'array':
-      # No more...
-    break;
-    default:
-      return ERROR | @Trigger_Error(101);
-  }
+	#-------------------------------------------------------------------------------
+	$VPSScheme = DB_Select('VPSSchemes','*',Array('UNIQ','ID'=>$VPSSchemeID));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($VPSScheme)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		# No more...
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
 }else{
-  #-----------------------------------------------------------------------------
-  $VPSScheme = Array(
-    #---------------------------------------------------------------------------
-    'GroupID'            => 1,
-    'UserID'            => 1,
-    'Name'              => 'default1',
-    'PackageID'         => 'MB500',
-    'CostDay'           => 40,
-    'CostMonth'         => 1200,
-    'CostInstall'	=> 100,
-    'ServersGroupID'    => 1,
-    'Comment'           => 'Идеальный тариф для ...',
-    'IsReselling'       => FALSE,
-    'IsActive'          => TRUE,
-    'IsProlong'         => TRUE,
-    'IsSchemeChangeable'=> TRUE,
-    'IsSchemeChange'    => TRUE,
-    'MinDaysPay'        => 31,
-    'MinDaysProlong'    => 14,
-    'MaxDaysPay'        => 1460,
-    'MaxOrders'		=> 0,
-    'SortID'            => 10,
-    'vdslimit'		=> 1,
-    'disklimit'         => 999,
-    'maxdesc'	        => 1000,
-    'blkiotune'		=> 500,
-    'maxswap'	        => 10,
-    'traf'	        => 1000000,
-    'chrate'		=> 8,
-    'QuotaUsers'	=> 20,
-    'cpu'	        => 100,
-    'ncpu'	        => 1,
-    'mem'		=> 128,
-    'bmem'		=> 128,
-    'proc'              => 64,
-    'ipalias'		=> 0,
-    'extns'		=> 'dnsprovider',
-    'limitpvtdns'	=> 256,
-    'limitpubdns'	=> 256,
-    'backup'		=> 'bmonth'
-  );
+	#-------------------------------------------------------------------------------
+	$VPSScheme = Array(
+				'GroupID'		=> 1,
+				'UserID'		=> 1,
+				'Name'			=> 'default1',
+				'PackageID'		=> 'MB500',
+				'CostDay'		=> 40,
+				'CostMonth'		=> 1200,
+				'CostInstall'		=> 100,
+				'ServersGroupID'	=> 1,
+				'Comment'		=> 'Идеальный тариф для ...',
+				'IsReselling'		=> FALSE,
+				'IsActive'		=> TRUE,
+				'IsProlong'		=> TRUE,
+				'IsSchemeChangeable'	=> TRUE,
+				'IsSchemeChange'	=> TRUE,
+				'MinDaysPay'		=> 31,
+				'MinDaysProlong'	=> 14,
+				'MaxDaysPay'		=> 1460,
+				'MaxOrders'		=> 0,
+				'SortID'		=> 10,
+				'vdslimit'		=> 1,
+				'disklimit'		=> 999,
+				'maxdesc'		=> 1000,
+				'blkiotune'		=> 500,
+				'isolimitsize'		=> 1024,
+				'isolimitnum'		=> 2,
+				'snapshot_limit'	=> 0,
+				'maxswap'		=> 10,
+				'traf'			=> 1000000,
+				'chrate'		=> 8,
+				'QuotaUsers'		=> 20,
+				'cpu'	        	=> 100,
+				'ncpu'	        	=> 1,
+				'mem'			=> 128,
+				'bmem'			=> 128,
+				'proc'			=> 64,
+				'ipalias'		=> 0,
+				'extns'			=> 'dnsprovider',
+				'limitpvtdns'		=> 256,
+				'limitpubdns'		=> 256,
+				'backup'		=> 'bmonth'
+			);
+	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $DOM = new DOM();
 #-------------------------------------------------------------------------------
@@ -82,7 +87,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Title = ($VPSSchemeID?'Редактирование тарифа виртуального сервера':'Добавление нового тарифа виртуального сервера');
+$Title = ($VPSSchemeID?SPrintF('Редактирование тарифа VPS: %s',$VPSScheme['Name']):'Добавление нового тарифа виртуального сервера');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
@@ -325,7 +330,7 @@ $Comp = Comp_Load(
     'type'  => 'text',
     'size'  => 10,
     'name'  => 'cpu',
-    'prompt'=> 'частота каждого выделенного процессора',
+    'prompt'=> 'Частота каждого выделенного процессора (в случае виртуализации KVM, это число - приоритет cgroups)',
     'value' => $VPSScheme['cpu'],
     'style' => 'width: 100%;',
   )
@@ -520,6 +525,58 @@ if(Is_Error($Comp))
 $Table[] = Array('Вес использования дискового I/O',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+		'Form/Input',
+		Array(
+			'type'  => 'text',
+			'name'  => 'isolimitsize',
+			'value' => $VPSScheme['isolimitsize'],
+			'prompt'=> 'Ограничение по суммарному объёму ISO-образов ',
+			'style' => 'width: 100%;',
+			)
+		);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Объем ISO, Mb',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+		'Form/Input',
+		Array(
+			'type'  => 'text',
+			'name'  => 'isolimitnum',
+			'value' => $VPSScheme['isolimitnum'],
+			'prompt'=> 'Ограничение по количеству ISO-образов, доступных для закачивания пользователем ',
+			'style' => 'width: 100%;',
+			)
+		);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Количество ISO',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+		'Form/Input',
+		Array(
+			'type'  => 'text',
+			'name'  => 'snapshot_limit',
+			'value' => $VPSScheme['snapshot_limit'],
+			'prompt'=> 'Максимально возможное количество снимков виртуальной машины',
+			'style' => 'width: 100%;',
+			)
+		);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Количество снимков VM',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+
+
+
+
 $Comp = Comp_Load(
   'Form/TextArea',
   Array(

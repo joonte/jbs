@@ -536,7 +536,11 @@ CREATE TABLE IF NOT EXISTS `VPSSchemes` (
 	`traf` int(6) DEFAULT '0',
 	`chrate` int(4) NOT NULL,
 	`maxdesc` int(9) NOT NULL,
+	-- VmManager
 	`blkiotune` int(9) NOT NULL,
+	`isolimitsize` INT(11) NOT NULL DEFAULT '0',
+	`isolimitnum` INT(2) NOT NULL DEFAULT '0',
+	`snapshot_limit` INT(2) NOT NULL DEFAULT '0',
 	`proc` int(4) DEFAULT '0',
 	`ipalias` int(4) NOT NULL,
 	`extns` VARCHAR(32) NOT NULL,
