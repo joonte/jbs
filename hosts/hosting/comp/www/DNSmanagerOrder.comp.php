@@ -320,42 +320,17 @@ if($StepID){
 		#-------------------------------------------------------------------------------
 		$Links[$LinkID] = &$Td;
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Prompt',$LinkID,'Кол-во места на аккаунте');
-		if(Is_Error($Comp))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		$Tr->AddChild($Td);
-		#-------------------------------------------------------------------------------
-		$Td = new Tag('TD',Array('class'=>'Head','align'=>'center'),new Tag('SPAN','Почты'),new Tag('SPAN',Array('style'=>'font-weight:bold;font-size:14px;'),'?'));
-		#-------------------------------------------------------------------------------
-		$Links[$LinkID] = &$Td;
-		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Prompt',$LinkID,'Кол-во почтовых ящиков');
-		#-------------------------------------------------------------------------------
-		if(Is_Error($Comp))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		$Tr->AddChild($Td);
 		#-------------------------------------------------------------------------------
 		$Td = new Tag('TD',Array('class'=>'Head','align'=>'center'),new Tag('SPAN','Доменов'),new Tag('SPAN',Array('style'=>'font-weight:bold;font-size:14px;'),'?'));
 		#-------------------------------------------------------------------------------
 		$Links[$LinkID] = &$Td;
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Prompt',$LinkID,'Кол-во дополнительных доменов');
+		$Comp = Comp_Load('Form/Prompt',$LinkID,'Кол-во доменов которые можно разместить на вторичном DNS сервере');
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		$Tr->AddChild($Td);
 		#-------------------------------------------------------------------------------
-		$Td = new Tag('TD',Array('class'=>'Head','align'=>'center'),new Tag('SPAN','Баз'),new Tag('SPAN',Array('style'=>'font-weight:bold;font-size:14px;'),'?'));
-		#-------------------------------------------------------------------------------
-		$Links[$LinkID] = &$Td;
-		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Prompt',$LinkID,'Кол-во баз данных');
-		if(Is_Error($Comp))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		$Tr->AddChild($Td);
 		#-------------------------------------------------------------------------------
 		UnSet($Links[$LinkID]);
 		#-------------------------------------------------------------------------------
@@ -393,7 +368,7 @@ if($StepID){
 			if(Is_Error($CostMonth))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$Rows[] = new Tag('TR',new Tag('TD',Array('width'=>20),$Comp),new Tag('TD',Array('class'=>'Comment'),$DNSmanagerScheme['Name']),new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth),new Tag('TD',Array('class'=>'Standard','align'=>'right')),new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DNSmanagerScheme['DomainLimit']));
+			$Rows[] = new Tag('TR',new Tag('TD',Array('width'=>20),$Comp),new Tag('TD',Array('class'=>'Comment'),$DNSmanagerScheme['Name']),new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth),new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DNSmanagerScheme['DomainLimit']));
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
