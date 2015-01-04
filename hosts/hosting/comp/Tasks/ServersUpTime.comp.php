@@ -19,7 +19,7 @@ if(!$Settings['IsActive'])
 	return 3600;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Servers = DB_Select('Servers',Array('ID','Address','Port','Monitoring'),Array('SortOn'=>'Address'));
+$Servers = DB_Select('Servers',Array('ID','Address','Port','Monitoring'),Array('SortOn'=>Array('ServersGroupID','Address')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Servers)){
 case 'error':
