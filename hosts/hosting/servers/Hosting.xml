@@ -9,6 +9,7 @@
 		<Type>Select</Type>
 		<Options>
 			<IspManager4>IspManager4</IspManager4>
+			<IspManager5>IspManager5</IspManager5>
 			<DirectAdmin>DirectAdmin</DirectAdmin>
 			<Plesk>Plesk</Plesk>
 			<Cpanel>Cpanel</Cpanel>
@@ -22,7 +23,7 @@
 			<prompt>Система управления используемая на сервере</prompt>
 		</Attribs>
 		<IsDuty>1</IsDuty>
-		<Value>IspManager4</Value>
+		<Value>IspManager5</Value>
 	</SystemID>
 	<!-- *********************************************************************** -->
 	<IP>

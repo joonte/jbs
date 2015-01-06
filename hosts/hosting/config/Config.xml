@@ -98,9 +98,18 @@
 						<Protocol>ssl</Protocol>
 						<Theme>sirius</Theme>
 						<Language>ru</Language>
-						<Url>https://isp.su:1500/</Url>
+						<Url>https://srv1.isp.su:1500/</Url>
 					</Settings>
 				</IspManager4>
+                                <IspManager5>
+					<Settings>
+						<Port>1500</Port>
+						<Protocol>ssl</Protocol>
+						<Theme>Orion</Theme>
+						<Language>ru</Language>
+						<Url>https://s01.isp.su:1500/ispmgr</Url>
+					</Settings>
+				</IspManager5>
 				<!-- ********************************************************************* -->
 				<Plesk>
 					<Settings>
