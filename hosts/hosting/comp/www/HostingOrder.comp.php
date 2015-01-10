@@ -103,7 +103,7 @@ if($StepID){
 		$Table[] = Array('Доменное имя',($Domain)?$Domain:'без домена');
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Servers = DB_Select('Servers',Array('ID','Params'),Array('Where'=>SPrintF('`ServersGroupID` = (SELECT `ServersGroupID` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = %u)',$HostingSchemeID),'SortOn'=>'Address'));
+		$Servers = DB_Select('Servers',Array('ID','Params'),Array('Where'=>SPrintF('`ServersGroupID` = (SELECT `ServersGroupID` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = %u) AND `IsActive` = "yes"',$HostingSchemeID),'SortOn'=>'Address'));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($Servers)){
 		case 'error':
@@ -123,7 +123,7 @@ if($StepID){
 				if(!IsSet($Array[$Server['Params']['ServerAttrib']]))
 					$Array[$Server['Params']['ServerAttrib']] = $Server['Params']['ServerAttrib'];
 		#-------------------------------------------------------------------------------
-		if(SizeOf($Array) < 1){
+		if(SizeOf($Array) < 2){
 			#-------------------------------------------------------------------------------
 			$DOM->AddAttribs('Body',Array('onload'=>'HostingOrder();'));
 			#-------------------------------------------------------------------------------

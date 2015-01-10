@@ -109,7 +109,7 @@ if($HostingScheme['HardServerID']){
 	#-------------------------------------------------------------------------------
 	if($ServerAttrib){
 		#-------------------------------------------------------------------------------
-		$Servers = DB_Select('Servers',Array('ID','Params'),Array('Where'=>SPrintF('`ServersGroupID` = %u',$HostingScheme['ServersGroupID']),'SortOn'=>'Address'));
+		$Servers = DB_Select('Servers',Array('ID','Params'),Array('Where'=>SPrintF('`ServersGroupID` = %u AND `IsActive` = "yes"',$HostingScheme['ServersGroupID']),'SortOn'=>'Address'));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($Servers)){
 		case 'error':
