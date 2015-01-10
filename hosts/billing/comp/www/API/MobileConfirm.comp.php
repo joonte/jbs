@@ -72,6 +72,7 @@ if($Mobile){
     #-------------------------------------------------------------------------------
     $Confirm = rand(100000, 999999);
     CacheManager::add($CacheID, SPrintF('%s%s',$Confirm,$Mobile), 10*24*3600);
+    Debug(SPrintF('[comp/www/API/MobileConfirm]: confirm code = %s',$Confirm));
     #-------------------------------------------------------------------------------
     $Message = SPrintF('Ваш проверочный код: %s%s',$Confirm,($ServerSettings['Params']['CutSign'])?'':SPrintF('\r\n%s',$Executor['Sign']));
     $Comp = Comp_Load('Tasks/SMS',NULL,$Mobile,$Message,$GLOBALS['__USER']['ID'],TRUE,TRUE);
