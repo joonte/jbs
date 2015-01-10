@@ -407,7 +407,7 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 			'ip'				=> $IP,		# IP-адрес
 			'email'				=> $Email,
 			#-------------------------------------------------------------------------------
-			'limit_quota'			=> $HostingScheme['QuotaDisk'],
+			'limit_quota'			=> ($HostingScheme['QuotaDisk'])?$HostingScheme['QuotaDisk']:'1',
 			'limit_cgi'			=> ($HostingScheme['IsCGIAccess']?'on':'off'),
 			'limit_db'			=> $HostingScheme['QuotaDBs'],
 			'limit_db_users'		=> $HostingScheme['QuotaUsersDBs'],
@@ -416,7 +416,7 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 			'limit_emaildomains_enabled'	=> ($HostingScheme['QuotaEmailDomains']?'on':'off'),
 			'limit_emails'			=> $HostingScheme['QuotaEmail'],
 			'limit_ftp_users'		=> $HostingScheme['QuotaFTP'],
-			'limit_php_mode'		=> ($HostingScheme['IsPHPModAccess']?'php_mode_mod':'off'),
+			'limit_php_mode'		=> 'php_mode_mod',
 			'limit_php_mode_cgi'		=> ($HostingScheme['IsPHPCGIAccess']?'on':'off'),
 			'limit_php_mode_mod'		=> ($HostingScheme['IsPHPModAccess']?'on':'off'),
 			'limit_shell'			=> ($HostingScheme['IsShellAccess']?'on':'off'),
@@ -701,7 +701,7 @@ function IspManager5_Scheme_Change($Settings,$Login,$HostingScheme){
 			'name'				=> $Login, # Имя пользователя (реселлера)
 			'ip'				=> $Settings['Params']['IP'], # IP-адрес
 			#-------------------------------------------------------------------------------
-			'limit_quota'			=> $HostingScheme['QuotaDisk'],
+			'limit_quota'			=> ($HostingScheme['QuotaDisk'])?$HostingScheme['QuotaDisk']:'1',
 			'limit_cgi'			=> ($HostingScheme['IsCGIAccess']?'on':'off'),
 			'limit_db'			=> $HostingScheme['QuotaDBs'],
 			'limit_db_users'		=> $HostingScheme['QuotaUsersDBs'],
@@ -710,7 +710,7 @@ function IspManager5_Scheme_Change($Settings,$Login,$HostingScheme){
 			'limit_emaildomains_enabled'	=> ($HostingScheme['QuotaEmailDomains']?'on':'off'),
 			'limit_emails'			=> $HostingScheme['QuotaEmail'],
 			'limit_ftp_users'		=> $HostingScheme['QuotaFTP'],
-			'limit_php_mode'		=> ($HostingScheme['IsPHPModAccess']?'php_mode_mod':'off'),
+			'limit_php_mode'		=> 'php_mode_mod',
 			'limit_php_mode_cgi'		=> ($HostingScheme['IsPHPCGIAccess']?'on':'off'),
 			'limit_php_mode_mod'		=> ($HostingScheme['IsPHPModAccess']?'on':'off'),
 			'limit_shell'			=> ($HostingScheme['IsShellAccess']?'on':'off'),
