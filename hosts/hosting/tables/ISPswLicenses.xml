@@ -85,7 +85,7 @@
  <After>
   <Delete>
    <Args>
-    <Comment>Выбранные заказы</Comment>
+    <Comment>Выбранные лицензии</Comment>
     <Send>
      <TableID>ISPswLicenses</TableID>
     </Send>
