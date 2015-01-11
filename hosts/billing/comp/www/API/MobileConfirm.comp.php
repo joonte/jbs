@@ -70,7 +70,7 @@ if($Mobile){
     if (!Is_Array($Executor))
 	return ERROR | @Trigger_Error(500);
     #-------------------------------------------------------------------------------
-    $Confirm = rand(100000, 999999);
+    $Confirm = rand(1000, 9999);
     CacheManager::add($CacheID, SPrintF('%s%s',$Confirm,$Mobile), 10*24*3600);
     Debug(SPrintF('[comp/www/API/MobileConfirm]: confirm code = %s',$Confirm));
     #-------------------------------------------------------------------------------
@@ -90,7 +90,7 @@ if($Mobile){
     if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
     #-------------------------------------------------------------------------------
-    CacheManager::add($CacheID2, 'block', IntVal($Config['Interface']['Notes']['User']['MobileConfirmation']['ConfirmInterval']) * 20);
+    CacheManager::add($CacheID2, 'block', IntVal($Config['Interface']['Notes']['User']['MobileConfirmation']['ConfirmInterval']));
     #-------------------------------------------------------------------------------
     return Array('Status' => 'Ok');
     #-------------------------------------------------------------------------------
