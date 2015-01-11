@@ -62,18 +62,6 @@
 		<Value />
 	</BalanceLowLimit>
 	<!-- *********************************************************************** -->
-	<Interval>
-		<Check>/^[0-9]{1,4}$/u</Check>
-		<Comment>Интервал</Comment>
-		<Type>Input</Type>
-		<Attribs>
-			<prompt>Через какой период времени можно отправлять новую SMS с кодом подтверждения</prompt>
-			<type>text</type>
-			<style>width: 100%;</style>
-		</Attribs>
-		<IsDuty>1</IsDuty>
-		<Value>300</Value>
-	</Interval>
 	<!-- *********************************************************************** -->
         <CutSign>
 		<Check>Char</Check>

@@ -1471,6 +1471,7 @@
 			<MobileConfirmation>
 				<MobileRequire>1</MobileRequire>
 				<MobileConfirmRequire>1</MobileConfirmRequire>
+				<ConfirmInterval>300</ConfirmInterval>
 			</MobileConfirmation>
 			<!-- *********************************************************************** -->
 			<Invoices>

@@ -31,7 +31,7 @@ default:
 $Config = Config();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(!IsSet($ServerSettings['Params']['Interval']))
+if(!IsSet($Config['Interface']['Notes']['User']['MobileConfirmation']['ConfirmInterval']))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ if($Mobile){
     $Result2 = CacheManager::get($CacheID2);
     if($Result2 == 'block'){
       #-------------------------------------------------------------------------------
-      $Comp = Comp_Load('Formats/Date/Remainder',$ServerSettings['Params']['Interval']);
+      $Comp = Comp_Load('Formats/Date/Remainder',$Config['Interface']['Notes']['User']['MobileConfirmation']['ConfirmInterval']);
       if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------------
@@ -90,7 +90,7 @@ if($Mobile){
     if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
     #-------------------------------------------------------------------------------
-    CacheManager::add($CacheID2, 'block', IntVal($ServerSettings['Params']['Interval']) * 20);
+    CacheManager::add($CacheID2, 'block', IntVal($Config['Interface']['Notes']['User']['MobileConfirmation']['ConfirmInterval']) * 20);
     #-------------------------------------------------------------------------------
     return Array('Status' => 'Ok');
     #-------------------------------------------------------------------------------
