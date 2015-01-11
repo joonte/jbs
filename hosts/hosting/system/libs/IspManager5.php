@@ -915,6 +915,14 @@ function IspManager5_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
         $__args_types = Array('array','string','string','string','string','string');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
         /****************************************************************************/
+	$Version = IspManager5_Check_Version($Settings);
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[IspManager5_AddIP]: ISPmanager = %s',$Version));
+	#-------------------------------------------------------------------------------
+	if($Version == 'Lite')
+		return new gException('LITE_NOT_SUPPORT_MANAGE_IP_ADDRESS_LIST','Версия ISPmanager Lite 5 не подерживает управление IP адресами');
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
         $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
         #-----------------------------------------------------------------------------
         $Http = IspManager5_Build_HTTP($Settings);
@@ -962,12 +970,20 @@ function IspManager5_DeleteIP($Settings,$ExtraIP){
 	/****************************************************************************/
         $__args_types = Array('array','string');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
-        #Debug("ExtraIP order ID = " . $ID);
 	/****************************************************************************/
+	$Version = IspManager5_Check_Version($Settings);
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[IspManager5_AddIP]: ISPmanager = %s',$Version));
+	#-------------------------------------------------------------------------------
+	if($Version == 'Lite')
+		return new gException('LITE_NOT_SUPPORT_MANAGE_IP_ADDRESS_LIST','Версия ISPmanager Lite 5 не подерживает управление IP адресами');
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
 	$Http = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
+	#Debug("ExtraIP order ID = " . $ID);
         # Логика.
         # 1. определяем число доменов на этом адресе.
         # 2. если доменов больше нуля - переносим их на шаред адрес
