@@ -31,13 +31,7 @@ function VmManager5_KVM_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 	#-------------------------------------------------------------------------------
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
-			'Address'  => $Settings['Params']['IP'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Hidden'   => $authinfo
-			);
+	$Http = VmManager5_KVM_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	# создаём юзера
 	$Request = Array(
@@ -174,13 +168,7 @@ function VmManager5_KVM_Active($Settings,$Login){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
-			'Address'  => $Settings['Params']['IP'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Hidden'   => $authinfo
-			);
+	$Http = VmManager5_KVM_Build_HTTP($Settings);
 	#------------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
 	if(Is_Error($Response))
@@ -238,13 +226,7 @@ function VmManager5_KVM_Suspend($Settings,$Login,$VPSScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
-			'Address'  => $Settings['Params']['IP'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Hidden'   => $authinfo
-			);
+	$Http = VmManager5_KVM_Build_HTTP($Settings);
 	#------------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
 	if(Is_Error($Response))
@@ -302,13 +284,7 @@ function VmManager5_KVM_Delete($Settings,$Login){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
-			'Address'  => $Settings['Params']['IP'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Hidden'   => $authinfo
-			);
+	$Http = VmManager5_KVM_Build_HTTP($Settings);
 	#------------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
 	if(Is_Error($Response))
@@ -417,13 +393,7 @@ function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
-			'Address'  => $Settings['Params']['IP'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Hidden'   => $authinfo
-			);
+	$Http = VmManager5_KVM_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$VPSOrder['Login']));
 	if(Is_Error($Response))
@@ -538,6 +508,8 @@ function VmManager5_KVM_Password_Change($Settings,$Login,$Password){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
+	$Http = VmManager5_KVM_Build_HTTP($Settings);
+	#-------------------------------------------------------------------------------
 	$Request = Array(
 			'authinfo'	=> $authinfo,
 			'out'		=> 'xml',
@@ -548,14 +520,6 @@ function VmManager5_KVM_Password_Change($Settings,$Login,$Password){
 	                'allowcreatevm'	=> 'off',
 	);
         #---------------------------------------------------------------------------
-        $Http = Array(
-			'Address'	=> $Settings['Params']['IP'],
-			'Port'		=> $Settings['Port'],
-			'Host'		=> $Settings['Address'],
-			'Protocol'	=> $Settings['Protocol'],
-			'Hidden'	=> SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
-			);
-	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_KVM_Password_Change]: не удалось соедениться с сервером');
@@ -645,20 +609,9 @@ function VmManager5_KVM_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = Array(
-		#---------------------------------------------------------------------------
-		'Address'  => $Settings['Params']['IP'],
-		'Port'     => $Settings['Port'],
-		'Host'     => $Settings['Address'],
-		'Protocol' => $Settings['Protocol'],
-		'Hidden'   => $authinfo
-	);
+	$Http = VmManager5_KVM_Build_HTTP($Settings);
         #-----------------------------------------------------------------------------
-        if($AddressType == "IPv4"){
-                $AddrType = "auto";
-        }else{
-                $AddrType = "auto6";
-        }
+	$AddrType = (($AddressType == "IPv4")?'auto':'auto6');
         #-----------------------------------------------------------------------------
         $Request = Array(
                 'authinfo'      => $authinfo,
@@ -705,21 +658,16 @@ function VmManager5_KVM_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 function VmManager5_KVM_DeleteIP($Settings,$ExtraIP){
-	/****************************************************************************/
+	/******************************************************************************/
         $__args_types = Array('array','string');
+	#-------------------------------------------------------------------------------
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
         #Debug("ExtraIP order ID = " . $ID);
-	/****************************************************************************/
+	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
-	#-----------------------------------------------------------------------------
-	$Http = Array(
-		#---------------------------------------------------------------------------
-		'Address'  => $Settings['Params']['IP'],
-		'Port'     => $Settings['Port'],
-		'Host'     => $Settings['Address'],
-		'Protocol' => $Settings['Protocol'],
-		'Hidden'   => $authinfo
-	);
+	#-------------------------------------------------------------------------------
+	$Http = VmManager5_KVM_Build_HTTP($Settings);
+	#-------------------------------------------------------------------------------
         # func=vds.ip.delete&elid=91.227.18.39&plid=91.227.18.7
         $Request = Array(
                 'authinfo'      => $authinfo,
@@ -756,24 +704,17 @@ function VmManager5_KVM_DeleteIP($Settings,$ExtraIP){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 function VmManager5_KVM_MainUsage($Settings){
-	/****************************************************************************/
+	/******************************************************************************/
         $__args_types = Array('array');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
-	/****************************************************************************/
+	/******************************************************************************/
 	# TODO: надо сделать
 	return rand(1,10);
-
+	#-------------------------------------------------------------------------------
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
-	#-----------------------------------------------------------------------------
-	$Http = Array(
-		#---------------------------------------------------------------------------
-		'Address'  => $Settings['Params']['IP'],
-		'Port'     => $Settings['Port'],
-		'Host'     => $Settings['Address'],
-		'Protocol' => $Settings['Protocol'],
-		'Hidden'   => $authinfo
-	);
-        # 
+	#-------------------------------------------------------------------------------
+	$Http = VmManager5_KVM_Build_HTTP($Settings);
+	#-------------------------------------------------------------------------------
         $Request = Array(
                 'authinfo'      => $authinfo,
                 'func'          => 'mainusage',
@@ -832,14 +773,7 @@ function VmManager5_KVM_CheckIsActive($Settings,$Login){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = Array(
-		#---------------------------------------------------------------------------
-		'Address'  => $Settings['Params']['IP'],
-		'Port'     => $Settings['Port'],
-		'Host'     => $Settings['Address'],
-		'Protocol' => $Settings['Protocol'],
-		'Hidden'   => $authinfo
-	);
+	$Http = VmManager5_KVM_Build_HTTP($Settings);
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm'));
 	if(Is_Error($Response))
@@ -883,13 +817,7 @@ function VmManager5_KVM_Reboot($Settings,$Login){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
-			'Address'  => $Settings['Params']['IP'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Hidden'   => $authinfo
-			);
+	$Http = VmManager5_KVM_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
 	if(Is_Error($Response))
@@ -944,20 +872,13 @@ function VmManager5_KVM_Reboot($Settings,$Login){
 #-------------------------------------------------------------------------------
 function VmManager5_KVM_Get_Users($Settings){
 	/****************************************************************************/
-	$__args_types = Array('array','string');
+	$__args_types = Array('array');
 	#-----------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = Array(
-	#---------------------------------------------------------------------------
-		'Address'  => $Settings['Params']['IP'],
-		'Port'     => $Settings['Port'],
-		'Host'     => $Settings['Address'],
-		'Protocol' => $Settings['Protocol'],
-		'Hidden'   => $authinfo
-	);
+	$Http = VmManager5_KVM_Build_HTTP($Settings);
 	#-----------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
 	if(Is_Error($Response))
@@ -995,7 +916,103 @@ function VmManager5_KVM_Get_Users($Settings){
 	return $Result;
 	#-----------------------------------------------------------------------------
 }
+
 #-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+function VmManager5_KVM_Get_DiskTemplates($Settings){
+	/****************************************************************************/
+	$__args_types = Array('array');
+	#-----------------------------------------------------------------------------
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/****************************************************************************/
+	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
+	#-----------------------------------------------------------------------------
+	$Http = VmManager5_KVM_Build_HTTP($Settings);
+	#-----------------------------------------------------------------------------
+        $Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'osmgr'));
+	if(Is_Error($Response))
+		return ERROR | @Trigger_Error('[VmManager5_Get_DiskTemplates]: не удалось соедениться с сервером');
+	#-----------------------------------------------------------------------------
+	$Response = Trim($Response['Body']);
+	#-----------------------------------------------------------------------------
+	$XML = String_XML_Parse($Response);
+	if(Is_Exception($XML))
+		return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
+	#-----------------------------------------------------------------------------
+	$XML = $XML->ToArray('elem');
+	#-----------------------------------------------------------------------------
+	$Templates = $XML['doc'];
+	#-----------------------------------------------------------------------------
+	if(IsSet($Templates['error']))
+		return new gException('GET_TEMPLATES_ERROR',$Templates['error']);
+	#-----------------------------------------------------------------------------
+	$Result = Array();
+	#-----------------------------------------------------------------------------
+	foreach($Templates as $Template){
+		#-----------------------------------------------------------------------------
+		if(!IsSet($Template['id']))
+			continue;
+		#-----------------------------------------------------------------------------
+		if(!IsSet($Template['name']))
+			continue;
+		#-----------------------------------------------------------------------------
+		if($Template['installed'] != 'ok')
+			continue;
+		#-----------------------------------------------------------------------------
+		if($Template['restrict'] != 'off')
+			continue;
+		#-----------------------------------------------------------------------------
+		$Result[] = $Template['name'];
+		#-----------------------------------------------------------------------------
+	}
+	#-----------------------------------------------------------------------------
+	#-----------------------------------------------------------------------------
+	return $Result;
+	#-----------------------------------------------------------------------------
+	#-----------------------------------------------------------------------------
+}
+
+
+
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+# внутренние функции
+
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+function VmManager5_KVM_Build_HTTP($Settings){
+	/******************************************************************************/
+	$__args_types = Array('array');
+	#-----------------------------------------------------------------------------
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/******************************************************************************/
+	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
+	#-------------------------------------------------------------------------------
+	$Http = Array(
+			'Address'	=> $Settings['Params']['IP'],
+			'Port'		=> $Settings['Port'],
+			'Host'		=> $Settings['Address'],
+			'Protocol'	=> $Settings['Protocol'],
+			'Hidden'	=> $authinfo,
+			'IsLoggin'	=> FALSE
+			);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return $Http;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 ?>

@@ -1360,6 +1360,10 @@
     <ExcludeServerAccounts />
    </CheckUsersOnVPSServersSettings>
    <!-- ********************************************************************* -->
+   <UpdateDiskTemplatesSettings>
+    <IsActive>1</IsActive>
+   </UpdateDiskTemplatesSettings>
+   <!-- ********************************************************************* -->
    <DiskUsageNotifiesSettings>
     <IsActive>1</IsActive>
     <IsNotify>1</IsNotify>
@@ -1382,6 +1386,7 @@
     <CheckBalance>Проверка балланса регистраторов, поставщиков</CheckBalance>
     <ISPswCheckLicenses>Синхронизация лицензий с ISPsystem</ISPswCheckLicenses>
     <CheckUsersOnVPSServers>Синхронизация аккаунтов биллинга и серверов VPS</CheckUsersOnVPSServers>
+    <UpdateDiskTemplates>Обновление шаблонов дисков на VPS</UpdateDiskTemplates>
     <CheckUsersOnHostingServers>Синхронизация аккаунтов биллинга и серверов хостинга</CheckUsersOnHostingServers>
     <DiskUsageNotifies>Уведомление о заканчивающемся месте на хостинге</DiskUsageNotifies>
     <EmailBoxesNotifies>Уведомление o заканчивающейся квоте почтовых ящиков</EmailBoxesNotifies>
