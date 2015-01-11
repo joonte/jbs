@@ -44,15 +44,39 @@ $Config = Config();
 #-------------------------------------------------------------------------------
 if($StepID){
 	#-------------------------------------------------------------------------------
+	if(!$HostingSchemeID)
+		return new gException('HOSTING_SCHEME_NOT_DEFINED','Тарифный план не выбран');
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('name'=>'ContractID','type'=>'hidden','value'=>$ContractID));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Form->AddChild($Comp);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if(!$HostingSchemeID)
+		return new gException('HOSTING_SCHEME_NOT_DEFINED','Тарифный план не выбран');
+	#-------------------------------------------------------------------------------
+	$HostingScheme = DB_Select('HostingSchemes',Array('ID','Name','IsActive','HardServerID'),Array('UNIQ','ID'=>$HostingSchemeID));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($HostingScheme)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if(!$HostingScheme['IsActive'])
+		return new gException('SCHEME_NOT_ACTIVE','Выбранный тарифный план заказа хостинга не активен');
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	if($StepID == 2 || !$Domain){
-		#-------------------------------------------------------------------------------
-		if(!$HostingSchemeID)
-			return new gException('HOSTING_SCHEME_NOT_DEFINED','Тарифный план не выбран');
-		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Input',Array('name'=>'ContractID','type'=>'hidden','value'=>$ContractID));
-		if(Is_Error($Comp))
-			return ERROR | @Trigger_Error(500);
-		$Form->AddChild($Comp);
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load('Form/Input',Array('name'=>'HostingSchemeID','type'=>'hidden','value'=>$HostingSchemeID));
 		if(Is_Error($Comp))
@@ -123,7 +147,7 @@ if($StepID){
 				if(!IsSet($Array[$Server['Params']['ServerAttrib']]))
 					$Array[$Server['Params']['ServerAttrib']] = $Server['Params']['ServerAttrib'];
 		#-------------------------------------------------------------------------------
-		if(SizeOf($Array) < 2){
+		if(SizeOf($Array) < 2 || IntVal($HostingScheme['HardServerID']) > 0){
 			#-------------------------------------------------------------------------------
 			$DOM->AddAttribs('Body',Array('onload'=>'HostingOrder();'));
 			#-------------------------------------------------------------------------------
@@ -184,12 +208,6 @@ if($StepID){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Input',Array('name'=>'ContractID','type'=>'hidden','value'=>$ContractID));
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	$Form->AddChild($Comp);
-	#-------------------------------------------------------------------------------
 	$Regulars = Regulars();
 	#-------------------------------------------------------------------------------
 	$Domain = Mb_StrToLower($Domain,'UTF-8');
@@ -199,26 +217,8 @@ if($StepID){
 	#-------------------------------------------------------------------------------
 	if(!Preg_Match($Regulars['Domain'],$Domain))
 		return new gException('WRONG_DOMAIN','Неверный домен');
+
 	#-------------------------------------------------------------------------------
-	if(!$HostingSchemeID)
-		return new gException('HOSTING_SCHEME_NOT_DEFINED','Тарифный план не выбран');
-	#-------------------------------------------------------------------------------
-	$HostingScheme = DB_Select('HostingSchemes',Array('ID','Name','IsActive'),Array('UNIQ','ID'=>$HostingSchemeID));
-	#-------------------------------------------------------------------------------
-	switch(ValueOf($HostingScheme)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		return ERROR | @Trigger_Error(400);
-	case 'array':
-		break;
-	default:
-		return ERROR | @Trigger_Error(101);
-	}
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	if(!$HostingScheme['IsActive'])
-		return new gException('SCHEME_NOT_ACTIVE','Выбранный тарифный план заказа хостинга не активен');
 	#-------------------------------------------------------------------------------
 	$Table = Array(Array('Тарифный план',$HostingScheme['Name']));
 	#-------------------------------------------------------------------------------
