@@ -109,18 +109,6 @@ if($StepID){
 		$Form->AddChild($Comp);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$HostingScheme = DB_Select('HostingSchemes',Array('ID','Name'),Array('UNIQ','ID'=>$HostingSchemeID));
-		switch(ValueOf($HostingScheme)){
-		case 'error':
-			return ERROR | @Trigger_Error(500);
-		case 'exception':
-			return new gException('SCHEME_NOT_FOUND','Выбранный тариф не найден');
-		case 'array':
-			break;
-		default:
-			return ERROR | @Trigger_Error(101);
-		}
-		#-------------------------------------------------------------------------------
 		$Table = Array('Дополнительные параметры заказа');
 		$Table[] = Array('Тарифный план',$HostingScheme['Name']);
 		#-------------------------------------------------------------------------------
