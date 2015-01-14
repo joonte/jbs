@@ -207,7 +207,7 @@
  </IsActive>
  <!-- ********************************************************************** -->
 	<Orders>
-		<Head>Кол. зак.</Head>
+		<Head>Зак.</Head>
 		<Prompt>Кол-во активных заказов данного тарифа</Prompt>
 		<Alias>(SELECT COUNT(*) FROM `VPSOrders` WHERE `VPSSchemes`.`ID` = `VPSOrders`.`SchemeID` AND `VPSOrders`.`StatusID` = 'Active')</Alias>
 		<Attribs>
@@ -234,7 +234,6 @@
  <ListElement>disklimit</ListElement>
  <ListElement>cpu</ListElement>
  <ListElement>mem</ListElement>
- <ListElement>proc</ListElement>
  <ListElement>IsActive</ListElement>
  <ListElement>OrderLink</ListElement>
  <ListElement>Orders</ListElement>

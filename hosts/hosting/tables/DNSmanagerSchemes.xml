@@ -191,7 +191,7 @@
 		</IsActive>
 		<!-- ********************************************************************** -->
 		<Orders>
-			<Head>Кол. зак.</Head>
+			<Head>Зак.</Head>
 			<Prompt>Кол-во активных заказов данного тарифа</Prompt>
 			<Alias>(SELECT COUNT(*) FROM `DNSmanagerOrders` WHERE `DNSmanagerSchemes`.`ID` = `DNSmanagerOrders`.`SchemeID` AND `DNSmanagerOrders`.`StatusID` = 'Active')</Alias>
 			<Attribs>

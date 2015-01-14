@@ -161,7 +161,7 @@
  </IsActive>
  <!-- ********************************************************************** -->
 	<Orders>
-		<Head>Кол. зак.</Head>
+		<Head>Зак.</Head>
 		<Prompt>Кол-во активных заказов данного тарифа</Prompt>
 		<Alias>(SELECT COUNT(*) FROM `ISPswOrders` WHERE `ISPswSchemes`.`ID` = `ISPswOrders`.`SchemeID` AND `ISPswOrders`.`StatusID` = 'Active')</Alias>
 		<Attribs>

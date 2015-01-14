@@ -164,7 +164,7 @@
  </IsActive>
  <!-- ********************************************************************** -->
 	<Orders>
-		<Head>Кол. зак.</Head>
+		<Head>Зак.</Head>
 		<Prompt>Кол-во активных заказов данного тарифа</Prompt>
 		<Alias>(SELECT COUNT(*) FROM `DomainsOrders` WHERE `DomainsSchemes`.`ID` = `DomainsOrders`.`SchemeID` AND `DomainsOrders`.`StatusID` = 'Active')</Alias>
 		<Attribs>

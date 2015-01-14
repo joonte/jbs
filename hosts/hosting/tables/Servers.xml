@@ -169,7 +169,7 @@
 	</IsActive>
 	<!-- ********************************************************************** -->
 	<Orders>
-		<Head>Кол. зак.</Head>
+		<Head>Зак.</Head>
 		<Prompt>Кол-во заказов находящихся на данном сервере</Prompt>
 		<Alias>(SELECT COUNT(*) FROM `Orders` WHERE `Servers`.`ID` = `Orders`.`ServerID`)</Alias>
 		<Attribs>

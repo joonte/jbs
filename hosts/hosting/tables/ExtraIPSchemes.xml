@@ -157,7 +157,7 @@
  </IsActive>
  <!-- ********************************************************************** -->
 	<Orders>
-		<Head>Кол. зак.</Head>
+		<Head>Зак.</Head>
 		<Prompt>Кол-во активных заказов данного тарифа</Prompt>
 		<Alias>(SELECT COUNT(*) FROM `ExtraIPOrders` WHERE `ExtraIPSchemes`.`ID` = `ExtraIPOrders`.`SchemeID` AND `ExtraIPOrders`.`StatusID` = 'Active')</Alias>
 		<Attribs>

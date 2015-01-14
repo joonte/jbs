@@ -219,7 +219,7 @@
  </IsActive>
 		<!-- ********************************************************************** -->
 		<Orders>
-			<Head>Кол. зак.</Head>
+			<Head>Зак.</Head>
 			<Prompt>Кол-во активных заказов данного тарифа</Prompt>
 			<Alias>(SELECT COUNT(*) FROM `HostingOrders` WHERE `HostingSchemes`.`ID` = `HostingOrders`.`SchemeID` AND `HostingOrders`.`StatusID` = 'Active')</Alias>
 			<Attribs>

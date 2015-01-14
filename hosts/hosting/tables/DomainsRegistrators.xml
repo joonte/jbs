@@ -86,7 +86,7 @@
  </Login>
  <!-- ********************************************************************** -->
 	<Orders>
-		<Head>Кол. зак.</Head>
+		<Head>Зак.</Head>
 		<Prompt>Кол-во активных заказов данного регистратора</Prompt>
 		<Alias>(SELECT COUNT(*) FROM `DomainsOrders` WHERE `DomainsOrders`.`SchemeID` IN (SELECT `ID` FROM  `DomainsSchemes` WHERE `RegistratorID` = `Registrators`.`ID`))</Alias>
 		<Attribs>
