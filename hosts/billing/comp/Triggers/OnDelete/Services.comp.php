@@ -30,7 +30,7 @@ if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Count)
-	return new gException('SERVICE_INVOICES_EXISTS',SPrintF('Услуга (%s) не может быть удалена, т.к. на было выписано %u счетов',$Service['Name'],$Count));
+	return new gException('SERVICE_INVOICES_EXISTS',SPrintF('Услуга (%s) не может быть удалена, т.к. на неё было выписано %u счетов',$Service['Name'],$Count));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Count = DB_Count('ServersGroups',Array('Where'=>SPrintF('`ServiceID` = %u',$Service['ID'])));
