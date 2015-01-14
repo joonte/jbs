@@ -151,7 +151,7 @@ function IspSoft_Create($Settings,$ISPswScheme){
 			'period'	=> $ISPswScheme['period'],
 			'addon'		=> 1,
 			'IP'		=> $ISPswScheme['IP'],
-			'elid'		=> $Doc['id'],
+			'elid'		=> $Doc['item.id'],
 			'IsInternal'	=> $ISPswScheme['IsInternal']?'yes':'no',
 			'IsUsed'	=> 'yes',
 			'StatusID'	=> 'Active',
