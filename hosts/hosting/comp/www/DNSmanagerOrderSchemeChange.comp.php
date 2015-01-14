@@ -15,7 +15,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','lib
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','UserID','SchemeID','(SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`)) AS `ServersGroupID`','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`)) AS `Params`','StatusID');
+$Columns = Array('ID','UserID','SchemeID','ServerID','(SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`) AS `ServersGroupID`','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`) AS `Params`','StatusID');
 #-------------------------------------------------------------------------------
 $DNSmanagerOrder = DB_Select('DNSmanagerOrdersOwners',$Columns,Array('UNIQ','ID'=>$DNSmanagerOrderID));
 #-------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ case 'array':
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$Where = SPrintF("`ServersGroupID` = %u /*AND `ID` != %u*/ AND `IsActive` = 'yes' AND `IsSchemeChangeable` = 'yes' AND `IsReselling` = '%s'",$DNSmanagerOrder['ServersGroupID'],$DNSmanagerOrder['SchemeID'],$OldScheme['IsReselling']?'yes':'no');
+			$Where = SPrintF("`ServersGroupID` = %u AND `HardServerID` = %u AND `IsActive` = 'yes' AND `IsSchemeChangeable` = 'yes' AND `IsReselling` = '%s'",$DNSmanagerOrder['ServersGroupID'],$DNSmanagerOrder['ServerID'],$OldScheme['IsReselling']?'yes':'no');
 			#-------------------------------------------------------------------------------
 			$DNSmanagerSchemes = DB_Select($UniqID,Array('ID','Name'),Array('SortOn'=>'SortID','Where'=>$Where));
 			#-------------------------------------------------------------------------------

@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('classes/DNSmanagerServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DNSmanagerOrder = DB_Select('DNSmanagerOrdersOwners',Array('ID','UserID','Login','SchemeID','Password','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) AS `ServerID`'),Array('UNIQ','ID'=>$DNSmanagerOrderID));
+$DNSmanagerOrder = DB_Select('DNSmanagerOrdersOwners',Array('ID','UserID','Login','SchemeID','Password','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) AS `ServerID`','(SELECT `Params` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) AS `Params`'),Array('UNIQ','ID'=>$DNSmanagerOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DNSmanagerOrder)){
 case 'error':
@@ -54,6 +54,10 @@ case 'array':
 default:
 	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# надо поправить в массиве имя используемой view
+$DNSmanagerScheme['ViewArea'] = $DNSmanagerOrder['Params']['ViewArea'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Args = Array($DNSmanagerOrder['Login'],$DNSmanagerOrder['Password'],$DNSmanagerScheme);

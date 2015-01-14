@@ -14,6 +14,7 @@ $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 $ContractID		= (integer) @$Args['ContractID'];
 $DNSmanagerSchemeID	= (integer) @$Args['DNSmanagerSchemeID'];
+$ViewArea		=  (string) @$Args['ViewArea'];
 $Comment		=  (string) @$Args['Comment'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
@@ -23,7 +24,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 if(!$DNSmanagerSchemeID)
 	return new gException('DNS_SCHEME_NOT_DEFINED','Тарифный план не выбран');
 #-------------------------------------------------------------------------------
-$DNSmanagerScheme = DB_Select('DNSmanagerSchemes',Array('ID','Name','ServersGroupID','HardServerID','IsActive'),Array('UNIQ','ID'=>$DNSmanagerSchemeID));
+$DNSmanagerScheme = DB_Select('DNSmanagerSchemes',Array('*'),Array('UNIQ','ID'=>$DNSmanagerSchemeID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DNSmanagerScheme)){
 case 'error':
@@ -38,6 +39,35 @@ default:
 #-------------------------------------------------------------------------------
 if(!$DNSmanagerScheme['IsActive'])
 	return new gException('SCHEME_NOT_ACTIVE','Выбранный тарифный план заказа DNSmanager не активен');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Server = DB_Select('Servers',Array('ID','Params','IsActive'),Array('UNIQ','ID'=>$DNSmanagerScheme['HardServerID']));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Server)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('SERVERS_NOT_FOUND','Серверы для вторичного DNS не настроены');
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+if($Server['Params']['DefaultView'] != $DNSmanagerScheme['ViewArea'])
+	if(!$ViewArea)
+		return new gException('VIEW_NOT_SET','При выборе тарифа с собственным ДНС сервером, вы должны указать имя области');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# проверяем, задан ли реселлер. если задан - используем дефолтовую вьюху
+if($DNSmanagerScheme['Reseller'])
+	$ViewArea = $DNSmanagerScheme['ViewArea'];
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Regulars = Regulars();
+#-------------------------------------------------------------------------------
+if(!Preg_Match($Regulars['DnsDomain'],$ViewArea))
+	return new gException('WRONG_VIEW_NAME','Неверное имя области, укажиет домен третьего уровня');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Contract = DB_Select('Contracts',Array('ID','UserID'),Array('UNIQ','ID'=>$ContractID));
@@ -72,31 +102,6 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($DNSmanagerScheme['HardServerID']){
-	#-------------------------------------------------------------------------------
-	$Where = SPrintF("`ID` = %u",$DNSmanagerScheme['HardServerID']);
-	#-------------------------------------------------------------------------------
-}else{
-	#-------------------------------------------------------------------------------
-	$Where = SPrintF("`ServersGroupID` = %u AND `IsDefault` = 'yes'",$DNSmanagerScheme['ServersGroupID']);
-	#-------------------------------------------------------------------------------
-}
-#-------------------------------------------------------------------------------
-$Server = DB_Select('Servers',Array('ID','Params'),Array('Where'=>$Where));
-#-------------------------------------------------------------------------------
-switch(ValueOf($Server)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	return new gException('SERVER_NOT_DEFINED','Сервер размещения не определён');
-case 'array':
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
-}
-#-------------------------------------------------------------------------------
-$Server = Current($Server);
-#-------------------------------------------------------------------------------
 $Password = SubStr(Md5(UniqID()),0,12);
 #-------------------------------------------------------------------------------
 #-------------------------TRANSACTION-------------------------------------------
@@ -126,7 +131,7 @@ if($Count < 1){
 	}
 }
 #-------------------------------------------------------------------------------
-$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>52000,'ServerID'=>$Server['ID']));
+$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>52000,'ServerID'=>$Server['ID'],'Params'=>Array('ViewArea'=>$ViewArea)));
 if(Is_Error($OrderID))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

@@ -38,124 +38,6 @@ $Form = new Tag('FORM',Array('name'=>'DNSmanagerOrderForm','onsubmit'=>'return f
 $Config = Config();
 #-------------------------------------------------------------------------------
 if($StepID){
-	# эта стадии не юзаются, поэтому костыль чтоб сразу пропустить
-	$DOM->AddAttribs('Body',Array('onload'=>'DNSmanagerOrder();'));
-	#-------------------------------------------------------------------------------
-	if($StepID == 2){
-		#-------------------------------------------------------------------------------
-		if(!$DNSmanagerSchemeID)
-			return new gException('HOSTING_SCHEME_NOT_DEFINED','Тарифный план не выбран');
-		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Input',Array('name'=>'ContractID','type'=>'hidden','value'=>$ContractID));
-		if(Is_Error($Comp))
-			return ERROR | @Trigger_Error(500);
-		$Form->AddChild($Comp);
-		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Input',Array('name'=>'DNSmanagerSchemeID','type'=>'hidden','value'=>$DNSmanagerSchemeID));
-		if(Is_Error($Comp))
-			return ERROR | @Trigger_Error(500);
-		$Form->AddChild($Comp);
-		#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		$DNSmanagerScheme = DB_Select('DNSmanagerSchemes',Array('ID','Name'),Array('UNIQ','ID'=>$DNSmanagerSchemeID));
-		switch(ValueOf($DNSmanagerScheme)){
-		case 'error':
-			return ERROR | @Trigger_Error(500);
-		case 'exception':
-			return new gException('SCHEME_NOT_FOUND','Выбранный тариф не найден');
-		case 'array':
-			break;
-		default:
-			return ERROR | @Trigger_Error(101);
-		}
-		#-------------------------------------------------------------------------------
-		$Table = Array('Дополнительные параметры заказа');
-		$Table[] = Array('Тарифный план',$DNSmanagerScheme['Name']);
-		#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		$Servers = DB_Select('Servers',Array('ID','Params'),Array('Where'=>SPrintF('`ServersGroupID` = (SELECT `ServersGroupID` FROM `DNSmanagerSchemes` WHERE `DNSmanagerSchemes`.`ID` = %u)',$DNSmanagerSchemeID),'SortOn'=>'Address'));
-		#-------------------------------------------------------------------------------
-		switch(ValueOf($Servers)){
-		case 'error':
-			return ERROR | @Trigger_Error(500);
-		case 'exception':
-			return new gException('SERVERS_NOT_FOUND','Серверы для вторичного DNS не настроены');
-		case 'array':
-			break;
-		default:
-			return ERROR | @Trigger_Error(101);
-		}
-		#-------------------------------------------------------------------------------
-		$Array = Array();
-		#-------------------------------------------------------------------------------
-		foreach($Servers as $Server)
-			if($Server['Params']['ServerAttrib'])
-				if(!IsSet($Array[$Server['Params']['ServerAttrib']]))
-					$Array[$Server['Params']['ServerAttrib']] = $Server['Params']['ServerAttrib'];
-		#-------------------------------------------------------------------------------
-		if(SizeOf($Array) < 1){
-			#-------------------------------------------------------------------------------
-			$DOM->AddAttribs('Body',Array('onload'=>'DNSmanagerOrder();'));
-			#-------------------------------------------------------------------------------
-		}else{
-			#-------------------------------------------------------------------------------
-			ASort($Array);
-			#-------------------------------------------------------------------------------
-			$Options = Array('0'=>'Всё равно') + $Array;
-			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load('Form/Select',Array('name'=>'ServerAttrib','style'=>'width: 100%;'),$Options);
-			if(Is_Error($Comp))
-				return ERROR | @Trigger_Error(500);
-			#-------------------------------------------------------------------------------
-			$Table[] = Array('Дополнительный параметр',$Comp);
-			#-------------------------------------------------------------------------------
-		}
-		#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		/*
-		$Comp = Comp_Load(
-				'Form/Input',
-				Array(
-					'type'		=> 'button',
-					'onclick'	=> SPrintF("ShowWindow('/DNSmanagerOrder',{DNSmanagerSchemeID:%u});",$DNSmanagerScheme['ID']),
-					'value'		=> 'Изменить домен/тариф'
-					)
-				);
-		if(Is_Error($Comp))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		$Div = new Tag('DIV',Array('align'=>'right'),$Comp);
-		*/
-		$Div = new Tag('DIV',Array('align'=>'right'));
-		#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"DNSmanagerOrder();",'value'=>'Продолжить'));
-		if(Is_Error($Comp))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		$Div->AddChild($Comp);
-		#-------------------------------------------------------------------------------
-		$Table[] = $Div;
-		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Tables/Standard',$Table,Array('width'=>400));
-		if(Is_Error($Comp))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		$Form->AddChild($Comp);
-		#-------------------------------------------------------------------------------
-		$DOM->AddChild('Into',$Form);
-
-		$Out = $DOM->Build(FALSE);
-		#-------------------------------------------------------------------------------
-		if(Is_Error($Out))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		return Array('Status'=>'Ok','DOM'=>$DOM->Object);
-
-
-	}
-	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Form/Input',Array('name'=>'ContractID','type'=>'hidden','value'=>$ContractID));
 	if(Is_Error($Comp))
@@ -165,9 +47,9 @@ if($StepID){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if(!$DNSmanagerSchemeID)
-		return new gException('HOSTING_SCHEME_NOT_DEFINED','Тарифный план не выбран');
+		return new gException('DNSMANAGER_SCHEME_NOT_DEFINED','Тарифный план не выбран');
 	#-------------------------------------------------------------------------------
-	$DNSmanagerScheme = DB_Select('DNSmanagerSchemes',Array('ID','Name','IsActive'),Array('UNIQ','ID'=>$DNSmanagerSchemeID));
+	$DNSmanagerScheme = DB_Select('DNSmanagerSchemes',Array('*'),Array('UNIQ','ID'=>$DNSmanagerSchemeID));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($DNSmanagerScheme)){
 	case 'error':
@@ -183,6 +65,102 @@ if($StepID){
 	#-------------------------------------------------------------------------------
 	if(!$DNSmanagerScheme['IsActive'])
 		return new gException('SCHEME_NOT_ACTIVE','Выбранный тарифный план вторичного DNS не активен');
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if(!$DNSmanagerSchemeID)
+		return new gException('HOSTING_SCHEME_NOT_DEFINED','Тарифный план не выбран');
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('name'=>'DNSmanagerSchemeID','type'=>'hidden','value'=>$DNSmanagerSchemeID));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	$Form->AddChild($Comp);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Table = Array('Дополнительные параметры заказа');
+	#-------------------------------------------------------------------------------
+	$Table[] = Array('Тарифный план',$DNSmanagerScheme['Name']);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Server = DB_Select('Servers',Array('ID','Params','IsActive'),Array('UNIQ','ID'=>$DNSmanagerScheme['HardServerID']));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Server)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return new gException('SERVERS_NOT_FOUND','Серверы для вторичного DNS не настроены');
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if($DNSmanagerScheme['Reseller'] || $Server['Params']['DefaultView'] == $DNSmanagerScheme['ViewArea']){
+		#-------------------------------------------------------------------------------
+		$DOM->AddAttribs('Body',Array('onload'=>'DNSmanagerOrder();'));
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Form/Input',Array('type'=>'text','style'=>'width: 100%;','name'=>'ViewArea','value'=>'','prompt'=>'Введите область, в которой будут размещаться ваши домены. Обычно, она именуется по имени DNS сервера. Например: dns0.example.ru'));
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Table[] = Array('Область (view)',$Comp);
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load(
+			'Form/Input',
+			Array(
+				'type'		=> 'button',
+				'onclick'	=> SPrintF("ShowWindow('/DNSmanagerOrder',{DNSmanagerSchemeID:%u});",$DNSmanagerScheme['ID']),
+				'value'		=> 'Изменить тариф'
+				)
+			);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Div = new Tag('DIV',Array('align'=>'right'),$Comp);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"DNSmanagerOrder();",'value'=>'Продолжить'));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Div->AddChild($Comp);
+	#-------------------------------------------------------------------------------
+	$Table[] = $Div;
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Tables/Standard',$Table,Array('width'=>400));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Form->AddChild($Comp);
+	#-------------------------------------------------------------------------------
+	$DOM->AddChild('Into',$Form);
+		$Out = $DOM->Build(FALSE);
+	#-------------------------------------------------------------------------------
+	if(Is_Error($Out))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return Array('Status'=>'Ok','DOM'=>$DOM->Object);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Table = Array(Array('Тарифный план',$DNSmanagerScheme['Name']));
 	#-------------------------------------------------------------------------------
