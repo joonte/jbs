@@ -431,6 +431,8 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 			'emaildomain_name'		=> $Domain,
 			'webdomain_name'		=> $Domain,
 			'domain'			=> $Domain,
+
+			'limit_dirindex'		=> '',
 			#'bandwidthlimit'  => $HostingScheme['QuotaTraffic'], # Трафик
 			#'ssi'                   => ($HostingScheme['IsSSIAccess']?'on':'off'), # SSI
 			#'phpfcgi'               => ($HostingScheme['IsPHPFastCGIAccess']?'on':'off'), # PHP как FastCGI
@@ -719,6 +721,7 @@ function IspManager5_Scheme_Change($Settings,$Login,$HostingScheme){
 			'limit_webdomains_enabled'	=> ($HostingScheme['QuotaWWWDomains']?'on':'off'),
 			'php_enable'			=> 'on',	# TODO: расхардкодить надо
 			'preset'			=> '#custom',
+			'limit_dirindex'		=> '',
 			'mailrate'			=> $HostingScheme['mailrate'],	# TODO: отследить когда реализуют
 			);
 	#-------------------------------------------------------------------------------
