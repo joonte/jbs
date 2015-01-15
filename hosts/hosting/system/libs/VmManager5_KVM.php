@@ -286,6 +286,7 @@ function VmManager5_KVM_Delete($Settings,$Login){
 	#-------------------------------------------------------------------------------
 	$Http = VmManager5_KVM_Build_HTTP($Settings);
 	#------------------------------------------------------------------------------
+	# грохаем виртуалки
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_KVM_Delete]: не удалось соедениться с сервером');
@@ -328,6 +329,94 @@ function VmManager5_KVM_Delete($Settings,$Login){
 	}
 	#------------------------------------------------------------------------------
 	#------------------------------------------------------------------------------
+	# грохаем харды
+	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'volume','su'=>$Login));
+	if(Is_Error($Response))
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Delete]: не удалось соедениться с сервером');
+	#-------------------------------------------------------------------------------
+	$Response = Trim($Response['Body']);
+	#-------------------------------------------------------------------------------
+	$XML = String_XML_Parse($Response);
+	if(Is_Exception($XML))
+		return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
+	#-------------------------------------------------------------------------------
+        $XML = $XML->ToArray('elem');
+	#-------------------------------------------------------------------------------
+	$Doc = $XML['doc'];
+	if(IsSet($Doc['error']))
+		return new gException('VmManager5_KVM_Delete','Не удалось получить список дисков пользователя');
+	#-------------------------------------------------------------------------------
+	foreach($Doc as $HDD){
+		#-------------------------------------------------------------------------------
+		if(!IsSet($HDD['id']))
+			continue;
+		#-------------------------------------------------------------------------------
+		$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'volume.extdelete','elid'=>$HDD['id'],'sok'=>'ok'));
+		if(Is_Error($Response))
+			return ERROR | @Trigger_Error('[VmManager5_KVM_Delete]: не удалось соедениться с сервером');
+		#-------------------------------------------------------------------------------
+		$Response = Trim($Response['Body']);
+		#-------------------------------------------------------------------------------
+		$XML = String_XML_Parse($Response);
+		if(Is_Exception($XML))
+			return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
+		#-------------------------------------------------------------------------------
+		$XML = $XML->ToArray();
+		#-----------------------------------------------------------------------------
+		$Doc = $XML['doc'];
+		#-----------------------------------------------------------------------------
+		if(IsSet($Doc['error']))
+			return new gException('VM_DELETE_ERROR','Не удалось удалить HDD');
+		#-------------------------------------------------------------------------------
+	}
+	#------------------------------------------------------------------------------
+	#------------------------------------------------------------------------------
+	# грохаем ISO
+	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'iso','su'=>$Login));
+	if(Is_Error($Response))
+		return ERROR | @Trigger_Error('[VmManager5_KVM_Delete]: не удалось соедениться с сервером');
+	#-------------------------------------------------------------------------------
+	$Response = Trim($Response['Body']);
+	#-------------------------------------------------------------------------------
+	$XML = String_XML_Parse($Response);
+	if(Is_Exception($XML))
+		return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
+	#-------------------------------------------------------------------------------
+        $XML = $XML->ToArray('elem');
+	#-------------------------------------------------------------------------------
+	$Doc = $XML['doc'];
+	if(IsSet($Doc['error']))
+		return new gException('VmManager5_KVM_Delete','Не удалось получить список ISO образов пользователя');
+	#-------------------------------------------------------------------------------
+	foreach($Doc as $ISO){
+		#-------------------------------------------------------------------------------
+		if(!IsSet($ISO['id']))
+			continue;
+		#-------------------------------------------------------------------------------
+		if($ISO['owner'] != 'on')
+			continue;
+		#-------------------------------------------------------------------------------
+		$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'iso.delete','elid'=>$ISO['id']));
+		if(Is_Error($Response))
+			return ERROR | @Trigger_Error('[VmManager5_KVM_Delete]: не удалось соедениться с сервером');
+		#-------------------------------------------------------------------------------
+		$Response = Trim($Response['Body']);
+		#-------------------------------------------------------------------------------
+		$XML = String_XML_Parse($Response);
+		if(Is_Exception($XML))
+			return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
+		#-------------------------------------------------------------------------------
+		$XML = $XML->ToArray();
+		#-----------------------------------------------------------------------------
+		$Doc = $XML['doc'];
+		#-----------------------------------------------------------------------------
+		if(IsSet($Doc['error']))
+			return new gException('VM_DELETE_ERROR','Не удалось удалить ISO');
+		#-------------------------------------------------------------------------------
+	}
+	#------------------------------------------------------------------------------
+	#------------------------------------------------------------------------------
+	# грохаем самого юзера
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager5_KVM_Delete]: не удалось соедениться с сервером');
