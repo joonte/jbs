@@ -141,16 +141,16 @@ function IspManager5_Get_Domains($Settings){
 	#-----------------------------------------------------------------------------
 	foreach($Domains as $Domain){
 		#---------------------------------------------------------------------------
-		if(!IsSet($Domain['owner']))
+		if(!IsSet($Domain['user']))
 			continue;
 		#---------------------------------------------------------------------------
-		$Owner = $Domain['owner'];
+		$Owner = $Domain['user'];
 		#---------------------------------------------------------------------------
 		if(!IsSet($Users[$Owner]))
 			$Users[$Owner] = Array();
 		#---------------------------------------------------------------------------
-		if(!In_Array($Domain['name'],$Users[$Owner]))
-			$Users[$Owner][] = $Domain['name'];
+		if(!In_Array($Domain['displayname'],$Users[$Owner]))
+			$Users[$Owner][] = $Domain['displayname'];
 		#---------------------------------------------------------------------------
 		# домены юзеров реселлеров
 		if(IsSet($Owners[$Owner])){
@@ -158,11 +158,13 @@ function IspManager5_Get_Domains($Settings){
 			if(!IsSet($Users[$Owners[$Owner]]))
 				$Users[$Owners[$Owner]] = Array();
 			#---------------------------------------------------------------------------
-			if(!In_Array($Domain['name'],$Users[$Owners[$Owner]]))
-				$Users[$Owners[$Owner]][] = $Domain['name'];
+			if(!In_Array($Domain['displayname'],$Users[$Owners[$Owner]]))
+				$Users[$Owners[$Owner]][] = $Domain['displayname'];
 		}
 		#---------------------------------------------------------------------------
 	}
+	#-----------------------------------------------------------------------------
+	#Debug(SPrintF('[system/libs/IspManager5.php]: UsersList = %s',print_r($Users,true)));
 	#-----------------------------------------------------------------------------
 	#-----------------------------------------------------------------------------
 	# достаём Email домены
