@@ -147,7 +147,7 @@ function IspSoft_Create($Settings,$ISPswScheme){
 	#-------------------------------------------------------------------------------
 	$License = Array(
 			#-------------------------------------------------------------------------------
-			'pricelist'	=> $ISPswScheme['pricelist_id'],
+			'pricelist_id'	=> $ISPswScheme['pricelist_id'],
 			'period'	=> $ISPswScheme['period'],
 			'addon'		=> 1,
 			'IP'		=> $ISPswScheme['IP'],
