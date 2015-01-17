@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<!-- @author Alex Keda, for www.host-food.ru -->
 <XML>
 <!-- *********************************************************************** -->
 <Appearance>
@@ -42,6 +42,14 @@
        <Name>Только внутренние</Name>
        <Where>`IsInternal` = 'yes'</Where>
       </ItIsInternal>
+      <ItIsAllowIPChange>
+       <Name>Внутренние, можно менять IP</Name>
+       <Where>`StatusDate` + 31 * 24 * 3600 - UNIX_TIMESTAMP() &lt; 0 AND `IsInternal` = 'yes'</Where>
+      </ItIsAllowIPChange>
+      <IsHaveFlag>
+       <Name>С флагом</Name>
+       <Where>`Flag` != ''</Where>
+      </IsHaveFlag>
       <ItIsNotInternal>
        <Name>Только внешние</Name>
        <Where>`IsInternal` != 'yes'</Where>
