@@ -221,13 +221,15 @@ foreach(Array_Keys($Types) as $TypeID){
 		if(!$Method['IsActive'])
 			continue;
 		#-------------------------------------------------------------------------------
+		$UseName = SPrintF('Use%s',$MethodID);
+		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load(
 				'Form/Input',
 				Array(
 					'name'	=> SPrintF('%s[]',$MethodID),
 					'type'	=> 'checkbox',
 					'value'	=> $TypeID,
-					'prompt'=> (IsSet($Type[$MethodID]) && !$Type[$MethodID])?'Данная настройка отключена администратором':'Настройка уведомления'
+					'prompt'=> (IsSet($Type[$UseName]) && !$Type[$UseName])?'Данная настройка отключена администратором':'Настройка уведомления'
 					)
 				);
 		if(Is_Error($Comp))
@@ -241,7 +243,7 @@ foreach(Array_Keys($Types) as $TypeID){
 		}else{
 			#Debug(SPrintF('[comp/www/UserNotifiesSet]: ', $MobileCountry));
 			#-------------------------------------------------------------------------------
-			if(IsSet($Type[$MethodID]) && !$Type[$MethodID])
+			if(IsSet($Type[$UseName]) && !$Type[$UseName])
 				$Comp->AddAttribs(Array('disabled'=>'true'));
 			#-------------------------------------------------------------------------------
 			if(!In_Array($TypeID,$uNotifies[$MethodID]))

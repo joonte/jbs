@@ -828,84 +828,93 @@
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Notifies>
- <Types>
-  <FromTicketsMessages>
-   <Title>Центр поддержки</Title>
-   <Name>Новое сообщение от службы поддержки</Name>
-   <GroupID>1</GroupID>
-  </FromTicketsMessages>
-  <!-- ********************************************************************* -->
-  <ToTicketsMessages>
-   <Name>Новое сообщение в службу поддержки</Name>
-   <GroupID>3000000</GroupID>
-  </ToTicketsMessages>
-  <!-- ********************************************************************* -->
-  <EdeskCreate>
-   <Title>Обсуждения</Title>
-   <Name>Создание нового обсуждения</Name>
-   <GroupID>1</GroupID>
-  </EdeskCreate>
-  <!-- ********************************************************************* -->
-  <EdeskMessageCreate>
-   <Name>Новое сообщение в обсуждении</Name>
-   <GroupID>1</GroupID>
-  </EdeskMessageCreate>
-  <!-- ********************************************************************* -->
-  <PartnersReneward>
-   <Title>Прочее</Title>
-   <Name>Партнёрские начисления</Name>
-   <GroupID>1</GroupID>
-  </PartnersReneward>
-  <!-- ********************************************************************* -->
-  <NotPayedInvoice>
-   <Name>Неоплаченные счета</Name>
-   <GroupID>1</GroupID>
-  </NotPayedInvoice>
-  <!-- ********************************************************************* -->
-  <CreateAndSendInvoices>
-   <Name>Автоматически выписанные счета</Name>
-   <GroupID>1</GroupID>
-   <ICQ>0</ICQ>
-   <Jabber>0</Jabber>
-   <SMS>0</SMS>
-  </CreateAndSendInvoices>
-  <!-- ********************************************************************* -->
-  <OrdersSuspend>
-   <Title>Заказы на прочие услуги</Title>
-   <Name>Другие заказанные услуги</Name>
-   <Code></Code>
-   <GroupID>1</GroupID>
-  </OrdersSuspend>
-  <!-- ********************************************************************* -->
- </Types>
- <!-- ********************************************************************** -->
- <Methods>
-  <Email>
-   <Name>Эл. почта</Name>
-   <IsActive>1</IsActive>
-   <IsEvent>1</IsEvent>
-  </Email>
-  <!-- ********************************************************************* -->
-  <ICQ>
-   <Name>ICQ пейджинг</Name>
-   <IsActive>0</IsActive>
-   <IsEvent>1</IsEvent>
-  </ICQ>
-  <!-- ********************************************************************* -->
-  <Jabber>
-   <Name>Jabber пейджинг</Name>
-   <IsActive>0</IsActive>
-   <IsEvent>1</IsEvent>
-  </Jabber>
-  <!-- ********************************************************************* -->
-  <SMS>
-   <Name>SMS сообщения</Name>
-   <IsActive>0</IsActive>
-   <Provider>SMSC</Provider>
-   <IsEvent>1</IsEvent>
-  </SMS>
- </Methods>
- <!-- ********************************************************************** -->
+	<Types>
+		<FromTicketsMessages>
+			<Title>Центр поддержки</Title>
+			<Name>Новое сообщение от службы поддержки</Name>
+			<GroupID>1</GroupID>
+			<IsActive>1</IsActive>
+		</FromTicketsMessages>
+		<!-- ********************************************************************* -->
+		<ToTicketsMessages>
+			<Name>Новое сообщение в службу поддержки</Name>
+			<GroupID>3000000</GroupID>
+			<IsActive>1</IsActive>
+		</ToTicketsMessages>
+		<!-- ********************************************************************* -->
+		<EdeskCreate>
+			<Title>Обсуждения</Title>
+			<Name>Создание нового обсуждения</Name>
+			<GroupID>1</GroupID>
+			<IsActive>1</IsActive>
+		</EdeskCreate>
+		<!-- ********************************************************************* -->
+		<EdeskMessageCreate>
+			<Name>Новое сообщение в обсуждении</Name>
+			<GroupID>1</GroupID>
+			<IsActive>1</IsActive>
+		</EdeskMessageCreate>
+		<!-- ********************************************************************* -->
+		<PartnersReneward>
+			<Title>Прочее</Title>
+			<Name>Партнёрские начисления</Name>
+			<GroupID>1</GroupID>
+			<IsActive>1</IsActive>
+		</PartnersReneward>
+		<!-- ********************************************************************* -->
+		<NotPayedInvoice>
+			<Name>Неоплаченные счета</Name>
+			<GroupID>1</GroupID>
+			<IsActive>1</IsActive>
+		</NotPayedInvoice>
+		<!-- ********************************************************************* -->
+		<CreateAndSendInvoices>
+			<Name>Автоматически выписанные счета</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>0</UseICQ>
+			<UseJabber>0</UseJabber>
+			<UseSMS>0</UseSMS>
+			<IsActive>1</IsActive>
+		</CreateAndSendInvoices>
+		<!-- ********************************************************************* -->
+		<OrdersSuspend>
+			<Title>Заказы на прочие услуги</Title>
+			<Name>Другие заказанные услуги</Name>
+			<IsActive>1</IsActive>
+			<Code></Code>
+			<GroupID>1</GroupID>
+		</OrdersSuspend>
+		<!-- ********************************************************************* -->
+	</Types>
+	<!-- ********************************************************************** -->
+	<Methods>
+		<Email>
+			<Name>Эл. почта</Name>
+			<IsActive>1</IsActive>
+			<IsEvent>1</IsEvent>
+		</Email>
+		<!-- ********************************************************************* -->
+		<ICQ>
+			<Name>ICQ пейджинг</Name>
+			<IsActive>0</IsActive>
+			<IsEvent>1</IsEvent>
+		</ICQ>
+		<!-- ********************************************************************* -->
+		<Jabber>
+			<Name>Jabber пейджинг</Name>
+			<IsActive>0</IsActive>
+			<IsEvent>1</IsEvent>
+		</Jabber>
+		<!-- ********************************************************************* -->
+		<SMS>
+			<Name>SMS сообщения</Name>
+			<IsActive>0</IsActive>
+			<Provider>SMSC</Provider>
+			<IsEvent>1</IsEvent>
+		</SMS>
+	</Methods>
+	<!-- ********************************************************************** -->
 </Notifies>
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
