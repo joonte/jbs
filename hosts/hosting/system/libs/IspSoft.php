@@ -13,7 +13,6 @@ function IspSoft_Find_Free_License($ISPswScheme){
 	$__args_types = Array('array');
 	#-------------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
-	
 	/******************************************************************************/
 	# на входе функции надо минимум два параметра
 
@@ -93,15 +92,7 @@ function IspSoft_Create($Settings,$ISPswScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
-			#-------------------------------------------------------------------------------
-			'Address'	=> $Settings['Address'],
-			'Port'		=> $Settings['Port'],
-			'Host'		=> $Settings['Address'],
-			'Protocol'	=> $Settings['Protocol'],
-			'Hidden'	=> $authinfo
-			#-------------------------------------------------------------------------------
-			);
+	$Http = IspSoft_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# billmgr?authinfo=USER:PASSWD&out=xml&func=soft.order.param&clicked_button=finish&ip=82.156.37.16&licname=name&period=1&pricelist=4601&addon_4602=1&sok=ok&skipbasket=on
@@ -145,13 +136,35 @@ function IspSoft_Create($Settings,$ISPswScheme){
 	if(IsSet($Doc['error']))
 		return new gException('SOFT_CREATE_ERROR','Не удалось создать заказ ПО');
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	# JBS-909, надо сразу класть ключ лицензии в базу
+	$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'soft.edit','elid'=>$Doc['item.id']);
+	#-------------------------------------------------------------------------------
+	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
+	if(Is_Error($Response))
+		return ERROR | @Trigger_Error('[IspSoft_Create]: не удалось соедениться с сервером');
+	#-------------------------------------------------------------------------------
+	$Response = Trim($Response['Body']);
+	#-------------------------------------------------------------------------------
+	$XML = String_XML_Parse($Response);
+	if(Is_Exception($XML))
+		return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
+	#-------------------------------------------------------------------------------
+	$XML = $XML->ToArray();
+	#-------------------------------------------------------------------------------
+	$Doc = $XML['doc'];
+	if(IsSet($Doc['error']))
+		return new gException('IspSoft_Create','Не удалось получить полную информацию лицензии');
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$License = Array(
 			#-------------------------------------------------------------------------------
 			'pricelist_id'	=> $ISPswScheme['pricelist_id'],
 			'period'	=> $ISPswScheme['period'],
 			'addon'		=> 1,
 			'IP'		=> $ISPswScheme['IP'],
-			'elid'		=> $Doc['item.id'],
+			'elid'		=> $Doc['elid'],
+			'LicKey'	=> $Doc['lickey'],
 			'IsInternal'	=> $ISPswScheme['IsInternal']?'yes':'no',
 			'IsUsed'	=> 'yes',
 			'StatusID'	=> 'Active',
@@ -166,7 +179,7 @@ function IspSoft_Create($Settings,$ISPswScheme){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	return Array('elid'=>$Doc['id'],'LicenseID'=>$IsInsert);
+	return Array('elid'=>$Doc['elid'],'LicenseID'=>$IsInsert);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 }
@@ -183,15 +196,7 @@ function IspSoft_Change_IP($Settings,$ISPswScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
-			#-------------------------------------------------------------------------------
-			'Address'	=> $Settings['Address'],
-			'Port'		=> $Settings['Port'],
-			'Host'		=> $Settings['Address'],
-			'Protocol'	=> $Settings['Protocol'],
-			'Hidden'	=> $authinfo
-			#-------------------------------------------------------------------------------
-			);
+	$Http = IspSoft_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# https://api.ispsystem.com/manager/billmgr?authinfo=USER:PASSWD&out=xml&func=soft.edit&elid=334673&licname=NEWLICNAME&ip=111.222.111.223&sok=ok
@@ -242,15 +247,7 @@ function IspSoft_UnLock($Settings,$ISPswScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
-			#-------------------------------------------------------------------------------
-			'Address'	=> $Settings['Address'],
-			'Port'		=> $Settings['Port'],
-			'Host'		=> $Settings['Address'],
-			'Protocol'	=> $Settings['Protocol'],
-			'Hidden'	=> $authinfo
-			#-------------------------------------------------------------------------------
-			);
+	$Http = IspSoft_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# https://api.ispsystem.com/manager/billmgr?authinfo=USER:PASSWD&out=xml&func=soft.resume&elid=код_лицензии
@@ -299,15 +296,7 @@ function IspSoft_Lock($Settings,$ISPswScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
-			#-------------------------------------------------------------------------------
-			'Address'	=> $Settings['Address'],
-			'Port'		=> $Settings['Port'],
-			'Host'		=> $Settings['Address'],
-			'Protocol'	=> $Settings['Protocol'],
-			'Hidden'	=> $authinfo
-			#-------------------------------------------------------------------------------
-			);
+	$Http = IspSoft_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# /manager/billmgr?authinfo=USER:PASSWD&out=xml&func=soft.suspend&elid=код_лицензии
@@ -355,23 +344,10 @@ function IspSoft_Get_List_Licenses($Settings){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = Array(
-			#-------------------------------------------------------------------------------
-			'Address'  => $Settings['Address'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Hidden'   => $authinfo
-			#-------------------------------------------------------------------------------
-	);
+	$Http = IspSoft_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
-	$Request = Array(
-			#-------------------------------------------------------------------------------
-			'authinfo'	=> $authinfo,	# авторизационная информация
-			'out'		=> 'xml',	# Формат вывода
-			'func'		=> 'soft',	# Целевая функция
-			#-------------------------------------------------------------------------------
-			);
+	#-------------------------------------------------------------------------------
+	$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'soft');
 	#-------------------------------------------------------------------------------
 	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
 	if(Is_Error($Response))
@@ -464,14 +440,7 @@ function IspSoft_Scheme_Change($Settings,$ISPswScheme){
 
   $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
   #-----------------------------------------------------------------------------
-  $Http = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Hidden'   => $authinfo
-  );
+  $Http = IspSoft_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   #-----------------------------------------------------------------------------
   $Request = Array(
@@ -536,14 +505,7 @@ function IspSoft_Get_Balance($Settings){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = Array(
-		#---------------------------------------------------------------------------
-		'Address'  => $Settings['Address'],
-		'Port'     => $Settings['Port'],
-		'Host'     => $Settings['Address'],
-		'Protocol' => $Settings['Protocol'],
-		'Hidden'   => $authinfo
-	);
+	$Http = IspSoft_Build_HTTP($Settings);
 	#-----------------------------------------------------------------------------
 	$Request = Array(
 			'authinfo'	=> $authinfo,		# авторизационная информация
@@ -579,15 +541,7 @@ function IspSoft_Check_ISPsystem_IP($Settings, $ISPswInfo){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
-			#-------------------------------------------------------------------------------
-			'Address'	=> $Settings['Address'],
-			'Port'		=> $Settings['Port'],
-			'Host'		=> $Settings['Address'],
-			'Protocol'	=> $Settings['Protocol'],
-			'Hidden'	=> $authinfo
-			#-------------------------------------------------------------------------------
-			);
+	$Http = IspSoft_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# authinfo=USER:PASSWD&out=xml&func=soft.checkip&pricelist=7&period=1&ip=82.145.17.16
@@ -641,6 +595,41 @@ function IspSoft_Check_Local_IP($Settings, $ISPswInfo){
 	#---------------------------------------------------------------------------
 	return TRUE;
 }
+
+
+
+
+
+# внутренние функции
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+function IspSoft_Build_HTTP($Settings){
+	/******************************************************************************/
+	$__args_types = Array('array');
+	#-----------------------------------------------------------------------------
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/******************************************************************************/
+	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
+	#-------------------------------------------------------------------------------
+	$Http = Array(
+			'Address'       => $Settings['Params']['IP'],
+			'Port'          => $Settings['Port'],
+			'Host'          => $Settings['Address'],
+			'Protocol'      => $Settings['Protocol'],
+			'Hidden'        => $authinfo,
+			'IsLoggin'      => FALSE
+			);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return $Http;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+}
+
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+
+
 
 
 
