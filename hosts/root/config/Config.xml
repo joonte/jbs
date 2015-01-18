@@ -53,6 +53,9 @@
 			<StreamTimeout>120</StreamTimeout>
 		</Http>
 	</Libs>
+	<Protocol>
+		<UseSSL>0</UseSSL>
+	</Protocol>
 </Other>
 <!-- *********************************************************************** -->
 </XML>
