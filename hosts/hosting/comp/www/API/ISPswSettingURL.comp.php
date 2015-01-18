@@ -12,10 +12,12 @@ Eval(COMP_INIT);
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 $id		= (integer) @$Args['id'];		# elid лицензии
-$elid		= (integer) @$Args['elid'];		# происходящее событие
-$module		= (boolean) @$Args['module'];
+$elid		=  (string) @$Args['elid'];		# происходящее событие
+$module		=  (string) @$Args['module'];
 $IP		=  (string) @$_SERVER['REMOTE_ADDR'];
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+Debug(SPrintF('[comp/www/API/ISPswSettingURL]: id = "%s"; elid = "%s"; module = "%s"',$id,$elid,$module));
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('libs/XXTEA.php')))
 	return ERROR | @Trigger_Error(500);
@@ -29,6 +31,11 @@ if($elid != 'install')
 	return new gException('IS_NOT_INSTALL','Работает только при инсталляции');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+if($module != 'dns')
+	if($module != '')
+		return new gException('IS_NOT_DNS_MODULE','Настройки передаются только при активации модуля DNS');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Config = Config();
 $Settings = $Config['Other']['ISPswSettingURL'];
 #-------------------------------------------------------------------------------
@@ -39,7 +46,7 @@ $Owner = Array();
 # надо посмотреть по лицензии
 $Where = Array(SPrintF('`LicenseID` = (SELECT `ID` FROM `ISPswLicenses` WHERE `elid` = %u)',$id));
 #-------------------------------------------------------------------------------
-$Order = DB_Select('ISPswOrdersOwners',Array('ID','UserID'),Array('UNIQ','Where'=>$Where));
+$Order = DB_Select('ISPswOrdersOwners',Array('ID','UserID','(SELECT `Email` FROM `Users` WHERE `ID` = `ISPswOrdersOwners`.`UserID`) AS `Email`'),Array('UNIQ','Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Order)){
 case 'error':
@@ -59,11 +66,11 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # ищщем в базе IP  с которого пришёл запрос, определяем VPS на котором запущена лицензия
-if($Settings['slaveserver.edit']['UseForVPS']){
+if($Settings['slaveserver-edit']['UseForVPS']){
 	#-------------------------------------------------------------------------------
 	$Where = Array(SPrintF('`IP` = "%s"',$IP),'`StatusID` IN ("Active","OnCreate","SchemeChange","Suspended")');
 	#-------------------------------------------------------------------------------
-	$Order = DB_Select('VPSOrdersOwners',Array('ID','UserID'),Array('UNIQ','Where'=>$Where));
+	$Order = DB_Select('VPSOrdersOwners',Array('ID','UserID','(SELECT `Email` FROM `Users` WHERE `ID` = `VPSOrdersOwners`.`UserID`) AS `Email`'),Array('UNIQ','Where'=>$Where));
 	switch(ValueOf($Order)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
@@ -84,11 +91,11 @@ if($Settings['slaveserver.edit']['UseForVPS']){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # ищщем в базе IP  с которого пришёл запрос, определяем выделенный сервер на котором запущена лицензия
-if($Settings['slaveserver.edit']['UseForDS']){
+if($Settings['slaveserver-edit']['UseForDS']){
 	#-------------------------------------------------------------------------------
 	$Where = Array(SPrintF('`IP` = "%s" OR `ExtraIP` LIKE "%%%s%%"',$IP,$IP),'`StatusID` IN ("Active","OnCreate","SchemeChange","Suspended")');
 	#-------------------------------------------------------------------------------
-	$Order = DB_Select('DSOrdersOwners',Array('ID','UserID'),Array('UNIQ','Where'=>$Where));
+	$Order = DB_Select('DSOrdersOwners',Array('ID','UserID','(SELECT `Email` FROM `Users` WHERE `ID` = `DSOrdersOwners`.`UserID`) AS `Email`'),Array('UNIQ','Where'=>$Where));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Order)){
 	case 'error':
@@ -109,32 +116,43 @@ if($Settings['slaveserver.edit']['UseForDS']){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+# если не найден владелец - валим
+if(SizeOf($Owner) < 1){
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[comp/www/API/ISPswSettingURL]: License owner not found'));
+	#-------------------------------------------------------------------------------
+	return new gException('LICENSE_OWNER_NOT_FOUND','Владелец лицензии не найден');
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # массив, с элементами выходной XML
 $Array = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # настройки сети из которой можно выполнять команды
-if($Settings['xset.up.param']['IsActive'])
-	$Array[] = SPrintF('<func name="xset.up.param"><arg name="ip">%s</arg></func>',$Settings['xset.up.param']['LAN']);
+if($Settings['xset-up-param']['IsActive'])
+	$Array[] = SPrintF('<func name="xset.up.param"><arg name="ip">%s</arg></func>',$Settings['xset-up-param']['LAN']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # настройки DNS
-$Args = Array();
+$Args = Array('<arg name="sok">ok</arg><arg name="sync">on</arg>');
 #-------------------------------------------------------------------------------
 if($Settings['dnsparam']['IsActive'])
 	foreach(Array_Keys($Settings['dnsparam']) as $Name)
 		if($Name != 'IsActive')
-			$Args[] = SPrintF('<arg name="%s">%s</arg>',$Name,$Settings['dnsparam'][$Name]);
+			$Args[] = SPrintF('<arg name="%s">%s</arg>',Str_Replace('dnsparam.','',Str_Replace('-','.',$Name)),($Name == 'dnsparam-email')?$Owner[0]['Email']:$Settings['dnsparam'][$Name]);
 #-------------------------------------------------------------------------------
+
 $Array[] = SPrintF('<func name="dnsparam">%s</func>',Implode('',$Args));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # TODO надо вытянуть номерки автосоздаваемых тарифов, и юзать их заказы
 #-------------------------------------------------------------------------------
 # по юзеру, которому принадлежит заказ находим заказы на DNSmanager
-if($Settings['slaveserver.edit']['IsActive'] && SizeOf($Owner) >0){
+if($Settings['slaveserver-edit']['IsActive']){
 	#-------------------------------------------------------------------------------
-	$DNSmanagerOrders = DB_Select('DNSmanagerOrdersOwners',Array('*','(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`) AS `Address`'),Array('Where'=>SPrintF('`UserID` = %u',$Owner[0]['UserID']),'IsDesc'=>TRUE,'SortOn'=>'ID'));
+	$DNSmanagerOrders = DB_Select('DNSmanagerOrdersOwners',Array('ServerID','Login','Password','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`) AS `Params`'),Array('Where'=>SPrintF('`UserID` = %u',$Owner[0]['UserID']),'IsDesc'=>TRUE,'SortOn'=>'ID'));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($DNSmanagerOrders)){
 	case 'error':
@@ -155,21 +173,20 @@ if($Settings['slaveserver.edit']['IsActive'] && SizeOf($Owner) >0){
 		if(!IsSet($Servers[$DNSmanagerOrder['ServerID']]))
 			$Servers[$DNSmanagerOrder['ServerID']] = $DNSmanagerOrder;
 	#-------------------------------------------------------------------------------
-	#Debug(SPrintF('[comp/www/API/ISPswSettingURL]: Servers = %s',print_r($Servers,true)));
-	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# выдаём данные DNSmanager в ответе
-	$XML = '<func name="%s"><arg name="username">%s</arg><arg name="password">%s</arg><arg name="url">%s</arg></func>';
+	$XML = '<func name="%s"><arg name="sok">ok</arg><arg name="username">%s</arg><arg name="password">%s</arg><arg name="url">%s</arg></func>';
 	#-------------------------------------------------------------------------------
 	foreach($Servers as $Server)
 		foreach(Array('slaveserver.edit','slave.edit') as $Func)
-			$Array[] = SPrintF($XML,$Func,$Server['Login'],$Server['Password'],$Server['Address']);
+			$Array[] = SPrintF($XML,$Func,$Server['Login'],$Server['Password'],$Server['Params']['Url']);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # строим выхлопную XML'ину
 $Out = SPrintF('<?xml version="1.0" encoding="UTF-8"?><doc>%s</doc>',Implode('',$Array));
+Debug(SPrintF('[comp/www/API/ISPswSettingURL]: Out XML = %s',$Out));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $License = DB_Select('ISPswLicenses',Array('LicKey'),Array('UNIQ','Where'=>SPrintF('`elid` = %u',$id)));

@@ -1690,25 +1690,25 @@
 	<!-- *********************************************************************** -->
 	<ISPswSettingURL>
 		<!-- *********************************************************************** -->
-		<xset.up.param>
+		<xset-up-param>
 			<IsActive>1</IsActive>
 			<LAN>192.168.0.0/16</LAN>
-		</xset.up.param>
+		</xset-up-param>
 		<!-- *********************************************************************** -->
 		<dnsparam>
 			<IsActive>1</IsActive>
-			<dnsparam.email>root@isp.su</dnsparam.email>
-			<dnsparam.mx>mail mail</dnsparam.mx>
-			<dnsparam.ns>dns0.isp.su. dns1.isp.su.</dnsparam.ns>
-			<dnsparam.nsips></dnsparam.nsips>
-			<dnsparam.subdom>www ftp mail smtp pop imap4</dnsparam.subdom>
+			<dnsparam-email>root@isp.su</dnsparam-email>
+			<dnsparam-mx>mail mail</dnsparam-mx>
+			<dnsparam-ns>dns0.isp.su. dns1.isp.su.</dnsparam-ns>
+			<dnsparam-nsips></dnsparam-nsips>
+			<dnsparam-subdom>www ftp mail smtp pop imap4</dnsparam-subdom>
 		</dnsparam>
 		<!-- *********************************************************************** -->
-		<slaveserver.edit>
+		<slaveserver-edit>
 			<IsActive>1</IsActive>
 			<UseForVPS>1</UseForVPS>
 			<UseForDS>1</UseForDS>
-		</slaveserver.edit>
+		</slaveserver-edit>
 		<!-- *********************************************************************** -->
 	</ISPswSettingURL>
 	<!-- *********************************************************************** -->
