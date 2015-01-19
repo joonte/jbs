@@ -612,7 +612,7 @@ function IspSoft_Build_HTTP($Settings){
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
 	$Http = Array(
-			'Address'       => $Settings['Params']['IP'],
+			'Address'       => $Settings['Address'],
 			'Port'          => $Settings['Port'],
 			'Host'          => $Settings['Address'],
 			'Protocol'      => $Settings['Protocol'],

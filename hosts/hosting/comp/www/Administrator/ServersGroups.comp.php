@@ -21,7 +21,7 @@ if(Is_Error($DOM->Load('Base')))
 #-------------------------------------------------------------------------------
 $DOM->AddAttribs('MenuLeft',Array('args'=>'Administrator/AddIns'));
 #-------------------------------------------------------------------------------
-$DOM->AddText('Title','Дополнения → Мастера настройки → Группы серверов');
+$DOM->AddText('Title','Дополнения → Мастера настройки → Прочее → Группы серверов');
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/Administrator/ServersGroupEdit');"),'Новая группа серверов','Add.gif');
 if(Is_Error($Comp))

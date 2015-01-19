@@ -69,7 +69,7 @@ function Config_Read($Array,$Path = Array(),$Level = 1){
     #---------------------------------------------------------------------------
     $ID = SPrintF('ID%06u',$Index++);
     #---------------------------------------------------------------------------
-    $StringPath = Implode('.',$CurrentPath = Array_Merge($Path,Array($ElementID)));
+    $StringPath = Implode('/',$CurrentPath = Array_Merge($Path,Array($ElementID)));
     #---------------------------------------------------------------------------
     if(IsSet($ConfigNames[$ElementID])){
       #-------------------------------------------------------------------------

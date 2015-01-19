@@ -21,7 +21,7 @@ if(Is_Error($DOM->Load('Base')))
 #-------------------------------------------------------------------------------
 $DOM->AddAttribs('MenuLeft',Array('args'=>'Administrator/AddIns'));
 #-------------------------------------------------------------------------------
-$DOM->AddText('Title','Дополнения → Мастера настройки → Сервера');
+$DOM->AddText('Title','Дополнения → Мастера настройки → Прочее → Сервера');
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/Administrator/ServerEdit');"),'Добавить новый сервер','Add.gif');
 if(Is_Error($Comp))

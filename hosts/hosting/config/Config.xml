@@ -606,234 +606,435 @@
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Notifies>
- <Types>
-  <HostingOrdersActive>
-   <Name>Активация заказа</Name>
-   <Title>Заказы хостинга</Title>
-   <Code>Hosting</Code>
-   <GroupID>1</GroupID>
-  </HostingOrdersActive>
-  <!-- ********************************************************************* -->
-  <HostingNoticeSuspend>
-   <Name>Уведомление о блокировке заказа</Name>
-   <GroupID>1</GroupID>
-  </HostingNoticeSuspend>
-  <!-- ********************************************************************* -->
-  <HostingOrdersSuspended>
-   <Name>Блокировка заказа</Name>
-   <GroupID>1</GroupID>
-  </HostingOrdersSuspended>
-  <!-- ********************************************************************* -->
-  <HostingNoticeDelete>
-   <Name>Уведомление о удалении заказа</Name>
-   <GroupID>1</GroupID>
-  </HostingNoticeDelete>
-  <!-- ********************************************************************* -->
-  <HostingOrdersDeleted>
-   <Name>Удаление заказа</Name>
-   <GroupID>1</GroupID>
-  </HostingOrdersDeleted>
-  <!-- ********************************************************************* -->
-  <HostingPasswordChange>
-   <Name>Смена пароля на заказ</Name>
-   <GroupID>1</GroupID>
-  </HostingPasswordChange>
-  <!-- ********************************************************************* -->
-  <HostingCPUUsageNotice>
-   <Name>Превышение процессорного времени</Name>
-   <GroupID>1</GroupID>
-  </HostingCPUUsageNotice>
-  <!-- ********************************************************************* -->
-  <DiskUsageNotice>
-   <Name>Превышение использования диска</Name>
-   <GroupID>1</GroupID>
-  </DiskUsageNotice>
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <DomainsOrdersOnRegister>
-   <Title>Заказы доменов</Title>
-   <Name>Домен поступил на регистрацию</Name>
-   <Code>Domains</Code>
-   <GroupID>1</GroupID>
-  </DomainsOrdersOnRegister>
-  <!-- ********************************************************************* -->
-  <DomainsOrdersActive>
-   <Name>Активация заказа</Name>
-   <GroupID>1</GroupID>
-  </DomainsOrdersActive>
-  <!-- ********************************************************************* -->
-<!-- а нету такого уведомления. и было ли - не понятно. а вот шаблон отличается
-     тут Domain а везде Domains
-  <DomainNsChange>
-   <Name>Смена серверов DNS</Name>
-   <GroupID>1</GroupID>
-  </DomainNsChange>
-  -->
-  <!-- ********************************************************************* -->
-  <DomainsNoticeSuspend>
-   <Name>Уведомление о блокировке заказа</Name>
-   <GroupID>1</GroupID>
-  </DomainsNoticeSuspend>
-  <!-- ********************************************************************* -->
-  <DomainsOrdersSuspended>
-   <Name>Блокировка заказа</Name>
-   <GroupID>1</GroupID>
-  </DomainsOrdersSuspended>
-  <!-- ********************************************************************* -->
-  <DomainsNoticeDelete>
-   <Name>Уведомление о удалении заказа</Name>
-   <GroupID>1</GroupID>
-  </DomainsNoticeDelete>
-  <!-- ********************************************************************* -->
-  <DomainsOrdersDeleted>
-   <Name>Удаление заказа</Name>
-   <GroupID>1</GroupID>
-  </DomainsOrdersDeleted>
-  <!-- added by lissyara 2011-08-11 in 14:06 MSK *************************** -->
-  <!-- ********************************************************************* -->
-  <VPSOrdersActive>
-   <Name>Активация заказа</Name>
-   <Title>Заказы VPS (виртуальных серверов)</Title>
-   <Code>VPS</Code>
-   <GroupID>1</GroupID>
-  </VPSOrdersActive>
-  <!-- ********************************************************************* -->
-  <VPSNoticeSuspend>
-   <Name>Уведомление о блокировке заказа</Name>
-   <GroupID>1</GroupID>
-  </VPSNoticeSuspend>
-  <!-- ********************************************************************* -->
-  <VPSOrdersSuspended>
-   <Name>Блокировка заказа</Name>
-   <GroupID>1</GroupID>
-  </VPSOrdersSuspended>
-  <!-- ********************************************************************* -->
-  <VPSNoticeDelete>
-   <Name>Уведомление о удалении заказа</Name>
-   <GroupID>1</GroupID>
-  </VPSNoticeDelete>
-  <!-- ********************************************************************* -->
-  <VPSOrdersDeleted>
-   <Name>Удаление заказа</Name>
-   <GroupID>1</GroupID>
-  </VPSOrdersDeleted>
-  <!-- ********************************************************************* -->
-  <VPSPasswordChange>
-   <Name>Смена пароля на заказ</Name>
-   <GroupID>1</GroupID>
-  </VPSPasswordChange>
-  <!-- added by lissyara 2013-05-30 in 23:46 MSK *************************** -->
-  <!-- ********************************************************************* -->
-  <DSOrdersActive>
-   <Name>Активация заказа</Name>
-   <Title>Заказы DS (выделенных серверов)</Title>
-   <Code>DS</Code>
-   <GroupID>1</GroupID>
-  </DSOrdersActive>
-  <!-- ********************************************************************* -->
-  <DSNoticeSuspend>
-   <Name>Уведомление о блокировке заказа</Name>
-   <GroupID>1</GroupID>
-  </DSNoticeSuspend>
-  <!-- ********************************************************************* -->
-  <DSOrdersSuspended>
-   <Name>Блокировка заказа</Name>
-   <GroupID>1</GroupID>
-  </DSOrdersSuspended>
-  <!-- ********************************************************************* -->
-  <DSNoticeDelete>
-   <Name>Уведомление о удалении заказа</Name>
-   <GroupID>1</GroupID>
-  </DSNoticeDelete>
-  <!-- ********************************************************************* -->
-  <DSOrdersDeleted>
-   <Name>Удаление заказа</Name>
-   <GroupID>1</GroupID>
-  </DSOrdersDeleted>
-  <!-- ********************************************************************* -->
-  <!-- added by lissyara 2011-08-11 in 14:10 MSK *************************** -->
-  <!-- ********************************************************************* -->
-  <ExtraIPOrdersActive>
-   <Name>Активация заказа</Name>
-   <Title>Заказы выделенных IP адресов</Title>
-   <Code>ExtraIP</Code>
-   <GroupID>1</GroupID>
-  </ExtraIPOrdersActive>
-  <!-- ********************************************************************* -->
-  <ExtraIPNoticeDelete>
-   <Name>Уведомление о удалении заказа</Name>
-   <GroupID>1</GroupID>
-  </ExtraIPNoticeDelete>
-  <!-- ********************************************************************* -->
-  <ExtraIPOrdersDeleted>
-   <Name>Удаление заказа</Name>
-   <GroupID>1</GroupID>
-  </ExtraIPOrdersDeleted>
-  <!-- ********************************************************************* -->
-  <!-- added by lissyara 2013-05-30 in 14:06 MSK *************************** -->
-  <!-- ********************************************************************* -->
-  <ISPswOrdersActive>
-   <Name>Активация заказа</Name>
-   <Title>Заказы программного обеспечения ISPsystem</Title>
-   <Code>ISPsw</Code>
-   <GroupID>1</GroupID>
-  </ISPswOrdersActive>
-  <!-- ********************************************************************* -->
-  <ISPswNoticeSuspend>
-   <Name>Уведомление о блокировке заказа</Name>
-   <GroupID>1</GroupID>
-  </ISPswNoticeSuspend>
-  <!-- ********************************************************************* -->
-  <ISPswOrdersSuspended>
-   <Name>Блокировка заказа</Name>
-   <GroupID>1</GroupID>
-  </ISPswOrdersSuspended>
-  <!-- ********************************************************************* -->
-  <ISPswNoticeDelete>
-   <Name>Уведомление о удалении заказа</Name>
-   <GroupID>1</GroupID>
-  </ISPswNoticeDelete>
-  <!-- ********************************************************************* -->
-  <ISPswOrdersDeleted>
-   <Name>Удаление заказа</Name>
-   <GroupID>1</GroupID>
-  </ISPswOrdersDeleted>
-  <!-- ********************************************************************* -->
-  <!-- added by lissyara 2014-12-26 in 16:41 MSK -->
-  <!-- ********************************************************************* -->
-  <DNSmanagerOrdersActive>
-   <Name>Активация заказа</Name>
-   <Title>Заказы на вторичные DNS сервера (DNSmanager)</Title>
-   <Code>DNSmanager</Code>
-   <GroupID>1</GroupID>
-  </DNSmanagerOrdersActive>
-  <!-- ********************************************************************* -->
-  <DNSmanagerNoticeSuspend>
-   <Name>Уведомление о блокировке заказа</Name>
-   <GroupID>1</GroupID>
-  </DNSmanagerNoticeSuspend>
-  <!-- ********************************************************************* -->
-  <DNSmanagerOrdersSuspended>
-   <Name>Блокировка заказа</Name>
-   <GroupID>1</GroupID>
-  </DNSmanagerOrdersSuspended>
-  <!-- ********************************************************************* -->
-  <DNSmanagerNoticeDelete>
-   <Name>Уведомление о удалении заказа</Name>
-   <GroupID>1</GroupID>
-  </DNSmanagerNoticeDelete>
-  <!-- ********************************************************************* -->
-  <DNSmanagerOrdersDeleted>
-   <Name>Удаление заказа</Name>
-   <GroupID>1</GroupID>
-  </DNSmanagerOrdersDeleted>
-  <!-- ********************************************************************* -->
-  <DNSmanagerPasswordChange>
-   <Name>Смена пароля на заказ</Name>
-   <GroupID>1</GroupID>
-  </DNSmanagerPasswordChange>
-  <!-- ********************************************************************* -->
- </Types>
+	<Types>
+		<HostingOrdersActive>
+			<Name>Активация заказа</Name>
+			<Title>Заказы хостинга</Title>
+			<Code>Hosting</Code>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</HostingOrdersActive>
+		<!-- ********************************************************************* -->
+		<HostingNoticeSuspend>
+			<Name>Уведомление о блокировке заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</HostingNoticeSuspend>
+		<!-- ********************************************************************* -->
+		<HostingOrdersSuspended>
+			<Name>Блокировка заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</HostingOrdersSuspended>
+		<!-- ********************************************************************* -->
+		<HostingNoticeDelete>
+			<Name>Уведомление о удалении заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</HostingNoticeDelete>
+		<!-- ********************************************************************* -->
+		<HostingOrdersDeleted>
+			<Name>Удаление заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</HostingOrdersDeleted>
+		<!-- ********************************************************************* -->
+		<HostingPasswordChange>
+			<Name>Смена пароля на заказ</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</HostingPasswordChange>
+		<!-- ********************************************************************* -->
+		<HostingCPUUsageNotice>
+			<Name>Превышение процессорного времени</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>0</UseSMS>
+			<IsActive>1</IsActive>
+		</HostingCPUUsageNotice>
+		<!-- ********************************************************************* -->
+		<DiskUsageNotice>
+			<Name>Превышение использования диска</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>0</UseSMS>
+			<IsActive>1</IsActive>
+		</DiskUsageNotice>
+		<!-- ********************************************************************* -->
+		<!-- ********************************************************************* -->
+		<DomainsOrdersOnRegister>
+			<Title>Заказы доменов</Title>
+			<Name>Домен поступил на регистрацию</Name>
+			<Code>Domains</Code>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</DomainsOrdersOnRegister>
+		<!-- ********************************************************************* -->
+		<DomainsOrdersActive>
+			<Name>Активация заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</DomainsOrdersActive>
+		<!-- ********************************************************************* -->
+		<!-- а нету такого уведомления. и было ли - не понятно. а вот шаблон отличается, тут Domain а везде Domains
+		<DomainNsChange>
+			<Name>Смена серверов DNS</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</DomainNsChange>
+		-->
+		<!-- ********************************************************************* -->
+		<DomainsNoticeSuspend>
+			<Name>Уведомление о блокировке заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</DomainsNoticeSuspend>
+		<!-- ********************************************************************* -->
+		<DomainsOrdersSuspended>
+			<Name>Блокировка заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</DomainsOrdersSuspended>
+		<!-- ********************************************************************* -->
+		<DomainsNoticeDelete>
+			<Name>Уведомление о удалении заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</DomainsNoticeDelete>
+		<!-- ********************************************************************* -->
+		<DomainsOrdersDeleted>
+			<Name>Удаление заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</DomainsOrdersDeleted>
+		<!-- ********************************************************************* -->
+		<!-- added by lissyara 2011-08-11 in 14:06 MSK *************************** -->
+		<!-- ********************************************************************* -->
+		<VPSOrdersActive>
+			<Name>Активация заказа</Name>
+			<Title>Заказы VPS (виртуальных серверов)</Title>
+			<Code>VPS</Code>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</VPSOrdersActive>
+		<!-- ********************************************************************* -->
+		<VPSNoticeSuspend>
+			<Name>Уведомление о блокировке заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</VPSNoticeSuspend>
+		<!-- ********************************************************************* -->
+		<VPSOrdersSuspended>
+			<Name>Блокировка заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</VPSOrdersSuspended>
+		<!-- ********************************************************************* -->
+		<VPSNoticeDelete>
+			<Name>Уведомление о удалении заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</VPSNoticeDelete>
+		<!-- ********************************************************************* -->
+		<VPSOrdersDeleted>
+			<Name>Удаление заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</VPSOrdersDeleted>
+		<!-- ********************************************************************* -->
+		<VPSPasswordChange>
+			<Name>Смена пароля на заказ</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</VPSPasswordChange>
+		<!-- ********************************************************************* -->
+		<!-- added by lissyara 2013-05-30 in 23:46 MSK *************************** -->
+		<!-- ********************************************************************* -->
+		<DSOrdersActive>
+			<Name>Активация заказа</Name>
+			<Title>Заказы DS (выделенных серверов)</Title>
+			<Code>DS</Code>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</DSOrdersActive>
+		<!-- ********************************************************************* -->
+		<DSNoticeSuspend>
+			<Name>Уведомление о блокировке заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</DSNoticeSuspend>
+		<!-- ********************************************************************* -->
+		<DSOrdersSuspended>
+			<Name>Блокировка заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</DSOrdersSuspended>
+		<!-- ********************************************************************* -->
+		<DSNoticeDelete>
+			<Name>Уведомление о удалении заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</DSNoticeDelete>
+		<!-- ********************************************************************* -->
+		<DSOrdersDeleted>
+			<Name>Удаление заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</DSOrdersDeleted>
+		<!-- ********************************************************************* -->
+		<!-- added by lissyara 2011-08-11 in 14:10 MSK *************************** -->
+		<!-- ********************************************************************* -->
+		<ExtraIPOrdersActive>
+			<Name>Активация заказа</Name>
+			<Title>Заказы выделенных IP адресов</Title>
+			<Code>ExtraIP</Code>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</ExtraIPOrdersActive>
+		<!-- ********************************************************************* -->
+		<ExtraIPNoticeDelete>
+			<Name>Уведомление о удалении заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</ExtraIPNoticeDelete>
+		<!-- ********************************************************************* -->
+		<ExtraIPOrdersDeleted>
+			<Name>Удаление заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</ExtraIPOrdersDeleted>
+		<!-- ********************************************************************* -->
+		<!-- added by lissyara 2013-05-30 in 14:06 MSK *************************** -->
+		<!-- ********************************************************************* -->
+		<ISPswOrdersActive>
+			<Name>Активация заказа</Name>
+			<Title>Заказы программного обеспечения ISPsystem</Title>
+			<Code>ISPsw</Code>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</ISPswOrdersActive>
+		<!-- ********************************************************************* -->
+		<ISPswNoticeSuspend>
+			<Name>Уведомление о блокировке заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</ISPswNoticeSuspend>
+		<!-- ********************************************************************* -->
+		<ISPswOrdersSuspended>
+			<Name>Блокировка заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</ISPswOrdersSuspended>
+		<!-- ********************************************************************* -->
+		<ISPswNoticeDelete>
+			<Name>Уведомление о удалении заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</ISPswNoticeDelete>
+		<!-- ********************************************************************* -->
+		<ISPswOrdersDeleted>
+			<Name>Удаление заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>1</UseSMS>
+			<IsActive>1</IsActive>
+		</ISPswOrdersDeleted>
+		<!-- ********************************************************************* -->
+		<!-- added by lissyara 2014-12-26 in 16:41 MSK -->
+		<!-- ********************************************************************* -->
+		<DNSmanagerOrdersActive>
+			<Name>Активация заказа</Name>
+			<Title>Заказы на вторичные DNS сервера (DNSmanager)</Title>
+			<Code>DNSmanager</Code>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>0</UseICQ>
+			<UseJabber>0</UseJabber>
+			<UseSMS>0</UseSMS>
+			<IsActive>1</IsActive>
+		</DNSmanagerOrdersActive>
+		<!-- ********************************************************************* -->
+		<DNSmanagerNoticeSuspend>
+			<Name>Уведомление о блокировке заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>0</UseICQ>
+			<UseJabber>0</UseJabber>
+			<UseSMS>0</UseSMS>
+			<IsActive>1</IsActive>
+		</DNSmanagerNoticeSuspend>
+		<!-- ********************************************************************* -->
+		<DNSmanagerOrdersSuspended>
+			<Name>Блокировка заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>0</UseICQ>
+			<UseJabber>0</UseJabber>
+			<UseSMS>0</UseSMS>
+			<IsActive>1</IsActive>
+		</DNSmanagerOrdersSuspended>
+		<!-- ********************************************************************* -->
+		<DNSmanagerNoticeDelete>
+			<Name>Уведомление о удалении заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>0</UseICQ>
+			<UseJabber>0</UseJabber>
+			<UseSMS>0</UseSMS>
+			<IsActive>1</IsActive>
+		</DNSmanagerNoticeDelete>
+		<!-- ********************************************************************* -->
+		<DNSmanagerOrdersDeleted>
+			<Name>Удаление заказа</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>0</UseICQ>
+			<UseJabber>0</UseJabber>
+			<UseSMS>0</UseSMS>
+			<IsActive>1</IsActive>
+		</DNSmanagerOrdersDeleted>
+		<!-- ********************************************************************* -->
+		<DNSmanagerPasswordChange>
+			<Name>Смена пароля на заказ</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>0</UseICQ>
+			<UseJabber>0</UseJabber>
+			<UseSMS>0</UseSMS>
+			<IsActive>1</IsActive>
+		</DNSmanagerPasswordChange>
+		<!-- ********************************************************************* -->
+	</Types>
 </Notifies>
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->

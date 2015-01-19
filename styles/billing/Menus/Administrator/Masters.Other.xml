@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+	<!-- *********************************************************************** -->
+	<Items>
+		<ID100>
+			<Text>Группы серверов</Text>
+			<Paths>
+				<UniqID>^\/Administrator\/ServersGroups$</UniqID>
+			</Paths>
+			<Href>/Administrator/ServersGroups</Href>
+			<Level>1</Level>
+		</ID100>
+		<!-- *********************************************************************** -->
+		<ID200>
+			<Text>Сервера</Text>
+			<Paths>
+				<UniqID>^\/Administrator\/Servers$</UniqID>
+			</Paths>
+			<Href>/Administrator/Servers</Href>
+			<Level>1</Level>
+		</ID200>
+		<!-- *********************************************************************** -->
+		<ID300>
+			<Text>Уведомления</Text>
+			<Paths>
+				<UniqID>^\/Administrator\/GlobalNotifiesSet$</UniqID>
+			</Paths>
+			<Href>/Administrator/GlobalNotifiesSet</Href>
+			<Level>1</Level>
+		</ID300>
+	</Items>
+	<!-- *********************************************************************** -->
+</XML>

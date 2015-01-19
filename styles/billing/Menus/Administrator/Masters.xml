@@ -28,21 +28,13 @@
   <Level>1</Level>
  </ID300>
  <ID400>
-  <Text>Группы серверов</Text>
+  <Text>Прочее</Text>
   <Paths>
-   <UniqID>^\/Administrator\/ServersGroups$</UniqID>
+   <UniqID>^\/Administrator\/(Other|ServersGroups|Servers|GlobalNotifiesSet)$</UniqID>
   </Paths>
-  <Href>/Administrator/ServersGroups</Href>
-  <Level>1</Level>
+  <Href>/Administrator/Other</Href>
+  <Level>2</Level>
  </ID400>
- <ID500>
-  <Text>Сервера</Text>
-  <Paths>
-   <UniqID>^\/Administrator\/Servers$</UniqID>
-  </Paths>
-  <Href>/Administrator/Servers</Href>
-  <Level>1</Level>
- </ID500>
 </Items>
 <!-- *********************************************************************** -->
 </XML>
