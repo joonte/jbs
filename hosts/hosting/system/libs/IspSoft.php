@@ -54,7 +54,7 @@ function IspSoft_Find_Free_License($ISPswScheme){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# делаем тот же запрос снова, только без части про IP и с датой
-	$Where = Array(SPrintF("`pricelist_id` = '%s'",$ISPswScheme['pricelist_id']),'UNIX_TIMESTAMP() - `StatusDate` > 24 * 3600 * 31',"`IsInternal` = 'yes'","`IsUsed` = 'no'","`Flag` != 'Locked'");
+	$Where = Array(SPrintF("`pricelist_id` = '%s'",$ISPswScheme['pricelist_id']),'UNIX_TIMESTAMP() - `ip_change_date` > 24 * 3600 * 31',"`IsInternal` = 'yes'","`IsUsed` = 'no'","`Flag` != 'Locked'");
 	#-------------------------------------------------------------------------------
 	$ISPswLicenses = DB_Select('ISPswLicenses','*',Array('UNIQ','Where'=>$Where,'Limits'=>Array(0,1)));
 	switch(ValueOf($ISPswLicenses)){
@@ -159,18 +159,20 @@ function IspSoft_Create($Settings,$ISPswScheme){
 	#-------------------------------------------------------------------------------
 	$License = Array(
 			#-------------------------------------------------------------------------------
-			'pricelist_id'	=> $ISPswScheme['pricelist_id'],
-			'period'	=> $ISPswScheme['period'],
-			'addon'		=> 1,
-			'IP'		=> $ISPswScheme['IP'],
-			'elid'		=> $Doc['elid'],
-			'LicKey'	=> $Doc['lickey'],
-			'IsInternal'	=> $ISPswScheme['IsInternal']?'yes':'no',
-			'IsUsed'	=> 'yes',
-			'StatusID'	=> 'Active',
-			'CreateDate'	=> time(),	// дата создания лицензии
-			'UpdateDate'	=> time(),	// дата последнего обновления инфы с биллинга ISPsystems
-			'StatusDate'	=> time()	// поле по которому узнаётся дата смены IP
+			'pricelist_id'		=> $ISPswScheme['pricelist_id'],
+			'period'		=> $ISPswScheme['period'],
+			'addon'			=> 1,
+			'IP'			=> $ISPswScheme['IP'],
+			'remoteip'		=> (IsSet($Doc['remoteip'])?$Doc['remoteip']:''),
+			'elid'			=> $Doc['elid'],
+			'LicKey'		=> $Doc['lickey'],
+			'IsInternal'		=> $ISPswScheme['IsInternal']?'yes':'no',
+			'IsUsed'		=> 'yes',
+			'StatusID'		=> 'Active',
+			'CreateDate'		=> time(),	// дата создания лицензии
+			'ip_change_date'	=> time(),	// когда можно менять IP адрес
+			'lickey_change_date'	=> time(),	// когда можно менять ключ лицензии
+			'StatusDate'		=> time()	// поле по которому узнаётся дата смены IP
 			#-------------------------------------------------------------------------------
 			);
 	#-------------------------------------------------------------------------------

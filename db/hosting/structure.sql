@@ -933,7 +933,8 @@ CREATE TABLE IF NOT EXISTS `ISPswLicenses` (
 	`pricelist_id` int(12) NOT NULL,
 	`period` VARCHAR(32) NOT NULL,
 	`addon` INT(12) NOT NULL DEFAULT '1',
-	`IP` char(64) NOT NULL,
+	`IP` char(64) NOT NULL,					-- IP-адрес
+	`remoteip` char(64) NOT NULL,				-- IP-адрес сервера
 	`elid` int(12) NOT NULL,
 	`LicKey` VARCHAR(128) NOT NULL,
 	`IsInternal` enum('yes','no') NOT NULL DEFAULT 'yes',
@@ -941,7 +942,8 @@ CREATE TABLE IF NOT EXISTS `ISPswLicenses` (
 	`ISPname` text,
 	`StatusID` char(30) DEFAULT 'UnSeted',
 	`CreateDate` int(11) NOT NULL,
-	`UpdateDate` int(11) NOT NULL,
+	`ip_change_date` int(11) NOT NULL,
+	`lickey_change_date` int(11) NOT NULL,
 	`StatusDate` int(11) NOT NULL,
 	`ExpireDate` int(11) NOT NULL,
 	`Flag` char(32) NOT NULL,

@@ -75,12 +75,9 @@ foreach($Doc as $License){
 	$StatusID = "UnSeted";
 	#-------------------------------------------------------------------------------
 	#Debug(SPrintF("[comp/Tasks/ISPswCheckLicenses]: Statuses = %s",print_r($Statuses, true)));
-	foreach(Array_Keys($Statuses) as $Status){
-		#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Statuses) as $Status)
 		if($Statuses[$Status]['status'] == $License['status'])
 			$StatusID = $Status;
-		#-------------------------------------------------------------------------------
-	}
         #-------------------------------------------------------------------------------
 	#----------------------------------TRANSACTION----------------------------------
 	if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Tasks/GC/ISPswCheckLicenses'))))
@@ -114,21 +111,23 @@ foreach($Doc as $License){
 		$IsInsert = DB_Insert(
 				'ISPswLicenses',
 				Array(
-					'pricelist_id'	=> $License['pricelist_id'],
-					'period'	=> $License['period'],
-					'addon'		=> $addon,
-					'IP'		=> $License['ip'],
-					'elid'		=> $License['id'],
-					'LicKey'	=> $License['lickey'],
-					'IsInternal'	=> 'no',	# TODO надо бы по IP определять
-					'IsUsed'	=> 'no',
-					'ISPname'	=> (IsSet($License['licname'])?$License['licname']:'Имя не задано'),
-					'StatusID'	=> $StatusID,
-					'CreateDate'	=> time(),
-					'UpdateDate'	=> time(),
-					'StatusDate'	=> StrToTime($License['ip_change_date']),
-					'ExpireDate'	=> $ExpireDate,
-					'Flag'		=> 'Locked'
+					'pricelist_id'		=> $License['pricelist_id'],
+					'period'		=> $License['period'],
+					'addon'			=> $addon,
+					'IP'			=> $License['ip'],
+					'remoteip'		=> (IsSet($License['remoteip'])?$License['remoteip']:''),
+					'elid'			=> $License['id'],
+					'LicKey'		=> $License['lickey'],
+					'IsInternal'		=> 'no',	# TODO надо бы по IP определять
+					'IsUsed'		=> 'no',
+					'ISPname'		=> (IsSet($License['licname'])?$License['licname']:'Имя не задано'),
+					'StatusID'		=> $StatusID,
+					'CreateDate'		=> Time(),
+					'ip_change_date'	=> StrToTime($License['ip_change_date']),
+					'lickey_change_date'	=> StrToTime($License['lickey_change_date']),
+					'StatusDate'		=> Time(),
+					'ExpireDate'		=> $ExpireDate,
+					'Flag'			=> 'Locked'
 				)
 			);
 		if(Is_Error($IsInsert))
@@ -162,13 +161,15 @@ foreach($Doc as $License){
 			#-------------------------------------------------------------------------
 			Debug(SPrintF("[comp/Tasks/ISPswCheckLicenses]: change license #%s IP %s->%s",$License['id'],$ISPswLic['ip'],$License['ip']));
 			#-------------------------------------------------------------------------
-			$Comp = Comp_Load('www/API/StatusSet',
-						Array(  'ModeID'        => 'ISPswLicenses',
-							'IsNotNotify'   => TRUE,
-							'IsNoTrigger'   => TRUE,
-							'StatusID'      => $StatusID,
-							'RowsIDs'       => $ISPswLic['ID'],
-							'Comment'       => SPrintF('Изменение IP в биллинге ISPsystem [%s->%s]',$ISPswLic['ip'],$License['ip'])
+			$Comp = Comp_Load(
+					'www/API/StatusSet',
+					Array(
+						'ModeID'        => 'ISPswLicenses',
+						'IsNotNotify'   => TRUE,
+						'IsNoTrigger'   => TRUE,
+						'StatusID'      => $StatusID,
+						'RowsIDs'       => $ISPswLic['ID'],
+						'Comment'       => SPrintF('ISPsystem IP: %s->%s',$ISPswLic['ip'],$License['ip'])
 						)
 					);
 			#-------------------------------------------------------------------------
@@ -190,18 +191,19 @@ foreach($Doc as $License){
 		$IsUpdate = DB_Update(
 					'ISPswLicenses',
 					Array(
-						'LicKey'	=> $License['lickey'],
-						'pricelist_id'  => $License['pricelist_id'],
-						'period'        => $License['period'],
-						'addon'		=> $addon,
-						'IP'		=> $License['ip'],
-						'ISPname'	=> (IsSet($License['licname'])?$License['licname']:'Имя не задано'),
-						'UpdateDate'	=> time(),
-						'StatusDate'	=> StrToTime($License['ip_change_date']),
-						'ExpireDate'	=> $ExpireDate
+						'LicKey'		=> $License['lickey'],
+						'pricelist_id'  	=> $License['pricelist_id'],
+						'period'        	=> $License['period'],
+						'addon'			=> $addon,
+						'IP'			=> $License['ip'],
+						'remoteip'		=> (IsSet($License['remoteip'])?$License['remoteip']:''),
+						'ISPname'		=> (IsSet($License['licname'])?$License['licname']:'Имя не задано'),
+						'ip_change_date'	=> StrToTime($License['ip_change_date']),
+						'lickey_change_date'	=> StrToTime($License['lickey_change_date']),
+						'ExpireDate'		=> $ExpireDate
 					),
 					Array(
-						'Where'		=> SPrintF('`elid` = %u',$License['id'])
+						'Where'			=> SPrintF('`elid` = %u',$License['id'])
 					)
 				);
 		if(Is_Error($IsUpdate))
@@ -216,7 +218,7 @@ foreach($Doc as $License){
 							'IsNoTrigger'   => TRUE,
 							'StatusID'      => $StatusID,
 							'RowsIDs'       => $ISPswLic['ID'],
-							'Comment'       => SPrintF('Изменение статуса в биллинге ISPsystem [%s->%s]',$ISPswLic['StatusID'],$StatusID)
+							'Comment'       => SPrintF('ISPsystem Status: %s->%s',$ISPswLic['StatusID'],$StatusID)
 						)
 					);
 			#-------------------------------------------------------------------------
@@ -401,16 +403,6 @@ default:
 	return ERROR | @Trigger_Error(101);
 
 }
-
-
-
-
-
-
-
-
-
-
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;

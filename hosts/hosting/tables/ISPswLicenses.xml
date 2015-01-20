@@ -22,7 +22,8 @@
   <ListElement>elid</ListElement>
   <ListElement>IsInternal</ListElement>
   <ListElement>IsUsed</ListElement>
-  <ListElement>UpdateDate</ListElement>
+  <ListElement>ip_change_date</ListElement>
+  <ListElement>lickey_change_date</ListElement>
   <ListElement>ISPname</ListElement>
   <ListElement>StatusID</ListElement>
   <ListElement>Flag</ListElement>
@@ -44,7 +45,7 @@
       </ItIsInternal>
       <ItIsAllowIPChange>
        <Name>Внутренние, можно менять IP</Name>
-       <Where>`StatusDate` + 31 * 24 * 3600 - UNIX_TIMESTAMP() &lt; 0 AND `IsInternal` = 'yes'</Where>
+       <Where>`ip_change_date` + 31 * 24 * 3600 - UNIX_TIMESTAMP() &lt; 0 AND `IsInternal` = 'yes'</Where>
       </ItIsAllowIPChange>
       <IsHaveFlag>
        <Name>С флагом</Name>
