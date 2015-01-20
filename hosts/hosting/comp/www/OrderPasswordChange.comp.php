@@ -109,7 +109,9 @@ if($Order['Params']['SystemID'] == 'VmManager5_KVM'){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Password = SubStr(Md5(UniqID(Time())),0,8);
+$Password = Comp_Load('Passwords/Generator');
+if(Is_Error($Password))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('name'=>'IsPasswordCreate','value'=>$Password,'type'=>'checkbox','onclick'=>'PasswordMode();'));
 if(Is_Error($Comp))

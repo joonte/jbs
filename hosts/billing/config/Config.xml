@@ -1574,6 +1574,12 @@
 		<IsStampAdmin>0</IsStampAdmin>
 	</MotionDocumentDownload>
 	<!-- *********************************************************************** -->
+	<PasswordsGenerator>
+		<UseLetters>1</UseLetters>
+		<UseDigits>1</UseDigits>
+		<UseSpecials>0</UseSpecials>
+		<Length>8</Length>
+	</PasswordsGenerator>
 </Other>
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
