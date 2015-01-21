@@ -102,7 +102,9 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Password = SubStr(Md5(UniqID()),0,12);
+$Password = Comp_Load('Passwords/Generator');
+if(Is_Error($Password))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------TRANSACTION-------------------------------------------
 if(Is_Error(DB_Transaction($TransactionID = UniqID('DNSmanagerOrder'))))

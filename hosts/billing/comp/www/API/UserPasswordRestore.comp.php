@@ -36,7 +36,9 @@ switch(ValueOf($User)){
     if(!$Comp)
       return new gException('WRONG_PROTECT_CODE','Введенный Вами защитный код неверен, либо устарел. Пожалуйста, введите его заново.');
     #---------------------------------------------------------------------------
-    $Password = SubStr(Md5(UniqID(Rand(), true)), 0, 8);
+    $Password = Comp_Load('Passwords/Generator');
+    if(Is_Error($Password))
+      return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
     $IsUpdated = DB_Update('Users',Array('Watchword'=>Md5($Password)),Array('ID'=>$User['ID']));
     if(Is_Error($IsUpdated))

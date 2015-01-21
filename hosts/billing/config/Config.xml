@@ -1578,7 +1578,7 @@
 		<UseLetters>1</UseLetters>
 		<UseDigits>1</UseDigits>
 		<UseSpecials>0</UseSpecials>
-		<Length>8</Length>
+		<Length>9</Length>
 	</PasswordsGenerator>
 </Other>
 <!-- *********************************************************************** -->

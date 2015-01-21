@@ -33,18 +33,14 @@ if(Is_Error(System_Load('modules/Authorisation.mod','libs/WhoIs.php')))
 $DomainName = Mb_StrToLower($DomainName,'UTF-8');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($Ns1Name){
-	if(Mb_StrToLower($Ns1Name,'UTF-8') == Mb_StrToLower($Ns2Name,'UTF-8')){
+if($Ns1Name)
+	if(Mb_StrToLower($Ns1Name,'UTF-8') == Mb_StrToLower($Ns2Name,'UTF-8'))
 		return new gException('DNS_SERVERS_CANNOT_BE_EQUAL','Имена DNS серверов должны быть разными');
-	}
-}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($Ns1IP){
-	if($Ns1IP == $Ns2IP){
+if($Ns1IP)
+	if($Ns1IP == $Ns2IP)
 		return new gException('IP_DNS_SERVERS_CANNOT_BE_EQUAL','IP адреса DNS серверов должны быть разными');
-	}
-}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Mb_StrToLower($Ns1Name,'UTF-8') == $DomainName || Mb_StrToLower($Ns2Name,'UTF-8') == $DomainName || Mb_StrToLower($Ns3Name,'UTF-8') == $DomainName || Mb_StrToLower($Ns4Name,'UTF-8') == $DomainName)

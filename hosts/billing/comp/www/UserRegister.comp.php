@@ -116,7 +116,9 @@ $Table[] = new Tag('TD',Array('width'=>430,'colspan'=>2,'class'=>'Standard','sty
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Электронный адрес (логин)'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Например: ivanov@ivanovich.ru')),$Comp);
 #-------------------------------------------------------------------------------
-$Password = SubStr(Md5(UniqID(Time())),0,8);
+$Password = Comp_Load('Passwords/Generator');
+if(Is_Error($Password))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('name'=>'IsPasswordCreate','value'=>$Password,'type'=>'checkbox','onclick'=>'PasswordMode();'));
 if(Is_Error($Comp))

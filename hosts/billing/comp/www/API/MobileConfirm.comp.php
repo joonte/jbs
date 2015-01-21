@@ -70,8 +70,14 @@ if($Mobile){
     if (!Is_Array($Executor))
 	return ERROR | @Trigger_Error(500);
     #-------------------------------------------------------------------------------
+    #-------------------------------------------------------------------------------
     $Confirm = rand(1000, 9999);
+    $Confirm = Comp_Load('Passwords/Generator',4,FALSE,TRUE,FALSE);
+    if(Is_Error($Confirm))
+            return ERROR | @Trigger_Error(500);
+    #-------------------------------------------------------------------------------
     CacheManager::add($CacheID, SPrintF('%s%s',$Confirm,$Mobile), 10*24*3600);
+    #-------------------------------------------------------------------------------
     Debug(SPrintF('[comp/www/API/MobileConfirm]: confirm code = %s',$Confirm));
     #-------------------------------------------------------------------------------
     $Message = SPrintF('Ваш проверочный код: %s%s',$Confirm,($ServerSettings['Params']['CutSign'])?'':SPrintF('\r\n%s',$Executor['Sign']));
