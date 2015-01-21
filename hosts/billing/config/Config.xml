@@ -1574,12 +1574,28 @@
 		<IsStampAdmin>0</IsStampAdmin>
 	</MotionDocumentDownload>
 	<!-- *********************************************************************** -->
-	<PasswordsGenerator>
+	<PasswordGenerator>
 		<UseLetters>1</UseLetters>
 		<UseDigits>1</UseDigits>
 		<UseSpecials>0</UseSpecials>
 		<Length>9</Length>
-	</PasswordsGenerator>
+	</PasswordGenerator>
+	<!-- *********************************************************************** -->
+	<PasswordChecker>
+		<Register>
+			<IsActive>0</IsActive>
+			<UseLetters>1</UseLetters>
+			<UseDigits>1</UseDigits>
+			<Length>7</Length>
+		</Register>
+		<!-- *********************************************************************** -->
+		<Change>
+			<IsActive>1</IsActive>
+			<UseLetters>1</UseLetters>
+			<UseDigits>1</UseDigits>
+			<Length>7</Length>
+		</Change>
+	</PasswordChecker>
 </Other>
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->

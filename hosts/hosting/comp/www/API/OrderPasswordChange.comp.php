@@ -25,6 +25,15 @@ if(StrLen($Password) > 15)
 	return new gException('BAD_PASSWORD_LENGTH','Слишком длинный пароль. Максимум - 15 символов.');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$IsCheck = Comp_Load('Passwords/Checker',$Password,'Change');
+if(Is_Error($IsCheck))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#Debug(SPrintF('[comp/www/API/OrderPasswordChange]: IsCheck = %s',print_r($IsCheck,true)));
+if(Is_Exception($IsCheck))
+	return $IsCheck;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Service = DB_Select('ServicesOwners',Array('*'),Array('UNIQ','ID'=>$ServiceID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Service)){

@@ -26,6 +26,13 @@ $Regulars = Regulars();
 if(!Preg_Match($Regulars['Password'],$Password))
 	return new gException('WRONG_PASSWORD','Неверно указан новый пароль');
 #-------------------------------------------------------------------------------
+$IsCheck = Comp_Load('Passwords/Checker',$Password,'Change');
+if(Is_Error($IsCheck))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if(Is_Exception($IsCheck))
+	return $IsCheck;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $User = DB_Select('Users','ID',Array('UNIQ','ID'=>(($UserID)?$UserID:$GLOBALS['__USER']['ID'])));
 #-------------------------------------------------------------------------------
