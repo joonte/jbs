@@ -72,13 +72,15 @@ foreach($Services as $Service){
 		$ServiceOrderID	= (integer)$ServiceOrder['ID'];
 		#-------------------------------------------------------------------------------
 		$GLOBALS['TaskReturnInfo'][] = SPrintF('%s: %s',$Service['Code'],$OrderID);
+		#-------------------------------------------------------------------------------
 		#------------------------------TRANSACTION--------------------------------------
 		if(Is_Error(DB_Transaction($TransactionID = UniqID('OrdersConsider'))))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$Where = SPrintF('`OrderID` = %u AND `DaysRemainded` > 0 AND `ID` = (SELECT MIN(`ID`) FROM `OrdersConsider` WHERE `OrderID` = %u AND `DaysRemainded` > 0)',$OrderID,$OrderID);
 		#-------------------------------------------------------------------------------
-		$OrdersConsider = DB_Select('OrdersConsider','*',Array('UNIQ','Where'=>$Where));
+		$Where = SPrintF('`OrderID` = %u AND `DaysRemainded` > 0',$OrderID);
+		#-------------------------------------------------------------------------------
+		$OrdersConsider = DB_Select('OrdersConsider','*',Array('UNIQ','SortOn'=>'Discont','Limits'=>Array(0,1),'Where'=>$Where));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($OrdersConsider)){
 		case 'error':
