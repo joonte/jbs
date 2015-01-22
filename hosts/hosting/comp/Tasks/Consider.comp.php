@@ -36,6 +36,10 @@ foreach($Services as $Service){
 			SPrintF('(SELECT `IsAutoProlong` FROM `Orders` WHERE `%sOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',$Service['Code'])
 			);
 	#-------------------------------------------------------------------------------
+	# затычка для вечных лицензий ISPsystem
+	if($Service['Code'] == 'ISPsw')
+		$Columns[] = '(SELECT `ConsiderTypeID` FROM `ISPswSchemes` WHERE `ISPswSchemes`.`ID` = `ISPswOrdersOwners`.`SchemeID`)  = "Daily"';
+	#-------------------------------------------------------------------------------
 	$ServiceOrders = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),$Columns,Array('Where'=>$Where,'Limit'=>Array('Start'=>0,'Length'=>5)));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($ServiceOrders)){
