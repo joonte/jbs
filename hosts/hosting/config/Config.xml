@@ -1156,12 +1156,6 @@
    <IsActive>1</IsActive>
   </HostingNoticeSuspend>
   <!-- ********************************************************************* -->
-  <HostingConsider>
-   <Name>Учет заказов хостинга</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </HostingConsider>
-  <!-- ********************************************************************* -->
   <HostingNoticeDelete>
    <Name>Уведомления об удалении заказов хостинг</Name>
    <Params type="array" />
@@ -1264,12 +1258,6 @@
    <IsActive>1</IsActive>
   </VPSNoticeSuspend>
   <!-- ********************************************************************* -->
-  <VPSConsider>
-   <Name>Учет заказов VPS</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </VPSConsider>
-  <!-- ********************************************************************* -->
   <VPSNoticeDelete>
    <Name>Уведомления об удалении заказов VPS</Name>
    <Params type="array" />
@@ -1346,12 +1334,6 @@
    <IsActive>1</IsActive>
   </DSNoticeSuspend>
   <!-- ********************************************************************* -->
-  <DSConsider>
-   <Name>Учет заказов аренды серверов</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </DSConsider>
-  <!-- ********************************************************************* -->
   <DSNoticeDelete>
    <Name>Уведомления об удалении заказов аренды серверов</Name>
    <Params type="array" />
@@ -1416,12 +1398,6 @@
    <IsActive>1</IsActive>
   </ExtraIPActive>
   <!-- ********************************************************************* -->
-  <ExtraIPConsider>
-   <Name>Учет заказов IP адресов</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </ExtraIPConsider>
-  <!-- ********************************************************************* -->
   <ExtraIPNoticeDelete>
    <Name>Уведомления об удалении заказов IP адресов</Name>
    <Params type="array" />
@@ -1458,12 +1434,6 @@
    <Params type="array" />
    <IsActive>1</IsActive>
   </ISPswNoticeSuspend>
-  <!-- ********************************************************************* -->
-  <ISPswConsider>
-   <Name>Учет заказов ПО ISPsystem</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </ISPswConsider>
   <!-- ********************************************************************* -->
   <ISPswNoticeDelete>
    <Name>Уведомления об удалении заказов ПО ISPsytsem</Name>
@@ -1607,12 +1577,6 @@
    <IsActive>1</IsActive>
   </DNSmanagerNoticeSuspend>
   <!-- ********************************************************************* -->
-  <DNSmanagerConsider>
-   <Name>Учет заказов на вторичный DNS</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </DNSmanagerConsider>
-  <!-- ********************************************************************* -->
   <DNSmanagerNoticeDelete>
    <Name>Уведомления об удалении заказов на вторичный DNS</Name>
    <Params type="array" />
@@ -1668,7 +1632,14 @@
    <IsActive>1</IsActive>
   </DNSmanagerDelete>
   <!-- ********************************************************************* -->
-</Types>
+		<!-- *********************************************************************** -->
+		<Consider>
+			<Name>Учет заказов штатных услуг</Name>
+			<Params type="array" />
+			<IsActive>1</IsActive>
+		</Consider>
+		<!-- *********************************************************************** -->
+	</Types>
 </Tasks>
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->

@@ -2,12 +2,12 @@ SET NAMES 'utf8';
 SET FOREIGN_KEY_CHECKS=0;
 
 LOCK TABLES `Tasks` WRITE;
-DELETE FROM `Tasks` WHERE `ID` IN(51,52,53,54,55,56,57,58,59,60,61,62,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,86,91,92,93,94);
+DELETE FROM `Tasks` WHERE `ID` IN(51,52,53,54,55,56,57,58,59,60,61,62,64,65,66,67,69,70,71,73,74,75,77,78,79,80,81,83,86,91,93,94);
 INSERT INTO `Tasks`
   (`ID`,`UserID`,`TypeID`,`Params`,`IsActive`)
 VALUES
 (51,1,'HostingNoticeSuspend','[]','yes'),
-(52,1,'HostingConsider','[]','yes'),
+(52,1,'Consider','[]','yes'),
 (53,1,'HostingNoticeDelete','[]','yes'),
 (54,1,'HostingForDelete','[]','yes'),
 (55,1,'DomainsNoticeSuspend','[]','yes'),
@@ -21,24 +21,19 @@ VALUES
 (64,1,'QIWI','[]','yes'),
 (65,1,'VPSSetPrimaryServer','[]','yes'),
 (67,1,'VPSNoticeSuspend','[]','yes'),
-(68,1,'VPSConsider','[]','yes'),
 (69,1,'VPSNoticeDelete','[]','yes'),
 (70,1,'VPSForDelete','[]','yes'),
 (71,1,'DSNoticeSuspend','[]','yes'),
-(72,1,'DSConsider','[]','yes'),
 (73,1,'DSNoticeDelete','[]','yes'),
 (74,1,'DSForDelete','[]','yes'),
 (75,1,'DSCalculateNumServers','[]','yes'),
-(76,1,'ExtraIPConsider','[]','yes'),
 (77,1,'ExtraIPNoticeDelete','[]','yes'),
 (78,1,'ExtraIPForDelete','[]','yes'),
 (81,1,'ISPswNoticeSuspend','[]','yes'),
-(82,1,'ISPswConsider','[]','yes'),
 (83,1,'ISPswNoticeDelete','[]','yes'),
 (84,1,'ISPswForDelete','[]','yes'),
 (86,1,'HostingSetPrimaryServer','[]','yes'),
 (91,1,'DNSmanagerNoticeSuspend','[]','yes'),
-(92,1,'DNSmanagerConsider','[]','yes'),
 (93,1,'DNSmanagerNoticeDelete','[]','yes'),
 (94,1,'DNSmanagerForDelete','[]','yes')
 ;
