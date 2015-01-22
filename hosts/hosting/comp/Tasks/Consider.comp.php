@@ -7,6 +7,9 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
+$GLOBALS['TaskReturnInfo'] = Array();
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Where = Array('`ConsiderTypeID` = "Daily"','`Code` != "Default"','`IsProlong` = "yes"','`IsHidden` = "no"');
 #-------------------------------------------------------------------------------
 $Services = DB_Select('Services',Array('ID','Code','Name'),Array('Where'=>$Where));
@@ -14,7 +17,11 @@ switch(ValueOf($Services)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
+	#-------------------------------------------------------------------------------
+	$GLOBALS['TaskReturnInfo'][] = 'no services for consider';
+	#-------------------------------------------------------------------------------
 	return MkTime(4,15,0,Date('n'),Date('j')+1,Date('Y'));
+	#-------------------------------------------------------------------------------
 case 'array':
 	break;
 default:
@@ -26,19 +33,20 @@ $CurrentDay = (integer)(Time()/86400);
 #-------------------------------------------------------------------------------
 foreach($Services as $Service){
 	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[comp/Orders/Consider]: processing Service = %s',$Service['Code']));
 	#if($Service['Code'] != 'DNSmanager')
 	#	continue;
 	#-------------------------------------------------------------------------------
-	$Where = SPrintF("`StatusID` = 'Active' AND `ConsiderDay` < %u",$CurrentDay);
+	$Where = Array("`StatusID` = 'Active'",SPrintF("`ConsiderDay` < %u",$CurrentDay));
+	#-------------------------------------------------------------------------------
+	# затычка для вечных лицензий ISPsystem
+	if($Service['Code'] == 'ISPsw')
+		$Where[] = '(SELECT `ConsiderTypeID` FROM `ISPswSchemes` WHERE `ISPswSchemes`.`ID` = `ISPswOrdersOwners`.`SchemeID`)  = "Daily"';
 	#-------------------------------------------------------------------------------
 	$Columns = Array(
 			'ID','UserID','OrderID','ContractID','ConsiderDay','SchemeID',
 			SPrintF('(SELECT `IsAutoProlong` FROM `Orders` WHERE `%sOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',$Service['Code'])
 			);
-	#-------------------------------------------------------------------------------
-	# затычка для вечных лицензий ISPsystem
-	if($Service['Code'] == 'ISPsw')
-		$Columns[] = '(SELECT `ConsiderTypeID` FROM `ISPswSchemes` WHERE `ISPswSchemes`.`ID` = `ISPswOrdersOwners`.`SchemeID`)  = "Daily"';
 	#-------------------------------------------------------------------------------
 	$ServiceOrders = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),$Columns,Array('Where'=>$Where,'Limit'=>Array('Start'=>0,'Length'=>5)));
 	#-------------------------------------------------------------------------------
@@ -46,7 +54,11 @@ foreach($Services as $Service){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/Orders/Consider]: no orders for consider, Service = %s',$Service['Code']));
+		#-------------------------------------------------------------------------------
 		continue 2;
+		#-------------------------------------------------------------------------------
 	case 'array':
 		break;
 	default:
@@ -58,6 +70,8 @@ foreach($Services as $Service){
 		#-------------------------------------------------------------------------------
 		$OrderID	= (integer)$ServiceOrder['OrderID'];
 		$ServiceOrderID	= (integer)$ServiceOrder['ID'];
+		#-------------------------------------------------------------------------------
+		$GLOBALS['TaskReturnInfo'][] = SPrintF('%s: %s',$Service['Code'],$OrderID);
 		#------------------------------TRANSACTION--------------------------------------
 		if(Is_Error(DB_Transaction($TransactionID = UniqID('OrdersConsider'))))
 			return ERROR | @Trigger_Error(500);
@@ -199,10 +213,16 @@ foreach($Services as $Service){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[comp/Orders/Consider]: end orders processing for Service = %s',$Service['Code']));
+	#-------------------------------------------------------------------------------
+	return 60;
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return 60;
+Debug(SPrintF('[comp/Orders/Consider]: no more orders, go to next day'));
+#-------------------------------------------------------------------------------
+return MkTime(4,15,0,Date('n'),Date('j')+1,Date('Y'));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
