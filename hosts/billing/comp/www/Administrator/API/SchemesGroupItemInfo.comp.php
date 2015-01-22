@@ -20,7 +20,7 @@ if($ServiceID > 0){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
-		return new gException('NO_SERVICE','Выбранный сервис не найден');
+		$Service = Array('Name' => SPrintF('Deleted:%s',$ServiceID));
 	case 'array':
 		break;
 	default:
@@ -32,31 +32,35 @@ if($ServiceID > 0){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($ServiceID > 0 && $SchemeID > 0 && $Service['Code'] != 'Default'){
+	#-------------------------------------------------------------------------------
 	$Scheme = DB_Select(SPrintF('%sSchemesOwners',$Service['Code']),Array('ID','Name','PackageID'),Array('UNIQ','ID'=>$SchemeID));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Scheme)){
 	case 'error':
 	return ERROR | @Trigger_Error(500);
 	case 'exception':
-		return new gException('NO_RESULT_SCHEME','Выбранный тариф не найден');
+		$Scheme = Array('Name' => SPrintF('Deleted:%s',$ServiceID));
 	case 'array':
 		break;
 	default:
 		return ERROR | @Trigger_Error(101);
 	}
 }else{
+	#-------------------------------------------------------------------------------
 	$Scheme = Array('Name' => 'Любой тариф');
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($SchemesGroupID){
+	#-------------------------------------------------------------------------------
 	$SchemesGroup = DB_Select('SchemesGroups',Array('ID','Name'),Array('UNIQ','ID'=>$SchemesGroupID));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($SchemesGroup)){
 	case 'error':
 	return ERROR | @Trigger_Error(500);
 	case 'exception':
-		return new gException('NO_RESULT_SCHEME_GROUP','Выбранная группа тарифов не найдена');
+		$SchemesGroup = Array('Name' => SPrintF('Deleted:%s',$SchemesGroupID));
 	case 'array':
 		break;
 	default:
@@ -71,6 +75,8 @@ $Comp = Comp_Load('Formats/String',$Out,$Length);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 return $Comp;
-
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 ?>
