@@ -48,7 +48,7 @@ foreach($Services as $Service){
 			SPrintF('(SELECT `IsAutoProlong` FROM `Orders` WHERE `%sOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',$Service['Code'])
 			);
 	#-------------------------------------------------------------------------------
-	$ServiceOrders = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),$Columns,Array('Where'=>$Where,'Limit'=>Array('Start'=>0,'Length'=>5)));
+	$ServiceOrders = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),$Columns,Array('Where'=>$Where,'Limits'=>Array(0,5)));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($ServiceOrders)){
 	case 'error':
