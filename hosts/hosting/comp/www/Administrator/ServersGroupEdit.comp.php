@@ -182,10 +182,11 @@ if(IsSet($ServersGroup['Params']['Count']) && $ServersGroup['Params']['Count'] >
 		#-------------------------------------------------------------------------------
 		$Table[] = SPrintF('Настройки автоматически заказываемой услуги #%u',$i);
 		#-------------------------------------------------------------------------------
-		$Status		= SPrintF('Status%u',$i);
-		$Service	= SPrintF('Service%u',$i);
-		$Scheme		= SPrintF('Scheme%u',$i);
-		$IsNoDuplicate	= SPrintF('IsNoDuplicate%u',$i);
+		$Status			= SPrintF('Status%u',$i);
+		$Service		= SPrintF('Service%u',$i);
+		$Scheme			= SPrintF('Scheme%u',$i);
+		$AdditionalParams	= SPrintF('AdditionalParams%u',$i);
+		$IsNoDuplicate		= SPrintF('IsNoDuplicate%u',$i);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load('Form/Select',Array('name'=>$Status,'style'=>'width:100%','prompt'=>'При наступлении какого статуса активировать зависимую услугу. Обычно, это "На создании" или "Активен"'),$Array,(IsSet($ServersGroup['Params'][$Status])?$ServersGroup['Params'][$Status]:'OnCreate'));
@@ -209,6 +210,13 @@ if(IsSet($ServersGroup['Params']['Count']) && $ServersGroup['Params']['Count'] >
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		$Table[] = Array('Тариф',$Comp);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>$AdditionalParams,'style'=>'width: 100%;','value'=>(IsSet($ServersGroup['Params'][$AdditionalParams])?$ServersGroup['Params'][$AdditionalParams]:''),'prompt'=>"Дополнительные параметры, используемые при заказе услуги.\nМогут быть фиксированными, например IP=11.22.33.44, или же выбираться из таблицы заказов основной услуги, например IP=%ColName%.\n Во втором примере, %ColName% - это имя колонки в таблице основной услуги, а IP - имя параметра, значением которого и будет полученный IP адрес.\n\nЕсли параметров несколько, то они перечисляются через запятую."));
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Table[] = Array('Параметры заказа',$Comp);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>$IsNoDuplicate,'value'=>'yes','prompt'=>'Не производить заказ, если у пользователя уже есть такая услуга с таким тарифом'));

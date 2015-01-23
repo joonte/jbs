@@ -31,19 +31,22 @@ if($Count){
 	#-------------------------------------------------------------------------------
 	for($i = 1; $i <= $Count; $i++){
 		#-------------------------------------------------------------------------------
-		$Status			= SPrintF('Status%u',$i);
-		$Scheme			= SPrintF('Scheme%u',$i);
-		$Service		= SPrintF('Service%u',$i);
-		$IsNoDuplicate		= SPrintF('IsNoDuplicate%u',$i);
+		$Status				= SPrintF('Status%u',$i);
+		$Scheme				= SPrintF('Scheme%u',$i);
+		$Service			= SPrintF('Service%u',$i);
+		$IsNoDuplicate			= SPrintF('IsNoDuplicate%u',$i);
+		$AdditionalParams		= SPrintF('AdditionalParams%u',$i);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Params[$Status]	= (@$Args[$Status])?((string)@$Args[$Status]):'OnCreate';
+		$Params[$Status]		= (@$Args[$Status])?((string)@$Args[$Status]):'OnCreate';
 		#-------------------------------------------------------------------------------
-		$Params[$Service]	= (integer)@$Args[$Service];
+		$Params[$Service]		= (integer) @$Args[$Service];
 		#-------------------------------------------------------------------------------
-		$Params[$Scheme]	= (integer)@$Args[$Scheme];
+		$Params[$Scheme]		= (integer) @$Args[$Scheme];
 		#-------------------------------------------------------------------------------
-		$Params[$IsNoDuplicate]	= (boolean)@$Args[$IsNoDuplicate];
+		$Params[$AdditionalParams]	=  (string) @$Args[$AdditionalParams];
+		#-------------------------------------------------------------------------------
+		$Params[$IsNoDuplicate]		= (boolean) @$Args[$IsNoDuplicate];
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
