@@ -176,7 +176,7 @@ if(IsSet($ServersGroup['Params']['Count']) && $ServersGroup['Params']['Count'] >
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Table[] = new Tag('TD',Array('colspan'=>2,'width'=>300,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),new Tag('SPAN',new Tag('SPAN','Если вы не понимаете зачем это используется - лучше проставьте ноль в количество сервисов, и сохраните данные формы.'),new Tag('HR',Array('size'=>1)),new Tag('SPAN','В общих чертах, задумано как заказ дополнительных сервисов при активации какого-то заказа. Например, заказ вторичных DNS серверов, по бесплатному тарифному плану, при активации заказа на VPS.')));
+	$Table[] = new Tag('TD',Array('colspan'=>2,'width'=>300,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),new Tag('SPAN',new Tag('SPAN','Если вы не понимаете зачем это используется - лучше проставьте ноль в количество сервисов, и сохраните данные формы.'),new Tag('HR',Array('size'=>1)),new Tag('SPAN','В общих чертах, задумано как заказ дополнительных сервисов при активации какого-то заказа. Например:'),new Tag('UL',Array('class'=>'Standard'),new Tag('LI',Array('style'=>'border-bottom:1px dashed #DCDCDC;'),'заказ вторичных DNS серверов, по бесплатному тарифному плану, при создании заказа на VPS'),new Tag('LI',Array('style'=>'#DCDCDC;'),' или заказ панели управления при активации заказа VPS/Dedicated сервера, при наличии политики на 100% скидку на панель для таких заказов'))));
 	#-------------------------------------------------------------------------------
 	for ($i = 1; $i <= $ServersGroup['Params']['Count']; $i++){
 		#-------------------------------------------------------------------------------
@@ -186,6 +186,8 @@ if(IsSet($ServersGroup['Params']['Count']) && $ServersGroup['Params']['Count'] >
 		$Service		= SPrintF('Service%u',$i);
 		$Scheme			= SPrintF('Scheme%u',$i);
 		$AdditionalParams	= SPrintF('AdditionalParams%u',$i);
+		$IsZeroPriceOrder	= SPrintF('IsZeroPriceOrder%u',$i);
+		$IsZeroPricePay		= SPrintF('IsZeroPricePay%u',$i);
 		$IsNoDuplicate		= SPrintF('IsNoDuplicate%u',$i);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
@@ -227,6 +229,26 @@ if(IsSet($ServersGroup['Params']['Count']) && $ServersGroup['Params']['Count'] >
 			$Comp->AddAttribs(Array('checked'=>'yes'));
 		#-------------------------------------------------------------------------------
 		$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>SPrintF('ChangeCheckBox(\'%s\'); return false;',$IsNoDuplicate)),'Не дублировать'),$Comp);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>$IsZeroPriceOrder,'value'=>'yes','prompt'=>'Делать заказ только в случае если цена будет нулевая (т.е. прайс на услугу имеет нулевой ценник, или, имеются бонусы со 100% скидкой)'));
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		if(IsSet($ServersGroup['Params'][$IsZeroPriceOrder]) && $ServersGroup['Params'][$IsZeroPriceOrder])
+			$Comp->AddAttribs(Array('checked'=>'yes'));
+		#-------------------------------------------------------------------------------
+		$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>SPrintF('ChangeCheckBox(\'%s\'); return false;',$IsZeroPriceOrder)),'Нулевая цена на заказ'),$Comp);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>$IsZeroPricePay,'value'=>'yes','prompt'=>'Оплачивать услугу только если цена нулевая. Т.е. если снять предыдущую галочку и поставить эту, то при ненулевой цене услуга будет заказана, но не оплачена.'));
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		if(IsSet($ServersGroup['Params'][$IsZeroPricePay]) && $ServersGroup['Params'][$IsZeroPricePay])
+			$Comp->AddAttribs(Array('checked'=>'yes'));
+		#-------------------------------------------------------------------------------
+		$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>SPrintF('ChangeCheckBox(\'%s\'); return false;',$IsZeroPricePay)),'Нулевая цена на оплату'),$Comp);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$Scripts[] = SPrintF("GetSchemes('%s','%s','%s');",$ServersGroup['Params'][$Service],$Scheme,$ServersGroup['Params'][$Scheme]);

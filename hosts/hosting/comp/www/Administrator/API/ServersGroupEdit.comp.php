@@ -34,8 +34,10 @@ if($Count){
 		$Status				= SPrintF('Status%u',$i);
 		$Scheme				= SPrintF('Scheme%u',$i);
 		$Service			= SPrintF('Service%u',$i);
-		$IsNoDuplicate			= SPrintF('IsNoDuplicate%u',$i);
 		$AdditionalParams		= SPrintF('AdditionalParams%u',$i);
+		$IsZeroPriceOrder		= SPrintF('IsZeroPriceOrder%u',$i);
+		$IsZeroPricePay			= SPrintF('IsZeroPricePay%u',$i);
+		$IsNoDuplicate			= SPrintF('IsNoDuplicate%u',$i);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$Params[$Status]		= (@$Args[$Status])?((string)@$Args[$Status]):'OnCreate';
@@ -45,6 +47,10 @@ if($Count){
 		$Params[$Scheme]		= (integer) @$Args[$Scheme];
 		#-------------------------------------------------------------------------------
 		$Params[$AdditionalParams]	=  (string) @$Args[$AdditionalParams];
+		#-------------------------------------------------------------------------------
+		$Params[$IsZeroPriceOrder]	= (boolean) @$Args[$IsZeroPriceOrder];
+		#-------------------------------------------------------------------------------
+		$Params[$IsZeroPricePay]	= (boolean) @$Args[$IsZeroPricePay];
 		#-------------------------------------------------------------------------------
 		$Params[$IsNoDuplicate]		= (boolean) @$Args[$IsNoDuplicate];
 		#-------------------------------------------------------------------------------
