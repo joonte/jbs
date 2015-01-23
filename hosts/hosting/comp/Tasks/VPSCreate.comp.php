@@ -65,6 +65,7 @@ default:
 if(IsSet($VPSOrder['Params']['DiskTemplate'])){
 	#-------------------------------------------------------------------------------
 	foreach(Explode("\n",$VPSServer->Settings['Params']['DiskTemplate']) as $Line){
+		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[comp/Tasks/VPSCreate]: Line = (%s)',print_r($Line,true)));
 		#-------------------------------------------------------------------------------
 		$Template = Explode('=',Trim($Line));
@@ -75,6 +76,7 @@ if(IsSet($VPSOrder['Params']['DiskTemplate'])){
 	}
 	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/Tasks/VPSCreate]: DiskTemplate = (%s)',IsSet($DiskTemplate)?$DiskTemplate:'не задан'));
 #-------------------------------------------------------------------------------
 if(!IsSet($DiskTemplate) || StrLen($DiskTemplate) < 2){
@@ -86,6 +88,7 @@ if(!IsSet($DiskTemplate) || StrLen($DiskTemplate) < 2){
 	$DiskTemplate = $Template[0];
 	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/Tasks/VPSCreate]: DiskTemplate = (%s)',print_r($DiskTemplate,true)));
 #-------------------------------------------------------------------------------
 $VPSOrder['DiskTemplate'] = $DiskTemplate;
