@@ -108,25 +108,19 @@ case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
 	return $IsCreate;
-case 'true':
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
-}
-#-------------------------------------------------------------------------------
-# достаём собсно адрес из БД
-$VPS_IP = DB_Select('VPSOrdersOwners',Array('Login'),Array('UNIQ','ID'=>$VPSOrderID));
-#-------------------------------------------------------------------------------
-switch(ValueOf($VPS_IP)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	return ERROR | @Trigger_Error(400);
 case 'array':
 	break;
 default:
 	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+# вносим адрес в базу
+$IsUpdate = DB_Update('VPSOrders',Array('IP'=>$IsCreate['IP']),Array('ID'=>$VPSOrder['ID']));
+if(Is_Error($IsUpdate))
+	return ERROR | @Trigger_Error('[comp/Tasks/VPSCreate]: не удалось прописать IP адрес для виртуального сервера');
+#-------------------------------------------------------------------------------
+# вписываем адрес в массив, чтоб не лазить в базу
+$VPSOrder['IP'] = $IsCreate['IP'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'Active','RowsIDs'=>$VPSOrder['ID'],'Comment'=>'Заказ создан на сервере'));
@@ -145,13 +139,13 @@ default:
 $Event = Array(
 		'UserID'	=> $VPSOrder['UserID'],
 		'PriorityID'	=> 'Hosting',
-		'Text'		=> SPrintF('Заказ VPS [%s] создан на сервере (%s) с тарифным планом (%s), идентификатор пакета (%s)',$VPS_IP['Login'],$VPSServer->Settings['Address'],$VPSScheme['Name'],$VPSScheme['PackageID'])
+		'Text'		=> SPrintF('Заказ VPS [%s] создан на сервере (%s) с тарифным планом (%s), идентификатор пакета (%s)',$VPSOrder['IP'],$VPSServer->Settings['Address'],$VPSScheme['Name'],$VPSScheme['PackageID'])
 		);
 $Event = Comp_Load('Events/EventInsert',$Event);
 if(!$Event)
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$GLOBALS['TaskReturnInfo'] = Array($VPSServer->Settings['Address'],$VPS_IP['Login'],$VPSScheme['Name']);
+$GLOBALS['TaskReturnInfo'] = Array($VPSServer->Settings['Address'],$VPSOrder['IP'],$VPSScheme['Name']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;

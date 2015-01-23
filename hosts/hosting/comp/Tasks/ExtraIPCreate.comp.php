@@ -101,25 +101,19 @@ case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
 	return $IsCreate;
-case 'true':
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
-}
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-# достаём собсно адрес из БД
-$ExtraIP = DB_Select('ExtraIPOrdersOwners',Array('Login'),Array('UNIQ','ID'=>$ExtraIPOrderID));
-switch(ValueOf($ExtraIP)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	return ERROR | @Trigger_Error(400);
 case 'array':
 	break;
 default:
 	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$IsQuery = DB_Query("UPDATE `ExtraIPOrders` SET `Login`='" . $Doc['ip'] . "' WHERE `ID`='" . $ID . "'");
+if(Is_Error($IsQuery))
+	return ERROR | @Trigger_Error('[comp/Tasks/ExtraIPCreate]: не удалось прописать IP адрес в базу');
+#-------------------------------------------------------------------------------
+# вписываем адрес в масив, чтоб не лазить в базу
+$ExtraIPOrder['Login'] = $IsCreate['IP'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ExtraIPOrders','StatusID'=>'Active','RowsIDs'=>$ExtraIPOrder['ID'],'Comment'=>'Дополнительный IP добавлен'));
@@ -133,13 +127,13 @@ case 'array':
 	$Event = Array(
 			'UserID'	=> $ExtraIPOrder['UserID'],
 			'PriorityID'	=> 'Billing',
-			'Text'		=> SPrintF('На сервере (%s) для логина (%s) добавлен дополнительный IP (%s) c обратной зоной (%s)',$ExtraIPServer->Settings['Address'],$DependOrder['Login'],$ExtraIP['Login'],$DependOrder['Domain'])
+			'Text'		=> SPrintF('На сервере (%s) для логина (%s) добавлен дополнительный IP (%s) c обратной зоной (%s)',$ExtraIPServer->Settings['Address'],$DependOrder['Login'],$ExtraIPOrder['Login'],$DependOrder['Domain'])
 			);
 	$Event = Comp_Load('Events/EventInsert',$Event);
 	if(!$Event)
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'] = Array($ExtraIPServer->Settings['Address'],$DependOrder['Login'],$ExtraIP['Login']);
+	$GLOBALS['TaskReturnInfo'] = Array($ExtraIPServer->Settings['Address'],$DependOrder['Login'],$ExtraIPOrder['Login']);
 	#-------------------------------------------------------------------------------
 	return TRUE;
 	#-------------------------------------------------------------------------------

@@ -993,13 +993,9 @@ function IspManager4_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
                 return new gException('IP_ADD_CREATE_ERROR','Не удалось добавить IP адрес');
         #-----------------------------------------------------------------------------
         #-----------------------------------------------------------------------------
-        #Debug("[system/libs/IspManager4]: to hosting order added IP = " . $Doc['ip']);
-        #-----------------------------------------------------------------------------
-	$IsUpdate = DB_Update('ExtraIPOrders',Array('Login'=>$Doc['ip']),Array('ID'=>$ID));
-        if(Is_Error($IsUpdate))
-                return ERROR | @Trigger_Error('[IspManager4_AddIP]: не удалось прописать IP адрес для заказа хостинга ' . $Login);
-        #-----------------------------------------------------------------------------
-        return TRUE;
+        return Array('ID'=>$ID,'IP'=>$Doc['ip']);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 }
 
 # added by lissyara 2011-08-10 in 10:13 MSK
