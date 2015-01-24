@@ -28,6 +28,21 @@ if(!Is_Array($ServerSettings))
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Contract = DB_Select('Contracts',Array('ID','UserID'),Array('UNIQ','ID'=>$ContractID));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Contract)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('CONTRACT_NOT_FOUND','Договор не найден');
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
@@ -74,7 +89,14 @@ if(!$ISPswScheme['IsInternal']){
 # проверка - есть ли заказ от этого пользователя на этот IP
 if($ISPswScheme['IsInternal']){
 	#-------------------------------------------------------------------------------
-	$Count = DB_Count('ISPswOrdersOwners',Array('Where'=>SPrintF("`IP` = '%s' AND `StatusID` != 'Deleted' AND `UserID` = %u AND (SELECT `SoftWareGroup` FROM `ISPswSchemes` WHERE `ISPswOrdersOwners`.`SchemeID` = `ISPswSchemes`.`ID`) = %u",$IP,$__USER['ID'],$ISPswScheme['SoftWareGroup'])));
+	$Where = Array(
+			'`StatusID` != "Deleted"',
+			SPrintF('`IP` = "%s"',$IP),
+			SPrintF('`UserID` = %u',$Contract['UserID']),
+			SPrintF('(SELECT `SoftWareGroup` FROM `ISPswSchemes` WHERE `ISPswOrdersOwners`.`SchemeID` = `ISPswSchemes`.`ID`) = %u',$ISPswScheme['SoftWareGroup'])
+			);
+	#-------------------------------------------------------------------------------
+	$Count = DB_Count('ISPswOrdersOwners',Array('Where'=>$Where));
 	if(Is_Error($Count))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -87,26 +109,20 @@ if($ISPswScheme['IsInternal']){
 # проверяем, если тарифный плане не поддерживает продление, то заказывать его повторно для
 # этого же IP юзер не может, т.к. это не имеет смысла. тем самым срезаются попытки
 # повторного заказа триальных и вечных лицензий - т.к. и те и другие не продлеваются
-$Count = DB_Count('ISPswOrdersOwners',Array('Where'=>SPrintF("`IP` = '%s' AND `SchemeID` = %u AND (`StatusID` = 'Deleted' OR `StatusID` = 'Suspended') AND `UserID` = %u AND (SELECT `IsProlong` FROM `ISPswSchemesOwners` WHERE `ISPswSchemesOwners`.`ID` = `ISPswOrdersOwners`.`SchemeID`) = 'no'",$IP,$ISPswSchemeID,$__USER['ID'])));
+$Where = Array(
+		'`StatusID` = "Deleted" OR `StatusID` = "Suspended"',
+		'(SELECT `IsProlong` FROM `ISPswSchemesOwners` WHERE `ISPswSchemesOwners`.`ID` = `ISPswOrdersOwners`.`SchemeID`) = "no"',
+		SPrintF('`IP` = "%s"',$IP),
+		SPrintF('`SchemeID` = %u',$ISPswSchemeID),
+		SPrintF('`UserID` = %u',$Contract['UserID']),
+		);
+#-------------------------------------------------------------------------------
+$Count = DB_Count('ISPswOrdersOwners',Array('Where'=>$Where));
 if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Count)
 	return new gException('SOFTWARE_EXISTS','Нельзя заказать вечную или триальную лицензию дважды для одного и того же IP адреса.');
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Contract = DB_Select('Contracts',Array('ID','UserID'),Array('UNIQ','ID'=>$ContractID));
-#-------------------------------------------------------------------------------
-switch(ValueOf($Contract)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	return new gException('CONTRACT_NOT_FOUND','Договор не найден');
-case 'array':
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
-}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IsPermission = Permission_Check('ContractRead',(integer)$__USER['ID'],(integer)$Contract['UserID']);
