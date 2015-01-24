@@ -71,7 +71,15 @@ foreach($Services as $Service){
 		$OrderID	= (integer)$ServiceOrder['OrderID'];
 		$ServiceOrderID	= (integer)$ServiceOrder['ID'];
 		#-------------------------------------------------------------------------------
-		$GLOBALS['TaskReturnInfo'][] = SPrintF('%s: %s',$Service['Code'],$OrderID);
+		if(IsSet($GLOBALS['TaskReturnInfo'][$Service['Code']])){
+			#-------------------------------------------------------------------------------
+			$GLOBALS['TaskReturnInfo'][$Service['Code']][] = $OrderID;
+			#-------------------------------------------------------------------------------
+		}else{
+			#-------------------------------------------------------------------------------
+			$GLOBALS['TaskReturnInfo'][$Service['Code']] = Array($OrderID);
+			#-------------------------------------------------------------------------------
+		}
 		#-------------------------------------------------------------------------------
 		#------------------------------TRANSACTION--------------------------------------
 		if(Is_Error(DB_Transaction($TransactionID = UniqID('OrdersConsider'))))
