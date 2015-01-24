@@ -10,6 +10,11 @@ Eval(COMP_INIT);
 $GLOBALS['TaskReturnInfo'] = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Config = Config();
+$Settings = $Config['Tasks']['Types']['Consider'];
+Debug(Print_r($Settings,true));
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Where = Array('`ConsiderTypeID` = "Daily"','`Code` != "Default"','`IsProlong` = "yes"','`IsHidden` = "no"');
 #-------------------------------------------------------------------------------
 $Services = DB_Select('Services',Array('ID','Code','Name'),Array('Where'=>$Where));
@@ -48,7 +53,7 @@ foreach($Services as $Service){
 			SPrintF('(SELECT `IsAutoProlong` FROM `Orders` WHERE `%sOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',$Service['Code'])
 			);
 	#-------------------------------------------------------------------------------
-	$ServiceOrders = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),$Columns,Array('Where'=>$Where,'Limits'=>Array(0,5)));
+	$ServiceOrders = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),$Columns,Array('Where'=>$Where,'Limits'=>Array(0,$Settings['PerIteration'])));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($ServiceOrders)){
 	case 'error':
@@ -142,6 +147,8 @@ foreach($Services as $Service){
 						return ERROR | @Trigger_Error(101);
 					}
 					#-------------------------------------------------------------------------------
+					break;
+					#-------------------------------------------------------------------------------
 				default:
 					return ERROR | @Trigger_Error(101);
 				}
@@ -225,7 +232,7 @@ foreach($Services as $Service){
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[comp/Orders/Consider]: end orders processing for Service = %s',$Service['Code']));
 	#-------------------------------------------------------------------------------
-	return 60;
+	return IntVal($Settings['SleepTime']);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------

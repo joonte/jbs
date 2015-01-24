@@ -1636,6 +1636,8 @@
 		<Consider>
 			<Name>Учет заказов штатных услуг</Name>
 			<Params type="array" />
+			<PerIteration>10</PerIteration>
+			<SleepTime>30</SleepTime>
 			<IsActive>1</IsActive>
 		</Consider>
 		<!-- *********************************************************************** -->
