@@ -56,7 +56,7 @@ switch(ValueOf($Order)){
                   #-------------------------------------------------------------
                   'ContractID' => $Contract['ID'],
                   'Month'      => $CurrentMonth,
-                  'ServiceID'  => 51000,
+                  'ServiceID'  => $ISPswOrder['ServiceID'],
                   'Comment'    => SPrintF('№%s',$Number),
                   'Amount'     => $ConsiderItem['DaysConsidered'],
                   'Cost'       => $ConsiderItem['Cost'],

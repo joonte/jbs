@@ -12,10 +12,10 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 #-------------------------------------------------------------------------------
 $Args = Args();
 #-------------------------------------------------------------------------------
-$ISPswGroupID = (integer) @$Args['ISPswGroupID'];
-$Name                  =  (string) @$Args['Name'];
-$Comment               =  (string) @$Args['Comment'];
-$SortID                = (integer) @$Args['SortID'];
+$ISPswGroupID	= (integer) @$Args['ISPswGroupID'];
+$Name		=  (string) @$Args['Name'];
+$Comment	=  (string) @$Args['Comment'];
+$SortID		= (integer) @$Args['SortID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!Is_Array(SelectServerSettingsByService(51000)))

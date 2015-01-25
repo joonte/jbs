@@ -20,7 +20,7 @@ $PayMessage     =  (string) @$Args['PayMessage'];
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','OrderID','ContractID','StatusID','UserID','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `ISPswOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `ISPswOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `ISPswOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`ISPswOrdersOwners`.`OrderID`) AS PayedSumm');
+$Columns = Array('ID','OrderID','ServiceID','ContractID','StatusID','UserID','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `ISPswOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `ISPswOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `ISPswOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`ISPswOrdersOwners`.`OrderID`) AS PayedSumm');
 #-------------------------------------------------------------------------------
 $ISPswOrder = DB_Select('ISPswOrdersOwners',$Columns,Array('UNIQ','ID'=>$ISPswOrderID));
 #-------------------------------------------------------------------------------
@@ -90,7 +90,7 @@ switch(ValueOf($ISPswOrder)){
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
             #-------------------------------------------------------------------
-            $Comp = Comp_Load('Services/Politics',$ISPswOrder['UserID'],$ISPswOrder['GroupID'],51000,$ISPswScheme['ID'],$DaysPay,SPrintF('ISPsystem/%s',$ISPswOrder['ID']));
+            $Comp = Comp_Load('Services/Politics',$ISPswOrder['UserID'],$ISPswOrder['GroupID'],$ISPswOrder['ServiceID'],$ISPswScheme['ID'],$DaysPay,SPrintF('ISPsystem/%s',$ISPswOrder['ID']));
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
@@ -101,7 +101,7 @@ switch(ValueOf($ISPswOrder)){
             #-------------------------------------------------------------------
             $DaysRemainded = $DaysPay;
             #-------------------------------------------------------------------
-            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,51000,$ISPswScheme['ID'],$UserID,$CostPay,$ISPswScheme['CostDay'],$ISPswOrder['OrderID'],$ISPswScheme['ConsiderTypeID']);
+            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,$ISPswOrder['ServiceID'],$ISPswScheme['ID'],$UserID,$CostPay,$ISPswScheme['CostDay'],$ISPswOrder['OrderID'],$ISPswScheme['ConsiderTypeID']);
             if(Is_Error($Comp))
                return ERROR | @Trigger_Error(500);
             #-----------------------------------------------------------------
@@ -162,7 +162,7 @@ switch(ValueOf($ISPswOrder)){
               #-----------------------------------------------------------------
               $ISPswOrder['Number'] = $Comp;
               #-----------------------------------------------------------------
-              $IsUpdate = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$ISPswOrder['ContractID'],'Summ'=>-$CostPay,'ServiceID'=>51000,'Comment'=>SPrintF('№%s на %s дн.',$Comp,$DaysPay)));
+              $IsUpdate = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$ISPswOrder['ContractID'],'Summ'=>-$CostPay,'ServiceID'=>$ISPswOrder['ServiceID'],'Comment'=>SPrintF('№%s на %s дн.',$Comp,$DaysPay)));
               #-----------------------------------------------------------------
               switch(ValueOf($IsUpdate)){
                 case 'error':

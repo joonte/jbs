@@ -22,7 +22,7 @@ $DaysReserved   = (integer) @$Args['DaysReserved'];
 $IsCreate       = (boolean) @$Args['IsCreate'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Server = DB_Select('Servers',Array('ID'),Array('UNIQ','ID'=>$ServerID));
+$Server = DB_Select('Servers',Array('ID','(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) AS `ServiceID`'),Array('UNIQ','ID'=>$ServerID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Server)){
 case 'error':
@@ -130,7 +130,7 @@ if($ISPswOrderID){
   }
 }else{
   #-----------------------------------------------------------------------------
-  $OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID'],'ServiceID'=>51000,'IsPayed'=>TRUE));
+  $OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID'],'ServiceID'=>$Server['ServiceID'],'IsPayed'=>TRUE));
   if(Is_Error($OrderID))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
