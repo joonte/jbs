@@ -14,7 +14,7 @@ Eval(COMP_INIT);
 $UserID = $GLOBALS['__USER']['ID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Service = DB_Select('Services',Array('ID','Code','Name'),Array('UNIQ','ID'=>50000));
+$Service = DB_Select('Services',Array('ID','Code','Name'),Array('UNIQ','ID'=>$ExtraIPOrder['ServiceID']));
 switch(ValueOf($Service)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
