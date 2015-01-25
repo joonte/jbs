@@ -95,11 +95,11 @@
   <Comp>Buttons/Standard</Comp>
   <Args>
    <ListElement>
-    <onclick>DNSmanagerManage(%ID%);</onclick>
+    <onclick>OrderManage(%ID%,52000);</onclick>
    </ListElement>
    <ListElement>Управлять заказом DNSmanager</ListElement>
    <ListElement>HostingManage.gif</ListElement>
-   <ListElement>DNSmanagerManage.js</ListElement>
+   <ListElement>OrderManage.js</ListElement>
   </Args>
   <Attribs>
    <class>TableSuperStandard</class>

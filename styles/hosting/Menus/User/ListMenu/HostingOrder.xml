@@ -41,9 +41,9 @@
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Управлять заказом хостинга</Text>
-  <Href>javascript:HostingManage(%Replace%);</Href>
+  <Href>javascript:OrderManage(%Replace%,10000);</Href>
   <Icon>HostingManage.gif</Icon>
-  <JavaScript>HostingManage.js</JavaScript>
+  <JavaScript>OrderManage.js</JavaScript>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>

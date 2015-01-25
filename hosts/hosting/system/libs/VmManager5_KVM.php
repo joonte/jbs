@@ -8,13 +8,14 @@ if(Is_Error(System_Load('libs/Http.php')))
 #-------------------------------------------------------------------------------
 Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
 #-------------------------------------------------------------------------------
-function VmManager5_KVM_Logon($Settings,$Login,$Password){
+function VmManager5_KVM_Logon($Settings,$Params){
 	/****************************************************************************/
-	$__args_types = Array('array','string','string');
+	$__args_types = Array('array','array');
 	#-----------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/
-	return Array('Url'=>$Settings['Params']['Url'],'Args'=>Array('lang'=>$Settings['Params']['Language'],'theme'=>$Settings['Params']['Theme'],'checkcookie'=>'no','username'=>$Login,'password'=>$Password,'func'=>'auth'));
+	return Array('Url'=>$Settings['Params']['Url'],'Args'=>Array('lang'=>$Settings['Params']['Language'],'theme'=>$Settings['Params']['Theme'],'checkcookie'=>'no','username'=>$Params['Login'],'password'=>$Params['Password'],'func'=>'auth'));
+	#-------------------------------------------------------------------------------
 }
 
 #-------------------------------------------------------------------------------

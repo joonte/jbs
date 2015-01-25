@@ -95,11 +95,11 @@
   <Comp>Buttons/Standard</Comp>
   <Args>
    <ListElement>
-    <onclick>VPSManage(%ID%);</onclick>
+    <onclick>OrderManage(%ID%,30000);</onclick>
    </ListElement>
    <ListElement>Управлять заказом VPS</ListElement>
    <ListElement>HostingManage.gif</ListElement>
-   <ListElement>VPSManage.js</ListElement>
+   <ListElement>OrderManage.js</ListElement>
   </Args>
   <Attribs>
    <class>TableSuperStandard</class>

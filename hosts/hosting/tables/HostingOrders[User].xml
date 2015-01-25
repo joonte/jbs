@@ -95,11 +95,11 @@
   <Comp>Buttons/Standard</Comp>
   <Args>
    <ListElement>
-    <onclick>HostingManage(%ID%);</onclick>
+    <onclick>OrderManage(%ID%,10000);</onclick>
    </ListElement>
    <ListElement>Управлять заказом хостинга</ListElement>
    <ListElement>HostingManage.gif</ListElement>
-   <ListElement>HostingManage.js</ListElement>
+   <ListElement>OrderManage.js</ListElement>
   </Args>
   <Attribs>
    <class>TableSuperStandard</class>
