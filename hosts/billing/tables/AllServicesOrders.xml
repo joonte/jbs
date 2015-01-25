@@ -29,6 +29,7 @@
   <ListElement>OrderDate</ListElement>
   <ListElement>StatusID</ListElement>
   <ListElement>StatusDate</ListElement>
+  <ListElement>ServiceID</ListElement>
   <ListElement>(SELECT `Services`.`Code` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) AS `OrderTypeCode`</ListElement>
   <ListElement>AdminNotice</ListElement>
   <ListElement>UserNotice</ListElement>
@@ -171,7 +172,10 @@
    <Comp>Services/Orders/ContextMenuWrapper</Comp>
    <Args>
     <ListElement>%OrderTypeCode%</ListElement>
-    <ListElement>%ID%</ListElement>
+    <Replace>
+     <ServiceOrderID>%ID%</ServiceOrderID>
+     <ServiceID>%ServiceID%</ServiceID>
+    </Replace>
    </Args>
  </ExtendedMenu>
  <!-- ********************************************************************** -->

@@ -95,7 +95,7 @@
   <Comp>Buttons/Standard</Comp>
   <Args>
    <ListElement>
-    <onclick>OrderManage(%ID%,30000);</onclick>
+    <onclick>OrderManage(%ID%,%ServiceID%);</onclick>
    </ListElement>
    <ListElement>Управлять заказом VPS</ListElement>
    <ListElement>HostingManage.gif</ListElement>
@@ -114,7 +114,7 @@
    <ListElement>/OrderPasswordChange</ListElement>
    <ListElement>
     <ServiceOrderID>%ID%</ServiceOrderID>
-    <ServiceID>30000</ServiceID>
+    <ServiceID>%ServiceID%</ServiceID>
    </ListElement>
    <ListElement>Сменить пароль</ListElement>
    <ListElement>Password.gif</ListElement>
@@ -147,7 +147,10 @@
   <Comp>Menus/List</Comp>
   <Args>
    <ListElement>User/ListMenu/VPSOrder.xml</ListElement>
-   <Replace>%ID%</Replace>
+   <Replace>
+    <ServiceOrderID>%ID%</ServiceOrderID>
+    <ServiceID>%ServiceID%</ServiceID>
+   </Replace>
   </Args>
  </ExtendedMenu>
 </Columns>

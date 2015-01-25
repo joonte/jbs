@@ -32,7 +32,7 @@ if($Count > 1)
 	return new gException('SERVER_NOT_FOUND','Сервер не задан');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Server = DB_Select('Servers',Array('ID','ServersGroupID'),Array('UNIQ','ID'=>$ServerID));
+$Server = DB_Select('Servers',Array('ID','ServersGroupID','(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) AS `ServiceID`'),Array('UNIQ','ID'=>$ServerID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Server)){
 case 'error':
@@ -138,7 +138,7 @@ if($DNSmanagerOrderID){
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServiceID'=>52000,'IsPayed'=>TRUE,'ServerID'=>$Server['ID']));
+	$OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServiceID'=>$Server['ServiceID'],'IsPayed'=>TRUE,'ServerID'=>$Server['ID']));
 	if(Is_Error($OrderID))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

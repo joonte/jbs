@@ -25,11 +25,13 @@ CREATE
   VIEW `HostingOrdersOwners` AS
 SELECT
   `HostingOrders`.*,
+  `OrdersOwners`.`ServiceID`,
   (SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `HostingOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
   `OrdersOwners`.`ServerID`,
   `OrdersOwners`.`OrderDate`,
   `OrdersOwners`.`UserID`,
   `OrdersOwners`.`ContractID`,
+  `OrdersOwners`.`UserNotice`,
   `OrdersOwners`.`AdminNotice`
 FROM
   `HostingOrders`
@@ -42,11 +44,13 @@ CREATE
   VIEW `DomainsOrdersOwners` AS
 SELECT
   `DomainsOrders`.*,
+  `OrdersOwners`.`ServiceID`,
   `DomainsSchemes`.`Name`,
   `DomainsSchemes`.`RegistratorID`,
   `OrdersOwners`.`OrderDate`,
   `OrdersOwners`.`UserID`,
   `OrdersOwners`.`ContractID`,
+  `OrdersOwners`.`UserNotice`,
   `OrdersOwners`.`AdminNotice`
 FROM
   `DomainsOrders`
@@ -143,11 +147,13 @@ DROP VIEW IF EXISTS `VPSOrdersOwners`;
 DROP TABLE IF EXISTS `VPSOrdersOwners`;
 CREATE VIEW `VPSOrdersOwners` AS select
 	`VPSOrders`.*,
+	`OrdersOwners`.`ServiceID`,
 	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `VPSOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
 	`OrdersOwners`.`ServerID`,
 	`OrdersOwners`.`OrderDate` AS `OrderDate`,
 	`OrdersOwners`.`UserID` AS `UserID`,
 	`OrdersOwners`.`ContractID` AS `ContractID`,
+	`OrdersOwners`.`UserNotice`,
 	`OrdersOwners`.`AdminNotice`
 	FROM (`VPSOrders` LEFT JOIN `OrdersOwners` ON((`VPSOrders`.`OrderID` = `OrdersOwners`.`ID`)));
 
@@ -189,10 +195,12 @@ DROP VIEW IF EXISTS `DSOrdersOwners`;
 DROP TABLE IF EXISTS `DSOrdersOwners`;
 CREATE VIEW `DSOrdersOwners` AS select
 	`DSOrders`.*,
+	`OrdersOwners`.`ServiceID`,
 	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `DSOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
 	`OrdersOwners`.`OrderDate` AS `OrderDate`,
 	`OrdersOwners`.`UserID` AS `UserID`,
 	`OrdersOwners`.`ContractID` AS `ContractID`,
+	`OrdersOwners`.`UserNotice`,
 	`OrdersOwners`.`AdminNotice`
 	FROM (`DSOrders` LEFT JOIN `OrdersOwners` ON((`DSOrders`.`OrderID` = `OrdersOwners`.`ID`)));
 
@@ -250,10 +258,12 @@ DROP VIEW IF EXISTS `ExtraIPOrdersOwners`;
 DROP TABLE IF EXISTS `ExtraIPOrdersOwners`;
 CREATE VIEW `ExtraIPOrdersOwners` AS select
 	`ExtraIPOrders`.*,
+	`OrdersOwners`.`ServiceID`,
 	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `ExtraIPOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
 	`OrdersOwners`.`OrderDate` AS `OrderDate`,
 	`OrdersOwners`.`UserID` AS `UserID`,
 	`OrdersOwners`.`ContractID` AS `ContractID`,
+	`OrdersOwners`.`UserNotice`,
 	`OrdersOwners`.`AdminNotice`
 	FROM (`ExtraIPOrders` LEFT JOIN `OrdersOwners` ON((`ExtraIPOrders`.`OrderID` = `OrdersOwners`.`ID`)));
 
@@ -316,10 +326,12 @@ DROP VIEW IF EXISTS `ISPswOrdersOwners`;
 DROP TABLE IF EXISTS `ISPswOrdersOwners`;
 CREATE VIEW `ISPswOrdersOwners` AS select
 	`ISPswOrders`.*,
+	`OrdersOwners`.`ServiceID`,
 	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `ISPswOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
 	`OrdersOwners`.`OrderDate` AS `OrderDate`,
 	`OrdersOwners`.`UserID` AS `UserID`,
 	`OrdersOwners`.`ContractID` AS `ContractID`,
+	`OrdersOwners`.`UserNotice`,
 	`OrdersOwners`.`AdminNotice`
 	FROM (`ISPswOrders` LEFT JOIN `OrdersOwners` ON((`ISPswOrders`.`OrderID` = `OrdersOwners`.`ID`)));
 
@@ -367,11 +379,13 @@ CREATE
 	VIEW `DNSmanagerOrdersOwners` AS
 SELECT
 	`DNSmanagerOrders`.*,
+	`OrdersOwners`.`ServiceID`,
 	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `DNSmanagerOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
 	`OrdersOwners`.`ServerID`,
 	`OrdersOwners`.`OrderDate`,
 	`OrdersOwners`.`UserID`,
 	`OrdersOwners`.`ContractID`,
+	`OrdersOwners`.`UserNotice`,
 	`OrdersOwners`.`AdminNotice`
 FROM
 	`DNSmanagerOrders` LEFT JOIN `OrdersOwners` ON (`DNSmanagerOrders`.`OrderID` = `OrdersOwners`.`ID`);

@@ -6,55 +6,55 @@
 <Items>
  <UniqID>
   <Text>Дополнительная информация</Text>
-  <Href>javascript:ShowWindow("/DomainsOrderInfo",{DomainOrderID:%Replace%});</Href>
+  <Href>javascript:ShowWindow("/DomainsOrderInfo",{DomainOrderID:%ServiceOrderID%});</Href>
   <Icon>Info.gif</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Оплатить заказ</Text>
-  <Href>javascript:ShowWindow("/DomainOrderPay",{DomainOrderID:%Replace%});</Href>
+  <Href>javascript:ShowWindow("/DomainOrderPay",{DomainOrderID:%ServiceOrderID%});</Href>
   <Icon>Pay.gif</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
   <UniqID>
    <Text>Настройки автопродления</Text>
-   <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%Replace%",ServiceID:"20000"});</Href>
+   <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
    <Icon>AutoProlong.png</Icon>
   </UniqID>
   <!-- *********************************************************************** -->
  <UniqID>
   <Text>Сменить именные сервера</Text>
-  <Href>javascript:ShowWindow("/DomainOrderNsChange",{DomainOrderID:%Replace%});</Href>
+  <Href>javascript:ShowWindow("/DomainOrderNsChange",{DomainOrderID:%ServiceOrderID%});</Href>
   <Icon>SchemeChange.png</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Определить владельца</Text>
-  <Href>javascript:ShowWindow("/DomainSelectOwner",{DomainOrderID:%Replace%});</Href>
+  <Href>javascript:ShowWindow("/DomainSelectOwner",{DomainOrderID:%ServiceOrderID%});</Href>
   <Icon>Edit.gif</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Передать на другой аккаунт</Text>
-  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%Replace%",ServiceID:"20000"});</Href>
+  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
   <Icon>OrdersTransfer.png</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Ввести AuthInfo</Text>
-  <Href>javascript:ShowWindow("/DomainAuthInfoInput",{DomainOrderID:%Replace%});</Href>
+  <Href>javascript:ShowWindow("/DomainAuthInfoInput",{DomainOrderID:%ServiceOrderID%});</Href>
   <Icon>Password.gif</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Сменить контактные данные</Text>
-  <Href>javascript:ShowWindow("/DomainOrderChangeContactData",{DomainOrderID:%Replace%});</Href>
+  <Href>javascript:ShowWindow("/DomainOrderChangeContactData",{DomainOrderID:%ServiceOrderID%});</Href>
   <Icon>Profiles.png</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Информация от регистратора</Text>
-  <Href>javascript:ShowWindow("/DomainOrderRegistratorInfo",{DomainOrderID:%Replace%});</Href>
+  <Href>javascript:ShowWindow("/DomainOrderRegistratorInfo",{DomainOrderID:%ServiceOrderID%});</Href>
   <Icon>Info.gif</Icon>
  </UniqID>
 </Items>

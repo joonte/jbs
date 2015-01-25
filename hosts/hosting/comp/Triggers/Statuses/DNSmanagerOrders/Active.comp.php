@@ -9,7 +9,7 @@ $__args_list = Array('DNSmanagerOrder');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Order = DB_Select('Orders',Array('ID','ContractID'),Array('UNIQ','ID'=>$DNSmanagerOrder['OrderID']));
+$Order = DB_Select('Orders',Array('ID','ContractID','ServiceID'),Array('UNIQ','ID'=>$DNSmanagerOrder['OrderID']));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Order)){
   case 'error':
@@ -56,7 +56,7 @@ switch(ValueOf($Order)){
                   #-------------------------------------------------------------
                   'ContractID' => $Contract['ID'],
                   'Month'      => $CurrentMonth,
-                  'ServiceID'  => 52000,
+                  'ServiceID'  => $Order['ServiceID'],
                   'Comment'    => SPrintF('№%s',$Number),
                   'Amount'     => $ConsiderItem['DaysConsidered'],
                   'Cost'       => $ConsiderItem['Cost'],

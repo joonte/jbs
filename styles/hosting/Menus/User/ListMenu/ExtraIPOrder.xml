@@ -5,31 +5,31 @@
 <Items>
  <UniqID>
   <Text>Дополнительная информация</Text>
-  <Href>javascript:ShowWindow("/ExtraIPOrderInfo",{ExtraIPOrderID:"%Replace%"});</Href>
+  <Href>javascript:ShowWindow("/ExtraIPOrderInfo",{ExtraIPOrderID:"%ServiceOrderID%"});</Href>
   <Icon>Info.gif</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Оплатить заказ</Text>
-  <Href>javascript:ShowWindow("/ExtraIPOrderPay",{ExtraIPOrderID:%Replace%});</Href>
+  <Href>javascript:ShowWindow("/ExtraIPOrderPay",{ExtraIPOrderID:%ServiceOrderID%});</Href>
   <Icon>Pay.gif</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Учёт заказа</Text>
-  <Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%Replace%",ServiceID:"50000"});</Href>
+  <Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
   <Icon>OrderConsiderInfo.png</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Настройки автопродления</Text>
-  <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%Replace%",ServiceID:"50000"});</Href>
+  <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
   <Icon>AutoProlong.png</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Передать на другой аккаунт</Text>
-  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%Replace%",ServiceID:"50000"});</Href>
+  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
   <Icon>OrdersTransfer.png</Icon>
  </UniqID>
 </Items>

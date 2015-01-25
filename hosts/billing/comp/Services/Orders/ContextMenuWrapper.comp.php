@@ -4,16 +4,19 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('OrderTypeCode', 'ID');
+$__args_list = Array('OrderTypeCode', 'Replace');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 #-------------------------------------------------------------------------------
 if($OrderTypeCode == 'Default'){
+	#-------------------------------------------------------------------------------
 	$OrderTypeCode = 'Services';
+	#-------------------------------------------------------------------------------
 }else{
-	$Order = DB_Select($OrderTypeCode . 'OrdersOwners',Array('ID'),Array('UNIQ','Where'=>'OrderID=' . $ID));
+	#-------------------------------------------------------------------------------
+	$Order = DB_Select(SPrintF('%sOrdersOwners',$OrderTypeCode),Array('ID'),Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Replace['ServiceOrderID'])));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Order)){
 	case 'error':
@@ -21,15 +24,16 @@ if($OrderTypeCode == 'Default'){
 	case 'exception':
 		return ERROR | @Trigger_Error(400);
 	case 'array':
-		$ID = $Order['ID'];
+		$Replace['ServiceOrderID'] = $Order['ID'];
 		break;
 	default:
 		return ERROR | @Trigger_Error(101);
 	}
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Menus/List', 'Administrator/ListMenu/' . $OrderTypeCode . 'Order.xml', $ID);
+$Comp = Comp_Load('Menus/List', SPrintF('Administrator/ListMenu/%sOrder.xml',$OrderTypeCode),$Replace);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

@@ -78,7 +78,10 @@
   <Comp>Menus/List</Comp>
   <Args>
    <ListElement>User/ListMenu/ExtraIPOrder.xml</ListElement>
-   <Replace>%ID%</Replace>
+   <Replace>
+    <ServiceOrderID>%ID%</ServiceOrderID>
+    <ServiceID>%ServiceID%</ServiceID>
+   </Replace>
   </Args>
  </ExtendedMenu>
  <!-- ********************************************************************** -->

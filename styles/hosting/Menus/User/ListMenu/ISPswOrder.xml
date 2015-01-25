@@ -5,43 +5,43 @@
 <Items>
  <UniqID>
   <Text>Дополнительная информация</Text>
-  <Href>javascript:ShowWindow("/ISPswOrderInfo",{ISPswOrderID:"%Replace%"});</Href>
+  <Href>javascript:ShowWindow("/ISPswOrderInfo",{ISPswOrderID:"%ServiceOrderID%"});</Href>
   <Icon>Info.gif</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Оплатить заказ</Text>
-  <Href>javascript:ShowWindow("/ISPswOrderPay",{ISPswOrderID:%Replace%});</Href>
+  <Href>javascript:ShowWindow("/ISPswOrderPay",{ISPswOrderID:%ServiceOrderID%});</Href>
   <Icon>Pay.gif</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Учёт заказа</Text>
-  <Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%Replace%",ServiceID:"51000"});</Href>
+  <Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
   <Icon>OrderConsiderInfo.png</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Настройки автопродления</Text>
-  <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%Replace%",ServiceID:"51000"});</Href>
+  <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
   <Icon>AutoProlong.png</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Сменить тарифный план</Text>
-  <Href>javascript:ShowWindow("/ISPswOrderSchemeChange",{ISPswOrderID:%Replace%});</Href>
+  <Href>javascript:ShowWindow("/ISPswOrderSchemeChange",{ISPswOrderID:%ServiceOrderID%});</Href>
   <Icon>SchemeChange.png</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Передать на другой аккаунт</Text>
-  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%Replace%",ServiceID:"51000"});</Href>
+  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
   <Icon>OrdersTransfer.png</Icon>
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Сменить IP адрес лицензии</Text>
-  <Href>javascript:ShowWindow("/ISPswChangeIP",{ISPswOrderID:%Replace%});</Href>
+  <Href>javascript:ShowWindow("/ISPswChangeIP",{ISPswOrderID:%ServiceOrderID%});</Href>
   <Icon>Password.gif</Icon>
  </UniqID>
 </Items>

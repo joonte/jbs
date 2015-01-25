@@ -21,8 +21,9 @@
   <ListElement>DaysRemainded</ListElement>
   <ListElement>StatusID</ListElement>
   <ListElement>StatusDate</ListElement>
-  <ListElement>(SELECT `UserNotice` FROM `Orders` WHERE `DSOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `UserNotice`</ListElement>
-  <ListElement>(SELECT `AdminNotice` FROM `Orders` WHERE `DSOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `AdminNotice`</ListElement>
+  <ListElement>ServiceID</ListElement>
+  <ListElement>UserNotice</ListElement>
+  <ListElement>AdminNotice</ListElement>
  </ColumnsIDs>
  <Conditions>
   <Message>Заказов на аренду серверов не обнаружено.</Message>
@@ -147,7 +148,10 @@
   <Comp>Menus/List</Comp>
   <Args>
    <ListElement>Administrator/ListMenu/DSOrder.xml</ListElement>
-   <Replace>%ID%</Replace>
+   <Replace>
+    <ServiceOrderID>%ID%</ServiceOrderID>
+    <ServiceID>%ServiceID%</ServiceID>
+   </Replace>
   </Args>
  </ExtendedMenu>
  <!-- ********************************************************************** -->
