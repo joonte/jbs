@@ -88,4 +88,6 @@ commented by lissyara, see http://jira.joonte.com/browse/JBS-171
 <!-- added by lissyara 2012-01-11 in 10:37 MSK
      see http://jira.joonte.com/browse/JBS-269	-->
 <IsAutoProlong>Logic</IsAutoProlong>
+<!-- added by lissyara, 2015-01-25 in 19:37 for JBS-910 -->
+<IsCheckUsers>Logic</IsCheckUsers>
 </XML>

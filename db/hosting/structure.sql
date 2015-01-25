@@ -7,14 +7,15 @@ SET FOREIGN_KEY_CHECKS=0;
 
 DROP TABLE IF EXISTS `ServersGroups`;
 CREATE TABLE `ServersGroups` (
-	`ID` int(11) NOT NULL AUTO_INCREMENT,	-- идентификатор группы
-	`Name` char(30) NOT NULL,		-- имя группы
-	`ServiceID` int(11) NULL,		-- ссылка на сервис (или NULL, если группа не относится к сервису)
-	`FunctionID` char(30) default '',	-- принцип определения того кто IsDefault
-	`Params` LONGTEXT NOT NULL,		-- дополнительные параметры группы серверов (зависимые услуги)
-	`Comment` char(255) default '',		-- комментарий к группе
-	`SortID` int(11) default '10',		-- поле для сортировки
-	PRIMARY KEY(`ID`),			-- первичный ключ
+	`ID` int(11) NOT NULL AUTO_INCREMENT,		-- идентификатор группы
+	`Name` char(30) NOT NULL,			-- имя группы
+	`ServiceID` int(11) NULL,			-- ссылка на сервис (или NULL, если группа не относится к сервису)
+	`FunctionID` char(30) default '',		-- принцип определения того кто IsDefault
+	`IsCheckUsers` enum('no','yes') default 'yes',	-- JBS-910: проверка соответствия юзеров на серверах группы и в биллинге
+	`Params` LONGTEXT NOT NULL,			-- дополнительные параметры группы серверов (зависимые услуги)
+	`Comment` char(255) default '',			-- комментарий к группе
+	`SortID` int(11) default '10',			-- поле для сортировки
+	PRIMARY KEY(`ID`),				-- первичный ключ
 	/* внешний ключ на таблицу сервисов */
 	KEY `ServersGroupsServiceID` (`ServiceID`),
 	CONSTRAINT `ServersGroupsServiceID` FOREIGN KEY (`ServiceID`) REFERENCES `Services` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
