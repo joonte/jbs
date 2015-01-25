@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -57,7 +56,7 @@ switch(ValueOf($Order)){
                   #-------------------------------------------------------------
                   'ContractID' => $Contract['ID'],
                   'Month'      => $CurrentMonth,
-                  'ServiceID'  => 10000,
+                  'ServiceID'  => $HostingOrder['ServiceID'],
                   'Comment'    => SPrintF('№%s',$Number),
                   'Amount'     => $ConsiderItem['DaysConsidered'],
                   'Cost'       => $ConsiderItem['Cost'],

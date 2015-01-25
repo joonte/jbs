@@ -20,7 +20,7 @@ $PayMessage	=  (string) @$Args['PayMessage'];
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','ContractID','OrderID','UserID','DomainName','ExpirationDate','AuthInfo','StatusID','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `DomainsOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DomainsOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT `Balance` FROM `Contracts` WHERE `DomainsOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`');
+$Columns = Array('ID','ContractID','OrderID','ServiceID','UserID','DomainName','ExpirationDate','AuthInfo','StatusID','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `DomainsOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DomainsOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT `Balance` FROM `Contracts` WHERE `DomainsOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`');
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
@@ -161,7 +161,7 @@ switch(ValueOf($DomainOrder)){
             $YearsRemainded = $YearsPay;
 	    #-------------------------------------------------------------------
 	    #-------------------------------------------------------------------
-#            $Comp = Comp_Load('Services/Bonuses',$YearsRemainded,20000,$DomainScheme['ID'],$UserID,$CostPay,$DomainScheme[(!$IsPayed && $YearsPay - $YearsRemainded < $DomainScheme['MinOrderYears']?'CostOrder':'CostProlong')],$DomainOrderID);
+#            $Comp = Comp_Load('Services/Bonuses',$YearsRemainded,$DomainOrder['ServiceID'],$DomainScheme['ID'],$UserID,$CostPay,$DomainScheme[(!$IsPayed && $YearsPay - $YearsRemainded < $DomainScheme['MinOrderYears']?'CostOrder':'CostProlong')],$DomainOrderID);
 #            if(Is_Error($Comp))
 #              return ERROR | @Trigger_Error(500);
 #            #-----------------------------------------------------------------
@@ -279,7 +279,7 @@ switch(ValueOf($DomainOrder)){
               #-----------------------------------------------------------------
               $DomainOrder['Number'] = $Comp;
               #-----------------------------------------------------------------
-              $IsUpdate = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$DomainOrder['ContractID'],'Summ'=>-$CostPay,'ServiceID'=>20000,'Comment'=>SPrintF('№%s на %s лет.',$Comp,$YearsPay)));
+              $IsUpdate = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$DomainOrder['ContractID'],'Summ'=>-$CostPay,'ServiceID'=>$DomainOrder['ServiceID'],'Comment'=>SPrintF('№%s на %s лет.',$Comp,$YearsPay)));
               #-----------------------------------------------------------------
               switch(ValueOf($IsUpdate)){
                 case 'error':

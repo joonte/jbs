@@ -19,7 +19,7 @@ $IsChange       = (boolean) @$Args['IsChange'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','OrderID','Login','Domain','StatusID','UserID','SchemeID','DaysRemainded','(SELECT `TypeID` FROM `Contracts` WHERE `HostingOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractTypeID`','(SELECT `Balance` FROM `Contracts` WHERE `HostingOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `GroupID` FROM `Users` WHERE `HostingOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `HostingOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`HostingOrdersOwners`.`OrderID`) AS PayedSumm');
+$Columns = Array('ID','OrderID','ServiceID','Login','Domain','StatusID','UserID','SchemeID','DaysRemainded','(SELECT `TypeID` FROM `Contracts` WHERE `HostingOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractTypeID`','(SELECT `Balance` FROM `Contracts` WHERE `HostingOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `GroupID` FROM `Users` WHERE `HostingOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `HostingOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`HostingOrdersOwners`.`OrderID`) AS PayedSumm');
 #-------------------------------------------------------------------------------
 $Where = ($HostingOrderID?SPrintF('`ID` = %u',$HostingOrderID):SPrintF('`OrderID` = %u',$OrderID));
 #-------------------------------------------------------------------------------
@@ -138,7 +138,7 @@ switch(ValueOf($HostingOrder)){
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
 	      #-----------------------------------------------------------------
-	      $Comp = Comp_Load('Services/Politics',$HostingOrder['UserID'],$HostingOrder['GroupID'],10000,$HostingScheme['ID'],$DaysPay,SPrintF('Hosting/%s',$HostingOrder['Login']));
+	      $Comp = Comp_Load('Services/Politics',$HostingOrder['UserID'],$HostingOrder['GroupID'],$HostingOrder['ServiceID'],$HostingScheme['ID'],$DaysPay,SPrintF('Hosting/%s',$HostingOrder['Login']));
 	      if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
@@ -146,7 +146,7 @@ switch(ValueOf($HostingOrder)){
               $DaysRemainded = $DaysPay;
 	      $CostPay = 0.00;
 	      #-----------------------------------------------------------------
-              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,10000,$HostingScheme['ID'],$UserID,$CostPay,$HostingScheme['CostDay'],FALSE);
+              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,$HostingOrder['ServiceID'],$HostingScheme['ID'],$UserID,$CostPay,$HostingScheme['CostDay'],FALSE);
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------

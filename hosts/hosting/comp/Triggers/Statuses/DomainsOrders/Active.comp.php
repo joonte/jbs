@@ -62,7 +62,7 @@ switch(ValueOf($DomainsConsider)){
             #-------------------------------------------------------------------
             'ContractID' => $DomainOrder['ContractID'],
             'Month'      => $CurrentMonth,
-            'ServiceID'  => 20000,
+            'ServiceID'  => $DomainOrder['ServiceID'],
             'Comment'    => SPrintF('№%s',$Number),
             'Amount'     => $ConsiderItem['YearsRemainded'],
             'Cost'       => $ConsiderItem['Cost'],

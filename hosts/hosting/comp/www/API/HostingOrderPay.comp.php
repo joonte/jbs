@@ -20,7 +20,7 @@ $PayMessage	=  (string) @$Args['PayMessage'];
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','OrderID','ContractID','StatusID','UserID','Login','Domain','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `HostingOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `HostingOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `HostingOrdersOwners`.`OrderID`) as `IsPayed`', '(SELECT `Name` FROM `HostingSchemes` WHERE `HostingOrdersOwners`.`SchemeID` = `HostingSchemes`.`ID`) as `SchemeName`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`HostingOrdersOwners`.`OrderID`) AS PayedSumm');
+$Columns = Array('ID','OrderID','ServiceID','ContractID','StatusID','UserID','Login','Domain','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `HostingOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `HostingOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `HostingOrdersOwners`.`OrderID`) as `IsPayed`', '(SELECT `Name` FROM `HostingSchemes` WHERE `HostingOrdersOwners`.`SchemeID` = `HostingSchemes`.`ID`) as `SchemeName`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`HostingOrdersOwners`.`OrderID`) AS PayedSumm');
 #-------------------------------------------------------------------------------
 $HostingOrder = DB_Select('HostingOrdersOwners',$Columns,Array('UNIQ','ID'=>$HostingOrderID));
 #-------------------------------------------------------------------------------
@@ -87,7 +87,7 @@ switch(ValueOf($HostingOrder)){
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
 	    #-------------------------------------------------------------------
-            $Comp = Comp_Load('Services/Politics',$HostingOrder['UserID'],$HostingOrder['GroupID'],10000,$HostingScheme['ID'],$DaysPay,SPrintF('Hosting/%s',$HostingOrder['Login']));
+            $Comp = Comp_Load('Services/Politics',$HostingOrder['UserID'],$HostingOrder['GroupID'],$HostingOrder['ServiceID'],$HostingScheme['ID'],$DaysPay,SPrintF('Hosting/%s',$HostingOrder['Login']));
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
@@ -98,7 +98,7 @@ switch(ValueOf($HostingOrder)){
             #-------------------------------------------------------------------
             $DaysRemainded = $DaysPay;
 	    #-------------------------------------------------------------------
-            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,10000,$HostingScheme['ID'],$UserID,$CostPay,$HostingScheme['CostDay'],$HostingOrder['OrderID']);
+            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,$HostingOrder['ServiceID'],$HostingScheme['ID'],$UserID,$CostPay,$HostingScheme['CostDay'],$HostingOrder['OrderID']);
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-----------------------------------------------------------------
@@ -154,7 +154,7 @@ switch(ValueOf($HostingOrder)){
               #-----------------------------------------------------------------
               $HostingOrder['Number'] = $Comp;
               #-----------------------------------------------------------------
-              $IsUpdate = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$HostingOrder['ContractID'],'Summ'=>-$CostPay,'ServiceID'=>10000,'Comment'=>SPrintF('№%s на %s дн.',$Comp,$DaysPay)));
+              $IsUpdate = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$HostingOrder['ContractID'],'Summ'=>-$CostPay,'ServiceID'=>$HostingOrder['ServiceID'],'Comment'=>SPrintF('№%s на %s дн.',$Comp,$DaysPay)));
               #-----------------------------------------------------------------
               switch(ValueOf($IsUpdate)){
                 case 'error':
