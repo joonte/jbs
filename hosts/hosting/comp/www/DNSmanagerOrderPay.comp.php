@@ -19,7 +19,7 @@ $IsChange       = (boolean) @$Args['IsChange'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','OrderID','Login','StatusID','UserID','SchemeID','DaysRemainded','(SELECT `TypeID` FROM `Contracts` WHERE `DNSmanagerOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractTypeID`','(SELECT `Balance` FROM `Contracts` WHERE `DNSmanagerOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `GroupID` FROM `Users` WHERE `DNSmanagerOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`DNSmanagerOrdersOwners`.`OrderID`) AS PayedSumm');
+$Columns = Array('ID','OrderID','ServiceID','Login','StatusID','UserID','SchemeID','DaysRemainded','(SELECT `TypeID` FROM `Contracts` WHERE `DNSmanagerOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractTypeID`','(SELECT `Balance` FROM `Contracts` WHERE `DNSmanagerOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `GroupID` FROM `Users` WHERE `DNSmanagerOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`DNSmanagerOrdersOwners`.`OrderID`) AS PayedSumm');
 #-------------------------------------------------------------------------------
 $Where = ($DNSmanagerOrderID?SPrintF('`ID` = %u',$DNSmanagerOrderID):SPrintF('`OrderID` = %u',$OrderID));
 #-------------------------------------------------------------------------------
@@ -138,7 +138,7 @@ switch(ValueOf($DNSmanagerOrder)){
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
 	      #-----------------------------------------------------------------
-	      $Comp = Comp_Load('Services/Politics',$DNSmanagerOrder['UserID'],$DNSmanagerOrder['GroupID'],52000,$DNSmanagerScheme['ID'],$DaysPay,SPrintF('DNSmanager/%s',$DNSmanagerOrder['Login']));
+	      $Comp = Comp_Load('Services/Politics',$DNSmanagerOrder['UserID'],$DNSmanagerOrder['GroupID'],$DNSmanagerOrder['ServiceID'],$DNSmanagerScheme['ID'],$DaysPay,SPrintF('DNSmanager/%s',$DNSmanagerOrder['Login']));
 	      if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
@@ -146,7 +146,7 @@ switch(ValueOf($DNSmanagerOrder)){
               $DaysRemainded = $DaysPay;
 	      $CostPay = 0.00;
 	      #-----------------------------------------------------------------
-              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,52000,$DNSmanagerScheme['ID'],$UserID,$CostPay,$DNSmanagerScheme['CostDay'],FALSE);
+              $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,$DNSmanagerOrder['ServiceID'],$DNSmanagerScheme['ID'],$UserID,$CostPay,$DNSmanagerScheme['CostDay'],FALSE);
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------

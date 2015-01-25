@@ -20,7 +20,7 @@ $PayMessage	=  (string) @$Args['PayMessage'];
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','OrderID','ContractID','StatusID','UserID','Login','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `DNSmanagerOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `DNSmanagerOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) as `IsPayed`', '(SELECT `Name` FROM `DNSmanagerSchemes` WHERE `DNSmanagerOrdersOwners`.`SchemeID` = `DNSmanagerSchemes`.`ID`) as `SchemeName`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`DNSmanagerOrdersOwners`.`OrderID`) AS PayedSumm');
+$Columns = Array('ID','OrderID','ServiceID','ContractID','StatusID','UserID','Login','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `DNSmanagerOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `DNSmanagerOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) as `IsPayed`', '(SELECT `Name` FROM `DNSmanagerSchemes` WHERE `DNSmanagerOrdersOwners`.`SchemeID` = `DNSmanagerSchemes`.`ID`) as `SchemeName`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`DNSmanagerOrdersOwners`.`OrderID`) AS PayedSumm');
 #-------------------------------------------------------------------------------
 $DNSmanagerOrder = DB_Select('DNSmanagerOrdersOwners',$Columns,Array('UNIQ','ID'=>$DNSmanagerOrderID));
 #-------------------------------------------------------------------------------
@@ -87,7 +87,7 @@ switch(ValueOf($DNSmanagerOrder)){
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
 	    #-------------------------------------------------------------------
-            $Comp = Comp_Load('Services/Politics',$DNSmanagerOrder['UserID'],$DNSmanagerOrder['GroupID'],52000,$DNSmanagerScheme['ID'],$DaysPay,SPrintF('DNSmanager/%s',$DNSmanagerOrder['Login']));
+            $Comp = Comp_Load('Services/Politics',$DNSmanagerOrder['UserID'],$DNSmanagerOrder['GroupID'],$DNSmanagerScheme['ServiceID'],$DNSmanagerScheme['ID'],$DaysPay,SPrintF('DNSmanager/%s',$DNSmanagerOrder['Login']));
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
@@ -98,7 +98,7 @@ switch(ValueOf($DNSmanagerOrder)){
             #-------------------------------------------------------------------
             $DaysRemainded = $DaysPay;
 	    #-------------------------------------------------------------------
-            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,52000,$DNSmanagerScheme['ID'],$UserID,$CostPay,$DNSmanagerScheme['CostDay'],$DNSmanagerOrder['OrderID']);
+            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,$DNSmanagerScheme['ServiceID'],$DNSmanagerScheme['ID'],$UserID,$CostPay,$DNSmanagerScheme['CostDay'],$DNSmanagerOrder['OrderID']);
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-----------------------------------------------------------------
@@ -154,7 +154,7 @@ switch(ValueOf($DNSmanagerOrder)){
               #-----------------------------------------------------------------
               $DNSmanagerOrder['Number'] = $Comp;
               #-----------------------------------------------------------------
-              $IsUpdate = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$DNSmanagerOrder['ContractID'],'Summ'=>-$CostPay,'ServiceID'=>52000,'Comment'=>SPrintF('№%s на %s дн.',$Comp,$DaysPay)));
+              $IsUpdate = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$DNSmanagerOrder['ContractID'],'Summ'=>-$CostPay,'ServiceID'=>$DNSmanagerScheme['ServiceID'],'Comment'=>SPrintF('№%s на %s дн.',$Comp,$DaysPay)));
               #-----------------------------------------------------------------
               switch(ValueOf($IsUpdate)){
                 case 'error':

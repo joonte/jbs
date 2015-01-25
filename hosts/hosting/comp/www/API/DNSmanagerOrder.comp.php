@@ -41,7 +41,7 @@ if(!$DNSmanagerScheme['IsActive'])
 	return new gException('SCHEME_NOT_ACTIVE','Выбранный тарифный план заказа DNSmanager не активен');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Server = DB_Select('Servers',Array('ID','Params','IsActive'),Array('UNIQ','ID'=>$DNSmanagerScheme['HardServerID']));
+$Server = DB_Select('Servers',Array('ID','Params','IsActive','(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) AS `ServiceID`'),Array('UNIQ','ID'=>$DNSmanagerScheme['HardServerID']));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Server)){
 case 'error':
@@ -133,7 +133,7 @@ if($Count < 1){
 	}
 }
 #-------------------------------------------------------------------------------
-$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>52000,'ServerID'=>$Server['ID'],'Params'=>Array('ViewArea'=>$ViewArea)));
+$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>$Server['ServiceID'],'ServerID'=>$Server['ID'],'Params'=>Array('ViewArea'=>$ViewArea)));
 if(Is_Error($OrderID))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
