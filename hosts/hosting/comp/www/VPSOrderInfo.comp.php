@@ -96,7 +96,7 @@ switch(ValueOf($VPSOrder)){
           'Form/Input',
           Array(
             'type'    => 'button',
-            'onclick' => SPrintF('VPSManage(%u);',$VPSOrder['ID']),
+            'onclick' => SPrintF('OrderManage(%u,%u);',$VPSOrder['ID'],$VPSOrder['ServiceID']),
             'value'   => 'Вход'
           )
         );

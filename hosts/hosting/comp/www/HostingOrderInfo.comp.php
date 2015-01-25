@@ -96,7 +96,7 @@ switch(ValueOf($HostingOrder)){
           'Form/Input',
           Array(
             'type'    => 'button',
-            'onclick' => SPrintF('HostingManage(%u);',$HostingOrder['ID']),
+            'onclick' => SPrintF('OrderManage(%u,%u);',$HostingOrder['ID'],$HostingOrder['ServiceID']),
             'value'   => 'Вход'
           )
         );
