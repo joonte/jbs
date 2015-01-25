@@ -14,7 +14,7 @@ Eval(COMP_INIT);
 $UserID = $GLOBALS['__USER']['ID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Service = DB_Select('Services',Array('ID','Code','Name'),Array('UNIQ','ID'=>30000));
+$Service = DB_Select('Services',Array('ID','Code','Name'),Array('UNIQ','ID'=>$VPSOrder['ServiceID']));
 switch(ValueOf($Service)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
