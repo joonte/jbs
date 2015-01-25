@@ -942,13 +942,10 @@ function IspManager4_Get_Email_Boxes($Settings){
   #-----------------------------------------------------------------------------
   return $Users;
 }
+
 #-------------------------------------------------------------------------------
-
-
-
-
+#-------------------------------------------------------------------------------
 # added by lissyara 2011-08-08 in 11:25 MSK
-
 function IspManager4_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
         /****************************************************************************/
         $__args_types = Array('array','string','string','string','string','string');

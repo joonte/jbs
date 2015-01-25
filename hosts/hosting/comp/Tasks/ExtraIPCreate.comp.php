@@ -108,8 +108,8 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsQuery = DB_Query("UPDATE `ExtraIPOrders` SET `Login`='" . $Doc['ip'] . "' WHERE `ID`='" . $ID . "'");
-if(Is_Error($IsQuery))
+$IsUpdate = DB_Update('ExtraIPOrders',Array('Login'=>$IsCreate['IP']),Array('ID'=>$ExtraIPOrder['ID']));
+if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error('[comp/Tasks/ExtraIPCreate]: не удалось прописать IP адрес в базу');
 #-------------------------------------------------------------------------------
 # вписываем адрес в масив, чтоб не лазить в базу
