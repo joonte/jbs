@@ -71,14 +71,14 @@ switch(ValueOf($DNSmanagerOrder)){
             }
 	    #-------------------------------------------------------------------
             # проверяем, это первая оплата или нет? если не первая, то минимальное число дней MinDaysProlong
-            Debug(SPrintF('[comp/www/DNSmanagerOrderPay]: ранее оплачено за заказ %s',$DNSmanagerOrder['PayedSumm']));
+            Debug(SPrintF('[comp/www/API/DNSmanagerOrderPay]: ранее оплачено за заказ %s',$DNSmanagerOrder['PayedSumm']));
             if($DNSmanagerOrder['PayedSumm'] > 0){
               $MinDaysPay = $DNSmanagerScheme['MinDaysProlong'];
             }else{
               $MinDaysPay = $DNSmanagerScheme['MinDaysPay'];
             }
             #-------------------------------------------------------------------
-            Debug(SPrintF('[comp/www/DNSmanagerOrderPay]: минимальное число дней %s',$MinDaysPay));
+            Debug(SPrintF('[comp/www/API/DNSmanagerOrderPay]: минимальное число дней %s',$MinDaysPay));
             #-------------------------------------------------------------------
             if($DaysPay < $MinDaysPay || $DaysPay > $DNSmanagerScheme['MaxDaysPay'])
               return new gException('WRONG_DAYS_PAY','Неверное кол-во дней оплаты');
@@ -87,7 +87,7 @@ switch(ValueOf($DNSmanagerOrder)){
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
 	    #-------------------------------------------------------------------
-            $Comp = Comp_Load('Services/Politics',$DNSmanagerOrder['UserID'],$DNSmanagerOrder['GroupID'],$DNSmanagerScheme['ServiceID'],$DNSmanagerScheme['ID'],$DaysPay,SPrintF('DNSmanager/%s',$DNSmanagerOrder['Login']));
+            $Comp = Comp_Load('Services/Politics',$DNSmanagerOrder['UserID'],$DNSmanagerOrder['GroupID'],$DNSmanagerOrder['ServiceID'],$DNSmanagerScheme['ID'],$DaysPay,SPrintF('DNSmanager/%s',$DNSmanagerOrder['Login']));
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
@@ -98,7 +98,7 @@ switch(ValueOf($DNSmanagerOrder)){
             #-------------------------------------------------------------------
             $DaysRemainded = $DaysPay;
 	    #-------------------------------------------------------------------
-            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,$DNSmanagerScheme['ServiceID'],$DNSmanagerScheme['ID'],$UserID,$CostPay,$DNSmanagerScheme['CostDay'],$DNSmanagerOrder['OrderID']);
+            $Comp = Comp_Load('Services/Bonuses',$DaysRemainded,$DNSmanagerOrder['ServiceID'],$DNSmanagerScheme['ID'],$UserID,$CostPay,$DNSmanagerScheme['CostDay'],$DNSmanagerOrder['OrderID']);
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-----------------------------------------------------------------
@@ -154,7 +154,7 @@ switch(ValueOf($DNSmanagerOrder)){
               #-----------------------------------------------------------------
               $DNSmanagerOrder['Number'] = $Comp;
               #-----------------------------------------------------------------
-              $IsUpdate = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$DNSmanagerOrder['ContractID'],'Summ'=>-$CostPay,'ServiceID'=>$DNSmanagerScheme['ServiceID'],'Comment'=>SPrintF('№%s на %s дн.',$Comp,$DaysPay)));
+              $IsUpdate = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$DNSmanagerOrder['ContractID'],'Summ'=>-$CostPay,'ServiceID'=>$DNSmanagerOrder['ServiceID'],'Comment'=>SPrintF('№%s на %s дн.',$Comp,$DaysPay)));
               #-----------------------------------------------------------------
               switch(ValueOf($IsUpdate)){
                 case 'error':
