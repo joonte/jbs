@@ -28,8 +28,8 @@ foreach($ServersGroups as $ServersGroup){
 	if($ServersGroup['Code'] == 'Default')
 		continue;
 	#-------------------------------------------------------------------------------
-	if($ServersGroup['Code'] == 'DNSmanager')
-		continue;
+	#if($ServersGroup['Code'] == 'DNSmanager')
+	#	continue;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$ClassName = SPrintF('%sServer',$ServersGroup['Code']);
@@ -161,7 +161,7 @@ foreach($ServersGroups as $ServersGroup){
 				$Event = Array(
 						'UserID'        => $ServerUser['UserID'],
 						'PriorityID'    => 'Warning',
-						'Text'          => SPrintF('Пользователь (%s) не найден на сервере (%s)',$ServerUser['Login'],$Server['Address']),
+						'Text'          => SPrintF('Не найден %s/%s имеющийся в биллинге',$Server['Address'],$ServerUser['Login']),
 						'IsReaded'      => FALSE
 						);
 				#-------------------------------------------------------------------------------
@@ -198,7 +198,7 @@ foreach($ServersGroups as $ServersGroup){
 				$Event = Array(
 						'UserID'        => 1,
 						'PriorityID'    => 'Warning',
-						'Text'          => SPrintF('На сервере (%s) найден пользователь (%s) отсутствующий в биллинге',$Server['Address'],$UserID),
+						'Text'          => SPrintF('Найден %s/%s отсутствующий в биллинге',$Server['Address'],$UserID),
 						'IsReaded'      => FALSE
 						);
 				#-------------------------------------------------------------------------------
