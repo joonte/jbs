@@ -1506,6 +1506,10 @@
 				<CompleteBonuses>1</CompleteBonuses>
 			</Bonuses>
 			<!-- *********************************************************************** -->
+			<CheckEnterIP>
+				<IsActive>1</IsActive>
+			</CheckEnterIP>
+			<!-- *********************************************************************** -->
 			<EmailConfirmation>
 				<EmailConfirmRequire>1</EmailConfirmRequire>
 			</EmailConfirmation>
@@ -1529,6 +1533,10 @@
 			<Announcement>
 				<ShowAnnouncement>1</ShowAnnouncement>
 			</Announcement>
+			<!-- *********************************************************************** -->
+			<CheckEnterIP>
+				<IsActive>1</IsActive>
+			</CheckEnterIP>
 			<!-- *********************************************************************** -->
 			<CheckUserID>
 				<MakeCheckUserID>1</MakeCheckUserID>
