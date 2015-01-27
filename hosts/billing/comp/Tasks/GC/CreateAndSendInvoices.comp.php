@@ -176,8 +176,7 @@ case 'array':
 				#-------------------------------------------------------------------------------
 			}else{
 				#-------------------------------------------------------------------------------
-				$OrderInfo = DB_Select(SPrintF('%sOrdersOwners',$UOrder['Code']),Array('ID',SPrintF('(SELECT `MinDaysPay` FROM `%sSchemes` WHERE `%sSchemes`.`ID` = `%sOrdersOwners`.`SchemeID`) as `MinDaysPay`',$UOrder['Code'],$UOrder['Code'],$UOrder['Code'])),Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$UOrder['ID']))
-							);
+				$OrderInfo = DB_Select(SPrintF('%sOrdersOwners',$UOrder['Code']),Array('ID','SchemeID',SPrintF('(SELECT `MinDaysPay` FROM `%sSchemes` WHERE `%sSchemes`.`ID` = `%sOrdersOwners`.`SchemeID`) as `MinDaysPay`',$UOrder['Code'],$UOrder['Code'],$UOrder['Code']),SPrintF('(SELECT `CostDay` FROM `%sSchemes` WHERE `%sSchemes`.`ID` = `%sOrdersOwners`.`SchemeID`) as `CostDay`',$UOrder['Code'],$UOrder['Code'],$UOrder['Code'])),Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$UOrder['ID'])));
 				switch(ValueOf($OrderInfo)){
 				case 'error':
 					return ERROR | @Trigger_Error(500);
@@ -188,6 +187,27 @@ case 'array':
 				default:
 					return ERROR | @Trigger_Error(101);
 				}
+				#-------------------------------------------------------------------------------
+				#-------------------------------------------------------------------------------
+				# реализация JBS-948
+				if(Is_Error(DB_Transaction($TransactionID = UniqID('CostPay1'))))
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+				$Comp = Comp_Load('Services/Bonuses',$OrderInfo['MinDaysPay'],$UOrder['ServiceID'],$OrderInfo['SchemeID'],$UOrder['UserID'],'0.00',$OrderInfo['CostDay'],FALSE);
+				if(Is_Error($Comp))
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+				if(Is_Error(DB_Roll($TransactionID)))
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+				if(Round($Comp['CostPay'],2) == 0){
+					#-------------------------------------------------------------------------------
+					Debug(SPrintF('[comp/www/CreateAndSendInvoices]: нулевая цена продления на %s дней, счёт не выписан',$Scheme['CostDay']));
+					#-------------------------------------------------------------------------------
+					continue;
+					#-------------------------------------------------------------------------------
+				}
+				#-------------------------------------------------------------------------------
 				#-------------------------------------------------------------------------------
 				$Comp = Comp_Load(SPrintF('www/API/%sOrderPay',$UOrder['Code']),Array(SPrintF('%sOrderID',$UOrder['Code'])=>$OrderInfo['ID'],'DaysPay'=>$OrderInfo['MinDaysPay'],'IsUseBasket'=>TRUE,'PayMessage'=>'Автоматическое выставление счёта на продление услуг'));
 				if(Is_Error($Comp))
