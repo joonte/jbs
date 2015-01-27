@@ -17,7 +17,7 @@
   <Paths>
    <UniqID>^\/Administrator\/(Statistics|PaymentsSystemsStatistics|PersonalStatistics)$</UniqID>
   </Paths>
-  <Href>/Administrator/Statistics</Href>
+  <Href>/Administrator/PaymentsSystemsStatistics</Href>
   <Level>1</Level>
  </ID200>
  <ID300>
