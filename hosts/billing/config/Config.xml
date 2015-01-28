@@ -7,7 +7,7 @@
 	<Register>
 		<Captcha>
 			<IsActive>1</IsActive>
-			<IsNoCaptchaFromIP></IsNoCaptchaFromIP>
+			<ExcludeIPs></ExcludeIPs>
 		</Captcha>
 		<!-- *********************************************************************** -->
 		<LayPayMaxDays>31</LayPayMaxDays>
@@ -1508,6 +1508,7 @@
 			<!-- *********************************************************************** -->
 			<CheckEnterIP>
 				<IsActive>1</IsActive>
+				<ExcludeIPs></ExcludeIPs>
 			</CheckEnterIP>
 			<!-- *********************************************************************** -->
 			<EmailConfirmation>
@@ -1536,6 +1537,7 @@
 			<!-- *********************************************************************** -->
 			<CheckEnterIP>
 				<IsActive>1</IsActive>
+				<ExcludeIPs></ExcludeIPs>
 			</CheckEnterIP>
 			<!-- *********************************************************************** -->
 			<CheckUserID>
