@@ -65,7 +65,7 @@ if($ICQ)
 #-------------------------------------------------------------------------------
 if((!IsSet($GLOBALS['__USER']) && $_SERVER['REMOTE_ADDR'] != $_SERVER['SERVER_ADDR']) && $Settings['Captcha']['IsActive']){
 	#-------------------------------------------------------------------------------
-	$Array = Explode(',',$Settings['Captcha']['IsNoCaptchaFromIP']);
+	$Array = Explode(',',$Settings['Captcha']['ExcludeIPs']);
 	#-------------------------------------------------------------------------------
 	foreach($Array as $IP)
 		if(Trim($IP) == $_SERVER['REMOTE_ADDR'])
