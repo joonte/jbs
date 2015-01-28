@@ -65,7 +65,22 @@ if(Is_Error($IsUpdate))
 #--------------------------------------------------------------------------------
 # added by lissyara 2012-09-28 in 13:54 MSK, for JBS-377
 $Where = '(SELECT `ID` FROM `Users` WHERE `Events`.`UserID`=`Users`.`ID`) IS NULL';
+#--------------------------------------------------------------------------------
 $IsDelete = DB_Delete('Events',Array('Where'=>$Where));
+if(Is_Error($IsDelete))
+	return ERROR | @Trigger_Error(500);
+
+#--------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
+# Удаляем бонусы c датой окончания меньше текущей даты ... и года, например
+$IsDelete = DB_Delete('Bonuses',Array('Where'=>'`ExpirationDate` < UNIX_TIMESTAMP() - 365*24*60*60'));
+if(Is_Error($IsDelete))
+	return ERROR | @Trigger_Error(500);
+
+#--------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
+# Удаляем бонусы c датой окончания меньше текущей даты ... и года, например
+$IsDelete = DB_Delete('Bonuses',Array('Where'=>'`DaysRemainded` = 0 AND `CreateDate` < UNIX_TIMESTAMP() - 365*24*60*60'));
 if(Is_Error($IsDelete))
 	return ERROR | @Trigger_Error(500);
 
