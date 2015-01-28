@@ -15,11 +15,16 @@ $Config = Config();
 $Settings = $Config['Interface']['Notes']['User']['Bonuses'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(!$Settings['CompleteBonuses'])
+if(!$Settings['IsActive'])
 	return $Result;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Where = Array('`UserID` = @local.__USER_ID','`DaysRemainded` > 0','`Discont` = 1','`ExpirationDate` > UNIX_TIMESTAMP()');
+if(!$Settings['Percent'])
+	return $Result;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Where = Array('`UserID` = @local.__USER_ID','`DaysRemainded` > 0','`Discont` > 0','`ExpirationDate` > UNIX_TIMESTAMP()');
+#-------------------------------------------------------------------------------
 $Columns = Array(
 			'*','(SELECT `NameShort` FROM `Services` WHERE `Services`.`ID` = `BonusesOwners`.`ServiceID`) AS `NameShort`',
 			'(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `BonusesOwners`.`ServiceID`) AS `Code`',
@@ -29,10 +34,18 @@ $Columns = Array(
 		);
 #-------------------------------------------------------------------------------
 $Bonuses = DB_Select('BonusesOwners',$Columns,Array('Where'=>$Where));
+#-------------------------------------------------------------------------------
 switch(ValueOf($Bonuses)){
 case 'array':
 	#-------------------------------------------------------------------------------
 	foreach($Bonuses as $Bonus){
+		#-------------------------------------------------------------------------------
+		$Percent = $Bonus['Discont'] * 100;
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/Notes/User/Bonuses]: Code = %s; Percent = %s',$Bonus['Code'],$Percent));
+		#-------------------------------------------------------------------------------
+		if($Percent < $Settings['Percent'])
+			continue;
 		#-------------------------------------------------------------------------------
 		if(Is_Null($Bonus['NameShort'])){
 			#-------------------------------------------------------------------------------
@@ -42,7 +55,7 @@ case 'array':
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		$Params = Array('Bonus'=>$Bonus);
+		$Params = Array('Bonus'=>$Bonus,'Percent'=>$Percent);
 		#-------------------------------------------------------------------------------
 		$NoBody = new Tag('NOBODY');
 		$NoBody->AddHTML(TemplateReplace('Notes.User.Bonuses',$Params));

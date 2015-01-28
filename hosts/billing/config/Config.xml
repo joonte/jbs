@@ -1503,7 +1503,8 @@
 			</Announcement>
 			<!-- *********************************************************************** -->
 			<Bonuses>
-				<CompleteBonuses>1</CompleteBonuses>
+				<IsActive>1</IsActive>
+				<Percent>50</Percent>
 			</Bonuses>
 			<!-- *********************************************************************** -->
 			<CheckEnterIP>
