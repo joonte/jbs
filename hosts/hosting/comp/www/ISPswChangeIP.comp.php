@@ -54,7 +54,7 @@ default:
 # проверяем, можно ли менять IP для этой лицензии
 # 1. внутренним, могут менять только сотрудники
 # 2. время - прошёл ли 31 день от последней смены адреса
-$ISPswLicense = DB_Select('ISPswLicenses',Array('ID','StatusDate','IsInternal'),Array('UNIQ','ID'=>$ISPswOrder['LicenseID']));
+$ISPswLicense = DB_Select('ISPswLicenses',Array('ID','IP','remoteip','LicKey','StatusDate','IsInternal','ip_change_date','lickey_change_date'),Array('UNIQ','ID'=>$ISPswOrder['LicenseID']));
 #-------------------------------------------------------------------------------
 switch(ValueOf($ISPswLicense)){
 case 'error':
@@ -71,7 +71,7 @@ default:
 if(!$__USER['IsAdmin'] && $ISPswLicense['IsInternal'])
 	return new gException('INTERNAL_LICENSE','Данная лицензия предназначена для использования на заказах VPS и выделенных серверов. Вы не можете изменить её IP адрес. Если вам нужна лицензия для другого заказа VPS или выделенного сервера - сделайте заказ на новую лицензию.');
 #-------------------------------------------------------------------------------
-$m_time = $ISPswOrder['StatusDate'] + 31 * 24 * 3600 - Time();
+$m_time = $ISPswLicense['ip_change_date'] + 31 * 24 * 3600 - Time();
 #-------------------------------------------------------------------------------
 if($m_time > 0){
 	#-------------------------------------------------------------------------------
