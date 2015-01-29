@@ -32,5 +32,3 @@ Options -Indexes
 	php_flag display_startup_errors	Off
 </IfModule>
 
-
-
