@@ -55,7 +55,7 @@ switch(ValueOf($DomainOrder)){
         if(Is_Error($DOM->Load('Window')))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
-        $DOM->AddText('Title','Заказ домена');
+        $DOM->AddText('Title',SPrintF('Заказ домена %s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']));
         #-----------------------------------------------------------------------
         $Table = Array('Общая информация');
         #-----------------------------------------------------------------------

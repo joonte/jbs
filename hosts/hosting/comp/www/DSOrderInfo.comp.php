@@ -59,15 +59,16 @@ switch(ValueOf($DSOrder)){
         if(Is_Error($DOM->Load('Window')))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
-        $DOM->AddText('Title','Заказ выделенного сервера');
+        $Number = Comp_Load('Formats/Order/Number',$DSOrder['OrderID']);
+        if(Is_Error($Number))
+          return ERROR | @Trigger_Error(500);
+        #-----------------------------------------------------------------------
+        $DOM->AddText('Title',SPrintF('Заказ выделенного сервера #%s/%s',$Number,$DSOrder['IP']));
         #-----------------------------------------------------------------------
         $Table = Array('Общая информация');
         #-----------------------------------------------------------------------
-        $Comp = Comp_Load('Formats/Order/Number',$DSOrder['OrderID']);
-        if(Is_Error($Comp))
-          return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
-        $Table[] = Array('Номер',$Comp);
+        $Table[] = Array('Номер',$Number);
         #-----------------------------------------------------------------------
         $Comp = Comp_Load('Formats/Date/Extended',$DSOrder['OrderDate']);
         if(Is_Error($Comp))

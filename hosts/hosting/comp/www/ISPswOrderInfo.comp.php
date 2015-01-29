@@ -20,10 +20,10 @@ $ISPswOrderID = (integer) @$Args['ISPswOrderID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Columns = Array(
-			'ID','OrderID','UserID','OrderDate','ContractID','LicenseID','StatusID','StatusDate',
+			'ID','OrderID','UserID','OrderDate','ContractID','LicenseID','StatusID','StatusDate','IP',
 			'(SELECT `Name` FROM `ISPswSchemes` WHERE `ISPswSchemes`.`ID` = `ISPswOrdersOwners`.`SchemeID`) as `Scheme`',
 			'(SELECT `elid` FROM `ISPswLicenses` WHERE `ISPswOrdersOwners`.`LicenseID`=`ISPswLicenses`.`ID`) AS `elid`',
-			'(SELECT `IP` FROM `ISPswLicenses` WHERE `ISPswOrdersOwners`.`LicenseID`=`ISPswLicenses`.`ID`) AS `IP`',
+			'(SELECT `IP` FROM `ISPswLicenses` WHERE `ISPswOrdersOwners`.`LicenseID`=`ISPswLicenses`.`ID`) AS `LicenseIP`',
 			'(SELECT `pricelist_id` FROM `ISPswLicenses` WHERE `ISPswOrdersOwners`.`LicenseID`=`ISPswLicenses`.`ID`) AS `pricelist_id`',
 			'(SELECT `IsAutoProlong` FROM `Orders` WHERE `ISPswOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',
 			'(SELECT (SELECT `Code` FROM `Services` WHERE `Orders`.`ServiceID` = `Services`.`ID`) FROM `Orders` WHERE `ISPswOrdersOwners`.`OrderID` = `Orders`.`ID`) AS `Code`'
@@ -71,16 +71,17 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DOM->AddText('Title','Заказ ПО ISPsystem');
+$Number = Comp_Load('Formats/Order/Number',$ISPswOrder['OrderID']);
+if(Is_Error($Number))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$DOM->AddText('Title',SPrintF('Заказ ПО ISPsystem #%s/%s',$Number,$ISPswOrder['IP']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table = Array('Общая информация');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Formats/Order/Number',$ISPswOrder['OrderID']);
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Номер',$Comp);
+$Table[] = Array('Номер',$Number);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Formats/Date/Extended',$ISPswOrder['OrderDate']);
@@ -112,21 +113,20 @@ if(!Is_Null($ISPswOrder['LicenseID'])){
 	#-------------------------------------------------------------------------------
 	$Table[] = Array('Номер лицензии ISPsystem (elid)',$ISPswOrder['elid']);
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Pattern = ($ISPswOrder['pricelist_id'] > 1000)?'http://%s:1500/%s':'http://%s/manager/%s';
+	# TODO: надо по типу панели определять окончание панели управления
+	$Mgr = 'ispmgr';
+	#-------------------------------------------------------------------------------
+	$Url = SPrintF($Pattern,Long2IP(IP2Long($ISPswOrder['LicenseIP'])),$Mgr);
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Formats/String',$Url,35,$Url);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array('Панель управления',$Comp);
+	#-------------------------------------------------------------------------------
 }
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Pattern = ($ISPswOrder['pricelist_id'] > 1000)?'http://%s:1500/%s':'http://%s/manager/%s';
-# TODO: надо по типу панели определять окончание панели управления
-$Mgr = 'ispmgr';
-#-------------------------------------------------------------------------------
-$Url = SPrintF($Pattern,Long2IP(IP2Long($ISPswOrder['IP'])),$Mgr);
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load('Formats/String',$Url,35,$Url);
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array('Панель управления',$Comp);
-#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Прочее';
 #-------------------------------------------------------------------------------
