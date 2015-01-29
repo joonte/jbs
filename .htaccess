@@ -14,6 +14,7 @@ RewriteRule (install|public|styles|index.php|favicon.ico|apc.php) - [L]
 RewriteRule (.*) /index.php
 Options -Indexes
 
+
 <IfModule mod_headers.c>
     <FilesMatch "\.(css|js|png)$">
         Header set Cache-Control "max-age=600, proxy-revalidate"
