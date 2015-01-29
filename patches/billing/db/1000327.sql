@@ -1,4 +1,4 @@
 
-DELETE FROM `Clauses` WHERE `Partition` = 'Invoices/PaymentSystems/QIWI';
+DELETE FROM `Clauses` WHERE `Partition` = '/Help/Services/QIWIPhone';
 
 

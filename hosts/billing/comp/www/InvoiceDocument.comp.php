@@ -19,9 +19,15 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','lib
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
-if($Mobile)
+if($Mobile){
+	#-------------------------------------------------------------------------------
 	if(!Preg_Match($Regulars['Mobile'],$Mobile))
 		return new gException('WRONG_MOBILE','Номер мобильного телефона указан неверно');
+	#-------------------------------------------------------------------------------
+	if(!SetCookie('Mobile',$Mobile,Time() + 364*24*3600,'/'))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Invoice = DB_Select('InvoicesOwners',Array('ID','UserID','PaymentSystemID','IsPosted','StatusID','Summ'),Array('UNIQ','ID'=>$InvoiceID));
@@ -72,7 +78,7 @@ if($PaymentSystemID == 'QIWI' && !$IsPayed){
 	#-------------------------------------------------------------------------------
 	if(!$Mobile){
 		#-------------------------------------------------------------------------------
-		#DEBUG('[comp/www/InvoiceDocument]: Need user phone');
+		$Mobile = IsSet($_COOKIE['Mobile'])?$_COOKIE['Mobile']:$GLOBALS['__USER']['Mobile'];
 		#-------------------------------------------------------------------------------
 		$DOM->AddText('Title','Оплата QIWI требует телефонный номер');
 		#-------------------------------------------------------------------------------
@@ -81,7 +87,7 @@ if($PaymentSystemID == 'QIWI' && !$IsPayed){
 		#-------------------------------------------------------------------------------
 		$Messages = Messages();
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Input',Array('type'=>'text','style'=>'width: 100%;','name'=>'Mobile','value'=>$GLOBALS['__USER']['Mobile'],'prompt'=>$Messages['Prompts']['Mobile']));
+		$Comp = Comp_Load('Form/Input',Array('type'=>'text','style'=>'width: 100%;','name'=>'Mobile','value'=>$Mobile,'prompt'=>$Messages['Prompts']['Mobile']));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
