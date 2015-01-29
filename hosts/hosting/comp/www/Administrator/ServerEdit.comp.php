@@ -34,6 +34,8 @@ if($ServerID){
 		#-------------------------------------------------------------------------------
 		$TemplateID = $Server['TemplateID'];
 		#-------------------------------------------------------------------------------
+		$Server['Password'] = 'Default';
+		#-------------------------------------------------------------------------------
 		break;
 		#-------------------------------------------------------------------------------
 	default:
@@ -51,7 +53,7 @@ if($ServerID){
 			'Address'		=> 'srv1.isp.su',
 			'Port'			=> 443,
 			'Login'			=> 'root',
-			'Password'		=> '',
+			'Password'		=> 'Default',
 			'Monitoring'		=> "HTTP=80\nHTTPS=443\nFTP=21\nMySQL=3306\nSMTP=25\nPOP=110\nIMAP=143",
 			'AdminNotice'		=> "Платформа: HP Proliant DL165 G7\nПроцессоры: 2x AMD Opteron 6238 Twelve Core (G34, 2600MHz, 16Mb, 12 ядер)\nОперативная память: DDR3, 2x4Gb + 4x2Gb, всего 16Gb\nRAID контроллер: 3Ware 9750-4I, 512Mb RAM\nЖёсткие диски: 4x Western Digital WD5003ABYX (собраны в RAID10)\nАдминистратор: Василий Алибабаевич\n\nДоступ к встроенной IP-KVM: 222.111.123.123/admin/cw4rf34n3"
 			);

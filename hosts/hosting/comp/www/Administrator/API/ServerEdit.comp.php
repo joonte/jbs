@@ -58,11 +58,14 @@ $UServer = Array(
 			'Address'	=> $Address,
 			'Port'		=> $Port,
 			'Login'		=> $Login,
-			'Password'	=> $Password,
 			'Monitoring'	=> $Monitoring,
 			'AdminNotice'	=> $AdminNotice,
 			'SortID'	=> $SortID
 		);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($Password != 'Default')
+	$UServer['Password'] = $Password;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Template = System_XML(SPrintF('servers/%s.xml',$TemplateID));
