@@ -699,7 +699,7 @@ function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 #-------------------------------------------------------------------------------
 function VmManager5_KVM_Password_Change($Settings,$Login,$Password){
 	/****************************************************************************/
-	$__args_types = Array('array','string','string','array');
+	$__args_types = Array('array','string','string');
 	#-----------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/
@@ -710,11 +710,13 @@ function VmManager5_KVM_Password_Change($Settings,$Login,$Password){
 	$Request = Array(
 			'authinfo'	=> $authinfo,
 			'out'		=> 'xml',
-			'func'		=> 'user.edit',
+			'func'		=> 'usrparam',
 	                'name'		=> $Login,
 			'passwd'	=> $Password,
 			'confirm'	=> $Password,
-	                'allowcreatevm'	=> 'off',
+			'atype'		=> 'atany',
+			'sok'		=> 'ok',
+			'su'		=> $Login,
 	);
         #---------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),$Request);
@@ -732,7 +734,7 @@ function VmManager5_KVM_Password_Change($Settings,$Login,$Password){
 	$Doc = $XML['doc'];
 	#-----------------------------------------------------------------------------
 	if(IsSet($Doc['error']))
-		return new gException('PASSWORD_CHANGE_ERROR','Не удалось изменить пароль для заказа виртуального сервера');
+		return new gException('PASSWORD_CHANGE_ERROR','Не удалось изменить пароль для пользователя виртуального сервера');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Response = Http_Send('/vmmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vm','su'=>$Login));
@@ -757,6 +759,12 @@ function VmManager5_KVM_Password_Change($Settings,$Login,$Password){
 		if(!IsSet($VM['id']))
 			continue;
 		#-------------------------------------------------------------------------------
+		# http://forum.ispsystem.com/ru/showthread.php?t=27057
+		if(!IsSet($VM['chpass']))
+			continue;
+		#-------------------------------------------------------------------------------
+		if($VM['chpass'] != 'on')
+			continue;
 		#-------------------------------------------------------------------------------
 		$Request = Array(
 				'authinfo'		=> $authinfo,
