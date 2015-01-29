@@ -258,7 +258,7 @@ if(!IsSet($GLOBALS['__USER']['IsEmulate'])){
 	$Cached = CacheManager::get(Md5(SPrintF('LastLogon_%s',$User['Email'])));
 	#-------------------------------------------------------------------------------
 	if(!$Cached)
-		CacheManager::add(Md5(SPrintF('LastLogon_%s',$User['Email'])),Array('EnterIP'=>$User['EnterIP'],'EnterDate'=>$User['EnterDate']),24*3600);
+		CacheManager::add(Md5(SPrintF('LastLogon_%s',$User['Email'])),Array('EnterIP'=>$User['EnterIP'],'EnterDate'=>$User['EnterDate']),15*60);
 	#-------------------------------------------------------------------------------
 	#Debug(SPrintF('[comp/Users/Init]: User[EnterIP] = %s',$User['EnterIP']));
 	#-------------------------------------------------------------------------------
