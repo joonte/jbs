@@ -54,7 +54,7 @@ default:
 # проверяем, можно ли менять IP для этой лицензии
 # 1. внутренним, могут менять только сотрудники
 # 2. время - прошёл ли 31 день от последней смены адреса
-$ISPswLicense = DB_Select('ISPswLicenses',Array('ID','IP','remoteip','LicKey','StatusDate','IsInternal','ip_change_date','lickey_change_date'),Array('UNIQ','ID'=>$ISPswOrder['LicenseID']));
+$ISPswLicense = DB_Select('ISPswLicenses',Array('ID','elid','IP','remoteip','LicKey','StatusDate','IsInternal','ip_change_date','lickey_change_date'),Array('UNIQ','ID'=>$ISPswOrder['LicenseID']));
 #-------------------------------------------------------------------------------
 switch(ValueOf($ISPswLicense)){
 case 'error':
@@ -98,13 +98,29 @@ $DOM->AddText('Title','Смена IP адреса для заказа ПО');
 $Table = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Table[] = Array('Текущий адрес',$ISPswOrder['IP']);
+$Table[] = SPrintF('Данные для лицензии #%u',$ISPswLicense['elid']);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('name'=>'IP','size'=>16,'prompt' => "Введите новый IP адрес лицензии",'type'=>'text'));
+$Table[] = Array('IP-адрес сервера',($ISPswLicense['remoteip'])?$ISPswLicense['remoteip']:'-');
+#-------------------------------------------------------------------------------
+$Table[] = Array('IP-адрес лицензии',$ISPswLicense['IP']);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Ключ лицензии',($ISPswLicense['LicKey'])?$ISPswLicense['LicKey']:'-');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Table[] = SPrintF('Новые данные для лицензии #%u',$ISPswLicense['elid']);
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('name'=>'remoteip','prompt'=>'IP адрес сервера, с которого будут приходить запросы. Если вы не знаете что это и зачем, оставьте это поле пустым','style'=>'width: 100%;','type'=>'text'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Новый адрес',$Comp);
+$Table[] = Array('Новый IP сервера',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('name'=>'IP','prompt'=>'Введите новый IP адрес лицензии','style'=>'width: 100%;','type'=>'text'));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Новый IP лицензии',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"FormEdit('/API/ISPswChangeIP','ISPswChangeIPForm','Смена IP адреса лицензии ISPsystem');",'value'=>'Сменить'));
