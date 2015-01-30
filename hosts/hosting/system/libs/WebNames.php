@@ -71,7 +71,7 @@ function WebNames_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1N
 		return Array('TicketID'=>SPrintF('%s.%s',$DomainName,$DomainZone));
 	#-------------------------------------------------------------------------------
 	if(Preg_Match('/Error:/',$Result))
-		return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
+		return new gException('REGISTRATOR_ERROR',SPrintF('Регистратор вернул ошибку: %s',$Result));
 	#-------------------------------------------------------------------------------
 	return new gException('WRONG_ANSWER',$Result);
 	#-------------------------------------------------------------------------------

@@ -102,7 +102,7 @@ switch(ValueOf($DomainOrder)){
                   $GLOBALS['TaskReturnArray'] = Array('CompName' => 'www/API/TicketEdit', 'CompParameters' => $CompParameters);
                 }
                 #-------------------------------------------------------------------
-                return new gException('TRANSFER_TO_OPERATOR_1','Задание не может быть выполнено автоматически и передано оператору');
+                return new gException('TRANSFER_TO_OPERATOR_1','Задание не может быть выполнено автоматически и передано оператору',$DomainRegister);
               case 'false':
                 return 300;
               case 'array':
