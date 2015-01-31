@@ -300,7 +300,7 @@ if(!$TemplateID){
 				'type'    => 'button',
 				'value'   => 'Продолжить'
 				)
-			);	if(Is_Error($Comp))
+			);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
