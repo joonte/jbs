@@ -300,7 +300,7 @@ if(!$TemplateID){
 				'type'    => 'button',
 				'value'   => 'Продолжить'
 				)
-			);
+			);	if(Is_Error($Comp))
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -360,7 +360,7 @@ if(!$TemplateID){
 	#-------------------------------------------------------------------------------
 	$Table[] = 'Общие параметры';
 	#-------------------------------------------------------------------------------
-	$ServersGroups = DB_Select('ServersGroups',Array('ID','Name','(SELECT `Code` FROM `Services` WHERE `ServersGroups`.`ServiceID` = `Services`.`ID`) AS `Code`'));
+	$ServersGroups = DB_Select('ServersGroups',Array('ID','Name','ServiceID','(SELECT `Code` FROM `Services` WHERE `ServersGroups`.`ServiceID` = `Services`.`ID`) AS `Code`'),Array('SortOn'=>'SortID'));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($ServersGroups)){
 	case 'error':
@@ -377,11 +377,27 @@ if(!$TemplateID){
 	#-------------------------------------------------------------------------------
 	$Options = Array(0=>'Не входит в группу');
 	#-------------------------------------------------------------------------------
-	if(Is_Array($ServersGroups))
-		foreach($ServersGroups as $ServersGroup)
-			$Options[$ServersGroup['ID']] = SPrintF('[%s] %s',($ServersGroup['Code'])?$ServersGroup['Code']:'любой сервис',$ServersGroup['Name']);
+	$Selected = 0;
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Select',Array('name'=>'ServersGroupID','prompt'=>'Группа серверов, в которую входит сервер','style'=>'width: 100%;'),$Options,$Server['ServersGroupID']);
+	if(Is_Array($ServersGroups)){
+		#-------------------------------------------------------------------------------
+		foreach($ServersGroups as $ServersGroup){
+			#-------------------------------------------------------------------------------
+			$Options[$ServersGroup['ID']] = SPrintF('[%s] %s',($ServersGroup['Code'])?$ServersGroup['Code']:'любой сервис',$ServersGroup['Name']);
+			#-------------------------------------------------------------------------------
+			if(IsSet($Templates[$TemplateID]['ServiceID']))
+				if($ServersGroup['ServiceID'] == $Templates[$TemplateID]['ServiceID'])
+					if(!$Selected)
+						$Selected = $ServersGroup['ID'];
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	if($Server['ServersGroupID'])
+		$Selected = $Server['ServersGroupID'];
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Select',Array('name'=>'ServersGroupID','prompt'=>'Группа серверов, в которую входит сервер','style'=>'width: 100%;'),$Options,$Selected);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
