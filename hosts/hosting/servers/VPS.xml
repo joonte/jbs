@@ -2,6 +2,50 @@
 <!-- @author Alex Keda, for www.host-food.ru -->
 <XML>
 <!-- *********************************************************************** -->
+<Name>Сервер VPS</Name>
+<!-- *********************************************************************** -->
+<IsActive>1</IsActive>
+<!-- *********************************************************************** -->
+<ServiceID>30000</ServiceID>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<SystemID>
+	<!-- *********************************************************************** -->
+	<NullSystem>
+		<Name>Ручное управление</Name>
+		<Settings>
+			<Port>1000</Port>
+			<Protocol>tcp</Protocol>
+		</Settings>
+	</NullSystem>
+	<!-- ********************************************************************* -->
+	<VdsManager4>
+		<Name>VdsManager4</Name>
+		<Settings>
+			<Port>443</Port>
+			<Protocol>ssl</Protocol>
+			<Theme>sirius</Theme>
+			<Language>ru</Language>
+			<DiskTemplate>FreeBSD-9-ISPmanager</DiskTemplate>
+			<Url>http://vds01.isp.su/manager/</Url>
+		</Settings>
+	</VdsManager4>
+	<!-- ********************************************************************* -->
+	<VmManager5_KVM>
+		<Name>VmManager5_KVM</Name>
+		<Settings>
+			<Port>1500</Port>
+			<Protocol>ssl</Protocol>
+			<Theme>Orion</Theme>
+			<Language>ru</Language>
+			<DiskTemplate>FreeBSD-10-amd64</DiskTemplate>
+			<Url>https://vds01.isp.su:1500/vmmgr</Url>
+		</Settings>
+	</VmManager5_KVM>
+	<!-- *********************************************************************** -->
+</SystemID>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
 <Attribs>
 	<SystemID>
 		<Title>Общая информация</Title>
@@ -242,3 +286,4 @@
 </Attribs>
 <!-- *********************************************************************** -->
 </XML>
+
