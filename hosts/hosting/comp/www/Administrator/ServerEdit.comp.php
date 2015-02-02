@@ -227,8 +227,9 @@ if(!$TemplateID){
 	#-------------------------------------------------------------------------------
 	# достаём дефолтовые значения для формы
 	if(IsSet($Template['Defaults']))
-		foreach(Array_Keys($Template['Defaults']) as $Key)
-			$Server[$Key] = $Template['Defaults'][$Key];
+		if(!$ServerID)
+			foreach(Array_Keys($Template['Defaults']) as $Key)
+				$Server[$Key] = $Template['Defaults'][$Key];
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# строим массив параметров подстановки
