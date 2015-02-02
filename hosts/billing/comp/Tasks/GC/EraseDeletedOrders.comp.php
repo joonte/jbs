@@ -67,7 +67,7 @@ for($i=0;$i<Count($Services);$i++){
 	    $Event = Array(
 	    			'UserID'	=> $Order['UserID'],
 				'PriorityID'	=> 'Billing',
-				'Text'		=> SPrintF('Отмененный заказ (%s) #%d автоматически удален.',$Services[$i]['Code'],$Order['OrderID'])
+				'Text'		=> SPrintF('Отмененный #%d (%s) автоматически удален',$Order['OrderID'],$Services[$i]['Code'])
 	    		  );
 	    $Event = Comp_Load('Events/EventInsert',$Event);
 	    if(!$Event)
@@ -122,7 +122,7 @@ case 'array':
 			$Event = Array(
 					'UserID'	=> $Order['UserID'],
 					'PriorityID'	=> 'Billing',
-					'Text'		=> SPrintF('Отмененный заказ (%s) #%d автоматически удален.',$Order['NameShort'],$Order['ID'])
+					'Text'		=> SPrintF('Отмененный заказ #%d (%s) автоматически удален',$Order['ID'],$Order['NameShort'])
 					);
 			#-------------------------------------------------------------------------------
 			$Event = Comp_Load('Events/EventInsert',$Event);
