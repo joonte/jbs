@@ -221,39 +221,6 @@ switch(ValueOf($HostingOrder)){
                       return ERROR | @Trigger_Error(101);
                   }
                   #-------------------------------------------------------------
-/*
-                  $HostingDomainPolitic = DB_Select('HostingDomainsPolitics','*',Array('IsDesc'=>TRUE,'SortOn'=>'DaysPay','Where'=>SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR `SchemeID` IS NULL) AND `DaysPay` <= %u',Implode(',',$Entrance),$HostingOrder['UserID'],$HostingOrder['SchemeID'],$DaysPay)));
-                  #-------------------------------------------------------------
-                  switch(ValueOf($HostingDomainPolitic)){
-                    case 'error':
-                      return ERROR | @Trigger_Error(500);
-                    case 'exception':
-                      # No more...
-                    break;
-                    case 'array':
-                      #---------------------------------------------------------
-                      $HostingDomainPolitic = Current($HostingDomainPolitic);
-                      #---------------------------------------------------------
-                      $IDomainBonus = Array(
-                        #-------------------------------------------------------
-                        'UserID'                => $HostingOrder['UserID'],
-                        'SchemeID'              => NULL,
-                        'DomainsSchemesGroupID' => $HostingDomainPolitic['DomainsSchemesGroupID'],
-                        'YearsReserved'         => 1,
-                        'OperationID'           => 'Order',
-                        'Discont'               => $HostingDomainPolitic['Discont'],
-                        'Comment'               => 'Назначен доменной политикой'
-                      );
-                      #---------------------------------------------------------
-                      $IsInsert = DB_Insert('DomainsBonuses',$IDomainBonus);
-                      if(Is_Error($IsInsert))
-                        return ERROR | @Trigger_Error(500);
-                      #---------------------------------------------------------
-                    break;
-                    default:
-                      return ERROR | @Trigger_Error(101);
-                  }
-*/
                   #-------------------------------------------------------------
 		  $Event = Array(
 		                  'UserID'	=> $HostingOrder['UserID'],

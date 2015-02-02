@@ -179,35 +179,7 @@ switch(ValueOf($DomainOrder)){
                       #---------------------------------------------------------
                       foreach($Basket as $Order){
                         #-------------------------------------------------------
-                        $HostingDomainPolitic = DB_Select('HostingDomainsPolitics','*',Array('SortOn'=>'Discont','Where'=>SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR `SchemeID` IS NULL) AND `DaysPay` <= %u AND EXISTS(SELECT * FROM `DomainsSchemesGroupsItems` WHERE `DomainsSchemesGroupsItems`.`DomainsSchemesGroupID` = `DomainsSchemesGroupID` AND `SchemeID` = %u)',Implode(',',$Entrance),$DomainOrder['UserID'],$Order['SchemeID'],$Order['Amount'],$DomainOrder['SchemeID'])));
-                        #-------------------------------------------------------
-                        switch(ValueOf($HostingDomainPolitic)){
-                          case 'error':
-                            return ERROR | @Trigger_Error(500);
-                          case 'exception':
-                            # No more...
-                          break;
-                          case 'array':
-                            #---------------------------------------------------
-                            $HostingDomainPolitic = Current($HostingDomainPolitic);
-                            #---------------------------------------------------
-                            $IDomainBonus = Array(
-                              #-------------------------------------------------
-                              'UserID'        => $DomainOrder['UserID'],
-                              'SchemeID'      => $DomainOrder['SchemeID'],
-                              'YearsReserved' => 1,
-                              'OperationID'   => 'Order',
-                              'Discont'       => $HostingDomainPolitic['Discont'],
-                              'Comment'       => 'Назначен доменной политикой'
-                            );
-                            #---------------------------------------------------
-                            $IsInsert = DB_Insert('DomainsBonuses',$IDomainBonus);
-                            if(Is_Error($IsInsert))
-                              return ERROR | @Trigger_Error(500);
-                          break;
-                          default:
-                            return ERROR | @Trigger_Error(101);
-                        }
+			# HostingDomainsPolitics deleted
                       }
                       #---------------------------------------------------------
                     break 2;

@@ -230,39 +230,6 @@ switch(ValueOf($DSOrder)){
                       return ERROR | @Trigger_Error(101);
                   }
                   #-------------------------------------------------------------
-/*
-                  $DSDomainPolitic = DB_Select('DSDomainsPolitics','*',Array('IsDesc'=>TRUE,'SortOn'=>'DaysPay','Where'=>SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR `SchemeID` IS NULL) AND `DaysPay` <= %u',Implode(',',$Entrance),$DSOrder['UserID'],$DSOrder['SchemeID'],$DaysPay)));
-                  #-------------------------------------------------------------
-                  switch(ValueOf($DSDomainPolitic)){
-                    case 'error':
-                      return ERROR | @Trigger_Error(500);
-                    case 'exception':
-                      # No more...
-                    break;
-                    case 'array':
-                      #---------------------------------------------------------
-                      $DSDomainPolitic = Current($DSDomainPolitic);
-                      #---------------------------------------------------------
-                      $IDomainBonus = Array(
-                        #-------------------------------------------------------
-                        'UserID'                => $DSOrder['UserID'],
-                        'SchemeID'              => NULL,
-                        'DomainsSchemesGroupID' => $DSDomainPolitic['DomainsSchemesGroupID'],
-                        'YearsReserved'         => 1,
-                        'OperationID'           => 'Order',
-                        'Discont'               => $DSDomainPolitic['Discont'],
-                        'Comment'               => 'Назначен доменной политикой'
-                      );
-                      #---------------------------------------------------------
-                      $IsInsert = DB_Insert('DomainsBonuses',$IDomainBonus);
-                      if(Is_Error($IsInsert))
-                        return ERROR | @Trigger_Error(500);
-                      #---------------------------------------------------------
-                    break;
-                    default:
-                      return ERROR | @Trigger_Error(101);
-                  }
-*/
                   #-------------------------------------------------------------
 		  $Event = Array(
 		  			'UserID'	=> $DSOrder['UserID'],

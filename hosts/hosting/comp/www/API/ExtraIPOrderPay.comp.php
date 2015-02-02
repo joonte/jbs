@@ -232,39 +232,6 @@ switch(ValueOf($ExtraIPOrder)){
                       return ERROR | @Trigger_Error(101);
                   }
                   #-------------------------------------------------------------
-/*
-                  $ExtraIPDomainPolitic = DB_Select('ExtraIPDomainsPolitics','*',Array('IsDesc'=>TRUE,'SortOn'=>'DaysPay','Where'=>SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR `SchemeID` IS NULL) AND `DaysPay` <= %u',Implode(',',$Entrance),$ExtraIPOrder['UserID'],$ExtraIPOrder['SchemeID'],$DaysPay)));
-                  #-------------------------------------------------------------
-                  switch(ValueOf($ExtraIPDomainPolitic)){
-                    case 'error':
-                      return ERROR | @Trigger_Error(500);
-                    case 'exception':
-                      # No more...
-                    break;
-                    case 'array':
-                      #---------------------------------------------------------
-                      $ExtraIPDomainPolitic = Current($ExtraIPDomainPolitic);
-                      #---------------------------------------------------------
-                      $IDomainBonus = Array(
-                        #-------------------------------------------------------
-                        'UserID'                => $ExtraIPOrder['UserID'],
-                        'SchemeID'              => NULL,
-                        'DomainsSchemesGroupID' => $ExtraIPDomainPolitic['DomainsSchemesGroupID'],
-                        'YearsReserved'         => 1,
-                        'OperationID'           => 'Order',
-                        'Discont'               => $ExtraIPDomainPolitic['Discont'],
-                        'Comment'               => 'Назначен доменной политикой'
-                      );
-                      #---------------------------------------------------------
-                      $IsInsert = DB_Insert('DomainsBonuses',$IDomainBonus);
-                      if(Is_Error($IsInsert))
-                        return ERROR | @Trigger_Error(500);
-                      #---------------------------------------------------------
-                    break;
-                    default:
-                      return ERROR | @Trigger_Error(101);
-                  }
-*/
                   #-------------------------------------------------------------
 		  $Event = Array(
 		  			'UserID'	=> $ExtraIPOrder['UserID'],

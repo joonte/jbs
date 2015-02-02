@@ -17,27 +17,6 @@
   </Paths>
   <Href>/Administrator/DomainSchemes</Href>
  </ListElement>
- <ListElement>
-  <Text>Группы тарифов</Text>
-  <Paths>
-   <UniqID>^\/Administrator\/DomainSchemesGroups$</UniqID>
-  </Paths>
-  <Href>/Administrator/DomainSchemesGroups</Href>
- </ListElement>
- <ListElement>
-  <Text>Бонусы</Text>
-  <Paths>
-   <UniqID>^\/Administrator\/DomainBonuses$</UniqID>
-  </Paths>
-  <Href>/Administrator/DomainBonuses</Href>
- </ListElement>
- <ListElement>
-  <Text>Регистраторы</Text>
-  <Paths>
-   <UniqID>^\/Administrator\/DomainRegistrators$</UniqID>
-  </Paths>
-  <Href>/Administrator/DomainRegistrators</Href>
- </ListElement>
 </Items>
 <!-- *********************************************************************** -->
 </XML>

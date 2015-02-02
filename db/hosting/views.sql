@@ -46,7 +46,7 @@ SELECT
   `DomainsOrders`.*,
   `OrdersOwners`.`ServiceID`,
   `DomainsSchemes`.`Name`,
-  `DomainsSchemes`.`RegistratorID`,
+  `OrdersOwners`.`ServerID`,
   `OrdersOwners`.`OrderDate`,
   `OrdersOwners`.`UserID`,
   `OrdersOwners`.`ContractID`,
@@ -91,7 +91,7 @@ CREATE
   VIEW `DomainsSchemesOwners` AS
 SELECT
   `DomainsSchemes`.*,
-  CONCAT(`Name`,' (',(SELECT `Name` FROM `Registrators` WHERE `Registrators`.`ID` = `DomainsSchemes`.`RegistratorID`),')') AS PackageID
+  CONCAT(`Name`,' (',(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = `DomainsSchemes`.`ServerID`),')') AS PackageID
 FROM
   `DomainsSchemes`;
 #-------------------------------------------------------------------------------
@@ -102,43 +102,15 @@ DROP VIEW IF EXISTS `HostingServersOwners`;
 DROP TABLE IF EXISTS `HostingServersOwners`;
 #-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `RegistratorsOwners`;
-DROP TABLE IF EXISTS `RegistratorsOwners`;
-CREATE
-  VIEW `RegistratorsOwners` AS
-SELECT
-  `Registrators`.*,
-  100 as `UserID`
-FROM
-  `Registrators`;
 #-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `DomainsSchemesGroupsOwners`;
 DROP TABLE IF EXISTS `DomainsSchemesGroupsOwners`;
-CREATE
-  VIEW `DomainsSchemesGroupsOwners` AS
-SELECT
-  `DomainsSchemesGroups`.*,
-  100 as `UserID`
-FROM
-  `DomainsSchemesGroups`;
 #-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `DomainsSchemesGroupsItemsOwners`;
 DROP TABLE IF EXISTS `DomainsSchemesGroupsItemsOwners`;
-CREATE
-  VIEW `DomainsSchemesGroupsItemsOwners` AS
-SELECT
-  `DomainsSchemesGroupsItems`.*,
-  100 as `UserID`
-FROM
-  `DomainsSchemesGroupsItems`;
 #-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `HostingDomainsPoliticsOwners`;
 DROP TABLE IF EXISTS `HostingDomainsPoliticsOwners`;
-CREATE
-  VIEW `HostingDomainsPoliticsOwners` AS
-SELECT
-  `HostingDomainsPolitics`.*
-FROM
-  `HostingDomainsPolitics`;
 #-------------------------------------------------------------------------------
 
 /* VPS values added by lissyara 2011-06-22 in 15:52 MSK */

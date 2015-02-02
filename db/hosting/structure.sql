@@ -104,7 +104,7 @@ CREATE TABLE `DomainsSchemes` (
   `CostOrder` decimal(6,2) default '0.00',
   `CostProlong` decimal(6,2) default '0.00',
   `CostTransfer` decimal(6,2) default '0.00',
-  `RegistratorID` int(11) NOT NULL,
+  `ServerID` int(11) NOT NULL,
   `SortID` int(11) default '10',
   `MinOrderYears` int(11) default '1',
   `MaxActionYears` int(11) default '1',
@@ -117,8 +117,8 @@ CREATE TABLE `DomainsSchemes` (
   CONSTRAINT `DomainsSchemesGroupID` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   KEY `DomainsSchemesUserID` (`UserID`),
   CONSTRAINT `DomainsSchemesUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  KEY `DomainsSchemesRegistratorID` (`RegistratorID`),
-  CONSTRAINT `DomainsSchemesRegistratorID` FOREIGN KEY (`RegistratorID`) REFERENCES `Registrators` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `DomainsSchemesServerID` (`ServerID`),
+  CONSTRAINT `DomainsSchemesServerID` FOREIGN KEY (`ServerID`) REFERENCES `Servers` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -349,119 +349,22 @@ CREATE TABLE `DNSmanagerSchemes` (
 
 
 
---
--- Table structure for table `Registrators`
---
-
+/* moved into Servers table*/
 DROP TABLE IF EXISTS `Registrators`;
-CREATE TABLE `Registrators` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` char(30) default '',
-  `TypeID` char(30) default '',
-  `Comment` char(255) default '',
-  `SortID` int(11) default '10',
-  `Address` char(30) default '',
-  `Port` int(5) default '80',
-  `Protocol` enum('tcp','ssl') default 'tcp',
-  `PrefixAPI` char(255) default '',
-  `Login` char(60) default '',
-  `Password` char(60) default '',
-  `Ns1Name` char(50) default '',
-  `Ns2Name` char(50) default '',
-  `Ns3Name` char(50) default '',
-  `Ns4Name` char(50) default '',
-  `ParentID` int(20) default '0',
-  `PrefixNic` char(20) NOT NULL,
-  `PartnerLogin` char(60) NOT NULL,
-  `PartnerContract` char(60) NOT NULL,
-  `JurName` char(255) NOT NULL,
-  `BalanceLowLimit` DOUBLE(7,2) NOT NULL DEFAULT '0',
-  PRIMARY KEY(`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 /* join to one Bonuses table */
 DROP TABLE IF EXISTS `HostingBonuses`;
 /* moved to OrdersConsider */
 DROP TABLE IF EXISTS `HostingConsider`;
 /* join to one Politics table */
 DROP TABLE IF EXISTS `HostingPolitics`;
-
---
--- Table structure for table `DomainsBonuses`
---
-
+/* join to one Bonuses table */
 DROP TABLE IF EXISTS `DomainsBonuses`;
-CREATE TABLE `DomainsBonuses` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `CreateDate` int(11) default '0',
-  `UserID` int(11) NOT NULL,
-  `SchemeID` int(11) NULL,
-  `DomainsSchemesGroupID` int(11) NULL,
-  `YearsReserved` int(11) default '0',
-  `YearsRemainded` int(11) default '0',
-  `OperationID` enum('Order','Prolong') default 'Order',
-  `Discont` decimal(11,2) default '0.00',
-  `Comment` char(255) default '',
-  PRIMARY KEY(`ID`),
-  KEY `DomainsBonusesUserID` (`UserID`),
-  CONSTRAINT `DomainsBonusesUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  KEY `DomainsBonusesSchemeID` (`SchemeID`),
-  CONSTRAINT `DomainsBonusesSchemeID` FOREIGN KEY (`SchemeID`) REFERENCES `DomainsSchemes` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE,
-  KEY `DomainsBonusesDomainsSchemesGroupID` (`DomainsSchemesGroupID`),
-  CONSTRAINT `DomainsBonusesDomainsSchemesGroupID` FOREIGN KEY (`DomainsSchemesGroupID`) REFERENCES `DomainsSchemesGroups` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `DomainsSchemesGroups`
---
-
+/* join to one table */
 DROP TABLE IF EXISTS `DomainsSchemesGroups`;
-CREATE TABLE `DomainsSchemesGroups` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` char(255) default '',
-  PRIMARY KEY(`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `DomainsSchemesGroupsItems`
---
-
+/* join to one table */
 DROP TABLE IF EXISTS `DomainsSchemesGroupsItems`;
-CREATE TABLE `DomainsSchemesGroupsItems` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `DomainsSchemesGroupID` int(11) NOT NULL,
-  `SchemeID` int(11) NULL,
-  PRIMARY KEY(`ID`),
-  KEY `DomainsSchemesGroupsItemsDomainsSchemesGroupID` (`DomainsSchemesGroupID`),
-  CONSTRAINT `DomainsSchemesGroupsItemsDomainsSchemesGroupID` FOREIGN KEY (`DomainsSchemesGroupID`) REFERENCES `DomainsSchemesGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  KEY `DomainsSchemesGroupsItemsID` (`SchemeID`),
-  CONSTRAINT `DomainsSchemesGroupsItemsSchemeID` FOREIGN KEY (`SchemeID`) REFERENCES `DomainsSchemes` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `HostingDomainsPolitics`
---
-
+/* join to one Politics table */
 DROP TABLE IF EXISTS `HostingDomainsPolitics`;
-CREATE TABLE `HostingDomainsPolitics` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `UserID` int(11) NOT NULL,
-  `GroupID` int(11) NOT NULL,
-  `SchemeID` int(11) NULL,
-  `DomainsSchemesGroupID` int(11) NOT NULL,
-  `DaysPay` int(11) default '365',
-  `Discont` float(11,2) default '0.00',
-  PRIMARY KEY(`ID`),
-  KEY `HostingDomainsPoliticsGroupID` (`GroupID`),
-  CONSTRAINT `HostingDomainsPoliticsGroupID` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  KEY `HostingDomainsPoliticsUserID` (`UserID`),
-  CONSTRAINT `HostingDomainsPoliticsUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  KEY `HostingDomainsPoliticsSchemeID` (`SchemeID`),
-  CONSTRAINT `HostingDomainsPoliticsSchemeID` FOREIGN KEY (`SchemeID`) REFERENCES `HostingSchemes` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  KEY `HostingDomainsPoliticsDomainsSchemesGroupID` (`DomainsSchemesGroupID`),
-  CONSTRAINT `HostingDomainsPoliticsDomainsSchemesGroupID` FOREIGN KEY (`DomainsSchemesGroupID`) REFERENCES `DomainsSchemesGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 --
 -- Table structure for table `DomainsConsider`
 --
@@ -713,69 +616,18 @@ ALTER TABLE `DSOrders`
 -- SEPARATOR
 /* join to one Politics table */
 DROP TABLE IF EXISTS `DSPolitics`;
-
--- SEPARATOR
-CREATE TABLE IF NOT EXISTS `DSDomainsPolitics` (
-	`ID` int(11) NOT NULL AUTO_INCREMENT,
-	`UserID` int(11) NOT NULL,
-	`GroupID` int(11) NOT NULL,
-	`SchemeID` int(11) DEFAULT NULL,
-	`DomainsSchemesGroupID` int(11) NOT NULL,
-	`DaysPay` int(11) DEFAULT '365',
-	`Discont` float(11,2) DEFAULT '0.00',
-	PRIMARY KEY (`ID`),
-	KEY `DSDomainsPoliticsGroupID` (`GroupID`),
-	KEY `DSDomainsPoliticsUserID` (`UserID`),
-	KEY `DSDomainsPoliticsSchemeID` (`SchemeID`),
-	KEY `DSDomainsPoliticsDomainsSchemesGroupID` (`DomainsSchemesGroupID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
--- SEPARATOR
-ALTER TABLE `DSDomainsPolitics`
-	ADD CONSTRAINT `DSDomainsPoliticsDomainsSchemesGroupID` FOREIGN KEY (`DomainsSchemesGroupID`) REFERENCES `DomainsSchemesGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-	ADD CONSTRAINT `DSDomainsPoliticsGroupID` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-	ADD CONSTRAINT `DSDomainsPoliticsSchemeID` FOREIGN KEY (`SchemeID`) REFERENCES `DSSchemes` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-	ADD CONSTRAINT `DSDomainsPoliticsUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- SEPARATOR
-
+/* join to one Politics table */
+DROP TABLE IF EXISTS `DSDomainsPolitics`;
 /* join to one Bonuses table */
 DROP TABLE IF EXISTS `DSBonuses`;
-
--- SEPARATOR
 /* moved to OrdersConsider */
 DROP TABLE IF EXISTS `DSConsider`;
-
--- SEPARATOR
-
 /* join to one Bonuses table */
 DROP TABLE IF EXISTS `ExtraIPBonuses`;
-
--- SEPARATOR
 /* moved to OrdersConsider */
 DROP TABLE IF EXISTS `ExtraIPConsider`;
-
--- SEPARATOR
-
---
--- Структура таблицы `ExtraIPDomainsPolitics`
---
-
-CREATE TABLE IF NOT EXISTS `ExtraIPDomainsPolitics` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `UserID` int(11) NOT NULL,
-  `GroupID` int(11) NOT NULL,
-  `SchemeID` int(11) DEFAULT NULL,
-  `DomainsSchemesGroupID` int(11) NOT NULL,
-  `DaysPay` int(11) DEFAULT '365',
-  `Discont` float(11,2) DEFAULT '0.00',
-  PRIMARY KEY (`ID`),
-  KEY `ExtraIPDomainsPoliticsGroupID` (`GroupID`),
-  KEY `ExtraIPDomainsPoliticsUserID` (`UserID`),
-  KEY `ExtraIPDomainsPoliticsSchemeID` (`SchemeID`),
-  KEY `ExtraIPDomainsPoliticsDomainsSchemesGroupID` (`DomainsSchemesGroupID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- SEPARATOR
+/* join to one Politics table */
+DROP TABLE IF EXISTS `ExtraIPDomainsPolitics`;
 
 --
 -- Структура таблицы `ExtraIPOrders`
@@ -890,17 +742,6 @@ CREATE TABLE IF NOT EXISTS `ExtraIPsGroups` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
--- SEPARATOR
-
---
--- Ограничения внешнего ключа таблицы `ExtraIPDomainsPolitics`
---
-ALTER TABLE `ExtraIPDomainsPolitics`
-  ADD CONSTRAINT `ExtraIPDomainsPoliticsDomainsSchemesGroupID` FOREIGN KEY (`DomainsSchemesGroupID`) REFERENCES `DomainsSchemesGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `ExtraIPDomainsPoliticsGroupID` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `ExtraIPDomainsPoliticsSchemeID` FOREIGN KEY (`SchemeID`) REFERENCES `ExtraIPSchemes` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `ExtraIPDomainsPoliticsUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- SEPARATOR
 
@@ -1031,28 +872,7 @@ ADD CONSTRAINT `ISPswOrdersLicenseID` FOREIGN KEY (`LicenseID`) REFERENCES `ISPs
 -- SEPARATOR
 /* join to one Politics table */
 DROP TABLE IF EXISTS `ISPswPolitics`;
-
--- SEPARATOR
-CREATE TABLE IF NOT EXISTS `ISPswDomainsPolitics` (
-	`ID` int(11) NOT NULL AUTO_INCREMENT,
-	`UserID` int(11) NOT NULL,
-	`GroupID` int(11) NOT NULL,
-	`SchemeID` int(11) DEFAULT NULL,
-	`DomainsSchemesGroupID` int(11) NOT NULL,
-	`DaysPay` int(11) DEFAULT '365',
-	`Discont` float(11,2) DEFAULT '0.00',
-	PRIMARY KEY (`ID`),
-	KEY `ISPswDomainsPoliticsGroupID` (`GroupID`),
-	KEY `ISPswDomainsPoliticsUserID` (`UserID`),
-	KEY `ISPswDomainsPoliticsSchemeID` (`SchemeID`),
-	KEY `ISPswDomainsPoliticsDomainsSchemesGroupID` (`DomainsSchemesGroupID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
--- SEPARATOR
-ALTER TABLE `ISPswDomainsPolitics`
-	ADD CONSTRAINT `ISPswDomainsPoliticsDomainsSchemesGroupID` FOREIGN KEY (`DomainsSchemesGroupID`) REFERENCES `DomainsSchemesGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-	ADD CONSTRAINT `ISPswDomainsPoliticsGroupID` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-	ADD CONSTRAINT `ISPswDomainsPoliticsSchemeID` FOREIGN KEY (`SchemeID`) REFERENCES `ISPswSchemes` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-	ADD CONSTRAINT `ISPswDomainsPoliticsUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+DROP TABLE IF EXISTS `ISPswDomainsPolitics`;
 
 -- SEPARATOR
 /* join to one Bonuses table */
