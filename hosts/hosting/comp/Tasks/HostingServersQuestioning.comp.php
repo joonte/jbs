@@ -31,6 +31,9 @@ foreach($Servers as $Server){
 	#if($Server['Address'] != 's06.host-food.ru')
 	#	continue;
 	#-------------------------------------------------------------------------------
+	if(!$Server['IsActive'])
+		continue;
+	#-------------------------------------------------------------------------------
 	$ClassHostingServer = new HostingServer();
 	#-------------------------------------------------------------------------------
 	$IsSelected = $ClassHostingServer->Select((integer)$Server['ID']);
