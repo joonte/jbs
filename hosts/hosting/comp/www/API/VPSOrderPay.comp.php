@@ -230,39 +230,6 @@ switch(ValueOf($VPSOrder)){
                       return ERROR | @Trigger_Error(101);
                   }
                   #-------------------------------------------------------------
-/*
-                  $VPSDomainPolitic = DB_Select('VPSDomainsPolitics','*',Array('IsDesc'=>TRUE,'SortOn'=>'DaysPay','Where'=>SPrintF('(`GroupID` IN (%s) OR `UserID` = %u) AND (`SchemeID` = %u OR `SchemeID` IS NULL) AND `DaysPay` <= %u',Implode(',',$Entrance),$VPSOrder['UserID'],$VPSOrder['SchemeID'],$DaysPay)));
-                  #-------------------------------------------------------------
-                  switch(ValueOf($VPSDomainPolitic)){
-                    case 'error':
-                      return ERROR | @Trigger_Error(500);
-                    case 'exception':
-                      # No more...
-                    break;
-                    case 'array':
-                      #---------------------------------------------------------
-                      $VPSDomainPolitic = Current($VPSDomainPolitic);
-                      #---------------------------------------------------------
-                      $IDomainBonus = Array(
-                        #-------------------------------------------------------
-                        'UserID'                => $VPSOrder['UserID'],
-                        'SchemeID'              => NULL,
-                        'DomainsSchemesGroupID' => $VPSDomainPolitic['DomainsSchemesGroupID'],
-                        'YearsReserved'         => 1,
-                        'OperationID'           => 'Order',
-                        'Discont'               => $VPSDomainPolitic['Discont'],
-                        'Comment'               => 'Назначен доменной политикой'
-                      );
-                      #---------------------------------------------------------
-                      $IsInsert = DB_Insert('DomainsBonuses',$IDomainBonus);
-                      if(Is_Error($IsInsert))
-                        return ERROR | @Trigger_Error(500);
-                      #---------------------------------------------------------
-                    break;
-                    default:
-                      return ERROR | @Trigger_Error(101);
-                  }
-*/
                   #-------------------------------------------------------------
 		  $Event = Array(
 		  		'UserID'	=> $VPSOrder['UserID'],

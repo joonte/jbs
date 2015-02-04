@@ -13,9 +13,9 @@ $DomainOrderID = (integer)$DomainOrder['ID'];
 #-------------------------------------------------------------------------------
 $Where = SPrintF("`DomainOrderID` = %u AND `YearsRemainded` > 0",$DomainOrderID);
 #-------------------------------------------------------------------------------
-$DomainsConsider = DB_Select('DomainsConsider','*',Array('SortOn'=>'ID','Where'=>$Where));
+$DomainConsider = DB_Select('DomainConsider','*',Array('SortOn'=>'ID','Where'=>$Where));
 #-------------------------------------------------------------------------------
-switch(ValueOf($DomainsConsider)){
+switch(ValueOf($DomainConsider)){
   case 'error':
     return ERROR | @Trigger_Error(500);
   case 'exception':
@@ -26,7 +26,7 @@ switch(ValueOf($DomainsConsider)){
     if(Is_Error(DB_Transaction($TransactionID = UniqID('Triggers/Statuses/DomainOrder/Active'))))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
-    $YearsRemainded = DB_Select('DomainsConsider',Array('SUM(`YearsRemainded`) as `YearsRemainded`'),Array('UNIQ','Where'=>$Where));
+    $YearsRemainded = DB_Select('DomainConsider',Array('SUM(`YearsRemainded`) as `YearsRemainded`'),Array('UNIQ','Where'=>$Where));
     #---------------------------------------------------------------------------
     switch(ValueOf($YearsRemainded)){
       case 'error':
@@ -46,7 +46,7 @@ switch(ValueOf($DomainsConsider)){
         #-----------------------------------------------------------------------
         $ExpirationDate = MkTime($Date['H'],$Date['i'],$Date['s'],$Date['m'],$Date['d'],$Date['Y']);
         #-----------------------------------------------------------------------
-        $IsUpdate = DB_Update('DomainsOrders',Array('ProfileID'=>NULL,'ExpirationDate'=>$ExpirationDate),Array('ID'=>$DomainOrderID));
+        $IsUpdate = DB_Update('DomainOrders',Array('ProfileID'=>NULL,'ExpirationDate'=>$ExpirationDate),Array('ID'=>$DomainOrderID));
         if(Is_Error($IsUpdate))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
@@ -56,7 +56,7 @@ switch(ValueOf($DomainsConsider)){
         #-----------------------------------------------------------------------
         $CurrentMonth = (Date('Y') - 1970)*12 + (integer)Date('n');
         #-----------------------------------------------------------------------
-        foreach($DomainsConsider as $ConsiderItem){
+        foreach($DomainConsider as $ConsiderItem){
           #---------------------------------------------------------------------
           $IWorkComplite = Array(
             #-------------------------------------------------------------------
@@ -73,7 +73,7 @@ switch(ValueOf($DomainsConsider)){
           if(Is_Error($IsInsert))
             return ERROR | @Trigger_Error(500);
           #---------------------------------------------------------------------
-          $IsUpdate = DB_Update('DomainsConsider',Array('YearsRemainded'=>0),Array('ID'=>$ConsiderItem['ID']));
+          $IsUpdate = DB_Update('DomainConsider',Array('YearsRemainded'=>0),Array('ID'=>$ConsiderItem['ID']));
           if(Is_Error($IsUpdate))
             return ERROR | @Trigger_Error(500);
         }

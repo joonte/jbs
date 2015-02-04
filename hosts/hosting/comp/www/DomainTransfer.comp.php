@@ -75,9 +75,9 @@ if($StepID){
   if(!$DomainSchemeID)
     return new gException('DOMAIN_SCHEME_NOT_DEFINED','Доменная зона не выбрана');
   #-----------------------------------------------------------------------------
-  $Columns = Array('`DomainsSchemes`.`ID`','`DomainsSchemes`.`Name` as `Name`','IsActive','`Registrators`.`Name` as `RegistratorName`','`Registrators`.`TypeID` as `RegistratorTypeID`','Ns1Name','Ns2Name','Ns3Name','Ns4Name','DaysAfterTransfer','DaysBeforeTransfer');
+  $Columns = Array('`DomainSchemes`.`ID`','`DomainSchemes`.`Name` as `Name`','`DomainSchemes`.`IsActive` AS `IsActive`','`Servers`.`Address` as `Address`','`Servers`.`Params` as `Params`','Ns1Name','Ns2Name','Ns3Name','Ns4Name','DaysAfterTransfer','DaysBeforeTransfer');
   #-----------------------------------------------------------------------------
-  $DomainScheme = DB_Select(Array('DomainsSchemes','Registrators'),$Columns,Array('UNIQ','Where'=>SPrintF('`DomainsSchemes`.`RegistratorID` = `Registrators`.`ID` AND `DomainsSchemes`.`ID` = %u',$DomainSchemeID)));
+  $DomainScheme = DB_Select(Array('DomainSchemes','Servers'),$Columns,Array('UNIQ','Where'=>SPrintF('`DomainSchemes`.`ServerID` = `Servers`.`ID` AND `DomainSchemes`.`ID` = %u',$DomainSchemeID)));
   #-----------------------------------------------------------------------------
   switch(ValueOf($DomainScheme)){
     case 'error':
@@ -134,17 +134,13 @@ if($StepID){
           #---------------------------------------------------------------------
           $Form->AddChild($Comp);
           #---------------------------------------------------------------------
-          $Table[] = Array('Доменное имя',SPrintF('%s.%s | %s',$DomainName,$DomainScheme['Name'],$DomainScheme['RegistratorName']));
+          $Table[] = Array('Доменное имя',SPrintF('%s.%s | %s',$DomainName,$DomainScheme['Name'],$DomainScheme['Params']['Name']));
           #---------------------------------------------------------------------
           $Table[] = new Tag('TD',Array('colspan'=>2,'width'=>300,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),'Для осуществления переноса необходима подготовка определённого пакета документов. В ближайшее время Вам будет выслана инструкция и необходимая для переноса информация.');
           #---------------------------------------------------------------------
-          $Config = Config();
           #---------------------------------------------------------------------
-          $Registrator = $Config['Domains']['Registrators'][$DomainScheme['RegistratorTypeID']];
+          $IsSupportContracts = $DomainScheme['Params']['IsSupportContracts'];
           #---------------------------------------------------------------------
-          $IsSupportContracts = $Registrator['IsSupportContracts'];
-          #---------------------------------------------------------------------
-	  #---------------------------------------------------------------------
 	  if(!In_Array($DomainScheme['Name'],Array('ru','su','рф'))){
             $Comp = Comp_Load(
               'Form/Input',
@@ -177,10 +173,10 @@ if($StepID){
           #---------------------------------------------------------------------
           $NoBody = new Tag('NOBODY',new Tag('SPAN','Укажите Ваш договор с регистратором или оставьте поле пустым'));
           #---------------------------------------------------------------------
-          if($Registrator['PersonID']){
+          if($DomainScheme['Params']['PersonID']){
             #-------------------------------------------------------------------
             $NoBody->AddChild(new Tag('BR'));
-            $NoBody->AddChild(new Tag('SPAN',Array('class'=>'Comment'),new Tag('SPAN',$Registrator['PersonID'])));
+            $NoBody->AddChild(new Tag('SPAN',Array('class'=>'Comment'),new Tag('SPAN',$DomainScheme['Params']['PersonID'])));
           }
           #---------------------------------------------------------------------
           $Table[] = Array($NoBody,$Adding);
@@ -249,17 +245,17 @@ if($StepID){
       #-------------------------------------------------------------------------
       $Table[] = new Tag('TD',Array('colspan'=>2,'width'=>300,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),'Домены в зонах ru/su/рф переносятся без дополнительных условий, во всех остальных зонах переносятся с оплатой продления на год. Ниже приведены цены на продление Вашего доменного имени.');
       #-------------------------------------------------------------------------
-      $UniqID = UniqID('DomainsSchemes');
+      $UniqID = UniqID('DomainSchemes');
       #-------------------------------------------------------------------------
-      $Comp = Comp_Load('Services/Schemes','DomainsSchemes',$__USER['ID'],Array('Name','RegistratorID'),$UniqID);
+      $Comp = Comp_Load('Services/Schemes','DomainSchemes',$__USER['ID'],Array('Name','ServerID'),$UniqID);
       if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
-      $Columns = Array('ID','Name','RegistratorID','CostProlong','(SELECT `Name` FROM `Registrators` WHERE `RegistratorID` = `Registrators`.`ID`) as `RegistratorName`','(SELECT `Comment` FROM `Registrators` WHERE `RegistratorID` = `Registrators`.`ID`) as `RegistratorComment`','(SELECT `SortID` FROM `Registrators` WHERE `RegistratorID` = `Registrators`.`ID`) as `RegistratorSortID`');
+      $Columns = Array('ID','Name','ServerID','CostProlong','(SELECT `Address` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `Address`','(SELECT `Params` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `Params`','(SELECT `SortID` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `ServerSortID`');
       #-------------------------------------------------------------------------
-      $DomainsSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('RegistratorSortID','SortID'),'Where'=>"`IsActive` = 'yes'"));
+      $DomainSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('ServerSortID','SortID'),'Where'=>"`IsActive` = 'yes'"));
       #-------------------------------------------------------------------------
-      switch(ValueOf($DomainsSchemes)){
+      switch(ValueOf($DomainSchemes)){
         case 'error':
           return ERROR | @Trigger_Error(500);
         case 'exception':
@@ -288,13 +284,13 @@ if($StepID){
           #---------------------------------------------------------------------
           $Tr = new Tag('TR');
           #---------------------------------------------------------------------
-          $RegistratorName = UniqID();
+          $ServerName = UniqID();
           #---------------------------------------------------------------------
-          foreach($DomainsSchemes as $DomainScheme){
+          foreach($DomainSchemes as $DomainScheme){
             #-------------------------------------------------------------------
-            if($RegistratorName != $DomainScheme['RegistratorName']){
+            if($ServerName != $DomainScheme['Params']['Name']){
               #-----------------------------------------------------------------
-              $RegistratorName = $DomainScheme['RegistratorName'];
+              $ServerName = $DomainScheme['Params']['Name'];
               #-----------------------------------------------------------------
               if(Count($Tr->Childs)){
                 #---------------------------------------------------------------
@@ -303,11 +299,11 @@ if($StepID){
                 $Tr = new Tag('TR');
               }
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Formats/String',$DomainScheme['RegistratorComment'],25);
+              $Comp = Comp_Load('Formats/String',$DomainScheme['Params']['Comment'],25);
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
-              $Rows[] = new Tag('TR',new Tag('TD',Array('colspan'=>6,'class'=>'Separator'),new Tag('SPAN',Array('style'=>'font-size:16px;'),SPrintF('%s |',$RegistratorName)),new Tag('SPAN',$Comp)));
+              $Rows[] = new Tag('TR',new Tag('TD',Array('colspan'=>6,'class'=>'Separator'),new Tag('SPAN',Array('style'=>'font-size:16px;'),SPrintF('%s |',$DomainScheme['Params']['Name'])),new Tag('SPAN',$Comp)));
             }
             #-------------------------------------------------------------------
             $Comp = Comp_Load(

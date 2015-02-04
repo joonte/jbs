@@ -7,9 +7,9 @@
  *  Official site: www.joonte.com
  *
  */
- class DomainsOrdersDeletedMsg extends Message {
+ class DomainOrdersDeletedMsg extends Message {
      public function __construct(array $params, $toUser) {
-         parent::__construct('DomainsOrdersDeleted', $toUser);
+         parent::__construct('DomainOrdersDeleted', $toUser);
 
          $this->setParams($params);
      }

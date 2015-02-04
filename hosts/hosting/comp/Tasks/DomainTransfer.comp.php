@@ -12,9 +12,9 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('libs/WhoIs.php','classes/Registrator.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('UserID','DomainName','AuthInfo','ProfileID','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `RegistratorID`','StatusID','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','IsPrivateWhoIs','PersonID');
+$Columns = Array('UserID','DomainName','AuthInfo','ProfileID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','ServerID','StatusID','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','IsPrivateWhoIs','PersonID');
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
@@ -34,18 +34,16 @@ case 'array':
 	$WhoIs = WhoIs_Check($DomainOrder['DomainName'],$DomainOrder['DomainZone']);
 	$Registrar = IsSet($WhoIs['Registrar'])?$WhoIs['Registrar']:'NOT_FOUND';
 	#-------------------------------------------------------------------------------
-	$Registrator = DB_Select('Registrators','PrefixNic',Array('UNIQ','ID'=>$DomainOrder['RegistratorID']));
+	$Server = DB_Select('Servers','Params',Array('UNIQ','ID'=>$DomainOrder['ServerID']));
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[Task/DomainTransfer]: Registrar: %s; PrefixNic: %s',$Registrar,$Registrator['PrefixNic']));
+	Debug(SPrintF('[Task/DomainTransfer]: Registrar: %s; PrefixNic: %s',$Registrar,$Server['Params']['PrefixNic']));
 	#-------------------------------------------------------------------------------
-	$IsInternal = (Preg_Match(SPrintF('/%s/',$Registrator['PrefixNic']),$Registrar))?TRUE:FALSE;
+	$IsInternal = (Preg_Match(SPrintF('/%s/',$Server['Params']['PrefixNic']),$Registrar))?TRUE:FALSE;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Registrator = new Registrator();
+	$Server = new Registrator();
 	#-------------------------------------------------------------------------------
-	$RegistratorID = $DomainOrder['RegistratorID'];
-	#-------------------------------------------------------------------------------
-	$IsSelected = $Registrator->Select((integer)$DomainOrder['RegistratorID']);
+	$IsSelected = $Server->Select((integer)$DomainOrder['ServerID']);
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($IsSelected)){
 	case 'error':
@@ -136,7 +134,7 @@ case 'array':
 			$Params['IsPrivateWhoIs']	= $DomainOrder['IsPrivateWhoIs'];
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-			$IsDomainTransfer = $Registrator->DomainTransfer($DomainOrder['DomainName'],$DomainOrder['DomainZone'],$Params);
+			$IsDomainTransfer = $Server->DomainTransfer($DomainOrder['DomainName'],$DomainOrder['DomainZone'],$Params);
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($IsDomainTransfer)){
 			case 'error':
@@ -145,7 +143,7 @@ case 'array':
 				return new gException('TRANSFER_TO_OPERATOR','Задание не может быть выполнено автоматически и передано оператору');
 			case 'array':
 				#-------------------------------------------------------------------------------
-				$IsUpdate = DB_Update('DomainsOrders',Array('ProfileID'=>NULL,'DomainID'=>$IsDomainTransfer['DomainID']),Array('ID'=>$DomainOrderID));
+				$IsUpdate = DB_Update('DomainOrders',Array('ProfileID'=>NULL,'DomainID'=>$IsDomainTransfer['DomainID']),Array('ID'=>$DomainOrderID));
 				if(Is_Error($IsUpdate))
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------

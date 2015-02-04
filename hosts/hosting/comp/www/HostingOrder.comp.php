@@ -274,9 +274,9 @@ if($StepID){
 			if(Is_Error($Radio2))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$UniqID = UniqID('DomainsSchemes');
+			$UniqID = UniqID('DomainSchemes');
 			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load('Services/Schemes','DomainsSchemes',$GLOBALS['__USER']['ID'],Array('Name','RegistratorID'),$UniqID);
+			$Comp = Comp_Load('Services/Schemes','DomainSchemes',$GLOBALS['__USER']['ID'],Array('Name','ServerID'),$UniqID);
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
@@ -343,9 +343,9 @@ if($StepID){
 			if(Is_Error($Radio2))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$UniqID = UniqID('DomainsSchemes');
+			$UniqID = UniqID('DomainSchemes');
 			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load('Services/Schemes','DomainsSchemes',$GLOBALS['__USER']['ID'],Array('Name','RegistratorID'),$UniqID);
+			$Comp = Comp_Load('Services/Schemes','DomainSchemes',$GLOBALS['__USER']['ID'],Array('Name','ServerID'),$UniqID);
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------

@@ -9,9 +9,9 @@ $__args_list = Array('Task','DomainOrderID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Columns = Array('ID','UserID','DomainName','ProfileID','PersonID','StatusID','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `RegistratorID`');
+$Columns = Array('ID','UserID','DomainName','ProfileID','PersonID','StatusID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `ServerID` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `ServerID`');
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
   case 'error':
@@ -76,9 +76,9 @@ switch(ValueOf($DomainOrder)){
       return 24 * 3600;
     }
     #---------------------------------------------------------------------------
-    $Registrator = DB_Select('Registrators','TypeID',Array('UNIQ','ID'=>$DomainOrder['RegistratorID']));
+    $Server = DB_Select('Servers','Params',Array('UNIQ','ID'=>$DomainOrder['ServerID']));
     #---------------------------------------------------------------------------
-    switch(ValueOf($Registrator)){
+    switch(ValueOf($Server)){
       case 'error':
         return ERROR | @Trigger_Error(500);
       case 'exception':
@@ -87,11 +87,9 @@ switch(ValueOf($DomainOrder)){
         #-----------------------------------------------------------------------
         $Config = Config();
         #-----------------------------------------------------------------------
-        $Registrator = $Config['Domains']['Registrators'][$Registrator['TypeID']];
+        $StatusID = ($Server['Params']['IsSupportContracts'] && $Server['Params']['UseContractRegister'] && $DomainOrder['ProfileID']?'ForContractRegister':'ForRegister');
         #-----------------------------------------------------------------------
-        $StatusID = ($Registrator['IsSupportContracts'] && $Registrator['UseContractRegister'] && $DomainOrder['ProfileID']?'ForContractRegister':'ForRegister');
-        #-----------------------------------------------------------------------
-        $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>$StatusID,'RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Алгоритм регистрации доменного имени выбран'));
+        $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>$StatusID,'RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Алгоритм регистрации доменного имени выбран'));
         #-----------------------------------------------------------------------
         switch(ValueOf($Comp)){
           case 'error':

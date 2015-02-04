@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -10,7 +9,7 @@ $__args_list = Array('Item');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$DomainOrder = DB_Select('DomainsOrdersOwners',Array('ID','UserID','DomainName','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`'),Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Item['OrderID'])));
+$DomainOrder = DB_Select('DomainOrdersOwners',Array('ID','UserID','DomainName','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`'),Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Item['OrderID'])));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
   case 'error':

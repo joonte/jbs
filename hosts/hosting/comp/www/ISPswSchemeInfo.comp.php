@@ -75,63 +75,6 @@ switch(ValueOf($ISPswScheme)){
     #---------------------------------------------------------------------------
     $Table[] = Array('Максимальное число заказов',SPrintF('%s',($ISPswScheme['MaxOrders'] > 0)?$ISPswScheme['MaxOrders']:'не ограничено'));
     #---------------------------------------------------------------------------
-#    $Table[] = Array('Почтовые ящики',$ISPswScheme['QuotaEmail']);
-#    #---------------------------------------------------------------------------
-#    $Table[] = Array('Кол-во доменов',$ISPswScheme['QuotaDomains']);
-#    #---------------------------------------------------------------------------
-#    $Table[] = Array('FTP пользователи',$ISPswScheme['QuotaFTP']);
-#    #---------------------------------------------------------------------------
-#    $Table[] = Array('Кол-во псевдонимов домена',$ISPswScheme['QuotaParkDomains']);
-#    #---------------------------------------------------------------------------
-#    $Table[] = Array('Кол-во поддоменов',$ISPswScheme['QuotaSubDomains']);
-#    #---------------------------------------------------------------------------
-#    $Table[] = Array('Кол-во баз данных',$ISPswScheme['QuotaDBs']);
-#    #---------------------------------------------------------------------------
-#    $Table[] = Array('Месячный трафик',SPrintF('%u Мб.',$ISPswScheme['QuotaTraffic']));
-#    #---------------------------------------------------------------------------
-#    $Table[] = Array('Кол-во почтовых автоответчиков',$ISPswScheme['QuotaEmailAutoResp']);
-#    #---------------------------------------------------------------------------
-#    $Table[] = Array('Кол-во списков рассылки',$ISPswScheme['QuotaEmailLists']);
-#    #---------------------------------------------------------------------------
-#    $Table[] = Array('Кол-во пересылок почты',$ISPswScheme['QuotaEmailForwards']);
-#    #---------------------------------------------------------------------------
-#    $Comp = Comp_Load('Formats/Logic',$ISPswScheme['IsShellAccess']);
-#    if(Is_Error($Comp))
-#      return ERROR | @Trigger_Error(500);
-#    #---------------------------------------------------------------------------
-#    $Table[] = Array('Secure Shell (SSH)',$Comp);
-#    #---------------------------------------------------------------------------
-#    $Comp = Comp_Load('Formats/Logic',$ISPswScheme['IsSSLAccess']);
-#    if(Is_Error($Comp))
-#      return ERROR | @Trigger_Error(500);
-#    #---------------------------------------------------------------------------
-#    $Table[] = Array('Secure Sockets Layer (SSL)',$Comp);
-#    #---------------------------------------------------------------------------
-#    $Comp = Comp_Load('Formats/Logic',$ISPswScheme['IsCGIAccess']);
-#    if(Is_Error($Comp))
-#      return ERROR | @Trigger_Error(500);
-#    #---------------------------------------------------------------------------
-#    $Table[] = Array('Common Gateway Interface (CGI)',$Comp);
-#    #---------------------------------------------------------------------------
-#    $SystemsIDs = Array();
-#    #---------------------------------------------------------------------------
-#    $ISPswGroups = DB_Select('ISPswGroups','SystemID',Array('Where'=>SPrintF('`ServersGroupID` = %u',$ISPswScheme['ServersGroupID']),'GroupBy'=>'SystemID'));
-#    #---------------------------------------------------------------------------
-#    switch(ValueOf($ISPswGroups)){
-#      case 'error':
-#        return ERROR | @Trigger_Error(500);
-#      case 'exception':
-#        # No more...
-#      break;
-#      case 'array':
-#        #-----------------------------------------------------------------------
-#        foreach($ISPswGroups as $ISPswGroup)
-#          $SystemsIDs[] = $ISPswGroup['SystemID'];
-#      break;
-#      default:
-#        return ERROR | @Trigger_Error(101);
-#    }
-#    #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
     $Comp = Comp_Load('Tables/Standard',$Table);
     if(Is_Error($Comp))

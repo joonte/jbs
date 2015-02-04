@@ -6,9 +6,9 @@
  *  Copyright © 2012 Vitaly Velikodnyy
  *
  */
- class DomainsOrdersActiveMsg extends Message {
+ class DomainOrdersActiveMsg extends Message {
      public function __construct(array $params, $toUser) {
-         parent::__construct('DomainsOrdersActive', $toUser);
+         parent::__construct('DomainOrdersActive', $toUser);
 
          $this->setParams($params);
      }

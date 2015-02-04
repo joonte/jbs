@@ -19,7 +19,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainsOrdersOwners',Array('*','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`'),Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainOrdersOwners',Array('*','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`'),Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
   case 'error':
@@ -30,7 +30,7 @@ switch(ValueOf($DomainOrder)){
     #---------------------------------------------------------------------------
     $__USER = $GLOBALS['__USER'];
     #---------------------------------------------------------------------------
-    $IsPermission = Permission_Check('DomainsOrdersChangeContactData',(integer)$__USER['ID'],(integer)$DomainOrder['UserID']);
+    $IsPermission = Permission_Check('DomainOrdersChangeContactData',(integer)$__USER['ID'],(integer)$DomainOrder['UserID']);
     #---------------------------------------------------------------------------
     switch(ValueOf($IsPermission)){
       case 'error':
@@ -46,7 +46,7 @@ switch(ValueOf($DomainOrder)){
         if($DomainOrder['StatusID'] != 'Active')
           return new gException('ORDER_IS_NOT_ACTIVE','Невозможно изменить данные для неактивного домена');
         #-----------------------------------------------------------------------
-        $DomainScheme = DB_Select('DomainsSchemes','*',Array('UNIQ','ID'=>$DomainOrder['SchemeID']));
+        $DomainScheme = DB_Select('DomainSchemes','*',Array('UNIQ','ID'=>$DomainOrder['SchemeID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($DomainScheme)){
           case 'error':
@@ -96,9 +96,9 @@ switch(ValueOf($DomainOrder)){
 	      return new gException('NO_INPUT_DATA','Необходимо ввести хоть какие-то данные для изменения');
             #-------------------------------------------------------------------
             #-------------------------------------------------------------------
-            $Registrator = new Registrator();
+            $Server = new Registrator();
             #---------------------------------------------------------------------------
-            $IsSelected = $Registrator->Select((integer)$DomainOrder['RegistratorID']);
+            $IsSelected = $Server->Select((integer)$DomainOrder['ServerID']);
             #---------------------------------------------------------------------------
             switch(ValueOf($IsSelected)){
             case 'error':
@@ -111,7 +111,7 @@ switch(ValueOf($DomainOrder)){
               return ERROR | @Trigger_Error(101);
             }
             #---------------------------------------------------------------------------
-            $ChangeContactDetail = $Registrator->ChangeContactDetail($Domain,$DomainOrder['DomainZone'],$Person);
+            $ChangeContactDetail = $Server->ChangeContactDetail($Domain,$DomainOrder['DomainZone'],$Person);
             switch(ValueOf($ChangeContactDetail)){
             case 'error':
               return ERROR | @Trigger_Error(500);

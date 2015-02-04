@@ -8,10 +8,10 @@
  */
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-class DomainsOrdersForTransferMsg extends Message {
+class DomainOrdersForTransferMsg extends Message {
 	#-------------------------------------------------------------------------------
 	public function __construct(array $params, $toUser) {
-	parent::__construct('DomainsOrdersForTransfer', $toUser, $params);
+	parent::__construct('DomainOrdersForTransfer', $toUser, $params);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
@@ -31,8 +31,8 @@ public function getParams(){
 	#-------------------------------------------------------------------------------
 	# Получаем параметры для формирования Event
 	$Where = SPrintF('`OrderID` = %s', $this->params['OrderID']);
-	$UserID = DB_Select('DomainsOrdersOwners', 'UserID as ID', Array('UNIQ', 'Where' => $Where));
-	$SchemeName = DB_Select('DomainsSchemes', 'Name as SchemeName', Array('UNIQ', 'ID' => $this->params['SchemeID']));
+	$UserID = DB_Select('DomainOrdersOwners', 'UserID as ID', Array('UNIQ', 'Where' => $Where));
+	$SchemeName = DB_Select('DomainSchemes', 'Name as SchemeName', Array('UNIQ', 'ID' => $this->params['SchemeID']));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if(In_Array($SchemeName['SchemeName'],Array('ru','su','рф'))){
@@ -43,21 +43,21 @@ public function getParams(){
 			$this->params['prefixRegistrar'] = $PrefixRegistrar;
 			#-------------------------------------------------------------------------------
 			# Получаем параметры регистратора к которому осуществляется трансфер
-			$RegistratorID = DB_Select('DomainsSchemes','RegistratorID as ID',Array('UNIQ','ID'=>$this->params['SchemeID']));
+			$RegistratorID = DB_Select('DomainSchemes','RegistratorID as ID',Array('UNIQ','ID'=>$this->params['SchemeID']));
 			$Settings = DB_Select('Registrators','*',Array('UNIQ','ID'=>$RegistratorID['ID']));
 			#-------------------------------------------------------------------------------
-			Debug("[system/classes/DomainsOrdersForTransferMsg.class.php]: Registrators[TypeID] - " . $Settings['TypeID']);
-			Debug("[system/classes/DomainsOrdersForTransferMsg.class.php]: Settings[PrefixNic] - " . $Settings['PrefixNic']);
-			Debug("[system/classes/DomainsOrdersForTransferMsg.class.php]: Registrar - " . $Registrar);
-			Debug("[system/classes/DomainsOrdersForTransferMsg.class.php]: PrefixRegistrar - " . $PrefixRegistrar);
+			Debug("[system/classes/DomainOrdersForTransferMsg.class.php]: Registrators[TypeID] - " . $Settings['TypeID']);
+			Debug("[system/classes/DomainOrdersForTransferMsg.class.php]: Settings[PrefixNic] - " . $Settings['PrefixNic']);
+			Debug("[system/classes/DomainOrdersForTransferMsg.class.php]: Registrar - " . $Registrar);
+			Debug("[system/classes/DomainOrdersForTransferMsg.class.php]: PrefixRegistrar - " . $PrefixRegistrar);
 			#-------------------------------------------------------------------------------
 			# Проверяем является ли регистрар нашим регистратором
 			if($PrefixRegistrar == $Settings['PrefixNic']){
 				#-------------------------------------------------------------------------------
 				$this->params['internalRegister'] = true;
 				#---------------------------------------------------------------------------
-				Debug("[system/classes/DomainsOrdersForTransferMsg.class.php]: IsOurRegistrar - TRUE");
-				Debug("[system/classes/DomainsOrdersForTransferMsg.class.php]: Инструкция по трансферу в пределах регистратора");
+				Debug("[system/classes/DomainOrdersForTransferMsg.class.php]: IsOurRegistrar - TRUE");
+				Debug("[system/classes/DomainOrdersForTransferMsg.class.php]: Инструкция по трансферу в пределах регистратора");
 				#---------------------------------------------------------------------------
 				$this->params['registratorID'] = $Settings['TypeID'];
 				$this->params['partnerLogin'] = $Settings['PartnerLogin'];
@@ -74,7 +74,7 @@ public function getParams(){
 					#-------------------------------------------------------------------------------
 				default:
 					#-------------------------------------------------------------------------------
-					Debug(SPrintF('[system/classes/DomainsOrdersForTransferMsg.class.php]: Статья не найдена. Ожидалась Registrators/%s/internal', $PrefixRegistrar));
+					Debug(SPrintF('[system/classes/DomainOrdersForTransferMsg.class.php]: Статья не найдена. Ожидалась Registrators/%s/internal', $PrefixRegistrar));
 					#-------------------------------------------------------------------------------
 					$TransferDoc = "Для получения информации об оформлении писем Вашему текущему регистратору и его контактах перейдите на его сайт.";
 					#-------------------------------------------------------------------------------
@@ -98,7 +98,7 @@ public function getParams(){
 				#-------------------------------------------------------------------------------
 				$this->params['internalRegister'] = false;
 				#-------------------------------------------------------------------------------
-				Debug("[system/classes/DomainsOrdersForTransferMsg.class.php]: Инструкция по трансферу от стороннего регистратора");
+				Debug("[system/classes/DomainOrdersForTransferMsg.class.php]: Инструкция по трансферу от стороннего регистратора");
 				#-------------------------------------------------------------------------------
 				# Формируем постфикс идентификатора
 				switch ($SchemeName['SchemeName']){
@@ -128,7 +128,7 @@ public function getParams(){
 					break;
 				default:
 					#-------------------------------------------------------------------------------
-					Debug(SPrintF('[system/classes/DomainsOrdersForTransferMsg.class.php]: Статья не найдена. Ожидалась Registrators/%s/external',$PrefixRegistrar));
+					Debug(SPrintF('[system/classes/DomainOrdersForTransferMsg.class.php]: Статья не найдена. Ожидалась Registrators/%s/external',$PrefixRegistrar));
 					#-------------------------------------------------------------------------------
 					$TransferDoc = "\n\nДля получения информации об оформлении писем Вашему текущему регистратору и его контактах перейдите на его сайт.";
 					#-------------------------------------------------------------------------------
@@ -151,7 +151,7 @@ public function getParams(){
 			#-------------------------------------------------------------------------------
 		}else{
 			#-------------------------------------------------------------------------------
-			Debug("[system/classes/DomainsOrdersForTransferMsg.class.php]: Registrar или PrefixRegistrar не был определён.");
+			Debug("[system/classes/DomainOrdersForTransferMsg.class.php]: Registrar или PrefixRegistrar не был определён.");
 			# Уведомление об ошибке формирования инструкции
 			$Event = Array (
 					'UserID'    => $UserID['ID'],

@@ -6,8 +6,8 @@
  *  Copyright © 2012 Vitaly Velikodnyy
  *
  */
- class DomainsNoticeDeleteMsg extends Message {
+ class DomainNoticeDeleteMsg extends Message {
      public function __construct(array $params, $toUser) {
-         parent::__construct('DomainsNoticeDelete', $toUser, $params);
+         parent::__construct('DomainNoticeDelete', $toUser, $params);
      }
  }

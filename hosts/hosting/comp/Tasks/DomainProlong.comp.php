@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -13,9 +12,9 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('classes/Registrator.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('DomainName','PersonID','DomainID','StatusID','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrders`.`SchemeID`) as `DomainZone`','(SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrders`.`SchemeID`) as `RegistratorID`','(SELECT SUM(`YearsRemainded`) FROM `DomainsConsider` WHERE `DomainsConsider`.`DomainOrderID` = `DomainsOrders`.`ID`) as `YearsRemainded`');
+$Columns = Array('DomainName','PersonID','DomainID','StatusID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrders`.`SchemeID`) as `DomainZone`','ServerID','(SELECT SUM(`YearsRemainded`) FROM `DomainConsider` WHERE `DomainConsider`.`DomainOrderID` = `DomainOrders`.`ID`) as `YearsRemainded`');
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainsOrders',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
   case 'error':
@@ -24,9 +23,9 @@ switch(ValueOf($DomainOrder)){
     return ERROR | @Trigger_Error(400);
   case 'array':
     #---------------------------------------------------------------------------
-    $Registrator = new Registrator();
+    $Server = new Registrator();
     #---------------------------------------------------------------------------
-    $IsSelected = $Registrator->Select((integer)$DomainOrder['RegistratorID']);
+    $IsSelected = $Server->Select((integer)$DomainOrder['ServerID']);
     #---------------------------------------------------------------------------
     switch(ValueOf($IsSelected)){
       case 'error':
@@ -40,7 +39,7 @@ switch(ValueOf($DomainOrder)){
         switch($DomainOrder['StatusID']){
           case 'ForProlong':
             #-------------------------------------------------------------------
-            $IsProlong = $Registrator->DomainProlong($DomainOrder['DomainName'],$DomainOrder['DomainZone'],(integer)$DomainOrder['YearsRemainded'],$DomainOrder['PersonID'],$DomainOrder['DomainID']);
+            $IsProlong = $Server->DomainProlong($DomainOrder['DomainName'],$DomainOrder['DomainZone'],(integer)$DomainOrder['YearsRemainded'],$DomainOrder['PersonID'],$DomainOrder['DomainID']);
             #-------------------------------------------------------------------
             switch(ValueOf($IsProlong)){
               case 'error':
@@ -57,7 +56,7 @@ switch(ValueOf($DomainOrder)){
                 if(Is_Error($IsUpdate))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'OnProlong','RowsIDs'=>$DomainOrderID,'Comment'=>'Регистратор принял заявку на продление доменного имени'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'OnProlong','RowsIDs'=>$DomainOrderID,'Comment'=>'Регистратор принял заявку на продление доменного имени'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':
@@ -76,7 +75,7 @@ switch(ValueOf($DomainOrder)){
             #-------------------------------------------------------------------
             $TicketID = $Task['Params']['TicketID'];
             #-------------------------------------------------------------------
-            $IsDomainProlong = $Registrator->CheckTask($TicketID);
+            $IsDomainProlong = $Server->CheckTask($TicketID);
             #-------------------------------------------------------------------
             switch(ValueOf($IsDomainProlong)){
               case 'error':
@@ -87,7 +86,7 @@ switch(ValueOf($DomainOrder)){
                 return 300;
               case 'array':
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Active','RowsIDs'=>$DomainOrderID,'Comment'=>'Доменное имя продлено'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'Active','RowsIDs'=>$DomainOrderID,'Comment'=>'Доменное имя продлено'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':

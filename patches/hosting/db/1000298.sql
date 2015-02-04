@@ -32,6 +32,19 @@ UPDATE `Tasks` SET `TypeID` = 'DomainForDelete' WHERE `TypeID` = 'DomainsForDele
 UPDATE `Tasks` SET `TypeID` = 'DomainOrdersWhoIsUpdate' WHERE `TypeID` = 'DomainsOrdersWhoIsUpdate';
 -- SEPARATOR
 UPDATE `StatusesHistory` SET `ModeID` = 'DomainOrders' WHERE `ModeID` = 'DomainsOrders';
+-- SEPARATOR
+UPDATE `Notifies` SET `TypeID` = 'DomainOrdersOnRegister' WHERE `TypeID` = 'DomainsOrdersOnRegister';
+-- SEPARATOR
+UPDATE `Notifies` SET `TypeID` = 'DomainOrdersActive' WHERE `TypeID` = 'DomainsOrdersActive';
+-- SEPARATOR
+UPDATE `Notifies` SET `TypeID` = 'DomainNoticeSuspend' WHERE `TypeID` = 'DomainsNoticeSuspend';
+-- SEPARATOR
+UPDATE `Notifies` SET `TypeID` = 'DomainOrdersSuspended' WHERE `TypeID` = 'DomainsOrdersSuspended';
+-- SEPARATOR
+UPDATE `Notifies` SET `TypeID` = 'DomainNoticeDelete' WHERE `TypeID` = 'DomainsNoticeDelete';
+-- SEPARATOR
+UPDATE `Notifies` SET `TypeID` = 'DomainOrdersDeleted' WHERE `TypeID` = 'DomainsOrdersDeleted';
+
 
 -- SEPARATOR
 ALTER TABLE `DomainsConsider` DROP FOREIGN KEY `DomainsConsiderDomainOrderID`;

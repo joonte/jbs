@@ -18,13 +18,6 @@
   <Href>/DomainSchemes</Href>
  </ListElement>
  <ListElement>
-  <Text>Мои бонусы</Text>
-  <Paths>
-   <UniqID>^\/DomainBonuses$</UniqID>
-  </Paths>
-  <Href>/DomainBonuses</Href>
- </ListElement>
- <ListElement>
   <Text>Проверка домена</Text>
   <Paths>
    <UniqID>^\/DomainWhoIs$</UniqID>

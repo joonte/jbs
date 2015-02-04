@@ -13,7 +13,7 @@ if(Is_Error(System_Load('libs/WhoIs.php')))
 #-------------------------------------------------------------------------------
 $Config = Config();
 #------------------------------------------------------------------------------
-$Settings = $Config['Tasks']['Types']['DomainsOrdersWhoIsUpdate'];
+$Settings = $Config['Tasks']['Types']['DomainOrdersWhoIsUpdate'];
 #------------------------------------------------------------------------------
 # если неактивна, то через день запуск
 if(!$Settings['IsActive'])
@@ -34,8 +34,8 @@ $Where = Array(
 		"UNIX_TIMESTAMP() - 3 * 86400 > `StatusDate`"
 		);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','DomainName','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) AS `DomainZone`');
-$DomainOrders = DB_Select('DomainsOrders',$Columns,Array('Where'=>$Where,'Limits'=>Array(0,$Settings['Limit']),'SortOn'=>Array('UpdateDate','DomainName')));
+$Columns = Array('ID','DomainName','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`) AS `DomainZone`');
+$DomainOrders = DB_Select('DomainOrders',$Columns,Array('Where'=>$Where,'Limits'=>Array(0,$Settings['Limit']),'SortOn'=>Array('UpdateDate','DomainName')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrders)){
 case 'error':
@@ -69,7 +69,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Count = DB_Count('DomainsOrders',Array('Where'=>$Where));
+$Count = DB_Count('DomainOrders',Array('Where'=>$Where));
 if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

@@ -9,7 +9,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Where = "`StatusID` = 'Suspended' AND `StatusDate` + 2678400 - UNIX_TIMESTAMP() <= 0";
 #-------------------------------------------------------------------------------
-$DomainOrders = DB_Select('DomainsOrders','ID',Array('Where'=>$Where));
+$DomainOrders = DB_Select('DomainOrders','ID',Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrders)){
 case 'error':
@@ -23,7 +23,7 @@ case 'array':
 	#-------------------------------------------------------------------------------
 	foreach($DomainOrders as $DomainOrder){
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Deleted','RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Срок блокировки заказа окончен'));
+		$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'Deleted','RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Срок блокировки заказа окончен'));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($Comp)){
 		case 'error':

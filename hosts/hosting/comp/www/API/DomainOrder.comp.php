@@ -50,7 +50,7 @@ if(Mb_StrToLower($Ns1Name,'UTF-8') == $DomainName || Mb_StrToLower($Ns2Name,'UTF
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$DomainScheme = DB_Select('DomainsSchemes',Array('ID','Name','IsActive'),Array('UNIQ','ID'=>$DomainSchemeID));
+$DomainScheme = DB_Select('DomainSchemes',Array('ID','Name','ServerID','IsActive'),Array('UNIQ','ID'=>$DomainSchemeID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainScheme)){
   case 'error':
@@ -72,7 +72,7 @@ switch(ValueOf($DomainScheme)){
     if(!$DomainScheme['IsActive'])
       return new gException('SCHEME_NOT_ACTIVE','Выбранный тарифный план заказа домена не активен');
     #---------------------------------------------------------------------------
-    $Count = DB_Count('DomainsOrdersOwners',Array('Where'=>SPrintF("`DomainName` = '%s' AND (SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) = '%s' AND `UserID` = %u",$DomainName,$DomainScheme['Name'],$GLOBALS['__USER']['ID'])));
+    $Count = DB_Count('DomainOrdersOwners',Array('Where'=>SPrintF("`DomainName` = '%s' AND (SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) = '%s' AND `UserID` = %u",$DomainName,$DomainScheme['Name'],$GLOBALS['__USER']['ID'])));
     if(Is_Error($Count))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
@@ -80,7 +80,7 @@ switch(ValueOf($DomainScheme)){
       return new gException('DOMAIN_ORDER_EXISTS','Домен уже находится в вашем списке заказов');
     #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
-    $Count = DB_Count('DomainsOrdersOwners',Array('Where'=>SPrintF("`DomainName` = '%s' AND (SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) = '%s'",$DomainName,$DomainScheme['Name'])));
+    $Count = DB_Count('DomainOrdersOwners',Array('Where'=>SPrintF("`DomainName` = '%s' AND (SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) = '%s'",$DomainName,$DomainScheme['Name'])));
     if(Is_Error($Count))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
@@ -250,7 +250,7 @@ switch(ValueOf($DomainScheme)){
                   }
                 }
                 #---------------------------------------------------------------
-                $OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>20000));
+                $OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>20000,'ServerID'=>$DomainScheme['ServerID']));
                 if(Is_Error($OrderID))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
@@ -270,11 +270,11 @@ switch(ValueOf($DomainScheme)){
                   'Ns4IP'          => $Ns4IP
                 );
                 #---------------------------------------------------------------
-                $DomainOrderID = DB_Insert('DomainsOrders',$IDomainOrder);
+                $DomainOrderID = DB_Insert('DomainOrders',$IDomainOrder);
                 if(Is_Error($DomainOrderID))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Waiting','RowsIDs'=>$DomainOrderID,'Comment'=>($Comment)?$Comment:'Заказ создан и ожидает оплаты'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'Waiting','RowsIDs'=>$DomainOrderID,'Comment'=>($Comment)?$Comment:'Заказ создан и ожидает оплаты'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':

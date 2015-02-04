@@ -9,7 +9,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Where = "`StatusID` = 'Suspended' AND ROUND((`StatusDate` + 2678400 - UNIX_TIMESTAMP())/86400) IN (1,5,10,15,20,25)";
 #-------------------------------------------------------------------------------
-$DomainOrders = DB_Select('DomainsOrdersOwners','*',Array('Where'=>$Where));
+$DomainOrders = DB_Select('DomainOrdersOwners','*',Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrders)){
   case 'error':
@@ -23,7 +23,7 @@ switch(ValueOf($DomainOrders)){
     #---------------------------------------------------------------------------
     foreach($DomainOrders as $DomainOrder){
       #-------------------------------------------------------------------------
-      $msg = new DomainsNoticeDeleteMsg($DomainOrder, (integer)$DomainOrder['UserID']);
+      $msg = new DomainNoticeDeleteMsg($DomainOrder, (integer)$DomainOrder['UserID']);
       $IsSend = NotificationManager::sendMsg($msg);
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){

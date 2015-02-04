@@ -6,8 +6,8 @@
  *  Copyright © 2012 Vitaly Velikodnyy
  *
  */
- class DomainsNoticeSuspendMsg extends Message {
+ class DomainNoticeSuspendMsg extends Message {
      public function __construct(array $params, $toUser) {
-         parent::__construct('DomainsNoticeSuspend', $toUser, $params);
+         parent::__construct('DomainNoticeSuspend', $toUser, $params);
      }
  }

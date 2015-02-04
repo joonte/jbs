@@ -14,9 +14,9 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $DomainSchemeID = (string) @$Args['DomainSchemeID'];
 #-------------------------------------------------------------------------------
-$Columns = Array('*','(SELECT `Name` FROM `Registrators` WHERE `RegistratorID` = `Registrators`.`ID`) as `RegistratorName`');
+$Columns = Array('*','(SELECT `Params` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `Params`');
 #-------------------------------------------------------------------------------
-$DomainScheme = DB_Select('DomainsSchemes',$Columns,Array('UNIQ','ID'=>$DomainSchemeID));
+$DomainScheme = DB_Select('DomainSchemes',$Columns,Array('UNIQ','ID'=>$DomainSchemeID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainScheme)){
   case 'error':
@@ -62,7 +62,7 @@ switch(ValueOf($DomainScheme)){
     #---------------------------------------------------------------------------
     $Table[] = Array('Стоимость продления',$Comp);
     #---------------------------------------------------------------------------
-    $Table[] = Array('Регистратор',$DomainScheme['RegistratorName']);
+    $Table[] = Array('Регистратор',$DomainScheme['Params']['Name']);
     #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
     $Table[] = 'Ограничения';

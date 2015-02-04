@@ -50,7 +50,7 @@ switch(ValueOf($Contract)){
         return ERROR | @Trigger_Error(700);
       case 'true':
         #-----------------------------------------------------------------------
-        $DomainScheme = DB_Select('DomainsSchemes',Array('ID','Name'),Array('UNIQ','ID'=>$DomainSchemeID));
+        $DomainScheme = DB_Select('DomainSchemes',Array('ID','Name'),Array('UNIQ','ID'=>$DomainSchemeID));
         #-----------------------------------------------------------------------
         switch(ValueOf($DomainScheme)){
           case 'error':
@@ -65,7 +65,7 @@ switch(ValueOf($Contract)){
                   return new gException('INCORRECT_AUTHINFO','Указан неверный код переноса домена');
 	    }
             #-------------------------------------------------------------------
-            $Count = DB_Count('DomainsOrders',Array('Where'=>SPrintF("`DomainName` = '%s' AND (SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrders`.`SchemeID`) = '%s'",$DomainName,$DomainScheme['Name'])));
+            $Count = DB_Count('DomainOrders',Array('Where'=>SPrintF("`DomainName` = '%s' AND (SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrders`.`SchemeID`) = '%s'",$DomainName,$DomainScheme['Name'])));
             if(Is_Error($Count))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
@@ -118,11 +118,11 @@ switch(ValueOf($Contract)){
                   $IDomainOrder[SPrintF('Ns%uIP',$i)] = $NsIP;
                 }
                 #---------------------------------------------------------------
-                $DomainOrderID = DB_Insert('DomainsOrders',$IDomainOrder);
+                $DomainOrderID = DB_Insert('DomainOrders',$IDomainOrder);
                 if(Is_Error($DomainOrderID))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'ForTransfer','RowsIDs'=>$DomainOrderID,'Comment'=>'Поступила заявка на перенос доменного имени'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'ForTransfer','RowsIDs'=>$DomainOrderID,'Comment'=>'Поступила заявка на перенос доменного имени'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':

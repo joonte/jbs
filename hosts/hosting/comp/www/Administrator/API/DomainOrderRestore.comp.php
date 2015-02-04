@@ -21,7 +21,7 @@ $DomainOrderID = (integer) @$Args['DomainOrderID'];
 if(Is_Error(DB_Transaction($TransactionID = UniqID('DomainOrderRestore'))))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainsOrdersOwners',Array('ID','OrderID','UserID','ContractID'),Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainOrdersOwners',Array('ID','OrderID','UserID','ContractID'),Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
   case 'error':
@@ -30,7 +30,7 @@ switch(ValueOf($DomainOrder)){
     return ERROR | @Trigger_Error(400);
   case 'array':
     #---------------------------------------------------------------------------
-    $SummRemainded = DB_Select('DomainsConsider','SUM(`YearsRemainded`*`Cost`*(1-`Discont`)) as `SummRemainded`',Array('UNIQ','Where'=>SPrintF('`DomainOrderID` = %u AND `YearsRemainded` > 0',$DomainOrder['ID'])));
+    $SummRemainded = DB_Select('DomainConsider','SUM(`YearsRemainded`*`Cost`*(1-`Discont`)) as `SummRemainded`',Array('UNIQ','Where'=>SPrintF('`DomainOrderID` = %u AND `YearsRemainded` > 0',$DomainOrder['ID'])));
     #---------------------------------------------------------------------------
     switch(ValueOf($SummRemainded)){
       case 'error':
@@ -56,7 +56,7 @@ switch(ValueOf($DomainOrder)){
               return ERROR | @Trigger_Error(400);
             case 'array':
               #-----------------------------------------------------------------
-              $IsUpdate = DB_Update('DomainsConsider',Array('YearsRemainded'=>0),Array('Where'=>SPrintF('`DomainOrderID` = %u',$DomainOrderID)));
+              $IsUpdate = DB_Update('DomainConsider',Array('YearsRemainded'=>0),Array('Where'=>SPrintF('`DomainOrderID` = %u',$DomainOrderID)));
               if(Is_Error($IsUpdate))
                 return ERROR | @Trigger_Error(500);
             break;

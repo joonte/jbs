@@ -12,9 +12,9 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('classes/Registrator.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','OrderID','UserID','DomainName','PersonID','DomainID','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `RegistratorID`','StatusID','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP');
+$Columns = Array('ID','OrderID','UserID','DomainName','PersonID','DomainID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','ServerID','StatusID','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP');
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
   case 'error':
@@ -32,9 +32,9 @@ switch(ValueOf($DomainOrder)){
       $GLOBALS['TaskReturnInfo'][] = $DomainOrder['Ns4Name'];
     #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
-    $Registrator = new Registrator();
+    $Server = new Registrator();
     #---------------------------------------------------------------------------
-    $IsSelected = $Registrator->Select((integer)$DomainOrder['RegistratorID']);
+    $IsSelected = $Server->Select((integer)$DomainOrder['ServerID']);
     #---------------------------------------------------------------------------
     switch(ValueOf($IsSelected)){
       case 'error':
@@ -46,18 +46,18 @@ switch(ValueOf($DomainOrder)){
         switch($DomainOrder['StatusID']){
           case 'ForNsChange':
             #-------------------------------------------------------------------
-            $DomainNsChange = $Registrator->DomainNsChange($DomainOrder['DomainName'],$DomainOrder['DomainZone'],$DomainOrder['PersonID'],$DomainOrder['DomainID'],$DomainOrder['Ns1Name'],$DomainOrder['Ns1IP'],$DomainOrder['Ns2Name'],$DomainOrder['Ns2IP'],$DomainOrder['Ns3Name'],$DomainOrder['Ns3IP'],$DomainOrder['Ns4Name'],$DomainOrder['Ns4IP']);
+            $DomainNsChange = $Server->DomainNsChange($DomainOrder['DomainName'],$DomainOrder['DomainZone'],$DomainOrder['PersonID'],$DomainOrder['DomainID'],$DomainOrder['Ns1Name'],$DomainOrder['Ns1IP'],$DomainOrder['Ns2Name'],$DomainOrder['Ns2IP'],$DomainOrder['Ns3Name'],$DomainOrder['Ns3IP'],$DomainOrder['Ns4Name'],$DomainOrder['Ns4IP']);
             #-------------------------------------------------------------------
             switch(ValueOf($DomainNsChange)){
               case 'error':
                 return ERROR | @Trigger_Error(500);
               case 'exception':
                 #---------------------------------------------------------------
-                $IsUpdate = DB_Update('DomainsOrders',Array('Ns1Name'=>$Ns1NameOld,'Ns1IP'=>$Ns1IPOld,'Ns2Name'=>$Ns2NameOld,'Ns2IP'=>$Ns2IPOld,'Ns3Name'=>$Ns3NameOld,'Ns3IP'=>$Ns3IPOld,'Ns4Name'=>$Ns4NameOld,'Ns4IP'=>$Ns4IPOld),Array('ID'=>$DomainOrder['ID']));
+                $IsUpdate = DB_Update('DomainOrders',Array('Ns1Name'=>$Ns1NameOld,'Ns1IP'=>$Ns1IPOld,'Ns2Name'=>$Ns2NameOld,'Ns2IP'=>$Ns2IPOld,'Ns3Name'=>$Ns3NameOld,'Ns3IP'=>$Ns3IPOld,'Ns4Name'=>$Ns4NameOld,'Ns4IP'=>$Ns4IPOld),Array('ID'=>$DomainOrder['ID']));
                 if(Is_Error($IsUpdate))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Active','RowsIDs'=>$DomainOrder['ID'],'Comment'=>$DomainNsChange->String));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'Active','RowsIDs'=>$DomainOrder['ID'],'Comment'=>$DomainNsChange->String));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':
@@ -90,7 +90,7 @@ switch(ValueOf($DomainOrder)){
                 if(Is_Error($IsUpdate))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'OnNsChange','RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Регистратор принял заявку на изменение именных серверов'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'OnNsChange','RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Регистратор принял заявку на изменение именных серверов'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':
@@ -109,7 +109,7 @@ switch(ValueOf($DomainOrder)){
             #-------------------------------------------------------------------
             $TicketID = $Task['Params']['TicketID'];
             #-------------------------------------------------------------------
-            $IsNsChange = $Registrator->CheckTask($TicketID);
+            $IsNsChange = $Server->CheckTask($TicketID);
             #-------------------------------------------------------------------
             switch(ValueOf($IsNsChange)){
               case 'error':
@@ -138,7 +138,7 @@ switch(ValueOf($DomainOrder)){
                 if(!$Event)
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Active','RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Именные сервера изменены'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'Active','RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Именные сервера изменены'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':

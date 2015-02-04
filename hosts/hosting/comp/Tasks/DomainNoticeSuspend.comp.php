@@ -9,9 +9,9 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Where = "`StatusID` = 'Active' AND CEIL((`ExpirationDate` - UNIX_TIMESTAMP())/86400) IN (1,5,10,15,30)";
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','OrderID','UserID','DomainName','ExpirationDate','StatusDate','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`');
+$Columns = Array('ID','OrderID','UserID','DomainName','ExpirationDate','StatusDate','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`');
 #-------------------------------------------------------------------------------
-$DomainOrders = DB_Select('DomainsOrdersOwners',$Columns,Array('Where'=>$Where));
+$DomainOrders = DB_Select('DomainOrdersOwners',$Columns,Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrders)){
   case 'error':
@@ -25,7 +25,7 @@ switch(ValueOf($DomainOrders)){
     #---------------------------------------------------------------------------
     foreach($DomainOrders as $DomainOrder){
       #-------------------------------------------------------------------------
-      $msg = new DomainsNoticeSuspendMsg($DomainOrder, (integer)$DomainOrder['UserID']);
+      $msg = new DomainNoticeSuspendMsg($DomainOrder, (integer)$DomainOrder['UserID']);
       $IsSend = NotificationManager::sendMsg($msg);
       #-------------------------------------------------------------------------
       switch(ValueOf($IsSend)){

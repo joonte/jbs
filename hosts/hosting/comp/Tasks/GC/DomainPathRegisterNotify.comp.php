@@ -21,17 +21,20 @@ switch(ValueOf($Tasks)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	Debug("[comp/Tasks/GC/DomainPathRegisterNotify]: нет доменов где владелец не определён более 30 дней");
+	#-------------------------------------------------------------------------------
+	Debug('[comp/Tasks/GC/DomainPathRegisterNotify]: нет доменов где владелец не определён более 30 дней');
+	#-------------------------------------------------------------------------------
 	return TRUE;
+	#-------------------------------------------------------------------------------
 case 'array':
 	#-------------------------------------------------------------------------------
 	foreach($Tasks as $Task){
 		#-------------------------------------------------------------------------------
 		$Params = (array)$Task['Params'];
 		#-------------------------------------------------------------------------------
-		$Columns = Array('ID','DomainName','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','UserID');
+		$Columns = Array('ID','DomainName','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','UserID');
 		#-------------------------------------------------------------------------------
-		$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','ID'=>$Params['ID']));
+		$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','ID'=>$Params['ID']));
 		switch(ValueOf($DomainOrder)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
@@ -43,7 +46,7 @@ case 'array':
 		case 'array':
 			#-------------------------------------------------------------------------------
 			# ставим домену статус "удалён"
-			$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Deleted','RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Владелец домена не определён более 30 дней'));
+			$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'Deleted','RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Владелец домена не определён более 30 дней'));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($Comp)){
 			case 'error':

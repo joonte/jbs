@@ -2,7 +2,7 @@
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
 <!-- *********************************************************************** -->
-<RootID>DomainsSchemes</RootID>
+<RootID>DomainSchemes</RootID>
 <Cut>
  <Comps>
   <Before>

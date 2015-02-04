@@ -16,9 +16,9 @@ $Filter = Array('Name'=>'Любые','UsersIDs'=>Array());
 #-------------------------------------------------------------------------------
 if($IsSearch){
   #-----------------------------------------------------------------------------
-  $DomainsOrders = DB_Select('DomainsOrdersOwners','UserID');
+  $DomainOrders = DB_Select('DomainOrdersOwners','UserID');
   #-----------------------------------------------------------------------------
-  switch(ValueOf($DomainsOrders)){
+  switch(ValueOf($DomainOrders)){
     case 'error':
       return ERROR | @Trigger_Error(500);
     case 'exception':
@@ -28,7 +28,7 @@ if($IsSearch){
       #-------------------------------------------------------------------------
       $UsersIDs = Array();
       #-------------------------------------------------------------------------
-      foreach($DomainsOrders as $HostingOrder)
+      foreach($DomainOrders as $HostingOrder)
         $UsersIDs[] = $HostingOrder['UserID'];
       #-------------------------------------------------------------------------
       Array_Unique($UsersIDs);
@@ -40,7 +40,7 @@ if($IsSearch){
   }
 }
 #-------------------------------------------------------------------------------
-$Filters['AllDomainsOrders'] = $Filter;
+$Filters['AllDomainOrders'] = $Filter;
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -48,9 +48,9 @@ $Filter = Array('Name'=>'Активные','UsersIDs'=>Array());
 #-------------------------------------------------------------------------------
 if($IsSearch){
   #-----------------------------------------------------------------------------
-  $DomainsOrders = DB_Select('DomainsOrdersOwners','UserID',Array('Where'=>"`StatusID` = 'Active'"));
+  $DomainOrders = DB_Select('DomainOrdersOwners','UserID',Array('Where'=>"`StatusID` = 'Active'"));
   #-----------------------------------------------------------------------------
-  switch(ValueOf($DomainsOrders)){
+  switch(ValueOf($DomainOrders)){
     case 'error':
       return ERROR | @Trigger_Error(500);
     case 'exception':
@@ -60,7 +60,7 @@ if($IsSearch){
       #-------------------------------------------------------------------------
       $UsersIDs = Array();
       #-------------------------------------------------------------------------
-      foreach($DomainsOrders as $HostingOrder)
+      foreach($DomainOrders as $HostingOrder)
         $UsersIDs[] = $HostingOrder['UserID'];
       #-------------------------------------------------------------------------
       Array_Unique($UsersIDs);
@@ -72,7 +72,7 @@ if($IsSearch){
   }
 }
 #-------------------------------------------------------------------------------
-$Filters['ActiveDomainsOrders'] = $Filter;
+$Filters['ActiveDomainOrders'] = $Filter;
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -80,9 +80,9 @@ $Filter = Array('Name'=>'Заблокированные','UsersIDs'=>Array());
 #-------------------------------------------------------------------------------
 if($IsSearch){
   #-----------------------------------------------------------------------------
-  $DomainsOrders = DB_Select('DomainsOrdersOwners','UserID',Array('Where'=>"`StatusID` = 'Suspended'"));
+  $DomainOrders = DB_Select('DomainOrdersOwners','UserID',Array('Where'=>"`StatusID` = 'Suspended'"));
   #-----------------------------------------------------------------------------
-  switch(ValueOf($DomainsOrders)){
+  switch(ValueOf($DomainOrders)){
     case 'error':
       return ERROR | @Trigger_Error(500);
     case 'exception':
@@ -92,7 +92,7 @@ if($IsSearch){
       #-------------------------------------------------------------------------
       $UsersIDs = Array();
       #-------------------------------------------------------------------------
-      foreach($DomainsOrders as $HostingOrder)
+      foreach($DomainOrders as $HostingOrder)
         $UsersIDs[] = $HostingOrder['UserID'];
       #-------------------------------------------------------------------------
       Array_Unique($UsersIDs);
@@ -104,7 +104,7 @@ if($IsSearch){
   }
 }
 #-------------------------------------------------------------------------------
-$Filters['SuspendedDomainsOrders'] = $Filter;
+$Filters['SuspendedDomainOrders'] = $Filter;
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -112,9 +112,9 @@ $Filter = Array('Name'=>'Удалённые','UsersIDs'=>Array());
 #-------------------------------------------------------------------------------
 if($IsSearch){
   #-----------------------------------------------------------------------------
-  $DomainsOrders = DB_Select('DomainsOrdersOwners','UserID',Array('Where'=>"`StatusID` = 'Deleted'"));
+  $DomainOrders = DB_Select('DomainOrdersOwners','UserID',Array('Where'=>"`StatusID` = 'Deleted'"));
   #-----------------------------------------------------------------------------
-  switch(ValueOf($DomainsOrders)){
+  switch(ValueOf($DomainOrders)){
     case 'error':
       return ERROR | @Trigger_Error(500);
     case 'exception':
@@ -124,7 +124,7 @@ if($IsSearch){
       #-------------------------------------------------------------------------
       $UsersIDs = Array();
       #-------------------------------------------------------------------------
-      foreach($DomainsOrders as $HostingOrder)
+      foreach($DomainOrders as $HostingOrder)
         $UsersIDs[] = $HostingOrder['UserID'];
       #-------------------------------------------------------------------------
       Array_Unique($UsersIDs);
@@ -136,7 +136,7 @@ if($IsSearch){
   }
 }
 #-------------------------------------------------------------------------------
-$Filters['DeletedDomainsOrders'] = $Filter;
+$Filters['DeletedDomainOrders'] = $Filter;
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -144,9 +144,9 @@ $Filter = Array('Name'=>'Ожидающие оплату','UsersIDs'=>Array());
 #-------------------------------------------------------------------------------
 if($IsSearch){
   #-----------------------------------------------------------------------------
-  $DomainsOrders = DB_Select('DomainsOrdersOwners','UserID',Array('Where'=>"`StatusID` = 'Waiting'"));
+  $DomainOrders = DB_Select('DomainOrdersOwners','UserID',Array('Where'=>"`StatusID` = 'Waiting'"));
   #-----------------------------------------------------------------------------
-  switch(ValueOf($DomainsOrders)){
+  switch(ValueOf($DomainOrders)){
     case 'error':
       return ERROR | @Trigger_Error(500);
     case 'exception':
@@ -156,7 +156,7 @@ if($IsSearch){
       #-------------------------------------------------------------------------
       $UsersIDs = Array();
       #-------------------------------------------------------------------------
-      foreach($DomainsOrders as $HostingOrder)
+      foreach($DomainOrders as $HostingOrder)
         $UsersIDs[] = $HostingOrder['UserID'];
       #-------------------------------------------------------------------------
       Array_Unique($UsersIDs);
@@ -168,7 +168,7 @@ if($IsSearch){
   }
 }
 #-------------------------------------------------------------------------------
-$Filters['WaitingDomainsOrders'] = $Filter;
+$Filters['WaitingDomainOrders'] = $Filter;
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -176,9 +176,9 @@ $Filter = Array('Name'=>'На переносе','UsersIDs'=>Array());
 #-------------------------------------------------------------------------------
 if($IsSearch){
   #-----------------------------------------------------------------------------
-  $DomainsOrders = DB_Select('DomainsOrdersOwners','UserID',Array('Where'=>"`StatusID` = 'OnTransfer'"));
+  $DomainOrders = DB_Select('DomainOrdersOwners','UserID',Array('Where'=>"`StatusID` = 'OnTransfer'"));
   #-----------------------------------------------------------------------------
-  switch(ValueOf($DomainsOrders)){
+  switch(ValueOf($DomainOrders)){
     case 'error':
       return ERROR | @Trigger_Error(500);
     case 'exception':
@@ -188,7 +188,7 @@ if($IsSearch){
       #-------------------------------------------------------------------------
       $UsersIDs = Array();
       #-------------------------------------------------------------------------
-      foreach($DomainsOrders as $HostingOrder)
+      foreach($DomainOrders as $HostingOrder)
         $UsersIDs[] = $HostingOrder['UserID'];
       #-------------------------------------------------------------------------
       Array_Unique($UsersIDs);
@@ -200,7 +200,7 @@ if($IsSearch){
   }
 }
 #-------------------------------------------------------------------------------
-$Filters['OnTransferDomainsOrders'] = $Filter;
+$Filters['OnTransferDomainOrders'] = $Filter;
 
 
 #-------------------------------------------------------------------------------

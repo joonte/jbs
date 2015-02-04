@@ -27,7 +27,7 @@ $Comp = Comp_Load('WhoIs');
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Tab','User/Domains',$Comp);
+$Comp = Comp_Load('Tab','User/Domain',$Comp);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

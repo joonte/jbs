@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -94,9 +93,9 @@ if($StepID){
   if(!$DomainSchemeID)
     return new gException('DOMAIN_SCHEME_NOT_DEFINED','Доменная зона не выбрана');
   #-----------------------------------------------------------------------------
-  $Columns = Array('`DomainsSchemes`.`ID`','`DomainsSchemes`.`Name` as `Name`','IsActive','`Registrators`.`Name` as `RegistratorName`','Ns1Name','Ns2Name','Ns3Name','Ns4Name');
+  $Columns = Array('`DomainSchemes`.`ID`','`DomainSchemes`.`Name` as `Name`','`DomainSchemes`.`IsActive` AS `IsActive`','`Servers`.`Params` as `Params`');
   #-----------------------------------------------------------------------------
-  $DomainScheme = DB_Select(Array('DomainsSchemes','Registrators'),$Columns,Array('UNIQ','Where'=>SPrintF('`DomainsSchemes`.`RegistratorID` = `Registrators`.`ID` AND `DomainsSchemes`.`ID` = %u',$DomainSchemeID)));
+  $DomainScheme = DB_Select(Array('DomainSchemes','Servers'),$Columns,Array('UNIQ','Where'=>SPrintF('`DomainSchemes`.`ServerID` = `Servers`.`ID` AND `DomainSchemes`.`ID` = %u',$DomainSchemeID)));
   #-----------------------------------------------------------------------------
   switch(ValueOf($DomainScheme)){
     case 'error':
@@ -158,7 +157,7 @@ if($StepID){
           #---------------------------------------------------------------------
           $Form->AddChild($Comp);
           #---------------------------------------------------------------------
-          $Table[] = Array('Доменное имя',SPrintF('%s.%s | %s',$DomainName,$DomainScheme['Name'],$DomainScheme['RegistratorName']));
+          $Table[] = Array('Доменное имя',SPrintF('%s.%s | %s',$DomainName,$DomainScheme['Name'],$DomainScheme['Params']['Name']));
 	  #---------------------------------------------------------------------
 	  #---------------------------------------------------------------------
           $Comp = Comp_Load('Form/Input',Array('name'=>'IsPrivateWhoIs','type'=>'checkbox','value'=>'yes','checked'=>'yes','prompt'=>'Если галочка установлена, то в тех доменных зонах, где поддерживается полное или частичное сокрытие данных владельца домена (ru,su,рф,com ....), они будут скрыты при просмотре информации о домене в сервисе WhoIs.'));
@@ -189,7 +188,7 @@ if($StepID){
                 #---------------------------------------------------------------
                 $Options = Array('Не использовать');
                 #---------------------------------------------------------------
-                $Script = Array(SPrintF("var HostingOrders = [{Ns1Name:'%s',Ns2Name:'%s'}];",$DomainScheme['Ns1Name'],$DomainScheme['Ns2Name']));
+                $Script = Array(SPrintF("var HostingOrders = [{Ns1Name:'%s',Ns2Name:'%s'}];",$DomainScheme['Params']['Ns1Name'],$DomainScheme['Params']['Ns2Name']));
                 #---------------------------------------------------------------
                 foreach($HostingOrders as $HostingOrder){
                   #-------------------------------------------------------------
@@ -226,7 +225,7 @@ if($StepID){
                 'type'    => 'text',
                 'prompt'  => $Messages['Prompts']['Domain']['NsName'],
                 'onkeyup' => 'IsNewNs();',
-                'value'   => $DomainScheme['Ns1Name']
+                'value'   => $DomainScheme['Params']['Ns1Name']
               )
             );
             if(Is_Error($Comp))
@@ -258,7 +257,7 @@ if($StepID){
                 'type'    => 'text',
                 'prompt'  => $Messages['Prompts']['Domain']['NsName'],
                 'onkeyup' => 'IsNewNs();',
-                'value'   => $DomainScheme['Ns2Name']
+                'value'   => $DomainScheme['Params']['Ns2Name']
               )
             );
             if(Is_Error($Comp))
@@ -290,7 +289,7 @@ if($StepID){
                 'type'    => 'text',
                 'prompt'  => $Messages['Prompts']['Domain']['NsName'],
                 'onkeyup' => 'IsNewNs();',
-                'value'   => $DomainScheme['Ns3Name']
+                'value'   => $DomainScheme['Params']['Ns3Name']
               )
             );
             if(Is_Error($Comp))
@@ -322,7 +321,7 @@ if($StepID){
                 'type'    => 'text',
                 'prompt'  => $Messages['Prompts']['Domain']['NsName'],
                 'onkeyup' => 'IsNewNs();',
-                'value'   => $DomainScheme['Ns4Name']
+                'value'   => $DomainScheme['Params']['Ns4Name']
               )
             );
             if(Is_Error($Comp))
@@ -412,17 +411,17 @@ if($StepID){
       #-------------------------------------------------------------------------
       $Table = Array(Array('Базовый договор',$NoBody));
       #-------------------------------------------------------------------------
-      $UniqID = UniqID('DomainsSchemes');
+      $UniqID = UniqID('DomainSchemes');
       #-------------------------------------------------------------------------
-      $Comp = Comp_Load('Services/Schemes','DomainsSchemes',$__USER['ID'],Array('Name','RegistratorID'),$UniqID);
+      $Comp = Comp_Load('Services/Schemes','DomainSchemes',$__USER['ID'],Array('Name','ServerID'),$UniqID);
       if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
-      $Columns = Array('ID','Name','RegistratorID','CostOrder','(SELECT `Name` FROM `Registrators` WHERE `RegistratorID` = `Registrators`.`ID`) as `RegistratorName`','(SELECT `Comment` FROM `Registrators` WHERE `RegistratorID` = `Registrators`.`ID`) as `RegistratorComment`','(SELECT `SortID` FROM `Registrators` WHERE `RegistratorID` = `Registrators`.`ID`) as `RegistratorSortID`');
+      $Columns = Array('ID','Name','ServerID','CostOrder','(SELECT `Address` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `Address`','(SELECT `Params` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `Params`','(SELECT `SortID` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `ServersSortID`');
       #-------------------------------------------------------------------------
-      $DomainsSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('RegistratorSortID','SortID'),'Where'=>"`IsActive` = 'yes'"));
+      $DomainSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('ServersSortID','SortID'),'Where'=>"`IsActive` = 'yes'"));
       #-------------------------------------------------------------------------
-      switch(ValueOf($DomainsSchemes)){
+      switch(ValueOf($DomainSchemes)){
         case 'error':
           return ERROR | @Trigger_Error(500);
         case 'exception':
@@ -453,13 +452,13 @@ if($StepID){
           #---------------------------------------------------------------------
           $Tr = new Tag('TR');
           #---------------------------------------------------------------------
-          $RegistratorName = UniqID();
+          $ServerAddress = UniqID();
           #---------------------------------------------------------------------
-          foreach($DomainsSchemes as $DomainScheme){
+          foreach($DomainSchemes as $DomainScheme){
             #-------------------------------------------------------------------
-            if($RegistratorName != $DomainScheme['RegistratorName']){
+            if($ServerAddress != $DomainScheme['Address']){
               #-----------------------------------------------------------------
-              $RegistratorName = $DomainScheme['RegistratorName'];
+              $ServerAddress = $DomainScheme['Address'];
               #-----------------------------------------------------------------
               if(Count($Tr->Childs)){
                 #---------------------------------------------------------------
@@ -468,11 +467,11 @@ if($StepID){
                 $Tr = new Tag('TR');
               }
               #-----------------------------------------------------------------
-              $Comp = Comp_Load('Formats/String',$DomainScheme['RegistratorComment'],55);
+              $Comp = Comp_Load('Formats/String',$DomainScheme['Params']['Comment'],55);
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
-              $Rows[] = new Tag('TR',new Tag('TD',Array('colspan'=>8,'class'=>'Separator'),new Tag('SPAN',Array('style'=>'font-size:16px;'),SPrintF('%s |',$RegistratorName)),new Tag('SPAN',Array('style'=>'font-size:11px;'),$Comp)));
+              $Rows[] = new Tag('TR',new Tag('TD',Array('colspan'=>8,'class'=>'Separator'),new Tag('SPAN',Array('style'=>'font-size:16px;'),SPrintF('%s |',$ServerAddress)),new Tag('SPAN',Array('style'=>'font-size:11px;'),$Comp)));
             }
             #-------------------------------------------------------------------
             $Comp = Comp_Load(

@@ -16,10 +16,10 @@ $Where = Array(
 #-------------------------------------------------------------------------------
 $Columns = Array(
 		'ID','UserID','DomainName','Name','StatusID',
-                 '(SELECT `Name` FROM `RegistratorsOwners` WHERE `DomainsOrdersOwners`.`RegistratorID` = `RegistratorsOwners`.`ID`) AS `RegistratorName`'
+                 '(SELECT `Params` FROM `Servers` WHERE `DomainOrdersOwners`.`ServerID` = `Servers`.`ID`) AS `Params`'
                 );
 #-------------------------------------------------------------------------------
-$DomainOrders = DB_Select('DomainsOrdersOwners',$Columns,Array('Where'=>$Where));
+$DomainOrders = DB_Select('DomainOrdersOwners',$Columns,Array('Where'=>$Where));
 switch(ValueOf($DomainOrders)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
@@ -36,17 +36,17 @@ foreach($DomainOrders as $DomainOrder){
 	#-------------------------------------------------------------------------------
 	if(!($DomainOrder['StatusID'] == 'ForTransfer' || ($DomainOrder['StatusID'] == 'OnTransfer' && In_Array($DomainOrder['Name'],Array('ru','su','рф'))))){
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF("[Tasks/GC/DeleteDomainsForTransfer]: Домен не попал в условие: '%s.%s', статус: '%s'",$DomainOrder['DomainName'],$DomainOrder['Name'],$DomainOrder['StatusID']));
+		Debug(SPrintF("[Tasks/GC/DeleteDomainForTransfer]: Домен не попал в условие: '%s.%s', статус: '%s'",$DomainOrder['DomainName'],$DomainOrder['Name'],$DomainOrder['StatusID']));
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF("[Tasks/GC/DeleteDomainsForTransfer]: Удаление домена '%s.%s', статус '%s'",$DomainOrder['DomainName'],$DomainOrder['Name'],$DomainOrder['StatusID']));
+	Debug(SPrintF("[Tasks/GC/DeleteDomainForTransfer]: Удаление домена '%s.%s', статус '%s'",$DomainOrder['DomainName'],$DomainOrder['Name'],$DomainOrder['StatusID']));
 	#----------------------------------TRANSACTION----------------------------------
-	if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Tasks/GC/DeleteDomainsForTransfer'))))
+	if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Tasks/GC/DeleteDomainForTransfer'))))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'Deleted','RowsIDs'=>$DomainOrder['ID'],'Comment'=>SPrintF('Заказ домена не был перенесён к регистратору %s, более 180 дней',$DomainOrder['RegistratorName'])));
+	$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'Deleted','RowsIDs'=>$DomainOrder['ID'],'Comment'=>SPrintF('Заказ домена не был перенесён к регистратору %s, более 180 дней',$DomainOrder['Params']['Name'])));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Comp)){
 	case 'array':
@@ -74,7 +74,7 @@ foreach($DomainOrders as $DomainOrder){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Count = DB_Count('DomainsOrdersOwners',Array('Where'=>$Where));
+$Count = DB_Count('DomainOrdersOwners',Array('Where'=>$Where));
 if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

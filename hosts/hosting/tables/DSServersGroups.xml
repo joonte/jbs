@@ -100,7 +100,7 @@
  <System>
   <Head>Сист. упр.</Head>
   <Prompt>Система управления используемая на сервере</Prompt>
-  <Comp>Formats/System/Type</Comp>
+  <Comp>Formats/System/DSType</Comp>
    <Args>
     <ListElement>%System%</ListElement>
    </Args>

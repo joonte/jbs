@@ -261,7 +261,7 @@ case 'Order':
 	if(!Preg_Match($Regulars['DomainName'],$DomainName))
 		return new gException('WRONG_DOMAIN_NAME','Неверное имя домена');
 	#-------------------------------------------------------------------------------
-	$DomainScheme = DB_Select('DomainsSchemes',Array('ID','IsActive','MinOrderYears'),Array('UNIQ','ID'=>$DomainSchemeID));
+	$DomainScheme = DB_Select('DomainSchemes',Array('ID','IsActive','MinOrderYears'),Array('UNIQ','ID'=>$DomainSchemeID));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($DomainScheme)){
 	case 'error':
@@ -308,7 +308,7 @@ case 'Order':
 	#-------------------------------------------------------------------------------
 case 'Transfer':
 	#-------------------------------------------------------------------------------
-	$DomainScheme = DB_Select('DomainsSchemes','ID',Array('UNIQ','ID'=>$DomainSchemeID));
+	$DomainScheme = DB_Select('DomainSchemes','ID',Array('UNIQ','ID'=>$DomainSchemeID));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($DomainScheme)){
 	case 'error':

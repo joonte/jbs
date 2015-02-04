@@ -6,9 +6,9 @@
  *  Copyright © 2012 Vitaly Velikodnyy
  *
  */
- class DomainsOrdersSuspendedMsg extends Message {
+ class DomainOrdersSuspendedMsg extends Message {
      public function __construct(array $params, $toUser) {
-         parent::__construct('DomainsOrdersSuspended', $toUser);
+         parent::__construct('DomainOrdersSuspended', $toUser);
 
          $this->setParams($params);
      }

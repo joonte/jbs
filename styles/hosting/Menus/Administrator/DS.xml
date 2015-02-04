@@ -3,22 +3,32 @@
 <XML>
 <!-- *********************************************************************** -->
 <Items>
- <ListElement>
-  <Text>Заказы</Text>
-  <Prompt>Все заказы клиентов на аренду серверов</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/DSOrders$</UniqID>
-  </Paths>
-  <Href>/Administrator/DSOrders</Href>
- </ListElement>
- <ListElement>
-  <Text>Тарифы</Text>
-  <Prompt>Тарифные планы</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/DSSchemes$</UniqID>
-  </Paths>
-  <Href>/Administrator/DSSchemes</Href>
- </ListElement>
+	<ListElement>
+		<Text>Заказы</Text>
+		<Prompt>Все заказы клиентов на аренду серверов</Prompt>
+		<Paths>
+			<UniqID>^\/Administrator\/DSOrders$</UniqID>
+		</Paths>
+		<Href>/Administrator/DSOrders</Href>
+	</ListElement>
+	<!-- *********************************************************************** -->
+	<ListElement>
+		<Text>Тарифы</Text>
+		<Prompt>Тарифные планы</Prompt>
+		<Paths>
+			<UniqID>^\/Administrator\/DSSchemes$</UniqID>
+		</Paths>
+		<Href>/Administrator/DSSchemes</Href>
+	</ListElement>
+	<!-- *********************************************************************** -->
+	<ListElement>
+		<Text>Группы серверов</Text>
+		<Prompt>Характеристики объединения серверов</Prompt>
+		<Paths>
+			<UniqID>^\/Administrator\/DSServersGroups$</UniqID>
+		</Paths>
+		<Href>/Administrator/DSServersGroups</Href>
+	</ListElement>
 </Items>
 <!-- *********************************************************************** -->
 </XML>

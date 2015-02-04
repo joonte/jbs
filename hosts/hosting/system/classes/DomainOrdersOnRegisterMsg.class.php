@@ -6,9 +6,9 @@
  *  Copyright © 2012 Vitaly Velikodnyy
  *
  */
- class DomainsOrdersOnRegisterMsg extends Message {
+ class DomainOrdersOnRegisterMsg extends Message {
     public function __construct(array $params, $toUser) {
-        parent::__construct('DomainsOrdersOnRegister', $toUser);
+        parent::__construct('DomainOrdersOnRegister', $toUser);
 
         $this->setParams($params);
     }

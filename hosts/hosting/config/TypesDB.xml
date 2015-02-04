@@ -11,7 +11,7 @@
 <IsCGIAccess>Logic</IsCGIAccess>
 <IsSSIAccess>Logic</IsSSIAccess>
 <IsDnsControll>Logic</IsDnsControll>
-<IsCreateDomains>Logic</IsCreateDomains>
+<IsCreateDomain>Logic</IsCreateDomain>
 <IsManageHosting>Logic</IsManageHosting>
 <IsManageQuota>Logic</IsManageQuota>
 <IsManageSubdomains>Logic</IsManageSubdomains>
@@ -46,14 +46,14 @@
 <IsCatchAll>Logic</IsCatchAll>
 <IsSystemInfo>Logic</IsSystemInfo>
 <!-- *********************************************************************** -->
-<!-- HostingSchemes, DomainsSchemes -->
+<!-- HostingSchemes, DomainSchemes -->
 <IsActive>Logic</IsActive>
 <IsProlong>Logic</IsProlong>
 <!-- *********************************************************************** -->
 <!-- HostingOrders -->
 <Password>Crypt</Password>
 <!-- *********************************************************************** -->
-<!-- DomainsOrders -->
+<!-- DomainOrders -->
 <IsPrivateWhoIs>Logic</IsPrivateWhoIs>
 <!-- *********************************************************************** -->
 <!-- HostingServers -->

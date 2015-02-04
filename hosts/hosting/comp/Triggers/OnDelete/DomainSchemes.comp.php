@@ -10,7 +10,7 @@ $__args_list = Array('DomainScheme');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Count = DB_Count('DomainsOrders',Array('Where'=>SPrintF('`SchemeID` = %u',$DomainScheme['ID'])));
+$Count = DB_Count('DomainOrders',Array('Where'=>SPrintF('`SchemeID` = %u',$DomainScheme['ID'])));
 if(Is_Error($Count))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

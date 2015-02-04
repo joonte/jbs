@@ -8,7 +8,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(Is_Error(System_Load('classes/DOM.class.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Links = &Links();
 # Коллекция ссылок
@@ -22,53 +22,46 @@ $Table = Array();
 $Messages = Messages();
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'name'   => 'DomainName',
-    'size'   => 12,
-    'onkeydown' => 'if(IsEnter(event)) WhoIs();',
-    'prompt' => $Messages['Prompts']['Domain']['Name'],
-    'type'   => 'text'
-  )
-);
+		'Form/Input',
+		Array(
+			'name'		=> 'DomainName',
+			'size'		=> 12,
+			'onkeydown'	=> 'if(IsEnter(event)) WhoIs();',
+			'prompt'	=> $Messages['Prompts']['Domain']['Name'],
+			'type'		=> 'text'
+			)
+		);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Span = new Tag('SPAN',$Comp);
 #-------------------------------------------------------------------------------
-$DomainsZones = System_XML('config/DomainsZones.xml');
-if(Is_Error($DomainsZones))
-  return ERROR | @Trigger_Error(500);
+$DomainZones = System_XML('config/DomainZones.xml');
+if(Is_Error($DomainZones))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Options = Array();
 #-------------------------------------------------------------------------------
-foreach($DomainsZones as $DomainZone)
-  $Options[$DomainZone['Name']] = SPrintF('.%s',$DomainZone['Name']);
+foreach($DomainZones as $DomainZone)
+	$Options[$DomainZone['Name']] = SPrintF('.%s',$DomainZone['Name']);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'DomainZone'),$Options);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Span->AddChild($Comp);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Доменное имя',$Span);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'    => 'button',
-    'onclick' => 'WhoIs();',
-    'value'   => 'Проверить'
-  )
-);
+$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>'WhoIs();','value'=>'Проверить'));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = $Comp;
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Standard',$Table);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Form = new Tag('FORM',Array('name'=>'WhoIsForm','onsubmit'=>'return false;'),$Comp);
 #-------------------------------------------------------------------------------

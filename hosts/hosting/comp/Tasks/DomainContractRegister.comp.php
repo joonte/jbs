@@ -13,9 +13,9 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('classes/Registrator.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','UserID','DomainName','ProfileID','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `RegistratorID`','StatusID');
+$Columns = Array('ID','UserID','DomainName','ProfileID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','ServerID','StatusID');
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
   case 'error':
@@ -24,9 +24,9 @@ switch(ValueOf($DomainOrder)){
     return ERROR | @Trigger_Error(400);
   case 'array':
     #---------------------------------------------------------------------------
-    $Registrator = new Registrator();
+    $Server = new Registrator();
     #---------------------------------------------------------------------------
-    $IsSelected = $Registrator->Select((integer)$DomainOrder['RegistratorID']);
+    $IsSelected = $Server->Select((integer)$DomainOrder['ServerID']);
     #---------------------------------------------------------------------------
     switch(ValueOf($IsSelected)){
       case 'error':
@@ -49,7 +49,7 @@ switch(ValueOf($DomainOrder)){
                 return 300;
               case 'array':
                 #---------------------------------------------------------------
-                $ContractRegister = $Registrator->ContractRegister($Profile['TemplateID'],$Profile['Attribs'],$DomainOrder['DomainZone']);
+                $ContractRegister = $Server->ContractRegister($Profile['TemplateID'],$Profile['Attribs'],$DomainOrder['DomainZone']);
                 #---------------------------------------------------------------
                 switch(ValueOf($ContractRegister)){
                   case 'error':
@@ -64,7 +64,7 @@ switch(ValueOf($DomainOrder)){
                     if(Is_Error($IsUpdate))
                       return ERROR | @Trigger_Error(500);
                     #-----------------------------------------------------------
-                    $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'OnContractRegister','RowsIDs'=>$DomainOrderID,'Comment'=>'Регистратор принял заявку на регистрацию договора клиента'));
+                    $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'OnContractRegister','RowsIDs'=>$DomainOrderID,'Comment'=>'Регистратор принял заявку на регистрацию договора клиента'));
                     #-----------------------------------------------------------
                     switch(ValueOf($Comp)){
                       case 'error':
@@ -86,7 +86,7 @@ switch(ValueOf($DomainOrder)){
             #-------------------------------------------------------------------
             $TicketID = $Task['Params']['TicketID'];
             #-------------------------------------------------------------------
-            $GetContract = $Registrator->GetContract((string)$TicketID);
+            $GetContract = $Server->GetContract((string)$TicketID);
             #-------------------------------------------------------------------
             switch(ValueOf($GetContract)){
               case 'error':
@@ -97,11 +97,11 @@ switch(ValueOf($DomainOrder)){
                 return 300;
               case 'array':
                 #---------------------------------------------------------------
-                $IsUpdate = DB_Update('DomainsOrders',Array('ProfileID'=>NULL,'PersonID'=>$GetContract['ContractID']),Array('ID'=>$DomainOrderID));
+                $IsUpdate = DB_Update('DomainOrders',Array('ProfileID'=>NULL,'PersonID'=>$GetContract['ContractID']),Array('ID'=>$DomainOrderID));
                 if(Is_Error($IsUpdate))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'ForRegister','RowsIDs'=>$DomainOrderID,'Comment'=>'Регистратор зарегистрировал договор клиента, идет передача доменного имени на регистрацию'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'ForRegister','RowsIDs'=>$DomainOrderID,'Comment'=>'Регистратор зарегистрировал договор клиента, идет передача доменного имени на регистрацию'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':

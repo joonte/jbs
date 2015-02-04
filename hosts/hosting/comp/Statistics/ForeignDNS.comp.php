@@ -24,8 +24,8 @@ if(!$IsCreate)
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-if(IsSet($Config['Domains']['NsServers']['Ns1']['Address'])){
-  $NS1 = $Config['Domains']['NsServers']['Ns1']['Address'];
+if(IsSet($Config['Domain']['NsServers']['Ns1']['Address'])){
+  $NS1 = $Config['Domain']['NsServers']['Ns1']['Address'];
   #Debug("[comp/Statistics/ForeignDNS]: NS1 = " . $NS1);
   $Where = Array('`Ns1Name` NOT LIKE "%' . SubStr($NS1, StrPos($NS1, '.') + 1, StrLen($NS1)) . '%"');
 }else{
@@ -42,7 +42,7 @@ $Columns = Array(
 		'COUNT(*) AS Count',
 		);
 #-------------------------------------------------------------------------------
-$DNSs = DB_Select('DomainsOrdersOwners',$Columns,Array('Where'=>$Where,'SortOn'=>'Count','IsDesc'=>TRUE,'GroupBy'=>'Address'));
+$DNSs = DB_Select('DomainOrdersOwners',$Columns,Array('Where'=>$Where,'SortOn'=>'Count','IsDesc'=>TRUE,'GroupBy'=>'Address'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DNSs)){
   case 'error':
