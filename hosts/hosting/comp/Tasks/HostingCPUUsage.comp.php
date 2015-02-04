@@ -24,7 +24,7 @@ if(!$Settings['IsActive'])
 	return $ExecuteTime;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 10000','SortOn'=>'Address'));
+$Servers = DB_Select('Servers',Array('ID','Address','IsActive'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 10000','SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Servers)){
 case 'error':
@@ -49,6 +49,9 @@ foreach($Servers as $Server){
 	# костыль, чтоб тока один сервер
 	#if($Server['Address'] != 's06.host-food.ru')
 	#	continue;
+	#-------------------------------------------------------------------------------
+	if(!$Server['IsActive'])
+		continue;
 	#-------------------------------------------------------------------------------
 	$TUsages[$Server['ID']] = Array();
 	#-------------------------------------------------------------------------------
