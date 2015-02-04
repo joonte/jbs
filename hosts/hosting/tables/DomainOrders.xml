@@ -209,7 +209,7 @@
    <ListElement>%Scheme%</ListElement>
    <Length>7</Length>
   </Args>
-  <Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `Registrators` WHERE `Registrators`.`ID` = `DomainsSchemes`.`RegistratorID`),')') FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`)</Alias>
+  <Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = `DomainsSchemes`.`ServerID`),')') FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`)</Alias>
  </Scheme>
  <!-- ********************************************************************** -->
  <Expiration>

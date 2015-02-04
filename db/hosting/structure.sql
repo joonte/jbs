@@ -51,11 +51,11 @@ CREATE TABLE `Servers` (
 
 
 --
--- Table structure for table `DomainsOrders`
+-- Table structure for table `DomainOrders`
 --
 
-DROP TABLE IF EXISTS `DomainsOrders`;
-CREATE TABLE `DomainsOrders` (
+DROP TABLE IF EXISTS `DomainOrders`;
+CREATE TABLE `DomainOrders` (
   `ID` int(11) NOT NULL auto_increment,
   `OrderID` int(11) NOT NULL,
   `DomainName` char(50) default '',
@@ -80,20 +80,20 @@ CREATE TABLE `DomainsOrders` (
   `StatusID` char(30) default 'UnSeted',
   `StatusDate` int(11) default '0',
   PRIMARY KEY  (`ID`),
-  KEY `DomainsOrdersOrderID` (`OrderID`),
-  CONSTRAINT `DomainsOrdersOrderID` FOREIGN KEY (`OrderID`) REFERENCES `Orders` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  KEY `DomainsOrdersSchemeID` (`SchemeID`),
-  CONSTRAINT `DomainsOrdersSchemeID` FOREIGN KEY (`SchemeID`) REFERENCES `DomainsSchemes` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  KEY `DomainsOrdersProfileID` (`ProfileID`),
-  CONSTRAINT `DomainsOrdersProfileID` FOREIGN KEY (`ProfileID`) REFERENCES `Profiles` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE
+  KEY `DomainOrdersOrderID` (`OrderID`),
+  CONSTRAINT `DomainOrdersOrderID` FOREIGN KEY (`OrderID`) REFERENCES `Orders` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `DomainOrdersSchemeID` (`SchemeID`),
+  CONSTRAINT `DomainOrdersSchemeID` FOREIGN KEY (`SchemeID`) REFERENCES `DomainSchemes` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `DomainOrdersProfileID` (`ProfileID`),
+  CONSTRAINT `DomainOrdersProfileID` FOREIGN KEY (`ProfileID`) REFERENCES `Profiles` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `DomainsSchemes`
+-- Table structure for table `DomainSchemes`
 --
 
-DROP TABLE IF EXISTS `DomainsSchemes`;
-CREATE TABLE `DomainsSchemes` (
+DROP TABLE IF EXISTS `DomainSchemes`;
+CREATE TABLE `DomainSchemes` (
   `ID` int(11) NOT NULL auto_increment,
   `CreateDate` int(11) default '0',
   `GroupID` int(11) NOT NULL,
@@ -113,12 +113,12 @@ CREATE TABLE `DomainsSchemes` (
   `DaysBeforeTransfer` INT(3) DEFAULT '60',
   `DaysAfterTransfer` INT(3) DEFAULT '60',
   PRIMARY KEY  (`ID`),
-  KEY `DomainsSchemesGroupID` (`GroupID`),
-  CONSTRAINT `DomainsSchemesGroupID` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  KEY `DomainsSchemesUserID` (`UserID`),
-  CONSTRAINT `DomainsSchemesUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  KEY `DomainsSchemesServerID` (`ServerID`),
-  CONSTRAINT `DomainsSchemesServerID` FOREIGN KEY (`ServerID`) REFERENCES `Servers` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `DomainSchemesGroupID` (`GroupID`),
+  CONSTRAINT `DomainSchemesGroupID` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `DomainSchemesUserID` (`UserID`),
+  CONSTRAINT `DomainSchemesUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `DomainSchemesServerID` (`ServerID`),
+  CONSTRAINT `DomainSchemesServerID` FOREIGN KEY (`ServerID`) REFERENCES `Servers` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -369,8 +369,8 @@ DROP TABLE IF EXISTS `HostingDomainsPolitics`;
 -- Table structure for table `DomainsConsider`
 --
 
-DROP TABLE IF EXISTS `DomainsConsider`;
-CREATE TABLE `DomainsConsider` (
+DROP TABLE IF EXISTS `DomainConsider`;
+CREATE TABLE `DomainConsider` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `CreateDate` int(11) default '0',
   `DomainOrderID` int(11) NOT NULL,
@@ -379,8 +379,8 @@ CREATE TABLE `DomainsConsider` (
   `Cost` decimal(11,2) default '0.00',
   `Discont` decimal(11,2) default '0.00',
   PRIMARY KEY(`ID`),
-  KEY `DomainsConsiderDomainOrderID` (`DomainOrderID`),
-  CONSTRAINT `DomainsConsiderDomainOrderID` FOREIGN KEY (`DomainOrderID`) REFERENCES `DomainsOrders` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `DomainConsiderDomainOrderID` (`DomainOrderID`),
+  CONSTRAINT `DomainConsiderDomainOrderID` FOREIGN KEY (`DomainOrderID`) REFERENCES `DomainOrders` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

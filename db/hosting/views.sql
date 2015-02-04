@@ -69,12 +69,6 @@ DROP TABLE IF EXISTS `HostingPoliticsOwners`;
 #-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `DomainsBonusesOwners`;
 DROP TABLE IF EXISTS `DomainsBonusesOwners`;
-CREATE
-  VIEW `DomainsBonusesOwners` AS
-SELECT
-  `DomainsBonuses`.*
-FROM
-  `DomainsBonuses`;
 #-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `HostingSchemesOwners`;
 DROP TABLE IF EXISTS `HostingSchemesOwners`;
@@ -210,7 +204,6 @@ DROP TABLE IF EXISTS `DSPoliticsOwners`;
 -- SEPARATOR
 DROP VIEW IF EXISTS `DSDomainsPoliticsOwners`;
 DROP TABLE IF EXISTS `DSDomainsPoliticsOwners`;
-CREATE VIEW `DSDomainsPoliticsOwners` AS select `DSDomainsPolitics`.* from `DSDomainsPolitics`;
 
 
 -- SEPARATOR
@@ -273,7 +266,6 @@ DROP TABLE IF EXISTS `ExtraIPPoliticsOwners`;
 -- SEPARATOR
 DROP VIEW IF EXISTS `ExtraIPDomainsPoliticsOwners`;
 DROP TABLE IF EXISTS `ExtraIPDomainsPoliticsOwners`;
-CREATE VIEW `ExtraIPDomainsPoliticsOwners` AS select `ExtraIPDomainsPolitics`.* from `ExtraIPDomainsPolitics`;
 
 -- SEPARATOR
 DROP VIEW IF EXISTS `ExtraIPSchemesOwners`;
@@ -331,7 +323,6 @@ DROP TABLE IF EXISTS `ISPswPoliticsOwners`;
 -- SEPARATOR
 DROP VIEW IF EXISTS `ISPswDomainsPoliticsOwners`;
 DROP TABLE IF EXISTS `ISPswDomainsPoliticsOwners`;
-CREATE VIEW `ISPswDomainsPoliticsOwners` AS select `ISPswDomainsPolitics`.* from `ISPswDomainsPolitics`;
 
 -- SEPARATOR
 DROP VIEW IF EXISTS `ISPswSchemesOwners`;

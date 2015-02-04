@@ -1,0 +1,26 @@
+
+UPDATE `Services` SET `Code` = 'Domain' WHERE `Code` = 'Domains';
+
+-- SEPARATOR
+DROP TABLE IF EXISTS `DomainsBonuses`;
+-- SEPARATOR
+DROP TABLE IF EXISTS `DSDomainsPolitics`;
+-- SEPARATOR
+DROP TABLE IF EXISTS `HostingDomainsPolitics`;
+-- SEPARATOR
+DROP TABLE IF EXISTS `ExtraIPDomainsPolitics`;
+-- SEPARATOR
+DROP TABLE IF EXISTS `ISPswDomainsPolitics`;
+-- SEPARATOR
+DROP TABLE IF EXISTS `DomainsSchemesGroupsItems`;
+-- SEPARATOR
+DROP TABLE IF EXISTS `DomainsSchemesGroups`;
+-- SEPARATOR
+DROP TABLE IF EXISTS `DSBonuses`;
+-- SEPARATOR
+DROP TABLE IF EXISTS `ExtraIPBonuses`;
+-- SEPARATOR
+DROP TABLE IF EXISTS `ISPswPolitics`;
+
+
+

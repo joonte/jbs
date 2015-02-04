@@ -151,7 +151,7 @@
  <!-- ********************************************************************** -->
  <Registrator>
   <Head>Регистратор</Head>
-  <Alias>(SELECT `Name` FROM `Registrators` WHERE `Registrators`.`ID` = `RegistratorID`)</Alias>
+  <Alias>(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`)</Alias>
  </Registrator>
  <!-- ********************************************************************** -->
  <IsActive>
