@@ -71,7 +71,7 @@ default:
 foreach($Registrators as $Registrator){
 	#-------------------------------------------------------------------------------
 	$Server = Array(
-			'TemplateID'		=> 'Domains',
+			'TemplateID'		=> 'Domain',
 			'ServersGroupID'	=> $ServersGroupID,
 			'IsActive'		=> TRUE,
 			'IsDefault'		=> TRUE,
@@ -109,18 +109,18 @@ foreach($Registrators as $Registrator){
 	$RS[$Registrator['ID']] = $ServerID;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$DomainsOrders = DB_Select('DomainsOrdersOwners',Array('ID','OrderID'),Array('Where'=>SPrintF('`RegistratorID` = %u',$Registrator['ID'])));
+	$DomainOrders = DB_Select('DomainOrders',Array('ID','OrderID'),Array('Where'=>SPrintF('(SELECT `RegistratorID` FROM `DomainSchemes` WHERE `ID` = `DomainOrders`.`SchemeID`) = %u',$Registrator['ID'])));
 	#-------------------------------------------------------------------------------
-	switch(ValueOf($DomainsOrders)){
+	switch(ValueOf($DomainOrders)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
 		break;
 	case 'array':
 		#-------------------------------------------------------------------------------
-		foreach($DomainsOrders as $DomainsOrder){
+		foreach($DomainOrders as $DomainOrder){
 			#-------------------------------------------------------------------------------
-			$IsUpdate = DB_Update('Orders',Array('ServerID'=>$ServerID),Array('ID'=>$DomainsOrder['OrderID']));
+			$IsUpdate = DB_Update('Orders',Array('ServerID'=>$ServerID),Array('ID'=>$DomainOrder['OrderID']));
 			if(Is_Error($IsUpdate))
 					return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
@@ -135,39 +135,39 @@ foreach($Registrators as $Registrator){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsQuery = DB_Query('ALTER TABLE `DomainsSchemes` DROP FOREIGN KEY `DomainsSchemesRegistratorID`');
+$IsQuery = DB_Query('ALTER TABLE `DomainSchemes` DROP FOREIGN KEY `DomainSchemesRegistratorID`');
 if(Is_Error($IsQuery))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IsQuery = DB_Query('ALTER TABLE `DomainsSchemes` DROP KEY `DomainsSchemesRegistratorID`');
+$IsQuery = DB_Query('ALTER TABLE `DomainSchemes` DROP KEY `DomainSchemesRegistratorID`');
 if(Is_Error($IsQuery))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IsQuery = DB_Query('ALTER TABLE `DomainsSchemes` CHANGE `RegistratorID` `ServerID` INT(11) NOT NULL');
+$IsQuery = DB_Query('ALTER TABLE `DomainSchemes` CHANGE `RegistratorID` `ServerID` INT(11) NOT NULL');
 if(Is_Error($IsQuery))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IsQuery = DB_Query('ALTER TABLE `DomainsSchemes` ADD `tmpServerID` int(11) NOT NULL');
+$IsQuery = DB_Query('ALTER TABLE `DomainSchemes` ADD `tmpServerID` int(11) NOT NULL');
 if(Is_Error($IsQuery))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IsQuery = DB_Query('UPDATE `DomainsSchemes` SET `tmpServerID` = `ServerID`');
+$IsQuery = DB_Query('UPDATE `DomainSchemes` SET `tmpServerID` = `ServerID`');
 if(Is_Error($IsQuery))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$DomainsSchemes = DB_Select('DomainsSchemes',Array('ID','ServerID','tmpServerID'),Array('Where'=>'`ServerID` > 0'));
+$DomainSchemes = DB_Select('DomainSchemes',Array('ID','ServerID','tmpServerID'),Array('Where'=>'`ServerID` > 0'));
 #-------------------------------------------------------------------------------
-switch(ValueOf($DomainsSchemes)){
+switch(ValueOf($DomainSchemes)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
 	break;
 case 'array':
 	#-------------------------------------------------------------------------------
-	foreach($DomainsSchemes as $DomainsScheme){
+	foreach($DomainSchemes as $DomainScheme){
 		#-------------------------------------------------------------------------------
-		$IsUpdate = DB_Update('DomainsSchemes',Array('ServerID'=>$RS[$DomainsScheme['tmpServerID']]),Array('ID'=>$DomainsScheme['ID']));
+		$IsUpdate = DB_Update('DomainSchemes',Array('ServerID'=>$RS[$DomainScheme['tmpServerID']]),Array('ID'=>$DomainScheme['ID']));
 		if(Is_Error($IsUpdate))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
@@ -186,16 +186,16 @@ if(Is_Error($IsQuery))
 	return ERROR | @Trigger_Error(500);
 
 #-------------------------------------------------------------------------------
-$IsQuery = DB_Query('ALTER TABLE `DomainsSchemes` DROP `tmpServerID`');
+$IsQuery = DB_Query('ALTER TABLE `DomainSchemes` DROP `tmpServerID`');
 if(Is_Error($IsQuery))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsQuery = DB_Query('ALTER TABLE `DomainsSchemes` ADD KEY `DomainsSchemesServerID` (`ServerID`)');
+$IsQuery = DB_Query('ALTER TABLE `DomainSchemes` ADD KEY `DomainSchemesServerID` (`ServerID`)');
 if(Is_Error($IsQuery))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IsQuery = DB_Query('ALTER TABLE `DomainsSchemes` ADD CONSTRAINT `DomainsSchemesServerID` FOREIGN KEY (`ServerID`) REFERENCES `Servers` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE');
+$IsQuery = DB_Query('ALTER TABLE `DomainSchemes` ADD CONSTRAINT `DomainSchemesServerID` FOREIGN KEY (`ServerID`) REFERENCES `Servers` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE');
 if(Is_Error($IsQuery))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

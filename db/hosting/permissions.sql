@@ -21,54 +21,54 @@ VALUES
 ('HostingOrdersConsider','hosting',1,1,4000000,1,1,'no'),
 ('HostingOrdersConsider','hosting',3000000,100,1,1,2,'yes'),
 
-('DomainsOrdersRead','hosting',1,1,4000000,1,1,'yes'),
-('DomainsOrdersRead','hosting',3000000,100,1,1,2,'yes'),
+('DomainOrdersRead','hosting',1,1,4000000,1,1,'yes'),
+('DomainOrdersRead','hosting',3000000,100,1,1,2,'yes'),
 
-('DomainsOrdersPay','hosting',1,1,4000000,1,1,'yes'),
-('DomainsOrdersPay','hosting',3000000,100,1,1,2,'yes'),
+('DomainOrdersPay','hosting',1,1,4000000,1,1,'yes'),
+('DomainOrdersPay','hosting',3000000,100,1,1,2,'yes'),
 
-('DomainsOrdersNsChange','hosting',1,1,4000000,1,1,'yes'),
-('DomainsOrdersNsChange','hosting',3000000,100,1,1,2,'yes'),
+('DomainOrdersNsChange','hosting',1,1,4000000,1,1,'yes'),
+('DomainOrdersNsChange','hosting',3000000,100,1,1,2,'yes'),
 
-('DomainsOrdersConsider','hosting',1,1,4000000,1,1,'no'),
-('DomainsOrdersConsider','hosting',3000000,100,1,1,2,'yes'),
+('DomainOrdersConsider','hosting',1,1,4000000,1,1,'no'),
+('DomainOrdersConsider','hosting',3000000,100,1,1,2,'yes'),
 
 /* ----------------------------- */
 
 ('HostingOrdersStatusSet','hosting',1,1,4000000,1,1,'no'),
 ('HostingOrdersStatusSet','hosting',3000000,100,1,1,2,'yes'),
 
-('DomainsOrdersStatusSet','hosting',1,1,4000000,1,1,'no'),
-('DomainsOrdersStatusSet','hosting',3000000,100,1,1,2,'yes'),
+('DomainOrdersStatusSet','hosting',1,1,4000000,1,1,'no'),
+('DomainOrdersStatusSet','hosting',3000000,100,1,1,2,'yes'),
 
 /* ----------------------------- */
 
 ('HostingOrdersDelete','hosting',1,1,4000000,1,1,'yes'),
 ('HostingOrdersDelete','hosting',3000000,100,1,1,2,'yes'),
 
-('DomainsOrdersDelete','hosting',1,1,4000000,1,1,'yes'),
-('DomainsOrdersDelete','hosting',3000000,100,1,1,2,'yes'),
+('DomainOrdersDelete','hosting',1,1,4000000,1,1,'yes'),
+('DomainOrdersDelete','hosting',3000000,100,1,1,2,'yes'),
 
 ('HostingSchemesDelete','hosting',1,1,4000000,1,1,'no'),
 ('HostingSchemesDelete','hosting',3000000,100,1,1,2,'yes'),
 
-('DomainsSchemesDelete','hosting',1,1,4000000,1,1,'no'),
-('DomainsSchemesDelete','hosting',3000000,100,1,1,2,'yes'),
+('DomainSchemesDelete','hosting',1,1,4000000,1,1,'no'),
+('DomainSchemesDelete','hosting',3000000,100,1,1,2,'yes'),
 
-('DomainsBonusesDelete','hosting',1,1,4000000,1,1,'no'),
-('DomainsBonusesDelete','hosting',3000000,100,1,1,2,'yes'),
+('DomainBonusesDelete','hosting',1,1,4000000,1,1,'no'),
+('DomainBonusesDelete','hosting',3000000,100,1,1,2,'yes'),
 
 ('RegistratorsDelete','hosting',1,1,4000000,1,1,'no'),
 ('RegistratorsDelete','hosting',3000000,100,1,1,2,'yes'),
 
-('DomainsSchemesGroupsDelete','hosting',1,1,4000000,1,1,'no'),
-('DomainsSchemesGroupsDelete','hosting',3000000,100,1,1,2,'yes'),
+('DomainSchemesGroupsDelete','hosting',1,1,4000000,1,1,'no'),
+('DomainSchemesGroupsDelete','hosting',3000000,100,1,1,2,'yes'),
 
-('DomainsSchemesGroupsItemsDelete','hosting',1,1,4000000,1,1,'no'),
-('DomainsSchemesGroupsItemsDelete','hosting',3000000,100,1,1,2,'yes'),
+('DomainSchemesGroupsItemsDelete','hosting',1,1,4000000,1,1,'no'),
+('DomainSchemesGroupsItemsDelete','hosting',3000000,100,1,1,2,'yes'),
 
-('HostingDomainsPoliticsDelete','hosting',1,1,4000000,1,1,'no'),
-('HostingDomainsPoliticsDelete','hosting',3000000,100,1,1,2,'yes'),
+('HostingDomainPoliticsDelete','hosting',1,1,4000000,1,1,'no'),
+('HostingDomainPoliticsDelete','hosting',3000000,100,1,1,2,'yes'),
 
 
 /* values for VPS added by lissyara 2014-12-24 in 12:58 MSK */
@@ -90,8 +90,8 @@ VALUES
 ('DNSmanagerOrdersStatusSet','hosting',1,1,4000000,1,1,'no'),
 ('DNSmanagerOrdersStatusSet','hosting',3000000,100,1,1,2,'yes'),
 
-('DomainsOrdersStatusSet','hosting',1,1,4000000,1,1,'no'),
-('DomainsOrdersStatusSet','hosting',3000000,100,1,1,2,'yes'),
+('DomainOrdersStatusSet','hosting',1,1,4000000,1,1,'no'),
+('DomainOrdersStatusSet','hosting',3000000,100,1,1,2,'yes'),
 
 ('DNSmanagerOrdersDelete','hosting',1,1,4000000,1,1,'yes'),
 ('DNSmanagerOrdersDelete','hosting',3000000,100,1,1,2,'yes'),
@@ -99,8 +99,8 @@ VALUES
 ('DNSmanagerSchemesDelete','hosting',1,1,4000000,1,1,'no'),
 ('DNSmanagerSchemesDelete','hosting',3000000,100,1,1,2,'yes'),
 
-('DNSmanagerDomainsPoliticsDelete','hosting',1,1,4000000,1,1,'no'),
-('DNSmanagerDomainsPoliticsDelete','hosting',3000000,100,1,1,2,'yes'),
+('DNSmanagerDomainPoliticsDelete','hosting',1,1,4000000,1,1,'no'),
+('DNSmanagerDomainPoliticsDelete','hosting',3000000,100,1,1,2,'yes'),
 
 
 /* values for VPS added by lissyara 2011-06-14 in 21:42 MSK */
@@ -159,8 +159,8 @@ VALUES
 ('DSServersDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
 ('DSServersDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
 
-('DSDomainsPoliticsDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
-('DSDomainsPoliticsDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
+('DSDomainPoliticsDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
+('DSDomainPoliticsDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
 
 /* show or not show additional fields for server information screen */
 ('DSAdditionalInfo', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
@@ -201,8 +201,8 @@ VALUES
 ('ExtraIPsDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
 ('ExtraIPsDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
 
-('ExtraIPDomainsPoliticsDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
-('ExtraIPDomainsPoliticsDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
+('ExtraIPDomainPoliticsDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
+('ExtraIPDomainPoliticsDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
 
 /* values for ISPsw added by lissyara 2011-09-06 in 15:26 MSK */
 ('ISPswOrdersRead', 'hosting', 1, 1, 4000000, 1, 1, 'yes'),
@@ -235,8 +235,8 @@ VALUES
 ('ISPswGroupsDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
 ('ISPswGroupsDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
 
-('ISPswDomainsPoliticsDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
-('ISPswDomainsPoliticsDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
+('ISPswDomainPoliticsDelete', 'hosting', 1, 1, 4000000, 1, 1, 'no'),
+('ISPswDomainPoliticsDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
 
 ('ISPswLicensesDelete', 'hosting', 1, 1, 4000000, 1, 1, 'yes'),
 ('ISPswLicensesDelete', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
@@ -247,8 +247,8 @@ VALUES
 ('ServiceAutoProlongation', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),
 
 /* added by lissyara, for JBS-353, 2012-03-19 in 16:30 MSK */
-('DomainsOrdersChangeContactData','hosting',1,1,4000000,1,1,'yes'),
-('DomainsOrdersChangeContactData','hosting',3000000,100,1,1,2,'yes'),
+('DomainOrdersChangeContactData','hosting',1,1,4000000,1,1,'yes'),
+('DomainOrdersChangeContactData','hosting',3000000,100,1,1,2,'yes'),
 
 /* added by lissyara, for JBS-422 */
 ('ServersGroupsDelete','hosting',1,1,4000000,1,1,'no'),

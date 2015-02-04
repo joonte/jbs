@@ -4,7 +4,7 @@
 <!-- *********************************************************************** -->
 <Appearance>
  <Row>
-  <Comp>Colors/DomainsOrders</Comp>
+  <Comp>Colors/DomainOrders</Comp>
   <Args>
    <ListElement>%StatusID%</ListElement>
   </Args>
@@ -12,7 +12,7 @@
 </Appearance>
 <!-- *********************************************************************** -->
 <Source>
- <TableID>DomainsOrdersOwners</TableID>
+ <TableID>DomainOrdersOwners</TableID>
  <ColumnsIDs>
   <ListElement>ID</ListElement>
   <ListElement>OrderID</ListElement>
@@ -27,7 +27,7 @@
   <ListElement>ServiceID</ListElement>
   <ListElement>UserNotice</ListElement>
   <ListElement>AdminNotice</ListElement>
-  <ListElement>(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsOrdersOwners`.`SchemeID`=`DomainsSchemes`.`ID`) AS `DomainZone`</ListElement>
+  <ListElement>(SELECT `Name` FROM `DomainSchemes` WHERE `DomainOrdersOwners`.`SchemeID`=`DomainSchemes`.`ID`) AS `DomainZone`</ListElement>
  </ColumnsIDs>
  <Conditions>
   <Message>Заказов на домены не обнаружено.</Message>
@@ -123,7 +123,7 @@
     <ColumnsIDs>
      <ListElement>OrderID</ListElement>
      <ListElement>UserID</ListElement>
-     <ListElement>CONCAT(`DomainName`,'.',(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`))</ListElement>
+     <ListElement>CONCAT(`DomainName`,'.',(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`))</ListElement>
      <ListElement>AdminNotice</ListElement>
     </ColumnsIDs>
    </Args>
@@ -135,7 +135,7 @@
    <Args>
     <Comment>Выбранные заказы</Comment>
     <Send>
-     <TableID>DomainsOrders</TableID>
+     <TableID>DomainOrders</TableID>
     </Send>
    </Args>
   </Delete>
@@ -143,7 +143,7 @@
   <StatusSet>
    <Comp>Statuses/Set</Comp>
    <Args>
-    <ListElement>DomainsOrders</ListElement>
+    <ListElement>DomainOrders</ListElement>
    </Args>
   </StatusSet>
  </After>
@@ -156,7 +156,7 @@
 <Columns>
  <SelectID>
   <Args>
-   <TableID>DomainsOrders</TableID>
+   <TableID>DomainOrders</TableID>
   </Args>
  </SelectID>
  <!-- ********************************************************************** -->
@@ -165,7 +165,7 @@
   <IsSorted>0</IsSorted>
   <Comp>Menus/List</Comp>
   <Args>
-   <ListElement>Administrator/ListMenu/DomainsOrder.xml</ListElement>
+   <ListElement>Administrator/ListMenu/DomainOrder.xml</ListElement>
    <Replace>
     <ServiceOrderID>%ID%</ServiceOrderID>
     <ServiceID>%ServiceID%</ServiceID>
@@ -193,7 +193,7 @@
  <!-- ********************************************************************** -->
  <DomainName>
   <Head>Название</Head>
-  <Comp>Formats/DomainsOrder/Domains</Comp>
+  <Comp>Formats/DomainOrder/Domain</Comp>
   <Args>
    <ListElement>%DomainName%</ListElement>
    <Zone>%Scheme%</Zone>
@@ -209,24 +209,24 @@
    <ListElement>%Scheme%</ListElement>
    <Length>7</Length>
   </Args>
-  <Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = `DomainsSchemes`.`ServerID`),')') FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`)</Alias>
+  <Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = `DomainSchemes`.`ServerID`),')') FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`)</Alias>
  </Scheme>
  <!-- ********************************************************************** -->
  <Expiration>
   <IsSorted>0</IsSorted>
   <Head>Дата оконч.</Head>
   <Prompt>Дата окончания заказа | остаток дней</Prompt>
-  <Comp>Formats/DomainsOrder/ExpirationDate</Comp>
+  <Comp>Formats/DomainOrder/ExpirationDate</Comp>
   <Args>
    <ListElement>%ExpirationDate%</ListElement>
    <ListElement>%Expiration%</ListElement>
   </Args>
-  <Alias>(SELECT SUM(`YearsRemainded`) FROM `DomainsConsider` WHERE `DomainsConsider`.`DomainOrderID` = `DomainsOrdersOwners`.`ID` AND `DomainsConsider`.`YearsRemainded` &gt; 0)</Alias>
+  <Alias>(SELECT SUM(`YearsRemainded`) FROM `DomainConsider` WHERE `DomainConsider`.`DomainOrderID` = `DomainOrdersOwners`.`ID` AND `DomainConsider`.`YearsRemainded` &gt; 0)</Alias>
  </Expiration>
  <!-- ********************************************************************** -->
  <Status>
   <Args>
-   <ModeID>DomainsOrders</ModeID>
+   <ModeID>DomainOrders</ModeID>
   </Args>
  </Status>
 </Columns>

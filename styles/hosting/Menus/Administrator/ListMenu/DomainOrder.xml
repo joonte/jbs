@@ -5,7 +5,7 @@
 <Items>
  <UniqID>
   <Text>Дополнительная информация</Text>
-  <Href>javascript:ShowWindow("/DomainsOrderInfo",{DomainOrderID:%ServiceOrderID%});</Href>
+  <Href>javascript:ShowWindow("/DomainOrderInfo",{DomainOrderID:%ServiceOrderID%});</Href>
   <Icon>Info.gif</Icon>
  </UniqID>
  <!-- *********************************************************************** -->

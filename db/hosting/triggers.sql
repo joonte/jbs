@@ -25,8 +25,9 @@ DROP TRIGGER IF EXISTS `HostingConsiderOnUpdated`;
 DROP TRIGGER IF EXISTS `HostingConsiderOnDeleted`;
 #-------------------------------------------------------------------------------
 DROP TRIGGER IF EXISTS `DomainsSchemesOnInsert`;
+DROP TRIGGER IF EXISTS `DomainSchemesOnInsert`;
 DELIMITER |
-CREATE DEFINER = CURRENT_USER TRIGGER `DomainsSchemesOnInsert` BEFORE INSERT ON `DomainsSchemes`
+CREATE DEFINER = CURRENT_USER TRIGGER `DomainSchemesOnInsert` BEFORE INSERT ON `DomainSchemes`
   FOR EACH ROW BEGIN
     IF NEW.`CreateDate` = 0
       THEN
@@ -37,24 +38,11 @@ CREATE DEFINER = CURRENT_USER TRIGGER `DomainsSchemesOnInsert` BEFORE INSERT ON 
 DELIMITER ;
 #-------------------------------------------------------------------------------
 DROP TRIGGER IF EXISTS `DomainsBonusesOnInsert`;
-DELIMITER |
-CREATE DEFINER = CURRENT_USER TRIGGER `DomainsBonusesOnInsert` BEFORE INSERT ON `DomainsBonuses`
-  FOR EACH ROW BEGIN
-    IF NEW.`CreateDate` = 0
-      THEN
-        SET NEW.`CreateDate` = UNIX_TIMESTAMP();
-    END IF;
-    IF NEW.`YearsRemainded` = 0
-      THEN
-        SET NEW.`YearsRemainded` = NEW.`YearsReserved`;
-    END IF;
-  END;
-|
-DELIMITER ;
 #-------------------------------------------------------------------------------
 DROP TRIGGER IF EXISTS `DomainsConsiderOnInsert`;
+DROP TRIGGER IF EXISTS `DomainConsiderOnInsert`;
 DELIMITER |
-CREATE DEFINER = CURRENT_USER TRIGGER `DomainsConsiderOnInsert` BEFORE INSERT ON `DomainsConsider`
+CREATE DEFINER = CURRENT_USER TRIGGER `DomainConsiderOnInsert` BEFORE INSERT ON `DomainConsider`
   FOR EACH ROW BEGIN
     IF NEW.`CreateDate` = 0
       THEN
@@ -78,8 +66,9 @@ CREATE DEFINER = CURRENT_USER TRIGGER `HostingOrdersOnDelete` AFTER DELETE ON `H
 DELIMITER ;
 #-------------------------------------------------------------------------------
 DROP TRIGGER IF EXISTS `DomainsOrdersOnDelete`;
+DROP TRIGGER IF EXISTS `DomainOrdersOnDelete`;
 DELIMITER |
-CREATE DEFINER = CURRENT_USER TRIGGER `DomainsOrdersOnDelete` AFTER DELETE ON `DomainsOrders`
+CREATE DEFINER = CURRENT_USER TRIGGER `DomainOrdersOnDelete` AFTER DELETE ON `DomainOrders`
   FOR EACH ROW BEGIN
     DELETE FROM `Orders` WHERE `ID` = OLD.`OrderID`;
   END;
@@ -258,8 +247,9 @@ CREATE DEFINER = CURRENT_USER TRIGGER `UpdateHostingStatus` AFTER UPDATE ON `Hos
 DELIMITER ;
 #-------------------------------------------------------------------------------
 DROP TRIGGER IF EXISTS `UpdateDomainsStatus`;
+DROP TRIGGER IF EXISTS `UpdateDomainStatus`;
 DELIMITER |
-CREATE DEFINER = CURRENT_USER TRIGGER `UpdateDomainsStatus` AFTER UPDATE ON `DomainsOrders`
+CREATE DEFINER = CURRENT_USER TRIGGER `UpdateDomainStatus` AFTER UPDATE ON `DomainOrders`
   FOR EACH ROW BEGIN
     UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate`, `ExpirationDate` = NEW.`ExpirationDate`  WHERE `ID` = NEW.`OrderID`;
   END;

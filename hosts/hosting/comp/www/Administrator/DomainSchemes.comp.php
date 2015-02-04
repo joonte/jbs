@@ -9,7 +9,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM = new DOM();
 #-------------------------------------------------------------------------------
@@ -18,7 +18,7 @@ $Links = &Links();
 $Links['DOM'] = &$DOM;
 #-------------------------------------------------------------------------------
 if(Is_Error($DOM->Load('Base')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM->AddAttribs('MenuLeft',Array('args'=>'Administrator/Services'));
 #-------------------------------------------------------------------------------
@@ -26,32 +26,34 @@ $DOM->AddText('Title','Услуги → Домены → Тарифы');
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/Administrator/DomainSchemeEdit');"),'Новый тариф','Add.gif');
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Buttons/Panel',Array('Comp'=>$Comp,'Name'=>'Новый тариф'));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $NoBody = new Tag('NOBODY',$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Tables/Super','DomainsSchemes');
+$Comp = Comp_Load('Tables/Super','DomainSchemes');
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $NoBody->AddChild($Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Tab','Administrator/Domains',$NoBody);
+$Comp = Comp_Load('Tab','Administrator/Domain',$NoBody);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Into',$Comp);
 #-------------------------------------------------------------------------------
 $Out = $DOM->Build();
 #-------------------------------------------------------------------------------
 if(Is_Error($Out))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $Out;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>

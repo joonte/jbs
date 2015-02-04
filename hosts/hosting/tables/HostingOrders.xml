@@ -197,7 +197,7 @@
  <!-- ********************************************************************** -->
  <Domain>
   <Head>Домен</Head>
-  <Comp>Formats/HostingOrder/Domains</Comp>
+  <Comp>Formats/HostingOrder/Domain</Comp>
   <Args>
    <ListElement>%Domain%</ListElement>
    <ListElement>%Parked%</ListElement>

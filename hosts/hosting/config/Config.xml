@@ -94,173 +94,6 @@
 </DS>
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
-<Domains>
- <Registrators>
-  <NullRegistrator>
-   <Name>Ручная регистрация</Name>
-   <Settings>
-    <Address>www.isp.su</Address>
-    <Port>80</Port>
-    <Protocol>tcp</Protocol>
-    <PrefixAPI />
-    <PrefixNic />
-    <JurName />
-   </Settings>
-   <PersonID />
-   <UseContractRegister>0</UseContractRegister>
-   <IsSupportContracts>0</IsSupportContracts>
-   <IsSupportPrivateWhoIs>0</IsSupportPrivateWhoIs>
-  </NullRegistrator>
-  <!-- ********************************************************************* -->
-  <WebNames>
-   <Name>WebNames</Name>
-   <Settings>
-    <Address>www.webnames.ru</Address>
-    <Port>81</Port>
-    <Protocol>ssl</Protocol>
-    <PrefixAPI />
-    <PrefixNic>REGTIME</PrefixNic>
-    <JurName>ООО "Регтайм"</JurName>
-   </Settings>
-   <PersonID />
-   <UseContractRegister>0</UseContractRegister>
-   <IsSupportContracts>0</IsSupportContracts>
-   <IsSupportPrivateWhoIs>0</IsSupportPrivateWhoIs>
-  </WebNames>
-  <!-- ********************************************************************* -->
-  <NauNet>
-   <Name>NauNet</Name>
-   <Settings>
-    <Address>ssbase.naunet.ru</Address>
-    <Port>443</Port>
-    <Protocol>ssl</Protocol>
-    <PrefixAPI />
-    <PrefixNic>NAUNET</PrefixNic>
-    <JurName>ООО "Наунет СП"</JurName>
-   </Settings>
-   <PersonID>Contact login</PersonID>
-   <UseContractRegister>0</UseContractRegister>
-   <IsSupportContracts>1</IsSupportContracts>
-   <IsSupportPrivateWhoIs>1</IsSupportPrivateWhoIs>
-  </NauNet>
-  <!-- ********************************************************************* -->
-  <RuCenter>
-   <Name>RuCenter</Name>
-   <Settings>
-    <Address>www.nic.ru</Address>
-    <Port>443</Port>
-    <Protocol>ssl</Protocol>
-    <PrefixAPI />
-    <PrefixNic>RU-CENTER</PrefixNic>
-    <JurName>ЗАО "Региональный Сетевой Информационный Центр"</JurName>
-   </Settings>
-   <PersonID>000000/NIC-D</PersonID>
-   <UseContractRegister>1</UseContractRegister>
-   <IsSupportContracts>1</IsSupportContracts>
-   <IsSupportPrivateWhoIs>0</IsSupportPrivateWhoIs>
-  </RuCenter>
-  <!-- ********************************************************************* -->
-  <MasterName>
-   <Name>MasterName</Name>
-   <Settings>
-    <Address>cp.mastername.ru</Address>
-    <Port>443</Port>
-    <Protocol>ssl</Protocol>
-    <PrefixAPI />
-    <PrefixNic>REGISTRATOR</PrefixNic>
-    <JurName>ООО "Регистратор Доменов"</JurName>
-   </Settings>
-   <PersonID />
-   <UseContractRegister>1</UseContractRegister>
-   <IsSupportContracts>1</IsSupportContracts>
-   <IsSupportPrivateWhoIs>0</IsSupportPrivateWhoIs>
-  </MasterName>
-  <!-- ********************************************************************* -->
-  <RegRu>
-   <Name>RegRu</Name>
-   <Settings>
-    <Address>api.reg.ru</Address>
-    <Port>443</Port>
-    <Protocol>ssl</Protocol>
-    <PrefixAPI>/api/regru2</PrefixAPI>
-    <PrefixNic>REGRU</PrefixNic>
-    <JurName>ООО "Регистратор доменных имён РЕГ.РУ"</JurName>
-   </Settings>
-   <PersonID />
-   <UseContractRegister>0</UseContractRegister>
-   <IsSupportContracts>0</IsSupportContracts>
-   <IsSupportPrivateWhoIs>0</IsSupportPrivateWhoIs>
-  </RegRu>
-  <!-- ********************************************************************* -->
-  <LogicBoxes>
-   <Name>LogicBoxes (beta)</Name>
-   <Settings>
-    <Address>www.isp.su</Address>
-    <Port>443</Port>
-    <Protocol>ssl</Protocol>
-    <PrefixAPI />
-    <PrefixNic />
-    <JurName />
-   </Settings>
-   <PersonID />
-   <UseContractRegister>1</UseContractRegister>
-   <IsSupportContracts>1</IsSupportContracts>
-   <IsSupportPrivateWhoIs>0</IsSupportPrivateWhoIs>
-  </LogicBoxes>
-  <!-- ********************************************************************* -->
-  <Started>
-   <Name>Started (beta)</Name>
-   <Settings>
-    <Address>api.started.ru</Address>
-    <Port>443</Port>
-    <Protocol>ssl</Protocol>
-    <PrefixAPI />
-    <PrefixNic />
-    <JurName />
-   </Settings>
-   <PersonID />
-   <UseContractRegister>1</UseContractRegister>
-   <IsSupportContracts>1</IsSupportContracts>
-   <IsSupportPrivateWhoIs>0</IsSupportPrivateWhoIs>
-  </Started>
-  <!-- ********************************************************************* -->
-  <R01>
-   <Name>R01 (beta)</Name>
-   <Settings>
-    <Address>partner.r01.ru</Address>
-    <Port>1443</Port>
-    <Protocol>ssl</Protocol>
-    <PrefixAPI>partner_api.khtml</PrefixAPI>
-    <PrefixNic>R01</PrefixNic>
-    <JurName>ООО "Гарант-Парк-Телеком"</JurName>
-   </Settings>
-   <PersonID />
-   <UseContractRegister>1</UseContractRegister>
-   <IsSupportContracts>1</IsSupportContracts>
-   <IsSupportPrivateWhoIs>1</IsSupportPrivateWhoIs>
-  </R01>
-  <!-- ********************************************************************* -->
-  <InternetBS>
-   <Name>InternetBS (beta)</Name>
-   <Settings>
-    <Address>api.internet.bs</Address>
-    <Port>443</Port>
-    <Protocol>ssl</Protocol>
-    <PrefixAPI />
-    <PrefixNic />
-    <JurName />
-   </Settings>
-   <PersonID />
-   <UseContractRegister>0</UseContractRegister>
-   <IsSupportContracts>0</IsSupportContracts>
-   <IsSupportPrivateWhoIs>0</IsSupportPrivateWhoIs>
-  </InternetBS>
-  <!-- ********************************************************************* -->
-  <!-- *********************************************************************** -->
- </Registrators>
-</Domains>
-<!-- *********************************************************************** -->
-<!-- *********************************************************************** -->
 <Notifies>
 	<Types>
 		<HostingOrdersActive>
@@ -346,19 +179,19 @@
 		</DiskUsageNotice>
 		<!-- ********************************************************************* -->
 		<!-- ********************************************************************* -->
-		<DomainsOrdersOnRegister>
+		<DomainOrdersOnRegister>
 			<Title>Заказы доменов</Title>
 			<Name>Домен поступил на регистрацию</Name>
-			<Code>Domains</Code>
+			<Code>Domain</Code>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
 			<IsActive>1</IsActive>
-		</DomainsOrdersOnRegister>
+		</DomainOrdersOnRegister>
 		<!-- ********************************************************************* -->
-		<DomainsOrdersActive>
+		<DomainOrdersActive>
 			<Name>Активация заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
@@ -366,9 +199,9 @@
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
 			<IsActive>1</IsActive>
-		</DomainsOrdersActive>
+		</DomainOrdersActive>
 		<!-- ********************************************************************* -->
-		<!-- а нету такого уведомления. и было ли - не понятно. а вот шаблон отличается, тут Domain а везде Domains
+		<!-- а нету такого уведомления. и было ли - не понятно. а вот шаблон отличается, тут Domain а везде Domain
 		<DomainNsChange>
 			<Name>Смена серверов DNS</Name>
 			<GroupID>1</GroupID>
@@ -380,7 +213,7 @@
 		</DomainNsChange>
 		-->
 		<!-- ********************************************************************* -->
-		<DomainsNoticeSuspend>
+		<DomainNoticeSuspend>
 			<Name>Уведомление о блокировке заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
@@ -388,9 +221,9 @@
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
 			<IsActive>1</IsActive>
-		</DomainsNoticeSuspend>
+		</DomainNoticeSuspend>
 		<!-- ********************************************************************* -->
-		<DomainsOrdersSuspended>
+		<DomainOrdersSuspended>
 			<Name>Блокировка заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
@@ -398,9 +231,9 @@
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
 			<IsActive>1</IsActive>
-		</DomainsOrdersSuspended>
+		</DomainOrdersSuspended>
 		<!-- ********************************************************************* -->
-		<DomainsNoticeDelete>
+		<DomainNoticeDelete>
 			<Name>Уведомление о удалении заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
@@ -408,9 +241,9 @@
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
 			<IsActive>1</IsActive>
-		</DomainsNoticeDelete>
+		</DomainNoticeDelete>
 		<!-- ********************************************************************* -->
-		<DomainsOrdersDeleted>
+		<DomainOrdersDeleted>
 			<Name>Удаление заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
@@ -418,7 +251,7 @@
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
 			<IsActive>1</IsActive>
-		</DomainsOrdersDeleted>
+		</DomainOrdersDeleted>
 		<!-- ********************************************************************* -->
 		<!-- added by lissyara 2011-08-11 in 14:06 MSK *************************** -->
 		<!-- ********************************************************************* -->
@@ -711,32 +544,32 @@
 <!-- *********************************************************************** -->
 <Tasks>
  <Types>
-  <DomainsNoticeSuspend>
+  <DomainNoticeSuspend>
    <Name>Уведомления об окончании заказов на домены</Name>
    <Params type="array" />
    <IsActive>1</IsActive>
-  </DomainsNoticeSuspend>
+  </DomainNoticeSuspend>
   <!-- ********************************************************************* -->
-  <DomainsNoticeDelete>
+  <DomainNoticeDelete>
    <Name>Уведомления об удалении заказов доменов</Name>
    <Params type="array" />
    <IsActive>1</IsActive>
-  </DomainsNoticeDelete>
+  </DomainNoticeDelete>
   <!-- ********************************************************************* -->
-  <DomainsForDelete>
+  <DomainForDelete>
    <Name>Заказы на домены для удаления</Name>
    <Params type="array" />
    <IsActive>1</IsActive>
-  </DomainsForDelete>
+  </DomainForDelete>
   <!-- ********************************************************************* -->
-  <DomainsOrdersWhoIsUpdate>
+  <DomainOrdersWhoIsUpdate>
    <Name>Синхронизация доменов с базой WhoIs</Name>
    <Params type="array" />
    <ExecuteTime>05:00</ExecuteTime>
    <ExecutePeriod>00:02</ExecutePeriod>
    <Limit>5</Limit>
    <IsActive>1</IsActive>
-  </DomainsOrdersWhoIsUpdate>
+  </DomainOrdersWhoIsUpdate>
   <!-- ********************************************************************* -->
   <DomainNsChange>
    <Name>Смена именных серверов</Name>
@@ -792,11 +625,11 @@
    <IsActive>1</IsActive>
   </DomainProlong>
   <!-- ********************************************************************* -->
-  <DomainsOrdersRegStatusUpdate>
+  <DomainOrdersRegStatusUpdate>
    <Name>Проверка наличия домена у регистратора</Name>
    <SleepTime>2592000</SleepTime>
    <IsActive>1</IsActive>
-  </DomainsOrdersRegStatusUpdate>
+  </DomainOrdersRegStatusUpdate>
   <!-- ********************************************************************* -->
   <DomainTransfer>
    <Name>Перенести домен</Name>
@@ -1206,11 +1039,11 @@
     <UpdateDiskTemplates>Обновление шаблонов дисков на VPS</UpdateDiskTemplates>
     <DiskUsageNotifies>Уведомление о заканчивающемся месте на хостинге</DiskUsageNotifies>
     <EmailBoxesNotifies>Уведомление o заканчивающейся квоте почтовых ящиков</EmailBoxesNotifies>
-    <DomainsAutoProlongation>Автопродление истекающих доменов</DomainsAutoProlongation>
-    <SetSuspendExpiredDomains>Блокировка просроченных доменов</SetSuspendExpiredDomains>
+    <DomainAutoProlongation>Автопродление истекающих доменов</DomainAutoProlongation>
+    <SetSuspendExpiredDomain>Блокировка просроченных доменов</SetSuspendExpiredDomain>
     <DomainPathRegisterNotify>Уведомления о доменах с неопределёнными владельцами</DomainPathRegisterNotify>
-    <DeleteDomainsForTransfer>Удаление доменов в статусе &quot;Для переноса&quot;</DeleteDomainsForTransfer>
-    <DomainsFindOdd>Поиск доменов отсутствующих в биллинге/у регистратора</DomainsFindOdd>
+    <DeleteDomainForTransfer>Удаление доменов в статусе &quot;Для переноса&quot;</DeleteDomainForTransfer>
+    <DomainFindOdd>Поиск доменов отсутствующих в биллинге/у регистратора</DomainFindOdd>
    </DailyTasks>
    <!-- ********************************************************************* -->
   </GC>
@@ -1348,7 +1181,7 @@
    <Name>Сервер удалён</Name>
   </Deleted>
  </DSOrders>
- <DomainsOrders>
+ <DomainOrders>
   <Waiting>
    <Name>Ожидание оплаты</Name>
   </Waiting>
@@ -1397,7 +1230,7 @@
   <Deleted>
    <Name>Удален</Name>
   </Deleted>
- </DomainsOrders>
+ </DomainOrders>
  <!-- IP addresses -->
  <ExtraIPOrders>
   <Waiting>

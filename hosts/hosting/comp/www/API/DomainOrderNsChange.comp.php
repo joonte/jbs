@@ -33,7 +33,7 @@ if($Ns1IP)
 		return new gException('IP_DNS_SERVERS_CANNOT_BE_EQUAL','IP адреса DNS серверов должны быть разными');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainsOrdersOwners','*',Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainOrdersOwners','*',Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
   case 'error':
@@ -44,7 +44,7 @@ switch(ValueOf($DomainOrder)){
     #---------------------------------------------------------------------------
     $__USER = $GLOBALS['__USER'];
     #---------------------------------------------------------------------------
-    $IsPermission = Permission_Check('DomainsOrdersNsChange',(integer)$__USER['ID'],(integer)$DomainOrder['UserID']);
+    $IsPermission = Permission_Check('DomainOrdersNsChange',(integer)$__USER['ID'],(integer)$DomainOrder['UserID']);
     #---------------------------------------------------------------------------
     switch(ValueOf($IsPermission)){
       case 'error':
@@ -60,7 +60,7 @@ switch(ValueOf($DomainOrder)){
         if($DomainOrder['StatusID'] != 'Active')
           return new gException('ORDER_IS_NOT_ACTIVE','Смена именных серверов не доступна');
         #-----------------------------------------------------------------------
-        $DomainScheme = DB_Select('DomainsSchemes','*',Array('UNIQ','ID'=>$DomainOrder['SchemeID']));
+        $DomainScheme = DB_Select('DomainSchemes','*',Array('UNIQ','ID'=>$DomainOrder['SchemeID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($DomainScheme)){
           case 'error':
@@ -85,7 +85,8 @@ switch(ValueOf($DomainOrder)){
             }else{
               #-----------------------------------------------------------------
               if($Ns1IP)
-                return new gException('IP_NS1_CAN_NOT_FILL','IP адрес первого сервера имен не может быть указан');
+	        $Ns1IP = '';
+                #return new gException('IP_NS1_CAN_NOT_FILL','IP адрес первого сервера имен не может быть указан');
             }
             #-------------------------------------------------------------------
             $Ns2Name = Trim(Mb_StrToLower($Ns2Name,'UTF-8'),'.');
@@ -100,7 +101,8 @@ switch(ValueOf($DomainOrder)){
             }else{
               #-----------------------------------------------------------------
               if($Ns2IP)
-                return new gException('IP_NS2_CAN_NOT_FILL','IP адрес второго сервера имен не может быть указан');
+	        $Ns2IP = '';
+                #return new gException('IP_NS2_CAN_NOT_FILL','IP адрес второго сервера имен не может быть указан');
             }
             #-------------------------------------------------------------------
             $Ns3Name = Trim(Mb_StrToLower($Ns3Name,'UTF-8'),'.');
@@ -117,12 +119,14 @@ switch(ValueOf($DomainOrder)){
               }else{
                 #---------------------------------------------------------------
                 if($Ns3IP)
-                  return new gException('IP_NS3_CAN_NOT_FILL','IP адрес дополнительного сервера имен не может быть указан');
+		  $Ns3IP = '';
+                  #return new gException('IP_NS3_CAN_NOT_FILL','IP адрес дополнительного сервера имен не может быть указан');
               }
             }else{
               #-----------------------------------------------------------------
               if($Ns3IP)
-                return new gException('NAME_NS3_NOT_FILL','Укажите имя дополнительного сервера имен');
+	        $Ns3IP = '';
+                #return new gException('NAME_NS3_NOT_FILL','Укажите имя дополнительного сервера имен');
             }
             #-------------------------------------------------------------------
             $Ns4Name = Trim(Mb_StrToLower($Ns4Name,'UTF-8'),'.');
@@ -167,7 +171,7 @@ switch(ValueOf($DomainOrder)){
               'Ns4IP'   => $Ns4IP
             );
             #-------------------------------------------------------------------
-            $IsUpdate = DB_Update('DomainsOrders',$UDomainOrder,Array('ID'=>$DomainOrderID));
+            $IsUpdate = DB_Update('DomainOrders',$UDomainOrder,Array('ID'=>$DomainOrderID));
             if(Is_Error($IsUpdate))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
@@ -180,7 +184,7 @@ switch(ValueOf($DomainOrder)){
                 return ERROR | @Trigger_Error(400);
               case 'array':
                 #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>'ForNsChange','RowsIDs'=>$DomainOrderID,'Comment'=>'Поступила заявка на изменение именных серверов'));
+                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'ForNsChange','RowsIDs'=>$DomainOrderID,'Comment'=>'Поступила заявка на изменение именных серверов'));
                 #---------------------------------------------------------------
                 switch(ValueOf($Comp)){
                   case 'error':

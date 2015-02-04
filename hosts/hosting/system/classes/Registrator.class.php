@@ -4,17 +4,17 @@
 #-------------------------------------------------------------------------------
 class Registrator{
 # Тип регистратора
-public $TypeID = 'Default';
+public $SystemID = 'Default';
 # Параметры связи с регистратором
 public $Settings = Array();
 #-------------------------------------------------------------------------------
-public function Select($RedistratorID){
+public function Select($ServerID){
   /****************************************************************************/
   $__args_types = Array('integer');
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Settings = DB_Select('Registrators','*',Array('UNIQ','ID'=>$RedistratorID));
+  $Settings = DB_Select('Servers','*',Array('UNIQ','ID'=>$ServerID));
   #-----------------------------------------------------------------------------
   switch(ValueOf($Settings)){
     case 'error':
@@ -23,11 +23,11 @@ public function Select($RedistratorID){
       return new gException('REGISTRATOR_NOT_FOUND','Указаный регистратор не найден');
     case 'array':
       #-------------------------------------------------------------------------
-      $this->TypeID = $Settings['TypeID'];
+      $this->SystemID = $Settings['Params']['SystemID'];
       #-------------------------------------------------------------------------
       $this->Settings = $Settings;
       #-------------------------------------------------------------------------
-      if(Is_Error(System_Load(SPrintF('libs/%s.php',$this->Settings['TypeID']))))
+      if(Is_Error(System_Load(SPrintF('libs/%s.php',$this->Settings['Params']['SystemID']))))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
       return TRUE;
@@ -42,7 +42,7 @@ public function DomainRegister(){
   /****************************************************************************/
   Array_UnShift($__args__,$this->Settings);
   #-----------------------------------------------------------------------------
-  $Function = SPrintF('%s_Domain_Register',$this->TypeID);
+  $Function = SPrintF('%s_Domain_Register',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
     return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
@@ -60,7 +60,7 @@ public function GetUploadID(){
   /****************************************************************************/
   Array_UnShift($__args__,$this->Settings);
   #-----------------------------------------------------------------------------
-  $Function = SPrintF('%s_GetUploadID',$this->TypeID);
+  $Function = SPrintF('%s_GetUploadID',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
     return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
@@ -78,7 +78,7 @@ public function DomainProlong(){
   /****************************************************************************/
   Array_UnShift($__args__,$this->Settings);
   #-----------------------------------------------------------------------------
-  $Function = SPrintF('%s_Domain_Prolong',$this->TypeID);
+  $Function = SPrintF('%s_Domain_Prolong',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
     return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
@@ -96,7 +96,7 @@ public function DomainNsChange(){
   /****************************************************************************/
   Array_UnShift($__args__,$this->Settings);
   #-----------------------------------------------------------------------------
-  $Function = SPrintF('%s_Domain_Ns_Change',$this->TypeID);
+  $Function = SPrintF('%s_Domain_Ns_Change',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
     return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
@@ -114,7 +114,7 @@ public function CheckTask(){
   /****************************************************************************/
   Array_UnShift($__args__,$this->Settings);
   #-----------------------------------------------------------------------------
-  $Function = SPrintF('%s_Check_Task',$this->TypeID);
+  $Function = SPrintF('%s_Check_Task',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
     return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
@@ -132,7 +132,7 @@ public function ContractRegister(){
   /****************************************************************************/
   Array_UnShift($__args__,$this->Settings);
   #-----------------------------------------------------------------------------
-  $Function = SPrintF('%s_Contract_Register',$this->TypeID);
+  $Function = SPrintF('%s_Contract_Register',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
     return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
@@ -150,7 +150,7 @@ public function GetContract(){
   /****************************************************************************/
   Array_UnShift($__args__,$this->Settings);
   #-----------------------------------------------------------------------------
-  $Function = SPrintF('%s_Get_Contract',$this->TypeID);
+  $Function = SPrintF('%s_Get_Contract',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
     return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
@@ -168,7 +168,7 @@ public function GetBalance(){
 	/****************************************************************************/
 	Array_UnShift($__args__,$this->Settings);
 	#-----------------------------------------------------------------------------
-	$Function = SPrintF('%s_Get_Balance',$this->TypeID);
+	$Function = SPrintF('%s_Get_Balance',$this->SystemID);
 	#-----------------------------------------------------------------------------
 	if(!Function_Exists($Function))
 		return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
@@ -186,7 +186,7 @@ public function IsAvailableDomain(){
 	/****************************************************************************/
 	Array_UnShift($__args__,$this->Settings);
 	#-----------------------------------------------------------------------------
-	$Function = SPrintF('%s_Is_Available_Domain',$this->TypeID);
+	$Function = SPrintF('%s_Is_Available_Domain',$this->SystemID);
 	#-----------------------------------------------------------------------------
 	if(!Function_Exists($Function))
 		return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
@@ -206,7 +206,7 @@ public function DomainTransfer(){
   /****************************************************************************/
   Array_UnShift($__args__,$this->Settings);
   #-----------------------------------------------------------------------------
-  $Function = SPrintF('%s_Domain_Transfer',$this->TypeID);
+  $Function = SPrintF('%s_Domain_Transfer',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
     return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
@@ -220,20 +220,20 @@ public function DomainTransfer(){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-public function DomainsAccept(){
+public function DomainAccept(){
 	/****************************************************************************/
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/
 	Array_UnShift($__args__,$this->Settings);
 	#-----------------------------------------------------------------------------
-	$Function = SPrintF('%s_Domains_Accept',$this->TypeID);
+	$Function = SPrintF('%s_Domain_Accept',$this->SystemID);
 	#-----------------------------------------------------------------------------
 	if(!Function_Exists($Function))
 		return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
 	#-----------------------------------------------------------------------------
 	$Result = Call_User_Func_Array($Function,$__args__);
 	if(Is_Error($Result))
-		return ERROR | @Trigger_Error('[Registrator->DomainsAccept]: не удалось вызвать целевую функцию');
+		return ERROR | @Trigger_Error('[Registrator->DomainAccept]: не удалось вызвать целевую функцию');
 	#-----------------------------------------------------------------------------
 	return $Result;
 	#-------------------------------------------------------------------------------
@@ -247,7 +247,7 @@ public function ChangeContactDetail(){
   /****************************************************************************/
   Array_UnShift($__args__,$this->Settings);
   #-----------------------------------------------------------------------------
-  $Function = SPrintF('%s_Change_Contact_Detail',$this->TypeID);
+  $Function = SPrintF('%s_Change_Contact_Detail',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
     return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
@@ -266,7 +266,7 @@ public function GetContactDetail(){
   /****************************************************************************/
   Array_UnShift($__args__,$this->Settings);
   #-----------------------------------------------------------------------------
-  $Function = SPrintF('%s_Get_Contact_Detail',$this->TypeID);
+  $Function = SPrintF('%s_Get_Contact_Detail',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
     return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
@@ -280,20 +280,20 @@ public function GetContactDetail(){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 /* получение списка всех доменов на аккаунте */
-public function GetListDomains(){
+public function GetListDomain(){
   /****************************************************************************/
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
   Array_UnShift($__args__,$this->Settings);
   #-----------------------------------------------------------------------------
-  $Function = SPrintF('%s_Get_List_Domains',$this->TypeID);
+  $Function = SPrintF('%s_Get_List_Domain',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
     return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Registrator->GetListDomains]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[Registrator->GetListDomain]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }

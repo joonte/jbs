@@ -19,7 +19,7 @@ $OwnerTypeID   =  (string) @$Args['OwnerTypeID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainsOrdersOwners',Array('ID','UserID','SchemeID','StatusID'),Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainOrdersOwners',Array('ID','UserID','SchemeID','StatusID'),Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
   case 'error':
@@ -30,7 +30,7 @@ switch(ValueOf($DomainOrder)){
     #---------------------------------------------------------------------------
     $__USER = $GLOBALS['__USER'];
     #---------------------------------------------------------------------------
-    $IsPermission = Permission_Check('DomainsOrdersRead',(integer)$__USER['ID'],(integer)$DomainOrder['UserID']);
+    $IsPermission = Permission_Check('DomainOrdersRead',(integer)$__USER['ID'],(integer)$DomainOrder['UserID']);
     #---------------------------------------------------------------------------
     switch(ValueOf($IsPermission)){
       case 'error':
@@ -48,7 +48,7 @@ switch(ValueOf($DomainOrder)){
         #-----------------------------------------------------------------------
         $__USER = $GLOBALS['__USER'];
         #-----------------------------------------------------------------------
-        $DomainScheme = DB_Select('DomainsSchemes',Array('Name','RegistratorID','(SELECT `TypeID` FROM `Registrators` WHERE `RegistratorID` = `Registrators`.`ID`) as `RegistratorTypeID`'),Array('UNIQ','ID'=>$DomainOrder['SchemeID']));
+        $DomainScheme = DB_Select('DomainSchemes',Array('Name','ServerID','(SELECT `Params` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `Params`'),Array('UNIQ','ID'=>$DomainOrder['SchemeID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($DomainScheme)){
           case 'error':
@@ -88,7 +88,7 @@ switch(ValueOf($DomainOrder)){
             #-------------------------------------------------------------------
             $Config = Config();
             #-------------------------------------------------------------------
-            $Registrator = $Config['Domains']['Registrators'][$DomainScheme['RegistratorTypeID']];
+            $Registrator = $DomainScheme['Params'];
             #-------------------------------------------------------------------
             $IsSupportContracts = $Registrator['IsSupportContracts'];
             #-------------------------------------------------------------------
@@ -138,9 +138,9 @@ switch(ValueOf($DomainOrder)){
                     $NoBody->AddChild(new Tag('SPAN',Array('class'=>'Comment'),new Tag('SPAN',$Registrator['PersonID'])));
                   }
                   #-------------------------------------------------------------
-                  $Where = SPrintF("`ID` != %u AND `PersonID` != '' AND `UserID` = %u AND `DomainsOrdersOwners`.`SchemeID` IN(SELECT `ID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`RegistratorID` = %u)",$DomainOrder['ID'],$__USER['ID'],$DomainScheme['RegistratorID']);
+                  $Where = SPrintF("`ID` != %u AND `PersonID` != '' AND `UserID` = %u AND `DomainOrdersOwners`.`SchemeID` IN (SELECT `ID` FROM `DomainSchemes` WHERE `DomainSchemes`.`ServerID` = %u)",$DomainOrder['ID'],$__USER['ID'],$DomainScheme['ServerID']);
                   #-------------------------------------------------------------
-                  $Persons = DB_Select('DomainsOrdersOwners','PersonID',Array('Where'=>$Where));
+                  $Persons = DB_Select('DomainOrdersOwners','PersonID',Array('Where'=>$Where));
                   #-------------------------------------------------------------
                   switch(ValueOf($Persons)){
                     case 'error':

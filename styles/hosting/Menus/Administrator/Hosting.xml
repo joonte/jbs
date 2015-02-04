@@ -19,14 +19,6 @@
   </Paths>
   <Href>/Administrator/HostingSchemes</Href>
  </ListElement>
-<!-- <ListElement>
-  <Text>Доменные политики</Text>
-  <Prompt>Правила назначения бонусов на домены при оплате заказов на различные периоды</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/HostingDomainsPolitics$</UniqID>
-  </Paths>
-  <Href>/Administrator/HostingDomainsPolitics</Href>
- </ListElement> -->
 </Items>
 <!-- *********************************************************************** -->
 </XML>

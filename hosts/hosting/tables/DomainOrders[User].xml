@@ -2,7 +2,7 @@
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
 <!-- *********************************************************************** -->
-<RootID>DomainsOrders</RootID>
+<RootID>DomainOrders</RootID>
 <Cut>
  <Comps>
   <Before>
@@ -42,7 +42,7 @@
   <IsSorted>0</IsSorted>
   <Comp>Buttons/Window</Comp>
   <Args>
-   <ListElement>/DomainsOrderInfo</ListElement>
+   <ListElement>/DomainOrderInfo</ListElement>
    <ListElement>
     <DomainOrderID>%ID%</DomainOrderID>
    </ListElement>
@@ -109,7 +109,7 @@
   <IsSorted>0</IsSorted>
   <Comp>Menus/List</Comp>
   <Args>
-   <ListElement>User/ListMenu/DomainsOrder.xml</ListElement>
+   <ListElement>User/ListMenu/DomainOrder.xml</ListElement>
    <Replace>
     <ServiceOrderID>%ID%</ServiceOrderID>
     <ServiceID>%ServiceID%</ServiceID>

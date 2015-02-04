@@ -9,22 +9,19 @@ $__args_list = Array('Args');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Null($Args)){
-	#-----------------------------------------------------------------------------
+if(Is_Null($Args))
 	if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 		return ERROR | @Trigger_Error(500);
-}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 $DomainOrderID = (integer) @$Args['DomainOrderID'];
-if(!$DomainOrderID)
-	$DomainOrderID = (integer) @$Args['DomainsOrderID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','UserID','OrderID','OrderDate','ContractID','DomainName','ProfileID','PersonID','IsPrivateWhoIs','WhoIs','UpdateDate','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','StatusID','StatusDate','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `Name` FROM `Registrators` WHERE `Registrators`.`ID` = (SELECT `RegistratorID` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`)) as `RegistratorName`','(SELECT `IsAutoProlong` FROM `Orders` WHERE `DomainsOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`');
+$Columns = Array('ID','UserID','OrderID','OrderDate','ContractID','DomainName','ProfileID','PersonID','IsPrivateWhoIs','WhoIs','UpdateDate','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','StatusID','StatusDate','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`)) as `Params`','(SELECT `IsAutoProlong` FROM `Orders` WHERE `DomainOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`');
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
   case 'error':
@@ -35,7 +32,7 @@ switch(ValueOf($DomainOrder)){
     #---------------------------------------------------------------------------
     $__USER = $GLOBALS['__USER'];
     #---------------------------------------------------------------------------
-    $IsPermission = Permission_Check('DomainsOrdersRead',(integer)$__USER['ID'],(integer)$DomainOrder['UserID']);
+    $IsPermission = Permission_Check('DomainOrdersRead',(integer)$__USER['ID'],(integer)$DomainOrder['UserID']);
     #---------------------------------------------------------------------------
     switch(ValueOf($IsPermission)){
       case 'error':
@@ -79,9 +76,9 @@ switch(ValueOf($DomainOrder)){
         #-----------------------------------------------------------------------
         $Table[] = Array('Доменное имя',SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']));
         #-----------------------------------------------------------------------
-        $DomainsConsider = DB_Select('DomainsConsider','*',Array('Where'=>SPrintF('`DomainOrderID` = %u',$DomainOrder['ID'])));
+        $DomainConsider = DB_Select('DomainConsider','*',Array('Where'=>SPrintF('`DomainOrderID` = %u',$DomainOrder['ID'])));
         #-----------------------------------------------------------------------
-        switch(ValueOf($DomainsConsider)){
+        switch(ValueOf($DomainConsider)){
           case 'error':
             return ERROR | @Trigger_Error(500);
           case 'exception':
@@ -98,7 +95,7 @@ switch(ValueOf($DomainOrder)){
             #-------------------------------------------------------------------
             $RemainderSumm = 0.00;
             #-------------------------------------------------------------------
-            foreach($DomainsConsider as $ConsiderItem){
+            foreach($DomainConsider as $ConsiderItem){
               #-----------------------------------------------------------------
               $Comp = Comp_Load('Formats/Percent',$ConsiderItem['Discont']);
               if(Is_Error($Comp))
@@ -120,7 +117,7 @@ switch(ValueOf($DomainOrder)){
             #-------------------------------------------------------------------
             $Table[] = new Tag('DIV',Array('align'=>'center'),$Comp);
             #-------------------------------------------------------------------
-            $IsPermission = Permission_Check('DomainsOrdersConsider',(integer)$__USER['ID'],(integer)$DomainOrder['UserID']);
+            $IsPermission = Permission_Check('DomainOrdersConsider',(integer)$__USER['ID'],(integer)$DomainOrder['UserID']);
             #-------------------------------------------------------------------
             switch(ValueOf($IsPermission)){
               case 'error':
@@ -269,7 +266,7 @@ switch(ValueOf($DomainOrder)){
 	$Table[] = Array('Автопродление',$Comp);
 	#-----------------------------------------------------------------------
         #-----------------------------------------------------------------------
-        $Comp = Comp_Load('Statuses/State','DomainsOrders',$DomainOrder);
+        $Comp = Comp_Load('Statuses/State','DomainOrders',$DomainOrder);
         if(Is_Error($Comp))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------

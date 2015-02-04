@@ -20,9 +20,9 @@ $PayMessage	=  (string) @$Args['PayMessage'];
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','ContractID','OrderID','ServiceID','UserID','DomainName','ExpirationDate','AuthInfo','StatusID','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `DomainsOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DomainsOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT `Balance` FROM `Contracts` WHERE `DomainsOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`');
+$Columns = Array('ID','ContractID','OrderID','ServiceID','UserID','DomainName','ExpirationDate','AuthInfo','StatusID','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `DomainOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DomainOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT `Balance` FROM `Contracts` WHERE `DomainOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`');
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
   case 'error':
@@ -33,7 +33,7 @@ switch(ValueOf($DomainOrder)){
     #---------------------------------------------------------------------------
     $UserID = (integer)$DomainOrder['UserID'];
     #---------------------------------------------------------------------------
-    $IsPermission = Permission_Check('DomainsOrdersPay',(integer)$GLOBALS['__USER']['ID'],$UserID);
+    $IsPermission = Permission_Check('DomainOrdersPay',(integer)$GLOBALS['__USER']['ID'],$UserID);
     #---------------------------------------------------------------------------
     switch(ValueOf($IsPermission)){
       case 'error':
@@ -51,7 +51,7 @@ switch(ValueOf($DomainOrder)){
         if(!In_Array($StatusID,Array('Waiting','Active','Suspended','ForTransfer')))
           return new gException('ORDER_CAN_NOT_PAY','Заказ домена не может быть оплачен');
         #-----------------------------------------------------------------------
-        $DomainScheme = DB_Select('DomainsSchemes','*',Array('UNIQ','ID'=>$DomainOrder['SchemeID']));
+        $DomainScheme = DB_Select('DomainSchemes','*',Array('UNIQ','ID'=>$DomainOrder['SchemeID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($DomainScheme)){
           case 'error':
@@ -89,6 +89,11 @@ switch(ValueOf($DomainOrder)){
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
             $DomainOrderID = (integer)$DomainOrder['ID'];
+
+
+if(FALSE){
+
+
             #-------------------------------------------------------------------
             $Columns = Array('(SELECT `SchemeID` FROM `HostingOrders` WHERE `HostingOrders`.`OrderID` = `Basket`.`OrderID`) as `SchemeID`','Amount');
             #-------------------------------------------------------------------
@@ -115,7 +120,7 @@ switch(ValueOf($DomainOrder)){
                     #-----------------------------------------------------------
                     foreach($Basket as $Order){
                       #---------------------------------------------------------
-			# HostingDomainsPolitics deleted
+			# HostingDomainPolitics deleted
                     }
                     #-----------------------------------------------------------
                   break 2;
@@ -147,11 +152,11 @@ switch(ValueOf($DomainOrder)){
                 $CurrentCost = $DomainScheme[(!$IsPayed && $YearsPay - $YearsRemainded < $DomainScheme['MinOrderYears']?'CostOrder':'CostProlong')];
 	      }
               #-----------------------------------------------------------------
-              $IDomainsConsider = Array('DomainOrderID'=>$DomainOrderID,'Cost'=>$CurrentCost);
+              $IDomainConsider = Array('DomainOrderID'=>$DomainOrderID,'Cost'=>$CurrentCost);
               #-----------------------------------------------------------------
-              $Where = SPrintF("`UserID` = %u AND ((`SchemeID` = %u OR %u IN (SELECT `SchemeID` FROM `DomainsSchemesGroupsItems` WHERE `DomainsSchemesGroupsItems`.`DomainsSchemesGroupID` = `DomainsBonuses`.`DomainsSchemesGroupID`)) OR ISNULL(`SchemeID`) AND ISNULL(`DomainsSchemesGroupID`)) AND `YearsRemainded` > 0",$UserID,$DomainScheme['ID'],$DomainScheme['ID']);
+              $Where = SPrintF("`UserID` = %u AND ((`SchemeID` = %u OR %u IN (SELECT `SchemeID` FROM `DomainSchemesGroupsItems` WHERE `DomainSchemesGroupsItems`.`DomainSchemesGroupID` = `DomainBonuses`.`DomainSchemesGroupID`)) OR ISNULL(`SchemeID`) AND ISNULL(`DomainSchemesGroupID`)) AND `YearsRemainded` > 0",$UserID,$DomainScheme['ID'],$DomainScheme['ID']);
               #-----------------------------------------------------------------
-              $DomainBonus = DB_Select('DomainsBonuses','*',Array('IsDesc'=>TRUE,'SortOn'=>'Discont','Where'=>$Where));
+              $DomainBonus = DB_Select('DomainBonuses','*',Array('IsDesc'=>TRUE,'SortOn'=>'Discont','Where'=>$Where));
               #-----------------------------------------------------------------
               switch(ValueOf($DomainBonus)){
                 case 'error':
@@ -160,7 +165,7 @@ switch(ValueOf($DomainOrder)){
                   #-------------------------------------------------------------
                   $CostPay += $YearsRemainded*$CurrentCost;
                   #-------------------------------------------------------------
-                  $IDomainsConsider['YearsReserved'] = $YearsRemainded;
+                  $IDomainConsider['YearsReserved'] = $YearsRemainded;
                   #-------------------------------------------------------------
                   $YearsRemainded = 0;
                 break;
@@ -170,13 +175,13 @@ switch(ValueOf($DomainOrder)){
                   #-------------------------------------------------------------
                   $Discont = (1 - $DomainBonus['Discont']);
                   #-------------------------------------------------------------
-                  $IDomainsConsider['Discont'] = $DomainBonus['Discont'];
+                  $IDomainConsider['Discont'] = $DomainBonus['Discont'];
                   #-------------------------------------------------------------
                   if($DomainBonus['YearsRemainded'] - $YearsRemainded < 0){
                     #-----------------------------------------------------------
                     $CostPay += $DomainBonus['YearsRemainded']*$CurrentCost*$Discont;
                     #-----------------------------------------------------------
-                    $IDomainsConsider['YearsReserved'] = $DomainBonus['YearsRemainded'];
+                    $IDomainConsider['YearsReserved'] = $DomainBonus['YearsRemainded'];
                     #-----------------------------------------------------------
                     $UDomainBonus = Array('YearsRemainded'=>0);
                     #-----------------------------------------------------------
@@ -185,14 +190,14 @@ switch(ValueOf($DomainOrder)){
                     #-----------------------------------------------------------
                     $CostPay += $YearsRemainded*$CurrentCost*$Discont;
                     #-----------------------------------------------------------
-                    $IDomainsConsider['YearsReserved'] = $YearsRemainded;
+                    $IDomainConsider['YearsReserved'] = $YearsRemainded;
                     #-----------------------------------------------------------
                     $UDomainBonus = Array('YearsRemainded'=>$DomainBonus['YearsRemainded'] - $YearsRemainded);
                     #-----------------------------------------------------------
                     $YearsRemainded = 0;
                   }
                   #-------------------------------------------------------------
-                  $IsUpdate = DB_Update('DomainsBonuses',$UDomainBonus,Array('ID'=>$DomainBonus['ID']));
+                  $IsUpdate = DB_Update('DomainBonuses',$UDomainBonus,Array('ID'=>$DomainBonus['ID']));
                   if(Is_Error($IsUpdate))
                     return ERROR | @Trigger_Error(500);
                 break;
@@ -200,10 +205,40 @@ switch(ValueOf($DomainOrder)){
                   return ERROR | @Trigger_Error(101);
               }
               #-----------------------------------------------------------------
-              $IsInsert = DB_Insert('DomainsConsider',$IDomainsConsider);
+              $IsInsert = DB_Insert('DomainConsider',$IDomainConsider);
               if(Is_Error($IsInsert))
                 return ERROR | @Trigger_Error(500);
             }
+
+
+}
+$CostPay = 0.00;
+#-----------------------------------------------------------------
+$YearsRemainded = $YearsPay;
+#-----------------------------------------------------------------
+while($YearsRemainded){
+	#---------------------------------------------------------------
+	if($StatusID == 'ForTransfer'){
+		$CurrentCost = $DomainScheme['CostTransfer'];
+	}else{
+		$CurrentCost = $DomainScheme[(!$IsPayed && $YearsPay - $YearsRemainded < $DomainScheme['MinOrderYears']?'CostOrder':'CostProlong')];
+	}
+	$IDomainConsider = Array('DomainOrderID'=>$DomainOrderID,'Cost'=>$CurrentCost);
+
+	#-----------------------------------------------------------
+	$CostPay += $YearsRemainded*$CurrentCost;
+	#-----------------------------------------------------------
+	$IDomainConsider['YearsReserved'] = $YearsRemainded;
+	#-----------------------------------------------------------
+	$YearsRemainded = 0;
+	#-----------------------------------------------------------
+	$IsInsert = DB_Insert('DomainConsider',$IDomainConsider);
+	if(Is_Error($IsInsert))
+		return ERROR | @Trigger_Error(500);
+}
+
+
+
             #-------------------------------------------------------------------
             $CostPay = Round($CostPay,2);
             #-------------------------------------------------------------------
@@ -274,7 +309,7 @@ switch(ValueOf($DomainOrder)){
 		  #-------------------------------------------------------------
 		  if($StatusID == 'ForTransfer')
 		    $NewStatusID = 'OnTransfer';
-                  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainsOrders','StatusID'=>$NewStatusID,'RowsIDs'=>$DomainOrder['ID'],'Comment'=>($PayMessage)?$PayMessage:'Заказ оплачен'));
+                  $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>$NewStatusID,'RowsIDs'=>$DomainOrder['ID'],'Comment'=>($PayMessage)?$PayMessage:'Заказ оплачен'));
                   #-------------------------------------------------------------
                   switch(ValueOf($Comp)){
                     case 'error':

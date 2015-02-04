@@ -49,7 +49,7 @@ case 'array':
 			# проверяем как скоро заканчивается, и, не надо ли уведомлять о окончании
 		
 			# заказы настриваемых услуг и сильно отличающихся от хостинга - обрабатываем отдельно
-			if(In_Array($Order['Code'],Array('Default','Domains','ISPsw','DS'))){
+			if(In_Array($Order['Code'],Array('Default','Domain','ISPsw','DS'))){
 				if($Order['ExpirationDate'] < Time() + 15 * 24 * 3600){
 					#-------------------------------------------------------------------------
 					$Order['DaysRemainded'] = Ceil(($Order['ExpirationDate'] - Time())/(24*3600));
@@ -64,10 +64,10 @@ case 'array':
 					}
 					#-------------------------------------------------------------------------
 					#-------------------------------------------------------------------------
-					if($Order['Code'] == 'Domains'){
+					if($Order['Code'] == 'Domain'){
 						# выбираем данные по этому домену
-						$Columns = Array('ID','CONCAT(`DomainName`,".",(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`)) AS `DomainNameFull`');
-						$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
+						$Columns = Array('ID','CONCAT(`DomainName`,".",(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`)) AS `DomainNameFull`');
+						$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
 						switch(ValueOf($DomainOrder)){
 						case 'error':
 							return ERROR | @Trigger_Error(500);
@@ -78,7 +78,7 @@ case 'array':
 							$Params['DomainOrder'] = $DomainOrder;
 							#-------------------------------------------------------------------------------
 							$NoBody = new Tag('NOBODY');
-							$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Active.Domains',$Params));
+							$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Active.Domain',$Params));
 							#-------------------------------------------------------------------------
 							$Result[] = $NoBody;
 							break;
@@ -199,7 +199,7 @@ case 'array':
 			# уведомляем что залочен, скоро будет удалён
 			#---------------------------------------------------------------------------
 			# заказы настриваемых услуг и сильно отличающихся от хостинга - обрабатываем отдельно
-			if(In_Array($Order['Code'],Array('Default','Domains','ISPsw','DS'))){
+			if(In_Array($Order['Code'],Array('Default','Domain','ISPsw','DS'))){
 				#-------------------------------------------------------------------------
 				$Order['DaysRemainded'] = Ceil(($Order['ExpirationDate'] - Time())/(24*3600));
 				$Params['Order']['DaysRemainded'] = $Order['DaysRemainded'];
@@ -213,10 +213,10 @@ case 'array':
 				}
 				#-------------------------------------------------------------------------
 				#-------------------------------------------------------------------------
-				if($Order['Code'] == 'Domains'){
+				if($Order['Code'] == 'Domain'){
 					# выбираем данные по этому домену
-					$Columns = Array('ID','CONCAT(`DomainName`,".",(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`)) AS `DomainNameFull`');
-					$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
+					$Columns = Array('ID','CONCAT(`DomainName`,".",(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`)) AS `DomainNameFull`');
+					$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
 					switch(ValueOf($DomainOrder)){
 					case 'error':
 						return ERROR | @Trigger_Error(500);
@@ -227,7 +227,7 @@ case 'array':
 						$Params['DomainOrder'] = $DomainOrder;
 						#-------------------------------------------------------------------------------
 						$NoBody = new Tag('NOBODY');
-						$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Suspended.Domains',$Params));
+						$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Suspended.Domain',$Params));
 						#-------------------------------------------------------------------------
 						$Result[] = $NoBody;
 						break;
@@ -350,7 +350,7 @@ case 'array':
 			# уведомление о неоплаченном заказе
 			#---------------------------------------------------------------------------
 			# заказы настриваемых услуг и сильно отличающихся от хостинга - обрабатываем отдельно
-			if(In_Array($Order['Code'],Array('Default','Domains','ISPsw','DS'))){
+			if(In_Array($Order['Code'],Array('Default','Domain','ISPsw','DS'))){
 				#-------------------------------------------------------------------------
 				$Order['DaysRemainded'] = $Params['Order']['DaysRemainded'] = Ceil(($Order['ExpirationDate'] - Time())/(24*3600));
 				#-------------------------------------------------------------------------
@@ -363,10 +363,10 @@ case 'array':
 				}
 				#-------------------------------------------------------------------------
 				#-------------------------------------------------------------------------
-				if($Order['Code'] == 'Domains'){
+				if($Order['Code'] == 'Domain'){
 					# выбираем данные по этому домену
-					$Columns = Array('ID','CONCAT(`DomainName`,".",(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`)) AS `DomainNameFull`');
-					$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
+					$Columns = Array('ID','CONCAT(`DomainName`,".",(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`)) AS `DomainNameFull`');
+					$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
 					switch(ValueOf($DomainOrder)){
 					case 'error':
 						return ERROR | @Trigger_Error(500);
@@ -377,7 +377,7 @@ case 'array':
 						$Params['DomainOrder'] = $DomainOrder;
 						#-------------------------------------------------------------------------------
 						$NoBody = new Tag('NOBODY');
-						$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Waiting.Domains',$Params));
+						$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Waiting.Domain',$Params));
 						#-------------------------------------------------------------------------
 						$Result[] = $NoBody;
 						break;
@@ -472,8 +472,8 @@ case 'array':
 			#-------------------------------------------------------------------------------
 		}elseif($Order['StatusID'] == 'ClaimForRegister' && $Settings['OrdersClaimForRegister']){
 			#-------------------------------------------------------------------------------
-			$Columns = Array('ID','PersonID','ProfileID','CONCAT(`DomainName`,".",(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`)) AS `DomainNameFull`');
-			$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
+			$Columns = Array('ID','PersonID','ProfileID','CONCAT(`DomainName`,".",(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`)) AS `DomainNameFull`');
+			$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
 			switch(ValueOf($DomainOrder)){
 			case 'error':
 				return ERROR | @Trigger_Error(500);
@@ -497,9 +497,9 @@ case 'array':
 			#-------------------------------------------------------------------------------
 		}elseif($Order['StatusID'] == 'ForTransfer' && $Settings['OrdersForTransfer']){
 			#-------------------------------------------------------------------------------
-			$Columns = Array('ID','AuthInfo','DomainName','ProfileID','PersonID','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) AS `Name`','(SELECT `CostTransfer` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) AS `CostTransfer`');
+			$Columns = Array('ID','AuthInfo','DomainName','ProfileID','PersonID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`) AS `Name`','(SELECT `CostTransfer` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`) AS `CostTransfer`');
 			#-------------------------------------------------------------------------------
-			$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
+			$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
 			switch(ValueOf($DomainOrder)){
 			case 'error':
 				return ERROR | @Trigger_Error(500);
@@ -557,8 +557,8 @@ case 'array':
 
 		}elseif($Order['StatusID'] == 'OnTransfer' && $Settings['OrdersOnTransfer']){
 			#-------------------------------------------------------------------------------
-			$Columns = Array('ID','AuthInfo','DomainName','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) AS `Name`','StatusDate');
-			$DomainOrder = DB_Select('DomainsOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
+			$Columns = Array('ID','AuthInfo','DomainName','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`) AS `Name`','StatusDate');
+			$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
 			switch(ValueOf($DomainOrder)){
 			case 'error':
 				return ERROR | @Trigger_Error(500);

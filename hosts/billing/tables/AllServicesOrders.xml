@@ -7,7 +7,7 @@
   <Comp>Services/Orders/ColorWrapper</Comp>
   <Args>
    <ListElement>%StatusID%</ListElement>
-   <ListElement>%OrderTypeCode%</ListElement>
+   <ListElement>%Code%</ListElement>
   </Args>
  </Row>
 </Appearance>
@@ -30,7 +30,7 @@
   <ListElement>StatusID</ListElement>
   <ListElement>StatusDate</ListElement>
   <ListElement>ServiceID</ListElement>
-  <ListElement>(SELECT `Services`.`Code` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) AS `OrderTypeCode`</ListElement>
+  <ListElement>(SELECT `Services`.`Code` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) AS `Code`</ListElement>
   <ListElement>AdminNotice</ListElement>
   <ListElement>UserNotice</ListElement>
 <!-- не работает в MySQL. А вот в Oracle - такой фокус прокатывает
@@ -161,7 +161,7 @@
   <Prompt>Дата окончания заказа | остаток дней</Prompt>
   <Comp>Services/Orders/ExpirationDateWrapper</Comp>
   <Args>
-   <ListElement>%OrderTypeCode%</ListElement>
+   <ListElement>%Code%</ListElement>
    <ListElement>%ID%</ListElement>
   </Args>
  </Expiration>
@@ -171,7 +171,7 @@
    <IsSorted>0</IsSorted>
    <Comp>Services/Orders/ContextMenuWrapper</Comp>
    <Args>
-    <ListElement>%OrderTypeCode%</ListElement>
+    <ListElement>%Code%</ListElement>
     <Replace>
      <ServiceOrderID>%ID%</ServiceOrderID>
      <ServiceID>%ServiceID%</ServiceID>
@@ -185,7 +185,7 @@
   <Prompt>Тарифный план заказанной услуги</Prompt>
   <Comp>Services/Orders/SchemeWrapper</Comp>
   <Args>
-   <ListElement>%OrderTypeCode%</ListElement>
+   <ListElement>%Code%</ListElement>
    <ListElement>%ID%</ListElement>
   </Args>
  </Scheme>
@@ -193,7 +193,7 @@
  <!-- ********************************************************************** -->
  <Status>
   <Args>
-   <ModeID>%OrderTypeCode%:%ID%</ModeID>
+   <ModeID>%Code%:%ID%</ModeID>
    <StatusID>%StatusID%</StatusID>
    <RowID>%ID%</RowID>
   </Args>

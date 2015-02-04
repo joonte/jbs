@@ -19,30 +19,6 @@
   </Paths>
   <Href>/Administrator/DSSchemes</Href>
  </ListElement>
- <ListElement>
-  <Text>Доменные политики</Text>
-  <Prompt>Правила назначения бонусов на домены при оплате заказов на различные периоды</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/DSDomainsPolitics$</UniqID>
-  </Paths>
-  <Href>/Administrator/DSDomainsPolitics</Href>
- </ListElement>
- <ListElement>
-  <Text>Группы серверов</Text>
-  <Prompt>Характеристики объединения серверов</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/DSServersGroups$</UniqID>
-  </Paths>
-  <Href>/Administrator/DSServersGroups</Href>
- </ListElement>
-<!-- <ListElement>
-  <Text>Серверы</Text>
-  <Prompt>Места размещения клиентов</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/DSServers$</UniqID>
-  </Paths>
-  <Href>/Administrator/DSServers</Href>
- </ListElement>-->
 </Items>
 <!-- *********************************************************************** -->
 </XML>

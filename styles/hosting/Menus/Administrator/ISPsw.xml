@@ -36,16 +36,6 @@
   </Paths>
   <Href>/Administrator/ISPswLicenses</Href>
  </ListElement>
-<!-- commented by lissyara 2011-09-19 in 17:04 MSK
- <ListElement>
-  <Text>Доменные политики</Text>
-  <Prompt>Правила назначения бонусов на домены при оплате заказов на различные периоды</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/ISPswDomainsPolitics$</UniqID>
-  </Paths>
-  <Href>/Administrator/ISPswDomainsPolitics</Href>
- </ListElement>
- -->
 </Items>
 <!-- *********************************************************************** -->
 </XML>

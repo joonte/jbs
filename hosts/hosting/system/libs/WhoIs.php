@@ -9,11 +9,11 @@ function WhoIs_Parse($Domain){
   if(!Preg_Match($Regulars['Domain'],$Domain))
     return new gException('WRONG_DOMAIN_NAME','Неверное доменное имя');
   #-----------------------------------------------------------------------------
-  $DomainsZones = System_XML('config/DomainsZones.xml');
-  if(Is_Error($DomainsZones))
+  $DomainZones = System_XML('config/DomainZones.xml');
+  if(Is_Error($DomainZones))
     return ERROR | @Trigger_Error('[WhoIs_Parse]: не удалось загрузить базу WhoIs серверов');
   #-----------------------------------------------------------------------------
-  foreach($DomainsZones as $DomainZone){
+  foreach($DomainZones as $DomainZone){
     #---------------------------------------------------------------------------
     $Name = $DomainZone['Name'];
     #---------------------------------------------------------------------------
@@ -35,13 +35,13 @@ function WhoIs_Check($DomainName,$ZoneName){
   if(!Preg_Match($Regulars['DomainName'],$DomainName))
     return new gException('WRONG_DOMAIN_NAME','Неверное доменное имя');
   #-----------------------------------------------------------------------------
-  $DomainsZones = System_XML('config/DomainsZones.xml');
-  if(Is_Error($DomainsZones))
+  $DomainZones = System_XML('config/DomainZones.xml');
+  if(Is_Error($DomainZones))
     return ERROR | @Trigger_Error('[WhoIs_Check]: не удалось загрузить базу WhoIs серверов');
   #-----------------------------------------------------------------------------
   $IsSuppoted = FALSE;
   #-----------------------------------------------------------------------------
-  foreach($DomainsZones as $DomainZone){
+  foreach($DomainZones as $DomainZone){
     #---------------------------------------------------------------------------
     if($DomainZone['Name'] == $ZoneName){
       #-------------------------------------------------------------------------

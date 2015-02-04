@@ -23,9 +23,9 @@ $DomainOrderID = (integer) @$Args['DomainOrderID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/WhoIs.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','DomainName','StatusID','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `SchemeID`) as `SchemeName`');
+$Columns = Array('ID','DomainName','StatusID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`) as `SchemeName`');
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainsOrders',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainOrders',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
 case 'error':
@@ -66,7 +66,7 @@ case 'array':
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		$IsUpdate = DB_Update('DomainsOrders',$UDomainOrder,Array('ID'=>$DomainOrder['ID']));
+		$IsUpdate = DB_Update('DomainOrders',$UDomainOrder,Array('ID'=>$DomainOrder['ID']));
 		if(Is_Error($IsUpdate))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
@@ -90,7 +90,7 @@ case 'array':
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------
 				# update last whois update date
-				$IsUpdate = DB_Update('DomainsOrders',Array('UpdateDate'=>Time()),Array('ID'=>$DomainOrder['ID']));
+				$IsUpdate = DB_Update('DomainOrders',Array('UpdateDate'=>Time()),Array('ID'=>$DomainOrder['ID']));
 				if(Is_Error($IsUpdate))
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------

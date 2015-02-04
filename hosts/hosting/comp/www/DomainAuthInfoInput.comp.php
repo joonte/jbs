@@ -23,7 +23,8 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainsOrdersOwners',Array('ID','UserID','SchemeID','DomainName','Name','AuthInfo','StatusID'),Array('UNIQ','ID'=>$DomainOrderID));
+#-------------------------------------------------------------------------------
+$DomainOrder = DB_Select('DomainOrdersOwners',Array('ID','UserID','SchemeID','DomainName','Name','AuthInfo','StatusID'),Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
 case 'error':
@@ -31,25 +32,24 @@ case 'error':
 case 'exception':
 	return ERROR | @Trigger_Error(400);
 case 'array':
-	#---------------------------------------------------------------------------
-	$__USER = $GLOBALS['__USER'];
-	#---------------------------------------------------------------------------
-	$IsPermission = Permission_Check('DomainsOrdersRead',(integer)$__USER['ID'],(integer)$DomainOrder['UserID']);
-	#---------------------------------------------------------------------------
-	switch(ValueOf($IsPermission)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		return ERROR | @Trigger_Error(400);
-	case 'false':
-		return ERROR | @Trigger_Error(700);
-	case 'true':
-		# OK
-		break;
-	default:
-		return ERROR | @Trigger_Error(101);
-	}
-	#---------------------------------------------------------------------------
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+$__USER = $GLOBALS['__USER'];
+#-------------------------------------------------------------------------------
+$IsPermission = Permission_Check('DomainOrdersRead',(integer)$__USER['ID'],(integer)$DomainOrder['UserID']);
+#-------------------------------------------------------------------------------
+switch(ValueOf($IsPermission)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'false':
+	return ERROR | @Trigger_Error(700);
+case 'true':
+	# OK
 	break;
 default:
 	return ERROR | @Trigger_Error(101);
@@ -120,9 +120,11 @@ $DOM->AddChild('Into',$Form);
 $Out = $DOM->Build(FALSE);
 #-------------------------------------------------------------------------------
 if(Is_Error($Out))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return Array('Status'=>'Ok','DOM'=>$DOM->Object);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>

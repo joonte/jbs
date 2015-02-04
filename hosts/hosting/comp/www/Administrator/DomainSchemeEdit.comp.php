@@ -16,7 +16,7 @@ $DomainSchemeID = (integer) @$Args['DomainSchemeID'];
 #-------------------------------------------------------------------------------
 if($DomainSchemeID){
   #-----------------------------------------------------------------------------
-  $DomainScheme = DB_Select('DomainsSchemes','*',Array('UNIQ','ID'=>$DomainSchemeID));
+  $DomainScheme = DB_Select('DomainSchemes','*',Array('UNIQ','ID'=>$DomainSchemeID));
   #-----------------------------------------------------------------------------
   switch(ValueOf($DomainScheme)){
     case 'error':
@@ -41,7 +41,7 @@ if($DomainSchemeID){
     'CostOrder'      => 500,
     'CostProlong'    => 500,
     'CostTransfer'   => 0,
-    'RegistratorID'  => 1,
+    'ServerID'  => 1,
     'SortID'         => 10,
     'MinOrderYears'  => 1,
     'MaxActionYears' => 1,
@@ -61,7 +61,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Title = ($DomainSchemeID?'Редактирование тарифа на домен':'Добавление нового тарифа на домен');
+$Title = ($DomainSchemeID?SPrintF('Редактирование тарифа на домен .%s',$DomainScheme['Name']):'Добавление нового тарифа на домен');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
@@ -125,9 +125,9 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array('Стоимость переноса',$Comp);
 #-------------------------------------------------------------------------------
-$Registrators = DB_Select('Registrators',Array('ID','Name'));
+$Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>Array('`IsActive` = "yes"','(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 20000')));
 #-------------------------------------------------------------------------------
-switch(ValueOf($Registrators)){
+switch(ValueOf($Servers)){
   case 'error':
     return ERROR | @Trigger_Error(500);
   case 'exception':
@@ -141,10 +141,10 @@ switch(ValueOf($Registrators)){
 #-------------------------------------------------------------------------------
 $Options = Array();
 #-------------------------------------------------------------------------------
-foreach($Registrators as $Registrator)
-  $Options[$Registrator['ID']] = $Registrator['Name'];
+foreach($Servers as $Server)
+  $Options[$Server['ID']] = $Server['Address'];
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'RegistratorID'),$Options,$DomainScheme['RegistratorID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ServerID'),$Options,$DomainScheme['ServerID']);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

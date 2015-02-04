@@ -38,14 +38,19 @@ FROM
 LEFT JOIN `OrdersOwners`
 ON (`HostingOrders`.`OrderID` = `OrdersOwners`.`ID`);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `DomainsOrdersOwners`;
 DROP TABLE IF EXISTS `DomainsOrdersOwners`;
+#-------------------------------------------------------------------------------
+DROP VIEW IF EXISTS `DomainOrdersOwners`;
+DROP TABLE IF EXISTS `DomainOrdersOwners`;
+#-------------------------------------------------------------------------------
 CREATE
-  VIEW `DomainsOrdersOwners` AS
+  VIEW `DomainOrdersOwners` AS
 SELECT
-  `DomainsOrders`.*,
+  `DomainOrders`.*,
   `OrdersOwners`.`ServiceID`,
-  `DomainsSchemes`.`Name`,
+  `DomainSchemes`.`Name`,
   `OrdersOwners`.`ServerID`,
   `OrdersOwners`.`OrderDate`,
   `OrdersOwners`.`UserID`,
@@ -53,11 +58,11 @@ SELECT
   `OrdersOwners`.`UserNotice`,
   `OrdersOwners`.`AdminNotice`
 FROM
-  `DomainsOrders`
-LEFT JOIN `DomainsSchemes`
-ON (`DomainsOrders`.`SchemeID` = `DomainsSchemes`.`ID`)
+  `DomainOrders`
+LEFT JOIN `DomainSchemes`
+ON (`DomainOrders`.`SchemeID` = `DomainSchemes`.`ID`)
 LEFT JOIN `OrdersOwners`
-ON (`DomainsOrders`.`OrderID` = `OrdersOwners`.`ID`);
+ON (`DomainOrders`.`OrderID` = `OrdersOwners`.`ID`);
 #-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `HostingBonusesOwners`;
 #-------------------------------------------------------------------------------
@@ -79,15 +84,20 @@ SELECT
 FROM
   `HostingSchemes`;
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `DomainsSchemesOwners`;
 DROP TABLE IF EXISTS `DomainsSchemesOwners`;
+#-------------------------------------------------------------------------------
+DROP VIEW IF EXISTS `DomainSchemesOwners`;
+DROP TABLE IF EXISTS `DomainSchemesOwners`;
+#-------------------------------------------------------------------------------
 CREATE
-  VIEW `DomainsSchemesOwners` AS
+  VIEW `DomainSchemesOwners` AS
 SELECT
-  `DomainsSchemes`.*,
-  CONCAT(`Name`,' (',(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = `DomainsSchemes`.`ServerID`),')') AS PackageID
+  `DomainSchemes`.*,
+  CONCAT(`Name`,' (',(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = `DomainSchemes`.`ServerID`),')') AS PackageID
 FROM
-  `DomainsSchemes`;
+  `DomainSchemes`;
 #-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `HostingServersGroupsOwners`;
 DROP TABLE IF EXISTS `HostingServersGroupsOwners`;

@@ -3,7 +3,7 @@
 <XML>
 <!-- *********************************************************************** -->
 <Source>
- <TableID>DomainsSchemes</TableID>
+ <TableID>DomainSchemes</TableID>
  <ColumnsIDs>
   <ListElement>ID</ListElement>
   <ListElement>UserID</ListElement>
@@ -49,7 +49,7 @@
    <Args>
     <Comment>Выбранные тарифы</Comment>
     <Send>
-     <TableID>DomainsSchemes</TableID>
+     <TableID>DomainSchemes</TableID>
     </Send>
    </Args>
   </Delete>
@@ -64,7 +64,7 @@
 <Columns>
  <SelectID>
   <Args>
-   <TableID>DomainsSchemes</TableID>
+   <TableID>DomainSchemes</TableID>
   </Args>
  </SelectID>
  <!-- ********************************************************************** -->
@@ -166,7 +166,7 @@
 	<Orders>
 		<Head>Зак.</Head>
 		<Prompt>Кол-во активных заказов данного тарифа</Prompt>
-		<Alias>(SELECT COUNT(*) FROM `DomainsOrders` WHERE `DomainsSchemes`.`ID` = `DomainsOrders`.`SchemeID` AND `DomainsOrders`.`StatusID` = 'Active')</Alias>
+		<Alias>(SELECT COUNT(*) FROM `DomainOrders` WHERE `DomainSchemes`.`ID` = `DomainOrders`.`SchemeID` AND `DomainOrders`.`StatusID` = 'Active')</Alias>
 		<Attribs>
 			<style>text-align:right;</style>
 		</Attribs>
@@ -174,7 +174,7 @@
 	<!-- ********************************************************************** -->
  <SortID>
   <Args>
-   <TableID>DomainsSchemes</TableID>
+   <TableID>DomainSchemes</TableID>
   </Args>
  </SortID>
 </Columns>

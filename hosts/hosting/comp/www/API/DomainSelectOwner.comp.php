@@ -24,7 +24,7 @@ if(!$Agree)
   return new gException('NOT_AGREE','Вы не дали согласия на передачу ваших персональных данных');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainsOrdersOwners',Array('ID','UserID','SchemeID','StatusID','DomainName','(SELECT `Name` FROM `DomainsSchemes` WHERE `DomainsSchemes`.`ID` = `DomainsOrdersOwners`.`SchemeID`) as `DomainZone`'),Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainOrdersOwners',Array('ID','UserID','SchemeID','StatusID','DomainName','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`'),Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
   case 'error':
@@ -35,7 +35,7 @@ switch(ValueOf($DomainOrder)){
     #---------------------------------------------------------------------------
     $__USER = $GLOBALS['__USER'];
     #---------------------------------------------------------------------------
-    $IsPermission = Permission_Check('DomainsOrdersRead',(integer)$__USER['ID'],(integer)$DomainOrder['UserID']);
+    $IsPermission = Permission_Check('DomainOrdersRead',(integer)$__USER['ID'],(integer)$DomainOrder['UserID']);
     #---------------------------------------------------------------------------
     switch(ValueOf($IsPermission)){
       case 'error':
@@ -53,7 +53,7 @@ switch(ValueOf($DomainOrder)){
         #-----------------------------------------------------------------------
         $__USER = $GLOBALS['__USER'];
         #-----------------------------------------------------------------------
-        $DomainScheme = DB_Select('DomainsSchemes',Array('Name','RegistratorID','(SELECT `TypeID` FROM `Registrators` WHERE `RegistratorID` = `Registrators`.`ID`) as `RegistratorTypeID`'),Array('UNIQ','ID'=>$DomainOrder['SchemeID']));
+        $DomainScheme = DB_Select('DomainSchemes',Array('Name','ServerID','(SELECT `Params` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `Params`'),Array('UNIQ','ID'=>$DomainOrder['SchemeID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($DomainScheme)){
           case 'error':
@@ -72,7 +72,7 @@ switch(ValueOf($DomainOrder)){
                 #---------------------------------------------------------------
                 $Config = Config();
                 #---------------------------------------------------------------
-                $IsSupportContracts = $Config['Domains']['Registrators'][$DomainScheme['RegistratorTypeID']]['IsSupportContracts'];
+                $IsSupportContracts = $DomainScheme['Params']['IsSupportContracts'];
                 #---------------------------------------------------------------
                 if(!$IsSupportContracts)
                   return new gException('REGISTRATOR_NOT_SUPPORT_CONTRACTS','Регистратор не поддерживает договоры');
@@ -94,7 +94,7 @@ switch(ValueOf($DomainOrder)){
                 return ERROR | @Trigger_Error(101);
             }
             #-------------------------------------------------------------------
-            $IsUpdate = DB_Update('DomainsOrders',$UDomainOrder,Array('ID'=>$DomainOrder['ID']));
+            $IsUpdate = DB_Update('DomainOrders',$UDomainOrder,Array('ID'=>$DomainOrder['ID']));
             if(Is_Error($IsUpdate))
               return ERROR | @Trigger_Error(500);
 	    #-------------------------------------------------------------------

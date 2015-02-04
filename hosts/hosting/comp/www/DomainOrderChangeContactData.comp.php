@@ -14,7 +14,7 @@ $DomainOrderID = (integer) @$Args['DomainOrderID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','classes/Registrator.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainsOrdersOwners',Array('ID','UserID','SchemeID','DomainName','StatusID','RegistratorID'),Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainOrdersOwners',Array('ID','UserID','SchemeID','DomainName','StatusID','RegistratorID'),Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
   case 'error':
@@ -25,7 +25,7 @@ switch(ValueOf($DomainOrder)){
     #---------------------------------------------------------------------------
     $__USER = $GLOBALS['__USER'];
     #---------------------------------------------------------------------------
-    $IsPermission = Permission_Check('DomainsOrdersRead',(integer)$__USER['ID'],(integer)$DomainOrder['UserID']);
+    $IsPermission = Permission_Check('DomainOrdersRead',(integer)$__USER['ID'],(integer)$DomainOrder['UserID']);
     #---------------------------------------------------------------------------
     switch(ValueOf($IsPermission)){
       case 'error':
@@ -53,7 +53,7 @@ switch(ValueOf($DomainOrder)){
         #-----------------------------------------------------------------------
         $__USER = $GLOBALS['__USER'];
         #-----------------------------------------------------------------------
-        $DomainScheme = DB_Select('DomainsSchemes','Name',Array('UNIQ','ID'=>$DomainOrder['SchemeID']));
+        $DomainScheme = DB_Select('DomainSchemes','Name',Array('UNIQ','ID'=>$DomainOrder['SchemeID']));
         #-----------------------------------------------------------------------
         switch(ValueOf($DomainScheme)){
           case 'error':
