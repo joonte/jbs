@@ -81,7 +81,7 @@ case 'array':
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Регистратор (%s), баланс: %s',$NowReg['Params']['Name'],$Balance['Prepay']));
 			#-------------------------------------------------------------------------------
-			if((float)$Balance['Prepay'] < $NowReg['Params']['BalanceLowLimit']){
+			if((float)$Balance['Prepay'] < IntVal($NowReg['Params']['BalanceLowLimit'])){
 				#-------------------------------------------------------------------------------
 				Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Баланс (%s) ниже порога уведомления',$NowReg['Params']['Name']));
 				#-------------------------------------------------------------------------------
@@ -116,7 +116,7 @@ case 'exception':
 	break;
 	case 'array':
 		#-------------------------------------------------------------------------------
-		if($Settings['Params']['BalanceLowLimit'] > 0){
+		if(IntVal($Settings['Params']['BalanceLowLimit']) > 0){
 			#-------------------------------------------------------------------------------
 			# получаем баланс
 			$Balances = IspSoft_Get_Balance($Settings);
@@ -129,7 +129,7 @@ case 'exception':
 					Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: %s / %s',$Balance['project'],$Balance['balance']));
 					#-------------------------------------------------------------------------------
 					#-------------------------------------------------------------------------------
-					if((double)$Balance['balance'] < $Settings['Params']['BalanceLowLimit']){
+					if((double)$Balance['balance'] < IntVal($Settings['Params']['BalanceLowLimit'])){
 						#-------------------------------------------------------------------------------
 						Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: add to message: %s / %s',$Balance['project'],$Balance['balance']));
 						#-------------------------------------------------------------------------------
@@ -161,7 +161,7 @@ case 'exception':
 	break;
 case 'array':
 	#-------------------------------------------------------------------------------
-	if($ServerSettings['Params']['BalanceLowLimit'] > 0){
+	if(IntVal($ServerSettings['Params']['BalanceLowLimit']) > 0){
 		#-------------------------------------------------------------------------------
 		if(Is_Error(System_Load(SPrintF('classes/%s.class.php', $ServerSettings['Params']['Provider']))))
 			return ERROR | @Trigger_Error(500);
@@ -178,7 +178,7 @@ case 'array':
 			$Balance = (double)$SMS->balance;
 			Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: баланс SMS шлюза "%s" равен: %s',$ServerSettings['Params']['Provider'],$Balance));
 			#-------------------------------------------------------------------------------
-			if($Balance < $ServerSettings['Params']['BalanceLowLimit']){
+			if($Balance < IntVal($ServerSettings['Params']['BalanceLowLimit'])){
 				#-------------------------------------------------------------------------------
 				Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: SMS provider low balance = %s',$Balance));
 				$Message .= SPrintF("Остаток на счете SMS шлюза \"%s\" ниже допустимого минимума: %01.2f руб.\n",$ServerSettings['Params']['Provider'],$Balance);

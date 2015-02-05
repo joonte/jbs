@@ -68,12 +68,17 @@ $Regulars = Regulars();
 if(!Preg_Match($Regulars['DomainName'],$DomainName))
 	return new gException('WRONG_DOMAIN_NAME','Неверное имя домена');
 #-------------------------------------------------------------------------------
-$Count = DB_Count('DomainSchemes',Array('ID'=>$SchemeID));
-if(Is_Error($Count))
-	return  ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-if(!$Count)
+$DomainScheme = DB_Select('DomainSchemes','*',Array('UNIQ','ID'=>$SchemeID));
+switch(ValueOf($DomainScheme)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
 	return new gException('DOMAIN_SCHEME_NOT_FOUND','Тарифный план на домен не найден');
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($PersonID)
@@ -147,7 +152,7 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID),Array('ID'=>$DomainOrder['OrderID']));
+$IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$DomainScheme['ServerID']),Array('ID'=>$DomainOrder['OrderID']));
 if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

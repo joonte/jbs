@@ -367,7 +367,7 @@
 			<type>text</type>
 			<style>width: 100%;</style>
 		</Attribs>
-		<IsDuty>1</IsDuty>
+		<IsDuty>0</IsDuty>
 		<Value>3000</Value>
 	</BalanceLowLimit>
 	<!-- *********************************************************************** -->

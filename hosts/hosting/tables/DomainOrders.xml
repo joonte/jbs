@@ -28,6 +28,7 @@
   <ListElement>UserNotice</ListElement>
   <ListElement>AdminNotice</ListElement>
   <ListElement>(SELECT `Name` FROM `DomainSchemes` WHERE `DomainOrdersOwners`.`SchemeID`=`DomainSchemes`.`ID`) AS `DomainZone`</ListElement>
+  <ListElement>(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `DomainOrdersOwners`.`ServerID`) AS `Registrator`</ListElement>
  </ColumnsIDs>
  <Conditions>
   <Message>Заказов на домены не обнаружено.</Message>
@@ -204,12 +205,12 @@
  <!-- ********************************************************************** -->
  <Scheme>
   <Head>Тариф</Head>
-  <Comp>Formats/String</Comp>
+  <Comp>Formats/DomainOrder/Scheme</Comp>
   <Args>
+   <ListElement>%Registrator%</ListElement>
    <ListElement>%Scheme%</ListElement>
-   <Length>7</Length>
   </Args>
-  <Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = `DomainSchemes`.`ServerID`),')') FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`)</Alias>
+  <Alias>(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`)</Alias>
  </Scheme>
  <!-- ********************************************************************** -->
  <Expiration>

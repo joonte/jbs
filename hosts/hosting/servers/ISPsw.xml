@@ -42,8 +42,8 @@
 			<type>text</type>
 			<style>width: 100%;</style>
 		</Attribs>
-		<IsDuty>1</IsDuty>
-		<Value />
+		<IsDuty>0</IsDuty>
+		<Value>500</Value>
 	</BalanceLowLimit>
 	<!-- *********************************************************************** -->
 </Attribs>

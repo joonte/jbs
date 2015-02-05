@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -75,7 +74,7 @@ if($StepID){
   if(!$DomainSchemeID)
     return new gException('DOMAIN_SCHEME_NOT_DEFINED','Доменная зона не выбрана');
   #-----------------------------------------------------------------------------
-  $Columns = Array('`DomainSchemes`.`ID`','`DomainSchemes`.`Name` as `Name`','`DomainSchemes`.`IsActive` AS `IsActive`','`Servers`.`Address` as `Address`','`Servers`.`Params` as `Params`','Ns1Name','Ns2Name','Ns3Name','Ns4Name','DaysAfterTransfer','DaysBeforeTransfer');
+  $Columns = Array('`DomainSchemes`.`ID`','`DomainSchemes`.`Name` as `Name`','`DomainSchemes`.`IsActive` AS `IsActive`','`Servers`.`Params` as `Params`','DaysAfterTransfer','DaysBeforeTransfer');
   #-----------------------------------------------------------------------------
   $DomainScheme = DB_Select(Array('DomainSchemes','Servers'),$Columns,Array('UNIQ','Where'=>SPrintF('`DomainSchemes`.`ServerID` = `Servers`.`ID` AND `DomainSchemes`.`ID` = %u',$DomainSchemeID)));
   #-----------------------------------------------------------------------------
@@ -251,7 +250,7 @@ if($StepID){
       if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
-      $Columns = Array('ID','Name','ServerID','CostProlong','(SELECT `Address` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `Address`','(SELECT `Params` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `Params`','(SELECT `SortID` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `ServerSortID`');
+      $Columns = Array('ID','Name','ServerID','CostProlong','(SELECT `Params` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `Params`','(SELECT `SortID` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `ServerSortID`');
       #-------------------------------------------------------------------------
       $DomainSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('ServerSortID','SortID'),'Where'=>"`IsActive` = 'yes'"));
       #-------------------------------------------------------------------------

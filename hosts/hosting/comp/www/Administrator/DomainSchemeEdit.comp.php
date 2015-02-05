@@ -73,19 +73,13 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = $Comp;
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'name'  => 'Name',
-    'size'  => 6,
-    'value' => $DomainScheme['Name']
-  )
-);
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'Name','prompt'=>"Доменная зона в которой будут регистраироваться домены по данному тарифу.\nНапример 'su', 'ru', 'рф'",'value'=>$DomainScheme['Name']));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Доменная зона',$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes'));
 if(Is_Error($Comp))
@@ -125,37 +119,37 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array('Стоимость переноса',$Comp);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>Array('`IsActive` = "yes"','(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 20000')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Servers)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return new gException('REGISTRATORS_NOT_FOUND','Регистраторы не найдены');
-  case 'array':
-    # No more...
-  break;
-  default:
-    return ERROR | @Trigger_Error(101);
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('REGISTRATORS_NOT_FOUND','Регистраторы не найдены');
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
 $Options = Array();
 #-------------------------------------------------------------------------------
 foreach($Servers as $Server)
-  $Options[$Server['ID']] = $Server['Address'];
+	$Options[$Server['ID']] = $Server['Address'];
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ServerID'),$Options,$DomainScheme['ServerID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ServerID','style'=>'width: 240px;'),$Options,$DomainScheme['ServerID']);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Регистратор',$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
     'name'  => 'SortID',
-    'size'  => 6,
     'value' => $DomainScheme['SortID']
   )
 );
@@ -170,7 +164,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 6,
     'name'  => 'MinOrderYears',
     'value' => $DomainScheme['MinOrderYears']
   )
@@ -184,7 +177,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 6,
     'name'  => 'MaxActionYears',
     'value' => $DomainScheme['MaxActionYears']
   )
@@ -198,7 +190,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 6,
     'name'  => 'DaysToProlong',
     'value' => $DomainScheme['DaysToProlong'],
     'prompt'=> 'За сколько дней до окончания домена его можно продлевать'
@@ -214,7 +205,6 @@ $Comp = Comp_Load(
   'Form/Input',
      Array(
     'type'  => 'text',
-    'size'  => 6,
     'name'  => 'DaysBeforeTransfer',
     'value' => $DomainScheme['DaysBeforeTransfer'],
     'prompt'=> 'Многие регистраторы, ставят ограничение на возможность переноса домена, если домен скоро оканчивается'
@@ -231,7 +221,6 @@ $Comp = Comp_Load(
   'Form/Input',
      Array(
     'type'  => 'text',
-    'size'  => 6,
     'name'  => 'DaysAfterTransfer',
     'value' => $DomainScheme['DaysAfterTransfer'],
     'prompt'=> 'Некоторые регистраторы, ставят ограничение на возможность переноса домена, сразу после его регистрации или продления. По прошествии указанного числа дней, перенос возможен'
@@ -248,7 +237,6 @@ $Comp = Comp_Load(
   'Form/Input',
      Array(
     'type'  => 'text',
-    'size'  => 6,
     'name'  => 'MaxOrders',
     'value' => $DomainScheme['MaxOrders'],
     'prompt'=> 'Максимально возможное число заказов по данному тарифу, на каждого клиента. Используется для создания "триальных" тарифных планов. Для снятия ограничений, введите ноль.'
