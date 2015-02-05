@@ -2,6 +2,15 @@
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
 <!-- *********************************************************************** -->
+<Appearance>
+	<Row>
+		<Comp>Colors/Schemes</Comp>
+		<Args>
+			<ListElement>%IsActive%</ListElement>
+		</Args>
+	</Row>
+</Appearance>
+<!-- *********************************************************************** -->
 <Source>
  <TableID>DSSchemes</TableID>
  <ColumnsIDs>
@@ -261,22 +270,26 @@
    <style>text-align:center;</style>
   </Attribs>
  </cpufreq>
- <!-- ********************************************************************** -->
- <IsActive>
-  <Head>Актив.</Head>
-  <Prompt>Тариф активен?</Prompt>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsActive%</ListElement>
-  </Args>
- </IsActive>
- <!-- ********************************************************************** -->
- <SortID>
-  <Args>
-   <TableID>DSSchemes</TableID>
-  </Args>
- </SortID>
+	<!-- ********************************************************************** -->
+	<IsActive>
+		<Head>Актив.</Head>
+		<Prompt>Тариф активен?</Prompt>
+		<Comp>BooleanEdit</Comp>
+		<Args>
+			<ListElement>DSSchemes</ListElement>
+			<ListElement>IsActive</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>%IsActive%</ListElement>
+		</Args>
+	</IsActive>
+	<!-- ********************************************************************** -->
+	<SortID>
+		<Args>
+			<TableID>DSSchemes</TableID>
+		</Args>
+	</SortID>
 </Columns>
+<!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Sequence>
  <ListElement>SelectID</ListElement>

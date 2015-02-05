@@ -2,6 +2,15 @@
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
 <!-- *********************************************************************** -->
+<Appearance>
+	<Row>
+		<Comp>Colors/Schemes</Comp>
+		<Args>
+			<ListElement>%IsActive%</ListElement>
+		</Args>
+	</Row>
+</Appearance>
+<!-- *********************************************************************** -->
 <Source>
  <TableID>DomainSchemes</TableID>
  <ColumnsIDs>
@@ -148,26 +157,29 @@
    <ListElement>%CostTransfer%</ListElement>
   </Args>
  </CostTransfer>
- <!-- ********************************************************************** -->
- <Registrator>
-  <Head>Регистратор</Head>
-  <Comp>Formats/System/Param</Comp>
-  <Args>
-   <Params>%Registrator%</Params>
-   <Key>Name</Key>
-  </Args>
-  <Alias>(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`)</Alias>
- </Registrator>
- <!-- ********************************************************************** -->
- <IsActive>
-  <Head>Актив.</Head>
-  <Prompt>Тариф активен?</Prompt>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsActive%</ListElement>
-  </Args>
- </IsActive>
- <!-- ********************************************************************** -->
+	<!-- ********************************************************************** -->
+	<Registrator>
+		<Head>Регистратор</Head>
+		<Comp>Formats/System/Param</Comp>
+		<Args>
+			<Params>%Registrator%</Params>
+			<Key>Name</Key>
+		</Args>
+		<Alias>(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`)</Alias>
+	</Registrator>
+	<!-- ********************************************************************** -->
+	<IsActive>
+		<Head>Актив.</Head>
+		<Prompt>Тариф активен?</Prompt>
+		<Comp>BooleanEdit</Comp>
+		<Args>
+			<ListElement>DomainSchemes</ListElement>
+			<ListElement>IsActive</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>%IsActive%</ListElement>
+		</Args>
+	</IsActive>
+	<!-- ********************************************************************** -->
 	<Orders>
 		<Head>Зак.</Head>
 		<Prompt>Кол-во активных заказов данного тарифа</Prompt>
@@ -177,12 +189,14 @@
 		</Attribs>
 	</Orders>
 	<!-- ********************************************************************** -->
- <SortID>
-  <Args>
-   <TableID>DomainSchemes</TableID>
-  </Args>
- </SortID>
+	<SortID>
+		<Args>
+			<TableID>DomainSchemes</TableID>
+		</Args>
+	</SortID>
 </Columns>
+<!-- ********************************************************************** -->
+<!-- ********************************************************************** -->
 <Sequence>
  <ListElement>SelectID</ListElement>
  <ListElement>Info</ListElement>

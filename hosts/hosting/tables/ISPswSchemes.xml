@@ -2,6 +2,15 @@
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
 <!-- *********************************************************************** -->
+<Appearance>
+	<Row>
+		<Comp>Colors/Schemes</Comp>
+		<Args>
+			<ListElement>%IsActive%</ListElement>
+		</Args>
+	</Row>
+</Appearance>
+<!-- *********************************************************************** -->
 <Source>
  <TableID>ISPswSchemes</TableID>
  <ColumnsIDs>
@@ -147,19 +156,20 @@
   </Args>
   <Alias>(SELECT `Name` FROM `ISPswGroups` WHERE `ISPswGroups`.`ID` = `SoftWareGroup`)</Alias>
  </SoftWareGroup>
- <!-- ********************************************************************** -->
- <!-- ********************************************************************** -->
- <!-- ********************************************************************** -->
- <!-- ********************************************************************** -->
- <IsActive>
-  <Head>Актив.</Head>
-  <Prompt>Тариф активен?</Prompt>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsActive%</ListElement>
-  </Args>
- </IsActive>
- <!-- ********************************************************************** -->
+	<!-- ********************************************************************** -->
+	<IsActive>
+		<Head>Актив.</Head>
+		<Prompt>Тариф активен?</Prompt>
+		<Comp>Formats/Logic</Comp>
+		<Comp>BooleanEdit</Comp>
+		<Args>
+			<ListElement>ISPswSchemes</ListElement>
+			<ListElement>IsActive</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>%IsActive%</ListElement>
+		</Args>
+	</IsActive>
+	<!-- ********************************************************************** -->
 	<Orders>
 		<Head>Зак.</Head>
 		<Prompt>Кол-во активных заказов данного тарифа</Prompt>
@@ -169,15 +179,16 @@
 		</Attribs>
 	</Orders>
 	<!-- *********************************************************************** -->
- <SortID>
-  <Args>
-   <TableID>ISPswSchemes</TableID>
-  </Args>
-  <Attribs>
-   <style>width:22px;</style>
-  </Attribs>
- </SortID>
+	<SortID>
+		<Args>
+			<TableID>ISPswSchemes</TableID>
+		</Args>
+		<Attribs>
+			<style>width:22px;</style>
+		</Attribs>
+	</SortID>
 </Columns>
+<!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Sequence>
  <ListElement>SelectID</ListElement>

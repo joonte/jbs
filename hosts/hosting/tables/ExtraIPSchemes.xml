@@ -2,6 +2,15 @@
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
 <!-- *********************************************************************** -->
+<Appearance>
+	<Row>
+		<Comp>Colors/Schemes</Comp>
+		<Args>
+			<ListElement>%IsActive%</ListElement>
+		</Args>
+	</Row>
+</Appearance>
+<!-- *********************************************************************** -->
 <Source>
  <TableID>ExtraIPSchemes</TableID>
  <ColumnsIDs>
@@ -146,16 +155,19 @@
    <ListElement>%CostInstall%</ListElement>
   </Args>
  </CostInstall>
- <!-- ********************************************************************** -->
- <IsActive>
-  <Head>Актив.</Head>
-  <Prompt>Тариф активен?</Prompt>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsActive%</ListElement>
-  </Args>
- </IsActive>
- <!-- ********************************************************************** -->
+	<!-- ********************************************************************** -->
+	<IsActive>
+		<Head>Актив.</Head>
+		<Prompt>Тариф активен?</Prompt>
+		<Comp>BooleanEdit</Comp>
+		<Args>
+			<ListElement>ExtraIPSchemes</ListElement>
+			<ListElement>IsActive</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>%IsActive%</ListElement>
+		</Args>
+	</IsActive>
+	<!-- ********************************************************************** -->
 	<Orders>
 		<Head>Зак.</Head>
 		<Prompt>Кол-во активных заказов данного тарифа</Prompt>
@@ -165,12 +177,13 @@
 		</Attribs>
 	</Orders>
 	<!-- *********************************************************************** -->
- <SortID>
-  <Args>
-   <TableID>ExtraIPSchemes</TableID>
-  </Args>
- </SortID>
+	<SortID>
+		<Args>
+			<TableID>ExtraIPSchemes</TableID>
+		</Args>
+	</SortID>
 </Columns>
+<!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Sequence>
  <ListElement>SelectID</ListElement>

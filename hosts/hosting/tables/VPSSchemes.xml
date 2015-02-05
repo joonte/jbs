@@ -2,6 +2,15 @@
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
 <!-- *********************************************************************** -->
+<Appearance>
+	<Row>
+		<Comp>Colors/Schemes</Comp>
+		<Args>
+			<ListElement>%IsActive%</ListElement>
+		</Args>
+	</Row>
+</Appearance>
+<!-- *********************************************************************** -->
 <Source>
  <TableID>VPSSchemes</TableID>
  <ColumnsIDs>
@@ -196,16 +205,20 @@
   <Head>Процессов</Head>
   <Prompt>Максимальное число запускаемых процессов</Prompt>
  </proc>
- <!-- ********************************************************************** -->
- <IsActive>
-  <Head>Актив.</Head>
-  <Prompt>Тариф активен?</Prompt>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsActive%</ListElement>
-  </Args>
- </IsActive>
- <!-- ********************************************************************** -->
+	<!-- ********************************************************************** -->
+	<IsActive>
+		<Head>Актив.</Head>
+		<Prompt>Тариф активен?</Prompt>
+		<Comp>BooleanEdit</Comp>
+		<Args>
+			<ListElement>VPSSchemes</ListElement>
+			<ListElement>IsActive</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>%IsActive%</ListElement>
+		</Args>
+		<Comp>Formats/Logic</Comp>
+	</IsActive>
+	<!-- ********************************************************************** -->
 	<Orders>
 		<Head>Зак.</Head>
 		<Prompt>Кол-во активных заказов данного тарифа</Prompt>
@@ -215,11 +228,11 @@
 		</Attribs>
 	</Orders>
 	<!-- *********************************************************************** -->
- <SortID>
-  <Args>
-   <TableID>VPSSchemes</TableID>
-  </Args>
- </SortID>
+	<SortID>
+		<Args>
+			<TableID>VPSSchemes</TableID>
+		</Args>
+	</SortID>
 </Columns>
 <!-- *********************************************************************** -->
 <Sequence>

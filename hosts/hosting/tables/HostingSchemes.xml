@@ -2,6 +2,15 @@
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
 	<!-- *********************************************************************** -->
+	<Appearance>
+		<Row>
+			<Comp>Colors/Schemes</Comp>
+			<Args>
+				<ListElement>%IsActive%</ListElement>
+			</Args>
+		</Row>
+	</Appearance>
+	<!-- *********************************************************************** -->
 	<Source>
 		<TableID>HostingSchemes</TableID>
 		<ColumnsIDs>
@@ -209,14 +218,17 @@
   <Prompt>Максимальное количество отправляемых писем, в час</Prompt>
  </mailrate>
  <!-- ********************************************************************** -->
- <IsActive>
-  <Head>Актив.</Head>
-  <Prompt>Тариф активен?</Prompt>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsActive%</ListElement>
-  </Args>
- </IsActive>
+		<IsActive>
+			<Head>Актив.</Head>
+			<Prompt>Тариф активен?</Prompt>
+			<Comp>BooleanEdit</Comp>
+			<Args>
+				<ListElement>HostingSchemes</ListElement>
+				<ListElement>IsActive</ListElement>
+				<ListElement>%ID%</ListElement>
+				<ListElement>%IsActive%</ListElement>
+			</Args>
+		</IsActive>
 		<!-- ********************************************************************** -->
 		<Orders>
 			<Head>Зак.</Head>
