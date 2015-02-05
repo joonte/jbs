@@ -43,28 +43,28 @@ public function getParams(){
 			$this->params['prefixRegistrar'] = $PrefixRegistrar;
 			#-------------------------------------------------------------------------------
 			# Получаем параметры регистратора к которому осуществляется трансфер
-			$RegistratorID = DB_Select('DomainSchemes','RegistratorID as ID',Array('UNIQ','ID'=>$this->params['SchemeID']));
-			$Settings = DB_Select('Registrators','*',Array('UNIQ','ID'=>$RegistratorID['ID']));
+			$ServerID = DB_Select('DomainSchemes','`ServerID` AS `ID`',Array('UNIQ','ID'=>$this->params['SchemeID']));
+			$Settings = DB_Select('Servers','*',Array('UNIQ','ID'=>$ServerID['ID']));
 			#-------------------------------------------------------------------------------
-			Debug("[system/classes/DomainOrdersForTransferMsg.class.php]: Registrators[TypeID] - " . $Settings['TypeID']);
-			Debug("[system/classes/DomainOrdersForTransferMsg.class.php]: Settings[PrefixNic] - " . $Settings['PrefixNic']);
+			Debug("[system/classes/DomainOrdersForTransferMsg.class.php]: Servers[SystemID] - " . $Settings['Params']['SystemID']);
+			Debug("[system/classes/DomainOrdersForTransferMsg.class.php]: Settings[PrefixNic] - " . $Settings['Params']['PrefixNic']);
 			Debug("[system/classes/DomainOrdersForTransferMsg.class.php]: Registrar - " . $Registrar);
 			Debug("[system/classes/DomainOrdersForTransferMsg.class.php]: PrefixRegistrar - " . $PrefixRegistrar);
 			#-------------------------------------------------------------------------------
 			# Проверяем является ли регистрар нашим регистратором
-			if($PrefixRegistrar == $Settings['PrefixNic']){
+			if($PrefixRegistrar == $Settings['Params']['PrefixNic']){
 				#-------------------------------------------------------------------------------
 				$this->params['internalRegister'] = true;
 				#---------------------------------------------------------------------------
 				Debug("[system/classes/DomainOrdersForTransferMsg.class.php]: IsOurRegistrar - TRUE");
 				Debug("[system/classes/DomainOrdersForTransferMsg.class.php]: Инструкция по трансферу в пределах регистратора");
 				#---------------------------------------------------------------------------
-				$this->params['registratorID'] = $Settings['TypeID'];
-				$this->params['partnerLogin'] = $Settings['PartnerLogin'];
-				$this->params['partnerContract'] = $Settings['PartnerContract'];
+				$this->params['registratorID'] = $Settings['Params']['SystemID'];
+				$this->params['partnerLogin'] = $Settings['Params']['PartnerLogin'];
+				$this->params['partnerContract'] = $Settings['Params']['PartnerContract'];
 				#-------------------------------------------------------------------------------
 				# Достаем статью с информацией о шаблонах документов и контактами регистратора
-				$Where = SPrintF('`Partition`=\'Registrators/%s/internal\'', $PrefixRegistrar);
+				$Where = SPrintF('`Partition` = "Registrators/%s/internal"', $PrefixRegistrar);
 				$Clause = DB_Select('Clauses','*',Array('UNIQ','Where'=>$Where));
 				switch(ValueOf($Clause)) {
 				case 'array':
@@ -113,14 +113,14 @@ public function getParams(){
 				}
 				#-------------------------------------------------------------------------------
 				$this->params['registrar'] = $Registrar;
-				$this->params['registratorID'] = $Settings['TypeID'];
-				$this->params['jurName'] = $Settings['JurName'];
-				$this->params['prefixNic'] = $Settings['PrefixNic'];
+				$this->params['registratorID'] = $Settings['Params']['SystemID'];
+				$this->params['jurName'] = $Settings['Params']['JurName'];
+				$this->params['prefixNic'] = $Settings['Params']['PrefixNic'];
 				$this->params['postfixNic'] = $PostfixNic;
-				$this->params['schemeName'] = strtoupper($SchemeName['SchemeName']);
+				$this->params['schemeName'] = StrToUpper($SchemeName['SchemeName']);
 				#-------------------------------------------------------------------------------
 				# Достаем статью с информацией о шаблонах документов и контактами регистратора
-				$Where = SPrintF('`Partition`=\'Registrators/%s/external\'',$PrefixRegistrar);
+				$Where = SPrintF('`Partition` = "Registrators/%s/external"',$PrefixRegistrar);
 				$Clause = DB_Select('Clauses','*',Array('UNIQ','Where'=>$Where));
 				switch(ValueOf($Clause)){
 				case 'array':
@@ -169,7 +169,7 @@ public function getParams(){
 			#-------------------------------------------------------------------------------
 			// буржуйские домены, пеерносятся через AuthInfo
 			$this->params['notUSSR'] = TRUE;
-			$this->params['schemeName'] = strtoupper($SchemeName['SchemeName']);
+			$this->params['schemeName'] = StrToUpper($SchemeName['SchemeName']);
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------

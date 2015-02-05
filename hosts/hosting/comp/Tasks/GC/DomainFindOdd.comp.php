@@ -53,7 +53,7 @@ foreach($Servers as $NowReg){
 	case 'true':
 		#-------------------------------------------------------------------------------
 		# реализация JBS-805
-		$Accept = $Server->DomainsAccept();
+		$Accept = $Server->DomainAccept();
 		#return TRUE;
 		#-------------------------------------------------------------------------------
 		$RegDomains = $Server->GetListDomains();

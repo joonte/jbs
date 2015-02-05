@@ -16,74 +16,90 @@ if(Is_Error(System_Load('classes/Registrator.class.php','libs/IspSoft.php','libs
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Registrators = DB_Select('Registrators',Array('ID','Name','TypeID','BalanceLowLimit'),Array('Where'=>'`BalanceLowLimit` > 0'));
+$Servers = DB_Select('Servers',Array('ID','Params'),Array('Where'=>Array('`IsActive` = "yes"','(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 20000')));
 #-------------------------------------------------------------------------------
-switch(ValueOf($Registrators)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		# No more...
-		Debug("[comp/Tasks/GC/CheckBalance]: Регистраторы не найдены");
-		return TRUE;
-	case 'array':
-		#-----------------------------------------------------------------------
-		$GLOBALS['TaskReturnInfo'] = Array();
-		#-----------------------------------------------------------------------
-		foreach($Registrators as $NowReg){
-			#-----------------------------------------------------------------------
-			$GLOBALS['TaskReturnInfo'][] = $NowReg['Name'];
-			#-------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Проверка баланса для %s (ID %d, тип %s)',$NowReg['Name'],$NowReg['ID'],$NowReg['TypeID']));
-			#-------------------------------------------------------------------
-			$Registrator = new Registrator();
-			#-------------------------------------------------------------------
-			$IsSelected = $Registrator->Select((integer)$NowReg['ID']);
-			#-------------------------------------------------------------------
-			switch(ValueOf($IsSelected)){
-				case 'error':
-					return ERROR | @Trigger_Error(500);
-				case 'exception':
-					return new gException('TRANSFER_TO_OPERATOR','Задание не может быть выполнено автоматически и передано оператору');
-				case 'true':
-					#-----------------------------------------------------------
-					$Balance = $Registrator->GetBalance();
-					#-----------------------------------------------------------
-					break;
-				default:
-					return new gException('WRONG_STATUS','Регистратор не определён');
-			}
-			switch(ValueOf($Balance)){
-				case 'error':
-					return ERROR | @Trigger_Error(500);
-				case 'exception':
-				#---------------------------------------------------------------
-				switch($Balance->CodeID){
-					case 'REGISTRATOR_ERROR':
-						Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: %s: %s',$NowReg['Name'],$Balance->String));
-						break;
-					default:
-						Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Для регистратора %s (ID %d, тип %s) проверка баланса счета не реализована.',$NowReg['Name'],$NowReg['ID'],$NowReg['TypeID']));
-						$Message .= SPrintF("Для регистратора %s (ID %d, тип %s) проверка баланса счета не реализована. \n",$NowReg['Name'],$NowReg['ID'],$NowReg['TypeID']);
-				}
-				#---------------------------------------------------------------
+switch(ValueOf($Servers)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	#-------------------------------------------------------------------------------
+	# No more...
+	Debug("[comp/Tasks/GC/CheckBalance]: Регистраторы не найдены");
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+case 'array':
+	#-------------------------------------------------------------------------------
+	$GLOBALS['TaskReturnInfo'] = Array();
+	#-------------------------------------------------------------------------------
+	foreach($Servers as $NowReg){
+		#-------------------------------------------------------------------------------
+		$GLOBALS['TaskReturnInfo'][] = $NowReg['Params']['Name'];
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Проверка баланса для %s (ID %d, тип %s)',$NowReg['Params']['Name'],$NowReg['ID'],$NowReg['Params']['SystemID']));
+		#-------------------------------------------------------------------------------
+		$Server = new Registrator();
+		#-------------------------------------------------------------------------------
+		$IsSelected = $Server->Select((integer)$NowReg['ID']);
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($IsSelected)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				return new gException('TRANSFER_TO_OPERATOR','Задание не может быть выполнено автоматически и передано оператору');
+			case 'true':
 				break;
-				case 'array':
-					Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Регистратор (%s), баланс: %s',$NowReg['Name'],$Balance['Prepay']));
-					#-----------------------------------------------------------
-					if((float)$Balance['Prepay'] < $NowReg['BalanceLowLimit']){
-						Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Баланс (%s) ниже порога уведомления',$NowReg['Name']));
-						$Message .= SPrintF("Остаток на счете регистратора %s ниже допустимого минимума - %01.2f\n",$NowReg['Name'],$Balance['Prepay']);
-					}
-					#-----------------------------------------------------------
-					break;
-				default:
-					return new gException('WRONG_STATUS','Задание не может быть в данном статусе');
-			}
-			#-------------------------------------------------------------------
+			default:
+				return new gException('WRONG_STATUS','Регистратор не определён');
 		}
-		#-----------------------------------------------------------------------
-		break;
-	default:
+		#-------------------------------------------------------------------------------
+		$Balance = $Server->GetBalance();
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($Balance)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			#-------------------------------------------------------------------------------
+			switch($Balance->CodeID){
+			case 'REGISTRATOR_ERROR':
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: %s: %s',$NowReg['Params']['Name'],$Balance->String));
+				#-------------------------------------------------------------------------------
+				break;
+				#-------------------------------------------------------------------------------
+			default:
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Для регистратора %s (ID %d, тип %s) проверка баланса счета не реализована.',$NowReg['Params']['Name'],$NowReg['ID'],$NowReg['Params']['SystemID']));
+				#-------------------------------------------------------------------------------
+				$Message .= SPrintF("Для регистратора %s (ID %d, тип %s) проверка баланса счета не реализована. \n",$NowReg['Params']['Name'],$NowReg['ID'],$NowReg['Params']['SystemID']);
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		case 'array':
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Регистратор (%s), баланс: %s',$NowReg['Params']['Name'],$Balance['Prepay']));
+			#-------------------------------------------------------------------------------
+			if((float)$Balance['Prepay'] < $NowReg['Params']['BalanceLowLimit']){
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Баланс (%s) ниже порога уведомления',$NowReg['Params']['Name']));
+				#-------------------------------------------------------------------------------
+				$Message .= SPrintF("Остаток на счете регистратора %s ниже допустимого минимума - %01.2f\n",$NowReg['Params']['Name'],$Balance['Prepay']);
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		default:
+			return new gException('WRONG_STATUS','Задание не может быть в данном статусе');
+		}
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
         return ERROR | @Trigger_Error(101);
 }
 

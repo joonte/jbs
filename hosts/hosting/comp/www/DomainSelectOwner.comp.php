@@ -86,11 +86,8 @@ switch(ValueOf($DomainOrder)){
               $Form->AddChild($Comp);
             }
             #-------------------------------------------------------------------
-            $Config = Config();
             #-------------------------------------------------------------------
-            $Registrator = $DomainScheme['Params'];
-            #-------------------------------------------------------------------
-            $IsSupportContracts = $Registrator['IsSupportContracts'];
+            $IsSupportContracts = $DomainScheme['Params']['IsSupportContracts'];
             #-------------------------------------------------------------------
             if($StepID){
               #-----------------------------------------------------------------
@@ -132,10 +129,10 @@ switch(ValueOf($DomainOrder)){
                   #-------------------------------------------------------------
                   $NoBody = new Tag('NOBODY',new Tag('SPAN','Договор регистратора'));
                   #-------------------------------------------------------------
-                  if($Registrator['PersonID']){
+                  if($DomainScheme['Params']['PersonID']){
                     #-----------------------------------------------------------
                     $NoBody->AddChild(new Tag('BR'));
-                    $NoBody->AddChild(new Tag('SPAN',Array('class'=>'Comment'),new Tag('SPAN',$Registrator['PersonID'])));
+                    $NoBody->AddChild(new Tag('SPAN',Array('class'=>'Comment'),new Tag('SPAN',$DomainScheme['Params']['PersonID'])));
                   }
                   #-------------------------------------------------------------
                   $Where = SPrintF("`ID` != %u AND `PersonID` != '' AND `UserID` = %u AND `DomainOrdersOwners`.`SchemeID` IN (SELECT `ID` FROM `DomainSchemes` WHERE `DomainSchemes`.`ServerID` = %u)",$DomainOrder['ID'],$__USER['ID'],$DomainScheme['ServerID']);
