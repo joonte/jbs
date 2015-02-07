@@ -2,6 +2,15 @@
 <!-- @author Alex Keda, for www.host-food.ru -->
 <XML>
 	<!-- *********************************************************************** -->
+	<Appearance>
+		<Row>
+			<Comp>Colors/Schemes</Comp>
+			<Args>
+				<ListElement>%IsActive%</ListElement>
+			</Args>
+		</Row>
+	</Appearance>
+	<!-- *********************************************************************** -->
 	<Source>
 		<TableID>DNSmanagerSchemes</TableID>
 		<ColumnsIDs>
@@ -184,8 +193,11 @@
 		<IsActive>
 			<Head>Актив.</Head>
 			<Prompt>Тариф активен?</Prompt>
-			<Comp>Formats/Logic</Comp>
+			<Comp>BooleanEdit</Comp>
 			<Args>
+				<ListElement>DNSmanagerSchemes</ListElement>
+				<ListElement>IsActive</ListElement>
+				<ListElement>%ID%</ListElement>
 				<ListElement>%IsActive%</ListElement>
 			</Args>
 		</IsActive>

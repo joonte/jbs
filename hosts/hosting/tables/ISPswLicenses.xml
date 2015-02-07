@@ -176,8 +176,11 @@
 	<IsInternal>
 		<Head>Вн.</Head>
 		<Prompt>Внутренняя лицензия</Prompt>
-		<Comp>Formats/Logic</Comp>
+		<Comp>BooleanEdit</Comp>
 		<Args>
+			<ListElement>ISPswLicenses</ListElement>
+			<ListElement>IsInternal</ListElement>
+			<ListElement>%ID%</ListElement>
 			<ListElement>%IsInternal%</ListElement>
 		</Args>
 	</IsInternal>
@@ -185,8 +188,11 @@
 	<IsUsed>
 		<Head>Исп.</Head>
 		<Prompt>Лицензия используется в заказах</Prompt>
-		<Comp>Formats/Logic</Comp>
+		<Comp>BooleanEdit</Comp>
 		<Args>
+			<ListElement>ISPswLicenses</ListElement>
+			<ListElement>IsUsed</ListElement>
+			<ListElement>%ID%</ListElement>
 			<ListElement>%IsUsed%</ListElement>
 		</Args>
 	</IsUsed>

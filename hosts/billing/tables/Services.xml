@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
+	<!-- *********************************************************************** -->
+	<Appearance>
+		<Row>
+			<Comp>Colors/Schemes</Comp>
+			<Args>
+				<ListElement>%IsActive%</ListElement>
+			</Args>
+		</Row>
+	</Appearance>
 <!-- *********************************************************************** -->
 <Cut>
  <Comps>
@@ -106,47 +115,55 @@
   <Head>Ед. изм.</Head>
   <Prompt>Еденицы измерения</Prompt>
  </Measure>
- <!-- ********************************************************************** -->
- <IsProtected>
-  <Head>Защищена</Head>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsProtected%</ListElement>
-  </Args>
- </IsProtected>
- <!-- ********************************************************************** -->
- <IsActive>
-  <Head>Активна</Head>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsActive%</ListElement>
-  </Args>
- </IsActive>
- <!-- ********************************************************************** -->
- <IsConditionally>
-  <Head>Условн.</Head>
-  <Prompt>Может быть оплачена условным счётом, самим пользователем</Prompt>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsConditionally%</ListElement>
-  </Args>
- </IsConditionally>
- <!-- ********************************************************************** -->
- <Orders>
-  <Head>Кол. зак.</Head>
-  <Prompt>Кол-во заказов на данный сервис</Prompt>
-  <Alias>(SELECT COUNT(*) FROM `Orders` WHERE `Services`.`ID` = `Orders`.`ServiceID`)</Alias>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
- </Orders>
- <!-- ********************************************************************** -->
- <SortID>
-  <Args>
-   <TableID>Services</TableID>
-  </Args>
- </SortID>
+	<!-- ********************************************************************** -->
+	<IsProtected>
+		<Head>Защищена</Head>
+		<Comp>Formats/Logic</Comp>
+		<Args>
+			<ListElement>%IsProtected%</ListElement>
+		</Args>
+	</IsProtected>
+	<!-- ********************************************************************** -->
+	<IsActive>
+		<Head>Активна</Head>
+		<Comp>BooleanEdit</Comp>
+		<Args>
+			<ListElement>Services</ListElement>
+			<ListElement>IsActive</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>%IsActive%</ListElement>
+		</Args>
+	</IsActive>
+	<!-- ********************************************************************** -->
+	<IsConditionally>
+	<Head>Условн.</Head>
+	<Prompt>Может быть оплачена условным счётом, самим пользователем</Prompt>
+		<Comp>BooleanEdit</Comp>
+		<Args>
+			<ListElement>Services</ListElement>
+			<ListElement>IsConditionally</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>%IsConditionally%</ListElement>
+		</Args>
+	</IsConditionally>
+	<!-- ********************************************************************** -->
+	<Orders>
+		<Head>Кол. зак.</Head>
+		<Prompt>Кол-во заказов на данный сервис</Prompt>
+		<Alias>(SELECT COUNT(*) FROM `Orders` WHERE `Services`.`ID` = `Orders`.`ServiceID`)</Alias>
+		<Attribs>
+			<style>text-align:right;</style>
+		</Attribs>
+	</Orders>
+	<!-- ********************************************************************** -->
+	<SortID>
+		<Args>
+			<TableID>Services</TableID>
+		</Args>
+	</SortID>
 </Columns>
+<!-- ********************************************************************** -->
+<!-- ********************************************************************** -->
 <Sequence>
  <ListElement>SelectID</ListElement>
  <ListElement>Edit</ListElement>
