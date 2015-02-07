@@ -20,7 +20,7 @@ $Data = SPrintF('{TableID:\'%s\', ColumnID:\'%s\', RowID:\'%u\'}',$TableID,$Colu
 #-------------------------------------------------------------------------------
 $Func = SPrintF('jQuery.post("/Administrator/API/BooleanEdit",%s); TableSuperReload(); return false;',$Data);
 #-------------------------------------------------------------------------------
-$A = new Tag('A',Array('href'=>'#','onclick' => $Func),$Comp);
+$A = new Tag('A',Array('href'=>'#ChangeValue','onclick' => $Func),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Links = &Links();
