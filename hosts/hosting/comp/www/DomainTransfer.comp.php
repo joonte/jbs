@@ -78,7 +78,7 @@ if($StepID){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
-			return new gException('DOMAINS_SCHEME_NOT_SUPPORTED','Доменная зоан не поддерживается');
+			return new gException('DOMAINS_SCHEME_NOT_SUPPORTED','Доменная зона не поддерживается');
 		case 'array':
 			break;
 		default:
@@ -149,7 +149,40 @@ if($StepID){
 		return new gException('DOMAIN_NEED_PROLONG',SPrintF('Перенос домена невозможен менее чем за %s дней до даты его продления. Для переноса, необходимо его продлить у текущего регистратора',$DomainScheme['DaysBeforeTransfer']));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('name'=>'DomainSchemeID','type'=>'hidden','value'=>$DomainScheme['ID']));
+	# реализация JBS-825
+	if(!$Settings['Transfer']['IsSelectRegistrator']){
+		#-------------------------------------------------------------------------------
+		$Registrar = IsSet($WhoIs['Registrar'])?$WhoIs['Registrar']:'NOT_FOUND';
+		#-------------------------------------------------------------------------------
+		$UniqID = UniqID('DomainSchemes');
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Services/Schemes','DomainSchemes',$__USER['ID'],Array('Name','ServerID'),$UniqID);
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Columns = Array('ID','Name','ServerID','CostProlong','(SELECT `Params` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `Params`');
+		#-------------------------------------------------------------------------------
+		$DomainSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('SortID'),'Where'=>Array("`IsTransfer` = 'yes'",SPrintF("`Name` = '%s'",$DomainScheme['Name']))));
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($DomainSchemes)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return new gException('DOMAINS_SCHEME_NOT_SUPPORTED','Доменная зона не поддерживается');
+		case 'array':
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+		foreach($DomainSchemes as $Scheme)
+			if(Preg_Match(SPrintF('/%s/',$Scheme['Params']['PrefixNic']),$Registrar))
+				$DomainScheme = $Scheme;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('name'=>'DomainSchemeID','type'=>'hidden','value'=>$DomainScheme['ID']));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

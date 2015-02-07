@@ -10,12 +10,12 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(Is_Error(System_Load('libs/WhoIs.php','classes/Registrator.class.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Columns = Array('UserID','DomainName','AuthInfo','ProfileID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','ServerID','StatusID','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','IsPrivateWhoIs','PersonID');
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
-#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
 case 'error':
@@ -32,6 +32,7 @@ case 'array':
 	$GLOBALS['TaskReturnInfo'] = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']);
 	#-------------------------------------------------------------------------------
 	$WhoIs = WhoIs_Check($DomainOrder['DomainName'],$DomainOrder['DomainZone']);
+	#-------------------------------------------------------------------------------
 	$Registrar = IsSet($WhoIs['Registrar'])?$WhoIs['Registrar']:'NOT_FOUND';
 	#-------------------------------------------------------------------------------
 	$Server = DB_Select('Servers','Params',Array('UNIQ','ID'=>$DomainOrder['ServerID']));
