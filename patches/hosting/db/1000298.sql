@@ -12,6 +12,8 @@ DROP TABLE IF EXISTS `ExtraIPDomainsPolitics`;
 -- SEPARATOR
 DROP TABLE IF EXISTS `ISPswDomainsPolitics`;
 -- SEPARATOR
+DROP TABLE IF EXISTS `VPSDomainsPolitics`;
+-- SEPARATOR
 DROP TABLE IF EXISTS `DomainsSchemesGroupsItems`;
 -- SEPARATOR
 DROP TABLE IF EXISTS `DomainsSchemesGroups`;

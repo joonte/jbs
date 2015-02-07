@@ -16,7 +16,7 @@ $StepID         = (integer) @$Args['StepID'];
 $HostingOrderID = (integer) @$Args['HostingOrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/WhoIs.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM = new DOM();
 #-------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ $Links = &Links();
 $Links['DOM'] = &$DOM;
 #-------------------------------------------------------------------------------
 if(Is_Error($DOM->Load('Base')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM->AddAttribs('MenuLeft',Array('args'=>'User/Services'));
 #-------------------------------------------------------------------------------
@@ -471,7 +471,7 @@ if($StepID){
               if(Is_Error($Comp))
                 return ERROR | @Trigger_Error(500);
               #-----------------------------------------------------------------
-              $Rows[] = new Tag('TR',new Tag('TD',Array('colspan'=>8,'class'=>'Separator'),new Tag('SPAN',Array('style'=>'font-size:16px;'),SPrintF('%s |',$ServerAddress)),new Tag('SPAN',Array('style'=>'font-size:11px;'),$Comp)));
+              $Rows[] = new Tag('TR',new Tag('TD',Array('colspan'=>8,'class'=>'Separator'),new Tag('SPAN',Array('style'=>'font-size:16px;'),SPrintF('%s |',$DomainScheme['Params']['Name'])),new Tag('SPAN',Array('style'=>'font-size:11px;'),$Comp)));
             }
             #-------------------------------------------------------------------
             $Comp = Comp_Load(
