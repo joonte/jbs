@@ -101,6 +101,7 @@ CREATE TABLE `DomainSchemes` (
   `Name` char(30) default NULL,
   `IsActive` enum('no','yes') default 'no',
   `IsProlong` enum('no','yes') default 'no',
+  `IsTransfer` enum('no','yes') default 'no',
   `CostOrder` decimal(6,2) default '0.00',
   `CostProlong` decimal(6,2) default '0.00',
   `CostTransfer` decimal(6,2) default '0.00',

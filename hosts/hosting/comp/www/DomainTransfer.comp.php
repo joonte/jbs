@@ -70,9 +70,9 @@ if($StepID){
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$Columns = Array('ID','Name','ServerID','CostProlong','(SELECT `Params` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `Params`','(SELECT `SortID` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `ServerSortID`');
+		$Columns = Array('ID','Name','ServerID','CostProlong','(SELECT `Params` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `Params`');
 		#-------------------------------------------------------------------------------
-		$DomainSchemes = DB_Select($UniqID,$Columns,Array('UNIQ','Limits'=>Array(0,1),'SortOn'=>Array('ServerSortID','SortID'),'Where'=>Array("`IsActive` = 'yes'",SPrintF("`Name` = '%s'",$DomainZone))));
+		$DomainSchemes = DB_Select($UniqID,$Columns,Array('UNIQ','Limits'=>Array(0,1),'SortOn'=>Array('SortID'),'Where'=>Array("`IsTransfer` = 'yes'",SPrintF("`Name` = '%s'",$DomainZone))));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($DomainSchemes)){
 		case 'error':
@@ -105,7 +105,7 @@ if($StepID){
 	if(!$DomainSchemeID)
 		return new gException('DOMAIN_SCHEME_NOT_DEFINED','Доменная зона не выбрана');
 	#-------------------------------------------------------------------------------
-	$Columns = Array('`DomainSchemes`.`ID`','`DomainSchemes`.`Name` as `Name`','`DomainSchemes`.`IsActive` AS `IsActive`','`Servers`.`Params` as `Params`','DaysAfterTransfer','DaysBeforeTransfer');
+	$Columns = Array('`DomainSchemes`.`ID`','`DomainSchemes`.`Name` as `Name`','`DomainSchemes`.`IsTransfer` AS `IsTransfer`','`Servers`.`Params` as `Params`','DaysAfterTransfer','DaysBeforeTransfer');
 	#-------------------------------------------------------------------------------
 	$DomainScheme = DB_Select(Array('DomainSchemes','Servers'),$Columns,Array('UNIQ','Where'=>SPrintF('`DomainSchemes`.`ServerID` = `Servers`.`ID` AND `DomainSchemes`.`ID` = %u',$DomainSchemeID)));
 	#-------------------------------------------------------------------------------
@@ -121,8 +121,8 @@ if($StepID){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	if(!$DomainScheme['IsActive'])
-		return new gException('SCHEME_NOT_ACTIVE','Выбранный тарифный план заказа домена не активен');
+	if(!$DomainScheme['IsTransfer'])
+		return new gException('SCHEME_NOT_ALLOW_TRANSFER','Выбранный тарифный план заказа домена не позволяет перенос');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$WhoIs = WhoIs_Check($DomainName,$DomainScheme['Name']);
@@ -271,7 +271,7 @@ $Comp = Comp_Load('Form/Input',Array('name'=>'DomainSchemeID','type'=>'hidden','
 	#-------------------------------------------------------------------------------
 	$Columns = Array('ID','Name','ServerID','CostProlong','(SELECT `Params` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `Params`','(SELECT `SortID` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `ServerSortID`');
 	#-------------------------------------------------------------------------------
-	$DomainSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('ServerSortID','SortID'),'Where'=>"`IsActive` = 'yes'"));
+	$DomainSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('ServerSortID','SortID'),'Where'=>"`IsTransfer` = 'yes'"));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($DomainSchemes)){
 	case 'error':

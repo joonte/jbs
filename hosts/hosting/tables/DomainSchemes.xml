@@ -12,20 +12,22 @@
 </Appearance>
 <!-- *********************************************************************** -->
 <Source>
- <TableID>DomainSchemes</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>UserID</ListElement>
-  <ListElement>Name</ListElement>
-  <ListElement>CostOrder</ListElement>
-  <ListElement>CostProlong</ListElement>
-  <ListElement>CostTransfer</ListElement>
-  <ListElement>IsActive</ListElement>
-  <ListElement>SortID</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Message>Тарифов на домены не обнаружено.</Message>
- </Conditions>
+	<TableID>DomainSchemes</TableID>
+	<ColumnsIDs>
+		<ListElement>ID</ListElement>
+		<ListElement>UserID</ListElement>
+		<ListElement>Name</ListElement>
+		<ListElement>CostOrder</ListElement>
+		<ListElement>CostProlong</ListElement>
+		<ListElement>CostTransfer</ListElement>
+		<ListElement>IsActive</ListElement>
+		<ListElement>IsTransfer</ListElement>
+		<ListElement>SortID</ListElement>
+	</ColumnsIDs>
+	<!-- *********************************************************************** -->
+	<Conditions>
+		<Message>Тарифов на домены не обнаружено.</Message>
+	</Conditions>
 </Source>
 <!-- *********************************************************************** -->
 <Comps>
@@ -133,30 +135,33 @@
   </Args>
   <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `UserID`)</Alias>
  </User>
- <!-- ********************************************************************** -->
- <CostOrder>
-  <Head>Цена заказа</Head>
-  <Comp>Formats/Currency</Comp>
-  <Args>
-   <ListElement>%CostOrder%</ListElement>
-  </Args>
- </CostOrder>
- <!-- ********************************************************************** -->
- <CostProlong>
-  <Head>Цена продления</Head>
-  <Comp>Formats/Currency</Comp>
-  <Args>
-   <ListElement>%CostProlong%</ListElement>
-  </Args>
- </CostProlong>
- <!-- ********************************************************************** -->
- <CostTransfer>
-  <Head>Цена переноса</Head>
-  <Comp>Formats/Currency</Comp>
-  <Args>
-   <ListElement>%CostTransfer%</ListElement>
-  </Args>
- </CostTransfer>
+	<!-- ********************************************************************** -->
+	<CostOrder>
+		<Head>Цена зак.</Head>
+		<Prompt>Стоимость регистрации доменного имени</Prompt>
+		<Comp>Formats/Currency</Comp>
+		<Args>
+			<ListElement>%CostOrder%</ListElement>
+		</Args>
+	</CostOrder>
+	<!-- ********************************************************************** -->
+	<CostProlong>
+		<Head>Цена продл.</Head>
+		<Prompt>Стоимость продления уже зарегистрированного доменного имени</Prompt>
+		<Comp>Formats/Currency</Comp>
+		<Args>
+			<ListElement>%CostProlong%</ListElement>
+		</Args>
+	</CostProlong>
+	<!-- ********************************************************************** -->
+	<CostTransfer>
+		<Head>Цена перен.</Head>
+		<Prompt>Стоимость переноса уже зарегистрированного доменного имени от друого регистратора к нам</Prompt>
+		<Comp>Formats/Currency</Comp>
+		<Args>
+			<ListElement>%CostTransfer%</ListElement>
+		</Args>
+	</CostTransfer>
 	<!-- ********************************************************************** -->
 	<Registrator>
 		<Head>Регистратор</Head>
@@ -180,6 +185,18 @@
 		</Args>
 	</IsActive>
 	<!-- ********************************************************************** -->
+	<IsTransfer>
+		<Head>Перен.</Head>
+		<Prompt>Возможен перенос от другого регистратора на данный тарифный план</Prompt>
+		<Comp>BooleanEdit</Comp>
+		<Args>
+			<ListElement>DomainSchemes</ListElement>
+			<ListElement>IsTransfer</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>%IsTransfer%</ListElement>
+		</Args>
+	</IsTransfer>
+	<!-- ********************************************************************** -->
 	<Orders>
 		<Head>Зак.</Head>
 		<Prompt>Кол-во активных заказов данного тарифа</Prompt>
@@ -198,19 +215,20 @@
 <!-- ********************************************************************** -->
 <!-- ********************************************************************** -->
 <Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>Info</ListElement>
- <ListElement>Edit</ListElement>
- <ListElement>Name</ListElement>
- <ListElement>Group</ListElement>
- <ListElement>User</ListElement>
- <ListElement>CostOrder</ListElement>
- <ListElement>CostProlong</ListElement>
- <ListElement>CostTransfer</ListElement>
- <ListElement>Registrator</ListElement>
- <ListElement>IsActive</ListElement>
- <ListElement>Orders</ListElement>
- <ListElement>SortID</ListElement>
+	<ListElement>SelectID</ListElement>
+	<ListElement>Info</ListElement>
+	<ListElement>Edit</ListElement>
+	<ListElement>Name</ListElement>
+	<ListElement>Group</ListElement>
+	<ListElement>User</ListElement>
+	<ListElement>CostOrder</ListElement>
+	<ListElement>CostProlong</ListElement>
+	<ListElement>CostTransfer</ListElement>
+	<ListElement>Registrator</ListElement>
+	<ListElement>IsActive</ListElement>
+	<ListElement>IsTransfer</ListElement>
+	<ListElement>Orders</ListElement>
+	<ListElement>SortID</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
 </XML>
