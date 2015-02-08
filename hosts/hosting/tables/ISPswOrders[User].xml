@@ -118,21 +118,41 @@
    <style>width:22px;</style>
   </Attribs>
  </IPChange>
+	<!-- *********************************************************************** -->
+	<Manage>
+		<IsSorted>0</IsSorted>
+		<Comp>Buttons/Standard</Comp>
+		<Args>
+			<ListElement>
+				<onclick>OrderManage(%ID%,%ServiceID%);</onclick>
+			</ListElement>
+			<ListElement>Перейти в панель управления</ListElement>
+			<ListElement>HostingManage.gif</ListElement>
+			<ListElement>OrderManage.js</ListElement>
+		</Args>
+		<Attribs>
+			<class>TableSuperStandard</class>
+			<style>width:22px;</style>
+		</Attribs>
+	</Manage>
+	<!-- *********************************************************************** -->
 </Columns>
 <!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
 <Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>Info</ListElement>
- <ListElement>Pay</ListElement>
- <ListElement>SchemeChange</ListElement>
- <ListElement>IPChange</ListElement>
- <ListElement>ExtendedMenu</ListElement>
- <ListElement>Number</ListElement>
- <ListElement>IP</ListElement>
- <ListElement>Scheme</ListElement>
- <ListElement>Expiration</ListElement>
- <ListElement>Status</ListElement>
- <ListElement>StatusOver</ListElement>
+	<ListElement>SelectID</ListElement>
+	<ListElement>Info</ListElement>
+	<ListElement>Pay</ListElement>
+	<ListElement>SchemeChange</ListElement>
+	<ListElement>IPChange</ListElement>
+	<ListElement>Manage</ListElement>
+	<ListElement>ExtendedMenu</ListElement>
+	<ListElement>Number</ListElement>
+	<ListElement>IP</ListElement>
+	<ListElement>Scheme</ListElement>
+	<ListElement>Expiration</ListElement>
+	<ListElement>Status</ListElement>
+	<ListElement>StatusOver</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
 </XML>
