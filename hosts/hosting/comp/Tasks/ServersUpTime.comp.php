@@ -19,7 +19,7 @@ if(!$Settings['IsActive'])
 	return 3600;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Servers = DB_Select('Servers',Array('ID','Address','Port','Monitoring'),Array('SortOn'=>Array('ServersGroupID','Address')));
+$Servers = DB_Select('Servers',Array('ID','Address','Port','Monitoring','(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) AS `Name`'),Array('SortOn'=>Array('ServersGroupID','Address')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Servers)){
 case 'error':
@@ -37,7 +37,13 @@ $GLOBALS['TaskReturnInfo'] = Array();
 #-------------------------------------------------------------------------------
 foreach($Servers as $Server){
 	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'][] = $Server['Address'];
+	if(Is_Null($Server['Name']))
+		$Server['Name'] = 'NoGroup';
+	#-------------------------------------------------------------------------------
+	if(!IsSet($GLOBALS['TaskReturnInfo'][$Server['Name']]))
+		$GLOBALS['TaskReturnInfo'][$Server['Name']] = Array();
+	#-------------------------------------------------------------------------------
+	$GLOBALS['TaskReturnInfo'][$Server['Name']][] = $Server['Address'];
 	#-------------------------------------------------------------------------------
 	if(StrLen($Server['Monitoring']) > 3){
 		#-------------------------------------------------------------------------------
