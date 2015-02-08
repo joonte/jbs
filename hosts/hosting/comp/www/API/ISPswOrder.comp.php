@@ -16,7 +16,7 @@ $ISPswSchemeID	= (integer) @$Args['ISPswSchemeID'];
 $IP		=  (string) @$Args['IP'];
 $Comment	=  (string) @$Args['Comment'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','libs/IspSoft.php','libs/Server.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','libs/BillManager.php','libs/Server.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ if(!$ISPswScheme['IsInternal']){
 				#-------------------------------------------------------------------------------
 			);
 	#-------------------------------------------------------------------------------
-	if(!IspSoft_Check_ISPsystem_IP($ServerSettings, $ISPswInfo))
+	if(!BillManager_Check_ISPsystem_IP($ServerSettings, $ISPswInfo))
 		return new gException('ISPsw_IP_ADDRESS_IN_USE',SPrintF('Для указанного IP адреса [%s] уже есть лицензия такого типа. За более подробной информацией, обратитесь в службу поддержки пользователей',$IP));
 	#-------------------------------------------------------------------------------
 }

@@ -12,7 +12,7 @@ $Config = Config();
 $Theme = "Проверка баланса счета регистратора";
 $Message = "";
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/Registrator.class.php','libs/IspSoft.php','libs/Server.php')))
+if(Is_Error(System_Load('classes/Registrator.class.php','libs/BillManager.php','libs/Server.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ case 'exception':
 		if(IntVal($Settings['Params']['BalanceLowLimit']) > 0){
 			#-------------------------------------------------------------------------------
 			# получаем баланс
-			$Balances = IspSoft_Get_Balance($Settings);
+			$Balances = BillManager_Get_Balance($Settings);
 			Debug("[comp/Tasks/GC/CheckBalance]: " . print_r($Balances, true) );
 			#-------------------------------------------------------------------------------
 			foreach($Balances as $Balance){

@@ -9,7 +9,7 @@ $__args_list = Array('Task','ISPswOrderID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('libs/IspSoft.php')))
+if(Is_Error(System_Load('libs/BillManager.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -56,11 +56,11 @@ case 'array':
 		$ISPswScheme['LicenseID']= $ISPswOrder['LicenseID'];
 		#-------------------------------------------------------------------------------
 		# блокируем
-		if(!IspSoft_Lock($Server,$ISPswScheme))
+		if(!BillManager_Lock($Server,$ISPswScheme))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		# удаляем
-		if(!IspSoft_Delete($Server,$ISPswScheme))
+		if(!BillManager_Delete($Server,$ISPswScheme))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		$Event = Array(

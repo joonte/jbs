@@ -8,7 +8,20 @@ if(Is_Error(System_Load('libs/Http.php')))
 Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function IspSoft_Find_Free_License($ISPswScheme){
+function BillManager_Logon($Settings,$Params){
+	/******************************************************************************/
+	$__args_types = Array('array','array');
+	#-------------------------------------------------------------------------------
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/******************************************************************************/
+	return Array('Url'=>$Params['Url'],'Args'=>Array('checkcookie'=>'no','username'=>$Params['Login'],'password'=>$Params['Password'],'func'=>'auth'));
+	#-------------------------------------------------------------------------------
+}
+
+
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+function BillManager_Find_Free_License($ISPswScheme){
 	/******************************************************************************/
 	$__args_types = Array('array');
 	#-------------------------------------------------------------------------------
@@ -38,13 +51,13 @@ function IspSoft_Find_Free_License($ISPswScheme){
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[system/libs/IspSoft.php]: no free licenses, pricelist_id = %s; IP = %s',$ISPswScheme['pricelist_id'],$ISPswScheme['IP']));
+		Debug(SPrintF('[system/libs/BillManager.php]: no free licenses, pricelist_id = %s; IP = %s',$ISPswScheme['pricelist_id'],$ISPswScheme['IP']));
 		#-------------------------------------------------------------------------------
 		break;
 		#-------------------------------------------------------------------------------
 	case 'array':
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[system/libs/IspSoft.php]: found free license, pricelist_id = %s; elid = %s',$ISPswScheme['pricelist_id'],$ISPswLicenses['elid']));
+		Debug(SPrintF('[system/libs/BillManager.php]: found free license, pricelist_id = %s; elid = %s',$ISPswScheme['pricelist_id'],$ISPswLicenses['elid']));
 		#-------------------------------------------------------------------------------
 		return Array('elid'=>$ISPswLicenses['elid'],'LicenseID'=>$ISPswLicenses['ID']);
 		#-------------------------------------------------------------------------------
@@ -62,13 +75,13 @@ function IspSoft_Find_Free_License($ISPswScheme){
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[system/libs/IspSoft.php]: no free licenses, pricelist_id = %s; IP not set',$ISPswScheme['pricelist_id']));
+		Debug(SPrintF('[system/libs/BillManager.php]: no free licenses, pricelist_id = %s; IP not set',$ISPswScheme['pricelist_id']));
 		#-------------------------------------------------------------------------------
 		return FALSE;
 		#-------------------------------------------------------------------------------
 	case 'array':
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[system/libs/IspSoft.php]: found free license, pricelist_id = %s; elid = %s',$ISPswScheme['pricelist_id'],$ISPswLicenses['elid']));
+		Debug(SPrintF('[system/libs/BillManager.php]: found free license, pricelist_id = %s; elid = %s',$ISPswScheme['pricelist_id'],$ISPswLicenses['elid']));
 		#-------------------------------------------------------------------------------
 		return Array('elid'=>$ISPswLicenses['elid'],'LicenseID'=>$ISPswLicenses['ID']);
 		#-------------------------------------------------------------------------------
@@ -84,7 +97,7 @@ function IspSoft_Find_Free_License($ISPswScheme){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function IspSoft_Create($Settings,$ISPswScheme){
+function BillManager_Create($Settings,$ISPswScheme){
 	/******************************************************************************/
 	$__args_types = Array('array','array');
 	#-------------------------------------------------------------------------------
@@ -92,7 +105,7 @@ function IspSoft_Create($Settings,$ISPswScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = IspSoft_Build_HTTP($Settings);
+	$Http = BillManager_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# billmgr?authinfo=USER:PASSWD&out=xml&func=soft.order.param&clicked_button=finish&ip=82.156.37.16&licname=name&period=1&pricelist=4601&addon_4602=1&sok=ok&skipbasket=on
@@ -121,7 +134,7 @@ function IspSoft_Create($Settings,$ISPswScheme){
   	#-------------------------------------------------------------------------------
 	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[IspSoft_Create]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[BillManager_Create]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-------------------------------------------------------------------------------
@@ -142,7 +155,7 @@ function IspSoft_Create($Settings,$ISPswScheme){
 	#-------------------------------------------------------------------------------
 	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[IspSoft_Create]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[BillManager_Create]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-------------------------------------------------------------------------------
@@ -154,7 +167,7 @@ function IspSoft_Create($Settings,$ISPswScheme){
 	#-------------------------------------------------------------------------------
 	$Doc = $XML['doc'];
 	if(IsSet($Doc['error']))
-		return new gException('IspSoft_Create','Не удалось получить полную информацию лицензии');
+		return new gException('BillManager_Create','Не удалось получить полную информацию лицензии');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$License = Array(
@@ -190,7 +203,7 @@ function IspSoft_Create($Settings,$ISPswScheme){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function IspSoft_Change_IP($Settings,$ISPswScheme){
+function BillManager_Change_IP($Settings,$ISPswScheme){
 	/******************************************************************************/
 	$__args_types = Array('array','array');
 	#-------------------------------------------------------------------------------
@@ -198,7 +211,7 @@ function IspSoft_Change_IP($Settings,$ISPswScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = IspSoft_Build_HTTP($Settings);
+	$Http = BillManager_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# https://api.ispsystem.com/manager/billmgr?authinfo=USER:PASSWD&out=xml&func=soft.edit&elid=334673&licname=NEWLICNAME&ip=111.222.111.223&sok=ok
@@ -216,7 +229,7 @@ function IspSoft_Change_IP($Settings,$ISPswScheme){
 	#-------------------------------------------------------------------------------
 	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[IspSoft_Change_IP]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[BillManager_Change_IP]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
   	#-------------------------------------------------------------------------------
@@ -229,7 +242,7 @@ function IspSoft_Change_IP($Settings,$ISPswScheme){
 	$Doc = $XML['doc'];
 	#-------------------------------------------------------------------------------
 	if(IsSet($Doc['error']))
-		return new gException('IspSoft_Change_IP','Не удалось изменить IP для лицензии ' . $ISPswScheme['elid']);
+		return new gException('BillManager_Change_IP','Не удалось изменить IP для лицензии ' . $ISPswScheme['elid']);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return TRUE;
@@ -241,7 +254,7 @@ function IspSoft_Change_IP($Settings,$ISPswScheme){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function IspSoft_UnLock($Settings,$ISPswScheme){
+function BillManager_UnLock($Settings,$ISPswScheme){
 	/******************************************************************************/
 	$__args_types = Array('array','array');
 	#-------------------------------------------------------------------------------
@@ -249,7 +262,7 @@ function IspSoft_UnLock($Settings,$ISPswScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = IspSoft_Build_HTTP($Settings);
+	$Http = BillManager_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# https://api.ispsystem.com/manager/billmgr?authinfo=USER:PASSWD&out=xml&func=soft.resume&elid=код_лицензии
@@ -265,7 +278,7 @@ function IspSoft_UnLock($Settings,$ISPswScheme){
 	#-------------------------------------------------------------------------------
 	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[IspSoft_UnLock]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[BillManager_UnLock]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-------------------------------------------------------------------------------
@@ -277,7 +290,7 @@ function IspSoft_UnLock($Settings,$ISPswScheme){
 	#-------------------------------------------------------------------------------
 	$Doc = $XML['doc'];
 	if(IsSet($Doc['error']))
-		return new gException('IspSoft_UnLock','Не удалось разблокировать лицензию' . $ISPswScheme['elid']);
+		return new gException('BillManager_UnLock','Не удалось разблокировать лицензию' . $ISPswScheme['elid']);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return TRUE;
@@ -290,7 +303,7 @@ function IspSoft_UnLock($Settings,$ISPswScheme){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function IspSoft_Lock($Settings,$ISPswScheme){
+function BillManager_Lock($Settings,$ISPswScheme){
 	/******************************************************************************/
 	$__args_types = Array('array','array');
 	#-------------------------------------------------------------------------------
@@ -298,7 +311,7 @@ function IspSoft_Lock($Settings,$ISPswScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = IspSoft_Build_HTTP($Settings);
+	$Http = BillManager_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# /manager/billmgr?authinfo=USER:PASSWD&out=xml&func=soft.suspend&elid=код_лицензии
@@ -314,7 +327,7 @@ function IspSoft_Lock($Settings,$ISPswScheme){
   	#-------------------------------------------------------------------------------
 	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[IspSoft_Lock]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[BillManager_Lock]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-------------------------------------------------------------------------------
@@ -326,7 +339,7 @@ function IspSoft_Lock($Settings,$ISPswScheme){
 	#-------------------------------------------------------------------------------
 	$Doc = $XML['doc'];
 	if(IsSet($Doc['error']))
-		return new gException('IspSoft_Lock','Не удалось заблокировать лицензию' . $ISPswScheme['elid']);
+		return new gException('BillManager_Lock','Не удалось заблокировать лицензию' . $ISPswScheme['elid']);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return TRUE;
@@ -338,7 +351,7 @@ function IspSoft_Lock($Settings,$ISPswScheme){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function IspSoft_Get_List_Licenses($Settings){
+function BillManager_Get_List_Licenses($Settings){
 	/****************************************************************************/
 	$__args_types = Array('array');
 	#-----------------------------------------------------------------------------
@@ -346,14 +359,14 @@ function IspSoft_Get_List_Licenses($Settings){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = IspSoft_Build_HTTP($Settings);
+	$Http = BillManager_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'soft');
 	#-------------------------------------------------------------------------------
 	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[IspSoft_Get_List_Licenses]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[BillManager_Get_List_Licenses]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	#-------------------------------------------------------------------------------
@@ -365,14 +378,14 @@ function IspSoft_Get_List_Licenses($Settings){
 	#-------------------------------------------------------------------------------
 	$Doc = $XML['doc'];
 	if(IsSet($Doc['error']))
-		return new gException('IspSoft_Get_List_Licenses','Не удалось получить список лицензий');
+		return new gException('BillManager_Get_List_Licenses','Не удалось получить список лицензий');
 	#-------------------------------------------------------------------------------
 	# в полученном массиве недостаточно данных. перебираем лицензии по одной, достаём полную информацию.
 	$Out = Array();
 	#-------------------------------------------------------------------------------
 	foreach($Doc as $License){
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF("[system/libs/IspSoft.php]: License = %s",print_r($License, true)));
+		#Debug(SPrintF("[system/libs/BillManager.php]: License = %s",print_r($License, true)));
 		#-------------------------------------------------------------------------------
 		if(!IsSet($License['expiredate']))
 			continue;
@@ -381,7 +394,7 @@ function IspSoft_Get_List_Licenses($Settings){
 		#-------------------------------------------------------------------------------
 		$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
 		if(Is_Error($Response))
-			return ERROR | @Trigger_Error('[IspSoft_Get_List_Licenses]: не удалось соедениться с сервером');
+			return ERROR | @Trigger_Error('[BillManager_Get_List_Licenses]: не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
 		$Response = Trim($Response['Body']);
 		#-------------------------------------------------------------------------------
@@ -393,9 +406,9 @@ function IspSoft_Get_List_Licenses($Settings){
 		#-------------------------------------------------------------------------------
 		$Doc = $XML['doc'];
 		if(IsSet($Doc['error']))
-			return new gException('IspSoft_Get_List_Licenses','Не удалось получить список лицензий');
+			return new gException('BillManager_Get_List_Licenses','Не удалось получить список лицензий');
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF("[system/libs/IspSoft.php]: Doc = %s",print_r($Doc, true)));
+		#Debug(SPrintF("[system/libs/BillManager.php]: Doc = %s",print_r($Doc, true)));
 		$Out[] = Array_Merge($License,$Doc);
 		#-------------------------------------------------------------------------------
 	}
@@ -406,7 +419,7 @@ function IspSoft_Get_List_Licenses($Settings){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function IspSoft_Delete($Settings,$ISPswScheme){
+function BillManager_Delete($Settings,$ISPswScheme){
 	/******************************************************************************/
 	$__args_types = Array('array','array');
 	#-------------------------------------------------------------------------------
@@ -427,7 +440,7 @@ function IspSoft_Delete($Settings,$ISPswScheme){
 
 
 #-------------------------------------------------------------------------------
-function IspSoft_Scheme_Change($Settings,$ISPswScheme){
+function BillManager_Scheme_Change($Settings,$ISPswScheme){
   /****************************************************************************/
   $__args_types = Array('array','array');
   #-----------------------------------------------------------------------------
@@ -442,7 +455,7 @@ function IspSoft_Scheme_Change($Settings,$ISPswScheme){
 
   $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
   #-----------------------------------------------------------------------------
-  $Http = IspSoft_Build_HTTP($Settings);
+  $Http = BillManager_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   #-----------------------------------------------------------------------------
   $Request = Array(
@@ -466,7 +479,7 @@ function IspSoft_Scheme_Change($Settings,$ISPswScheme){
   #-----------------------------------------------------------------------------
   $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
   if(Is_Error($Response))
-    return ERROR | @Trigger_Error('[IspSoft_Scheme_Change]: не удалось соедениться с сервером');
+    return ERROR | @Trigger_Error('[BillManager_Scheme_Change]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
   $Response = Trim($Response['Body']);
   #-----------------------------------------------------------------------------
@@ -491,7 +504,7 @@ function IspSoft_Scheme_Change($Settings,$ISPswScheme){
           #-----------------------------------------------------------------------------
           $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
           if(Is_Error($Response))
-            return ERROR | @Trigger_Error('[IspSoft_Scheme_Change]: не удалось соедениться с сервером');
+            return ERROR | @Trigger_Error('[BillManager_Scheme_Change]: не удалось соедениться с сервером');
   }
   #-----------------------------------------------------------------------------
   return TRUE;
@@ -499,7 +512,7 @@ function IspSoft_Scheme_Change($Settings,$ISPswScheme){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function IspSoft_Get_Balance($Settings){
+function BillManager_Get_Balance($Settings){
 	/****************************************************************************/
 	$__args_types = Array('array');
 	#-----------------------------------------------------------------------------
@@ -507,7 +520,7 @@ function IspSoft_Get_Balance($Settings){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = IspSoft_Build_HTTP($Settings);
+	$Http = BillManager_Build_HTTP($Settings);
 	#-----------------------------------------------------------------------------
 	$Request = Array(
 			'authinfo'	=> $authinfo,		# авторизационная информация
@@ -516,7 +529,7 @@ function IspSoft_Get_Balance($Settings){
 			);
 	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[IspSoft_Get_Balance]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[BillManager_Get_Balance]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	$XML = String_XML_Parse($Response);
@@ -526,7 +539,7 @@ function IspSoft_Get_Balance($Settings){
 	$XML = $XML->ToArray('elem');
 	$Doc = $XML['doc'];
 	if(IsSet($Doc['error']))
-		return new gException('[IspSoft_Get_Balance]','Не удалось получить баланс аккаунтов');
+		return new gException('[BillManager_Get_Balance]','Не удалось получить баланс аккаунтов');
 	#---------------------------------------------------------------------------
 	#---------------------------------------------------------------------------
 	return $Doc;
@@ -535,7 +548,7 @@ function IspSoft_Get_Balance($Settings){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function IspSoft_Check_ISPsystem_IP($Settings, $ISPswInfo){
+function BillManager_Check_ISPsystem_IP($Settings, $ISPswInfo){
 	/******************************************************************************/
 	$__args_types = Array('array', 'array');
 	#-------------------------------------------------------------------------------
@@ -543,7 +556,7 @@ function IspSoft_Check_ISPsystem_IP($Settings, $ISPswInfo){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = IspSoft_Build_HTTP($Settings);
+	$Http = BillManager_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# authinfo=USER:PASSWD&out=xml&func=soft.checkip&pricelist=7&period=1&ip=82.145.17.16
@@ -560,7 +573,7 @@ function IspSoft_Check_ISPsystem_IP($Settings, $ISPswInfo){
 	#-------------------------------------------------------------------------------
 	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
 	if(Is_Error($Response))
-		return ERROR | @Trigger_Error('[IspSoft_Check_ISPsystem_IP]: не удалось соедениться с сервером');
+		return ERROR | @Trigger_Error('[BillManager_Check_ISPsystem_IP]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
 	$Response = Trim($Response['Body']);
 	$XML = String_XML_Parse($Response);
@@ -584,7 +597,7 @@ function IspSoft_Check_ISPsystem_IP($Settings, $ISPswInfo){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function IspSoft_Check_Local_IP($Settings, $ISPswInfo){
+function BillManager_Check_Local_IP($Settings, $ISPswInfo){
 	/****************************************************************************/
 	$__args_types = Array('array', 'array');
 	#-----------------------------------------------------------------------------
@@ -605,7 +618,7 @@ function IspSoft_Check_Local_IP($Settings, $ISPswInfo){
 # внутренние функции
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
-function IspSoft_Build_HTTP($Settings){
+function BillManager_Build_HTTP($Settings){
 	/******************************************************************************/
 	$__args_types = Array('array');
 	#-----------------------------------------------------------------------------

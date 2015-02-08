@@ -9,7 +9,7 @@ $__args_list = Array('Task','ISPswOrderID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('libs/IspSoft.php')))
+if(Is_Error(System_Load('libs/BillManager.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -76,7 +76,7 @@ $ISPswScheme['LicComment'] = SPrintF('%s, order #%u%s',(($ISPswScheme['IsInterna
 # add IP
 $ISPswScheme['IP'] = $ISPswOrder['IP'];
 #-------------------------------------------------------------------------------
-$License = IspSoft_Find_Free_License($ISPswScheme);
+$License = BillManager_Find_Free_License($ISPswScheme);
 if(Is_Error($License))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -89,7 +89,7 @@ if($License){
 	$ISPswScheme['LicenseID'] = $License['LicenseID'];
 	#-------------------------------------------------------------------------------
 	# меняем IP лицензии
-	$Change_IP = IspSoft_Change_IP($Server,$ISPswScheme);
+	$Change_IP = BillManager_Change_IP($Server,$ISPswScheme);
 	#-------------------------------------------------------------------------------
 	if(Is_Error($Change_IP))
 		return ERROR | @Trigger_Error(500);
@@ -104,7 +104,7 @@ if($License){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	# разблокируем
-	if(!IspSoft_UnLock($Server,$ISPswScheme))
+	if(!BillManager_UnLock($Server,$ISPswScheme))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	# всё путём, лицензия создана
@@ -113,7 +113,7 @@ if($License){
 }else{
 	#-------------------------------------------------------------------------------
 	# свободная лицензия не найдена, надо заказывать
-	$IsCreate = IspSoft_Create($Server,$ISPswScheme);
+	$IsCreate = BillManager_Create($Server,$ISPswScheme);
 	if(Is_Error($IsCreate))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

@@ -9,7 +9,7 @@ $__args_list = Array('Task');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('libs/IspSoft.php','libs/Http.php','libs/Server.php')))
+if(Is_Error(System_Load('libs/BillManager.php','libs/Http.php','libs/Server.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 # get config values
@@ -31,7 +31,7 @@ if(!Is_Array($Settings)){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # достаём лицензии с сайта ispsystem
-$Doc = IspSoft_Get_List_Licenses($Settings);
+$Doc = BillManager_Get_List_Licenses($Settings);
 # проверяем, что вернулось
 switch(ValueOf($Doc)){
 case 'array':

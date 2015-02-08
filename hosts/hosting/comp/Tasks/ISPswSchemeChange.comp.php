@@ -9,7 +9,7 @@ $__args_list = Array('Task','ISPswOrderID','ISPswSchemeID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('libs/IspSoft.php')))
+if(Is_Error(System_Load('libs/BillManager.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ case 'array':
 		return ERROR | @Trigger_Error(400);
 	case 'array':
 		#-------------------------------------------------------------------------------
-		$SchemeChange = IspSoft_Scheme_Change($Server,$ISPswNewScheme);
+		$SchemeChange = BillManager_Scheme_Change($Server,$ISPswNewScheme);
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($SchemeChange)){
 		case 'error':

@@ -13,7 +13,7 @@ $ISPswOrderID	= (integer) @$Args['ISPswOrderID'];
 $LicenseID	= (integer) @$Args['LicenseID'];
 $IP		=  (string) @$Args['IP'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','libs/IspSoft.php','libs/Server.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','libs/BillManager.php','libs/Server.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 # get config values
@@ -134,7 +134,7 @@ $ISPswScheme = array(
 # если лицензия внутренняя - ищщем свободную, или заказываем новую
 if($ISPswLicense['IsInternal']){
 	#-------------------------------------------------------------------------------
-	$elid = IspSoft_Find_Free_License($ISPswScheme);
+	$elid = BillManager_Find_Free_License($ISPswScheme);
 	#-------------------------------------------------------------------------------
 	if($elid){
 		#-------------------------------------------------------------------------------
@@ -143,7 +143,7 @@ if($ISPswLicense['IsInternal']){
 		$ISPswScheme['elid'] = $elid;
 		#-------------------------------------------------------------------------------
 		# меняем IP лицензии
-		if(IspSoft_Change_IP($Settings,$ISPswScheme)){
+		if(BillManager_Change_IP($Settings,$ISPswScheme)){
 			#-------------------------------------------------------------------------------
 			$IsUpdate = DB_Update('ISPswLicenses',Array('UpdateDate'=>Time(),'IsUsed'=>TRUE,'ip'=>$ISPswScheme['IP']),Array('ID'=>$elid));
 			if(Is_Error($IsUpdate))
@@ -156,7 +156,7 @@ if($ISPswLicense['IsInternal']){
 		}
 		#-------------------------------------------------------------------------------
 		# разблокируем
-		if(!IspSoft_UnLock($Settings,$ISPswScheme))
+		if(!BillManager_UnLock($Settings,$ISPswScheme))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		# всё путём, лицензия создана
@@ -165,7 +165,7 @@ if($ISPswLicense['IsInternal']){
 	}else{
 		#-------------------------------------------------------------------------------
 		# свободная лицензия не найдена, надо заказывать
-		$IsCreate = IspSoft_Create($Settings,$ISPswScheme);
+		$IsCreate = BillManager_Create($Settings,$ISPswScheme);
 		#-------------------------------------------------------------------------------
 		if($IsCreate){
 			#-------------------------------------------------------------------------------
@@ -182,12 +182,12 @@ if($ISPswLicense['IsInternal']){
 }else{
 	#-------------------------------------------------------------------------------
 	# если лицензия внешняя, проверяем новый IP, и меняем адресок
-	if(!IspSoft_Check_ISPsystem_IP($Settings, $ISPswScheme))
+	if(!BillManager_Check_ISPsystem_IP($Settings, $ISPswScheme))
 		return new gException('ISPsw_IP_ADDRESS_IN_USE','Для указанного IP адреса [' . $IP . '] уже есть лицензия такого типа. За более подробной информацией, обратитесь в службу поддержки пользователей');
 	#-------------------------------------------------------------------------------
 	$ISPswScheme['elid'] = $ISPswLicense['elid'];
 	#-------------------------------------------------------------------------------
-	$IsCreate = IspSoft_Change_IP($Settings,$ISPswScheme);
+	$IsCreate = BillManager_Change_IP($Settings,$ISPswScheme);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
