@@ -19,18 +19,27 @@ $NoBody = new Tag('NOBODY');
 $NoBody->AddChild(new Tag('P','Данный вид статистики содержит информацию о используемых DNS серверах конкурентов'));
 #-------------------------------------------------------------------------------
 if(!$IsCreate)
-  return $Result;
+	return $Result;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Config = Config();
+$Servers = DB_Select('Servers',Array('ID','Params'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) = 20000'));
 #-------------------------------------------------------------------------------
-if(IsSet($Config['Domain']['NsServers']['Ns1']['Address'])){
-  $NS1 = $Config['Domain']['NsServers']['Ns1']['Address'];
-  #Debug("[comp/Statistics/ForeignDNS]: NS1 = " . $NS1);
-  $Where = Array('`Ns1Name` NOT LIKE "%' . SubStr($NS1, StrPos($NS1, '.') + 1, StrLen($NS1)) . '%"');
-}else{
-  $Where = Array();
+switch(ValueOf($Servers)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $Result;
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Where = Array();
+#-------------------------------------------------------------------------------
+foreach($Servers as $Server)
+	$Where[] = '`Ns1Name` NOT LIKE "%' . SubStr($Server['Params']['Ns1Name'], StrPos($Server['Params']['Ns1Name'], '.') + 1, StrLen($Server['Params']['Ns1Name'])) . '%"';
 #-------------------------------------------------------------------------------
 $Where[] = '`Ns1Name` != ""';
 $Where[] = '`StatusID` = "Active"';
