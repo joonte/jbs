@@ -46,6 +46,13 @@
  </UniqID>
  <!-- *********************************************************************** -->
  <UniqID>
+  <Text>Панель управления</Text>
+  <Href>javascript:OrderManage(%ServiceOrderID%,%ServiceID%);</Href>
+  <Icon>HostingManage.gif</Icon>
+  <JavaScript>OrderManage.js</JavaScript>
+ </UniqID>
+ <!-- *********************************************************************** -->
+ <UniqID>
   <Text>Сменить IP адрес лицензии</Text>
   <Href>javascript:ShowWindow("/ISPswChangeIP",{ISPswOrderID:%ServiceOrderID%});</Href>
   <Icon>Password.gif</Icon>

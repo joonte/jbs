@@ -36,10 +36,17 @@ if(Is_Error(System_Load(SPrintF('classes/%sServer.class.php',$Service['Code'])))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','UserID','StatusID','StatusID');
+$Columns = Array('ID','UserID','StatusID','ServerID','StatusID');
 #-------------------------------------------------------------------------------
-if($Service['Code'] != 'ISPsw')
-	$Columns = $Columns + Array('Login','Password','ServerID');
+if($Service['Code'] == 'ISPsw'){
+	#-------------------------------------------------------------------------------
+	$Columns = Array_Merge($Columns,Array('IP'));
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
+	$Columns = Array_Merge($Columns,Array('Login','Password'));
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 $Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),$Columns,Array('UNIQ','ID'=>$ServiceOrderID));
 #-------------------------------------------------------------------------------
@@ -58,7 +65,7 @@ if($Order['StatusID'] != 'Active')
 	return new gException('ORDER_NOT_ACTIVE',SPrintF('Заказ услуги "%s" не активен',$Service['NameShort']));
 #-------------------------------------------------------------------------------
 if($Service['Code'] == 'ISPsw')
-	$Order = $Order + Array('Login'=>'root','Password'=>'my-mega-pass','ServerID'=>1);
+	$Order = $Order + Array('Login'=>'root','Password'=>'my-mega-pass');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];
@@ -97,7 +104,12 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsLogon = $ClassServer->Logon(Array('Login'=>$Order['Login'],'Password'=>$Order['Password']));
+$Params = Array('Login'=>$Order['Login'],'Password'=>$Order['Password']);
+#-------------------------------------------------------------------------------
+if($Service['Code'] == 'ISPsw')
+	$Params = $Params + Array('Url'=>SPrintF('https://%s:1500/',$Order['IP']));
+#-------------------------------------------------------------------------------
+$IsLogon = $ClassServer->Logon($Params);
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsLogon)){
 case 'error':
