@@ -34,8 +34,8 @@ $Where = Array(
 		"UNIX_TIMESTAMP() - 3 * 86400 > `StatusDate`"
 		);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','DomainName','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`) AS `DomainZone`');
-$DomainOrders = DB_Select('DomainOrders',$Columns,Array('Where'=>$Where,'Limits'=>Array(0,$Settings['Limit']),'SortOn'=>Array('UpdateDate','DomainName')));
+$Columns = Array('ID','DomainName','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`) AS `DomainZone`','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`) AS `Params`');
+$DomainOrders = DB_Select('DomainOrdersOwners',$Columns,Array('Where'=>$Where,'Limits'=>Array(0,$Settings['Limit']),'SortOn'=>Array('UpdateDate','DomainName')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrders)){
 case 'error':
@@ -53,7 +53,10 @@ case 'array':
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$GLOBALS['TaskReturnInfo'][] = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']);
+		if(!IsSet($GLOBALS['TaskReturnInfo'][$DomainOrder['Params']['Name']]))
+			$GLOBALS['TaskReturnInfo'][$DomainOrder['Params']['Name']] = Array();
+		#-------------------------------------------------------------------------------
+		$GLOBALS['TaskReturnInfo'][$DomainOrder['Params']['Name']][] = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
