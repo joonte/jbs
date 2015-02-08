@@ -12,7 +12,7 @@ $Result = Array();
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-$Settings = $Config['Interface']['Notes']['Administrator']['CheckTablesEngines'];
+$Settings = $Config['Interface']['Administrator']['Notes']['CheckTablesEngines'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$Settings['MakeCheckTablesEngines'])

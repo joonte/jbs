@@ -16,7 +16,7 @@ if(!CacheManager::isEnabled())
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-$Settings = $Config['Interface']['Notes']['User']['MobileConfirmation'];
+$Settings = $Config['Interface']['User']['Notes']['MobileConfirmation'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Is_Numeric($GLOBALS['__USER']['Mobile']) && $GLOBALS['__USER']['MobileConfirmed'] < 1 && $Settings['MobileConfirmRequire']){
