@@ -1573,6 +1573,7 @@
 		<ShowTicketContextMenu>0</ShowTicketContextMenu>
 		<ThemeMinimumLength>4</ThemeMinimumLength>
 		<AutoAssignToLastAnswerEmployee>1</AutoAssignToLastAnswerEmployee>
+		<EdeskOldDays>90</EdeskOldDays>
 	</Edesks>
 	<!-- *********************************************************************** -->
 </Interface>
