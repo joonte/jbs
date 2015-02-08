@@ -134,7 +134,7 @@ case 'true':
 		if(!$Event)
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$GLOBALS['TaskReturnInfo'] = Array($ClassHostingServer->Settings['Address'],$HostingOrder['Login'],$HostingScheme['Name']);
+		$GLOBALS['TaskReturnInfo'] = Array(($ClassHostingServer->Settings['Address'])=>Array($HostingOrder['Login'],$HostingScheme['Name']));
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		return TRUE;

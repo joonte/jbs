@@ -102,7 +102,7 @@ case 'array':
 			return ERROR | @Trigger_Error(400);
 		case 'true':
 			#-------------------------------------------------------------------------------
-			$GLOBALS['TaskReturnInfo'] = Array($ClassHostingServer->Settings['Address'],$HostingOrder['Login'],$HostingOrder['SchemeName'],$HostingNewScheme['Name']);
+			$GLOBALS['TaskReturnInfo'] = Array(($ClassHostingServer->Settings['Address'])=>Array($HostingOrder['Login']),($HostingOrder['SchemeName'])=>Array($HostingNewScheme['Name']));
 			#-------------------------------------------------------------------------------
 			#Debug(SPrintF("[comp/Tasks/HostingSchemeChange]: HostingNewScheme = %s",print_r($HostingNewScheme,true)));
 			$SchemeChange = $ClassHostingServer->SchemeChange($HostingOrder['Login'],$HostingNewScheme);
