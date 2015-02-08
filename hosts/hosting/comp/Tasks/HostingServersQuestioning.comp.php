@@ -10,7 +10,7 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('classes/HostingServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Servers = DB_Select('Servers','*',Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 10000','SortOn'=>'Address'));
+$Servers = DB_Select('Servers',Array('*','(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) AS `Name`'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 10000','SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Servers)){
 case 'error':
@@ -34,11 +34,18 @@ foreach($Servers as $Server){
 	if(!$Server['IsActive'])
 		continue;
 	#-------------------------------------------------------------------------------
+	if(Is_Null($Server['Name']))
+		$Server['Name'] = 'NoGroup';
+	#-------------------------------------------------------------------------------
+	if(!IsSet($GLOBALS['TaskReturnInfo'][$Server['Name']]))
+		$GLOBALS['TaskReturnInfo'][$Server['Name']] = Array();
+	#-------------------------------------------------------------------------------
+	$GLOBALS['TaskReturnInfo'][$Server['Name']][] = $Server['Address'];
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$ClassHostingServer = new HostingServer();
 	#-------------------------------------------------------------------------------
 	$IsSelected = $ClassHostingServer->Select((integer)$Server['ID']);
-	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'][] = $ClassHostingServer->Settings['Address'];
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($IsSelected)){
 	case 'error':
