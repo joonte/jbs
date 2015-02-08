@@ -305,6 +305,7 @@ CREATE VIEW `ISPswOrdersOwners` AS select
 	`OrdersOwners`.`OrderDate` AS `OrderDate`,
 	`OrdersOwners`.`UserID` AS `UserID`,
 	`OrdersOwners`.`ContractID` AS `ContractID`,
+	`OrdersOwners`.`ServerID` AS `ServerID`,
 	`OrdersOwners`.`UserNotice`,
 	`OrdersOwners`.`AdminNotice`
 	FROM (`ISPswOrders` LEFT JOIN `OrdersOwners` ON((`ISPswOrders`.`OrderID` = `OrdersOwners`.`ID`)));
