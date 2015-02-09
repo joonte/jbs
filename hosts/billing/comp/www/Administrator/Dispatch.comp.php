@@ -180,6 +180,8 @@ if(Count($Filters)){
 	#-------------------------------------------------------------------------------
 	foreach(Array_Keys($Filters) as $FilterID){
 		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/www/Administrator/Dispatch]: FilterID = %s, Filter = %s',$FilterID,print_r($Filters[$FilterID],true)));
+		#-------------------------------------------------------------------------------
 		$Filter = $Filters[$FilterID];
 		#-------------------------------------------------------------------------------
 		if(Is_String($Filter)){
