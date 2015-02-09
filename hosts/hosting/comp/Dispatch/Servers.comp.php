@@ -37,7 +37,7 @@ foreach($Orders as $Order)
 		$Filters[$Order['StatusID']] = Array('Name'=>IsSet($Statuses[$Order['StatusID']])?$Statuses[$Order['StatusID']]['Name']:$Order['StatusID'],'UsersIDs'=>Array());
 	}
 
-$Filters['Delimiter'] = '+';
+$Filters['Delimiter'] = '+ + +';
 #-------------------------------------------------------------------------------
 foreach($Orders as $Order){
 	#-------------------------------------------------------------------------------
