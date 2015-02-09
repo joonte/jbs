@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('classes/Registrator.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','DomainName','UserID','IsPrivateWhoIs','PersonID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','ProfileID','ServerID','StatusID','(SELECT SUM(`YearsRemainded`) FROM `DomainConsider` WHERE `DomainConsider`.`DomainOrderID` = `DomainOrdersOwners`.`ID`) as `YearsRemainded`','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP');
+$Columns = Array('ID','DomainName','UserID','IsPrivateWhoIs','PersonID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','ProfileID','ServerID','StatusID','(SELECT SUM(`YearsRemainded`) FROM `DomainConsider` WHERE `DomainConsider`.`DomainOrderID` = `DomainOrdersOwners`.`ID`) as `YearsRemainded`','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `DomainOrdersOwners`.`ServerID`) AS `Params`');
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ switch(ValueOf($DomainOrder)){
         return new gException('CANNOT_SELECT_REGISTRATOR','Не удалось выбрать регистратора');
       case 'true':
         #-----------------------------------------------------------------------
-        $GLOBALS['TaskReturnInfo'] = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']);
+        $GLOBALS['TaskReturnInfo'] = Array(($DomainOrder['Params']['Name'])=>SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']));
         #-----------------------------------------------------------------------
         switch($DomainOrder['StatusID']){
           case 'ForRegister':
