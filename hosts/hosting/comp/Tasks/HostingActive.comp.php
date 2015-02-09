@@ -56,7 +56,7 @@ case 'array':
 			if(!$Event)
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$GLOBALS['TaskReturnInfo'] = Array(($ClassHostingServer->Settings['Address'])=>Array($HostingOrder['Login'],$HostingScheme['Name']));
+			$GLOBALS['TaskReturnInfo'] = Array(($ClassHostingServer->Settings['Address'])=>Array($HostingOrder['Login'],$HostingOrder['SchemeName']));
 			#-------------------------------------------------------------------------------
 			return TRUE;
 			#-------------------------------------------------------------------------------
