@@ -30,7 +30,7 @@ if($DomainOrder['StatusID'] == 'Deleted')
 	return TRUE;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$GLOBALS['TaskReturnInfo'] = Array(($DomainOrder['Params']['Name'])=>SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']));
+$GLOBALS['TaskReturnInfo'] = Array(($DomainOrder['Params']['Name'])=>Array(SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone'])));
 #-------------------------------------------------------------------------------
 $IsDefined = ($DomainOrder['ProfileID'] || $DomainOrder['PersonID']);
 #-------------------------------------------------------------------------------
