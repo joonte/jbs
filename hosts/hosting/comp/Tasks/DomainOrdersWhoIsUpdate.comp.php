@@ -30,8 +30,10 @@ if(Is_Error($ExecuteTime))
 #-------------------------------------------------------------------------------
 $Where = Array(
 		"`StatusID` = 'Active' OR `StatusID` = 'ForTransfer' OR `StatusID` = 'OnTransfer'",
-		"UNIX_TIMESTAMP() - 86400 > `UpdateDate`",
-		"UNIX_TIMESTAMP() - 3 * 86400 > `StatusDate`"
+		# как часто обновляем информацию WhoIs
+		SPRintF('UNIX_TIMESTAMP() - %u * 86400 > `UpdateDate`',$Settings['WhoIsUpdatePeriod']),
+		# через сколько начинаем обновлять WhoIs, после установки статуса
+		SPrintF('UNIX_TIMESTAMP() - %u * 86400 > `StatusDate`',$Settings['WhoIsBeginUpdate'])
 		);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','DomainName','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`) AS `DomainZone`','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`) AS `Params`');

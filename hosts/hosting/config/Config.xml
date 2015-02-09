@@ -561,16 +561,18 @@
    <Params type="array" />
    <IsActive>1</IsActive>
   </DomainForDelete>
-  <!-- ********************************************************************* -->
-  <DomainOrdersWhoIsUpdate>
-   <Name>Синхронизация доменов с базой WhoIs</Name>
-   <Params type="array" />
-   <ExecuteTime>05:00</ExecuteTime>
-   <ExecutePeriod>00:02</ExecutePeriod>
-   <Limit>5</Limit>
-   <IsActive>1</IsActive>
-  </DomainOrdersWhoIsUpdate>
-  <!-- ********************************************************************* -->
+	<!-- ********************************************************************* -->
+	<DomainOrdersWhoIsUpdate>
+		<Name>Синхронизация доменов с базой WhoIs</Name>
+		<Params type="array" />
+		<ExecuteTime>05:00</ExecuteTime>
+		<ExecutePeriod>00:02</ExecutePeriod>
+		<Limit>5</Limit>
+		<IsActive>1</IsActive>
+		<WhoIsUpdatePeriod>1</WhoIsUpdatePeriod>
+		<WhoIsBeginUpdate>3</WhoIsBeginUpdate>
+	</DomainOrdersWhoIsUpdate>
+	<!-- ********************************************************************* -->
   <DomainNsChange>
    <Name>Смена именных серверов</Name>
    <Params>
