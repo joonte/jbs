@@ -28,12 +28,12 @@
 	<VdsManager4>
 		<Name>VdsManager4</Name>
 		<Settings>
-			<Port>443</Port>
+			<Port>1500</Port>
 			<Protocol>ssl</Protocol>
 			<Theme>sirius</Theme>
 			<Language>ru</Language>
 			<DiskTemplate>FreeBSD-9-ISPmanager</DiskTemplate>
-			<Url>http://vds01.isp.su/manager/</Url>
+			<Url>http://vds01.isp.su:1500/vdsmgr</Url>
 		</Settings>
 	</VdsManager4>
 	<!-- ********************************************************************* -->
@@ -45,7 +45,7 @@
 			<Theme>Orion</Theme>
 			<Language>ru</Language>
 			<DiskTemplate>FreeBSD-10-amd64</DiskTemplate>
-			<Url>https://vds01.isp.su:1500/vmmgr</Url>
+			<Url>https://kvm01.isp.su:1500/vmmgr</Url>
 		</Settings>
 	</VmManager5_KVM>
 	<!-- *********************************************************************** -->

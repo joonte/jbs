@@ -35,11 +35,11 @@
 	<!-- ********************************************************************* -->
 	<IspManager4>
 		<Settings>
-			<Port>443</Port>
+			<Port>1500</Port>
 			<Protocol>ssl</Protocol>
 			<Theme>sirius</Theme>
 			<Language>ru</Language>
-			<Url>https://srv1.isp.su:1500/</Url>
+			<Url>https://srv1.isp.su:1500/ispmgr</Url>
 		</Settings>
 	</IspManager4>
 	<!-- ********************************************************************* -->
