@@ -36,7 +36,7 @@ switch(ValueOf($DomainOrder)){
         return new gException('CANNOT_SELECT_REGISTRATOR','Не удалось выбрать регистратора');
       case 'true':
         #-----------------------------------------------------------------------
-        $GLOBALS['TaskReturnInfo'] = Array(($DomainOrder['Params']['Name'])=>SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']));
+        $GLOBALS['TaskReturnInfo'] = Array(($DomainOrder['Params']['Name'])=>Array(SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone'])));
         #-----------------------------------------------------------------------
         switch($DomainOrder['StatusID']){
           case 'ForRegister':
