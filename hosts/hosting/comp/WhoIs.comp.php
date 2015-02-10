@@ -36,14 +36,51 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Span = new Tag('SPAN',$Comp);
 #-------------------------------------------------------------------------------
-$DomainZones = System_XML('config/DomainZones.xml');
-if(Is_Error($DomainZones))
-	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Config = Config();
+#-------------------------------------------------------------------------------
+$Settings = $Config['Interface']['User']['Orders']['Domain']['DomainWhoIs'];
 #-------------------------------------------------------------------------------
 $Options = Array();
 #-------------------------------------------------------------------------------
-foreach($DomainZones as $DomainZone)
-	$Options[$DomainZone['Name']] = SPrintF('.%s',$DomainZone['Name']);
+if($Settings['IsSchemesOnly']){
+	#-------------------------------------------------------------------------------
+	$__USER = $GLOBALS['__USER'];
+	#-------------------------------------------------------------------------------
+	$UniqID = UniqID('DomainSchemes');
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Services/Schemes','DomainSchemes',$__USER['ID'],Array('Name','ServerID'),$UniqID);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Columns = Array('ID','Name','ServerID','CostProlong','(SELECT `Params` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `Params`');
+	#-------------------------------------------------------------------------------
+	$DomainSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('SortID'),'Where'=>Array("`IsActive` = 'yes'")));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($DomainSchemes)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return new gException('NO_SUPPORTED_DOMAIN_ZONES','Тарифы на домены не настроены');
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	foreach($DomainSchemes as $DomainScheme)
+		$Options[$DomainScheme['Name']] = SPrintF('.%s',$DomainScheme['Name']);
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
+	$DomainZones = System_XML('config/DomainZones.xml');
+	if(Is_Error($DomainZones))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	foreach($DomainZones as $DomainZone)
+		$Options[$DomainZone['Name']] = SPrintF('.%s',$DomainZone['Name']);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'DomainZone'),$Options);
 if(Is_Error($Comp))

@@ -1322,6 +1322,10 @@
 				<Transfer>
 					<IsSelectRegistrator>0</IsSelectRegistrator>
 				</Transfer>
+				<!-- *********************************************************************** -->
+				<DomainWhoIs>
+					<IsSchemesOnly>1</IsSchemesOnly>
+				</DomainWhoIs>
 			</Domain>
 		</Orders>
 		<!-- *********************************************************************** -->
