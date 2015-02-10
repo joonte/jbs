@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
 /** @author Бреславский А.В. (Joonte Ltd.) */
 //------------------------------------------------------------------------------
-function WhoIs(){
+function WhoIs(DomainName, DomainZone){
   //----------------------------------------------------------------------------
   var $Form = document.forms['WhoIsForm'];
   //----------------------------------------------------------------------------
@@ -14,76 +14,76 @@ function WhoIs(){
     return false;
   }
   //----------------------------------------------------------------------------
-  $HTTP.onLoaded = function(){
-    //--------------------------------------------------------------------------
-    HideProgress();
-  }
   //----------------------------------------------------------------------------
   $HTTP.onAnswer = function($Answer){
     //--------------------------------------------------------------------------
-    var $WhoIsInfo = document.getElementById('WhoIsInfo');
+    var $WhoIsInfo = document.getElementById(DomainZone + 'Info');
     //--------------------------------------------------------------------------
     $WhoIsInfo.innerHTML = '';
+    var $span = document.getElementById(DomainZone);
     //--------------------------------------------------------------------------
     switch($Answer.Status){
       case 'Error':
-        ShowAlert($Answer.Error.String,'Warning');
+        $span.innerHTML = '<span style="color: red;">Error</span>';
       break;
       case 'Fail':
-        ShowAlert('Ошибка определения домена','Warning');
+	$span.innerHTML = '<span style="color: red;">Fail</span>';
       break;
       case 'Exception':
-        ShowAlert(ExceptionsStack($Answer.Exception),'Warning');
+      	$span.innerHTML = '<span style="color: red;">Exception</span>';
+//        ShowAlert(ExceptionsStack($Answer.Exception),'Warning');
       break;
       case 'Borrowed':
+      $span.innerHTML = '<span style="color: red; cursor: pointer;" onclick="var c = document.getElementById(\'' + DomainZone + 'Info\'); c.style.display=(c.style.display==\'none\')?\'block\':\'none\';">занят</span>';
         //----------------------------------------------------------------------
-        var $ExpirationDate = $Answer.ExpirationDate;
-        //----------------------------------------------------------------------
-        if($ExpirationDate){
-          //--------------------------------------------------------------------
-          var $Date = new Date($Answer.ExpirationDate*1000).ToStringDate();
-          //--------------------------------------------------------------------
-          $WhoIsInfo.innerHTML += SPrintF('<H2>Дата окончания: %s</H2>',$Date);
-        }
-        //----------------------------------------------------------------------
-        var $Ul = '<UL class="Standard">';
-        //----------------------------------------------------------------------
-        for(var $i=1;$i<10;$i++){
-          //--------------------------------------------------------------------
-          $NsName = $Answer[SPrintF('Ns%uName',$i)];
-          //--------------------------------------------------------------------
-          if($NsName)
-            $Ul += SPrintF('<LI>%s',$NsName);
-          //--------------------------------------------------------------------
-          $NsIP = $Answer[SPrintF('Ns%uIP',$i)];
-          //--------------------------------------------------------------------
-          if($NsIP)
-            $Ul += SPrintF(' %s',$NsIP);
-          //--------------------------------------------------------------------
-          $Ul += '</LI>';
-        }
-        //----------------------------------------------------------------------
-        $WhoIsInfo.innerHTML += SPrintF('%s</UL>',$Ul);
-        //----------------------------------------------------------------------
-        $WhoIsInfo.innerHTML += SPrintF('<PRE class="Standard">%s</PRE>',$Answer.Info);
+	var $ExpirationDate = $Answer.ExpirationDate;
+	//----------------------------------------------------------------------
+	if($ExpirationDate){
+		//--------------------------------------------------------------------
+		var $Date = new Date($Answer.ExpirationDate*1000).ToStringDate();
+		//--------------------------------------------------------------------
+		$WhoIsInfo.innerHTML += SPrintF('<H2>Дата окончания: %s</H2>',$Date);
+	} 
+	//----------------------------------------------------------------------
+	var $Ul = '<UL class="Standard">';
+	//----------------------------------------------------------------------
+	for(var $i=1;$i<10;$i++){
+		//--------------------------------------------------------------------
+		$NsName = $Answer[SPrintF('Ns%uName',$i)];
+		//--------------------------------------------------------------------
+		if($NsName)
+			$Ul += SPrintF('<LI>%s',$NsName);
+		//--------------------------------------------------------------------
+		$NsIP = $Answer[SPrintF('Ns%uIP',$i)];
+		//--------------------------------------------------------------------
+		if($NsIP)
+			$Ul += SPrintF(' %s',$NsIP);
+		//--------------------------------------------------------------------
+		$Ul += '</LI>';
+	} 
+	//----------------------------------------------------------------------
+	$WhoIsInfo.innerHTML += SPrintF('%s</UL>',$Ul);
+	//----------------------------------------------------------------------
+	$WhoIsInfo.innerHTML += SPrintF('<PRE class="Standard">%s</PRE>',$Answer.Info);
+	//----------------------------------------------------------------------
         //----------------------------------------------------------------------
       break;
       case 'Free':
-        ShowAlert('Доменное имя свободно');
+	$span.innerHTML = '<a target="_blank" href="/"><span style="color: green;">свободен</span></a>';
       break;
       default:
-        alert('Не известный ответ');
+        $span.innerHTML = '<span style="color: red;">default</span>';
     }
   };
   //----------------------------------------------------------------------------
-  var $Args = FormGet($Form);
+//  var $Args = FormGet($Form);
   //----------------------------------------------------------------------------
-  if(!$HTTP.Send('/API/WhoIs',$Args)){
+  if(!$HTTP.Send('/API/WhoIs?DomainName=' + DomainName + '&DomainZone=' + DomainZone)){
     //--------------------------------------------------------------------------
     alert('Не удалось отправить запрос на сервер');
     //--------------------------------------------------------------------------
     return false;
   }
   //----------------------------------------------------------------------------
-  ShowProgress('Проверка домена');
+//  ShowProgress('Проверка домена');
 }
