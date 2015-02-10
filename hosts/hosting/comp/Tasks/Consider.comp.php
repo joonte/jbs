@@ -42,6 +42,12 @@ foreach($Services as $Service){
 	#if($Service['Code'] != 'DNSmanager')
 	#	continue;
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Statuses = $Config['Statuses'][SPrintF('%sOrders',$Service['Code'])];
+	#-------------------------------------------------------------------------------
+	$StatusID = IsSet($Statuses['Suspended'])?'Suspended':'Deleted';
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$Where = Array("`StatusID` = 'Active'",SPrintF("`ConsiderDay` < %u",$CurrentDay));
 	#-------------------------------------------------------------------------------
 	# затычка для вечных лицензий ISPsystem
@@ -126,7 +132,7 @@ foreach($Services as $Service){
 						if(!$Event)
 							return ERROR | @Trigger_Error(500);
 						#-------------------------------------------------------------------------------
-						$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>SPrintF('%sOrders',$Service['Code']),'StatusID'=>'Suspended','RowsIDs'=>$ServiceOrderID,'Comment'=>SPrintF('Срок действия заказа окончен/%s',$ServiceOrderPay->String)));
+						$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>SPrintF('%sOrders',$Service['Code']),'StatusID'=>$StatusID,'RowsIDs'=>$ServiceOrderID,'Comment'=>SPrintF('Срок действия заказа окончен/%s',$ServiceOrderPay->String)));
 						#-------------------------------------------------------------------------------
 						switch(ValueOf($Comp)){
 						case 'error':
@@ -157,7 +163,7 @@ foreach($Services as $Service){
 				#-------------------------------------------------------------------------------
 				Debug(SPrintF('[comp/Orders/Consider]: NO AutoProlongation for %s',$ServiceOrder['OrderID']));
 				#-------------------------------------------------------------------------------
-				$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>SPrintF('%sOrders',$Service['Code']),'StatusID'=>'Suspended','RowsIDs'=>$ServiceOrderID,'Comment'=>'Срок действия заказа окончен/Автопродление отключено'));
+				$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>SPrintF('%sOrders',$Service['Code']),'StatusID'=>$StatusID,'RowsIDs'=>$ServiceOrderID,'Comment'=>'Срок действия заказа окончен/Автопродление отключено'));
 				switch(ValueOf($Comp)){
 				case 'error':
 					return ERROR | @Trigger_Error(500);
