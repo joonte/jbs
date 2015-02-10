@@ -1114,7 +1114,7 @@ function IspManager4_DeleteIP($Settings,$ExtraIP){
                                         $Request[$ParamID] = $Doc[$ParamID];
 				#-----------------------------------------------------------------------------
                                 # change IP to shared
-                                $Request['ip']  = $Settings['IP'];
+                                $Request['ip']  = $Settings['Params']['IP'];
 				#-----------------------------------------------------------------------------
                                 $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
                                 if(Is_Error($Response))
@@ -1216,7 +1216,7 @@ function IspManager4_DeleteIP($Settings,$ExtraIP){
 					$Request[$ParamID] = $Doc[$ParamID];
 				#-----------------------------------------------------------------------------
 				# change IP to shared
-				$Request['ip']  = $Settings['IP'];
+				$Request['ip']  = $Settings['Params']['IP'];
 				#-----------------------------------------------------------------------------
 				$Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
 				if(Is_Error($Response))
@@ -1312,25 +1312,21 @@ function IspManager4_Get_CPU_Usage($Settings,$TFilter){
 	#-----------------------------------------------------------------------------
 	$Resellers = Array();
 	#-----------------------------------------------------------------------------
-	if(Is_Array($Elems)){
-		#-------------------------------------------------------------------------------
+	if(Is_Array($Elems))
 		foreach($Elems as $Elem)
 			if(!In_Array($Elem['owner'],$Resellers))
 				$Resellers[] = $Elem['owner'];
-		#-------------------------------------------------------------------------------
-	}
+	#-----------------------------------------------------------------------------
 	#Debug(SPrintF('[system/libs/IspManager4.php]: Resellers = %s',print_r($Resellers,true)));
 	#-----------------------------------------------------------------------------
 	#-----------------------------------------------------------------------------
 	$Owners = Array();
 	#-----------------------------------------------------------------------------
-	if(Is_Array($Elems)){
-		#-------------------------------------------------------------------------------
+	if(Is_Array($Elems))
 		foreach($Elems as $Elem)
 			if(In_Array($Elem['owner'],$Resellers))
 				$Owners[$Elem['name']] = $Elem['owner'];
-		#-------------------------------------------------------------------------------
-	}
+	#-----------------------------------------------------------------------------
 	#Debug(SPrintF('[system/libs/IspManager4.php]: Owners = %s',print_r($Owners,true)));
 	#-------------------------------------------------------------------------------
 	# /manager/ispmgr?func=totalresourceusage&tfilter=2013-03-01%20-%202013-03-07&out=xml
