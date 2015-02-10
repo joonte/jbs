@@ -69,7 +69,7 @@ case 'array':
 		if(!$Event)
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$GLOBALS['TaskReturnInfo'] = Array($ISPswOrder['IP'],$ISPswScheme['Name']);
+		$GLOBALS['TaskReturnInfo'] = Array($ISPswOrder['IP']=>Array($ISPswScheme['Name']));
 		#-------------------------------------------------------------------------------
 		return TRUE;
 		#-------------------------------------------------------------------------------

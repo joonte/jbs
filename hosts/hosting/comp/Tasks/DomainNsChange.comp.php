@@ -23,13 +23,13 @@ switch(ValueOf($DomainOrder)){
     return ERROR | @Trigger_Error(400);
   case 'array':
     #---------------------------------------------------------------------------
-    $GLOBALS['TaskReturnInfo'] = Array(SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']),$DomainOrder['Ns1Name'],$DomainOrder['Ns2Name']);
+    $GLOBALS['TaskReturnInfo'] = Array(SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone'])=>Array($DomainOrder['Ns1Name'],$DomainOrder['Ns2Name']));
     #---------------------------------------------------------------------------
     if($DomainOrder['Ns3Name'])
-      $GLOBALS['TaskReturnInfo'][] = $DomainOrder['Ns3Name'];
+      $GLOBALS['TaskReturnInfo'][SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone'])][] = $DomainOrder['Ns3Name'];
     #---------------------------------------------------------------------------
     if($DomainOrder['Ns4Name'])
-      $GLOBALS['TaskReturnInfo'][] = $DomainOrder['Ns4Name'];
+      $GLOBALS['TaskReturnInfo'][SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone'])][] = $DomainOrder['Ns4Name'];
     #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
     $Server = new Registrator();
