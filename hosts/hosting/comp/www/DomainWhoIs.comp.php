@@ -161,7 +161,7 @@ if($DomainName){
 		$Rows[] = $Row;
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Rows[] = Array(new Tag('TD',Array('colspan'=>4),new Tag('SPAN',Array('style'=>'display:none;','id'=>SPrintF('%sInfo',$ID)))));
+		$Rows[] = Array(new Tag('TD',Array('colspan'=>4),new Tag('DIV',Array('style'=>'display:none;','id'=>SPrintF('%sInfo',$ID)))));
 		#-------------------------------------------------------------------------------
 		#if(In_Array($Zones[$Key]['Name'],Array('ru','su','рф','com')))
 		$Scripts[] = SPrintF("WhoIs('%s','%s',%u);",$DomainName,$Zones[$Key]['Name'],$Key);
