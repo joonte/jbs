@@ -15,7 +15,7 @@ $Params = Comp_Load('Formats/Explode/JSON',$Registrator);
 if(Is_Error($Params))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Out = Comp_Load('Formats/String',SPrintF('%s (%s)',$Scheme,$Params['Name']),8);
+$Out = Comp_Load('Formats/String',SPrintF('%s (%s)',$Scheme,$Params['Name']),7);
 if(Is_Error($Out))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
