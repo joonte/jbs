@@ -82,7 +82,7 @@ function WhoIs($DomainName, $DomainZone, $DomainSchemeID){
 			//------------------------------------------------------------------------------
 			$WhoIsInfo.innerHTML += SPrintF('%s</UL>',$Ul);
 			//------------------------------------------------------------------------------
-			$WhoIsInfo.innerHTML += SPrintF('<PRE class="Standard" style="overflow:hidden; width:570px;">%s</PRE>',$Answer.Info);
+			$WhoIsInfo.innerHTML += SPrintF('<PRE class="Standard" style="overflow:hidden; width:560px;">%s</PRE>',$Answer.Info);
 			//------------------------------------------------------------------------------
 			break;
 			//------------------------------------------------------------------------------
