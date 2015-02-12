@@ -294,7 +294,7 @@ function __Error_Handler__($Number,$Error,$File,$Line){
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		if(File_Exists(SPrintF('%s/DEBUG.OUT',SYSTEM_PATH))){
+		if(File_Exists(SPrintF('%s/DEBUG.OUT',SYSTEM_PATH)) || !IsSet($_SERVER["REMOTE_PORT"])){
 			#-------------------------------------------------------------------------------
 			Exit($Log);
 		}else{
