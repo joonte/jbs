@@ -33,8 +33,8 @@ class TestServer {
 	#-------------------------------------------------------------------------------
 	function updateBill($param){
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/www/Merchant/QIWI]: login = %s; password = %s; txn = %s, status = %s',$param->login,$param->password,$param->txn,$param->status));
-		Debug(SPrintF('[comp/www/Merchant/QIWI]: param = %s',print_r($param,true)));
+		#Debug(SPrintF('[comp/www/Merchant/QIWI]: login = %s; password = %s; txn = %s, status = %s',$param->login,$param->password,$param->txn,$param->status));
+		#Debug(SPrintF('[comp/www/Merchant/QIWI]: param = %s',print_r($param,true)));
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$Out = new Response();
