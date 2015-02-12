@@ -24,7 +24,7 @@ class Tag{
 		if($Name == 'FORM'){
 			#-------------------------------------------------------------------------------
 			#Debug(SPrintF('[system/classes/auto/Tag]: before __args__ = %s',print_r($__args__,true)));
-			$Comp = Comp_Load('Form/Input',Array('name'=>'CSRF','type'=>'hidden','value'=>'SOME_VARIABLE'));
+			$Comp = Comp_Load('Form/Input',Array('name'=>'CSRF','type'=>'hidden','value'=>$GLOBALS['CSRF']));
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------

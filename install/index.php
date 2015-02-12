@@ -253,6 +253,7 @@ $Data = <<<EOD
   <Port>%s</Port>
  </DBConnection>
  <EncryptionKey>%s</EncryptionKey>
+ <CSRFKey>%s</CSRFKey>
 </XML>
 EOD;
         if (File_Put_Contents($File,SPrintF($Data, $__SETTINGS['db-user'], $__SETTINGS['db-password'],
