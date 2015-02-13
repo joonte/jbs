@@ -300,13 +300,15 @@ function __Error_Handler__($Number,$Error,$File,$Line){
 		}else{
 			#-------------------------------------------------------------------------------
 			$Errors = Array(
-					100 => 'Ошибка выполнения',
-					101 => 'Неизвестный результат',
-					201 => 'Неверные параметры',
-					400 => 'Ошибка данных',
-					500 => 'Системная ошибка',
-					600 => 'Ошибка политики безопасности',
-					700 => 'Нарушение политики прав'
+					100	=> 'Ошибка выполнения',
+					101	=> 'Неизвестный результат',
+					201	=> 'Неверные параметры',
+					400	=> 'Ошибка данных',
+					500	=> 'Системная ошибка',
+					600	=> 'Ошибка политики безопасности',
+					601	=> 'Неверный реферер',
+					602	=> 'Отсутствует реферер',
+					700	=> 'Нарушение политики прав'
 					);
 			#-------------------------------------------------------------------------------
 			$Result = '<HTML><HEAD><TITLE>%s</TITLE><META http-equiv="Content-Type" content="text/html" charset="utf-8" /><STYLE>body{background-color: #F9F9F9;font-family: Verdana;font-size: 12px;} h1{color: #A65300; font-size: 25px; font-weight: normal; margin: 15px; text-align: left; } p{border: 1px solid #B7B7FF; background-color: #FFFFD7; margin: 10px; padding: 5px; } </STYLE></HEAD><BODY><H1>%s</H1><P><SPAN>Приносим свои извинения.</SPAN><BR /><SPAN>В ближайшее время мы постараемся исправить возникшую проблему.</SPAN><BR /><SPAN>Идентификтор ошибки: </SPAN><B>%s</B></P><DIV style="font-size:10px;margin:10px;"><SPAN>Joonte Software 2007-2015</SPAN><A href="http://www.joonte.com/">http://www.joonte.com</A></DIV></BODY></HTML>';
