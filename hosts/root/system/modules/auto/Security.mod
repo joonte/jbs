@@ -80,6 +80,8 @@ if(Count($Args) > 0){
 #-------------------------------------------------------------------------------
 if($Settings['IsCheckReferer'] && IsSet($_SERVER["REQUEST_URI"]) && Preg_Match('#/API/#',$_SERVER["REQUEST_URI"])){
 	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[Security module]: проверка параметров реферера для REQUEST_URI = %s',$_SERVER["REQUEST_URI"]));
+	#-------------------------------------------------------------------------------
 	$Template = "#^(/API/EmailConfirm|/API/Logon).*#";
 	#-------------------------------------------------------------------------------
 	if(Preg_Match($Template,$_SERVER["REQUEST_URI"]))
@@ -106,9 +108,11 @@ if($Settings['IsCheckReferer'] && IsSet($_SERVER["REQUEST_URI"]) && Preg_Match('
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[Security module]: referer not set, for IP = %s; API = %s',$_SERVER['REMOTE_ADDR'],$_SERVER["REQUEST_URI"]));
+		Debug(SPrintF('[Security module]: отсутствует реферер, запрос API = %s',$_SERVER['REMOTE_ADDR'],$_SERVER["REQUEST_URI"]));
 		#-------------------------------------------------------------------------------
-		#if(!$Settings['IsNoReferer'])
+		if(!$Settings['IsNoReferer'])
+			return ERROR | @Trigger_Error(602);
+		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 }
