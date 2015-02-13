@@ -87,28 +87,29 @@ if($Settings['IsCheckReferer'] && IsSet($_SERVER["REQUEST_URI"]) && Preg_Match('
 	if(Preg_Match($Template,$_SERVER["REQUEST_URI"]))
 		return TRUE;
 	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
 	if(IsSet($_SERVER["HTTP_REFERER"])){
 		#-------------------------------------------------------------------------------
 		if(IsSet($_SERVER["HTTP_HOST"])){
 			#-------------------------------------------------------------------------------
-			if(!Preg_Match(SPrintF('#/%s#',$_SERVER["HTTP_HOST"]),$_SERVER["HTTP_REFERER"])){
+			if(!Preg_Match(SPrintF('#^(http|https)://%s.*#',$_SERVER["HTTP_HOST"]),$_SERVER["HTTP_REFERER"])){
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[Security module]: referer does not match, for IP = %s; API = %s',$$_SERVER['REMOTE_ADDR'],$_SERVER["REQUEST_URI"]));
-				Debug(SPrintF('[Security module]: HTTP_REFERER = %s',$_SERVER["HTTP_REFERER"]));
-				Debug(SPrintF('[Security module]: HTTP_HOST = %s',IsSet($_SERVER["HTTP_HOST"])?$_SERVER["HTTP_HOST"]:'FALSE'));
-			#-------------------------------------------------------------------------------
+				Debug(SPrintF('[Security module]: реферер не соответствует хосту, IP = %s; API = %s',$_SERVER['REMOTE_ADDR'],$_SERVER["REQUEST_URI"]));
+				Debug(SPrintF('[Security module]: %s != %s',$_SERVER['HTTP_HOST'],$_SERVER["HTTP_REFERER"]));
+				#-------------------------------------------------------------------------------
+				if($Settings['IsCheckReferer'])
+					return ERROR | @Trigger_Error(601);
+				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
 		}else{
 			#-------------------------------------------------------------------------------
-				Debug(SPrintF('[Security module]: host not set, for API = %s',$_SERVER["REQUEST_URI"]));
+			Debug(SPrintF('[Security module]: не задана переменная $_SERVER["HTTP_HOST"], невозможно проверить HTTP_REFERER'));
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[Security module]: отсутствует реферер, запрос API = %s',$_SERVER['REMOTE_ADDR'],$_SERVER["REQUEST_URI"]));
+		Debug(SPrintF('[Security module]: отсутствует реферер, IP = %s; API = %s',$_SERVER['REMOTE_ADDR'],$_SERVER["REQUEST_URI"]));
 		#-------------------------------------------------------------------------------
 		if(!$Settings['IsNoReferer'])
 			return ERROR | @Trigger_Error(602);
