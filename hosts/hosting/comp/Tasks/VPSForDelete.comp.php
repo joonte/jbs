@@ -22,7 +22,7 @@ switch(ValueOf($VPSOrders)){
   break;
   case 'array':
     #---------------------------------------------------------------------------
-    $GLOBALS['TaskReturnInfo'] = SPrintF('Deleted %s accounts',SizeOf($VPSOrders));
+    $GLOBALS['TaskReturnInfo'] = Array('Deleted'=>Array(SizeOf($VPSOrders)));
     #---------------------------------------------------------------------------
     foreach($VPSOrders as $VPSOrder){
       #-------------------------------------------------------------------------

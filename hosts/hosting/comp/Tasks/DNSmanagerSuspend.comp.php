@@ -50,7 +50,7 @@ case 'array':
 			if(!$Event)
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$GLOBALS['TaskReturnInfo'] = Array($ClassDNSmanagerServer->Settings['Address'],$DNSmanagerOrder['Login'],$DNSmanagerOrder['SchemeName']);
+			$GLOBALS['TaskReturnInfo'] = Array(($ClassDNSmanagerServer->Settings['Address'])=>Array($DNSmanagerOrder['Login'],$DNSmanagerScheme['SchemeName']));
 			#-------------------------------------------------------------------------------
 			return TRUE;
 			#-------------------------------------------------------------------------------

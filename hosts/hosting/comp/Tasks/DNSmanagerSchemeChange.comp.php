@@ -102,7 +102,7 @@ case 'array':
 			return ERROR | @Trigger_Error(400);
 		case 'true':
 			#-------------------------------------------------------------------------------
-			$GLOBALS['TaskReturnInfo'] = Array($ClassDNSmanagerServer->Settings['Address'],$DNSmanagerOrder['Login'],$DNSmanagerOrder['SchemeName'],$DNSmanagerNewScheme['Name']);
+			$GLOBALS['TaskReturnInfo'] = Array(($ClassDNSmanagerServer->Settings['Address'])=>Array($DNSmanagerOrder['Login']),$DNSmanagerOrder['SchemeName']=>Array($DNSmanagerNewScheme['Name']));
 			#-------------------------------------------------------------------------------
 			#Debug(SPrintF("[comp/Tasks/DNSmanagerSchemeChange]: DNSmanagerNewScheme = %s",print_r($DNSmanagerNewScheme,true)));
 			$SchemeChange = $ClassDNSmanagerServer->SchemeChange($DNSmanagerOrder['Login'],$DNSmanagerNewScheme);

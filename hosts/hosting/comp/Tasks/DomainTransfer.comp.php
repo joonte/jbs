@@ -13,7 +13,7 @@ if(Is_Error(System_Load('libs/WhoIs.php','classes/Registrator.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Columns = Array('UserID','DomainName','AuthInfo','ProfileID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','ServerID','StatusID','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','IsPrivateWhoIs','PersonID');
+$Columns = Array('UserID','DomainName','AuthInfo','ProfileID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','ServerID','StatusID','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','IsPrivateWhoIs','PersonID','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `DomainOrdersOwners`.`ServerID`) AS `Params`');
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
@@ -25,11 +25,12 @@ case 'exception':
 	#return ERROR | @Trigger_Error(400);
 	# к моменту выполнения задания, бывает что юзер уже успел грохнуть заказ...
 	Debug("[Task/DomainTransfer]: Заказа на домен уже не существует, вероятно пользователь его удалил");
+	#-------------------------------------------------------------------------------
 	return TRUE;
 	#-------------------------------------------------------------------------------
 case 'array':
 	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'] = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']);
+	$GLOBALS['TaskReturnInfo'] = Array(($DomainOrder['Params']['Name'])=>Array(SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone'])));
 	#-------------------------------------------------------------------------------
 	$WhoIs = WhoIs_Check($DomainOrder['DomainName'],$DomainOrder['DomainZone']);
 	#-------------------------------------------------------------------------------
