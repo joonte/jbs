@@ -427,7 +427,7 @@
  <Registrar>Default</Registrar>
 </UniqID>
 <UniqID>
- <Server>whois.nic.ws</Server>
+ <Server>whois.website.ws</Server>
  <Name>ws</Name>
  <Available>No\smatch\sfor</Available>
  <NotAvailable>not\sa\svalid\sname</NotAvailable>
