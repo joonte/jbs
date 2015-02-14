@@ -39,7 +39,7 @@ case 'array':
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$MessageID = SPrintF('clause_%s_%s',$GLOBALS['__USER']['ID'],SubStr(Md5(JSON_Encode($Comp)),0,6));
+	$MessageID = SPrintF('clause_%s_%s',IsSet($GLOBALS['__USER']['ID'])?$GLOBALS['__USER']['ID']:10,SubStr(Md5(JSON_Encode($Comp)),0,6));
 	#-------------------------------------------------------------------------------
 	if(IsSet($_COOKIE[$MessageID]))
 		break;
