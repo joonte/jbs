@@ -47,6 +47,7 @@
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Other>
+	<!-- *********************************************************************** -->
 	<Libs>
 		<HTTP>
 			<SocketTimeout>60</SocketTimeout>
@@ -54,16 +55,19 @@
 		</HTTP>
 	</Libs>
 	<!-- *********************************************************************** -->
+	<Modules>
+		<Security>
+			<IsActive>1</IsActive>
+			<ExcludeIPs></ExcludeIPs>
+			<IsCheckReferer>1</IsCheckReferer>
+			<IsNoReferer>0</IsNoReferer>
+		</Security>
+	</Modules>
+	<!-- *********************************************************************** -->
 	<Protocol>
 		<UseSSL>0</UseSSL>
 	</Protocol>
 	<!-- *********************************************************************** -->
-	<SecurityMod>
-		<IsActive>1</IsActive>
-		<ExcludeIPs></ExcludeIPs>
-		<IsCheckReferer>1</IsCheckReferer>
-		<IsNoReferer>0</IsNoReferer>
-	</SecurityMod>
 </Other>
 <!-- *********************************************************************** -->
 </XML>
