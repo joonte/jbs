@@ -29,7 +29,7 @@ $DOM->AddAttribs('MenuLeft',Array('args'=>'User/Services'));
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Услуги → Домены → Проверка домена');
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/WhoIs.js}')));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/DomainWhoIs.js}')));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table = Array();
