@@ -26,15 +26,7 @@ function IspManager4_Get_Domains($Settings){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$HTTP = Array(
-			#---------------------------------------------------------------------------
-			'Address'  => $Settings['Params']['IP'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Hidden'   => $authinfo,
-			'IsLoggin' => FALSE
-			);
+	$HTTP = IspManager4_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	# достаём список пользователей/реселлеров
 	$Response = HTTP_Send('/manager/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
@@ -71,7 +63,7 @@ function IspManager4_Get_Domains($Settings){
 	if(Is_Array($Elems)){
 		#-------------------------------------------------------------------------------
 		foreach($Elems as $Elem)
-			if(In_Array($Elem['owner'],$Resellers))
+			if(IsSet($Elem['owner']) && In_Array($Elem['owner'],$Resellers))
 				$Owners[$Elem['name']] = $Elem['owner'];
 		#-------------------------------------------------------------------------------
 	}
@@ -231,17 +223,11 @@ function IspManager4_Get_Users($Settings){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
+  $Version = IspManager4_Check_Version($Settings);
+  #-------------------------------------------------------------------------------
   $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
   #-----------------------------------------------------------------------------
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Params']['IP'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Hidden'   => $authinfo,
-    'IsLoggin' => FALSE
-  );
+  $HTTP = IspManager4_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $Response = HTTP_Send('/manager/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
   if(Is_Error($Response))
@@ -268,41 +254,52 @@ function IspManager4_Get_Users($Settings){
       continue;
     #---------------------------------------------------------------------------
     if(!IsSet($User['owner']))
-      continue;
+      if($Version != 'Lite')
+        continue;
     #---------------------------------------------------------------------------
+    if(!IsSet($User['owner']))
+      $User['owner'] = $Settings['Login'];
+    #-------------------------------------------------------------------------------
     if($User['owner'] == $Settings['Login'])
       $Result[] = $User['name'];
   }
-  #-----------------------------------------------------------------------------
-  #-----------------------------------------------------------------------------
-  $Response = HTTP_Send('/manager/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'reseller'));
-  if(Is_Error($Response))
-    return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
-  #-----------------------------------------------------------------------------
-  $Response = Trim($Response['Body']);
-  #-----------------------------------------------------------------------------
-  $XML = String_XML_Parse($Response);
-  if(Is_Exception($XML))
-    return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
-  #-----------------------------------------------------------------------------
-  $XML = $XML->ToArray('elem');
-  #-----------------------------------------------------------------------------
-  $Users = $XML['doc'];
-  #-----------------------------------------------------------------------------
-  if(IsSet($Users['error']))
-    return new gException('GET_USERS_ERROR',$Users['error']);
-  #-----------------------------------------------------------------------------
-  if(Is_Array($Users)){
-    foreach($Users as $User){
-      #---------------------------------------------------------------------------
-      if(!IsSet($User['name']))
-        continue;
-      #---------------------------------------------------------------------------
-      $Result[] = $User['name'];
-    }
-  }
-  #-----------------------------------------------------------------------------
-  #-----------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if($Version != 'Lite'){
+		#-------------------------------------------------------------------------------
+		$Response = HTTP_Send('/manager/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'reseller'));
+		if(Is_Error($Response))
+			return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
+		#-------------------------------------------------------------------------------
+		$Response = Trim($Response['Body']);
+		#-------------------------------------------------------------------------------
+		$XML = String_XML_Parse($Response);
+		if(Is_Exception($XML))
+			return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
+		#-------------------------------------------------------------------------------
+		$XML = $XML->ToArray('elem');
+		#-------------------------------------------------------------------------------
+		$Users = $XML['doc'];
+		#-------------------------------------------------------------------------------
+		if(IsSet($Users['error']))
+			return new gException('GET_USERS_ERROR',$Users['error']);
+		#-------------------------------------------------------------------------------
+		if(Is_Array($Users)){
+			#-------------------------------------------------------------------------------
+			foreach($Users as $User){
+				#-------------------------------------------------------------------------------
+				if(!IsSet($User['name']))
+					continue;
+				#-------------------------------------------------------------------------------
+				$Result[] = $User['name'];
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
   $Response = HTTP_Send('/manager/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'mgradmin'));
   if(Is_Error($Response))
     return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
@@ -345,14 +342,7 @@ function IspManager4_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
   /****************************************************************************/
   $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
   #-----------------------------------------------------------------------------
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Params']['IP'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Hidden'   => $authinfo
-  );
+  $HTTP = IspManager4_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $IsReselling = $HostingScheme['IsReselling'];
   #-----------------------------------------------------------------------------
@@ -479,14 +469,7 @@ function IspManager4_Active($Settings,$Login,$IsReseller = FALSE){
   /****************************************************************************/
   $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
   #-----------------------------------------------------------------------------
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Params']['IP'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Hidden'   => $authinfo
-  );
+  $HTTP = IspManager4_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $Response = HTTP_Send('/manager/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.enable':'user.enable','elid'=>$Login));
   if(Is_Error($Response))
@@ -529,14 +512,7 @@ function IspManager4_Suspend($Settings,$Login,$IsReseller = FALSE){
   /****************************************************************************/
   $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
   #-----------------------------------------------------------------------------
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Params']['IP'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Hidden'   => $authinfo
-  );
+  $HTTP = IspManager4_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $Response = HTTP_Send('/manager/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.disable':'user.disable','elid'=>$Login));
   if(Is_Error($Response))
@@ -579,14 +555,7 @@ function IspManager4_Delete($Settings,$Login,$IsReseller = FALSE){
   /****************************************************************************/
   $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
   #-----------------------------------------------------------------------------
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Params']['IP'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Hidden'   => $authinfo
-  );
+  $HTTP = IspManager4_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   #-----------------------------------------------------------------------------
   # JBS-543, проверяем наличие такого юзера
@@ -700,14 +669,7 @@ function IspManager4_Scheme_Change($Settings,$Login,$HostingScheme){
   /****************************************************************************/
   $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
   #-----------------------------------------------------------------------------
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Params']['IP'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Hidden'   => $authinfo
-  );
+  $HTTP = IspManager4_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $IsReselling = $HostingScheme['IsReselling'];
   #-----------------------------------------------------------------------------
@@ -799,14 +761,7 @@ function IspManager4_Password_Change($Settings,$Login,$Password,$IsReseller = FA
   /****************************************************************************/
   $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
   #-----------------------------------------------------------------------------
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Params']['IP'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Hidden'   => $authinfo
-  );
+  $HTTP = IspManager4_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   #-----------------------------------------------------------------------------
   # /usr/local/ispmgr/sbin/mgrctl -m ispmgr -o xml usrparam sok=ok atype=atany su=h33502
@@ -850,14 +805,7 @@ function IspManager4_Get_Email_Boxes($Settings){
   /****************************************************************************/
   $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
   #-----------------------------------------------------------------------------
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Params']['IP'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Hidden'   => $authinfo
-  );
+  $HTTP = IspManager4_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $Response = HTTP_Send('/manager/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'emaildomain'));
   if(Is_Error($Response))
@@ -947,20 +895,21 @@ function IspManager4_Get_Email_Boxes($Settings){
 #-------------------------------------------------------------------------------
 # added by lissyara 2011-08-08 in 11:25 MSK
 function IspManager4_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
-        /****************************************************************************/
+        /******************************************************************************/
         $__args_types = Array('array','string','string','string','string','string');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
-        /****************************************************************************/
+        /******************************************************************************/
+	$Version = IspManager4_Check_Version($Settings);
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[IspManager4_AddIP]: ISPmanager = %s',$Version));
+	#-------------------------------------------------------------------------------
+	if($Version == 'Lite')
+		return new gException('LITE_NOT_SUPPORT_MANAGE_IP_ADDRESS_LIST','Версия ISPmanager Lite 5 не подерживает управление IP адресами');
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
         $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
         #-----------------------------------------------------------------------------
-        $HTTP = Array(
-                'Address'  => $Settings['Params']['IP'],
-                'Port'     => $Settings['Port'],
-                'Host'     => $Settings['Address'],
-                'Protocol' => $Settings['Protocol'],
-                'Hidden'   => $authinfo,
-                'IsLoggin' => FALSE
-        );
+	$HTTP = IspManager4_Build_HTTP($Settings);
         #-----------------------------------------------------------------------------
         $Request = Array(
                 'authinfo'      => $authinfo,
@@ -1003,16 +952,17 @@ function IspManager4_DeleteIP($Settings,$ExtraIP){
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
         #Debug("ExtraIP order ID = " . $ID);
 	/****************************************************************************/
+	$Version = IspManager4_Check_Version($Settings);
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[IspManager4_AddIP]: ISPmanager = %s',$Version));
+	#-------------------------------------------------------------------------------
+	if($Version == 'Lite')
+		return new gException('LITE_NOT_SUPPORT_MANAGE_IP_ADDRESS_LIST','Версия ISPmanager Lite 5 не подерживает управление IP адресами');
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$HTTP = Array(
-		#---------------------------------------------------------------------------
-		'Address'  => $Settings['Params']['IP'],
-		'Port'     => $Settings['Port'],
-		'Host'     => $Settings['Address'],
-		'Protocol' => $Settings['Protocol'],
-		'Hidden'   => $authinfo
-	);
+	$HTTP = IspManager4_Build_HTTP($Settings);
         # Логика.
         # 1. определяем число доменов на этом адресе.
         # 2. если доменов больше нуля - переносим их на шаред адрес
@@ -1281,15 +1231,17 @@ function IspManager4_Get_CPU_Usage($Settings,$TFilter){
         $__args_types = Array('array','string');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/
+	$Version = IspManager4_Check_Version($Settings);
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[IspManager4_Get_CPU_Usage]: ISPmanager = %s',$Version));
+	#-------------------------------------------------------------------------------
+	if($Version == 'Lite')
+		return Array();
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$HTTP = Array(
-			'Address'  => $Settings['Params']['IP'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Hidden'   => $authinfo
-			);
+	$HTTP = IspManager4_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# достаём список пользователей/реселлеров
@@ -1412,15 +1364,7 @@ function IspManager4_Get_Disk_Usage($Settings){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$HTTP = Array(
-			#---------------------------------------------------------------------------
-			'Address'  => $Settings['Params']['IP'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Hidden'   => $authinfo,
-			'IsLoggin' => FALSE
-			);
+	$HTTP = IspManager4_Build_HTTP($Settings);
 	#-----------------------------------------------------------------------------
 	$Out = Array();
 	#-----------------------------------------------------------------------------
@@ -1491,6 +1435,71 @@ function IspManager4_Get_Disk_Usage($Settings){
 #-------------------------------------------------------------------------------
 
 
+
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# Функции используемые для внутреннего употребления =)
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+function IspManager4_Check_Version($Settings){
+	/******************************************************************************/
+	$__args_types = Array('array','string');
+	#-------------------------------------------------------------------------------
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/******************************************************************************/
+	$HTTP = IspManager4_Build_HTTP($Settings);
+	#-------------------------------------------------------------------------------
+	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
+	#-------------------------------------------------------------------------------
+	# достаём информацию о лицензии
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'softinfo'));
+	if(Is_Error($Response))
+		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
+	#-------------------------------------------------------------------------------
+	$Response = Trim($Response['Body']);
+	#-------------------------------------------------------------------------------
+	$XML = String_XML_Parse($Response);
+	if(Is_Exception($XML))
+		return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
+	#-------------------------------------------------------------------------------
+	$XML = $XML->ToArray();
+	#-------------------------------------------------------------------------------
+	$Info = $XML['doc'];
+	#-------------------------------------------------------------------------------
+	if(IsSet($Info['error']))
+		return new gException('GET_LICENSE_INFO_ERROR',$Info['error']);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return ((Preg_Match('/Lite/',$Info['mgrver']))?'Lite':'Pro');
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+function IspManager4_Build_HTTP($Settings){
+	/******************************************************************************/
+	$__args_types = Array('array');
+	#-------------------------------------------------------------------------------
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/******************************************************************************/
+	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
+	#-------------------------------------------------------------------------------
+	$HTTP = Array(
+			'Address'	=> $Settings['Params']['IP'],
+			'Port'		=> $Settings['Port'],
+			'Host'		=> $Settings['Address'],
+			'Protocol'	=> $Settings['Protocol'],
+			'Hidden'	=> $authinfo,
+			'IsLoggin'	=> FALSE
+			);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return $HTTP;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 
 
 
