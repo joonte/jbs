@@ -133,25 +133,32 @@
    <Length>45</Length>
    </Args>
  </Notice>
- <!-- ********************************************************************** -->
- <IsPublish>
-  <Head>Опуб.</Head>
-  <Prompt>Группа статей опубликована</Prompt>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsPublish%</ListElement>
-  </Args>
- </IsPublish>
- <!-- ********************************************************************** -->
- <IsProtected>
-  <Head>Защ.</Head>
-  <Prompt>Группа статей защищена от удаления</Prompt>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsProtected%</ListElement>
-  </Args>
- </IsProtected>
+	<!-- ********************************************************************** -->
+	<IsPublish>
+		<Head>Опуб.</Head>
+		<Prompt>Группа статей опубликована</Prompt>
+		<Comp>BooleanEdit</Comp>
+		<Args>
+			<ListElement>ClausesGroups</ListElement>
+			<ListElement>IsPublish</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>%IsPublish%</ListElement>
+		</Args>
+	</IsPublish>
+	<!-- ********************************************************************** -->
+	<IsProtected>
+		<Head>Защ.</Head>
+		<Prompt>Группа статей защищена от удаления</Prompt>
+		<Comp>BooleanEdit</Comp>
+		<Args>
+			<ListElement>ClausesGroups</ListElement>
+			<ListElement>IsProtected</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>%IsProtected%</ListElement>
+		</Args>
+	</IsProtected>
 </Columns>
+<!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Sequence>
  <ListElement>SelectID</ListElement>
