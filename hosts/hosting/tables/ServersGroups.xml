@@ -18,6 +18,7 @@
 		<ListElement>Name</ListElement>
 		<ListElement>Comment</ListElement>
 		<ListElement>FunctionID</ListElement>
+		<ListElement>IsCheckUsers</ListElement>
 		<ListElement>SortID</ListElement>
 	</ColumnsIDs>
 	<Conditions>
@@ -91,6 +92,18 @@
 		<Alias>IF(ISNULL(`ServiceID`),'без сервиса',(SELECT `Item` FROM `Services` WHERE `Services`.`ID` = `ServersGroups`.`ServiceID`))</Alias>
 	</Service>
 	<!-- ********************************************************************** -->
+	<IsCheckUsers>
+		<Head>Пр. акк.</Head>
+		<Prompt>Проводить проверку акканутов на сервере - искать лишние или недостающие, по отношению к биллингу</Prompt>
+		<Comp>BooleanEdit</Comp>
+		<Args>
+			<ListElement>ServersGroups</ListElement>
+			<ListElement>IsCheckUsers</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>%IsCheckUsers%</ListElement>
+		</Args>
+	</IsCheckUsers>
+	<!-- ********************************************************************** -->
 	<Comment>
 		<Head>Комментарий</Head>
 		<Comp>Formats/String</Comp>
@@ -123,6 +136,7 @@
 	<ListElement>Service</ListElement>
 	<ListElement>Comment</ListElement>
 	<ListElement>FunctionID</ListElement>
+	<ListElement>IsCheckUsers</ListElement>
 	<ListElement>Servers</ListElement>
 	<ListElement>SortID</ListElement>
 </Sequence>
