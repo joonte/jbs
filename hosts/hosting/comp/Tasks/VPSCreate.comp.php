@@ -145,7 +145,7 @@ $Event = Comp_Load('Events/EventInsert',$Event);
 if(!$Event)
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$GLOBALS['TaskReturnInfo'] = Array($VPSServer->Settings['Address'],$VPSOrder['IP'],$VPSScheme['Name']);
+$GLOBALS['TaskReturnInfo'] = Array(($VPSServer->Settings['Address'])=>Array($VPSOrder['Login'],$VPSOrder['IP'],$VPSScheme['Name']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;
