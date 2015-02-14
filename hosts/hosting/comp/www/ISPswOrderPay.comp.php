@@ -395,7 +395,7 @@ $DaysPay = 1;
 	      #-----------------------------------------------------------------
               if($ISPswScheme['CostDay'] > 0){
                 $DaysFromBallance = Floor($ISPswOrder['ContractBalance'] / $ISPswScheme['CostDay']);
-                if($MinDaysPay < $DaysFromBallance){
+                if($MinDaysPay <= $DaysFromBallance){
                   if($IsPeriods){
                     #---------------------------------------------------------------
                     $Comp = Comp_Load('Form/Input',Array('onclick'=>'form.Period.disabled = true;form.Year.disabled = true;form.Month.disabled = true;form.Day.disabled = true;','name'=>'Calendar','type'=>'radio'));

@@ -385,7 +385,7 @@ switch(ValueOf($HostingOrder)){
 	      #-----------------------------------------------------------------
 	      if($HostingScheme['CostDay'] > 0){
                 $DaysFromBallance = Floor($HostingOrder['ContractBalance'] / $HostingScheme['CostDay']);
-	        if($MinDaysPay < $DaysFromBallance){
+	        if($MinDaysPay <= $DaysFromBallance){
                   if($IsPeriods){
                     #---------------------------------------------------------------
                     $Comp = Comp_Load('Form/Input',Array('onclick'=>'form.Period.disabled = true;form.Year.disabled = true;form.Month.disabled = true;form.Day.disabled = true;','name'=>'Calendar','type'=>'radio'));
