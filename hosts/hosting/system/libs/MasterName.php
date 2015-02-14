@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/Http.php')))
+if(Is_Error(System_Load('libs/HTTP.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 function MasterName_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name,$Ns1IP,$Ns2Name,$Ns2IP,$Ns3Name,$Ns3IP,$Ns4Name,$Ns4IP,$IsPrivateWhoIs,$ContractID){
@@ -13,7 +13,7 @@ function MasterName_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns
   /****************************************************************************/
   $Password = $Settings['Password'];
   #-----------------------------------------------------------------------------
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -79,7 +79,7 @@ function MasterName_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns
   #-----------------------------------------------------------------------------
   $Query = Array('request'=>Implode("\n",$Query));
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/partner_gateway',$Http,Array(),$Query);
+  $Result = HTTP_Send('/partner_gateway',$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[MasterName_Domain_Register]:не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -122,7 +122,7 @@ function MasterName_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Con
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -151,7 +151,7 @@ function MasterName_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Con
   #-----------------------------------------------------------------------------
   $Query = Array('request'=>Implode("\n",$Query));
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/partner_gateway',$Http,Array(),$Query);
+  $Result = HTTP_Send('/partner_gateway',$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[MasterName_Domain_Prolong]:не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -194,7 +194,7 @@ function MasterName_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$Contract
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -255,7 +255,7 @@ function MasterName_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$Contract
   #-----------------------------------------------------------------------------
   $Query = Array('request'=>Implode("\n",$Query));
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/partner_gateway',$Http,Array(),$Query);
+  $Result = HTTP_Send('/partner_gateway',$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[MasterName_Domain_Ns_Change]:не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -298,7 +298,7 @@ function MasterName_Check_Task($Settings,$TicketID){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -318,7 +318,7 @@ function MasterName_Check_Task($Settings,$TicketID){
   #-----------------------------------------------------------------------------
   $Query = Array('request'=>Implode("\n",$Query));
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/partner_gateway',$Http,Array(),$Query);
+  $Result = HTTP_Send('/partner_gateway',$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[MasterName_Check_Task]:не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -365,7 +365,7 @@ function MasterName_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -480,7 +480,7 @@ function MasterName_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
   #-----------------------------------------------------------------------------
   $Query = Array('request'=>Implode("\n",$Query));
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/partner_gateway',$Http,Array(),$Query);
+  $Result = HTTP_Send('/partner_gateway',$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[MasterName_Contract_Register]:не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -527,7 +527,7 @@ function MasterName_Get_Contract($Settings,$TicketID){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -546,7 +546,7 @@ function MasterName_Get_Contract($Settings,$TicketID){
   #-----------------------------------------------------------------------------
   $Query = Array('request'=>Implode("\n",$Query));
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/partner_gateway',$Http,Array(),$Query);
+  $Result = HTTP_Send('/partner_gateway',$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[MasterName_Check_Task]:не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/Http.php')))
+if(Is_Error(System_Load('libs/HTTP.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ function DNSmanager5_Get_Users($Settings){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 			'Address'  => $Settings['Address'],
 			'Port'     => $Settings['Port'],
 			'Host'     => $Settings['Address'],
@@ -34,7 +34,7 @@ function DNSmanager5_Get_Users($Settings){
 			'IsLoggin' => FALSE
 			);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/dnsmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
+	$Response = HTTP_Send('/dnsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ function DNSmanager5_Get_Users($Settings){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/dnsmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'reseller'));
+	$Response = HTTP_Send('/dnsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'reseller'));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -108,7 +108,7 @@ function DNSmanager5_Create($Settings,$Login,$Password,$DNSmanagerScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 			'Address'  => $Settings['Address'],
 			'Port'     => $Settings['Port'],
 			'Host'     => $Settings['Address'],
@@ -127,7 +127,7 @@ function DNSmanager5_Create($Settings,$Login,$Password,$DNSmanagerScheme){
 			'elid'          => $Login
 			);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/dnsmgr',$Http,Array(),$Request);
+	$Response = HTTP_Send('/dnsmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -161,7 +161,7 @@ function DNSmanager5_Create($Settings,$Login,$Password,$DNSmanagerScheme){
 	if($DNSmanagerScheme['Reseller'])
 		$Request['su'] = $DNSmanagerScheme['Reseller'];
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/dnsmgr',$Http,Array(),$Request);
+	$Response = HTTP_Send('/dnsmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[DNSmanager5_Create]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------  
@@ -193,7 +193,7 @@ function DNSmanager5_Active($Settings,$Login,$IsReseller = FALSE){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 			'Address'  => $Settings['Address'],
 			'Port'     => $Settings['Port'],
 			'Host'     => $Settings['Address'],
@@ -201,7 +201,7 @@ function DNSmanager5_Active($Settings,$Login,$IsReseller = FALSE){
 			'Hidden'   => $authinfo
 			);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/dnsmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.resume':'user.resume','elid'=>$Login));
+	$Response = HTTP_Send('/dnsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.resume':'user.resume','elid'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[DNSmanager5_Activate]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -231,7 +231,7 @@ function DNSmanager5_Suspend($Settings,$Login,$IsReseller = FALSE){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 			'Address'  => $Settings['Address'],
 			'Port'     => $Settings['Port'],
 			'Host'     => $Settings['Address'],
@@ -239,7 +239,7 @@ function DNSmanager5_Suspend($Settings,$Login,$IsReseller = FALSE){
 			'Hidden'   => $authinfo
 			);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/dnsmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.suspend':'user.suspend','elid'=>$Login));
+	$Response = HTTP_Send('/dnsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.suspend':'user.suspend','elid'=>$Login));
 	#-------------------------------------------------------------------------------
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[DNSmanager5_Suspend]: не удалось соедениться с сервером');
@@ -270,7 +270,7 @@ function DNSmanager5_Delete($Settings,$Login,$IsReseller = FALSE){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 			'Address'  => $Settings['Address'],
 			'Port'     => $Settings['Port'],
 			'Host'     => $Settings['Address'],
@@ -287,7 +287,7 @@ function DNSmanager5_Delete($Settings,$Login,$IsReseller = FALSE){
 			'elid'          => $Login
 			);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/dnsmgr',$Http,Array(),$Request);
+	$Response = HTTP_Send('/dnsmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -316,7 +316,7 @@ function DNSmanager5_Delete($Settings,$Login,$IsReseller = FALSE){
 				'su'            => $Login
 				);
 		#-------------------------------------------------------------------------------
-		$Response = Http_Send('/dnsmgr',$Http,Array(),$Request);
+		$Response = HTTP_Send('/dnsmgr',$HTTP,Array(),$Request);
 		if(Is_Error($Response))
 			return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
@@ -346,7 +346,7 @@ function DNSmanager5_Delete($Settings,$Login,$IsReseller = FALSE){
 						'elid'		=> $User['name']
 						);
 				#-----------------------------------------------------------------------------
-				$Response = Http_Send('/dnsmgr',$Http,Array(),$Request);
+				$Response = HTTP_Send('/dnsmgr',$HTTP,Array(),$Request);
 				if(Is_Error($Response))
 					return ERROR | @Trigger_Error('[DNSmanager5_Delete]: не удалось соедениться с сервером');
 				# я так думаю, неважно чё он там ответил, если ответил...
@@ -359,7 +359,7 @@ function DNSmanager5_Delete($Settings,$Login,$IsReseller = FALSE){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# собственно дропаем юзера/реселлера
-	$Response = Http_Send('/dnsmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.delete':'user.delete','elid'=>$Login));
+	$Response = HTTP_Send('/dnsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.delete':'user.delete','elid'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[DNSmanager5_Delete]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -389,7 +389,7 @@ function DNSmanager5_Scheme_Change($Settings,$Login,$DNSmanagerScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 			'Address'  => $Settings['Address'],
 			'Port'     => $Settings['Port'],
 			'Host'     => $Settings['Address'],
@@ -410,7 +410,7 @@ function DNSmanager5_Scheme_Change($Settings,$Login,$DNSmanagerScheme){
 			'namespace'	=> $DNSmanagerScheme['ViewArea']
 			  );
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/dnsmgr',$Http,Array(),$Request);
+	$Response = HTTP_Send('/dnsmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[DNSmanager5_Scheme_Change]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -440,7 +440,7 @@ function DNSmanager5_Password_Change($Settings,$Login,$Password,$IsReseller = FA
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 			'Address'  => $Settings['Address'],
 			'Port'     => $Settings['Port'],
 			'Host'     => $Settings['Address'],
@@ -459,7 +459,7 @@ function DNSmanager5_Password_Change($Settings,$Login,$Password,$IsReseller = FA
 			'confirm'	=> $Password,
 			);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/dnsmgr',$Http,Array(),$Request);
+	$Response = HTTP_Send('/dnsmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[DNSmanager5_Password_Change]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------

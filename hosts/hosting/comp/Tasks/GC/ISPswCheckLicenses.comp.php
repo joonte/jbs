@@ -9,7 +9,7 @@ $__args_list = Array('Task');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('libs/BillManager.php','libs/Http.php','libs/Server.php')))
+if(Is_Error(System_Load('libs/BillManager.php','libs/HTTP.php','libs/Server.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 # get config values

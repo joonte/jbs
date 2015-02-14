@@ -1,6 +1,6 @@
 <?php
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/Http.php')))
+if(Is_Error(System_Load('libs/HTTP.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 function Started_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name,$Ns1IP,$Ns2Name,$Ns2IP,$Ns3Name,$Ns3IP,$Ns4Name,$Ns4IP,$IsPrivateWhoIs,$CustomerID){
@@ -9,7 +9,7 @@ function Started_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Na
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address']);
+  $HTTP = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address']);
   #-----------------------------------------------------------------------------
   $Reseller = new Tag('reseller');
   $Reseller->AddChild(new Tag('login',$Settings['Login']));
@@ -30,7 +30,7 @@ function Started_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Na
   #-----------------------------------------------------------------------------
   $Post = SprintF("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n%s",$Request->ToXMLString());
   #-----------------------------------------------------------------------------
-  $Responce = Http_Send('/',$Http,Array(),$Post,Array('Content-type: text/xml'));
+  $Responce = HTTP_Send('/',$HTTP,Array(),$Post,Array('Content-type: text/xml'));
   if(Is_Error($Responce))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ function Started_Check_Task($Settings,$RequestID){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address']);
+  $HTTP = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address']);
   #-----------------------------------------------------------------------------
   $Request = new Tag('RequestBody');
   #-----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ function Started_Check_Task($Settings,$RequestID){
   #-----------------------------------------------------------------------------
   $Post = SprintF("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n%s",$Request->ToXMLString());
   #-----------------------------------------------------------------------------
-  $Responce = Http_Send('/',$Http,Array(),$Post,Array('Content-type: text/xml'));
+  $Responce = HTTP_Send('/',$HTTP,Array(),$Post,Array('Content-type: text/xml'));
   if(Is_Error($Responce))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
@@ -121,7 +121,7 @@ function Started_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contra
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address']);
+  $HTTP = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address']);
   #-----------------------------------------------------------------------------
   $Request = new Tag('RequestBody');
   $Reseller = new Tag('reseller');
@@ -144,7 +144,7 @@ function Started_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contra
   #-----------------------------------------------------------------------------
   $Post = SprintF("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n%s",$Request->ToXMLString());
   #-----------------------------------------------------------------------------
-  $Responce = Http_Send('/',$Http,Array(),$Post,Array('Content-type: text/xml'));
+  $Responce = HTTP_Send('/',$HTTP,Array(),$Post,Array('Content-type: text/xml'));
   if(Is_Error($Responce))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
@@ -168,7 +168,7 @@ function Started_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID,
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address']);
+  $HTTP = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address']);
   #-----------------------------------------------------------------------------
   $Request = new Tag('RequestBody');
   #-----------------------------------------------------------------------------
@@ -191,7 +191,7 @@ function Started_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID,
   #-----------------------------------------------------------------------------
   $Post = SprintF("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n%s",$Request->ToXMLString());
   #-----------------------------------------------------------------------------
-  $Responce = Http_Send('/',$Http,Array(),$Post,Array('Content-type: text/xml'));
+  $Responce = HTTP_Send('/',$HTTP,Array(),$Post,Array('Content-type: text/xml'));
   if(Is_Error($Responce))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
@@ -213,7 +213,7 @@ function Started_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address']);
+  $HTTP = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address']);
   #-----------------------------------------------------------------------------
   $Reseller = new Tag('reseller');
   $Reseller->AddChild(new Tag('login',$Settings['Login']));
@@ -248,7 +248,7 @@ function Started_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
     #---------------------------------------------------------------------------
     $Post = SprintF("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n%s",$Request->ToXMLString());
     #---------------------------------------------------------------------------
-    $Responce = Http_Send('/',$Http,Array(),$Post,Array('Content-type: text/xml'));
+    $Responce = HTTP_Send('/',$HTTP,Array(),$Post,Array('Content-type: text/xml'));
     if(Is_Error($Responce))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
@@ -483,7 +483,7 @@ function Started_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
   #-----------------------------------------------------------------------------
   $Post = SprintF("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n%s",$Request->ToXMLString());
   #-----------------------------------------------------------------------------
-  $Responce = Http_Send('/',$Http,Array(),$Post,Array('Content-type: text/xml; charset=utf-8'));
+  $Responce = HTTP_Send('/',$HTTP,Array(),$Post,Array('Content-type: text/xml; charset=utf-8'));
   if(Is_Error($Responce))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------

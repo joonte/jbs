@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/Http.php')))
+if(Is_Error(System_Load('libs/HTTP.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name,$Ns1IP,$Ns2Name,$Ns2IP,$Ns3Name,$Ns3IP,$Ns4Name,$Ns4IP,$ContractID = '',$IsPrivateWhoIs,$PepsonID = 'Default',$Person = Array()){
@@ -11,7 +11,7 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -227,7 +227,7 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
   #-----------------------------------------------------------------------------
   $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/create");
   #-----------------------------------------------------------------------------
-  $Result = Http_Send($Settings['PrefixAPI'],$Http,Array(),$Query);
+  $Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[RegRu_Domain_Register]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -261,7 +261,7 @@ function RegRu_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contract
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -288,7 +288,7 @@ function RegRu_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contract
   #-----------------------------------------------------------------------------
   $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","service/renew");
   #---------------------------------------------------------------------------
-  $Result = Http_Send($Settings['PrefixAPI'],$Http,Array(),$Query);
+  $Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[RegRu_Domain_Prolong]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -320,7 +320,7 @@ function RegRu_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID,$D
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -362,7 +362,7 @@ function RegRu_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID,$D
   #-----------------------------------------------------------------------------
   $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/update_nss");
   #---------------------------------------------------------------------------
-  $Result = Http_Send($Settings['PrefixAPI'],$Http,Array(),$Query);
+  $Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[RegRu_Domain_Ns_Change]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -408,7 +408,7 @@ function RegRu_Check_Task($Settings,$TicketID){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -427,7 +427,7 @@ function RegRu_Check_Task($Settings,$TicketID){
   #-----------------------------------------------------------------------------
   $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/nop");
   #-----------------------------------------------------------------------------
-  $Result = Http_Send($Settings['PrefixAPI'],$Http,Array(),$Query);
+  $Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[RegRu_Check_Task]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -456,7 +456,7 @@ function RegRu_GetUploadID($Settings,$Domain){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -475,7 +475,7 @@ function RegRu_GetUploadID($Settings,$Domain){
   #-----------------------------------------------------------------------------
   $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/get_docs_upload_uri");
   #-----------------------------------------------------------------------------
-  $Result = Http_Send($Settings['PrefixAPI'],$Http,Array(),$Query);
+  $Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[RegRu_GetUploadID]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -500,7 +500,7 @@ function RegRu_Get_Balance($Settings){
   #----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-   $Http = Array(
+   $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -519,7 +519,7 @@ function RegRu_Get_Balance($Settings){
   #----------------------------------------------------------------------------
   $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","user/get_balance");
   #----------------------------------------------------------------------------
-  $Result = Http_Send($Settings['PrefixAPI'],$Http,Array(),$Query);
+  $Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[RegRu_GetBalance]: не удалось выполнить запрос к серверу');
   #----------------------------------------------------------------------------
@@ -545,7 +545,7 @@ function RegRu_Is_Available_Domain($Settings,$Domain){
   #---------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #--------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -564,7 +564,7 @@ function RegRu_Is_Available_Domain($Settings,$Domain){
   #----------------------------------------------------------------------------
   $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","service/get_info");
   #----------------------------------------------------------------------------
-  $Result = Http_Send($Settings['PrefixAPI'],$Http,Array(),$Query);
+  $Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[RegRu_Is_Available_Domain]: не удалось выполнить запрос к серверу');
   #----------------------------------------------------------------------------
@@ -615,7 +615,7 @@ function RegRu_Domain_Transfer($Settings,$DomainName,$DomainZone,$Param){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -641,7 +641,7 @@ function RegRu_Domain_Transfer($Settings,$DomainName,$DomainZone,$Param){
     #---------------------------------------------------------------------------
     $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/transfer");
     #---------------------------------------------------------------------------
-    $Result = Http_Send($Settings['PrefixAPI'],$Http,Array(),$Query);
+    $Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
     if(Is_Error($Result))
       return ERROR | @Trigger_Error('[RegRu_Domain_Register]: не удалось выполнить запрос к серверу');
     #---------------------------------------------------------------------------
@@ -677,7 +677,7 @@ function RegRu_Domain_Accept($Settings){
 	#-----------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/
-	$Http = Array(
+	$HTTP = Array(
 			#---------------------------------------------------------------------------
 			'Address'  => $Settings['Address'],
 			'Port'     => $Settings['Port'],
@@ -698,7 +698,7 @@ function RegRu_Domain_Accept($Settings){
 	#---------------------------------------------------------------------------
 	$Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/look_at_entering_list");
 	#---------------------------------------------------------------------------
-	$Result = Http_Send($Settings['PrefixAPI'],$Http,Array(),$Query);
+	$Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
 	if(Is_Error($Result))
 		return ERROR | @Trigger_Error('[RegRu_Domain_Accept]: не удалось выполнить запрос к серверу');
 	#---------------------------------------------------------------------------
@@ -728,7 +728,7 @@ function RegRu_Domain_Accept($Settings){
 			$Query['action_type']	= 'accept';
 			$Query['action']	= 'accept';
 			#-------------------------------------------------------------------------------
-			$Result = Http_Send($Settings['PrefixAPI'],$Http,Array(),$Query);
+			$Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
 			if(Is_Error($Result))
 				return ERROR | @Trigger_Error('[RegRu_Domain_Accept]: не удалось выполнить запрос к серверу');
 			#---------------------------------------------------------------------------
@@ -757,7 +757,7 @@ function RegRu_Change_Contact_Detail($Settings,$Domain,$DomainZone,$Person){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -793,7 +793,7 @@ function RegRu_Change_Contact_Detail($Settings,$Domain,$DomainZone,$Person){
     $Query['p_addr'] = $Person['PostalAddress'];
   #---------------------------------------------------------------------------
   #---------------------------------------------------------------------------
-  $Result = Http_Send($Settings['PrefixAPI'],$Http,Array(),$Query);
+  $Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[RegRu_Domain_Register]: не удалось выполнить запрос к серверу');
   #---------------------------------------------------------------------------
@@ -822,7 +822,7 @@ function RegRu_Get_Contact_Detail($Settings,$Domain){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -844,7 +844,7 @@ function RegRu_Get_Contact_Detail($Settings,$Domain){
   #---------------------------------------------------------------------------
   $Settings['PrefixAPI'] = SprintF('https://api.reg.ru/api/regru2/%s','service/get_details');
   #---------------------------------------------------------------------------
-  $Result = Http_Send($Settings['PrefixAPI'],$Http,Array(),$Query);
+  $Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[RegRu_Get_Contact_Detail]: не удалось выполнить запрос к серверу');
   #---------------------------------------------------------------------------
@@ -889,7 +889,7 @@ function RegRu_Get_List_Domains($Settings){
   #---------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #--------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -908,7 +908,7 @@ function RegRu_Get_List_Domains($Settings){
   #----------------------------------------------------------------------------
   $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","service/get_list");
   #----------------------------------------------------------------------------
-  $Result = Http_Send($Settings['PrefixAPI'],$Http,Array(),$Query);
+  $Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[RegRu_Get_List_Domains]: не удалось выполнить запрос к серверу');
   #----------------------------------------------------------------------------

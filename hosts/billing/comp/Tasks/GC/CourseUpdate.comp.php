@@ -7,7 +7,7 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('libs/Http.php')))
+if(Is_Error(System_Load('libs/HTTP.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -20,10 +20,10 @@ if(!$Settings['IsActive'])
 #-------------------------------------------------------------------------------
 $Request = Array('date_req'=>SPrintF('%s/%s/%s',Date('d'),Date('m'),Date('Y')));
 #-------------------------------------------------------------------------------
-$Http = Array('Address'=>'www.cbr.ru','Host'=>'www.cbr.ru','Port'=>'80');
+$HTTP = Array('Address'=>'www.cbr.ru','Host'=>'www.cbr.ru','Port'=>'80');
 #-------------------------------------------------------------------------------
-#$Response = Http_Send('/scripts/XML_daily.asp',$Http,$Request);
-$Response = Http_Send('/scripts/XML_daily_eng.asp',$Http,$Request);
+#$Response = HTTP_Send('/scripts/XML_daily.asp',$HTTP,$Request);
+$Response = HTTP_Send('/scripts/XML_daily_eng.asp',$HTTP,$Request);
 if(Is_Error($Response))
 	return TRUE;
 #-------------------------------------------------------------------------------

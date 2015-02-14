@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/Bytes.php','libs/TVL.php','libs/SNAC.php','libs/FLAP.php','libs/Http.php')))
+if(Is_Error(System_Load('libs/Bytes.php','libs/TVL.php','libs/SNAC.php','libs/FLAP.php','libs/HTTP.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 class IcqClient{
@@ -299,7 +299,7 @@ static function IsOnLine($UIN){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Result = Http_Send(
+  $Result = HTTP_Send(
     '/online.gif',
     Array(
       'Address' => 'status.icq.com',

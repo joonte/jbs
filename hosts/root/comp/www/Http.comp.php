@@ -4,10 +4,10 @@
 #-------------------------------------------------------------------------------
 Header('Content-type: text/plain; charset=utf-8');
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/Http.php')))
+if(Is_Error(System_Load('libs/HTTP.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Http = Array(
+$HTTP = Array(
   #-----------------------------------------------------------------------------
   'Address'  => 'cp.mastername.ru',
   'Port'     => 443,
@@ -49,7 +49,7 @@ EOD;
 #-------------------------------------------------------------------------------
 $Query = Array('request'=>SPrintF($Request,UniqID('ID')));
 #-------------------------------------------------------------------------------
-$Result = Http_Send('/partner_gateway',$Http,Array(),$Query);
+$Result = HTTP_Send('/partner_gateway',$HTTP,Array(),$Query);
 if(Is_Error($Result))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

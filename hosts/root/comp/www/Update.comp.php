@@ -5,7 +5,7 @@ $Args = Args();
 $Commit = (boolean) @$Args['Commit'];
 $Force  = (boolean) @$Args['Force'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/Http.php')))
+if(Is_Error(System_Load('libs/HTTP.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 Header('Content-type: text/plain; charset=utf-8');
@@ -74,7 +74,7 @@ $Config = Config();
 #-------------------------------------------------------------------------------
 $Server = $Config['Update']['Server'];
 #-------------------------------------------------------------------------------
-$Answer = Http_Send('/GetUpdate',$Server,Array('HostsIDs'=>Implode(',',$HostsIDs)),Array('Snapshot'=>JSON_Encode($Snapshot)));
+$Answer = HTTP_Send('/GetUpdate',$Server,Array('HostsIDs'=>Implode(',',$HostsIDs)),Array('Snapshot'=>JSON_Encode($Snapshot)));
 if(Is_Error($Answer))
   return "ERROR: не удалось выполнить запрос к серверу\n";
 #-------------------------------------------------------------------------------

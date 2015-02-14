@@ -3,7 +3,7 @@
 /** @author Alex Keda, for www.host-food.ru */
 /* VDS functions written by lissyara, for www.host-food.ru */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/Http.php')))
+if(Is_Error(System_Load('libs/HTTP.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
@@ -29,7 +29,7 @@ function VdsManager4_Create($Settings,$VPSOrder,$IP,$VPSScheme){
   /****************************************************************************/
   $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
   #-----------------------------------------------------------------------------
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
@@ -81,7 +81,7 @@ function VdsManager4_Create($Settings,$VPSOrder,$IP,$VPSScheme){
     $Request['userlimit'] = $VPSScheme['QuotaUsers']; # Пользователи
   }
   
-  $Response = Http_Send('/manager/vdsmgr',$Http,Array(),$Request);
+  $Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),$Request);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[VdsManager4_Create]: не удалось соедениться с сервером');
   
@@ -116,7 +116,7 @@ function VdsManager4_Active($Settings,$Login,$IsReseller = FALSE){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 		#---------------------------------------------------------------------------
 		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
@@ -125,7 +125,7 @@ function VdsManager4_Active($Settings,$Login,$IsReseller = FALSE){
 		'Hidden'   => $authinfo
 	);
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/manager/vdsmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'user.enable':'vds.enable','elid'=>$Login));
+	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'user.enable':'vds.enable','elid'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VdsManager4_Activate]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -156,7 +156,7 @@ function VdsManager4_Suspend($Settings,$Login,$VPSScheme){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 	#---------------------------------------------------------------------------
 		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
@@ -165,7 +165,7 @@ function VdsManager4_Suspend($Settings,$Login,$VPSScheme){
 		'Hidden'   => $authinfo
 	);
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/manager/vdsmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vds.disable','elid'=>$Login));
+	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vds.disable','elid'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VdsManager4_Suspend]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -196,7 +196,7 @@ function VdsManager4_Delete($Settings,$Login,$IsReseller = FALSE){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 		#---------------------------------------------------------------------------
 		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
@@ -205,7 +205,7 @@ function VdsManager4_Delete($Settings,$Login,$IsReseller = FALSE){
 		'Hidden'   => $authinfo
 	);
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/manager/vdsmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'user.delete':'vds.delete','elid'=>$Login));
+	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'user.delete':'vds.delete','elid'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VdsManager4_Delete]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -237,7 +237,7 @@ function VdsManager4_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
   /****************************************************************************/
   $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
   #-----------------------------------------------------------------------------
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
@@ -280,7 +280,7 @@ function VdsManager4_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
   else
     $Request['userlimit'] = $VPSScheme['QuotaUsers']; # Пользователи
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/manager/vdsmgr',$Http,Array(),$Request);
+  $Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),$Request);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[VdsManager4_Scheme_Change]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -324,7 +324,7 @@ function VdsManager4_Password_Change($Settings,$Login,$Password){
 		'atype'    => 'atany',         # разрешаем доступ к панели с любого IP
 	);
         #---------------------------------------------------------------------------
-        $Http = Array(
+        $HTTP = Array(
         #---------------------------------------------------------------------------
                 'Address'  => $Settings['Params']['IP'],
                 'Port'     => $Settings['Port'],
@@ -333,7 +333,7 @@ function VdsManager4_Password_Change($Settings,$Login,$Password){
                 'Hidden'   => $authinfo
         );
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/manager/vdsmgr',$Http,Array(),$Request);
+	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VdsManager4_Password_Change]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -364,7 +364,7 @@ function VdsManager4_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 		#---------------------------------------------------------------------------
 		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
@@ -393,7 +393,7 @@ function VdsManager4_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
         );
         #Debug(var_export($Settings, true));
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/manager/vdsmgr',$Http,Array(),$Request);
+	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VdsManager4_AddIP]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -429,7 +429,7 @@ function VdsManager4_DeleteIP($Settings,$ExtraIP){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 		#---------------------------------------------------------------------------
 		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
@@ -448,7 +448,7 @@ function VdsManager4_DeleteIP($Settings,$ExtraIP){
         );
         #Debug(var_export($Settings, true));
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/manager/vdsmgr',$Http,Array(),$Request);
+	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VdsManager4_DeleteIP]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -479,7 +479,7 @@ function VdsManager4_MainUsage($Settings){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 		#---------------------------------------------------------------------------
 		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
@@ -496,7 +496,7 @@ function VdsManager4_MainUsage($Settings){
         );
         #Debug(var_export($Settings, true));
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/manager/vdsmgr',$Http,Array(),$Request);
+	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VdsManager4_MainUsage]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -546,7 +546,7 @@ function VdsManager4_CheckIsActive($Settings,$Login){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 		#---------------------------------------------------------------------------
 		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
@@ -555,7 +555,7 @@ function VdsManager4_CheckIsActive($Settings,$Login){
 		'Hidden'   => $authinfo
 	);
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/manager/vdsmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vds'));
+	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vds'));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VdsManager4_CheckIsActive]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -601,7 +601,7 @@ function VdsManager4_Reboot($Settings,$Login){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 	#---------------------------------------------------------------------------
 		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
@@ -610,7 +610,7 @@ function VdsManager4_Reboot($Settings,$Login){
 		'Hidden'   => $authinfo
 	);
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/manager/vdsmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vds.reboot','elid'=>$Login));
+	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vds.reboot','elid'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VdsManager4_Reboot]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -643,7 +643,7 @@ function VdsManager4_Get_Users($Settings){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 	#---------------------------------------------------------------------------
 		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
@@ -652,7 +652,7 @@ function VdsManager4_Get_Users($Settings){
 		'Hidden'   => $authinfo
 	);
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/manager/vdsmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vds'));
+	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vds'));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VdsManager4_Get_Users]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -701,7 +701,7 @@ function VdsManager4_Get_DiskTemplates($Settings){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 	#---------------------------------------------------------------------------
 		'Address'  => $Settings['Params']['IP'],
 		'Port'     => $Settings['Port'],
@@ -710,7 +710,7 @@ function VdsManager4_Get_DiskTemplates($Settings){
 		'Hidden'   => $authinfo
 	);
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/manager/vdsmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'disktempl'));
+	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'disktempl'));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VdsManager4_Get_DiskTemplates]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------

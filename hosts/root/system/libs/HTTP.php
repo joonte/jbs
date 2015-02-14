@@ -18,7 +18,7 @@ if(!Function_Exists('Debug')){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function Http_Query($Data,$Charset,$Hidden,$IsLoggin = TRUE){
+function HTTP_Query($Data,$Charset,$Hidden,$IsLoggin = TRUE){
 	/******************************************************************************/
 	$__args_types = Array('array','string','string','boolean');
 	#-------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ function Http_Query($Data,$Charset,$Hidden,$IsLoggin = TRUE){
 	/******************************************************************************/
 	$Log = Array();
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[Http_Query]: целевая кодировка (%s)',$Charset));
+	Debug(SPrintF('[HTTP_Query]: целевая кодировка (%s)',$Charset));
 	#-------------------------------------------------------------------------------
 	$Log[] = $Charset;
 	#-------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ function Http_Query($Data,$Charset,$Hidden,$IsLoggin = TRUE){
 			#-------------------------------------------------------------------------------
 			foreach($Element as $Value){
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[Http_Query]: [%s]=(%s)',$Key,$Value));
+				Debug(SPrintF('[HTTP_Query]: [%s]=(%s)',$Key,$Value));
 				#-------------------------------------------------------------------------------
 				$Log[] = SPrintF('%s=%s',$Key,$Value);
 				#-------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ function Http_Query($Data,$Charset,$Hidden,$IsLoggin = TRUE){
 			#-------------------------------------------------------------------------------
 		}else{
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[Http_Query]: [%s]=(%s)',$Key,$Element));
+			Debug(SPrintF('[HTTP_Query]: [%s]=(%s)',$Key,$Element));
 			#-------------------------------------------------------------------------------
 			$Log[] = SPrintF('%s=%s',$Key,$Element);
 			#-------------------------------------------------------------------------------
@@ -80,11 +80,11 @@ function Http_Query($Data,$Charset,$Hidden,$IsLoggin = TRUE){
 		#-------------------------------------------------------------------------------
 		$Tmp = System_Element('tmp');
 		if(Is_Error($Tmp))
-			return ERROR | @Trigger_Error('[Http_Query]: не удалось определить путь временной директории');
+			return ERROR | @Trigger_Error('[HTTP_Query]: не удалось определить путь временной директории');
 		#-------------------------------------------------------------------------------
 		$IsWrite = IO_Write(SPrintF('%s/logs/http-send.log',$Tmp),$Log);
 		if(Is_Error($IsWrite))
-			return ERROR | @Trigger_Error('[Http_Query]: не удалось записать данные в лог файл');
+			return ERROR | @Trigger_Error('[HTTP_Query]: не удалось записать данные в лог файл');
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ function Http_Query($Data,$Charset,$Hidden,$IsLoggin = TRUE){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function Http_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Array()){
+function HTTP_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Array()){
 	/******************************************************************************/
 	$__args_types = Array('string','array','array','string,array','array');
 	#-------------------------------------------------------------------------------
@@ -117,29 +117,29 @@ function Http_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
 	#-------------------------------------------------------------------------------
 	$Tmp = System_Element('tmp');
 	if(Is_Error($Tmp))
-		return ERROR | @Trigger_Error('[Http_Send]: не удалось определить путь временной директории');
+		return ERROR | @Trigger_Error('[HTTP_Send]: не удалось определить путь временной директории');
 	#-------------------------------------------------------------------------------
 	$Config = Config();
 	#-------------------------------------------------------------------------------
 	$Address = $Default['Address'];
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[Http_Send]: соединяемся с (%s)',$Address));
+	Debug(SPrintF('[HTTP_Send]: соединяемся с (%s)',$Address));
 	#-------------------------------------------------------------------------------
 	# https://bugs.php.net/bug.php?id=52913
 	# пришлось заменить: $Address -> $Default['Host']
-	$Socket = @FsockOpen(SPrintF('%s://%s',$Protocol = $Default['Protocol'],$Default['Host'] /*$Address*/),$Port = $Default['Port'],$nError,$sError,$Config['Other']['Libs']['Http']['SocketTimeout']);
+	$Socket = @FsockOpen(SPrintF('%s://%s',$Protocol = $Default['Protocol'],$Default['Host'] /*$Address*/),$Port = $Default['Port'],$nError,$sError,$Config['Other']['Libs']['HTTP']['SocketTimeout']);
 	if(!Is_Resource($Socket)){
 		#-------------------------------------------------------------------------------
 		$IsWrite = IO_Write(SPrintF('%s/logs/http-send.log',$Tmp),SPrintF("%s://%s:%u ошибка соединения\n\n",$Protocol,$Address,$Port));
 		if(Is_Error($IsWrite))
-			return ERROR | @Trigger_Error('[Http_Send]: не удалось записать данные в лог файл');
+			return ERROR | @Trigger_Error('[HTTP_Send]: не удалось записать данные в лог файл');
 		#-------------------------------------------------------------------------------
-		return ERROR | @Trigger_Error('[Http_Send]: не удалось соединиться с удаленным хостом');
+		return ERROR | @Trigger_Error('[HTTP_Send]: не удалось соединиться с удаленным хостом');
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 	# added by lissyara, 2012-01-04 in 08:42:54 MSK, for JBS-130
-	Stream_Set_TimeOut($Socket, $Config['Other']['Libs']['Http']['StreamTimeout']);
+	Stream_Set_TimeOut($Socket, $Config['Other']['Libs']['HTTP']['StreamTimeout']);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Charset = $Default['Charset'];
@@ -149,7 +149,7 @@ function Http_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
 	$Hidden = $Default['Hidden'];
 	#-------------------------------------------------------------------------------
 	if(Count($Get))
-		$Target .= SPrintF('?%s',Http_Query($Get,$Charset,$Hidden,$IsLoggin));
+		$Target .= SPrintF('?%s',HTTP_Query($Get,$Charset,$Hidden,$IsLoggin));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Headers[] = SPrintF('%s %s HTTP/1.0',$Method,$Target);
@@ -178,7 +178,7 @@ function Http_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
 				#-------------------------------------------------------------------------------
 				$Headers[] = 'Content-Type: application/x-www-form-urlencoded';
 				#-------------------------------------------------------------------------------
-				$Body = Http_Query($Post,$Charset,$Hidden,$IsLoggin);
+				$Body = HTTP_Query($Post,$Charset,$Hidden,$IsLoggin);
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
@@ -195,13 +195,13 @@ function Http_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
 	#-------------------------------------------------------------------------------
 	$Query = SPrintF("%s\r\n\r\n%s",Implode("\r\n",$Headers),$Body);
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF("[Http_Send]: делаем запрос:\n%s",$Query));
+	Debug(SPrintF("[HTTP_Send]: делаем запрос:\n%s",$Query));
 	#-------------------------------------------------------------------------------
 	if(!@Fwrite($Socket,$Query))
-		return ERROR | @Trigger_Error('[Http_Send]: не удалось записать в сокет');
+		return ERROR | @Trigger_Error('[HTTP_Send]: не удалось записать в сокет');
 	#-------------------------------------------------------------------------------
 	# added by lissyara, 2014-01-28 in 14:19:08 MSK, for JBS-130
-	Stream_Set_TimeOut($Socket, $Config['Other']['Libs']['Http']['StreamTimeout']);
+	Stream_Set_TimeOut($Socket, $Config['Other']['Libs']['HTTP']['StreamTimeout']);
 	#-------------------------------------------------------------------------------
 	$Receive = '';
 	#-------------------------------------------------------------------------------
@@ -225,7 +225,7 @@ function Http_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF("[Http_Send]: получили ответ:\n%s",$Receive));
+	Debug(SPrintF("[HTTP_Send]: получили ответ:\n%s",$Receive));
 	#-------------------------------------------------------------------------------
 	$Log = SPrintF("%s://%s:%u [%s]\n%s\n%s\n\n",$Protocol,$Address,$Port,Date('r'),$Query,$Receive);
 	#-------------------------------------------------------------------------------
@@ -248,7 +248,7 @@ function Http_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
 		#-------------------------------------------------------------------------------
 		$IsWrite = IO_Write(SPrintF('%s/logs/http-send.log',$Tmp),$Log);
 		if(Is_Error($IsWrite))
-			return ERROR | @Trigger_Error('[Http_Send]: не удалось записать данные в лог файл');
+			return ERROR | @Trigger_Error('[HTTP_Send]: не удалось записать данные в лог файл');
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -270,7 +270,7 @@ function Http_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
 	}
 	#-------------------------------------------------------------------------------
 	if(SizeOf($Body) < 1)
-		return ERROR | @Trigger_Error('[Http_Send]: ответ от сервера не верен');
+		return ERROR | @Trigger_Error('[HTTP_Send]: ответ от сервера не верен');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return Array('Heads'=>Implode("\r\n\r\n",$Heads),'Body'=>Implode("\r\n\r\n",$Body));
@@ -279,7 +279,7 @@ function Http_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
 	#$Receive = Preg_Split('/\r\n\r\n/',$Receive,PREG_SPLIT_DELIM_CAPTURE);
 	#-------------------------------------------------------------------------------
 	#if(Count($Receive) < 2)
-	#	return ERROR | @Trigger_Error('[Http_Send]: ответ от сервера не верен');
+	#	return ERROR | @Trigger_Error('[HTTP_Send]: ответ от сервера не верен');
 	#-------------------------------------------------------------------------------
 	#$Receive = Array_Combine(Array('Heads','Body'),$Receive);
 	#-------------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/Http.php')))
+if(Is_Error(System_Load('libs/HTTP.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
@@ -36,7 +36,7 @@ function Plesk_Get_Domains($Settings){
   #-----------------------------------------------------------------------------
   $Headers = Array('Content-Type: text/xml',SPrintF('HTTP_AUTH_LOGIN: %s',$Settings['Login']),SPrintF('HTTP_AUTH_PASSWD: %s',$Settings['Password']));
   #-----------------------------------------------------------------------------
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['IP'],
     'Port'     => $Settings['Port'],
@@ -46,7 +46,7 @@ function Plesk_Get_Domains($Settings){
     'IsLoggin' => FALSE
   );
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/enterprise/control/agent.php',$Http,Array(),$Request,$Headers);
+  $Response = HTTP_Send('/enterprise/control/agent.php',$HTTP,Array(),$Request,$Headers);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[Plesk_Get_Domains]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -221,7 +221,7 @@ function Plesk_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,$Ema
   #-----------------------------------------------------------------------------
   $Headers = Array('Content-Type: text/xml',SPrintF('HTTP_AUTH_LOGIN: %s',$Settings['Login']),SPrintF('HTTP_AUTH_PASSWD: %s',$Settings['Password']));
   #-----------------------------------------------------------------------------
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['IP'],
     'Port'     => $Settings['Port'],
@@ -230,7 +230,7 @@ function Plesk_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,$Ema
     'Hidden'   => $Settings['Password']
   );
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/enterprise/control/agent.php',$Http,Array(),$Request,$Headers);
+  $Response = HTTP_Send('/enterprise/control/agent.php',$HTTP,Array(),$Request,$Headers);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[Plesk_Create]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -255,7 +255,7 @@ function Plesk_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,$Ema
      #--------------------------------------------------------------------------
      $Request = SPrintF("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n%s",$packet->ToXMLString());
      #--------------------------------------------------------------------------
-     $Response = Http_Send('/enterprise/control/agent.php',$Http,Array(),$Request,$Headers);
+     $Response = HTTP_Send('/enterprise/control/agent.php',$HTTP,Array(),$Request,$Headers);
      if(Is_Error($Response))
        return ERROR | @Trigger_Error('[Plesk_Create]: не удалось соедениться с сервером');
      #--------------------------------------------------------------------------
@@ -298,7 +298,7 @@ function Plesk_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,$Ema
          #----------------------------------------------------------------------
          $Request = SPrintF("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n%s",$packet->ToXMLString());
          #----------------------------------------------------------------------
-         $Response = Http_Send('/enterprise/control/agent.php',$Http,Array(),$Request,$Headers);
+         $Response = HTTP_Send('/enterprise/control/agent.php',$HTTP,Array(),$Request,$Headers);
          if(Is_Error($Response))
            return ERROR | @Trigger_Error('[Plesk_Create]: не удалось соедениться с сервером');
          #----------------------------------------------------------------------
@@ -358,7 +358,7 @@ function Plesk_Active($Settings,$Login,$IsReseller = FALSE){
   #-----------------------------------------------------------------------------
   $Headers = Array('Content-Type: text/xml',SPrintF('HTTP_AUTH_LOGIN: %s',$Settings['Login']),SPrintF('HTTP_AUTH_PASSWD: %s',$Settings['Password']));
   #-----------------------------------------------------------------------------
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['IP'],
     'Port'     => $Settings['Port'],
@@ -367,7 +367,7 @@ function Plesk_Active($Settings,$Login,$IsReseller = FALSE){
     'Hidden'   => $Settings['Password']
   );
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/enterprise/control/agent.php',$Http,Array(),$Request,$Headers);
+  $Response = HTTP_Send('/enterprise/control/agent.php',$HTTP,Array(),$Request,$Headers);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[Plesk_Active]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -410,7 +410,7 @@ function Plesk_Suspend($Settings,$Login,$IsReseller = FALSE){
   #-----------------------------------------------------------------------------
   $Headers = Array('Content-Type: text/xml',SPrintF('HTTP_AUTH_LOGIN: %s',$Settings['Login']),SPrintF('HTTP_AUTH_PASSWD: %s',$Settings['Password']));
   #-----------------------------------------------------------------------------
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['IP'],
     'Port'     => $Settings['Port'],
@@ -419,7 +419,7 @@ function Plesk_Suspend($Settings,$Login,$IsReseller = FALSE){
     'Hidden'   => $Settings['Password']
   );
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/enterprise/control/agent.php',$Http,Array(),$Request,$Headers);
+  $Response = HTTP_Send('/enterprise/control/agent.php',$HTTP,Array(),$Request,$Headers);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[Plesk_Suspend]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -519,7 +519,7 @@ function Plesk_Scheme_Change($Settings,$Login,$HostingScheme){
   #-----------------------------------------------------------------------------
   $Headers = Array('Content-Type: text/xml',SPrintF('HTTP_AUTH_LOGIN: %s',$Settings['Login']),SPrintF('HTTP_AUTH_PASSWD: %s',$Settings['Password']));
   #-----------------------------------------------------------------------------
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['IP'],
     'Port'     => $Settings['Port'],
@@ -528,7 +528,7 @@ function Plesk_Scheme_Change($Settings,$Login,$HostingScheme){
     'Hidden'   => $Settings['Password']
   );
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/enterprise/control/agent.php',$Http,Array(),$Request,$Headers);
+  $Response = HTTP_Send('/enterprise/control/agent.php',$HTTP,Array(),$Request,$Headers);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[Plesk_Scheme_Change]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -571,7 +571,7 @@ function Plesk_Delete($Settings,$Login,$IsReseller = FALSE){
   #-----------------------------------------------------------------------------
   $Headers = Array('Content-Type: text/xml',SPrintF('HTTP_AUTH_LOGIN: %s',$Settings['Login']),SPrintF('HTTP_AUTH_PASSWD: %s',$Settings['Password']));
   #-----------------------------------------------------------------------------
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['IP'],
     'Port'     => $Settings['Port'],
@@ -580,7 +580,7 @@ function Plesk_Delete($Settings,$Login,$IsReseller = FALSE){
     'Hidden'   => $Settings['Password']
   );
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/enterprise/control/agent.php',$Http,Array(),$Request,$Headers);
+  $Response = HTTP_Send('/enterprise/control/agent.php',$HTTP,Array(),$Request,$Headers);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[Plesk_Delete]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -623,7 +623,7 @@ function Plesk_Password_Change($Settings,$Login,$Password,$IsReseller = FALSE){
   #-----------------------------------------------------------------------------
   $Headers = Array('Content-Type: text/xml',SPrintF('HTTP_AUTH_LOGIN: %s',$Settings['Login']),SPrintF('HTTP_AUTH_PASSWD: %s',$Settings['Password']));
   #-----------------------------------------------------------------------------
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['IP'],
     'Port'     => $Settings['Port'],
@@ -632,7 +632,7 @@ function Plesk_Password_Change($Settings,$Login,$Password,$IsReseller = FALSE){
     'Hidden'   => $Settings['Password']
   );
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/enterprise/control/agent.php',$Http,Array(),$Request,$Headers);
+  $Response = HTTP_Send('/enterprise/control/agent.php',$HTTP,Array(),$Request,$Headers);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[Plesk_Password_Change]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------

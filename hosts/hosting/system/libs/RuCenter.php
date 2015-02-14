@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/Http.php')))
+if(Is_Error(System_Load('libs/HTTP.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 function RuCenter_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name,$Ns1IP,$Ns2Name,$Ns2IP,$Ns3Name,$Ns3IP,$Ns4Name,$Ns4IP,$IsPrivateWhoIs,$ContractID = ''){
@@ -11,7 +11,7 @@ function RuCenter_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1N
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -92,7 +92,7 @@ function RuCenter_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1N
         $Query[] = SPrintF('subject-contract: %s',$ContractID);
         $Query[] = SPrintF('request-id: %s',$RequestID);
         #-----------------------------------------------------------------------
-        $Result = Http_Send('/dns/dealer',$Http,Array(),Array('SimpleRequest'=>Implode("\n",$Query)));
+        $Result = HTTP_Send('/dns/dealer',$HTTP,Array(),Array('SimpleRequest'=>Implode("\n",$Query)));
         if(Is_Error($Result))
           return ERROR | @Trigger_Error('[RuCenter_Domain_Register]: не удалось выполнить запрос к серверу');
         #-----------------------------------------------------------------------
@@ -152,7 +152,7 @@ function RuCenter_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1N
   #-----------------------------------------------------------------------------
   $Query[] = 'type: CORPORATE';
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/dns/dealer',$Http,Array(),Array('SimpleRequest'=>Implode("\n",$Query)));
+  $Result = HTTP_Send('/dns/dealer',$HTTP,Array(),Array('SimpleRequest'=>Implode("\n",$Query)));
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[RuCenter_Domain_Register]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -186,7 +186,7 @@ function RuCenter_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contr
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -241,7 +241,7 @@ function RuCenter_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contr
   $Query[] = SPrintF('domain: %s',$Domain);
   $Query[] = SPrintF('prolong: %u',$Years);
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/dns/dealer',$Http,Array(),Array('SimpleRequest'=>Implode("\n",$Query)));
+  $Result = HTTP_Send('/dns/dealer',$HTTP,Array(),Array('SimpleRequest'=>Implode("\n",$Query)));
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[RuCenter_Domain_Prolong]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -266,7 +266,7 @@ function RuCenter_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -323,7 +323,7 @@ function RuCenter_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID
   if($Ns4Name)
     $Query[] = $Ns4IP?SPrintF('nserver: %s %s',$Ns4Name,$Ns4IP):SPrintF('nserver: %s',$Ns4Name);
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/dns/dealer',$Http,Array(),Array('SimpleRequest'=>Implode("\n",$Query)));
+  $Result = HTTP_Send('/dns/dealer',$HTTP,Array(),Array('SimpleRequest'=>Implode("\n",$Query)));
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[RuCenter_Domain_Ns_Change]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -357,7 +357,7 @@ function RuCenter_Check_Task($Settings,$TicketID){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -382,7 +382,7 @@ function RuCenter_Check_Task($Settings,$TicketID){
   $Query[] = '[order]';
   $Query[] = SPrintF('order_id: %s',$TicketID);
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/dns/dealer',$Http,Array(),Array('SimpleRequest'=>Implode("\n",$Query)));
+  $Result = HTTP_Send('/dns/dealer',$HTTP,Array(),Array('SimpleRequest'=>Implode("\n",$Query)));
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[RuCenter_Check_Task]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -434,7 +434,7 @@ function RuCenter_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -496,7 +496,7 @@ function RuCenter_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       return new gException('WRONG_PROFILE_ID','Неверный идентификатор профиля');
   }
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/dns/dealer',$Http,Array(),Array('SimpleRequest'=>Implode("\n",$Query)));
+  $Result = HTTP_Send('/dns/dealer',$HTTP,Array(),Array('SimpleRequest'=>Implode("\n",$Query)));
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[RuCenter_Contract_Register]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -557,7 +557,7 @@ function RuCenter_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
     $Query[] = SPrintF('fax: %s',$Person['Fax']);
     $Query[] = SPrintF('email: %s',$Person['Email']);
     #---------------------------------------------------------------------------
-    $Result = Http_Send('/dns/dealer',$Http,Array(),Array('SimpleRequest'=>Implode("\n",$Query)));
+    $Result = HTTP_Send('/dns/dealer',$HTTP,Array(),Array('SimpleRequest'=>Implode("\n",$Query)));
     if(Is_Error($Result))
       return ERROR | @Trigger_Error('[RuCenter_Contract_Register]: не удалось выполнить запрос к серверу');
     #---------------------------------------------------------------------------

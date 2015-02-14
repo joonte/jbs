@@ -266,14 +266,14 @@ foreach($UserIDs as $UserID){
 		$Where[]= SPrintF('`UserID` = %u',$UserID);
 		$Where[]= SPrintF('`CreateDate` BETWEEN %u AND %u',$StartDate,$FinishDate);
 		#-------------------------------------------------------------------------------
-		$HttpQuery = DB_Select('RequestLog',Array('COUNT(*) AS Counter'),Array('UNIQ','Where'=>$Where));
-		switch(ValueOf($HttpQuery)){
+		$HTTPQuery = DB_Select('RequestLog',Array('COUNT(*) AS Counter'),Array('UNIQ','Where'=>$Where));
+		switch(ValueOf($HTTPQuery)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
 			return ERROR | @Trigger_Error(400);
 		case 'array':
-			$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard'),$HttpQuery['Counter']));
+			$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard'),$HTTPQuery['Counter']));
 			break;
 		default:
 			return ERROR | @Trigger_Error(101);

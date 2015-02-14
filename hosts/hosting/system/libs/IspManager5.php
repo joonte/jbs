@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/Http.php')))
+if(Is_Error(System_Load('libs/HTTP.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
@@ -26,10 +26,10 @@ function IspManager5_Get_Domains($Settings){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = IspManager5_Build_HTTP($Settings);
+	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	# достаём список пользователей/реселлеров
-	$Response = Http_Send('/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ function IspManager5_Get_Domains($Settings){
 	$Users = Array();
 	#-------------------------------------------------------------------------------
 	# достаём список www доменов
-	$Response = Http_Send('/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'webdomain'));
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'webdomain'));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -119,7 +119,7 @@ function IspManager5_Get_Domains($Settings){
 	#-----------------------------------------------------------------------------
 	#-----------------------------------------------------------------------------
 	# достаём DNS домены
-	$Response = Http_Send('/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'domain'));
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'domain'));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -168,7 +168,7 @@ function IspManager5_Get_Domains($Settings){
 	#-----------------------------------------------------------------------------
 	#-----------------------------------------------------------------------------
 	# достаём Email домены
-	$Response = Http_Send('/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'emaildomain'));
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'emaildomain'));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -234,9 +234,9 @@ function IspManager5_Get_Users($Settings){
 	#-------------------------------------------------------------------------------
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = IspManager5_Build_HTTP($Settings);
+	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -276,7 +276,7 @@ function IspManager5_Get_Users($Settings){
 	#-------------------------------------------------------------------------------
 	if($Version != 'Lite'){
 		#-------------------------------------------------------------------------------
-		$Response = Http_Send('/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'reseller'));
+		$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'reseller'));
 		if(Is_Error($Response))
 			return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
@@ -310,7 +310,7 @@ function IspManager5_Get_Users($Settings){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'admin'));
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'admin'));
 	#-------------------------------------------------------------------------------
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
@@ -360,7 +360,7 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = IspManager5_Build_HTTP($Settings);
+	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	$IsReselling = $HostingScheme['IsReselling'];
 	#-------------------------------------------------------------------------------
@@ -373,7 +373,7 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 			'elid'          => $Login
 			);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -463,7 +463,7 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 		#-------------------------------------------------------------------------------
 	}
   	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[IspManager5_Create]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -500,9 +500,9 @@ function IspManager5_Active($Settings,$Login,$IsReseller = FALSE){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = IspManager5_Build_HTTP($Settings);
+	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user.resume','elid'=>$Login));
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user.resume','elid'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[IspManager5_Activate]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -539,9 +539,9 @@ function IspManager5_Suspend($Settings,$Login,$IsReseller = FALSE){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = IspManager5_Build_HTTP($Settings);
+	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user.suspend','elid'=>$Login));
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user.suspend','elid'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[IspManager5_Suspend]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -577,7 +577,7 @@ function IspManager5_Delete($Settings,$Login,$IsReseller = FALSE){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = IspManager5_Build_HTTP($Settings);
+	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# JBS-543, проверяем наличие такого юзера
@@ -588,7 +588,7 @@ function IspManager5_Delete($Settings,$Login,$IsReseller = FALSE){
 			'elid'          => $Login
 			);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -618,7 +618,7 @@ function IspManager5_Delete($Settings,$Login,$IsReseller = FALSE){
 				'su'            => $Login
 				);
 		#-----------------------------------------------------------------------------
-		$Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+		$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 		if(Is_Error($Response))
 			return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 		#-----------------------------------------------------------------------------
@@ -645,7 +645,7 @@ function IspManager5_Delete($Settings,$Login,$IsReseller = FALSE){
 						'elid'		=> $User['name']
 						);
 				#-----------------------------------------------------------------------------
-				$Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+				$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 				if(Is_Error($Response))
 					return ERROR | @Trigger_Error('[IspManager5_Delete]: не удалось соедениться с сервером');
 				# я так думаю, неважно чё он там ответил, если ответил...
@@ -657,7 +657,7 @@ function IspManager5_Delete($Settings,$Login,$IsReseller = FALSE){
  	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user.delete','elid'=>$Login));
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user.delete','elid'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[IspManager5_Delete]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -692,7 +692,7 @@ function IspManager5_Scheme_Change($Settings,$Login,$HostingScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = IspManager5_Build_HTTP($Settings);
+	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	$IsReselling = $HostingScheme['IsReselling'];
 	#-------------------------------------------------------------------------------
@@ -737,7 +737,7 @@ function IspManager5_Scheme_Change($Settings,$Login,$HostingScheme){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 	#-------------------------------------------------------------------------------
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[IspManager5_Scheme_Change]: не удалось соедениться с сервером');
@@ -774,12 +774,12 @@ function IspManager5_Password_Change($Settings,$Login,$Password,$IsReseller = FA
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = IspManager5_Build_HTTP($Settings);
+	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'usrparam','su'=>$Login,'sok'=>'ok','atype'=>'atany','passwd'=>$Password,'confirm'=>$Password);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[IspManager5_Password_Change]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -812,9 +812,9 @@ function IspManager5_Get_Email_Boxes($Settings){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = IspManager5_Build_HTTP($Settings);
+	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'emaildomain'));
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'emaildomain'));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -854,7 +854,7 @@ function IspManager5_Get_Email_Boxes($Settings){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send('/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'email'));
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'email'));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -930,7 +930,7 @@ function IspManager5_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
 	#-------------------------------------------------------------------------------
         $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
         #-----------------------------------------------------------------------------
-        $Http = IspManager5_Build_HTTP($Settings);
+        $HTTP = IspManager5_Build_HTTP($Settings);
         #-----------------------------------------------------------------------------
         $Request = Array(
                 'authinfo'      => $authinfo,
@@ -943,7 +943,7 @@ function IspManager5_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
                 'owner'         => $Login,
                 'type'          => StrToLower($AddressType)
         );
-        $Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+        $Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
         if(Is_Error($Response))
                 return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
         #-----------------------------------------------------------------------------
@@ -982,7 +982,7 @@ function IspManager5_DeleteIP($Settings,$ExtraIP){
 	#-------------------------------------------------------------------------------
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = IspManager5_Build_HTTP($Settings);
+	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#Debug("ExtraIP order ID = " . $ID);
         # Логика.
@@ -998,7 +998,7 @@ function IspManager5_DeleteIP($Settings,$ExtraIP){
                 'out'           => 'xml',
                 'elid'          => $ExtraIP
         );
-        $Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+        $Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
         if(Is_Error($Response))
                 return ERROR | @Trigger_Error('[IspManager5_DeleteIP]: не удалось соедениться с сервером');
         $Response = Trim($Response['Body']);
@@ -1020,7 +1020,7 @@ function IspManager5_DeleteIP($Settings,$ExtraIP){
                         'out'           => 'xml',
                         'su'            => $Settings['UserLogin']
                 );
-                $Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+                $Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
                 if(Is_Error($Response))
                         return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 		#-----------------------------------------------------------------------------
@@ -1055,7 +1055,7 @@ function IspManager5_DeleteIP($Settings,$ExtraIP){
                                         'su'            => $Settings['UserLogin']
                                 );
 				#-----------------------------------------------------------------------------
-                                $Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+                                $Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
                                 if(Is_Error($Response))
                                         return ERROR | @Trigger_Error('[IspManager5_DeleteIP]: не удалось соедениться с сервером');
 				#-----------------------------------------------------------------------------
@@ -1088,7 +1088,7 @@ function IspManager5_DeleteIP($Settings,$ExtraIP){
                                 # change IP to shared
                                 $Request['ip']  = $Settings['IP'];
 				#-----------------------------------------------------------------------------
-                                $Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+                                $Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
                                 if(Is_Error($Response))
                                         return ERROR | @Trigger_Error('[IspManager5_DeleteIP]: не удалось соедениться с сервером');
 				#-----------------------------------------------------------------------------
@@ -1124,7 +1124,7 @@ function IspManager5_DeleteIP($Settings,$ExtraIP){
 			'su'		=> $Settings['UserLogin']
 			);
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -1157,7 +1157,7 @@ function IspManager5_DeleteIP($Settings,$ExtraIP){
 					'su'		=> $Settings['UserLogin']
 					);
 			#-----------------------------------------------------------------------------
-			$Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+			$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 			if(Is_Error($Response))
 				return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 			#-----------------------------------------------------------------------------
@@ -1190,7 +1190,7 @@ function IspManager5_DeleteIP($Settings,$ExtraIP){
 				# change IP to shared
 				$Request['ip']  = $Settings['IP'];
 				#-----------------------------------------------------------------------------
-				$Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+				$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 				if(Is_Error($Response))
 					return ERROR | @Trigger_Error('[IspManager5_DeleteIP]: не удалось соедениться с сервером');
 				#-----------------------------------------------------------------------------
@@ -1225,7 +1225,7 @@ function IspManager5_DeleteIP($Settings,$ExtraIP){
         );
         #Debug(var_export($Settings, true));
 	#-----------------------------------------------------------------------------
-	$Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[IspManager5_DeleteIP]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -1263,11 +1263,11 @@ function IspManager5_Get_CPU_Usage($Settings,$TFilter){
 	#-------------------------------------------------------------------------------
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = IspManager5_Build_HTTP($Settings);
+	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# достаём список пользователей/реселлеров
-	$Response = Http_Send('/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -1315,7 +1315,7 @@ function IspManager5_Get_CPU_Usage($Settings,$TFilter){
 			'tfilter'	=> $TFilter
 			);
 	#-------------------------------------------------------------------------------
-        $Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+        $Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
         if(Is_Error($Response))
                 return ERROR | @Trigger_Error('[IspManager5_Get_CPU_Usage]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -1390,7 +1390,7 @@ function IspManager5_Get_Disk_Usage($Settings){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = IspManager5_Build_HTTP($Settings);
+	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-----------------------------------------------------------------------------
 	$Out = Array();
 	#-----------------------------------------------------------------------------
@@ -1398,7 +1398,7 @@ function IspManager5_Get_Disk_Usage($Settings){
 #	foreach(Array('user','reseller') as $Func){
 	foreach(Array('user') as $Func){
 		#-----------------------------------------------------------------------------
-		$Response = Http_Send('/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$Func));
+		$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$Func));
 		if(Is_Error($Response))
 			return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 		#-----------------------------------------------------------------------------
@@ -1460,12 +1460,12 @@ function IspManager5_Check_Version($Settings){
 	$__args_types = Array('array','string');
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/******************************************************************************/
-	$Http = IspManager5_Build_HTTP($Settings);
+	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
 	# достаём информацию о лицензии
-	$Response = Http_Send('/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'license.info'));
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'license.info'));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -1495,12 +1495,12 @@ function IspManager5_Service_Restart($Settings,$Service){
 	$__args_types = Array('array','string');
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/******************************************************************************/
-	$Http = IspManager5_Build_HTTP($Settings);
+	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
 	# достаём список сервисов
-	$Response = Http_Send('/ispmgr',$Http,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'services'));
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'services'));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -1530,7 +1530,7 @@ function IspManager5_Service_Restart($Settings,$Service){
 		#-------------------------------------------------------------------------------
 		$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'services.restart','elid'=>$Service);
 		#-------------------------------------------------------------------------------
-		$Response = Http_Send('/ispmgr',$Http,Array(),$Request);
+		$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 		if(Is_Error($Response))
 			return ERROR | @Trigger_Error('[IspManager5_Create]: не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
@@ -1551,7 +1551,7 @@ function IspManager5_Build_HTTP($Settings){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 			'Address'	=> $Settings['Params']['IP'],
 			'Port'		=> $Settings['Port'],
 			'Host'		=> $Settings['Address'],
@@ -1561,7 +1561,7 @@ function IspManager5_Build_HTTP($Settings){
 			);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	return $Http;
+	return $HTTP;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 }

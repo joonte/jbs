@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/Http.php')))
+if(Is_Error(System_Load('libs/HTTP.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
@@ -105,7 +105,7 @@ function BillManager_Create($Settings,$ISPswScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = BillManager_Build_HTTP($Settings);
+	$HTTP = BillManager_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# billmgr?authinfo=USER:PASSWD&out=xml&func=soft.order.param&clicked_button=finish&ip=82.156.37.16&licname=name&period=1&pricelist=4601&addon_4602=1&sok=ok&skipbasket=on
@@ -132,7 +132,7 @@ function BillManager_Create($Settings,$ISPswScheme){
 	if($Comp)
 		$Request[$Comp] = 1;
   	#-------------------------------------------------------------------------------
-	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
+	$Response = HTTP_Send($Settings['Params']['PrefixAPI'],$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[BillManager_Create]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -153,7 +153,7 @@ function BillManager_Create($Settings,$ISPswScheme){
 	# JBS-909, надо сразу класть ключ лицензии в базу
 	$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'soft.edit','elid'=>$Doc['item.id']);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
+	$Response = HTTP_Send($Settings['Params']['PrefixAPI'],$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[BillManager_Create]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -211,7 +211,7 @@ function BillManager_Change_IP($Settings,$ISPswScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = BillManager_Build_HTTP($Settings);
+	$HTTP = BillManager_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# https://api.ispsystem.com/manager/billmgr?authinfo=USER:PASSWD&out=xml&func=soft.edit&elid=334673&licname=NEWLICNAME&ip=111.222.111.223&sok=ok
@@ -227,7 +227,7 @@ function BillManager_Change_IP($Settings,$ISPswScheme){
 			#-------------------------------------------------------------------------------
 			);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
+	$Response = HTTP_Send($Settings['Params']['PrefixAPI'],$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[BillManager_Change_IP]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -262,7 +262,7 @@ function BillManager_UnLock($Settings,$ISPswScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = BillManager_Build_HTTP($Settings);
+	$HTTP = BillManager_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# https://api.ispsystem.com/manager/billmgr?authinfo=USER:PASSWD&out=xml&func=soft.resume&elid=код_лицензии
@@ -276,7 +276,7 @@ function BillManager_UnLock($Settings,$ISPswScheme){
 			#-------------------------------------------------------------------------------
 			);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
+	$Response = HTTP_Send($Settings['Params']['PrefixAPI'],$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[BillManager_UnLock]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -311,7 +311,7 @@ function BillManager_Lock($Settings,$ISPswScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = BillManager_Build_HTTP($Settings);
+	$HTTP = BillManager_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# /manager/billmgr?authinfo=USER:PASSWD&out=xml&func=soft.suspend&elid=код_лицензии
@@ -325,7 +325,7 @@ function BillManager_Lock($Settings,$ISPswScheme){
 			#-------------------------------------------------------------------------------
 			);
   	#-------------------------------------------------------------------------------
-	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
+	$Response = HTTP_Send($Settings['Params']['PrefixAPI'],$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[BillManager_Lock]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -359,12 +359,12 @@ function BillManager_Get_List_Licenses($Settings){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = BillManager_Build_HTTP($Settings);
+	$HTTP = BillManager_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'soft');
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
+	$Response = HTTP_Send($Settings['Params']['PrefixAPI'],$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[BillManager_Get_List_Licenses]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -392,7 +392,7 @@ function BillManager_Get_List_Licenses($Settings){
 		#-------------------------------------------------------------------------------
 		$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'soft.edit','elid'=>$License['id']);
 		#-------------------------------------------------------------------------------
-		$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
+		$Response = HTTP_Send($Settings['Params']['PrefixAPI'],$HTTP,Array(),$Request);
 		if(Is_Error($Response))
 			return ERROR | @Trigger_Error('[BillManager_Get_List_Licenses]: не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
@@ -455,7 +455,7 @@ function BillManager_Scheme_Change($Settings,$ISPswScheme){
 
   $authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
   #-----------------------------------------------------------------------------
-  $Http = BillManager_Build_HTTP($Settings);
+  $HTTP = BillManager_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   #-----------------------------------------------------------------------------
   $Request = Array(
@@ -477,7 +477,7 @@ function BillManager_Scheme_Change($Settings,$ISPswScheme){
   else
     $Request['userlimit'] = $HostingScheme['QuotaUsers']; # Пользователи
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
+  $Response = HTTP_Send('/manager/ispmgr',$HTTP,Array(),$Request);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[BillManager_Scheme_Change]: не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -502,7 +502,7 @@ function BillManager_Scheme_Change($Settings,$ISPswScheme){
             'func'     => 'restart'
           );
           #-----------------------------------------------------------------------------
-          $Response = Http_Send('/manager/ispmgr',$Http,Array(),$Request);
+          $Response = HTTP_Send('/manager/ispmgr',$HTTP,Array(),$Request);
           if(Is_Error($Response))
             return ERROR | @Trigger_Error('[BillManager_Scheme_Change]: не удалось соедениться с сервером');
   }
@@ -520,14 +520,14 @@ function BillManager_Get_Balance($Settings){
 	/****************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-----------------------------------------------------------------------------
-	$Http = BillManager_Build_HTTP($Settings);
+	$HTTP = BillManager_Build_HTTP($Settings);
 	#-----------------------------------------------------------------------------
 	$Request = Array(
 			'authinfo'	=> $authinfo,		# авторизационная информация
 			'out'		=> 'xml',		# Формат вывода
 			'func'		=> 'subaccount',	# Целевая функция
 			);
-	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
+	$Response = HTTP_Send($Settings['Params']['PrefixAPI'],$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[BillManager_Get_Balance]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -556,7 +556,7 @@ function BillManager_Check_ISPsystem_IP($Settings, $ISPswInfo){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = BillManager_Build_HTTP($Settings);
+	$HTTP = BillManager_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# authinfo=USER:PASSWD&out=xml&func=soft.checkip&pricelist=7&period=1&ip=82.145.17.16
@@ -571,7 +571,7 @@ function BillManager_Check_ISPsystem_IP($Settings, $ISPswInfo){
 			#-------------------------------------------------------------------------------
 			);
 	#-------------------------------------------------------------------------------
-	$Response = Http_Send($Settings['Params']['PrefixAPI'],$Http,Array(),$Request);
+	$Response = HTTP_Send($Settings['Params']['PrefixAPI'],$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[BillManager_Check_ISPsystem_IP]: не удалось соедениться с сервером');
 	#-----------------------------------------------------------------------------
@@ -626,7 +626,7 @@ function BillManager_Build_HTTP($Settings){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 			'Address'       => $Settings['Address'],
 			'Port'          => $Settings['Port'],
 			'Host'          => $Settings['Address'],
@@ -636,7 +636,7 @@ function BillManager_Build_HTTP($Settings){
 			);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	return $Http;
+	return $HTTP;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 }

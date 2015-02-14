@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/Http.php')))
+if(Is_Error(System_Load('libs/HTTP.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
@@ -22,7 +22,7 @@ function DirectAdmin_Get_Domains($Settings){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['IP'],
     'Port'     => $Settings['Port'],
@@ -31,7 +31,7 @@ function DirectAdmin_Get_Domains($Settings){
     'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password'])
   );
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/CMD_API_SHOW_DOMAINS',$Http);
+  $Response = HTTP_Send('/CMD_API_SHOW_DOMAINS',$HTTP);
   if(Is_Error($Response))
     return new gException('SERVER_CONNECTION_ERROR','Не удалось соедениться с сервером');
   #-----------------------------------------------------------------------------
@@ -47,7 +47,7 @@ function DirectAdmin_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['IP'],
     'Port'     => $Settings['Port'],
@@ -119,7 +119,7 @@ function DirectAdmin_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
     Array_Union($Request,$Adding);
   }
   #-----------------------------------------------------------------------------
-  $Response = Http_Send($IsReselling?'/CMD_API_ACCOUNT_RESELLER':'/CMD_API_ACCOUNT_USER',$Http,$Request);
+  $Response = HTTP_Send($IsReselling?'/CMD_API_ACCOUNT_RESELLER':'/CMD_API_ACCOUNT_USER',$HTTP,$Request);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[DirectAdmin_Create]: не удалось осуществить запрос');
   #-----------------------------------------------------------------------------
@@ -137,7 +137,7 @@ function DirectAdmin_Active($Settings,$Login,$IsReseller = FALSE){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['IP'],
     'Port'     => $Settings['Port'],
@@ -148,7 +148,7 @@ function DirectAdmin_Active($Settings,$Login,$IsReseller = FALSE){
   #-----------------------------------------------------------------------------
   $Request = Array('suspend'=>'Unsuspend','select0'=>$Login);
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/CMD_SELECT_USERS',$Http,$Request);
+  $Response = HTTP_Send('/CMD_SELECT_USERS',$HTTP,$Request);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[DirectAdmin_Active]: не удалось осуществить запрос');
   #-----------------------------------------------------------------------------
@@ -166,7 +166,7 @@ function DirectAdmin_Suspend($Settings,$Login,$IsReseller = FALSE){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['IP'],
     'Port'     => $Settings['Port'],
@@ -177,7 +177,7 @@ function DirectAdmin_Suspend($Settings,$Login,$IsReseller = FALSE){
   #-----------------------------------------------------------------------------
   $Request = Array('suspend'=>'Suspend','select0'=>$Login);
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/CMD_SELECT_USERS',$Http,$Request);
+  $Response = HTTP_Send('/CMD_SELECT_USERS',$HTTP,$Request);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[DirectAdmin_Suspend]: не удалось осуществить запрос');
   #-----------------------------------------------------------------------------
@@ -195,7 +195,7 @@ function DirectAdmin_Delete($Settings,$Login,$IsReseller = FALSE){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['IP'],
     'Port'     => $Settings['Port'],
@@ -206,7 +206,7 @@ function DirectAdmin_Delete($Settings,$Login,$IsReseller = FALSE){
   #-----------------------------------------------------------------------------
   $Request = Array('confirmed'=>'Confirm','delete'=>'yes','select0'=>$Login);
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/CMD_SELECT_USERS',$Http,$Request);
+  $Response = HTTP_Send('/CMD_SELECT_USERS',$HTTP,$Request);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[DirectAdmin_Delete]: не удалось осуществить запрос');
   #-----------------------------------------------------------------------------
@@ -224,7 +224,7 @@ function DirectAdmin_Scheme_Change($Settings,$Login,$HostingScheme){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['IP'],
     'Port'     => $Settings['Port'],
@@ -261,7 +261,7 @@ function DirectAdmin_Scheme_Change($Settings,$Login,$HostingScheme){
     'dnscontrol'  => ($HostingScheme['IsDnsControll']?'ON':'OFF')
   );
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/CMD_MODIFY_USER',$Http,$Request);
+  $Response = HTTP_Send('/CMD_MODIFY_USER',$HTTP,$Request);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[DirectAdmin_Scheme_Change]: не удалось осуществить запрос');
   #-----------------------------------------------------------------------------
@@ -279,7 +279,7 @@ function DirectAdmin_Password_Change($Settings,$Login,$Password,$IsReseller = FA
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['IP'],
     'Port'     => $Settings['Port'],
@@ -295,7 +295,7 @@ function DirectAdmin_Password_Change($Settings,$Login,$Password,$IsReseller = FA
     'passwd2'  => $Password
   );
   #-----------------------------------------------------------------------------
-  $Response = Http_Send('/CMD_USER_PASSWD',$Http,Array(),$Request);
+  $Response = HTTP_Send('/CMD_USER_PASSWD',$HTTP,Array(),$Request);
   if(Is_Error($Response))
     return ERROR | @Trigger_Error('[DirectAdmin_Password_Change]: не удалось осуществить запрос');
   #-----------------------------------------------------------------------------

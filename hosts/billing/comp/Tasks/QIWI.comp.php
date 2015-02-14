@@ -24,7 +24,7 @@ $NumInvoices = 0;
 $NumPayed = 0;
 #-------------------------------------------------------------------------------
 # грузим либы
-if(Is_Error(System_Load('libs/Http.php')))
+if(Is_Error(System_Load('libs/HTTP.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -101,9 +101,9 @@ case 'array':
 	$Result .= base64_encode($crypted);
 	#-------------------------------------------------------------------------------
 	# send message to QIWI server
-	$Http = Array('Protocol'=>($Settings['Send']['UseSSL'])?'ssl':'tcp','Port'=>($Settings['Send']['UseSSL'])?'443':'80','Address'=>'ishop.qiwi.ru','Host'=>'ishop.qiwi.ru');
+	$HTTP = Array('Protocol'=>($Settings['Send']['UseSSL'])?'ssl':'tcp','Port'=>($Settings['Send']['UseSSL'])?'443':'80','Address'=>'ishop.qiwi.ru','Host'=>'ishop.qiwi.ru');
 	#-------------------------------------------------------------------------------
-	$Send = Http_Send('/xml',$Http,Array(),$Result,Array('Content-type: text/xml; encoding=utf-8'));
+	$Send = HTTP_Send('/xml',$HTTP,Array(),$Result,Array('Content-type: text/xml; encoding=utf-8'));
 	#-------------------------------------------------------------------------------
 	if(Is_Error($Send))
 		return $ExecuteTime;

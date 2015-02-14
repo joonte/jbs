@@ -1,7 +1,7 @@
 <?php
 # Rootden 2012 for lowhosting.ru
   /****************************************************************************/
-  if(Is_Error(System_Load('libs/Http.php')))
+  if(Is_Error(System_Load('libs/HTTP.php')))
   return ERROR | @Trigger_Error(500);
   
 function InternetBS_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name,$Ns1IP,$Ns2Name,$Ns2IP,$Ns3Name,$Ns3IP,$Ns4Name,$Ns4IP,$ContractID = '',$IsPrivateWhoIs,$PepsonID = 'Default',$Person = Array()){
@@ -10,7 +10,7 @@ function InternetBS_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  	$Http = Array(
+  	$HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -139,7 +139,7 @@ function InternetBS_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns
 		$data ['period'] = $regperiod . "Y";
 	}
 
-	$Result = Http_Send($commandUrl,$Http,Array(),$data);
+	$Result = HTTP_Send($commandUrl,$HTTP,Array(),$data);
 	if(Is_Error($Result))
     return ERROR | @Trigger_Error('[InternetBS_Domain_Register]:не удалось выполнить запрос к серверу');
 	
@@ -173,7 +173,7 @@ function InternetBS_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$Contract
   /****************************************************************************/
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-    $Http = Array(
+    $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -206,7 +206,7 @@ function InternetBS_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$Contract
 	
 	$data = array ('apikey' => $username, 'password' => $password, 'domain' => $domainName, 'ns_list' => trim ( implode ( ',', $nslist ), "," ) );
     
-	$Result = Http_Send($commandUrl,$Http,Array(),$data);
+	$Result = HTTP_Send($commandUrl,$HTTP,Array(),$data);
 	if(Is_Error($Result))
     return ERROR | @Trigger_Error('[InternetBS_Domain_Register]:не удалось выполнить запрос к серверу');
 	
@@ -234,7 +234,7 @@ function InternetBS_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Cus
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-    $Http = Array(
+    $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -261,7 +261,7 @@ function InternetBS_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Cus
 		$data ['period'] = $regperiod . "Y";
 	}
 	
-	$Result = Http_Send($commandUrl,$Http,Array(),$data);
+	$Result = HTTP_Send($commandUrl,$HTTP,Array(),$data);
 	if(Is_Error($Result))
     return ERROR | @Trigger_Error('[InternetBS_Domain_Register]:не удалось выполнить запрос к серверу');
 	

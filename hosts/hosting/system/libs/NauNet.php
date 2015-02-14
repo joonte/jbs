@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/Http.php')))
+if(Is_Error(System_Load('libs/HTTP.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 function NauNet_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name,$Ns1IP,$Ns2Name,$Ns2IP,$Ns3Name,$Ns3IP,$Ns4Name,$Ns4IP,$IsPrivateWhoIs,$ContractID = '',$PepsonID = 'Default',$Person = Array()){
@@ -11,7 +11,7 @@ function NauNet_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Nam
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -89,7 +89,7 @@ function NauNet_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Nam
   #-----------------------------------------------------------------------------
   $Query['nserver'] = $NsServers;
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/c/registrar',$Http,Array(),$Query);
+  $Result = HTTP_Send('/c/registrar',$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[NauNet_Domain_Register]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -156,7 +156,7 @@ function NauNet_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contrac
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -174,7 +174,7 @@ function NauNet_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contrac
     'mode'   => 'async'
   );
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/c/registrar',$Http,Array(),$Query);
+  $Result = HTTP_Send('/c/registrar',$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[NauNet_Domain_Prolong]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -237,7 +237,7 @@ function NauNet_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID,$
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -260,7 +260,7 @@ function NauNet_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID,$
   if($Ns1IP && $Ns2IP)
     $Query['nserver'] = Array(SPrintF('%s %s',$Query['nserver'],$Ns1IP),SPrintF('%s %s',$Query['nserver'],$Ns2IP));
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/c/registrar',$Http,Array(),$Query);
+  $Result = HTTP_Send('/c/registrar',$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[NauNet_Domain_Ns_Change]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -320,7 +320,7 @@ function NauNet_Check_Task($Settings,$TicketID){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -337,7 +337,7 @@ function NauNet_Check_Task($Settings,$TicketID){
     'requestid' => $TicketID
   );
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/c/registrar',$Http,Array(),$Query);
+  $Result = HTTP_Send('/c/registrar',$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[NauNet_Check_Task]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------

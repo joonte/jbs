@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------------------
 /** @author Бреславский А.В. (Joonte Ltd.) */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/Http.php')))
+if(Is_Error(System_Load('libs/HTTP.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 function WebNames_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name,$Ns1IP,$Ns2Name,$Ns2IP,$Ns3Name,$Ns3IP,$Ns4Name,$Ns4IP,$ContractID = '',$IsPrivateWhoIs,$PersonID = 'Default',$Person = Array()){
@@ -11,7 +11,7 @@ function WebNames_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1N
 	#-----------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/
-	$Http = Array(
+	$HTTP = Array(
 			#---------------------------------------------------------------------------
 			'Address'  => $Settings['Address'],
 			'Port'     => $Settings['Port'],
@@ -61,7 +61,7 @@ function WebNames_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1N
 	$Query = Build_Query($Query,$Params);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
+	$Result = HTTP_Send('/RegTimeSRS.pl',$HTTP,Array(),$Query);
 	if(Is_Error($Result))
 		return ERROR | @Trigger_Error('[WebNames_Domain_Register]: не удалось выполнить запрос к серверу');
 	#-------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ function WebNames_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contr
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -106,7 +106,7 @@ function WebNames_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contr
     'period'             => $Years,
   );
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
+  $Result = HTTP_Send('/RegTimeSRS.pl',$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[WebNames_Domain_Prolong]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -127,7 +127,7 @@ function WebNames_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -168,7 +168,7 @@ function WebNames_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID
   if($Ns4IP)
     $Query['ns3ip'] = $Ns4IP;
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
+  $Result = HTTP_Send('/RegTimeSRS.pl',$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[WebNames_Domain_Ns_Change]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -192,7 +192,7 @@ function WebNames_Check_Task($Settings,$TicketID){
   if($TicketID == 'NO')
     return Array('DomainID'=>0);
   #-----------------------------------------------------------------------------
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -212,7 +212,7 @@ function WebNames_Check_Task($Settings,$TicketID){
     'interface_lang'     => 'en',
   );
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
+  $Result = HTTP_Send('/RegTimeSRS.pl',$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[WebNames_Check_Task]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -249,7 +249,7 @@ function WebNames_Get_Balance($Settings){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $Http = Array(
+  $HTTP = Array(
     #---------------------------------------------------------------------------
     'Address'  => $Settings['Address'],
     'Port'     => $Settings['Port'],
@@ -268,7 +268,7 @@ function WebNames_Get_Balance($Settings){
     'interface_lang'     => 'en',
   );
   #-----------------------------------------------------------------------------
-  $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
+  $Result = HTTP_Send('/RegTimeSRS.pl',$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[WebNames_Check_Task]: не удалось выполнить запрос к серверу');
   #-----------------------------------------------------------------------------
@@ -298,7 +298,7 @@ function WebNames_Is_Available_Domain($Settings,$Domain){
   $Result = CacheManager::get($CacheID);
   # если результата нет - лезем в вебнеймс
   if(!$Result || SizeOf($Result) < 2){
-    $Http = Array(
+    $HTTP = Array(
       #---------------------------------------------------------------------------
       'Address'  => $Settings['Address'],
       'Port'     => $Settings['Port'],
@@ -317,7 +317,7 @@ function WebNames_Is_Available_Domain($Settings,$Domain){
       'interface_lang'     => 'en',
       );
     #-----------------------------------------------------------------------------
-    $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
+    $Result = HTTP_Send('/RegTimeSRS.pl',$HTTP,Array(),$Query);
     if(Is_Error($Result))
       return ERROR | @Trigger_Error('[WebNames_Is_Available_Domain]: не удалось выполнить запрос к серверу');
     #-----------------------------------------------------------------------------
@@ -367,7 +367,7 @@ function WebNames_Change_Contact_Detail($Settings,$Domain,$DomainZone,$Person){
 	/******************************************************************************/
 	// phone, e_mail, cell_phone
 	#-------------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 			'Address'  => $Settings['Address'],
 			'Port'     => $Settings['Port'],
 			'Host'     => $Settings['Address'],
@@ -413,7 +413,7 @@ function WebNames_Change_Contact_Detail($Settings,$Domain,$DomainZone,$Person){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
+	$Result = HTTP_Send('/RegTimeSRS.pl',$HTTP,Array(),$Query);
 	if(Is_Error($Result))
 		return ERROR | @Trigger_Error('[WebNames_Change_Contact_Detail]: не удалось выполнить запрос к серверу');
 	#-------------------------------------------------------------------------------
@@ -449,7 +449,7 @@ function WebNames_Get_Contact_Detail($Settings,$Domain){
   #-------------------------------------------------------------------------------
   // phone, e_mail, cell_phone
   #-------------------------------------------------------------------------------
-  $Http = Array(
+  $HTTP = Array(
                 #---------------------------------------------------------------------------
 	        'Address'  => $Settings['Address'],
                 'Port'     => $Settings['Port'],
@@ -469,7 +469,7 @@ function WebNames_Get_Contact_Detail($Settings,$Domain){
                 );
   #-------------------------------------------------------------------------------
   #-------------------------------------------------------------------------------
-  $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
+  $Result = HTTP_Send('/RegTimeSRS.pl',$HTTP,Array(),$Query);
   if(Is_Error($Result))
     return ERROR | @Trigger_Error('[WebNames_Get_Contact_Detail]: не удалось выполнить запрос к серверу');
   #-------------------------------------------------------------------------------
@@ -539,7 +539,7 @@ function WebNames_Get_List_Domains($Settings){
   $Result = CacheManager::get($CacheID);
   # если результата нет - лезем в вебнеймс
   if(!$Result || SizeOf($Result) < 2){
-    $Http = Array(
+    $HTTP = Array(
       #---------------------------------------------------------------------------
       'Address'  => $Settings['Address'],
       'Port'     => $Settings['Port'],
@@ -558,7 +558,7 @@ function WebNames_Get_List_Domains($Settings){
       'interface_lang'     => 'en',
       );
     #-----------------------------------------------------------------------------
-    $Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
+    $Result = HTTP_Send('/RegTimeSRS.pl',$HTTP,Array(),$Query);
     if(Is_Error($Result))
       return ERROR | @Trigger_Error('[WebNames_Get_List_Domains]: не удалось выполнить запрос к серверу');
     #-----------------------------------------------------------------------------
@@ -613,7 +613,7 @@ function WebNames_Domain_Transfer($Settings,$DomainName,$DomainZone,$Params){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Http = Array(
+	$HTTP = Array(
 			#-------------------------------------------------------------------------------
 			'Address'  => $Settings['Address'],
 			'Port'     => $Settings['Port'],
@@ -641,7 +641,7 @@ function WebNames_Domain_Transfer($Settings,$DomainName,$DomainZone,$Params){
 	$Query = Build_Query($Query,$Params);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Result = Http_Send('/RegTimeSRS.pl',$Http,Array(),$Query);
+	$Result = HTTP_Send('/RegTimeSRS.pl',$HTTP,Array(),$Query);
 	if(Is_Error($Result))
 		return ERROR | @Trigger_Error('[WebNames_Domain_Transfer]: не удалось выполнить запрос к серверу');
 	#-------------------------------------------------------------------------------
