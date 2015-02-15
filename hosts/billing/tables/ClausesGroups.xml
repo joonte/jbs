@@ -134,6 +134,12 @@
    </Args>
  </Notice>
 	<!-- ********************************************************************** -->
+	<Count>
+		<Head>Статей</Head>
+		<Prompt>Количество статей в этой категории</Prompt>
+		<Alias>(SELECT COUNT(*) FROM `Clauses` WHERE `Clauses`.`GroupID` = `ClausesGroupsOwners`.`ID`)</Alias>
+	</Count>
+	<!-- ********************************************************************** -->
 	<IsPublish>
 		<Head>Опуб.</Head>
 		<Prompt>Группа статей опубликована</Prompt>
@@ -166,6 +172,7 @@
  <ListElement>UpdateDate</ListElement>
  <ListElement>Name</ListElement>
  <ListElement>Notice</ListElement>
+ <ListElement>Count</ListElement>
  <ListElement>IsPublish</ListElement>
  <ListElement>IsProtected</ListElement>
 </Sequence>
