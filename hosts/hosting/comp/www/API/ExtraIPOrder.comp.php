@@ -126,7 +126,7 @@ switch(ValueOf($ExtraIPScheme)){
                     if(Is_Error(DB_Commit($TransactionID)))
                       return ERROR | @Trigger_Error(500);
                     #----------------------END TRANSACTION----------------------
-                    return Array('Status'=>'Ok','ExtraIPOrderID'=>$ExtraIPOrderID);
+                    return Array('Status'=>'Ok','ExtraIPOrderID'=>$ExtraIPOrderID,'ServiceOrderID'=>$ExtraIPOrderID,'OrderID'=>$OrderID);
                   default:
                     return ERROR | @Trigger_Error(101);
                 }

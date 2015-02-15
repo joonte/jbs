@@ -29,7 +29,7 @@ $DOM->AddAttribs('MenuLeft',Array('args'=>'User/Services'));
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Заказ вторичного DNS');
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/DNSmanagerOrder.js}'));
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Order.js}'));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
@@ -97,7 +97,7 @@ if($StepID){
 	#-------------------------------------------------------------------------------
 	if($DNSmanagerScheme['Reseller'] || $Server['Params']['DefaultView'] == $DNSmanagerScheme['ViewArea']){
 		#-------------------------------------------------------------------------------
-		$DOM->AddAttribs('Body',Array('onload'=>'DNSmanagerOrder();'));
+		$DOM->AddAttribs('Body',Array('onload'=>"Order('DNSmanager');"));
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
@@ -124,7 +124,7 @@ if($StepID){
 	$Div = new Tag('DIV',Array('align'=>'right'),$Comp);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"DNSmanagerOrder();",'value'=>'Продолжить'));
+	$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"Order('DNSmanager');",'value'=>'Продолжить'));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

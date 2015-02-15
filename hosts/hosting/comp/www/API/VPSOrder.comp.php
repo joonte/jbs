@@ -144,7 +144,7 @@ switch(ValueOf($VPSScheme)){
                     if(Is_Error(DB_Commit($TransactionID)))
                       return ERROR | @Trigger_Error(500);
                     #----------------------END TRANSACTION----------------------
-                    return Array('Status'=>'Ok','VPSOrderID'=>$VPSOrderID);
+                    return Array('Status'=>'Ok','VPSOrderID'=>$VPSOrderID,'ServiceOrderID'=>$VPSOrderID,'OrderID'=>$OrderID);
                   default:
                     return ERROR | @Trigger_Error(101);
                 }

@@ -179,7 +179,7 @@ if(Is_Error(DB_Commit($TransactionID)))
 	return ERROR | @Trigger_Error(500);
 #----------------------END TRANSACTION------------------------------------------
 #-------------------------------------------------------------------------------
-return Array('Status'=>'Ok','DNSmanagerOrderID'=>$DNSmanagerOrderID);
+return Array('Status'=>'Ok','DNSmanagerOrderID'=>$DNSmanagerOrderID,'ServiceOrderID'=>$DNSmanagerOrderID,'OrderID'=>$OrderID);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 ?>

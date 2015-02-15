@@ -351,7 +351,7 @@ if(Is_Error(DB_Commit($TransactionID)))
 	return ERROR | @Trigger_Error(500);
 #----------------------END TRANSACTION------------------------------------------
 #-------------------------------------------------------------------------------
-return Array('Status'=>'Ok','HostingOrderID'=>$HostingOrderID);
+return Array('Status'=>'Ok','HostingOrderID'=>$HostingOrderID,'ServiceOrderID'=>$HostingOrderID,'OrderID'=>$OrderID);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 ?>

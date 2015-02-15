@@ -216,7 +216,7 @@ if(Is_Error(DB_Commit($TransactionID)))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #----------------------END TRANSACTION------------------------------------------
-return Array('Status'=>'Ok','ISPswOrderID'=>$ISPswOrderID);
+return Array('Status'=>'Ok','ISPswOrderID'=>$ISPswOrderID,'ServiceOrderID'=>$ISPswOrderID,'OrderID'=>$OrderID);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
