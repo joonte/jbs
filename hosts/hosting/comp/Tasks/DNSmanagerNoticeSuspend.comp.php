@@ -21,7 +21,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$GLOBALS['TaskReturnInfo'] = Array(('Notified %u accounts'=>Array(SizeOf($DNSmanagerOrders)));
+$GLOBALS['TaskReturnInfo'] = Array('Notified'=>Array(SizeOf($DNSmanagerOrders)));
 #-------------------------------------------------------------------------------
 foreach($DNSmanagerOrders as $DNSmanagerOrder){
 	#-------------------------------------------------------------------------------
