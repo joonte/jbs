@@ -42,7 +42,15 @@ function OrderManage($ServiceOrderID,$ServiceID){
 			//------------------------------------------------------------------------------
 			var $Height = screen.height - 100;
 			//------------------------------------------------------------------------------
-			var $Window = window.open('','OrderManage',SPrintF('left=%u,top=%u,width=%u,height=%u,toolbar=0, scrollbars=1',(screen.width-$Width)/2,(screen.height-$Height)/2,$Width,$Height));
+			//if($Answer.NewWindow == 1){
+				//------------------------------------------------------------------------------
+				//var $Window = window.open('','OrderManage',SPrintF('left=%u,top=%u,width=%u,height=%u,toolbar=0, scrollbars=1',(screen.width-$Width)/2,(screen.height-$Height)/2,$Width,$Height));
+				//------------------------------------------------------------------------------
+			//}else{
+				//------------------------------------------------------------------------------
+				var $Window = window.open('');
+				//------------------------------------------------------------------------------
+			//}
 			//------------------------------------------------------------------------------
 			$HTML = '<HTML><HEAD><LINK href="/styles/root/Css/Standard.css" rel="stylesheet" type="text/css" /><TITLE>Управление заказом</TITLE></HEAD>';
 			//------------------------------------------------------------------------------
@@ -68,6 +76,8 @@ function OrderManage($ServiceOrderID,$ServiceID){
 			$HTML += '<SCRIPT>document.getElementById("OrderManage").submit();</SCRIPT></BODY></HTML>';
 			//------------------------------------------------------------------------------
 			$Window.document.write($HTML);
+			//------------------------------------------------------------------------------
+			$Window.focus();
 			//------------------------------------------------------------------------------
 			break;
 			//------------------------------------------------------------------------------
