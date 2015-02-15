@@ -18,7 +18,8 @@
 <Source>
 	<TableID>InvoicesOwners</TableID>
 	<ColumnsIDs>
-		<ListElement>FROM_UNIXTIME(`StatusDate`,'%Y') AS `Year`</ListElement>
+		<ListElement>Year</ListElement>
+		<ListElement>Month</ListElement>
 	</ColumnsIDs>
 	<Conditions>
 		<Message>У Вас нет пользователей с оплаченными счетами.</Message>
@@ -30,7 +31,7 @@
 </Source>
 <!-- *********************************************************************** -->
 <Query>
-	<GroupBy>`Year`,`Month`</GroupBy>
+	<GroupBy>Year,Month</GroupBy>
 	<SortOn>Year</SortOn>
 </Query>
 <!-- *********************************************************************** -->
@@ -43,8 +44,7 @@
 	<!-- *********************************************************************** -->
 	<Month>
 		<Head>Месяц</Head>
-		<Prompt>Год когда были платежи</Prompt>
-		<Alias>FROM_UNIXTIME(`StatusDate`,'%m')</Alias>
+		<Prompt>Месяц когда были платежи</Prompt>
 	</Month>
 	<!-- *********************************************************************** -->
 	<Users>
