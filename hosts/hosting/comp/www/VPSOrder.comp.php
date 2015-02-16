@@ -30,7 +30,7 @@ $DOM->AddAttribs('MenuLeft',Array('args'=>'User/Services'));
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Заказ виртуального сервера');
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/VPSOrder.js}'));
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Order.js}'));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------тариф-------------
@@ -168,7 +168,7 @@ if($StepID){
 				'Form/Input',
 				Array(
 					'type'    => 'button',
-					'onclick' => 'VPSOrder();',
+					'onclick' => 'Order("VPS");',
 					'value'   => 'Продолжить'
 					)
 				);

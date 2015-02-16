@@ -40,7 +40,7 @@ $DOM->AddAttribs('MenuLeft',Array('args'=>'User/Services'));
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Заказ выделенного IP адреса');
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/ExtraIPOrder.js}'));
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Order.js}'));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
@@ -441,7 +441,7 @@ if($StepID){
 				'Form/Input',
 				Array(
 					'type'		=> 'button',
-					'onclick'	=> 'ExtraIPOrder();',
+					'onclick'	=> 'Order("ExtraIP");',
 					'value'		=> 'Продолжить'
 					)
 				);

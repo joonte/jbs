@@ -63,7 +63,7 @@ $DOM->AddAttribs('MenuLeft',Array('args'=>'User/Services'));
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Заказ лицензии ISPsystem');
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/ISPswOrder.js}'));
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Order.js}'));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
@@ -482,7 +482,7 @@ if(!$StepID){
 			'Form/Input',
 			Array(
 				'type'    => 'button',
-				'onclick' => 'ISPswOrder();',
+				'onclick' => 'Order("ISPsw");',
 				'value'   => 'Продолжить'
 				)
 			);

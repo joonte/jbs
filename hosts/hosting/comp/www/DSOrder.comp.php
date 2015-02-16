@@ -30,7 +30,7 @@ $DOM->AddAttribs('MenuLeft',Array('args'=>'User/Services'));
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Аренда сервера');
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/DSOrder.js}'));
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Order.js}'));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
@@ -104,7 +104,7 @@ if($StepID){
         'Form/Input',
         Array(
           'type'    => 'button',
-          'onclick' => 'DSOrder();',
+          'onclick' => 'Order("DS");',
           'value'   => 'Продолжить'
         )
       );
@@ -347,7 +347,7 @@ if($StepID){
 	     'Form/Input',
 	     Array(
 	       'type'    => 'button',
-	       'onclick' => 'DSOrder();',
+	       'onclick' => 'Order("DS");',
 	       'value'   => 'Продолжить'
 	     )
 	  );

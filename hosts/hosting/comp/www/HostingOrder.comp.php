@@ -34,7 +34,7 @@ $DOM->AddAttribs('MenuLeft',Array('args'=>'User/Services'));
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Заказ хостинга');
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/HostingOrder.js}'));
+$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Order.js}'));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
@@ -137,7 +137,7 @@ if($StepID){
 		#-------------------------------------------------------------------------------
 		if(SizeOf($Array) < 2 || IntVal($HostingScheme['HardServerID']) > 0){
 			#-------------------------------------------------------------------------------
-			$DOM->AddAttribs('Body',Array('onload'=>'HostingOrder();'));
+			$DOM->AddAttribs('Body',Array('onload'=>'Order("Hosting");'));
 			#-------------------------------------------------------------------------------
 		}else{
 			#-------------------------------------------------------------------------------
@@ -168,7 +168,7 @@ if($StepID){
 		$Div = new Tag('DIV',Array('align'=>'right'),$Comp);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"HostingOrder();",'value'=>'Продолжить'));
+		$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"Order('Hosting');",'value'=>'Продолжить'));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
