@@ -81,7 +81,7 @@ if(!In_Array($DomainScheme['Name'],Array('ru','su','рф')))
 			return new gException('INCORRECT_AUTHINFO','Указан неверный код переноса домена');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Count = DB_Count('DomainOrdersOwners',Array('Where'=>SPrintF("`DomainName` = '%s' AND (SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) = '%s' AND `UserID` = %u",$DomainName,$DomainScheme['Name'],$GLOBALS['__USER']['ID'])));
+$Count = DB_Count('DomainOrdersOwners',Array('Where'=>SPrintF("`DomainName` = '%s' AND (SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) = '%s' AND `UserID` = %u AND `StatusID` != 'Deleted'",$DomainName,$DomainScheme['Name'],$GLOBALS['__USER']['ID'])));
 if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -89,7 +89,7 @@ if($Count)
 	return new gException('DOMAIN_ORDER_EXISTS','Домен уже находится в вашем списке заказов');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Count = DB_Count('DomainOrdersOwners',Array('Where'=>SPrintF("`DomainName` = '%s' AND (SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) = '%s'",$DomainName,$DomainScheme['Name'])));
+$Count = DB_Count('DomainOrdersOwners',Array('Where'=>SPrintF("`DomainName` = '%s' AND (SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) = '%s' AND `StatusID` != 'Deleted' AND `StatusID` != 'Waiting'",$DomainName,$DomainScheme['Name'])));
 if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
