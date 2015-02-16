@@ -37,9 +37,9 @@ if($ServersGroupID){
 	#-------------------------------------------------------------------------------
 	$ServersGroup = Array(
 				'Name'		=> 'Сервера хостинга, линейка VIP',
-				'ServiceID'	=> 0,
-				'FunctionID'	=> 'NotDefined',
-				'IsCheckUsers'	=> FALSE,
+				'ServiceID'	=> 10000,
+				'FunctionID'	=> 'ByAllCapacity',
+				'IsCheckUsers'	=> TRUE,
 				'Params'	=> Array('Count'=>0),
 				'Comment'	=> 'Москва, M9, пятая стойка с правого угла',
 				'SortID'	=> 10

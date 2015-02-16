@@ -702,13 +702,6 @@
    <IsActive>1</IsActive>
   </HostingDelete>
   <!-- ********************************************************************* -->
-  <HostingSetPrimaryServer>
-   <Name>Автобалансировка серверов хостинга</Name>
-   <Params type="array" />
-   <ExecutePeriod>01:00</ExecutePeriod>
-   <IsActive>1</IsActive>
-   <IsEvent>0</IsEvent>
-  </HostingSetPrimaryServer>
   <!-- ********************************************************************* -->
   <HostingCPUUsage>
    <Name>Учёт используемого процессорного времени пользователями хостинга</Name>
@@ -805,12 +798,6 @@
    <IsActive>1</IsActive>
   </VPSDelete>
   <!-- ********************************************************************* -->
-  <VPSSetPrimaryServer>
-   <Name>Автобалансировка VPS</Name>
-   <Params type="array" />
-   <ExecutePeriod>01:00</ExecutePeriod>
-   <IsActive>1</IsActive>
-  </VPSSetPrimaryServer>
   <!-- ********************************************************************* -->
   <HostingServersQuestioning>
    <Name>Опрос серверов хостинга</Name>
@@ -1111,7 +1098,16 @@
    </Params>
    <IsActive>1</IsActive>
   </DNSmanagerDelete>
-  <!-- ********************************************************************* -->
+		<!-- *********************************************************************** -->
+		<!-- *********************************************************************** -->
+		<!-- *********************************************************************** -->
+		<ServersAutoBalance>
+			<Name>Автобалансировка серверов</Name>
+			<Params type="array" />
+			<ExecutePeriod>01:00</ExecutePeriod>
+			<IsActive>1</IsActive>
+			<IsEvent>1</IsEvent>
+		</ServersAutoBalance>
 		<!-- *********************************************************************** -->
 		<Consider>
 			<Name>Учет заказов штатных услуг</Name>

@@ -70,6 +70,11 @@
 	<!-- ********************************************************************** -->
 	<Name>
 		<Head>Название</Head>
+		<Comp>Formats/String</Comp>
+		<Args>
+			<ListElement>%Name%</ListElement>
+			<Length>20</Length>
+		</Args>
 	</Name>
 	<!-- ********************************************************************** -->
 	<FunctionID>
@@ -78,7 +83,7 @@
 			<Comp>Formats/System/BalancingType</Comp>
 	<Args>
 			<ListElement>%FunctionID%</ListElement>
-			<Length>40</Length>
+			<Length>20</Length>
 		</Args>
 	</FunctionID>
 	<!-- ********************************************************************** -->
@@ -87,13 +92,13 @@
 		<Comp>Formats/String</Comp>
 		<Args>
 			<ListElement>%Service%</ListElement>
-			<Length>40</Length>
+			<Length>20</Length>
 		</Args>
 		<Alias>IF(ISNULL(`ServiceID`),'без сервиса',(SELECT `Item` FROM `Services` WHERE `Services`.`ID` = `ServersGroups`.`ServiceID`))</Alias>
 	</Service>
 	<!-- ********************************************************************** -->
 	<IsCheckUsers>
-		<Head>Пр. акк.</Head>
+		<Head>Пр.</Head>
 		<Prompt>Проводить проверку акканутов на сервере - искать лишние или недостающие, по отношению к биллингу</Prompt>
 		<Comp>BooleanEdit</Comp>
 		<Args>
@@ -109,13 +114,13 @@
 		<Comp>Formats/String</Comp>
 		<Args>
 			<ListElement>%Comment%</ListElement>
-			<Length>40</Length>
+			<Length>30</Length>
 		</Args>
 	</Comment>
 	<!-- ********************************************************************** -->
 	<Servers>
-		<Head>Кол. серв.</Head>
-		<Prompt>Кол-во серверов в группе</Prompt>
+		<Head>Серв.</Head>
+		<Prompt>Количество серверов в этой группе</Prompt>
 		<Alias>(SELECT COUNT(*) FROM `Servers` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`)</Alias>
 		<Attribs>
 			<style>text-align:right;</style>

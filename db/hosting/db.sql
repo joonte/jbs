@@ -19,7 +19,6 @@ VALUES
 (61,1,'ServersUpTime','[]','yes'),
 (62,1,'UpTimeAgregate','[]','yes'),
 (64,1,'QIWI','[]','yes'),
-(65,1,'VPSSetPrimaryServer','[]','yes'),
 (67,1,'VPSNoticeSuspend','[]','yes'),
 (69,1,'VPSNoticeDelete','[]','yes'),
 (70,1,'VPSForDelete','[]','yes'),
@@ -32,7 +31,7 @@ VALUES
 (81,1,'ISPswNoticeSuspend','[]','yes'),
 (83,1,'ISPswNoticeDelete','[]','yes'),
 (84,1,'ISPswForDelete','[]','yes'),
-(86,1,'HostingSetPrimaryServer','[]','yes'),
+(86,1,'ServersAutoBalance','[]','yes'),
 (91,1,'DNSmanagerNoticeSuspend','[]','yes'),
 (93,1,'DNSmanagerNoticeDelete','[]','yes'),
 (94,1,'DNSmanagerForDelete','[]','yes')
