@@ -63,7 +63,7 @@ case 'array':
 			if(!$Event)
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$GLOBALS['TaskReturnInfo'] = Array(($VPSServer->Settings['Address'])=>Array($VPSOrder['Login'],$VPSOrder['IP'],$VPSScheme['SchemeName']));
+			$GLOBALS['TaskReturnInfo'] = Array(($VPSServer->Settings['Address'])=>Array($VPSOrder['Login'],$VPSOrder['IP'],$VPSOrder['SchemeName']));
 			#-------------------------------------------------------------------------------
 			return TRUE;
 			#-------------------------------------------------------------------------------
