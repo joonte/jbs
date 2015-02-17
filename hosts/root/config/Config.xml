@@ -73,6 +73,7 @@
 			<ExcludeIPs></ExcludeIPs>
 			<IsCheckReferer>1</IsCheckReferer>
 			<IsNoReferer>0</IsNoReferer>
+			<CSRFCheck>1</CSRFCheck>
 		</Security>
 	</Modules>
 	<!-- *********************************************************************** -->
