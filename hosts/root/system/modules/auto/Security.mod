@@ -102,9 +102,9 @@ if(Count($Args) > 0){
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[Security module]: проверка значения CSRF: %s',$IsOK?'OK':'Ошибка, хэш не сопадает'));
 			#-------------------------------------------------------------------------------
-			#if($Settings['CSRFCheck'] && !$IsOK)
-			#	if(!$IsNoAction)
-			#		return ERROR | @Trigger_Error(603);
+			if($Settings['CSRFCheck'] && !$IsOK)
+				if(!$IsNoAction)
+					return ERROR | @Trigger_Error(603);
 			#-------------------------------------------------------------------------------
 		}
 	}
