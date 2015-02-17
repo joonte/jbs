@@ -123,7 +123,7 @@ function HTTP_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
 	#-------------------------------------------------------------------------------
 	$Address = $Default['Address'];
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[HTTP_Send]: соединяемся с (%s)',$Address));
+	Debug(SPrintF('[HTTP_Send]: соединяемся с (%s:%u)',$Address,$Default['Port']));
 	#-------------------------------------------------------------------------------
 	# https://bugs.php.net/bug.php?id=52913
 	# пришлось заменить: $Address -> $Default['Host']
