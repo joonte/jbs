@@ -256,8 +256,19 @@ $Data = <<<EOD
  <CSRFKey>%s</CSRFKey>
 </XML>
 EOD;
-        if (File_Put_Contents($File,SPrintF($Data, $__SETTINGS['db-user'], $__SETTINGS['db-password'],
-                $__SETTINGS['db-name'],$__SETTINGS['db-port'],Md5(MicroTime().Rand(0,1000000))))) {
+        if (File_Put_Contents(
+				$File,
+					SPrintF(
+						$Data,
+						$__SETTINGS['db-user'],
+						$__SETTINGS['db-password'],
+						$__SETTINGS['db-name'],
+						$__SETTINGS['db-port'],
+						Md5(MicroTime().Rand(0,1000000)),
+						Str_Shuffle(Md5(MicroTime().Rand(0,1000000)))
+					)
+				)
+			){
           Message('Настройки конфигурации успешно сохранены');
 
           if (!chmod($File, 0600)) {
