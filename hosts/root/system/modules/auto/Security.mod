@@ -86,7 +86,7 @@ if($Settings['IsCheckReferer'] && IsSet($_SERVER["REQUEST_URI"]) && Preg_Match('
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[Security module]: проверка параметров реферера для REQUEST_URI = %s',$_SERVER["REQUEST_URI"]));
 	#-------------------------------------------------------------------------------
-	$Template = "#^(/API/EmailConfirm|/API/Logon).*#";
+	$Template = "#^(/API/EmailConfirm|/API/Logon|/API/Events).*#";
 	#-------------------------------------------------------------------------------
 	if(Preg_Match($Template,$_SERVER["REQUEST_URI"]))
 		return TRUE;
