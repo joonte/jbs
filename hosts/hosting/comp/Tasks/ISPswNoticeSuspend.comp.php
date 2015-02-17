@@ -17,7 +17,7 @@ switch(ValueOf($ISPswOrders)){
   break;
   case 'array':
     #-------------------------------------------------------------------------------
-    $GLOBALS['TaskReturnInfo'] = SPrintF('Notified %u accounts',SizeOf($ISPswOrders));
+    $GLOBALS['TaskReturnInfo'] = Array('Notified'=>Array(SizeOf($ISPswOrders)));
     #---------------------------------------------------------------------------
     foreach($ISPswOrders as $ISPswOrder){
       #-------------------------------------------------------------------------

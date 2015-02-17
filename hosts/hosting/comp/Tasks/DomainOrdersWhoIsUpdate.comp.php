@@ -79,7 +79,7 @@ if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Count)
-	$GLOBALS['TaskReturnInfo'][] = SPrintF('estimated: %s domains',$Count);
+	$GLOBALS['TaskReturnInfo']['Estimated'] = Array($Count);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return ($Count?$ExecutePeriod:$ExecuteTime);
