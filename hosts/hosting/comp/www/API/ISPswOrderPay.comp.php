@@ -68,6 +68,7 @@ case 'error':
 case 'exception':
 	return ERROR | @Trigger_Error(400);
 case 'array':
+	break;
 default:
 	return ERROR | @Trigger_Error(101);
 }
