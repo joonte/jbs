@@ -76,23 +76,28 @@
   <Alias>(SELECT `Name` FROM `Groups` `Table` WHERE `Groups`.`ParentID` = `Table`.`ID`)</Alias>
  </ParentName>
  <!-- ********************************************************************** -->
- <IsDepartment>
-  <Head>Отдел</Head>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsDepartment%</ListElement>
-  </Args>
- </IsDepartment>
- <!-- ********************************************************************** -->
- <Comment>
-  <Head>Комментарий</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <UserID>%Comment%</UserID>
-   <Length>25</Length>
-  </Args>
- </Comment>
+	<IsDepartment>
+		<Head>Отдел</Head>
+		<Prompt>Группа является отделом, т.е. в ней сотрудники хостинга, а не клиенты</Prompt>
+		<Comp>BooleanEdit</Comp>
+		<Args>
+			<ListElement>Groups</ListElement>
+			<ListElement>IsDepartment</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>%IsDepartment%</ListElement>
+		</Args>
+	</IsDepartment>
+	<!-- ********************************************************************** -->
+	<Comment>
+		<Head>Комментарий</Head>
+		<Comp>Formats/String</Comp>
+		<Args>
+			<UserID>%Comment%</UserID>
+			<Length>25</Length>
+		</Args>
+	</Comment>
 </Columns>
+<!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Sequence>
  <ListElement>SelectID</ListElement>
