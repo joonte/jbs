@@ -102,7 +102,7 @@ $IsDelete = DB_Delete('Tasks',Array('ID'=>11));
 if(Is_Error($IsDelete))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IsInsert = DB_Insert('Tasks',Array('ID'=>11,'UserID'=>1,'TypeID'=>'RecoveryServers','Params'=>Array(),'IsActive'=>TRUE));
+$IsInsert = DB_Insert('Tasks',Array('ID'=>11,'UserID'=>1,'TypeID'=>'ServersRecovery','Params'=>Array(),'IsActive'=>TRUE));
 if(Is_Error($IsInsert))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

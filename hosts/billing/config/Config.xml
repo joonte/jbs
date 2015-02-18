@@ -1028,11 +1028,11 @@
    <IsActive>1</IsActive>
   </RecoveryProfiles>
   <!-- ********************************************************************* -->
-  <RecoveryServers>
+  <ServersRecovery>
    <Name>Восстановление серверов</Name>
    <Params type="array" />
    <IsActive>1</IsActive>
-  </RecoveryServers>
+  </ServersRecovery>
   <!-- ********************************************************************* -->
   <Temp>
    <Name>Удаление временных файлов</Name>
