@@ -47,7 +47,7 @@ foreach($ServersGroups as $ServersGroup){
 	#-------------------------------------------------------------------------------
 	$Config = Config();
 	#-------------------------------------------------------------------------------
-	$Settings = $Config['Tasks']['Types']['GC']['CheckUsersOnServersSettings'];
+	$Settings = $Config['Tasks']['Types']['GC']['ServersCheckUsersSettings'];
 	#-------------------------------------------------------------------------------
 	if(!$Settings['IsActive'])
 		return TRUE;
@@ -76,7 +76,7 @@ foreach($ServersGroups as $ServersGroup){
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
 		#-------------------------------------------------------------------------------
-		Debug(SprintF('[comp/Tasks/GC/CheckUsersOnServers]: в группе #%u нет серверов',$ServersGroup['ID']));
+		Debug(SprintF('[comp/Tasks/GC/ServersCheckUsers]: в группе #%u нет серверов',$ServersGroup['ID']));
 		#-------------------------------------------------------------------------------
 		continue 2;
 		#-------------------------------------------------------------------------------

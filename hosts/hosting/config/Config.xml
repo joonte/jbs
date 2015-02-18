@@ -994,10 +994,10 @@
   <!-- ********************************************************************* -->
   <GC>
    <!-- ********************************************************************* -->
-   <CheckUsersOnServersSettings>
+   <ServersCheckUsersSettings>
     <IsActive>1</IsActive>
     <ExcludeServerAccounts />
-   </CheckUsersOnServersSettings>
+   </ServersCheckUsersSettings>
    <!-- ********************************************************************* -->
    <UpdateDiskTemplatesSettings>
     <IsActive>1</IsActive>
@@ -1024,7 +1024,7 @@
     <EraseDeletedOrders>Удаление заказов в статусе Удален</EraseDeletedOrders>
     <CheckBalance>Проверка балланса регистраторов, поставщиков</CheckBalance>
     <ISPswCheckLicenses>Синхронизация лицензий с ISPsystem</ISPswCheckLicenses>
-    <CheckUsersOnServers>Синхронизация аккаунтов биллинга и серверов</CheckUsersOnServers>
+    <ServersCheckUsers>Синхронизация аккаунтов биллинга и серверов</ServersCheckUsers>
     <UpdateDiskTemplates>Обновление шаблонов дисков на VPS</UpdateDiskTemplates>
     <DiskUsageNotifies>Уведомление о заканчивающемся месте на хостинге</DiskUsageNotifies>
     <EmailBoxesNotifies>Уведомление o заканчивающейся квоте почтовых ящиков</EmailBoxesNotifies>
