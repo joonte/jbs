@@ -75,7 +75,7 @@ $Options = Array();
 foreach($Groups as $Element)
   $Options[$Element['ID']] = $Element['Name'];
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ParentID'),$Options,$Group['ParentID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ParentID','style'=>'width: 100%;'),$Options,$Group['ParentID']);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
