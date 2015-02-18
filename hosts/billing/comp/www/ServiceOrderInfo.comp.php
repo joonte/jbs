@@ -14,7 +14,7 @@ $ServiceOrderID = (integer) @$Args['ServiceOrderID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','UserID','OrderDate','ContractID','ExpirationDate','StatusID','StatusDate','(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `ServiceName`','(SELECT `Address` FROM `Servers` WHERE `OrdersOwners`.`ServerID` = `Servers`.`ID`) AS `Address`','IsAutoProlong','UserNotice','AdminNotice');
+$Columns = Array('ID','UserID','OrderDate','ContractID','ExpirationDate','StatusID','StatusDate','(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `ServiceName`','(SELECT `Address` FROM `Servers` WHERE `OrdersOwners`.`ServerID` = `Servers`.`ID`) AS `Address`','IsAutoProlong','UserNotice','AdminNotice','(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `OrdersOwners`.`ContractID`) AS `Customer`');
 #-------------------------------------------------------------------------------
 $ServiceOrder = DB_Select('OrdersOwners',$Columns,Array('UNIQ','ID'=>$ServiceOrderID));
 #-------------------------------------------------------------------------------
@@ -74,13 +74,18 @@ $Comp = Comp_Load('Formats/Contract/Number',$ServiceOrder['ContractID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Договор №',$Comp);
+$Comp = Comp_Load('Formats/String',SPrintF('%s / %s',$Comp,$ServiceOrder['Customer']),35);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Договор',new Tag('TD',Array('class'=>'Standard'),$Comp));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(Mb_StrLen($ServiceOrder['ServiceName']) > 30)
-	$ServiceOrder['ServiceName'] = SPrintF('%s...',Mb_SubStr($ServiceOrder['ServiceName'],0,30));
+$Comp = Comp_Load('Formats/String',$ServiceOrder['ServiceName'],35);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Название услуги',$ServiceOrder['ServiceName']);
+$Table[] = Array('Название услуги',new Tag('TD',Array('class'=>'Standard'),$Comp));
 #-------------------------------------------------------------------------------
 $ExpirationDate = $ServiceOrder['ExpirationDate'];
 #-------------------------------------------------------------------------------

@@ -27,6 +27,7 @@ $Columns = Array(
 			'(SELECT `AdminNotice` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`) AS `AdminNotice`',
 			'(SELECT `Params` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`) AS `Params`',
 			'(SELECT `IsAutoProlong` FROM `Orders` WHERE `HostingOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',
+			'(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `HostingOrdersOwners`.`ContractID`) AS `Customer`',
 			'(SELECT (SELECT `Code` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) FROM `OrdersOwners` WHERE `HostingOrdersOwners`.`OrderID` = `OrdersOwners`.`ID`) AS `Code`'
 		);
 #-------------------------------------------------------------------------------
@@ -95,7 +96,11 @@ $Comp = Comp_Load('Formats/Contract/Number',$HostingOrder['ContractID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Договор №',$Comp);
+$Comp = Comp_Load('Formats/String',SPrintF('%s / %s',$Comp,$HostingOrder['Customer']),35);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Договор',new Tag('TD',Array('class'=>'Standard'),$Comp));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = Array('Тарифный план',SPrintF('%s (%s)',$HostingOrder['Scheme'],$HostingOrder['ServersGroupName']));
