@@ -59,8 +59,8 @@ foreach($OrdersConsider as $OrderConsider){
 	#Debug(SPrintF('[comp/Tasks/GC/ResetOrdersDays]: OrderID = %s; DaysRemainded = %s',$OrderConsider['OrderID'],$OrderConsider['SumDaysRemainded']));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	# Заказы этого клиента
-	$Where = SPrintF('`UserID` = (SELECT `UserID` FROM `OrdersOwners` WHERE `ID` = %u)',$OrderConsider['OrderID']);
+	# Заказы этого клиента, только те для которых есть учёт в таблице OrdersConsider
+	$Where = Array(SPrintF('`UserID` = (SELECT `UserID` FROM `OrdersOwners` WHERE `ID` = %u)',$OrderConsider['OrderID']),'(SELECT `OrderID` FROM `OrdersConsider` WHERE `OrdersConsider`.`OrderID` = `OrdersOwners`.`ID` LIMIT 1) IS NOT NULL');
 	#-------------------------------------------------------------------------------
 	$Orders = DB_Select('OrdersOwners',Array('ID','UserID'),Array('Where'=>$Where));
 	#-------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ foreach($OrdersConsider as $OrderConsider){
 	#-------------------------------------------------------------------------------
 	if(In_Array($UserID,$UserIDs)){
 		#-------------------------------------------------------------------------------
-		continue;
+		#continue;
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
@@ -112,13 +112,22 @@ foreach($OrdersConsider as $OrderConsider){
 		continue;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Tasks/GC/ResetOrdersDays]: OrderIDs = %s',Implode(',',$Array)));
+	#Debug(SPrintF('[comp/Tasks/GC/ResetOrdersDays]: UserID = %s; OrderIDs = %s',$UserID,Implode(',',$Array)));
 	#-------------------------------------------------------------------------------
-	# а ещё у него могут быть домены... которые учитываются иначе ...
-
-	# а ещё могут быть услуги настраиваемые вручную...
-
-
+	# а ещё у него могут быть домены... которые учитываются иначе ... а ещё могут быть услуги настраиваемые вручную...
+	$Where = Array('`StatusID` = "Suspended" OR `StatusID` = "Active"',SPrintF('`UserID` = %u',$UserID),SPrintF('`ID` NOT IN (%s)',Implode(',',$Array)));
+	#-------------------------------------------------------------------------------
+	$Count = DB_Count('OrdersOwners',Array('Where'=>$Where));
+	if(Is_Error($Count))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	#Debug(SPrintF('[comp/Tasks/GC/ResetOrdersDays]: OrdersOwners Count = %s',$Count));
+	#-------------------------------------------------------------------------------
+	if($Count)
+		continue;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[comp/Tasks/GC/ResetOrdersDays]: Надо списывать для заказa OrderID = %s; юзера = %s',$OrderConsider['OrderID'],$UserID));
 
 	#----------------------------------TRANSACTION----------------------------
 
