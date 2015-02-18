@@ -26,6 +26,8 @@ $Columns = Array(
 			'(SELECT `IP` FROM `ISPswLicenses` WHERE `ISPswOrdersOwners`.`LicenseID`=`ISPswLicenses`.`ID`) AS `LicenseIP`',
 			'(SELECT `pricelist_id` FROM `ISPswLicenses` WHERE `ISPswOrdersOwners`.`LicenseID`=`ISPswLicenses`.`ID`) AS `pricelist_id`',
 			'(SELECT `IsAutoProlong` FROM `Orders` WHERE `ISPswOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',
+			'(SELECT `UserNotice` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `ISPswOrdersOwners`.`OrderID`) AS `UserNotice`',
+			'(SELECT `AdminNotice` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `ISPswOrdersOwners`.`OrderID`) AS `AdminNotice`',
 			'(SELECT (SELECT `Code` FROM `Services` WHERE `Orders`.`ServiceID` = `Services`.`ID`) FROM `Orders` WHERE `ISPswOrdersOwners`.`OrderID` = `Orders`.`ID`) AS `Code`'
 		);
 #-------------------------------------------------------------------------------
@@ -143,6 +145,19 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table = Array_Merge($Table,$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($ISPswOrder['UserNotice'] || ($ISPswOrder['AdminNotice'] && $GLOBALS['__USER']['IsAdmin'])){
+	#-------------------------------------------------------------------------------
+	$Table[] = 'Примечания к заказу';
+	#-------------------------------------------------------------------------------
+	if($ISPswOrder['UserNotice'])
+		$Table[] = Array('Примечание',new Tag('PRE',Array('class'=>'Standard','style'=>'width:260px; overflow:hidden;'),$ISPswOrder['UserNotice']));
+	#-------------------------------------------------------------------------------
+	if($ISPswOrder['AdminNotice'] && $GLOBALS['__USER']['IsAdmin'])
+		$Table[] = Array('Примечание администратора',new Tag('PRE',Array('class'=>'Standard','style'=>'width:260px; overflow:hidden;'),$ISPswOrder['AdminNotice']));
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Standard',$Table);

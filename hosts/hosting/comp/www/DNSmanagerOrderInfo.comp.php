@@ -9,12 +9,9 @@ $__args_list = Array('Args');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Null($Args)){
-	#-----------------------------------------------------------------------------
+if(Is_Null($Args))
 	if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-}
 #-------------------------------------------------------------------------------
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
@@ -28,6 +25,8 @@ $Columns = Array(
 			'(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) AS `ServerID`',
 			'(SELECT `Params` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) AS `Params`',
 			'(SELECT `IsAutoProlong` FROM `Orders` WHERE `DNSmanagerOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',
+			'(SELECT `UserNotice` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) AS `UserNotice`',
+			'(SELECT `AdminNotice` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) AS `AdminNotice`',
 			'(SELECT (SELECT `Code` FROM `Services` WHERE `OrdersOwners`.`ServiceID` = `Services`.`ID`) FROM `OrdersOwners` WHERE `DNSmanagerOrdersOwners`.`OrderID` = `OrdersOwners`.`ID`) AS `Code`'
 		);
 #-------------------------------------------------------------------------------
@@ -132,28 +131,26 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table = Array_Merge($Table,$Comp);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($DNSmanagerOrder['UserNotice'] || ($DNSmanagerOrder['AdminNotice'] && $GLOBALS['__USER']['IsAdmin'])){
+	#-------------------------------------------------------------------------------
+	$Table[] = 'Примечания к заказу';
+	#-------------------------------------------------------------------------------
+	if($DNSmanagerOrder['UserNotice'])
+		$Table[] = Array('Примечание',new Tag('PRE',Array('class'=>'Standard','style'=>'width:260px; overflow:hidden;'),$DNSmanagerOrder['UserNotice']));
+	#-------------------------------------------------------------------------------
+	if($DNSmanagerOrder['AdminNotice'] && $GLOBALS['__USER']['IsAdmin'])
+		$Table[] = Array('Примечание администратора',new Tag('PRE',Array('class'=>'Standard','style'=>'width:260px; overflow:hidden;'),$DNSmanagerOrder['AdminNotice']));
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Standard',$Table);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Form = new Tag('FORM',Array('method'=>'POST','name'=>'OrderInfo'),$Comp);
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'hidden','name'=>'OrderID','value'=>$DNSmanagerOrder['OrderID']));
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Form->AddChild($Comp);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'hidden','name'=>'DNSmanagerOrderID','value'=>$DNSmanagerOrder['ID']));
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Form->AddChild($Comp);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Into',$Form);
+$DOM->AddChild('Into',$Comp);
 #-------------------------------------------------------------------------------
 if(Is_Error($DOM->Build(FALSE)))
 	return ERROR | @Trigger_Error(500);
