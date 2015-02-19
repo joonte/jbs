@@ -13,7 +13,7 @@
      <TABLE cellspacing="0" height="100%" cellpadding="0">
       <TR id="Top">
        <TD>
-        <IMG src="SRC:{Images/TopLogo.png}" style="display:block;" />
+        <IMG src="SRC:{Images/TopLogo.png}" style="display:block;" id="TopLogo" />
        </TD>
       </TR>
      </TABLE>
