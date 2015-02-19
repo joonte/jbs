@@ -137,7 +137,7 @@ foreach($OrdersConsider as $OrderConsider){
 	if($Count)
 		continue;
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Tasks/GC/ResetOrdersDays]: Надо списывать для заказa OrderID = %s; юзер = %s',$OrderID,$UserID));
+	Debug(SPrintF('[comp/Tasks/GC/ResetOrdersDays]: Изменено число оставшихся дней (%u->%u) для заказa OrderID = %s; юзер = %s',$OrderConsider['SumDaysRemainded'],$Settings['ResetDaysTo'],$OrderID,$UserID));
 	#-------------------------------------------------------------------------------
 	#----------------------------------TRANSACTION----------------------------------
 	if(Is_Error(DB_Transaction($TransactionID = UniqID('ResetOrdersDays'))))
@@ -168,6 +168,17 @@ foreach($OrdersConsider as $OrderConsider){
 	#-------------------------------------------------------------------------------
 	if(Is_Error(DB_Commit($TransactionID)))
 		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if($Settings['IsEvent']){
+		#-------------------------------------------------------------------------------
+		$Event = Array('Text'=>SPrintF('Изменено число оставшихся дней (%u->%u) для услуги #%u',$OrderConsider['SumDaysRemainded'],$Settings['ResetDaysTo'],$OrderID),'PriorityID'=>'Error','IsReaded'=>FALSE,'UserID'=>$UserID);
+		#-------------------------------------------------------------------------------
+		$Event = Comp_Load('Events/EventInsert', $Event);
+		if(!$Event)
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
