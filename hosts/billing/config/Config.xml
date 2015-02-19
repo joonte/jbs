@@ -1221,6 +1221,13 @@
     <IsActive>1</IsActive>
     <DaysBeforeDeleted>182</DaysBeforeDeleted>
    </SetDeletedWaitingOrdersSettings>
+   <!-- ********************************************************************* -->
+   <ResetOrdersDaysSettings>
+    <IsActive>1</IsActive>
+    <IsEvent>1</IsEvent>
+    <ResetDaysTo>28</ResetDaysTo>
+   </ResetOrdersDaysSettings>
+   <!-- ********************************************************************* -->
    <!-- задачи -->
    <DailyTasks>
     <!-- курсы валют с сайта цекнтробанка -->
@@ -1245,6 +1252,8 @@
     <CloseEdesks>Закрытие старых тикетов</CloseEdesks>
     <!-- удаление неоплаченных заказов -->
     <SetDeletedWaitingOrders>Отмена неоплаченных заказов</SetDeletedWaitingOrders>
+    <!-- автоматическое списание лишних дней у бесплатных заказов -->
+    <ResetOrdersDays>Списание лишних дней у заказов</ResetOrdersDays>
    </DailyTasks>
    <WeeklyTasks type="array" />
    <MonthlyTasks type="array" />
