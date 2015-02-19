@@ -27,7 +27,7 @@ if(File_Exists($ConfigPath)){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(IsSet($Config['Tasks']['Types']['GC']['CheckUsersOnServers'])){
+if(IsSet($Config['Tasks']['Types']['GC']['CheckUsersOnServersSettings'])){
 	#-------------------------------------------------------------------------------
 	$Config['Tasks']['Types']['GC']['ServersCheckUsersSettings'] = $Config['Tasks']['Types']['GC']['CheckUsersOnServersSettings'];
 	#-------------------------------------------------------------------------------
