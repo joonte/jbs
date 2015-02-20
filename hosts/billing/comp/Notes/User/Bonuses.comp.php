@@ -26,14 +26,15 @@ if(!$Settings['Percent'])
 $Where = Array('`UserID` = @local.__USER_ID','`DaysRemainded` > 0','`Discont` > 0','`ExpirationDate` > UNIX_TIMESTAMP()');
 #-------------------------------------------------------------------------------
 $Columns = Array(
-			'*','(SELECT `NameShort` FROM `Services` WHERE `Services`.`ID` = `BonusesOwners`.`ServiceID`) AS `NameShort`',
+			'SUM(`DaysRemainded`) AS `DaysRemainded`','Discont',
+			'(SELECT `NameShort` FROM `Services` WHERE `Services`.`ID` = `BonusesOwners`.`ServiceID`) AS `NameShort`',
 			'(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `BonusesOwners`.`ServiceID`) AS `Code`',
 			'(SELECT `ConsiderTypeID` FROM `Services` WHERE `Services`.`ID` = `BonusesOwners`.`ServiceID`) AS `ConsiderTypeID`',
 			'(SELECT `Measure` FROM `Services` WHERE `Services`.`ID` = `BonusesOwners`.`ServiceID`) AS `Measure`'
 
 		);
 #-------------------------------------------------------------------------------
-$Bonuses = DB_Select('BonusesOwners',$Columns,Array('Where'=>$Where));
+$Bonuses = DB_Select('BonusesOwners',$Columns,Array('Where'=>$Where,'GroupBy'=>Array('ServiceID','Discont')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Bonuses)){
 case 'array':
