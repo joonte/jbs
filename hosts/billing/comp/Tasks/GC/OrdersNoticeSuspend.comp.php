@@ -13,6 +13,7 @@ $Columns = Array(
 			'(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `OrdersOwners`.`ServiceID`) AS `Name`',
 			'ROUND((`ExpirationDate` - UNIX_TIMESTAMP())/86400) AS `DaysRemainded`'
 		);
+#-------------------------------------------------------------------------------
 $Where = "(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) = 'Default' AND (SELECT `ConsiderTypeID` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) != 'Upon' AND `StatusID` = 'Active' AND ROUND((`ExpirationDate` - UNIX_TIMESTAMP())/86400) IN (1,3,5,7)";
 #-------------------------------------------------------------------------------
 $Orders = DB_Select('OrdersOwners',$Columns,Array('Where'=>$Where));
@@ -43,12 +44,16 @@ case 'array':
 			return ERROR | @Trigger_Error(101);
 		}
 	} # end foreach
+	#-------------------------------------------------------------------------------
 	break;
+	#-------------------------------------------------------------------------------
 default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 return TRUE;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>
