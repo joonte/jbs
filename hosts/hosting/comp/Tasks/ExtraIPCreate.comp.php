@@ -133,7 +133,7 @@ case 'array':
 	if(!$Event)
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'] = Array($ExtraIPServer->Settings['Address'],$DependOrder['Login'],$ExtraIPOrder['Login']);
+	$GLOBALS['TaskReturnInfo'] = Array(($ExtraIPServer->Settings['Address'])=>Array($DependOrder['Login'],$ExtraIPOrder['Login']));
 	#-------------------------------------------------------------------------------
 	return TRUE;
 	#-------------------------------------------------------------------------------
