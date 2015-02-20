@@ -44,7 +44,7 @@ if(!IsSet($_SERVER["HTTP_REFERER"])){
 	#-------------------------------------------------------------------------------
 	CacheManager::add($CacheID,$Count,600);
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Notes/User/CheckReferer]: HTTP_REFERER is not set for IP = %s, Count = %u',$_SERVER['REMOTE_ADDR']),$Count);
+	Debug(SPrintF('[comp/Notes/User/CheckReferer]: HTTP_REFERER is not set for IP = %s, Count = %u',$_SERVER['REMOTE_ADDR'],$Count));
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
