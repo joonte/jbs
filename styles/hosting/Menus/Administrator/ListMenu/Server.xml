@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+	<Items>
+		<UniqID>
+			<Text>Дополнительная информация</Text>
+			<Href>javascript:ShowWindow("/Administrator/ServerInfo",{ServerID:"%ID%"});</Href>
+			<Icon>Info.gif</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Редактировать сервер</Text>
+			<Href>javascript:ShowWindow("/Administrator/ServerEdit",{ServerID:"%ID%"});</Href>
+			<Icon>Edit.gif</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Панель управления</Text>
+			<Href>javascript:OrderManage(0,%ServiceID%,%ID%);</Href>
+			<Icon>HostingManage.gif</Icon>
+			<JavaScript>OrderManage.js</JavaScript>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Сменить пароль</Text>
+			<Href>javascript:ShowWindow("/OrderPasswordChange",{ServerID:%ID%});</Href>
+			<Icon>Password.gif</Icon>
+		</UniqID>
+	</Items>
+</XML>

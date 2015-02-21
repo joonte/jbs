@@ -254,11 +254,17 @@ VALUES
 ('ServersGroupsDelete','hosting',1,1,4000000,1,1,'no'),
 ('ServersGroupsDelete','hosting',3000000,100,1,1,2,'yes'),
 ('ServersDelete','hosting',1,1,4000000,1,1,'no'),
-('ServersDelete','hosting',3000000,100,1,1,2,'yes')
+('ServersDelete','hosting',3000000,100,1,1,2,'yes'),
 
+/* added by lissyara 2015-02-20 in 23:18 MSK, for JBS-953 */
+('ServerRead','hosting',1,1,4000000,1,1,'no'),
+('ServerRead','hosting',3000000,100,1,1,2,'yes'),
+('ServerManage','hosting',1,1,4000000,1,1,'no'),
+('ServerManage','hosting',3000000,100,1,1,2,'yes')
 
 ;
 
 UNLOCK TABLES;
 
 SET FOREIGN_KEY_CHECKS=1;
+

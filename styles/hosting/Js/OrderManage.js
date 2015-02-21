@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
 //------------------------------------------------------------------------------
-function OrderManage($ServiceOrderID,$ServiceID){
+function OrderManage($ServiceOrderID,$ServiceID,$ServerID){
 	//------------------------------------------------------------------------------
 	var $HTTP = new HTTP();
 	//------------------------------------------------------------------------------
@@ -88,9 +88,10 @@ function OrderManage($ServiceOrderID,$ServiceID){
 	};
 	//------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------
-	var $Args = {ServiceOrderID:$ServiceOrderID,ServiceID:$ServiceID};
+	var $Args = {ServiceOrderID:$ServiceOrderID,ServiceID:$ServiceID,ServerID:$ServerID};
+	var $API  = ($ServerID)?'/Administrator/API/ServerManage':'/API/OrderManage';
 	//------------------------------------------------------------------------------
-	if(!$HTTP.Send('/API/OrderManage',$Args)){
+	if(!$HTTP.Send($API,$Args)){
 		//------------------------------------------------------------------------------
 		alert('Не удалось отправить запрос на сервер');
 		//------------------------------------------------------------------------------

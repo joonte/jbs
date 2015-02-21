@@ -33,6 +33,7 @@
 		<ListElement>IsActive</ListElement>
 		<ListElement>AdminNotice</ListElement>
 		<ListElement>SortID</ListElement>
+		<ListElement>(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) AS `ServiceID`</ListElement>
 	</ColumnsIDs>
 	<Conditions>
 		<Message>Серверов не обнаружено.</Message>
@@ -197,12 +198,25 @@
 		</Args>
 	</SortID>
 	<!-- ********************************************************************** -->
+	<ExtendedMenu>
+		<IsSorted>0</IsSorted>
+		<Comp>Menus/List</Comp>
+		<Args>
+			<ListElement>Administrator/ListMenu/Server.xml</ListElement>
+			<Replace>
+				<ID>%ID%</ID>
+				<ServiceID>%ServiceID%</ServiceID>
+			</Replace>
+		</Args>
+	</ExtendedMenu>
+<!-- ********************************************************************** -->
 </Columns>
 <!-- ********************************************************************** -->
 <!-- ********************************************************************** -->
 <Sequence>
 	<ListElement>SelectID</ListElement>
 	<ListElement>Edit</ListElement>
+	<ListElement>ExtendedMenu</ListElement>
 	<ListElement>ServersGroup</ListElement>
 	<ListElement>TemplateID</ListElement>
 	<ListElement>Protocol</ListElement>
