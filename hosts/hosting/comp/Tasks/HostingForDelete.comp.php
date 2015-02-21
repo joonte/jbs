@@ -33,7 +33,7 @@ case 'exception':
 	break;
 case 'array':
 	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'] = SPrintF('Deleted %s accounts',SizeOf($HostingOrders));
+	$GLOBALS['TaskReturnInfo'] = Array('Deleted'=>Array(SizeOf($HostingOrders)));
 	#-------------------------------------------------------------------------------
 	foreach($HostingOrders as $HostingOrder){
 		#-------------------------------------------------------------------------------
