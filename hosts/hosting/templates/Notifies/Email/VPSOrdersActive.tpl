@@ -16,9 +16,8 @@
   * Имя пользователя: root
   * Пароль: {$Password|default:'$Password'}
  
-При заказе сервера с панелью управления ISPmanager Lite, Вы можете войти в нее используя следующие данные:
-  * Адрес панели ISPmanager 4: https://{$IP|default:'$IP'}/manager/ispmgr
-  * Адрес панели ISPmanager 5: https://{$IP|default:'$IP'}:1500/ispmgr
+При заказе сервера с панелью управления ISPmanager, Вы можете войти в неё используя следующие данные:
+  * Адрес панели ISPmanager: https://{$IP|default:'$IP'}:1500/ispmgr
   * Логин в панель ISPmanager: root
   * Пароль панели ISPmanger: {$Password|default:'$Password'}
 
