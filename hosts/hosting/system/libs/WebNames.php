@@ -11,17 +11,7 @@ function WebNames_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1N
 	#-----------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/
-	$HTTP = Array(
-			#---------------------------------------------------------------------------
-			'Address'  => $Settings['Address'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Charset'  => 'CP1251',
-			'Hidden'   => $Settings['Password'],
-			'IsLogging'=> $Settings['Params']['IsLogging']
-			#-------------------------------------------------------------------------------
-			);
+	$HTTP = WebNames_Build_HTTP($Settings);
 	#-----------------------------------------------------------------------------
 	#-----------------------------------------------------------------------------
 	$Query = Array(
@@ -86,16 +76,7 @@ function WebNames_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contr
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Address'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'CP1251',
-    'Hidden'   => $Settings['Password'],
-    'IsLogging'=> $Settings['Params']['IsLogging']
-  );
+  $HTTP = WebNames_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
@@ -129,16 +110,7 @@ function WebNames_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Address'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'CP1251',
-    'Hidden'   => $Settings['Password'],
-    'IsLogging'=> $Settings['Params']['IsLogging']
-  );
+  $HTTP = WebNames_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
@@ -195,16 +167,7 @@ function WebNames_Check_Task($Settings,$TicketID){
   if($TicketID == 'NO')
     return Array('DomainID'=>0);
   #-----------------------------------------------------------------------------
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Address'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'CP1251',
-    'Hidden'   => $Settings['Password'],
-    'IsLogging'=> $Settings['Params']['IsLogging']
-  );
+  $HTTP = WebNames_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
@@ -253,16 +216,7 @@ function WebNames_Get_Balance($Settings){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Address'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'CP1251',
-    'Hidden'   => $Settings['Password'],
-    'IsLogging'=> $Settings['Params']['IsLogging']
-  );
+  $HTTP = WebNames_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
@@ -303,18 +257,10 @@ function WebNames_Is_Available_Domain($Settings,$Domain){
   $Result = CacheManager::get($CacheID);
   # если результата нет - лезем в вебнеймс
   if(!$Result || SizeOf($Result) < 2){
-    $HTTP = Array(
-      #---------------------------------------------------------------------------
-      'Address'  => $Settings['Address'],
-      'Port'     => $Settings['Port'],
-      'Host'     => $Settings['Address'],
-      'Protocol' => $Settings['Protocol'],
-      'Charset'  => 'CP1251',
-      'Hidden'   => $Settings['Password'],
-      'IsLogging'=> $Settings['Params']['IsLogging']
-      );
-    #-----------------------------------------------------------------------------
-    $Query = Array(
+	#-------------------------------------------------------------------------------
+	$HTTP = WebNames_Build_HTTP($Settings);
+	#-------------------------------------------------------------------------------
+	$Query = Array(
       #---------------------------------------------------------------------------
       'thisPage'           => 'pispAllDomainsInfo',	# see JBS-252
       'username'           => $Settings['Login'],
@@ -373,15 +319,7 @@ function WebNames_Change_Contact_Detail($Settings,$Domain,$DomainZone,$Person){
 	/******************************************************************************/
 	// phone, e_mail, cell_phone
 	#-------------------------------------------------------------------------------
-	$HTTP = Array(
-			'Address'  => $Settings['Address'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Charset'  => 'CP1251',
-			'Hidden'   => $Settings['Password'],
-			'IsLogging'=> $Settings['Params']['IsLogging']
-			);
+	$HTTP = WebNames_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	$Query = Array(
 			'thisPage'           => 'pispContactDetails',
@@ -456,16 +394,7 @@ function WebNames_Get_Contact_Detail($Settings,$Domain){
   #-------------------------------------------------------------------------------
   // phone, e_mail, cell_phone
   #-------------------------------------------------------------------------------
-  $HTTP = Array(
-                #---------------------------------------------------------------------------
-	        'Address'  => $Settings['Address'],
-                'Port'     => $Settings['Port'],
-                'Host'     => $Settings['Address'],
-                'Protocol' => $Settings['Protocol'],
-                'Charset'  => 'CP1251',
-		'Hidden'   => $Settings['Password'],
-		'IsLogging'=> $Settings['Params']['IsLogging']
-               );
+  $HTTP = WebNames_Build_HTTP($Settings);
   #-------------------------------------------------------------------------------
   $Query = Array(
                  'thisPage'           => 'pispGetContactDetails',
@@ -547,16 +476,8 @@ function WebNames_Get_List_Domains($Settings){
   $Result = CacheManager::get($CacheID);
   # если результата нет - лезем в вебнеймс
   if(!$Result || SizeOf($Result) < 2){
-    $HTTP = Array(
-      #---------------------------------------------------------------------------
-      'Address'  => $Settings['Address'],
-      'Port'     => $Settings['Port'],
-      'Host'     => $Settings['Address'],
-      'Protocol' => $Settings['Protocol'],
-      'Charset'  => 'UTF-8',
-      'Hidden'   => $Settings['Password'],
-      'IsLogging'=> $Settings['Params']['IsLogging']
-      );
+	#-------------------------------------------------------------------------------
+	$HTTP = WebNames_Build_HTTP($Settings);
     #-----------------------------------------------------------------------------
     $Query = Array(
       #---------------------------------------------------------------------------
@@ -622,17 +543,7 @@ function WebNames_Domain_Transfer($Settings,$DomainName,$DomainZone,$Params){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$HTTP = Array(
-			#-------------------------------------------------------------------------------
-			'Address'  => $Settings['Address'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Charset'  => 'CP1251',
-			'Hidden'   => $Settings['Password'],
-			'IsLogging'=> $Settings['Params']['IsLogging']
-			#-------------------------------------------------------------------------------
-			);
+	$HTTP = WebNames_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Query = Array(
@@ -908,5 +819,40 @@ function Build_Query($Query = Array(),$Params){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+
+
+
+
+# внутренние функции
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+function WebNames_Build_HTTP($Settings){
+	/******************************************************************************/
+	$__args_types = Array('array');
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/******************************************************************************/
+	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
+	#-------------------------------------------------------------------------------
+	$HTTP = Array(
+			'Address'	=> $Settings['Address'],
+			'Port'		=> $Settings['Port'],
+			'Host'		=> $Settings['Address'],
+			'Protocol'	=> $Settings['Protocol'],
+			'Charset'	=> 'CP1251',
+			'Hidden'	=> $Settings['Password'],
+			'IsLogging'	=> $Settings['Params']['IsLogging']
+			);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return $HTTP;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+
+
+
+
 
 ?>
