@@ -11,17 +11,7 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Address'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8',
-    'Hidden'   => $Settings['Password'],
-    'IsLogging'=> $Settings['Params']['IsLogging']
-
-  );
+  $HTTP = RegRu_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $Domain = Mb_StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone),'UTF-8');
   #-----------------------------------------------------------------------------
@@ -262,16 +252,7 @@ function RegRu_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contract
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Address'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8',
-    'Hidden'   => $Settings['Password'],
-    'IsLogging'=> $Settings['Params']['IsLogging']
-  );
+  $HTTP = RegRu_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $Domain = Mb_StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone),'UTF-8');
   #-----------------------------------------------------------------------------
@@ -322,16 +303,7 @@ function RegRu_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID,$D
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Address'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8',
-    'Hidden'   => $Settings['Password'],
-    'IsLogging'=> $Settings['Params']['IsLogging']
-  );
+  $HTTP = RegRu_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $Domain = Mb_StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone),'UTF-8');
   #-----------------------------------------------------------------------------
@@ -411,16 +383,7 @@ function RegRu_Check_Task($Settings,$TicketID){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Address'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8',
-    'Hidden'   => $Settings['Password'],
-    'IsLogging'=> $Settings['Params']['IsLogging']
-  );
+  $HTTP = RegRu_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
@@ -460,16 +423,7 @@ function RegRu_GetUploadID($Settings,$Domain){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Address'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8',
-    'Hidden'   => $Settings['Password'],
-    'IsLogging'=> $Settings['Params']['IsLogging']
-  );
+  $HTTP = RegRu_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
@@ -505,16 +459,7 @@ function RegRu_Get_Balance($Settings){
   #----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-   $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Address'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8',
-    'Hidden'   => $Settings['Password'],
-    'IsLogging'=> $Settings['Params']['IsLogging']
-  );
+  $HTTP = RegRu_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
@@ -551,16 +496,7 @@ function RegRu_Is_Available_Domain($Settings,$Domain){
   #---------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array(
-    #--------------------------------------------------------------------------
-    'Address'  => $Settings['Address'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8',
-    'Hidden'   => $Settings['Password'],
-    'IsLogging'=> $Settings['Params']['IsLogging']
-  );
+  $HTTP = RegRu_Build_HTTP($Settings);
   #----------------------------------------------------------------------------
   $Query = Array(
     #--------------------------------------------------------------------------
@@ -622,16 +558,7 @@ function RegRu_Domain_Transfer($Settings,$DomainName,$DomainZone,$Param){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Address'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8',
-    'Hidden'   => $Settings['Password'],
-    'IsLogging'=> $Settings['Params']['IsLogging']
-  );
+  $HTTP = RegRu_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $Domain = Mb_StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone),'UTF-8');
   #-----------------------------------------------------------------------------
@@ -684,17 +611,7 @@ function RegRu_Domain_Accept($Settings){
 	#-----------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/
-	$HTTP = Array(
-			#---------------------------------------------------------------------------
-			'Address'  => $Settings['Address'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Charset'  => 'utf8',
-			'Hidden'   => $Settings['Password'],
-			'IsLogging'=> $Settings['Params']['IsLogging']
-			#---------------------------------------------------------------------------
-			);
+	$HTTP = RegRu_Build_HTTP($Settings);
 	#-----------------------------------------------------------------------------
 	$Query = Array(
 			#---------------------------------------------------------------------------
@@ -765,16 +682,7 @@ function RegRu_Change_Contact_Detail($Settings,$Domain,$DomainZone,$Person){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Address'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8',
-    'Hidden'   => $Settings['Password'],
-    'IsLogging'=> $Settings['Params']['IsLogging']
-  );
+  $HTTP = RegRu_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
@@ -830,16 +738,7 @@ function RegRu_Get_Contact_Detail($Settings,$Domain){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array(
-    #---------------------------------------------------------------------------
-    'Address'  => $Settings['Address'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8',
-    'Hidden'   => $Settings['Password'],
-    'IsLogging'=> $Settings['Params']['IsLogging']
-  );
+  $HTTP = RegRu_Build_HTTP($Settings);
   #-----------------------------------------------------------------------------
   $Query = Array(
     #---------------------------------------------------------------------------
@@ -897,16 +796,7 @@ function RegRu_Get_List_Domains($Settings){
   #---------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array(
-    #--------------------------------------------------------------------------
-    'Address'  => $Settings['Address'],
-    'Port'     => $Settings['Port'],
-    'Host'     => $Settings['Address'],
-    'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8',
-    'Hidden'   => $Settings['Password'],
-    'IsLogging'=> $Settings['Params']['IsLogging']
-  );
+  $HTTP = RegRu_Build_HTTP($Settings);
   #----------------------------------------------------------------------------
   $Query = Array(
     #--------------------------------------------------------------------------
@@ -945,6 +835,38 @@ function RegRu_Get_List_Domains($Settings){
   return ERROR | @Trigger_Error('[RegRu_Get_List_Domains]: неизвестный ответ');
 }
 #-------------------------------------------------------------------------------
+
+
+
+# внутренние функции
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+function RegRu_Build_HTTP($Settings){
+	/******************************************************************************/
+	$__args_types = Array('array');
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/******************************************************************************/
+	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
+	#-------------------------------------------------------------------------------
+	$HTTP = Array(
+			'Address'	=> $Settings['Address'],
+			'Port'		=> $Settings['Port'],
+			'Host'		=> $Settings['Address'],
+			'Protocol'	=> $Settings['Protocol'],
+			'Charset'	=> 'utf8',
+			'Hidden'	=> $Settings['Password'],
+			'IsLogging'	=> $Settings['Params']['IsLogging']
+			);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return $HTTP;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+
+
 
 
 ?>
