@@ -9,7 +9,7 @@ function Started_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Na
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address']);
+  $HTTP = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address'],'IsLogging'=>$Settings['IsLogging']);
   #-----------------------------------------------------------------------------
   $Reseller = new Tag('reseller');
   $Reseller->AddChild(new Tag('login',$Settings['Login']));
@@ -54,7 +54,7 @@ function Started_Check_Task($Settings,$RequestID){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address']);
+  $HTTP = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address'],'IsLogging'=>$Settings['IsLogging']);
   #-----------------------------------------------------------------------------
   $Request = new Tag('RequestBody');
   #-----------------------------------------------------------------------------
@@ -121,7 +121,7 @@ function Started_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contra
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address']);
+  $HTTP = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address'],'IsLogging'=>$Settings['IsLogging']);
   #-----------------------------------------------------------------------------
   $Request = new Tag('RequestBody');
   $Reseller = new Tag('reseller');
@@ -168,7 +168,7 @@ function Started_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID,
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address']);
+  $HTTP = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address'],'IsLogging'=>$Settings['IsLogging']);
   #-----------------------------------------------------------------------------
   $Request = new Tag('RequestBody');
   #-----------------------------------------------------------------------------
@@ -213,7 +213,7 @@ function Started_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-  $HTTP = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address']);
+  $HTTP = Array('Protocol'=>$Settings['Protocol'],'Port'=>$Settings['Port'],'Address'=>$Settings['Address'],'Host'=>$Settings['Address'],'IsLogging'=>$Settings['IsLogging']);
   #-----------------------------------------------------------------------------
   $Reseller = new Tag('reseller');
   $Reseller->AddChild(new Tag('login',$Settings['Login']));

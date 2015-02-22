@@ -43,7 +43,7 @@ function Plesk_Get_Domains($Settings){
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Hidden'   => $Settings['Password'],
-    'IsLogging' => FALSE
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Response = HTTP_Send('/enterprise/control/agent.php',$HTTP,Array(),$Request,$Headers);
@@ -227,7 +227,8 @@ function Plesk_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,$Ema
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Hidden'   => $Settings['Password']
+    'Hidden'   => $Settings['Password'],
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Response = HTTP_Send('/enterprise/control/agent.php',$HTTP,Array(),$Request,$Headers);
@@ -364,7 +365,8 @@ function Plesk_Active($Settings,$Login,$IsReseller = FALSE){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Hidden'   => $Settings['Password']
+    'Hidden'   => $Settings['Password'],
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Response = HTTP_Send('/enterprise/control/agent.php',$HTTP,Array(),$Request,$Headers);
@@ -416,7 +418,8 @@ function Plesk_Suspend($Settings,$Login,$IsReseller = FALSE){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Hidden'   => $Settings['Password']
+    'Hidden'   => $Settings['Password'],
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Response = HTTP_Send('/enterprise/control/agent.php',$HTTP,Array(),$Request,$Headers);
@@ -525,7 +528,8 @@ function Plesk_Scheme_Change($Settings,$Login,$HostingScheme){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Hidden'   => $Settings['Password']
+    'Hidden'   => $Settings['Password'],
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Response = HTTP_Send('/enterprise/control/agent.php',$HTTP,Array(),$Request,$Headers);
@@ -577,7 +581,8 @@ function Plesk_Delete($Settings,$Login,$IsReseller = FALSE){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Hidden'   => $Settings['Password']
+    'Hidden'   => $Settings['Password'],
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Response = HTTP_Send('/enterprise/control/agent.php',$HTTP,Array(),$Request,$Headers);
@@ -629,7 +634,8 @@ function Plesk_Password_Change($Settings,$Login,$Password,$IsReseller = FALSE){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Hidden'   => $Settings['Password']
+    'Hidden'   => $Settings['Password'],
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Response = HTTP_Send('/enterprise/control/agent.php',$HTTP,Array(),$Request,$Headers);

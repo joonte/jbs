@@ -637,7 +637,7 @@ function BillManager_Build_HTTP($Settings){
 			'Host'          => $Settings['Address'],
 			'Protocol'      => $Settings['Protocol'],
 			'Hidden'        => $authinfo,
-			'IsLogging'      => FALSE
+			'IsLogging'      => $Settings['IsLogging']
 			);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------

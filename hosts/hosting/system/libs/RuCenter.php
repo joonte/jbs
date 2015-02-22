@@ -17,7 +17,8 @@ function RuCenter_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1N
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'KOI8-R'
+    'Charset'  => 'KOI8-R',
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Domain = SPrintF('%s.%s',$DomainName,$DomainZone);
@@ -192,7 +193,8 @@ function RuCenter_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contr
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'KOI8-R'
+    'Charset'  => 'KOI8-R',
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Domain = SPrintF('%s.%s',$DomainName,$DomainZone);
@@ -272,7 +274,8 @@ function RuCenter_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'KOI8-R'
+    'Charset'  => 'KOI8-R',
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Domain = SPrintF('%s.%s',$DomainName,$DomainZone);
@@ -363,7 +366,8 @@ function RuCenter_Check_Task($Settings,$TicketID){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'KOI8-R'
+    'Charset'  => 'KOI8-R',
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Query = Array();
@@ -440,7 +444,8 @@ function RuCenter_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'KOI8-R'
+    'Charset'  => 'KOI8-R',
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Query = Array();

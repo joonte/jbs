@@ -29,7 +29,7 @@ function Cpanel_Get_Domains($Settings){
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
-    'IsLogging' => FALSE
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Request = Array('nohtml'=>'y');
@@ -152,7 +152,8 @@ function Cpanel_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,$Em
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password'])
+    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $IDNA = new Net_IDNA_php5();
@@ -211,7 +212,8 @@ function Cpanel_Active($Settings,$Login,$IsReseller = FALSE){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password'])
+    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Request = $IsReseller?Array('reseller'=>$Login,'resalso'=>1,'un'=>1):Array('user'=>$Login,'nohtml'=>'y');
@@ -240,7 +242,8 @@ function Cpanel_Suspend($Settings,$Login,$IsReseller = FALSE){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password'])
+    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Request = $IsReseller?Array('reseller'=>$Login,'resalso'=>1):Array('user'=>$Login,'nohtml'=>'y');
@@ -269,7 +272,8 @@ function Cpanel_Delete($Settings,$Login,$IsReseller = FALSE){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password'])
+    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Request = $IsReseller?Array('reseller'=>$Login,'resalso'=>1):Array('user'=>$Login,'nohtml'=>'y');
@@ -298,7 +302,8 @@ function Cpanel_Scheme_Change($Settings,$Login,$HostingScheme){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password'])
+    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Request = Array(
@@ -332,7 +337,8 @@ function Cpanel_Password_Change($Settings,$Login,$Password,$IsReseller = FALSE){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password'])
+    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Request = Array('user'=>$Login,'pass'=>$Password);

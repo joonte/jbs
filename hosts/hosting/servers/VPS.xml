@@ -115,6 +115,22 @@
 		<Value>yes</Value>
 	</IsAutoBalancing>
 	<!-- *********************************************************************** -->
+	<IsLogging>
+		<Check>Char</Check>
+		<Comment>Записывать запросы в лог</Comment>
+		<CommentAttribs>
+			<style>cursor:pointer;</style>
+			<onclick>ChangeCheckBox('IsLogging'); return false;</onclick>
+			<prompt>Записывать в лог все запросы и ответы сервера</prompt>
+		</CommentAttribs>
+		<Type>Input</Type>
+		<Attribs>
+			<type>checkbox</type>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>yes</Value>
+	</IsLogging>
+	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
 	<Domain>
 		<Title>Пользовательские аккаунты</Title>

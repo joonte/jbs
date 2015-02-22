@@ -28,7 +28,8 @@ function DirectAdmin_Get_Domains($Settings){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password'])
+    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Response = HTTP_Send('/CMD_API_SHOW_DOMAINS',$HTTP);
@@ -53,7 +54,8 @@ function DirectAdmin_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password'])
+    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $IsReselling = $HostingScheme['IsReselling'];
@@ -143,7 +145,8 @@ function DirectAdmin_Active($Settings,$Login,$IsReseller = FALSE){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password'])
+    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Request = Array('suspend'=>'Unsuspend','select0'=>$Login);
@@ -172,7 +175,8 @@ function DirectAdmin_Suspend($Settings,$Login,$IsReseller = FALSE){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password'])
+    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Request = Array('suspend'=>'Suspend','select0'=>$Login);
@@ -201,7 +205,8 @@ function DirectAdmin_Delete($Settings,$Login,$IsReseller = FALSE){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password'])
+    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Request = Array('confirmed'=>'Confirm','delete'=>'yes','select0'=>$Login);
@@ -230,7 +235,8 @@ function DirectAdmin_Scheme_Change($Settings,$Login,$HostingScheme){
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password'])
+    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Request = Array(
@@ -285,7 +291,8 @@ function DirectAdmin_Password_Change($Settings,$Login,$Password,$IsReseller = FA
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password'])
+    'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Request = Array(

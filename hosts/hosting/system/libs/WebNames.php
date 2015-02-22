@@ -19,6 +19,7 @@ function WebNames_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1N
 			'Protocol' => $Settings['Protocol'],
 			'Charset'  => 'CP1251',
 			'Hidden'   => $Settings['Password'],
+			'IsLogging'=> $Settings['IsLogging']
 			#-------------------------------------------------------------------------------
 			);
 	#-----------------------------------------------------------------------------
@@ -93,6 +94,7 @@ function WebNames_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contr
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'CP1251',
     'Hidden'   => $Settings['Password'],
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Query = Array(
@@ -135,6 +137,7 @@ function WebNames_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'CP1251',
     'Hidden'   => $Settings['Password'],
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Query = Array(
@@ -200,6 +203,7 @@ function WebNames_Check_Task($Settings,$TicketID){
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'CP1251',
     'Hidden'   => $Settings['Password'],
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Query = Array(
@@ -257,6 +261,7 @@ function WebNames_Get_Balance($Settings){
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'CP1251',
     'Hidden'   => $Settings['Password'],
+    'IsLogging'=> $Settings['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Query = Array(
@@ -306,6 +311,7 @@ function WebNames_Is_Available_Domain($Settings,$Domain){
       'Protocol' => $Settings['Protocol'],
       'Charset'  => 'CP1251',
       'Hidden'   => $Settings['Password'],
+      'IsLogging'=> $Settings['IsLogging']
       );
     #-----------------------------------------------------------------------------
     $Query = Array(
@@ -374,6 +380,7 @@ function WebNames_Change_Contact_Detail($Settings,$Domain,$DomainZone,$Person){
 			'Protocol' => $Settings['Protocol'],
 			'Charset'  => 'CP1251',
 			'Hidden'   => $Settings['Password'],
+			'IsLogging'=> $Settings['IsLogging']
 			);
 	#-------------------------------------------------------------------------------
 	$Query = Array(
@@ -457,6 +464,7 @@ function WebNames_Get_Contact_Detail($Settings,$Domain){
                 'Protocol' => $Settings['Protocol'],
                 'Charset'  => 'CP1251',
 		'Hidden'   => $Settings['Password'],
+		'IsLogging'=> $Settings['IsLogging']
                );
   #-------------------------------------------------------------------------------
   $Query = Array(
@@ -547,6 +555,7 @@ function WebNames_Get_List_Domains($Settings){
       'Protocol' => $Settings['Protocol'],
       'Charset'  => 'UTF-8',
       'Hidden'   => $Settings['Password'],
+      'IsLogging'=> $Settings['IsLogging']
       );
     #-----------------------------------------------------------------------------
     $Query = Array(
@@ -621,6 +630,7 @@ function WebNames_Domain_Transfer($Settings,$DomainName,$DomainZone,$Params){
 			'Protocol' => $Settings['Protocol'],
 			'Charset'  => 'CP1251',
 			'Hidden'   => $Settings['Password'],
+			'IsLogging'=> $Settings['IsLogging']
 			#-------------------------------------------------------------------------------
 			);
 	#-------------------------------------------------------------------------------

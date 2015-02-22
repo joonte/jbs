@@ -16,7 +16,8 @@ function InternetBS_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8'
+    'Charset'  => 'utf8',
+    'IsLogging'=> $Settings['IsLogging']
     );
 
 	$username = $Settings['Login'];
@@ -179,7 +180,8 @@ function InternetBS_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$Contract
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8'
+    'Charset'  => 'utf8',
+    'IsLogging'=> $Settings['IsLogging']
     );
   
     $username = $Settings['Login'];
@@ -240,7 +242,8 @@ function InternetBS_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Cus
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
-    'Charset'  => 'utf8'
+    'Charset'  => 'utf8',
+    'IsLogging'=> $Settings['IsLogging']
     );
   
     $username = $Settings['Login'];
