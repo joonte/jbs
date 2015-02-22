@@ -113,7 +113,7 @@ function HTTP_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
 	#-------------------------------------------------------------------------------
 	Array_Union($Default,$Settings);
 	#-------------------------------------------------------------------------------
-	$IsLogging = (boolean)$Default['IsLoggin'];
+	$IsLogging = (boolean)$Default['IsLogging'];
 	#-------------------------------------------------------------------------------
 	$Tmp = System_Element('tmp');
 	if(Is_Error($Tmp))

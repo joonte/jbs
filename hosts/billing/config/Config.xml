@@ -353,6 +353,7 @@
    <MinimumPayment>1.00</MinimumPayment>
    <MaximumPayment>15000.00</MaximumPayment>
    <IsActive>0</IsActive>
+   <IsLogging>0</IsLogging>
   </QIWI>
   <!-- ******************************************************************** -->
   <ZPayment>
