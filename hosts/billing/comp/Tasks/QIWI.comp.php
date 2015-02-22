@@ -101,7 +101,7 @@ case 'array':
 	$Result .= base64_encode($crypted);
 	#-------------------------------------------------------------------------------
 	# send message to QIWI server
-	$HTTP = Array('Protocol'=>($Settings['Send']['UseSSL'])?'ssl':'tcp','Port'=>($Settings['Send']['UseSSL'])?'443':'80','Address'=>'ishop.qiwi.ru','Host'=>'ishop.qiwi.ru');
+	$HTTP = Array('Protocol'=>($Settings['Send']['UseSSL'])?'ssl':'tcp','Port'=>($Settings['Send']['UseSSL'])?'443':'80','Address'=>'ishop.qiwi.ru','Host'=>'ishop.qiwi.ru','IsLogging'=>$Settings['IsLogging']);
 	#-------------------------------------------------------------------------------
 	$Send = HTTP_Send('/xml',$HTTP,Array(),$Result,Array('Content-type: text/xml; encoding=utf-8'));
 	#-------------------------------------------------------------------------------
