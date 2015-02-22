@@ -43,7 +43,7 @@ function Plesk_Get_Domains($Settings){
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Hidden'   => $Settings['Password'],
-    'IsLoggin' => FALSE
+    'IsLogging' => FALSE
   );
   #-----------------------------------------------------------------------------
   $Response = HTTP_Send('/enterprise/control/agent.php',$HTTP,Array(),$Request,$Headers);

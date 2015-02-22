@@ -1490,7 +1490,7 @@ function IspManager4_Build_HTTP($Settings){
 			'Host'		=> $Settings['Address'],
 			'Protocol'	=> $Settings['Protocol'],
 			'Hidden'	=> $authinfo,
-			'IsLoggin'	=> FALSE
+			'IsLogging'	=> FALSE
 			);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------

@@ -31,7 +31,7 @@ function DNSmanager4_Get_Users($Settings){
 			'Host'     => $Settings['Address'],
 			'Protocol' => $Settings['Protocol'],
 			'Hidden'   => $authinfo,
-			'IsLoggin' => FALSE
+			'IsLogging' => FALSE
 			);
 	#-------------------------------------------------------------------------------
 	$Response = HTTP_Send('/manager/dnsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));

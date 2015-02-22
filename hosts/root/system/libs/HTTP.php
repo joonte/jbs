@@ -18,7 +18,7 @@ if(!Function_Exists('Debug')){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function HTTP_Query($Data,$Charset,$Hidden,$IsLoggin = TRUE){
+function HTTP_Query($Data,$Charset,$Hidden,$IsLogging = TRUE){
 	/******************************************************************************/
 	$__args_types = Array('array','string','string','boolean');
 	#-------------------------------------------------------------------------------
@@ -76,7 +76,7 @@ function HTTP_Query($Data,$Charset,$Hidden,$IsLoggin = TRUE){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	if($IsLoggin){
+	if($IsLogging){
 		#-------------------------------------------------------------------------------
 		$Tmp = System_Element('tmp');
 		if(Is_Error($Tmp))
@@ -108,12 +108,12 @@ function HTTP_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
 			'Basic'		=> '',
 			'Charset'	=> 'UTF-8',
 			'Hidden'	=> '',
-			'IsLoggin'	=> TRUE,
+			'IsLogging'	=> TRUE,
 			);
 	#-------------------------------------------------------------------------------
 	Array_Union($Default,$Settings);
 	#-------------------------------------------------------------------------------
-	$IsLoggin = (boolean)$Default['IsLoggin'];
+	$IsLogging = (boolean)$Default['IsLoggin'];
 	#-------------------------------------------------------------------------------
 	$Tmp = System_Element('tmp');
 	if(Is_Error($Tmp))
@@ -149,7 +149,7 @@ function HTTP_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
 	$Hidden = $Default['Hidden'];
 	#-------------------------------------------------------------------------------
 	if(Count($Get))
-		$Target .= SPrintF('?%s',HTTP_Query($Get,$Charset,$Hidden,$IsLoggin));
+		$Target .= SPrintF('?%s',HTTP_Query($Get,$Charset,$Hidden,$IsLogging));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Headers[] = SPrintF('%s %s HTTP/1.0',$Method,$Target);
@@ -178,7 +178,7 @@ function HTTP_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
 				#-------------------------------------------------------------------------------
 				$Headers[] = 'Content-Type: application/x-www-form-urlencoded';
 				#-------------------------------------------------------------------------------
-				$Body = HTTP_Query($Post,$Charset,$Hidden,$IsLoggin);
+				$Body = HTTP_Query($Post,$Charset,$Hidden,$IsLogging);
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
@@ -244,7 +244,7 @@ function HTTP_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	if($Default['IsLoggin']){
+	if($Default['IsLogging']){
 		#-------------------------------------------------------------------------------
 		$IsWrite = IO_Write(SPrintF('%s/logs/http-send.log',$Tmp),$Log);
 		if(Is_Error($IsWrite))

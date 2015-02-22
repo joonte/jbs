@@ -29,7 +29,7 @@ function Cpanel_Get_Domains($Settings){
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
-    'IsLoggin' => FALSE
+    'IsLogging' => FALSE
   );
   #-----------------------------------------------------------------------------
   $Request = Array('nohtml'=>'y');
