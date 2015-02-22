@@ -25,14 +25,7 @@ function DNSmanager5_Get_Users($Settings){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$HTTP = Array(
-			'Address'  => $Settings['Address'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Hidden'   => $authinfo,
-			'IsLogging'=> $Settings['Params']['IsLogging']
-			);
+	$HTTP = DNSmanager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	$Response = HTTP_Send('/dnsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user'));
 	if(Is_Error($Response))
@@ -108,14 +101,7 @@ function DNSmanager5_Create($Settings,$Login,$Password,$DNSmanagerScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$HTTP = Array(
-			'Address'  => $Settings['Address'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Hidden'   => $authinfo,
-			'IsLogging'=> $Settings['Params']['IsLogging']
-			);
+	$HTTP = DNSmanager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	$IsReselling = $DNSmanagerScheme['IsReselling'];
 	#-------------------------------------------------------------------------------
@@ -194,14 +180,7 @@ function DNSmanager5_Active($Settings,$Login,$IsReseller = FALSE){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$HTTP = Array(
-			'Address'  => $Settings['Address'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Hidden'   => $authinfo,
-			'IsLogging'=> $Settings['Params']['IsLogging']
-			);
+	$HTTP = DNSmanager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	$Response = HTTP_Send('/dnsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.resume':'user.resume','elid'=>$Login));
 	if(Is_Error($Response))
@@ -233,14 +212,7 @@ function DNSmanager5_Suspend($Settings,$Login,$IsReseller = FALSE){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$HTTP = Array(
-			'Address'  => $Settings['Address'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Hidden'   => $authinfo,
-			'IsLogging'=> $Settings['Params']['IsLogging']
-			);
+	$HTTP = DNSmanager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	$Response = HTTP_Send('/dnsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'reseller.suspend':'user.suspend','elid'=>$Login));
 	#-------------------------------------------------------------------------------
@@ -273,14 +245,7 @@ function DNSmanager5_Delete($Settings,$Login,$IsReseller = FALSE){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$HTTP = Array(
-			'Address'  => $Settings['Address'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Hidden'   => $authinfo,
-			'IsLogging'=> $Settings['Params']['IsLogging']
-			);
+	$HTTP = DNSmanager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# JBS-543, проверяем наличие такого юзера
@@ -393,14 +358,7 @@ function DNSmanager5_Scheme_Change($Settings,$Login,$DNSmanagerScheme){
 	/******************************************************************************/
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
-	$HTTP = Array(
-			'Address'  => $Settings['Address'],
-			'Port'     => $Settings['Port'],
-			'Host'     => $Settings['Address'],
-			'Protocol' => $Settings['Protocol'],
-			'Hidden'   => $authinfo,
-			'IsLogging'=> $Settings['Params']['IsLogging']
-			);
+	$HTTP = DNSmanager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	$IsReselling = $DNSmanagerScheme['IsReselling'];
 	#-------------------------------------------------------------------------------
@@ -489,8 +447,32 @@ function DNSmanager5_Password_Change($Settings,$Login,$Password,$IsReseller = FA
 #-------------------------------------------------------------------------------
 
 
-
-
+# внутренние функции
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+function DNSmanager5_Build_HTTP($Settings){
+	/******************************************************************************/
+	$__args_types = Array('array');
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/******************************************************************************/
+	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
+	#-------------------------------------------------------------------------------
+	$HTTP = Array(
+			'Address'       => $Settings['Address'],
+			'Port'          => $Settings['Port'],
+			'Host'          => $Settings['Address'],
+			'Protocol'      => $Settings['Protocol'],
+			'Hidden'        => $authinfo,
+			'IsLogging'     => $Settings['Params']['IsLogging']
+			);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return $HTTP;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 
 
 
