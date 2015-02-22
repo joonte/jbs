@@ -9,7 +9,7 @@ $__args_list = Array('Task','DomainOrderID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/Registrator.class.php')))
+if(Is_Error(System_Load('classes/DomainServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','DomainName','ProfileID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','ServerID','StatusID');
@@ -23,7 +23,7 @@ switch(ValueOf($DomainOrder)){
     return ERROR | @Trigger_Error(400);
   case 'array':
     #---------------------------------------------------------------------------
-    $Server = new Registrator();
+    $Server = new DomainServer();
     #---------------------------------------------------------------------------
     $IsSelected = $Server->Select((integer)$DomainOrder['ServerID']);
     #---------------------------------------------------------------------------

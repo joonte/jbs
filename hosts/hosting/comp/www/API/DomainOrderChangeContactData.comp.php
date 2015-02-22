@@ -15,8 +15,8 @@ $Phone         =  (string) @$Args['Phone'];
 $CellPhone     =  (string) @$Args['CellPhone'];
 $PostalAddress =  (string) @$Args['PostalAddress'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod')))
-  return ERROR | @Trigger_Error(500);
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DomainServer.class.php')))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainOrdersOwners',Array('*','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`'),Array('UNIQ','ID'=>$DomainOrderID));
@@ -96,7 +96,7 @@ switch(ValueOf($DomainOrder)){
 	      return new gException('NO_INPUT_DATA','Необходимо ввести хоть какие-то данные для изменения');
             #-------------------------------------------------------------------
             #-------------------------------------------------------------------
-            $Server = new Registrator();
+            $Server = new DomainServer();
             #---------------------------------------------------------------------------
             $IsSelected = $Server->Select((integer)$DomainOrder['ServerID']);
             #---------------------------------------------------------------------------

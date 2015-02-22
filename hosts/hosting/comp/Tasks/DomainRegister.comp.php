@@ -9,7 +9,7 @@ $__args_list = Array('Task','DomainOrderID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/Registrator.class.php')))
+if(Is_Error(System_Load('classes/DomainServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','DomainName','UserID','IsPrivateWhoIs','PersonID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','ProfileID','ServerID','StatusID','(SELECT SUM(`YearsRemainded`) FROM `DomainConsider` WHERE `DomainConsider`.`DomainOrderID` = `DomainOrdersOwners`.`ID`) as `YearsRemainded`','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `DomainOrdersOwners`.`ServerID`) AS `Params`');
@@ -23,7 +23,7 @@ switch(ValueOf($DomainOrder)){
     return ERROR | @Trigger_Error(400);
   case 'array':
     #---------------------------------------------------------------------------
-    $Server = new Registrator();
+    $Server = new DomainServer();
     #---------------------------------------------------------------------------
     $ServerID = $DomainOrder['ServerID'];
     #---------------------------------------------------------------------------

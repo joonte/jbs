@@ -11,7 +11,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $DomainOrderID = (integer) @$Args['DomainOrderID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','classes/Registrator.class.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','classes/DomainServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainOrdersOwners',Array('ID','UserID','SchemeID','DomainName','StatusID','ServerID'),Array('UNIQ','ID'=>$DomainOrderID));
@@ -96,7 +96,7 @@ $DOM->AddText('Title','Смена контактных данных владел
 $Domain = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainScheme['Name']);
 #-------------------------------------------------------------------------------
 # получем контактные данные домена
-$Server = new Registrator();
+$Server = new DomainServer();
 #-------------------------------------------------------------------------------
 $IsSelected = $Server->Select((integer)$DomainOrder['ServerID']);
 #-------------------------------------------------------------------------------

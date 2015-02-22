@@ -10,7 +10,7 @@ Eval(COMP_INIT);
 $Config = Config();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/Registrator.class.php','libs/WhoIs.php')))
+if(Is_Error(System_Load('classes/DomainServer.class.php','libs/WhoIs.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ foreach($Servers as $NowReg){
 	#-------------------------------------------------------------------
 	Debug(SPrintF('[comp/Tasks/GC/DomainFindOdd]: Поиск лишних доменов у %s (ID %d, тип %s)',$NowReg['Params']['Name'],$NowReg['ID'],$NowReg['Params']['SystemID']));
 	#-------------------------------------------------------------------
-	$Server = new Registrator();
+	$Server = new DomainServer();
 	#-------------------------------------------------------------------
 	$IsSelected = $Server->Select((integer)$NowReg['ID']);
 	#-------------------------------------------------------------------

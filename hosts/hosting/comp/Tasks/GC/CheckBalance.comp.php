@@ -12,7 +12,7 @@ $Config = Config();
 $Theme = "Проверка баланса счета регистратора";
 $Message = "";
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/Registrator.class.php','libs/BillManager.php','libs/Server.php')))
+if(Is_Error(System_Load('classes/DomainServer.class.php','libs/BillManager.php','libs/Server.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ case 'array':
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Проверка баланса для %s (ID %d, тип %s)',$NowReg['Params']['Name'],$NowReg['ID'],$NowReg['Params']['SystemID']));
 		#-------------------------------------------------------------------------------
-		$Server = new Registrator();
+		$Server = new DomainServer();
 		#-------------------------------------------------------------------------------
 		$IsSelected = $Server->Select((integer)$NowReg['ID']);
 		#-------------------------------------------------------------------------------

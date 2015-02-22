@@ -9,7 +9,7 @@ $__args_list = Array('Task','DomainOrderID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('libs/WhoIs.php','classes/Registrator.class.php')))
+if(Is_Error(System_Load('libs/WhoIs.php','classes/DomainServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ case 'array':
 	$IsInternal = (Preg_Match(SPrintF('/%s/',$Server['Params']['PrefixNic']),$Registrar))?TRUE:FALSE;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Server = new Registrator();
+	$Server = new DomainServer();
 	#-------------------------------------------------------------------------------
 	$IsSelected = $Server->Select((integer)$DomainOrder['ServerID']);
 	#-------------------------------------------------------------------------------

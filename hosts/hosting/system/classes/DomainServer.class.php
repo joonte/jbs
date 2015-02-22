@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 #-------------------------------------------------------------------------------
-class Registrator{
+class DomainServer{
 # Тип регистратора
 public $SystemID = 'Default';
 # Параметры связи с регистратором
@@ -18,7 +18,7 @@ public function Select($ServerID){
   #-----------------------------------------------------------------------------
   switch(ValueOf($Settings)){
     case 'error':
-      return ERROR | @Trigger_Error('[Registrator->Select]: не удалось выбрать регистратора');
+      return ERROR | @Trigger_Error('[DomainServer->Select]: не удалось выбрать регистратора');
     case 'exception':
       return new gException('REGISTRATOR_NOT_FOUND','Указаный регистратор не найден');
     case 'array':
@@ -49,7 +49,7 @@ public function DomainRegister(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Registrator->DomainRegister]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[DomainServer->DomainRegister]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -67,7 +67,7 @@ public function GetUploadID(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Registrator->GetUploadID]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[DomainServer->GetUploadID]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -85,7 +85,7 @@ public function DomainProlong(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Registrator->DomainProlong]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[DomainServer->DomainProlong]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -103,7 +103,7 @@ public function DomainNsChange(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Registrator->DomainNsChange]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[DomainServer->DomainNsChange]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -121,7 +121,7 @@ public function CheckTask(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Registrator->CheckTask]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[DomainServer->CheckTask]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -139,7 +139,7 @@ public function ContractRegister(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Registrator->ContractRegister]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[DomainServer->ContractRegister]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -157,7 +157,7 @@ public function GetContract(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Registrator->GetContract]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[DomainServer->GetContract]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -175,7 +175,7 @@ public function GetBalance(){
 	#-----------------------------------------------------------------------------
 	$Result = Call_User_Func_Array($Function,$__args__);
 	if(Is_Error($Result))
-		return ERROR | @Trigger_Error('[Registrator->GetBalance]: не удалось вызвать целевую функцию');
+		return ERROR | @Trigger_Error('[DomainServer->GetBalance]: не удалось вызвать целевую функцию');
 	#-----------------------------------------------------------------------------
 	return $Result;
 }
@@ -193,7 +193,7 @@ public function IsAvailableDomain(){
 	#-----------------------------------------------------------------------------
 	$Result = Call_User_Func_Array($Function,$__args__);
 	if(Is_Error($Result))
-		return ERROR | @Trigger_Error('[Registrator->IsAvailableDomain]: не удалось вызвать целевую функцию');
+		return ERROR | @Trigger_Error('[DomainServer->IsAvailableDomain]: не удалось вызвать целевую функцию');
 	#-----------------------------------------------------------------------------
 	return $Result;
 }
@@ -213,7 +213,7 @@ public function DomainTransfer(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Registrator->DomainTransfer]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[DomainServer->DomainTransfer]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -233,7 +233,7 @@ public function DomainAccept(){
 	#-----------------------------------------------------------------------------
 	$Result = Call_User_Func_Array($Function,$__args__);
 	if(Is_Error($Result))
-		return ERROR | @Trigger_Error('[Registrator->DomainAccept]: не удалось вызвать целевую функцию');
+		return ERROR | @Trigger_Error('[DomainServer->DomainAccept]: не удалось вызвать целевую функцию');
 	#-----------------------------------------------------------------------------
 	return $Result;
 	#-------------------------------------------------------------------------------
@@ -254,7 +254,7 @@ public function ChangeContactDetail(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Registrator->ChangeContactDetail]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[DomainServer->ChangeContactDetail]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -273,7 +273,7 @@ public function GetContactDetail(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Registrator->GetContactDetail]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[DomainServer->GetContactDetail]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }
@@ -293,7 +293,7 @@ public function GetListDomains(){
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[Registrator->GetListDomain]: не удалось вызвать целевую функцию');
+    return ERROR | @Trigger_Error('[DomainServer->GetListDomain]: не удалось вызвать целевую функцию');
   #-----------------------------------------------------------------------------
   return $Result;
 }

@@ -9,7 +9,7 @@ $__args_list = Array('Task','DomainOrderID','Ns1NameOld','Ns1IPOld','Ns2NameOld'
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/Registrator.class.php')))
+if(Is_Error(System_Load('classes/DomainServer.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','OrderID','UserID','DomainName','PersonID','DomainID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','ServerID','StatusID','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP');
@@ -32,7 +32,7 @@ switch(ValueOf($DomainOrder)){
       $GLOBALS['TaskReturnInfo'][SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone'])][] = $DomainOrder['Ns4Name'];
     #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
-    $Server = new Registrator();
+    $Server = new DomainServer();
     #---------------------------------------------------------------------------
     $IsSelected = $Server->Select((integer)$DomainOrder['ServerID']);
     #---------------------------------------------------------------------------
