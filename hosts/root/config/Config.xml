@@ -8,7 +8,7 @@
 		<Port>80</Port>
 		<Host>joonte.com</Host>
 		<Protocol>tcp</Protocol>
-		<IsLogging>0</IsLoggin>
+		<IsLogging>0</IsLogging>
 	</Server>
 </Update>
 <!-- *********************************************************************** -->
