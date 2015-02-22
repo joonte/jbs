@@ -29,7 +29,7 @@ function DirectAdmin_Get_Domains($Settings){
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Response = HTTP_Send('/CMD_API_SHOW_DOMAINS',$HTTP);
@@ -55,7 +55,7 @@ function DirectAdmin_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $IsReselling = $HostingScheme['IsReselling'];
@@ -146,7 +146,7 @@ function DirectAdmin_Active($Settings,$Login,$IsReseller = FALSE){
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Request = Array('suspend'=>'Unsuspend','select0'=>$Login);
@@ -176,7 +176,7 @@ function DirectAdmin_Suspend($Settings,$Login,$IsReseller = FALSE){
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Request = Array('suspend'=>'Suspend','select0'=>$Login);
@@ -206,7 +206,7 @@ function DirectAdmin_Delete($Settings,$Login,$IsReseller = FALSE){
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Request = Array('confirmed'=>'Confirm','delete'=>'yes','select0'=>$Login);
@@ -236,7 +236,7 @@ function DirectAdmin_Scheme_Change($Settings,$Login,$HostingScheme){
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Request = Array(
@@ -292,7 +292,7 @@ function DirectAdmin_Password_Change($Settings,$Login,$Password,$IsReseller = FA
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Basic'    => SPrintF('%s:%s',$Settings['Login'],$Settings['Password']),
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Request = Array(

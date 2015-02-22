@@ -18,7 +18,7 @@ function RuCenter_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1N
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'KOI8-R',
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Domain = SPrintF('%s.%s',$DomainName,$DomainZone);
@@ -194,7 +194,7 @@ function RuCenter_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contr
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'KOI8-R',
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Domain = SPrintF('%s.%s',$DomainName,$DomainZone);
@@ -275,7 +275,7 @@ function RuCenter_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'KOI8-R',
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Domain = SPrintF('%s.%s',$DomainName,$DomainZone);
@@ -367,7 +367,7 @@ function RuCenter_Check_Task($Settings,$TicketID){
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'KOI8-R',
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Query = Array();
@@ -445,7 +445,7 @@ function RuCenter_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'KOI8-R',
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Query = Array();

@@ -1557,7 +1557,7 @@ function IspManager5_Build_HTTP($Settings){
 			'Host'		=> $Settings['Address'],
 			'Protocol'	=> $Settings['Protocol'],
 			'Hidden'	=> $authinfo,
-			'IsLogging'	=> $Settings['IsLogging']
+			'IsLogging'	=> $Settings['Params']['IsLogging']
 			);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------

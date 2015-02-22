@@ -21,7 +21,7 @@ function MasterName_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'CP1251',
     'Hidden'   => $Password,
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Domain = SPrintF('%s.%s',$DomainName,$DomainZone);
@@ -130,7 +130,7 @@ function MasterName_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Con
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'CP1251',
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Domain = SPrintF('%s.%s',$DomainName,$DomainZone);
@@ -203,7 +203,7 @@ function MasterName_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$Contract
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'CP1251',
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Domain = SPrintF('%s.%s',$DomainName,$DomainZone);
@@ -308,7 +308,7 @@ function MasterName_Check_Task($Settings,$TicketID){
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'CP1251',
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Query = Array();
@@ -376,7 +376,7 @@ function MasterName_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'CP1251',
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Query = Array();
@@ -539,7 +539,7 @@ function MasterName_Get_Contract($Settings,$TicketID){
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'CP1251',
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Query = Array();

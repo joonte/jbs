@@ -36,7 +36,7 @@ function VdsManager4_Create($Settings,$VPSOrder,$IP,$VPSScheme){
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Hidden'   => $authinfo,
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $IsReselling = FALSE;
@@ -124,7 +124,7 @@ function VdsManager4_Active($Settings,$Login,$IsReseller = FALSE){
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
 		'Hidden'   => $authinfo,
-		'IsLogging'=> $Settings['IsLogging']
+		'IsLogging'=> $Settings['Params']['IsLogging']
 	);
 	#-----------------------------------------------------------------------------
 	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'user.enable':'vds.enable','elid'=>$Login));
@@ -165,7 +165,7 @@ function VdsManager4_Suspend($Settings,$Login,$VPSScheme){
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
 		'Hidden'   => $authinfo,
-		'IsLogging'=> $Settings['IsLogging']
+		'IsLogging'=> $Settings['Params']['IsLogging']
 	);
 	#-----------------------------------------------------------------------------
 	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vds.disable','elid'=>$Login));
@@ -206,7 +206,7 @@ function VdsManager4_Delete($Settings,$Login,$IsReseller = FALSE){
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
 		'Hidden'   => $authinfo,
-		'IsLogging'=> $Settings['IsLogging']
+		'IsLogging'=> $Settings['Params']['IsLogging']
 	);
 	#-----------------------------------------------------------------------------
 	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$IsReseller?'user.delete':'vds.delete','elid'=>$Login));
@@ -248,7 +248,7 @@ function VdsManager4_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Hidden'   => $authinfo,
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $IsReselling = FALSE;
@@ -336,7 +336,7 @@ function VdsManager4_Password_Change($Settings,$Login,$Password){
                 'Host'     => $Settings['Address'],
                 'Protocol' => $Settings['Protocol'],
                 'Hidden'   => $authinfo,
-		'IsLogging'=> $Settings['IsLogging']
+		'IsLogging'=> $Settings['Params']['IsLogging']
         );
 	#-----------------------------------------------------------------------------
 	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),$Request);
@@ -377,7 +377,7 @@ function VdsManager4_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
 		'Hidden'   => $authinfo,
-		'IsLogging'=> $Settings['IsLogging']
+		'IsLogging'=> $Settings['Params']['IsLogging']
 	);
         #-----------------------------------------------------------------------------
         if($AddressType == "IPv4"){
@@ -443,7 +443,7 @@ function VdsManager4_DeleteIP($Settings,$ExtraIP){
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
 		'Hidden'   => $authinfo,
-		'IsLogging'=> $Settings['IsLogging']
+		'IsLogging'=> $Settings['Params']['IsLogging']
 	);
         # func=vds.ip.delete&elid=91.227.18.39&plid=91.227.18.7
         $Request = Array(
@@ -494,7 +494,7 @@ function VdsManager4_MainUsage($Settings){
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
 		'Hidden'   => $authinfo,
-		'IsLogging'=> $Settings['IsLogging']
+		'IsLogging'=> $Settings['Params']['IsLogging']
 	);
         # 
         $Request = Array(
@@ -562,7 +562,7 @@ function VdsManager4_CheckIsActive($Settings,$Login){
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
 		'Hidden'   => $authinfo,
-		'IsLogging'=> $Settings['IsLogging']
+		'IsLogging'=> $Settings['Params']['IsLogging']
 	);
 	#-----------------------------------------------------------------------------
 	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vds'));
@@ -618,7 +618,7 @@ function VdsManager4_Reboot($Settings,$Login){
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
 		'Hidden'   => $authinfo,
-		'IsLogging'=> $Settings['IsLogging']
+		'IsLogging'=> $Settings['Params']['IsLogging']
 	);
 	#-----------------------------------------------------------------------------
 	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vds.reboot','elid'=>$Login));
@@ -661,7 +661,7 @@ function VdsManager4_Get_Users($Settings){
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
 		'Hidden'   => $authinfo,
-		'IsLogging'=> $Settings['IsLogging']
+		'IsLogging'=> $Settings['Params']['IsLogging']
 	);
 	#-----------------------------------------------------------------------------
 	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'vds'));
@@ -720,7 +720,7 @@ function VdsManager4_Get_DiskTemplates($Settings){
 		'Host'     => $Settings['Address'],
 		'Protocol' => $Settings['Protocol'],
 		'Hidden'   => $authinfo,
-		'IsLogging'=> $Settings['IsLogging']
+		'IsLogging'=> $Settings['Params']['IsLogging']
 	);
 	#-----------------------------------------------------------------------------
 	$Response = HTTP_Send('/manager/vdsmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'disktempl'));

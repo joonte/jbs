@@ -18,7 +18,7 @@ function NauNet_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Nam
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'KOI8-R',
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Domain = SPrintF('%s.%s',$DomainName,$DomainZone);
@@ -164,7 +164,7 @@ function NauNet_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$Contrac
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'KOI8-R',
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Query = Array(
@@ -246,7 +246,7 @@ function NauNet_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID,$
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'KOI8-R',
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Query = Array(
@@ -330,7 +330,7 @@ function NauNet_Check_Task($Settings,$TicketID){
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
     'Charset'  => 'KOI8-R',
-    'IsLogging'=> $Settings['IsLogging']
+    'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
   $Query = Array(
