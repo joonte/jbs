@@ -47,7 +47,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>us.com</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -57,7 +57,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>kr.com</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -67,7 +67,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>jpn.com</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -77,7 +77,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>cn.com</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -87,7 +87,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>sa.com</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -97,7 +97,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>qc.com</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -107,7 +107,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>za.com</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -117,7 +117,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>uy.com</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -127,7 +127,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>br.com</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -137,7 +137,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>no.com</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -147,7 +147,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>hu.com</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -157,7 +157,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>se.com</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -167,7 +167,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>eu.com</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -177,7 +177,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>gb.com</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -187,7 +187,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>de.com</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -197,7 +197,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>uk.com</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -218,7 +218,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>gb.net</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -228,7 +228,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>se.net</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -238,7 +238,7 @@
 <UniqID>
  <Server>whois.centralnic.com</Server>
  <Name>uk.net</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -259,7 +259,7 @@
 <UniqID>
  <Server>whois.centralnic.net</Server>
  <Name>ae.org</Name>
- <Available>No\smatch\sfor</Available>
+ <Available>NOT\sFOUND</Available>
  <NotAvailable>name\sis\sreserved</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
@@ -469,7 +469,7 @@
 <UniqID>
  <Server>whois.twnic.net</Server>
  <Name>tw</Name>
- <Available>no\smatching\srecord</Available>
+ <Available>No\sFound</Available>
  <NotAvailable>reserved\sname</NotAvailable>
  <MinChars>2</MinChars>
  <ExpirationDate>Record\sexpires\son\s([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>

@@ -87,7 +87,7 @@ if($DomainName){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
-			return new gException('NO_SUPPORTED_DOMAIN_ZONES','Тарифы на домены не настроены');
+			break;
 		case 'array':
 			break;
 		default:
@@ -95,7 +95,8 @@ if($DomainName){
 		}
 		#-------------------------------------------------------------------------------
 		foreach($DomainSchemes as $DomainScheme)
-			$Zones[$DomainScheme['ID']] = Array('Name'=>$DomainScheme['Name'],'CostOrder'=>$DomainScheme['CostOrder']);
+			if(IsSet($DomainScheme['ID']))
+				$Zones[$DomainScheme['ID']] = Array('Name'=>$DomainScheme['Name'],'CostOrder'=>$DomainScheme['CostOrder']);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
