@@ -136,13 +136,13 @@ if(Is_Error($Comp))
 $Table[] = Array('Стоимость переноса',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>Array('`IsActive` = "yes"','(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 20000')));
+$Servers = DB_Select('Servers',Array('ID','Address','Params'),Array('Where'=>Array('`IsActive` = "yes"','(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 20000')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Servers)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return new gException('REGISTRATORS_NOT_FOUND','Регистраторы не найдены');
+	return new gException('REGISTRATORS_SERVERS_NOT_FOUND','Сервера регистраторов не найдены. Добавьте хотя бы одну группу для сервиса "Домены", и хотя бы один сервер регистратора в неё');
 case 'array':
 	break;
 default:
@@ -152,7 +152,7 @@ default:
 $Options = Array();
 #-------------------------------------------------------------------------------
 foreach($Servers as $Server)
-	$Options[$Server['ID']] = $Server['Address'];
+	$Options[$Server['ID']] = $Server['Params']['Name'];
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'ServerID','style'=>'width: 240px;'),$Options,$DomainScheme['ServerID']);
 if(Is_Error($Comp))
