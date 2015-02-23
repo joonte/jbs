@@ -119,6 +119,7 @@ function BillManager_Create($Settings,$ISPswScheme){
 			'skipbasket'	=> 'on',
 			'licname'	=> $ISPswScheme['LicComment'],	# имя лицензии
 			'ip'		=> $ISPswScheme['IP'],		# IP на который цеплять лицензию
+			'remoteip'	=> IsSet($ISPswScheme['remoteip'])?$ISPswScheme['remoteip']:'',
 			'pricelist'	=> $ISPswScheme['pricelist_id'],# прайс
 			'period'	=> $ISPswScheme['period'],	# период на который заказываем
 			#-------------------------------------------------------------------------------
@@ -227,6 +228,9 @@ function BillManager_Change_IP($Settings,$ISPswScheme){
 			#-------------------------------------------------------------------------------
 			);
 	#-------------------------------------------------------------------------------
+	if(IsSet($ISPswScheme['remoteip']))
+		$Request['remoteip'] = $ISPswScheme['remoteip'];
+	#-------------------------------------------------------------------------------
 	$Response = HTTP_Send($Settings['Params']['PrefixAPI'],$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[BillManager_Change_IP]: не удалось соедениться с сервером');
@@ -245,6 +249,32 @@ function BillManager_Change_IP($Settings,$ISPswScheme){
 		return new gException('BillManager_Change_IP','Не удалось изменить IP для лицензии ' . $ISPswScheme['elid']);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	$License = Array(
+			#-------------------------------------------------------------------------------
+			'pricelist_id'		=> $Doc['pricelist'],
+			'period'		=> $Doc['period'],
+			'addon'			=> 1,
+			'IP'			=> $Doc['ip'],
+			'remoteip'		=> (IsSet($Doc['remoteip'])?$Doc['remoteip']:''),
+			'elid'			=> $Doc['elid'],
+			'LicKey'		=> $Doc['lickey'],
+			'IsInternal'		=> $ISPswScheme['IsInternal']?'yes':'no',
+			'IsUsed'		=> 'yes',
+			'StatusID'		=> 'Active',
+			'CreateDate'		=> time(),	// дата создания лицензии
+			'ip_change_date'	=> time(),	// когда можно менять IP адрес
+			'lickey_change_date'	=> time(),	// когда можно менять ключ лицензии
+			'StatusDate'		=> time()	// поле по которому узнаётся дата смены IP
+			#-------------------------------------------------------------------------------
+			);
+	#-------------------------------------------------------------------------------
+	$IsInsert = DB_Insert('ISPswLicenses',$License);
+	if(Is_Error($IsInsert))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return Array('elid'=>$Doc['elid'],'LicenseID'=>$IsInsert);
+
 	return TRUE;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -346,6 +376,7 @@ function BillManager_Lock($Settings,$ISPswScheme){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 }
+
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # затычка
