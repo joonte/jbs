@@ -36,7 +36,8 @@ if($DomainTypeID != 'None'){
 	if(!Preg_Match($Regulars['Domain'],$Domain))
 		return new gException('WRONG_DOMAIN','Неверный домен');
 	#-------------------------------------------------------------------------------
-	$Count = DB_Count('HostingOrders',Array('Where'=>SPrintF("(`Domain` LIKE '%%%s%%' OR `Parked` LIKE '%%%s%%') AND `StatusID` != 'Waiting'",$Domain,$Domain)));
+	$Where = Array(SPrintF('`Domain` LIKE "%%%s%%" OR `Parked` LIKE "%%%s%%"',$Domain,$Domain),'`StatusID` != "Waiting"','`StatusID` != "Deleted"');
+	$Count = DB_Count('HostingOrders',Array('Where'=>$Where));
 	if(Is_Error($Count))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
