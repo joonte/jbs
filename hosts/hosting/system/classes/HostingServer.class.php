@@ -48,7 +48,7 @@ public function Logon(){
 	$Function = SPrintF('%s_Logon',$this->SystemID);
 	#-------------------------------------------------------------------------------
 	if(!Function_Exists($Function))
-		return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+		return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
 	#-------------------------------------------------------------------------------
 	$Result = Call_User_Func_Array($Function,$__args__);
 	if(Is_Error($Result))
@@ -67,7 +67,7 @@ public function GetDomains(){
   $Function = SPrintF('%s_Get_Domains',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
-    return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+    return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
@@ -85,7 +85,7 @@ public function GetUsers(){
   $Function = SPrintF('%s_Get_Users',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
-    return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+    return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
@@ -103,7 +103,7 @@ public function Create(){
   $Function = SPrintF('%s_Create',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
-    return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+    return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
@@ -121,7 +121,7 @@ public function Active(){
   $Function = SPrintF('%s_Active',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
-    return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+    return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
@@ -139,7 +139,7 @@ public function Suspend(){
   $Function = SPrintF('%s_Suspend',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
-    return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+    return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
@@ -157,7 +157,7 @@ public function Delete(){
   $Function = SPrintF('%s_Delete',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
-    return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+    return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
@@ -175,7 +175,7 @@ public function SchemeChange(){
   $Function = SPrintF('%s_Scheme_Change',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
-    return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+    return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
@@ -193,7 +193,7 @@ public function PasswordChange(){
   $Function = SPrintF('%s_Password_Change',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
-    return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+    return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
@@ -211,7 +211,7 @@ public function GetEmailBoxes(){
   $Function = SPrintF('%s_Get_Email_Boxes',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
-    return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+    return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
@@ -230,7 +230,7 @@ public function GetCPUUsage(){
   $Function = SPrintF('%s_Get_CPU_Usage',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
-    return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+    return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
@@ -249,7 +249,7 @@ public function GetDiskUsage(){
   $Function = SPrintF('%s_Get_Disk_Usage',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
-    return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+    return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))

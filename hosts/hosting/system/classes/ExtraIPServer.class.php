@@ -15,15 +15,9 @@ public function FindSystem($ExtraIPOrderID,$OrderType,$DependOrderID){
 	/****************************************************************************/
 	/* find server */
 	Debug(SPrintF('[system/classes/ExtraIPServer]: OrderType = %s',$OrderType));
-#	if($OrderType == 'Hosting'){
-#		#-------------------------------------------------------------------------------
-#		$Columns = Array('ServerID','Login');
-#		#-------------------------------------------------------------------------------
-#	}else{
-#		#-------------------------------------------------------------------------------
-		$Columns = Array(SPrintF('(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `%sOrdersOwners`.`OrderID`) AS `ServerID`',$OrderType),'Login');
-#		#-------------------------------------------------------------------------------
-#	}
+	#-------------------------------------------------------------------------------
+	$Columns = Array(SPrintF('(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `%sOrdersOwners`.`OrderID`) AS `ServerID`',$OrderType),'Login');
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$OrderServer = DB_Select(SPrintF('%sOrdersOwners',$OrderType),$Columns,Array('UNIQ','ID'=>$DependOrderID));
 	switch(ValueOf($OrderServer)){
@@ -72,7 +66,7 @@ public function AddIP(){
   $Function = SPrintF('%s_AddIP',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
-    return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+    return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))
@@ -92,7 +86,7 @@ public function DeleteIP(){
   $Function = SPrintF('%s_DeleteIP',$this->SystemID);
   #-----------------------------------------------------------------------------
   if(!Function_Exists($Function))
-    return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+    return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
   #-----------------------------------------------------------------------------
   $Result = Call_User_Func_Array($Function,$__args__);
   if(Is_Error($Result))

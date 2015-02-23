@@ -51,7 +51,7 @@ class DNSmanagerServer{
 		$Function = SPrintF('%s_Logon',$this->SystemID);
 		#-------------------------------------------------------------------------------
 		if(!Function_Exists($Function))
-			return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+			return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
 		#-------------------------------------------------------------------------------
 		$Result = Call_User_Func_Array($Function,$__args__);
 		if(Is_Error($Result))
@@ -71,7 +71,7 @@ class DNSmanagerServer{
 		$Function = SPrintF('%s_Get_Users',$this->SystemID);
 		#-------------------------------------------------------------------------------
 		if(!Function_Exists($Function))
-			return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+			return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
 		#-------------------------------------------------------------------------------
 		$Result = Call_User_Func_Array($Function,$__args__);
 		if(Is_Error($Result))
@@ -91,7 +91,7 @@ class DNSmanagerServer{
 		$Function = SPrintF('%s_Create',$this->SystemID);
 		#-------------------------------------------------------------------------------
 		if(!Function_Exists($Function))
-			return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+			return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
 		#-------------------------------------------------------------------------------
 		$Result = Call_User_Func_Array($Function,$__args__);
 		if(Is_Error($Result))
@@ -111,7 +111,7 @@ class DNSmanagerServer{
 		$Function = SPrintF('%s_Active',$this->SystemID);
 		#-------------------------------------------------------------------------------
 		if(!Function_Exists($Function))
-			return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+			return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
 		#-------------------------------------------------------------------------------
 		$Result = Call_User_Func_Array($Function,$__args__);
 		if(Is_Error($Result))
@@ -131,7 +131,7 @@ class DNSmanagerServer{
 		$Function = SPrintF('%s_Suspend',$this->SystemID);
 		#-------------------------------------------------------------------------------
 		if(!Function_Exists($Function))
-			return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+			return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
 		#-------------------------------------------------------------------------------
 		$Result = Call_User_Func_Array($Function,$__args__);
 		if(Is_Error($Result))
@@ -151,7 +151,7 @@ class DNSmanagerServer{
 		$Function = SPrintF('%s_Delete',$this->SystemID);
 		#-------------------------------------------------------------------------------
 		if(!Function_Exists($Function))
-			return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+			return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
 		#-------------------------------------------------------------------------------
 		$Result = Call_User_Func_Array($Function,$__args__);
 		if(Is_Error($Result))
@@ -171,7 +171,7 @@ class DNSmanagerServer{
 		$Function = SPrintF('%s_Scheme_Change',$this->SystemID);
 		#-------------------------------------------------------------------------------
 		if(!Function_Exists($Function))
-			return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+			return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
 		#-------------------------------------------------------------------------------
 		$Result = Call_User_Func_Array($Function,$__args__);
 		if(Is_Error($Result))
@@ -191,7 +191,7 @@ class DNSmanagerServer{
 		$Function = SPrintF('%s_Password_Change',$this->SystemID);
 		#-------------------------------------------------------------------------------
 		if(!Function_Exists($Function))
-			return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+			return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
 		#-------------------------------------------------------------------------------
 		$Result = Call_User_Func_Array($Function,$__args__);
 		if(Is_Error($Result))

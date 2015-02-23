@@ -51,7 +51,7 @@ class ISPswServer{
 		$Function = SPrintF('%s_Logon',$this->SystemID);
 		#-------------------------------------------------------------------------------
 		if(!Function_Exists($Function))
-			return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+			return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
 		#-------------------------------------------------------------------------------
 		$Result = Call_User_Func_Array($Function,$__args__);
 		if(Is_Error($Result))
@@ -72,7 +72,7 @@ class ISPswServer{
 		$Function = SPrintF('%s_Get_Users',$this->SystemID);
 		#-------------------------------------------------------------------------------
 		if(!Function_Exists($Function))
-			return new gException('FUNCTION_NOT_SUPPORTED','Функция не поддерживается API модулем');
+			return new gException('FUNCTION_NOT_SUPPORTED',SPrintF('Функция (%s) не поддерживается API модулем',$Function));
 		#-------------------------------------------------------------------------------
 		$Result = Call_User_Func_Array($Function,$__args__);
 		if(Is_Error($Result))
