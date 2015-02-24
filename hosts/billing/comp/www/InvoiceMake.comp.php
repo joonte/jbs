@@ -324,7 +324,7 @@ switch($StepID){
                 #---------------------------------------------------------------
                 $PaymentSystem = $PaymentSystems[$PaymentSystemID];
                 #---------------------------------------------------------------
-                if(!$PaymentSystem['IsActive'] || !$PaymentSystem['ContractsTypes'][$Contract['TypeID']])
+                if(!$PaymentSystem['IsActive'] || !IsSet($PaymentSystem['ContractsTypes'][$Contract['TypeID']]) || !$PaymentSystem['ContractsTypes'][$Contract['TypeID']])
                   continue;
                 #---------------------------------------------------------------
                 $Options[$PaymentSystemID] = $PaymentSystem['Name'];
@@ -333,7 +333,7 @@ switch($StepID){
               }
               #-----------------------------------------------------------------
               if(!Count($Options))
-                return new gException('PAYMENT_SYSTEMS_NOT_DEFINED','Платежные системы не определены');
+                return new gException('PAYMENT_SYSTEMS_NOT_DEFINED','Платежные системы не определены, или у вас отсутствует договор');
 	      #-----------------------------------------------------------------
 	      if(SizeOf($Options) > 5){
 		$WindowHeight = SizeOf($Options);
