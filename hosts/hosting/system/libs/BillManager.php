@@ -246,7 +246,7 @@ function BillManager_Change_IP($Settings,$ISPswScheme){
 	$Doc = $XML['doc'];
 	#-------------------------------------------------------------------------------
 	if(IsSet($Doc['error']))
-		return new gException('BillManager_Change_IP','Не удалось изменить IP для лицензии ' . $ISPswScheme['elid']);
+		return ERROR | @Trigger_Error(SPrintF('[BillManager_Change_IP]: Не удалось изменить IP для лицензии %u',$ISPswScheme['elid']));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$License = Array(
