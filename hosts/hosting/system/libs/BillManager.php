@@ -249,6 +249,11 @@ function BillManager_Change_IP($Settings,$ISPswScheme){
 		return ERROR | @Trigger_Error(SPrintF('[BillManager_Change_IP]: Не удалось изменить IP для лицензии %u',$ISPswScheme['elid']));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	#Debug(print_r($Doc,true));
+	#Debug(print_r($XML,true));
+	if(!IsSet($Doc['pricelist']))
+		$Doc = $Doc['doc'];
+	#-------------------------------------------------------------------------------
 	$License = Array(
 			#-------------------------------------------------------------------------------
 			'pricelist_id'		=> $Doc['pricelist'],
@@ -256,7 +261,6 @@ function BillManager_Change_IP($Settings,$ISPswScheme){
 			'addon'			=> 1,
 			'IP'			=> $Doc['ip'],
 			'remoteip'		=> (IsSet($Doc['remoteip'])?$Doc['remoteip']:''),
-			'elid'			=> $Doc['elid'],
 			'LicKey'		=> $Doc['lickey'],
 			'IsInternal'		=> $ISPswScheme['IsInternal']?'yes':'no',
 			'IsUsed'		=> 'yes',
@@ -268,12 +272,12 @@ function BillManager_Change_IP($Settings,$ISPswScheme){
 			#-------------------------------------------------------------------------------
 			);
 	#-------------------------------------------------------------------------------
-	$IsInsert = DB_Insert('ISPswLicenses',$License);
-	if(Is_Error($IsInsert))
+	$IsUpdate = DB_Update('ISPswLicenses',$License,Array('Where'=>SPrintF('`elid` = %u',$ISPswScheme['elid'])));
+	if(Is_Error($IsUpdate))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	return Array('elid'=>$Doc['elid'],'LicenseID'=>$IsInsert);
+	return Array('elid'=>$Doc['elid']);
 
 	return TRUE;
 	#-------------------------------------------------------------------------------

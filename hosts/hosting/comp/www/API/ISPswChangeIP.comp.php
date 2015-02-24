@@ -158,7 +158,7 @@ if($ISPswLicense['IsInternal']){
 		# меняем IP лицензии
 		if(BillManager_Change_IP($Settings,$ISPswScheme)){
 			#-------------------------------------------------------------------------------
-			$IsUpdate = DB_Update('ISPswLicenses',Array('UpdateDate'=>Time(),'IsUsed'=>TRUE,'ip'=>$ISPswScheme['IP']),Array('ID'=>$elid));
+			$IsUpdate = DB_Update('ISPswLicenses',Array('UpdateDate'=>Time(),'IsUsed'=>TRUE,'ip'=>$ISPswScheme['IP']),Array('Where'=>SPrintF('`elid` = %u',$elid)));
 			if(Is_Error($IsUpdate))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
