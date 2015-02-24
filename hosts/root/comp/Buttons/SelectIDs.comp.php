@@ -9,7 +9,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Img = new Tag('IMG',Array('alt'=>'Выбрать все записи','align'=>'center','height'=>16,'src'=>'SRC:{Images/Icons/SelectIDs.gif}','width'=>16));
 #-------------------------------------------------------------------------------
-$Button = new Tag('BUTTON',Array('class'=>'Transparent','onclick'=>"var Elements = document.getElementsByName('RowsIDs[]'); for(i=0;i<Elements.length;i++) Elements[i].checked = !Elements[i].checked;"),$Img);
+$Button = new Tag('BUTTON',Array('class'=>'Transparent','onclick'=>"var Elements = document.getElementsByName('RowsIDs[]'); for(i=0;i<Elements.length;i++) Elements[i].checked = !Elements[i].checked; return false;"),$Img);
 #-------------------------------------------------------------------------------
 $LinkID = UniqID('Button');
 #-------------------------------------------------------------------------------

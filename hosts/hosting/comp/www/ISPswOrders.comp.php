@@ -31,20 +31,21 @@ if(Is_Error($Count))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Count){
-  #-----------------------------------------------------------------------------
-  $Comp1 = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/ISPswOrder');"),'Новый заказ','Add.gif');
-  if(Is_Error($Comp1))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $Comp2 = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/Clause',{ClauseID:'/Help/Services/Paying'});"),'Оплатить (продлить) заказ','Pay.gif');
-  if(Is_Error($Comp2))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $Comp = Comp_Load('Buttons/Panel',Array('Comp'=>$Comp1,'Name'=>'Новый заказ'),Array('Comp'=>$Comp2,'Name'=>'Оплатить (продлить) заказ'));
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $NoBody->AddChild($Comp);
+	#-------------------------------------------------------------------------------
+	$Comp1 = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/ISPswOrder');"),'Новый заказ','Add.gif');
+	if(Is_Error($Comp1))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Comp2 = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/OrdersPay',FormGet(document.forms.TableSuperForm));"),'Можно сразу оплатить или продлить несколько заказов на один срок','Pay.gif');
+	if(Is_Error($Comp2))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Buttons/Panel',Array('Comp'=>$Comp1,'Name'=>'Новый заказ'),Array('Comp'=>$Comp2,'Name'=>'Оплатить (продлить) несколько заказов'));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$NoBody->AddChild($Comp);
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Super','ISPswOrders[User]');
