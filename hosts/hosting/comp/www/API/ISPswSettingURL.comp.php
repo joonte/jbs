@@ -46,7 +46,7 @@ $Owner = Array();
 # надо посмотреть по лицензии
 $Where = Array(SPrintF('`LicenseID` = (SELECT `ID` FROM `ISPswLicenses` WHERE `elid` = %u)',$id));
 #-------------------------------------------------------------------------------
-$Order = DB_Select('ISPswOrdersOwners',Array('ID','UserID','(SELECT `Email` FROM `Users` WHERE `ID` = `ISPswOrdersOwners`.`UserID`) AS `Email`'),Array('UNIQ','Where'=>$Where));
+$Order = DB_Select('ISPswOrdersOwners',Array('ID','UserID','(SELECT `Email` FROM `Users` WHERE `ID` = `ISPswOrdersOwners`.`UserID`) AS `Email`'),Array('UNIQ','Where'=>$Where,'Limits'=>Array(0,1),'SortOn'=>'ID','IsDesc'=>TRUE));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Order)){
 case 'error':
@@ -178,7 +178,7 @@ if($Settings['slaveserver-edit']['IsActive']){
 	$XML = '<func name="%s"><arg name="sok">ok</arg><arg name="username">%s</arg><arg name="password">%s</arg><arg name="url">%s</arg></func>';
 	#-------------------------------------------------------------------------------
 	foreach($Servers as $Server)
-		foreach(Array('slaveserver.edit','slave.edit') as $Func)
+		foreach(Array('slaveserver.edit') as $Func)
 			$Array[] = SPrintF($XML,$Func,$Server['Login'],$Server['Password'],$Server['Params']['Url']);
 	#-------------------------------------------------------------------------------
 }
@@ -205,4 +205,5 @@ default:
 echo Bin2Hex(xxtea_encrypt($Out,$License['LicKey']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+
 ?>
