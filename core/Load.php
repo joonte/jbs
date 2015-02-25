@@ -232,7 +232,7 @@ function Report($Theme,$ReportID = ''){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[JBs core]: запуск системы (%s)',Date('d.n.y')));
+Debug(SPrintF('[JBs core]: запуск системы (%s)',Date('Y-m-d')));
 Debug(SPrintF('[JBs core]: тип интерфейса сервера (%s)',PHP_SAPI_Name()));
 Debug(SPrintF('[JBs core]: IP-адрес сервера (%s)',IsSet($_SERVER['SERVER_ADDR'])?$_SERVER['SERVER_ADDR']:'127.0.0.1'));
 Debug(SPrintF('[JBs core]: версия PHP интерпретатора (%s)',PhpVersion()));
