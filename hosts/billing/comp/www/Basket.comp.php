@@ -101,11 +101,7 @@ switch(ValueOf($Basket)){
           if(Is_Error($Summ))
             return ERROR | @Trigger_Error(500);
           #---------------------------------------------------------------------
-          $Code = $Item['ServiceCode'];
-	  # added by lissyara 2011-10-10 in 15:49, for JBS-176
-	  if($Code == "Domains"){$Code = "Domain";}
-          #---------------------------------------------------------------------
-          $Href = ($Code != 'Default'?SPrintF('/%sOrderPay?OrderID=%u',$Code,$Item['OrderID']):SPrintF('/ServiceOrderPay?OrderID=%s',$Item['OrderID']));
+          $Href = ($Item['ServiceCode'] != 'Default'?SPrintF('/%sOrderPay?OrderID=%u',$Item['ServiceCode'],$Item['OrderID']):SPrintF('/ServiceOrderPay?OrderID=%s',$Item['OrderID']));
           #---------------------------------------------------------------------
           $Td = new Tag('TD',Array('class'=>'Standard'),new Tag('CNAME',SPrintF('%s %s',$Item['Amount'],$Service['Measure'])),new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('%s');",$Href)),'[изменить]'));
           #---------------------------------------------------------------------

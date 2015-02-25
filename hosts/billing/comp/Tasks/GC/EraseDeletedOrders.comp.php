@@ -81,7 +81,7 @@ for($i=0;$i<Count($Services);$i++){
           return ERROR | @Trigger_Error(500);
         #-------------------------------------------------------------------------
       }
-      $Count = DB_Count('DomainsOrders',Array('Where'=>$Where));
+      $Count = DB_Count('DomainOrders',Array('Where'=>$Where));
       if(Is_Error($Count))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------

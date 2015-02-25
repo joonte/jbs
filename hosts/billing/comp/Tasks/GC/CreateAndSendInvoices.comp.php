@@ -156,7 +156,7 @@ case 'array':
 			}
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-			if($UOrder['Code'] == 'Domains'){
+			if($UOrder['Code'] == 'Domain'){
 				#-------------------------------------------------------------------------------
 				$OrderInfo = DB_Select(SPrintF('%sOrdersOwners',$UOrder['Code']),Array('ID','OrderID'),Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$UOrder['ID'])));
 				switch(ValueOf($OrderInfo)){

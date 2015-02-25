@@ -56,11 +56,7 @@ switch(ValueOf($Path)){
           if(Is_Error($Comp))
             return ERROR | @Trigger_Error(500);
           #---------------------------------------------------------------------
-          $Code = $Service['Code'];
-	  # added by lissyara 2011-10-10 in 16:03 MSK, for JBS-176
-	  if($Code == "Domains"){$Code = "Domain";}
-          #---------------------------------------------------------------------
-          $OnClick = SPrintF("ShowWindow('%s');",($Code != 'Default'?SPrintF('%sOrder',$Code):SPrintF('ServiceOrder?ServiceID=%s',$Service['ID'])));
+          $OnClick = SPrintF("ShowWindow('%s');",($Service['Code'] != 'Default'?SPrintF('%sOrder',$Service['Code']):SPrintF('ServiceOrder?ServiceID=%s',$Service['ID'])));
           #---------------------------------------------------------------------
           $Tr->AddChild(new Tag('TD',Array('class'=>'Standard','onclick'=>$OnClick,'align'=>'center','width'=>'100px','valign'=>'top','style'=>'padding:5px;'),new Tag('IMG',Array('class'=>'Button','alt'=>$Service['Name'],'width'=>72,'height'=>72,'align'=>'center','src'=>SPrintF('/ServiceEmblem?ServiceID=%u',$Service['ID']))),new Tag('BR'),new Tag('SPAN',Array('style'=>'color:#5B8B15;'),$Service['Item'])));
           #---------------------------------------------------------------------

@@ -223,7 +223,6 @@ if(IsSet($GLOBALS['__USER']) /*&& Mb_StrLen($Content) < 1000*/){
 					#-------------------------------------------------------------------------------
 					$UrlPart = $Item['Code'];
 					#-------------------------------------------------------------------------------
-					if($Item['Code'] == 'Domains'){$UrlPart = 'Domain';}
 					if($Item['Code'] == 'Default'){$UrlPart = 'Services';}
 					#-------------------------------------------------------------------------------
 					$LinkTarget = SPrintF('/Administrator/%sOrders?Search=%s&PatternOutID=Default',$UrlPart,$User['Email']);

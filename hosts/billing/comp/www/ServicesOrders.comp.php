@@ -87,11 +87,7 @@ if($ServiceID){
     break;
     case 'array':
       #-------------------------------------------------------------------------
-      $Code = $Service['Code'];
-      # added by lissyara, see JBS-176
-      if($Code == "Domains"){$Code = "Domain";}
-      #-------------------------------------------------------------------------
-      Header(SPrintF('Location: /%s',($Code != 'Default'?SPrintF('%sOrders',$Code):SPrintF('ServicesOrders?ServiceID=%s',$Service['ID']))));
+      Header(SPrintF('Location: /%s',($Service['Code'] != 'Default'?SPrintF('%sOrders',$Service['Code']):SPrintF('ServicesOrders?ServiceID=%s',$Service['ID']))));
       #-------------------------------------------------------------------------
       return NULL;
     default:
