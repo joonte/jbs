@@ -18,7 +18,7 @@ $AmountPay      = (integer) @$Args['AmountPay'];
 $IsChange       = (boolean) @$Args['IsChange'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','ServiceID','ExpirationDate','IsPayed','StatusID','(SELECT `Balance` FROM `Contracts` WHERE `Contracts`.`ID` = `ContractID`) as `ContractBalance`');
 #-------------------------------------------------------------------------------
@@ -274,7 +274,7 @@ switch(ValueOf($ServiceOrder)){
                   if($IsPayed)
                     return new gException('SERVICE_ORDER_PAYED','Заказ уже оплачен');
                   #-------------------------------------------------------------
-                  $Comp = Comp_Load('www/ServiceOrderPay',Array('ServiceOrderID'=>$ServiceOrderID,'AmountPay'=>1));
+                  $Comp = Comp_Load('www/ServiceOrderPay',Array('ServiceOrderID'=>$ServiceOrderID,'OrderID'=>$OrderID,'AmountPay'=>1));
                   if(Is_Error($Comp))
                     return ERROR | @Trigger_Error(500);
                   #-------------------------------------------------------------
