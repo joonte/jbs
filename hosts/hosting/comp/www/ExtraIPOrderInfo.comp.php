@@ -52,7 +52,7 @@ if($ExtraIPOrder['OrderType'] == "Hosting" || $ExtraIPOrder['OrderType'] == "VPS
 	case 'error':
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
-		return ERROR | @Trigger_Error(400);
+		return new gException('IP_DESTINATION_DELETED','Заказ к которому был прикреплен IP адрес уже удалён');
 	case 'array':
 		break;
 	default:
