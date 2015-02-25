@@ -33,7 +33,7 @@ if($elid != 'install')
 #-------------------------------------------------------------------------------
 if($module != 'dns')
 	if($module != '')
-		return new gException('IS_NOT_DNS_MODULE','Настройки передаются только при активации модуля DNS');
+		return new gException('IS_NOT_DNS_MODULE',SPrintF('Настройки передаются только при активации модуля DNS (текущий модуль = %s)',$module));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Config = Config();
@@ -175,7 +175,7 @@ if($Settings['slaveserver-edit']['IsActive']){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# выдаём данные DNSmanager в ответе
-	$XML = '<func name="%s"><arg name="sok">ok</arg><arg name="username">%s</arg><arg name="password">%s</arg><arg name="url">%s</arg></func>';
+	$XML = '<func name="%s"><arg name="sok">ok</arg><arg name="sync">off</arg><arg name="username">%s</arg><arg name="password">%s</arg><arg name="url">%s</arg></func>';
 	#-------------------------------------------------------------------------------
 	foreach($Servers as $Server)
 		foreach(Array('slaveserver.edit') as $Func)
