@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -10,18 +9,17 @@ $__args_list = Array('Args');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(IsSet($Args)){
-  #-----------------------------------------------------------------------------
-  if(Is_Error(System_Load('modules/Authorisation.mod')))
-    return ERROR | @Trigger_Error(500);
-}else
-  $Args = Args();
+$Args = IsSet($Args)?$Args:Args();
+#-------------------------------------------------------------------------------
+if(Is_Error(System_Load('modules/Authorisation.mod')))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $ContractID = (integer) @$Args['ContractID'];
 $Summ       =  (double) Str_Replace(',', '.', @$Args['Summ']);
 $ServiceID  = (integer) @$Args['ServiceID'];
 $Comment    =  (string) @$Args['Comment'];
-
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 Debug("[comp/www/Administrator/API/PostingMake]: ContractID = $ContractID; Summ = $Summ; ServiceID = $ServiceID; Comment = $Comment");
 #-------------------------------------------------------------------------------
 $Service = DB_Select('Services',Array('ID','Name','OperationSign'),Array('UNIQ','ID'=>$ServiceID));

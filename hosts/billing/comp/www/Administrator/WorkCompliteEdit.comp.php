@@ -156,6 +156,17 @@ $Tr->AddChild(new Tag('TD',new Tag('NOBODY',$Comp,new Tag('SPAN','%'))));
 $Table[] = new Tag('TD',Array('colspan'=>2,'width'=>'100%'),new Tag('TABLE',Array('class'=>'Standard','align'=>'right','cellspacing'=>5,'style'=>'widht:100%;'),new Tag('TR',new Tag('TD',Array('class'=>'Head'),'Кол-во:'),new Tag('TD',Array('class'=>'Head'),'Цена:'),new Tag('TD',Array('class'=>'Head'),'Скидка:')),$Tr));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+if(!$WorkCompliteID){
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('name'=>'IsPostingMake','type'=>'checkbox','value'=>'yes','checked'=>'yes'));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPostingMake\'); return false;'),'Списать деньги'),new Tag('SPAN',$Comp,new Tag('SPAN',Array('style'=>'color:green;'),'(с договора будет списана соответствующая сумма)')));
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>SPrintF("FormEdit('/Administrator/API/WorkCompliteEdit','WorkCompliteEditForm','%s');",$Title),'value'=>($WorkCompliteID?'Сохранить':'Добавить')));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
