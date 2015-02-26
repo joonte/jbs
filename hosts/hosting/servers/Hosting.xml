@@ -33,6 +33,16 @@
 		</Settings>
 	</Cpanel>
 	<!-- ********************************************************************* -->
+	<ISPConfig>
+		<Settings>
+			<Port>8080</Port>
+			<Protocol>ssl</Protocol>
+			<Theme>default</Theme>
+			<Language>ru</Language>
+			<Url>https://isp.su:8080/</Url>
+		</Settings>
+	</ISPConfig>
+	<!-- ********************************************************************* -->
 	<IspManager4>
 		<Settings>
 			<Port>1500</Port>
@@ -84,6 +94,7 @@
 		<Options>
 			<IspManager4>IspManager4</IspManager4>
 			<IspManager5>IspManager5</IspManager5>
+			<ISPConfig>ISPConfig</ISPConfig>
 			<DirectAdmin>DirectAdmin</DirectAdmin>
 			<Plesk>Plesk</Plesk>
 			<Cpanel>Cpanel</Cpanel>
