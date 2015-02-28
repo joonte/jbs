@@ -54,17 +54,21 @@
    <style>width:22px;</style>
   </Attribs>
  </Pay>
-  <!-- ********************************************************************** -->
-  <ExtendedMenu>
-   <IsSorted>0</IsSorted>
-   <Comp>Menus/List</Comp>
-   <Args>
-    <ListElement>User/ListMenu/ServicesOrder.xml</ListElement>
-    <Replace>%ID%</Replace>
-   </Args>
-  </ExtendedMenu>
- <!-- *********************************************************************** -->
+	<!-- ********************************************************************** -->
+	<ExtendedMenu>
+		<IsSorted>0</IsSorted>
+		<Comp>Menus/List</Comp>
+		<Args>
+			<ListElement>User/ListMenu/ServicesOrder.xml</ListElement>
+			<Replace>
+				<ServiceOrderID>%ID%</ServiceOrderID>
+				<ServiceID>%ServiceID%</ServiceID>
+			</Replace>
+		</Args>
+	</ExtendedMenu>
+	<!-- *********************************************************************** -->
 </Columns>
+<!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Sequence>
  <ListElement>SelectID</ListElement>
