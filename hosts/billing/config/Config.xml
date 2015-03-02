@@ -584,7 +584,8 @@
     <WMI_SIGNATURE>auto</WMI_SIGNATURE>
    </Send>
    <Comp>W1</Comp>
-   <Cpp>https://merchant.w1.ru/checkout/default.aspx</Cpp>
+<!--    <Cpp>https://merchant.w1.ru/checkout/default.aspx</Cpp> -->
+   <Cpp>https://www.walletone.com/checkout/default.aspx</Cpp>
    <Hash />
    <ContractsTypes>
     <Default>1</Default>
