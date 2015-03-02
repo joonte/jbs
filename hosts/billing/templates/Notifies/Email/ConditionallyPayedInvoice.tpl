@@ -2,7 +2,7 @@
  *  Joonte Billing System
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
-{assign var=Theme value="Условно оплаченный счет #{$ID|default:'$ID'}" scope=global}
+{assign var=Theme value="Условно оплаченный счёт #{$ID|default:'$ID'}" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 У вас есть счёт, номер #{$ID|default:'$ID'}, в статусе "Условно оплачен".

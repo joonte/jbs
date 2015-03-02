@@ -546,7 +546,7 @@
  <!-- ********************************************************************** -->
  <BankAccount>
   <Check>BankAccount</Check>
-  <Comment>Номер расчетного счета</Comment>
+  <Comment>Номер расчётного счёта</Comment>
   <Example>40701256800030000589</Example>
   <Type>Input</Type>
   <Attribs>
@@ -558,7 +558,7 @@
  <!-- ********************************************************************** -->
  <Kor>
   <Check>Kor</Check>
-  <Comment>Корреспондентский счет</Comment>
+  <Comment>Корреспондентский счёт</Comment>
   <Example>30101810500000000444</Example>
   <Type>Input</Type>
   <Attribs>

@@ -24,7 +24,7 @@ case 'array':
 	#---------------------------------------------------------------------------
 	foreach($Invoices as $Invoice){
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF("[Tasks/GC/NotifyWaitingInvoice]: Уведомление о неоплаченном счете #%d",$Invoice['ID']));
+		Debug(SPrintF("[Tasks/GC/NotifyWaitingInvoice]: Уведомление о неоплаченном счёте #%d",$Invoice['ID']));
 		#-------------------------------------------------------------------------------
 		# достаём, что именно оплачивается счётом
 		$Columns = Array(
@@ -70,7 +70,7 @@ case 'array':
 		if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Tasks/GC/NotifyWaitingInvoice'))))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------
-		$IsSend = NotificationManager::sendMsg(new Message('NotPayedInvoice', (integer)$Invoice['UserID'], Array('Theme'=>SPrintF('Неоплаченный счет #%d',$Invoice['ID']),'InvoiceID'=>$Invoice['ID'],'Items'=>Implode("\n",$Items))));
+		$IsSend = NotificationManager::sendMsg(new Message('NotPayedInvoice', (integer)$Invoice['UserID'], Array('Theme'=>SPrintF('Неоплаченный счёт #%d',$Invoice['ID']),'InvoiceID'=>$Invoice['ID'],'Items'=>Implode("\n",$Items))));
 		#-------------------------------------------------------------------------
 		switch(ValueOf($IsSend)){
 		case 'true':
@@ -78,7 +78,7 @@ case 'array':
 			$Event = Array(
 					'UserID'	=> $Invoice['UserID'],
 					'PriorityID'	=> 'Billing',
-					'Text'		=> SPrintF('Уведомление о неоплаченном счете #%d, неоплачен более %d дней',$Invoice['ID'],$Params['Invoices']['DaysBeforeNotice'])
+					'Text'		=> SPrintF('Уведомление о неоплаченном счёте #%d, неоплачен более %d дней',$Invoice['ID'],$Params['Invoices']['DaysBeforeNotice'])
 					);
 			$Event = Comp_Load('Events/EventInsert',$Event);
 			#-------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ case 'array':
 			$Event = Array(
 					'UserID'	=> $Invoice['UserID'],
 					'PriorityID'	=> 'Billing',
-					'Text'		=> SPrintF('Уведомление о неоплаченном счете #%d не доставлено. Не удалось оповестить пользователя ни одним из методов.',$Invoice['ID'])
+					'Text'		=> SPrintF('Уведомление о неоплаченном счёте #%d не доставлено. Не удалось оповестить пользователя ни одним из методов.',$Invoice['ID'])
 					);
 			#-------------------------------------------------------------------------------
 			$Event = Comp_Load('Events/EventInsert',$Event);

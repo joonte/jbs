@@ -69,7 +69,7 @@
    <ListElement>
     <InvoiceID>%ID%</InvoiceID>
    </ListElement>
-   <ListElement>Изменить счет</ListElement>
+   <ListElement>Изменить счёт</ListElement>
    <ListElement>Edit.gif</ListElement>
   </Args>
   <Attribs>
@@ -85,7 +85,7 @@
    <ListElement>
     <onclick>document.location = '/InvoiceDownload?InvoiceID=%ID%&amp;IsStamp=yes';</onclick>
    </ListElement>
-   <ListElement>Загрузить счет в PDF</ListElement>
+   <ListElement>Загрузить счёт в PDF</ListElement>
    <ListElement>PDF.gif</ListElement>
   </Args>
   <Attribs>
@@ -101,7 +101,7 @@
    <ListElement>
     <onclick>document.location = '/InvoiceDownload?InvoiceID=%ID%&amp;IsTIFF=yes&amp;IsStamp=yes';</onclick>
    </ListElement>
-   <ListElement>Загрузить счет в TIFF</ListElement>
+   <ListElement>Загрузить счёт в TIFF</ListElement>
    <ListElement>Image.gif</ListElement>
   </Args>
   <Attribs>

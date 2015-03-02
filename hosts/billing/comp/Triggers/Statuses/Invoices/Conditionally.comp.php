@@ -30,7 +30,7 @@ $Number = Comp_Load('Formats/Invoice/Number',$Invoice['ID']);
 if(Is_Error($Number))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IsUpdate = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$Invoice['ContractID'],'Summ'=>$Invoice['Summ'],'ServiceID'=>1000,'Comment'=>SPrintF('по счету №%s',$Number)));
+$IsUpdate = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$Invoice['ContractID'],'Summ'=>$Invoice['Summ'],'ServiceID'=>1000,'Comment'=>SPrintF('по счёту №%s',$Number)));
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsUpdate)){
   case 'error':

@@ -145,17 +145,17 @@ if($PaymentSystemID == 'QIWI' && !$IsPayed){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp1 = Comp_Load('Buttons/Standard',Array('onclick'=>SPrintF("document.location = '/InvoiceDownload?InvoiceID=%u&IsStamp=yes';",$Invoice['ID'])),'Скачать счет в формате PDF','PDF.gif');
+$Comp1 = Comp_Load('Buttons/Standard',Array('onclick'=>SPrintF("document.location = '/InvoiceDownload?InvoiceID=%u&IsStamp=yes';",$Invoice['ID'])),'Скачать сёёт в формате PDF','PDF.gif');
 if(Is_Error($Comp1))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp2 = Comp_Load('Buttons/Standard',Array('onclick'=>SPrintF("document.location = '/InvoiceDownload?InvoiceID=%u&IsTIFF=yes&IsStamp=yes';",$Invoice['ID'])),'Скачать счет в формате TIFF','Image.gif');
+$Comp2 = Comp_Load('Buttons/Standard',Array('onclick'=>SPrintF("document.location = '/InvoiceDownload?InvoiceID=%u&IsTIFF=yes&IsStamp=yes';",$Invoice['ID'])),'Скачать счёт в формате TIFF','Image.gif');
 if(Is_Error($Comp2))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Buttons/Panel',Array('Comp'=>$Comp1,'Name'=>'Скачать счет в формате PDF'),Array('Comp'=>$Comp2,'Name'=>'Скачать счет в формате TIFF'));
+$Comp = Comp_Load('Buttons/Panel',Array('Comp'=>$Comp1,'Name'=>'Скачать счёт в формате PDF'),Array('Comp'=>$Comp2,'Name'=>'Скачать счёт в формате TIFF'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

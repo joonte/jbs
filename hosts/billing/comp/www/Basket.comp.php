@@ -116,7 +116,7 @@ switch(ValueOf($Basket)){
               Array(
                 'onclick' => SPrintF("ShowWindow('/InvoiceMake',{ContractID:%u,StepID:1});",$Item['ContractID']),
                 'type'    => 'button',
-                'value'   => 'Выписать счет'
+                'value'   => 'Выписать счёт'
               )
             );
             if(Is_Error($Comp))

@@ -126,7 +126,7 @@ foreach($Invoices as $Invoice){
 	#-------------------------------------------------------------------------------
 	$Out = SPrintF("%sНеоплаченный счёт на сумму %s от пользователя %s\n",$Out,$Invoice['Summ'],$Invoice['UserEmail']);
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF("[Tasks/GC/NotifyConditionallyInvoice]: Уведомление о условно оплаченном счете #%d.",$Invoice['ID']));
+	Debug(SPrintF("[Tasks/GC/NotifyConditionallyInvoice]: Уведомление о условно оплаченном счёте #%d.",$Invoice['ID']));
 	#----------------------------------TRANSACTION----------------------------------
 	if(Is_Error(DB_Transaction($TransactionID = UniqID('Tasks/GC/NotifyConditionallyInvoice'))))
 		return ERROR | @Trigger_Error(500);
@@ -137,7 +137,7 @@ foreach($Invoices as $Invoice){
 	switch(ValueOf($IsSend)){
 	case 'true':
 		#-------------------------------------------------------------------------------
-		$Event = Array('UserID'=>$Invoice['UserID'],'PriorityID'=>'Billing','Text'=>SPrintF('Уведомление о условно оплаченном счете #%d, неоплачен более %d дней',$Invoice['ID'],$Settings['DaysBeforeNotice']));
+		$Event = Array('UserID'=>$Invoice['UserID'],'PriorityID'=>'Billing','Text'=>SPrintF('Уведомление о условно оплаченном счёте #%d, неоплачен более %d дней',$Invoice['ID'],$Settings['DaysBeforeNotice']));
 		$Event = Comp_Load('Events/EventInsert',$Event);
 		if(!$Event)
 			return ERROR | @Trigger_Error(500);
@@ -146,7 +146,7 @@ foreach($Invoices as $Invoice){
 		#-------------------------------------------------------------------------------
 	case 'exception':
 		#-------------------------------------------------------------------------------
-		$Event = Array('UserID'=>$Invoice['UserID'],'PriorityID'=>'Billing','Text'=>SPrintF('Уведомление о условно оплаченном счете #%d не доставлено. Не удалось оповестить пользователя ни одним из методов.',$Invoice['ID']));
+		$Event = Array('UserID'=>$Invoice['UserID'],'PriorityID'=>'Billing','Text'=>SPrintF('Уведомление о условно оплаченном счёте #%d не доставлено. Не удалось оповестить пользователя ни одним из методов.',$Invoice['ID']));
 		$Event = Comp_Load('Events/EventInsert',$Event);
 		if(!$Event)
 			return ERROR | @Trigger_Error(500);

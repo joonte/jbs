@@ -25,7 +25,7 @@ $Number = Comp_Load('Formats/Invoice/Number',$Invoice['ID']);
 if(Is_Error($Number))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IsUpdate = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$Invoice['ContractID'],'Summ'=>$Invoice['Summ'],'ServiceID'=>1000,'Comment'=>SPrintF('по счету №%s',$Number)));
+$IsUpdate = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$Invoice['ContractID'],'Summ'=>$Invoice['Summ'],'ServiceID'=>1000,'Comment'=>SPrintF('по счёту №%s',$Number)));
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsUpdate)){
   case 'error':
@@ -40,7 +40,7 @@ switch(ValueOf($IsUpdate)){
     $Event = Array(
 			'UserID'	=> $Invoice['UserID'],
 			'PriorityID'	=> 'Billing',
-			'Text'		=> SPrintF('Оплачен счет №%s, на сумму %s, платежная система (%s)',$Number,$Invoice['Summ'],$PaymentSystemName)
+			'Text'		=> SPrintF('Оплачен счёт №%s, на сумму %s, платежная система (%s)',$Number,$Invoice['Summ'],$PaymentSystemName)
                   );
     $Event = Comp_Load('Events/EventInsert',$Event);
     if(!$Event)

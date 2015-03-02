@@ -27,18 +27,18 @@ $DOM->AddAttribs('MenuLeft',Array('args'=>'User/Office'));
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Мой офис → Счета на оплату');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/InvoiceMake');"),'Новый счет','Add.gif');
+$Comp = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/InvoiceMake');"),'Новый счёт','Add.gif');
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Buttons/Panel',Array('Comp'=>$Comp,'Name'=>'Новый счет'));
+$Comp = Comp_Load('Buttons/Panel',Array('Comp'=>$Comp,'Name'=>'Новый счёт'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $NoBody = new Tag('NOBODY',$Comp);
 #-------------------------------------------------------------------------------
 if($IsError)
-  $DOM->AddAttribs('Body',Array('onload'=>"ShowAlert('В ходе оплаты счета произошла ошибка','Warning');"));
+  $DOM->AddAttribs('Body',Array('onload'=>"ShowAlert('В ходе оплаты счёта произошла ошибка','Warning');"));
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Super','Invoices[User]');
 if(Is_Error($Comp))
