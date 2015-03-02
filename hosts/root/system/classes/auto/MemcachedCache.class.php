@@ -37,7 +37,7 @@ class MemcachedCache implements Cache {
         // Check connection.
         self::$memcached = new Memcache();
 
-        $connected = self::$memcached->connect('localhost', $Port, 0x1);
+        $connected = self::$memcached->connect('localhost', $Port, 1);
         if(!$connected) {
             throw new Exception(SPrintF("Could not connet to memcached [port=%s]", $Port));
         }
