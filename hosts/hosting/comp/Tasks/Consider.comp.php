@@ -12,7 +12,7 @@ $GLOBALS['TaskReturnInfo'] = Array();
 #-------------------------------------------------------------------------------
 $Config = Config();
 $Settings = $Config['Tasks']['Types']['Consider'];
-Debug(Print_r($Settings,true));
+#Debug(Print_r($Settings,true));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Where = Array('`ConsiderTypeID` = "Daily"','`Code` != "Default"','`IsProlong` = "yes"','`IsHidden` = "no"');
