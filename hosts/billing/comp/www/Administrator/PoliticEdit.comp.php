@@ -8,46 +8,49 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Args = Args();
 #-------------------------------------------------------------------------------
 $PoliticID = (integer) @$Args['PoliticID'];
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if($PoliticID){
-  #-----------------------------------------------------------------------------
-  $Politic = DB_Select('Politics','*',Array('UNIQ','ID'=>$PoliticID));
-  #-----------------------------------------------------------------------------
-  switch(ValueOf($Politic)){
-    case 'error':
-      return ERROR | @Trigger_Error(500);
-    case 'exception':
-      return ERROR | @Trigger_Error(400);
-    case 'array':
-      # No more...
-    break;
-    default:
-      return ERROR | @Trigger_Error(101);
-  }
+	#-------------------------------------------------------------------------------
+	$Politic = DB_Select('Politics','*',Array('UNIQ','ID'=>$PoliticID));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Politic)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		# No more...
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
 }else{
-	#-----------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$Politic = Array(
-		#--------------------------------------------------------------------------
-		'ExpirationDate'	=> Time() + 10 * 365 * 24 * 3600,
-		'GroupID'		=> 1,
-		'UserID'		=> 1,
-		'FromServiceID'		=> 0,
-		'FromSchemeID'		=> 0,
-		'FromSchemesGroupID'	=> 0,
-		'ToServiceID'		=> 0,
-		'ToSchemeID'		=> 0,
-		'ToSchemesGroupID'	=> 0,
-		'DaysPay'		=> 363,
-		'DaysDiscont'		=> 0,
-		'Discont'		=> 0.1,
-		'Comment'		=> '10% скидки тем кто платит сразу за год'
-  );
+			'ExpirationDate'	=> Time() + 10 * 365 * 24 * 3600,
+			'GroupID'		=> 1,
+			'UserID'		=> 1,
+			'FromServiceID'		=> 0,
+			'FromSchemeID'		=> 0,
+			'FromSchemesGroupID'	=> 0,
+			'ToServiceID'		=> 0,
+			'ToSchemeID'		=> 0,
+			'ToSchemesGroupID'	=> 0,
+			'DaysPay'		=> 363,
+			'DaysDiscont'		=> 0,
+			'Discont'		=> 0.1,
+			'AdminNotice'		=> '10% скидки тем кто платит сразу за год'
+			);
+	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $DOM = new DOM();
 #-------------------------------------------------------------------------------
@@ -56,7 +59,7 @@ $Links = &Links();
 $Links['DOM'] = &$DOM;
 #-------------------------------------------------------------------------------
 if(Is_Error($DOM->Load('Window')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM->AddAttribs('Body',Array('onload'=>SPrintF("GetSchemes(%s,'FromSchemeID','%s');GetSchemes(%s,'ToSchemeID','%s');",$Politic['FromServiceID'],$Politic['FromSchemeID'],$Politic['ToServiceID'],$Politic['ToSchemeID'])));
 #-------------------------------------------------------------------------------
@@ -70,16 +73,13 @@ $Table = Array();
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Owner','Владелец политики',$Politic['GroupID'],$Politic['UserID']);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = $Comp;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Where = Array(
-		'`IsActive` = "yes"',
-		'`IsHidden` != "yes"',
-		);
+$Where = Array('`IsActive` = "yes"','`IsHidden` != "yes"');
 #-------------------------------------------------------------------------------
 $Services = DB_Select('ServicesOwners','*',Array('Where'=>$Where,'SortOn'=>'SortID'));
 #-------------------------------------------------------------------------------
@@ -95,7 +95,9 @@ case 'array':
 	#---------------------------------------------------------------------------
 	foreach($Services as $Service)
 		$ServicesOptions[$Service['ID']] = SPrintF('%s (%s)',$Service['Code'],$Service['NameShort']);
+	#-------------------------------------------------------------------------------
 	break;
+	#-------------------------------------------------------------------------------
 default:
 	return ERROR | @Trigger_Error(101);
 }
@@ -130,7 +132,9 @@ case 'array':
 	#---------------------------------------------------------------------------
 	foreach($SchemesGroups as $SchemesGroup)
 		$Options[$SchemesGroup['ID']] = $SchemesGroup['Name'];
+	#-------------------------------------------------------------------------------
 	break;
+	#-------------------------------------------------------------------------------
 default:
 	return ERROR | @Trigger_Error(101);
 }
@@ -170,7 +174,9 @@ case 'array':
 	#---------------------------------------------------------------------------
 	foreach($SchemesGroups as $SchemesGroup)
 		$Options[$SchemesGroup['ID']] = $SchemesGroup['Name'];
+	#-------------------------------------------------------------------------------
 	break;
+	#-------------------------------------------------------------------------------
 default:
 	return ERROR | @Trigger_Error(101);
 }
@@ -189,64 +195,28 @@ if(Is_Error($Comp))
 $Table[] = Array('Дата окончания',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'name'  => 'DaysPay',
-    'value' => $Politic['DaysPay'],
-    'prompt'=> 'Сколько дней надо оплатить, чтобы политика сработала',
-    'style' => 'width:100%'
-  )
-);
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'DaysPay','value'=>$Politic['DaysPay'],'prompt'=>'Сколько дней надо оплатить, чтобы политика сработала','style'=>'width:100%'));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Дней оплаты',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'name'  => 'DaysDiscont',
-    'value' => $Politic['DaysDiscont'],
-    'prompt'=> 'На какой срок выдаётся бонус - дни, годы, штуки - в зависимости от типа учёта. Ноль - на число дней оплаты.',
-    'style' => 'width:100%'
-  )
-);
+$Comp = Comp_Load('Form/Input', Array('type'=>'text','name'=>'DaysDiscont','value'=>$Politic['DaysDiscont'],'prompt'=>'На какой срок выдаётся бонус - дни, годы, штуки - в зависимости от типа учёта. Ноль - на число дней оплаты.','style'=>'width:100%'));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Дней скидки',$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'name'  => 'Discont',
-    'value' => $Politic['Discont']*100,
-    'prompt'=> 'Число от 5 до 100',
-    'style' => 'width:100%'
-  )
-);
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'Discont','value'=>$Politic['Discont']*100,'prompt'=>'Число от 5 до 100','style'=>'width:100%'));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Размер скидки в %',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/TextArea',
-   Array(
-	'name'  => 'Comment',
-	'style' => 'width:100%;',
-	'rows'  => 5,
-	'prompt'=> 'Цель/причина создания этой скидки клиенту',
-	'style' => 'width:100%'
-	),
-   $Politic['Comment']
-);
+$Comp = Comp_Load('Form/TextArea',Array('name'=>'AdminNotice','style'=>'width:100%;','rows'=>5,'prompt'=>'Цель/причина создания этой скидки клиенту','style'=>'width:100%'),$Politic['AdminNotice']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -255,47 +225,37 @@ $Table[] = 'Комментарий';
 $Table[] = $Comp;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'    => 'button', # FormEdit($URL,$FormName,$ShowProgress)
-    'onclick' => SPrintF("FormEdit('/Administrator/API/PoliticEdit','PoliticEditForm','%s');",$Title),
-    'value'   => ($PoliticID?'Сохранить':'Добавить')
-  )
-);
+$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>SPrintF("FormEdit('/Administrator/API/PoliticEdit','PoliticEditForm','%s');",$Title),'value'=>($PoliticID?'Сохранить':'Добавить')));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = $Comp;
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Standard',$Table);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Form = new Tag('FORM',Array('name'=>'PoliticEditForm','onsubmit'=>'return false;'),$Comp);
 #-------------------------------------------------------------------------------
 if($PoliticID){
-  #-----------------------------------------------------------------------------
-  $Comp = Comp_Load(
-    'Form/Input',
-    Array(
-      'name'  => 'PoliticID',
-      'type'  => 'hidden',
-      'value' => $PoliticID
-    )
-  );
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $Form->AddChild($Comp);
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('name'=>'PoliticID','type'=>'hidden','value'=>$PoliticID));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Form->AddChild($Comp);
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Into',$Form);
 #-------------------------------------------------------------------------------
 if(Is_Error($DOM->Build(FALSE)))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return Array('Status'=>'Ok','DOM'=>$DOM->Object);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>

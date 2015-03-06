@@ -732,7 +732,7 @@ CREATE TABLE `Politics` (
   `DaysPay` int(11) default '665',	-- какой срок надо оплатить, чтобы сработала политика
   `DaysDiscont` int(11) default '665',  -- на какой срок даётся скидка
   `Discont` decimal(11,2) default '0.00',	-- размер скидки, в долях от единицы
-  `Comment` char(255) default '',       -- комментарий к политике
+  `AdminNotice` char(255) default '',	-- комментарий к политике
   PRIMARY KEY(`ID`),
   /* просто ключи для тарифов */
   KEY `PoliticsFromSchemeID` (`FromSchemeID`),

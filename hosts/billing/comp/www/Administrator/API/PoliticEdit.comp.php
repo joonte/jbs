@@ -26,7 +26,7 @@ $ToSchemesGroupID	= (integer) @$Args['ToSchemesGroupID'];
 $DaysPay		= (integer) @$Args['DaysPay'];
 $DaysDiscont		= (integer) @$Args['DaysDiscont'];
 $Discont		= (integer) @$Args['Discont'];
-$Comment		=  (string) @$Args['Comment'];
+$AdminNotice		=  (string) @$Args['AdminNotice'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$FromServiceID && !$FromSchemesGroupID)
@@ -71,7 +71,7 @@ $IPolitic = Array(
 	'DaysPay'		=> $DaysPay,
 	'DaysDiscont'		=> $DaysDiscont,
 	'Discont'		=> $Discont/100,
-	'Comment'		=> $Comment
+	'AdminNotice'		=> $AdminNotice
 );
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -80,14 +80,18 @@ if($PoliticID){
 	$IsUpdate = DB_Update('Politics',$IPolitic,Array('ID'=>$PoliticID));
 	if(Is_Error($IsUpdate))
 		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
 }else{
 	#-----------------------------------------------------------------------------
 	$IsInsert = DB_Insert('Politics',$IPolitic);
 	if(Is_Error($IsInsert))
 		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 return Array('Status'=>'Ok');
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>

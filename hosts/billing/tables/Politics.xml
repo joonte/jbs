@@ -3,58 +3,63 @@
 <XML>
 <!-- *********************************************************************** -->
 <Source>
- <TableID>Politics</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>FromServiceID</ListElement>
-  <ListElement>FromSchemeID</ListElement>
-  <ListElement>FromSchemesGroupID</ListElement>
-  <ListElement>ToServiceID</ListElement>
-  <ListElement>ToSchemeID</ListElement>
-  <ListElement>ToSchemesGroupID</ListElement>
-  <ListElement>DaysPay</ListElement>
-  <ListElement>Discont</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Message>Ценовых политик не обнаружено.</Message>
- </Conditions>
+	<TableID>Politics</TableID>
+	<ColumnsIDs>
+		<ListElement>ID</ListElement>
+		<ListElement>FromServiceID</ListElement>
+		<ListElement>FromSchemeID</ListElement>
+		<ListElement>FromSchemesGroupID</ListElement>
+		<ListElement>ToServiceID</ListElement>
+		<ListElement>ToSchemeID</ListElement>
+		<ListElement>ToSchemesGroupID</ListElement>
+		<ListElement>DaysPay</ListElement>
+		<ListElement>Discont</ListElement>
+		<ListElement>AdminNotice</ListElement>
+	</ColumnsIDs>
+	<Conditions>
+		<Message>Ценовых политик не обнаружено.</Message>
+	</Conditions>
 </Source>
 <!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
 <Comps>
- <Before>
-  <Search>
-   <Args>
-    <ColumnsIDs>
-     <ListElement>UserID</ListElement>
-     <ListElement>FromServiceID</ListElement>
-     <ListElement>FromSchemeID</ListElement>
-     <ListElement>FromSchemesGroupID</ListElement>
-     <ListElement>ToServiceID</ListElement>
-     <ListElement>ToSchemeID</ListElement>
-     <ListElement>ToSchemesGroupID</ListElement>
-     <ListElement>DaysPay</ListElement>
-     <ListElement>Discont</ListElement>
-    </ColumnsIDs>
-   </Args>
-  </Search>
- </Before>
- <!-- ********************************************************************** -->
- <After>
-  <Delete>
-   <Args>
-    <Comment>Выбранные политики</Comment>
-    <Send>
-     <TableID>Politics</TableID>
-    </Send>
-   </Args>
-  </Delete>
- </After>
+	<Before>
+		<Search>
+			<Args>
+				<ColumnsIDs>
+					<ListElement>UserID</ListElement>
+					<ListElement>FromServiceID</ListElement>
+					<ListElement>FromSchemeID</ListElement>
+					<ListElement>FromSchemesGroupID</ListElement>
+					<ListElement>ToServiceID</ListElement>
+					<ListElement>ToSchemeID</ListElement>
+					<ListElement>ToSchemesGroupID</ListElement>
+					<ListElement>DaysPay</ListElement>
+					<ListElement>Discont</ListElement>
+					<ListElement>AdminNotice</ListElement>
+				</ColumnsIDs>
+			</Args>
+		</Search>
+	</Before>
+	<!-- ********************************************************************** -->
+	<After>
+		<Delete>
+			<Args>
+				<Comment>Выбранные политики</Comment>
+				<Send>
+					<TableID>Politics</TableID>
+				</Send>
+			</Args>
+		</Delete>
+	</After>
 </Comps>
 <!-- *********************************************************************** -->
-<!--<Query>
- <SortOn>Scheme</SortOn>
- <IsDesc>0</IsDesc>
-</Query> -->
+<!-- *********************************************************************** -->
+<Query>
+	<SortOn>Discont</SortOn>
+	<IsDesc>0</IsDesc>
+</Query>
+<!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Columns>
  <SelectID>
@@ -160,18 +165,32 @@
    <style>text-align:right;</style>
   </Attribs>
  </Discont>
+	<!-- *********************************************************************** -->
+	<AdminNotice>
+		<Head>-</Head>
+		<Comp>Notice</Comp>
+		<Args>
+			<ListElement>Politics</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>%AdminNotice%</ListElement>
+		</Args>
+	</AdminNotice>
+	<!-- *********************************************************************** -->
 </Columns>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
 <Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>ID</ListElement>
- <ListElement>Edit</ListElement>
- <ListElement>Group</ListElement>
- <ListElement>User</ListElement>
- <ListElement>FromServiceID</ListElement>
- <ListElement>ToServiceID</ListElement>
- <ListElement>DaysPay</ListElement>
- <ListElement>DaysDiscont</ListElement>
- <ListElement>Discont</ListElement>
+	<ListElement>SelectID</ListElement>
+	<ListElement>ID</ListElement>
+	<ListElement>Edit</ListElement>
+	<ListElement>Group</ListElement>
+	<ListElement>User</ListElement>
+	<ListElement>AdminNotice</ListElement>
+	<ListElement>FromServiceID</ListElement>
+	<ListElement>ToServiceID</ListElement>
+	<ListElement>DaysPay</ListElement>
+	<ListElement>DaysDiscont</ListElement>
+	<ListElement>Discont</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
 </XML>
