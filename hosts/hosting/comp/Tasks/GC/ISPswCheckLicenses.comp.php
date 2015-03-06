@@ -146,7 +146,7 @@ foreach($Doc as $License){
 			$Event = Array(
 					'UserID'	=> 100,
 					'PriorityID'	=> 'Error',
-					'Text'		=> SPrintF('Найдена лицензия ISPsystem 5 версии без ключа:  #%u, продукт (%s), период (%s), IP (%s)',$License['id'],$License['pricelist_id'],$License['period'],$License['ip']),
+					'Text'		=> SPrintF('Найдена лицензия ISPsystem 5 версии без ключа: #%u, продукт (%s), период (%s), IP (%s)',$License['id'],$License['pricelist_id'],$License['period'],$License['ip']),
 					'IsReaded'	=> FALSE
 					);
 			$Event = Comp_Load('Events/EventInsert',$Event);
