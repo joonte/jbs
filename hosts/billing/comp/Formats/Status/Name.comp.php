@@ -62,7 +62,7 @@ return new Tag(
                                'onMouseOver' => 'PromptShow(event,\'История изменений\',this);',
                                'width'       => 16,
                                'height'      => 16,
-                               'src'         => 'SRC:{/Images/Icons/History.gif}',
+                               'src'         => 'SRC:{Images/Icons/History.gif}',
                                'onclick'     => SPrintF("javascript:ShowWindow('/StatusesHistory',{ModeID:'%s',RowID:%u});",$ModeID,$RowID)
                                )
                        ),
