@@ -87,6 +87,7 @@ then
 	rm -f $marker
 	# let Mortal Combat begin! =)
 	sh demon.sh $HostsID $RootDir >> $RootDir/demon.log &
+	chmod 600 $RootDir/demon.log
 fi
 
 #------------------------------------------------
