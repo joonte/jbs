@@ -157,6 +157,7 @@
  </OrderDate>
  <!-- ********************************************************************** -->
  <Expiration>
+  <IsSorted>0</IsSorted>
   <Head>Дата оконч.</Head>
   <Prompt>Дата окончания заказа | остаток дней</Prompt>
   <Comp>Services/Orders/ExpirationDateWrapper</Comp>
