@@ -183,8 +183,9 @@ function DB_Select($TablesIDs,$ColumnsIDs = '*',$Query = Array()){
        #-------------------------------------------------------------------------
       $ColumnID = DB_Escape($ColumnID);
       #-------------------------------------------------------------------------
-      #$Array[] = SPrintF('`%s`',$ColumnID);
-      $Array[] = $ColumnID;
+      $Array[] = StrPos($ColumnID,'.')?$ColumnID:SPrintF('`%s`',$ColumnID);
+      #Debug(SPrintF('[system/libs/auto/DB]: SortOn = %s',$ColumnID));
+      #$Array[] = $ColumnID;
     }
     #---------------------------------------------------------------------------
     $Sql = SPrintF('%s ORDER BY %s',$Sql,Implode(',',$Array));
