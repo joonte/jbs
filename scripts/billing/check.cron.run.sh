@@ -98,13 +98,12 @@ then
 	# определяем время на час назад, в разных системах по разному
 	if [ `uname` = "Linux" ]
 	then
-		params=--date="1 hour ago"
+		now=`date --date='1 hour ago' +%Y%m%d%H%M%S`
 	else
-		params="-v-1H"
+		now=`date -v-1H +%Y%m%d%H%M%S`
 	fi
 
-	executed=`cat $marker`
-	if [ `date $params +%Y%m%d%H%M%S` -ge $executed ]
+	if [ $now -ge `cat $marker` ]
 	then
 		echo "" >> $RootDir/demon.log
 		echo "`date +%Y-%m-%d` in `date +%H:%M:%S`: php-cgi auto killed, no executed tasks more than one hour" >> $RootDir/demon.log
