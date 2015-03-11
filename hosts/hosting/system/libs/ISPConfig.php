@@ -30,8 +30,8 @@ function ISPConfig_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-//  $IDNA = new Net_IDNA_php5();
-//  $Domain = $IDNA->encode($Domain);
+  $IDNA = new Net_IDNA_php5();
+  $Domain = $IDNA->encode($Domain);
   #-----------------------------------------------------------------------------
   if ($HostingScheme['PackageID'] == '') $HostingScheme['PackageID'] = 0;
   $ISPConfigPHP = "no";
