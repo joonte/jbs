@@ -248,6 +248,7 @@ if(Function_Exists('posix_getpwuid')){
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[JBs core]: осуществлен запрос с адреса (%s)',@$_SERVER['REMOTE_ADDR']));
 Debug(SPrintF('[JBs core]: REQUEST_URI=(%s)',@$_SERVER['REQUEST_URI']));
+Debug(SPrintF('[JBs core]: HTTP_REFERER=(%s)',@$_SERVER['HTTP_REFERER']));
 
 #******************************************************************************#
 # ПОДСИСТЕМА ОТЛАДКИ
