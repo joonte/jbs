@@ -175,7 +175,7 @@ function ISPConfig_Active($Settings,$Login,$IsReseller = FALSE){
 	#-----------------------------------------------------------------------------
 	# Запрашиваем параметры клиента
 	$ns1 = 'ns1:client_getResponse';
-	$Request = ISPConfig_ClientGet($session_id, $client_id,$ns1);
+	$Request = ISPConfig_ClientGet($session_id,$client,$client_id,$ns1,$Request);
 
 	#-----------------------------------------------------------------------------
 	# Выполняем запрос активации клиента на панели ISPConfig
@@ -234,7 +234,7 @@ function ISPConfig_Suspend($Settings,$Login,$IsReseller = FALSE){
 	#-----------------------------------------------------------------------------
 	# Запрашиваем параметры клиента
 	$ns1 = 'ns1:client_getResponse';
-	$Request = ISPConfig_ClientGet($session_id, $client_id,$ns1);
+	$Request = ISPConfig_ClientGet($session_id,$client,$client_id,$ns1,$Request);
 
 	#-----------------------------------------------------------------------------
 	# Выполняем запрос блокировки клиента на панели ISPConfig
@@ -415,7 +415,7 @@ function ISPConfig_Scheme_Change($Settings,$Login,$HostingScheme){
 	#-----------------------------------------------------------------------------
 	# Запрашиваем параметры клиента
 	$ns1 = 'ns1:client_getResponse';
-	$Request = ISPConfig_ClientGet($session_id, $client_id,$ns1);
+	$Request = ISPConfig_ClientGet($session_id,$client,$client_id,$ns1,$Request);
 
 	#-----------------------------------------------------------------------------
 	# Выполняем отправку данных в панель ISPConfig
@@ -444,7 +444,7 @@ function ISPConfig_Scheme_Change($Settings,$Login,$HostingScheme){
 #-------------------------------------------------------------------------------
 # Функция запроса данных клиента в панели ISPConfig
 #-------------------------------------------------------------------------------
-function ISPConfig_ClientGet($session_id, $client_id,$ns1){
+function ISPConfig_ClientGet($session_id,$client,$client_id,$ns1,$Request){
 	try {
 		$client->client_get($session_id, $client_id);
 		$Response = $client->__getLastResponse();
