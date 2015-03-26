@@ -107,7 +107,7 @@ default:
 $Params = Array('Login'=>$Order['Login'],'Password'=>$Order['Password']);
 #-------------------------------------------------------------------------------
 if($Service['Code'] == 'ISPsw')
-	$Params = $Params + Array('Url'=>SPrintF('https://%s:1500/',$Order['IP']));
+	$Params = $Params + Array('Url'=>SPrintF('https://%s:1500/ispmgr',$Order['IP']));
 #-------------------------------------------------------------------------------
 $IsLogon = $ClassServer->Logon($Params);
 #-------------------------------------------------------------------------------
