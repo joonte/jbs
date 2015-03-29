@@ -1104,7 +1104,7 @@
 		<ServersAutoBalance>
 			<Name>Автобалансировка серверов</Name>
 			<Params type="array" />
-			<ExecutePeriod>01:00</ExecutePeriod>
+			<ExecutePeriod>04:00</ExecutePeriod>
 			<IsActive>1</IsActive>
 			<IsEvent>1</IsEvent>
 		</ServersAutoBalance>
