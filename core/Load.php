@@ -225,7 +225,8 @@ function Report($Theme,$ReportID = ''){
 		#-------------------------------------------------------------------------------
 		if($Emails)
 			foreach(Explode("\n",$Emails) as $Email)
-				@Mail(Trim($Email),$ReportID,Implode("\n",$GLOBALS['__SYSLOG']),"MIME-Version: 1.0\r\nContent-type: text/plain; charset=UTF-8\r\n");
+				if($Email)
+					@Mail(Trim($Email),$ReportID,Implode("\n",$GLOBALS['__SYSLOG']),"MIME-Version: 1.0\r\nContent-type: text/plain; charset=UTF-8\r\n");
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
