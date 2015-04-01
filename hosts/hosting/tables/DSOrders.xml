@@ -198,24 +198,27 @@
   </Args>
   <Alias>DaysRemainded</Alias>
  </Expiration>
- <!-- ********************************************************************** -->
- <!-- ********************************************************************** -->
- <Status>
-  <Args>
-   <ModeID>DSOrders</ModeID>
-  </Args>
- </Status>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Status>
+		<Args>
+			<ModeID>DSOrders</ModeID>
+		</Args>
+	</Status>
+	<!-- *********************************************************************** -->
 </Columns>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
 <Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>ExtendedMenu</ListElement>
- <ListElement>Number</ListElement>
- <ListElement>IP</ListElement>
- <ListElement>Owner</ListElement>
- <ListElement>Scheme</ListElement>
- <ListElement>Expiration</ListElement>
- <ListElement>Status</ListElement>
- <ListElement>StatusOver</ListElement>
+	<ListElement>SelectID</ListElement>
+	<ListElement>ExtendedMenu</ListElement>
+	<ListElement>Number</ListElement>
+	<ListElement>IP</ListElement>
+	<ListElement>Owner</ListElement>
+	<ListElement>Scheme</ListElement>
+	<ListElement>Expiration</ListElement>
+	<ListElement>Status</ListElement>
+	<ListElement>StatusOver</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
 </XML>

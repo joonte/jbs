@@ -41,7 +41,7 @@ if($DSSchemeID){
 			'CostDay'			=> 100,
 			'CostMonth'			=> 3000,
 			'CostInstall'			=> 300,
-			'ServersGroupID'		=> 1,
+			'ServerID'			=> 1,
 			'NumServers'			=> 10,
 			'RemainServers'			=> 10,
 			'IsCalculateNumServers'		=> TRUE,
@@ -132,13 +132,13 @@ if(Is_Error($Comp))
 $Table[] = Array('Стоимость установки/подключения',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$ServersGroups = DB_Select('DSServersGroups','*');
+$Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) = 40000','SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
-switch(ValueOf($ServersGroups)){
+switch(ValueOf($Servers)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return new gException('SERVERS_GROUPS_NOT_FOUND','Группы серверов не найдены');
+	return new gException('SERVERS_NOT_FOUND','Управляющие сервера не найдены');
 case 'array':
 	# No more...
 	break;
@@ -148,14 +148,14 @@ default:
 #-------------------------------------------------------------------------------
 $Options = Array();
 #-------------------------------------------------------------------------------
-foreach($ServersGroups as $ServersGroup)
-	$Options[$ServersGroup['ID']] = $ServersGroup['Name'];
+foreach($Servers as $Server)
+	$Options[$Server['ID']] = $Server['Address'];
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'ServersGroupID','style'=>'width: 240px;'),$Options,$DSScheme['ServersGroupID']);
+$Comp = Comp_Load('Form/Select',Array('name'=>'ServerID','style'=>'width: 240px;','prompt'=>'Сервер управляющий выделенными серверами'),$Options,$DSScheme['ServerID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Группа серверов',$Comp);
+$Table[] = Array('Управляющий сервер',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'NumServers','value'=>$DSScheme['NumServers']));

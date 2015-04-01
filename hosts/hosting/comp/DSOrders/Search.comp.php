@@ -70,9 +70,9 @@ switch(ValueOf($DSSchemes)){
     return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$DSServers = DB_Select('DSServers',Array('ID','Address'),Array('SortOn'=>'Address'));
+$Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) = 40000','SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
-switch(ValueOf($DSServers)){
+switch(ValueOf($Servers)){
   case 'error':
     return ERROR | @Trigger_Error(500);
   case 'exception':
@@ -84,8 +84,8 @@ switch(ValueOf($DSServers)){
     #---------------------------------------------------------------------------
     $Options['Default'] = 'Не указан';
     #---------------------------------------------------------------------------
-    foreach($DSServers as $DSServer)
-      $Options[$DSServer['ID']] = $DSServer['Address'];
+    foreach($Servers as $Server)
+      $Options[$Server['ID']] = $Server['Address'];
     #---------------------------------------------------------------------------
     $ServerID = 'Default';
     #---------------------------------------------------------------------------
@@ -110,7 +110,7 @@ switch(ValueOf($DSServers)){
     if(Is_Error($Comp))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
-    $Tr->AddChild(new Tag('NOBODY',new Tag('TD',Array('class'=>'Comment'),'Сервер размещения'),new Tag('TD',$Comp)));
+    $Tr->AddChild(new Tag('NOBODY',new Tag('TD',Array('class'=>'Comment'),'Управляющий сервер'),new Tag('TD',$Comp)));
   break;
   default:
     return ERROR | @Trigger_Error(101);

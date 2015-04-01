@@ -302,7 +302,7 @@ switch(ValueOf($vGroups)){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # DS
-$dGroups = DB_Select('DSServersGroups','*');
+$dGroups = DB_Select('ServersGroups','*',Array('Where'=>'`ServiceID` = 40000'));
 switch(ValueOf($dGroups)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);

@@ -20,15 +20,6 @@
 		</Paths>
 		<Href>/Administrator/DSSchemes</Href>
 	</ListElement>
-	<!-- *********************************************************************** -->
-	<ListElement>
-		<Text>Группы серверов</Text>
-		<Prompt>Характеристики объединения серверов</Prompt>
-		<Paths>
-			<UniqID>^\/Administrator\/DSServersGroups$</UniqID>
-		</Paths>
-		<Href>/Administrator/DSServersGroups</Href>
-	</ListElement>
 </Items>
 <!-- *********************************************************************** -->
 </XML>

@@ -50,7 +50,9 @@
  <ListElement>Info</ListElement>
  <ListElement>DSOrder</ListElement>
  <ListElement>Name</ListElement>
- <ListElement>ServersGroup</ListElement>
+<!-- проблема - в админской части .xml захардкожено имя таблицы, а у юзеров используется временая таблица, с другим именем =(
+     <ListElement>ServersGroup</ListElement>
+     -->
  <ListElement>CostMonth</ListElement>
  <ListElement>cputype</ListElement>
  <ListElement>numcpu</ListElement>

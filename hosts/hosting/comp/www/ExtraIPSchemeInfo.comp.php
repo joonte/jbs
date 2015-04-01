@@ -132,7 +132,7 @@ if($ExtraIPScheme['VPSGroupID'] > 0){
 # DS
 if($ExtraIPScheme['DSGroupID'] > 0){
 	#-------------------------------------------------------------------------------
-	$dGroups = DB_Select('DSServersGroups','*',Array('UNIQ','ID'=>$ExtraIPScheme['DSGroupID']));
+	$dGroups = DB_Select('ServersGroups','*',Array('UNIQ','ID'=>$ExtraIPScheme['DSGroupID']));
 	switch(ValueOf($dGroups)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
