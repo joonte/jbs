@@ -499,18 +499,6 @@ DROP TABLE IF EXISTS `VPSConsider`;
 -- SEPARATOR
 /* DS values added by lissyara 2011-06-29 in 20:31 MSK */
 
-CREATE TABLE IF NOT EXISTS `DSServersGroups` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` char(30) NOT NULL,
-  `FunctionID` char(30) DEFAULT '',
-  `SystemID` char(127) NOT NULL,
-  `Comment` char(255) DEFAULT '',
-  `SortID` int(11) DEFAULT '10',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- SEPARATOR
-
 CREATE TABLE IF NOT EXISTS `DSSchemes` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `CreateDate` int(11) DEFAULT '0',
@@ -555,43 +543,6 @@ CREATE TABLE IF NOT EXISTS `DSSchemes` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 -- SEPARATOR
-
-
-CREATE TABLE IF NOT EXISTS `DSServers` (
-	`ID` int(11) NOT NULL AUTO_INCREMENT,
-	`SystemID` char(30) DEFAULT '',
-	`ServersGroupID` int(11) NOT NULL,
-	`IsDefault` enum('no','yes') DEFAULT 'no',
-	`Domain` char(30) DEFAULT '',
-	`Prefix` char(30) DEFAULT 'h',
-	`Address` char(30) DEFAULT '',
-	`Port` int(5) DEFAULT '80',
-	`Protocol` enum('tcp','ssl') DEFAULT 'tcp',
-	`Login` char(60) DEFAULT '',
-	`Password` char(255) DEFAULT '',
-	`IP` char(60) DEFAULT '127.0.0.1',
-	`IPsPool` text,
-	`Theme` char(30) DEFAULT '',
-	`Language` char(30) DEFAULT 'ru',
-	`Url` char(60) DEFAULT '',
-	`Ns1Name` char(30) DEFAULT '',
-	`Ns2Name` char(30) DEFAULT '',
-	`Ns3Name` char(30) DEFAULT '',
-	`Ns4Name` char(30) DEFAULT '',
-	`Services` text,
-	`TestDate` int(11) DEFAULT '0',
-	`IsOK` int(3) NULL DEFAULT NULL,
-	`Notice` text,
-	PRIMARY KEY (`ID`),
-	KEY `DSServersServersGroupID` (`ServersGroupID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
--- SEPARATOR
-ALTER TABLE `DSServers`
-	ADD CONSTRAINT `DSServersServersGroupID` FOREIGN KEY (`ServersGroupID`) REFERENCES `DSServersGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-
--- SEPARATOR
-
 
 CREATE TABLE IF NOT EXISTS `DSOrders` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,

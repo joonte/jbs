@@ -172,6 +172,7 @@ DROP TABLE IF EXISTS `DSOrdersOwners`;
 CREATE VIEW `DSOrdersOwners` AS select
 	`DSOrders`.*,
 	`OrdersOwners`.`ServiceID`,
+	`OrdersOwners`.`ServerID`,
 	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `DSOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
 	`OrdersOwners`.`OrderDate` AS `OrderDate`,
 	`OrdersOwners`.`UserID` AS `UserID`,
@@ -183,25 +184,9 @@ CREATE VIEW `DSOrdersOwners` AS select
 -- SEPARATOR
 DROP VIEW IF EXISTS `DSServersOwners`;
 DROP TABLE IF EXISTS `DSServersOwners`;
-CREATE
-	VIEW `DSServersOwners` AS
-SELECT
-	`DSServers`.*,
-	100 as `UserID`
-FROM
-	`DSServers`;
-
 -- SEPARATOR
 DROP VIEW IF EXISTS `DSServersGroupsOwners`;
 DROP TABLE IF EXISTS `DSServersGroupsOwners`;
-CREATE
-	VIEW `DSServersGroupsOwners` AS
-SELECT
-	`DSServersGroups`.*,
-	100 as `UserID`
-FROM
-	`DSServersGroups`;
-
 -- SEPARATOR
 DROP VIEW IF EXISTS `DSBonusesOwners`;
 -- SEPARATOR

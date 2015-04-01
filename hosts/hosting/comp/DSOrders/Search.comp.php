@@ -18,7 +18,7 @@ $Template = &$Links[$LinkID];
 /******************************************************************************/
 $Tr = new Tag('TR');
 #-------------------------------------------------------------------------------
-$DSSchemes = DB_Select('DSSchemes',Array('ID','Name','CostMonth','(SELECT `Name` FROM `DSServersGroups` WHERE `DSSchemes`.`ServersGroupID` = `DSServersGroups`.`ID`) as `ServersGroupName`'),Array('SortOn'=>'Name'));
+$DSSchemes = DB_Select('DSSchemes',Array('ID','Name','CostMonth','(SELECT `Name` FROM `ServersGroups` WHERE (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `DSSchemes`.`ServerID`)) as `ServersGroupName`'),Array('SortOn'=>'Name'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DSSchemes)){
   case 'error':

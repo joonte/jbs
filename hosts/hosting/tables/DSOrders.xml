@@ -3,13 +3,14 @@
 <XML>
 <!-- *********************************************************************** -->
 <Appearance>
- <Row>
-  <Comp>Colors/DSOrders</Comp>
-  <Args>
-   <ListElement>%StatusID%</ListElement>
-  </Args>
- </Row>
+	<Row>
+		<Comp>Colors/DSOrders</Comp>
+		<Args>
+			<ListElement>%StatusID%</ListElement>
+		</Args>
+	</Row>
 </Appearance>
+<!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Source>
  <TableID>DSOrdersOwners</TableID>
@@ -185,7 +186,7 @@
    <ListElement>%Scheme%</ListElement>
    <Length>10</Length>
   </Args>
-  <Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `DSServersGroups` WHERE `DSServersGroups`.`ID` = `DSSchemes`.`ServersGroupID`),')') FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`)</Alias>
+  <Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `DSOrdersOwners`.`ServerID`)),')') FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`)</Alias>
  </Scheme>
  <!-- ********************************************************************** -->
  <Expiration>

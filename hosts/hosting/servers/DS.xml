@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Name>Выделенный сервер</Name>
+<!-- *********************************************************************** -->
+<IsActive>1</IsActive>
+<!-- *********************************************************************** -->
+<ServiceID>40000</ServiceID>
+<!-- *********************************************************************** -->
+<Defaults>
+	<Address>dci01.isp.su</Address>
+	<Monitoring>HTTP=80 HTTPS=443</Monitoring>
+	<AdminNotice></AdminNotice>
+	<SortID>40000</SortID>
+</Defaults>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<SystemID>
+	<!-- *********************************************************************** -->
+	<NullSystem>
+		<Name>Ручное управление</Name>
+		<Settings>
+			<Port>1000</Port>
+			<Protocol>tcp</Protocol>
+		</Settings>
+	</NullSystem>
+	<!-- ********************************************************************* -->
+	<DCImanager5>
+		<Name>DCImanager 5</Name>
+		<Settings>
+			<Port>1500</Port>
+			<Protocol>ssl</Protocol>
+			<Theme>Orion</Theme>
+			<Language>ru</Language>
+			<DiskTemplate>FreeBSD-10-amd64</DiskTemplate>
+			<Url>https://dci01.isp.su:1500/vmmgr</Url>
+		</Settings>
+	</DCImanager5>
+	<!-- *********************************************************************** -->
+</SystemID>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<Attribs>
+	<SystemID>
+		<Title>Общая информация</Title>
+		<Comment>Система управления</Comment>
+		<Type>Select</Type>
+		<Options>
+			<NullSystem>Ручное управление</NullSystem>
+			<DCImanager5>DCImanager 5</DCImanager5>
+		</Options>
+		<Check>/^[A-Za-zА-Яа-я0-9\-]{2,25}$/u</Check>
+		<Attribs>
+			<size>1</size>
+			<style>width: 100%;</style>
+			<onchange>SettingsUpdate();</onchange>
+			<prompt>Система управления используемая на сервере</prompt>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>DCImanager5</Value>
+	</SystemID>
+	<!-- *********************************************************************** -->
+	<IP>
+		<Check>IP</Check>
+		<Comment>IP адрес</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>IPv4 адрес сервера</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value />
+	</IP>
+	<!-- *********************************************************************** -->
+	<BalancingFactor>
+		<Check>/^[0-9\.]{1,32}$/u</Check>
+		<Comment>Приоритет балансировки</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Число, может быть дробным (разделитель - точка). Используется для определения приоритета сервера, при балансировке. Может задаваться по числу процессоров (ядер), или, как какой-то абстрактный множитель, по производительности сервера.</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>4.0</Value>
+	</BalancingFactor>
+	<!-- *********************************************************************** -->
+	<IsAutoBalancing>
+		<Check>Char</Check>
+		<Comment>Автобалансировка</Comment>
+		<CommentAttribs>
+			<style>cursor:pointer;</style>
+			<onclick>ChangeCheckBox('IsAutoBalancing'); return false;</onclick>
+			<prompt>Сервер принимает участие в автобалансировке - т.е. может быть автоматически назначен сервером по-умолчанию</prompt>
+		</CommentAttribs>
+		<Type>Input</Type>
+		<Attribs>
+			<type>checkbox</type>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>yes</Value>
+	</IsAutoBalancing>
+	<!-- *********************************************************************** -->
+	<IsLogging>
+		<Check>Char</Check>
+		<Comment>Записывать запросы в лог</Comment>
+		<CommentAttribs>
+			<style>cursor:pointer;</style>
+			<onclick>ChangeCheckBox('IsLogging'); return false;</onclick>
+			<prompt>Записывать в лог все запросы и ответы сервера</prompt>
+		</CommentAttribs>
+		<Type>Input</Type>
+		<Attribs>
+			<type>checkbox</type>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>yes</Value>
+	</IsLogging>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Domain>
+		<Title>Пользовательские аккаунты</Title>
+		<Check>Domain</Check>
+		<Comment>Доменный адрес</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Используется при создании служебных доменов для аккаунтов клиентов</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>test.su</Value>
+	</Domain>
+	<!-- *********************************************************************** -->
+	<Prefix>
+		<Check>/^[a-zA-Z0-9\-]{1,5}$/u</Check>
+		<Comment>Префикс имени аккаунта</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Используется при назначении имени пользовательского аккаунта. Имена аккаунтов для клиентов, с целью уникальности назначаются в виде: префикс00000, где 00000 - номер заказа, например: v10212</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>v</Value>
+	</Prefix>
+	<!-- *********************************************************************** -->
+	<DiskTemplate>
+		<Check>/.{1,512}/u</Check>
+		<Comment>Шаблоны диска</Comment>
+		<Type>TextArea</Type>
+		<Attribs>
+			<prompt>Дисковые шаблоны используемые при создании виртуального сервера. Один на строку. По-умолчанию используется первый из заданных. Возможно (необязательно) задать отображаемое имя, через знак "=". При включенном обновлении шаблонов, список берётся с сервера. Примеры:
+			ubuntu-10.04-x86_64
+			debian-5.0-x86_64-ispmanager=debian-5.0 с ISPmanager
+			debian-5.0-amd64-minimal=Минимальная установка debian-5.0
+			centos-5-x86_64
+			fedora-15-x86_64</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+			<rows>5</rows>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value />
+	</DiskTemplate>
+	<!-- *********************************************************************** -->
+	<IsUpdateDiskTemplates>
+		<Check>Char</Check>
+		<Comment>Обновлять список шаблонов</Comment>
+		<CommentAttribs>
+			<style>cursor:pointer;</style>
+			<onclick>ChangeCheckBox('IsUpdateDiskTemplates'); return false;</onclick>
+			<prompt>Обновлять список шаблонов, в соответствии со списком шаблонов доступных на сервере</prompt>
+		</CommentAttribs>
+		<Type>Input</Type>
+		<Attribs>
+			<type>checkbox</type>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>yes</Value>
+	</IsUpdateDiskTemplates>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Theme>
+		<Title>Параметры панели управления</Title>
+		<Check>/^[a-zA-Z0-9\.\-]{2,32}$/u</Check>
+		<Comment>Тема</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Тема устанавливаемая клиенту при переходе в панель управления заказом VPS</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value />
+	</Theme>
+	<!-- *********************************************************************** -->
+	<Language>
+		<Check>/^[a-zA-Z0-9\.\-]{1,32}$/u</Check>
+		<Comment>Язык</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Язык устанавливаемый клиенту при переходе в панель управления заказом VPS</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>Default</Value>
+	</Language>
+	<!-- *********************************************************************** -->
+	<Url>
+		<Check>Char</Check>
+		<Comment>Адрес входа для клиентов</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>На какой URL необходимо логинится клиентам для входа в панель управления заказом VPS</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value />
+	</Url>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Ns1Name>
+		<Title>Сервера имен</Title>
+		<Check>DnsDomain</Check>
+		<Comment>Первичный</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Сервер DNS на котором будут размещены доменные зоны клиентских сайтов</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>ns1.isp.su</Value>
+	</Ns1Name>
+	<!-- *********************************************************************** -->
+	<Ns2Name>
+		<Check>DnsDomain</Check>
+		<Comment>Вторичный</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Сервер DNS на котором будут размещены доменные зоны клиентских сайтов</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>ns2.isp.su</Value>
+	</Ns2Name>
+	<!-- *********************************************************************** -->
+	<Ns3Name>
+		<Check>DnsDomain</Check>
+		<Comment>Дополнительный</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Сервер DNS на котором будут размещены доменные зоны клиентских сайтов</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value />
+	</Ns3Name>
+	<!-- *********************************************************************** -->
+	<Ns4Name>
+		<Check>DnsDomain</Check>
+		<Comment>Расширенный</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Сервер DNS на котором будут размещены доменные зоны клиентских сайтов</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value />
+	</Ns4Name>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<IPsPool>
+		<Title>IP адреса для VPS</Title>
+		<Check>Text</Check>
+		<Comment>Пул IP адресов</Comment>
+		<Type>TextArea</Type>
+		<Attribs>
+			<prompt>ПОКА НЕ РАБОТАЕТ. Пул адресов, из которых выбирается IP адрес назначаемый VPS</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+			<rows>5</rows>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value />
+	</IPsPool>
+	<!-- *********************************************************************** -->
+</Attribs>
+<!-- *********************************************************************** -->
+</XML>
+
