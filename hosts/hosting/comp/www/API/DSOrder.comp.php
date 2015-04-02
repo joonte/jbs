@@ -11,20 +11,21 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 $ContractID	= (integer) @$Args['ContractID'];
 $DSSchemeID	= (integer) @$Args['DSSchemeID'];
 $Comment	=  (string) @$Args['Comment'];
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
 if(!$DSSchemeID)
 	return new gException('DS_SCHEME_NOT_DEFINED','Сервер не выбран');
 #-------------------------------------------------------------------------------
-$DSScheme = DB_Select('DSSchemes',Array('ID','Name','ServersGroupID','IsActive'),Array('UNIQ','ID'=>$DSSchemeID));
+$DSScheme = DB_Select('DSSchemes',Array('ID','Name','ServerID','IsActive'),Array('UNIQ','ID'=>$DSSchemeID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DSScheme)){
 case 'error':
@@ -101,7 +102,7 @@ if($Count < 1){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>40000));
+$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServerID'=>$DSScheme['ServerID'],'ServiceID'=>40000));
 if(Is_Error($OrderID))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -118,8 +119,8 @@ switch(ValueOf($Comp)){
 case 'error':
 return ERROR | @Trigger_Error(500);
 case 'exception':
-	#return ERROR | @Trigger_Error(400);
-	return $Comp;
+	return ERROR | @Trigger_Error(400);
+	#return $Comp;
 case 'array':
 	break;
 default:

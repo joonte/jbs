@@ -12,37 +12,42 @@ $Where = "`StatusID` = 'Suspended' AND ROUND((`StatusDate` + 1296000 - UNIX_TIME
 $DSOrders = DB_Select('DSOrdersOwners',Array('ID','OrderID','UserID','IP','StatusDate'),Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DSOrders)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    # No more...
-  break;
-  case 'array':
-    #---------------------------------------------------------------------------
-    $GLOBALS['TaskReturnInfo'] = SPrintF('Notified %u accounts',SizeOf($DSOrders));
-    #---------------------------------------------------------------------------
-    foreach($DSOrders as $DSOrder){
-      #-------------------------------------------------------------------------
-      $IsSend = NotificationManager::sendMsg(new Message('DSNoticeDelete',(integer)$DSOrder['UserID'],Array('DSOrder'=>$DSOrder)));
-      #-------------------------------------------------------------------------
-      switch(ValueOf($IsSend)){
-        case 'error':
-          return ERROR | @Trigger_Error(500);
-        case 'exception':
-          # No more...
-        case 'true':
-          # No more...
-        break;
-        default:
-          return ERROR | @Trigger_Error(101);
-      }
-    }
-  break;
-  default:
-    return ERROR | @Trigger_Error(101);
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	# No more...
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	$GLOBALS['TaskReturnInfo'] = Array('Notified'=>Array(SizeOf($DSOrders)));
+	#-------------------------------------------------------------------------------
+	foreach($DSOrders as $DSOrder){
+		#-------------------------------------------------------------------------------
+		$IsSend = NotificationManager::sendMsg(new Message('DSNoticeDelete',(integer)$DSOrder['UserID'],Array('DSOrder'=>$DSOrder)));
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($IsSend)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			# No more...
+		case 'true':
+			# No more...
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 return MkTime(4,25,0,Date('n'),Date('j')+1,Date('Y'));
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>
