@@ -509,7 +509,7 @@ CREATE TABLE IF NOT EXISTS `DSSchemes` (
   `CostDay` decimal(11,2) DEFAULT '0.00',
   `CostMonth` decimal(11,2) DEFAULT '0.00',
   `CostInstall` decimal(11,2) NOT NULL DEFAULT '0.00',
-  `ServersGroupID` int(11) NOT NULL,
+  `ServerID` int(11) NULL,
   `NumServers` int(4) NOT NULL,
   `RemainServers` int(4) NOT NULL,
   `IsCalculateNumServers` enum('no','yes') NOT NULL,
@@ -539,8 +539,11 @@ CREATE TABLE IF NOT EXISTS `DSSchemes` (
   `AdminComment` char(255) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `DSSchemesGroupID` (`GroupID`),
-  KEY `DSSchemesUserID` (`UserID`)
+  KEY `DSSchemesUserID` (`UserID`),
+  KEY `DSSchemesServerID` (`ServerID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+-- SEPARATOR
+ALTER TABLE `DSSchemes` ADD CONSTRAINT `DSSchemesServerID` FOREIGN KEY (`ServerID`) REFERENCES `Servers` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- SEPARATOR
 

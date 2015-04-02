@@ -135,61 +135,13 @@ foreach($OldGroups as $Group){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-#$IsQuery = DB_Query('ALTER TABLE `DSSchemes` DROP FOREIGN KEY `DSSchemesRegistratorID`');
-#if(Is_Error($IsQuery))
-#	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-#$IsQuery = DB_Query('ALTER TABLE `DSSchemes` DROP KEY `DSSchemesRegistratorID`');
-#if(Is_Error($IsQuery))
-#	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$IsQuery = DB_Query('ALTER TABLE `DSSchemes` CHANGE `ServersGroupID` `ServerID` INT(11) NOT NULL');
+$IsQuery = DB_Query('ALTER TABLE `DSSchemes` CHANGE `ServersGroupID` `ServerID` INT(11) NULL');
 if(Is_Error($IsQuery))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-#$IsQuery = DB_Query('ALTER TABLE `DSSchemes` ADD `tmpServerID` int(11) NOT NULL');
-#if(Is_Error($IsQuery))
-#	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$IsQuery = DB_Query(SPrintF('UPDATE `DSSchemes` SET `ServerID` = %u',$ServersGroupID));
+$IsQuery = DB_Query(SPrintF('UPDATE `DSSchemes` SET `ServerID` = %u',$ServerID));
 if(Is_Error($IsQuery))
 	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-#$DSSchemes = DB_Select('DSSchemes',Array('ID','ServerID','tmpServerID'),Array('Where'=>'`ServerID` > 0'));
-#-------------------------------------------------------------------------------
-#switch(ValueOf($DSSchemes)){
-#case 'error':
-#	return ERROR | @Trigger_Error(500);
-#case 'exception':
-#	break;
-#case 'array':
-#	#-------------------------------------------------------------------------------
-#	foreach($DSSchemes as $DSScheme){
-#		#-------------------------------------------------------------------------------
-#		$IsUpdate = DB_Update('DSSchemes',Array('ServerID'=>$DS[$DSScheme['tmpServerID']]),Array('ID'=>$DSScheme['ID']));
-#		if(Is_Error($IsUpdate))
-#			return ERROR | @Trigger_Error(500);
-#		#-------------------------------------------------------------------------------
-#	}
-#	#-------------------------------------------------------------------------------
-#        break;
-#	#-------------------------------------------------------------------------------
-#default:
-#	return ERROR | @Trigger_Error(101);
-#}
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-# удаляем OldGroups
-#$IsQuery = DB_Query('DROP TABLE `OldGroups`');
-#if(Is_Error($IsQuery))
-#	return ERROR | @Trigger_Error(500);
-#
-#-------------------------------------------------------------------------------
-#$IsQuery = DB_Query('ALTER TABLE `DSSchemes` DROP `tmpServerID`');
-#if(Is_Error($IsQuery))
-#	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IsQuery = DB_Query('ALTER TABLE `DSSchemes` ADD KEY `DSSchemesServerID` (`ServerID`)');
 if(Is_Error($IsQuery))
@@ -199,16 +151,13 @@ $IsQuery = DB_Query('ALTER TABLE `DSSchemes` ADD CONSTRAINT `DSSchemesServerID` 
 if(Is_Error($IsQuery))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 $IsQuery = DB_Query('DROP TABLE IF EXISTS `DSServers`');
 if(Is_Error($IsQuery))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 $IsQuery = DB_Query('DROP TABLE IF EXISTS `DSServersGroups`');
 if(Is_Error($IsQuery))
 	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Is_Error(DB_Commit($TransactionID)))
 	return ERROR | @Trigger_Error(500);

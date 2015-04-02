@@ -153,9 +153,9 @@ if($StepID){
 	#-------------------------------------------------------------------------------
 	$Columns = Array(
 			'ID','Name','ServerID','UserComment','CostMonth','CostInstall','cputype', 'cpuarch', 'numcpu', 'numcores', 'cpufreq', 'ram', 'raid', 'disk1', 'disk2',
-			SPrintF('(SELECT `Name` FROM `ServersGroups` WHERE (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupName`',$UniqID),
-			SPrintF('(SELECT `Comment` FROM `ServersGroups` WHERE (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupComment`',$UniqID),
-			SPrintF('(SELECT `SortID` FROM `ServersGroups` WHERE (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupSortID`',$UniqID),
+			SPrintF('(SELECT `Name` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupName`',$UniqID),
+			SPrintF('(SELECT `Comment` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupComment`',$UniqID),
+			SPrintF('(SELECT `SortID` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupSortID`',$UniqID),
 			);
 	#-------------------------------------------------------------------------------
 	$DSSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('ServersGroupSortID','SortID'),'Where'=>"`IsActive` = 'yes' AND `RemainServers` > 0"));
