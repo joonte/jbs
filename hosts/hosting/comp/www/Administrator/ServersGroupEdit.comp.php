@@ -315,14 +315,14 @@ $Form->AddChild($Comp);
 #-------------------------------------------------------------------------------
 if($ServersGroupID){
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load(
-			'Form/Input',
-			Array(
-				'name'  => 'ServersGroupID',
-				'type'  => 'hidden',
-				'value' => $ServersGroupID
-				)
-			);
+	$Comp = Comp_Load('Form/Input',Array('name'=>'ServersGroupID','type'=>'hidden','value'=>$ServersGroupID));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Form->AddChild($Comp);
+	#-------------------------------------------------------------------------------
+	# надо сохранить старое значение счётчика доп услуг, иначе при увеличении числа ругаеетс яна услуги...
+	$Comp = Comp_Load('Form/Input',Array('name'=>'OldCount','type'=>'hidden','value'=>IsSet($ServersGroup['Params']['Count'])?$ServersGroup['Params']['Count']:0));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
