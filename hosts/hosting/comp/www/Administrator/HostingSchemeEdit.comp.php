@@ -127,6 +127,10 @@ if($HostingSchemeID){
   );
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Messages = Messages();
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $DOM = new DOM();
 #-------------------------------------------------------------------------------
 $Links = &Links();
@@ -348,7 +352,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 5,
     'name'  => 'MaxDaysPay',
     'value' => $HostingScheme['MaxDaysPay']
   )
@@ -363,10 +366,9 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
    'type'  => 'text',
-   'size'  => 5,
    'name'  => 'MaxOrders',
    'value' => $HostingScheme['MaxOrders'],
-   'prompt'=> 'Максимально возможное число заказов по данному тарифу, на каждого клиента. Используется для создания "триальных" тарифных планов. Для снятия ограничений, введите ноль.'
+   'prompt'=> $Messages['Prompts']['MaxOrders']
   )
 );
 if(Is_Error($Comp))
@@ -380,7 +382,6 @@ $Comp = Comp_Load(
   Array(
     'type'  => 'text',
     'name'  => 'SortID',
-    'size'  => 5,
     'value' => $HostingScheme['SortID']
   )
 );
@@ -396,7 +397,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaDisk',
     'value' => $HostingScheme['QuotaDisk']
   )
@@ -410,7 +410,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaEmail',
     'value' => $HostingScheme['QuotaEmail']
   )
@@ -424,7 +423,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaDomains',
     'value' => $HostingScheme['QuotaDomains']
   )
@@ -438,7 +436,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaFTP',
     'value' => $HostingScheme['QuotaFTP']
   )
@@ -452,7 +449,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaParkDomains',
     'value' => $HostingScheme['QuotaParkDomains']
   )
@@ -466,7 +462,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaSubDomains',
     'value' => $HostingScheme['QuotaSubDomains']
   )
@@ -480,7 +475,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaDBs',
     'value' => $HostingScheme['QuotaDBs']
   )
@@ -494,7 +488,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaTraffic',
     'value' => $HostingScheme['QuotaTraffic']
   )
@@ -508,7 +501,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaEmailAutoResp',
     'value' => $HostingScheme['QuotaEmailAutoResp']
   )
@@ -522,7 +514,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaEmailLists',
     'value' => $HostingScheme['QuotaEmailLists']
   )
@@ -536,7 +527,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaEmailForwards',
     'value' => $HostingScheme['QuotaEmailForwards']
   )

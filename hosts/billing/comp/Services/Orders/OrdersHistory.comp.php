@@ -24,6 +24,7 @@ if(Is_Error($Count))
 	return ERROR | Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Count){
+	#-------------------------------------------------------------------------------
 	# это вторичная проставка статуса для заказа. просто обновляем StatusDate
 	$IsUpdate = DB_Update('OrdersHistory',$IOrdersHistory,Array('Where'=>SPrintF('`OrderID` = %u',$Params['OrderID'])));
 	if(Is_Error($IsUpdate))
@@ -37,6 +38,7 @@ if($Count){
 if(!IsSet($Params['ServiceID']) || !IsSet($Params['SchemeID'])){
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[comp/Services/Orders/OrdersHistory]: не указаны ServiceID и SchemeID заказа #%s',$Params['OrderID']));
+	#-------------------------------------------------------------------------------
 	return Array('Status'=>'Ok');
 	#-------------------------------------------------------------------------------
 }
@@ -48,6 +50,7 @@ $Where = Array(
 			SPrintF('`ServiceID` = %u',$Params['ServiceID']),
 			SPrintF('`SchemeID` = %u',$Params['SchemeID'])
 		);
+#-------------------------------------------------------------------------------
 $Count = DB_Count('OrdersHistory',Array('Where'=>$Where));
 if(Is_Error($Count))
 	return ERROR | Trigger_Error(500);
