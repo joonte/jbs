@@ -1206,44 +1206,54 @@
     <IsActive>1</IsActive>
     <DaysBeforeDeleted>182</DaysBeforeDeleted>
    </SetDeletedWaitingOrdersSettings>
-   <!-- ********************************************************************* -->
-   <ResetOrdersDaysSettings>
-    <IsActive>1</IsActive>
-    <IsEvent>1</IsEvent>
-    <ResetDaysTo>28</ResetDaysTo>
-   </ResetOrdersDaysSettings>
-   <!-- ********************************************************************* -->
-   <!-- задачи -->
-   <DailyTasks>
-    <!-- курсы валют с сайта цекнтробанка -->
-    <CourseUpdate>Обновление курсов валют</CourseUpdate>
-    <!-- Операции со счетами -->
-    <NotifyWaitingInvoice>Уведомление о неоплаченных счетах</NotifyWaitingInvoice>
-    <EraseDeletedInvoice>Удаление счетов в статусе Отменен</EraseDeletedInvoice>
-    <SetDeletedWaitingInvoice>Отмена неоплаченных счетов</SetDeletedWaitingInvoice>
-    <NotifyConditionallyInvoice>Уведомление о условно оплаченных счетах</NotifyConditionallyInvoice>
-    <CreateAndSendInvoices>Создание и отсылка счетов на почту</CreateAndSendInvoices>
-    <!-- Удаление пользователей не заходивших в биллинг более года -->
-    <EraseOldUsers>Удаление неактивных пользователей</EraseOldUsers>
-    <!-- Очистка некоторых таблиц -->
-    <CleanTables>Очистка таблиц</CleanTables>
-    <!-- проверка прав на конфигурационный файл биллинговой системы -->
-    <CheckConfigPermission>Проверка прав на конфигурационный файл</CheckConfigPermission>
-    <!-- Уведомление о окончании услуг настроенных вручную -->
-    <OrdersNoticeSuspend>Уведомление о окончании услуг</OrdersNoticeSuspend>
-    <!-- Сборщик устаревших сессий -->
-    <Sessions>Сборщик устаревших сессий</Sessions>
-    <!-- закрытие старых непросматриваемых тикетов -->
-    <CloseEdesks>Закрытие старых тикетов</CloseEdesks>
-    <!-- удаление неоплаченных заказов -->
-    <SetDeletedWaitingOrders>Отмена неоплаченных заказов</SetDeletedWaitingOrders>
-    <!-- автоматическое списание лишних дней у бесплатных заказов -->
-    <ResetOrdersDays>Списание лишних дней у заказов</ResetOrdersDays>
-   </DailyTasks>
-   <WeeklyTasks type="array" />
-   <MonthlyTasks type="array" />
-  </GC>
- </Types>
+			<!-- ********************************************************************* -->
+			<ResetOrdersDaysSettings>
+				<IsActive>1</IsActive>
+				<IsEvent>1</IsEvent>
+				<ResetDaysTo>28</ResetDaysTo>
+			</ResetOrdersDaysSettings>
+			<!-- ********************************************************************* -->
+			<CheckSoftWareSettings>
+				<IsActive>1</IsActive>
+				<IsEvent>1</IsEvent>
+			</CheckSoftWareDaysSettings>
+			<!-- ********************************************************************* -->
+			<!-- задачи -->
+			<DailyTasks>
+				<!-- проверка софта -->
+				<CheckSoftWare>Проверка наличия ПО необходимого для работы биллинга</CheckSoftWare>
+				<!-- курсы валют с сайта цекнтробанка -->
+				<CourseUpdate>Обновление курсов валют</CourseUpdate>
+				<!-- Операции со счетами -->
+				<NotifyWaitingInvoice>Уведомление о неоплаченных счетах</NotifyWaitingInvoice>
+				<EraseDeletedInvoice>Удаление счетов в статусе Отменен</EraseDeletedInvoice>
+				<SetDeletedWaitingInvoice>Отмена неоплаченных счетов</SetDeletedWaitingInvoice>
+				<NotifyConditionallyInvoice>Уведомление о условно оплаченных счетах</NotifyConditionallyInvoice>
+				<CreateAndSendInvoices>Создание и отсылка счетов на почту</CreateAndSendInvoices>
+				<!-- Удаление пользователей не заходивших в биллинг более года -->
+				<EraseOldUsers>Удаление неактивных пользователей</EraseOldUsers>
+				<!-- Очистка некоторых таблиц -->
+				<CleanTables>Очистка таблиц</CleanTables>
+				<!-- проверка прав на конфигурационный файл биллинговой системы -->
+				<CheckConfigPermission>Проверка прав на конфигурационный файл</CheckConfigPermission>
+				<!-- Уведомление о окончании услуг настроенных вручную -->
+				<OrdersNoticeSuspend>Уведомление о окончании услуг</OrdersNoticeSuspend>
+				<!-- Сборщик устаревших сессий -->
+				<Sessions>Сборщик устаревших сессий</Sessions>
+				<!-- закрытие старых непросматриваемых тикетов -->
+				<CloseEdesks>Закрытие старых тикетов</CloseEdesks>
+				<!-- удаление неоплаченных заказов -->
+				<SetDeletedWaitingOrders>Отмена неоплаченных заказов</SetDeletedWaitingOrders>
+				<!-- автоматическое списание лишних дней у бесплатных заказов -->
+				<ResetOrdersDays>Списание лишних дней у заказов</ResetOrdersDays>
+			</DailyTasks>
+			<!-- *********************************************************************** -->
+			<WeeklyTasks type="array" />
+			<!-- *********************************************************************** -->
+			<MonthlyTasks type="array" />
+			<!-- *********************************************************************** -->
+		</GC>
+	</Types>
 </Tasks>
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
