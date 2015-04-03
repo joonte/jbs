@@ -1216,7 +1216,7 @@
 			<CheckSoftWareSettings>
 				<IsActive>1</IsActive>
 				<IsEvent>1</IsEvent>
-			</CheckSoftWareDaysSettings>
+			</CheckSoftWareSettings>
 			<!-- ********************************************************************* -->
 			<!-- задачи -->
 			<DailyTasks>
