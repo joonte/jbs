@@ -51,6 +51,7 @@ if($ExtraIPSchemeID){
 				'MinDaysProlong'	=> 14,
 				'MaxDaysPay'		=> 1460,
 				'MaxOrders'		=> 0,
+				'MinOrdersPeriod'	=> 0,
 				'SortID'		=> 10
 			);
 	#-------------------------------------------------------------------------------
@@ -98,7 +99,6 @@ $Comp = Comp_Load(
 		'Form/Input',
 		Array(
 			'type'	=> 'text',
-			'size'	=> 10,
 			'name'	=> 'PackageID',
 			'value'	=> $ExtraIPScheme['PackageID']
 			),
@@ -171,7 +171,6 @@ $Comp = Comp_Load(
 		'Form/Input',
 		Array(
 			'type'	=> 'text',
-			'size'	=> 5,
 			'name'	=> 'MinDaysPay',
 			'value'	=> $ExtraIPScheme['MinDaysPay']
 			)
@@ -186,7 +185,6 @@ $Comp = Comp_Load(
 		'Form/Input',
 		Array(
 			'type'	=> 'text',
-			'size'	=> 5,
 			'name'	=> 'MinDaysProlong',
 			'value'	=> $ExtraIPScheme['MinDaysProlong'],
 			'prompt'=> 'Минимальное число дней, на которое можно продлевать заказ'
@@ -202,7 +200,6 @@ $Comp = Comp_Load(
 		'Form/Input',
 		Array(
 			'type'	=> 'text',
-			'size'	=> 5,
 			'name'	=> 'MaxDaysPay',
 			'value'	=> $ExtraIPScheme['MaxDaysPay']
 			)
@@ -217,7 +214,6 @@ $Comp = Comp_Load(
 		'Form/Input',
 		Array(
 			'type'	=> 'text',
-			'size'	=> 5,
 			'name'	=> 'MaxOrders',
 			'value'	=> $ExtraIPScheme['MaxOrders'],
 			'prompt'=> $Messages['Prompts']['MaxOrders']
@@ -229,12 +225,18 @@ if(Is_Error($Comp))
 $Table[] = Array('Максимальное кол-во заказов',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'MinOrdersPeriod','value'=>$ExtraIPScheme['MinOrdersPeriod'],'prompt'=>$Messages['Prompts']['MinOrdersPeriod']));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Минимальный период между заказами',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load(
 		'Form/Input',
 		Array(
 			'type'	=> 'text',
 			'name'	=> 'SortID',
-			'size'	=> 5,
 			'value'	=> $ExtraIPScheme['SortID']
 			)
 		);

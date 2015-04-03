@@ -51,6 +51,7 @@ if($VPSSchemeID){
 				'MinDaysProlong'	=> 14,
 				'MaxDaysPay'		=> 1460,
 				'MaxOrders'		=> 0,
+				'MinOrdersPeriod'	=> 0,
 				'SortID'		=> 10,
 				'vdslimit'		=> 1,
 				'disklimit'		=> 999,
@@ -119,7 +120,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'PackageID',
     'value' => $VPSScheme['PackageID']
   ),
@@ -217,7 +217,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 5,
     'name'  => 'MinDaysPay',
     'value' => $VPSScheme['MinDaysPay'],
     'style' => 'width: 100%;',
@@ -233,7 +232,6 @@ $Comp = Comp_Load(
   'Form/Input',
     Array(
      'type'  => 'text',
-     'size'  => 5,
      'name'  => 'MinDaysProlong',
      'value' => $VPSScheme['MinDaysProlong'],
      'prompt'=> 'Минимальное число дней, на которое можно продлевать заказ',
@@ -277,6 +275,13 @@ if(Is_Error($Comp))
 $Table[] = Array('Максимальное кол-во заказов',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'MinOrdersPeriod','value'=>$VPSScheme['MinOrdersPeriod'],'prompt'=>$Messages['Prompts']['MinOrdersPeriod'],'style'=>'width: 100%;'));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Минимальный период между заказами',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',
   Array(
@@ -297,7 +302,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'disklimit',
     'value' => $VPSScheme['disklimit'],
     'style' => 'width: 100%;',
@@ -312,7 +316,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'ncpu',
     'prompt'=> 'количество/число процессоров выделыемых виртуальной машине',
     'value' => $VPSScheme['ncpu'],
@@ -328,7 +331,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'cpu',
     'prompt'=> 'Частота каждого выделенного процессора (в случае виртуализации KVM, это число - приоритет cgroups)',
     'value' => $VPSScheme['cpu'],
@@ -345,7 +347,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'mem',
     'value' => $VPSScheme['mem'],
     'prompt'=> 'сколько оперативной памяти выделить машине',
@@ -362,7 +363,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'chrate',
     'value' => $VPSScheme['chrate'],
     'prompt'=> 'Ограничение скорости канала, в мегабитах',
@@ -381,7 +381,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'bmem',
     'value' => $VPSScheme['bmem'],
     'prompt'=> 'количество дополнительной оперативной памяти, которое может использовать виртуальная машина, при наличии свободной оперативной памяти на хост-машине',
@@ -398,7 +397,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'maxswap',
     'value' => $VPSScheme['maxswap'],
     'style' => 'width: 100%;',
@@ -413,7 +411,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'maxdesc',
     'value' => $VPSScheme['maxdesc'],
     'prompt'=> 'Максимальное количество открытых файлов',
@@ -429,7 +426,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'proc',
     'value' => $VPSScheme['proc'],
     'style' => 'width: 100%;',
@@ -444,7 +440,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 10,
 		'name'  => 'traf',
 		'value' => $VPSScheme['traf'],
 		'style' => 'width: 100%;',
@@ -468,7 +463,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 12,
     'name'  => 'limitpvtdns',
     'value' => $VPSScheme['limitpvtdns'],
     'prompt'=> 'Лимит приватных DNS. Параметр зависим от возможности DnsLimits. Используется для ограничения числа создаваемых доменов',
@@ -485,7 +479,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 12,
     'name'  => 'limitpubdns',
     'value' => $VPSScheme['limitpubdns'],
     'prompt'=> 'Лимит DNS провайдера. Параметр зависим от возможности DnsLimits. Используется для ограничения числа создаваемых доменов',

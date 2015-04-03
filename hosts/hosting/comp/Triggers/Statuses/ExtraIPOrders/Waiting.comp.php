@@ -41,12 +41,13 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Params = Array(
-		'SchemeID'	=> $ExtraIPOrder['SchemeID'],
-		'OrderID'	=> $ExtraIPOrder['OrderID'],
-		'MaxOrders'	=> $Scheme['MaxOrders'],
-		'ServiceID'	=> $Service['ID'],
-		'ServiceName'	=> $Service['Name'],
-		'SchemeName'	=> $Scheme['Name']
+		'SchemeID'		=> $ExtraIPOrder['SchemeID'],
+		'OrderID'		=> $ExtraIPOrder['OrderID'],
+		'MaxOrders'		=> $Scheme['MaxOrders'],
+		'MinOrdersPeriod'	=> $Scheme['MinOrdersPeriod'],
+		'ServiceID'		=> $Service['ID'],
+		'ServiceName'		=> $Service['Name'],
+		'SchemeName'		=> $Scheme['Name']
 		);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Services/Orders/OrdersHistory',$Params);

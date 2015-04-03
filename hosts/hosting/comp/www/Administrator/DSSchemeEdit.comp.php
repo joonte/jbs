@@ -51,6 +51,7 @@ if($DSSchemeID){
 			'MinDaysProlong'		=> 14,
 			'MaxDaysPay'			=> 1460,
 			'MaxOrders'			=> 0,
+			'MinOrdersPeriod'		=> 0,
 			'SortID'			=> 10,
 			'cputype'			=> 'Opteron',
 			'cpuarch'			=> 'x32',
@@ -233,6 +234,13 @@ if(Is_Error($Comp))
 $Table[] = Array('Максимальное кол-во заказов',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'MinOrdersPeriod','value'=>$DSScheme['MinOrdersPeriod'],'prompt'=>$Messages['Prompts']['MinOrdersPeriod']));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Минимальный период между заказами',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'SortID','value'=>$DSScheme['SortID']));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
@@ -277,7 +285,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 5,
 		'name'  => 'numcpu',
 		'value' => $DSScheme['numcpu']
 	)
@@ -291,7 +298,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 5,
 		'name'  => 'numcores',
 		'value' => $DSScheme['numcores']
 	)
@@ -305,7 +311,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 5,
 		'name'  => 'cpufreq',
 		'value' => $DSScheme['cpufreq']
 	)
@@ -324,7 +329,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 5,
 		'name'  => 'ram',
 		'value' => $DSScheme['ram']
 	)
@@ -338,7 +342,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 25,
 		'name'  => 'raid',
 		'value' => $DSScheme['raid']
 	)
@@ -359,7 +362,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 25,
 		'name'  => 'disk1',
 		'value' => $DSScheme['disk1']
 	)
@@ -373,7 +375,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 25,
 		'name'  => 'disk2',
 		'value' => $DSScheme['disk2']
 	)
@@ -387,7 +388,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 25,
 		'name'  => 'disk3',
 		'value' => $DSScheme['disk3']
 	)
@@ -401,7 +401,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 25,
 		'name'  => 'disk4',
 		'value' => $DSScheme['disk4']
 	)

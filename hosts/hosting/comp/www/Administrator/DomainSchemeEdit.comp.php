@@ -47,6 +47,7 @@ if($DomainSchemeID){
 				'MinOrderYears'		=> 1,
 				'MaxActionYears'	=> 1,
 				'MaxOrders'		=> 0,
+				'MinOrdersPeriod'	=> 0,
 				'DaysToProlong'		=> 31,
 				'DaysBeforeTransfer'	=> 60,
 				'DaysAfterTransfer'	=> 60
@@ -213,6 +214,13 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Максимальное кол-во заказов',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'MinOrdersPeriod','value'=>$DomainScheme['MinOrdersPeriod'],'prompt'=>$Messages['Prompts']['MinOrdersPeriod']));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Минимальный период между заказами',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>SPrintF("FormEdit('/Administrator/API/DomainSchemeEdit','DomainSchemeEditForm','%s');",$Title),'value'=>($DomainSchemeID?'Сохранить':'Добавить')));

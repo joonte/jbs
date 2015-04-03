@@ -51,14 +51,34 @@ $Where = Array(
 			SPrintF('`SchemeID` = %u',$Params['SchemeID'])
 		);
 #-------------------------------------------------------------------------------
-$Count = DB_Count('OrdersHistory',Array('Where'=>$Where));
-if(Is_Error($Count))
-	return ERROR | Trigger_Error(500);
+$OrdersHistory = DB_Select('OrdersHistory',Array('COUNT(*) AS `Counter`','MAX(`CreateDate`) AS `LastDate`'),Array('UNIQ','Where'=>$Where));
 #-------------------------------------------------------------------------------
-# проверяем, как много таких заказов можно делать
-if($Params['MaxOrders'] > 0 && $Count >= $Params['MaxOrders'])
-	if(!$GLOBALS['__USER']['IsAdmin'])
-		return new gException('TOO_MANY_ORDERS',SPrintF('Для данного тарифного плана существует ограничение на максимальное число заказов, равное %s. Ранее, вы уже делали заказы по данному тарифу%s, и больше сделать не можете. Выберите другой тарифный план.',$Params['MaxOrders'],($Count > $Params['MaxOrders'])?SPrintF(' (%s)',$Count):''));
+switch(ValueOf($OrdersHistory)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	# No more...
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	# проверяем, как много таких заказов можно делать
+	if($Params['MaxOrders'] > 0 && $OrdersHistory['Counter'] >= $Params['MaxOrders'])
+		if(!$GLOBALS['__USER']['IsAdmin'])
+			return new gException('TOO_MANY_ORDERS',SPrintF('Для данного тарифного плана существует ограничение на максимальное число заказов, равное %s. Ранее, вы уже делали заказы по данному тарифу%s, и больше сделать не можете. Выберите другой тарифный план.',$Params['MaxOrders'],($OrdersHistory['Counter'] > $Params['MaxOrders'])?SPrintF(' (%s)',$OrdersHistory['Counter']):''));
+	#-------------------------------------------------------------------------------
+	# проверяем, как часто можно делать такие заказы
+	if($Params['MinOrdersPeriod'] > 0 && $Params['MinOrdersPeriod'] > (Time() - $OrdersHistory['LastDate'])/(24 * 60 * 60))
+		if(!$GLOBALS['__USER']['IsAdmin'])
+			return new gException('TOO_MANY_ORDER_RATE',SPrintF('Для данного тарифного плана существует ограничение на частоту заказа. Тариф можно заказывать не чаще чем раз в %s дней. До возможности сделать заказ осталось %s дней. Пока, вы можете выбрать другой тарифный план.',$Params['MinOrdersPeriod'],Ceil($Params['MinOrdersPeriod'] - (Time() - $OrdersHistory['LastDate'])/(24 * 60 * 60))));
+	#-------------------------------------------------------------------------------
+        break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
+
+
+
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # вносим заказ в таблицу, если его там нет

@@ -51,6 +51,7 @@ if($DNSmanagerSchemeID){
 				'MinDaysProlong'	=> 5,
 				'MaxDaysPay'		=> 1460,
 				'MaxOrders'		=> 0,
+				'MinOrdersPeriod'	=> 0,
 				'Reseller'		=> '',
 				'ViewArea'		=> 'dns0.isp.su',
 				'DomainLimit'		=> '500',
@@ -93,7 +94,7 @@ if(Is_Error($Comp))
 $Table[] = Array('Название тарифного плана',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'text','size'=>10,'name'=>'PackageID','value'=>$DNSmanagerScheme['PackageID'],'prompt'=>'Внутренний идентификатор тарифа. Рекомендуется делать уникальными, только английские буквы и цифры'),'Точное имя пакета в панели управления');
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'PackageID','value'=>$DNSmanagerScheme['PackageID'],'prompt'=>'Внутренний идентификатор тарифа. Рекомендуется делать уникальными, только английские буквы и цифры'),'Точное имя пакета в панели управления');
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -230,35 +231,42 @@ if($DNSmanagerScheme['IsSchemeChange'])
 $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsSchemeChange\'); return false;'),'Возможность перехода с тарифа'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'text','size'=>5,'name'=>'MinDaysPay','value'=>$DNSmanagerScheme['MinDaysPay'],'prompt'=>'Минимальное число дней, на которое можно производить первую оплату заказа'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'MinDaysPay','value'=>$DNSmanagerScheme['MinDaysPay'],'prompt'=>'Минимальное число дней, на которое можно производить первую оплату заказа'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Минимальное кол-во дней оплаты',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'text','size'=>5,'name'=>'MinDaysProlong','value'=>$DNSmanagerScheme['MinDaysProlong'],'prompt'=>'Минимальное число дней, на которое можно продлевать заказ'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'MinDaysProlong','value'=>$DNSmanagerScheme['MinDaysProlong'],'prompt'=>'Минимальное число дней, на которое можно продлевать заказ'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Минимальное кол-во дней продления',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'text','size'=>5,'name'=>'MaxDaysPay','value'=>$DNSmanagerScheme['MaxDaysPay']));
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'MaxDaysPay','value'=>$DNSmanagerScheme['MaxDaysPay']));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Максимальное кол-во дней оплаты',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'text','size'=>5,'name'=>'MaxOrders','value'=>$DNSmanagerScheme['MaxOrders'],'prompt'=>$Messages['Prompts']['MaxOrders']));
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'MaxOrders','value'=>$DNSmanagerScheme['MaxOrders'],'prompt'=>$Messages['Prompts']['MaxOrders']));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Максимальное кол-во заказов',$Comp);
+$Table[] = Array('Максимальное количество заказов',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'SortID','size'=>5,'value'=>$DNSmanagerScheme['SortID']));
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'MinOrdersPeriod','value'=>$DNSmanagerScheme['MinOrdersPeriod'],'prompt'=>$Messages['Prompts']['MinOrdersPeriod']));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Минимальный период между заказами',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'SortID','value'=>$DNSmanagerScheme['SortID']));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

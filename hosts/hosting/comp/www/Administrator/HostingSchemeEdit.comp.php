@@ -51,6 +51,7 @@ if($HostingSchemeID){
     'MinDaysProlong'        => 14,
     'MaxDaysPay'            => 1460,
     'MaxOrders'             => 0,
+    'MinOrdersPeriod'		=> 0,
     'SortID'                => 10,
     'QuotaDisk'             => 999,
     'QuotaEmail'            => 999,
@@ -170,7 +171,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'PackageID',
     'value' => $HostingScheme['PackageID'],
     'prompt'=> 'Внутренний идентификатор тарифа. Рекомендуется делать уникальными, только английские буквы и цифры'
@@ -320,7 +320,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 5,
     'name'  => 'MinDaysPay',
     'value' => $HostingScheme['MinDaysPay'],
     'prompt'=> 'Минимальное число дней, на которое можно производить первую оплату заказа'
@@ -336,7 +335,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 5,
     'name'  => 'MinDaysProlong',
     'value' => $HostingScheme['MinDaysProlong'],
     'prompt'=> 'Минимальное число дней, на которое можно продлевать заказ'
@@ -375,6 +373,13 @@ if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Максимальное кол-во заказов',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'MinOrdersPeriod','value'=>$HostingScheme['MinOrdersPeriod'],'prompt'=>$Messages['Prompts']['MinOrdersPeriod']));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Минимальный период между заказами',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
@@ -540,7 +545,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaUsers',
     'value' => $HostingScheme['QuotaUsers']
   )
@@ -596,7 +600,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaWWWDomains',
     'value' => $HostingScheme['QuotaWWWDomains']
   )
@@ -610,7 +613,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaEmailDomains',
     'value' => $HostingScheme['QuotaEmailDomains']
   )
@@ -624,7 +626,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaUsersDBs',
     'value' => $HostingScheme['QuotaUsersDBs']
   )
@@ -639,7 +640,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaCPU',
     'prompt'=> 'Ограничение на использование процессорного времени, в процентах',
     'value' => $HostingScheme['QuotaCPU']
@@ -655,7 +655,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'MaxExecutionTime',
     'prompt'=> 'Максимальное время выполнения скриптов, в секундах',
     'value' => $HostingScheme['MaxExecutionTime']
@@ -671,7 +670,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaMEM',
     'value' => $HostingScheme['QuotaMEM']
   )
@@ -685,7 +683,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaPROC',
     'value' => $HostingScheme['QuotaPROC']
   )
@@ -699,7 +696,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 10,
 		'name'  => 'QuotaMPMworkers',
 		'value' => $HostingScheme['QuotaMPMworkers']
 	)
@@ -713,7 +709,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 10,
 		'name'  => 'mysqlquerieslimit',
 		'value' => $HostingScheme['mysqlquerieslimit']
 	)
@@ -727,7 +722,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 10,
 		'name'  => 'mysqlupdateslimit',
 		'value' => $HostingScheme['mysqlupdateslimit']
 	)
@@ -741,7 +735,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 10,
 		'name'  => 'mysqlconnectlimit',
 		'value' => $HostingScheme['mysqlconnectlimit']
 	)
@@ -755,7 +748,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 10,
 		'name'  => 'mysqluserconnectlimit',
 		'value' => $HostingScheme['mysqluserconnectlimit']
 	)
@@ -769,7 +761,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'	=> 'text',
-		'size'	=> 10,
 		'name'	=> 'mailrate',
 		'value'	=> $HostingScheme['mailrate']
 	)
@@ -835,7 +826,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaAddonDomains',
     'value' => $HostingScheme['QuotaAddonDomains']
   )
@@ -851,7 +841,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaWebUsers',
     'value' => $HostingScheme['QuotaWebUsers']
   )
@@ -865,7 +854,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
-    'size'  => 10,
     'name'  => 'QuotaEmailBox',
     'value' => $HostingScheme['QuotaEmailBox']
   )
@@ -879,7 +867,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'text',
-    'size'  => 10,
     'name'    => 'QuotaEmailGroups',
     'value'   => $HostingScheme['QuotaEmailGroups']
   )
@@ -893,7 +880,6 @@ $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'    => 'text',
-    'size'  => 10,
     'name'    => 'QuotaWebApp',
     'value'   => $HostingScheme['QuotaWebApp']
   )
@@ -1212,7 +1198,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 10,
 		'name'  => 'field1',
 		'value' => $HostingScheme['field1']
 	)
@@ -1226,7 +1211,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 10,
 		'name'  => 'field2',
 		'value' => $HostingScheme['field2']
 	)
@@ -1240,7 +1224,6 @@ $Comp = Comp_Load(
 	'Form/Input',
 	Array(
 		'type'  => 'text',
-		'size'  => 10,
 		'name'  => 'field3',
 		'value' => $HostingScheme['field3']
 	)

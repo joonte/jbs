@@ -33,6 +33,7 @@ $MinDaysPay		= (integer) @$Args['MinDaysPay'];
 $MinDaysProlong		= (integer) @$Args['MinDaysProlong'];
 $MaxDaysPay		= (integer) @$Args['MaxDaysPay'];
 $MaxOrders		= (integer) @$Args['MaxOrders'];
+$MinOrdersPeriod	= (integer) @$Args['MinOrdersPeriod'];
 $SortID			= (integer) @$Args['SortID'];
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Groups',Array('ID'=>$GroupID));
@@ -119,6 +120,7 @@ $IExtraIPScheme = Array(
 			'MinDaysProlong'	=> $MinDaysProlong,
 			'MaxDaysPay'		=> $MaxDaysPay,
 			'MaxOrders'		=> $MaxOrders,
+			'MinOrdersPeriod'	=> $MinOrdersPeriod,
 			'SortID'		=> $SortID
 			);
 #-------------------------------------------------------------------------------
