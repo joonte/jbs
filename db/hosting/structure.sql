@@ -110,6 +110,7 @@ CREATE TABLE `DomainSchemes` (
   `MinOrderYears` int(11) default '1',
   `MaxActionYears` int(11) default '1',
   `MaxOrders` int(6) DEFAULT '0',
+  `MinOrdersPeriod` INT(6) DEFAULT '0',
   `DaysToProlong` int(11) default '31',
   `DaysBeforeTransfer` INT(3) DEFAULT '60',
   `DaysAfterTransfer` INT(3) DEFAULT '60',
@@ -172,6 +173,7 @@ CREATE TABLE `HostingSchemes` (
   `MinDaysProlong` INT(6) default '0',			/* минимальное число дней продления, для ранее оплаченных заказов */
   `MaxDaysPay` int(6) default '0',			/* максимальное число дней оплаты заказа */
   `MaxOrders` int(6) DEFAULT '0',			/* максимальное число заказов по этому тарифу, на одного пользователя */
+  `MinOrdersPeriod` INT(6) DEFAULT '0',
   `SortID` int(11) default '10',
 --
 -- Common quotas
@@ -326,6 +328,7 @@ CREATE TABLE `DNSmanagerSchemes` (
 	`MinDaysProlong` INT(6) default '0',			/* минимальное число дней продления, для ранее оплаченных заказов */
 	`MaxDaysPay` int(6) default '0',			/* максимальное число дней оплаты заказа */
 	`MaxOrders` int(6) DEFAULT '0',				/* максимальное число заказов по этому тарифу, на одного пользователя */
+	`MinOrdersPeriod` INT(6) DEFAULT '0',
 	`SortID` int(11) default '10',
 	--
 	-- Common
@@ -429,6 +432,7 @@ CREATE TABLE IF NOT EXISTS `VPSSchemes` (
 	`MinDaysProlong` int(6) DEFAULT '0',
 	`MaxDaysPay` int(6) DEFAULT '0',
 	`MaxOrders` int(6) DEFAULT '0',
+	`MinOrdersPeriod` INT(6) DEFAULT '0',
 	`SortID` int(11) DEFAULT '10',
 	`vdslimit` int(3) NOT NULL,
 	`QuotaUsers` int(4) DEFAULT '0',
@@ -519,6 +523,7 @@ CREATE TABLE IF NOT EXISTS `DSSchemes` (
   `MinDaysProlong` int(6) DEFAULT '0',
   `MaxDaysPay` int(6) DEFAULT '0',
   `MaxOrders` int(6) DEFAULT '0',
+  `MinOrdersPeriod` INT(6) DEFAULT '0',
   `SortID` int(11) DEFAULT '10',
   `cputype` char(16) NOT NULL,
   `cpuarch` char(16) NOT NULL,
@@ -674,6 +679,7 @@ CREATE TABLE IF NOT EXISTS `ExtraIPSchemes` (
   `MinDaysProlong` int(6) DEFAULT '0',
   `MaxDaysPay` int(6) DEFAULT '0',
   `MaxOrders` int(6) DEFAULT '0',
+  `MinOrdersPeriod` INT(6) DEFAULT '0',
   `SortID` int(11) DEFAULT '10',
   PRIMARY KEY (`ID`),
   KEY `ExtraIPSchemesGroupID` (`GroupID`),
@@ -784,6 +790,7 @@ CREATE TABLE IF NOT EXISTS `ISPswSchemes` (
 	`MinDaysProlong` int(6) DEFAULT '0',
 	`MaxDaysPay` int(6) DEFAULT '0',
 	`MaxOrders` int(6) DEFAULT '0',
+	`MinOrdersPeriod` INT(6) DEFAULT '0',
 	`ConsiderTypeID` char(30) default 'Daily',
 	`SortID` int(11) DEFAULT '10',
 	`pricelist_id` int(12) NOT NULL,
