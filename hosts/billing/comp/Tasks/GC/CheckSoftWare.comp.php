@@ -19,7 +19,7 @@ if(!$Settings['IsActive'])
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # проверяем необходимые для работы расширения
-$Extensions = Array('gd','json','libxml','mbstring','mysql','openssl','xml','zlib','imap','mailparse','test');
+$Extensions = Array('gd','json','libxml','mbstring','mysql','openssl','xml','zlib','imap','mailparse');
 #-------------------------------------------------------------------------------
 foreach($Extensions as $Extension){
 	#-------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ foreach($Extensions as $Extension){
 			$Event = Array(
 					'UserID'        => 100,
 					'PriorityID'    => 'Error',
-					'Text'          => SPrintF('Не найдено расширение php требуемое для работы: %s. Биллинговая система может работать с ошибками, или часть функционала будет недоступна.',$Extension),
+					'Text'          => SPrintF('Не найдено расширение php, требуемое для работы: %s. Биллинговая система может работать с ошибками, или часть функционала будет недоступна.',$Extension),
 					'IsReaded'      => FALSE
 					);
 			$Event = Comp_Load('Events/EventInsert',$Event);
