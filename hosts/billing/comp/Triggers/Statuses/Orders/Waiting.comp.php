@@ -28,12 +28,13 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Params = Array(
-		'SchemeID'	=> 0,
-		'OrderID'	=> $ServiceOrder['ID'],
-		'MaxOrders'	=> 0, /* может из полей доставать? */
-		'ServiceID'	=> $Service['ID'],
-		'ServiceName'	=> $Service['Name'],
-		'SchemeName'	=> $Service['NameShort']
+		'SchemeID'		=> 0,
+		'OrderID'		=> $ServiceOrder['ID'],
+		'MaxOrders'		=> 0,			/* может из полей доставать? */
+		'MinOrdersPeriod'	=> 0,			/* TODO надо реализовать ... */
+		'ServiceID'		=> $Service['ID'],
+		'ServiceName'		=> $Service['Name'],
+		'SchemeName'		=> $Service['NameShort']
 		);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Services/Orders/OrdersHistory',$Params);
