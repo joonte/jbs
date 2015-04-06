@@ -118,3 +118,42 @@ img.TicketOrig {
 	cursor:	pointer;
 }
 
+/* новый интерфейс оплаты */
+ul.pp-showcases{
+	list-style:none;
+	margin:0 0 -20px 20px;
+	//margin:20px 20px 20px 20px;
+	padding:0;
+	font-size:12px;
+	overflow:hidden
+}
+
+ul.pp-showcases li{
+	float:left;
+	width:148px;
+	margin:0 20px 20px 0;
+	//margin:20px 20px 20px 20px;
+	border:1px solid #d3d3d3;
+	-webkit-box-shadow:0 1px 2px 0 rgba(0,0,0,.5);
+	box-shadow:0 1px 1px 0 rgba(0,0,0,.1)
+}
+
+
+ul.pp-showcases li:hover{
+	float:left;
+	width:148px;
+	margin:0 20px 20px 0;
+	//margin:20px 20px 20px 20px;
+	border:1px solid #c3c3c3;
+	-webkit-box-shadow:none;
+	box-shadow:none
+}
+
+pp-rounded-5px{
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius:5px
+}
+
+
+
