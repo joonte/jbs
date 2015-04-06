@@ -123,6 +123,7 @@ if(!IsSet($GLOBALS['__USER'])){
 	  #---------------------------------------------------------------------
 	  #---------------------------------------------------------------------
           foreach($Contracts as $Contract){
+	  	Debug(SPrintF('[comp/TopPanel]: Contract TypeID = %s',$Contract['TypeID']));
 	    #-------------------------------------------------------------------
             $ContractID = Comp_Load('Formats/Contract/Number',$Contract['ID']);
             if(Is_Error($ContractID))
@@ -132,7 +133,11 @@ if(!IsSet($GLOBALS['__USER'])){
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $A = new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/InvoiceMake',{ContractID:%u,StepID:1});",$Contract['ID'])),'[пополнить]');
+	    if($Contract['TypeID'] == 'NaturalPartner'){
+		$A = new Tag('SPAN','-');
+	    }else{
+	            $A = new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/InvoiceMake',{ContractID:%u,StepID:1});",$Contract['ID'])),'[пополнить]');
+	    }
             #-------------------------------------------------------------------
             $Table->AddChild(new Tag('TR',
 	    				new Tag('TD',Array('style'=>'text-align:left;'),SPrintF('#%s',$ContractID)),
