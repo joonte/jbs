@@ -33,7 +33,7 @@ function ISPConfig_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,
 //  $IDNA = new Net_IDNA_php5();
 //  $Domain = $IDNA->encode($Domain);
   #-----------------------------------------------------------------------------
-  if ($HostingScheme['PackageID'] == '') $HostingScheme['PackageID'] = 0;
+  if (($HostingScheme['PackageID'] == '') or ($HostingScheme['PackageID'] == 'MB500')) $HostingScheme['PackageID'] = 0;
   $ISPConfigPHP = "no";
   if ($HostingScheme['IsPHPFastCGIAccess']=='yes') { $ISPConfigPHP = $ISPConfigPHP.",fast-cgi"; }
   if ($HostingScheme['IsPHPCGIAccess']=='yes') { $ISPConfigPHP = $ISPConfigPHP.",cgi"; }
