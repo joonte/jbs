@@ -32,13 +32,17 @@ if($HostingOrderID){
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
+	$Password = Comp_Load('Passwords/Generator');
+	if(Is_Error($Password))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
 	$HostingOrder = Array(
 				'UserID'	=> 100,
 				'ContractID'	=> 0,
 				'ServerID'	=> 1,
 				'Domain'	=> 'example.su',
 				'Login'		=> 'login',
-				'Password'	=> UniqID(),
+				'Password'	=> $Password,
 				'SchemeID'	=> 1
 			);
 	#-------------------------------------------------------------------------------
