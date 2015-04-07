@@ -21,6 +21,11 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 Debug(SPrintF('[comp/www/InvoiceMake]: StepID = %u',$StepID));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Config = Config();
+#-------------------------------------------------------------------------------
+$Settings = $Config['Interface']['User']['InvoiceMake'];
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $DOM = new DOM();
 #-------------------------------------------------------------------------------
 $Links = &Links();
@@ -31,8 +36,6 @@ if(Is_Error($DOM->Load('Window')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Новый счёт');
-#-------------------------------------------------------------------------------
-$Config = Config();
 #-------------------------------------------------------------------------------
 $Form = new Tag('FORM',Array('name'=>'InvoiceMakeForm','onsubmit'=>'return false;'));
 #-------------------------------------------------------------------------------
@@ -229,7 +232,7 @@ case 1:
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		if(!$Config['Interface']['User']['InvoiceMake']['PaymentSystemsByType'])
+		if(!$Settings['PaymentSystemsByType'])
 			$Table[] = Array('Платежная система',$Comp);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
@@ -237,11 +240,11 @@ case 1:
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		if(!$Config['Interface']['User']['InvoiceMake']['PaymentSystemsByType'])
+		if(!$Settings['PaymentSystemsByType'])
 			$Table[] = $Comp;
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		if($Config['Interface']['User']['InvoiceMake']['PaymentSystemsByType']){
+		if($Settings['PaymentSystemsByType']){
 			#-------------------------------------------------------------------------------
 			#------------------------------------------------------------------------------
 			$Collations = DB_Select('PaymentSystemsCollation',Array('*'),Array('Where'=>Array('`IsActive` = "yes"',SPrintF('`Source` IN (%s)',Implode(',',$Array))),'SortOn'=>'SortID'));
@@ -258,7 +261,7 @@ case 1:
 			}
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-			$Div = new Tag('DIV',Array('style'=>SPrintF('width: %upx',$Config['Interface']['User']['InvoiceMake']['WindowWidth'])));
+			$Div = new Tag('DIV',Array('style'=>SPrintF('width: %upx',$Settings['WindowWidth'])));
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			$List = new Tag('UL',Array('class'=>'pp-showcases'));
@@ -270,7 +273,7 @@ case 1:
 				#-------------------------------------------------------------------------------
 				$JS = SPrintF("var form = document.forms.InvoiceMakeForm; form.PaymentSystemID.value = '%s'; ShowWindow('/InvoiceMake',FormGet(form));",$Collation['Source']);
 				#-------------------------------------------------------------------------------
-				$Image = new Tag('IMG',Array('src'=>SPrintF('SRC:{Images/PaymentSystems/%s}',$SRC),'style'=>'cursor: pointer;','vspace'=>5,'hspace'=>5,'onclick'=>$JS));
+				$Image = new Tag('IMG',Array('src'=>SPrintF('SRC:{Images/PaymentSystems/%s}',$SRC),'style'=>'cursor: pointer;','vspace'=>5,'hspace'=>5,'width'=>$Settings['ImageWidth'],'height'=>$Settings['ImageHeight'],'onclick'=>$JS));
 				#-------------------------------------------------------------------------------
 				$LinkID = UniqID('IMG');
 				#-------------------------------------------------------------------------------
@@ -364,7 +367,7 @@ case 1:
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		if(!$Config['Interface']['User']['InvoiceMake']['PaymentSystemsByType'])
+		if(!$Settings['PaymentSystemsByType'])
 			$Table[] = Array('Платежная система',$Comp);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
@@ -372,11 +375,11 @@ case 1:
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		if(!$Config['Interface']['User']['InvoiceMake']['PaymentSystemsByType'])
+		if(!$Settings['PaymentSystemsByType'])
 			$Table[] = $Comp;
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		if($Config['Interface']['User']['InvoiceMake']['PaymentSystemsByType']){
+		if($Settings['PaymentSystemsByType']){
 			#-------------------------------------------------------------------------------
 			#------------------------------------------------------------------------------
 			$Collations = DB_Select('PaymentSystemsCollation',Array('*'),Array('Where'=>Array('`IsActive` = "yes"',SPrintF('`Source` IN (%s)',Implode(',',$Array))),'SortOn'=>'SortID'));
@@ -393,7 +396,7 @@ case 1:
 			}
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-			$Div = new Tag('DIV',Array('style'=>SPrintF('width: %upx',$Config['Interface']['User']['InvoiceMake']['WindowWidth'])));
+			$Div = new Tag('DIV',Array('style'=>SPrintF('width: %upx',$Settings['WindowWidth'])));
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			$List = new Tag('UL',Array('class'=>'pp-showcases'));
@@ -405,7 +408,7 @@ case 1:
 				#-------------------------------------------------------------------------------
 				$JS = SPrintF("var form = document.forms.InvoiceMakeForm; form.PaymentSystemID.value = '%s'; InvoiceMake();",$Collation['Source']);
 				#-------------------------------------------------------------------------------
-				$Image = new Tag('IMG',Array('src'=>SPrintF('SRC:{Images/PaymentSystems/%s}',$SRC),'style'=>'cursor: pointer;','vspace'=>5,'hspace'=>5,'onclick'=>$JS));
+				$Image = new Tag('IMG',Array('src'=>SPrintF('SRC:{Images/PaymentSystems/%s}',$SRC),'style'=>'cursor: pointer;','vspace'=>5,'hspace'=>5,'width'=>$Settings['ImageWidth'],'height'=>$Settings['ImageHeight'],'onclick'=>$JS));
 				#-------------------------------------------------------------------------------
 				$LinkID = UniqID('IMG');
 				#-------------------------------------------------------------------------------

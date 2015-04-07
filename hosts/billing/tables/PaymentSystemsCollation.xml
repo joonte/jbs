@@ -126,7 +126,7 @@
 	<!-- *********************************************************************** -->
 	<Image>
 		<Head>Логотип</Head>
-		<Prompt>Логотип для варианта оплаты. 135x70, прозрачный</Prompt>
+		<Prompt>Логотип для варианта оплаты</Prompt>
 		<Comp>Formats/String</Comp>
 		<Args>
 			<ListElement>%Image%</ListElement>

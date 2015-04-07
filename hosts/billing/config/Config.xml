@@ -1551,6 +1551,8 @@
 		<InvoiceMake>
 			<PaymentSystemsByType>1</PaymentSystemsByType>
 			<WindowWidth>530</WindowWidth>
+			<ImageWidth>135</ImageWidth>
+			<ImageHeight>70</ImageHeight>
 		</InvoiceMake>
 		<!-- *********************************************************************** -->
 	</User>

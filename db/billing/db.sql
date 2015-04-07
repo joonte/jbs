@@ -2961,9 +2961,9 @@ INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',30,'Yandex','Яндекс
 -- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',40,'QIWI','QIWI','QIWI.png','Платёжная система использующая номер мобильного телефона в качестве номера кошелька. Большая сеть терминалов для оплаты.\n\nОбратите внимание, что мы используем Российскую систему QIWI, и ваш кошелёк тоже должен состоять из Российского мобильного телефона.\n\nНапример: +7 926 123 45 67','QIWI','');
 -- SEPARATOR
-INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'ZPayment','Z-Payment','','Оплата при помощи электронных денег платёжной системы Z-Payment.','Z-Payment','нет картинки');
+INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'ZPayment','Z-Payment','Z-Payment.png','Оплата при помощи электронных денег платёжной системы Z-Payment.','Z-Payment','');
 -- SEPARATOR
-INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'EasyPay','EasyPay','','Оплата при помощи электронных денег платёжной системы EasyPay.','EasyPay','нет картинки');
+INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'EasyPay','EasyPay','EasyPay.png','Оплата при помощи электронных денег платёжной системы EasyPay.','EasyPay','');
 -- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES ('','no',9999,'Egold','E-Gold','','Оплата при помощи электронных денег платёжной системы E-Gold.','E-Gold','нет картинки.\nда и самой такой платёжной системы больше нет.');
 -- SEPARATOR
@@ -2971,19 +2971,19 @@ INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',50,'RBKMoney','RBK Money'
 -- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',60,'ROBOKASSA','ROBOKASSA','ROBOKASSA.png','Оплата любыми способами - все виды электронных денег, VISA, MasterCard, Maestro, оплата через SMS, терминалы, электронный банкинг и много других способов','ROBOKASSA','');
 -- SEPARATOR
-INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'InterKassa','ИнтерКасса','','Оплата при помощи платёжной системы ИнтерКасса.','ИнтерКасса','нет картинки');
+INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'InterKassa','ИнтерКасса','InterKassa.png','Оплата при помощи платёжной системы ИнтерКасса.','ИнтерКасса','');
 -- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'MailRu','Деньги@Mail.Ru','','Оплата при помощи электронных денег платёжной системы Деньги@Mail.Ru.','Деньги@Mail.Ru','нет картинки');
 -- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'W1','Единый кошелек','W1R.gif','Оплата при помощи электронных денег платёжной системы Единый кошелек.','Единый кошелек','');
 -- SEPARATOR
-INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'Moneybookers','Moneybookers','','Система электронных переводов Moneybookers','Moneybookers','нет картинки');
+INSERT INTO `PaymentSystemsCollation` VALUES ('','no',9999,'Moneybookers','Moneybookers','','Система электронных переводов Moneybookers','Moneybookers','нет картинки');
 -- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'Checkout','2Checkout','','Оплата при помощи пластиковых карт и PayPal через процессинговый центр 2Checkout','2Checkout','нет картинки');
 -- SEPARATOR
-INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'OKPAY','OKPAY','','Оплата при помощи электронных денег платёжной системы OKPAY.','OKPAY','нет картинки');
+INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'OKPAY','OKPAY','OKPAY.png','Оплата при помощи электронных денег платёжной системы OKPAY.','OKPAY','');
 -- SEPARATOR
-INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'OnPay','OnPay.ru','','Оплата при помощи электронных денег платёжной системы OnPay.ru','OnPay.ru','нет картинки');
+INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'OnPay','OnPay.ru','OnPay.png','Оплата при помощи электронных денег платёжной системы OnPay.ru','OnPay.ru','');
 -- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',100,'Natural','Банк (физ. лица)','Bank.png','Оплата платежом через банк (СберБанк или любой другой).','Банк (физ. лица)','');
 -- SEPARATOR
