@@ -147,7 +147,7 @@ if(!IsSet($GLOBALS['__USER'])){
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			if($Contract['TypeID'] == 'NaturalPartner'){
+			if($Contract['TypeID'] == 'NaturalPartner' || $Contract['TypeID'] == 'Juridical'){
 				#-------------------------------------------------------------------------------
 				$A = new Tag('SPAN','-');
 				#-------------------------------------------------------------------------------
