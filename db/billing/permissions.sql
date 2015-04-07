@@ -188,7 +188,12 @@ INSERT INTO `Permissions` (`Name`,`HostID`,`UserGroupID`,`UserID`,`OwnerGroupID`
 
 /* added by lissyara, for JBS-600, 2013-02-11 in 15:31 MSK  */
 ('OrdersTransfer', 'billing', 1, 1, 4000000, 1, 1, 'yes'),
-('OrdersTransfer', 'billing', 3000000, 100, 1, 1, 2, 'yes')
+('OrdersTransfer', 'billing', 3000000, 100, 1, 1, 2, 'yes'),
+
+/* added by lissyara, for  JBS-1032, 2015-04-07 in 13:03 MSK  */
+('PaymentSystemsCollationDelete','billing',1,1,4000000,1,1,'no'),
+('PaymentSystemsCollationDelete','billing',3000000,100,1,1,2,'yes')
+
 ;
 
 

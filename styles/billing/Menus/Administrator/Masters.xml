@@ -30,7 +30,7 @@
  <ID400>
   <Text>Прочее</Text>
   <Paths>
-   <UniqID>^\/Administrator\/(Other|ServersGroups|Servers|GlobalNotifiesSet)$</UniqID>
+   <UniqID>^\/Administrator\/(Other|ServersGroups|Servers|PaymentSystemsCollation|GlobalNotifiesSet)$</UniqID>
   </Paths>
   <Href>/Administrator/Other</Href>
   <Level>2</Level>

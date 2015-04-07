@@ -32,7 +32,7 @@
  <ID400>
   <Text>Мастера настройки</Text>
   <Paths>
-   <UniqID>^\/Administrator\/(Appearanse|BaseEdit|Config|Other|ServersGroups|Servers)$</UniqID>
+   <UniqID>^\/Administrator\/(Appearanse|BaseEdit|Config|Other|ServersGroups|Servers|PaymentSystemsCollation|GlobalNotifiesSet)$</UniqID>
   </Paths>
   <Href>/Administrator/Appearanse</Href>
   <Level>1</Level>

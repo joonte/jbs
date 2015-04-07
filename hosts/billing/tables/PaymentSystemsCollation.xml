@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Appearance>
+	<Row>
+		<Comp>Colors/Schemes</Comp>
+		<Args>
+			<ListElement>%IsActive%</ListElement>
+		</Args>
+	</Row>
+</Appearance>
+<!-- *********************************************************************** -->
+<Source>
+	<TableID>PaymentSystemsCollation</TableID>
+	<ColumnsIDs>
+		<ListElement>ID</ListElement>
+		<ListElement>IsActive</ListElement>
+		<ListElement>SortID</ListElement>
+		<ListElement>Source</ListElement>
+		<ListElement>Destination</ListElement>
+		<ListElement>Image</ListElement>
+		<ListElement>Prompt</ListElement>
+		<ListElement>Description</ListElement>
+		<ListElement>AdminNotice</ListElement>
+	</ColumnsIDs>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Conditions>
+		<Message>Сопоставления платёжных систем не настроены</Message>
+	</Conditions>
+	<!-- *********************************************************************** -->
+</Source>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<Comps>
+	<!-- *********************************************************************** -->
+	<Before>
+		<Search>
+			<Args>
+				<ColumnsIDs>
+					<ListElement>ID</ListElement>
+					<ListElement>IsActive</ListElement>
+					<ListElement>SortID</ListElement>
+					<ListElement>Source</ListElement>
+					<ListElement>Destination</ListElement>
+					<ListElement>Image</ListElement>
+					<ListElement>Prompt</ListElement>
+					<ListElement>Description</ListElement>
+					<ListElement>AdminNotice</ListElement>
+				</ColumnsIDs>
+			</Args>
+		</Search>
+	</Before>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<After>
+		<Data>
+			<Args>
+				<DataModeID>Vertical</DataModeID>
+			</Args>
+		</Data>
+		<!-- *********************************************************************** -->
+		<Delete>
+			<Args>
+				<Comment>Выбранные сопоставления</Comment>
+				<Send>
+					<TableID>PaymentSystemsCollation</TableID>
+				</Send>
+			</Args>
+		</Delete>
+	</After>
+	<!-- *********************************************************************** -->
+</Comps>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<Query>
+	<SortOn>SortID</SortOn>
+	<IsDesc>0</IsDesc>
+</Query>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<Columns>
+	<!-- *********************************************************************** -->
+	<SelectID>
+		<Args>
+			<TableID>PaymentSystemsCollation</TableID>
+		</Args>
+	</SelectID>
+	<!-- *********************************************************************** -->
+	<Edit>
+		<IsSorted>0</IsSorted>
+		<Comp>Buttons/Window</Comp>
+		<Args>
+			<ListElement>/Administrator/PaymentSystemsCollationEdit</ListElement>
+			<ListElement>
+				<CollationID>%ID%</CollationID>
+			</ListElement>
+			<ListElement>Редактировать сопоставленеи платёжных сисем</ListElement>
+			<ListElement>Edit.gif</ListElement>
+		</Args>
+		<Attribs>
+			<class>TableSuperStandard</class>
+			<style>width:22px;</style>
+		</Attribs>
+	</Edit>
+	<!-- *********************************************************************** -->
+	<Source>
+		<Head>Исходная</Head>
+		<Prompt>Исходная платёжная система, через которую и будет в итоге осуществляться оплата. В данном столбце используются идентификаторы платёжных систем, из конфигурационного файла, а не то как вы её назвали через редактирование</Prompt>
+		<Comp>Formats/String</Comp>
+		<Args>
+			<ListElement>%Source%</ListElement>
+			<Length>15</Length>
+		</Args>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Destination>
+		<Head>Итоговая</Head>
+		<Comp>Formats/String</Comp>
+		<Args>
+			<ListElement>%Destination%</ListElement>
+			<Length>15</Length>
+		</Args>
+	</Destination>
+	<!-- *********************************************************************** -->
+	<Image>
+		<Head>Логотип</Head>
+		<Prompt>Логотип для варианта оплаты. 135x70, прозрачный</Prompt>
+		<Comp>Formats/String</Comp>
+		<Args>
+			<ListElement>%Image%</ListElement>
+			<Length>15</Length>
+		</Args>
+	</Image>
+	<!-- *********************************************************************** -->
+	<Description>
+		<Head>Описание</Head>
+		<Prompt>Текст, который выводится под логотипом платёжной системы</Prompt>
+		<Comp>Formats/String</Comp>
+		<Args>
+			<ListElement>%Description%</ListElement>
+			<Length>15</Length>
+		</Args>
+	</Description>
+	<!-- *********************************************************************** -->
+	<Prompt>
+		<Head>Подсказка</Head>
+		<Prompt>Текст всплывающей подсказки, при наведении мышки на логотип платёжной системы</Prompt>
+		<Comp>Formats/String</Comp>
+		<Args>
+			<ListElement>%Prompt%</ListElement>
+			<Length>25</Length>
+		</Args>
+	</Prompt>
+	<!-- *********************************************************************** -->
+	<IsActive>
+		<Head>Акт.</Head>
+		<Prompt>Сопоставление активно</Prompt>
+		<Comp>BooleanEdit</Comp>
+		<Args>
+			<ListElement>PaymentSystemsCollation</ListElement>
+			<ListElement>IsActive</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>%IsActive%</ListElement>
+		</Args>
+	</IsActive>
+	<!-- ********************************************************************** -->
+	<AdminNotice>
+		<Head>-</Head>
+		<Comp>Notice</Comp>
+		<Args>
+			<ListElement>PaymentSystemsCollation</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>%AdminNotice%</ListElement>
+		</Args>
+	</AdminNotice>
+	<!-- *********************************************************************** -->
+	<SortID>
+		<Args>
+			<TableID>PaymentSystemsCollation</TableID>
+		</Args>
+	</SortID>
+</Columns>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Edit</ListElement>
+		<ListElement>Source</ListElement>
+		<ListElement>Destination</ListElement>
+		<ListElement>AdminNotice</ListElement>
+		<ListElement>IsActive</ListElement>
+		<ListElement>Image</ListElement>
+		<ListElement>Description</ListElement>
+	<ListElement>Prompt</ListElement>
+	<ListElement>SortID</ListElement>
+</Sequence>
+<!-- *********************************************************************** -->
+</XML>

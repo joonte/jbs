@@ -22,13 +22,22 @@
 		</ID200>
 		<!-- *********************************************************************** -->
 		<ID300>
+			<Text>Настройки сопоставления платёжных систем</Text>
+			<Paths>
+				<UniqID>^\/Administrator\/PaymentSystemsCollation$</UniqID>
+			</Paths>
+			<Href>/Administrator/PaymentSystemsCollation</Href>
+			<Level>1</Level>
+		</ID300>
+		<!-- *********************************************************************** -->
+		<ID400>
 			<Text>Уведомления</Text>
 			<Paths>
 				<UniqID>^\/Administrator\/GlobalNotifiesSet$</UniqID>
 			</Paths>
 			<Href>/Administrator/GlobalNotifiesSet</Href>
 			<Level>1</Level>
-		</ID300>
+		</ID400>
 	</Items>
 	<!-- *********************************************************************** -->
 </XML>

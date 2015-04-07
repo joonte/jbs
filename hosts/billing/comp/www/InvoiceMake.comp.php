@@ -282,7 +282,7 @@ case 1:
 				#-------------------------------------------------------------------------------
 				UnSet($Links[$LinkID]);
 				#-------------------------------------------------------------------------------
-				$Div1 = new Tag('DIV',$Image,new Tag('DIV',Array('style'=>'width:145px; white-space:nowrap; overflow:hidden;'),$Collation['Description']));
+				$Div1 = new Tag('DIV',$Image,new Tag('DIV',Array('style'=>'margin:0 0 0 3px; width:145px; white-space:nowrap; overflow:hidden;'),$Collation['Description']));
 				#-------------------------------------------------------------------------------
 				$List->AddChild(new Tag('LI',Array('class'=>'pp-rounded-5px'),$Div1));
 				#-------------------------------------------------------------------------------
@@ -417,7 +417,7 @@ case 1:
 				#-------------------------------------------------------------------------------
 				UnSet($Links[$LinkID]);
 				#-------------------------------------------------------------------------------
-				$Div1 = new Tag('DIV',$Image,new Tag('DIV',Array('style'=>'width:145px; white-space:nowrap; overflow:hidden;'),$Collation['Description']));
+				$Div1 = new Tag('DIV',$Image,new Tag('DIV',Array('style'=>'margin:0 0 0 3px; width:145px; white-space:nowrap; overflow:hidden;'),$Collation['Description']));
 				#-------------------------------------------------------------------------------
 				$List->AddChild(new Tag('LI',Array('class'=>'pp-rounded-5px'),$Div1));
 				#-------------------------------------------------------------------------------

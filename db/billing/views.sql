@@ -335,6 +335,15 @@ SELECT
 FROM
    `PromoCodesExtinguished`;
 
-
+#-------------------------------------------------------------------------------
+DROP VIEW IF EXISTS `PaymentSystemsCollationOwners`;
+DROP TABLE IF EXISTS `PaymentSystemsCollationOwners`;
+CREATE
+	VIEW `PaymentSystemsCollationOwners` AS
+SELECT
+	`PaymentSystemsCollation`.*,
+	100 as `UserID`
+FROM
+	`PaymentSystemsCollation`;
 
 
