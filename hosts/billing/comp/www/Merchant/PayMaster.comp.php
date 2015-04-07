@@ -74,7 +74,8 @@ $LMI_PAYMENT_SYSTEMs = Array(
 				81	=> 'Онлайн-банкинг',
 				82	=> 'Ростелеком',
 				92	=> 'Пластиковые карты',
-				93	=> 'Банковские карты'
+				93	=> 'Банковские карты',
+				102	=> 'МТС'
 			    );
 #-------------------------------------------------------------------------------
 $PS = SPrintF('%s / %s',((IsSet($LMI_PAYMENT_SYSTEMs[$Args['LMI_PAYMENT_SYSTEM']]))?$LMI_PAYMENT_SYSTEMs[$Args['LMI_PAYMENT_SYSTEM']]:'LMI_PAYMENT_SYSTEM'),$Args['LMI_PAYMENT_SYSTEM']);
