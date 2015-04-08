@@ -280,7 +280,7 @@ if($StepID){
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$DomainScheme = DB_Select($UniqID,'ID',Array('Where'=>SPrintF("`Name` = '%s' AND `IsActive` = 'yes'",$DomainZone)));
+			$DomainScheme = DB_Select($UniqID,'ID',Array('Where'=>SPrintF("`Name` = '%s' AND `IsTransfer` = 'yes'",$DomainZone)));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($DomainScheme)){
 			case 'error':
