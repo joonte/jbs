@@ -60,10 +60,7 @@ if($DSSchemeID){
 			'cpufreq'			=> 2000,
 			'ram'				=> 2048,
 			'raid'				=> '3Ware 9650SE-4LPML, 256Mb cache',
-			'disk1'				=> 'SATA 500Gb',
-			'disk2'				=> 'SATA 500Gb',
-			'disk3'				=> 'no',
-			'disk4'				=> 'no',
+			'disks'				=> 'SATA 500Gb + SATA 500Gb',
 			'chrate'			=> 8,
 			'trafflimit'			=> 1000,
 			'traffcorrelation'		=> '1:4',
@@ -355,60 +352,11 @@ $Table[] = Array('Тип RAID контроллера',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-
-
-# TODO  сделать JBS-1028
-$Comp = Comp_Load(
-	'Form/Input',
-	Array(
-		'type'  => 'text',
-		'name'  => 'disk1',
-		'value' => $DSScheme['disk1']
-	)
-);
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'disks','value'=>$DSScheme['disks']));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
-
-$Table[] = Array('Характеристики 1 жёсткого диска',$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-	'Form/Input',
-	Array(
-		'type'  => 'text',
-		'name'  => 'disk2',
-		'value' => $DSScheme['disk2']
-	)
-);
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-
-$Table[] = Array('Характеристики 2 жёсткого диска',$Comp);
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-	'Form/Input',
-	Array(
-		'type'  => 'text',
-		'name'  => 'disk3',
-		'value' => $DSScheme['disk3']
-	)
-);
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-
-$Table[] = Array('Характеристики 3 жёсткого диска',$Comp);
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-	'Form/Input',
-	Array(
-		'type'  => 'text',
-		'name'  => 'disk4',
-		'value' => $DSScheme['disk4']
-	)
-);
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-
-$Table[] = Array('Характеристики 4 жёсткого диска',$Comp);
+$Table[] = Array('Характеристики жёстких дисков',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Прочая информация';

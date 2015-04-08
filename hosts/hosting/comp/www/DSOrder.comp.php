@@ -152,7 +152,7 @@ if($StepID){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$Columns = Array(
-			'ID','Name','ServerID','UserComment','CostMonth','CostInstall','cputype', 'cpuarch', 'numcpu', 'numcores', 'cpufreq', 'ram', 'raid', 'disk1', 'disk2',
+			'ID','Name','ServerID','UserComment','CostMonth','CostInstall','cputype', 'cpuarch', 'numcpu', 'numcores', 'cpufreq', 'ram', 'raid', 'disks',
 			SPrintF('(SELECT `Name` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupName`',$UniqID),
 			SPrintF('(SELECT `Comment` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupComment`',$UniqID),
 			SPrintF('(SELECT `SortID` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupSortID`',$UniqID),
@@ -250,23 +250,11 @@ if($StepID){
 	$Tr->AddChild($Td);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Td = new Tag('TD',Array('class'=>'Head','align'=>'center'),new Tag('SPAN','disk1'),new Tag('SPAN',Array('style'=>'font-weight:bold;font-size:14px;'),'?'));
+	$Td = new Tag('TD',Array('class'=>'Head','align'=>'center'),new Tag('SPAN','disks'),new Tag('SPAN',Array('style'=>'font-weight:bold;font-size:14px;'),'?'));
 	#-------------------------------------------------------------------------------
 	$Links[$LinkID] = &$Td;
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Prompt',$LinkID,'Характеристики первого диска установленного в сервер');
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	$Tr->AddChild($Td);
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	$Td = new Tag('TD',Array('class'=>'Head','align'=>'center'),new Tag('SPAN','disk2'),new Tag('SPAN',Array('style'=>'font-weight:bold;font-size:14px;'),'?'));
-	#-------------------------------------------------------------------------------
-	$Links[$LinkID] = &$Td;
-	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Prompt',$LinkID,'Характеристики второго диска установленного в сервер');
-	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Prompt',$LinkID,'Характеристики жёстких дисков установленных в сервер');
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -327,8 +315,7 @@ if($StepID){
 					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DSScheme['cpufreq']),
 					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DSScheme['ram']),
 					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$raid),
-					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DSScheme['disk1']),
-					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DSScheme['disk2'])
+					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DSScheme['disks'])
 					);
 		#-------------------------------------------------------------------------------
 	}

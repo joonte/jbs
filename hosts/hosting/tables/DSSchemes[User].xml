@@ -60,8 +60,7 @@
  <ListElement>cpufreq</ListElement>
  <ListElement>ram</ListElement>
  <ListElement>raid</ListElement>
- <ListElement>disk1</ListElement>
- <ListElement>disk2</ListElement>
+ <ListElement>disks</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
 </XML>

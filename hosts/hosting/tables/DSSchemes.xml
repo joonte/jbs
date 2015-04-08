@@ -25,8 +25,7 @@
   <ListElement>cpufreq</ListElement>
   <ListElement>ram</ListElement>
   <ListElement>raid</ListElement>
-  <ListElement>disk1</ListElement>
-  <ListElement>disk2</ListElement>
+  <ListElement>disks</ListElement>
   <ListElement>SortID</ListElement>
   <ListElement>IsActive</ListElement>
  </ColumnsIDs>
@@ -205,21 +204,13 @@
  </Args>
  </raid>
  <!-- ********************************************************************** -->
- <disk1>
-  <Head>HDD1</Head>
-  <Prompt>Установленный жёсткий диск, размер</Prompt>
+ <disks>
+  <Head>HDD</Head>
+  <Prompt>Установленные жёсткие диски, размер</Prompt>
   <Attribs>
    <style>text-align:right;</style>
   </Attribs>
- </disk1>
- <!-- ********************************************************************** -->
- <disk2>
-  <Head>HDD2</Head>
-  <Prompt>Установленный жёсткий диск, размер</Prompt>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
- </disk2>
+ </disks>
  <!-- ********************************************************************** -->
  <ncpu>
    <Head># CPU</Head>
@@ -303,8 +294,7 @@
  <ListElement>cputype</ListElement>
  <ListElement>ram</ListElement>
  <ListElement>raid</ListElement>
- <ListElement>disk1</ListElement>
- <ListElement>disk2</ListElement>
+ <ListElement>disks</ListElement>
  <ListElement>IsActive</ListElement>
  <ListElement>NumServers</ListElement>
  <ListElement>RemainServers</ListElement>
