@@ -54,10 +54,7 @@
      <ListElement>ServersGroup</ListElement>
      -->
  <ListElement>CostMonth</ListElement>
- <ListElement>cputype</ListElement>
- <ListElement>numcpu</ListElement>
- <ListElement>numcores</ListElement>
- <ListElement>cpufreq</ListElement>
+ <ListElement>CPU</ListElement>
  <ListElement>ram</ListElement>
  <ListElement>raid</ListElement>
  <ListElement>disks</ListElement>

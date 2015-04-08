@@ -19,10 +19,7 @@
   <ListElement>CostMonth</ListElement>
   <ListElement>NumServers</ListElement>
   <ListElement>RemainServers</ListElement>
-  <ListElement>cputype</ListElement>
-  <ListElement>numcpu</ListElement>
-  <ListElement>numcores</ListElement>
-  <ListElement>cpufreq</ListElement>
+  <ListElement>CPU</ListElement>
   <ListElement>ram</ListElement>
   <ListElement>raid</ListElement>
   <ListElement>disks</ListElement>
@@ -212,24 +209,6 @@
   </Attribs>
  </disks>
  <!-- ********************************************************************** -->
- <ncpu>
-   <Head># CPU</Head>
-   <Prompt>Количество процессоров</Prompt>
-   <Attribs>
-     <style>text-align:right;</style>
-   </Attribs>
- </ncpu>
- <!-- ********************************************************************** -->
- <cputype>
-  <Head>CPU</Head>
-  <Prompt>Тип установленного в сервер процесора</Prompt>
-  <Comp>Formats/DSOrder/CPUType</Comp>
-  <Args>
-   <ListElement>%cputype%</ListElement>
-   <Length>5</Length>
-  </Args>
- </cputype>
- <!-- ********************************************************************** -->
  <ram>
   <Head>RAM</Head>
   <Prompt>Оперативная памяти, Mb</Prompt>
@@ -237,30 +216,19 @@
    <style>text-align:center;</style>
   </Attribs>
  </ram>
- <!-- ********************************************************************** -->
- <numcpu>
-  <Head>Проц.</Head>
-  <Prompt>Число установленных процессоров</Prompt>
-  <Attribs>
-   <style>text-align:center;</style>
-  </Attribs>
- </numcpu>
- <!-- ********************************************************************** -->
- <numcores>
-  <Head>Ядер</Head>
-  <Prompt>Число ядер в каждом процессоре</Prompt>
-  <Attribs>
-   <style>text-align:center;</style>
-  </Attribs>
- </numcores>
- <!-- ********************************************************************** -->
- <cpufreq>
-  <Head>Частота</Head>
-  <Prompt>Частота установленных процессоров</Prompt>
-  <Attribs>
-   <style>text-align:center;</style>
-  </Attribs>
- </cpufreq>
+	<!-- ********************************************************************** -->
+	<CPU>
+		<Head>Проц.</Head>
+		<Prompt>Процессор(-ы) установленный в сервер</Prompt>
+		<Comp>Formats/String</Comp>
+		<Args>
+			<ListElement>%CPU%</ListElement>
+			<Length>10</Length>
+		</Args>
+		<Attribs>
+			<style>text-align:left;</style>
+		</Attribs>
+	</CPU>
 	<!-- ********************************************************************** -->
 	<IsActive>
 		<Head>Актив.</Head>
@@ -291,7 +259,7 @@
  <ListElement>User</ListElement>
  <ListElement>ServersGroup</ListElement>
  <ListElement>CostMonth</ListElement>
- <ListElement>cputype</ListElement>
+ <ListElement>CPU</ListElement>
  <ListElement>ram</ListElement>
  <ListElement>raid</ListElement>
  <ListElement>disks</ListElement>

@@ -152,7 +152,7 @@ if($StepID){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$Columns = Array(
-			'ID','Name','ServerID','UserComment','CostMonth','CostInstall','cputype', 'cpuarch', 'numcpu', 'numcores', 'cpufreq', 'ram', 'raid', 'disks',
+			'ID','Name','ServerID','UserComment','CostMonth','CostInstall','CPU', 'ram', 'raid', 'disks',
 			SPrintF('(SELECT `Name` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupName`',$UniqID),
 			SPrintF('(SELECT `Comment` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupComment`',$UniqID),
 			SPrintF('(SELECT `SortID` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupSortID`',$UniqID),
@@ -193,41 +193,6 @@ if($StepID){
 	$Tr->AddChild($Td);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Td = new Tag('TD',Array('class'=>'Head','align'=>'center'),new Tag('SPAN','Проц.'),new Tag('SPAN',Array('style'=>'font-weight:bold;font-size:14px;'),'?'));
-	#-------------------------------------------------------------------------------
-	$LinkID = UniqID('Prompt');
-	#-------------------------------------------------------------------------------
-	$Links[$LinkID] = &$Td;
-	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Prompt',$LinkID,'Число процессоров (сокетов)');
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	$Tr->AddChild($Td);
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	$Td = new Tag('TD',Array('class'=>'Head','align'=>'center'),new Tag('SPAN','Ядер'),new Tag('SPAN',Array('style'=>'font-weight:bold;font-size:14px;'),'?'));
-	#-------------------------------------------------------------------------------
-	$Links[$LinkID] = &$Td;
-	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Prompt',$LinkID,'Число ядер в каждом процессоре');
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	$Tr->AddChild($Td);
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	$Td = new Tag('TD',Array('class'=>'Head','align'=>'center'),new Tag('SPAN','MHz'),new Tag('SPAN',Array('style'=>'font-weight:bold;font-size:14px;'),'?'));
-	#-------------------------------------------------------------------------------
-	$Links[$LinkID] = &$Td;
-	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Prompt',$LinkID,'Частота работы, каждого ядра');
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	$Tr->AddChild($Td);
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
 	$Td = new Tag('TD',Array('class'=>'Head','align'=>'center'),new Tag('SPAN','RAM'),new Tag('SPAN',Array('style'=>'font-weight:bold;font-size:14px;'),'?'));
 	#-------------------------------------------------------------------------------
 	$Links[$LinkID] = &$Td;
@@ -250,7 +215,7 @@ if($StepID){
 	$Tr->AddChild($Td);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Td = new Tag('TD',Array('class'=>'Head','align'=>'center'),new Tag('SPAN','disks'),new Tag('SPAN',Array('style'=>'font-weight:bold;font-size:14px;'),'?'));
+	$Td = new Tag('TD',Array('class'=>'Head','align'=>'center'),new Tag('SPAN','HDD'),new Tag('SPAN',Array('style'=>'font-weight:bold;font-size:14px;'),'?'));
 	#-------------------------------------------------------------------------------
 	$Links[$LinkID] = &$Td;
 	#-------------------------------------------------------------------------------
@@ -297,10 +262,6 @@ if($StepID){
 		if(Is_Error($CostMonth))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$cpu = Comp_Load('Formats/DSOrder/CPUType', $DSScheme['cputype'], 12);
-		if(Is_Error($cpu))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
 		$raid = Comp_Load('Formats/String',$DSScheme['raid'],9);
 		if(Is_Error($raid))
 			return ERROR | @Trigger_Error(500);
@@ -309,10 +270,7 @@ if($StepID){
 					new Tag('TD',Array('width'=>20),$Comp),
 					new Tag('TD',Array('class'=>'Comment'),$DSScheme['Name']),
 					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth),
-					new Tag('TD',Array('class'=>'Standard','align'=>'left'),$cpu),
-					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DSScheme['numcpu']),
-					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DSScheme['numcores']),
-					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DSScheme['cpufreq']),
+					new Tag('TD',Array('class'=>'Standard','align'=>'left'),$DSScheme['CPU']),
 					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DSScheme['ram']),
 					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$raid),
 					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DSScheme['disks'])

@@ -53,11 +53,7 @@ if($DSSchemeID){
 			'MaxOrders'			=> 0,
 			'MinOrdersPeriod'		=> 0,
 			'SortID'			=> 10,
-			'cputype'			=> 'Opteron',
-			'cpuarch'			=> 'x32',
-			'numcpu'			=> 2,
-			'numcores'			=> 8,
-			'cpufreq'			=> 2000,
+			'CPU'				=> '2x Opteron 2GHz, 2 ядра',
 			'ram'				=> 2048,
 			'raid'				=> '3Ware 9650SE-4LPML, 256Mb cache',
 			'disks'				=> 'SATA 500Gb + SATA 500Gb',
@@ -248,78 +244,11 @@ $Table[] = Array('Порядок сортировки',$Comp);
 $Table[] = 'Технические характеристики сервера';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-# TODO сделать JBS-1027
-
-# Load CPUType => CPUName Array
-$CpuArray = Comp_Load('Formats/DSOrder/CPUTypesList');
-if(Is_Error($CpuArray))
-	return ERROR | @Trigger_Error(500);
-
-$Comp = Comp_Load('Form/Select',
-	Array('name'=>'cputype'),
-	$CpuArray,
-	$DSScheme['cputype']);
+$Comp = Comp_Load('Form/Input',	Array('type'=>'text','name'=>'CPU','value'=>$DSScheme['CPU']));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
-
-$Table[] = Array('Тип процессора',$Comp);
 #-------------------------------------------------------------------------------
-
-$Comp = Comp_Load('Form/Select',
-	Array('name'=>'cpuarch'),
-	Array(	'x32'	=> '32-битная',
-		'x64'	=> '64-битная'
-	),
-	$DSScheme['cpuarch']);
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-
-$Table[] = Array('Архитектура процессора',$Comp);
-#-------------------------------------------------------------------------------
-
-
-$Comp = Comp_Load(
-	'Form/Input',
-	Array(
-		'type'  => 'text',
-		'name'  => 'numcpu',
-		'value' => $DSScheme['numcpu']
-	)
-);
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-
-$Table[] = Array('Число физических процессоров',$Comp);
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-	'Form/Input',
-	Array(
-		'type'  => 'text',
-		'name'  => 'numcores',
-		'value' => $DSScheme['numcores']
-	)
-);
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-
-$Table[] = Array('Число ядер в процессоре',$Comp);
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-	'Form/Input',
-	Array(
-		'type'  => 'text',
-		'name'  => 'cpufreq',
-		'value' => $DSScheme['cpufreq']
-	)
-);
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-
-$Table[] = Array('Частота процессора, MHz',$Comp);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
+$Table[] = Array('Процессоры',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
