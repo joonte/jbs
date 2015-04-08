@@ -2937,13 +2937,15 @@ UNLOCK TABLES;
 -- SEPARATOR
 LOCK TABLES `PaymentSystemsCollation` WRITE;
 -- SEPARATOR
-INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',10,'PayMaster','WebMoney','WebMoney.gif','Оплата через WebMoney, банковскими картами VISA/MasterCard (без процентов),\nчерез интернет-банкинги, наличными через кассы магазинов и многими другими способами','WebMoney','');
+INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',10,'PayMaster','WebMoney','WebMoney.png','Оплата через WebMoney, банковскими картами VISA/MasterCard (без процентов),\nчерез интернет-банкинги, наличными через кассы магазинов и многими другими способами','WebMoney','');
 -- SEPARATOR
-INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',20,'PayMaster','VISA','Visa.MasterCard.gif','Оплата при помощи пластиковой карты VISA или MasterCard.','VISA/MasterCard','');
+INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',20,'PayMaster','VISA','Visa.MasterCard.png','Оплата при помощи пластиковой карты VISA или MasterCard.','VISA/MasterCard','');
 -- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES ('','no',999,'PayMaster','BeeLine','BeeLine.png','Оплата со счета телефона, оператор BeeLine','BeeLine','');
 -- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES ('','no',999,'PayMaster','МТС','MTS.png','Оплата со счета телефона, оператор МТС','МТС','');
+-- SEPARATOR
+INSERT INTO `PaymentSystemsCollation` VALUES ('','no',999,'ROBOKASSA','МegaFon','МegaFon.png','Оплата со счета телефона, оператор МegaFon','МegaFon','');
 -- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES ('','no',999,'PayMaster','ЕвроСеть','EuroSet.png','Оплата через офисы ЕвроСети','ЕвроСеть','');
 -- SEPARATOR
@@ -2955,7 +2957,7 @@ INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'WebMoneyZ','WebMoney
 -- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'WebMoneyE','WebMoney WME','WMEM.gif','Оплата при помощи электронных денег платёжной системы WebMoney, валюта платежа - евро.','WebMoney WME','');
 -- SEPARATOR
-INSERT INTO `PaymentSystemsCollation` VALUES ('','no',999,'WebMoneyU','WebMoney WMU','WebMoney.gif','Оплата при помощи электронных денег платёжной системы WebMoney, валюта платежа - Украинская гривна.','WebMoney WMU','картинка от обычных вебманей');
+INSERT INTO `PaymentSystemsCollation` VALUES ('','no',999,'WebMoneyU','WebMoney WMU','WebMoney.png','Оплата при помощи электронных денег платёжной системы WebMoney, валюта платежа - Украинская гривна.','WebMoney WMU','картинка от обычных вебманей');
 -- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',30,'Yandex','Яндекс.Деньги','Yandex.png','Яндекс.Деньги — это платежная система, которая позволяет оплачивать различные товары и услуги; совершать безопасные платежи в интернете; надежно хранить всю информацию о ваших зачислениях и платежах.','Яндекс.Деньги','');
 -- SEPARATOR
