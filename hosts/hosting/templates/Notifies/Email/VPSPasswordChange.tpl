@@ -2,7 +2,7 @@
  *  Joonte Billing System
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
-{assign var=Theme value="Пароль для заказа виртуального сервера #{$OrderID|string_format:"%05u"}/[{$IP|default:'$IP'}] изменен" scope=global}
+{assign var=Theme value="Изменён пароль для заказа виртуального сервера #{$OrderID|string_format:"%05u"}/{$IP|default:'$IP'}" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Уведомляем Вас о том, что {$smarty.now|date_format:"%d.%m.%Y"} пароль на Ваш заказ виртуального выделенного сервера (VPS) №{$OrderID|string_format:"%05u"} был изменен.
