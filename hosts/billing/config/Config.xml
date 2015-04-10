@@ -334,12 +334,13 @@
     <UseSSL>1</UseSSL>
     <check_agt>false</check_agt>
     <txn_id>auto</txn_id>
-    <currency>RUB</currency>
+    <alarm>0</alarm>
    </Send>
    <Comp>QIWI</Comp>
    <Cpp>https://w.qiwi.com/order/external/create.action</Cpp>
    <XmlCpp>http://ishop.qiwi.ru/xml</XmlCpp>
    <Hash />
+   <QIWI_REST_Hash />
    <ContractsTypes>
     <Default>1</Default>
     <Natural>1</Natural>
@@ -347,7 +348,7 @@
     <Individual>0</Individual>
    </ContractsTypes>
    <IsContinuePaying>1</IsContinuePaying>
-   <Course>27.57</Course>
+   <Course>1</Course>
    <IsCourseUpdate>0</IsCourseUpdate>
    <Measure>руб</Measure>
    <Valute>RUR</Valute>
@@ -1116,7 +1117,7 @@
   <QIWI>
    <Name>Опрос сервера QIWI для получения статусов счетов</Name>
    <Params type="array" />
-   <ExecutePeriod>00:10</ExecutePeriod>
+   <ExecutePeriod>01:10</ExecutePeriod>
    <IsActive>1</IsActive>
   </QIWI>
   <!-- ********************************************************************* -->
