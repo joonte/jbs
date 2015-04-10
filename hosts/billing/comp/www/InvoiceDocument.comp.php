@@ -211,7 +211,8 @@ if($IsPayed){
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		if($Mobile)
-			$Send['to'] = SubStr($Mobile,StrLen($Mobile) - 10,10);
+			$Send['to'] = SPrintF('+%s',$Mobile);
+		#$Send['to'] = SubStr($Mobile,StrLen($Mobile) - 10,10);
 		#-------------------------------------------------------------------------------
 		foreach(Array_Keys($Send) as $ParamID){
 			#-------------------------------------------------------------------------------

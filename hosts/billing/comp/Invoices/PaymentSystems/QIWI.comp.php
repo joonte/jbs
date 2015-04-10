@@ -28,17 +28,15 @@ $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
 $Send['com'] .= SPrintF('%s, %s (%s)',$Comp,Translit($__USER['Name']),$__USER['Email']);
 #-------------------------------------------------------------------------------
-$Send['to'] = SubStr($__USER['Mobile'], StrLen($__USER['Mobile']) - 10, 10);
+#$Send['to'] = SPrintF('+%s',SubStr($__USER['Mobile'], StrLen($__USER['Mobile']) - 10, 10));
+$Send['to'] = SPrintF('+%s',$__USER['Mobile']);
 #-------------------------------------------------------------------------------
-//$Hash = Array(
-//  #-----------------------------------------------------------------------------
-//  $Send['MrchLogin'],
-//  $Send['OutSum'],
-//  $Send['InvId'],
-//  $Settings['MerchantPass1']
-//);
+$Protocol = (@$_SERVER['SERVER_PORT'] != 80?'https':'http');
 #-------------------------------------------------------------------------------
-//$Send['SignatureValue'] = StrToUpper(MD5(Implode(':',$Hash)));
+$Send['successUrl'] = SPrintF('%s://%s/Invoices',$Protocol,HOST_ID);
+$Send['failUrl']    = SPrintF('%s://%s/Invoices?Error=yes',$Protocol,HOST_ID);
+#-------------------------------------------------------------------------------
+Debug(SPrintF('[comp/Invoices/PaymentSystems/QIWI]: to = %s',$Send['to']));
 #-------------------------------------------------------------------------------
 return $Send;
 #-------------------------------------------------------------------------------

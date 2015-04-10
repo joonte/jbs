@@ -334,9 +334,10 @@
     <UseSSL>1</UseSSL>
     <check_agt>false</check_agt>
     <txn_id>auto</txn_id>
+    <currency>RUB</currency>
    </Send>
    <Comp>QIWI</Comp>
-   <Cpp>https://w.qiwi.ru/setInetBill_utf.do</Cpp>
+   <Cpp>https://w.qiwi.com/order/external/create.action</Cpp>
    <XmlCpp>http://ishop.qiwi.ru/xml</XmlCpp>
    <Hash />
    <ContractsTypes>

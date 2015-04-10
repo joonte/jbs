@@ -1,7 +1,7 @@
 <?php
 
 #-------------------------------------------------------------------------------
-/** @author Великодный В.В. (Joonte Ltd.) */
+/** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
 Eval(COMP_INIT);
@@ -9,6 +9,42 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
+if(!Count($Args))
+	return 'No args...';
+#-------------------------------------------------------------------------------
+$ArgsIDs = Array('command','bill_id','status','error','amount','user','prv_name','ccy','comment');
+#-------------------------------------------------------------------------------
+foreach($ArgsIDs as $ArgID){
+	$Args[$ArgID] = @$Args[$ArgID];
+	Debug(SPrintF('[comp/www/Merchant/QIWI]: %s => %s',$ArgID,$Args[$ArgID]));
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+Header('Content-type: text/xml; charset=utf-8');
+
+$Config = Config();
+#-------------------------------------------------------------------------------
+$Settings = $Config['Invoices']['PaymentSystems']['QIWI'];
+#-------------------------------------------------------------------------------
+#foreach(Array_Keys($_SERVER) as $Key)
+#	Debug(SPrintF('[comp/www/Merchant/QIWI]: %s => %s',$Key,$_SERVER[$Key]));
+
+$Shop_id = $_SERVER['PHP_AUTH_USER'];
+$Notification_password = $_SERVER['PHP_AUTH_PW'];
+
+Debug(SPrintF('[comp/www/Merchant/QIWI]: Auth Basic = %s:%s ',$Shop_id,$Notification_password));
+
+
+return '<?xml version="1.0"?><result><result_code>0</result_code></result>';
+
+
+
+
+
+
+
+
+
 $Wsdl = System_Element('config/Wsdl/IShopClientWS.wsdl');
 #-------------------------------------------------------------------------------
 if(Is_Error($Wsdl))
