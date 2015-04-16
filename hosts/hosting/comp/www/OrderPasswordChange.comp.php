@@ -79,13 +79,14 @@ if(Is_Error($DOM->Load('Window')))
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',SPrintF('Смена пароля для услуги "%s"',$Service['NameShort']));
 #-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/PasswordCheck.js}'));
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
-#-------------------------------------------------------------------------------
-$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/OrderPasswordChange.js}'));
-#-------------------------------------------------------------------------------
-$DOM->AddChild('Head',$Script);
+foreach(Array('PasswordCheck','Pages/OrderPasswordChange','OrderManage') as $Js){
+	#-------------------------------------------------------------------------------
+	$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>SPrintF('SRC:{Js/%s.js}',$Js)));
+	#-------------------------------------------------------------------------------
+	$DOM->AddChild('Head',$Script);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table = Array();
@@ -135,11 +136,16 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Подтверждение пароля'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Аналогично полю [Новый пароль]')),$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"if(PasswordCheck(this.form,'Password')){PasswordChange();}",'value'=>'Сменить'));
-if(Is_Error($Comp))
+#-------------------------------------------------------------------------------
+$Comp1 = Comp_Load('Form/Input',Array('type'=>'button','prompt'=>'Сменить пароль от панели управления заказом','onclick'=>"if(PasswordCheck(this.form,'Password')){PasswordChange();}; var Button = document.getElementById('OrderManageButton'); Button.style.cursor = 'pointer'; Button.disabled = false;",'value'=>'Сменить пароль'));
+if(Is_Error($Comp1))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = $Comp;
+$Comp2 = Comp_Load('Form/Input',Array('type'=>'button','id'=>'OrderManageButton','disabled'=>'yes','style'=>'cursor: not-allowed;','prompt'=>'Перейти в панель управления заказом','onclick'=>SPrintF('OrderManage(%u,%u);',$Order['ID'],$Service['ID']),'value'=>'Войти в панель управления'));
+if(Is_Error($Comp2))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = new Tag('DIV',Array('style'=>'width: 100%; align: right; text-align: right;'),$Comp2,$Comp1);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Standard',$Table);
