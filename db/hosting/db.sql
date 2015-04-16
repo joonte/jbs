@@ -18,7 +18,6 @@ VALUES
 (60,1,'HostingServersQuestioning','[]','yes'),
 (61,1,'ServersUpTime','[]','yes'),
 (62,1,'UpTimeAgregate','[]','yes'),
-(64,1,'QIWI','[]','yes'),
 (67,1,'VPSNoticeSuspend','[]','yes'),
 (69,1,'VPSNoticeDelete','[]','yes'),
 (70,1,'VPSForDelete','[]','yes'),

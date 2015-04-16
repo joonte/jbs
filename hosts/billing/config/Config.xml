@@ -330,7 +330,6 @@
     <to>auto</to>
     <summ>auto</summ>
     <com>Payment for invoice #</com>
-    <BillLifeTime>60</BillLifeTime>
     <UseSSL>1</UseSSL>
     <check_agt>false</check_agt>
     <txn_id>auto</txn_id>
@@ -1113,13 +1112,6 @@
    <StartMinutes>10</StartMinutes>
    <DeleteTimeout>30</DeleteTimeout>
   </OrdersForDelete>
-  <!-- ********************************************************************* -->
-  <QIWI>
-   <Name>Опрос сервера QIWI для получения статусов счетов</Name>
-   <Params type="array" />
-   <ExecutePeriod>01:10</ExecutePeriod>
-   <IsActive>1</IsActive>
-  </QIWI>
   <!-- ********************************************************************* -->
   <CaclulatePartnersReward>
     <Name>Партнёрские начисления</Name>
