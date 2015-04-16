@@ -264,7 +264,8 @@ function BillManager_Change_IP($Settings,$ISPswScheme){
 			'LicKey'		=> $Doc['lickey'],
 			'IsInternal'		=> $ISPswScheme['IsInternal']?'yes':'no',
 			'IsUsed'		=> 'yes',
-			'StatusID'		=> 'Active',
+			// JBS-1033 пусть планировщик по ночам статусы исправляет
+			//'StatusID'		=> 'Active',
 			'CreateDate'		=> time(),	// дата создания лицензии
 			'ip_change_date'	=> time(),	// когда можно менять IP адрес
 			'lickey_change_date'	=> time(),	// когда можно менять ключ лицензии
