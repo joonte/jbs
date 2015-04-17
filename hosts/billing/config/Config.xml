@@ -573,37 +573,35 @@
    <MaximumPayment>250000.00</MaximumPayment>
    <IsActive>0</IsActive>
   </MailRu>
-   <!-- ********************************************************************* --> 
-  <W1>
-   <Name>Единый кошелек</Name>
-   <SystemDescription>обеспечивает проведение финансовых расчетов между участниками системы в режиме реального времени и предназначенный для обслуживания потребностей населения, в первую очередь, связанных с оплатой услуг. Валюты расчётов — российский рубль, южноафриканский рэнд, украинская гривна, американский доллар, евро, казахстанский тенге</SystemDescription>
-   <Send>
-    <WMI_MERCHANT_ID />
-    <WMI_CURRENCY_ID>643</WMI_CURRENCY_ID>
-    <WMI_PAYMENT_AMOUNT>auto</WMI_PAYMENT_AMOUNT>
-    <WMI_DESCRIPTION>Payment for invoice #</WMI_DESCRIPTION>
-    <WMI_SIGNATURE>auto</WMI_SIGNATURE>
-   </Send>
-   <Comp>W1</Comp>
-<!--    <Cpp>https://merchant.w1.ru/checkout/default.aspx</Cpp> -->
-   <Cpp>https://www.walletone.com/checkout/default.aspx</Cpp>
-   <Hash />
-   <ContractsTypes>
-    <Default>1</Default>
-    <Natural>1</Natural>
-    <Juridical>1</Juridical>
-    <Individual>1</Individual>
-   </ContractsTypes>
-   <IsContinuePaying>1</IsContinuePaying>
-   <Course>1</Course>
-   <IsCourseUpdate>0</IsCourseUpdate>
-   <Measure>руб</Measure>
-   <Valute>RUR</Valute>
-   <MinimumPayment>1.00</MinimumPayment>
-   <MaximumPayment>250000.00</MaximumPayment>
-   <IsActive>0</IsActive>
-  </W1>
-  <!-- ********************************************************************* --> 
+		<!-- ********************************************************************* --> 
+		<W1>
+			<Name>Единый кошелек</Name>
+			<SystemDescription>обеспечивает проведение финансовых расчетов между участниками системы в режиме реального времени и предназначенный для обслуживания потребностей населения, в первую очередь, связанных с оплатой услуг. Валюты расчётов — российский рубль, южноафриканский рэнд, украинская гривна, американский доллар, евро, казахстанский тенге</SystemDescription>
+			<Send>
+				<WMI_MERCHANT_ID />
+				<WMI_CURRENCY_ID>643</WMI_CURRENCY_ID>
+				<WMI_PAYMENT_AMOUNT>auto</WMI_PAYMENT_AMOUNT>
+				<WMI_DESCRIPTION>Payment for invoice #</WMI_DESCRIPTION>
+			</Send>
+			<Comp>W1</Comp>
+			<Cpp>https://wl.walletone.com/checkout/checkout/Index</Cpp>
+			<Hash />
+			<ContractsTypes>
+				<Default>1</Default>
+				<Natural>1</Natural>
+				<Juridical>1</Juridical>
+				<Individual>1</Individual>
+			</ContractsTypes>
+			<IsContinuePaying>1</IsContinuePaying>
+			<Course>1</Course>
+			<IsCourseUpdate>0</IsCourseUpdate>
+			<Measure>руб</Measure>
+			<Valute>RUR</Valute>
+			<MinimumPayment>1.00</MinimumPayment>
+			<MaximumPayment>250000.00</MaximumPayment>
+			<IsActive>0</IsActive>
+		</W1>
+		<!-- ********************************************************************* --> 
   <Moneybookers>
    <Name>Moneybookers</Name>
    <SystemDescription>компания денежных переводов, которая позволяет посылать и получать деньги через электронную почту</SystemDescription>
