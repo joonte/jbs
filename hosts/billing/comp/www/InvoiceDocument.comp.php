@@ -24,8 +24,13 @@ if($Mobile){
 	# удаляем из телефона всё кроме цифр
 	$Mobile = Preg_Replace('/[^0-9]/', '', $Mobile);
 	#-------------------------------------------------------------------------------
-	if(!Preg_Match($Regulars['Mobile'],$Mobile))
+	if(!Preg_Match($Regulars['Mobile'],$Mobile)){
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/www/InvoiceDocument]: WRONG_MOBILE = %s',$Mobile));
+		#-------------------------------------------------------------------------------
 		return new gException('WRONG_MOBILE','Номер мобильного телефона указан неверно');
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 	if(!SetCookie('Mobile',$Mobile,Time() + 364*24*3600,'/'))
 		return ERROR | @Trigger_Error(500);
@@ -107,12 +112,20 @@ if($PaymentSystemID == 'QIWI' && !$IsPayed){
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Form = new Tag('FORM',Array('action'=>'/InvoiceDocument','method'=>'POST')/*,new Tag('BR'),new Tag('DIV','')*/);
+		$Form = new Tag('FORM',Array('action'=>'/InvoiceDocument','method'=>'POST','name'=>'MobileInputForm'));
 		#-------------------------------------------------------------------------------
 		$Form->AddChild($Comp);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Input',Array('type'=>'button','name'=>'Submit','onclick'=>"ShowWindow('/InvoiceDocument',FormGet(form));",'value'=>'Продолжить'));
+		$Comp = Comp_Load(
+				'Form/Input',
+				Array(
+					'type'		=>'button',
+					'name'		=>'Submit',
+					'value'		=> 'Продолжить',
+					'onclick'	=> "javascript: if(form.Mobile.value.charAt(0) == 8 || form.Mobile.value.charAt(0) == 9 || (form.Mobile.value.charAt(0) == \"+\" && (form.Mobile.value.charAt(1) == 8 || form.Mobile.value.charAt(1) == 9))){ ShowConfirm('С цифры 8 начинаются коды таких стран как Китай, Бангладеш и т.п. С цифры 9 начинаются телефонов в Афганистане, Монголии, Турции ... Вы уверены что ваш мобильный телефон относится именно к этой стране? Например код РФ: 7, Беларуси: 375, Украины: 380. Соответственно, обычный номер Российского мобильного телефона выглядит так: 79262223344. Вы всё ещё хотите сохранить свой телефонный номер в таком виде?','ShowWindow(\'/InvoiceDocument\',{Mobile:\'' + form.Mobile.value + '\',InvoiceID:' + form.InvoiceID.value + '})'); }else{ ShowWindow('/InvoiceDocument',FormGet(form)); }"
+					)
+				);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
