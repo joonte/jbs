@@ -1,3 +1,5 @@
+#!/bin/sh
+
 REMOTE_ADDR='127.0.0.1'
 export REMOTE_ADDR
 SERVER_NAME=$1
