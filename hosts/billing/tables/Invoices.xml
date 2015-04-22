@@ -159,7 +159,7 @@
   <Comp>Formats/Invoice/Type</Comp>
   <Args>
    <ListElement>%PaymentSystemID%</ListElement>
-   <Length>15</Length>
+   <Length>20</Length>
   </Args>
  </PaymentSystem>
  <!-- ********************************************************************** -->
