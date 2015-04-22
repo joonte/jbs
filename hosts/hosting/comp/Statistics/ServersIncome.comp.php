@@ -43,6 +43,9 @@ default:
 #-------------------------------------------------------------------------------
 foreach($ServersGroups as $ServersGroup){
 	#-------------------------------------------------------------------------------
+	#if($ServersGroup['ServiceID'] != 20000)
+	#	continue;
+	#-------------------------------------------------------------------------------
 	# выбираем сервера группы
 	$Servers = DB_Select('Servers',Array('*'),Array('Where'=>SPrintF('`ServersGroupID` = %u',$ServersGroup['ID']),'SortOn'=>'Address'));
 	#-------------------------------------------------------------------------------
@@ -50,44 +53,80 @@ foreach($ServersGroups as $ServersGroup){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
+		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[comp/Statistics/ServersIncome]: no servers for group %s',$ServersGroup['ID']));
-		break;
+		#-------------------------------------------------------------------------------
+		continue 2;
+		#-------------------------------------------------------------------------------
 	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Balance = $Accounts = $NumPaid = 0;
+	#-------------------------------------------------------------------------------
+	$Params = $Labels = Array();
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Table = Array(SPrintF('Группа серверов: %s',$ServersGroup['Name']));
+	#-------------------------------------------------------------------------------
+	$Table[] = Array(new Tag('TD',Array('class'=>'Head'),'Адрес сервера'),new Tag('TD',Array('class'=>'Head'),'Аккаунтов (всего/платно)'),new Tag('TD',Array('class'=>'Head'),'Доход сервера'),new Tag('TD',Array('class'=>'Head'),'Доход аккаунта')/*,new Tag('TD',Array('class'=>'Head'),'Диск, Gb'),new Tag('TD',Array('class'=>'Head'),'Память, Mb')*/);
+	#-------------------------------------------------------------------------------
+	foreach($Servers as $Server){
 		#-------------------------------------------------------------------------------
-		$Balance = 0;
-		$Accounts = 0;
-		$NumPaid = 0;
-		$Params = $Labels = Array();
+		Debug(SPrintF('[comp/Statistics/ServersIncome]: Address = %s',$Server['Address']));
 		#-------------------------------------------------------------------------------
-		$Table = Array(SPrintF('Группа серверов: %s',$ServersGroup['Name']));
+		# достаём все активные аккаунты сервера
+		$ServerAccounts = DB_Select('Orders',Array('ID'),Array('Where'=>SPrintF('`ServerID` = %u AND `StatusID` = "Active"',$Server['ID'])));
 		#-------------------------------------------------------------------------------
-		$Table[] = Array(new Tag('TD',Array('class'=>'Head'),'Адрес сервера'),new Tag('TD',Array('class'=>'Head'),'Аккаунтов (всего/платно)'),new Tag('TD',Array('class'=>'Head'),'Доход сервера'),new Tag('TD',Array('class'=>'Head'),'Доход аккаунта')/*,new Tag('TD',Array('class'=>'Head'),'Диск, Gb'),new Tag('TD',Array('class'=>'Head'),'Память, Mb')*/);
+		switch(ValueOf($ServerAccounts)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			Debug(SPrintF('[comp/Statistics/ServersIncome]: no accounts for server %s',$Server['Address']));
+			break;
+		case 'array':
+			# All OK, accounts found
+			Debug(SPrintF('[comp/Statistics/ServersIncome]: server %s, found %u accounts',$Server['Address'],SizeOf($ServerAccounts)));
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
 		#-------------------------------------------------------------------------------
-		foreach($Servers as $Server){
+		$Array = Array();
+		#-------------------------------------------------------------------------------
+		foreach($ServerAccounts as $Account)
+			$Array[] = $Account['ID'];
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+                if($ServersGroup['ServiceID'] == 20000){
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Statistics/ServersIncome]: Address = %s',$Server['Address']));
-			# достаём все активные аккаунты сервера
-			$ServerAccounts = DB_Select('Orders',Array('ID'),Array('Where'=>SPrintF('`ServerID` = %u AND `StatusID` = "Active"',$Server['ID'])));
+			# домены обсчитываем отдельно.
 			#-------------------------------------------------------------------------------
-			switch(ValueOf($ServerAccounts)){
+			#DaysRemainded - всегда 365?
+			# выбираем
+			$Income = DB_Select('DomainOrders',Array('SUM((SELECT `CostOrder` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrders`.`SchemeID`)) AS `SummRemainded`'),Array('UNIQ','Where'=>SPrintF('`OrderID` IN (%s)',Implode(',',$Array))));
+			#-------------------------------------------------------------------------------
+			switch(ValueOf($Income)){
 			case 'error':
 				return ERROR | @Trigger_Error(500);
 			case 'exception':
-				Debug(SPrintF('[comp/Statistics/ServersIncome]: no accounts for server %s',$Server['Address']));
-				break;
+				Debug(SPrintF('[comp/Statistics/ServersIncome]: no summ for registrator %s',$Server['Address']));
+				continue 2;
 			case 'array':
-				# All OK, accounts found
 				break;
 			default:
 				return ERROR | @Trigger_Error(101);
 			}
 			#-------------------------------------------------------------------------------
+			$PaidAccounts = SizeOf($Array);
 			#-------------------------------------------------------------------------------
-			$Array = Array();
+			$Income['DaysRemainded'] = $PaidAccounts * 365;
+			#Debug(SPrintF('[comp/Statistics/ServersIncome]: Income = %s',print_r($Income,true)));
 			#-------------------------------------------------------------------------------
-			foreach($ServerAccounts as $Account)
-				$Array[] = $Account['ID'];
-			#-------------------------------------------------------------------------------
+		}else{
 			#-------------------------------------------------------------------------------
 			# считаем сумму всех оплаченных дней сервера
 			$Where = Array('`DaysRemainded` > 0','`Discont` < 1','`Cost` > 0',SPrintF('`OrderID` IN (%s)',Implode(',',$Array)));
@@ -99,121 +138,99 @@ foreach($ServersGroups as $ServersGroup){
 				return ERROR | @Trigger_Error(500);
 			case 'exception':
 				Debug(SPrintF('[comp/Statistics/ServersIncome]: no summ for server %s',$Server['Address']));
+				continue 2;
+			case 'array':
 				break;
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
+			#-------------------------------------------------------------------------------
+			#Debug(SPrintF('[comp/Statistics/ServersIncome]: Income = %s',print_r($Income,true)));
+			#-------------------------------------------------------------------------------
+			# считаем все не-бесплатные аккаунты, по ним будут расчёты цены и доходов
+			$Count = DB_Select('OrdersConsider','DISTINCT(`OrderID`) AS `OrderID`',Array('Where'=>$Where));
+			#-------------------------------------------------------------------------------
+			switch(ValueOf($Count)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				#-------------------------------------------------------------------------------
+				# однако, дальше на это число делится - поэтому ноль нельзя
+				continue 3;
+				#-------------------------------------------------------------------------------
+				$PaidAccounts = 0;
+				#-------------------------------------------------------------------------------
+				break;
+				#-------------------------------------------------------------------------------
 			case 'array':
 				#-------------------------------------------------------------------------------
-				# считаем все не-бесплатные аккаунты, по ним будут расчёты цены и доходов
-				$Count = DB_Select('OrdersConsider','DISTINCT(`OrderID`) AS `OrderID`',Array('Where'=>$Where));
+				# All OK, accounts found
+				$PaidAccounts = SizeOf($Count);
 				#-------------------------------------------------------------------------------
-				switch(ValueOf($Count)){
-				case 'error':
-					return ERROR | @Trigger_Error(500);
-				case 'exception':
-					#-------------------------------------------------------------------------------
-					# однако, дальше на это число делится - поэтому ноль нельзя
-					continue 5;
-					#-------------------------------------------------------------------------------
-					$PaidAccounts = 0;
-					#-------------------------------------------------------------------------------
-					break;
-					#-------------------------------------------------------------------------------
-				case 'array':
-					#-------------------------------------------------------------------------------
-					# All OK, accounts found
-					$PaidAccounts = SizeOf($Count);
-					#-------------------------------------------------------------------------------
-					break;
-					#-------------------------------------------------------------------------------
-				default:
-					return ERROR | @Trigger_Error(101);
-				}
-				#-------------------------------------------------------------------------------
-if(FALSE){
-				# достаём место на диске и оперативную память
-				$Usage = DB_Select(Array('Orders','Schemes'),Array('CEIL(SUM(QuotaMEM)) AS tmem','CEIL(SUM(QuotaDisk)/1024) AS tdisk'),Array('UNIQ','Where'=>Array(SPrintF('`Orders`.`ServerID` = %u',$Server['ID']),'`Schemes`.`ID` = `Orders`.`SchemeID`','`Orders`.`StatusID` = "Active"')));
-				#-------------------------------------------------------------------------------
-				switch(ValueOf($Usage)){
-				case 'error':
-					return ERROR | @Trigger_Error(500);
-				case 'exception':
-					return ERROR | @Trigger_Error(400);
-				case 'array':
-					# All OK, accounts found
-					break;
-				default:
-					return ERROR | @Trigger_Error(101);
-				}
-}
-				#-------------------------------------------------------------------------------
-				#-------------------------------------------------------------------------------
-				Debug("before calculate");
-				$NumAccounts = SizeOf($Array);
-				#-------------------------------------------------------------------------------
-				$AccountIncome = Comp_Load('Formats/Currency',($Income['SummRemainded'] / $Income['DaysRemainded']) * 30);# 30 дней в месяце
-				if(Is_Error($AccountIncome))
-					return ERROR | @Trigger_Error(500);
-				#-------------------------------------------------------------------------------
-				Debug("debug - 1");
-				$ServerIncome = Comp_Load('Formats/Currency',($Income['SummRemainded'] / $Income['DaysRemainded']) * $PaidAccounts * 30);# 30 дней в месяце
-				if(Is_Error($ServerIncome))
-					return ERROR | @Trigger_Error(500);
-				#-------------------------------------------------------------------------------
-				Debug("debug - 2");
-				$Table[] = Array($Server['Address'],SPrintF('%s / %s',$NumAccounts,$PaidAccounts),$ServerIncome,$AccountIncome/*,$Usage['tdisk'],$Usage['tmem']*/);
-				#-------------------------------------------------------------------------------
-				#-------------------------------------------------------------------------------
-				Debug("debug - 3");
-				$Params[] = ($Income['SummRemainded'] / $Income['DaysRemainded']) * $PaidAccounts * 30;
-				$Labels[] = $Server['Address'];
-				#-------------------------------------------------------------------------------
-				Debug("debug - 4");
-				$Balance += ($Income['SummRemainded'] / $Income['DaysRemainded']) * $PaidAccounts * 30;
-				$Accounts+= $NumAccounts;
-				$NumPaid += $PaidAccounts;
-				#-------------------------------------------------------------------------------
-				Debug("cycle complete");
 				break;
 				#-------------------------------------------------------------------------------
 			default:
 				return ERROR | @Trigger_Error(101);
 			}
 			#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Formats/Currency',$Balance);
-		if(Is_Error($Comp))
+		#-------------------------------------------------------------------------------
+		#Debug("[comp/Statistics/ServersIncome]: before calculate");
+		$NumAccounts = SizeOf($Array);
+		#-------------------------------------------------------------------------------
+		$AccountIncome = Comp_Load('Formats/Currency',($Income['SummRemainded'] / $Income['DaysRemainded']) * 30);# 30 дней в месяце
+		if(Is_Error($AccountIncome))
 			return ERROR | @Trigger_Error(500);
-		#----------------------------------------------------------------------------
-		$Table[] = Array(new Tag('TD',Array('colspan'=>5,'class'=>'Standard'),SPrintF('Общий доход от серверов группы: %s',$Comp)));
-		#----------------------------------------------------------------------------
-		# средняя стоимость аккаунта
-		$Comp = Comp_Load('Formats/Currency',$Balance / $NumPaid);
-		if(Is_Error($Comp))
+		#-------------------------------------------------------------------------------
+		#Debug("[comp/Statistics/ServersIncome]: debug - 1");
+		$ServerIncome = Comp_Load('Formats/Currency',($Income['SummRemainded'] / $Income['DaysRemainded']) * $PaidAccounts * 30);# 30 дней в месяце
+		if(Is_Error($ServerIncome))
 			return ERROR | @Trigger_Error(500);
-		#----------------------------------------------------------------------------
-		$Table[] = Array(new Tag('TD',Array('colspan'=>5,'class'=>'Standard'),SPrintF('Средняя цена аккаунта в группе: %s',$Comp)));
-		#----------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Tables/Extended',$Table);
-		if(Is_Error($Comp))
-			return ERROR | @Trigger_Error(500);
-		#----------------------------------------------------------------------------
-		$NoBody->AddChild($Comp);
+		#Debug("[comp/Statistics/ServersIncome]: debug - 2");
+		$Table[] = Array($Server['Address'],SPrintF('%s / %s',$NumAccounts,$PaidAccounts),$ServerIncome,$AccountIncome/*,$Usage['tdisk'],$Usage['tmem']*/);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Graphs[$ServersGroup['ID']] = Array('Name'=>$ServersGroup['Name'],'Balance'=>$Balance,'NumPaid'=>$NumPaid,'Accounts'=>$Accounts,'Params'=>$Params,'Labels'=>$Labels);
-		#----------------------------------------------------------------------------
-		$NoBody->AddChild(new Tag('BR'));
+		#Debug("[comp/Statistics/ServersIncome]: debug - 3");
+		$Params[] = ($Income['SummRemainded'] / $Income['DaysRemainded']) * $PaidAccounts * 30;
+		$Labels[] = $Server['Address'];
 		#-------------------------------------------------------------------------------
+		#Debug("[comp/Statistics/ServersIncome]: debug - 4");
+		$Balance += ($Income['SummRemainded'] / $Income['DaysRemainded']) * $PaidAccounts * 30;
+		$Accounts+= $NumAccounts;
+		$NumPaid += $PaidAccounts;
 		#-------------------------------------------------------------------------------
-		break;
-		#----------------------------------------------------------------------------
-
-	default:
-		return ERROR | @Trigger_Error(101);
+		#Debug("[comp/Statistics/ServersIncome]: cycle complete");
+		#-------------------------------------------------------------------------------
 	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Formats/Currency',$Balance);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
 	#----------------------------------------------------------------------------
+	$Table[] = Array(new Tag('TD',Array('colspan'=>5,'class'=>'Standard'),SPrintF('Общий доход от серверов группы: %s',$Comp)));
+	#----------------------------------------------------------------------------
+	# средняя стоимость аккаунта
+	$Comp = Comp_Load('Formats/Currency',$Balance / $NumPaid);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#----------------------------------------------------------------------------
+	$Table[] = Array(new Tag('TD',Array('colspan'=>5,'class'=>'Standard'),SPrintF('Средняя цена аккаунта в группе: %s',$Comp)));
+	#----------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Tables/Extended',$Table);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#----------------------------------------------------------------------------
+	$NoBody->AddChild($Comp);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Graphs[$ServersGroup['ID']] = Array('Name'=>$ServersGroup['Name'],'Balance'=>$Balance,'NumPaid'=>$NumPaid,'Accounts'=>$Accounts,'Params'=>$Params,'Labels'=>$Labels);
+	#----------------------------------------------------------------------------
+	$NoBody->AddChild(new Tag('BR'));
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -279,4 +296,6 @@ $Result['DOM'] = $NoBody;
 #-------------------------------------------------------------------------------
 return $Result;
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+
 ?>
