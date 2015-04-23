@@ -46,7 +46,7 @@ $Epoches = 3;
 #-------------------------------------------------------------------------------
 $Incomes = Array();
 #-------------------------------------------------------------------------------
-$Orders = DB_Select(Array('VPSOrdersOwners','Orders','Contracts'),Array('ContractID','Balance','OrderID','Customer','Login','Domain','(UNIX_TIMESTAMP() + `VPSOrdersOwners`.`DaysRemainded`*86400) as `ExpirationDate`','(SELECT `MinDaysPay` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrders`.`SchemeID`) as `MinDaysPay`','(SELECT `CostDay` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrders`.`SchemeID`) as `CostDay`'),Array('Where'=>SPrintF('(UNIX_TIMESTAMP() + `VPSOrdersOwners`.`DaysRemainded`*86400) < %u AND `Orders`.`ID` = `VPSOrders`.`OrderID` AND `Contracts`.`ID` = `Orders`.`ContractID`',MkTime(0,0,1,(Date('n')+$Epoches))),'SortOn'=>'ExpirationDate'));
+$Orders = DB_Select(Array('VPSOrders','Orders','Contracts'),Array('ContractID','Balance','OrderID','Customer','Login','Domain','(UNIX_TIMESTAMP() + `DaysRemainded`*86400) as `ExpirationDate`','(SELECT `MinDaysPay` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrders`.`SchemeID`) as `MinDaysPay`','(SELECT `CostDay` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrders`.`SchemeID`) as `CostDay`'),Array('Where'=>SPrintF('(UNIX_TIMESTAMP() + `DaysRemainded`*86400) < %u AND `Orders`.`ID` = `VPSOrders`.`OrderID` AND `Contracts`.`ID` = `Orders`.`ContractID`',MkTime(0,0,1,(Date('n')+$Epoches))),'SortOn'=>'ExpirationDate'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Orders)){
   case 'error':
