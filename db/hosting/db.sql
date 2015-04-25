@@ -6,27 +6,22 @@ DELETE FROM `Tasks` WHERE `ID` IN(51,52,53,54,55,56,57,58,59,60,61,62,64,65,66,6
 INSERT INTO `Tasks`
   (`ID`,`UserID`,`TypeID`,`Params`,`IsActive`)
 VALUES
-(51,1,'HostingNoticeSuspend','[]','yes'),
+(51,1,'NoticeSuspend','[]','yes'),
 (52,1,'Consider','[]','yes'),
 (53,1,'NoticeDelete','[]','yes'),
 (54,1,'HostingForDelete','[]','yes'),
-(55,1,'DomainNoticeSuspend','[]','yes'),
 (56,1,'HostingCPUUsage','[]','yes'),
 (58,1,'DomainForDelete','[]','yes'),
 (59,1,'DomainOrdersWhoIsUpdate','[]','yes'),
 (60,1,'HostingServersQuestioning','[]','yes'),
 (61,1,'ServersUpTime','[]','yes'),
 (62,1,'UpTimeAgregate','[]','yes'),
-(67,1,'VPSNoticeSuspend','[]','yes'),
 (70,1,'VPSForDelete','[]','yes'),
-(71,1,'DSNoticeSuspend','[]','yes'),
 (74,1,'DSForDelete','[]','yes'),
 (75,1,'DSCalculateNumServers','[]','yes'),
 (78,1,'ExtraIPForDelete','[]','yes'),
-(81,1,'ISPswNoticeSuspend','[]','yes'),
 (84,1,'ISPswForDelete','[]','yes'),
 (86,1,'ServersAutoBalance','[]','yes'),
-(91,1,'DNSmanagerNoticeSuspend','[]','yes'),
 (94,1,'DNSmanagerForDelete','[]','yes')
 ;
 
