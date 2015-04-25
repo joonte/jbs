@@ -34,7 +34,7 @@ $Where = Array(
 			/* нет рефералов */
 			'(SELECT COUNT(*) FROM `Users` WHERE `OwnerID` = `Users`.`ID`) = 0',
 			/* нет свежих потстов в тикетницу */
-			SPrintF('(SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `OwnerID` = `Users`.`ID`) < UNIX_TIMESTAMP() - %u * 24 * 3600',$Settings['InactiveDaysForUser']),
+			SPrintF('(SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `OwnerID` = `Users`.`ID`) < UNIX_TIMESTAMP() - %u * 24 * 3600 OR (SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `OwnerID` = `Users`.`ID`) IS NULL',$Settings['InactiveDaysForUser'],$Settings['InactiveDaysForUser']),
 		);
 #-------------------------------------------------------------------------------
 $Users = DB_Select('Users', Array('ID','Email','Name'),Array('Where'=>$Where));
