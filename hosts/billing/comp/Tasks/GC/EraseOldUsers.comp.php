@@ -62,6 +62,7 @@ foreach($Users as $User){
 		#-------------------------------------------------------------------------------
 		$Event = Array(
 				'PriorityID'    => 'Billing',
+				'IsReaded'	=> ($Settings['IsEvent']?'FALSE':TRUE),
 				'Text'          => SPrintF('Удалён пользователь (%s/%s) не заходивший в биллинг более %s дней',$User['Name'],$User['Email'],$Settings['InactiveDaysForUser'])
 			);
 		$Event = Comp_Load('Events/EventInsert',$Event);

@@ -1179,6 +1179,7 @@
    <!-- ********************************************************************* -->
    <EraseOldUsersSettings>
     <IsActive>1</IsActive>
+    <IsEvent>1</IsEvent>
     <InactiveDaysForUser>365</InactiveDaysForUser>
    </EraseOldUsersSettings>
    <!-- ********************************************************************* -->
