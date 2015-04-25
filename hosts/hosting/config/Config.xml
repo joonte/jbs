@@ -550,11 +550,6 @@
    <IsActive>1</IsActive>
   </DomainNoticeSuspend>
   <!-- ********************************************************************* -->
-  <DomainNoticeDelete>
-   <Name>Уведомления об удалении заказов доменов</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </DomainNoticeDelete>
   <!-- ********************************************************************* -->
   <DomainForDelete>
    <Name>Заказы на домены для удаления</Name>
@@ -647,11 +642,6 @@
    <IsActive>1</IsActive>
   </HostingNoticeSuspend>
   <!-- ********************************************************************* -->
-  <HostingNoticeDelete>
-   <Name>Уведомления об удалении заказов хостинг</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </HostingNoticeDelete>
   <!-- ********************************************************************* -->
   <HostingForDelete>
    <Name>Заказы на хостинг для удаления</Name>
@@ -742,11 +732,6 @@
    <IsActive>1</IsActive>
   </VPSNoticeSuspend>
   <!-- ********************************************************************* -->
-  <VPSNoticeDelete>
-   <Name>Уведомления об удалении заказов VPS</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </VPSNoticeDelete>
   <!-- ********************************************************************* -->
   <VPSForDelete>
    <Name>Заказы на VPS для удаления</Name>
@@ -812,11 +797,6 @@
    <IsActive>1</IsActive>
   </DSNoticeSuspend>
   <!-- ********************************************************************* -->
-  <DSNoticeDelete>
-   <Name>Уведомления об удалении заказов аренды серверов</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </DSNoticeDelete>
   <!-- ********************************************************************* -->
   <DSForDelete>
    <Name>Заказы арендованных серверов для удаления</Name>
@@ -876,11 +856,6 @@
    <IsActive>1</IsActive>
   </ExtraIPActive>
   <!-- ********************************************************************* -->
-  <ExtraIPNoticeDelete>
-   <Name>Уведомления об удалении заказов IP адресов</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </ExtraIPNoticeDelete>
   <!-- ********************************************************************* -->
   <ExtraIPForDelete>
    <Name>Заказы на IP адреса для удаления</Name>
@@ -913,11 +888,6 @@
    <IsActive>1</IsActive>
   </ISPswNoticeSuspend>
   <!-- ********************************************************************* -->
-  <ISPswNoticeDelete>
-   <Name>Уведомления об удалении заказов ПО ISPsytsem</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </ISPswNoticeDelete>
   <!-- ********************************************************************* -->
   <ISPswForDelete>
    <Name>Заказы на ПО ISPsystem для удаления</Name>
@@ -1044,11 +1014,6 @@
    <IsActive>1</IsActive>
   </DNSmanagerNoticeSuspend>
   <!-- ********************************************************************* -->
-  <DNSmanagerNoticeDelete>
-   <Name>Уведомления об удалении заказов на вторичный DNS</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </DNSmanagerNoticeDelete>
   <!-- ********************************************************************* -->
   <DNSmanagerForDelete>
    <Name>Заказы на вторичный DNS для удаления</Name>
@@ -1116,6 +1081,13 @@
 			<SleepTime>20</SleepTime>
 			<IsActive>1</IsActive>
 		</Consider>
+		<!-- *********************************************************************** -->
+		<NoticeDelete>
+			<Name>Уведомления об удалении заказов штатных услуг</Name>
+			<Params type="array" />
+			<ExecuteTime>04:25</ExecuteTime>
+			<IsActive>1</IsActive>
+		</NoticeDelete>
 		<!-- *********************************************************************** -->
 	</Types>
 </Tasks>
