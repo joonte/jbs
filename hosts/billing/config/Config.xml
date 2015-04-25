@@ -1182,6 +1182,13 @@
     <InactiveDaysForUser>365</InactiveDaysForUser>
    </EraseOldUsersSettings>
    <!-- ********************************************************************* -->
+   <WithdrawalOldUsersSettings>
+    <IsActive>1</IsActive>
+    <IsEvent>1</IsEvent>
+    <InactiveDaysForUser>400</InactiveDaysForUser>
+    <WithdrawSumm>10.00</WithdrawSumm>
+   </WithdrawalOldUsersSettings>
+   <!-- ********************************************************************* -->
    <Sessions>
     <IsActive>1</IsActive>
     <SessionTTL>3600</SessionTTL>
@@ -1238,6 +1245,8 @@
 				<SetDeletedWaitingOrders>Отмена неоплаченных заказов</SetDeletedWaitingOrders>
 				<!-- автоматическое списание лишних дней у бесплатных заказов -->
 				<ResetOrdersDays>Списание лишних дней у заказов</ResetOrdersDays>
+				<!-- автоматическое списание денег у клиентов без заказов, не заходящих в биллинг -->
+				<WithdrawalOldUsers>Списание денег с балланса неактивных пользователей</WithdrawalOldUsers>
 			</DailyTasks>
 			<!-- *********************************************************************** -->
 			<WeeklyTasks type="array" />

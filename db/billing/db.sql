@@ -2922,13 +2922,14 @@ UNLOCK TABLES;
 
 -- SEPARATOR
 LOCK TABLES `Services` WRITE;
-DELETE FROM `Services` WHERE `ID` IN(1000,2000,3000);
+DELETE FROM `Services` WHERE `ID` IN(1000,2000,2100,3000);
 INSERT INTO `Services`
   (`ID`,`ServicesGroupID`,`GroupID`,`UserID`,`Name`,`NameShort`,`OperationSign`,`Measure`,`IsHidden`,`IsProtected`,`IsActive`)
 VALUES
 (1000,1000,2000000,1,'Пополнение средств','Пополнение','+','шт.','yes','yes','no'),
 (1100,1000,2000000,1,'Партнёрское начисление','Начисление','+','шт.','yes', 'yes','no'),
 (2000,1000,2000000,1,'Списание средств','Списание','-','шт.','yes','yes','no'),
+(2100,1000,2000000,1,'Хранение информации пользователя','Хранение информации','-','шт.','yes','yes','no'),
 (3000,1000,2000000,1,'Возврат средств на баланс','Возврат на баланс','+','шт.','yes','yes','no'),
 (4000,1000,2000000,1,'Возврат средств на реквизиты пользователя','Возврат на реквизиты','+','шт.','yes','yes','no');
 UNLOCK TABLES;
