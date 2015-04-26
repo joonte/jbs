@@ -22,6 +22,7 @@ $Where = Array(
 		SPrintF('`ExecuteDate` < UNIX_TIMESTAMP() - %u',$Settings['TableTasksStoryPeriod'] * 24 * 3600),
 		'`UserID` != 1','`TypeID` != "Dispatch"'
 		);
+#-------------------------------------------------------------------------------
 $IsDelete = DB_Delete('Tasks',Array('Where'=>$Where));
 if(Is_Error($IsDelete))
 	return ERROR | @Trigger_Error(500);
@@ -33,6 +34,7 @@ $Where = Array(
 		'`CreateDate` < UNIX_TIMESTAMP() - 24 * 3600',
 		"`TypeID` = 'SMS'"
 		);
+#-------------------------------------------------------------------------------
 $IsDelete = DB_Delete('Tasks',Array('Where'=>$Where));
 if(Is_Error($IsDelete))
 	return ERROR | @Trigger_Error(500);
@@ -41,6 +43,7 @@ if(Is_Error($IsDelete))
 #--------------------------------------------------------------------------------
 # зачищаем таблицу ServersUpTime
 $Where = SPrintF('`TestDate` < UNIX_TIMESTAMP() - %u',$Settings['TableServersUpTimeStoryPeriod'] * 24 * 3600);
+#-------------------------------------------------------------------------------
 $IsDelete = DB_Delete('ServersUpTime',Array('Where'=>$Where));
 if(Is_Error($IsDelete))
 	return ERROR | @Trigger_Error(500);
@@ -49,6 +52,7 @@ if(Is_Error($IsDelete))
 #--------------------------------------------------------------------------------
 # зачищаем таблицу RequestLog
 $Where = SPrintF('`CreateDate` < UNIX_TIMESTAMP() - %u',$Settings['TableRequestLogStoryPeriod'] * 24 * 3600);
+#-------------------------------------------------------------------------------
 $IsDelete = DB_Delete('RequestLog',Array('Where'=>$Where));
 if(Is_Error($IsDelete))
 	return ERROR | @Trigger_Error(500);
@@ -87,43 +91,47 @@ if(Is_Error($IsDelete))
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # added by lissyara for JBS-783
-$IsQuery = DB_Query('SELECT `ID`,`ModeID`,`RowID` FROM `StatusesHistory` WHERE DAYOFMONTH(FROM_UNIXTIME(`StatusDate`)) = DAYOFMONTH(FROM_UNIXTIME(UNIX_TIMESTAMP()))');
-if(Is_Error($IsQuery))
-	return ERROR | @Trigger_Error(500);
+# искуственно ограничиваем запрос, иначе может быть слишком большая выборка.
+# а так, за месяц, гарантированно переберутся все дни, и все лишние записи удалятся
+$Where = 'DAYOFMONTH(FROM_UNIXTIME(`StatusDate`)) = DAYOFMONTH(FROM_UNIXTIME(UNIX_TIMESTAMP()))';
 #--------------------------------------------------------------------------------
-$Rows = MySQL::Result($IsQuery);
-if(Is_Error($Rows))
+$StatusesHistory = DB_Select('StatusesHistory',Array('ID','ModeID','RowID'),Array('Where'=>$Where));
+#-------------------------------------------------------------------------------
+switch(ValueOf($StatusesHistory)){
+case 'error':
 	return ERROR | @Trigger_Error(500);
-#--------------------------------------------------------------------------------
-if(Count($Rows) >0){
+case 'exception':
+	# No more...
+	break;
+case 'array':
 	#--------------------------------------------------------------------------------
-	#Debug(SPrintF('[comp/Tasks/GC/CleanTables]: Rows = %s',print_r($Rows,true)));
+	#Debug(SPrintF('[comp/Tasks/GC/CleanTables]: StatusesHistory = %s',print_r($StatusesHistory,true)));
 	#--------------------------------------------------------------------------------
 	$Keys = Array();
 	#--------------------------------------------------------------------------------
-	foreach($Rows as $Row){
+	foreach($StatusesHistory as $History){
 		#--------------------------------------------------------------------------------
 		# перебираем только уникальные значения
-		$Key = SPrintF('%s-%s',$Row['ModeID'],$Row['RowID']);
+		$Key = SPrintF('%s-%s',$History['ModeID'],$History['RowID']);
 		#--------------------------------------------------------------------------------
 		if(In_Array($Key,$Keys))
 			continue;
 		#--------------------------------------------------------------------------------
-		#Debug(SPrintF('[comp/Tasks/GC/CleanTables]: ID = %s, ModeID = %s, RowID = %s',$Row['ID'],$Row['ModeID'],$Row['RowID']));
+		#Debug(SPrintF('[comp/Tasks/GC/CleanTables]: ID = %s, ModeID = %s, RowID = %s',$History['ID'],$History['ModeID'],$History['RowID']));
 		#--------------------------------------------------------------------------------
 		$Keys[] = $Key;
 		#--------------------------------------------------------------------------------
 		#--------------------------------------------------------------------------------
-		$Row1 = DB_Select($Row['ModeID'],'ID',Array('UNIQ','Where'=>SPrintF("`ID` = %u",$Row['RowID'])));
+		$Row = DB_Select($History['ModeID'],Array('ID'),Array('UNIQ','Where'=>SPrintF("`ID` = %u",$History['RowID'])));
 		#--------------------------------------------------------------------------------
-		switch(ValueOf($Row1)){
+		switch(ValueOf($Row)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
 			#--------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/GC/CleanTables]: orphaned row ID = %s, ModeID = %s, RowID = %s',$Row['ID'],$Row['ModeID'],$Row['RowID']));
+			Debug(SPrintF('[comp/Tasks/GC/CleanTables]: orphaned row ID = %s, ModeID = %s, RowID = %s',$History['ID'],$History['ModeID'],$History['RowID']));
 			#--------------------------------------------------------------------------------
-			$IsDelete = DB_Delete('StatusesHistory',Array('Where'=>SPrintF('`ModeID` = "%s" AND `RowID` = %u',$Row['ModeID'],$Row['RowID'])));
+			$IsDelete = DB_Delete('StatusesHistory',Array('Where'=>SPrintF('`ModeID` = "%s" AND `RowID` = %u',$History['ModeID'],$History['RowID'])));
 			if(Is_Error($IsDelete))
 				return ERROR | @Trigger_Error(500);
 			#--------------------------------------------------------------------------------
@@ -136,7 +144,13 @@ if(Count($Rows) >0){
 		default:
 			return ERROR | @Trigger_Error(101);
 		}
+		#--------------------------------------------------------------------------------
 	}
+	#--------------------------------------------------------------------------------
+	break;
+	#--------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
 }
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
