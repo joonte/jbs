@@ -39,7 +39,7 @@ $Where = Array(
 			SPrintF('(SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `UserID` = `Users`.`ID`) < UNIX_TIMESTAMP() - %u * 24 * 3600 OR (SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `UserID` = `Users`.`ID`) IS NULL',$Settings['InactiveDaysForUser'],$Settings['InactiveDaysForUser']),
 		);
 #-------------------------------------------------------------------------------
-$Users = DB_Select('Users', Array('ID','Email','Name','EnterDate'),Array('Where'=>$Where,'Limits'=>Array(0,20)));
+$Users = DB_Select('Users', Array('ID','Email','Name','EnterDate','RegisterDate'),Array('Where'=>$Where,'Limits'=>Array(0,20)));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Users)){
 case 'error':
@@ -55,7 +55,10 @@ default:
 // перебираем полученных пользователей.
 foreach($Users as $User){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Tasks/GC/EraseOldUsers]: автоматическое удаление юзера (%s) не заходившего в биллинг %s дней',$User['Email'],Ceil((Time() - $User['EnterDate'])/(24*3600))));
+	# выбираем меньшую из дат, т.к. мог не входить никогда
+	$EnterDate = (($User['EnterDate'] > $User['RegisterDate'])?$User['EnterDate']:$User['RegisterDate']);
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[comp/Tasks/GC/EraseOldUsers]: автоматическое удаление юзера (%s) не заходившего в биллинг %s дней',$User['Email'],Ceil((Time() - $EnterDate)/(24*3600))));
 	#-------------------------------------------------------------------------------
 	// удаляем юзера
 	$Comp = Comp_Load('www/API/Delete',Array('TableID'=>'Users','RowsIDs'=>$User['ID']));
@@ -66,7 +69,7 @@ foreach($Users as $User){
 		$Event = Array(
 				'PriorityID'    => 'Billing',
 				'IsReaded'	=> ($Settings['IsEvent']?FALSE:TRUE),
-				'Text'          => SPrintF('Удалён пользователь (%s/%s) не заходивший в биллинг %s дней',$User['Email'],$User['Name'],Ceil((Time() - $User['EnterDate'])/(24*3600)))
+				'Text'          => SPrintF('Удалён пользователь (%s / %s) не заходивший в биллинг %s дней',$User['Email'],$User['Name'],Ceil((Time() - $EnterDate)/(24*3600)))
 			);
 		$Event = Comp_Load('Events/EventInsert',$Event);
 		if(!$Event)
@@ -85,6 +88,7 @@ $Count = DB_Count('Users',Array('Where'=>$Where));
 if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+Debug(SPrintF('[comp/Tasks/GC/EraseOldUsers]: осталось удалить %u юзеров',$Count));
 #-------------------------------------------------------------------------------
 return (($Count)?90:TRUE);
 #-------------------------------------------------------------------------------
