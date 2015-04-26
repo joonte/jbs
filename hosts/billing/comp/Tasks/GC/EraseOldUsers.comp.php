@@ -25,6 +25,8 @@ $Where = Array(
 			'`IsProtected` = "no"',
 			/* не входил в биллинг больше чем настроено (год, по дефолту) */
 			SPrintF('`EnterDate` < UNIX_TIMESTAMP() - %u * 24 * 3600',$Settings['InactiveDaysForUser']),
+			/* зарегистрированный более этого же времени назад */
+			SPrintF('`RegisterDate` < UNIX_TIMESTAMP() - %u * 24 * 3600',$Settings['InactiveDaysForUser']),
 			/* нет заказов */
 			'(SELECT COUNT(*) FROM `OrdersOwners` WHERE `UserID` = `Users`.`ID`) = 0',
 			/* нет выписанных счетов на оплату */
@@ -34,10 +36,11 @@ $Where = Array(
 			/* нет рефералов */
 			'(SELECT COUNT(*) FROM `Users` WHERE `OwnerID` = `Users`.`ID`) = 0',
 			/* нет свежих потстов в тикетницу */
-			SPrintF('(SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `OwnerID` = `Users`.`ID`) < UNIX_TIMESTAMP() - %u * 24 * 3600 OR (SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `OwnerID` = `Users`.`ID`) IS NULL',$Settings['InactiveDaysForUser'],$Settings['InactiveDaysForUser']),
+			SPrintF('(SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `UserID` = `Users`.`ID`) < UNIX_TIMESTAMP() - %u * 24 * 3600 OR (SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `UserID` = `Users`.`ID`) IS NULL',$Settings['InactiveDaysForUser'],$Settings['InactiveDaysForUser']),
 		);
 #-------------------------------------------------------------------------------
-$Users = DB_Select('Users', Array('ID','Email','Name'),Array('Where'=>$Where));
+$Users = DB_Select('Users', Array('ID','Email','Name','EnterDate'),Array('Where'=>$Where,'Limits'=>Array(0,20)));
+#-------------------------------------------------------------------------------
 switch(ValueOf($Users)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
@@ -52,7 +55,7 @@ default:
 // перебираем полученных пользователей.
 foreach($Users as $User){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Tasks/GC/EraseOldUsers]: автоматическое удаление юзера (%s) не заходившего в биллинг %s дней',$User['Email'],$Settings['InactiveDaysForUser']));
+	Debug(SPrintF('[comp/Tasks/GC/EraseOldUsers]: автоматическое удаление юзера (%s) не заходившего в биллинг %s дней',$User['Email'],Ceil((Time() - $User['EnterDate'])/(24*3600))));
 	#-------------------------------------------------------------------------------
 	// удаляем юзера
 	$Comp = Comp_Load('www/API/Delete',Array('TableID'=>'Users','RowsIDs'=>$User['ID']));
@@ -62,8 +65,8 @@ foreach($Users as $User){
 		#-------------------------------------------------------------------------------
 		$Event = Array(
 				'PriorityID'    => 'Billing',
-				'IsReaded'	=> ($Settings['IsEvent']?'FALSE':TRUE),
-				'Text'          => SPrintF('Удалён пользователь (%s/%s) не заходивший в биллинг более %s дней',$User['Name'],$User['Email'],$Settings['InactiveDaysForUser'])
+				'IsReaded'	=> ($Settings['IsEvent']?FALSE:TRUE),
+				'Text'          => SPrintF('Удалён пользователь (%s/%s) не заходивший в биллинг %s дней',$User['Email'],$User['Name'],Ceil((Time() - $User['EnterDate'])/(24*3600)))
 			);
 		$Event = Comp_Load('Events/EventInsert',$Event);
 		if(!$Event)
@@ -78,7 +81,13 @@ foreach($Users as $User){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return TRUE;
+$Count = DB_Count('Users',Array('Where'=>$Where));
+if(Is_Error($Count))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+return (($Count)?90:TRUE);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+
 ?>
