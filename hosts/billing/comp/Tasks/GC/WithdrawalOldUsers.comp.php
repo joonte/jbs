@@ -35,6 +35,8 @@ $Where = Array(
 			'`IsProtected` = "no"',
 			/* не входил в биллинг больше чем настроено (год + месяц, по дефолту) */
 			SPrintF('`EnterDate` < UNIX_TIMESTAMP() - %u * 24 * 3600',$Settings['InactiveDaysForUser']),
+			/* зарегистрированный более этого же времени назад */
+			SPrintF('`RegisterDate` < UNIX_TIMESTAMP() - %u * 24 * 3600',$Settings['InactiveDaysForUser']),
 			/* нет заказов */
 			'(SELECT COUNT(*) FROM `OrdersOwners` WHERE `UserID` = `Users`.`ID`) = 0',
 			/* нет выписанных счетов на оплату */
@@ -42,7 +44,7 @@ $Where = Array(
 			/* есть договора с баллансом больше нуля */
 			'(SELECT SUM(`Balance`) FROM `ContractsOwners` WHERE `UserID` = `Users`.`ID`) > 0',
 			/* нет свежих постов в тикетницу */
-			SPrintF('(SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `OwnerID` = `Users`.`ID`) < UNIX_TIMESTAMP() - %u * 24 * 3600 OR (SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `OwnerID` = `Users`.`ID`) IS NULL',$Settings['InactiveDaysForUser'],$Settings['InactiveDaysForUser']),
+			SPrintF('(SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `UserID` = `Users`.`ID`) < UNIX_TIMESTAMP() - %u * 24 * 3600 OR (SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `UserID` = `Users`.`ID`) IS NULL',$Settings['InactiveDaysForUser'],$Settings['InactiveDaysForUser']),
 		);
 #-------------------------------------------------------------------------------
 $Users = DB_Select('Users', Array('ID','Email','Name','EnterDate'),Array('Where'=>$Where));
