@@ -62,7 +62,9 @@ default:
 // перебираем полученных пользователей.
 foreach($Users as $User){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Tasks/GC/WithdrawalOldUsers]: автоматическое списание денег с балланса юзера (%s) не заходившего в биллинг %s дней',$User['Email'],Ceil((Time() - $User['EnterDate'])/(24*3600))));
+	# выбираем меньшую из дат, т.к. мог не входить никогда
+	$EnterDate = (($User['EnterDate'] > $User['RegisterDate'])?$User['EnterDate']:$User['RegisterDate']);
+	Debug(SPrintF('[comp/Tasks/GC/WithdrawalOldUsers]: автоматическое списание денег с балланса юзера (%s) не заходившего в биллинг %s дней',$User['Email'],Ceil((Time() - $EnterDate)/(24*3600))));
 	#-------------------------------------------------------------------------------
 	#if($User['Email'] != 'mgolub@moskb.ru')
 	#	continue;
