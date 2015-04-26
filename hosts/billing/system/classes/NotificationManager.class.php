@@ -14,7 +14,7 @@ class NotificationManager {
 		#-------------------------------------------------------------------------------
 		$Executor = Comp_Load('www/Administrator/API/ProfileCompile', Array('ProfileID' => 100));
 		#-------------------------------------------------------------------------------
-		switch (ValueOf($Executor)) {
+		switch (ValueOf($Executor)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
@@ -33,15 +33,20 @@ class NotificationManager {
 		#-------------------------------------------------------------------------------
 		$User = DB_Select('Users',Array('ID','Name','Sign','ICQ','Email','Mobile','MobileConfirmed','JabberID','UniqID','IsNotifies'),Array('UNIQ','ID'=>$msg->getTo()));
 		#-------------------------------------------------------------------------------
-		switch(ValueOf($User)) {
+		switch(ValueOf($User)){
 		case 'error':
 			return ERROR | @Trigger_Error('[Email_Send]: не удалось выбрать получателя');
 		case 'exception':
 			return new gException('EMAIL_RECIPIENT_NOT_FOUND','Получатель письма не найден');
 		case 'array':
 			#-------------------------------------------------------------------------------
-			if(!$User['IsNotifies'])
-				return new gException('NOTIFIES_RECIPIENT_DISABLED','Уведомления для получателя отключены');
+			$TypeID = $msg->getTemplate();
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[system/classes/NotificationManager]: TypeID = %s',$TypeID));
+			#-------------------------------------------------------------------------------
+			if($TypeID != 'UserPasswordRestore')
+				if(!$User['IsNotifies'])
+					return new gException('NOTIFIES_RECIPIENT_DISABLED','Уведомления для получателя отключены');
 			#-------------------------------------------------------------------------------
 			$msg->setParam('User', $User);
 			#-------------------------------------------------------------------------------
@@ -88,8 +93,6 @@ class NotificationManager {
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$sentMsgCnt = 0;
-		#-------------------------------------------------------------------------------
-		$TypeID = $msg->getTemplate();
 		#-------------------------------------------------------------------------------
 		foreach(Array_Keys($Notifies['Methods']) as $MethodID){
 			#-------------------------------------------------------------------------------
