@@ -162,7 +162,7 @@
   <Comp>Formats/String</Comp>
   <Args>
    <ListElement>%Text%</ListElement>
-   <Length>60</Length>
+   <Length>75</Length>
   </Args>
  </Event>
 </Columns>
