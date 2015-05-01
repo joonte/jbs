@@ -1,5 +1,4 @@
 
--- SEPARATOR
 ALTER TABLE `ISPswSchemes` ADD `MinOrdersPeriod` INT(6) DEFAULT '0' AFTER `MaxOrders` ;
 -- SEPARATOR
 ALTER TABLE `HostingSchemes` ADD `MinOrdersPeriod` INT(6) DEFAULT '0' AFTER `MaxOrders` ;
