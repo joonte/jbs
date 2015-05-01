@@ -47,7 +47,7 @@ $Where = Array(
 			SPrintF('(SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `UserID` = `Users`.`ID`) < UNIX_TIMESTAMP() - %u * 24 * 3600 OR (SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `UserID` = `Users`.`ID`) IS NULL',$Settings['InactiveDaysForUser'],$Settings['InactiveDaysForUser']),
 		);
 #-------------------------------------------------------------------------------
-$Users = DB_Select('Users', Array('ID','Email','Name','EnterDate'),Array('Where'=>$Where));
+$Users = DB_Select('Users', Array('ID','Email','Name','EnterDate','RegisterDate'),Array('Where'=>$Where));
 switch(ValueOf($Users)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
