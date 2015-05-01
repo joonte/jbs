@@ -135,7 +135,7 @@ switch(ValueOf($Servers)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return new gException('SERVERS_NOT_FOUND','Управляющие сервера не найдены');
+	return new gException('SERVERS_NOT_FOUND','Группа управляющих серверов не найдена. Добавьте группу серверов для сервиса "Выделенный сервер" и хотя бы один управляющий сервер в неё');
 case 'array':
 	# No more...
 	break;
