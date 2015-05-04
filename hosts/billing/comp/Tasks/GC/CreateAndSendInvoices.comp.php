@@ -73,6 +73,7 @@ case 'array':
 		#-------------------------------------------------------------------------------
 		# Чистим юзеру корзину
 		$iBasket = DB_Select('BasketOwners','ID',Array('Where'=>SPrintF('`UserID` = %u',$Order['UserID'])));
+		#-------------------------------------------------------------------------------
 		switch(ValueOf($iBasket)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
@@ -98,7 +99,9 @@ case 'array':
 		#-------------------------------------------------------------------------------
 		# Выбираем заказы этого юзера
 		$Where = SPrintF("(SELECT `ConsiderTypeID` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) != 'Upon' AND `StatusID` = 'Active' AND ((ROUND((`ExpirationDate` - UNIX_TIMESTAMP())/86400) <= %u AND ROUND((`ExpirationDate` - UNIX_TIMESTAMP())/86400) > 0) OR (`DaysRemainded` <= %u AND `DaysRemainded` != 0)) AND `UserID` = %u",$Settings['CreateAndSendInvoicesPeriod'],$Settings['CreateAndSendInvoicesPeriod'],$Order['UserID']);
+		#-------------------------------------------------------------------------------
 		$UOrders = DB_Select('OrdersOwners',$Columns,Array('Where'=>$Where));
+		#-------------------------------------------------------------------------------
 		switch(ValueOf($UOrders)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
@@ -131,7 +134,7 @@ case 'array':
 			#-------------------------------------------------------------------------------
 			if($Count){
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/www/CreateAndSendInvoices]: юзер (%s), уже есть счёт на %s/#%u',$Order['Email'],$UOrder['Code'],$UOrder['ID']));
+				Debug(SPrintF('[comp/www/CreateAndSendInvoices]: для юзера (%s), уже есть счёт на %s/#%u',$Order['Email'],$UOrder['Code'],$UOrder['ID']));
 				#-------------------------------------------------------------------------------
 				continue;
 				#-------------------------------------------------------------------------------
@@ -144,6 +147,7 @@ case 'array':
 				#-------------------------------------------------------------------------------
 				# если подневно - на месяц, иначе - на 1 единицу
 				$AmountPay = (($UOrder['ConsiderTypeID'] == 'Daily')?31:1);
+				#-------------------------------------------------------------------------------
 				$Comp = Comp_Load('www/API/ServiceOrderPay',Array('ServiceOrderID'=>$UOrder['ID'],'AmountPay'=>$AmountPay,'IsUseBasket'=>TRUE,'PayMessage'=>'Автоматическое выставление счёта на продление услуг'));
 				if(Is_Error($Comp))
 					return ERROR | @Trigger_Error(500);

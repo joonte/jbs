@@ -248,7 +248,8 @@ while($YearsRemainded){
             #-------------------------------------------------------------------
 	    #-------------------------------------------------------------------
             #if($IsUseBasket || $CostPay > $DomainOrder['ContractBalance']){
-	    if((!$IsNoBasket && $CostPay > $DomainOrder['ContractBalance']) && ($IsUseBasket || $CostPay > $DomainOrder['ContractBalance'])){
+	    #if((!$IsNoBasket && $CostPay > $DomainOrder['ContractBalance']) && ($IsUseBasket || $CostPay > $DomainOrder['ContractBalance'])){
+	    if($IsUseBasket || (!$IsNoBasket && $CostPay > $DomainOrder['ContractBalance'])){
               #-----------------------------------------------------------------
               if(Is_Error(DB_Roll($TransactionID)))
                 return ERROR | @Trigger_Error(500);
