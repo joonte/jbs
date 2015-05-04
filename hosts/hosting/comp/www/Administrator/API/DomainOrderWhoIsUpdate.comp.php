@@ -10,11 +10,15 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(IsSet($Args)){
+	#-------------------------------------------------------------------------------
 	#Debug("[comp/www/Administrator/API/DomainOrderWhoIsUpdate]: internal request");
 	$IsInternal = TRUE;
+	#-------------------------------------------------------------------------------
 }else{
+	#-------------------------------------------------------------------------------
 	#Debug("[comp/www/Administrator/API/DomainOrderWhoIsUpdate]: external request");
 	$Args = Args();
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -33,79 +37,106 @@ case 'error':
 case 'exception':
 	return new gException('DOMAIN_ORDER_NOT_FOUND','Заказ домена не найден');
 case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+$WhoIs = WhoIs_Check($DomainOrder['DomainName'],$DomainOrder['SchemeName']);
+#-------------------------------------------------------------------------------
+switch(ValueOf($WhoIs)){
+case 'error':
+	return new gException('WHOIS_SERVER_ERROR','Ошибка сервера WhoIs');
+case 'exception':
+	return new gException('CAN_NOT_GET_WHOIS_DATA','Не удалось получить данные WhoIs',$WhoIs);
+case 'false':
+	return new gException('DOMAIN_ZONE_NOT_SUPPORTED','Доменная зона не поддерживается');
+case 'array':
 	#-------------------------------------------------------------------------------
-	$WhoIs = WhoIs_Check($DomainOrder['DomainName'],$DomainOrder['SchemeName']);
+	$UDomainOrder = Array('UpdateDate'=>Time(),'WhoIs'=>$WhoIs['Info']);
 	#-------------------------------------------------------------------------------
-	switch(ValueOf($WhoIs)){
-	case 'error':
-		return new gException('WHOIS_SERVER_ERROR','Ошибка сервера WhoIs');
-	case 'exception':
-		return new gException('CAN_NOT_GET_WHOIS_DATA','Не удалось получить данные WhoIs',$WhoIs);
-	case 'false':
-		return new gException('DOMAIN_ZONE_NOT_SUPPORTED','Доменная зона не поддерживается');
-	case 'array':
+	$ExpirationDate = $WhoIs['ExpirationDate'];
+	#-------------------------------------------------------------------------------
+	if($ExpirationDate){
 		#-------------------------------------------------------------------------------
-		$UDomainOrder = Array('UpdateDate'=>Time(),'WhoIs'=>$WhoIs['Info']);
+		$UDomainOrder['ExpirationDate'] = $ExpirationDate;
 		#-------------------------------------------------------------------------------
-		$ExpirationDate = $WhoIs['ExpirationDate'];
-		#-------------------------------------------------------------------------------
-		if($ExpirationDate)
-			$UDomainOrder['ExpirationDate'] = $ExpirationDate;
-		#-------------------------------------------------------------------------------
-		for($i=1;$i<5;$i++){
+		Debug(SPrintF('[comp/www/Administrator/API/DomainOrderWhoIsUpdate]: дата окончания домена %s.%s = %s',$DomainOrder['DomainName'],$DomainOrder['SchemeName'],Date('Y-m-d',$UDomainOrder['ExpirationDate'])));
+		# JBS-1047: если статус домена в биллинге - заблокирован, то меняем его на "Активен"
+		if($ExpirationDate > Time()){
 			#-------------------------------------------------------------------------------
-			$NsName = SPrintF('Ns%uName',$i);
-			#-------------------------------------------------------------------------------
-			if(IsSet($WhoIs[$NsName]))
-				$UDomainOrder[$NsName] = $WhoIs[$NsName];
-			#-------------------------------------------------------------------------------
-			$NsIP = SPrintF('Ns%uIP',$i);
-			#-------------------------------------------------------------------------------
-			if(IsSet($WhoIs[$NsIP]))
-				$UDomainOrder[$NsIP] = $WhoIs[$NsIP];
-			#-------------------------------------------------------------------------------
-		}
-		#-------------------------------------------------------------------------------
-		$IsUpdate = DB_Update('DomainOrders',$UDomainOrder,Array('ID'=>$DomainOrder['ID']));
-		if(Is_Error($IsUpdate))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		return Array('Status'=>'Ok');
-		#-------------------------------------------------------------------------------
-	case 'true':
-		#-------------------------------------------------------------------------------
-		if(IsSet($IsInternal)){
-			#-------------------------------------------------------------------------------
-			if(In_Array($DomainOrder['StatusID'],Array('Active','Suspended'))){
+			if(In_Array($DomainOrder['StatusID'],Array('Suspended'))){
 				#-------------------------------------------------------------------------------
-				# add admin message
-				$Event = Array(
-						'UserID'        => 1,
-						'PriorityID'    => 'Error',
-						'Text'          => SPrintF('Домен %s.%s является свободным, невозможно обновить информацию WhoIs',$DomainOrder['DomainName'],$DomainOrder['SchemeName']),
-						'IsReaded'      => FALSE
-						);
-				$Event = Comp_Load('Events/EventInsert',$Event);
-				if(!$Event)
-					return ERROR | @Trigger_Error(500);
+				$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'Active','RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Домен был продлён без использования биллинговой системы'));
 				#-------------------------------------------------------------------------------
-				# update last whois update date
-				$IsUpdate = DB_Update('DomainOrders',Array('UpdateDate'=>Time()),Array('ID'=>$DomainOrder['ID']));
-				if(Is_Error($IsUpdate))
+				switch(ValueOf($Comp)){
+				case 'error':
 					return ERROR | @Trigger_Error(500);
+				case 'exception':
+					return ERROR | @Trigger_Error(400);
+				case 'array':
+					break;
+				default:
+					return ERROR | @Trigger_Error(101);
+				}
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
-			return TRUE;
+		}
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	for($i=1;$i<5;$i++){
+		#-------------------------------------------------------------------------------
+		$NsName = SPrintF('Ns%uName',$i);
+		#-------------------------------------------------------------------------------
+		if(IsSet($WhoIs[$NsName]))
+			$UDomainOrder[$NsName] = $WhoIs[$NsName];
+		#-------------------------------------------------------------------------------
+		$NsIP = SPrintF('Ns%uIP',$i);
+		#-------------------------------------------------------------------------------
+		if(IsSet($WhoIs[$NsIP]))
+			$UDomainOrder[$NsIP] = $WhoIs[$NsIP];
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	$IsUpdate = DB_Update('DomainOrders',$UDomainOrder,Array('ID'=>$DomainOrder['ID']));
+	if(Is_Error($IsUpdate))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	return Array('Status'=>'Ok');
+	#-------------------------------------------------------------------------------
+case 'true':
+	#-------------------------------------------------------------------------------
+	if(IsSet($IsInternal)){
+		#-------------------------------------------------------------------------------
+		if(In_Array($DomainOrder['StatusID'],Array('Active','Suspended'))){
 			#-------------------------------------------------------------------------------
-		}else{
+			# add admin message
+			$Event = Array(
+					'UserID'        => 1,
+					'PriorityID'    => 'Error',
+					'Text'          => SPrintF('Домен %s.%s является свободным, невозможно обновить информацию WhoIs',$DomainOrder['DomainName'],$DomainOrder['SchemeName']),
+					'IsReaded'      => FALSE
+					);
+			$Event = Comp_Load('Events/EventInsert',$Event);
+			if(!$Event)
+				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			return new gException('DOMAIN_IS_FREE',SPrintF('Доменное имя %s.%s является свободным',$DomainOrder['DomainName'],$DomainOrder['SchemeName']));
+			# update last whois update date
+			$IsUpdate = DB_Update('DomainOrders',Array('UpdateDate'=>Time()),Array('ID'=>$DomainOrder['ID']));
+			if(Is_Error($IsUpdate))
+				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-	default:
-		return ERROR | @Trigger_Error(101);
+		return TRUE;
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		return new gException('DOMAIN_IS_FREE',SPrintF('Доменное имя %s.%s является свободным',$DomainOrder['DomainName'],$DomainOrder['SchemeName']));
+		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 default:
