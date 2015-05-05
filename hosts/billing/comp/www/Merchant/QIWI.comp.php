@@ -47,7 +47,7 @@ if($Settings['QIWI_REST_Hash'] != $_SERVER['PHP_AUTH_PW']){
 #-------------------------------------------------------------------------------
 if(Preg_Match('/TEST/', $Args['bill_id'])){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/www/Merchant/QIWI]: тестовый запрос'));
+	Debug(SPrintF('[comp/www/Merchant/QIWI]: тестовый запрос, bill_id = %s, status = %s; amount = %s',$Args['bill_id'],$Args['status'],$Args['amount']));
 	#-------------------------------------------------------------------------------
 	return '<?xml version="1.0"?><result><result_code>0</result_code></result>';
 	#-------------------------------------------------------------------------------
