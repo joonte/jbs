@@ -69,7 +69,7 @@ case 'array':
 				#-------------------------------------------------------------------------------
 				Debug(SPrintF('[comp/www/Administrator/API/DomainOrderWhoIsUpdate]: домена %s.%s продлён без использования биллинговой системы',$DomainOrder['DomainName'],$DomainOrder['SchemeName']));
 				#-------------------------------------------------------------------------------
-				$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'Active','RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Домен был продлён без использования биллинговой системы'));
+				$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'Active','RowsIDs'=>$DomainOrder['ID'],'Comment'=>'WhoIs: домен был продлён без использования биллинговой системы'));
 				#-------------------------------------------------------------------------------
 				switch(ValueOf($Comp)){
 				case 'error':
