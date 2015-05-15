@@ -27,7 +27,7 @@ if($Args['Signature'] != StrToUpper(Md5($Args['Order_ID'] . $Args['Status'] . $S
 	return ERROR | @Trigger_Error('[comp/www/Merchant/Uniteller]: проверка подлинности завершилась не удачей');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Invoice = DB_Select('Invoices',Array('ID','Summ','ContractID'),Array('UNIQ','ID'=>$OrderID));
+$Invoice = DB_Select('InvoicesOwners',Array('ID','UserID','Summ','ContractID'),Array('UNIQ','ID'=>$OrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Invoice)){
 case 'error':
@@ -102,14 +102,14 @@ case 'canceled':
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	# заносим запись в историю операций с контрактами
-	$Comp = Comp_Load('Formats/Invoice/Number',$Invoice['ID']);
-	if(Is_Error($Comp))
+	$Number = Comp_Load('Formats/Invoice/Number',$Invoice['ID']);
+	if(Is_Error($Number))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$IPosting = Array(
 			'ContractID' => $Invoice['ContractID'],
 			'ServiceID'  => 2000,
-			'Comment'    => SPrintF('Возврат средств условно зачисленных по счёту #%u',$Comp),
+			'Comment'    => SPrintF('Возврат средств зачисленных по счёту #%u (транзакция отменена)',$Number),
 			'Before'     => $Contract['Balance'],
 			'After'      => $After
 			);
@@ -117,7 +117,12 @@ case 'canceled':
 	$PostingID = DB_Insert('Postings',$IPosting);
 	if(Is_Error($PostingID))
 		return ERROR | @Trigger_Error(500);
-
+	#-------------------------------------------------------------------------------
+	$Event = Array('UserID'=>$Invoice['UserID'],'PriorityID'=>'Billing','IsReaded'=>FALSE,'Text'=>SPrintF('Осуществлён автоматический возврат средств по счёту #%u, процессинговый центр прислал статус "%s"',$Number,$Args['Status']));
+	$Event = Comp_Load('Events/EventInsert',$Event);
+	if(!$Event)
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
 	break;
 	#-------------------------------------------------------------------------------
 default:
