@@ -602,6 +602,37 @@
 			<IsActive>0</IsActive>
 		</W1>
 		<!-- ********************************************************************* --> 
+		<Uniteller>
+			<Name>Uniteller</Name>
+			<SystemDescription>экваринг, интернет эквайринг, эквайринг в самообслуживании, услуги эквайринга банковских карт</SystemDescription>
+			<Send>
+				<Shop_IDP />
+				<Order_IDP>auto</Order_IDP>
+				<Subtotal_P>auto</Subtotal_P>
+				<Comment>Payment for invoice #</Comment>
+			</Send>
+			<Comp>Uniteller</Comp>
+			<Cpp>https://wpay.uniteller.ru/pay/</Cpp>
+			<!-- тестовый интерфейс
+		     	<Cpp>https://test.wpay.uniteller.ru/pay/</Cpp>
+			-->
+			<Hash />
+			<ContractsTypes>
+				<Default>1</Default>
+				<Natural>1</Natural>
+				<Juridical>1</Juridical>
+				<Individual>1</Individual>
+			</ContractsTypes>
+			<IsContinuePaying>1</IsContinuePaying>
+			<Course>1</Course>
+			<IsCourseUpdate>0</IsCourseUpdate>
+			<Measure>руб</Measure>
+			<Valute>RUR</Valute>
+			<MinimumPayment>1.00</MinimumPayment>
+			<MaximumPayment>250000.00</MaximumPayment>
+			<IsActive>0</IsActive>
+		</Uniteller>
+		<!-- ********************************************************************* --> 
   <Moneybookers>
    <Name>Moneybookers</Name>
    <SystemDescription>компания денежных переводов, которая позволяет посылать и получать деньги через электронную почту</SystemDescription>
