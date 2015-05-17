@@ -24,7 +24,7 @@ case 'array':
 	foreach($DomainOrders as $DomainOrder){
 		#-------------------------------------------------------------------------------
 		# реализация JBS-1049: проверяем не продлён ли домен до этого напрямую у регистратора
-		$Comp = Comp_Load('www/Administrator/API/DomainOrderWhoIsUpdate',Array('DomainOrderID'=>$DomainOrder['ID']));
+		$Comp = Comp_Load('www/Administrator/API/DomainOrderWhoIsUpdate',Array('DomainOrderID'=>$DomainOrder['ID'],'IsReaded'=>TRUE));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------

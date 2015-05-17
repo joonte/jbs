@@ -22,7 +22,8 @@ if(IsSet($Args)){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$DomainOrderID = (integer) @$Args['DomainOrderID'];
+$DomainOrderID	= (integer) @$Args['DomainOrderID'];
+$IsReaded	= (boolean) @$Args['IsReaded'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/WhoIs.php')))
 	return ERROR | @Trigger_Error(500);
@@ -120,7 +121,7 @@ case 'true':
 					'UserID'        => 1,
 					'PriorityID'    => 'Error',
 					'Text'          => SPrintF('Домен %s.%s является свободным, невозможно обновить информацию WhoIs',$DomainOrder['DomainName'],$DomainOrder['SchemeName']),
-					'IsReaded'      => FALSE
+					'IsReaded'      => $IsReaded
 					);
 			$Event = Comp_Load('Events/EventInsert',$Event);
 			if(!$Event)
