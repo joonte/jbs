@@ -603,7 +603,7 @@
 		</W1>
 		<!-- ********************************************************************* --> 
 		<Uniteller>
-			<Name>Uniteller</Name>
+			<Name>UniTeller</Name>
 			<SystemDescription>экваринг, интернет эквайринг, эквайринг в самообслуживании, услуги эквайринга банковских карт</SystemDescription>
 			<Send>
 				<Shop_IDP />
