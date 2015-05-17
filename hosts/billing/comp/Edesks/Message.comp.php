@@ -114,7 +114,6 @@ if($__USER['IsAdmin']){
 	$Settings = $Config['Interface']['Edesks'];
 	#-------------------------------------------------------------------------------
 	# проверить что это его сообщение, что разрешено редактировать
-	Debug(SPrintF('[comp/Edesks/Message]: %s == %s; %s > %s; %s',$__USER['ID'],$UserID,$CreateDate,Time() - 24*3600,$Settings['AllowEditLastMessage']));
 	if($__USER['ID'] == $UserID && $Settings['AllowEditLastMessage']){
 		#-------------------------------------------------------------------------------
 		# проверить что это последнее сообщение в треде
