@@ -1631,6 +1631,7 @@
 		<ThemeMinimumLength>4</ThemeMinimumLength>
 		<AutoAssignToLastAnswerEmployee>1</AutoAssignToLastAnswerEmployee>
 		<EdeskOldDays>90</EdeskOldDays>
+		<AllowEditLastMessage>1</AllowEditLastMessage>
 	</Edesks>
 	<!-- *********************************************************************** -->
 </Interface>

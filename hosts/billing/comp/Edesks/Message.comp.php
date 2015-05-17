@@ -76,7 +76,14 @@ if((integer)$FileLength){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Params = Array('User'=>$User,'Status'=>((Time() - $User['EnterDate']) < 600?'OnLine':'OffLine'),'Delete'=>'','MessageID'=>SPrintF('%06u',$MessageID),'CreateDate'=>$CreateDate,'Group'=>$Group);
+$Params = Array(
+		'User'		=> $User,
+		'Status'	=> ((Time() - $User['EnterDate']) < 600?'OnLine':'OffLine'),
+		'Delete'	=> '',
+		'MessageID'	=> SPrintF('%06u',$MessageID),
+		'CreateDate'	=> $CreateDate,
+		'Group'		=> $Group,
+		);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Text = Comp_Load('Edesks/Text',Array('String'=>$Content,'IsLockText'=>($OwnerID != @$GLOBALS['__USER']['ID'])));
@@ -96,8 +103,42 @@ $Params['EnterDate'] = $EnterDate;
 $Params['BgColor'] = (!$IsVisible)?'FFE4E1':(($UserID != $OwnerID)?'FFFFFF':'FDF6D3');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($__USER['IsAdmin'])
+if($__USER['IsAdmin']){
+	#-------------------------------------------------------------------------------
 	$Params['Delete'] = SPrintF('<a href="JavaScript:EdeskMessageEdit(%u,\'%s\');">[редактировать]</a> | <a href="JavaScript:ShowConfirm(\'Вы подтверждаете удаление сообщения?\',\'AjaxCall(\\\'/API/EdeskMessageDelete\\\',{MessageID:%u},\\\'Удаление сообщения\\\',\\\'GetURL(document.location);\\\');\');" onmouseover="PromptShow(event,\'Удалить это сообщение\',this);">[удалить]</a>',$MessageID,AddcSlashes(HtmlSpecialChars($Content),"\0\n\r\\\'"),$MessageID);
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
+	$Config = Config();
+	#-------------------------------------------------------------------------------
+	$Settings = $Config['Interface']['Edesks'];
+	#-------------------------------------------------------------------------------
+	# проверить что это его сообщение, что разрешено редактировать
+	Debug(SPrintF('[comp/Edesks/Message]: %s == %s; %s > %s; %s',$__USER['ID'],$UserID,$CreateDate,Time() - 24*3600,$Settings['AllowEditLastMessage']));
+	if($__USER['ID'] == $UserID && $Settings['AllowEditLastMessage']){
+		#-------------------------------------------------------------------------------
+		# проверить что это последнее сообщение в треде
+		$LastMessage = DB_Select('EdesksMessages',Array('MAX(`ID`) AS `ID`','CreateDate'),Array('UNIQ','Where'=>SPrintF('`EdeskID` = (SELECT `EdeskID` FROM `EdesksMessages` WHERE `ID` = %u)',$MessageID)));
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($LastMessage)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return ERROR | @Trigger_Error(400);
+		case 'array':
+			# No more...
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+		# это последнее сообщение, и создано оно менее суток назад
+		if($LastMessage['ID'] == $MessageID && $LastMessage['CreateDate'] > Time() - 24*3600)
+			$Params['Delete'] = SPrintF('<a href="JavaScript:EdeskMessageEdit(%u,\'%s\');">[редактировать]</a>',$MessageID,AddcSlashes(HtmlSpecialChars($Content),"\0\n\r\\\'"));
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if((integer)$FileLength){
