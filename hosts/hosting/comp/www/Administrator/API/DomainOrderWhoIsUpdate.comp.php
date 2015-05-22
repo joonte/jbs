@@ -64,7 +64,8 @@ case 'array':
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[comp/www/Administrator/API/DomainOrderWhoIsUpdate]: дата окончания домена %s.%s = %s',$DomainOrder['DomainName'],$DomainOrder['SchemeName'],Date('Y-m-d',$UDomainOrder['ExpirationDate'])));
 		# JBS-1047: если статус домена в биллинге - заблокирован, то меняем его на "Активен"
-		if($ExpirationDate > Time()){
+		# reg.ru блочит на сутки позже... имеет смысл проверять что не просто больше, а на несколько дней
+		if($ExpirationDate > Time() + 10 * 24 * 3600){
 			#-------------------------------------------------------------------------------
 			if(In_Array($DomainOrder['StatusID'],Array('Suspended'))){
 				#-------------------------------------------------------------------------------
