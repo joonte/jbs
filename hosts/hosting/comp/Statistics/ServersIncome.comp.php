@@ -86,7 +86,7 @@ foreach($ServersGroups as $ServersGroup){
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
 			Debug(SPrintF('[comp/Statistics/ServersIncome]: no accounts for server %s',$Server['Address']));
-			break;
+			continue 2;
 		case 'array':
 			# All OK, accounts found
 			Debug(SPrintF('[comp/Statistics/ServersIncome]: server %s, found %u accounts',$Server['Address'],SizeOf($ServerAccounts)));
