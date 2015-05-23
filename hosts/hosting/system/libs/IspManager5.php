@@ -362,6 +362,8 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 	#-------------------------------------------------------------------------------
 	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
+	$Version = IspManager5_Check_Version($Settings);
+	#-------------------------------------------------------------------------------
 	$IsReselling = $HostingScheme['IsReselling'];
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -439,14 +441,14 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 			#'ssi'                   => ($HostingScheme['IsSSIAccess']?'on':'off'), # SSI
 			#'phpfcgi'               => ($HostingScheme['IsPHPFastCGIAccess']?'on':'off'), # PHP как FastCGI
 			#'safemode'              => ($HostingScheme['IsPHPSafeMode']?'on':'off'), # Безопасный режим
-			#'cpulimit'              => $HostingScheme['MaxExecutionTime'], # Ограничение на CPU
-			#'memlimit'              => Ceil($HostingScheme['QuotaMEM']), # Ограничение на память
-			#'proclimit'             => $HostingScheme['QuotaPROC'], # Кол-во процессов
-			#'maxclientsvhost'       => $HostingScheme['QuotaMPMworkers'], # mpm-itk
-			#'mysqlquerieslimit'     => $HostingScheme['mysqlquerieslimit'],      # Запросов к MySQL
-			#'mysqlupdateslimit'     => $HostingScheme['mysqlupdateslimit'],      # Обновлений MySQL
-			#'mysqlconnectlimit'     => $HostingScheme['mysqlconnectlimit'],      # Соединений к MySQL
-			#'mysqluserconnectlimit' => $HostingScheme['mysqluserconnectlimit'],   # Одновременных соединений к MySQL
+			'limit_cpu'			=> $HostingScheme['MaxExecutionTime'],		# Ограничение на CPU
+			'limit_memory'			=> Ceil($HostingScheme['QuotaMEM']),		# Ограничение на память
+			'limit_process'			=> $HostingScheme['QuotaPROC'],			# Кол-во процессов
+			'limit_maxclientsvhost'		=> $HostingScheme['QuotaMPMworkers'],		# mpm-itk
+			'limit_mysql_query'		=> ($HostingScheme['mysqlquerieslimit'])?$HostingScheme['mysqlquerieslimit']:'',	# Запросов к MySQL
+			'limit_mysql_update'		=> ($HostingScheme['mysqlupdateslimit'])?$HostingScheme['mysqlupdateslimit']:'',	# Обновлений MySQL
+			'limit_mysql_maxconn'		=> ($HostingScheme['mysqlconnectlimit'])?$HostingScheme['mysqlconnectlimit']:'',	# Соединений к MySQL
+			'limit_mysql_maxuserconn'	=> ($HostingScheme['mysqluserconnectlimit'])?$HostingScheme['mysqluserconnectlimit']:'',# Одновременных соединений к MySQL
 
 			);
 	#-------------------------------------------------------------------------------
@@ -455,7 +457,7 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 	#-------------------------------------------------------------------------------
 	if(!$IsReselling){
 		#-------------------------------------------------------------------------------
-		$Request['owner'] = $Settings['Login']; # Владелец
+		#$Request['owner'] = $Settings['Login']; # Владелец
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
@@ -481,7 +483,8 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 	if(IsSet($Doc['error']))
 		return new gException('ACCOUNT_CREATE_ERROR','Не удалось создать заказ хостинга');
 	#-------------------------------------------------------------------------------
-	if(!$Settings['Params']['NoRestartCreate'])
+	# TODO надо и для Busines как-то рестартавать веб-сервер ноды
+	if(!$Settings['Params']['NoRestartCreate'] && $Version == 'Lite')
 		IspManager5_Service_Restart($Settings,'httpd');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -502,6 +505,8 @@ function IspManager5_Active($Settings,$Login,$IsReseller = FALSE){
 	#-------------------------------------------------------------------------------
 	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
+	$Version = IspManager5_Check_Version($Settings);
+	#-------------------------------------------------------------------------------
 	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user.resume','elid'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[IspManager5_Activate]: не удалось соедениться с сервером');
@@ -520,7 +525,8 @@ function IspManager5_Active($Settings,$Login,$IsReseller = FALSE){
 	if(IsSet($Doc['error']))
 		return new gException('ACCOUNT_ACTIVATE_ERROR','Не удалось активировать заказ хостинга');
 	#-------------------------------------------------------------------------------
-	if(!$Settings['Params']['NoRestartActive'])
+	# TODO надо и для Busines как-то рестартавать веб-сервер ноды
+	if(!$Settings['Params']['NoRestartActive'] && $Version == 'Lite')
 		IspManager5_Service_Restart($Settings,'httpd');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -541,6 +547,8 @@ function IspManager5_Suspend($Settings,$Login,$IsReseller = FALSE){
 	#-------------------------------------------------------------------------------
 	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
+	$Version = IspManager5_Check_Version($Settings);
+	#-------------------------------------------------------------------------------
 	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user.suspend','elid'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[IspManager5_Suspend]: не удалось соедениться с сервером');
@@ -558,7 +566,8 @@ function IspManager5_Suspend($Settings,$Login,$IsReseller = FALSE){
 	if(IsSet($Doc['error']))
 		return new gException('ACCOUNT_SUSPEND_ERROR','Не удалось заблокировать заказ хостинга');
 	#-------------------------------------------------------------------------------
-	if(!$Settings['Params']['NoRestartSuspend'])
+	# TODO надо и для Busines как-то рестартавать веб-сервер ноды
+	if(!$Settings['Params']['NoRestartSuspend'] && $Version == 'Lite')
 		IspManager5_Service_Restart($Settings,'httpd');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -578,6 +587,8 @@ function IspManager5_Delete($Settings,$Login,$IsReseller = FALSE){
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
 	$HTTP = IspManager5_Build_HTTP($Settings);
+	#-------------------------------------------------------------------------------
+	$Version = IspManager5_Check_Version($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# JBS-543, проверяем наличие такого юзера
@@ -674,7 +685,8 @@ function IspManager5_Delete($Settings,$Login,$IsReseller = FALSE){
 	if(IsSet($Doc['error']))
 		return new gException('ACCOUNT_DELETE_ERROR','Не удалось удалить заказ хостинга');
 	#-------------------------------------------------------------------------------
-	if(!$Settings['Params']['NoRestartDelete'])
+	# TODO надо и для Busines как-то рестартавать веб-сервер ноды
+	if(!$Settings['Params']['NoRestartDelete'] && $Version == 'Lite')
 		IspManager5_Service_Restart($Settings,'httpd');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -693,6 +705,9 @@ function IspManager5_Scheme_Change($Settings,$Login,$HostingScheme){
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
 	$HTTP = IspManager5_Build_HTTP($Settings);
+	#-------------------------------------------------------------------------------
+	$Version = IspManager5_Check_Version($Settings);
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$IsReselling = $HostingScheme['IsReselling'];
 	#-------------------------------------------------------------------------------
@@ -725,11 +740,22 @@ function IspManager5_Scheme_Change($Settings,$Login,$HostingScheme){
 			'preset'			=> '#custom',
 			'limit_dirindex'		=> '',
 			'mailrate'			=> $HostingScheme['mailrate'],	# TODO: отследить когда реализуют
+
+			'limit_cpu'			=> $HostingScheme['MaxExecutionTime'],		# Ограничение на CPU
+			'limit_memory'			=> Ceil($HostingScheme['QuotaMEM']),		# Ограничение на память
+			'limit_process'			=> $HostingScheme['QuotaPROC'],			# Кол-во процессов
+			'limit_maxclientsvhost'		=> $HostingScheme['QuotaMPMworkers'],		# mpm-itk
+			'limit_mysql_query'		=> ($HostingScheme['mysqlquerieslimit'])?$HostingScheme['mysqlquerieslimit']:'',	# Запросов к MySQL
+			'limit_mysql_update'		=> ($HostingScheme['mysqlupdateslimit'])?$HostingScheme['mysqlupdateslimit']:'',	# Обновлений MySQL
+			'limit_mysql_maxconn'		=> ($HostingScheme['mysqlconnectlimit'])?$HostingScheme['mysqlconnectlimit']:'',	# Соединений к MySQL
+			'limit_mysql_maxuserconn'	=> ($HostingScheme['mysqluserconnectlimit'])?$HostingScheme['mysqluserconnectlimit']:'',# Одновременных соединений к MySQL
+
+
 			);
 	#-------------------------------------------------------------------------------
 	if(!$IsReselling){
 		#-------------------------------------------------------------------------------
-		$Request['owner'] = $Settings['Login']; # Владелец
+		#$Request['owner'] = $Settings['Login']; # Владелец
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
@@ -756,7 +782,7 @@ function IspManager5_Scheme_Change($Settings,$Login,$HostingScheme){
 	if(IsSet($Doc['error']))
 		return new gException('SCHEME_CHANGE_ERROR','Не удалось изменить тарифный план для заказа хостинга');
 	#-------------------------------------------------------------------------------
-	if(!$Settings['Params']['NoRestartSchemeChange'])
+	if(!$Settings['Params']['NoRestartSchemeChange'] && $Version == 'Lite')
 		IspManager5_Service_Restart($Settings,'httpd');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -1532,7 +1558,7 @@ function IspManager5_Service_Restart($Settings,$Service){
 		#-------------------------------------------------------------------------------
 		$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 		if(Is_Error($Response))
-			return ERROR | @Trigger_Error('[IspManager5_Create]: не удалось соедениться с сервером');
+			return ERROR | @Trigger_Error('[IspManager5_Service_Restart]: не удалось соедениться с сервером');
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
