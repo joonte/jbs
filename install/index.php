@@ -249,7 +249,7 @@ $Data = <<<EOD
   <User>%s</User>
   <Password>%s</Password>
   <DbName>%s</DbName>
-  <Server>localhost</Server>
+  <Server>%s</Server>
   <Port>%s</Port>
  </DBConnection>
  <EncryptionKey>%s</EncryptionKey>
@@ -263,8 +263,9 @@ EOD;
 						$__SETTINGS['db-user'],
 						$__SETTINGS['db-password'],
 						$__SETTINGS['db-name'],
+						$__SETTINGS['db-server'],
 						$__SETTINGS['db-port'],
-						Md5(MicroTime().Rand(0,1000000)),
+						Str_Shuffle(Md5(MicroTime().Rand(0,1000000))),
 						Str_Shuffle(Md5(MicroTime().Rand(0,1000000)))
 					)
 				)
