@@ -88,7 +88,7 @@ foreach($ServersGroups as $ServersGroup){
 	#---------------------------------------------------------------------------
 	foreach($Servers as $Server){
 		#-------------------------------------------------------------------------------
-		#if($Server['Address'] != 's06.host-food.ru')
+		#if($Server['Address'] != 's31.host-food.ru')
 		#	continue;
 		#-------------------------------------------------------------------------------
 		$ClassServer = new $ClassName();
