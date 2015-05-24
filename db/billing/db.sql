@@ -2901,9 +2901,16 @@ INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, 
 -- SEPARATOR
 INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES (11, 100, 100, '03:Dollar.gif', 'Запрос передан в бухгалтерию', 'no', 'yes', 'no', 'yes', '<p>\n Ваш запрос передан ответственному сотруднику в бухгалтерии.\n</p>\n<p>\n Обратите внимание, что бухгалтерия работает только по рабочим дням, с 9 до 18 часов.\n</p>');
 
+-- SEPARATOR
+-- added by lissyara 2015-05-15 in 16:54 MSK, for JBS-1051
+INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
+(6, 100, 100, 'Invoices/PaymentSystems/Uniteller', 'Шаблон платежной системы Uniteller', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер магазина\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.Shop_IDP%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
+-- SEPARATOR
 
 UNLOCK TABLES;
 -- SEPARATOR
+
+
 DELETE FROM `Config` WHERE `Param` = 'Copyright';
 INSERT INTO `Config` (`HostID`,`Param`,`Value`)
 VALUES ('billing','Copyright','ООО "Компания" 2000-2012 г.');
@@ -2996,20 +3003,12 @@ INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',110,'Individual','Бан�
 -- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',150,'InOffice','Наличными в офисе','Cash.png','Оплата наличными, в нашем офисе.','Наличными в офисе','');
 -- SEPARATOR
-
 -- added by lissyara 2015-05-15 in 16:54 MSK, for JBS-1051
-INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
-(6, 100, 100, 'Invoices/PaymentSystems/Uniteller', 'Шаблон платежной системы Uniteller', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер магазина\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.Shop_IDP%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
--- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',15,'Uniteller','VISA','Visa.MasterCard.png','Оплата при помощи пластиковой карты VISA или MasterCard.','VISA/MasterCard','');
 -- SEPARATOR
-
-
-
-
 UNLOCK TABLES;
-
 -- SEPARATOR
+
 SET FOREIGN_KEY_CHECKS=1;
 
 ALTER TABLE `Users` AUTO_INCREMENT=2001;
