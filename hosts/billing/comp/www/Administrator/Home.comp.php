@@ -87,7 +87,7 @@ switch(ValueOf($IsInitDB)){
    #----------------------------------------------------------------------------
    if($IsInitDB['Value'] != 'TRUE'){
      #--------------------------------------------------------------------------
-     $Answer = HTTP_Send('/Patches',Array('Address'=>HOST_ID,'Host'=>HOST_ID));
+     $Answer = HTTP_Send('/Patches',Array('Address'=>HOST_ID,'Host'=>HOST_ID,'Port'=>@$_SERVER['SERVER_PORT']));
      if(Is_Error($Answer))
        return ERROR | @Trigger_Error(500);
      #--------------------------------------------------------------------------
