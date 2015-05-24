@@ -401,8 +401,7 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 	$Request = Array(
 			'authinfo'			=> $authinfo,
 			'out'				=> 'xml',	# Формат вывода
-			#'func'				=> 'user.edit',	# Целевая функция
-			'func'				=> 'user.add.finish',
+			'func'				=> ($IsReselling)?'reseller.edit':'user.add.finish',			# Целевая функция
 			'sok'				=> 'ok',	# Значение параметра должно быть равно "ok"
 			'name'				=> $Login,	# Имя пользователя (реселлера)
 			#'fullname'			=> $Login,	# полное имя
@@ -455,13 +454,12 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 	if($HostingScheme['QuotaWWWDomains'])
 		$Request['domain'] = $Domain; # Домен
 	#-------------------------------------------------------------------------------
-	if(!$IsReselling){
+	if($IsReselling){
 		#-------------------------------------------------------------------------------
-		#$Request['owner'] = $Settings['Login']; # Владелец
-		#-------------------------------------------------------------------------------
-	}else{
-		#-------------------------------------------------------------------------------
-		$Request['limit_users'] = $HostingScheme['QuotaUsers']; # Пользователи
+		$Request['limit_users']		= $HostingScheme['QuotaUsers']; # Пользователи
+		# TODO сделать нормальное лимитирование через интерфейс. наверное, не раньше перевода тарифов на xml
+		$Request['limit_ipv4addrs']	= 0;				# адреса, v4
+		$Request['limit_ipv6addrs']	= 0;				# адреса, v6
 		#-------------------------------------------------------------------------------
 	}
   	#-------------------------------------------------------------------------------
@@ -507,7 +505,7 @@ function IspManager5_Active($Settings,$Login,$IsReseller = FALSE){
 	#-------------------------------------------------------------------------------
 	$Version = IspManager5_Check_Version($Settings);
 	#-------------------------------------------------------------------------------
-	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user.resume','elid'=>$Login));
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>($IsReseller)?'reseller.resume':'user.resume','elid'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[IspManager5_Activate]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -549,7 +547,7 @@ function IspManager5_Suspend($Settings,$Login,$IsReseller = FALSE){
 	#-------------------------------------------------------------------------------
 	$Version = IspManager5_Check_Version($Settings);
 	#-------------------------------------------------------------------------------
-	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user.suspend','elid'=>$Login));
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>($IsReseller)?'reseller.suspend':'user.suspend','elid'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[IspManager5_Suspend]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -668,7 +666,7 @@ function IspManager5_Delete($Settings,$Login,$IsReseller = FALSE){
  	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'user.delete','elid'=>$Login));
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>($IsReseller)?'reseller.delete':'user.delete','elid'=>$Login));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[IspManager5_Delete]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -714,7 +712,7 @@ function IspManager5_Scheme_Change($Settings,$Login,$HostingScheme){
 	$Request = Array(
 			'authinfo'			=> $authinfo,
 			'out'				=> 'xml', # Формат вывода
-			'func'				=> 'user.edit', # Целевая функция
+			'func'				=> ($IsReselling)?'reseller.edit':'user.edit', # Целевая функция
 			'elid'				=> $Login, # Уникальный идентификатор
 			'sok'				=> 'ok', # Значение параметра должно быть равно "yes"
 			'name'				=> $Login, # Имя пользователя (реселлера)
@@ -753,13 +751,11 @@ function IspManager5_Scheme_Change($Settings,$Login,$HostingScheme){
 
 			);
 	#-------------------------------------------------------------------------------
-	if(!$IsReselling){
+	if($IsReselling){
 		#-------------------------------------------------------------------------------
-		#$Request['owner'] = $Settings['Login']; # Владелец
-		#-------------------------------------------------------------------------------
-	}else{
-		#-------------------------------------------------------------------------------
-		$Request['userlimit'] = $HostingScheme['QuotaUsers']; # Пользователи
+		$Request['limit_users']		= $HostingScheme['QuotaUsers'];
+		$Request['limit_ipv4addrs']	= 0;
+		$Request['limit_ipv6addrs']	= 0;
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
