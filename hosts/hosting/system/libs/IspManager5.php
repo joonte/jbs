@@ -1084,7 +1084,7 @@ function IspManager5_Get_CPU_Usage($Settings,$TFilter){
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[IspManager5_Get_CPU_Usage]: ISPmanager = %s',$Version));
 	#-------------------------------------------------------------------------------
-	if($Version == 'Lite')
+	if($Version == 'Lite' || $Version == 'Businnes')	# надо разбираться
 		return Array();
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -1116,8 +1116,9 @@ function IspManager5_Get_CPU_Usage($Settings,$TFilter){
 	if(Is_Array($Elems)){
 		#-------------------------------------------------------------------------------
 		foreach($Elems as $Elem)
-			if(!In_Array($Elem['owner'],$Resellers))
-				$Resellers[] = $Elem['owner'];
+			if(IsSet($Elem['owner']))
+				if(!In_Array($Elem['owner'],$Resellers))
+					$Resellers[] = $Elem['owner'];
 		#-------------------------------------------------------------------------------
 	}
 	#Debug(SPrintF('[system/libs/IspManager5.php]: Resellers = %s',print_r($Resellers,true)));
@@ -1128,8 +1129,9 @@ function IspManager5_Get_CPU_Usage($Settings,$TFilter){
 	if(Is_Array($Elems)){
 		#-------------------------------------------------------------------------------
 		foreach($Elems as $Elem)
-			if(In_Array($Elem['owner'],$Resellers))
-				$Owners[$Elem['name']] = $Elem['owner'];
+			if(IsSet($Elem['owner']))
+				if(In_Array($Elem['owner'],$Resellers))
+					$Owners[$Elem['name']] = $Elem['owner'];
 		#-------------------------------------------------------------------------------
 	}
 	#Debug(SPrintF('[system/libs/IspManager5.php]: Owners = %s',print_r($Owners,true)));
