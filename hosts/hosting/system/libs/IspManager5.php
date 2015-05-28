@@ -268,7 +268,7 @@ function IspManager5_Get_Users($Settings){
 		if(!IsSet($User['owner']))
 			$User['owner'] = $Settings['Login'];
 		#-------------------------------------------------------------------------------
-		# в Businnes, походу вводят какие-то зачатки групп - все админы обозначаются как "owner*admins"
+		# в Business, походу вводят какие-то зачатки групп - все админы обозначаются как "owner*admins"
 		if($User['owner'] == $Settings['Login'] || $User['owner'] == 'owner*admins')
 			$Result[] = $User['name'];
 		#-------------------------------------------------------------------------------
@@ -486,7 +486,7 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 	if(IsSet($Doc['error']))
 		return new gException('ACCOUNT_CREATE_ERROR','Не удалось создать заказ хостинга');
 	#-------------------------------------------------------------------------------
-	# TODO надо и для Busines как-то рестартавать веб-сервер ноды
+	# TODO надо и для Business как-то рестартавать веб-сервер ноды
 	if(!$Settings['Params']['NoRestartCreate'] && $Version == 'Lite')
 		IspManager5_Service_Restart($Settings,'httpd');
 	#-------------------------------------------------------------------------------
@@ -528,7 +528,7 @@ function IspManager5_Active($Settings,$Login,$IsReseller = FALSE){
 	if(IsSet($Doc['error']))
 		return new gException('ACCOUNT_ACTIVATE_ERROR','Не удалось активировать заказ хостинга');
 	#-------------------------------------------------------------------------------
-	# TODO надо и для Busines как-то рестартавать веб-сервер ноды
+	# TODO надо и для Business как-то рестартавать веб-сервер ноды
 	if(!$Settings['Params']['NoRestartActive'] && $Version == 'Lite')
 		IspManager5_Service_Restart($Settings,'httpd');
 	#-------------------------------------------------------------------------------
@@ -569,7 +569,7 @@ function IspManager5_Suspend($Settings,$Login,$IsReseller = FALSE){
 	if(IsSet($Doc['error']))
 		return new gException('ACCOUNT_SUSPEND_ERROR','Не удалось заблокировать заказ хостинга');
 	#-------------------------------------------------------------------------------
-	# TODO надо и для Busines как-то рестартавать веб-сервер ноды
+	# TODO надо и для Business как-то рестартавать веб-сервер ноды
 	if(!$Settings['Params']['NoRestartSuspend'] && $Version == 'Lite')
 		IspManager5_Service_Restart($Settings,'httpd');
 	#-------------------------------------------------------------------------------
@@ -688,7 +688,7 @@ function IspManager5_Delete($Settings,$Login,$IsReseller = FALSE){
 	if(IsSet($Doc['error']))
 		return new gException('ACCOUNT_DELETE_ERROR','Не удалось удалить заказ хостинга');
 	#-------------------------------------------------------------------------------
-	# TODO надо и для Busines как-то рестартавать веб-сервер ноды
+	# TODO надо и для Business как-то рестартавать веб-сервер ноды
 	if(!$Settings['Params']['NoRestartDelete'] && $Version == 'Lite')
 		IspManager5_Service_Restart($Settings,'httpd');
 	#-------------------------------------------------------------------------------
@@ -1084,7 +1084,7 @@ function IspManager5_Get_CPU_Usage($Settings,$TFilter){
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[IspManager5_Get_CPU_Usage]: ISPmanager = %s',$Version));
 	#-------------------------------------------------------------------------------
-	if($Version == 'Lite' || $Version == 'Businnes')	# надо разбираться
+	if($Version == 'Lite' || $Version == 'Business')	# надо разбираться
 		return Array();
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -1312,7 +1312,7 @@ function IspManager5_Check_Version($Settings){
 		return new gException('GET_LICENSE_INFO_ERROR',$Info['error']);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	return ((Preg_Match('/Lite/',$Info['mgr']))?'Lite':'Businnes');
+	return ((Preg_Match('/Business/',$Info['mgr']))?'Business':'Lite');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 }
