@@ -42,11 +42,22 @@ $Form = new Tag('FORM',Array('name'=>'HostingOrderForm','onsubmit'=>'return fals
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
+$Settings = $Config['Interface']['User']['Orders']['Hosting'];
+#-------------------------------------------------------------------------------
 if($StepID){
 	#-------------------------------------------------------------------------------
 	if(!$HostingSchemeID)
 		return new gException('HOSTING_SCHEME_NOT_DEFINED','Тарифный план не выбран');
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if(!$Domain)
+		if(!$Settings['IsNoDomain'])
+			return new gException('DOMAIN_NOT_DEFINED','Вы не указали доменное имя');
+	#-------------------------------------------------------------------------------
+	if(!$Domain)
+		if(!$IsNoDomain)
+			if($Settings['CheckIsNoDomain'])
+				return new gException('DOMAIN_NOT_DEFINED_2','Вы не указали доменное имя. Если требуется сделать заказ без домена - установите соответствующий флажок');
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Form/Input',Array('name'=>'ContractID','type'=>'hidden','value'=>$ContractID));
 	if(Is_Error($Comp))
@@ -523,7 +534,7 @@ if($StepID){
 		#-------------------------------------------------------------------------------
 		$NoBody = new Tag('NOBODY');
 		#-------------------------------------------------------------------------------
-		if($Config['Hosting']['IsNoDomain']){
+		if($Settings['IsNoDomain']){
 			#-------------------------------------------------------------------------------
 			$Comp = Comp_Load('Form/Input',Array('name'=>'IsNoDomain','type'=>'checkbox','onclick'=>"form.Domain.disabled = checked;form.StepID.value = document.getElementsByName('IsNoDomain')[0].checked?2:1;"));
 			if(Is_Error($Comp))
