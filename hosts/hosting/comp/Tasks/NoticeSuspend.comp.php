@@ -57,7 +57,7 @@ foreach($Services as $Service){
 		#-------------------------------------------------------------------------------
 		$Columns[] = '(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`';
 		#-------------------------------------------------------------------------------
-		$Where = "`StatusID` = 'Active' AND CEIL((`ExpirationDate` - UNIX_TIMESTAMP())/86400) IN (1,5,10,15,30)";
+		$Where = "`StatusID` = 'Active' AND CEIL((`ExpirationDate` - UNIX_TIMESTAMP())/86400) IN (1,2,3,5,10,15,30)";
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
