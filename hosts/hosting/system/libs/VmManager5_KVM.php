@@ -1239,7 +1239,7 @@ function VmManager5_KVM_Get_DiskTemplates($Settings){
 		if(!IsSet($Template['name']))
 			continue;
 		#-----------------------------------------------------------------------------
-		if($Template['installed'] != 'ok')
+		if(!IsSet($Template['installed']) || $Template['installed'] != 'ok')
 			continue;
 		#-----------------------------------------------------------------------------
 		if($Template['restrict'] != 'off')
