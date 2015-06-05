@@ -65,7 +65,8 @@ case 'array':
 		Debug(SPrintF('[comp/www/Administrator/API/DomainOrderWhoIsUpdate]: дата окончания домена %s.%s = %s',$DomainOrder['DomainName'],$DomainOrder['SchemeName'],Date('Y-m-d',$UDomainOrder['ExpirationDate'])));
 		# JBS-1047: если статус домена в биллинге - заблокирован, то меняем его на "Активен"
 		# reg.ru блочит на сутки позже... имеет смысл проверять что не просто больше, а на несколько дней
-		if($ExpirationDate > Time() + 10 * 24 * 3600){
+		# 2015-06-05 in 17:02 MSK - домены .com автопродлеваются реестром на год, после чего через месяц удаляются
+		if($ExpirationDate > Time() + 10 * 24 * 3600 && $DomainOrder['SchemeName'] != 'com'){
 			#-------------------------------------------------------------------------------
 			if(In_Array($DomainOrder['StatusID'],Array('Suspended'))){
 				#-------------------------------------------------------------------------------
