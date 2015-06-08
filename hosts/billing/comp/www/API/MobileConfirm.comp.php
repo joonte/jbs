@@ -69,7 +69,7 @@ if($Mobile){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Confirm = Comp_Load('Passwords/Generator',4,FALSE,TRUE,FALSE);
+	$Confirm = Comp_Load('Passwords/Generator',4,TRUE);
 	if(Is_Error($Confirm))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
