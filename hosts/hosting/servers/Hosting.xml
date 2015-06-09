@@ -200,7 +200,7 @@
 		<Comment>Атрибут сервера</Comment>
 		<Type>Input</Type>
 		<Attribs>
-			<prompt>Отличительный атрибут сервера, внутри группы. Например, "php 5.2" и т.п. Используется для возможности выбора клиентом определённой версии ПО на последнем этапе заказ хостинга. Если вы не понимаете зачем это нужно - просто оставьте это поле пустым.</prompt>
+			<prompt>Отличительный атрибут сервера, внутри группы. Например, "php 5.2" и т.п. Используется для возможности выбора клиентом определённой версии ПО на последнем этапе заказ хостинга. Если вы не понимаете зачем это нужно - просто оставьте это поле пустым. Также, обратите внимание, что если у одного сервера это поле заполнено, а у второго - нет, то на втором сервере заказы создаваться не будут - безотносительного того основной это сервер группы или нет.</prompt>
 			<type>text</type>
 			<style>width: 100%;</style>
 		</Attribs>
@@ -209,9 +209,9 @@
 	</ServerAttrib>
 	<!-- *********************************************************************** -->
 	<NoRestartCreate>
-		<Title>Параметры перезапуска веб сервера (только для ISPmanager)</Title>
+		<Title>-Настройки НЕ-перезапуска веб сервера (только для ISPmanager)</Title>
 		<Check>Char</Check>
-		<Comment>Не перезапускать при Create</Comment>
+		<Comment>Создание</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
 			<onclick>ChangeCheckBox('NoRestartCreate'); return false;</onclick>
@@ -226,7 +226,7 @@
 	<!-- *********************************************************************** -->
 	<NoRestartActive>
 		<Check>Char</Check>
-		<Comment>Не перезапускать при Active</Comment>
+		<Comment>Активация</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
 			<onclick>ChangeCheckBox('NoRestartActive'); return false;</onclick>
@@ -241,7 +241,7 @@
 	<!-- *********************************************************************** -->
 	<NoRestartSuspend>
 		<Check>Char</Check>
-		<Comment>Не перезапускать при Suspend</Comment>
+		<Comment>Блокировка</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
 			<onclick>ChangeCheckBox('NoRestartSuspend'); return false;</onclick>
@@ -256,7 +256,7 @@
 	<!-- *********************************************************************** -->
 	<NoRestartDelete>
 		<Check>Char</Check>
-		<Comment>Не перезапускать при Delete</Comment>
+		<Comment>Удаление</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
 			<onclick>ChangeCheckBox('NoRestartDelete'); return false;</onclick>
@@ -271,7 +271,7 @@
 	<!-- *********************************************************************** -->
 	<NoRestartSchemeChange>
 		<Check>Char</Check>
-		<Comment>Не перезапускать при SchemeChange</Comment>
+		<Comment>Изменение тарифа</Comment>
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
 			<onclick>ChangeCheckBox('NoRestartSchemeChange'); return false;</onclick>
