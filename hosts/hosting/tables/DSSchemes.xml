@@ -12,23 +12,27 @@
 </Appearance>
 <!-- *********************************************************************** -->
 <Source>
- <TableID>DSSchemes</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>Name</ListElement>
-  <ListElement>CostMonth</ListElement>
-  <ListElement>NumServers</ListElement>
-  <ListElement>RemainServers</ListElement>
-  <ListElement>CPU</ListElement>
-  <ListElement>ram</ListElement>
-  <ListElement>raid</ListElement>
-  <ListElement>disks</ListElement>
-  <ListElement>SortID</ListElement>
-  <ListElement>IsActive</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Message>Тарифов на аренду серверов не обнаружено.</Message>
- </Conditions>
+	<TableID>DSSchemes</TableID>
+	<!-- *********************************************************************** -->
+	<ColumnsIDs>
+		<ListElement>ID</ListElement>
+		<ListElement>Name</ListElement>
+		<ListElement>CostMonth</ListElement>
+		<ListElement>NumServers</ListElement>
+		<ListElement>RemainServers</ListElement>
+		<ListElement>CPU</ListElement>
+		<ListElement>ram</ListElement>
+		<ListElement>raid</ListElement>
+		<ListElement>disks</ListElement>
+		<ListElement>UserNotice</ListElement>
+		<ListElement>AdminNotice</ListElement>
+		<ListElement>SortID</ListElement>
+		<ListElement>IsActive</ListElement>
+	</ColumnsIDs>
+	<!-- *********************************************************************** -->
+	<Conditions>
+		<Message>Тарифов на аренду серверов не обнаружено.</Message>
+	</Conditions>
 </Source>
 <!-- *********************************************************************** -->
 <Comps>
@@ -112,16 +116,34 @@
    <style>width:22px;</style>
   </Attribs>
  </Edit>
- <!-- ********************************************************************** -->
- <Name>
-  <Head>Тариф</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Name%</ListElement>
-   <Length>7</Length>
-  </Args>
- </Name>
- <!-- ********************************************************************** -->
+	<!-- ********************************************************************** -->
+<!--	<Name>
+		<Head>Тариф</Head>
+		<Comp>Formats/String</Comp>
+		<Args>
+			<ListElement>%Name%</ListElement>
+			<Length>7</Length>
+		</Args>
+	</Name>
+-->
+	<!-- ********************************************************************** -->
+	 <Name>
+		<Head>Тариф</Head>
+		<Comp>Formats/Order/Notice</Comp>
+		<Args>
+			<ListElement>DSSchemes</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>Formats/String</ListElement>
+			<ListElement>%Name%</ListElement>
+			<ListElement>7</ListElement>
+			<ListElement>%AdminNotice%</ListElement>
+			<ListElement>%UserNotice%</ListElement>
+		</Args>
+		<Attribs>
+			<style>text-align:right;</style>
+		</Attribs>
+	</Name>
+	<!-- ********************************************************************** -->
  <Group>
   <Head>Группа</Head>
   <Comp>Formats/String</Comp>

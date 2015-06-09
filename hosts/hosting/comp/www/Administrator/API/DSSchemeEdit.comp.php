@@ -41,8 +41,8 @@ $chrate			=   (float) @$Args['chrate'];
 $trafflimit		=   (float) @$Args['trafflimit'];
 $traffcorrelation	=  (string) @$Args['traffcorrelation'];
 $OS			=  (string) @$Args['OS'];
-$UserComment		=  (string) @$Args['UserComment'];
-$AdminComment		=  (string) @$Args['AdminComment'];
+$UserNotice		=  (string) @$Args['UserNotice'];
+$AdminNotice		=  (string) @$Args['AdminNotice'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Groups',Array('ID'=>$GroupID));
@@ -107,8 +107,8 @@ $IDSScheme = Array(
 			'trafflimit'		=> $trafflimit,
 			'traffcorrelation'	=> $traffcorrelation,
 			'OS'			=> $OS,
-			'UserComment'		=> $UserComment,
-			'AdminComment'		=> $AdminComment
+			'UserNotice'		=> $UserNotice,
+			'AdminNotice'		=> $AdminNotice
 );
 #-------------------------------------------------------------------------------
 if($DSSchemeID){

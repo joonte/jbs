@@ -152,7 +152,7 @@ if($StepID){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$Columns = Array(
-			'ID','Name','ServerID','UserComment','CostMonth','CostInstall','CPU', 'ram', 'raid', 'disks',
+			'ID','Name','ServerID','UserNotice','CostMonth','CostInstall','CPU', 'ram', 'raid', 'disks',
 			SPrintF('(SELECT `Name` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupName`',$UniqID),
 			SPrintF('(SELECT `Comment` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupComment`',$UniqID),
 			SPrintF('(SELECT `SortID` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupSortID`',$UniqID),
@@ -253,7 +253,7 @@ if($StepID){
 		if($DSScheme['ID'] == $DSSchemeID)
 			$Comp->AddAttribs(Array('checked'=>'true'));
 		#-------------------------------------------------------------------------------
-		$Comment = $DSScheme['UserComment'];
+		$Comment = $DSScheme['UserNotice'];
 		#-------------------------------------------------------------------------------
 		if($Comment)
 			$Rows[] = new Tag('TR',new Tag('TD',Array('colspan'=>2)),new Tag('TD',Array('colspan'=>9,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),$Comment));

@@ -44,6 +44,23 @@
   </Attribs>
  </DSOrder>
  <!-- ********************************************************************** -->
+	<Name>
+		<Head>Тариф</Head>
+		<Comp>Formats/Order/Notice</Comp>
+		<Args>
+			<ListElement>DSSchemes</ListElement>
+			<ListElement>%ID%</ListElement>
+			<ListElement>Formats/String</ListElement>
+			<ListElement>%Name%</ListElement>
+			<ListElement>7</ListElement>
+			<ListElement>%AdminNotice%</ListElement>
+			<ListElement>%UserNotice%</ListElement>
+			<ListElement>1</ListElement>
+		</Args>
+		<Attribs>
+			<style>text-align:right;</style>
+		</Attribs>
+	</Name>
 </Columns>
 <!-- *********************************************************************** -->
 <Sequence>

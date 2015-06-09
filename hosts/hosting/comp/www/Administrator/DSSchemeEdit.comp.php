@@ -61,8 +61,8 @@ if($DSSchemeID){
 			'trafflimit'			=> 1000,
 			'traffcorrelation'		=> '1:4',
 			'OS'				=> 'FreeBSD 10.1',
-			'UserComment'			=> 'Идеальный сервер для высоконагруженного проекта ...',
-			'AdminComment'			=> 'второй диск скоро посыпется, надо заменить',
+			'UserNotice'			=> 'Идеальный сервер для высоконагруженного проекта ...',
+			'AdminNotice'			=> 'второй диск скоро посыпется, надо заменить',
 			);
 	#-------------------------------------------------------------------------------
 }
@@ -320,7 +320,7 @@ $Table[] = Array('Предустановленная ОС',$Comp);
 #-------------------------------------------------------------------------------
 $Table[] = 'Описание сервера, для пользователя';
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/TextArea',Array('name'=>'UserComment','style'=>'width:100%;','rows'=>3),$DSScheme['UserComment']);
+$Comp = Comp_Load('Form/TextArea',Array('name'=>'UserNotice','style'=>'width:100%;','rows'=>3),$DSScheme['UserNotice']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -329,7 +329,7 @@ $Table[] = $Comp;
 #-------------------------------------------------------------------------------
 $Table[] = 'Заметка по серверу, для администратора';
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/TextArea',Array('name'=>'AdminComment','style'=>'width:100%;','rows'=>3),$DSScheme['AdminComment']);
+$Comp = Comp_Load('Form/TextArea',Array('name'=>'AdminNotice','style'=>'width:100%;','rows'=>3),$DSScheme['AdminNotice']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

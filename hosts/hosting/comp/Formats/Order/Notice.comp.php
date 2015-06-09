@@ -4,7 +4,7 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('Table','ID','OldComp','Value','Length','AdminNotice','UserNotice');
+$__args_list = Array('Table','ID','OldComp','Value','Length','AdminNotice','UserNotice','IsDisabled');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
@@ -14,7 +14,7 @@ $Tr = new Tag('TR');
 #-------------------------------------------------------------------------------
 # user notice
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('UserNotice',$Table,$ID,$UserNotice);
+$Comp = Comp_Load('UserNotice',$Table,$ID,$UserNotice,$IsDisabled);
 #-------------------------------------------------------------------------------
 if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
