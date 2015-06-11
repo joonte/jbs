@@ -83,7 +83,7 @@ $DOM->AddChild('Into',new Tag('DIV',Array('id'=>'Rubbish'),$Comp));
 #-------------------------------------------------------------------------------
 $Verifies = Array();
 #-------------------------------------------------------------------------------
-$Invoices = DB_Select('Invoices',Array('ID','CreateDate','Summ'),Array('Where' => SPrintF('`ContractID` = %u',$ContractID)));
+$Invoices = DB_Select('Invoices',Array('ID','CreateDate','Summ'),Array('Where' => Array(SPrintF('`ContractID` = %u',$ContractID),'`StatusID` = "Payed"')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Invoices)){
 case 'error':
