@@ -651,6 +651,9 @@ function IspManager5_Delete($Settings,$Login,$IsReseller = FALSE){
 			# дропаем юзеров
 			foreach($Users as $User){
 				#-----------------------------------------------------------------------------
+				if(!IsSet($User['name']))
+					continue;
+				#-----------------------------------------------------------------------------
 				$Request = Array(
 						'authinfo'      => $authinfo,
 						'func'		=> 'user.delete',
