@@ -18,7 +18,10 @@ if($Template['Source']['Count'] < 1)
   return FALSE;
 #-------------------------------------------------------------------------------
 $Config = Config();
+#-------------------------------------------------------------------------------
 $AllowConditionally = $Config['Invoices']['AllowConditionally'];
+#-------------------------------------------------------------------------------
+$Settings = $Config['Tasks']['Types']['GC']['NotifyConditionallyInvoiceSettings'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
@@ -74,10 +77,10 @@ if($ShowButton && $AllowConditionally){
   $Comp1 = Comp_Load(
     'Form/Input',
     Array(
-      'onclick' => "javascript:ShowConfirm('Вы действительно хотите воспользоваться услугами в долг? Данный счёт всё равно придётся оплачивать, иначе услуги будут заблокированы.','AjaxCall(\'/API/InvoiceSetConditionally\',FormGet(TableSuperForm),\'Проведение условной оплаты\',\'GetURL(document.location);\');');",
+      'onclick' => SPrintF("javascript:ShowConfirm('Вы действительно хотите воспользоваться услугами в долг? Данный счёт всё равно придётся оплачивать, иначе услуги будут заблокированы. В случае если счёт не будет оплачен в течении %u дней то ваш балланс станет отрицательным. В этом случае, вы не сможете оплатить другие услуги до того как он не станет нулевым или положительным','AjaxCall(\'/API/InvoiceSetConditionally\',FormGet(TableSuperForm),\'Проведение условной оплаты\',\'GetURL(document.location);\');');",$Settings['DaysBeforeRejectConditionallyInvoice']),
       'type'    => 'button',
       'value'   => 'Провести условно',
-      'prompt'  => 'Счёт зачисляется "условно". В течение месяца вы должны его оплатить. Услугами вы сможете пользоваться сейчас.'
+      'prompt'  => SPrintF('Счёт зачисляется "условно". В течение %u дней вы должны его оплатить. Услугами вы сможете пользоваться сейчас.',$Settings['DaysBeforeRejectConditionallyInvoice'])
     )
   );
   if(Is_Error($Comp1))
