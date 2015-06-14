@@ -56,6 +56,15 @@
   </Paths>
   <Href>/Administrator/BillingVersions</Href>
  </ListElement>
+	<!-- *********************************************************************** -->
+	<ListElement>
+		<Text>phpinfo()</Text>
+		<Prompt>Инофрмация о версии интерпретатора php</Prompt>
+		<Paths>
+			<UniqID>^\/Administrator\/PhpInfo$</UniqID>
+		</Paths>
+		<Href>/Administrator/PhpInfo</Href>
+	</ListElement>
 </Items>
 <!-- *********************************************************************** -->
 </XML>
