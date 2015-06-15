@@ -127,7 +127,7 @@ foreach($Services as $Service){
 						return ERROR | @Trigger_Error(500);
 					case 'exception':
 						#-------------------------------------------------------------------------------
-						$Event = Array('UserID'=>$ServiceOrder['UserID'],'Text'=>SPrintF('Не удалость автоматически оплатить заказ, причина (%s)',$ServiceOrderPay->String));
+						$Event = Array('UserID'=>$ServiceOrder['UserID'],'Text'=>SPrintF('Не удалость автоматически оплатить заказ %s/#%s, причина (%s)',$Service['Code'],$OrderID,$ServiceOrderPay->String));
 						$Event = Comp_Load('Events/EventInsert',$Event);
 						if(!$Event)
 							return ERROR | @Trigger_Error(500);
