@@ -139,7 +139,8 @@ $ISPswScheme = Array(
 			'period'	=> $ISPswOrder['period'],
 			'IP'		=> $IP,
 			'remoteip'	=> (($remoteip == $IP)?'':$remoteip),
-			'LicComment'	=> $LicComment
+			'LicComment'	=> $LicComment,
+			'IsInternal'	=> $ISPswLicense['IsInternal']
 		);
 #-------------------------------------------------------------------------------
 # если лицензия внутренняя - ищщем свободную, или заказываем новую
