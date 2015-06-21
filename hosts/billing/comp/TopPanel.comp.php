@@ -258,7 +258,8 @@ if(!IsSet($GLOBALS['__USER'])){
 	if(Is_Error($IsLoad))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$UsersIDs = $Session->Data['UsersIDs'];
+	$UsersIDs = @$Session->Data['UsersIDs'];
+	#-------------------------------------------------------------------------------
 	if(Count($UsersIDs) < 1)
 		return ERROR | @Trigger_Error(400);
 	#-------------------------------------------------------------------------------
