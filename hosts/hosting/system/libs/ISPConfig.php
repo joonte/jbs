@@ -120,9 +120,26 @@ function ISPConfig_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,
 	                                     'exceptions' => 1));
 	# Открываем сессию на панели ISPConfig
 	$session_id = $client->login($Settings['Login'], $Settings['Password']);
-	# Отправляем данные в панеь ISPConfig
+
+	# Отправляем данные нового пользователя в панеь ISPConfig
 	try {
 		$client->client_add($session_id, $reseller_id, $Request);
+		$Response = $client->__getLastResponse();
+	} catch (SoapFault $Result) {
+		$Response = $client->__getLastResponse();
+		$Response = Strip_Tags($Response);
+	}
+
+	#-----------------------------------------------------------------------------
+	# Запрашиваем ID клиента и ID группы клиента
+	$client_id = ISPConfig_ClientID($session_id,$client,$Login);
+
+	#-----------------------------------------------------------------------------
+	# Добавляем клиенту домен
+	$AddDomain = array(
+			'domain' => $Domain);
+	try {
+		$client->domains_domain_add($session_id, $client_id, $AddDomain);
 		$Response = $client->__getLastResponse();
 	} catch (SoapFault $Result) {
 		$Response = $client->__getLastResponse();
@@ -174,8 +191,7 @@ function ISPConfig_Active($Settings,$Login,$IsReseller = FALSE){
 
 	#-----------------------------------------------------------------------------
 	# Запрашиваем параметры клиента
-	$ns1 = 'ns1:client_getResponse';
-	$Request = ISPConfig_ClientGet($session_id,$client,$client_id,$ns1,$Request);
+	$Request = ISPConfig_ClientGet($session_id,$client,$client_id,$Request);
 
 	#-----------------------------------------------------------------------------
 	# Выполняем запрос активации клиента на панели ISPConfig
@@ -233,8 +249,7 @@ function ISPConfig_Suspend($Settings,$Login,$IsReseller = FALSE){
 
 	#-----------------------------------------------------------------------------
 	# Запрашиваем параметры клиента
-	$ns1 = 'ns1:client_getResponse';
-	$Request = ISPConfig_ClientGet($session_id,$client,$client_id,$ns1,$Request);
+	$Request = ISPConfig_ClientGet($session_id,$client,$client_id,$Request);
 
 	#-----------------------------------------------------------------------------
 	# Выполняем запрос блокировки клиента на панели ISPConfig
@@ -414,8 +429,7 @@ function ISPConfig_Scheme_Change($Settings,$Login,$HostingScheme){
 
 	#-----------------------------------------------------------------------------
 	# Запрашиваем параметры клиента
-	$ns1 = 'ns1:client_getResponse';
-	$Request = ISPConfig_ClientGet($session_id,$client,$client_id,$ns1,$Request);
+	$Request = ISPConfig_ClientGet($session_id,$client,$client_id,$Request);
 
 	#-----------------------------------------------------------------------------
 	# Выполняем отправку данных в панель ISPConfig
@@ -444,14 +458,14 @@ function ISPConfig_Scheme_Change($Settings,$Login,$HostingScheme){
 #-------------------------------------------------------------------------------
 # Функция запроса данных клиента в панели ISPConfig
 #-------------------------------------------------------------------------------
-function ISPConfig_ClientGet($session_id,$client,$client_id,$ns1,$Request){
+function ISPConfig_ClientGet($session_id,$client,$client_id,$Request){
 	try {
 		$client->client_get($session_id, $client_id);
 		$Response = $client->__getLastResponse();
 		$Body = Trim($Response);
 		$XML = String_XML_Parse($Body);
 		$XML = $XML->ToArray('item');
-		$Array = $XML['SOAP-ENV:Envelope']['SOAP-ENV:Body'][$ns1]['return'];
+		$Array = $XML['SOAP-ENV:Envelope']['SOAP-ENV:Body'][ns1:client_getResponse]['return'];
 		$ClientData = Array();
 		foreach(Array_Keys($Array) as $Key){
 			$ClientData[$Array[$Key]['key']] = $Array[$Key]['value'];
