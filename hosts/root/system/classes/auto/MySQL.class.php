@@ -43,7 +43,7 @@ class MySQL{
 		#-------------------------------------------------------------------------------
 		$Address = SPrintF('%s:%u',$Settings['Server'],$Settings['Port']);
 		#-------------------------------------------------------------------------------
-		$this->Link = @Mysql_Connect($Address,$User = $Settings['User'],$Settings['Password'],TRUE);
+		$this->Link = @MySQL_Connect($Address,$User = $Settings['User'],$Settings['Password'],TRUE);
 		#-------------------------------------------------------------------------------
 		if(!Is_Resource($this->Link))
 			return ERROR | @Trigger_Error(SPrintF('[MySQL->Open]: не возможно соединиться с (%s@%s)',$User,$Address));
