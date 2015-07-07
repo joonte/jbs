@@ -78,9 +78,10 @@ case 'canceled':
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# ставим счёт как неоплаченный
-	$IsUpdate = DB_Update('Invoices',Array('IsPosted'=>FALSE),Array('ID'=>$Invoice['ID']));
-	if(Is_Error($IsUpdate))
-		return ERROR | @Trigger_Error(500);
+	# плохая идея. появляется кнопка про оплату, а оплатить нельзя - юнителлер не даёт
+	#$IsUpdate = DB_Update('Invoices',Array('IsPosted'=>FALSE),Array('ID'=>$Invoice['ID']));
+	#if(Is_Error($IsUpdate))
+	#	return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	# вычитаем сумму счёта из договора, на который счёт.
 	$Contract = DB_Select('ContractsOwners','Balance',Array('UNIQ','ID'=>$Invoice['ContractID']));
