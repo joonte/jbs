@@ -133,6 +133,7 @@ function ISPConfig_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,
 	#-----------------------------------------------------------------------------
 	# Запрашиваем ID клиента и ID группы клиента
 	$client_id = ISPConfig_ClientID($session_id,$client,$Login);
+//	$client_group_id = ISPConfig_ClientGetGroupID($session_id,$client,$client_id);
 
 	#-----------------------------------------------------------------------------
 	# Добавляем клиенту домен
@@ -465,11 +466,14 @@ function ISPConfig_ClientGet($session_id,$client,$client_id,$Request){
 		$Body = Trim($Response);
 		$XML = String_XML_Parse($Body);
 		$XML = $XML->ToArray('item');
-		$Array = $XML['SOAP-ENV:Envelope']['SOAP-ENV:Body'][ns1:client_getResponse]['return'];
+		$Array = $XML['SOAP-ENV:Envelope']['SOAP-ENV:Body']['ns1:client_getResponse']['return'];
 		$ClientData = Array();
 		foreach(Array_Keys($Array) as $Key){
+			if ($Array[$Key]['key'] != "password"){
 			$ClientData[$Array[$Key]['key']] = $Array[$Key]['value'];
+			}
 		}
+//		Debug(SPrintF("Данные клиента => %s",print_r($ClientData, true)));
 		$Request = array_replace($ClientData, $Request);
 		return $Request;
 	} catch (SoapFault $Result) {
@@ -495,6 +499,30 @@ function ISPConfig_ClientID($session_id,$client,$Login){
 			if ($Array[$Key]['key']=='client_id') break;
 		}
 		return $Array[$Key]['value'];
+//		Debug(SPrintF('%s => %s',$Array[$Key]['key'],$Array[$Key]['value'],true));
+	} catch (SoapFault $Result) {
+		$Response = $client->__getLastResponse();
+		$Response = Strip_Tags($Response);
+		return new gException('WRONG_ANSWER',$Response);
+	}
+	#-----------------------------------------------------------------------------
+}
+
+#-------------------------------------------------------------------------------
+# Функция запроса ID группы клиента панели ISPConfig
+#-------------------------------------------------------------------------------
+function ISPConfig_ClientGetGroupID($session_id,$client,$client_id){
+	try {
+		$client->client_get_groupid($session_id, $client_id);
+		$Response = $client->__getLastResponse();
+		$Body = Trim($Response);
+		$XML = String_XML_Parse($Body);
+		$XML = $XML->ToArray('item');
+		$ClientGroupID = $XML['SOAP-ENV:Envelope']['SOAP-ENV:Body']['ns1:client_get_groupidResponse']['return'];
+//		foreach(Array_Keys($Array) as $Key){
+//			if ($Array[$Key]['key']=='client_id') break;
+//		}
+		return $ClientGroupID;
 //		Debug(SPrintF('%s => %s',$Array[$Key]['key'],$Array[$Key]['value'],true));
 	} catch (SoapFault $Result) {
 		$Response = $client->__getLastResponse();
