@@ -30,9 +30,10 @@ if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$ExecuteDate = Comp_Load('HostingOrders/SearchExecuteTime');
-if(Is_Error($ExecuteDate))
-	return ERROR | @Trigger_Error(500);
+#$ExecuteDate = Comp_Load('HostingOrders/SearchExecuteTime');
+#if(Is_Error($ExecuteDate))
+#	return ERROR | @Trigger_Error(500);
+$ExecuteDate = Time();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'HostingDelete','ExecuteDate'=>$ExecuteDate,'Params'=>Array($HostingOrderID)));

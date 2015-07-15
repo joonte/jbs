@@ -282,9 +282,10 @@ foreach(Array_Keys($TUsages) as $ServerID){
 				#-------------------------------------------------------------------------------
 				#-------------------------------------------------------------------------------
 				# время выполнения задачи
-				$ExecuteDate = Comp_Load('HostingOrders/SearchExecuteTime');
-				if(Is_Error($ExecuteDate))
-					return ERROR | @Trigger_Error(500);
+				#$ExecuteDate = Comp_Load('HostingOrders/SearchExecuteTime');
+				#if(Is_Error($ExecuteDate))
+				#	return ERROR | @Trigger_Error(500);
+				$ExecuteDate = Time();
 				#-------------------------------------------------------------------------------
 				#-------------------------------------------------------------------------------
 				# лочим 
