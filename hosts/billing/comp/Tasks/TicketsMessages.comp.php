@@ -41,214 +41,233 @@ $Where = Array(
 $Messages = DB_Select('EdesksMessages',$Columns,Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Messages)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    # No more...
-  break;
-  case 'array':
-    #---------------------------------------------------------------------------
-    #---------------------------------------------------------------------------
-    foreach($Messages as $Message){
-      #-------------------------------------------------------------------------
-      $TargetUserID = (integer)$Message['TargetUserID'];
-      $TargetGroupID = (integer)$Message['TargetGroupID'];
-      #-------------------------------------------------------------------------
-      $Upload = Upload_Get('TicketMessageFile',$Message['FileName']);
-      #---------------------------------------------------------------------
-      switch(ValueOf($Upload)){
-      case 'error':
-       	return ERROR | @Trigger_Error(500);
-      case 'exception':
-       	# No more...
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	# No more...
+	return $ExecuteTime;
+case 'array':
 	break;
-      case 'array':
-  	#-----------------------------------------------------------------
-  	$Data = GetUploadedFile('EdesksMessages', $Message['ID']);
-       	#-----------------------------------------------------------------
-	$EmailAttachments = Array(
-				Array(
-					'Name'	=> $Upload['Name'],
-					'Size'	=> GetUploadedFileSize('EdesksMessages',$Message['ID']),
-					'Mime'	=> GetFileMimeType('EdesksMessages',$Message['ID']),
-					'Data'	=> Chunk_Split(Base64_Encode($Data['Data']))
-					),
-				);
-	#-----------------------------------------------------------------
-	break;
-	#-----------------------------------------------------------------
-      default:
+default:
 	return ERROR | @Trigger_Error(101);
-      }
-      #-------------------------------------------------------------------------------
-      #-------------------------------------------------------------------------------
-      if($TargetGroupID != 1){
-        #-----------------------------------------------------------------------
-        $IsOwner = ($Message['UserID'] == ($OwnerID = $Message['OwnerID']));
-        #-----------------------------------------------------------------------
-        if($IsOwner){
-          #---------------------------------------------------------------------
-          if($TargetUserID != 100){
-            #-------------------------------------------------------------------
-            $msgParams = Array(
-                'TicketID'		=> $Message['EdeskID'],
-                'Theme'			=> $Message['Theme'],
-                'Message'		=> $Message['Content'],
-		'Message-ID'		=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
-		'EmailAttachments'	=> (IsSet($EmailAttachments)?$EmailAttachments:'не определено')
-            );
-	    #-------------------------------------------------------------------
-            $msg = new Message('ToTicketsMessages', $TargetUserID, $msgParams);
-            $IsSend = NotificationManager::sendMsg($msg);
-            #-------------------------------------------------------------------
-            switch(ValueOf($IsSend)){
-              case 'error':
-                return ERROR | @Trigger_Error(500);
-              case 'exception':
-                # No more...
-              case 'true':
-	        #---------------------------------------------------------------
-		$MessagesCount++;
-                # Update -> `IsNotify`='yes'
-		$IsUpdate = DB_Update('EdesksMessages',Array('IsNotify'=>'yes'),Array('ID'=>$Message['ID']));
-		if(Is_Error($IsUpdate))
-		  return ERROR | @Trigger_Error(500);
-		#---------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+foreach($Messages as $Message){
+	#-------------------------------------------------------------------------------
+	$TargetUserID = (integer)$Message['TargetUserID'];
+	$TargetGroupID = (integer)$Message['TargetGroupID'];
+	#-------------------------------------------------------------------------------
+	$Upload = Upload_Get('TicketMessageFile',$Message['FileName']);
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Upload)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		# No more...
 		break;
-              default:
-                return ERROR | @Trigger_Error(101);
-            }
-          }else{
-            #-------------------------------------------------------------------
-            $Entrance = Tree_Entrance('Groups',$TargetGroupID);
-            #-------------------------------------------------------------------
-            switch(ValueOf($Entrance)){
-              case 'error':
-                return ERROR | @Trigger_Error(500);
-              case 'exception':
-                return ERROR | @Trigger_Error(400);
-              case 'array':
-                #---------------------------------------------------------------
-                $String = Implode(',',$Entrance);
-                #---------------------------------------------------------------
-                $Employers = DB_Select('Users','ID',Array('Where'=>SPrintF('`GroupID` IN (%s)',$String)));
-                #---------------------------------------------------------------
-                switch(ValueOf($Employers)){
-                  case 'error':
-                    return ERROR | @Trigger_Error(500);
-                  case 'exception':
-                    # No more...
-                  continue 3;
-                  case 'array':
-                    #-----------------------------------------------------------
-                    foreach($Employers as $Employer){
-                      #---------------------------------------------------------
-                      $msgParams = Array(
-                          'TicketID'		=> $Message['EdeskID'],
-                          'Theme'		=> $Message['Theme'],
-                          'Message'		=> $Message['Content'],
-                          'Message-ID'		=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
-			  'EmailAttachments'	=> (IsSet($EmailAttachments)?$EmailAttachments:'не определено')
-                      );
-		      #-------------------------------------------------------------------
-                      $msg = new Message('ToTicketsMessages',(integer)$Employer['ID'], $msgParams);
-                      $IsSend = NotificationManager::sendMsg($msg);
-                      #---------------------------------------------------------
-                      switch(ValueOf($IsSend)){
-                        case 'error':
-                          return ERROR | @Trigger_Error(500);
-                        case 'exception':
-                          # No more...
-                        case 'true':
-			  #---------------------------------------------------------------
-			  $MessagesCount++;
-                          # Update -> `IsNotify`='yes'
-			  $IsUpdate = DB_Update('EdesksMessages',Array('IsNotify'=>'yes'),Array('ID'=>$Message['ID']));
-			  if(Is_Error($IsUpdate))
-			    return ERROR | @Trigger_Error(500);
-			  #---------------------------------------------------------------
-                        break;
-                        default:
-                          return ERROR | @Trigger_Error(101);
-                      }
-                    }
-                  break 2;
-                  default:
-                    return ERROR | @Trigger_Error(101);
-                }
-              default:
-                return ERROR | @Trigger_Error(101);
-            }
-          }
-        }else{
-          #---------------------------------------------------------------------
-          $String = $Message['Content'];
-          #---------------------------------------------------------------------
-          switch($Message['StatusID']){
-            case 'Closed':
-              $String = SPrintF("%s\n\nЕсли потребуется какая-либо помощь, пожалуйста, откройте новый запрос.\nСпасибо.",$String);
-            break;
-            case 'Working':
-              $String = SPrintF("%s\n\nНа данный момент мы решаем Ваш вопрос.\nСпасибо.",$String);
-            break;
-            default:
-              # No more...
-          }
-          #---------------------------------------------------------------------
-          $Message['Content'] = $String;
-	  #---------------------------------------------------------------------
-          $msgParams = Array(
-              'TicketID'	=> $Message['EdeskID'],
-              'Theme'		=> $Message['Theme'],
-              'Message'		=> $Message['Content'],
-              'Message-ID'	=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
-	      'EmailAttachments'=> (IsSet($EmailAttachments)?$EmailAttachments:'не определено')
-          );
-	  #Debug(SPrintF('[comp/Tasks/TicketsMessages]: msgParams = %s',print_r($msgParams,true)));
-          #-------------------------------------------------------------------
-          if(StrLen($Message['NotifyEmail']) > 5)
-            $msgParams['Recipient'] = $Message['NotifyEmail'];
-	  #-------------------------------------------------------------------
-          #-------------------------------------------------------------------
-          $msg = new FromTicketsMessagesMsg($msgParams, (integer)$OwnerID);
-          $IsSend = NotificationManager::sendMsg($msg);
-          #---------------------------------------------------------------------
-          switch(ValueOf($IsSend)){
-            case 'error':
-              return ERROR | @Trigger_Error(500);
-            case 'exception':
-              # No more...
-            case 'true':
-	      #---------------------------------------------------------------
-	      $MessagesCount++;
-              # Update -> `IsNotify`='yes'
-              $IsUpdate = DB_Update('EdesksMessages',Array('IsNotify'=>'yes'),Array('ID'=>$Message['ID']));
-              if(Is_Error($IsUpdate))
-                 return ERROR | @Trigger_Error(500);
-              #---------------------------------------------------------------
-            break;
-            default:
-              return ERROR | @Trigger_Error(101);
-          }
-        }
-      }else{
-        #-----------------------------------------------------------------------
-        # No more...
-        continue;
-      }
-    }
-  break;
-  default:
-    return ERROR | @Trigger_Error(101);
+	case 'array':
+		#-------------------------------------------------------------------------------
+		$Data = GetUploadedFile('EdesksMessages', $Message['ID']);
+		#-------------------------------------------------------------------------------
+		$EmailAttachments = Array(
+					Array(
+						'Name'	=> $Upload['Name'],
+						'Size'	=> GetUploadedFileSize('EdesksMessages',$Message['ID']),
+						'Mime'	=> GetFileMimeType('EdesksMessages',$Message['ID']),
+						'Data'	=> Chunk_Split(Base64_Encode($Data['Data']))
+						),
+					);
+		#-------------------------------------------------------------------------------
+		break;
+		#-------------------------------------------------------------------------------
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if($TargetGroupID != 1){
+		#-------------------------------------------------------------------------------
+		$IsOwner = ($Message['UserID'] == ($OwnerID = $Message['OwnerID']));
+		#-------------------------------------------------------------------------------
+		if($IsOwner){
+			#-------------------------------------------------------------------------------
+			if($TargetUserID != 100){
+				#-------------------------------------------------------------------------------
+				$msgParams = Array(
+							'TicketID'		=> $Message['EdeskID'],
+							'Theme'			=> $Message['Theme'],
+							'Message'		=> $Message['Content'],
+							'Message-ID'		=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
+							'EmailAttachments'	=> (IsSet($EmailAttachments)?$EmailAttachments:'не определено')
+							);
+				#-------------------------------------------------------------------------------
+				$msg = new Message('ToTicketsMessages', $TargetUserID, $msgParams);
+				$IsSend = NotificationManager::sendMsg($msg);
+				#-------------------------------------------------------------------------------
+				switch(ValueOf($IsSend)){
+				case 'error':
+					return ERROR | @Trigger_Error(500);
+				case 'exception':
+					# No more...
+				case 'true':
+					#-------------------------------------------------------------------------------
+					$MessagesCount++;
+					# Update -> `IsNotify`='yes'
+					$IsUpdate = DB_Update('EdesksMessages',Array('IsNotify'=>'yes'),Array('ID'=>$Message['ID']));
+					if(Is_Error($IsUpdate))
+						return ERROR | @Trigger_Error(500);
+					#-------------------------------------------------------------------------------
+					break;
+					#-------------------------------------------------------------------------------
+				default:
+					return ERROR | @Trigger_Error(101);
+				}
+				#-------------------------------------------------------------------------------
+			}else{
+				#-------------------------------------------------------------------------------
+				$Entrance = Tree_Entrance('Groups',$TargetGroupID);
+				#-------------------------------------------------------------------------------
+				switch(ValueOf($Entrance)){
+				case 'error':
+					return ERROR | @Trigger_Error(500);
+				case 'exception':
+					return ERROR | @Trigger_Error(400);
+				case 'array':
+					break;
+				default:
+					return ERROR | @Trigger_Error(101);
+				}
+				#-------------------------------------------------------------------------------
+				$String = Implode(',',$Entrance);
+				#-------------------------------------------------------------------------------
+				$Employers = DB_Select('Users','ID',Array('Where'=>SPrintF('`GroupID` IN (%s)',$String)));
+				#-------------------------------------------------------------------------------
+				switch(ValueOf($Employers)){
+				case 'error':
+					return ERROR | @Trigger_Error(500);
+				case 'exception':
+					# No more...
+					continue 2;
+				case 'array':
+					break;
+				default:
+					return ERROR | @Trigger_Error(101);
+				}
+				#-------------------------------------------------------------------------------
+				foreach($Employers as $Employer){
+					#-------------------------------------------------------------------------------
+					$msgParams = Array(
+								'TicketID'		=> $Message['EdeskID'],
+								'Theme'			=> $Message['Theme'],
+								'Message'		=> $Message['Content'],
+								'Message-ID'		=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
+								'EmailAttachments'	=> (IsSet($EmailAttachments)?$EmailAttachments:'не определено')
+								);
+					#-------------------------------------------------------------------------------
+					$msg = new Message('ToTicketsMessages',(integer)$Employer['ID'], $msgParams);
+					$IsSend = NotificationManager::sendMsg($msg);
+					#-------------------------------------------------------------------------------
+					switch(ValueOf($IsSend)){
+					case 'error':
+						return ERROR | @Trigger_Error(500);
+					case 'exception':
+						# No more...
+					case 'true':
+						#-------------------------------------------------------------------------------
+						$MessagesCount++;
+						# Update -> `IsNotify`='yes'
+						$IsUpdate = DB_Update('EdesksMessages',Array('IsNotify'=>'yes'),Array('ID'=>$Message['ID']));
+						if(Is_Error($IsUpdate))
+							return ERROR | @Trigger_Error(500);
+						#-------------------------------------------------------------------------------
+						break;
+						#-------------------------------------------------------------------------------
+					default:
+						return ERROR | @Trigger_Error(101);
+					}
+					#-------------------------------------------------------------------------------
+				}
+				#-------------------------------------------------------------------------------
+				break;
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+		}else{
+			#-------------------------------------------------------------------------------
+			$String = $Message['Content'];
+			#-------------------------------------------------------------------------------
+			switch($Message['StatusID']){
+			case 'Closed':
+				#-------------------------------------------------------------------------------
+				$String = SPrintF("%s\n\nЕсли потребуется какая-либо помощь, пожалуйста, откройте новый запрос.\nСпасибо.",$String);
+				#-------------------------------------------------------------------------------
+				break;
+				#-------------------------------------------------------------------------------
+			case 'Working':
+				#-------------------------------------------------------------------------------
+				$String = SPrintF("%s\n\nНа данный момент мы решаем Ваш вопрос.\nСпасибо.",$String);
+				#-------------------------------------------------------------------------------
+				break;
+				#-------------------------------------------------------------------------------
+			default:
+				# No more...
+			}
+			#-------------------------------------------------------------------------------
+			$Message['Content'] = $String;
+			#-------------------------------------------------------------------------------
+			$msgParams = Array(
+						'TicketID'	=> $Message['EdeskID'],
+						'Theme'		=> $Message['Theme'],
+						'Message'		=> $Message['Content'],
+						'Message-ID'		=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
+						'EmailAttachments'	=> (IsSet($EmailAttachments)?$EmailAttachments:'не определено')
+						);
+			#Debug(SPrintF('[comp/Tasks/TicketsMessages]: msgParams = %s',print_r($msgParams,true)));
+			#-------------------------------------------------------------------------------
+			if(StrLen($Message['NotifyEmail']) > 5)
+				$msgParams['Recipient'] = $Message['NotifyEmail'];
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			$msg = new FromTicketsMessagesMsg($msgParams, (integer)$OwnerID);
+			$IsSend = NotificationManager::sendMsg($msg);
+			#-------------------------------------------------------------------------------
+			switch(ValueOf($IsSend)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				# No more...
+			case 'true':
+				#-------------------------------------------------------------------------------
+				$MessagesCount++;
+				# Update -> `IsNotify`='yes'
+				$IsUpdate = DB_Update('EdesksMessages',Array('IsNotify'=>'yes'),Array('ID'=>$Message['ID']));
+				if(Is_Error($IsUpdate))
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+				break;
+				#-------------------------------------------------------------------------------
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		# No more...
+		continue;
+	}
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($MessagesCount > 0 && !IsSet($GLOBALS['TaskReturnInfo'])){
+if($MessagesCount > 0 && !IsSet($GLOBALS['TaskReturnInfo']))
 	$GLOBALS['TaskReturnInfo'] = SPrintF('%u new messages',$MessagesCount);
-}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $ExecuteTime;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>
