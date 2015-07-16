@@ -11,6 +11,7 @@ if(Is_Error(System_Load('libs/Tree.php','libs/Upload.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Config = Config();
+#-------------------------------------------------------------------------------
 $Settings = $Config['Tasks']['Types']['TicketsMessages'];
 #-------------------------------------------------------------------------------
 $ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecutePeriod'=>$Settings['ExecutePeriod']));
@@ -25,7 +26,7 @@ $MessagesCount = 0;
 #-------------------------------------------------------------------------------
 $Columns = Array(
 		'ID','UserID','EdeskID','FileName','SUBSTR(`Content`,1,4096) AS `Content`',
-		'(SELECT `Theme` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `Theme`',
+		SPrintF('CONCAT("[%s-",`EdeskID`,"] ",(SELECT `Theme` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`)) as `Theme`',$Settings['KeyPrefix']),
 		'(SELECT `TargetGroupID` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `TargetGroupID`',
 		'(SELECT `TargetUserID` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `TargetUserID`',
 		'(SELECT `UserID` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `OwnerID`',
@@ -217,8 +218,8 @@ foreach($Messages as $Message){
 			$Message['Content'] = $String;
 			#-------------------------------------------------------------------------------
 			$msgParams = Array(
-						'TicketID'	=> $Message['EdeskID'],
-						'Theme'		=> $Message['Theme'],
+						'TicketID'		=> $Message['EdeskID'],
+						'Theme'			=> $Message['Theme'],
 						'Message'		=> $Message['Content'],
 						'Message-ID'		=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
 						'EmailAttachments'	=> (IsSet($EmailAttachments)?$EmailAttachments:'не определено')

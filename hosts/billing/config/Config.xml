@@ -1060,15 +1060,16 @@
    <Params type="array" />
    <IsActive>1</IsActive>
   </Logs>
-  <!-- ********************************************************************* -->
-  <TicketsMessages>
-   <Name>Уведомления о новых сообщениях в запросах</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-   <IsImmediately>0</IsImmediately>
-   <ExecutePeriod>00:10</ExecutePeriod>
-  </TicketsMessages>
-  <!-- ********************************************************************* -->
+	<!-- ********************************************************************* -->
+	<TicketsMessages>
+		<Name>Уведомления о новых сообщениях в запросах</Name>
+		<Params type="array" />
+		<IsActive>1</IsActive>
+		<IsImmediately>0</IsImmediately>
+		<ExecutePeriod>00:10</ExecutePeriod>
+		<KeyPrefix>JBS</KeyPrefix>
+	</TicketsMessages>
+	<!-- ********************************************************************* -->
   <WorksComplite>
    <Name>Агрегатор выполненных работ</Name>
    <Params type="array" />
