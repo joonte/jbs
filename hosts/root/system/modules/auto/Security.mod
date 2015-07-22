@@ -41,7 +41,7 @@ if(Count($_COOKIE) > 0){
 		#-------------------------------------------------------------------------------
 		$Cookie = $_COOKIE[$CookieID];
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[Security module]: (%s) = (%s)',$CookieID,$Cookie));
+		Debug(SPrintF('[Security module]: (%s) = (%s)',$CookieID,Is_Array($Cookie)?Print_R($Cookie,true):$Cookie));
 		#-------------------------------------------------------------------------------
 		if(Preg_Match($Template,$Cookie))
 			if(!$IsNoAction)
