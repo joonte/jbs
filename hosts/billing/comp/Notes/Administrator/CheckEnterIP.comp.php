@@ -36,7 +36,7 @@ foreach($Array as $IP)
 #-------------------------------------------------------------------------------
 if($Cached['EnterIP'] != $GLOBALS['__USER']['EnterIP']){
 	#-------------------------------------------------------------------------------
-	$Params = Array('EnterIP'=>$Cached['EnterIP'],'IP'=>$_SERVER['REMOTE_ADDR'],'EnterDate'=>Date('Y-m-d H:i:s',$Cached['EnterDate']));
+	$Params = Array('EnterIP'=>$Cached['EnterIP'],'IP'=>$GLOBALS['__USER']['EnterIP'],'EnterDate'=>Date('Y-m-d H:i:s',$Cached['EnterDate']));
 	#-------------------------------------------------------------------------------
 	$NoBody = new Tag('NOBODY');
 	$NoBody->AddHTML(TemplateReplace('Notes.CheckEnterIP',$Params));
