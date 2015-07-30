@@ -43,6 +43,10 @@ if(Count($_COOKIE) > 0){
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[Security module]: (%s) = (%s)',$CookieID,Is_Array($Cookie)?Print_R($Cookie,true):$Cookie));
 		#-------------------------------------------------------------------------------
+		# TODO: преберать бы содержимое массива, по хорошему-то...
+		if(Is_Array($Cookie))
+			continue;
+		#-------------------------------------------------------------------------------
 		if(Preg_Match($Template,$Cookie))
 			if(!$IsNoAction)
 				return ERROR | @Trigger_Error(600);
