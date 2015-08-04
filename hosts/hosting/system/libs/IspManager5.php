@@ -409,7 +409,7 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 			'func'				=> ($IsReselling)?'reseller.edit':'user.add.finish',			# Целевая функция
 			'sok'				=> 'ok',	# Значение параметра должно быть равно "ok"
 			'name'				=> $Login,	# Имя пользователя (реселлера)
-			#'fullname'			=> $Login,	# полное имя
+			'fullname'			=> $Email,	# полное имя
 			'passwd'			=> $Password,	# Пароль
 			'confirm'			=> $Password,	# Подтверждение
 			'ip'				=> $IP,		# IP-адрес
