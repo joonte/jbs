@@ -123,14 +123,14 @@
   <Alias>(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `ContractsEnclosuresOwners`.`ContractID`)</Alias>
  </Customer>
  <!-- ********************************************************************** -->
- <Type>
+ <TypeID>
   <Head>Тип</Head>
   <Comp>Formats/Contract/Enclosure/Type</Comp>
   <Args>
    <ListElement>%TypeID%</ListElement>
    <ListElement>20</ListElement>
   </Args>
- </Type>
+ </TypeID>
  <!-- ********************************************************************** -->
  <Status>
   <Args>
@@ -144,7 +144,7 @@
  <ListElement>ContractEnclosureDownload</ListElement>
  <ListElement>Customer</ListElement>
  <ListElement>Owner</ListElement>
- <ListElement>Type</ListElement>
+ <ListElement>TypeID</ListElement>
  <ListElement>Status</ListElement>
  <ListElement>StatusOver</ListElement>
 </Sequence>

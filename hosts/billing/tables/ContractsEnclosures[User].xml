@@ -42,7 +42,7 @@
  <ListElement>ContractEnclosureDownload</ListElement>
  <ListElement>CreateDate</ListElement>
  <ListElement>Customer</ListElement>
- <ListElement>Type</ListElement>
+ <ListElement>TypeID</ListElement>
  <ListElement>Status</ListElement>
  <ListElement>StatusOver</ListElement>
 </Sequence>
