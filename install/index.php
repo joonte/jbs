@@ -158,18 +158,17 @@ foreach (Array('db-server', 'db-port', 'db-type', 'db-root', 'db-user', 'db-pass
 if ($__STEP_ID == 4) {
     switch ($__SETTINGS['db-type']) {
         case 'exists': {
-            $MySQL = @MySQL_Connect(SPrintF('%s:%u', $__SETTINGS['db-server'], $__SETTINGS['db-port']),
-                $__SETTINGS['db-user'], $__SETTINGS['db-password']);
+            $MySQL = @MySQLi_Connect($__SETTINGS['db-server'], $__SETTINGS['db-user'], $__SETTINGS['db-password'], $__SETTINGS['db-name'], $__SETTINGS['db-port']);
 
             if ($MySQL) {
-                $Result = @MySQL_Query($Query = SPrintF('use `%s`', $__SETTINGS['db-name']), $MySQL);
+                $Result = @MySQLi_Query($MySQL,$Query = SPrintF('use `%s`', $__SETTINGS['db-name']));
 
                 if ($Result) {
                     Message('Настройки соединения успешно проверены.');
 
                     /* added by lissyara for JBS-230 */
-                    $Result = @MySQL_Query('SHOW ENGINES');
-                    while ($Engine = MySQL_Fetch_Assoc($Result)){
+                    $Result = @MySQLi_Query($MySQL,'SHOW ENGINES');
+                    while ($Engine = MySQLi_Fetch_Assoc($Result)){
                       #-----------------------------------------------------------------------------
                       if($Engine['Engine'] == 'InnoDB'){
                         #---------------------------------------------------------------------------
@@ -192,20 +191,20 @@ if ($__STEP_ID == 4) {
             break;
         }
         case 'create': {
-            $MySQL = @MySQL_Connect(SPrintF('%s:%u',$__SETTINGS['db-server'],$__SETTINGS['db-port']),'root',$__SETTINGS['db-root']);
+            $MySQL = @MySQLi_Connect($__SETTINGS['db-server'], $__SETTINGS['db-user'], $__SETTINGS['db-password'], $__SETTINGS['db-name'], $__SETTINGS['db-port']);
 
             if ($MySQL) {
                 $Query = SPrintF("CREATE USER '%s' IDENTIFIED BY '%s';",$__SETTINGS['db-user'],$__SETTINGS['db-password']);
 
-                $Result = @MySQL_Query($Query,$MySQL);
+                $Result = @MySQLi_Query($MySQL,$Query);
                 if ($Result) {
                     $Query = SPrintF("CREATE DATABASE `%s`;",$__SETTINGS['db-name']);
 
-                    $Result = @MySQL_Query($Query,$MySQL);
+                    $Result = @MySQLi_Query($MySQL,$Query);
                     if ($Result) {
                         $Query = SPrintF("GRANT ALL ON `%s`.* TO '%s'@'%%';",$__SETTINGS['db-name'],$__SETTINGS['db-user']);
 
-                        $Result = @MySQL_Query($Query,$MySQL);
+                        $Result = @MySQLi_Query($MySQL,$Query);
                         if ($Result) {
                             Message('Пользователь и база данных успешно созданы');
                         }
@@ -291,22 +290,22 @@ if($__STEP_ID == 6){
   #-----------------------------------------------------------------------------
   if($__SETTINGS['db-root']){
     #---------------------------------------------------------------------------
-    $MySQL = @MySQL_Connect(SPrintF('%s:%u',$__SETTINGS['db-server'],$__SETTINGS['db-port']),'root',$__SETTINGS['db-root']);
+    $MySQL = @MySQLi_Connect($__SETTINGS['db-server'], $__SETTINGS['db-user'], $__SETTINGS['db-password'], $__SETTINGS['db-name'], $__SETTINGS['db-port']);
     if($MySQL){
       #-------------------------------------------------------------------------
       $Query = SPrintF("UPDATE `mysql`.`user` SET `Super_priv` = 'Y' WHERE `user` = '%s';",$__SETTINGS['db-user']);
       #-------------------------------------------------------------------------
-      $Result = @MySQL_Query($Query,$MySQL);
+      $Result = @MySQLi_Query($MySQL,$Query);
       if($Result){
         #-----------------------------------------------------------------------
         $Query = SPrintF("GRANT ALL ON `%s`.* TO '%s'@'%%';",$__SETTINGS['db-user'],$__SETTINGS['db-name']);
         #-----------------------------------------------------------------------
-        $Result = @MySQL_Query($Query,$MySQL);
+        $Result = @MySQLi_Query($MySQL,$Query);
         if($Result){
           #---------------------------------------------------------------------
           $Query = 'flush privileges;';
           #---------------------------------------------------------------------
-          $Result = @MySQL_Query($Query,$MySQL);
+          $Result = @MySQLi_Query($MySQL,$Query);
           if($Result){
             #-------------------------------------------------------------------
             Message('Права для пользователя успешно установлены');
