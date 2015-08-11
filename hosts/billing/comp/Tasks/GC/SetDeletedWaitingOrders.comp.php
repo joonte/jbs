@@ -23,6 +23,17 @@ $Services = CacheManager::get($CacheID);
 if(!$Services){
 	#-------------------------------------------------------------------------------
 	$Services = DB_Select('Services', Array('ID','Name','Code'),Array('Where' =>"`IsActive` = 'yes' AND `Code` NOT IN ('Default')"));
+	switch(ValueOf($Services)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		# No more...
+		return TRUE;
+	case 'array':
+		break;
+        default:
+		return ERROR | @Trigger_Error(101);
+	}
 	#-------------------------------------------------------------------------------
 	for($i=0;$i<Count($Services);$i++){
 		#-------------------------------------------------------------------------------
