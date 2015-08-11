@@ -307,7 +307,7 @@ function VdsManager4_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VdsManager4_Password_Change($Settings,$Login,$Password){
+function VdsManager4_Password_Change($Settings,$Login,$Password,$Params){
 	/****************************************************************************/
 	$__args_types = Array('array','string','string','array');
 	#-----------------------------------------------------------------------------

@@ -796,9 +796,9 @@ function IspManager5_Scheme_Change($Settings,$Login,$HostingScheme){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function IspManager5_Password_Change($Settings,$Login,$Password,$IsReseller = FALSE){
+function IspManager5_Password_Change($Settings,$Login,$Password,$Params){
 	/******************************************************************************/
-	$__args_types = Array('array','string','string','boolean');
+	$__args_types = Array('array','string','string','array');
 	#-------------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/******************************************************************************/
@@ -807,7 +807,7 @@ function IspManager5_Password_Change($Settings,$Login,$Password,$IsReseller = FA
 	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'usrparam','su'=>$Login,'sok'=>'ok','atype'=>'atany','passwd'=>$Password,'confirm'=>$Password);
+	$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'usrparam','su'=>$Login,'sok'=>'ok','atype'=>'atany','passwd'=>$Password,'confirm'=>$Password,'email'=>$Params['Email']);
 	#-------------------------------------------------------------------------------
 	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))

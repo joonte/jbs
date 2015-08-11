@@ -279,9 +279,9 @@ function DirectAdmin_Scheme_Change($Settings,$Login,$HostingScheme){
   return new gException('WRONG_ANSWER',$Result);
 }
 #-------------------------------------------------------------------------------
-function DirectAdmin_Password_Change($Settings,$Login,$Password,$IsReseller = FALSE){
+function DirectAdmin_Password_Change($Settings,$Login,$Password,$Params){
   /****************************************************************************/
-  $__args_types = Array('array','string','string','boolean');
+  $__args_types = Array('array','string','string','array');
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/

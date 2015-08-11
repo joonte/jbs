@@ -704,9 +704,9 @@ function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function VmManager5_KVM_Password_Change($Settings,$Login,$Password){
+function VmManager5_KVM_Password_Change($Settings,$Login,$Password,$Params){
 	/****************************************************************************/
-	$__args_types = Array('array','string','string');
+	$__args_types = Array('array','string','string','array');
 	#-----------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/

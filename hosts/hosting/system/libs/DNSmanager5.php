@@ -395,9 +395,9 @@ function DNSmanager5_Scheme_Change($Settings,$Login,$DNSmanagerScheme){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function DNSmanager5_Password_Change($Settings,$Login,$Password,$IsReseller = FALSE){
+function DNSmanager5_Password_Change($Settings,$Login,$Password,$Params){
 	/******************************************************************************/
-	$__args_types = Array('array','string','string','boolean');
+	$__args_types = Array('array','string','string','array');
 	#-------------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/******************************************************************************/

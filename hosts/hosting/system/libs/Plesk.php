@@ -612,9 +612,9 @@ function Plesk_Delete($Settings,$Login,$IsReseller = FALSE){
   }
 }
 #-------------------------------------------------------------------------------
-function Plesk_Password_Change($Settings,$Login,$Password,$IsReseller = FALSE){
+function Plesk_Password_Change($Settings,$Login,$Password,$Params){
   /****************************************************************************/
-  $__args_types = Array('array','string','string','boolean');
+  $__args_types = Array('array','string','string','array');
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/

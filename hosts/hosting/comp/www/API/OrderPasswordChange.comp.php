@@ -52,7 +52,7 @@ if(Is_Error(System_Load(SPrintF('classes/%sServer.class.php',$Service['Code'])))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),Array('*'),Array('UNIQ','ID'=>$ServiceOrderID));
+$Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),Array('*','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `UserID`) AS `Email`'),Array('UNIQ','ID'=>$ServiceOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Order)){
 case 'error':
@@ -106,7 +106,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$PasswordChange = $ClassServer->PasswordChange($Order['Login'],$Password);
+$PasswordChange = $ClassServer->PasswordChange($Order['Login'],$Password,Array('Email'=>$Order['Email']));
 #-------------------------------------------------------------------------------
 switch(ValueOf($PasswordChange)){
 case 'error':
