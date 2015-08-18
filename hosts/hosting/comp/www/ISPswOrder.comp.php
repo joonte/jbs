@@ -319,6 +319,10 @@ if(!$StepID){
 	#-----------------------------------------------------------------------------
 	Debug(SPrintF('[comp/www/ISPswOrder]: IP = %s',$IP));
 	#-----------------------------------------------------------------------------
+	# если не задан ИП и не задан зависимый заказ - вертаем ошибку
+	if($IP == '0.0.0.0' && !$OrderType)
+		return new gException('ISPsw_NO_DEPEND_ORDER_OR_VALID_IP','Укажите заказ к которому вы заказываете лицензию, или, корректный IP адрес');
+	#-----------------------------------------------------------------------------
 	## select IP for order - если он не задан явно
 	if($IP == '0.0.0.0'){
 		#-------------------------------------------------------------------------------
@@ -330,7 +334,7 @@ if(!$StepID){
 			return ERROR | @Trigger_Error(400);
 		case 'array':
 			Debug(SPrintF("[comp/www/ISPswOrder]: OrderInfo found, IP = %s",$OrderInfo['IP']));
-		break;
+			break;
 		default:
 			return ERROR | @Trigger_Error(101);
 		}
