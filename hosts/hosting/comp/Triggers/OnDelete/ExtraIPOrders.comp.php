@@ -15,8 +15,13 @@ case 'Waiting':
 	break;
 case 'Deleted':
 	#-------------------------------------------------------------------------------
-	if(Time() - $ExtraIPOrder['StatusDate'] < 600)
-		return new gException('SYNCHRONIZATION_WAITING','Синхронизация по удалению заказа с сервера еще не произведена. Пожалуйста, повторите запрос через 10 минут.');
+	$Count = DB_Count('Tasks',Array('Where'=>Array(SPrintF('`UserID` = %u', $ExtraIPOrder['UserID']),"`IsExecuted` = 'no'")));
+	if(Is_Error($Count))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	if($Count)
+		if(Time() - $ExtraIPOrder['StatusDate'] < 600)
+			return new gException('SYNCHRONIZATION_WAITING','Синхронизация по удалению заказа с сервера еще не произведена. Пожалуйста, повторите запрос через 10 минут.');
 	#-------------------------------------------------------------------------------
 	break;
 	#-------------------------------------------------------------------------------
