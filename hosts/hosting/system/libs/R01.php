@@ -7,7 +7,7 @@ function R01_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name,$
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
   $AddDomain = new SoapClient(null, Array(
-    'location' => SPrintF('https://%s:%d/%s', $Settings['Address'], $Settings['Port'], $Settings['PrefixAPI']),
+    'location' => SPrintF('https://%s:%d/%s', $Settings['Address'], $Settings['Port'], $Settings['Params']['PrefixAPI']),
     'uri' => 'urn:RegbaseSoapInterface',
     'exceptions' => 1,
     'user_agent' => 'RegbaseSoapInterfaceClient',
@@ -118,7 +118,7 @@ function R01_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$CustomerID
   /****************************************************************************/
   /****************************************************************************/
   $DomainProlong = new SoapClient(null, Array(
-    'location'   => SPrintF('https://%s:%d/%s', $Settings['Address'], $Settings['Port'], $Settings['PrefixAPI']),
+    'location'   => SPrintF('https://%s:%d/%s', $Settings['Address'], $Settings['Port'], $Settings['Params']['PrefixAPI']),
     'uri'        => 'urn:RegbaseSoapInterface',
     'exceptions' => 1,
     'user_agent' => 'RegbaseSoapInterfaceClient',
@@ -208,7 +208,7 @@ function R01_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
   $AddCustomer = new SoapClient(null, Array(
-    'location' => SPrintF('https://%s:%d/%s', $Settings['Address'], $Settings['Port'], $Settings['PrefixAPI']),
+    'location' => SPrintF('https://%s:%d/%s', $Settings['Address'], $Settings['Port'], $Settings['Params']['PrefixAPI']),
     'uri' => 'urn:RegbaseSoapInterface',
     'exceptions' => 1,
     'user_agent' => 'RegbaseSoapInterfaceClient',
@@ -346,7 +346,7 @@ function R01_Check_Task($Settings, $TicketID){
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
   $CheckTask = new SoapClient(null, Array(
-    'location' => SPrintF('https://%s:%d/%s', $Settings['Address'], $Settings['Port'], $Settings['PrefixAPI']),
+    'location' => SPrintF('https://%s:%d/%s', $Settings['Address'], $Settings['Port'], $Settings['Params']['PrefixAPI']),
     'uri' => 'urn:RegbaseSoapInterface',
     'exceptions' => 1,
     'user_agent' => 'RegbaseSoapInterfaceClient',
