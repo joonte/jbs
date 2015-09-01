@@ -83,7 +83,7 @@ if($DomainName){
 		#-------------------------------------------------------------------------------
 		$UniqID = UniqID('DomainSchemes');
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Services/Schemes','DomainSchemes',$__USER['ID'],Array('Name','ServerID'),$UniqID);
+		$Comp = Comp_Load('Services/Schemes','DomainSchemes',$__USER['ID'],Array('Name','ServerID'),$UniqID,"`IsActive` = 'yes'");
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
