@@ -25,4 +25,5 @@ see: http://forum.lissyara.su/viewtopic.php?f=17&t=34580
 <DomainName_xn--c1avg>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</DomainName_xn--c1avg>
 <!-- .москва -->
 <DomainName_xn--80adxhks>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</DomainName_xn--80adxhks>
+<DomainName_moscow>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</DomainName_moscow>
 </XML>

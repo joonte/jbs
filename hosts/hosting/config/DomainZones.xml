@@ -12,6 +12,7 @@
  <NsName>nserver:\s+([a-z0-9\.\-]{2,})</NsName>
  <Registrar>registrar:\s+([\w\-]{2,})</Registrar>
 </UniqID>
+<!-- *********************************************************************** -->
 <UniqID>
  <Server>whois.ripn.net</Server>
  <Name>рф</Name>
@@ -630,4 +631,29 @@
  <Registrar>Default</Registrar>
 </UniqID>
 
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<UniqID>
+		<Server>whois.nic.moscow</Server>
+		<Name>moscow</Name>
+		<Available>No\sentries\sfound</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+	</UniqID>
+	<!-- *********************************************************************** -->
+	<UniqID>
+		<Server>whois.nic.xn--80adxhks</Server>
+		<Name>москва</Name>
+		<Available>No\sentries\sfound</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+	</UniqID>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
 </XML>
