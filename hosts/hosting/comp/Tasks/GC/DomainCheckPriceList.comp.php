@@ -16,7 +16,6 @@ if(!$Settings['IsActive'])
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Theme = "Проверка стоимости доменных имён";
-$Message = "";
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('classes/DomainServer.class.php')))
 	return ERROR | @Trigger_Error(500);
@@ -77,9 +76,18 @@ foreach($Servers as $Registrator){
 			#-------------------------------------------------------------------------------
 		default:
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: Для регистратора %s (ID %d, тип %s) проверка стоимости доменов не реализована.',$Registrator['Params']['Name'],$Registrator['ID'],$Registrator['Params']['SystemID']));
+			$Message = SPrintF('Для регистратора %s (ID %d, тип %s) не реализована проверка стоимости доменов',$Registrator['Params']['Name'],$Registrator['ID'],$Registrator['Params']['SystemID']);
 			#-------------------------------------------------------------------------------
-			$Message .= SPrintF("Для регистратора %s (ID %d, тип %s) проверка стоимости доменов не реализована. \n",$Registrator['Params']['Name'],$Registrator['ID'],$Registrator['Params']['SystemID']);
+			Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: %s',$Message));
+			#-------------------------------------------------------------------------------
+			if($Settings['IsEvent']){
+				#-------------------------------------------------------------------------------
+				$Event = Array('Text' => $Message,'PriorityID' => 'Error','IsReaded' => FALSE);
+				$Event = Comp_Load('Events/EventInsert', $Event);
+				if(!$Event)
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+			}
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
@@ -186,9 +194,13 @@ foreach($Servers as $Registrator){
 						if(Is_Error($IsUpdate))
 							return ERROR | @Trigger_Error(500);
 						#-------------------------------------------------------------------------------
+						$Message = SPrintF('%s/%s: цена регистрации изменена %s->%s',$Registrator['Params']['Name'],$Key,IntVal($Schemes[$Key]['CostOrder']),$NewPriceReg);
+						#-------------------------------------------------------------------------------
+						Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: %s',$Message));
+						#-------------------------------------------------------------------------------
 						if($Settings['IsEvent']){
 							#-------------------------------------------------------------------------------
-							$Event = Array('Text' => SPrintF('%s/%s: цена регистрации изменена %s->%s',$Registrator['Params']['Name'],$Key,IntVal($Schemes[$Key]['CostOrder']),$NewPriceReg),'PriorityID' => 'Error','IsReaded' => FALSE);
+							$Event = Array('Text' => $Message,'PriorityID' => 'Notice','IsReaded' => FALSE);
 							$Event = Comp_Load('Events/EventInsert', $Event);
 							if(!$Event)
 								return ERROR | @Trigger_Error(500);
@@ -198,9 +210,14 @@ foreach($Servers as $Registrator){
 					}else{
 						#-------------------------------------------------------------------------------
 						# базу не обновляем, но событие может быть надо
+						#-------------------------------------------------------------------------------
+						$Message = SPrintF('%s/%s: цена регистрации не укладывается в девиацию, необходимо изменить %s->%s',$Registrator['Params']['Name'],$Key,IntVal($Schemes[$Key]['CostOrder']));
+						#-------------------------------------------------------------------------------
+						Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: %s',$Message));
+						#-------------------------------------------------------------------------------
 						if($Settings['IsEvent']){
 							#-------------------------------------------------------------------------------
-							$Event = Array('Text' => SPrintF('%s/%s: цена регистрации не укладывается в девиацию, необходимо изменить %s->%s',$Registrator['Params']['Name'],$Key,IntVal($Schemes[$Key]['CostOrder']),$NewPriceReg),'PriorityID' => 'Error','IsReaded' => FALSE);
+							$Event = Array('Text' => $Message,'PriorityID' => 'Notice','IsReaded' => FALSE);
 							$Event = Comp_Load('Events/EventInsert', $Event);
 							if(!$Event)
 								return ERROR | @Trigger_Error(500);
@@ -242,9 +259,13 @@ foreach($Servers as $Registrator){
 						if(Is_Error($IsUpdate))
 							return ERROR | @Trigger_Error(500);
 						#-------------------------------------------------------------------------------
+						$Message = SPrintF('%s/%s: цена продления изменена %s->%s',$Registrator['Params']['Name'],$Key,IntVal($Schemes[$Key]['CostProlong']),$NewPriceProlong);
+						#-------------------------------------------------------------------------------
+						Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: %s',$Message));
+						#-------------------------------------------------------------------------------
 						if($Settings['IsEvent']){
 							#-------------------------------------------------------------------------------
-							$Event = Array('Text' => SPrintF('%s/%s: цена продления изменена %s->%s',$Registrator['Params']['Name'],$Key,IntVal($Schemes[$Key]['CostProlong']),$NewPriceProlong),'PriorityID' => 'Error','IsReaded' => FALSE);
+							$Event = Array('Text' => $Message,'PriorityID' => 'Notice','IsReaded' => FALSE);
 							$Event = Comp_Load('Events/EventInsert', $Event);
 							if(!$Event)
 								return ERROR | @Trigger_Error(500);
@@ -254,9 +275,13 @@ foreach($Servers as $Registrator){
 					}else{
 						#-------------------------------------------------------------------------------
 						# базу не обновляем, но событие может быть надо
+						$Message = SPrintF('%s/%s: цена продления не укладывается в девиацию, необходимо изменить %s->%s',$Registrator['Params']['Name'],$Key,IntVal($Schemes[$Key]['CostProlong']),$NewPriceProlong);
+						#-------------------------------------------------------------------------------
+						Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: %s',$Message));
+						#-------------------------------------------------------------------------------
 						if($Settings['IsEvent']){
 							#-------------------------------------------------------------------------------
-							$Event = Array('Text' => SPrintF('%s/%s: цена продления не укладывается в девиацию, необходимо изменить %s->%s',$Registrator['Params']['Name'],$Key,IntVal($Schemes[$Key]['CostProlong']),$NewPriceProlong),'PriorityID' => 'Error','IsReaded' => FALSE);
+							$Event = Array('Text' => $Message,'PriorityID' => 'Notice','IsReaded' => FALSE);
 							$Event = Comp_Load('Events/EventInsert', $Event);
 							if(!$Event)
 								return ERROR | @Trigger_Error(500);
@@ -280,9 +305,13 @@ foreach($Servers as $Registrator){
 				if(Is_Error($IsUpdate))
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------
+				$Message = SPrintF('%s/%s: цена переноса изменена %s->%s',$Registrator['Params']['Name'],$Key,IntVal($Schemes[$Key]['CostTransfer']),$NewPriceTransfer);
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: %s',$Message));
+				#-------------------------------------------------------------------------------
 				if($Settings['IsEvent']){
 					#-------------------------------------------------------------------------------
-					$Event = Array('Text' => SPrintF('%s/%s: цена переноса изменена %s->%s',$Registrator['Params']['Name'],$Key,IntVal($Schemes[$Key]['CostTransfer']),$NewPriceTransfer),'PriorityID' => 'Error','IsReaded' => FALSE);
+					$Event = Array('Text' => $Message,'PriorityID' => 'Notice','IsReaded' => FALSE);
 					$Event = Comp_Load('Events/EventInsert', $Event);
 					if(!$Event)
 						return ERROR | @Trigger_Error(500);
@@ -317,9 +346,13 @@ foreach($Servers as $Registrator){
 			if(Is_Error($IsInsert))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
+			$Message = SPrintF('Для регистратора %s добавлен новый тарифный план: %s',$Registrator['Params']['Name'],$Key);
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: %s',$Message));
+			#-------------------------------------------------------------------------------
 			if($Settings['IsEvent']){
 				#-------------------------------------------------------------------------------
-				$Event = Array('Text' => SPrintF('Для регистратора %s добавлен новый тарифный план: %s',$Registrator['Params']['Name'],$Key),'PriorityID' => 'Error','IsReaded' => FALSE);
+				$Event = Array('Text' => $Message,'PriorityID' => 'Notice','IsReaded' => FALSE);
 				$Event = Comp_Load('Events/EventInsert', $Event);
 				if(!$Event)
 					return ERROR | @Trigger_Error(500);
@@ -328,10 +361,62 @@ foreach($Servers as $Registrator){
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		# заново достаём все доменные зоны в биллинге, сравниваем с теми которые у регистратора - ищщем лишние
+	}
 
-
-
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	# заново достаём все доменные зоны в биллинге, сравниваем с теми которые у регистратора - ищщем лишние
+	$NewDomainSchemes = DB_Select('DomainSchemes',Array('*'),Array('Where'=>Array(SPrintF('`ServerID` = %u',$Registrator['ID']))));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($NewDomainSchemes)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: у регистратора %s/%u так и нет тарифных планов',$Registrator['Params']['Name'],$Registrator['ID']));
+		#-------------------------------------------------------------------------------
+		continue 2;
+		#-------------------------------------------------------------------------------
+	case 'array':
+		#-------------------------------------------------------------------------------
+		$NewSchemes = Array();
+		#-------------------------------------------------------------------------------
+		foreach($NewDomainSchemes as $NewScheme)
+			$NewSchemes[] = $NewScheme['Name'];
+		#-------------------------------------------------------------------------------
+		break;
+		#-------------------------------------------------------------------------------
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	# сравниваем список от регистратора со списокм в биллинге
+	$RegList = Array_Keys($Prices);
+	#-------------------------------------------------------------------------------
+	ASort($NewSchemes);
+	#-------------------------------------------------------------------------------
+	ASort($RegList);
+	#-------------------------------------------------------------------------------
+	$DomainsOdd = Array_Diff($NewSchemes,$RegList);
+	#-------------------------------------------------------------------------------
+	if(SizeOf($DomainsOdd)){
+		#-------------------------------------------------------------------------------
+		foreach($DomainsOdd as $Odd){
+			#-------------------------------------------------------------------------------
+			$Message = SPrintF('Обнаружен тариф отсутствующий у регистратора: %s/%s',$Registrator['Params']['Name'],$Odd);
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: %s',$Message));
+			#-------------------------------------------------------------------------------
+			if($Settings['IsEvent']){
+				#-------------------------------------------------------------------------------
+				$Event = Array('Text' => $Message,'PriorityID' => 'Error','IsReaded' => FALSE);
+				$Event = Comp_Load('Events/EventInsert', $Event);
+				if(!$Event)
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+		}
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
