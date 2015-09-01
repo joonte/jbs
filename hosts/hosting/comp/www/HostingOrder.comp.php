@@ -287,11 +287,11 @@ if($StepID){
 			#-------------------------------------------------------------------------------
 			$UniqID = UniqID('DomainSchemes');
 			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load('Services/Schemes','DomainSchemes',$GLOBALS['__USER']['ID'],Array('Name','ServerID'),$UniqID);
+			$Comp = Comp_Load('Services/Schemes','DomainSchemes',$GLOBALS['__USER']['ID'],Array('Name','ServerID'),$UniqID,"`IsTransfer` = 'yes'");
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$DomainScheme = DB_Select($UniqID,'ID',Array('SortOn'=>'SortID','Where'=>SPrintF("`Name` = '%s' AND `IsTransfer` = 'yes'",$DomainZone)));
+			$DomainScheme = DB_Select($UniqID,'ID',Array('SortOn'=>'SortID','Where'=>SPrintF("`Name` = '%s'",$DomainZone)));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($DomainScheme)){
 			case 'error':
@@ -356,11 +356,11 @@ if($StepID){
 			#-------------------------------------------------------------------------------
 			$UniqID = UniqID('DomainSchemes');
 			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load('Services/Schemes','DomainSchemes',$GLOBALS['__USER']['ID'],Array('Name','ServerID'),$UniqID);
+			$Comp = Comp_Load('Services/Schemes','DomainSchemes',$GLOBALS['__USER']['ID'],Array('Name','ServerID'),$UniqID,"`IsActive` = 'yes'");
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$DomainScheme = DB_Select($UniqID,'ID',Array('Where'=>SPrintF("`Name` = '%s' AND `IsActive` = 'yes'",$DomainZone)));
+			$DomainScheme = DB_Select($UniqID,'ID',Array('Where'=>SPrintF("`Name` = '%s'",$DomainZone)));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($DomainScheme)){
 			case 'error':

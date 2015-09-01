@@ -67,13 +67,13 @@ if($StepID){
 		#-------------------------------------------------------------------------------
 		$UniqID = UniqID('DomainSchemes');
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Services/Schemes','DomainSchemes',$__USER['ID'],Array('Name','ServerID'),$UniqID);
+		$Comp = Comp_Load('Services/Schemes','DomainSchemes',$__USER['ID'],Array('Name','ServerID'),$UniqID,"`IsTransfer` = 'yes'");
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		$Columns = Array('ID','Name','ServerID','CostProlong','(SELECT `Params` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `Params`');
 		#-------------------------------------------------------------------------------
-		$DomainSchemes = DB_Select($UniqID,$Columns,Array('UNIQ','Limits'=>Array(0,1),'SortOn'=>Array('SortID'),'Where'=>Array("`IsTransfer` = 'yes'",SPrintF("`Name` = '%s'",$DomainZone))));
+		$DomainSchemes = DB_Select($UniqID,$Columns,Array('UNIQ','Limits'=>Array(0,1),'SortOn'=>Array('SortID'),'Where'=>Array(SPrintF("`Name` = '%s'",$DomainZone))));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($DomainSchemes)){
 		case 'error':
@@ -157,13 +157,13 @@ if($StepID){
 		#-------------------------------------------------------------------------------
 		$UniqID = UniqID('DomainSchemes');
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Services/Schemes','DomainSchemes',$__USER['ID'],Array('Name','ServerID'),$UniqID);
+		$Comp = Comp_Load('Services/Schemes','DomainSchemes',$__USER['ID'],Array('Name','ServerID'),$UniqID,"`IsTransfer` = 'yes'");
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		$Columns = Array('ID','Name','ServerID','CostProlong','(SELECT `Params` FROM `Servers` WHERE `ServerID` = `Servers`.`ID`) as `Params`');
 		#-------------------------------------------------------------------------------
-		$DomainSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('SortID'),'Where'=>Array("`IsTransfer` = 'yes'",SPrintF("`Name` = '%s'",$DomainScheme['Name']))));
+		$DomainSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('SortID'),'Where'=>Array(SPrintF("`Name` = '%s'",$DomainScheme['Name']))));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($DomainSchemes)){
 		case 'error':
@@ -299,7 +299,7 @@ if($StepID){
 	#-------------------------------------------------------------------------------
 	$UniqID = UniqID('DomainSchemes');
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Services/Schemes','DomainSchemes',$__USER['ID'],Array('Name','ServerID'),$UniqID);
+	$Comp = Comp_Load('Services/Schemes','DomainSchemes',$__USER['ID'],Array('Name','ServerID'),$UniqID,"`IsTransfer` = 'yes'");
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
