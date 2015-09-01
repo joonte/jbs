@@ -373,6 +373,39 @@
 	</BalanceLowLimit>
 	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
+	<IsUpdatePrice>
+		<Check>Char</Check>
+		<Title>Получение данных от вышестоящего регистратора</Title>
+		<Comment>Изменять цены</Comment>
+		<CommentAttribs>
+			<style>cursor:pointer;</style>
+			<onclick>ChangeCheckBox('IsUpdatePrice'); return false;</onclick>
+			<prompt>Обновлять цены в биллинге при изменении цен у вышестоящего регистратора</prompt>
+		</CommentAttribs>
+		<Type>Input</Type>
+		<Attribs>
+			<type>checkbox</type>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>yes</Value>
+	</IsUpdatePrice>
+	<!-- *********************************************************************** -->
+	<IsFetchNewDomains>
+		<Check>Char</Check>
+		<Comment>Синхронизировать доменные зоны</Comment>
+		<CommentAttribs>
+			<style>cursor:pointer;</style>
+			<onclick>ChangeCheckBox('IsFetchNewDomains'); return false;</onclick>
+			<prompt>Автоматически создавать новые доменные зоны и уведомлять о отсутствующих</prompt>
+		</CommentAttribs>
+		<Type>Input</Type>
+		<Attribs>
+			<type>checkbox</type>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>yes</Value>
+	</IsFetchNewDomains>
+	<!-- *********************************************************************** -->
         <!-- *********************************************************************** -->
 	<IsLogging>
 		<Title>Скрытые настройки</Title>

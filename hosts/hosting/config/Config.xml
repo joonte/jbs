@@ -912,61 +912,71 @@
   </UpTimeAgregate>
   <!-- ********************************************************************* -->
   <!-- ********************************************************************* -->
-  <GC>
-   <!-- ********************************************************************* -->
-   <ServersCheckUsersSettings>
-    <IsActive>1</IsActive>
-    <ExcludeServerAccounts />
-   </ServersCheckUsersSettings>
-   <!-- ********************************************************************* -->
-   <UpdateDiskTemplatesSettings>
-    <IsActive>1</IsActive>
-   </UpdateDiskTemplatesSettings>
-   <!-- ********************************************************************* -->
-   <DiskUsageNotifiesSettings>
-    <IsActive>1</IsActive>
-    <IsNotify>1</IsNotify>
-    <DiskUsageNotifiesPercent>90</DiskUsageNotifiesPercent>
-    <IsEventForNoLimits>1</IsEventForNoLimits>
-   </DiskUsageNotifiesSettings>
-   <!-- ********************************************************************* -->
-   <EmailBoxesNotifiesSettings>
-    <IsActive>1</IsActive>
-    <EmailBoxesNotifiesPercent>80</EmailBoxesNotifiesPercent>
-   </EmailBoxesNotifiesSettings>
-   <!-- ********************************************************************* -->
-   <ISPswCheckLicensesSettings>
-    <IsActive>1</IsActive>
-   </ISPswCheckLicensesSettings>
-   <!-- ********************************************************************* -->
-   <!-- задачи -->
-   <DailyTasks>
-    <EraseDeletedOrders>Удаление заказов в статусе Удален</EraseDeletedOrders>
-    <CheckBalance>Проверка балланса регистраторов, поставщиков</CheckBalance>
-    <ISPswCheckLicenses>Синхронизация лицензий с ISPsystem</ISPswCheckLicenses>
-    <ServersCheckUsers>Синхронизация аккаунтов биллинга и серверов</ServersCheckUsers>
-    <UpdateDiskTemplates>Обновление шаблонов дисков на VPS</UpdateDiskTemplates>
-    <DiskUsageNotifies>Уведомление о заканчивающемся месте на хостинге</DiskUsageNotifies>
-    <EmailBoxesNotifies>Уведомление o заканчивающейся квоте почтовых ящиков</EmailBoxesNotifies>
-    <DomainAutoProlongation>Автопродление истекающих доменов</DomainAutoProlongation>
-    <SetSuspendExpiredDomain>Блокировка просроченных доменов</SetSuspendExpiredDomain>
-    <DomainPathRegisterNotify>Уведомления о доменах с неопределёнными владельцами</DomainPathRegisterNotify>
-    <DeleteDomainForTransfer>Удаление доменов в статусе &quot;Для переноса&quot;</DeleteDomainForTransfer>
-    <DomainFindOdd>Поиск доменов отсутствующих в биллинге/у регистратора</DomainFindOdd>
-   </DailyTasks>
-   <!-- ********************************************************************* -->
-  </GC>
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <DNSmanagerForDelete>
-   <Name>Заказы на вторичный DNS для удаления</Name>
-   <Params type="array" />
-   <ExecuteTime>1:10</ExecuteTime>
-   <IsActive>1</IsActive>
-   <DNSmanagerDeleteTimeout>20</DNSmanagerDeleteTimeout>
-  </DNSmanagerForDelete>
+		<GC>
+			<!-- ********************************************************************* -->
+			<ServersCheckUsersSettings>
+				<IsActive>1</IsActive>
+				<ExcludeServerAccounts />
+			</ServersCheckUsersSettings>
+			<!-- ********************************************************************* -->
+			<UpdateDiskTemplatesSettings>
+				<IsActive>1</IsActive>
+			</UpdateDiskTemplatesSettings>
+			<!-- ********************************************************************* -->
+			<DiskUsageNotifiesSettings>
+				<IsActive>1</IsActive>
+				<IsNotify>1</IsNotify>
+				<DiskUsageNotifiesPercent>90</DiskUsageNotifiesPercent>
+				<IsEventForNoLimits>1</IsEventForNoLimits>
+			</DiskUsageNotifiesSettings>
+			<!-- ********************************************************************* -->
+			<EmailBoxesNotifiesSettings>
+				<IsActive>1</IsActive>
+				<EmailBoxesNotifiesPercent>80</EmailBoxesNotifiesPercent>
+			</EmailBoxesNotifiesSettings>
+			<!-- ********************************************************************* -->
+			<ISPswCheckLicensesSettings>
+				<IsActive>1</IsActive>
+			</ISPswCheckLicensesSettings>
+			<!-- ********************************************************************* -->
+			<DomainCheckPriceListSettings>
+				<IsActive>1</IsActive>
+				<IsEvent>1</IsEvent>
+				<IsDomainSchemeCreate>0</IsDomainSchemeCreate>
+				<DomainUpdatePriceUp>1</DomainUpdatePriceUp>
+				<DomainUpdatePriceLow>0</DomainUpdatePriceLow>
+				<DomainMinMarginPercent>8</DomainMinMarginPercent>
+				<DomainMinMarginSumm>50</DomainMinMarginSumm>
+				<DomainPriceDeviationPercent>4</DomainPriceDeviationPercent>
+				<DomainPriceDeviationSumm>25</DomainPriceDeviationSumm>
+			</DomainCheckPriceListSettings>
+			<!-- ********************************************************************* -->
+			<!-- задачи -->
+			<DailyTasks>
+				<EraseDeletedOrders>Удаление заказов в статусе Удален</EraseDeletedOrders>
+				<CheckBalance>Проверка балланса регистраторов, поставщиков</CheckBalance>
+				<ISPswCheckLicenses>Синхронизация лицензий с ISPsystem</ISPswCheckLicenses>
+				<ServersCheckUsers>Синхронизация аккаунтов биллинга и серверов</ServersCheckUsers>
+				<UpdateDiskTemplates>Обновление шаблонов дисков на VPS</UpdateDiskTemplates>
+				<DiskUsageNotifies>Уведомление о заканчивающемся месте на хостинге</DiskUsageNotifies>
+				<EmailBoxesNotifies>Уведомление o заканчивающейся квоте почтовых ящиков</EmailBoxesNotifies>
+				<DomainAutoProlongation>Автопродление истекающих доменов</DomainAutoProlongation>
+				<SetSuspendExpiredDomain>Блокировка просроченных доменов</SetSuspendExpiredDomain>
+				<DomainPathRegisterNotify>Уведомления о доменах с неопределёнными владельцами</DomainPathRegisterNotify>
+				<DeleteDomainForTransfer>Удаление доменов в статусе &quot;Для переноса&quot;</DeleteDomainForTransfer>
+				<DomainFindOdd>Поиск доменов отсутствующих в биллинге/у регистратора</DomainFindOdd>
+				<DomainCheckPriceList>Проверка цен на домены у вышестоящих регистраторов</DomainCheckPriceList>
+			</DailyTasks>
+			<!-- ********************************************************************* -->
+		</GC>
+		<!-- ********************************************************************* -->
+		<DNSmanagerForDelete>
+			<Name>Заказы на вторичный DNS для удаления</Name>
+			<Params type="array" />
+			<ExecuteTime>1:10</ExecuteTime>
+			<IsActive>1</IsActive>
+			<DNSmanagerDeleteTimeout>20</DNSmanagerDeleteTimeout>
+		</DNSmanagerForDelete>
   <!-- ********************************************************************* -->
   <DNSmanagerSchemeChange>
    <Name>Смена тарифного плана</Name>

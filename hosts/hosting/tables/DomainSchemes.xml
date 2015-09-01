@@ -31,19 +31,35 @@
 </Source>
 <!-- *********************************************************************** -->
 <Comps>
- <Before>
-  <PatternOut>
-   <Args>
-    <Patterns>
-     <ListElement>
-      <Name>Индивидуальные тарифы</Name>
-      <Where>`UserID` != 1</Where>
-     </ListElement>
-    </Patterns>
-    <ActiveID>Default</ActiveID>
-   </Args>
-  </PatternOut>
-  <!-- ********************************************************************* -->
+	<Before>
+		<PatternOut>
+			<Args>
+				<Patterns>
+					<Active>
+						<Name>Активные</Name>
+						<Where>`IsActive` = 'yes'</Where>
+					</Active>
+					<ActiveForTransfer>
+						<Name>Возможен перенос</Name>
+						<Where>`IsTransfer` = 'yes'</Where>
+					</ActiveForTransfer>
+					<WithOrders>
+						<Name>С заказами</Name>
+						<Where>(SELECT COUNT(*) FROM `DomainOrders` WHERE `DomainSchemes`.`ID` = `DomainOrders`.`SchemeID` AND `DomainOrders`.`StatusID` = 'Active') > 0</Where>
+					</WithOrders>
+					<WithOutOrders>
+						<Name>Без заказов</Name>
+						<Where>(SELECT COUNT(*) FROM `DomainOrders` WHERE `DomainSchemes`.`ID` = `DomainOrders`.`SchemeID` AND `DomainOrders`.`StatusID` = 'Active') = 0</Where>
+					</WithOutOrders>
+					<Individual>
+						<Name>Индивидуальные тарифы</Name>
+						<Where>`UserID` != 1</Where>
+					</Individual>
+				</Patterns>
+				<ActiveID>Default</ActiveID>
+			</Args>
+		</PatternOut>
+		<!-- ********************************************************************* -->
   <Search>
    <Args>
     <ColumnsIDs>
