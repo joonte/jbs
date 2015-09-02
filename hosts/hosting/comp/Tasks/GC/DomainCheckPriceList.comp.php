@@ -178,7 +178,7 @@ foreach($Servers as $Registrator){
 				#-------------------------------------------------------------------------------
 				if(Abs($Schemes[$Key]['CostOrder'] - $NewPriceReg) > $Deviation){
 					#-------------------------------------------------------------------------------
-					Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: регистрация, зона = %s; цена не укладывается в девиацию: биллинг = %s; регистратор = %s расчётная = %s',$Key,$Schemes[$Key]['CostOrder'],$Prices[$Key]['new'],$NewPriceReg));
+					Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: регистрация, зона = %s; цена не укладывается в девиацию: биллинг = %s; регистратор = %s; расчётная = %s',$Key,$Schemes[$Key]['CostOrder'],$Prices[$Key]['new'],$NewPriceReg));
 					#-------------------------------------------------------------------------------
 					# надо ли обновлять при повышении цены домена
 					$NeedUpdate = ($Settings['DomainUpdatePriceUp'] && $NewPriceReg > $Schemes[$Key]['CostOrder'])?TRUE:FALSE;
@@ -211,7 +211,7 @@ foreach($Servers as $Registrator){
 						#-------------------------------------------------------------------------------
 						# базу не обновляем, но событие может быть надо
 						#-------------------------------------------------------------------------------
-						$Message = SPrintF('%s/%s: цена регистрации не укладывается в девиацию, необходимо изменить %s->%s',$Registrator['Params']['Name'],$Key,IntVal($Schemes[$Key]['CostOrder']));
+						$Message = SPrintF('%s/%s: цена регистрации не укладывается в девиацию, необходимо изменить %s->%s',$Registrator['Params']['Name'],$Key,IntVal($Schemes[$Key]['CostOrder']),$NewPriceReg);
 						#-------------------------------------------------------------------------------
 						Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: %s',$Message));
 						#-------------------------------------------------------------------------------
