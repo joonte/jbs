@@ -589,11 +589,9 @@ CREATE TABLE IF NOT EXISTS `ExtraIPOrders` (
   `OrderID` int(11) NOT NULL,
   `SchemeID` int(11) NOT NULL,
   `OldSchemeID` int(11) DEFAULT NULL,
-  `OrderType` char(32) NOT NULL,
   `DependOrderID` int(11) NOT NULL,
   `Domain` char(255) DEFAULT '',
   `Parked` text,
-  `ServerID` int(11) NOT NULL,
   `Login` char(32) DEFAULT 'noassign',
   `Password` char(64) DEFAULT '',
   `ConsiderDay` int(11) DEFAULT '0',
@@ -602,7 +600,6 @@ CREATE TABLE IF NOT EXISTS `ExtraIPOrders` (
   PRIMARY KEY (`ID`),
   KEY `ExtraIPOrdersOrderID` (`OrderID`),
   KEY `ExtraIPOrdersSchemeID` (`SchemeID`),
-  KEY `ExtraIPOrdersServerID` (`ServerID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- SEPARATOR
@@ -659,9 +656,6 @@ CREATE TABLE IF NOT EXISTS `ExtraIPSchemes` (
 	`CostMonth` decimal(11,2) DEFAULT '0.00',
 	`CostInsall` decimal(11,2) NOT NULL,
 	`AddressType` CHAR( 8 ) NOT NULL DEFAULT 'IPv4',
-	`HostingGroupID` int(11) NOT NULL,
-	`VPSGroupID` int(11) NOT NULL,
-	`DSGroupID` int(11) NOT NULL,
 	`Comment` char(255) NOT NULL,
 	`IsActive` enum('no','yes') DEFAULT 'yes',
 	`IsProlong` enum('no','yes') DEFAULT 'yes',
@@ -670,7 +664,7 @@ CREATE TABLE IF NOT EXISTS `ExtraIPSchemes` (
 	`MaxDaysPay` int(6) DEFAULT '0',
 	`MaxOrders` int(6) DEFAULT '0',
 	`MinOrdersPeriod` INT(6) DEFAULT '0',
-	`Params` LONGTEXT,					-- набор переменных необходимых для работы
+	`Params` varchar(1024),					-- набор переменных необходимых для работы
 	`SortID` int(11) DEFAULT '10',
 	PRIMARY KEY (`ID`),
 	KEY `ExtraIPSchemesGroupID` (`GroupID`),

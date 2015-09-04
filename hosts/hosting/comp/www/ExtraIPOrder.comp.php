@@ -48,6 +48,32 @@ $Form = new Tag('FORM',Array('name'=>'ExtraIPOrderForm','onsubmit'=>'return fals
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# составляем список серверов на которых можно добавлять IP адреса
+$ExtraIPSchemes = DB_Select('ExtraIPSchemes',Array('ID','Params'),Array('Where'=>"`IsActive` = 'yes'"));
+#-------------------------------------------------------------------------------
+switch(ValueOf($ExtraIPSchemes)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('NO_IP_SCHEMES','Нет ни одного тарифа на выделенные IP адреса');
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+$ServerIDs = Array();
+#-------------------------------------------------------------------------------
+foreach($ExtraIPSchemes as $ExtraIPScheme)
+	foreach($ExtraIPScheme['Params']['Servers'] as $iServerID)
+		if(!In_Array($iServerID,$ServerIDs))
+			$ServerIDs[] = $iServerID;
+#-------------------------------------------------------------------------------
+if(!SizeOf($ServerIDs))
+	return new gException('NO_SERVERS_FOR_IP_SCHEMES','У существующих тарифных планов не отмечено ни одного сервера на котором можно было бы добавлять IP адреса');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if($StepID){
 	#-------------------------------------------------------------------------------
 	Debug("[comp/www/ExtraIPOrder]: StepID = $StepID");
@@ -60,11 +86,15 @@ if($StepID){
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		# Where общее для Hosting/VPS/DS
-		$Where = Array(SPrintF('`ContractID` = %u',$ContractID),"`StatusID` = 'Active' OR `StatusID` = 'Waiting'");
+		$Where = Array(
+				SPrintF('`ContractID` = %u',$ContractID),
+				SPrintF('`ServerID` IN (%s)',Implode(',',$ServerIDs)),
+				"`StatusID` = 'Active' OR `StatusID` = 'Waiting'"
+				);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		# create select, using ContractID for HostingOrders
-		$Columns = Array('ID','Login','(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`)) AS `Address`');
+		$Columns = Array('ID','Login','OrderID','(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`)) AS `Address`');
 		#-------------------------------------------------------------------------------
 		$HostingOrders = DB_Select('HostingOrdersOwners',$Columns,Array('Where'=>$Where));
 		switch(ValueOf($HostingOrders)){
@@ -75,11 +105,11 @@ if($StepID){
 			break;
 		case 'array':
 			#-------------------------------------------------------------------------------
-			$Options = Array('Не использовать');
+			$Options = Array();
 			#-------------------------------------------------------------------------------
 			foreach($HostingOrders as $HostingOrder){
 				#-------------------------------------------------------------------------------
-				$HostingOrderID = $HostingOrder['ID'];
+				$HostingOrderID = $HostingOrder['OrderID'];
 				#-------------------------------------------------------------------------------
 				$Options[$HostingOrderID] = SPrintF('%s [%s]',$HostingOrder['Login'],$HostingOrder['Address']);
 				#-------------------------------------------------------------------------------
@@ -101,7 +131,7 @@ if($StepID){
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		# create select, using ContractID for VPSOrders
-		$Columns = Array('ID','Login','(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`)) AS `Address`');
+		$Columns = Array('ID','Login','OrderID','(SELECT `Address` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`)) AS `Address`');
 		#-------------------------------------------------------------------------------
 		$VPSOrders = DB_Select('VPSOrdersOwners',$Columns,Array('Where'=>$Where));
 		switch(ValueOf($VPSOrders)){
@@ -116,7 +146,7 @@ if($StepID){
 			#-------------------------------------------------------------------------------
 			foreach($VPSOrders as $VPSOrder){
 				#-------------------------------------------------------------------------------
-				$VPSOrderID = $VPSOrder['ID'];
+				$VPSOrderID = $VPSOrder['OrderID'];
 				#-------------------------------------------------------------------------------
 				$Options[$VPSOrderID] = SPrintF('%s [%s]',$VPSOrder['Login'],$VPSOrder['Address']);
 				#-------------------------------------------------------------------------------
@@ -138,7 +168,7 @@ if($StepID){
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		# create select, using ContractID for DSOrders
-		$Columns = Array('ID','IP','(SELECT `Name` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `SchemeID`) as `Name`');
+		$Columns = Array('ID','IP','OrderID','(SELECT `Name` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `SchemeID`) as `Name`');
 		#-------------------------------------------------------------------------------
 		$DSOrders = DB_Select('DSOrdersOwners',$Columns,Array('Where'=>$Where));
 		switch(ValueOf($DSOrders)){
@@ -153,7 +183,7 @@ if($StepID){
 			#-------------------------------------------------------------------------------
 			foreach($DSOrders as $DSOrder){
 				#-------------------------------------------------------------------------------
-				$DSOrderID = $DSOrder['ID'];
+				$DSOrderID = $DSOrder['OrderID'];
 				#-------------------------------------------------------------------------------
 				$Options[$DSOrderID] = SPrintF('%s [%s]',$DSOrder['IP'],$DSOrder['Name']);
 				#-------------------------------------------------------------------------------
@@ -176,7 +206,7 @@ if($StepID){
 		#-------------------------------------------------------------------------------
 		# check - have it Owner some orders or not
 		if($OrderCount < 1)
-			return new gException('ExtraIP_OWNER_NOT_HAVE_ORDERS','Выбранный профиль не имеет никаких заказанных услуг. Выберите другой, или, закажите какую-либо услугу: хостинг, VPS, выделенный сервера. После этого, вы сможете заказать дополнительный IP адрес.');
+			return new gException('ExtraIP_OWNER_NOT_HAVE_ORDERS','Выбранный профиль не имеет никаких заказанных услуг, или, для этих услуг невозможно заказать IP адреса. Выберите другой, или, закажите какую-либо услугу: хостинг, VPS, выделенный сервера. После этого, вы сможете заказать дополнительный IP адрес.');
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load(
@@ -280,21 +310,22 @@ if($StepID){
 			return new gException('ExtraIP_SELECTED_MORE_THAN_ONE_ORDER','IP адрес можно прикрепить только к одному заказу. Выберите лишь один пункт.');
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		# select group for order
-		$OrderInfo = DB_Select($OrderType . 'OrdersOwners',$Columns,Array('ID'=>$DependOrderID,'UNIQ'));
-		switch(ValueOf($OrderInfo)){
+		# выбираем ServerID заказа
+		$Order = DB_Select('OrdersOwners',Array('ID','ServerID'),Array('UNIQ','ID'=>$DependOrderID));
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($Order)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
-			return ERROR | @Trigger_Error(400);
+			return new gException('ORDER_NOT_FOUND',SPrintF('Заказ (%s/%u) не найден. Обратитесь в службу поддержки пользователей.',$OrderType,$DependOrderID));
 		case 'array':
-			#-------------------------------------------------------------------------------
-			Debug("[comp/www/ExtraIPOrder]: OrderInfo found, group = " . $OrderInfo['ServersGroupID']);
 			break;
-			#-------------------------------------------------------------------------------
+
 		default:
 			return ERROR | @Trigger_Error(101);
 		}
+		#-------------------------------------------------------------------------------
+		$ServerID = $Order['ServerID'];
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		# тип заказа к которому надо прицепить IP адрес
@@ -345,15 +376,15 @@ if($StepID){
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$Columns = Array('ID','Name','Comment','CostMonth','CostInstall');
+		$Columns = Array('ID','Name','Comment','CostMonth','CostInstall','Params');
 		#-------------------------------------------------------------------------------
-		$ExtraIPSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('SortID'),'Where'=>"`IsActive` = 'yes' AND `" . $OrderType . "GroupID` = " . $OrderInfo['ServersGroupID']));
+		$ExtraIPSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('SortID'),'Where'=>"`IsActive` = 'yes'"));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($ExtraIPSchemes)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
-			return new gException('ExtraIP_SCHEMES_NOT_FOUND','Для указанного заказа отсутствует свободное адресное пространство. Обратитесь в службу поддержки пользователей.');
+			return new gException('ExtraIP_SCHEMES_NOT_FOUND','Активные тарифы на выделенные IP адреса не найдены. Обратитесь в службу поддержки пользователей.');
 		case 'array':
 			#-------------------------------------------------------------------------------
 			$NoBody = new Tag('NOBODY');
@@ -383,6 +414,11 @@ if($StepID){
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			foreach($ExtraIPSchemes as $ExtraIPScheme){
+				#-------------------------------------------------------------------------------
+				# если сервер заказа не содержится в тарифе на выделенный IP - пропускаем тариф
+				if(!In_Array($ServerID,$ExtraIPScheme['Params']['Servers']))
+					continue;
+				#-------------------------------------------------------------------------------
 				#-------------------------------------------------------------------------------
 				$Comp = Comp_Load(
 						'Form/Input',

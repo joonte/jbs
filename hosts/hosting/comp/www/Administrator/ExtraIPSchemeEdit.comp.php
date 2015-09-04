@@ -40,9 +40,6 @@ if($ExtraIPSchemeID){
 				'CostMonth'		=> 75.00,
 				'CostInstall'		=> 25.00,
 				'AddressType'		=> 'IPv4',
-				'HostingGroupID'	=> 0,
-				'VPSGroupID'		=> 0,
-				'DSGroupID'		=> 0,
 				'Comment'		=> 'Один сайт - один IP адрес',
 				'IsActive'		=> TRUE,
 				'IsProlong'		=> TRUE,
@@ -51,6 +48,7 @@ if($ExtraIPSchemeID){
 				'MaxDaysPay'		=> 1460,
 				'MaxOrders'		=> 0,
 				'MinOrdersPeriod'	=> 0,
+				'Params'		=> Array('Servers'=>Array()),
 				'SortID'		=> 10
 			);
 	#-------------------------------------------------------------------------------
@@ -235,93 +233,67 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array('Порядок сортировки',$Comp);
 #-------------------------------------------------------------------------------
-$Table[] = 'Где используется';
 #-------------------------------------------------------------------------------
+$Table[] = 'На каких серверах используется';
 #-------------------------------------------------------------------------------
-# Hosting
-$hGroups = DB_Select('ServersGroups','*',Array('Where'=>'`ServiceID` = 10000'));
-switch(ValueOf($hGroups)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		# no hosting servers groups
-		break;
-	case 'array':
-		#-------------------------------------------------------------------------------
-		# create 'select' field for found groups
-		$Options = Array('0' => 'Не используется');
-		#-------------------------------------------------------------------------------
-		foreach($hGroups as $hGroup)
-			$Options[$hGroup['ID']] = $hGroup['Name'];
-		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Select',Array('name'=>'HostingGroupID','style'=>'width: 240px;'),$Options,$ExtraIPScheme['HostingGroupID']);
-		if(Is_Error($Comp))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		$Table[] = Array('Группа серверов хостинга',$Comp);
-		#-------------------------------------------------------------------------------
-		break;
-		#-------------------------------------------------------------------------------
-	default:
-		return ERROR | @Trigger_Error(101);
+# выбрать все сервера всех услуг
+$Servers = DB_Select('Servers',Array('ID','Address','Params','AdminNotice','TemplateID','(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) AS `ServersGroupName`'),Array('Where'=>'`TemplateID` IN ("Hosting","VPS","DS")','SortOn'=>Array('TemplateID','ServersGroupID','Address')));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Servers)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $Result;
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-# VPS
-$vGroups = DB_Select('ServersGroups','*',Array('Where'=>'`ServiceID` = 30000'));
-switch(ValueOf($vGroups)){
-	case 'error':
+# перебираем сервера
+foreach($Servers as $Server){
+	#-------------------------------------------------------------------------------
+	# имя группы серверов
+	if(!IsSet($GroupName) || $GroupName != $Server['ServersGroupName'])
+		$Table[] = SPrintF('- %s / %s',$Server['TemplateID'],$Server['ServersGroupName']);
+	#-------------------------------------------------------------------------------
+	$GroupName = $Server['ServersGroupName'];
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	# добавляем сервер к списку
+	$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'Servers[]','id'=>$Server['Address'],'value'=>$Server['ID']));
+	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		# no hosting servers groups
-		break;
-	case 'array':
+	#-------------------------------------------------------------------------------
+	if(Is_Array($ExtraIPScheme['Params']['Servers']))
+		if(In_Array($Server['ID'],$ExtraIPScheme['Params']['Servers']))
+			$Comp->AddAttribs(Array('checked'=>'yes'));
+	#-------------------------------------------------------------------------------
+	# отображаем примечание к серверу как подсказку, если оно есть
+	if($Server['AdminNotice']){
 		#-------------------------------------------------------------------------------
-		# create 'select' field for found groups
-		$Options = Array('0' => 'Не используется');
+		$LinkID = UniqID('String');
 		#-------------------------------------------------------------------------------
-		foreach($vGroups as $vGroup)
-			$Options[$vGroup['ID']] = $vGroup['Name'];
+		$Links = &Links();
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Select',Array('name'=>'VPSGroupID','style'=>'width: 240px;'),$Options,$ExtraIPScheme['VPSGroupID']);
-		if(Is_Error($Comp))
+		$Text = new Tag('DIV',$Server['Address']);
+		#-------------------------------------------------------------------------------
+		$Links[$LinkID] = &$Text;
+		#-------------------------------------------------------------------------------
+		$Comp1 = Comp_Load('Form/Prompt',$LinkID,$Server['AdminNotice']);
+		if(Is_Error($Comp1))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$Table[] = Array('Группа серверов VPS',$Comp);
+		UnSet($Links[$LinkID]);
 		#-------------------------------------------------------------------------------
-		break;
+	}else{
 		#-------------------------------------------------------------------------------
-	default:
-		return ERROR | @Trigger_Error(101);
-}
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-# DS
-$dGroups = DB_Select('ServersGroups','*',Array('Where'=>'`ServiceID` = 40000'));
-switch(ValueOf($dGroups)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		# no hosting servers groups
-		break;
-	case 'array':
+		$Text = $Server['Address'];
 		#-------------------------------------------------------------------------------
-		# create 'select' field for found groups
-		$Options = Array('0' => 'Не используется');
-		#-------------------------------------------------------------------------------
-		foreach($dGroups as $dGroup)
-			$Options[$dGroup['ID']] = $dGroup['Name'];
-		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Select',Array('name'=>'DSGroupID','style'=>'width: 240px;'),$Options,$ExtraIPScheme['DSGroupID']);
-		if(Is_Error($Comp))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		$Table[] = Array('Группа выделенных серверов',$Comp);
-		#-------------------------------------------------------------------------------
-		break;
-		#-------------------------------------------------------------------------------
-	default:
-		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>SPrintF("ChangeCheckBox('%s'); return false;",$Server['Address'])),$Text),$Comp);
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

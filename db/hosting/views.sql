@@ -219,6 +219,7 @@ DROP TABLE IF EXISTS `ExtraIPOrdersOwners`;
 CREATE VIEW `ExtraIPOrdersOwners` AS select
 	`ExtraIPOrders`.*,
 	`OrdersOwners`.`ServiceID`,
+	`OrdersOwners`.`ServerID`,
 	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `ExtraIPOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
 	`OrdersOwners`.`OrderDate` AS `OrderDate`,
 	`OrdersOwners`.`UserID` AS `UserID`,

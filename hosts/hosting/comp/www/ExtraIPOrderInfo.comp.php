@@ -42,12 +42,25 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-# Select Depend Order Info
-if($ExtraIPOrder['OrderType'] == "Hosting" || $ExtraIPOrder['OrderType'] == "VPS"){
+# информация о заказе к которому прицеплен IP, если она есть...
+$DependService = DB_Select(Array('Servers','ServersGroups'),Array('(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `ServersGroups`.`ServiceID`) AS `Code`', '(SELECT `NameShort` FROM `Services` WHERE `Services`.`ID` = `ServersGroups`.`ServiceID`)'),Array('UNIQ','Where'=>Array('`Servers`.`ServersGroupID` = `ServersGroups`.`ID`',SPrintF('`Servers`.`ID` = %u',$ExtraIPOrder['ServerID']))));
+#-------------------------------------------------------------------------------
+switch(ValueOf($DependService)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('DESTINATION_SERVER_NOT_FOUND','Сервер размещения не найден');
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+if($DependService['Code'] == "Hosting" || $DependService['Code'] == "VPS"){
 	#-------------------------------------------------------------------------------
-	$Columns = Array('*',SPrintF('(SELECT `Address` FROM `Servers` WHERE `%sOrdersOwners`.`ServerID` = `Servers`.`ID`) AS Address',$ExtraIPOrder['OrderType']));
+	$Columns = Array('*',SPrintF('(SELECT `Address` FROM `Servers` WHERE `%sOrdersOwners`.`ServerID` = `Servers`.`ID`) AS Address',$DependService['Code']));
 	#-------------------------------------------------------------------------------
-	$ExtraIPDepend = DB_Select(SPrintF('%sOrdersOwners',$ExtraIPOrder['OrderType']),$Columns,Array('UNIQ','ID'=>$ExtraIPOrder['DependOrderID']));
+	$ExtraIPDepend = DB_Select(SPrintF('%sOrdersOwners',$DependService['Code']),$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$ExtraIPOrder['DependOrderID'])));
 	switch(ValueOf($ExtraIPDepend)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
@@ -126,19 +139,19 @@ $Table[] = 'Информация';
 #-------------------------------------------------------------------------------
 $Table[] = Array('IP адрес',$ExtraIPOrder['Login']);
 #-------------------------------------------------------------------------------
-if($ExtraIPOrder['OrderType'] == "Hosting"){
+if($DependService['Code'] == "Hosting"){
 	#-------------------------------------------------------------------------------
 	$OrderType = "Хостинг";
 	#-------------------------------------------------------------------------------
-}elseif($ExtraIPOrder['OrderType'] == "VPS"){
+}elseif($DependService['Code'] == "VPS"){
 	#-------------------------------------------------------------------------------
-	$OrderType = $ExtraIPOrder['OrderType'];
+	$OrderType = $DependService['Code'];
 	#-------------------------------------------------------------------------------
-}elseif($ExtraIPOrder['OrderType'] == "DS"){
+}elseif($DependService['Code'] == "DS"){
 	#-------------------------------------------------------------------------------
 	$OrderType = "Выделенный сервер";
 	#-------------------------------------------------------------------------------
-}elseif($ExtraIPOrder['OrderType'] == "Manual"){
+}elseif($DependService['Code'] == "Manual"){
 	#-------------------------------------------------------------------------------
 	$OrderType = "Без сервисов";
 	#-------------------------------------------------------------------------------

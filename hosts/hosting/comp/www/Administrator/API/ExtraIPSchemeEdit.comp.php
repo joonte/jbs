@@ -22,9 +22,7 @@ $CostDay		=   (float) @$Args['CostDay'];
 $CostMonth		=   (float) @$Args['CostMonth'];
 $CostInstall		=   (float) @$Args['CostInstall'];
 $AddressType		=  (string) @$Args['AddressType'];
-$HostingGroupID		= (integer) @$Args['HostingGroupID'];
-$VPSGroupID		= (integer) @$Args['VPSGroupID'];
-$DSGroupID		= (integer) @$Args['DSGroupID'];
+$Servers		=   (array) @$Args['Servers'];
 $Comment		=  (string) @$Args['Comment'];
 $IsActive		= (boolean) @$Args['IsActive'];
 $IsProlong		= (boolean) @$Args['IsProlong'];
@@ -55,41 +53,6 @@ if(!Preg_Match('/^[A-Za-zА-ЯёЁа-я0-9\s\.\-]+$/u',$Name))
 	return new gException('WRONG_SCHEME_NAME','Неверное имя тарифа');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($HostingGroupID > 0){
-	#-------------------------------------------------------------------------------
-	$Count = DB_Count('ServersGroups',Array('ID'=>$HostingGroupID));
-	if(Is_Error($Count))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	if(!$Count)
-		return new gException('HOSTING_SERVERS_GROUP_NOT_FOUND','Группа серверов хостинга не найдена');
-	#-------------------------------------------------------------------------------
-}
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-if($VPSGroupID > 0){
-	#-------------------------------------------------------------------------------
-	$Count = DB_Count('ServersGroups',Array('ID'=>$VPSGroupID));
-	if(Is_Error($Count))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	if(!$Count)
-		return new gException('VPS_SERVERS_GROUP_NOT_FOUND','Группа серверов VPS не найдена');
-	#-------------------------------------------------------------------------------
-}
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-if($DSGroupID > 0){
-	#-------------------------------------------------------------------------------
-	$Count = DB_Count('ServersGroups',Array('ID'=>$DSGroupID));
-	if(Is_Error($Count))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	if(!$Count)
-		return new gException('DS_SERVERS_GROUP_NOT_FOUND','Группа выделенных серверов не найдена');
-	#-------------------------------------------------------------------------------
-}
-#-------------------------------------------------------------------------------
 if(!$MinDaysPay)
 	return new gException('MIN_DAYS_PAY_NOT_DEFINED','Минимальное кол-во дней оплаты не указано');
 #-------------------------------------------------------------------------------
@@ -108,9 +71,7 @@ $IExtraIPScheme = Array(
 			'CostMonth'		=> $CostMonth,
 			'CostInstall'		=> $CostInstall,
 			'AddressType'		=> $AddressType,
-			'HostingGroupID'	=> $HostingGroupID,
-			'VPSGroupID'		=> $VPSGroupID,
-			'DSGroupID'		=> $DSGroupID,
+			'Params'		=> Array('Servers'=>$Servers),
 			'Comment'		=> $Comment,
 			'IsActive'		=> $IsActive,
 			'IsProlong'		=> $IsProlong,
