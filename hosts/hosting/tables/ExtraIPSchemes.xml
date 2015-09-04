@@ -17,7 +17,6 @@
   <ListElement>ID</ListElement>
   <ListElement>CostMonth</ListElement>
   <ListElement>CostInstall</ListElement>
-  <ListElement>IsAutomatic</ListElement>
   <ListElement>IsActive</ListElement>
   <ListElement>SortID</ListElement>
  </ColumnsIDs>
@@ -148,7 +147,7 @@
  </CostMonth>
  <!-- ********************************************************************** -->
  <CostInstall>
-  <Head>Цена подключения</Head>
+  <Head>Цена подкл.</Head>
   <Prompt>Цена в рублях за подключение</Prompt>
   <Comp>Formats/Currency</Comp>
   <Args>

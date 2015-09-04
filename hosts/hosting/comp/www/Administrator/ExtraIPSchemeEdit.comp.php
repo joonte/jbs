@@ -44,7 +44,6 @@ if($ExtraIPSchemeID){
 				'VPSGroupID'		=> 0,
 				'DSGroupID'		=> 0,
 				'Comment'		=> 'Один сайт - один IP адрес',
-				'IsAutomatic'		=> TRUE,
 				'IsActive'		=> TRUE,
 				'IsProlong'		=> TRUE,
 				'MinDaysPay'		=> 31,
@@ -138,15 +137,6 @@ $Table[] = Array('Тип адреса',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Параметры тарифа';
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsAutomatic','value'=>'yes'));
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-if($ExtraIPScheme['IsAutomatic'])
-	$Comp->AddAttribs(Array('checked'=>'yes'));
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsAutomatic\'); return false;'),'Автоматическое подключение/отключение'),$Comp);
-#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes'));
 if(Is_Error($Comp))

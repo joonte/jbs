@@ -649,34 +649,34 @@ CREATE TABLE IF NOT EXISTS `ExtraIPs` (
 --
 
 CREATE TABLE IF NOT EXISTS `ExtraIPSchemes` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `CreateDate` int(11) DEFAULT '0',
-  `GroupID` int(11) NOT NULL,
-  `UserID` int(11) NOT NULL,
-  `Name` char(30) DEFAULT '',
-  `PackageID` char(30) DEFAULT '',
-  `CostDay` decimal(11,2) DEFAULT '0.00',
-  `CostMonth` decimal(11,2) DEFAULT '0.00',
-  `CostInstall` decimal(11,2) NOT NULL,
-  `AddressType` CHAR( 8 ) NOT NULL DEFAULT 'IPv4',
-  `HostingGroupID` int(11) NOT NULL,
-  `VPSGroupID` int(11) NOT NULL,
-  `DSGroupID` int(11) NOT NULL,
-  `Comment` char(255) NOT NULL,
-  `IsAutomatic` enum('no','yes') DEFAULT 'no',
-  `IsActive` enum('no','yes') DEFAULT 'yes',
-  `IsProlong` enum('no','yes') DEFAULT 'yes',
-  `MinDaysPay` int(6) DEFAULT '0',
-  `MinDaysProlong` int(6) DEFAULT '0',
-  `MaxDaysPay` int(6) DEFAULT '0',
-  `MaxOrders` int(6) DEFAULT '0',
-  `MinOrdersPeriod` INT(6) DEFAULT '0',
-  `SortID` int(11) DEFAULT '10',
-  PRIMARY KEY (`ID`),
-  KEY `ExtraIPSchemesGroupID` (`GroupID`),
-  KEY `ExtraIPSchemesUserID` (`UserID`),
-  KEY `ExtraIPSchemessGroupID` (`HostingGroupID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+	`ID` int(11) NOT NULL AUTO_INCREMENT,
+	`CreateDate` int(11) DEFAULT '0',
+	`GroupID` int(11) NOT NULL,
+	`UserID` int(11) NOT NULL,
+	`Name` char(30) DEFAULT '',
+	`PackageID` char(30) DEFAULT '',
+	`CostDay` decimal(11,2) DEFAULT '0.00',
+	`CostMonth` decimal(11,2) DEFAULT '0.00',
+	`CostInsall` decimal(11,2) NOT NULL,
+	`AddressType` CHAR( 8 ) NOT NULL DEFAULT 'IPv4',
+	`HostingGroupID` int(11) NOT NULL,
+	`VPSGroupID` int(11) NOT NULL,
+	`DSGroupID` int(11) NOT NULL,
+	`Comment` char(255) NOT NULL,
+	`IsActive` enum('no','yes') DEFAULT 'yes',
+	`IsProlong` enum('no','yes') DEFAULT 'yes',
+	`MinDaysPay` int(6) DEFAULT '0',
+	`MinDaysProlong` int(6) DEFAULT '0',
+	`MaxDaysPay` int(6) DEFAULT '0',
+	`MaxOrders` int(6) DEFAULT '0',
+	`MinOrdersPeriod` INT(6) DEFAULT '0',
+	`Params` LONGTEXT,					-- набор переменных необходимых для работы
+	`SortID` int(11) DEFAULT '10',
+	PRIMARY KEY (`ID`),
+	KEY `ExtraIPSchemesGroupID` (`GroupID`),
+	KEY `ExtraIPSchemesUserID` (`UserID`),
+	KEY `ExtraIPSchemessGroupID` (`HostingGroupID`)
+) ENGINE InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 -- SEPARATOR
