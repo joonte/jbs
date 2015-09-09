@@ -88,7 +88,7 @@ $Comp = Comp_Load(
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Form = new Tag('FORM',Array('name'=>'TicketReadForm','onsubmit'=>'return false;'),$Comp);
+$Form = new Tag('FORM',Array('name'=>'TicketReadForm','onsubmit'=>'return false;','OnKeyPress'=>'ctrlEnterEvent(event);'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $MaxMessageID = DB_Select('EdesksMessagesOwners','MAX(`ID`) AS `MaxMessageID`',Array('UNIQ','Where'=>SPrintF('`EdeskID` = %u',$Ticket['ID'])));
@@ -225,12 +225,12 @@ if($__USER['ID'] == $Ticket['UserID']){	# ordinar user
 	if($Ticket['LastSeenBy'] == $__USER['ID']){
 		#-------------------------------------------------------------------------------
 		$color = "white";
-		$PlaceHolder = "";
+		$PlaceHolder = FALSE;
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
-		$PlaceHolder = (StrLen($Ticket['LastSeenByName']) > 0)?SPrintF('Тикет просматривается сотрудником %s',$Ticket['LastSeenByName']):'';
-		$TimePeriod = time() - $Ticket['SeenByPersonal'];
+		$PlaceHolder = (StrLen($Ticket['LastSeenByName']) > 0)?SPrintF('Тикет просматривается сотрудником %s',$Ticket['LastSeenByName']):FALSE;
+		$TimePeriod = Time() - $Ticket['SeenByPersonal'];
 		#-------------------------------------------------------------------------------
 		if($TimePeriod < 60){
 			#-------------------------------------------------------------------------------
@@ -254,7 +254,7 @@ if($__USER['ID'] == $Ticket['UserID']){	# ordinar user
 			#-------------------------------------------------------------------------------
 		}else{
 			#-------------------------------------------------------------------------------
-			$PlaceHolder = '';
+			$PlaceHolder = SPrintF('Тикет был просмотрен сотрудником %s, %s в %s',$Ticket['LastSeenByName'],Date('Y-m-d',$Ticket['SeenByPersonal']),Date('H:i:s',$Ticket['SeenByPersonal']));
 			$color = "white";
 			#-------------------------------------------------------------------------------
 		}
@@ -263,23 +263,36 @@ if($__USER['ID'] == $Ticket['UserID']){	# ordinar user
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-		'Form/TextArea',
-		Array(
-			'name'		=> 'Message',
-			'id'		=> 'Message',
-			'OnKeyPress'	=> 'ctrlEnterEvent(event);',
-			'style'		=> SPrintF('background:%s; width:%u;',$color,Max(@$_COOKIE['wScreen']/1.5,630)),
-			'rows'		=> 5,
-			'AutoFocus'	=> 'yes',
-			'PlaceHolder'	=> $PlaceHolder
-			)
+# параметры для области ввода текста
+$Array = Array(
+		'name'		=> 'Message',
+		'id'		=> 'Message',
+		'style'		=> SPrintF('background:%s; width:%u;',$color,Max(@$_COOKIE['wScreen']/1.5,630)),
+		'rows'		=> 5,
+		'AutoFocus'	=> 'yes',
 		);
+#-------------------------------------------------------------------------------
+# подсказка, если есть, и разная для юзеров/админов
+if($PlaceHolder){
+	#-------------------------------------------------------------------------------
+	if($__USER['ID'] == $Ticket['UserID']){
+		#-------------------------------------------------------------------------------
+		$Array['PlaceHolder'] = $PlaceHolder;
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		$Array['prompt'] = $PlaceHolder;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/TextArea',$Array);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = $Comp;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Disabled = Array();
 #-------------------------------------------------------------------------------
@@ -379,14 +392,7 @@ $Div = new Tag('DIV',$Comp,new Tag('SPAN','и'));
 #-------------------------------------------------------------------------------
 if($__USER['ID'] == $Ticket['UserID']){ # is ordinar user
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load(
-			'Form/Input',
-			Array(
-				'name'  => 'Flags',
-				'type'  => 'checkbox',
-				'value' => 'Closed'
-			)
-		);
+	$Comp = Comp_Load('Form/Input',Array('name'=>'Flags','type'=>'checkbox','value'=>'Closed'));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -398,11 +404,7 @@ if($__USER['ID'] == $Ticket['UserID']){ # is ordinar user
 	#-------------------------------------------------------------------------------
 	$Positions = $Config['Edesks']['Flags'];
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load(
-			'Form/Select',
-			Array('name'=>'Flags'),
-			$Positions,
-			$Ticket['Flags']);
+	$Comp = Comp_Load('Form/Select',Array('name'=>'Flags'),$Positions,$Ticket['Flags']);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
