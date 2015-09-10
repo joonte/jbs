@@ -178,9 +178,4 @@ $(document).ready(function() {
 //------------------------------------------------------------------------------
 */
 
-// added by lissyara, 2015-09-09 in 15:00 MSK
-// переводим фокус на окно ввода сообщения
-window.document.getElementById('Message').focus();
-
-
 

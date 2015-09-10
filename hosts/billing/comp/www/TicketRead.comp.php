@@ -70,6 +70,10 @@ $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Ticke
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$DOM->AddAttribs('Body',Array('onload'=>"window.document.getElementById('Message').focus();"));
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+
 $Comp = Comp_Load('Formats/Edesk/Number',$TicketID);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
