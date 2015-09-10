@@ -254,7 +254,8 @@ if($__USER['ID'] == $Ticket['UserID']){	# ordinar user
 			#-------------------------------------------------------------------------------
 		}else{
 			#-------------------------------------------------------------------------------
-			$PlaceHolder = SPrintF('Тикет был просмотрен сотрудником %s, %s в %s',$Ticket['LastSeenByName'],Date('Y-m-d',$Ticket['SeenByPersonal']),Date('H:i:s',$Ticket['SeenByPersonal']));
+			if($PlaceHolder)
+				$PlaceHolder = SPrintF('Тикет был просмотрен сотрудником %s, %s в %s',$Ticket['LastSeenByName'],Date('Y-m-d',$Ticket['SeenByPersonal']),Date('H:i:s',$Ticket['SeenByPersonal']));
 			$color = "white";
 			#-------------------------------------------------------------------------------
 		}
