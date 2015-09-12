@@ -89,7 +89,7 @@ function bb_code($Obj,$CodeBegin,$CodeEnd) {
 //------------------------------------------------------------------------------
 function ctrlEnterEvent(e){
 	//------------------------------------------------------------------------------
-	if(e.ctrlKey && (e.keyCode == 10 || e.keyCode == 13)){
+	if((e.ctrlKey || e.shiftKey) && (e.keyCode == 10 || e.keyCode == 13)){
 		//------------------------------------------------------------------------------
 		var form = document.forms['TicketReadForm'];
 		if(form.Flags.value == 'No'){
