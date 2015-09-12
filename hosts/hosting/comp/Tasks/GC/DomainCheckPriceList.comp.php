@@ -296,9 +296,14 @@ foreach($Servers as $Registrator){
 
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-			# перенос, если цена отличается от той что в биллинге
+			# перенос
 			#-------------------------------------------------------------------------------
-			if(IntVal($Schemes[$Key]['CostTransfer']) != $NewPriceTransfer){
+			$Deviation = $Schemes[$Key]['CostTransfer'] * (100 + $Settings['DomainPriceDeviationPercent'])/100 - $Schemes[$Key]['CostTransfer'];
+			#-------------------------------------------------------------------------------
+			if($Deviation < $Settings['DomainPriceDeviationSumm'])
+				$Deviation = $Settings['DomainPriceDeviationSumm'];
+			#-------------------------------------------------------------------------------
+			if(Abs($Schemes[$Key]['CostTransfer'] - $NewPriceTransfer) > $Deviation){
 				#-------------------------------------------------------------------------------
 				# прописываем новую цену в базе данных
 				$IsUpdate = DB_Update('DomainSchemes',Array('CostTransfer'=>$NewPriceTransfer),Array('ID'=>$Schemes[$Key]['ID']));
