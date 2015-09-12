@@ -29,18 +29,9 @@ if(!Is_Array($ServerSettings))
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Contract = DB_Select('Contracts',Array('ID','UserID'),Array('UNIQ','ID'=>$ContractID));
-#-------------------------------------------------------------------------------
-switch(ValueOf($Contract)){
-case 'error':
+$Contract = Comp_Load('Contracts/Fetch',$ContractID);
+if(Is_Error($Contract))
 	return ERROR | @Trigger_Error(500);
-case 'exception':
-	return new gException('CONTRACT_NOT_FOUND','Договор не найден');
-case 'array':
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
-}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Config = Config();

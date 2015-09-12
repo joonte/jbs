@@ -29,18 +29,9 @@ $DomainName = Mb_StrToLower($DomainName,'UTF-8');
 if(!Preg_Match($Regulars['DomainName'],$DomainName))
 	return new gException('WRONG_DOMAIN_NAME','Неверное имя домена');
 #-------------------------------------------------------------------------------
-$Contract = DB_Select('Contracts',Array('ID','UserID'),Array('UNIQ','ID'=>$ContractID));
-#-------------------------------------------------------------------------------
-switch(ValueOf($Contract)){
-case 'error':
+$Contract = Comp_Load('Contracts/Fetch',$ContractID);
+if(Is_Error($Contract))
 	return ERROR | @Trigger_Error(500);
-case 'exception':
-	return new gException('CONTRACT_NOT_FOUND','Договор не найден');
-case 'array':
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
-}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];

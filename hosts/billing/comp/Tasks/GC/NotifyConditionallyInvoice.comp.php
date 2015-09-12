@@ -61,17 +61,9 @@ case 'array':
 			}
 			#-------------------------------------------------------------------------------
 			# 2. вычитаем сумму счёта из договора, на который счёт.
-			$Contract = DB_Select('ContractsOwners','Balance',Array('UNIQ','ID'=>$Invoice['ContractID']));
-			switch(ValueOf($Contract)){
-			case 'error':
+			$Contract = Comp_Load('Contracts/Fetch',$Invoice['ContractID']);
+			if(Is_Error($Contract))
 				return ERROR | @Trigger_Error(500);
-			case 'exception':
-				return ERROR | @Trigger_Error(400);
-			case 'array':
-				break;
-			default:
-				return ERROR | @Trigger_Error(101);
-			}
 			#-------------------------------------------------------------------------------
 			$After = $Contract['Balance'] - $Invoice['Summ'];
 			#-------------------------------------------------------------------------------
