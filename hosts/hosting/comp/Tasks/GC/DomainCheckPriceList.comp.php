@@ -198,7 +198,7 @@ foreach($Servers as $Registrator){
 						#-------------------------------------------------------------------------------
 						Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: %s',$Message));
 						#-------------------------------------------------------------------------------
-						if($Settings['IsEvent']){
+						if($Settings['IsEvent'] && $Schemes[$Key]['IsActive']){
 							#-------------------------------------------------------------------------------
 							$Event = Array('Text' => $Message,'PriorityID' => 'Notice','IsReaded' => FALSE);
 							$Event = Comp_Load('Events/EventInsert', $Event);
@@ -215,7 +215,7 @@ foreach($Servers as $Registrator){
 						#-------------------------------------------------------------------------------
 						Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: %s',$Message));
 						#-------------------------------------------------------------------------------
-						if($Settings['IsEvent']){
+						if($Settings['IsEvent'] && $Schemes[$Key]['IsActive']){
 							#-------------------------------------------------------------------------------
 							$Event = Array('Text' => $Message,'PriorityID' => 'Notice','IsReaded' => FALSE);
 							$Event = Comp_Load('Events/EventInsert', $Event);
@@ -263,7 +263,7 @@ foreach($Servers as $Registrator){
 						#-------------------------------------------------------------------------------
 						Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: %s',$Message));
 						#-------------------------------------------------------------------------------
-						if($Settings['IsEvent']){
+						if($Settings['IsEvent'] && $Schemes[$Key]['IsActive']){
 							#-------------------------------------------------------------------------------
 							$Event = Array('Text' => $Message,'PriorityID' => 'Notice','IsReaded' => FALSE);
 							$Event = Comp_Load('Events/EventInsert', $Event);
@@ -279,7 +279,7 @@ foreach($Servers as $Registrator){
 						#-------------------------------------------------------------------------------
 						Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: %s',$Message));
 						#-------------------------------------------------------------------------------
-						if($Settings['IsEvent']){
+						if($Settings['IsEvent'] && $Schemes[$Key]['IsActive']){
 							#-------------------------------------------------------------------------------
 							$Event = Array('Text' => $Message,'PriorityID' => 'Notice','IsReaded' => FALSE);
 							$Event = Comp_Load('Events/EventInsert', $Event);
@@ -309,7 +309,7 @@ foreach($Servers as $Registrator){
 				#-------------------------------------------------------------------------------
 				Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: %s',$Message));
 				#-------------------------------------------------------------------------------
-				if($Settings['IsEvent']){
+				if($Settings['IsEvent'] && $Schemes[$Key]['IsActive']){
 					#-------------------------------------------------------------------------------
 					$Event = Array('Text' => $Message,'PriorityID' => 'Notice','IsReaded' => FALSE);
 					$Event = Comp_Load('Events/EventInsert', $Event);
