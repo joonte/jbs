@@ -36,9 +36,11 @@ $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'S
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/HTTP.js}')));
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CheckBox.js}')));
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/FormEdit.js}')));
+$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/CtrlEnterEvent.js}')));
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Ajax/Window.js}')));
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Ajax/AutoComplite.js}')));
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{others/jQuery/core.js}')));
+#-------------------------------------------------------------------------------
 $DOM->AddChild('Head',new Tag('LINK',Array('rel'=>'stylesheet','type'=>'text/css','href'=>'SRC:{others/jQuery/smoothness/jquery-ui-custom.css}')));
 #-------------------------------------------------------------------------------
 $DOM->AddHTML('Floating',TemplateReplace('Triggers.DOM.Before.Base.TABLE'));

@@ -92,7 +92,7 @@ $Comp = Comp_Load(
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Form = new Tag('FORM',Array('name'=>'TicketReadForm','onsubmit'=>'return false;','OnKeyPress'=>'ctrlEnterEvent(event);'),$Comp);
+$Form = new Tag('FORM',Array('name'=>'TicketReadForm','onsubmit'=>'return false;','OnKeyPress'=>'ctrlEnterEvent(event,true) && TicketAddMessage();'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $MaxMessageID = DB_Select('EdesksMessagesOwners','MAX(`ID`) AS `MaxMessageID`',Array('UNIQ','Where'=>SPrintF('`EdeskID` = %u',$Ticket['ID'])));
