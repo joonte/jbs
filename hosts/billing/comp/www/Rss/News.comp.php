@@ -30,9 +30,9 @@ default:
 $Rss = new Tag('rss',Array('version'=>'2.0'));
 #-------------------------------------------------------------------------------
 $Channel = new Tag('channel');
-$Channel->AddChild(new Tag('title',SPrintF('Новости компании %s "%s"',$Profile['Attribs']['CompanyForm'],$Profile['Attribs']['CompanyName'])));
+$Channel->AddChild(new Tag('title',SPrintF('Новости компании %s',$Profile['Name'])));
 $Channel->AddChild(new Tag('link',SPrintF('http://%s',HOST_ID)));
-$Channel->AddChild(new Tag('description',SPrintF('Новости компании %s "%s"',$Profile['Attribs']['CompanyForm'],$Profile['Attribs']['CompanyName'])));
+$Channel->AddChild(new Tag('description',SPrintF('Новости компании %s',$Profile['Name'])));
 $Channel->AddChild(new Tag('copyright',HOST_ID));
 $Channel->AddChild(new Tag('language','ru'));
 $Channel->AddChild(new Tag('ttl',5));

@@ -34,7 +34,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Main')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DOM->AddText('Title',SPrintF('Новости компании %s "%s"',$Profile['Attribs']['CompanyForm'],$Profile['Attribs']['CompanyName']));
+$DOM->AddText('Title',SPrintF('Новости компании %s',$Profile['Name']));
 #-------------------------------------------------------------------------------
 $Img = new Tag('IMG',Array('border'=>0,'height'=>32,'width'=>32,'src'=>'SRC:{Images/Icons/Rss.gif}'));
 #-------------------------------------------------------------------------------
