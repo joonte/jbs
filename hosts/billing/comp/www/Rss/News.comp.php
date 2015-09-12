@@ -12,12 +12,27 @@ Header('Content-Type: application/rss+xml');
 #-------------------------------------------------------------------------------
 echo "<" . "?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Profile = DB_Select('Profiles',Array('*'),Array('UNIQ','ID'=>100));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Profile)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('PROFILE_NOT_FOUND','Профиль не найден');
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Rss = new Tag('rss',Array('version'=>'2.0'));
 #-------------------------------------------------------------------------------
 $Channel = new Tag('channel');
-$Channel->AddChild(new Tag('title','Новости компании'));
+$Channel->AddChild(new Tag('title',SPrintF('Новости компании %s "%s"',$Profile['Attribs']['CompanyForm'],$Profile['Attribs']['CompanyName'])));
 $Channel->AddChild(new Tag('link',SPrintF('http://%s',HOST_ID)));
-$Channel->AddChild(new Tag('description','Новости компании'));
+$Channel->AddChild(new Tag('description',SPrintF('Новости компании %s "%s"',$Profile['Attribs']['CompanyForm'],$Profile['Attribs']['CompanyName'])));
 $Channel->AddChild(new Tag('copyright',HOST_ID));
 $Channel->AddChild(new Tag('language','ru'));
 $Channel->AddChild(new Tag('ttl',5));
