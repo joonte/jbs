@@ -36,6 +36,30 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+# JBS-1080: выбираем все статусы для доменов, с подсчётом количества
+$DomainOrders = DB_Select('DomainOrders',Array('DISTINCT(`StatusID`) AS `StatusID`','COUNT(*) AS `Count`'),Array('GroupBy'=>'StatusID','SortOn'=>'Count'));
+#-------------------------------------------------------------------------------
+switch(ValueOf($DomainOrders)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $Result;
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+$Config = Config();
+#-------------------------------------------------------------------------------
+$Statuses = $Config['Statuses']['DomainOrders'];
+#-------------------------------------------------------------------------------
+foreach($DomainOrders as $DomainOrder)
+	$NoBody->AddChild(new Tag('P',SPrintF('Доменов в статусе "%s": %u',IsSet($Statuses[$DomainOrder['StatusID']])?$Statuses[$DomainOrder['StatusID']]['Name']:$DomainOrder['StatusID'],$DomainOrder['Count'])));
+
+
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Where = Array();
 #-------------------------------------------------------------------------------
 foreach($Servers as $Server)
