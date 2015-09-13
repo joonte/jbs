@@ -87,11 +87,17 @@ if(!File_Exists($Folder)){
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
+$MyCnf = SPrintF('%s/my.cnf',$Tmp);
+#-------------------------------------------------------------------------------
+if(File_Exists($MyCnf))
+	UnLink($MyCnf);
+#-------------------------------------------------------------------------------
+if(!@File_Put_Contents($MyCnf, SPrintF("[client]\nhost = %s\nport = %u\nuser = %s\npassword = %s\n",$DBConnection['Server'],$DBConnection['Port'],$DBConnection['User'],$DBConnection['Password'])))
+	Error(SPrintF('<P>Не удалось сохранить текущие настройки соединения с базой данных в файле (%s)</P>', $MyCnf));
+#-------------------------------------------------------------------------------
 $File = SPrintF('%s/%s.sql',$Folder,Date('D'));
 #-------------------------------------------------------------------------------
-$Command = 'mysqldump --host=%s --port=%u --user=%s --password=%s --quote-names -r %s %s 2>&1';
-#-------------------------------------------------------------------------------
-$Command = SPrintF($Command,$DBConnection['Server'],$DBConnection['Port'],$DBConnection['User'],$DBConnection['Password'],$File,$DBConnection['DbName']);
+$Command = SPrintF('mysqldump --defaults-extra-file=%s --quote-names -r %s %s',$MyCnf,$File,$DBConnection['DbName']);
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/Tasks/BackUp]: команда консоли (%s)',$Command));
 #-------------------------------------------------------------------------------
@@ -102,6 +108,8 @@ if(Exec($Command,$Log))
 #-------------------------------------------------------------------------------
 if(!File_Exists($File))
 	return ERROR | @Trigger_Error('[comp/Tasks/BackUp]: файл резервной копии не был создан');
+#-------------------------------------------------------------------------------
+UnLink($MyCnf);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $GLOBALS['TaskReturnInfo'] = Array(SPrintF('DB dump size: %s Mb',Ceil(FileSize($File)/(1024*1024))));
