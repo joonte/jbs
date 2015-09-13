@@ -13,7 +13,7 @@ VALUES
 (56,1,'HostingCPUUsage','[]','yes'),
 (58,1,'DomainForDelete','[]','yes'),
 (59,1,'DomainOrdersWhoIsUpdate','[]','yes'),
-(60,1,'HostingServersQuestioning','[]','yes'),
+(60,1,'ServersQuestioning','[]','yes'),
 (61,1,'ServersUpTime','[]','yes'),
 (62,1,'UpTimeAgregate','[]','yes'),
 (70,1,'VPSForDelete','[]','yes'),

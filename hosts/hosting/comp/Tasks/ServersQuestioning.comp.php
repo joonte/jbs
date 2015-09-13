@@ -40,10 +40,10 @@ $Array = Array();
 #-------------------------------------------------------------------------------
 foreach($Servers as $Server){
 	#-------------------------------------------------------------------------------
-	#if($Server['Address'] != 's31.host-food.ru')
+	#if($Server['Address'] != 'dns0.host-food.ru')
 	#	continue;
-	if($Server['Code'] != 'Hosting')
-		continue;
+	#if($Server['Code'] != 'Hosting')
+	#	continue;
 	#-------------------------------------------------------------------------------
 	if(!$Server['IsActive'])
 		continue;
@@ -79,9 +79,11 @@ if(!IsSet($GLOBALS['TaskReturnInfo'][$Server['Name']]))
 $GLOBALS['TaskReturnInfo'][$Server['Name']][] = $Server['Address'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$ClassHostingServer = new HostingServer();
+$ClassName = SPrintF('%sServer',$Server['Code']);
 #-------------------------------------------------------------------------------
-$IsSelected = $ClassHostingServer->Select((integer)$Server['ID']);
+$ClassServer = new $ClassName();
+#-------------------------------------------------------------------------------
+$IsSelected = $ClassServer->Select((integer)$Server['ID']);
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsSelected)){
 case 'error':
@@ -90,7 +92,7 @@ case 'exception':
 	return ERROR | @Trigger_Error(400);
 case 'true':
 	#-------------------------------------------------------------------------------
-	$Users = $ClassHostingServer->GetDomains();
+	$Users = $ClassServer->GetDomains();
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Users)){
 	case 'error':
@@ -110,9 +112,9 @@ case 'true':
 			#-------------------------------------------------------------------------------
 			$Where = SPrintF('`ServerID` = %u AND `Login` IN (%s)',$Server['ID'],Implode(',',$Array));
 			#-------------------------------------------------------------------------------
-			$HostingOrders = DB_Select('HostingOrdersOwners',Array('ID','Login'),Array('Where'=>$Where));
+			$Orders = DB_Select(SPrintF('%sOrdersOwners',$Server['Code']),Array('ID','Login'),Array('Where'=>$Where));
 			#-------------------------------------------------------------------------------
-			switch(ValueOf($HostingOrders)){
+			switch(ValueOf($Orders)){
 			case 'error':
 				return ERROR | @Trigger_Error(500);
 			case 'exception':
@@ -120,11 +122,11 @@ case 'true':
 				break;
 			case 'array':
 				#-------------------------------------------------------------------------------
-				foreach($HostingOrders as $HostingOrder){
+				foreach($Orders as $Order){
 					#-------------------------------------------------------------------------------
-					$Parked = $Users[$HostingOrder['Login']];
+					$Parked = $Users[$Order['Login']];
 					#-------------------------------------------------------------------------------
-					$IsUpdate = DB_Update('HostingOrders',Array('Domain'=>(Count($Parked)?Current($Parked):'not-found'),'Parked'=>Implode(',',$Parked)),Array('ID'=>$HostingOrder['ID']));
+					$IsUpdate = DB_Update(SPrintF('%sOrders',$Server['Code']),Array('Domain'=>(Count($Parked)?Current($Parked):'not-found'),'Parked'=>Implode(',',$Parked)),Array('ID'=>$Order['ID']));
 					if(Is_Error($IsUpdate))
 						return ERROR | @Trigger_Error(500);
 					#-------------------------------------------------------------------------------
