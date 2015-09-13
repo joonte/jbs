@@ -11,127 +11,136 @@
  </Row>
 </Appearance>
 <!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
 <Source>
- <TableID>DNSmanagerOrdersOwners</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>OrderID</ListElement>
-  <ListElement>UserID</ListElement>
-  <ListElement>DaysRemainded</ListElement>
-  <ListElement>StatusID</ListElement>
-  <ListElement>StatusDate</ListElement>
-  <ListElement>ServiceID</ListElement>
-  <ListElement>UserNotice</ListElement>
-  <ListElement>AdminNotice</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Message>Заказов на вторичные DNS не обнаружено.</Message>
- </Conditions>
+	<TableID>DNSmanagerOrdersOwners</TableID>
+	<ColumnsIDs>
+		<ListElement>ID</ListElement>
+		<ListElement>OrderID</ListElement>
+		<ListElement>UserID</ListElement>
+		<ListElement>Domain</ListElement>
+		<ListElement>Parked</ListElement>
+		<ListElement>DaysRemainded</ListElement>
+		<ListElement>StatusID</ListElement>
+		<ListElement>StatusDate</ListElement>
+		<ListElement>ServiceID</ListElement>
+		<ListElement>UserNotice</ListElement>
+		<ListElement>AdminNotice</ListElement>
+	</ColumnsIDs>
+	<!-- *********************************************************************** -->
+	<Conditions>
+		<Message>Заказов на вторичные DNS не обнаружено.</Message>
+	</Conditions>
 </Source>
 <!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
 <Comps>
- <Before>
-  <DateSelect>
-   <Comp>Tables/Forms/DateSelect</Comp>
-   <Args>
-    <ListElement>OrderDate</ListElement>
-   </Args>
-   <NoBlock />
-  </DateSelect>
-  <!-- ********************************************************************* -->
-  <PatternOut>
-   <Args>
-    <Patterns>
-     <Yesterday>
-      <Name>Заказы за вчера</Name>
-      <Where>`OrderDate` &gt; BEGIN_DAY() - 86400</Where>
-     </Yesterday>
-     <!-- ****************************************************************** -->
-     <Today>
-      <Name>Заказы за сегодня</Name>
-      <Where>`OrderDate` &gt; BEGIN_DAY()</Where>
-     </Today>
-     <!-- ****************************************************************** -->
-     <Week>
-      <Name>Заказы за текущую неделю</Name>
-      <Where>`OrderDate` &gt; BEGIN_WEEK()</Where>
-     </Week>
-     <!-- ****************************************************************** -->
-     <Month>
-      <Name>Заказы за текущий месяц</Name>
-      <Where>`OrderDate` &gt; BEGIN_MONTH()</Where>
-     </Month>
-     <!-- ****************************************************************** -->
-     <Waiting>
-      <Name>Заказы для оплаты</Name>
-      <Where>`StatusID` = 'Waiting'</Where>
-     </Waiting>
-     <!-- ****************************************************************** -->
-     <OnCreate>
-      <Name>Заказы на создании</Name>
-      <Where>`StatusID` = 'OnCreate'</Where>
-     </OnCreate>
-     <!-- ****************************************************************** -->
-     <Active>
-      <Name>Активные заказы</Name>
-      <Where>`StatusID` = 'Active'</Where>
-     </Active>
-     <!-- ****************************************************************** -->
-     <Suspended>
-      <Name>Заблокированные заказы </Name>
-      <Where>`StatusID` = 'Suspended'</Where>
-     </Suspended>
-     <!-- ****************************************************************** -->
-     <Deleted>
-      <Name>Удаленные заказы</Name>
-      <Where>`StatusID` = 'Deleted'</Where>
-     </Deleted>
-    </Patterns>
-    <ActiveID>Week</ActiveID>
-   </Args>
-  </PatternOut>
-  <!-- ********************************************************************* -->
-  <Search>
-   <Args>
-    <ColumnsIDs>
-     <ListElement>OrderID</ListElement>
-     <ListElement>UserID</ListElement>
-     <ListElement>Login</ListElement>
-     <ListElement>(SELECT `Name` FROM `DNSmanagerSchemes` WHERE `DNSmanagerSchemes`.`ID` = `DNSmanagerOrdersOwners`.`SchemeID`)</ListElement>
-     <ListElement>AdminNotice</ListElement>
-    </ColumnsIDs>
-   </Args>
-  </Search>
-  <!-- ********************************************************************* -->
-  <DNSmanagerSearch>
-   <Comp>DNSmanagerOrders/Search</Comp>
-   <Args type="array" />
-   <NoBlock />
-  </DNSmanagerSearch>
- </Before>
- <!-- ********************************************************************** -->
- <After>
-  <Delete>
-   <Args>
-    <Comment>Выбранные заказы</Comment>
-    <Send>
-     <TableID>DNSmanagerOrders</TableID>
-    </Send>
-   </Args>
-  </Delete>
-  <!-- ********************************************************************* -->
-  <StatusSet>
-   <Comp>Statuses/Set</Comp>
-   <Args>
-    <ListElement>DNSmanagerOrders</ListElement>
-   </Args>
-  </StatusSet>
- </After>
+	<Before>
+		<DateSelect>
+			<Comp>Tables/Forms/DateSelect</Comp>
+			<Args>
+				<ListElement>OrderDate</ListElement>
+			</Args>
+			<NoBlock />
+		</DateSelect>
+		<!-- ********************************************************************* -->
+		<PatternOut>
+			<Args>
+				<Patterns>
+					<Yesterday>
+						<Name>Заказы за вчера</Name>
+						<Where>`OrderDate` &gt; BEGIN_DAY() - 86400</Where>
+					</Yesterday>
+					<!-- ****************************************************************** -->
+					<Today>
+						<Name>Заказы за сегодня</Name>
+						<Where>`OrderDate` &gt; BEGIN_DAY()</Where>
+					</Today>
+					<!-- ****************************************************************** -->
+					<Week>
+						<Name>Заказы за текущую неделю</Name>
+						<Where>`OrderDate` &gt; BEGIN_WEEK()</Where>
+					</Week>
+					<!-- ****************************************************************** -->
+					<Month>
+						<Name>Заказы за текущий месяц</Name>
+						<Where>`OrderDate` &gt; BEGIN_MONTH()</Where>
+					</Month>
+					<!-- ****************************************************************** -->
+					<Waiting>
+						<Name>Заказы для оплаты</Name>
+						<Where>`StatusID` = 'Waiting'</Where>
+					</Waiting>
+					<!-- ****************************************************************** -->
+					<OnCreate>
+						<Name>Заказы на создании</Name>
+						<Where>`StatusID` = 'OnCreate'</Where>
+					</OnCreate>
+					<!-- ****************************************************************** -->
+					<Active>
+						<Name>Активные заказы</Name>
+						<Where>`StatusID` = 'Active'</Where>
+					</Active>
+					<!-- ****************************************************************** -->
+					<Suspended>
+						<Name>Заблокированные заказы </Name>
+						<Where>`StatusID` = 'Suspended'</Where>
+					</Suspended>
+					<!-- ****************************************************************** -->
+					<Deleted>
+						<Name>Удаленные заказы</Name>
+						<Where>`StatusID` = 'Deleted'</Where>
+					</Deleted>
+				</Patterns>
+				<ActiveID>Week</ActiveID>
+			</Args>
+		</PatternOut>
+		<!-- ********************************************************************* -->
+		<Search>
+			<Args>
+				<ColumnsIDs>
+					<ListElement>OrderID</ListElement>
+					<ListElement>UserID</ListElement>
+					<ListElement>Domain</ListElement>
+					<ListElement>Parked</ListElement>
+					<ListElement>Login</ListElement>
+					<ListElement>(SELECT `Name` FROM `DNSmanagerSchemes` WHERE `DNSmanagerSchemes`.`ID` = `DNSmanagerOrdersOwners`.`SchemeID`)</ListElement>
+					<ListElement>AdminNotice</ListElement>
+				</ColumnsIDs>
+			</Args>
+		</Search>
+		<!-- ********************************************************************* -->
+		<DNSmanagerSearch>
+			<Comp>DNSmanagerOrders/Search</Comp>
+			<Args type="array" />
+			<NoBlock />
+		</DNSmanagerSearch>
+	</Before>
+	<!-- ********************************************************************** -->
+	<After>
+		<Delete>
+			<Args>
+				<Comment>Выбранные заказы</Comment>
+				<Send>
+					<TableID>DNSmanagerOrders</TableID>
+				 </Send>
+			 </Args>
+		 </Delete>
+		 <!-- ********************************************************************* -->
+		 <StatusSet>
+			 <Comp>Statuses/Set</Comp>
+			 <Args>
+				 <ListElement>DNSmanagerOrders</ListElement>
+			</Args>
+		</StatusSet>
+	</After>
 </Comps>
 <!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
 <Query>
- <SortOn>Number</SortOn>
+	<SortOn>Number</SortOn>
 </Query>
+<!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Columns>
  <SelectID>
@@ -190,23 +199,37 @@
   </Args>
   <Alias>DaysRemainded</Alias>
  </Expiration>
- <!-- ********************************************************************** -->
- <Status>
-  <Args>
-   <ModeID>DNSmanagerOrders</ModeID>
-  </Args>
- </Status>
+
+	<!-- *********************************************************************** -->
+	<Domain>
+		<Head>Домен</Head>
+		<Comp>Formats/HostingOrder/Domain</Comp>
+		<Args>
+			<ListElement>%Domain%</ListElement>
+			<ListElement>%Parked%</ListElement>
+			<Length>15</Length>
+		</Args>
+	</Domain>
+	<!-- *********************************************************************** -->
+	<Status>
+		<Args>
+			<ModeID>DNSmanagerOrders</ModeID>
+		</Args>
+	</Status>
 </Columns>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
 <Sequence>
- <ListElement>SelectID</ListElement>
-<!-- <ListElement>Edit</ListElement> -->
- <ListElement>ExtendedMenu</ListElement>
- <ListElement>Number</ListElement>
- <ListElement>Owner</ListElement>
- <ListElement>Scheme</ListElement>
- <ListElement>Expiration</ListElement>
- <ListElement>Status</ListElement>
- <ListElement>StatusOver</ListElement>
+	<ListElement>SelectID</ListElement>
+	<!-- <ListElement>Edit</ListElement> -->
+	<ListElement>ExtendedMenu</ListElement>
+	<ListElement>Number</ListElement>
+	<ListElement>Owner</ListElement>
+	<ListElement>Scheme</ListElement>
+	<ListElement>Expiration</ListElement>
+	<ListElement>Domain</ListElement>
+	<ListElement>Status</ListElement>
+	<ListElement>StatusOver</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
 </XML>
