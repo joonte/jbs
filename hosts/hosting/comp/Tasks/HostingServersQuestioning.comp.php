@@ -7,10 +7,22 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/HostingServer.class.php')))
+if(Is_Error(System_Load('classes/HostingServer.class.php','classes/DNSmanagerServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Servers = DB_Select('Servers',Array('*','(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) AS `Name`'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 10000','SortOn'=>Array('ServersGroupID','Address')));
+$Where = Array(
+		'`Services`.`ID` = `ServersGroups`.`ServiceID`',
+		'(`ServersGroups`.`ID` = `Servers`.`ServersGroupID`)',
+		'(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 10000 OR (SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 52000',
+		);
+#-------------------------------------------------------------------------------
+$Columns = Array(
+		'`Servers`.`ID`','Address','`Servers`.`IsActive`','`Servers`.`Params`',
+		'(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) AS `Name`',
+		'(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `ServersGroups`.`ServiceID`) AS `Code`',
+		);
+#-------------------------------------------------------------------------------
+$Servers = DB_Select(Array('Servers','ServersGroups','Services'),$Columns,Array('Where'=>$Where,'SortOn'=>Array('ServersGroupID','Address')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Servers)){
 case 'error':
@@ -30,6 +42,8 @@ foreach($Servers as $Server){
 	#-------------------------------------------------------------------------------
 	#if($Server['Address'] != 's31.host-food.ru')
 	#	continue;
+	if($Server['Code'] != 'Hosting')
+		continue;
 	#-------------------------------------------------------------------------------
 	if(!$Server['IsActive'])
 		continue;
@@ -43,13 +57,13 @@ foreach($Servers as $Server){
 #-------------------------------------------------------------------------------
 if(SizeOf($Array) < 1){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Tasks/HostingServersQuestioning]: все сервера опрошены'));
+	Debug(SPrintF('[comp/Tasks/ServersQuestioning]: все сервера опрошены'));
 	#-------------------------------------------------------------------------------
 	return 1800;
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/Tasks/HostingServersQuestioning]: необходимо опросить серверов: %u',SizeOf($Array)));
+Debug(SPrintF('[comp/Tasks/ServersQuestioning]: необходимо опросить серверов: %u',SizeOf($Array)));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $GLOBALS['TaskReturnInfo'] = Array();
