@@ -194,7 +194,7 @@ if($__USER['ID'] == $Ticket['UserID']){	# is ordinar user
 			# делаем кнопку, если это системная кнопка или этого админа
 			if((!Preg_Match('/@/',$Partition[0]) && $Partition[0] < 2000 && !IsSet($_COOKIE['EdeskOnlyMyButtons'])) || StrToLower($Partition[0]) == StrToLower($__USER['Email'])){
 				#-------------------------------------------------------------------------------
-				$Comp = Comp_Load('Buttons/Standard',Array('onclick' => SPrintF("form.Message.value += '%s';",$Text),'style'=>'cursor: pointer;'),$Article['Title'],$Image);
+				$Comp = Comp_Load('Buttons/Standard',Array('onclick' => SPrintF("form.Message.value += '%s';form.Message.focus();",$Text),'style'=>'cursor: pointer;'),$Article['Title'],$Image);
 				if(Is_Error($Comp))
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------

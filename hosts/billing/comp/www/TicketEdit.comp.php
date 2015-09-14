@@ -188,7 +188,7 @@ if($GLOBALS['__USER']['IsAdmin']){ # is support
 			}
 			#-------------------------------------------------------------------------------
 			# делаем кнопку
-			$Comp = Comp_Load('Buttons/Standard',Array('onclick'=>SPrintF("form.Message.value += '%s';",$Text),'style'=>'cursor: pointer;'),$Article['Title'],$Image);
+			$Comp = Comp_Load('Buttons/Standard',Array('onclick'=>SPrintF("form.Message.value += '%s'; form.Message.focus();",$Text),'style'=>'cursor: pointer;'),$Article['Title'],$Image);
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
