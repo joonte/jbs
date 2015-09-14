@@ -267,6 +267,7 @@ if($StepID){
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		$Rows[] = new Tag('TR',
+					Array('OnClick'=>SPrintF('document.forms[\'DSOrderForm\'].DSSchemeID.value=%s',$DSScheme['ID'])),
 					new Tag('TD',Array('width'=>20),$Comp),
 					new Tag('TD',Array('class'=>'Comment'),$DSScheme['Name']),
 					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth),

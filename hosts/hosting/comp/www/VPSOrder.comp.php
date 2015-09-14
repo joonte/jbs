@@ -353,6 +353,7 @@ if($StepID){
             #-------------------------------------------------------------------
             #-------------------------------------------------------------------
             $Rows[] = new Tag('TR',
+	    			Array('OnClick'=>SPrintF('document.forms[\'VPSOrderForm\'].VPSSchemeID.value=%s',$VPSScheme['ID'])),
 	    			new Tag('TD',Array('width'=>20),$Comp),
 				new Tag('TD',Array('class'=>'Comment'),$VPSScheme['Name']),
 				new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth),

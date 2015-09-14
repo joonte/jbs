@@ -490,13 +490,13 @@ if($StepID){
             #-------------------------------------------------------------------
             $Tr->AddChild(new Tag('TD',Array('width'=>20),$Comp));
             #-------------------------------------------------------------------
-            $Tr->AddChild(new Tag('TD',Array('class'=>'Comment'),$DomainScheme['Name']));
+            $Tr->AddChild(new Tag('TD',Array('class'=>'Comment','OnClick'=>SPrintF('document.forms[\'DomainOrderForm\'].DomainSchemeID.value=%s',$DomainScheme['ID'])),$DomainScheme['Name']));
             #-------------------------------------------------------------------
             $Comp = Comp_Load('Formats/Currency',$DomainScheme['CostOrder']);
             if(Is_Error($Comp))
               return ERROR | @Trigger_Error(500);
             #---------------------------------------------------------------
-            $Tr->AddChild(new Tag('TD',Array('class'=>'Standard','align'=>'right'),$Comp));
+            $Tr->AddChild(new Tag('TD',Array('class'=>'Standard','align'=>'right','OnClick'=>SPrintF('document.forms[\'DomainOrderForm\'].DomainSchemeID.value=%s',$DomainScheme['ID'])),$Comp));
             #-------------------------------------------------------------------
             if(Count($Tr->Childs)%6 == 0){
               #-----------------------------------------------------------------

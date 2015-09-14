@@ -448,8 +448,8 @@ if($StepID){
 				if(Is_Error($CostInstall))
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------
-				$Rows[] = new Tag(
-							'TR',
+				$Rows[] = new Tag(	'TR',
+							Array('OnClick'=>SPrintF('document.forms[\'ExtraIPOrderForm\'].ExtraIPSchemeID.value=%s',$ExtraIPScheme['ID'])),
 							new Tag('TD',Array('width'=>20),$Comp),
 							new Tag('TD',Array('class'=>'Comment','align'=>'right','style'=>'white-space: nowrap;'),$ExtraIPScheme['Name']),
 							new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth),

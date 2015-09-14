@@ -346,7 +346,7 @@ if($StepID){
 			if(Is_Error($CostMonth))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$Rows[] = new Tag('TR',new Tag('TD',Array('width'=>20),$Comp),new Tag('TD',Array('class'=>'Comment'),$DNSmanagerScheme['Name']),new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth),new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DNSmanagerScheme['DomainLimit']));
+			$Rows[] = new Tag('TR',Array('OnClick'=>SPrintF('document.forms[\'DNSmanagerOrderForm\'].DNSmanagerSchemeID.value=%s',$DNSmanagerScheme['ID'])),new Tag('TD',Array('width'=>20),$Comp),new Tag('TD',Array('class'=>'Comment',),$DNSmanagerScheme['Name']),new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth),new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DNSmanagerScheme['DomainLimit']));
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
