@@ -601,7 +601,7 @@ CREATE TABLE IF NOT EXISTS `ExtraIPOrders` (
   `StatusDate` int(11) DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `ExtraIPOrdersOrderID` (`OrderID`),
-  KEY `ExtraIPOrdersSchemeID` (`SchemeID`),
+  KEY `ExtraIPOrdersSchemeID` (`SchemeID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- SEPARATOR
@@ -670,8 +670,7 @@ CREATE TABLE IF NOT EXISTS `ExtraIPSchemes` (
 	`SortID` int(11) DEFAULT '10',
 	PRIMARY KEY (`ID`),
 	KEY `ExtraIPSchemesGroupID` (`GroupID`),
-	KEY `ExtraIPSchemesUserID` (`UserID`),
-	KEY `ExtraIPSchemessGroupID` (`HostingGroupID`)
+	KEY `ExtraIPSchemesUserID` (`UserID`)
 ) ENGINE InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
