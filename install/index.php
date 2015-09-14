@@ -278,7 +278,9 @@ EOD;
           else {
             Message(SPrintF('Права 0600 на файл конфигурации (%s) успешно установлены.', $File));
 
-            $__STEP_ID = 5;
+	    # пропускаем стадию с рассказом про триггеры и предложением их установки
+            #$__STEP_ID = 5;
+	    $__STEP_ID = 6;
           }
         }
         else {
@@ -659,6 +661,9 @@ $Echo = <<<EOD
   <TD>
    <INPUT name="db-name" type="input" size="20" value="%s" />
   </TD>
+ </TR>
+ <TR>
+   <TD class="Standard" style="background-color:#FCE5CC;" colspan="2">Биллинговая система использует триггеры в MySQL. До версии MySQL 5.1.6 для работы с триггерами необходимы права SUPER. Убедитесь, что указываемый пользователь обладает всеми необходимыми правами.</TD>
  </TR>
  <TR>
   <TD align="right" colspan="2">
