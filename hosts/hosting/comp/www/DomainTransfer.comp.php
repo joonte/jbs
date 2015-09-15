@@ -321,14 +321,20 @@ if($StepID){
 	#-------------------------------------------------------------------------------
 	$Messages = Messages();
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Input',Array('name'=>'DomainName','type'=>'text','value'=>$DomainName,'prompt'=>$Messages['Prompts']['DomainName']));
+	$Comp = Comp_Load('Form/Input',Array('name'=>'DomainName','type'=>'text','value'=>$DomainName,'prompt'=>$Messages['Prompts']['DomainName'],'OnKeyPress'=>'ctrlEnterEvent(event) && ShowWindow(\'/DomainTransfer\',FormGet(form));'));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	if($Settings['Transfer']['IsSelectRegistrator'])
 		$Comp->AddAttribs(Array('onblur'=>'TrimDomainName(this);'));
 	#-------------------------------------------------------------------------------
-	$Table[] = Array('Доменное имя',$Comp);
+        $Comp1 = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"ShowWindow('/DomainTransfer',FormGet(form));",'value'=>'Продолжить'));
+	if(Is_Error($Comp1))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$NoBody = new Tag('NOBODY',$Comp,$Comp1);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array('Доменное имя',$NoBody);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Rows = Array();
