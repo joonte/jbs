@@ -90,7 +90,7 @@ case 'array':
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Form = new Tag('FORM',Array('name'=>'NoticeEditForm','onsubmit'=>'return false;'),$Comp);
+	$Form = new Tag('FORM',Array('name'=>'NoticeEditForm','onsubmit'=>'return false;','OnKeyPress'=>'ctrlEnterEvent(event) && NoticeEdit();'),$Comp);
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load(
 			'Form/Input',
