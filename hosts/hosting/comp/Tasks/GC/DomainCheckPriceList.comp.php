@@ -344,7 +344,8 @@ foreach($Servers as $Registrator){
 					'CostTransfer'	=> $NewPriceTransfer,
 					'ServerID'	=> $Registrator['ID'],
 					'MinOrderYears'	=> $Prices[$Key]['min.period'],
-					'MaxActionYears'=> $Prices[$Key]['max.period']
+					'MaxActionYears'=> $Prices[$Key]['max.period'],
+					'SortID'	=> 20000
 					);
 			#-------------------------------------------------------------------------------
 			$IsInsert = DB_Insert('DomainSchemes',$Scheme);
