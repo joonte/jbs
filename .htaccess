@@ -16,9 +16,9 @@ Options -Indexes
 
 
 <IfModule mod_headers.c>
-    <FilesMatch "\.(css|js|png)$">
-        Header set Cache-Control "max-age=600, proxy-revalidate"
-    </FilesMatch>
+	<FilesMatch "\.(css|js|png)$">
+		Header set Cache-Control "max-age=600, proxy-revalidate"
+	</FilesMatch>
 </IfModule>
 
 <IfModule mod_php5.c>
