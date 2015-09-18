@@ -674,6 +674,57 @@ function Build_Query($Query = Array(),$Params){
 			return new gException('WRONG_PROFILE_ID','Неверный идентификатор профиля');
 		}
 		#-------------------------------------------------------------------------------
+	}elseif(In_Array($Params['DomainZone'],Array('moscow','москва','by','tatar','дети'))){
+		#-------------------------------------------------------------------------------
+		# Общие поля для организации и физ.лица
+		$Phone = $Params['Person']['Phone'];
+		#-------------------------------------------------------------------------------
+		$Phone = Preg_Split('/\s+/',$Phone);
+		#-------------------------------------------------------------------------------
+		$Phone = SPrintF('%s.%s%s',Current($Phone),Next($Phone),Next($Phone));
+		#-------------------------------------------------------------------------------
+		$Query['o_phone']	= $Phone;
+		$Query['addr_lang']	= IsSet($Params['Person']['jCountry'])?$Params['Person']['jCountry']:(IsSet($Params['Person']['PasportCountry'])?$Params['Person']['PasportCountry']:$Params['Person']['pCountry']);
+		$Query['o_email']	= $Params['Person']['Email'];
+		$Query['addr_cc']	= $Query['addr_lang'];
+		$Query['country']	= $Query['addr_lang'];
+		$Query['descr']		= 'Для представительских функций';
+		#-------------------------------------------------------------------------------
+		switch($Params['PersonID']){
+		case 'Natural':
+			#-------------------------------------------------------------------------------
+			$Query['person_r']	= SPrintF('%s %s %s',$Params['Person']['Sourname'],$Params['Person']['Name'],$Params['Person']['Lastname']);
+			$Query['birth_date']	= $Params['Person']['BornDate'];
+			$Query['passport']	= SPrintF('%s %s выдан %s %s',$Params['Person']['PasportLine'],$Params['Person']['PasportNum'],$Params['Person']['PasportWhom'],$Params['Person']['PasportDate']);
+			$Query['addr_street']	= SPrintF('%s %s',$Params['Person']['pType'],$Params['Person']['pAddress']);
+			$Query['addr_city']	= $Params['Person']['pCity'];
+			$Query['addr_sp']	= $Params['Person']['pState'];
+			$Query['addr_pc']	= $Params['Person']['pIndex'];
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		case 'Juridical':
+			#-------------------------------------------------------------------------------
+			#Контактные данные организации (только при регистрации домена на организацию!)
+			$Query['company_name']	= SPrintF('%s %s',$Params['Person']['CompanyName'],$Params['Person']['CompanyForm']);
+			$Query['company_tin']	= $Params['Person']['Inn'];
+			$Query['addr_street']	= SPrintF('%s %s',$Params['Person']['pType'],$Params['Person']['pAddress']);
+			$Query['addr_city']	= $Params['Person']['pCity'];
+			$Query['addr_sp']	= $Params['Person']['pState'];
+			$Query['addr_pc']	= $Params['Person']['pIndex'];
+			#-------------------------------------------------------------------------------
+			$Query['legal_lang']	= 'RU';
+			$Query['legal_street']	= SPrintF('%s %s',$Params['Person']['jType'],$Params['Person']['jAddress']);
+			$Query['legal_city']	= $Params['Person']['jCity'];
+			$Query['legal_sp']	= $Params['Person']['jState'];
+			$Query['legal_pc']	= $Params['Person']['jIndex'];
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		default:
+			return new gException('WRONG_PERSON_TYPE_ID_2','Неверный идентификатор типа персоны');
+		}
+		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
 		switch($Params['PersonID']){
@@ -777,15 +828,6 @@ function Build_Query($Query = Array(),$Params){
 			#-------------------------------------------------------------------------------
 		default:
 			return new gException('WRONG_PERSON_TYPE_ID','Неверный идентификатор типа персоны');
-		}
-		#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		if($Params['DomainZone'] == 'kz'){
-			#-------------------------------------------------------------------------------
-			$Query['street']	= 'Chizhevskogo, 17';
-			$Query['city']		= 'Karaganda';
-			$Query['sp']		= 'KAR';
-			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
