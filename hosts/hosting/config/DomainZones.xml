@@ -28,7 +28,7 @@
  <Server>whois.eu</Server>
  <Name>eu</Name>
  <Available>Status:\sAVAILABLE</Available>
- <NotAvailable>Default</NotAvailable>
+ <NotAvailable>NOT\sAVAILABLE</NotAvailable>
  <MinChars>3</MinChars>
  <ExpirationDate />
  <NsName>\t([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
@@ -637,7 +637,7 @@
 		<Server>whois.nic.moscow</Server>
 		<Name>moscow</Name>
 		<Available>Domain\snot\sfound.</Available>
-		<NotAvailable>Default</NotAvailable>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>3</MinChars>
 		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
@@ -649,6 +649,28 @@
 		<Name>москва</Name>
 		<Available>Domain\snot\sfound.</Available>
 		<NotAvailable>Default</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+	</UniqID>
+	<!-- *********************************************************************** -->
+	<UniqID>
+		<Server>whois.nic.tatar</Server>
+		<Name>tatar</Name>
+		<Available>No\sentries\sfound</Available>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+	</UniqID>
+	<!-- *********************************************************************** -->
+	<UniqID>
+		<Server>whois.nic.xn--d1acj3b</Server>
+		<Name>дети</Name>
+		<Available>No\sentries\sfound</Available>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>3</MinChars>
 		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
