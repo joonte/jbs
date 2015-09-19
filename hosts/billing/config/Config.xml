@@ -1633,6 +1633,7 @@
 		<AutoAssignToLastAnswerEmployee>1</AutoAssignToLastAnswerEmployee>
 		<EdeskOldDays>90</EdeskOldDays>
 		<AllowEditLastMessage>1</AllowEditLastMessage>
+		<MaxMessages>100</MaxMessages>
 	</Edesks>
 	<!-- *********************************************************************** -->
 </Interface>
