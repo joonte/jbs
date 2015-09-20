@@ -69,6 +69,10 @@ class MemcachedCache implements Cache {
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 
         $key = SPrintF('[%s]-%s', HOST_ID, $key);
+	
+	$IsGet = self::$memcached->get($key);
+	if($IsGet)
+		$IsDelete = self::$memcached->delete($key);
 
         $result = self::$memcached->add($key, $value, NULL, $time);
 
