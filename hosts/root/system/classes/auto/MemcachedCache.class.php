@@ -70,14 +70,13 @@ class MemcachedCache implements Cache {
 
         $key = SPrintF('[%s]-%s', HOST_ID, $key);
 	
-	$IsGet = self::$memcached->get($key);
-	if($IsGet)
-		$IsDelete = self::$memcached->delete($key);
-
         $result = self::$memcached->add($key, $value, NULL, $time);
 
         if (!$result) {
             Debug(SPrintF('[MemcachedCache::add]: не удалось закешировать объект [key=%s]', $key));
+	    # пробуем тупо удалить ключ и воткнуть значение заново, ибо ключи у memcache нельзя перезаписывать
+	    $IsDelete = self::$memcached->delete($key);
+	    $result = self::$memcached->add($key, $value, NULL, $time);
         }
 
         return $result;
