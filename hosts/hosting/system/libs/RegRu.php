@@ -62,7 +62,7 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
         return new gException('WRONG_PROFILE_ID','Неверный идентификатор профиля');
     }
     #---------------------------------------------------------------------------
-  }elseif(In_Array($DomainZone,Array('info','biz','org','com','net','be','cc','tv'))){
+  }elseif(In_Array($DomainZone,Array('info','biz','org','com','net','be','cc','tv','pro'))){
     #---------------------------------------------------------------------------
     switch($PepsonID){
       case 'Natural':
@@ -164,6 +164,11 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
       default:
         return new gException('WRONG_PERSON_TYPE_ID','Неверный идентификатор типа персоны');
     }
+    #---------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
+    if($DomainZone == 'pro')
+      $Query['pro_profession'] = 'Other';
+    #---------------------------------------------------------------------------
     #---------------------------------------------------------------------------
     $Phone = $Person['Phone'];
     #---------------------------------------------------------------------------
