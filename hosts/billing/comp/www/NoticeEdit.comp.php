@@ -51,7 +51,7 @@ $DOM->AddText('Title','Редактирование заметки');
 #-------------------------------------------------------------------------------
 $Table = Array();
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/TextArea',Array('name'>'UserNotice','style'=>'width: 400px','rows'=>10),$UserNotice['UserNotice']);
+$Comp = Comp_Load('Form/TextArea',Array('name'=>'UserNotice','style'=>'width: 400px','rows'=>10),$UserNotice['UserNotice']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
