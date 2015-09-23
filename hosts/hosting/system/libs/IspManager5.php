@@ -424,14 +424,14 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 			'limit_emaildomains_enabled'	=> ($HostingScheme['QuotaEmailDomains']?'on':'off'),
 			'limit_emails'			=> $HostingScheme['QuotaEmail'],
 			'limit_ftp_users'		=> $HostingScheme['QuotaFTP'],
-			'limit_php_mode'		=> 'php_mode_mod',
+			'limit_php_mode'		=> (($HostingScheme['IsPHPModAccess'])?'php_mode_mod':'php_mode_none'),
 			'limit_php_mode_cgi'		=> ($HostingScheme['IsPHPCGIAccess']?'on':'off'),
 			'limit_php_mode_mod'		=> ($HostingScheme['IsPHPModAccess']?'on':'off'),
 			'limit_shell'			=> ($HostingScheme['IsShellAccess']?'on':'off'),
 			'limit_ssl'			=> ($HostingScheme['IsSSLAccess']?'on':'off'),
 			'limit_webdomains'		=> $HostingScheme['QuotaWWWDomains'],
 			'limit_webdomains_enabled'	=> ($HostingScheme['QuotaWWWDomains']?'on':'off'),
-			'php_enable'			=> 'on',	# TODO: расхардкодить надо
+			'php_enable'			=> (($HostingScheme['IsPHPModAccess'] || $HostingScheme['IsPHPCGIAccess'] || $HostingScheme['IsPHPFastCGIAccess'])?'on':'off'),
 			'preset'			=> '#custom',
 			'mailrate'			=> $HostingScheme['mailrate'],	# TODO: отследить когда реализуют
 
@@ -735,14 +735,14 @@ function IspManager5_Scheme_Change($Settings,$Login,$HostingScheme){
 			'limit_emaildomains_enabled'	=> ($HostingScheme['QuotaEmailDomains']?'on':'off'),
 			'limit_emails'			=> $HostingScheme['QuotaEmail'],
 			'limit_ftp_users'		=> $HostingScheme['QuotaFTP'],
-			'limit_php_mode'		=> 'php_mode_mod',
+			'limit_php_mode'		=> (($HostingScheme['IsPHPModAccess'])?'php_mode_mod':'php_mode_none'),
 			'limit_php_mode_cgi'		=> ($HostingScheme['IsPHPCGIAccess']?'on':'off'),
 			'limit_php_mode_mod'		=> ($HostingScheme['IsPHPModAccess']?'on':'off'),
 			'limit_shell'			=> ($HostingScheme['IsShellAccess']?'on':'off'),
 			'limit_ssl'			=> ($HostingScheme['IsSSLAccess']?'on':'off'),
 			'limit_webdomains'		=> $HostingScheme['QuotaWWWDomains'],
 			'limit_webdomains_enabled'	=> ($HostingScheme['QuotaWWWDomains']?'on':'off'),
-			'php_enable'			=> 'on',	# TODO: расхардкодить надо
+			'php_enable'			=> (($HostingScheme['IsPHPModAccess'] || $HostingScheme['IsPHPCGIAccess'] || $HostingScheme['IsPHPFastCGIAccess'])?'on':'off'),
 			'preset'			=> '#custom',
 			'limit_dirindex'		=> '',
 			'mailrate'			=> $HostingScheme['mailrate'],	# TODO: отследить когда реализуют
