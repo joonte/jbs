@@ -33,7 +33,7 @@ $Config = Config();
 if(!$Theme)
 	return new gException('THEME_IS_EMPTY','Введите тему запроса');
 #-------------------------------------------------------------------------------
-if(Mb_StrLen($Theme) < $Config['Interface']['Edesks']['ThemeMinimumLength'])
+if(Mb_StrLen(Count_Chars($Theme,3)) < $Config['Interface']['Edesks']['ThemeMinimumLength'])
 	return new gException('THEME_IS_TOO_SHORT','Некорректная тема запроса');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
