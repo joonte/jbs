@@ -699,5 +699,93 @@
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 	</UniqID>
 	<!-- *********************************************************************** -->
+	<UniqID>
+		<Server>whois.nic.review</Server>
+		<Name>review</Name>
+		<Available>Not\sfound</Available>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+	</UniqID>
+	<!-- *********************************************************************** -->
+	<UniqID>
+		<Server>whois.nic.club</Server>
+		<Name>club</Name>
+		<Available>Not\sfound</Available>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+	</UniqID>
+	<!-- *********************************************************************** -->
+	<UniqID>
+		<Server>whois.nic.date</Server>
+		<Name>date</Name>
+		<Available>Not\sfound</Available>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+	</UniqID>
+	<!-- *********************************************************************** -->
+	<UniqID>
+		<Server>whois.nic.racing</Server>
+		<Name>racing</Name>
+		<Available>Not\sfound</Available>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+	</UniqID>
+	<!-- *********************************************************************** -->
+	<UniqID>
+		<Server>whois.nic.download</Server>
+		<Name>download</Name>
+		<Available>Not\sfound</Available>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+	</UniqID>
+	<!-- *********************************************************************** -->
+	<UniqID>
+		<Server>whois.nic.faith</Server>
+		<Name>faith</Name>
+		<Available>Not\sfound</Available>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+	</UniqID>
+	<!-- *********************************************************************** -->
+	<UniqID>
+		<Server>whois.nic.win</Server>
+		<Name>win</Name>
+		<Available>Not\sfound</Available>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+	</UniqID>
+	<!-- *********************************************************************** -->
+	<UniqID>
+		<Server>whois.nic.lol</Server>
+		<Name>lol</Name>
+		<Available>\sis\savailable\sfor\sregistration</Available>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+	</UniqID>
+	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
 </XML>
