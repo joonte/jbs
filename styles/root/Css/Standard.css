@@ -376,15 +376,19 @@ span.NodeParam {
     cursor:           pointer;
 }
 /* ------------------------- */
-input[type=text],
-input[type=password] {
-    border:  1px solid silver;
-    padding: 3px;
-    width:   240px;
+input[type=text], input[type=password],input[type=number]
+{
+	/* убираем стрелочки у поля ввода с числом */
+	-webkit-inner-spin-button;
+	-webkit-outer-spin-button {-webkit-appearance: none; margin:0;};
+	-moz-appearance:textfield;
+	border:		1px solid silver;
+	padding:	3px;
+	width:		240px;
 }
 /* ------------------------- */
 /* see http://forum.joonte.com/viewtopic.php?f=4&t=1191#p5674 */
-input[type=text]:focus, input[type=text]:active {
+input[type=text]:focus, input[type=text]:active, input[type=number]:focus, input[type=number]:active {
 	background: #FBF7E2;
 }
 /* ------------------------- */

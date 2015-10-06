@@ -117,7 +117,7 @@ $Comp = Comp_Load(
 		Array(
 			'name'	=> 'Mobile',
 			'size'	=> 25,
-			'type'	=> 'text',
+			'type'	=> 'number',
 			'prompt'=> $Messages['Prompts']['Mobile'],
 			'value'	=> $__USER['Mobile']
 			)
@@ -163,7 +163,7 @@ if ($__USER['MobileConfirmed'] == 0 && $Config['Notifies']['Methods']['SMS']['Is
 	    'Form/Input', Array(
 	'name' => 'MobileConfirmCode',
 	'size' => 25,
-	'type' => 'text',
+	'type' => 'number',
 	'prompt' => $Messages['Prompts']['MobileConfirm'],
 	'value' => ''
 	    )
