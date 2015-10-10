@@ -473,6 +473,8 @@ class ImapMailbox {
 				$filename = $this->quoteAttachmentFilename($filename);
 			}
 			if ($filename) {
+				if(StrLen($filename) > 64)
+					$filename = SubStr($filename,0,64);
 				if ($this->attachmentsDir) {
 					$filepath = rtrim($this->attachmentsDir, '/\\') . DIRECTORY_SEPARATOR . $filename;
 					file_put_contents($filepath, $data);
