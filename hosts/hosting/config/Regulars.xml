@@ -9,7 +9,7 @@
 see: http://forum.lissyara.su/viewtopic.php?f=17&t=34580
 -->
 <Domain>/^([\d\pL]([\d\-\pL]*[\d\pL]){0,62}\.)+\pL{2,16}$/ui</Domain>
-<DomainName>/^[\d\pL]([\d\-\pL]*[\d\pL]){2,62}$/ui</DomainName>
+<DomainName>/^[\d\pL]([\d\-\pL]*[\d\pL]){1,62}$/ui</DomainName>
 <!-- *********************************************************************** -->
 <!--
 <DnsDomain>/^([\d\pL]([\d\-\pL]*[\d\pL]){1,62}\.)+([\d\pL]([\d\-\pL]*[\d\pL]){1,62}\.)+\pL{2,8}$/ui</DnsDomain>
