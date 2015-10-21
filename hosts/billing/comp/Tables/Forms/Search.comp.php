@@ -93,7 +93,9 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $NoBody->AddChild($Comp);
 #-------------------------------------------------------------------------------
-$Table = Array(Array('Поиск',$NoBody));
+$Div = new Tag('DIV', Array('style'=>'cursor:pointer;','OnClick'=>'document.forms.TableSuperForm.Search.value = \'\';'),'Поиск');
+#-------------------------------------------------------------------------------
+$Table = Array(Array($Div,$NoBody));
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Standard',$Table);
 if(Is_Error($Comp))
