@@ -807,7 +807,7 @@ function IspManager5_Password_Change($Settings,$Login,$Password,$Params){
 	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'usrparam','su'=>$Login,'sok'=>'ok','atype'=>'atany','passwd'=>$Password,'confirm'=>$Password,'email'=>$Params['Email']);
+	$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'usrparam','su'=>$Login,'sok'=>'ok','atype'=>'atany','passwd'=>$Password,'confirm'=>$Password,'email'=>$Params['Email'],'experience'=>'expert');
 	#-------------------------------------------------------------------------------
 	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
