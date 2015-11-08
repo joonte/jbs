@@ -693,7 +693,7 @@
 		<Name>club</Name>
 		<Available>Not\sfound</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
-		<MinChars>3</MinChars>
+		<MinChars>4</MinChars>
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
@@ -713,9 +713,9 @@
 	<UniqID>
 		<Server>whois.nic.review</Server>
 		<Name>review</Name>
-		<Available>Not\sfound</Available>
+		<Available>The\squeried\sobject\sdoes\snot\sexist</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
-		<MinChars>3</MinChars>
+		<MinChars>4</MinChars>
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
@@ -726,7 +726,7 @@
 		<Name>club</Name>
 		<Available>Not\sfound</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
-		<MinChars>3</MinChars>
+		<MinChars>4</MinChars>
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
@@ -737,7 +737,7 @@
 		<Name>date</Name>
 		<Available>Not\sfound</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
-		<MinChars>3</MinChars>
+		<MinChars>4</MinChars>
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
@@ -746,9 +746,9 @@
 	<UniqID>
 		<Server>whois.nic.racing</Server>
 		<Name>racing</Name>
-		<Available>Not\sfound</Available>
+		<Available>The\squeried\sobject\sdoes\snot\sexist</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
-		<MinChars>3</MinChars>
+		<MinChars>4</MinChars>
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
@@ -759,7 +759,7 @@
 		<Name>download</Name>
 		<Available>Not\sfound</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
-		<MinChars>3</MinChars>
+		<MinChars>4</MinChars>
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
@@ -770,7 +770,7 @@
 		<Name>faith</Name>
 		<Available>Not\sfound</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
-		<MinChars>3</MinChars>
+		<MinChars>4</MinChars>
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
@@ -781,7 +781,7 @@
 		<Name>win</Name>
 		<Available>Not\sfound</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
-		<MinChars>3</MinChars>
+		<MinChars>4</MinChars>
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
