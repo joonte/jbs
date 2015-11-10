@@ -210,7 +210,9 @@ function DB_Select($TablesIDs,$ColumnsIDs = '*',$Query = Array()){
        #-------------------------------------------------------------------------
       $ColumnID = DB_Escape($ColumnID);
       #-------------------------------------------------------------------------
-      $Array[] = StrPos($ColumnID,'.')?$ColumnID:SPrintF('`%s`',$ColumnID);
+      #$Array[] = StrPos($ColumnID,'.')?$ColumnID:SPrintF('`%s`',$ColumnID);
+      # если в названии встречается точка или запятая - не ставим кавычки...
+      $Array[] = StrpBrk($ColumnID,'.,')?$ColumnID:SPrintF('`%s`',$ColumnID);
       #Debug(SPrintF('[system/libs/auto/DB]: SortOn = %s',$ColumnID));
       #$Array[] = $ColumnID;
     }
