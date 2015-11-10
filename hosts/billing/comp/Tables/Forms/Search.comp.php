@@ -93,7 +93,7 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $NoBody->AddChild($Comp);
 #-------------------------------------------------------------------------------
-$Div = new Tag('DIV', Array('style'=>'cursor:pointer;','OnClick'=>'document.forms.TableSuperForm.Search.value = \'\';'),'Поиск');
+$Div = new Tag('DIV', Array('style'=>'cursor:pointer;','OnClick'=>'s = document.forms.TableSuperForm.Search; s.value = \'\'; s.focus();'),'Поиск');
 #-------------------------------------------------------------------------------
 $Table = Array(Array($Div,$NoBody));
 #-------------------------------------------------------------------------------
