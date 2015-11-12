@@ -892,7 +892,7 @@
 		</EdeskMessageCreate>
 		<!-- ********************************************************************* -->
 		<PartnersReneward>
-			<Title>Прочее</Title>
+			<Title>Финансы</Title>
 			<Name>Партнёрские начисления</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
@@ -912,6 +912,16 @@
 			<IsActive>1</IsActive>
 		</NotPayedInvoice>
 		<!-- ********************************************************************* -->
+		<ConditionallyPayedInvoice>
+			<Name>Условно оплаченные счета</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>0</UseSMS>
+			<IsActive>1</IsActive>
+		</ConditionallyPayedInvoice>
+		<!-- ********************************************************************* -->
 		<CreateAndSendInvoices>
 			<Name>Автоматически выписанные счета</Name>
 			<GroupID>1</GroupID>
@@ -921,6 +931,16 @@
 			<UseSMS>0</UseSMS>
 			<IsActive>1</IsActive>
 		</CreateAndSendInvoices>
+		<!-- ********************************************************************* -->
+		<NegativeContractBalance>
+			<Name>Оповещение о отрицательном баллансе</Name>
+			<GroupID>1</GroupID>
+			<UseEmail>1</UseEmail>
+			<UseICQ>1</UseICQ>
+			<UseJabber>1</UseJabber>
+			<UseSMS>0</UseSMS>
+			<IsActive>1</IsActive>
+		</NegativeContractBalance>
 		<!-- ********************************************************************* -->
 		<OrdersSuspend>
 			<Title>Заказы на прочие услуги</Title>

@@ -99,7 +99,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-# досатаём условные счета ещё раз - уже без тех которые были отменены
+# достаём условные счета ещё раз - уже без тех которые были отменены
 $Where = "`StatusID` = 'Conditionally'";
 #-------------------------------------------------------------------------------
 $Invoices = DB_Select('InvoicesOwners',Array('ID','UserID','CreateDate','Summ','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `InvoicesOwners`.`UserID`) AS `UserEmail`'),Array('SortOn'=>'UserID', 'IsDesc'=>TRUE, 'Where'=>$Where));
@@ -123,7 +123,9 @@ foreach($Invoices as $Invoice){
 	if(Is_Error(DB_Transaction($TransactionID = UniqID('Tasks/GC/NotifyConditionallyInvoice'))))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$msg = new ConditionallyPayedInvoiceMsg($Invoice, (integer)$Invoice['UserID']);
+	#$msg = new ConditionallyPayedInvoiceMsg($Invoice, (integer)$Invoice['UserID']);
+	#$IsSend = NotificationManager::sendMsg($msg);
+	$msg = new Message('ConditionallyPayedInvoice', $Invoice['UserID'], $Invoice);
 	$IsSend = NotificationManager::sendMsg($msg);
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($IsSend)){
@@ -186,23 +188,18 @@ case 'array':
 		#-------------------------------------------------------------------------------
 		$UserBalance['Balance'] = $Summ;
 		#-------------------------------------------------------------------------------
-		$msg = new NegativeContractBalanceMsg($UserBalance = $User, (integer)$User['UserID']);
+		$msg = new Message('NegativeContractBalance', $User['UserID'], $UserBalance = $User);
 		$IsSend = NotificationManager::sendMsg($msg);
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($IsSend)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return ERROR | @Trigger_Error(400);
 		case 'true':
 			break;
-		case 'exception':
-			#-------------------------------------------------------------------------------
-			$Event = Array('UserID'	=>$User['UserID'],'PriorityID'=>'Billing','Text'=>'Уведомление о отрицательном баллансе не отправлено. Не удалось оповестить пользователя ни одним из методов.');
-			$Event = Comp_Load('Events/EventInsert',$Event);
-			if(!$Event)
-				return ERROR | @Trigger_Error(500);
-			#-------------------------------------------------------------------------------
-			break;
-			#-------------------------------------------------------------------------------
 		default:
-			return ERROR | @Trigger_Error(500);
+			return ERROR | @Trigger_Error(101);
 		}
 		#-------------------------------------------------------------------------------
 		# вешаем событие
