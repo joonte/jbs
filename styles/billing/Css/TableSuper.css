@@ -10,7 +10,7 @@ table.TableSuperData {
     font-size:             12px;
     width:                 100%;
 }
-/* disable, because broken line colors
+/* disable, because broken line colors 
 table.TableSuperData > tbody > tr:nth-child(odd) {
   background-color: whitesmoke;
 }
@@ -82,3 +82,8 @@ button.TableSuperIndexes {
 }
 /* ------------------------- */
 /* ------------------------- */
+.HiLightOn{
+	background-color: #ccbbff;
+}
+
+
