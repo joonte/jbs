@@ -98,7 +98,7 @@ foreach($ServersGroups as $ServersGroup){
 	#-------------------------------------------------------------------------------
 	# выбираем все активные сервера этой группы
 	$Columns = Array(
-			'ID','Address','IsDefault','Params',
+			'ID','Address','IsDefault','Params','IsOK',
 			'(SELECT COUNT(*) FROM `OrdersOwners` WHERE `ServerID` = `Servers`.`ID` AND `StatusID` = "Active") AS `AccountsActive`',
 			'(SELECT COUNT(*) FROM `OrdersOwners` WHERE `ServerID` = `Servers`.`ID` AND (`StatusID` = "Active" OR `StatusID` = "Suspended")) AS `AccountsAll`'
 			);
@@ -120,11 +120,35 @@ foreach($ServersGroups as $ServersGroup){
 			if(!$Servers[$Key]['Params']['IsAutoBalancing'])
 				UnSet($Servers[$Key]);
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: Servers = %s',print_r($Servers,true)));
+		#Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: Servers = %s',print_r($Servers,true)));
 		#-------------------------------------------------------------------------------
 		if(SizeOf($Servers) < 1){
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: group #%u (%s) not have servers with enabled AutoBalance',$ServersGroup['ID'],$ServersGroup['Name']));
+			#-------------------------------------------------------------------------------
+			continue 2;
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		# убираем из массива сервера, у которых не 100% аптайм
+		foreach(Array_Keys($Servers) as $Key){
+			#-------------------------------------------------------------------------------
+			if($Servers[$Key]['IsOK'] != 100){
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: сервер %s исключён из автобалансировки, аптайм = %s%%',$Servers[$Key]['Address'],$Servers[$Key]['IsOK']));
+				#-------------------------------------------------------------------------------
+				UnSet($Servers[$Key]);
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		#Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: Servers = %s',print_r($Servers,true)));
+		#-------------------------------------------------------------------------------
+		if(SizeOf($Servers) < 1){
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: group #%u (%s) not have servers with 100% uptime',$ServersGroup['ID'],$ServersGroup['Name']));
 			#-------------------------------------------------------------------------------
 			continue 2;
 			#-------------------------------------------------------------------------------
