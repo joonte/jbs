@@ -905,12 +905,6 @@
    <DaysAgregate>1</DaysAgregate>
   </ServersUpTime>
   <!-- ********************************************************************* -->
-  <UpTimeAgregate>
-   <Name>Агрегация стастистики мониторинга серверов</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </UpTimeAgregate>
-  <!-- ********************************************************************* -->
   <!-- ********************************************************************* -->
 		<GC>
 			<!-- ********************************************************************* -->
@@ -951,6 +945,9 @@
 				<DomainPriceDeviationSumm>25</DomainPriceDeviationSumm>
 			</DomainCheckPriceListSettings>
 			<!-- ********************************************************************* -->
+			<UpTimeAgregateSettings>
+				<IsActive>1</IsActive>
+			</UpTimeAgregateSettings>
 			<!-- задачи -->
 			<DailyTasks>
 				<EraseDeletedOrders>Удаление заказов в статусе Удален</EraseDeletedOrders>
@@ -966,6 +963,7 @@
 				<DeleteDomainForTransfer>Удаление доменов в статусе &quot;Для переноса&quot;</DeleteDomainForTransfer>
 				<DomainFindOdd>Поиск доменов отсутствующих в биллинге/у регистратора</DomainFindOdd>
 				<DomainCheckPriceList>Проверка цен на домены у вышестоящих регистраторов</DomainCheckPriceList>
+				<UpTimeAgregate>Агрегация стастистики мониторинга серверов</UpTimeAgregate>
 			</DailyTasks>
 			<!-- ********************************************************************* -->
 		</GC>

@@ -1196,7 +1196,7 @@
    <CleanTablesSettings>
     <IsActive>1</IsActive>
     <TableTasksStoryPeriod>60</TableTasksStoryPeriod>
-    <TableServersUpTimeStoryPeriod>186</TableServersUpTimeStoryPeriod>
+    <TableServersUpTimeStoryPeriod>3650</TableServersUpTimeStoryPeriod>
     <TableRequestLogStoryPeriod>186</TableRequestLogStoryPeriod>
    </CleanTablesSettings>
    <!-- ********************************************************************* -->

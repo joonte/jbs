@@ -15,7 +15,6 @@ VALUES
 (59,1,'DomainOrdersWhoIsUpdate','[]','yes'),
 (60,1,'ServersQuestioning','[]','yes'),
 (61,1,'ServersUpTime','[]','yes'),
-(62,1,'UpTimeAgregate','[]','yes'),
 (70,1,'VPSForDelete','[]','yes'),
 (74,1,'DSForDelete','[]','yes'),
 (75,1,'DSCalculateNumServers','[]','yes'),
