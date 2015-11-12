@@ -123,8 +123,6 @@ foreach($Invoices as $Invoice){
 	if(Is_Error(DB_Transaction($TransactionID = UniqID('Tasks/GC/NotifyConditionallyInvoice'))))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	#$msg = new ConditionallyPayedInvoiceMsg($Invoice, (integer)$Invoice['UserID']);
-	#$IsSend = NotificationManager::sendMsg($msg);
 	$msg = new Message('ConditionallyPayedInvoice', $Invoice['UserID'], $Invoice);
 	$IsSend = NotificationManager::sendMsg($msg);
 	#-------------------------------------------------------------------------------
