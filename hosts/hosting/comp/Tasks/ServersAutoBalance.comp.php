@@ -134,7 +134,7 @@ foreach($ServersGroups as $ServersGroup){
 		# убираем из массива сервера, у которых не 100% аптайм
 		foreach(Array_Keys($Servers) as $Key){
 			#-------------------------------------------------------------------------------
-			if(!Is_Null($Servers[$Key]['IsOK']) || $Servers[$Key]['IsOK'] != 100){
+			if(Is_Null($Servers[$Key]['IsOK']) || $Servers[$Key]['IsOK'] != 100){
 				#-------------------------------------------------------------------------------
 				Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: сервер %s исключён из автобалансировки, аптайм = %s%%',$Servers[$Key]['Address'],$Servers[$Key]['IsOK']));
 				#-------------------------------------------------------------------------------
@@ -144,11 +144,11 @@ foreach($ServersGroups as $ServersGroup){
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: Servers = %s',print_r($Servers,true)));
+		Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: Servers = %s',print_r($Servers,true)));
 		#-------------------------------------------------------------------------------
 		if(SizeOf($Servers) < 1){
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: group #%u (%s) not have servers with 100% uptime',$ServersGroup['ID'],$ServersGroup['Name']));
+			Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: group #%u (%s) not have servers with 100%% uptime',$ServersGroup['ID'],$ServersGroup['Name']));
 			#-------------------------------------------------------------------------------
 			continue 2;
 			#-------------------------------------------------------------------------------
