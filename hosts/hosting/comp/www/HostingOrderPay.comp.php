@@ -43,6 +43,8 @@ if(!In_Array($HostingOrder['StatusID'],Array('Waiting','Active','Suspended')))
 	return new gException('ORDER_CAN_NOT_PAY','Заказ хостинга не может быть оплачен');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$__USER = $GLOBALS['__USER'];
+#-------------------------------------------------------------------------------
 $UserID = (integer)$HostingOrder['UserID'];
 #-------------------------------------------------------------------------------
 $IsPermission = Permission_Check('HostingOrdersRead',(integer)$GLOBALS['__USER']['ID'],$UserID);
@@ -82,8 +84,6 @@ $Form->AddChild($Comp);
 $DOM->AddText('Title',SPrintF('Оплата заказа хостинга, %s',$HostingOrder['Login']));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/OrderPay.js}')));
-#-------------------------------------------------------------------------------
-$__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
 $HostingScheme = DB_Select('HostingSchemes',Array('ID','CostDay','MinDaysPay','MinDaysProlong','MaxDaysPay','IsActive','IsProlong'),Array('UNIQ','ID'=>$HostingOrder['SchemeID']));
 #-------------------------------------------------------------------------------
@@ -391,6 +391,11 @@ if($DaysPay){
 		#-------------------------------------------------------------------------------
 		$DaysFromBallance = Floor($HostingOrder['ContractBalance'] / $HostingScheme['CostDay']);
 		#-------------------------------------------------------------------------------
+		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',$DaysFromBallance,$HostingScheme,$HostingOrder,$UserID);
+		if(Is_Error($DaysFromBallance))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 		if($MinDaysPay <= $DaysFromBallance){
 			#-------------------------------------------------------------------------------
 			if($IsPeriods){
@@ -401,9 +406,13 @@ if($DaysPay){
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
-			$Table[] = new Tag('TD',Array('class'=>'Separator','colspan'=>2),$Comp,new Tag('SPAN','Остаток денег на балансе (' . $HostingOrder['ContractBalance'] . ' руб.)'));
+			$Comp = Comp_Load('Formats/Currency',$HostingOrder['ContractBalance']);
+			if(Is_Error($Comp))
+				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$Table[] = Array('Остатка на счету хватит на ',$DaysFromBallance . ' дней');
+			$Table[] = new Tag('TD',Array('class'=>'Separator','colspan'=>2),$Comp,new Tag('SPAN',SPrintF('Остаток денег на балансе (%s)',$Comp)));
+			#-------------------------------------------------------------------------------
+			$Table[] = Array('Остатка на счету хватит на',SPrintF('%s дней',$DaysFromBallance));
 			#-------------------------------------------------------------------------------
 			$Comp = Comp_Load('Form/Input',Array('name'=>'DaysPayFromBallance','value'=>$DaysFromBallance,'type'=>'hidden'));
 			if(Is_Error($Comp))

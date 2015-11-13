@@ -17,7 +17,7 @@ $DaysPay        = (integer) @$Args['DaysPay'];
 $IsChange       = (boolean) @$Args['IsChange'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Tree.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','OrderID','ServiceID','Login','StatusID','UserID','SchemeID','DaysRemainded','(SELECT `TypeID` FROM `Contracts` WHERE `VPSOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractTypeID`','(SELECT `Balance` FROM `Contracts` WHERE `VPSOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `GroupID` FROM `Users` WHERE `VPSOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `VPSOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`VPSOrdersOwners`.`OrderID`) AS PayedSumm');
 #-------------------------------------------------------------------------------
@@ -396,6 +396,12 @@ switch(ValueOf($VPSOrder)){
 	      #-----------------------------------------------------------------
               if($VPSScheme['CostDay'] > 0){
                 $DaysFromBallance = Floor($VPSOrder['ContractBalance'] / $VPSScheme['CostDay']);
+		#-------------------------------------------------------------------------------		
+		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',$DaysFromBallance,$VPSScheme,$VPSOrder,$UserID);
+		if(Is_Error($DaysFromBallance))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
                 if($MinDaysPay <= $DaysFromBallance){
                   if($IsPeriods){
                     #---------------------------------------------------------------

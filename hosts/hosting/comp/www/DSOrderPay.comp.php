@@ -395,6 +395,12 @@ switch(ValueOf($DSOrder)){
 	      #-----------------------------------------------------------------
               if($DSScheme['CostDay'] > 0){
                 $DaysFromBallance = Floor($DSOrder['ContractBalance'] / $DSScheme['CostDay']);
+		#-------------------------------------------------------------------------------
+		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',$DaysFromBallance,$DSScheme,$DSOrder,$UserID);
+		if(Is_Error($DaysFromBallance))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
                 if($MinDaysPay <= $DaysFromBallance){
                   if($IsPeriods){
                     #---------------------------------------------------------------

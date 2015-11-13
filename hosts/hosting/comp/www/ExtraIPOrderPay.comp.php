@@ -393,6 +393,12 @@ switch(ValueOf($ExtraIPOrder)){
 	      #-----------------------------------------------------------------
               if($ExtraIPScheme['CostDay'] > 0){
                 $DaysFromBallance = Floor($ExtraIPOrder['ContractBalance'] / $ExtraIPScheme['CostDay']);
+		#-------------------------------------------------------------------------------
+		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',$DaysFromBallance,$ExtraIPScheme,$ExtraIPOrder,$UserID);
+		if(Is_Error($DaysFromBallance))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
                 if($MinDaysPay <= $DaysFromBallance){
                   if($IsPeriods){
                     #---------------------------------------------------------------

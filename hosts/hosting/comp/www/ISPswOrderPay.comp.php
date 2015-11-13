@@ -395,6 +395,12 @@ $DaysPay = 1;
 	      #-----------------------------------------------------------------
               if($ISPswScheme['CostDay'] > 0){
                 $DaysFromBallance = Floor($ISPswOrder['ContractBalance'] / $ISPswScheme['CostDay']);
+		#-------------------------------------------------------------------------------
+		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',$DaysFromBallance,$ISPswScheme,$ISPswOrder,$UserID);
+		if(Is_Error($DaysFromBallance))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
                 if($MinDaysPay <= $DaysFromBallance){
                   if($IsPeriods){
                     #---------------------------------------------------------------

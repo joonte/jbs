@@ -385,6 +385,12 @@ switch(ValueOf($DNSmanagerOrder)){
 	      #-----------------------------------------------------------------
 	      if($DNSmanagerScheme['CostDay'] > 0){
                 $DaysFromBallance = Floor($DNSmanagerOrder['ContractBalance'] / $DNSmanagerScheme['CostDay']);
+		#-------------------------------------------------------------------------------
+		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',$DaysFromBallance,$DNSmanagerScheme,$DNSmanagerOrder,$UserID);
+		if(Is_Error($DaysFromBallance))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 	        if($MinDaysPay <= $DaysFromBallance){
                   if($IsPeriods){
                     #---------------------------------------------------------------
