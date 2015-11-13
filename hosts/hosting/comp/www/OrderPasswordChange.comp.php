@@ -11,9 +11,14 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ServiceOrderID	= (integer) @$Args['ServiceOrderID'];
 $ServiceID	= (integer) @$Args['ServiceID'];
+$ServerID	= (integer) @$Args['ServerID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($ServerID)
+	return new gException('SERVER_ADMIN_PASSWORD_CHANGE_NOT_IMPLEMENTED','Смена пароля администратора сервера не реализована');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Service = DB_Select('ServicesOwners',Array('*'),Array('UNIQ','ID'=>$ServiceID));
