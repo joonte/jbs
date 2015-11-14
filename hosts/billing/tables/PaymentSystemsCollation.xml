@@ -117,6 +117,7 @@
 	<!-- *********************************************************************** -->
 	<Destination>
 		<Head>Итоговая</Head>
+		<Prompt>Название платёжной системы, которое будет отображено клиенту при оплате</Prompt>
 		<Comp>Formats/String</Comp>
 		<Args>
 			<ListElement>%Destination%</ListElement>

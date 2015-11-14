@@ -114,7 +114,7 @@ if(Is_Error($Comp))
 $Table[] = Array('Итоговая платёжная система',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',	Array('type'=>'text','name'=>'Image','style'=>'width: 100%;','value'=>$Collation['Image'],'prompt'=>SPrintF("Имя файла с логотипом платёжной системы. (135x70, прозрачный фон)\nВсе имеющиеся изображения можно посмотреть по пути: %s/styles/billing/Images/PaymentSystems/\nсвои собственные изображеняи следует выкладывать по пути: %s/styles/%s/Images/PaymentSystems/",SYSTEM_PATH,SYSTEM_PATH,HOST_ID)));
+$Comp = Comp_Load('Form/Input',	Array('type'=>'text','name'=>'Image','style'=>'width: 100%;','value'=>$Collation['Image'],'prompt'=>SPrintF("Имя файла с логотипом платёжной системы. (135x70, прозрачный фон)\nВсе имеющиеся изображения можно посмотреть по пути: %s/styles/billing/Images/PaymentSystems/\nсвои собственные изображеня следует выкладывать по пути: %s/styles/%s/Images/PaymentSystems/",SYSTEM_PATH,SYSTEM_PATH,HOST_ID)));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
