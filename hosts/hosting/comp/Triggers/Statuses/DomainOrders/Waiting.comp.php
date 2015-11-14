@@ -47,7 +47,7 @@ $Params = Array(
 		'MinOrdersPeriod'	=> $Scheme['MinOrdersPeriod'],
 		'ServiceID'		=> $Service['ID'],
 		'ServiceName'		=> $Service['Name'],
-		'SchemeName'		=> $Scheme['Name']
+		'SchemeName'		=> SPrintF('%s.%s',$DomainOrder['DomainName'],$Scheme['Name'])
 		);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Services/Orders/OrdersHistory',$Params);
