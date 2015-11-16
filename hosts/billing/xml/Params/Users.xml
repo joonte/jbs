@@ -48,53 +48,56 @@
 		<Value>Left</Value>
 	</EdesksDisplay>
 	<!-- *********************************************************************** -->
-	<EdeskNoPreview>
-		<Comment>Не отображать миниатюры изображений</Comment>
-		<CommentAttribs>
-			<style>cursor:pointer;</style>
-			<onclick>ChangeCheckBox('EdeskNoPreview'); return false;</onclick>
-			<prompt>Не отображать эскизы картинок в окне просмотра тикета</prompt>
-		</CommentAttribs>
-		<Type>Input</Type>
-		<Check>ID</Check>
+	<EdeskImagesPreview>
+		<Comment>Отображать миниатюры изображений</Comment>
+		<Type>Select</Type>
+		<Options>
+			<Yes>Да</Yes>
+			<No>Нет</No>
+		</Options>
+		<Check>Char</Check>
 		<Attribs>
-			<type>checkbox</type>
+			<size>1</size>
+			<style>width: 100%;</style>
+			<prompt>Включение/отключение предпросмотра приложенных к тикетам изображений/ссылок на изображения</prompt>
 		</Attribs>
-		<IsDuty>0</IsDuty>
-		<Value>yes</Value>
-	</EdeskNoPreview>
+		<IsDuty>1</IsDuty>
+		<Value>Yes</Value>
+	</EdeskImagesPreview>
 	<!-- *********************************************************************** -->
-	<NotSendEdeskFilesToEmail>
-		<Comment>Не присылать вложения к тикетам на почту</Comment>
-		<CommentAttribs>
-			<style>cursor:pointer;</style>
-			<onclick>ChangeCheckBox('NotSendEdeskFilesToEmail'); return false;</onclick>
-			<prompt>Не присылать прикрепленные к тикету файлы на почту</prompt>
-		</CommentAttribs>
-		<Type>Input</Type>
-		<Check>ID</Check>
+	<SendEdeskFilesToEmail>
+		<Comment>Присылать вложения к тикетам на почту</Comment>
+		<Type>Select</Type>
+		<Options>
+			<Yes>Да</Yes>
+			<No>Нет</No>
+		</Options>
+		<Check>Char</Check>
 		<Attribs>
-			<type>checkbox</type>
+			<size>1</size>
+			<style>width: 100%;</style>
+			<prompt>Присылать или нет прикрепленные к тикету файлы на почту</prompt>
 		</Attribs>
-		<IsDuty>0</IsDuty>
-		<Value>yes</Value>
-	</NotSendEdeskFilesToEmail>
+		<IsDuty>1</IsDuty>
+		<Value>Yes</Value>
+	</SendEdeskFilesToEmail>
 	<!-- *********************************************************************** -->
-	<EdeskOnlyMyButtons>
+	<EdeskButtons>
 		<Comment>Показывать только персональные кнопки</Comment>
-		<CommentAttribs>
-			<style>cursor:pointer;</style>
-			<onclick>ChangeCheckBox('EdeskNoPreview'); return false;</onclick>
-			<prompt>Не показывать кнопки относящиеся ко всем сотрудникам, показывать только свои</prompt>
-		</CommentAttribs>
-		<Type>Input</Type>
-		<Check>ID</Check>
+		<Type>Select</Type>
+		<Options>
+			<Yes>Да</Yes>
+			<No>Нет</No>
+		</Options>
+		<Check>Char</Check>
 		<Attribs>
-			<type>checkbox</type>
+			<size>1</size>
+			<style>width: 100%;</style>
+			<prompt>Показывать кнопки относящиеся ко всем сотрудникам, или же показывать только свои</prompt>
 		</Attribs>
-		<IsDuty>0</IsDuty>
-		<Value>yes</Value>
-	</EdeskOnlyMyButtons>
+		<IsDuty>1</IsDuty>
+		<Value>No</Value>
+	</EdeskButtons>
 	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
 	<CreateInvoicesAutomatically>
@@ -153,13 +156,13 @@
 			<style>width: 100%;</style>
 			<prompt>Время начала рассылки SMS сообщений</prompt>
 		</Attribs>
-		<IsDuty>0</IsDuty>
-		<Value>Time_00</Value>
+		<IsDuty>1</IsDuty>
+		<Value>Time_09</Value>
 	</SMSBeginTime>
 	<!-- *********************************************************************** -->
 	<!--  период в который разрешена отправка SMS: конец периода -->
 	<SMSEndTime>
-		<Comment>Время начала рассылки</Comment>
+		<Comment>Время конца рассылки</Comment>
 		<Type>Select</Type>
 		<Options>
 			<Time_00>00:00</Time_00>
@@ -193,8 +196,8 @@
 			<style>width: 100%;</style>
 			<prompt>Время окончания рассылки SMS сообщений</prompt>
 		</Attribs>
-		<IsDuty>0</IsDuty>
-		<Value>Time_00</Value>
+		<IsDuty>1</IsDuty>
+		<Value>Time_21</Value>
 	</SMSEndTime>
 	<!-- *********************************************************************** -->
 </Settings>

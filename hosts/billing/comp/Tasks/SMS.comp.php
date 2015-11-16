@@ -44,32 +44,36 @@ $IsImmediately = (IsSet($IsImmediately)?$IsImmediately:FALSE);
 $TransferTime = FALSE;
 #-------------------------------------------------------------------------------
 # возможно, параметры не заданы/требуется немедленная отправка - время не опредлеяем
-if(IsSet($User['Params']['SMSTime']) && !$IsImmediately){
+if(!$IsImmediately){
 	#-------------------------------------------------------------------------------
-	$SMSTime = $User['Params']['SMSTime'];
+	$SMSBeginTime = $User['Params']['Settings']['SMSBeginTime'];
+	$SMSBeginTime = IntVal(SubStr($SMSBeginTime,StrPos($SMSBeginTime,'_')+1,StrLen($SMSBeginTime)));
+	#-------------------------------------------------------------------------------
+	$SMSEndTime = $User['Params']['Settings']['SMSEndTime'];
+	$SMSEndTime = IntVal(SubStr($SMSEndTime,StrPos($SMSEndTime,'_')+1,StrLen($SMSEndTime)));
 	#-------------------------------------------------------------------------------
 	# время окончания, если оно 0:00 - это больше чем 23:00, например... надо 0->24
-	$SMSTime['SMSEndTime'] = (($SMSTime['SMSEndTime'] == 0)?24:$SMSTime['SMSEndTime']);
+	$SMSEndTime = (($SMSEndTime == 0)?24:$SMSEndTime);
 	#-------------------------------------------------------------------------------
-	if(IsSet($SMSTime['SMSBeginTime']) && IsSet($SMSTime['SMSEndTime']) && $SMSTime['SMSBeginTime'] != $SMSTime['SMSEndTime']){
+	if($SMSBeginTime != $SMSEndTime){
 		#-------------------------------------------------------------------------------
 		# если обычный период, например 9:00-18:00
-		if($SMSTime['SMSBeginTime'] < $SMSTime['SMSEndTime']){
+		if($SMSBeginTime < $SMSEndTime){
 			#-------------------------------------------------------------------------------
-			if(Date('G') >= $SMSTime['SMSBeginTime'] && Date('G') < $SMSTime['SMSEndTime']){
+			if(Date('G') >= $SMSBeginTime && Date('G') < $SMSEndTime){
 				# OK
 			}else{
 				#-------------------------------------------------------------------------------
-				if(Date('G') < $SMSTime['SMSBeginTime']){
+				if(Date('G') < $SMSBeginTime){
 					#-------------------------------------------------------------------------------
 					# сегодня попзже
-					$TransferTime = MkTime($SMSTime['SMSBeginTime'],0,0,Date('n'),Date('j'),Date('Y'));
+					$TransferTime = MkTime($SMSBeginTime,0,0,Date('n'),Date('j'),Date('Y'));
 					Debug(SPrintF('[comp/Tasks/SMS]: Перенос отправки сообщения (%u) на %s',$Mobile,Date('Y-m-d/H:i:s',$TransferTime)));
 					#-------------------------------------------------------------------------------
 				}else{
 					#-------------------------------------------------------------------------------
 					# завтра пораньше
-					$TransferTime = MkTime($SMSTime['SMSBeginTime'],0,0,Date('n'),Date('j')+1,Date('Y'));
+					$TransferTime = MkTime($SMSBeginTime,0,0,Date('n'),Date('j')+1,Date('Y'));
 					Debug(SPrintF('[comp/Tasks/SMS]: Перенос отправки сообщения (%u) на завтра, %s',$Mobile,Date('Y-m-d/H:i:s',$TransferTime)));
 					#-------------------------------------------------------------------------------
 				}
@@ -78,10 +82,10 @@ if(IsSet($User['Params']['SMSTime']) && !$IsImmediately){
 		}else{
 			#-------------------------------------------------------------------------------
 			# период типа 21:00-8:00
-			if(Date('G') < $SMSTime['SMSBeginTime'] && Date('G') >= $SMSTime['SMSEndTime']){
+			if(Date('G') < $SMSBeginTime && Date('G') >= $SMSEndTime){
 				#-------------------------------------------------------------------------------
 				# время типа 12:00 - требуется перенос на SMSBeginTime, сегодня
-				$TransferTime = MkTime($SMSTime['SMSBeginTime'],0,0,Date('n'),Date('j'),Date('Y'));
+				$TransferTime = MkTime($SMSBeginTime,0,0,Date('n'),Date('j'),Date('Y'));
 				Debug(SPrintF('[comp/Tasks/SMS]: Перенос отправки сообщения (%u) на %s', $Mobile,Date('Y-m-d/H:i:s',$TransferTime)));
 				#-------------------------------------------------------------------------------
 			}else{

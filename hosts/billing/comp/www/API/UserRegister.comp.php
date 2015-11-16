@@ -15,7 +15,6 @@ $Args = IsSet($Args)?$Args:Args();
 $Email		=  (string) @$Args['Email'];
 $Password	=  (string) @$Args['Password'];
 $Name		=  (string) @$Args['Name'];
-$ICQ		=  (string) @$Args['ICQ'];
 $Protect	= (integer) @$Args['Protect'];
 $Message	=  (string) @$Args['Message'];
 $IsInternal	= (boolean) @$Args['IsInternal'];
@@ -59,10 +58,6 @@ if(Is_Exception($IsCheck))
 if(!Preg_Match($Regulars['Char'],$Name))
 	return new gException('WRONG_USER_NAME','Неверно указано Ваше имя');
 #-------------------------------------------------------------------------------
-if($ICQ)
-	if(!Preg_Match($Regulars['ICQ'],$ICQ))
-		return new gException('WRONG_ICQ','Неверно указан ICQ-номер');
-#-------------------------------------------------------------------------------
 if((!IsSet($GLOBALS['__USER']) && $_SERVER['REMOTE_ADDR'] != $_SERVER['SERVER_ADDR']) && $Settings['Captcha']['IsActive']){
 	#-------------------------------------------------------------------------------
 	$Array = Explode(',',$Settings['Captcha']['ExcludeIPs']);
@@ -84,153 +79,186 @@ if((!IsSet($GLOBALS['__USER']) && $_SERVER['REMOTE_ADDR'] != $_SERVER['SERVER_AD
 			return new gException('WRONG_PROTECT_CODE','Введенный Вами защитный код неверен, либо устарел. Пожалуйста, введите его заново.');
 		#-------------------------------------------------------------------------------
 	}
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Template = System_XML('xml/Params/Users.xml');
+if(Is_Error($Template))
+	return new gException('ERROR_TEMPLATE_LOAD','Ошибка загрузки шаблона');
+#-------------------------------------------------------------------------------
+$Params = Array('Settings'=>Array(),'NotificationMethods'=>Array());
+#-------------------------------------------------------------------------------
+foreach(Array_Keys($Template['Settings']) as $Key)
+	$Params['Settings'][$Key] = $Template['Settings'][$Key]['Value'];
+#-------------------------------------------------------------------------------
+foreach(Array_Keys($Template['NotificationMethods']) as $Key){
+	#-------------------------------------------------------------------------------
+	$Params['NotificationMethods'][$Key] = Array();
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Template['NotificationMethods'][$Key]) as $Value)
+		$Params['NotificationMethods'][$Key][$Value] = '';
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+if($IsInternal)
+	$Params['IsAutoRegistered'] = TRUE;
+#-------------------------------------------------------------------------------
+Debug(SPrintF('[comp/www/API/UserRegister]: $Params = %s',print_r($Params,true)));
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $IUser = Array(
-  #-----------------------------------------------------------------------------
-  'Name'            => $Name,
-  'Sign'            => SPrintF('%s %s.',$Settings['Sign'],$Name),
-  'Watchword'       => Md5($Password),
-  'UniqID'          => Md5(UniqID()),
-  'Email'           => $Email,
-  'ICQ'             => $ICQ,
-  'LayPayMaxDays'   => $Settings['LayPayMaxDays'],
-  'LayPayMaxSumm'   => $Settings['LayPayMaxSumm'],
-  'LayPayThreshold' => $Settings['LayPayThreshold'],
-  'Params'          => ($IsInternal)?Array('IsAutoRegistered'=>TRUE):Array(),
-);
+		'Name'			=> $Name,
+		'Sign'			=> SPrintF('%s %s.',$Settings['Sign'],$Name),
+		'Watchword'		=> Md5($Password),
+		'UniqID'		=> Md5(UniqID()),
+		'Email'			=> $Email,
+		'LayPayMaxDays'		=> $Settings['LayPayMaxDays'],
+		'LayPayMaxSumm'		=> $Settings['LayPayMaxSumm'],
+		'LayPayThreshold'	=> $Settings['LayPayThreshold'],
+		'Params'		=> $Params,
+		);
 #-------------------------------------------------------------------------------
 $Group = DB_Select('Groups','ID',Array('UNIQ','Where'=>"`IsDefault` = 'yes'"));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Group)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return new gException('DEFAULT_GROUP_NOT_FOUND','Группа по умолчанию не найдена');
-  case 'array':
-    $IUser['GroupID'] = $Group['ID'];
-  break;
-  default:
-    return ERROR | @Trigger_Error(101);
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return new gException('DEFAULT_GROUP_NOT_FOUND','Группа по умолчанию не найдена');
+case 'array':
+	#-------------------------------------------------------------------------------
+	$IUser['GroupID'] = $Group['ID'];
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Is_Error(DB_Transaction($TransactionID = UniqID('UserRegister'))))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $UserID = DB_Insert('Users',$IUser);
 if(Is_Error($UserID))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $OwnerID = 0;
 #-------------------------------------------------------------------------------
 if(IsSet($_COOKIE['OwnerID']))
-  $OwnerID = $_COOKIE['OwnerID'];
+	$OwnerID = $_COOKIE['OwnerID'];
 #-------------------------------------------------------------------------------
-if($OwnerID){  #-----------------------------------------------------------------------------
-  $Owner = DB_Select('Users',Array('ID','GroupID','IsInheritGroup'),Array('UNIQ','ID'=>$OwnerID));
-  #-----------------------------------------------------------------------------
-  switch(ValueOf($Owner)){
-    case 'error':
-      return ERROR | @Trigger_Error(500);
-    case 'exception':
-      # No more...
-    break;
-    case 'array':
-      #-------------------------------------------------------------------------
-      $UUpdate = Array(
-        #-----------------------------------------------------------------------
-        'OwnerID'   => $OwnerID,
-        'IsManaged' => IsSet($_COOKIE['IsManaged'])
-      );
-      #-------------------------------------------------------------------------
-      if($Owner['IsInheritGroup'])
-        $UUpdate['GroupID'] = $Owner['GroupID'];
-      #-------------------------------------------------------------------------
-      $IsUpdate = DB_Update('Users',$UUpdate,Array('ID'=>$UserID));
-      if(Is_Error($IsUpdate))
-        return ERROR | @Trigger_Error(500);
-      #-------------------------------------------------------------------------
-    break;
-    default:
-      return ERROR | @Trigger_Error(101);
-  }
+if($OwnerID){
+	#-------------------------------------------------------------------------------
+	$Owner = DB_Select('Users',Array('ID','GroupID','IsInheritGroup'),Array('UNIQ','ID'=>$OwnerID));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Owner)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		# No more...
+		break;
+	case 'array':
+		#-------------------------------------------------------------------------------
+		$UUpdate = Array(
+				'OwnerID'	=> $OwnerID,
+				'IsManaged'	=> IsSet($_COOKIE['IsManaged'])
+				);
+		#-------------------------------------------------------------------------------
+		if($Owner['IsInheritGroup'])
+			$UUpdate['GroupID'] = $Owner['GroupID'];
+		#-------------------------------------------------------------------------------
+		$IsUpdate = DB_Update('Users',$UUpdate,Array('ID'=>$UserID));
+		if(Is_Error($IsUpdate))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		break;
+		#-------------------------------------------------------------------------------
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Users/Init',$UserID);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('www/API/ContractMake',Array('TypeID'=>'Default'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Comp)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return ERROR | @Trigger_Error(400);
-  case 'array':
-    #---------------------------------------------------------------------------
-    $ContractID = $Comp['ContractID'];
-    #---------------------------------------------------------------------------
-    $IsSend = NotificationManager::sendMsg(new Message('UserRegister',(integer)$UserID,Array('Password'=>$Password)));
-    #---------------------------------------------------------------------------
-    switch(ValueOf($IsSend)){
-      case 'error':
-        return ERROR | @Trigger_Error(500);
-      case 'exception':
-        # No more...
-      case 'true':
-        #-----------------------------------------------------------------------
-	$Event = Array(
-			'UserID'	=> 1,
-			'Text'		=> SPrintF('%s (%s)',($Message)?$Message:'Зарегистрирован пользователь',$Email)
-		      );
-	$Event = Comp_Load('Events/EventInsert',$Event);
-	if(!$Event)
-		return ERROR | @Trigger_Error(500);
-        #-----------------------------------------------------------------------
-        if(Is_Error(DB_Commit($TransactionID)))
-          return ERROR | @Trigger_Error(500);
-        #-----------------------------------------------------------------------
-	if($IsInternal)
-		return Array('Status'=>'Ok','ID'=>$UserID);
-	#-----------------------------------------------------------------------
-        $SessionID = (IsSet($_COOKIE['SessionID']) && StrLen($_COOKIE['SessionID'])?$_COOKIE['SessionID']:UniqID('SESSION'));
-        #-----------------------------------------------------------------------
-        $Session = new Session($SessionID);
-        #-----------------------------------------------------------------------
-        $IsLoad = $Session->Load();
-        if(Is_Error($IsLoad))
-          return ERROR | @Trigger_Error(500);
-        #-----------------------------------------------------------------------
-        if(!$IsLoad){
-          #---------------------------------------------------------------------
-          $Session->Data['UsersIDs'] = Array();
-          #---------------------------------------------------------------------
-          if(!SetCookie('SessionID',$SessionID,Time() + 2678400,'/'))
-            return ERROR | @Trigger_Error(500);
-          #---------------------------------------------------------------------
-          if(!SetCookie('Email',$Email,Time() + 2678400,'/'))
-            return ERROR | @Trigger_Error(500);
-        }
-        #-----------------------------------------------------------------------
-        $IsUpdated = DB_Update('Users',Array('EnterDate'=>Time(),'EnterIP'=>$_SERVER['REMOTE_ADDR']),Array('ID'=>$UserID));
-        if(Is_Error($IsUpdated))
-          return ERROR | @Trigger_Error(500);
-        #-----------------------------------------------------------------------
-        Array_UnShift($Session->Data['UsersIDs'],$UserID);
-        #-----------------------------------------------------------------------
-        if(Is_Error($Session->Save()))
-          return ERROR | @Trigger_Error(500);
-        #-----------------------------------------------------------------------
-        return Array('Status'=>'Ok','SessionID'=>$SessionID,'Home'=>($Eval?SPrintF('/Home?Eval=%s',$Eval):'/Home'),'ContractID'=>$ContractID,'UserID'=>$UserID);
-      default:
-        return ERROR | @Trigger_Error(101);
-    }
-  default:
-    return ERROR | @Trigger_Error(101);
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+$ContractID = $Comp['ContractID'];
+#-------------------------------------------------------------------------------
+$IsSend = NotificationManager::sendMsg(new Message('UserRegister',(integer)$UserID,Array('Password'=>$Password)));
+#-------------------------------------------------------------------------------
+switch(ValueOf($IsSend)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	break;
+case 'true':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+$Event = Array('UserID'=>1,'Text'=>SPrintF('%s (%s)',($Message)?$Message:'Зарегистрирован пользователь',$Email));
+$Event = Comp_Load('Events/EventInsert',$Event);
+if(!$Event)
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if(Is_Error(DB_Commit($TransactionID)))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($IsInternal)
+	return Array('Status'=>'Ok','ID'=>$UserID);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$SessionID = (IsSet($_COOKIE['SessionID']) && StrLen($_COOKIE['SessionID'])?$_COOKIE['SessionID']:UniqID('SESSION'));
+#-------------------------------------------------------------------------------
+$Session = new Session($SessionID);
+#-------------------------------------------------------------------------------
+$IsLoad = $Session->Load();
+if(Is_Error($IsLoad))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if(!$IsLoad){
+	#-------------------------------------------------------------------------------
+	$Session->Data['UsersIDs'] = Array();
+	#-------------------------------------------------------------------------------
+	if(!SetCookie('SessionID',$SessionID,Time() + 2678400,'/'))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	if(!SetCookie('Email',$Email,Time() + 2678400,'/'))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+$IsUpdated = DB_Update('Users',Array('EnterDate'=>Time(),'EnterIP'=>$_SERVER['REMOTE_ADDR']),Array('ID'=>$UserID));
+if(Is_Error($IsUpdated))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+Array_UnShift($Session->Data['UsersIDs'],$UserID);
+#-------------------------------------------------------------------------------
+if(Is_Error($Session->Save()))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+return Array('Status'=>'Ok','SessionID'=>$SessionID,'Home'=>($Eval?SPrintF('/Home?Eval=%s',$Eval):'/Home'),'ContractID'=>$ContractID,'UserID'=>$UserID);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>

@@ -41,7 +41,7 @@ if(IsSet($Attachments) && SizeOf($Attachments) && Is_Array($Attachments)){
 	if(!Is_Array($User))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	if(!IsSet($User['Params']['NotSendEdeskFilesToEmail']) || !$User['Params']['NotSendEdeskFilesToEmail']){
+	if($User['Params']['Settings']['SendEdeskFilesToEmail'] == "Yes"){
 		#-------------------------------------------------------------------------------
 		#Debug(SPrintF('[comp/Tasks/Email]: письмо содержит %u вложений',SizeOf($Attachments)));
 		#-------------------------------------------------------------------------------

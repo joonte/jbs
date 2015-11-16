@@ -62,7 +62,7 @@ case 'array':
 		}
 		#---------------------------------------------------------------------------
 		#---------------------------------------------------------------------------
-		if(IsSet($Order['Params']['NotCreateInvoicesAutomatically']) && $Order['Params']['NotCreateInvoicesAutomatically']){
+		if($Order['Params']['Settings']['CreateInvoicesAutomatically'] == "No"){
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[comp/www/CreateAndSendInvoices]: настройки пользователя (%s) запрещают автоматическую выписку счетов',$Order['Email']));
 			#-------------------------------------------------------------------------------
@@ -263,49 +263,42 @@ case 'array':
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
-			if(IsSet($Order['Params']['CreateInvoicesAutomatically'][$Basket['TypeID']]) && In_Array($Order['Params']['CreateInvoicesAutomatically'][$Basket['TypeID']],$Array)){
+			#-------------------------------------------------------------------------------
+			# выбираем тип патёжной системы, которой был оплачен последний счёт юзера, по этому договору
+			$Invoice = DB_Select('InvoicesOwners',Array('PaymentSystemID'),Array('UNIQ','Where'=>SPrintF('`StatusID` = "Payed" AND `ContractID` = %s AND `UserID` = %s',$Basket['ContractID'],$Order['UserID']),'Limits'=>Array('Start'=>0,'Length'=>1),'SortOn'=>'StatusDate','IsDesc'=>TRUE));
+			#-------------------------------------------------------------------------------
+			switch(ValueOf($Invoice)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				# No more...
+				break;
+			case 'array':
+				#Debug(SPrintF('[comp/www/CreateAndSendInvoices]: Invoice = %s',print_r($Invoice,true)));
 				#-------------------------------------------------------------------------------
-				$PaymentSystemID = $Order['Params']['CreateInvoicesAutomatically'][$Basket['TypeID']];
+				if(IsSet($PaymentSystems[$Invoice['PaymentSystemID']]))
+					$PaymentSystemID = $Invoice['PaymentSystemID'];
 				#-------------------------------------------------------------------------------
-
-			}else{
+				break;
 				#-------------------------------------------------------------------------------
-				# выбираем тип патёжной системы, которой был оплачен последний счёт юзера, по этому договору
-				$Invoice = DB_Select('InvoicesOwners',Array('PaymentSystemID'),Array('UNIQ','Where'=>SPrintF('`StatusID` = "Payed" AND `ContractID` = %s AND `UserID` = %s',$Basket['ContractID'],$Order['UserID']),'Limits'=>Array('Start'=>0,'Length'=>1),'SortOn'=>'StatusDate','IsDesc'=>TRUE));
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
+			#-------------------------------------------------------------------------------
+			if(!IsSet($PaymentSystemID)){
 				#-------------------------------------------------------------------------------
-				switch(ValueOf($Invoice)){
-				case 'error':
-					return ERROR | @Trigger_Error(500);
-				case 'exception':
-					# No more...
-					break;
-				case 'array':
-					#Debug(SPrintF('[comp/www/CreateAndSendInvoices]: Invoice = %s',print_r($Invoice,true)));
+				if(IsSet($PaymentSystems[$Basket['TypeID']])){
 					#-------------------------------------------------------------------------------
-					if(IsSet($PaymentSystems[$Invoice['PaymentSystemID']]))
-						$PaymentSystemID = $Invoice['PaymentSystemID'];
+					$PaymentSystemID = $Basket['TypeID'];
 					#-------------------------------------------------------------------------------
-					break;
+				}else{
 					#-------------------------------------------------------------------------------
-				default:
-					return ERROR | @Trigger_Error(101);
-				}
-				#-------------------------------------------------------------------------------
-				if(!IsSet($PaymentSystemID)){
-					#-------------------------------------------------------------------------------
-					if(IsSet($PaymentSystems[$Basket['TypeID']])){
-						#-------------------------------------------------------------------------------
-						$PaymentSystemID = $Basket['TypeID'];
-						#-------------------------------------------------------------------------------
-					}else{
-						#-------------------------------------------------------------------------------
-						$PaymentSystemID = $Array[0];
-						#-------------------------------------------------------------------------------
-					}
+					$PaymentSystemID = $Array[0];
 					#-------------------------------------------------------------------------------
 				}
 				#-------------------------------------------------------------------------------
 			}
+			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			$Comp = Comp_Load('www/API/InvoiceMake',Array('ContractID'=>$Basket['ContractID'],'PaymentSystemID'=>$PaymentSystemID,'PayMessage'=>'Автоматическое выставление счёта на продление услуг'));
 			#-------------------------------------------------------------------------------

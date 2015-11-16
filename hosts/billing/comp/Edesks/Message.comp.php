@@ -64,7 +64,7 @@ if((integer)$FileLength){
 	if(StrRIPos($FileName,'.')){
 		#-------------------------------------------------------------------------------
 		# проверяем что это картинка
-		if(!IsSet($_COOKIE['EdeskNoPreview']) && In_Array(StrToLower(SubStr($FileName,StrRIPos($FileName,'.') + 1,4)),Array('png','gif','jpg','jpeg'))){
+		if(($__USER['Params']['Settings']['EdeskImagesPreview'] == "Yes") && In_Array(StrToLower(SubStr($FileName,StrRIPos($FileName,'.') + 1,4)),Array('png','gif','jpg','jpeg'))){
 			#-------------------------------------------------------------------------------
 			# добавляем к тексту превьюху
 			$Content = SPrintF("%s\n\n[image]%s://%s/FileDownload?TypeID=EdesksMessages&FileID=%u[/image]",$Content,Url_Scheme(),HOST_ID,$MessageID);
@@ -311,8 +311,10 @@ if(IsSet($GLOBALS['__USER']) /*&& Mb_StrLen($Content) < 1000*/){
 }
 #-------------------------------------------------------------------------------
 $Params['Links'] = IsSet($Span)?$Span->ToXMLString():'-';
+#-------------------------------------------------------------------------------
 $Table = new Tag('TABLE',Array('class'=>'EdeskMessage','cellspacing'=>5,'height'=>'100%','width'=>'100%'));
-$Table->AddHTML(TemplateReplace(SPrintF('Edesks.Message.TABLE.%s',IsSet($_COOKIE['EdesksDisplay'])?$_COOKIE['EdesksDisplay']:'Left'),$Params));
+#-------------------------------------------------------------------------------
+$Table->AddHTML(TemplateReplace(SPrintF('Edesks.Message.TABLE.%s',($__USER['Params']['Settings']['EdesksDisplay'] == 'Left')?'Left':'Right'),$Params));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $Table;
