@@ -37,7 +37,7 @@ case 'array':
 	# системный юзер
 	$Color = ($User['ID'] < 2000)?'D00000':'000000';
 	# автозареганый
-	$Color = IsSet($User['Params']['IsAutoRegistered'])?'FFA500':$Color;
+	$Color = ($User['Params']['IsAutoRegistered'])?'FFA500':$Color;
 	# неактивный юзер
 	$Color = $User['IsActive']?$Color:'848484';
 	#-------------------------------------------------------------------------------

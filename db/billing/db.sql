@@ -51,6 +51,7 @@ VALUES
 (9,1,'OrdersForSuspend','[]','yes'),
 (10,1,'RecoveryProfiles','[]','yes'),
 (11,1,'RecoveryServers','[]','yes'),
+(12,1,'RecoveryUsers','[]','yes'),
 (13,1,'CheckEmail','[]','yes'),
 (14,1,'OrdersForDelete','[]','yes');
 UNLOCK TABLES;

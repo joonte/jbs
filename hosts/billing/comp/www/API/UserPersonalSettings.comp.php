@@ -14,20 +14,15 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/Session.class.php')
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-
-Debug(print_r($Args,true));
-
-
 $Template = System_XML('xml/Params/Users.xml');
 if(Is_Error($Template))
 	return new gException('ERROR_TEMPLATE_LOAD','Ошибка загрузки шаблона');
 #-------------------------------------------------------------------------------
 $Errors = $Attribs = Array();
 #-------------------------------------------------------------------------------
-
+# TODO выпилить хреновину в отдельный файл
 $AttribsName = 'Settings';      # Attribs
-
-
+#-------------------------------------------------------------------------------
 if(IsSet($Template[$AttribsName])){
 	#-------------------------------------------------------------------------------
 	$Params = $Template[$AttribsName];
