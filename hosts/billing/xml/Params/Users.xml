@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<NotificationMethods>
+	<!-- *********************************************************************** -->
+	<Mobile>
+		<Address></Address>
+		<Confirmed></Confirmed>
+	</Mobile>
+	<!-- *********************************************************************** -->
+	<ICQ>
+		<Address></Address>
+		<Confirmed></Confirmed>
+	</ICQ>
+	<!-- *********************************************************************** -->
+	<Jabber>
+		<Address></Address>
+		<Confirmed></Confirmed>
+	</Jabber>
+	<!-- *********************************************************************** -->
+	<WhatsApp>
+		<Address></Address>
+		<Confirmed></Confirmed>
+	</WhatsApp>
+	<!-- *********************************************************************** -->
+</NotificationMethods>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<Settings>
+	<!-- настройки интерфейса пользователя -->
+	<EdesksDisplay>
+		<Title>Настройки интерфейса, "Система поддержки пользователей" (Тикеты)</Title>
+		<Comment>Положение текста в тикете</Comment>
+		<Type>Select</Type>
+		<Options>
+			<Right>Правое</Right>
+			<Left>Левое</Left>
+		</Options>
+		<Check>ID</Check>
+		<Attribs>
+			<size>1</size>
+			<style>width: 100%;</style>
+			<prompt>Как отображать в системе поддержки аватары и текст</prompt>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>Left</Value>
+	</EdesksDisplay>
+	<!-- *********************************************************************** -->
+	<EdeskNoPreview>
+		<Comment>Не отображать миниатюры изображений</Comment>
+		<CommentAttribs>
+			<style>cursor:pointer;</style>
+			<onclick>ChangeCheckBox('EdeskNoPreview'); return false;</onclick>
+			<prompt>Не отображать эскизы картинок в окне просмотра тикета</prompt>
+		</CommentAttribs>
+		<Type>Input</Type>
+		<Check>ID</Check>
+		<Attribs>
+			<type>checkbox</type>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>yes</Value>
+	</EdeskNoPreview>
+	<!-- *********************************************************************** -->
+	<NotSendEdeskFilesToEmail>
+		<Comment>Не присылать вложения к тикетам на почту</Comment>
+		<CommentAttribs>
+			<style>cursor:pointer;</style>
+			<onclick>ChangeCheckBox('NotSendEdeskFilesToEmail'); return false;</onclick>
+			<prompt>Не присылать прикрепленные к тикету файлы на почту</prompt>
+		</CommentAttribs>
+		<Type>Input</Type>
+		<Check>ID</Check>
+		<Attribs>
+			<type>checkbox</type>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>yes</Value>
+	</NotSendEdeskFilesToEmail>
+	<!-- *********************************************************************** -->
+	<EdeskOnlyMyButtons>
+		<Comment>Показывать только персональные кнопки</Comment>
+		<CommentAttribs>
+			<style>cursor:pointer;</style>
+			<onclick>ChangeCheckBox('EdeskNoPreview'); return false;</onclick>
+			<prompt>Не показывать кнопки относящиеся ко всем сотрудникам, показывать только свои</prompt>
+		</CommentAttribs>
+		<Type>Input</Type>
+		<Check>ID</Check>
+		<Attribs>
+			<type>checkbox</type>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>yes</Value>
+	</EdeskOnlyMyButtons>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<CreateInvoicesAutomatically>
+		<Title>Настройки автоматической выписки счетов</Title>
+		<Comment>Выписывать счета автоматически</Comment>
+		<Type>Select</Type>
+		<Options>
+			<Yes>Да</Yes>
+			<No>Нет</No>
+		</Options>
+		<Check>Char</Check>
+		<Attribs>
+			<size>1</size>
+			<style>width: 100%;</style>
+			<prompt>Включение/отключение еженедельной автоматической выписки счетов на оканчивающиеся услуги</prompt>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>Yes</Value>
+	</CreateInvoicesAutomatically>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<!--  период в который разрешена отправка SMS: начало периода -->
+	<SMSBeginTime>
+		<Title>Настройки SMS рассылок</Title>
+		<Comment>Время начала рассылки</Comment>
+		<Type>Select</Type>
+		<Options>
+			<Time_00>00:00</Time_00>
+			<Time_01>01:00</Time_01>
+			<Time_02>02:00</Time_02>
+			<Time_03>03:00</Time_03>
+			<Time_04>04:00</Time_04>
+			<Time_05>05:00</Time_05>
+			<Time_06>06:00</Time_06>
+			<Time_07>07:00</Time_07>
+			<Time_08>08:00</Time_08>
+			<Time_09>09:00</Time_09>
+			<Time_10>10:00</Time_10>
+			<Time_11>11:00</Time_11>
+			<Time_12>12:00</Time_12>
+			<Time_13>13:00</Time_13>
+			<Time_14>14:00</Time_14>
+			<Time_15>15:00</Time_15>
+			<Time_16>16:00</Time_16>
+			<Time_17>17:00</Time_17>
+			<Time_18>18:00</Time_18>
+			<Time_19>19:00</Time_19>
+			<Time_20>20:00</Time_20>
+			<Time_21>21:00</Time_21>
+			<Time_22>22:00</Time_22>
+			<Time_23>23:00</Time_23>
+		</Options>
+		<Check>/^[0-9]{1,2}$/u</Check>
+		<Attribs>
+			<size>1</size>
+			<style>width: 100%;</style>
+			<prompt>Время начала рассылки SMS сообщений</prompt>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>Time_00</Value>
+	</SMSBeginTime>
+	<!-- *********************************************************************** -->
+	<!--  период в который разрешена отправка SMS: конец периода -->
+	<SMSEndTime>
+		<Comment>Время начала рассылки</Comment>
+		<Type>Select</Type>
+		<Options>
+			<Time_00>00:00</Time_00>
+			<Time_01>01:00</Time_01>
+			<Time_02>02:00</Time_02>
+			<Time_03>03:00</Time_03>
+			<Time_04>04:00</Time_04>
+			<Time_05>05:00</Time_05>
+			<Time_06>06:00</Time_06>
+			<Time_07>07:00</Time_07>
+			<Time_08>08:00</Time_08>
+			<Time_09>09:00</Time_09>
+			<Time_10>10:00</Time_10>
+			<Time_11>11:00</Time_11>
+			<Time_12>12:00</Time_12>
+			<Time_13>13:00</Time_13>
+			<Time_14>14:00</Time_14>
+			<Time_15>15:00</Time_15>
+			<Time_16>16:00</Time_16>
+			<Time_17>17:00</Time_17>
+			<Time_18>18:00</Time_18>
+			<Time_19>19:00</Time_19>
+			<Time_20>20:00</Time_20>
+			<Time_21>21:00</Time_21>
+			<Time_22>22:00</Time_22>
+			<Time_23>23:00</Time_23>
+		</Options>
+		<Check>/^[0-9]{1,2}$/u</Check>
+		<Attribs>
+			<size>1</size>
+			<style>width: 100%;</style>
+			<prompt>Время окончания рассылки SMS сообщений</prompt>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>Time_00</Value>
+	</SMSEndTime>
+	<!-- *********************************************************************** -->
+</Settings>
+<!-- *********************************************************************** -->
+</XML>
+
