@@ -116,7 +116,7 @@ case 'true':
 	#-------------------------------------------------------------------------------
 	if(IsSet($IsInternal)){
 		#-------------------------------------------------------------------------------
-		if(In_Array($DomainOrder['StatusID'],Array('Active','Suspended'))){
+		if(In_Array($DomainOrder['StatusID'],Array('Active','Suspended','ForTransfer','OnTransfer'))){
 			#-------------------------------------------------------------------------------
 			# add admin message
 			$Event = Array(
