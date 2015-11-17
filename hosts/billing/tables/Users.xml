@@ -93,7 +93,7 @@
      <ListElement>Name</ListElement>
      <ListElement>Email</ListElement>
      <ListElement>EnterIP</ListElement>
-     <ListElement>ICQ</ListElement>
+     <ListElement>Params</ListElement>
      <ListElement>Mobile</ListElement>
      <ListElement>AdminNotice</ListElement>
     </ColumnsIDs>

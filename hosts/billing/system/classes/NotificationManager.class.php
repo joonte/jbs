@@ -31,7 +31,7 @@ class NotificationManager {
 		}
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$User = DB_Select('Users',Array('ID','Name','Sign','ICQ','Email','Mobile','MobileConfirmed','UniqID','IsNotifies','Params'),Array('UNIQ','ID'=>$msg->getTo()));
+		$User = DB_Select('Users',Array('ID','Name','Sign','Email','Mobile','MobileConfirmed','UniqID','IsNotifies','Params'),Array('UNIQ','ID'=>$msg->getTo()));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($User)){
 		case 'error':
@@ -57,7 +57,7 @@ class NotificationManager {
 		}
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$From = DB_Select('Users',Array('ID','Name','Sign','ICQ','Email','Mobile','UniqID'),Array('UNIQ','ID'=>$msg->getFrom()));
+		$From = DB_Select('Users',Array('ID','Name','Sign','Email','Mobile','UniqID','Params'),Array('UNIQ','ID'=>$msg->getFrom()));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($From)){
 		case 'error':

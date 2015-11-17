@@ -111,7 +111,6 @@ foreach($Users as $User){
         'EnterDate'       => GetTime(@$User['EnterDate']),
         'EnterIP'         => (string)@$User['EnterIP'],
         'Email'           => $Email,
-        'ICQ'             => (string)@$User['ICQ'],
         'Mobile'          => (string)@$User['Mobile'],
         'LayPayMaxDays'   => $Settings['LayPayMaxDays'],
         'LayPayMaxSumm'   => $Settings['LayPayMaxSumm'],

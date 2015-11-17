@@ -202,7 +202,7 @@ $Comp = Comp_Load(
     'size'   => 25,
     'type'   => 'text',
     'prompt' => $Messages['Prompts']['ICQ'],
-    'value'  => $__USER['ICQ']
+    'value'  => $__USER['Params']['NotificationMethods']['ICQ']['Address']
   )
 );
 if(Is_Error($Comp))

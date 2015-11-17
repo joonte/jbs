@@ -17,9 +17,9 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 #-------------------------------------------------------------------------------
 $Columns = Array(
 			'ID','RegisterDate','Name','GroupID','Email','EmailConfirmed',
-			'ICQ','Mobile','MobileConfirmed','Sign','OwnerID','IsManaged','LayPayMaxDays',
+			'Mobile','MobileConfirmed','Sign','OwnerID','IsManaged','LayPayMaxDays',
 			'LayPayMaxSumm','LayPayThreshold','EnterDate','EnterIP',
-			'Rating','IsActive','IsNotifies','IsHidden','IsProtected','AdminNotice',
+			'Rating','IsActive','IsNotifies','IsHidden','IsProtected','AdminNotice','Params',
 			'(SELECT COUNT(*) FROM `OrdersOwners` WHERE `OrdersOwners`.`UserID`=`Users`.`ID`) AS `NumOrders`',
 			'(SELECT COUNT(*) FROM `OrdersOwners` WHERE `OrdersOwners`.`UserID`=`Users`.`ID` AND `OrdersOwners`.`StatusID`="Active") AS `NumActiveOrders`',
 			'(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID`=`Users`.`ID`) AS `TotalPayments`',
@@ -108,7 +108,11 @@ if($User['EmailConfirmed'] > 0){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Table[] = Array('ICQ-номер',$User['ICQ']);
+if($User['Params']['NotificationMethods']['ICQ']['Address'])
+	$Table[] = Array('ICQ-номер',$User['Params']['NotificationMethods']['ICQ']['Address']);
+#-------------------------------------------------------------------------------
+if($User['Params']['NotificationMethods']['Jabber']['Address'])
+	$Table[] = Array('Jabber ID',$User['Params']['NotificationMethods']['Jabber']['Address']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(StrLen($User['Mobile']) > 0){

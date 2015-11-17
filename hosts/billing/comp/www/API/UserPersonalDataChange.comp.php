@@ -95,11 +95,12 @@ if($Mobile){
 #-------------------------------------------------------------------------------
 $User['Params']['NotificationMethods']['Jabber']['Address'] = $JabberID;
 #-------------------------------------------------------------------------------
+$User['Params']['NotificationMethods']['ICQ']['Address'] = $ICQ;
+#-------------------------------------------------------------------------------
 $UUser = Array(
 		'Name'		=> $Name,
 		'Sign'		=> $Sign,
 		'Email'		=> $Email,
-		'ICQ'		=> $ICQ,
 		'Mobile'	=> $Mobile,
 		'Params'	=> $User['Params']
 		);
