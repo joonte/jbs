@@ -13,7 +13,7 @@ if(Is_Error(System_Load('libs/Tree.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$User = DB_Select('Users',Array('ID','GroupID','RegisterDate','Name','Sign','Email','EmailConfirmed','MobileConfirmed','ICQ','JabberID','Mobile','UniqID','Params','LayPayMaxSumm','LayPayThreshold','EnterIP','EnterDate','Params'),Array('UNIQ','ID'=>$UserID));
+$User = DB_Select('Users',Array('ID','GroupID','RegisterDate','Name','Sign','Email','EmailConfirmed','MobileConfirmed','ICQ','Mobile','UniqID','Params','LayPayMaxSumm','LayPayThreshold','EnterIP','EnterDate','Params'),Array('UNIQ','ID'=>$UserID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($User)){
 case 'error':

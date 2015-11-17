@@ -31,7 +31,7 @@ class NotificationManager {
 		}
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$User = DB_Select('Users',Array('ID','Name','Sign','ICQ','Email','Mobile','MobileConfirmed','JabberID','UniqID','IsNotifies'),Array('UNIQ','ID'=>$msg->getTo()));
+		$User = DB_Select('Users',Array('ID','Name','Sign','ICQ','Email','Mobile','MobileConfirmed','UniqID','IsNotifies','Params'),Array('UNIQ','ID'=>$msg->getTo()));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($User)){
 		case 'error':

@@ -48,14 +48,14 @@ class Jabber implements Dispatcher {
 
         $recipient = $msg->getParam('User');
 
-        if(!$recipient['JabberID'])
+        if(!$recipient['Params']['NotificationMethods']['Jabber']['Address'])
             throw new jException("JabberID not found for user: ".$recipient['ID']);
 
         $taskParams = Array(
             'UserID' => $recipient['ID'],
             'TypeID' => 'Jabber',
             'Params' => Array(
-                $recipient['JabberID'],
+                $recipient['Params']['NotificationMethods']['Jabber']['Address'],
                 $message,
                 $recipient['ID']
             )

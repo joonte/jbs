@@ -38,7 +38,7 @@ $Email = StrToLower($Email);
 if(!Preg_Match($Regulars['Email'],$Email))
 	return new gException('WRONG_EMAIL','Неверно указан электронный адрес');
 #-------------------------------------------------------------------------------
-$User = DB_Select('Users',Array('ID','Email','Mobile'),Array('UNIQ','ID'=>$__USER['ID'])); 
+$User = DB_Select('Users',Array('ID','Email','Mobile','Params'),Array('UNIQ','ID'=>$__USER['ID'])); 
 #-------------------------------------------------------------------------------
 switch(ValueOf($User)){
 case 'error':
@@ -93,13 +93,15 @@ if($Mobile){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$User['Params']['NotificationMethods']['Jabber']['Address'] = $JabberID;
+#-------------------------------------------------------------------------------
 $UUser = Array(
 		'Name'		=> $Name,
 		'Sign'		=> $Sign,
 		'Email'		=> $Email,
 		'ICQ'		=> $ICQ,
-		'JabberID'	=> $JabberID,
-		'Mobile'	=> $Mobile
+		'Mobile'	=> $Mobile,
+		'Params'	=> $User['Params']
 		);
 #-------------------------------------------------------------------------------
 if($User['Email'] != $Email)

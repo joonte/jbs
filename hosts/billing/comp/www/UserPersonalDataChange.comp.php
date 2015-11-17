@@ -238,7 +238,7 @@ $Comp = Comp_Load(
     'size'   => 25,
     'type'   => 'text',
     'prompt' => $Messages['Prompts']['JabberID'],
-    'value'  => $__USER['JabberID']
+    'value'  => $__USER['Params']['NotificationMethods']['Jabber']['Address']
   )
 );
 if(Is_Error($Comp))
