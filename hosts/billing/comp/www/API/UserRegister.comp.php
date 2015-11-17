@@ -101,10 +101,9 @@ foreach(Array_Keys($Template['NotificationMethods']) as $Key){
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
-if($IsInternal)
-	$Params['IsAutoRegistered'] = TRUE;
+$Params['IsAutoRegistered'] = ($IsInternal)?TRUE:FALSE;
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/www/API/UserRegister]: $Params = %s',print_r($Params,true)));
+#Debug(SPrintF('[comp/www/API/UserRegister]: $Params = %s',print_r($Params,true)));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IUser = Array(

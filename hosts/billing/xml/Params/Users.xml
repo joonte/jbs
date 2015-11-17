@@ -7,22 +7,22 @@
 	<!-- *********************************************************************** -->
 	<Mobile>
 		<Address></Address>
-		<Confirmed></Confirmed>
+		<Confirmed>0</Confirmed>
 	</Mobile>
 	<!-- *********************************************************************** -->
 	<ICQ>
 		<Address></Address>
-		<Confirmed></Confirmed>
+		<Confirmed>0</Confirmed>
 	</ICQ>
 	<!-- *********************************************************************** -->
 	<Jabber>
 		<Address></Address>
-		<Confirmed></Confirmed>
+		<Confirmed>0</Confirmed>
 	</Jabber>
 	<!-- *********************************************************************** -->
 	<WhatsApp>
 		<Address></Address>
-		<Confirmed></Confirmed>
+		<Confirmed>0</Confirmed>
 	</WhatsApp>
 	<!-- *********************************************************************** -->
 </NotificationMethods>
