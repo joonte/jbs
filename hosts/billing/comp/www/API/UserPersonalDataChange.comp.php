@@ -16,7 +16,11 @@ $ICQ     =  (string) @$Args['ICQ'];
 $JabberID=  (string) @$Args['JabberID'];
 $Mobile  =  (string) @$Args['Mobile'];
 $IsClear = (boolean) @$Args['IsClear'];
-$CacheID2 = Md5('mobileconfirm'.$GLOBALS['__USER']['ID']);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$__USER = $GLOBALS['__USER'];
+#-------------------------------------------------------------------------------
+$CacheID2 = Md5(SPrintF('MobileConfirm_%s',$__USER['ID']));
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php','libs/Image.php')))
 	return ERROR | @Trigger_Error(500);
@@ -34,7 +38,7 @@ $Email = StrToLower($Email);
 if(!Preg_Match($Regulars['Email'],$Email))
 	return new gException('WRONG_EMAIL','Неверно указан электронный адрес');
 #-------------------------------------------------------------------------------
-$User = DB_Select('Users',Array('ID','Email','Mobile'),Array('UNIQ','ID'=>$GLOBALS['__USER']['ID'])); 
+$User = DB_Select('Users',Array('ID','Email','Mobile'),Array('UNIQ','ID'=>$__USER['ID'])); 
 #-------------------------------------------------------------------------------
 switch(ValueOf($User)){
 case 'error':
@@ -56,8 +60,9 @@ if(StrToLower($User['Email']) != $Email){
 	if($Count)
 		return new gException('USER_EXISTS','Пользователь с таким электронным адресом уже существует в системе');
 	#-------------------------------------------------------------------------------
-	if($GLOBALS['__USER']['EmailConfirmed'] + 3600 < Time() || Time() - $__USER['RegisterDate'] > 24*3600)
-		return new gException('EMAIL_CONFIRM_TOO_OLD','Вы слишком давно подтверждали ваш почтовый адрес. Смена адреса возможна в течение часа после его подтверждения.');
+	if($GLOBALS['__USER']['EmailConfirmed'] + 3600 < Time())
+		if(Time() - $__USER['RegisterDate'] > 24*3600)
+			return new gException('EMAIL_CONFIRM_TOO_OLD','Вы слишком давно подтверждали ваш почтовый адрес. Смена адреса возможна в течение часа после его подтверждения.');
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
@@ -148,7 +153,7 @@ if(Is_Error($IsUpdate))
 if($User['Email'] != $Email){
 	#-------------------------------------------------------------------------------
 	$Event = Array(
-			'UserID'	=> $GLOBALS['__USER']['ID'],
+			'UserID'	=> $__USER['ID'],
 			'PriorityID'	=> 'Billing',
 			'Text'		=> SPrintF('Пользователь сменил свой почтовый адрес с (%s) на (%s)',$User['Email'],$Email)
 			);
@@ -166,7 +171,7 @@ if($User['Mobile'] != $Mobile){
 	$Message = ($Mobile)?$Message:SPrintF('Удалён контактный телефон (%s)',$User['Mobile']);
 	#-------------------------------------------------------------------------------
 	$Event = Array(
-			'UserID'	=> $GLOBALS['__USER']['ID'],
+			'UserID'	=> $__USER['ID'],
 			'PriorityID'	=> 'Billing',
 			'Text'		=> $Message
 			);
