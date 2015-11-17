@@ -18,7 +18,7 @@ $Messages = Messages();
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$User = DB_Select('Users',Array('ID','Email','Mobile','Name','GroupID','OwnerID','IsManaged','IsInheritGroup','LayPayMaxDays','LayPayMaxSumm','LayPayThreshold','Rating','IsActive','IsNotifies','IsHidden','IsProtected','AdminNotice'),Array('UNIQ','ID'=>$UserID));
+$User = DB_Select('Users',Array('ID','Email','Name','GroupID','OwnerID','IsManaged','IsInheritGroup','LayPayMaxDays','LayPayMaxSumm','LayPayThreshold','Rating','IsActive','IsNotifies','IsHidden','IsProtected','AdminNotice','Params'),Array('UNIQ','ID'=>$UserID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($User)){
   case 'error':
@@ -85,7 +85,7 @@ $Comp = Comp_Load(
 			'size'      => 25,
 			'type'      => 'text',
 			'prompt'    => $Messages['Prompts']['Mobile'],
-			'value'     => $User['Mobile'],
+			'value'     => $User['Params']['NotificationMethods']['Mobile']['Address'],
 		)
 	);
 if(Is_Error($Comp))

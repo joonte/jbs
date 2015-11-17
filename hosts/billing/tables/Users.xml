@@ -94,7 +94,6 @@
      <ListElement>Email</ListElement>
      <ListElement>EnterIP</ListElement>
      <ListElement>Params</ListElement>
-     <ListElement>Mobile</ListElement>
      <ListElement>AdminNotice</ListElement>
     </ColumnsIDs>
    </Args>

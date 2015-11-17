@@ -31,8 +31,8 @@ $Send['LMI_PAYMENT_DESC'] .= SPrintF('%s, %s (%s)',$Comp,Translit($__USER['Name'
 $Send['LMI_PAYER_EMAIL'] = $__USER['Email'];
 #-------------------------------------------------------------------------------
 # необязательные параметры - телефон
-if(strlen($__USER['Mobile']) > 6)
-	$Send['LMI_PAYER_PHONE_NUMBER'] = $__USER['Mobile'];
+if(StrLen($__USER['Params']['NotificationMethods']['Mobile']['Address']) > 6)
+	$Send['LMI_PAYER_PHONE_NUMBER'] = $__USER['Params']['NotificationMethods']['Mobile']['Address'];
 #-------------------------------------------------------------------------------
 
 

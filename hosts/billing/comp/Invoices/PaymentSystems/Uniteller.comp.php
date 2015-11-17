@@ -41,8 +41,8 @@ $Send['URL_RETURN_NO']	= SPrintF('%s://%s/Invoices?Error=yes',$Protocol,HOST_ID)
 $Send['Email'] = $__USER['Email'];
 #-------------------------------------------------------------------------------
 # и телефон, если есть
-if($__USER['Mobile'])
-	$Send['Phone'] = $__USER['Mobile'];
+if($__USER['Params']['NotificationMethods']['Mobile']['Address'])
+	$Send['Phone'] = $__USER['Params']['NotificationMethods']['Mobile']['Address'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Array = Array(

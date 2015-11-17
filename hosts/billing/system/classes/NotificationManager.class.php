@@ -31,7 +31,7 @@ class NotificationManager {
 		}
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$User = DB_Select('Users',Array('ID','Name','Sign','Email','Mobile','MobileConfirmed','UniqID','IsNotifies','Params'),Array('UNIQ','ID'=>$msg->getTo()));
+		$User = DB_Select('Users',Array('ID','Name','Sign','Email','UniqID','IsNotifies','Params'),Array('UNIQ','ID'=>$msg->getTo()));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($User)){
 		case 'error':
@@ -57,7 +57,7 @@ class NotificationManager {
 		}
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$From = DB_Select('Users',Array('ID','Name','Sign','Email','Mobile','UniqID','Params'),Array('UNIQ','ID'=>$msg->getFrom()));
+		$From = DB_Select('Users',Array('ID','Name','Sign','Email','UniqID','Params'),Array('UNIQ','ID'=>$msg->getFrom()));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($From)){
 		case 'error':
@@ -100,7 +100,7 @@ class NotificationManager {
 				continue;
 			#-------------------------------------------------------------------------------
 			# проверяем не SMS ли шлём, и подтверждён ли телефон
-			if($MethodID == 'SMS' && $User['MobileConfirmed'] == 0)
+			if($MethodID == 'SMS' && $User['Params']['NotificationMethods']['Mobile']['Confirmed'] == 0)
 				continue;
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------

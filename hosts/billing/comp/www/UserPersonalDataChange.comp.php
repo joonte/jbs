@@ -118,7 +118,7 @@ $Comp = Comp_Load(
 			'size'	=> 25,
 			'type'	=> 'number',
 			'prompt'=> $Messages['Prompts']['Mobile'],
-			'value'	=> $__USER['Mobile']
+			'value'	=> $__USER['Params']['NotificationMethods']['Mobile']['Address']
 			)
 		);
 if (Is_Error($Comp))
@@ -132,9 +132,9 @@ if ($Config['Notifies']['Methods']['SMS']['IsActive']) {
     #-----------------------------------------------------------------------------
     $Params = Array('onclick' => 'MobileConfirm();', 'type' => 'button');
     #-----------------------------------------------------------------------------
-    if ($__USER['MobileConfirmed'] > 0) {
+    if ($__USER['Params']['NotificationMethods']['Mobile']['Confirmed'] > 0) {
         #-------------------------------------------------------------------------------
-	$MobileConfirmed = Comp_Load('Formats/Date/Extended', $__USER['MobileConfirmed']);
+	$MobileConfirmed = Comp_Load('Formats/Date/Extended', $__USER['Params']['NotificationMethods']['Mobile']['Confirmed']);
 	if (Is_Error($Comp))
 	    return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -157,7 +157,7 @@ if ($Config['Notifies']['Methods']['SMS']['IsActive']) {
 $Table[] = Array('Мобильный телефон', $NoBody);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if ($__USER['MobileConfirmed'] == 0 && $Config['Notifies']['Methods']['SMS']['IsActive']){
+if ($__USER['Params']['NotificationMethods']['Mobile']['Confirmed'] == 0 && $Config['Notifies']['Methods']['SMS']['IsActive']){
     $Comp = Comp_Load(
 	    'Form/Input', Array(
 	'name' => 'MobileConfirmCode',

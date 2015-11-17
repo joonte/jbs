@@ -17,7 +17,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 #-------------------------------------------------------------------------------
 $Columns = Array(
 			'ID','RegisterDate','Name','GroupID','Email','EmailConfirmed',
-			'Mobile','MobileConfirmed','Sign','OwnerID','IsManaged','LayPayMaxDays',
+			'Sign','OwnerID','IsManaged','LayPayMaxDays',
 			'LayPayMaxSumm','LayPayThreshold','EnterDate','EnterIP',
 			'Rating','IsActive','IsNotifies','IsHidden','IsProtected','AdminNotice','Params',
 			'(SELECT COUNT(*) FROM `OrdersOwners` WHERE `OrdersOwners`.`UserID`=`Users`.`ID`) AS `NumOrders`',
@@ -115,13 +115,13 @@ if($User['Params']['NotificationMethods']['Jabber']['Address'])
 	$Table[] = Array('Jabber ID',$User['Params']['NotificationMethods']['Jabber']['Address']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(StrLen($User['Mobile']) > 0){
+if($User['Params']['NotificationMethods']['Mobile']['Address']){
 	#-------------------------------------------------------------------------------
-	$Table[] = Array('Номер мобильного телефона',$User['Mobile']);
+	$Table[] = Array('Номер мобильного телефона',$User['Params']['NotificationMethods']['Mobile']['Address']);
 	#-------------------------------------------------------------------------------
-	if($User['MobileConfirmed'] > 0){
+	if($User['Params']['NotificationMethods']['Mobile']['Confirmed'] > 0){
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Formats/Date/Extended',$User['MobileConfirmed']);
+		$Comp = Comp_Load('Formats/Date/Extended',$User['Params']['NotificationMethods']['Mobile']['Confirmed']);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------

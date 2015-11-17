@@ -48,7 +48,7 @@ if(!Preg_Match($Regulars['Email'],$Email))
 	return new gException('WRONG_EMAIL','Неверно указан электронный адрес');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$User = DB_Select('Users',Array('ID','Email','Mobile'),Array('UNIQ','ID'=>$UserID));
+$User = DB_Select('Users',Array('ID','Email','Params'),Array('UNIQ','ID'=>$UserID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($User)){
 case 'error':
@@ -101,11 +101,14 @@ if(Is_Error($Count))
 if(!$Count)
 	return new gException('OWNER_NOT_FOUND','Владелец не найден');
 #-------------------------------------------------------------------------------
+$User['Params']['NotificationMethods']['Mobile']['Address'] = $Mobile;
+#-------------------------------------------------------------------------------
+if($User['Params']['NotificationMethods']['Mobile']['Address'] != $Mobile)
+	$User['Params']['NotificationMethods']['Mobile']['Confirmed'] = 0;
 #-------------------------------------------------------------------------------
 $IUser = Array(
 		'Name'            => $Name,
 		'Email'           => $Email,
-		'Mobile'          => $Mobile,
 		'GroupID'         => $GroupID,
 		'OwnerID'         => $OwnerID,
 		'IsManaged'       => $IsManaged,
@@ -118,7 +121,8 @@ $IUser = Array(
 		'IsNotifies'      => $IsNotifies,
 		'IsHidden'        => $IsHidden,
 		'IsProtected'     => $IsProtected,
-		'AdminNotice'     => $AdminNotice
+		'AdminNotice'     => $AdminNotice,
+		'Params'	=> $User['Params']
 		);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -139,10 +143,6 @@ if($User['Email'] != $Email){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 }
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-if($User['Mobile'] != $Mobile)
-	$IUser['MobileConfirmed'] = 0;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($Password != 'Default'){

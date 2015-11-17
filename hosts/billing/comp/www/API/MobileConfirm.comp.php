@@ -44,10 +44,10 @@ $CacheID2 = Md5('mobileconfirmlimit'.$GLOBALS['__USER']['ID']);
 if($Mobile){
 	#-------------------------------------------------------------------------------
 	# возможный вариант, что телефона не было, юзер его ввёл и не сохраняя нажал "подтвердить"
-	if(!$GLOBALS['__USER']['Mobile'])
+	if(!$GLOBALS['__USER']['Params']['NotificationMethods']['Mobile']['Address'])
 		return new gException('PHONE_NOT_SAVED', 'Для подтверждения, вначале сохраните настройки с введённым номером телефона');
 	#-------------------------------------------------------------------------------
-	$Mobile = $GLOBALS['__USER']['Mobile'];
+	$Mobile = $GLOBALS['__USER']['Params']['NotificationMethods']['Mobile']['Address'];
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	// Защита от агрессивно настроенных
@@ -64,7 +64,7 @@ if($Mobile){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Executor = DB_Select('Users', Array('Sign', 'Mobile', 'GroupID'), Array('UNIQ', 'ID' => 100));
+	$Executor = DB_Select('Users', Array('Sign','GroupID'), Array('UNIQ', 'ID' => 100));
 	if (!Is_Array($Executor))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -90,7 +90,11 @@ if($Mobile){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	$IsUpdate = DB_Update('Users', Array('MobileConfirmed' => 0), Array('ID' => $GLOBALS['__USER']['ID']));
+	$Params = $GLOBALS['__USER']['Params'];
+	#-------------------------------------------------------------------------------
+	$Params['NotificationMethods']['Mobile']['Confirmed'] = 0;
+	#-------------------------------------------------------------------------------
+	$IsUpdate = DB_Update('Users', Array('Params'=>$Params), Array('ID' => $GLOBALS['__USER']['ID']));
 	if(Is_Error($IsUpdate))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -105,9 +109,13 @@ if($Mobile){
 	#-------------------------------------------------------------------------------
 	$Result = CacheManager::get($CacheID);
 	#-------------------------------------------------------------------------------
-	if(SPrintF('%s%s',$Confirm,$GLOBALS['__USER']['Mobile']) == $Result){
+	if(SPrintF('%s%s',$Confirm,$GLOBALS['__USER']['Params']['NotificationMethods']['Mobile']['Address']) == $Result){
 		#-------------------------------------------------------------------------------
-		$IsUpdate = DB_Update('Users', Array('MobileConfirmed' => Time()), Array('ID' => $GLOBALS['__USER']['ID']));
+		$Params = $GLOBALS['__USER']['Params'];
+		#-------------------------------------------------------------------------------
+		$Params['NotificationMethods']['Mobile']['Confirmed'] = Time();
+		#-------------------------------------------------------------------------------
+		$IsUpdate = DB_Update('Users',Array('Params'=>$Params), Array('ID' => $GLOBALS['__USER']['ID']));
 		if (Is_Error($IsUpdate))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
@@ -138,7 +146,7 @@ if($Mobile){
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		$Event = Array('UserID'=>$GLOBALS['__USER']['ID'],'PriorityID'=>'Billing','Text'=>SPrintF('Мобильный телефон (%s) подтверждён',$GLOBALS['__USER']['Mobile']));
+		$Event = Array('UserID'=>$GLOBALS['__USER']['ID'],'PriorityID'=>'Billing','Text'=>SPrintF('Мобильный телефон (%s) подтверждён',$GLOBALS['__USER']['Params']['NotificationMethods']['Mobile']['Address']));
 		#-------------------------------------------------------------------------------
 		$Event = Comp_Load('Events/EventInsert',$Event);
 		if(!$Event)

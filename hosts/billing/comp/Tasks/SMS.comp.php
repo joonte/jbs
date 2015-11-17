@@ -35,7 +35,7 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # проверяем, можно ли отправлять в заданное время
-$User = DB_Select('Users', Array('MobileConfirmed','GroupID','Params'), Array('UNIQ', 'ID' => $UserID));
+$User = DB_Select('Users', Array('GroupID','Params'), Array('UNIQ', 'ID' => $UserID));
 if(!Is_Array($User))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

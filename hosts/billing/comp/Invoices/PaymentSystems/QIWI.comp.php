@@ -31,8 +31,7 @@ $Send['com'] .= SPrintF('%s, %s (%s)',$Comp,Translit($__USER['Name']),$__USER['E
 # замена устаревшего RUR на новое обозначение RUB
 $Send['currency'] = ($Settings['Valute'] == 'RUR')?'RUB':$Settings['Valute'];
 #-------------------------------------------------------------------------------
-#$Send['to'] = SPrintF('+%s',SubStr($__USER['Mobile'], StrLen($__USER['Mobile']) - 10, 10));
-$Send['to'] = SPrintF('+%s',$__USER['Mobile']);
+$Send['to'] = SPrintF('+%s',$__USER['Params']['NotificationMethods']['Mobile']['Address']);
 #-------------------------------------------------------------------------------
 $Protocol = (@$_SERVER['SERVER_PORT'] != 80?'https':'http');
 #-------------------------------------------------------------------------------

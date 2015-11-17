@@ -18,11 +18,14 @@ $Config = Config();
 #-------------------------------------------------------------------------------
 $Settings = $Config['Interface']['User']['Notes']['MobileConfirmation'];
 #-------------------------------------------------------------------------------
+$__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
-if(Is_Numeric($GLOBALS['__USER']['Mobile']) && $GLOBALS['__USER']['MobileConfirmed'] < 1 && $Settings['MobileConfirmRequire']){
+
+#-------------------------------------------------------------------------------
+if(Is_Numeric($__USER['Params']['NotificationMethods']['Mobile']['Address']) && $__USER['Params']['NotificationMethods']['Mobile']['Confirmed'] < 1 && $Settings['MobileConfirmRequire']){
 	#-------------------------------------------------------------------------------
 	$NoBody = new Tag('NOBODY');
-	$NoBody->AddHTML(TemplateReplace('Notes.User.MobileConfirmation', Array('User' => $GLOBALS['__USER'])));
+	$NoBody->AddHTML(TemplateReplace('Notes.User.MobileConfirmation', Array('User' => $__USER)));
 	$NoBody->AddChild(new Tag('STRONG', new Tag('A', Array('href' => "javascript:ShowWindow('/UserPersonalDataChange');"), '[Мои настройки]')));
 	#-------------------------------------------------------------------------------
 	$Result[] = $NoBody;
@@ -30,10 +33,10 @@ if(Is_Numeric($GLOBALS['__USER']['Mobile']) && $GLOBALS['__USER']['MobileConfirm
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(!$GLOBALS['__USER']['Mobile'] && $Settings['MobileRequire']){
+if(!$__USER['Params']['NotificationMethods']['Mobile']['Address'] && $Settings['MobileRequire']){
 	#-------------------------------------------------------------------------------
 	$NoBody = new Tag('NOBODY');
-	$NoBody->AddHTML(TemplateReplace('Notes.User.MobileConfirmation.NoMobile', Array('User' => $GLOBALS['__USER'])));
+	$NoBody->AddHTML(TemplateReplace('Notes.User.MobileConfirmation.NoMobile', Array('User' => $__USER)));
 	$NoBody->AddChild(new Tag('STRONG', new Tag('A', Array('href' => "javascript:ShowWindow('/UserPersonalDataChange');"), '[Мои настройки]')));
 	#-------------------------------------------------------------------------------
 	$Result[] = $NoBody;
