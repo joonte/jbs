@@ -1599,6 +1599,38 @@
 				<ConfirmInterval>300</ConfirmInterval>
 			</MobileConfirmation>
 			<!-- *********************************************************************** -->
+			<Email>
+				<SettingsReset>0</SettingsReset>
+				<Require>1</Require>
+				<ConfirmRequire>1</ConfirmRequire>
+				<Confirm>1</Confirm>
+				<ConfirmInterval>300</ConfirmInterval>
+			</Email>
+			<!-- *********************************************************************** -->
+			<ICQ>
+				<SettingsReset>0</SettingsReset>
+				<Require>0</Require>
+				<ConfirmRequire>1</ConfirmRequire>
+				<Confirm>1</Confirm>
+				<ConfirmInterval>300</ConfirmInterval>
+			</ICQ>
+			<!-- *********************************************************************** -->
+			<Jabber>
+				<SettingsReset>0</SettingsReset>
+				<Require>0</Require>
+				<ConfirmRequire>1</ConfirmRequire>
+				<Confirm>1</Confirm>
+				<ConfirmInterval>300</ConfirmInterval>
+			</Jabber>
+			<!-- *********************************************************************** -->
+			<SMS>
+				<SettingsReset>1</SettingsReset>
+				<Require>1</Require>
+				<ConfirmRequire>1</ConfirmRequire>
+				<Confirm>1</Confirm>
+				<ConfirmInterval>300</ConfirmInterval>
+			</SMS>
+			<!-- *********************************************************************** -->
 			<Invoices>
 				<UnPaidInvoicesReminders>1</UnPaidInvoicesReminders>
 			</Invoices>

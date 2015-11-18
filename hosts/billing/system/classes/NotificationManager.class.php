@@ -99,9 +99,10 @@ class NotificationManager {
 			if(!$Notifies['Methods'][$MethodID]['IsActive'] || !In_Array($MethodID,$Methods))
 				continue;
 			#-------------------------------------------------------------------------------
-			# проверяем не SMS ли шлём, и подтверждён ли телефон
-			if($MethodID == 'SMS' && $User['Params']['NotificationMethods']['Mobile']['Confirmed'] == 0)
-				continue;
+			# проверяем контакт, если не мыло - должен быть подтверждён
+			if($MethodID != 'Email')
+				if(!$User['Params']['NotificationMethods'][$MethodID]['Confirmed'])
+					continue;
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			# кусок от JBS-879

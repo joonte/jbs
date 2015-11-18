@@ -1,12 +1,12 @@
 <?php
 
 #-------------------------------------------------------------------------------
-/** @author Rootden, for lowhosting.ru */
-/* * *************************************************************************** */
-/* * *************************************************************************** */
+/** @author Alex Keda, for www.host-food.ru */
+/******************************************************************************/
+/******************************************************************************/
 Eval(COMP_INIT);
-/* * *************************************************************************** */
-/* * *************************************************************************** */
+/******************************************************************************/
+/******************************************************************************/
 $Result = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -16,30 +16,36 @@ if(!CacheManager::isEnabled())
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-$Settings = $Config['Interface']['User']['Notes']['MobileConfirmation'];
 #-------------------------------------------------------------------------------
-$__USER = $GLOBALS['__USER'];
-#-------------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------------
-if(Is_Numeric($__USER['Params']['NotificationMethods']['Mobile']['Address']) && $__USER['Params']['NotificationMethods']['Mobile']['Confirmed'] < 1 && $Settings['MobileConfirmRequire']){
+foreach(Array_Keys($Config['Notifies']['Methods']) as $MethodID){
+	if($MethodID == 'Email')
+		continue;
 	#-------------------------------------------------------------------------------
-	$NoBody = new Tag('NOBODY');
-	$NoBody->AddHTML(TemplateReplace('Notes.User.MobileConfirmation', Array('User' => $__USER)));
-	$NoBody->AddChild(new Tag('STRONG', new Tag('A', Array('href' => "javascript:ShowWindow('/UserPersonalDataChange');"), '[Мои настройки]')));
+	$Settings = $Config['Interface']['User']['Notes'][$MethodID];
 	#-------------------------------------------------------------------------------
-	$Result[] = $NoBody;
+	$NotificationMethods = $GLOBALS['__USER']['Params']['NotificationMethods'];
 	#-------------------------------------------------------------------------------
-}
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-if(!$__USER['Params']['NotificationMethods']['Mobile']['Address'] && $Settings['MobileRequire']){
+	if($NotificationMethods[$MethodID]['Address'] && !$NotificationMethods[$MethodID]['Confirmed'] && $Settings['ConfirmRequire']){
+		#-------------------------------------------------------------------------------
+		$NoBody = new Tag('NOBODY');
+		$NoBody->AddHTML(TemplateReplace('Notes.User.Confirmation', Array('Address'=>$NotificationMethods[$MethodID]['Address'],'Method'=>$Config['Notifies']['Methods'][$MethodID])));
+		$NoBody->AddChild(new Tag('STRONG', new Tag('A', Array('href' => "javascript:ShowWindow('/UserPersonalDataChange');"), '[Мои настройки]')));
+		#-------------------------------------------------------------------------------
+		$Result[] = $NoBody;
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
-	$NoBody = new Tag('NOBODY');
-	$NoBody->AddHTML(TemplateReplace('Notes.User.MobileConfirmation.NoMobile', Array('User' => $__USER)));
-	$NoBody->AddChild(new Tag('STRONG', new Tag('A', Array('href' => "javascript:ShowWindow('/UserPersonalDataChange');"), '[Мои настройки]')));
 	#-------------------------------------------------------------------------------
-	$Result[] = $NoBody;
+	if(!$NotificationMethods[$MethodID]['Address'] && $Settings['Require']){
+		#-------------------------------------------------------------------------------
+		$NoBody = new Tag('NOBODY');
+		Debug(print_r($Config['Notifies']['Methods'][$MethodID],true));
+		$NoBody->AddHTML(TemplateReplace('Notes.User.Confirmation.NoAddress', Array('Method'=>$Config['Notifies']['Methods'][$MethodID])));
+		$NoBody->AddChild(new Tag('STRONG', new Tag('A', Array('href' => "javascript:ShowWindow('/UserPersonalDataChange');"), '[Мои настройки]')));
+		#-------------------------------------------------------------------------------
+		$Result[] = $NoBody;
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------

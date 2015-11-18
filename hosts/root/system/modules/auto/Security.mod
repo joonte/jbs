@@ -28,7 +28,7 @@ foreach($Array as $IP)
 #-------------------------------------------------------------------------------
 $Template = "/^(SELECT.*FROM.*|INSERT INTO|UPDATE .* SET).*/i";
 #-------------------------------------------------------------------------------
-$TemplateAPI = "#^/API/(ISPswSettingURL|EmailConfirm|Logon|Logout|Events|OrdersPay|.*OrderPay).*#";
+$TemplateAPI = "#^/API/(ISPswSettingURL|Confirm|Logon|Logout|Events|OrdersPay|.*OrderPay).*#";
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Args = &Args();

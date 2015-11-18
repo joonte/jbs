@@ -13,14 +13,27 @@ $Name    =  (string) @$Args['Name'];
 $Sign    =  (string) @$Args['Sign'];
 $Email   =  (string) @$Args['Email'];
 $ICQ     =  (string) @$Args['ICQ'];
+$Jabber  = (string) @$Args['Jabber'];
 $JabberID=  (string) @$Args['JabberID'];
-$Mobile  =  (string) @$Args['Mobile'];
+
+$SMS  =  (string) @$Args['SMS'];
 $IsClear = (boolean) @$Args['IsClear'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+
+
+
+
+# tmp 
+if(!$JabberID && $Jabber)
+	$JabberID = $Jabber;
+
+
+
+
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
-$CacheID2 = Md5(SPrintF('MobileConfirm_%s',$__USER['ID']));
+$CacheID2 = Md5(SPrintF('SMSConfirm_%s',$__USER['ID']));
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php','libs/Image.php')))
 	return ERROR | @Trigger_Error(500);
@@ -85,9 +98,9 @@ if($JabberID){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($Mobile){
+if($SMS){
 	#-------------------------------------------------------------------------------
-	if(!Preg_Match($Regulars['Mobile'],$Mobile))
+	if(!Preg_Match($Regulars['SMS'],$SMS))
 		return new gException('WRONG_MOBILE','Номер мобильного телефона указан неверно');
 	#-------------------------------------------------------------------------------
 }
@@ -99,11 +112,11 @@ $Params['NotificationMethods']['Jabber']['Address'] = $JabberID;
 #-------------------------------------------------------------------------------
 $Params['NotificationMethods']['ICQ']['Address'] = $ICQ;
 #-------------------------------------------------------------------------------
-$Params['NotificationMethods']['Mobile']['Address'] = $Mobile;
+$Params['NotificationMethods']['SMS']['Address'] = $SMS;
 #-------------------------------------------------------------------------------
-if($User['Params']['NotificationMethods']['Mobile']['Address'] != $Mobile){
+if($User['Params']['NotificationMethods']['SMS']['Address'] != $SMS){
 	#-------------------------------------------------------------------------------
-	$Params['NotificationMethods']['Mobile']['Confirmed'] = 0;
+	$Params['NotificationMethods']['SMS']['Confirmed'] = 0;
 	#-------------------------------------------------------------------------------
 	CacheManager::add($CacheID2, '0');
 	#-------------------------------------------------------------------------------
@@ -171,11 +184,11 @@ if($User['Email'] != $Email){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($User['Params']['NotificationMethods']['Mobile']['Address'] != $Mobile){
+if($User['Params']['NotificationMethods']['SMS']['Address'] != $SMS){
 	#-------------------------------------------------------------------------------
-	$Message = ($User['Params']['NotificationMethods']['Mobile']['Address'])?SPrintF('Смена контактного телефона %s -> %s',$User['Params']['NotificationMethods']['Mobile']['Address'],$Mobile):SPrintF('Добавлен контактный телефон (%s)',$Mobile);
+	$Message = ($User['Params']['NotificationMethods']['SMS']['Address'])?SPrintF('Смена контактного телефона %s -> %s',$User['Params']['NotificationMethods']['SMS']['Address'],$SMS):SPrintF('Добавлен контактный телефон (%s)',$SMS);
 	#-------------------------------------------------------------------------------
-	$Message = ($Mobile)?$Message:SPrintF('Удалён контактный телефон (%s)',$User['Params']['NotificationMethods']['Mobile']['Address']);
+	$Message = ($SMS)?$Message:SPrintF('Удалён контактный телефон (%s)',$User['Params']['NotificationMethods']['SMS']['Address']);
 	#-------------------------------------------------------------------------------
 	$Event = Array(
 			'UserID'	=> $__USER['ID'],
