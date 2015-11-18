@@ -1589,16 +1589,6 @@
 				<ExcludeIPs></ExcludeIPs>
 			</CheckEnterIP>
 			<!-- *********************************************************************** -->
-			<EmailConfirmation>
-				<EmailConfirmRequire>1</EmailConfirmRequire>
-			</EmailConfirmation>
-			<!-- *********************************************************************** -->
-			<MobileConfirmation>
-				<MobileRequire>1</MobileRequire>
-				<MobileConfirmRequire>1</MobileConfirmRequire>
-				<ConfirmInterval>300</ConfirmInterval>
-			</MobileConfirmation>
-			<!-- *********************************************************************** -->
 			<Email>
 				<SettingsReset>0</SettingsReset>
 				<Require>1</Require>
