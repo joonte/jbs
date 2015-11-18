@@ -1,7 +1,7 @@
 <?php
 
 #-------------------------------------------------------------------------------
-/** @author Великодный В.В. (Joonte Ltd.) */
+/** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
 Eval(COMP_INIT);
@@ -58,26 +58,15 @@ $Table[] = Array('Подпись',$Comp);
 $Table[] = 'Ваши контактные данные';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
 $Methods = $Config['Notifies']['Methods'];
-
-Debug(SPrintF('[comp/www/UserPersonalDataChange]: %s',print_r($__USER['Params']['NotificationMethods'],true)));
-
+#-------------------------------------------------------------------------------
+#Debug(SPrintF('[comp/www/UserPersonalDataChange]: %s',print_r($__USER['Params']['NotificationMethods'],true)));
+#-------------------------------------------------------------------------------
 foreach(Array_Keys($Methods) as $Key){
 	#-------------------------------------------------------------------------------
 	$Method = $Methods[$Key];
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/www/UserPersonalDataChange]: Key = %s; Name = %s; IsActive = %s;',$Key,$Method['Name'],$Method['IsActive']));
+	#Debug(SPrintF('[comp/www/UserPersonalDataChange]: Key = %s; Name = %s; IsActive = %s;',$Key,$Method['Name'],$Method['IsActive']));
 	#-------------------------------------------------------------------------------
 	# кастыли для почты
 	$__USER['Params']['NotificationMethods']['Email'] = Array('Address'=>$__USER['Email'],'Confirmed'=>$__USER['EmailConfirmed']);
@@ -85,7 +74,7 @@ foreach(Array_Keys($Methods) as $Key){
 	$NotificationMethod = $__USER['Params']['NotificationMethods'][$Key];
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/www/UserPersonalDataChange]: до кнопки'));
+	#Debug(SPrintF('[comp/www/UserPersonalDataChange]: до кнопки'));
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Form/Input',Array('name'=>$Key,'type'=>'text','prompt'=> $Messages['Prompts'][$Key],'value'=>$NotificationMethod['Address']));
 	if (Is_Error($Comp))
@@ -147,20 +136,7 @@ foreach(Array_Keys($Methods) as $Key){
 	}
 	#-------------------------------------------------------------------------------
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Данные для участия в обсуждениях';
 #-------------------------------------------------------------------------------
@@ -168,53 +144,43 @@ $Foto = GetUploadedFileSize('Users',$__USER['ID']);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Upload','UserFoto',$Foto?SPrintF('%01.2f Кб.',$Foto/1024):'не загружена');
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Аватар (90x110)',$Comp);
 #-------------------------------------------------------------------------------
 if($Foto){
-  #-----------------------------------------------------------------------------
-  $Comp = Comp_Load(
-    'Form/Input',
-    Array(
-      'type'  => 'checkbox',
-      'name'  => 'IsClear',
-      'value' => 'yes'
-    )
-  );
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsClear\'); return false;'),'Удалить фотографию'),$Comp);
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsClear','value'=>'yes')  );
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsClear\'); return false;'),'Удалить фотографию'),$Comp);
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'    => 'button',
-    'onclick' => "javascript: if(form.Mobile && (form.Mobile.value.charAt(0) == 8 || form.Mobile.value.charAt(0) == 9)){ ShowConfirm('С цифры 8 начинаются коды таких стран как Китай, Бангладеш и т.п. С цифры 9 начинаются телефонов в Афганистане, Монголии, Турции ... Вы уверены что ваш мобильный телефон относится именно к этой стране? Например код РФ: 7, Беларуси: 375, Украины: 380. Соответственно, обычный номер Российского мобильного телефона выглядит так: 79262223344. Вы всё ещё хотите сохранить свой телефонный номер в таком виде?','UserPersonalDataChange();'); }else{ UserPersonalDataChange();}",
-    'value'   => 'Сохранить'
-  )
-);
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>'ConfirmSubmit();','value'=>'Сохранить'));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = $Comp;
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Standard',$Table);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tab','User/Settings',new Tag('FORM',Array('name'=>'UserPersonalDataChangeForm','onsubmit'=>'return false;'),$Comp));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Into',$Comp);
 #-------------------------------------------------------------------------------
 if(Is_Error($DOM->Build(FALSE)))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return Array('Status'=>'Ok','DOM'=>$DOM->Object);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>
