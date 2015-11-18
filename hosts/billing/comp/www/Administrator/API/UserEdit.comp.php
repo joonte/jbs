@@ -17,7 +17,7 @@ $Args = Args();
 $UserID          = (integer) @$Args['UserID'];
 $Name            =  (string) @$Args['Name'];
 $Email           =  (string) @$Args['Email'];
-$Mobile          =  (string) @$Args['Mobile'];
+$SMS          =  (string) @$Args['SMS'];
 $Password        =  (string) @$Args['Password'];
 $GroupID         = (integer) @$Args['GroupID'];
 $OwnerID         = (integer) @$Args['OwnerID'];
@@ -75,8 +75,8 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($Mobile)
-	if(!Preg_Match($Regulars['Mobile'],$Mobile))
+if($SMS)
+	if(!Preg_Match($Regulars['SMS'],$SMS))
 		return new gException('WRONG_MOBILE','Номер мобильного телефона указан неверно');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -101,10 +101,10 @@ if(Is_Error($Count))
 if(!$Count)
 	return new gException('OWNER_NOT_FOUND','Владелец не найден');
 #-------------------------------------------------------------------------------
-$User['Params']['NotificationMethods']['Mobile']['Address'] = $Mobile;
+$User['Params']['NotificationMethods']['SMS']['Address'] = $SMS;
 #-------------------------------------------------------------------------------
-if($User['Params']['NotificationMethods']['Mobile']['Address'] != $Mobile)
-	$User['Params']['NotificationMethods']['Mobile']['Confirmed'] = 0;
+if($User['Params']['NotificationMethods']['SMS']['Address'] != $SMS)
+	$User['Params']['NotificationMethods']['SMS']['Confirmed'] = 0;
 #-------------------------------------------------------------------------------
 $IUser = Array(
 		'Name'            => $Name,

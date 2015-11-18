@@ -11,9 +11,9 @@ if(Is_Error($Count))
 if(!$Count)
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-for($i=0;$i<$Count;$i+=10){
+for($i=0;$i<$Count;$i+=100){
 	#-------------------------------------------------------------------------------
-	$Users = DB_Select('Users',Array('*'),Array('Limits'=>Array('Start'=>$i,'Length'=>10)));
+	$Users = DB_Select('Users',Array('*'),Array('Limits'=>Array('Start'=>$i,'Length'=>100)));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Users)){
 	case 'error':
@@ -73,8 +73,8 @@ for($i=0;$i<$Count;$i+=10){
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			# дописываем контакты юзера в Params
-			$Params['NotificationMethods']['Mobile']['Address'] = $User['Mobile'];
-			$Params['NotificationMethods']['Mobile']['Confirmed'] = $User['MobileConfirmed'];
+			$Params['NotificationMethods']['SMS']['Address'] = $User['Mobile'];
+			$Params['NotificationMethods']['SMS']['Confirmed'] = $User['MobileConfirmed'];
 			#-------------------------------------------------------------------------------
 			$Params['NotificationMethods']['ICQ']['Address'] = $User['ICQ'];
 			$Params['NotificationMethods']['Jabber']['Address'] = $User['JabberID'];

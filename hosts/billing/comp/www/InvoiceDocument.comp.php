@@ -90,7 +90,7 @@ if($PaymentSystemID == 'QIWI' && !$IsPayed){
 	#-------------------------------------------------------------------------------
 	if(!$Mobile){
 		#-------------------------------------------------------------------------------
-		$Mobile = IsSet($_COOKIE['Mobile'])?$_COOKIE['Mobile']:$GLOBALS['__USER']['Params']['NotificationMethods']['Mobile']['Address'];
+		$Mobile = IsSet($_COOKIE['Mobile'])?$_COOKIE['Mobile']:$GLOBALS['__USER']['Params']['NotificationMethods']['SMS']['Address'];
 		#-------------------------------------------------------------------------------
 		$DOM->AddText('Title','Оплата QIWI требует телефонный номер');
 		#-------------------------------------------------------------------------------
@@ -99,7 +99,7 @@ if($PaymentSystemID == 'QIWI' && !$IsPayed){
 		#-------------------------------------------------------------------------------
 		$Messages = Messages();
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Input',Array('type'=>'text','style'=>'width: 100%;','name'=>'Mobile','value'=>$Mobile,'prompt'=>$Messages['Prompts']['Mobile']));
+		$Comp = Comp_Load('Form/Input',Array('type'=>'text','style'=>'width: 100%;','name'=>'Mobile','value'=>$Mobile,'prompt'=>$Messages['Prompts']['SMS']));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------

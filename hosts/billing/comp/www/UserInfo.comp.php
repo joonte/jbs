@@ -115,13 +115,13 @@ if($User['Params']['NotificationMethods']['Jabber']['Address'])
 	$Table[] = Array('Jabber ID',$User['Params']['NotificationMethods']['Jabber']['Address']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($User['Params']['NotificationMethods']['Mobile']['Address']){
+if($User['Params']['NotificationMethods']['SMS']['Address']){
 	#-------------------------------------------------------------------------------
-	$Table[] = Array('Номер мобильного телефона',$User['Params']['NotificationMethods']['Mobile']['Address']);
+	$Table[] = Array('Номер мобильного телефона',$User['Params']['NotificationMethods']['SMS']['Address']);
 	#-------------------------------------------------------------------------------
-	if($User['Params']['NotificationMethods']['Mobile']['Confirmed'] > 0){
+	if($User['Params']['NotificationMethods']['SMS']['Confirmed'] > 0){
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Formats/Date/Extended',$User['Params']['NotificationMethods']['Mobile']['Confirmed']);
+		$Comp = Comp_Load('Formats/Date/Extended',$User['Params']['NotificationMethods']['SMS']['Confirmed']);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------

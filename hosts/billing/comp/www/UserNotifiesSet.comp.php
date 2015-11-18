@@ -53,7 +53,7 @@ default:
 #-------------------------------------------------------------------------------
 if($Methods['SMS']['IsActive']){
 	#-------------------------------------------------------------------------------
-	if($__USER['Params']['NotificationMethods']['Mobile']['Confirmed'] == 0){
+	if($__USER['Params']['NotificationMethods']['SMS']['Confirmed'] == 0){
 		#-------------------------------------------------------------------------------
 		$Row2 = Array(new Tag('TD', Array('colspan' => 5, 'class' => 'Standard', 'style' => 'background-color:#FDF6D3;'), 'Для настройки SMS уведомлений, подтвердите свой номер телефона'));
 		#-------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ if($Methods['SMS']['IsActive']){
 					);
 		#-------------------------------------------------------------------------------
 		foreach ($RegCountrys as $RegCountryKey => $RegCountry)
-			if (Preg_Match($RegCountry, $__USER['Params']['NotificationMethods']['Mobile']['Address']))
+			if (Preg_Match($RegCountry, $__USER['Params']['NotificationMethods']['SMS']['Address']))
 				$MobileCountry = $RegCountryKey;
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[comp/www/UserNotifiesSet]: Страна определена (%s)', $MobileCountry));
@@ -118,7 +118,7 @@ if($Methods['SMS']['IsActive']){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	if(FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']) == 0 && $__USER['Params']['NotificationMethods']['Mobile']['Confirmed'] > 0)
+	if(FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']) == 0 && $__USER['Params']['NotificationMethods']['SMS']['Confirmed'] > 0)
 		UnSet($Row2);
 	#-------------------------------------------------------------------------------
 }
@@ -236,7 +236,7 @@ foreach(Array_Keys($Types) as $TypeID){
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		// Если телефон не подтвержден то не выводить активными галочки для смс.
-		if($MethodID == 'SMS' && $__USER['Params']['NotificationMethods']['Mobile']['Confirmed'] == 0){
+		if($MethodID == 'SMS' && $__USER['Params']['NotificationMethods']['SMS']['Confirmed'] == 0){
 			#-------------------------------------------------------------------------------
 			$Comp->AddAttribs(Array('disabled'=>'true'));
 			#-------------------------------------------------------------------------------

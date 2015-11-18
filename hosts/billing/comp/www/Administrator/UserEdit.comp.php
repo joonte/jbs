@@ -81,11 +81,11 @@ $Table[] = Array('Почтовый адрес',$Comp);
 $Comp = Comp_Load(
 	'Form/Input',
 		Array(
-			'name'      => 'Mobile',
+			'name'      => 'SMS',
 			'size'      => 25,
 			'type'      => 'text',
-			'prompt'    => $Messages['Prompts']['Mobile'],
-			'value'     => $User['Params']['NotificationMethods']['Mobile']['Address'],
+			'prompt'    => $Messages['Prompts']['SMS'],
+			'value'     => $User['Params']['NotificationMethods']['SMS']['Address'],
 		)
 	);
 if(Is_Error($Comp))
