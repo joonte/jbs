@@ -16,9 +16,9 @@ if(Is_Error($Count))
 if(!$Count)
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-for($i=0;$i<$Count;$i+=10){
+for($i=0;$i<$Count;$i+=100){
 	#-------------------------------------------------------------------------------
-	$Users = DB_Select('Users',Array('ID','Email','Params'),Array('Limits'=>Array('Start'=>$i,'Length'=>10)));
+	$Users = DB_Select('Users',Array('ID','Email','Params'),Array('Limits'=>Array('Start'=>$i,'Length'=>100)));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Users)){
 	case 'error':
@@ -58,6 +58,10 @@ for($i=0;$i<$Count;$i+=10){
 						$NotificationMethods[$Key][$Value] = $Template['NotificationMethods'][$Key][$Value];
 				#-------------------------------------------------------------------------------
 			}
+			#-------------------------------------------------------------------------------
+			foreach(Array_Keys($NotificationMethods) as $Key)
+				if(!IsSet($Template['NotificationMethods'][$Key]))
+					UnSet($NotificationMethods[$Key]);
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			$Params = Array();
