@@ -1283,6 +1283,7 @@
 				<!-- курсы валют с сайта цекнтробанка -->
 				<CourseUpdate>Обновление курсов валют</CourseUpdate>
 				<!-- Операции со счетами -->
+				<QIWI>Опрос сервера QIWI по XML протоколу</QIWI>
 				<NotifyWaitingInvoice>Уведомление о неоплаченных счетах</NotifyWaitingInvoice>
 				<EraseDeletedInvoice>Удаление счетов в статусе Отменен</EraseDeletedInvoice>
 				<SetDeletedWaitingInvoice>Отмена неоплаченных счетов</SetDeletedWaitingInvoice>
