@@ -17,7 +17,6 @@ $Args = Args();
 $UserID          = (integer) @$Args['UserID'];
 $Name            =  (string) @$Args['Name'];
 $Email           =  (string) @$Args['Email'];
-$SMS          =  (string) @$Args['SMS'];
 $Password        =  (string) @$Args['Password'];
 $GroupID         = (integer) @$Args['GroupID'];
 $OwnerID         = (integer) @$Args['OwnerID'];
@@ -41,6 +40,8 @@ if(StrLen($Name) < 2)
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
+#-------------------------------------------------------------------------------
+$Config = Config();
 #-------------------------------------------------------------------------------
 $Email = StrToLower($Email);
 #-------------------------------------------------------------------------------
@@ -75,11 +76,6 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($SMS)
-	if(!Preg_Match($Regulars['SMS'],$SMS))
-		return new gException('WRONG_MOBILE','Номер мобильного телефона указан неверно');
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 $Password = Trim($Password);
 #-------------------------------------------------------------------------------
 if(StrLen($Password) < 8 && $Password != 'Default')
@@ -101,28 +97,47 @@ if(Is_Error($Count))
 if(!$Count)
 	return new gException('OWNER_NOT_FOUND','Владелец не найден');
 #-------------------------------------------------------------------------------
-$User['Params']['NotificationMethods']['SMS']['Address'] = $SMS;
 #-------------------------------------------------------------------------------
-if($User['Params']['NotificationMethods']['SMS']['Address'] != $SMS)
-	$User['Params']['NotificationMethods']['SMS']['Confirmed'] = 0;
+$Params = $User['Params'];
+#-------------------------------------------------------------------------------
+$NotificationMethods = $User['Params']['NotificationMethods'];
+#-------------------------------------------------------------------------------
+foreach(Array_Keys($NotificationMethods) as $MethodID){
+	#-------------------------------------------------------------------------------
+	if(!IsSet($Config['Notifies']['Methods'][$MethodID]))
+		continue;
+	#-------------------------------------------------------------------------------
+	$Value = Mb_StrToLower(Trim(@$Args[$MethodID]));
+	#-------------------------------------------------------------------------------
+	if($Value)
+		if(!Preg_Match($Regulars[$MethodID],$Value))
+			return new gException('WRONG_CONTACT',SPrintF('Неправильный контактный адрес: %s',$Value));
+	#-------------------------------------------------------------------------------
+	$Params['NotificationMethods'][$MethodID]['Address'] = $Value;
+	#-------------------------------------------------------------------------------
+	if($User['Params']['NotificationMethods'][$MethodID]['Address'] != $Value)
+		$Params['NotificationMethods'][$MethodID]['Confirmed'] = 0;
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IUser = Array(
-		'Name'            => $Name,
-		'Email'           => $Email,
-		'GroupID'         => $GroupID,
-		'OwnerID'         => $OwnerID,
-		'IsManaged'       => $IsManaged,
-		'IsInheritGroup'  => $IsInheritGroup,
-		'LayPayMaxDays'   => $LayPayMaxDays,
-		'LayPayMaxSumm'   => $LayPayMaxSumm,
-		'LayPayThreshold' => $LayPayThreshold,
-		'Rating'          => $Rating,
-		'IsActive'        => $IsActive,
-		'IsNotifies'      => $IsNotifies,
-		'IsHidden'        => $IsHidden,
-		'IsProtected'     => $IsProtected,
-		'AdminNotice'     => $AdminNotice,
-		'Params'	=> $User['Params']
+		'Name'			=> $Name,
+		'Email'			=> $Email,
+		'GroupID'		=> $GroupID,
+		'OwnerID'		=> $OwnerID,
+		'IsManaged'		=> $IsManaged,
+		'IsInheritGroup'	=> $IsInheritGroup,
+		'LayPayMaxDays'		=> $LayPayMaxDays,
+		'LayPayMaxSumm'		=> $LayPayMaxSumm,
+		'LayPayThreshold'	=> $LayPayThreshold,
+		'Rating'		=> $Rating,
+		'IsActive'		=> $IsActive,
+		'IsNotifies'		=> $IsNotifies,
+		'IsHidden'		=> $IsHidden,
+		'IsProtected'		=> $IsProtected,
+		'AdminNotice'		=> $AdminNotice,
+		'Params'		=> $Params
 		);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -160,7 +175,15 @@ if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+# исправляем юзера, на всякий случай
+$Comp = Comp_Load('Tasks/RecoveryUsers',NULL,$UserID);
+#-------------------------------------------------------------------------------
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 return Array('Status'=>'Ok');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+
 ?>

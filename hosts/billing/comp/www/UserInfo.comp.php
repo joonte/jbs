@@ -15,6 +15,8 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Config = Config();
+#-------------------------------------------------------------------------------
 $Columns = Array(
 			'ID','RegisterDate','Name','GroupID','Email','EmailConfirmed',
 			'Sign','OwnerID','IsManaged','LayPayMaxDays',
@@ -108,24 +110,20 @@ if($User['EmailConfirmed'] > 0){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($User['Params']['NotificationMethods']['ICQ']['Address'])
-	$Table[] = Array('ICQ-номер',$User['Params']['NotificationMethods']['ICQ']['Address']);
+$NotificationMethods = $User['Params']['NotificationMethods'];
 #-------------------------------------------------------------------------------
-if($User['Params']['NotificationMethods']['Jabber']['Address'])
-	$Table[] = Array('Jabber ID',$User['Params']['NotificationMethods']['Jabber']['Address']);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-if($User['Params']['NotificationMethods']['SMS']['Address']){
+foreach(Array_Keys($NotificationMethods) as $MethodID){
 	#-------------------------------------------------------------------------------
-	$Table[] = Array('Номер мобильного телефона',$User['Params']['NotificationMethods']['SMS']['Address']);
+	if($NotificationMethods[$MethodID]['Address'])
+		$Table[] = Array($Config['Notifies']['Methods'][$MethodID]['Name'],$NotificationMethods[$MethodID]['Address']);
 	#-------------------------------------------------------------------------------
-	if($User['Params']['NotificationMethods']['SMS']['Confirmed'] > 0){
+	if($NotificationMethods[$MethodID]['Confirmed']){
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Formats/Date/Extended',$User['Params']['NotificationMethods']['SMS']['Confirmed']);
+		$Comp = Comp_Load('Formats/Date/Extended',$NotificationMethods[$MethodID]['Confirmed']);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$Table[] = Array('Телефон подтверждён',$Comp);
+		$Table[] = Array(SPrintF('%s подтверждён',$Config['Notifies']['Methods'][$MethodID]['Name']),$Comp);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
