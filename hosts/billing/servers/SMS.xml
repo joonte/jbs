@@ -60,8 +60,22 @@
 			<style>width: 100%;</style>
 		</Attribs>
 		<IsDuty>1</IsDuty>
-		<Value>MegaHoster</Value>
+		<Value>SuperMegaHoster</Value>
 	</Sender>
+	<!-- *********************************************************************** -->
+	<PrefixString>
+		<Check>/^[^\\]{3,11}$/u</Check>
+		<Comment>Добавочная строка</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Произвольная строка добавляемая в начало сообщения. Актуально при отправке через цифровые шлюзы, когда сообщения приходят со случайных номеров телефонов, не от буквенного отправителя.
+			Например: billing.isp.su</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value></Value>
+	</PrefixString>
 	<!-- *********************************************************************** -->
 	<BalanceLowLimit>
 		<Check>/^[0-9\-]{1,5}$/u</Check>
