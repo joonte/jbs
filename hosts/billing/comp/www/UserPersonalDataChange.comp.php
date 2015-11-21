@@ -124,7 +124,8 @@ foreach(Array_Keys($Methods) as $Key){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if($Method['IsActive'] && !$NotificationMethod['Confirmed']){
-		Debug(SPrintF('[comp/www/UserPersonalDataChange]: %s',print_r($Config['Interface']['User']['Notes'][$Key],true)));
+		#-------------------------------------------------------------------------------
+		#Debug(SPrintF('[comp/www/UserPersonalDataChange]: %s',print_r($Config['Interface']['User']['Notes'][$Key],true)));
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load('Form/Input', Array('name'=>SPrintF('%sCode',$Key),'type'=>'text','prompt'=>SPrintF('Введите код полученный в сообщении через %s, и нажмите кнопку "Проверить"',$Methods[$Key]['Name']),'value'=>'','disabled'=>'yes'));
 		if (Is_Error($Comp))

@@ -48,7 +48,7 @@ foreach(Array_Keys($Methods) as $MethodID){
 	#if(!$Method['IsActive'])
 	#	continue;
 	#-------------------------------------------------------------------------------
-	$Row[] = new Tag('TD',Array('class'=>'Head'),$Method['Name']);
+	$Row[] = new Tag('TD',Array('class'=>'Head'),$MethodID);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ foreach(Array_Keys($Types) as $TypeID){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if(IsSet($Type['Title']))
-		$Table[] = Array(new Tag('TD',Array('colspan'=>5,'class'=>'Separator'),$Type['Title']));
+		$Table[] = Array(new Tag('TD',Array('colspan'=>(SizeOf(Array_Keys($Methods)) + 1),'class'=>'Separator'),$Type['Title']));
 	#-------------------------------------------------------------------------------
 	$Row = Array(new Tag('TD',Array('class'=>'Comment'),$Type['Name']));
 	#-------------------------------------------------------------------------------
