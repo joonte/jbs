@@ -77,6 +77,7 @@
 			<Code>Hosting</Code>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -87,6 +88,7 @@
 			<Name>Уведомление о блокировке заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -97,6 +99,7 @@
 			<Name>Блокировка заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -107,6 +110,7 @@
 			<Name>Уведомление о удалении заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -117,6 +121,7 @@
 			<Name>Удаление заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -127,6 +132,7 @@
 			<Name>Смена пароля на заказ</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -137,6 +143,7 @@
 			<Name>Превышение процессорного времени</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>0</UseSMS>
@@ -147,6 +154,7 @@
 			<Name>Превышение использования диска</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>0</UseSMS>
@@ -160,6 +168,7 @@
 			<Code>Domain</Code>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -170,6 +179,7 @@
 			<Name>Активация заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -181,6 +191,7 @@
 			<Name>Смена серверов DNS</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -192,6 +203,7 @@
 			<Name>Уведомление о блокировке заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -202,6 +214,7 @@
 			<Name>Блокировка заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -212,6 +225,7 @@
 			<Name>Уведомление о удалении заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -222,6 +236,7 @@
 			<Name>Удаление заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -236,6 +251,7 @@
 			<Code>VPS</Code>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -246,6 +262,7 @@
 			<Name>Уведомление о блокировке заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -256,6 +273,7 @@
 			<Name>Блокировка заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -266,6 +284,7 @@
 			<Name>Уведомление о удалении заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -276,6 +295,7 @@
 			<Name>Удаление заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -286,6 +306,7 @@
 			<Name>Смена пароля на заказ</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -300,6 +321,7 @@
 			<Code>DS</Code>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -310,6 +332,7 @@
 			<Name>Уведомление о блокировке заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -320,6 +343,7 @@
 			<Name>Блокировка заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -330,6 +354,7 @@
 			<Name>Уведомление о удалении заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -340,6 +365,7 @@
 			<Name>Удаление заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -354,6 +380,7 @@
 			<Code>ExtraIP</Code>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -364,6 +391,7 @@
 			<Name>Уведомление о удалении заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -374,6 +402,7 @@
 			<Name>Удаление заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -388,6 +417,7 @@
 			<Code>ISPsw</Code>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -398,6 +428,7 @@
 			<Name>Уведомление о блокировке заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -408,6 +439,7 @@
 			<Name>Блокировка заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -418,6 +450,7 @@
 			<Name>Уведомление о удалении заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -428,6 +461,7 @@
 			<Name>Удаление заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -442,6 +476,7 @@
 			<Code>DNSmanager</Code>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>0</UseWhatsApp>
 			<UseICQ>0</UseICQ>
 			<UseJabber>0</UseJabber>
 			<UseSMS>0</UseSMS>
@@ -452,6 +487,7 @@
 			<Name>Уведомление о блокировке заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>0</UseWhatsApp>
 			<UseICQ>0</UseICQ>
 			<UseJabber>0</UseJabber>
 			<UseSMS>0</UseSMS>
@@ -462,6 +498,7 @@
 			<Name>Блокировка заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>0</UseWhatsApp>
 			<UseICQ>0</UseICQ>
 			<UseJabber>0</UseJabber>
 			<UseSMS>0</UseSMS>
@@ -472,6 +509,7 @@
 			<Name>Уведомление о удалении заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>0</UseWhatsApp>
 			<UseICQ>0</UseICQ>
 			<UseJabber>0</UseJabber>
 			<UseSMS>0</UseSMS>
@@ -482,6 +520,7 @@
 			<Name>Удаление заказа</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>0</UseWhatsApp>
 			<UseICQ>0</UseICQ>
 			<UseJabber>0</UseJabber>
 			<UseSMS>0</UseSMS>
@@ -492,6 +531,7 @@
 			<Name>Смена пароля на заказ</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>0</UseWhatsApp>
 			<UseICQ>0</UseICQ>
 			<UseJabber>0</UseJabber>
 			<UseSMS>0</UseSMS>

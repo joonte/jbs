@@ -854,6 +854,7 @@
 			<Name>Новое сообщение от службы поддержки</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -864,6 +865,7 @@
 			<Name>Новое сообщение в службу поддержки</Name>
 			<GroupID>3000000</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>0</UseWhatsApp>
 			<UseICQ>0</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>0</UseSMS>
@@ -875,6 +877,7 @@
 			<Name>Создание нового обсуждения</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -885,6 +888,7 @@
 			<Name>Новое сообщение в обсуждении</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -896,6 +900,7 @@
 			<Name>Партнёрские начисления</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>0</UseSMS>
@@ -906,6 +911,7 @@
 			<Name>Неоплаченные счета</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>0</UseSMS>
@@ -916,6 +922,7 @@
 			<Name>Условно оплаченные счета</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>0</UseSMS>
@@ -926,6 +933,7 @@
 			<Name>Автоматически выписанные счета</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>0</UseWhatsApp>
 			<UseICQ>0</UseICQ>
 			<UseJabber>0</UseJabber>
 			<UseSMS>0</UseSMS>
@@ -936,6 +944,7 @@
 			<Name>Оповещение о отрицательном баллансе</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>0</UseSMS>
@@ -946,6 +955,7 @@
 			<Title>Заказы на прочие услуги</Title>
 			<Name>Другие заказанные услуги</Name>
 			<UseEmail>1</UseEmail>
+			<UseWhatsApp>1</UseWhatsApp>
 			<UseICQ>1</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>1</UseSMS>
@@ -963,6 +973,19 @@
 			<IsEvent>1</IsEvent>
 		</Email>
 		<!-- ********************************************************************* -->
+		<WhatsApp>
+			<Name>WhatsApp сообщения</Name>
+			<IsActive>0</IsActive>
+			<IsEvent>1</IsEvent>
+		</WhatsApp>
+		<!-- ********************************************************************* -->
+		<SMS>
+			<Name>SMS сообщения</Name>
+			<IsActive>0</IsActive>
+			<Provider>SMSpilot</Provider>
+			<IsEvent>1</IsEvent>
+		</SMS>
+		<!-- ********************************************************************* -->
 		<ICQ>
 			<Name>ICQ пейджинг</Name>
 			<IsActive>0</IsActive>
@@ -974,13 +997,6 @@
 			<IsActive>0</IsActive>
 			<IsEvent>1</IsEvent>
 		</Jabber>
-		<!-- ********************************************************************* -->
-		<SMS>
-			<Name>SMS сообщения</Name>
-			<IsActive>0</IsActive>
-			<Provider>SMSC</Provider>
-			<IsEvent>1</IsEvent>
-		</SMS>
 	</Methods>
 	<!-- ********************************************************************** -->
 </Notifies>
@@ -1034,6 +1050,16 @@
    </Params>
    <IsActive>1</IsActive>
   </SMS>
+  <!-- ********************************************************************* -->
+  <WhatsApp>
+   <Name>WhatsApp сообщение</Name>
+   <Params>
+    <Mobile>Номер мобильного телефона</Mobile>
+    <Message>Сообщение</Message>
+    <ID>Идентификатор пользователя</ID>
+   </Params>
+   <IsActive>1</IsActive>
+  </WhatsApp>
   <!-- ********************************************************************* -->
   <Dispatch>
    <Name>Рассылка</Name>
@@ -1603,6 +1629,13 @@
 				<ConfirmRequire>1</ConfirmRequire>
 				<ConfirmInterval>300</ConfirmInterval>
 			</Email>
+			<!-- *********************************************************************** -->
+			<WhatsApp>
+				<SettingsReset>1</SettingsReset>
+				<Require>0</Require>
+				<ConfirmRequire>1</ConfirmRequire>
+				<ConfirmInterval>300</ConfirmInterval>
+			</WhatsApp>
 			<!-- *********************************************************************** -->
 			<ICQ>
 				<SettingsReset>1</SettingsReset>
