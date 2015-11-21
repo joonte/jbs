@@ -116,8 +116,8 @@ function CheckEvents(){
 					var $Color = '#F1FCCE';
 					break;
 				case 'System':
-					var $Color = '#ADC1F0';
-					//var $Color = '#F1FCCE';
+					//var $Color = '#ADC1F0';
+					var $Color = '#F1FCCE';
 					break;
 				case 'Hosting':
 					var $Color = '#F1FCCE';
