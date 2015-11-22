@@ -12,7 +12,7 @@
   * Логин в панель управления: {$Login|default:'$Login'}
   * Пароль панели управления: {$Password|default:'$Password'}
 
- Данные для доступа на сервер по SSH:
+Если вы заказывали сервер с UNIX-like операционной системой (FreeBSD/Linux), то вы можете войти на него по SSH:
   * IP адрес сервера: {$IP|default:'$IP'}
   * Имя пользователя: root
   * Пароль: {$Password|default:'$Password'}
