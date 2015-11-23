@@ -229,7 +229,7 @@ foreach(Array_Keys($Types) as $TypeID){
 					'name'	=> SPrintF('%s[]',$MethodID),
 					'type'	=> 'checkbox',
 					'value'	=> $TypeID,
-					'prompt'=> (IsSet($Type[$UseName]) && !$Type[$UseName])?'Данная настройка отключена администратором':'Настройка уведомления'
+					'prompt'=> (IsSet($Type[$UseName]) && !$Type[$UseName])?'Данная настройка отключена администратором':SPrintF('Настройка уведомления %s',$MethodID)
 					)
 				);
 		if(Is_Error($Comp))
