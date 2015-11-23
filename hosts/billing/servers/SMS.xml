@@ -91,22 +91,6 @@
 	</BalanceLowLimit>
 	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
-        <CutSign>
-		<Check>Char</Check>
-		<Comment>Вырезать подпись</Comment>
-		<CommentAttribs>
-			<style>cursor:pointer;</style>
-			<onclick>ChangeCheckBox('CutSign'); return false;</onclick>
-			<prompt>Убирать "подпись" в сообщении. Иногда, она довольно большая и просто не нужна.</prompt>
-		</CommentAttribs>
-		<Type>Input</Type>
-		<Attribs>
-			<type>checkbox</type>
-		</Attribs>
-		<IsDuty>0</IsDuty>
-		<Value>yes</Value>
-	</CutSign>
-	<!-- *********************************************************************** -->
 	<PriceRu>
 		<Title>Стоимость SMS собщений</Title>
 		<Check>/^[0-9\.]{1,6}$/u</Check>
