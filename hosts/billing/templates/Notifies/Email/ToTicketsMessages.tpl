@@ -15,5 +15,9 @@
 
 http://{$smarty.const.HOST_ID|default:'HOST_ID'}/Administrator/Tickets
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
 

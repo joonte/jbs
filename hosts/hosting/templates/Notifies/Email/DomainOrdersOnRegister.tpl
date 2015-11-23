@@ -15,5 +15,9 @@ http://www.reg.ru/user/docs/add?userdoc_secretkey={$UploadID|default:'$UploadID'
 {/if}
 Данные в службе WhoIs станут доступны в течение нескольких часов, а полная регистрация Вашего доменного имени будет завершена в течение 24 часов.
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
 

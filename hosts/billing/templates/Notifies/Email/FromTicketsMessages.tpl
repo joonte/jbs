@@ -15,5 +15,9 @@
 
 http://{$smarty.const.HOST_ID|default:'HOST_ID'}/Tickets?Email={$User.Email|default:'$User.Email'}&Password={$User.UniqID|default:'$User.UniqID'}
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
 

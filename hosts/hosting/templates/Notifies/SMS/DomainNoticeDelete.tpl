@@ -5,3 +5,9 @@
 {assign var=ExpDate value=$StatusDate + 2678400}
 Оканчивается срок блокировки заказа на домен {$DomainName|default:'$DomainName'}.{$Name|default:'$Name'}, удаление заказа {$ExpDate|date_format:"%d.%m.%Y"}
 
+{if !$MethodSettings.CutSign}
+--
+{$From.Sign|default:'$From.Sign'}
+
+{/if}
+

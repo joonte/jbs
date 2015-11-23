@@ -13,4 +13,9 @@ http://{$smarty.const.HOST_ID|default:'HOST_ID'}/WorksCompliteReportDownload?Ema
 
 Оригиналы документов будут высланы Вам по почте в самое ближайшее время.
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
+

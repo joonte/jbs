@@ -8,4 +8,9 @@
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ №{$OrderID|string_format:"%05u"} на выделенный IP адрес был выполнен.
 К вашему заказу добавлен адрес {$Login|default:'$Login'}
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
+

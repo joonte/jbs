@@ -9,4 +9,9 @@
 До окончания заказа {$DNSmanagerOrder.DaysRemainded|default:'$DNSmanagerOrder.DaysRemainded'} дн.
 Логин: {$DNSmanagerOrder.Login|default:'$DNSmanagerOrder.Login'}
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
+

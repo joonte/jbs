@@ -9,4 +9,9 @@
 IP адрес: {$ExtraIPOrder.Login|default:'$ExtraIPOrder.Login'}
 До удаления заказа {$ExtraIPOrder.DaysRemainded|default:'$ExtraIPOrder.DaysRemainded'} дней.
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
+

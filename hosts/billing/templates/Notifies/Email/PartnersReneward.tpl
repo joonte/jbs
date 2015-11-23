@@ -7,5 +7,10 @@
 {$Message|default:'$Message'}
 
 ---
+
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
 

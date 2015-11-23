@@ -7,4 +7,9 @@
 
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ на услугу ({$Service.Name|default:'$Service.Name'}), номер заказа #{$ID|string_format:"%05u"}, был заблокирован.
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
+

@@ -9,4 +9,9 @@
 Номер заказа №{$OrderID|string_format:"%05u"}, IP адрес {$IP|default:'$IP'}.
 Дополнительная информация будет предоставлена в центре поддержки биллинговой панели.
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
+

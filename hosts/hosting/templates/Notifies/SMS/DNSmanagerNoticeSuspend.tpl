@@ -5,3 +5,9 @@
 
 Оканчивается срок действия вторичного DNS ({$DNSmanagerOrder.Login|default:'$DNSmanagerOrder.Login'}), осталось {$DNSmanagerOrder.DaysRemainded|default:'$DNSmanagerOrder.DaysRemainded'} дн
 
+{if !$MethodSettings.CutSign}
+--
+{$From.Sign|default:'$From.Sign'}
+
+{/if}
+

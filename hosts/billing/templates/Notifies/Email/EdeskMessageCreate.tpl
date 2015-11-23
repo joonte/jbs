@@ -14,4 +14,9 @@
 
 http://%HostID%/EdeskMessages?Email=%User.Email%&Password=%User.UniqID%&EdeskID=%EdeskID%
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
+

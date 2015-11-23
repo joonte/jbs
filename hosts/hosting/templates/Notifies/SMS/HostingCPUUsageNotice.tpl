@@ -5,3 +5,9 @@
 
 Превышение процессорного времени, аккаунт {$HostingOrder.Login|default:'$HostingOrder.Login'}, тариф "{$HostingOrder.Scheme|default:'$HostingOrder.Scheme'}".
 
+{if !$MethodSettings.CutSign}
+--
+{$From.Sign|default:'$From.Sign'}
+
+{/if}
+

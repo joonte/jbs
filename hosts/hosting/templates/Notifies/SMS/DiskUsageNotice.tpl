@@ -4,3 +4,9 @@
 
 Осталось мало места на хостинге ({$Order.Used|default:'$Order.Used'}/{$Order.Limit|default:'$Order.Limit'}Mb), логин {$Order.Login|default:'$Order.Login'}.
 
+{if !$MethodSettings.CutSign}
+--
+{$From.Sign|default:'$From.Sign'}
+
+{/if}
+

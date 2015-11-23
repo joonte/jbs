@@ -19,5 +19,9 @@ wget -O /usr/local/mgr5/etc/ispmgr.lic "http://lic.ispsystem.com/ispmgr.lic?ip={
 При заказе лицензии для виртуального сервера с шаблоном ISPmanager, вы можете сразу же пользоваться лицензией, пройдя по адресу:
 http://{$IP|default:'$IP'}:1500/ispmgr
 
-
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
+

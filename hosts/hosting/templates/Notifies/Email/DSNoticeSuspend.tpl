@@ -9,5 +9,9 @@
 До окончания заказа {$DSOrder.DaysRemainded|default:'$DSOrder.DaysRemainded'} дн.
 IP адрес: {$DSOrder.IP|default:'$DSOrder.IP'}
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
 

@@ -993,7 +993,7 @@
 			<Name>ICQ пейджинг</Name>
 			<IsActive>0</IsActive>
 			<IsEvent>1</IsEvent>
-			<CutSign>0</CutSign>
+			<CutSign>1</CutSign>
 		</ICQ>
 		<!-- ********************************************************************* -->
 		<Jabber>

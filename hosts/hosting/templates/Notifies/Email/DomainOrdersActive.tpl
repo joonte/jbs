@@ -7,5 +7,9 @@
 
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ домена №{$OrderID|string_format:"%05u"} [{$DomainName|default:'$DomainName'}.{$Name|default:'$Name'}] был активирован.
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
 

@@ -9,5 +9,9 @@
 Логин:		{$Login|default:'$Login'}
 IP адрес:	{$IP|default:'$IP'}
 
-
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
+

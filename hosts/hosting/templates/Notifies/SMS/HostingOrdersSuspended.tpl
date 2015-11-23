@@ -5,3 +5,9 @@
 
 {$StatusDate|date_format:"%d.%m.%Y"} заблокирован хостинг {$Login|default:'$Login'}, домен {$Domain|default:'$Domain'}
 
+{if !$MethodSettings.CutSign}
+--
+{$From.Sign|default:'$From.Sign'}
+
+{/if}
+

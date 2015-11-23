@@ -4,3 +4,9 @@
  *}
 Дата окончания домена {$DomainName|default:'$DomainName'}.{$DomainZone|default:'$DomainZone'}: {$ExpirationDate|date_format:"%d.%m.%Y"}
 
+{if !$MethodSettings.CutSign}
+--
+{$From.Sign|default:'$From.Sign'}
+
+{/if}
+

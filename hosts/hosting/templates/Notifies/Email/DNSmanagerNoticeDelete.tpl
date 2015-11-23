@@ -9,6 +9,10 @@
 Уведомляем Вас о том, что оканчивается срок блокировки Вашего заказа №{$OrderID|string_format:"%05u"} на вторичный DNS, логин {$Login|default:'$Login'}.
 Дата удаления заказа {$ExpDate|date_format:"%d.%m.%Y"}
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
 
 

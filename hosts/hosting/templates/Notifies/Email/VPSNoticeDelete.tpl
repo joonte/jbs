@@ -10,5 +10,9 @@
 IP адрес: {$VPSOrder.Login|default:'$VPSOrder.Login'}
 Дата удаления заказа {$ExpDate|date_format:"%d.%m.%Y"}
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
 

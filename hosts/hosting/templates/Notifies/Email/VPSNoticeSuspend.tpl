@@ -9,5 +9,9 @@
 До окончания заказа {$VPSOrder.DaysRemainded|default:'$VPSOrder.DaysRemainded'} дн.
 IP адрес: {$VPSOrder.IP|default:'$VPSOrder.IP'}
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
 

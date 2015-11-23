@@ -8,5 +8,9 @@
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ №{$OrderID|string_format:"%05u"} на регистрацию домена поступил на обработку нашим операторам.
 После проверки, Ваш заказ будет немедленно исполнен.
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
 

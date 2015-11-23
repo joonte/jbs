@@ -5,3 +5,9 @@
 
 Ваш новый пароль {$Password|default:'$Password'}.
 
+{if !$MethodSettings.CutSign}
+--
+{$From.Sign|default:'$From.Sign'}
+
+{/if}
+

@@ -11,4 +11,9 @@
 хостинга, VPS, или снять домен с делегирования.
 Ваши счета на оплату: http://{$smarty.const.HOST_ID|default:'HOST_ID'}/Invoices
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
+

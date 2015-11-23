@@ -9,4 +9,9 @@
 на услугу "{$Order.Name|default:'$Order.Name'}".
 До окончания заказа {$Order.DaysRemainded|default:'$Order.DaysRemainded'} дн.
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
+

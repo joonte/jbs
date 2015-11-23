@@ -9,4 +9,9 @@
 До окончания заказа {$ISPswOrder.DaysRemainded|default:'$ISPswOrder.DaysRemainded'} дн.
 IP адрес заказа: {$ISPswOrder.IP|default:'$ISPswOrder.IP'}.
 
+{if !$MethodSettings.CutSign}
+--
 {$From.Sign|default:'$From.Sign'}
+
+{/if}
+
