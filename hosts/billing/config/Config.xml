@@ -971,12 +971,14 @@
 			<Name>Эл. почта</Name>
 			<IsActive>1</IsActive>
 			<IsEvent>1</IsEvent>
+			<CutSign>0</CutSign>
 		</Email>
 		<!-- ********************************************************************* -->
 		<WhatsApp>
 			<Name>WhatsApp сообщения</Name>
 			<IsActive>0</IsActive>
 			<IsEvent>1</IsEvent>
+			<CutSign>1</CutSign>
 		</WhatsApp>
 		<!-- ********************************************************************* -->
 		<SMS>
@@ -984,18 +986,21 @@
 			<IsActive>0</IsActive>
 			<Provider>SMSpilot</Provider>
 			<IsEvent>1</IsEvent>
+			<CutSign>1</CutSign>
 		</SMS>
 		<!-- ********************************************************************* -->
 		<ICQ>
 			<Name>ICQ пейджинг</Name>
 			<IsActive>0</IsActive>
 			<IsEvent>1</IsEvent>
+			<CutSign>0</CutSign>
 		</ICQ>
 		<!-- ********************************************************************* -->
 		<Jabber>
 			<Name>Jabber пейджинг</Name>
 			<IsActive>0</IsActive>
 			<IsEvent>1</IsEvent>
+			<CutSign>0</CutSign>
 		</Jabber>
 	</Methods>
 	<!-- ********************************************************************** -->
