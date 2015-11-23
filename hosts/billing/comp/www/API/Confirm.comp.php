@@ -148,7 +148,7 @@ if($Value){
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load(SPrintF('Tasks/%s',$Method),NULL,$Value,(($Method == 'SMS')?$Message1:$Message2),$__USER['ID'],TRUE,TRUE);
+		$Comp = Comp_Load(SPrintF('Tasks/%s',$Method),NULL,$Value,((In_Array($Method,Array('SMS','WhatsApp')))?$Message1:$Message2),$__USER['ID'],TRUE,TRUE);
 		#-------------------------------------------------------------------------------
 		if(Is_Error($Comp))
 			return new gException('ERROR_MESSAGE_SEND','Не удалось отправить сообщение');

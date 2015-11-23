@@ -55,7 +55,7 @@ if($Methods['SMS']['IsActive']){
 	#-------------------------------------------------------------------------------
 	if($__USER['Params']['NotificationMethods']['SMS']['Confirmed'] == 0){
 		#-------------------------------------------------------------------------------
-		$Row2 = Array(new Tag('TD', Array('colspan' => 5, 'class' => 'Standard', 'style' => 'background-color:#FDF6D3;'), 'Для настройки SMS уведомлений, подтвердите свой номер телефона'));
+		$Row2 = Array(new Tag('TD', Array('colspan' => (SizeOf($Methods) + 1), 'class' => 'Standard', 'style' => 'background-color:#FDF6D3;'), 'Для настройки SMS уведомлений, подтвердите свой номер телефона'));
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
@@ -114,7 +114,7 @@ if($Methods['SMS']['IsActive']){
 		#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		$Row2 = Array(new Tag('TD', Array('colspan' => 5, 'class' => 'Standard', 'style' => 'background-color:#FDF6D3;'), $Message));
+		$Row2 = Array(new Tag('TD', Array('colspan' => (SizeOf($Methods) + 1), 'class' => 'Standard', 'style' => 'background-color:#FDF6D3;'), $Message));
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -210,7 +210,7 @@ foreach(Array_Keys($Types) as $TypeID){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if(IsSet($Type['Title']))
-		$Table[] = Array(new Tag('TD',Array('colspan'=>5,'class'=>'Separator'),$Type['Title']));
+		$Table[] = Array(new Tag('TD',Array('colspan'=>(SizeOf($Methods) + 1),'class'=>'Separator'),$Type['Title']));
 	#-------------------------------------------------------------------------------
 	$Row = Array(new Tag('TD',Array('class'=>'Comment'),$Type['Name']));
 	#-------------------------------------------------------------------------------
@@ -235,8 +235,8 @@ foreach(Array_Keys($Types) as $TypeID){
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		// Если телефон не подтвержден то не выводить активными галочки для смс.
-		if($MethodID == 'SMS' && $__USER['Params']['NotificationMethods']['SMS']['Confirmed'] == 0){
+		// Если контакт не подтвержден то не выводить активными галочки для смс.
+		if($MethodID != 'Email' && !$__USER['Params']['NotificationMethods'][$MethodID]['Confirmed']){
 			#-------------------------------------------------------------------------------
 			$Comp->AddAttribs(Array('disabled'=>'true'));
 			#-------------------------------------------------------------------------------
@@ -271,7 +271,7 @@ $Comp = Comp_Load(
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('TD',Array('colspan'=>6,'align'=>'right'),$Comp));
+$Table[] = Array(new Tag('TD',Array('colspan'=>(SizeOf($Methods) + 1),'align'=>'right'),$Comp));
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Extended',$Table);
 if(Is_Error($Comp))
