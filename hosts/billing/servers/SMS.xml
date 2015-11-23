@@ -64,7 +64,7 @@
 	</Sender>
 	<!-- *********************************************************************** -->
 	<PrefixString>
-		<Check>/^[^\\]{3,11}$/u</Check>
+		<Check>/^[^\\]{1,30}$/u</Check>
 		<Comment>Добавочная строка</Comment>
 		<Type>Input</Type>
 		<Attribs>
