@@ -406,11 +406,11 @@ if($DaysPay){
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load('Formats/Currency',$HostingOrder['ContractBalance']);
-			if(Is_Error($Comp))
+			$ContractBalance = Comp_Load('Formats/Currency',$HostingOrder['ContractBalance']);
+			if(Is_Error($ContractBalance))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$Table[] = new Tag('TD',Array('class'=>'Separator','colspan'=>2),$Comp,new Tag('SPAN',SPrintF('Остаток денег на балансе (%s)',$Comp)));
+			$Table[] = new Tag('TD',Array('class'=>'Separator','colspan'=>2),$Comp,new Tag('SPAN',SPrintF('Остаток денег на балансе (%s)',$ContractBalance)));
 			#-------------------------------------------------------------------------------
 			$Table[] = Array('Остатка на счету хватит на',SPrintF('%s дней',$DaysFromBallance));
 			#-------------------------------------------------------------------------------
