@@ -30,6 +30,9 @@
 <!-- *********************************************************************** -->
 <!-- Invoices -->
 <IsPosted>Logic</IsPosted>
+<IsConditionally>Logic</IsConditionally>
+<AllowConditionally>Logic</AllowConditionally>
+<IsAutoInvoicing>Logic</IsAutoInvoicing>
 <!-- *********************************************************************** -->
 <!-- Tasks -->
 <Params>JSON</Params>
@@ -69,10 +72,6 @@
 <!-- *********************************************************************** -->
 <!-- дополнительная задача -->
 <AdditionalTaskExecuted>Logic</AdditionalTaskExecuted>
-<!-- added by lissyara 2012-09-29 in 20:06 MSK
-     see http://jira.joonte.com/browse/JBS-109 -->
-<IsConditionally>Logic</IsConditionally>
-<AllowConditionally>Logic</AllowConditionally>
 <!-- *********************************************************************** -->
 <!-- added by lissyara 2012-11-21 in 16:09 MSK
      see http://jira.joonte.com/browse/JBS-15 -->

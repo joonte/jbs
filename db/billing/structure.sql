@@ -522,6 +522,7 @@ CREATE TABLE `Services` (
   `IsActive` enum('no','yes') default 'yes',
   `IsProlong` enum('no','yes') default 'yes',
   `IsConditionally` enum('no','yes') default 'no',
+  `IsAutoInvoicing` enum('no','yes') default 'yes',
   `Params` LONGTEXT,
   `SortID` int(11) default '10',
   PRIMARY KEY  (`ID`),

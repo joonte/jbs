@@ -49,6 +49,7 @@ if($ServiceID){
 			'IsActive'		=> TRUE,
 			'IsProlong'		=> TRUE,
 			'IsConditionally'	=> FALSE,
+			'IsAutoInvoicing'	=> TRUE,
 			'SortID'		=> 10
 			#-------------------------------------------------------------------------------
 			);
@@ -239,8 +240,14 @@ if($Service['IsConditionally'])
 $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsConditionally\'); return false;'),'Может быть оплачена условно'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Table[] = 'Автоматическая выписка счетов';
-
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsAutoInvoicing','value'=>'yes','prompt'=>'Разрешить автоматическую выписку счетов для данной услуги'));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if($Service['IsAutoInvoicing'])
+	$Comp->AddAttribs(Array('checked'=>'yes'));
+#-------------------------------------------------------------------------------
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsAutoInvoicing\'); return false;'),'АвтоВыписка счетов'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(IsSet($Service['Code']) && $Service['Code'] == 'Default'){

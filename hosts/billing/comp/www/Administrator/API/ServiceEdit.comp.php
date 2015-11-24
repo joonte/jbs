@@ -28,6 +28,7 @@ $IsActive		= (boolean) @$Args['IsActive'];
 $IsProlong		= (boolean) @$Args['IsProlong'];
 $IsConditionally	= (boolean) @$Args['IsConditionally'];
 $Statuses		=   (array) @$Args['Statuses'];
+$IsAutoInvoicing	= (boolean) @$Args['IsAutoInvoicing'];
 $SortID			= (integer) @$Args['SortID'];
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/www/Administrator/API/ServiceEdit]: Statuses = %s',print_r($Statuses,true)));
@@ -48,6 +49,7 @@ $IService = Array(
 		'IsActive'		=> $IsActive,
 		'IsProlong'		=> $IsProlong,
 		'IsConditionally'	=> $IsConditionally,
+		'IsAutoInvoicing'	=> $IsAutoInvoicing,
 		'Params'		=> Array('Statuses'=>$Statuses),
 		'SortID'		=> $SortID
 		#-------------------------------------------------------------------------------

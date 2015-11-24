@@ -29,6 +29,7 @@ $Columns = Array(
 			'(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `OrdersOwners`.`ServiceID`) AS `Name`',
 			'(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `OrdersOwners`.`ServiceID`) AS `Code`',
 			'(SELECT `ID` FROM `Services` WHERE `Services`.`ID` = `OrdersOwners`.`ServiceID`) AS `ServiceID`',
+			'(SELECT `IsAutoInvoicing` FROM `Services` WHERE `Services`.`ID` = `OrdersOwners`.`ServiceID`) AS `IsAutoInvoicing`',
 			'(SELECT `ConsiderTypeID` FROM `Services` WHERE `Services`.`ID` = `OrdersOwners`.`ServiceID`) AS `ConsiderTypeID`',
 			'ROUND((`ExpirationDate` - UNIX_TIMESTAMP())/86400) AS `Remainded`'
 		);
@@ -53,6 +54,16 @@ case 'array':
 		if(In_Array($Order['UserID'],$Handled))
 			continue;
 		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		if(!$Order['IsAutoInvoicing']){
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/www/CreateAndSendInvoices]: автоматическая выписка счетов для сервиса "%s"/%s/%s отключена',$Order['Name'],$Order['Code'],$Order['ServiceID']));
+			#-------------------------------------------------------------------------------
+			continue;
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 		if(!$Order['IsAutoProlong']){
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[comp/www/CreateAndSendInvoices]: для заказа %s (%s) отключено автопродление',$Order['ID'],$Order['Item']));
@@ -62,7 +73,7 @@ case 'array':
 		}
 		#---------------------------------------------------------------------------
 		#---------------------------------------------------------------------------
-		if($Order['Params']['Settings']['CreateInvoicesAutomatically'] == "No"){
+		if($Order['Params']['Settings']['CreateInvoicesAutomatically'] == 'No'){
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[comp/www/CreateAndSendInvoices]: настройки пользователя (%s) запрещают автоматическую выписку счетов',$Order['Email']));
 			#-------------------------------------------------------------------------------
@@ -145,8 +156,12 @@ case 'array':
 			#-------------------------------------------------------------------------------
 			if($UOrder['Code'] == 'Default'){
 				#-------------------------------------------------------------------------------
+				# срок меньше месяца приравниваем к месяцу
+				if($UOrder['Params']['Settings']['InvoicingPeriod'] < 31)
+					$UOrder['Params']['Settings']['InvoicingPeriod'] = 31;
+				#-------------------------------------------------------------------------------
 				# если подневно - на месяц, иначе - на 1 единицу
-				$AmountPay = (($UOrder['ConsiderTypeID'] == 'Daily')?31:1);
+				$AmountPay = (($UOrder['ConsiderTypeID'] == 'Daily')?$UOrder['Params']['Settings']['InvoicingPeriod']:1);
 				#-------------------------------------------------------------------------------
 				$Comp = Comp_Load('www/API/ServiceOrderPay',Array('ServiceOrderID'=>$UOrder['ID'],'AmountPay'=>$AmountPay,'IsUseBasket'=>TRUE,'PayMessage'=>'Автоматическое выставление счёта на продление услуг'));
 				if(Is_Error($Comp))
@@ -209,6 +224,10 @@ case 'array':
 					#-------------------------------------------------------------------------------
 				}
 				#-------------------------------------------------------------------------------
+				#-------------------------------------------------------------------------------
+				# если минимальное число дней оплаты меньше чем дней автовыписки для сервиса - приравниваем к числу дней
+				if($OrderInfo['MinDaysPay'] < $UOrder['Params']['Settings']['InvoicingPeriod'])
+					$OrderInfo['MinDaysPay'] = $UOrder['Params']['Settings']['InvoicingPeriod'];
 				#-------------------------------------------------------------------------------
 				$Comp = Comp_Load(SPrintF('www/API/%sOrderPay',$UOrder['Code']),Array(SPrintF('%sOrderID',$UOrder['Code'])=>$OrderInfo['ID'],'DaysPay'=>$OrderInfo['MinDaysPay'],'IsUseBasket'=>TRUE,'PayMessage'=>'Автоматическое выставление счёта на продление услуг'));
 				if(Is_Error($Comp))
