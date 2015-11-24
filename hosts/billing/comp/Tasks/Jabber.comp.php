@@ -90,8 +90,8 @@ if(!$Config['Notifies']['Methods']['Jabber']['IsEvent'])
 	return TRUE;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Event = Comp_Load('Events/EventInsert', Array('UserID'=> $ID,SPrintF('Сообщение для (%s) через службу Jabber отправлено', $JabberID)));
-if (!$Event)
+$Event = Comp_Load('Events/EventInsert', Array('UserID'=>$ID,'Text'=>SPrintF('Сообщение для (%s) через службу Jabber отправлено', $JabberID)));
+if(!$Event)
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
