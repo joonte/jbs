@@ -94,7 +94,7 @@
  <!-- ********************************************************************** -->
  <Services>
   <Head>Кол. серв.</Head>
-  <Prompt>Кол-во услуг в группе</Prompt>
+  <Prompt>Количество услуг (сервисов) в группе</Prompt>
   <Alias>(SELECT COUNT(*) FROM `Services` WHERE `Services`.`ServicesGroupID` = `ServicesGroups`.`ID`)</Alias>
   <Attribs>
    <style>text-align:right;</style>

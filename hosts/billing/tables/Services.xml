@@ -110,14 +110,15 @@
    <Length>25</Length>
   </Args>
  </Name>
- <!-- ********************************************************************** -->
- <Measure>
-  <Head>Ед. изм.</Head>
-  <Prompt>Еденицы измерения</Prompt>
- </Measure>
+	<!-- ********************************************************************** -->
+	<Measure>
+		<Head>Ед.</Head>
+		<Prompt>Еденицы измерения</Prompt>
+	</Measure>
 	<!-- ********************************************************************** -->
 	<IsProtected>
-		<Head>Защищена</Head>
+		<Head>Защ.</Head>
+		<Prompt>Запретить удаление услуги, запретить редактирование основных настроек</Prompt>
 		<Comp>Formats/Logic</Comp>
 		<Args>
 			<ListElement>%IsProtected%</ListElement>
@@ -125,7 +126,8 @@
 	</IsProtected>
 	<!-- ********************************************************************** -->
 	<IsActive>
-		<Head>Активна</Head>
+		<Head>Акт.</Head>
+		<Prompt>Услуга активна и может быть заказана</Prompt>
 		<Comp>BooleanEdit</Comp>
 		<Args>
 			<ListElement>Services</ListElement>
@@ -136,7 +138,7 @@
 	</IsActive>
 	<!-- ********************************************************************** -->
 	<IsConditionally>
-	<Head>Условн.</Head>
+	<Head>Усл.</Head>
 	<Prompt>Может быть оплачена условным счётом, самим пользователем</Prompt>
 		<Comp>BooleanEdit</Comp>
 		<Args>
@@ -148,8 +150,8 @@
 	</IsConditionally>
 	<!-- ********************************************************************** -->
 	<Orders>
-		<Head>Кол. зак.</Head>
-		<Prompt>Кол-во заказов на данный сервис</Prompt>
+		<Head>Кол.</Head>
+		<Prompt>Количество заказов на данный сервис</Prompt>
 		<Alias>(SELECT COUNT(*) FROM `Orders` WHERE `Services`.`ID` = `Orders`.`ServiceID`)</Alias>
 		<Attribs>
 			<style>text-align:right;</style>

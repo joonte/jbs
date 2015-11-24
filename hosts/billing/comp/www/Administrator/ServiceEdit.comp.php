@@ -61,7 +61,7 @@ $Links = &Links();
 $Links['DOM'] = &$DOM;
 #-------------------------------------------------------------------------------
 if(Is_Error($DOM->Load('Window')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Administrator/ServiceEdit.js}'));
 #-------------------------------------------------------------------------------
@@ -76,107 +76,88 @@ $Table = Array();
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Owner','Владелец услуги',$Service['GroupID'],$Service['UserID']);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = $Comp;
 #-------------------------------------------------------------------------------
 $ServicesGroups = DB_Select('ServicesGroups',Array('ID','Name'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($ServicesGroups)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return ERROR | @Trigger_Error(400);
-  case 'array':
-    # No more...
-  break;
-  default:
-    return ERROR | @Trigger_Error(101);
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Options = Array();
 #-------------------------------------------------------------------------------
 foreach($ServicesGroups as $ServiceGroup)
-  $Options[$ServiceGroup['ID']] = $ServiceGroup['Name'];
+	$Options[$ServiceGroup['ID']] = $ServiceGroup['Name'];
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'ServicesGroupID','style'=>'width:240px;'),$Options,$Service['ServicesGroupID']);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Группа услуг',$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'name'  => 'Name',
-    'size'  => 30,
-    'value' => $Service['Name'],
-    'prompt'=> 'Это название используется в документах'
-  )
-);
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'Name','value'=>$Service['Name'],'prompt'=>'Это название используется в документах'));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Название услуги',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'name'  => 'NameShort',
-    'size'  => 30,
-    'value' => $Service['NameShort'],
-    'prompt'=> 'Используется в напоминаниях, листингах и т.п.'
-  )
-);
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'NameShort','value'=>$Service['NameShort'],'prompt'=>'Используется в напоминаниях, листингах и т.п.'));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Краткое название услуги',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'name'  => 'Item',
-    'size'  => 30,
-    'value' => $Service['Item'],
-    'prompt'=> 'Название для отображения в меню'
-  )
-);
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'Item','value'=>$Service['Item'],'prompt'=>'Название для отображения в меню'));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Раздел меню',$Comp);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load('Upload','Emblem',$ServiceID?SPrintF('%01.2f Кб.',GetUploadedFileSize('Services', $Service['ID'])/1024):'не загружена');
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Эмблема (72x72, *.jpg)',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'name'  => 'Measure',
-    'size'  => 10,
-    'value' => $Service['Measure']
-  )
-);
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes'));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if($Service['IsActive'])
+	$Comp->AddAttribs(Array('checked'=>'yes'));
+#-------------------------------------------------------------------------------
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsActive\'); return false;'),'Услуга активна'),$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Table[] = 'Финансовые настройки';
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'Measure','value'=>$Service['Measure']));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $IsProtected = $Service['IsProtected'];
 #-------------------------------------------------------------------------------
 if($IsProtected)
-  $Comp->AddAttribs(Array('disabled'=>TRUE));
+	$Comp->AddAttribs(Array('disabled'=>TRUE));
 #-------------------------------------------------------------------------------
 $Table[] = Array('Ед. измерения',$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
@@ -185,25 +166,26 @@ $Types = $Config['Services']['Consider']['Types'];
 $Options = Array();
 #-------------------------------------------------------------------------------
 foreach($Types as $TypeID=>$Type)
-  $Options[$TypeID] = $Type['Name'];
+	$Options[$TypeID] = $Type['Name'];
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'ConsiderTypeID','style'=>'width:240px;',),$Options,$Service['ConsiderTypeID']);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($IsProtected)
-  $Comp->AddAttribs(Array('disabled'=>TRUE));
+	$Comp->AddAttribs(Array('disabled'=>TRUE));
 #-------------------------------------------------------------------------------
 $Table[] = Array('Способ учета',$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Attribs = Array('name'=>'CostOn','value'=>SPrintF('%01.2f',$Service['CostOn']));
 #-------------------------------------------------------------------------------
 if($IsProtected)
-  $Attribs['disabled'] = TRUE;
+	$Attribs['disabled'] = TRUE;
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Summ',$Attribs);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Стоимость подключения',$Comp);
 #-------------------------------------------------------------------------------
@@ -211,11 +193,11 @@ $Table[] = Array('Стоимость подключения',$Comp);
 $Attribs = Array('name'=>'Cost','value'=>SPrintF('%01.2f',$Service['Cost']));
 #-------------------------------------------------------------------------------
 if($IsProtected)
-  $Attribs['disabled'] = TRUE;
+	$Attribs['disabled'] = TRUE;
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Summ',$Attribs);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Начальная цена',$Comp);
 #-------------------------------------------------------------------------------
@@ -227,7 +209,6 @@ $Comp = Comp_Load(
 		Array(
 			'type'  => 'text',
 			'name'  => 'PartnersRewardPercent',
-			'size'  => 30,
 			'value' => $Service['PartnersRewardPercent'],
 			'prompt'=> SPrintF('Процент начисляемый по партнёрской программе, при оплате этой услуги. 0 - не начислять, -1 - начислять процент используемый по умолчанию (%s%%)',$Config['Tasks']['Types']['CaclulatePartnersReward']['PartnersRewardPercent'])
 			)
@@ -238,22 +219,12 @@ if(Is_Error($Comp))
 $Table[] = Array('Партнёрские отчисления, %',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes'));
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-if($Service['IsActive'])
-  $Comp->AddAttribs(Array('checked'=>'yes'));
-#-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsActive\'); return false;'),'Услуга активна'),$Comp);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProlong','value'=>'yes'));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Service['IsProlong'])
-  $Comp->AddAttribs(Array('checked'=>'yes'));
+	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsProlong\'); return false;'),'Возможность продления'),$Comp);
 #-------------------------------------------------------------------------------
@@ -266,6 +237,10 @@ if($Service['IsConditionally'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsConditionally\'); return false;'),'Может быть оплачена условно'),$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Table[] = 'Автоматическая выписка счетов';
+
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(IsSet($Service['Code']) && $Service['Code'] == 'Default'){
@@ -317,73 +292,59 @@ if(IsSet($Service['Code']) && $Service['Code'] == 'Default'){
 $Table[] = 'Порядок сортировки сервисов';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'name'  => 'SortID',
-    'size'  => 5,
-    'value' => $Service['SortID']
-  )
-);
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'SortID','value'=>$Service['SortID']));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Порядок сортировки',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'    => 'button',
-    'onclick' => 'ServiceEdit();',
-    'value'   => ($ServiceID?'Сохранить':'Добавить')
-  )
-);
+$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>'ServiceEdit();','value'=>($ServiceID?'Сохранить':'Добавить')));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = $Comp;
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Standard',$Table);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Form = new Tag('FORM',Array('name'=>'ServiceEditForm','onsubmit'=>'return false;'),$Comp);
 #-------------------------------------------------------------------------------
-if($ServiceID){
-  #-----------------------------------------------------------------------------
-  $Comp = Comp_Load(
-    'Form/Input',
-    Array(
-      'name'  => 'ServiceID',
-      'type'  => 'hidden',
-      'value' => $ServiceID
-    )
-  );
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $Form->AddChild($Comp);
-}
 #-------------------------------------------------------------------------------
 if($ServiceID){
-  #-----------------------------------------------------------------------------
-  if(!$IsProtected){
-    #---------------------------------------------------------------------------
-    $Iframe = new Tag('IFRAME',Array('name'=>'ServiceFields','src'=>SPrintF('/Administrator/ServiceFields?ServiceID=%s',$ServiceID),'width'=>'450px','height'=>'450px'),'Загрузка...');
-    #---------------------------------------------------------------------------
-    $Form = new Tag('TABLE',Array('cellspacing'=>5),new Tag('TR',new Tag('TD',$Form),new Tag('TD',$Iframe)));
-  }
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('name'=>'ServiceID','type'=>'hidden','value'=>$ServiceID));
+	if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Form->AddChild($Comp);
+	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($ServiceID){
+	#-------------------------------------------------------------------------------
+	if(!$IsProtected){
+		#-------------------------------------------------------------------------------
+		$Iframe = new Tag('IFRAME',Array('name'=>'ServiceFields','src'=>SPrintF('/Administrator/ServiceFields?ServiceID=%s',$ServiceID),'width'=>'450px','height'=>'450px'),'Загрузка...');
+		#-------------------------------------------------------------------------------
+		$Form = new Tag('TABLE',Array('cellspacing'=>5),new Tag('TR',new Tag('TD',$Form),new Tag('TD',$Iframe)));
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Into',$Form);
 #-------------------------------------------------------------------------------
 if(Is_Error($DOM->Build(FALSE)))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return Array('Status'=>'Ok','DOM'=>$DOM->Object);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>
