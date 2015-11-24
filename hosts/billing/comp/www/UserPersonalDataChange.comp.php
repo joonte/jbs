@@ -133,7 +133,7 @@ foreach(Array_Keys($Methods) as $Key){
 		#-------------------------------------------------------------------------------
 		$NoBody = new Tag('NOBODY', $Comp);
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Input',Array('onclick'=>SPrintF('ConfirmCheck(\'%s\',%s);',$Key,$Config['Interface']['User']['Notes'][$Key]['SettingsReset']),'type'=>'button','value'=>'Проверить','prompt'=>'Нажмите для проверки вашего кода'));
+		$Comp = Comp_Load('Form/Input',Array('onclick'=>SPrintF('ConfirmCheck(\'%s\',\'%s\',%s);',$Key,$NotificationMethod['Address'],$Config['Interface']['User']['Notes'][$Key]['SettingsReset']),'type'=>'button','value'=>'Проверить','prompt'=>'Нажмите для проверки вашего кода'));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------

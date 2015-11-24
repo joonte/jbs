@@ -93,16 +93,25 @@ if(!IsSet($Links[$LinkID])){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$WhatsAppClient->connect();
+	#-------------------------------------------------------------------------------
 	$WhatsAppClient->loginWithPassword($Settings['Password']);
+	#-------------------------------------------------------------------------------
+	if(!File_Exists(SPrintF('%s/info.update.txt',$DataFolder))){
+		#-------------------------------------------------------------------------------
+		$WhatsAppClient->sendStatusUpdate($Settings['Params']['StatusMessage']);
+		#-------------------------------------------------------------------------------
+		$WhatsAppClient->sendSetProfilePicture($Settings['Params']['ProfileImage']);
+		#-------------------------------------------------------------------------------
+		$IsWrite = IO_Write(SPrintF('%s/info.update.txt',$DataFolder),'user info updated',TRUE);
+		if(Is_Error($IsWrite))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 $WhatsAppClient = &$Links[$LinkID];
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-# переводы строк
-#$Message = Str_Replace("\r","",$Message);
-#$Message = Str_Replace("\n","\n\r",$Message);
 #-------------------------------------------------------------------------------
 $IsMessage = $WhatsAppClient->sendMessage($Mobile,$Message);
 if(Is_Error($IsMessage)){
