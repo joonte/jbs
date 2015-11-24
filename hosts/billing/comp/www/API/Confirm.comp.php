@@ -33,9 +33,8 @@ if(!$Config['Notifies']['Methods'][$Method]['IsActive'])
 	return new gException('WRONG_CONTACT_ADDRESS','Данный способ оповещения отключен администратором');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($Value)
-	if(!Preg_Match($Regulars[$Method],$Value))
-		return new gException('WRONG_CONTACT_ADDRESS','Неверно указан адрес');
+if(!Preg_Match($Regulars[$Method],$Value))
+	return new gException('WRONG_CONTACT_ADDRESS','Неверно указан адрес');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # кастыли для почты
@@ -64,8 +63,10 @@ switch(ValueOf($ServerSettings)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
+	#-------------------------------------------------------------------------------
 	if($Method != 'Email')
 		return $ServerSettings;
+	#-------------------------------------------------------------------------------
 case 'array':
 	break;
 default:
@@ -273,7 +274,7 @@ if(!$Confirm && !$Code){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	$Event = Array('UserID'=>$__USER['ID'],'PriorityID'=>'Billing','Text'=>SPrintF('Контактный адрес (%s) подтверждён через %s',$__USER['Params']['NotificationMethods'][$Method]['Address'],$Config['Notifies']['Methods'][$Method]['Name']));
+	$Event = Array('UserID'=>$__USER['ID'],'PriorityID'=>'Billing','Text'=>SPrintF('Контактный адрес (%s) подтверждён через "%s"',$__USER['Params']['NotificationMethods'][$Method]['Address'],$Config['Notifies']['Methods'][$Method]['Name']));
 	#-------------------------------------------------------------------------------
 	$Event = Comp_Load('Events/EventInsert',$Event);
 	if(!$Event)
