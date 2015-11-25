@@ -18,8 +18,9 @@ $Config = Config();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 foreach(Array_Keys($Config['Notifies']['Methods']) as $MethodID){
+	#-------------------------------------------------------------------------------
 	if($MethodID == 'Email')
-		continue;
+		$GLOBALS['__USER']['Params']['NotificationMethods'][$MethodID] = Array('Address'=>$GLOBALS['__USER']['Email'],'Confirmed'=>$GLOBALS['__USER']['EmailConfirmed']);
 	#-------------------------------------------------------------------------------
 	$Settings = $Config['Interface']['User']['Notes'][$MethodID];
 	#-------------------------------------------------------------------------------
