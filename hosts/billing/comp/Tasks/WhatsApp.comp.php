@@ -78,45 +78,29 @@ if(!Is_Link($wadata))
 		return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Links = &Links();
+$WhatsAppClient = new WhatsProt($Settings['Login'], $Settings['Params']['Sender'],FALSE,TRUE,$DataFolder);
+if(Is_Error($WhatsAppClient))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$LinkID = Md5('WhatsAppClient');
+$WhatsAppClient->connect();
 #-------------------------------------------------------------------------------
-if(!IsSet($Links[$LinkID])){
+$WhatsAppClient->loginWithPassword($Settings['Password']);
+#-------------------------------------------------------------------------------
+if(!File_Exists(SPrintF('%s/info.update.txt',$DataFolder))){
 	#-------------------------------------------------------------------------------
-	$Links[$LinkID] = NULL;
+	$WhatsAppClient->sendStatusUpdate($Settings['Params']['StatusMessage']);
 	#-------------------------------------------------------------------------------
-	$WhatsAppClient = &$Links[$LinkID];
+	$WhatsAppClient->sendSetProfilePicture($Settings['Params']['ProfileImage']);
 	#-------------------------------------------------------------------------------
-	$WhatsAppClient = new WhatsProt($Settings['Login'], $Settings['Params']['Sender'],FALSE,TRUE,$DataFolder);
-	if(Is_Error($WhatsAppClient))
+	$IsWrite = IO_Write(SPrintF('%s/info.update.txt',$DataFolder),'user info updated',TRUE);
+	if(Is_Error($IsWrite))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$WhatsAppClient->connect();
-	#-------------------------------------------------------------------------------
-	$WhatsAppClient->loginWithPassword($Settings['Password']);
-	#-------------------------------------------------------------------------------
-	if(!File_Exists(SPrintF('%s/info.update.txt',$DataFolder))){
-		#-------------------------------------------------------------------------------
-		$WhatsAppClient->sendStatusUpdate($Settings['Params']['StatusMessage']);
-		#-------------------------------------------------------------------------------
-		$WhatsAppClient->sendSetProfilePicture($Settings['Params']['ProfileImage']);
-		#-------------------------------------------------------------------------------
-		$IsWrite = IO_Write(SPrintF('%s/info.update.txt',$DataFolder),'user info updated',TRUE);
-		if(Is_Error($IsWrite))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-	}
-	#-------------------------------------------------------------------------------
 }
-#-------------------------------------------------------------------------------
-$WhatsAppClient = &$Links[$LinkID];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IsMessage = $WhatsAppClient->sendMessage($Mobile,$Message);
 if(Is_Error($IsMessage)){
-	#-------------------------------------------------------------------------------
-	UnSet($Links[$LinkID]);
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[comp/Tasks/WhatsApp]: error sending message, see error file: %s',$LogFile));
 	#-------------------------------------------------------------------------------
