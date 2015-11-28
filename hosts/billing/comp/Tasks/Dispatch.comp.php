@@ -101,8 +101,8 @@ if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$GLOBALS['TaskReturnInfo']['Sended']	= Array(SizeOf($Task['Params']['SendedIDs']));
-$GLOBALS['TaskReturnInfo']['Estimated']	= Array(SizeOf($Task['Params']['SendToIDs']));
+$GLOBALS['TaskReturnInfo']['Sended']	= Array(SizeOf(Array_Filter($SendedIDs)));
+$GLOBALS['TaskReturnInfo']['Estimated']	= Array(SizeOf(Array_Filter($SendToIDs)));
 $GLOBALS['TaskReturnInfo']['New']	= Array($Count);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
