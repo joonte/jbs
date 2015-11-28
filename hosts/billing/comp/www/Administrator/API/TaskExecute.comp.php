@@ -212,17 +212,27 @@ default:
 # execute additional task, if need
 if(IsSet($GLOBALS['TaskReturnArray'])){
 	#-------------------------------------------------------------------------------
+	$CompName = $GLOBALS['TaskReturnArray']['CompName'];
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[comp/www/Administrator/API/TaskExecute]: TaskReturnArray задана, возможно необходимо выполнить: %s',$CompName));
+	#-------------------------------------------------------------------------------
+	# задаём массив с пометками - выполнена ли дополнительная задача
+	if(!IsSet($Task['Params']['AdditionalTaskExecuted']) || !Is_Array($Task['Params']['AdditionalTaskExecuted']))
+		$Task['Params']['AdditionalTaskExecuted'] = Array();
+	#-------------------------------------------------------------------------------
+	$AdditionalTaskExecuted = $Task['Params']['AdditionalTaskExecuted'];
+	#-------------------------------------------------------------------------------
 	# выполнено или нет?
-	if(IsSet($Task['Params']['AdditionalTaskExecuted']) && $Task['Params']['AdditionalTaskExecuted'] != 'yes'){
+	if(!IsSet($AdditionalTaskExecuted[$CompName]) || $AdditionalTaskExecuted[$CompName] != 'yes'){
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/www/Administrator/API/TaskExecute]: TaskReturnArray is set, need run additional task: %s',$GLOBALS['TaskReturnArray']['CompName']));
+		Debug(SPrintF('[comp/www/Administrator/API/TaskExecute]: TaskReturnArray => выполнение задачи: %s',$CompName));
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load($GLOBALS['TaskReturnArray']['CompName'],$GLOBALS['TaskReturnArray']['CompParameters']);
+		$Comp = Comp_Load($CompName,$GLOBALS['TaskReturnArray']['CompParameters']);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		# set in task parameters: additional task is executed
-		$Task['Params']['AdditionalTaskExecuted'] = 'yes';
+		$Task['Params']['AdditionalTaskExecuted'][$CompName] = 'yes';
 		#-------------------------------------------------------------------------------
 		$IsUpdate = DB_Update('Tasks',Array('Params'=>$Task['Params']),Array('ID'=>$Task['ID']));
 		if(Is_Error($IsUpdate))

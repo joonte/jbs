@@ -1663,7 +1663,7 @@
 			<!-- *********************************************************************** -->
 			<SMS>
 				<SettingsReset>1</SettingsReset>
-				<Require>1</Require>
+				<Require>0</Require>
 				<ConfirmRequire>1</ConfirmRequire>
 				<ConfirmInterval>300</ConfirmInterval>
 			</SMS>

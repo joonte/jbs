@@ -599,7 +599,7 @@
    <Name>Выбрать алгоритм регистрации</Name>
    <Params>
     <ID>Идентификатор заказа</ID>
-    <AdditionalTaskExecuted>Дополнительная задача</AdditionalTaskExecuted>
+    <AdditionalTaskExecuted>Дополнительная задача</AdditionalTaskExecuted> 
    </Params>
    <IsActive>1</IsActive>
   </DomainPathRegister>

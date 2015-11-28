@@ -51,6 +51,59 @@ $GLOBALS['TaskReturnInfo'] = Array(($DomainOrder['Params']['Name'])=>Array(SPrin
 switch($DomainOrder['StatusID']){
 case 'ForRegister':
 	#-------------------------------------------------------------------------------
+	# проверяем стоимость регистрации домена
+	#-------------------------------------------------------------------------------
+	# выбрать цену регистрации. DomainConsider, ID заказа, последняя запись
+	$DomainPrice = DB_Select('DomainConsider',Array('Cost'),Array('UNIQ','SortOn'=>'ID','IsDesc'=>TRUE,'Limits'=>Array(0,1),'Where'=>SPrintF('`DomainOrderID` = %u',$DomainOrderID)));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($DomainPrice)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	# получить цену регистрации домена у регистратора
+	$DomainGetPrice = $Server->DomainGetPrice(Mb_StrToLower($DomainOrder['DomainName'],'UTF-8'),$DomainOrder['DomainZone']);
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($DomainGetPrice)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[comp/Tasks/DomainRegister]: DomainGetPrice = %s',print_r($DomainGetPrice,true)));
+	#-------------------------------------------------------------------------------
+	# TODO тут бы где-то валюту приплести и сравнить ...
+	#-------------------------------------------------------------------------------
+	if(SizeOf($DomainGetPrice) && $DomainGetPrice['price'] > $DomainPrice['Cost']){
+		#-------------------------------------------------------------------------------
+		$Comment = (IsSet($DomainGetPrice['premium'])?'Данный домен относится к "премиум" доменам, регистрация только в ручном режиме':SPrintF('Цена регистратора не соответствует цене в биллинге %s > %s',$DomainGetPrice['price'],$DomainPrice['Cost']));
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/Tasks/DomainRegister]: Comment = %s',$Comment));
+		#-------------------------------------------------------------------------------
+		# задаём внешние параметры на вызов компонента
+		$GLOBALS['TaskReturnArray'] = Array(
+							'CompName'	=> 'www/API/StatusSet',
+							'CompParameters'=> Array('ModeID'=>'DomainOrders','StatusID'=>'Deleted','RowsIDs'=>$DomainOrderID,'Comment'=>$Comment)
+						);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		return TRUE;
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$PersonID = $DomainOrder['PersonID'];
 	#-------------------------------------------------------------------------------
 	if($PersonID){
