@@ -3,7 +3,7 @@
  *  Copyright © 2015 Alex Keda, for www.host-food.ru
  *}
 
-Заказ на регистрацию домена {$DomainName|default:'$DomainName'}.{$Name|default:'$Name'} был отправлен на регистрацию {$StatusDate|date_format:"%d.%m.%Y"}.
+Домен {$DomainName|default:'$DomainName'}.{$Name|default:'$Name'} отправлен на регистрацию {$StatusDate|date_format:"%d.%m.%Y"}.
 
 {if !$MethodSettings.CutSign}
 --
