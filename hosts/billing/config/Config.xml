@@ -1253,6 +1253,7 @@
     <CreateAndSendInvoicesSendEmptyMail>0</CreateAndSendInvoicesSendEmptyMail>
     <CreateAndSendInvoicesDay>1</CreateAndSendInvoicesDay>
     <CreateAndSendInvoicesPeriod>12</CreateAndSendInvoicesPeriod>
+    <ForcePaymentSystem>0</ForcePaymentSystem>
    </CreateAndSendInvoicesSettings>
    <!-- ********************************************************************* -->
    <CleanTablesSettings>
