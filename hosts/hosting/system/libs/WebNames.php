@@ -645,7 +645,7 @@ function WebNames_Domain_GetPrice($Settings,$DomainName,$DomainZone){
 	#-------------------------------------------------------------------------------
 	$Result = Json_Decode($Result['Body'],TRUE);
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[system/libs/WebNames.php]: $Result = %s',print_r($Result,true)));
+	#Debug(SPrintF('[system/libs/WebNames.php]: $Result = %s',print_r($Result,true)));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if(IsSet($Result['error']))
@@ -661,7 +661,7 @@ function WebNames_Domain_GetPrice($Settings,$DomainName,$DomainZone){
 		#-------------------------------------------------------------------------------
 		foreach(Array_Keys($Result) as $Key){
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[system/libs/WebNames.php]: Result[success][avail][%s] = %s',$Key,print_r($Result[$Key],true)));
+			#Debug(SPrintF('[system/libs/WebNames.php]: Result[success][avail][%s] = %s',$Key,print_r($Result[$Key],true)));
 			#-------------------------------------------------------------------------------
 			# не описание домена
 			if(!IsSet($Result[$Key]['dname']))
