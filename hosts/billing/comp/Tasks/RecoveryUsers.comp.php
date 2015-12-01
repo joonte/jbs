@@ -105,7 +105,7 @@ foreach($Users as $User){
 #-------------------------------------------------------------------------------
 if(SizeOf($Users) > 1){
 	#-------------------------------------------------------------------------------
-	$Event = Array('UserID'=>100,'PriorityID'=>'Billing','Text'=>SPrintF('Успешно восстановлено %u пользователей',Array_Keys($Users)));
+	$Event = Array('UserID'=>100,'PriorityID'=>'Billing','Text'=>SPrintF('Успешно восстановлено %u пользователей',SizeOf($Users)));
 	$Event = Comp_Load('Events/EventInsert',$Event);
 	if(!$Event)
 		return ERROR | @Trigger_Error(500);
