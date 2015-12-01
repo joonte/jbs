@@ -103,14 +103,14 @@ foreach($Users as $User){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(SizeOf(Array_Keys($Users)) > 1){
+if(SizeOf($Users) > 1){
 	#-------------------------------------------------------------------------------
 	$Event = Array('UserID'=>100,'PriorityID'=>'Billing','Text'=>SPrintF('Успешно восстановлено %u пользователей',Array_Keys($Users)));
 	$Event = Comp_Load('Events/EventInsert',$Event);
 	if(!$Event)
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'] = SPrintF('Recovered: %u users',SizeOf(Array_Keys($Users)));
+	$GLOBALS['TaskReturnInfo'] = SPrintF('Recovered: %u users',SizeOf($Users));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
