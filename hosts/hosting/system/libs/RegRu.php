@@ -46,13 +46,13 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
       break;
       case 'Juridical':
         #-----------------------------------------------------------------------
-        $Query['org']                 = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm']));
-        $Query['org_r']               = SPrintF('%s "%s"',$Person['CompanyForm'],$Person['CompanyName']);
+        $Query['org']                 = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyFormFull']));
+        $Query['org_r']               = SPrintF('%s "%s"',$Person['CompanyFormFull'],$Person['CompanyName']);
         $Query['code']                = $Person['Inn'];
         $Query['kpp']                 = $Person['Kpp'];
         $Query['country']             = $Person['jCountry'];
         $Query['address_r']           = SPrintF('%s, %s, %s, %s %s',$Person['jIndex'],$Person['jState'],$Person['jCity'],$Person['jType'],$Person['jAddress']);
-        $Query['p_addr']              = SPrintF('%s, %s, %s, %s %s, %s "%s"',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['CompanyForm'],$Person['CompanyName']);
+        $Query['p_addr']              = SPrintF('%s, %s, %s, %s %s, %s "%s"',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['CompanyFormFull'],$Person['CompanyName']);
         $Query['phone']               = $Person['Phone'];
 	$Query['sms_security_number'] = $Person['CellPhone'];
         $Query['fax']                 = $Person['Fax'];
@@ -114,7 +114,7 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
       break;
       case 'Juridical':
         #-----------------------------------------------------------------------
-        $CompanyEn = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm']));
+        $CompanyEn = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyFormFull']));
         #-----------------------------------------------------------------------
         $Query['o_company'] = $CompanyEn;
         $Query['a_company'] = $CompanyEn;

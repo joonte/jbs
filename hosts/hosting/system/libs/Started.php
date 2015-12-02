@@ -362,12 +362,12 @@ function Started_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
         $objUser->AddChild(new Tag('fname',$Person['dName']));
         $objUser->AddChild(new Tag('lname',$Person['dLastname']));
         $objUser->AddChild(new Tag('mname',$Person['dSourname']));
-        $objUser->AddChild(new Tag('org',SPrintF('%s "%s"',$Person['CompanyForm'],$Person['CompanyName'])));
+        $objUser->AddChild(new Tag('org',SPrintF('%s "%s"',$Person['CompanyFormFull'],$Person['CompanyName'])));
       }else{
         $objUser->AddChild(new Tag('fname',Translit($Person['dName'])));
         $objUser->AddChild(new Tag('lname',Translit($Person['dLastname'])));
         $objUser->AddChild(new Tag('mname',Translit($Person['dSourname'])));
-        $objUser->AddChild(new Tag('org',SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm']))));
+        $objUser->AddChild(new Tag('org',SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyFormFull']))));
       }
       #-------------------------------------------------------------------------
       $objUser->AddChild(new Tag('o_inn',$Person['Inn']));
@@ -446,11 +446,11 @@ function Started_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
         #-----------------------------------------------------------------------
         $objUser->AddChild(new Tag('pcity',$Person['pCity']));
         $objUser->AddChild(new Tag('paddr',SPrintF('%s %s',$Person['pType'],$Person['pAddress'])));
-        $objUser->AddChild(new Tag('pto',SPrintF('%s "%s"',$Person['CompanyForm'],$Person['CompanyName'])));
+        $objUser->AddChild(new Tag('pto',SPrintF('%s "%s"',$Person['CompanyFormFull'],$Person['CompanyName'])));
       }else{
         $objUser->AddChild(new Tag('pcity',Translit($Person['pCity'])));
         $objUser->AddChild(new Tag('paddr',Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']))));
-        $objUser->AddChild(new Tag('pto',SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm']))));
+        $objUser->AddChild(new Tag('pto',SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyFormFull']))));
       }
     break;
     default:

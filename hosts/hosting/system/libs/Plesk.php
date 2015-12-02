@@ -123,7 +123,7 @@ function Plesk_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,$Ema
     break;
     case 'Juridical':
       #-------------------------------------------------------------------------
-      $gen_info->AddChild(new Tag('cname',SPrintF('%s "%s" (%s)',$Person['CompanyForm'],$Person['CompanyName'],$Login)));
+      $gen_info->AddChild(new Tag('cname',SPrintF('%s "%s" (%s)',$Person['CompanyFormFull'],$Person['CompanyName'],$Login)));
       $gen_info->AddChild($Person['dSourname'] && $Person['dSourname'] && $Person['dLastname']?new Tag('pname',SPrintF('%s %s %s',$Person['dSourname'],$Person['dName'],$Person['dLastname'])):new Tag('pname',SPrintF('не указано (%s)',$Login)));
       $gen_info->AddChild(new Tag('country',$Person['jCountry']));
       $gen_info->AddChild(new Tag('state',$Person['jState']));

@@ -5,19 +5,33 @@
 <ProfileName>%CompanyForm% "%CompanyName%"</ProfileName>
 <!-- *********************************************************************** -->
 <Attribs>
- <CompanyForm>
-  <Title>Регистрационные данные</Title>
-  <Check>/^[а-яА-ЯёЁ0-9\s\-]+$/u</Check>
-  <Comment>Организационно-правовая форма</Comment>
-  <Example>ООО, ЗАО, НПО</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value>ООО</Value>
- </CompanyForm>
- <!-- ********************************************************************** -->
+	<CompanyForm>
+		<Title>Регистрационные данные</Title>
+		<Check>/^[а-яА-ЯёЁ0-9\s\-]+$/u</Check>
+		<Comment>Организационно-правовая форма</Comment>
+		<Example>ООО, АО, ЗАО, НПО</Example>
+		<Type>Input</Type>
+		<Attribs>
+			<type>text</type>
+			<prompt>Сокращённое именование организационно-правовой формы компании</prompt>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>ООО</Value>
+	</CompanyForm>
+	<!-- ********************************************************************** -->
+	<CompanyFormFull>
+		<Check>/^[а-яА-ЯёЁ0-9\s\-]+$/u</Check>
+		<Comment>Организационно-правовая форма</Comment>
+		<Example>Акционерное общество</Example>
+		<Type>Input</Type>
+		<Attribs>
+			<type>text</type>
+			<prompt>Полное наименование организационно-правовой формы, в соответствии с учредительными документами. Сокращения не допускаются.</prompt>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>Общество с ограниченной ответственностью</Value>
+	</CompanyFormFull>
+	<!-- ********************************************************************** -->
  <CompanyName>
   <Check>CompanyName</Check>
   <Comment>Название организации (без кавычек)</Comment>

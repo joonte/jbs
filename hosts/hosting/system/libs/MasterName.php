@@ -444,10 +444,10 @@ function MasterName_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       $Query[] = 'client-type: ЮРЛИЦО';
       $Query[] = 'resident:';
       #-------------------------------------------------------------------------
-      $Query[] = SPrintF('ownership: %s',$Person['CompanyForm']);
+      $Query[] = SPrintF('ownership: %s',$Person['CompanyFormFull']);
       $Query[] = SPrintF('org-r: %s',$Person['CompanyName']);
       #-------------------------------------------------------------------------
-      $Query[] = SPrintF('org: %s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm']));
+      $Query[] = SPrintF('org: %s %s',Translit($Person['CompanyName']),Translit($Person['CompanyFormFull']));
       $Query[] = SPrintF('email: %s',$Person['Email']);
       #-------------------------------------------------------------------------
       $Phone = $Person['Phone'];
@@ -465,7 +465,7 @@ function MasterName_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       $Query[] = SPrintF('post-zip-code: %s',$Person['pIndex']);
       $Query[] = SPrintF('post-region: %s',$Person['pState']);
       $Query[] = SPrintF('post-city: %s',$Person['pCity']);
-      $Query[] = SPrintF('post-street: %s %s, %s "%s"',$Person['pType'],$Person['pAddress'],$Person['CompanyForm'],$Person['CompanyName']);
+      $Query[] = SPrintF('post-street: %s %s, %s "%s"',$Person['pType'],$Person['pAddress'],$Person['CompanyFormFull'],$Person['CompanyName']);
       #-------------------------------------------------------------------------
       $Query[] = SPrintF('jur-country: %s',$Person['jCountry']);
       $Query[] = SPrintF('jur-zip-code: %s',$Person['jIndex']);

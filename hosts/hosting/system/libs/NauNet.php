@@ -55,12 +55,12 @@ function NauNet_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Nam
       break;
       case 'Juridical':
         #---------------------------------------------------------------------
-        $Query['org']           = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm']));
-        $Query['org-r']         = SPrintF('%s "%s"',$Person['CompanyForm'],$Person['CompanyName']);
+        $Query['org']           = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyFormFull']));
+        $Query['org-r']         = SPrintF('%s "%s"',$Person['CompanyFormFull'],$Person['CompanyName']);
         $Query['code']          = $Person['Inn'];
         $Query['kpp']           = $Person['Kpp'];
         $Query['address-r']     = SPrintF('%s, %s, %s, %s %s',$Person['jIndex'],$Person['jState'],$Person['jCity'],$Person['jType'],$Person['jAddress']);
-        $Query['p-addr']        = SPrintF('%s, %s, %s, %s %s, %s "%s"',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['CompanyForm'],$Person['CompanyName']);
+        $Query['p-addr']        = SPrintF('%s, %s, %s, %s %s, %s "%s"',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['CompanyFormFull'],$Person['CompanyName']);
         $Query['ogrn']          = $Person['Ogrn'];
         $Query['regdocuments']  = '';
         $Query['phone']         = $Person['Phone'];

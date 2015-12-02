@@ -289,7 +289,7 @@ function LogicBoxes_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
     case 'Juridical':
       #-------------------------------------------------------------------------
       $Params['name']     = SPrintF('%s %s %s',Translit($Person['dName']),Translit($Person['dLastname']),Translit($Person['dSourname']));
-      $Params['company']  = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm']));
+      $Params['company']  = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyFormFull']));
       $Params['address1'] = Translit(SPrintF('%s %s',$Person['jType'],$Person['jAddress']));
       $Params['address2'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
       $Params['address3'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));

@@ -485,8 +485,8 @@ function RuCenter_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
     case 'Juridical':
       #-----------------------------------------------------------------------
       $Query[] = 'client-type: ORG';
-      $Query[] = SPrintF('org: %s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm']));
-      $Query[] = SPrintF('org-r: %s',SPrintF('%s "%s"',$Person['CompanyForm'],$Person['CompanyName']));
+      $Query[] = SPrintF('org: %s %s',Translit($Person['CompanyName']),Translit($Person['CompanyFormFull']));
+      $Query[] = SPrintF('org-r: %s',SPrintF('%s "%s"',$Person['CompanyFormFull'],$Person['CompanyName']));
       $Query[] = SPrintF('country: %s',$Person['jCountry']);
       $Query[] = SPrintF('e-mail: %s',$Person['Email']);
       $Query[] = SPrintF('phone: %s',$Person['Phone']);
@@ -494,7 +494,7 @@ function RuCenter_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       $Query[] = SPrintF('code: %s',$Person['Inn']);
       $Query[] = SPrintF('kpp: %s',$Person['Kpp']);
       $Query[] = SPrintF('address-r: %s, %s, %s, %s %s',$Person['jIndex'],$Person['jState'],$Person['jCity'],$Person['jType'],$Person['jAddress']);
-      $Query[] = SPrintF('p-addr: %s, %s, %s, %s %s, %s "%s"',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['CompanyForm'],$Person['CompanyName']);
+      $Query[] = SPrintF('p-addr: %s, %s, %s, %s %s, %s "%s"',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['CompanyFormFull'],$Person['CompanyName']);
       $Query[] = SPrintF('d-addr: %s, %s, %s, %s %s',$Person['jIndex'],$Person['jState'],$Person['jCity'],$Person['jType'],$Person['jAddress']);
     break;
     default:

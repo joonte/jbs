@@ -731,13 +731,13 @@ function Build_Query($Query = Array(),$Params){
 			#-------------------------------------------------------------------------------
 		case 'Juridical':
 			#-------------------------------------------------------------------------------
-			$Query['org']		= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyForm']));
-			$Query['org_r']		= SPrintF('%s "%s"',$Params['Person']['CompanyForm'],$Params['Person']['CompanyName']);
+			$Query['org']		= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyFormFull']));
+			$Query['org_r']		= SPrintF('%s "%s"',$Params['Person']['CompanyFormFull'],$Params['Person']['CompanyName']);
 			$Query['code']		= $Params['Person']['Inn'];
 			$Query['kpp']		= $Params['Person']['Kpp'];
 			$Query['country']	= $Params['Person']['jCountry'];
 			$Query['address_r']	= SPrintF('%s, %s, %s, %s %s',$Params['Person']['jIndex'],$Params['Person']['pState'],$Params['Person']['jCity'],$Params['Person']['jType'],$Params['Person']['jAddress']);
-			$Query['p_addr']	= SPrintF('%s, %s, %s, %s, %s %s, %s "%s"',$Params['Person']['pIndex'],$Params['Person']['pState'],$Params['Person']['pCountry'],$Params['Person']['pCity'],$Params['Person']['pType'],$Params['Person']['pAddress'],$Params['Person']['CompanyForm'],$Params['Person']['CompanyName']);
+			$Query['p_addr']	= SPrintF('%s, %s, %s, %s, %s %s, %s "%s"',$Params['Person']['pIndex'],$Params['Person']['pState'],$Params['Person']['pCountry'],$Params['Person']['pCity'],$Params['Person']['pType'],$Params['Person']['pAddress'],$Params['Person']['CompanyFormFull'],$Params['Person']['CompanyName']);
 			$Query['phone']		= $Params['Person']['Phone'];
 			$Query['cell_phone']	= Preg_Replace('/\s+/', '', $Params['Person']['CellPhone']);
 			$Query['fax']		= $Params['Person']['Fax'];
@@ -784,7 +784,7 @@ function Build_Query($Query = Array(),$Params){
 		case 'Juridical':
 			#-------------------------------------------------------------------------------
 			#Контактные данные организации (только при регистрации домена на организацию!)
-			$Query['company_name']	= SPrintF('%s %s',$Params['Person']['CompanyName'],$Params['Person']['CompanyForm']);
+			$Query['company_name']	= SPrintF('%s %s',$Params['Person']['CompanyName'],$Params['Person']['CompanyFormFull']);
 			$Query['company_tin']	= $Params['Person']['Inn'];
 			$Query['addr_street']	= SPrintF('%s %s',$Params['Person']['pType'],$Params['Person']['pAddress']);
 			$Query['addr_city']	= $Params['Person']['pCity'];
@@ -857,10 +857,10 @@ function Build_Query($Query = Array(),$Params){
 			#-------------------------------------------------------------------------------
 		case 'Juridical':
 			#-------------------------------------------------------------------------------
-			$Query['o_company']	= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyForm']));
-			$Query['a_company']	= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyForm']));
-			$Query['t_company']	= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyForm']));
-			$Query['b_company']	= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyForm']));
+			$Query['o_company']	= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyFormFull']));
+			$Query['a_company']	= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyFormFull']));
+			$Query['t_company']	= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyFormFull']));
+			$Query['b_company']	= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyFormFull']));
 			#-------------------------------------------------------------------------------
 			$Query['o_country_code']= $Params['Person']['jCountry'];
 			$Query['a_country_code']= $Params['Person']['jCountry'];

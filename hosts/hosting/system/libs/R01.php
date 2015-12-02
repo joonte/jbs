@@ -274,8 +274,8 @@ function R01_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       $Response = $AddCustomer->addDadminOrg(
         #-----------------------------------------------------------------------
         $Params['NICHDL'],
-        SPrintF('%s %s',$Person['CompanyForm'], $Person['CompanyName']),
-        SPrintF('%s %s',Translit($Person['CompanyForm']),Translit($Person['CompanyName'])),
+        SPrintF('%s %s',$Person['CompanyFormFull'], $Person['CompanyName']),
+        SPrintF('%s %s',Translit($Person['CompanyFormFull']),Translit($Person['CompanyName'])),
         $Person['Inn'],
         $Person['Ogrn'],
         SPrintF('%d, %s, %s, %s, %s %s', $Person['jIndex'], $Person['jCountry'], $Person['jState'], $Person['jCity'], $Person['jType'], $Person['jAddress']),
