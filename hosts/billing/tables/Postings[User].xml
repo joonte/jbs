@@ -40,6 +40,7 @@
 <Sequence>
  <ListElement>Number</ListElement>
  <ListElement>CreateDate</ListElement>
+ <ListElement>ContractID</ListElement>
  <ListElement>Service</ListElement>
  <ListElement>Comment</ListElement>
  <ListElement>Summ</ListElement>

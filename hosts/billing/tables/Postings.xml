@@ -16,6 +16,7 @@
  <ColumnsIDs>
   <ListElement>ID</ListElement>
   <ListElement>UserID</ListElement>
+  <ListElement>ContractID</ListElement>
   <ListElement>CreateDate</ListElement>
   <ListElement>Before</ListElement>
   <ListElement>After</ListElement>
@@ -89,6 +90,14 @@
    <TableID>Postings</TableID>
   </Args>
  </SelectID>
+ <!-- ********************************************************************** -->
+ <ContractID>
+  <Head>Договор</Head>
+  <Comp>Formats/Contract/Number</Comp>
+  <Args>
+   <ListElement>%ContractID%</ListElement>
+  </Args>
+ </ContractID>
  <!-- ********************************************************************** -->
  <CreateDate>
   <Head>Дата</Head>
@@ -173,6 +182,7 @@
  <ListElement>Number</ListElement>
  <ListElement>CreateDate</ListElement>
  <ListElement>Owner</ListElement>
+ <ListElement>ContractID</ListElement>
  <ListElement>Service</ListElement>
  <ListElement>Comment</ListElement>
  <ListElement>Summ</ListElement>
