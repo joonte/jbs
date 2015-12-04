@@ -24,6 +24,28 @@
 		<Registrar>Registrar:\s+([\w\-]{2,})</Registrar>
 	</UniqID>
 	<!-- *********************************************************************** -->
+	<UniqID>
+		<Server>whois.nic.work</Server>
+		<Name>work</Name>
+		<Available>Status:\sNot\sRegistered</Available>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
+		<MinChars>1</MinChars>
+		<ExpirationDate>Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Registrar:\s+([\w\-]{2,})</Registrar>
+	</UniqID>
+	<!-- *********************************************************************** -->
+	<UniqID>
+		<Server>whois.nic.site</Server>
+		<Name>site</Name>
+		<Available>DOMAIN\sNOT\sFOUND</Available>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
+		<MinChars>1</MinChars>
+		<ExpirationDate>Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Registrar:\s+([\w\-]{2,})</Registrar>
+	</UniqID>
+	<!-- *********************************************************************** -->
 <UniqID>
  <Server>whois.ripn.net</Server>
  <Name>рф</Name>
@@ -737,7 +759,7 @@
 		<Name>date</Name>
 		<Available>No\sDomain\sexists\sfor\sthe\ssearch\sstring</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
-		<MinChars>4</MinChars>
+		<MinChars>3</MinChars>
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
@@ -781,7 +803,7 @@
 		<Name>win</Name>
 		<Available>Not\sfound</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
-		<MinChars>4</MinChars>
+		<MinChars>2</MinChars>
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
