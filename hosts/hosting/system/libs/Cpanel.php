@@ -24,7 +24,7 @@ function Cpanel_Get_Domains($Settings){
   /****************************************************************************/
   $HTTP = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -148,7 +148,7 @@ function Cpanel_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,$Em
   /****************************************************************************/
   $HTTP = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -208,7 +208,7 @@ function Cpanel_Active($Settings,$Login,$IsReseller = FALSE){
   /****************************************************************************/
   $HTTP = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -238,7 +238,7 @@ function Cpanel_Suspend($Settings,$Login,$IsReseller = FALSE){
   /****************************************************************************/
   $HTTP = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -268,7 +268,7 @@ function Cpanel_Delete($Settings,$Login,$IsReseller = FALSE){
   /****************************************************************************/
   $HTTP = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -298,7 +298,7 @@ function Cpanel_Scheme_Change($Settings,$Login,$HostingScheme){
   /****************************************************************************/
   $HTTP = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -333,7 +333,7 @@ function Cpanel_Password_Change($Settings,$Login,$Password,$Params){
   /****************************************************************************/
   $HTTP = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
