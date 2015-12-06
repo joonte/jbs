@@ -71,9 +71,13 @@ foreach($Servers as $Server){
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	# достаём за период
-	$TFilter = SPrintF('%s - %s',date('Y-m-d',time() - $Settings['PeriodToLock']*24*3600),date('Y-m-d',time() - 24*3600));
-	$BUsages = Call_User_Func_Array(Array($ClassHostingServer,'GetCPUUsage'),Array($TFilter));
+	$PeriodStart = Date('Y-m-d',Time() - $Settings['PeriodToLock']*24*3600);
+	#-------------------------------------------------------------------------------
+	$PeriodEnd = Date('Y-m-d',Time() - 24*3600);
+	#-------------------------------------------------------------------------------
+	$BUsages = Call_User_Func_Array(Array($ClassHostingServer,'GetCPUUsage'),Array($PeriodStart,$PeriodEnd));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($BUsages)){
 	case 'error':
@@ -90,8 +94,9 @@ foreach($Servers as $Server){
 	$TUsages[$Server['ID']]['BUsages'] = $BUsages;
 	#-------------------------------------------------------------------------------
 	# достаём за вчера
-	$TFilter = SPrintF('%s - %s',date('Y-m-d',time() - 24*3600),date('Y-m-d',time() - 24*3600));
-	$SUsages = Call_User_Func_Array(Array($ClassHostingServer,'GetCPUUsage'),Array($TFilter));
+	$PeriodStart = $PeriodEnd = Date('Y-m-d',Time() - 24*3600);
+	#-------------------------------------------------------------------------------
+	$SUsages = Call_User_Func_Array(Array($ClassHostingServer,'GetCPUUsage'),Array($PeriodStart,$PeriodEnd));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($SUsages)){
 	case 'error':

@@ -1226,11 +1226,14 @@ function IspManager4_DeleteIP($Settings,$ExtraIP){
 #-------------------------------------------------------------------------------
 # added by lissyara 2013-03-07 in 13:47 MSK
 #-------------------------------------------------------------------------------
-function IspManager4_Get_CPU_Usage($Settings,$TFilter){
+function IspManager4_Get_CPU_Usage($Settings,$PeriodStart,$PeriodEnd){
 	/****************************************************************************/
-        $__args_types = Array('array','string');
+        $__args_types = Array('array','string','string');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/
+	$TFilter = SPrintF('%s - %s',$PeriodStart,$PeriodEnd);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$Version = IspManager4_Check_Version($Settings);
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[IspManager4_Get_CPU_Usage]: ISPmanager = %s',$Version));
