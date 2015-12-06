@@ -62,7 +62,7 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
         return new gException('WRONG_PROFILE_ID','Неверный идентификатор профиля');
     }
     #---------------------------------------------------------------------------
-  }elseif(In_Array($DomainZone,Array('info','biz','org','com','net','be','cc','tv','pro'))){
+  }elseif(In_Array($DomainZone,Array('info','biz','org','com','net','be','cc','tv','pro','site'))){
     #---------------------------------------------------------------------------
     switch($PepsonID){
       case 'Natural':
@@ -910,7 +910,7 @@ function RegRu_Domain_GetPrice($Settings,$DomainName,$DomainZone){
 	/******************************************************************************/
 	$HTTP = RegRu_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
-	$Query = Array('username'=>$Settings['Login'],'password'=>$Settings['Password'],'tld'=>$DomainZone,'limit'=>100500);
+	$Query = Array('username'=>$Settings['Login'],'password'=>$Settings['Password'],'tld'=>$DomainZone,'cat'=>'','limit'=>100500);
 	#-------------------------------------------------------------------------------
 	$Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/get_premium");
 	#-------------------------------------------------------------------------------
