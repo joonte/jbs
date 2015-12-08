@@ -80,6 +80,8 @@
     <ColumnsIDs>
      <ListElement>IP</ListElement>
      <ListElement>elid</ListElement>
+     <ListElement>ISPname</ListElement>
+     <ListElement>Flag</ListElement>
     </ColumnsIDs>
    </Args>
   </Search>
