@@ -47,7 +47,7 @@ $TUsages = Array();
 foreach($Servers as $Server){
 	#-------------------------------------------------------------------------------
 	# костыль, чтоб тока один сервер
-	#if($Server['Address'] != 's06.host-food.ru')
+	#if($Server['Address'] != 's31.host-food.ru')
 	#	continue;
 	#-------------------------------------------------------------------------------
 	if(!$Server['IsActive'])
@@ -89,6 +89,7 @@ foreach($Servers as $Server){
 	default:
 		return ERROR | @Trigger_Error(101);
 	}
+	#-------------------------------------------------------------------------------
 	#Debug(SPrintF('[comp/Tasks/HostingCPUUsage]: BUsage = %s',print_r($BUsages,true)));
 	#-------------------------------------------------------------------------------
 	$TUsages[$Server['ID']]['BUsages'] = $BUsages;

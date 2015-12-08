@@ -1087,7 +1087,7 @@ function IspManager5_Get_CPU_Usage($Settings,$PeriodStart,$PeriodEnd){
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[IspManager5_Get_CPU_Usage]: ISPmanager = %s',$Version));
 	#-------------------------------------------------------------------------------
-	if($Version == 'Lite' || $Version == 'Business')	# надо разбираться
+	if($Version == 'Lite')
 		return Array();
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -1140,11 +1140,17 @@ function IspManager5_Get_CPU_Usage($Settings,$PeriodStart,$PeriodEnd){
 	#Debug(SPrintF('[system/libs/IspManager5.php]: Owners = %s',print_r($Owners,true)));
 	#-------------------------------------------------------------------------------
 	# /ispmgr?func=totalresourceusage&tfilter=2013-03-01%20-%202013-03-07&out=xml
+	# 'clicked_button=ok&func=accounting_stat&loc=%2A&owner=%2A&period=other&periodend=2015%2D12%2D05&periodstart=2015%2D12%2D05'
 	$Request = Array(
 			'authinfo'	=> $authinfo,
-			'func'		=> 'totalresourceusage',
+			'func'		=> 'accounting_stat',
 			'out'		=> 'xml',
-			'tfilter'	=> $TFilter
+			'sok'		=> 'ok',
+			'loc'		=> '*',
+			'owner'		=> '*',
+			'period'	=> 'other',
+			'periodend'	=> $PeriodEnd,
+			'periodstart'	=> $PeriodStart
 			);
 	#-------------------------------------------------------------------------------
         $Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
@@ -1165,6 +1171,7 @@ function IspManager5_Get_CPU_Usage($Settings,$PeriodStart,$PeriodEnd){
 		return new gException('GET_TOTALRESOURCEUSAGE_ERROR',$Elems['error']);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	#Debug(SPrintF('[system/libs/IspManager5.php]: Elems = %s',print_r($Elems,true)));
 	# создаём выходной массив
 	$Out = Array();
 	#-------------------------------------------------------------------------------
@@ -1174,7 +1181,7 @@ function IspManager5_Get_CPU_Usage($Settings,$PeriodStart,$PeriodEnd){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# массив с полями
-	$Fields = Array('memory','utime','stime','etime','io');
+	$Fields = Array('mem','utime','stime','etime','io');
 	#-------------------------------------------------------------------------------
 	foreach($Resellers as $Reseller){
 		#-------------------------------------------------------------------------------
@@ -1184,26 +1191,32 @@ function IspManager5_Get_CPU_Usage($Settings,$PeriodStart,$PeriodEnd){
 			$Out[$Reseller][$Key] = 0;
 		#-------------------------------------------------------------------------------
 	}
-	#Debug(SPrintF('[system/libs/IspManager5.php]: Elem = %s',print_r($Out,true)));
+	#Debug(SPrintF('[system/libs/IspManager5.php]: Out = %s',print_r($Out,true)));
 	#-------------------------------------------------------------------------------
 	# перебираем все данные по нагрузке
-	foreach($Elems as $Elem){
+	foreach($Elems['reportdata']['acctstat'] as $Elem){
 		#-------------------------------------------------------------------------------
-		if(Array_Key_Exists($Elem['account'], $Out)){
+		#Debug(SPrintF('[system/libs/IspManager5.php]: Elem = %s',print_r($Elem,true)));
+		#-------------------------------------------------------------------------------
+		if(!IsSet($Elem['user']))
+			continue;
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		if(Array_Key_Exists($Elem['user'], $Out)){
 			#-------------------------------------------------------------------------------
 			foreach($Fields as $Key)
-				$Out[$Elem['account']][$Key] = $Out[$Elem['account']][$Key] + $Elem[$Key];
+				$Out[$Elem['user']][$Key] = $Out[$Elem['user']][$Key] + $Elem[$Key];
 			#-------------------------------------------------------------------------------
 		}else{
 			#-------------------------------------------------------------------------------
 			foreach($Fields as $Key)
-				$Out[$Elem['account']][$Key] = $Elem[$Key];
+				$Out[$Elem['user']][$Key] = $Elem[$Key];
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		if(IsSet($Owners[$Elem['account']]))
+		if(IsSet($Owners[$Elem['user']]))
 			foreach($Fields as $Key)
-				$Out[$Owners[$Elem['account']]][$Key] = $Out[$Owners[$Elem['account']]][$Key] + $Elem[$Key];
+				$Out[$Owners[$Elem['user']]][$Key] = $Out[$Owners[$Elem['user']]][$Key] + $Elem[$Key];
 		#------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
