@@ -1251,7 +1251,7 @@
     <IsActive>1</IsActive>
     <CreateAndSendInvoicesSendOnlyNatural>1</CreateAndSendInvoicesSendOnlyNatural>
     <CreateAndSendInvoicesSendEmptyMail>0</CreateAndSendInvoicesSendEmptyMail>
-    <CreateAndSendInvoicesDay>1</CreateAndSendInvoicesDay>
+    <DayOfWeek>1</DayOfWeek>
     <CreateAndSendInvoicesPeriod>12</CreateAndSendInvoicesPeriod>
     <ForcePaymentSystem>0</ForcePaymentSystem>
    </CreateAndSendInvoicesSettings>
@@ -1317,7 +1317,12 @@
 				<IsActive>1</IsActive>
 				<IsEvent>1</IsEvent>
 			</CheckConfigParamsSettings>
-			<!-- ********************************************************************* -->>
+			<!-- ********************************************************************* -->
+			<StatisticsSettings>
+				<IsActive>1</IsActive>
+				<DayOfWeek>1</DayOfWeek>
+			</StatisticsSettings>
+			<!-- ********************************************************************* -->
 			<!-- задачи -->
 			<DailyTasks>
 				<!-- проверка софта -->
@@ -1351,6 +1356,8 @@
 				<ResetOrdersDays>Списание лишних дней у заказов</ResetOrdersDays>
 				<!-- автоматическое списание денег у клиентов без заказов, не заходящих в биллинг -->
 				<WithdrawalOldUsers>Списание денег с балланса неактивных пользователей</WithdrawalOldUsers>
+				<!-- сборка статистики по числу юзеров, заказов, и т.п. -->
+				<Statistics>Статистика</Statistics>
 			</DailyTasks>
 			<!-- *********************************************************************** -->
 			<WeeklyTasks type="array" />
