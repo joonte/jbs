@@ -414,3 +414,14 @@ input[type="button"], input[type="submit"] {
 input[type=button] {
 	cursor:	pointer;
 }
+/* ------------------------- */
+/* ------------------------- */
+select {
+	background:	#FAFAFA;
+	border:		1px solid silver;
+	border-width:	1px;
+}
+
+
+
+
