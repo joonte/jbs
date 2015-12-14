@@ -17,7 +17,7 @@ $Settings = $Config['Tasks']['Types']['GC']['CreateAndSendInvoicesSettings'];
 if(!$Settings['IsActive'])
 	return TRUE;
 #-------------------------------------------------------------------------------
-if(Date('N') != $Settings['CreateAndSendInvoicesDay'])
+if(Date('N') != $Settings['DayOfWeek'])
 	return TRUE;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
