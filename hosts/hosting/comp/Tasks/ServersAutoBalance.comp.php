@@ -117,7 +117,7 @@ foreach($ServersGroups as $ServersGroup){
 		#-------------------------------------------------------------------------------
 		# убираем из массива сервера, у которых не стоит галка про автобалансировку
 		foreach(Array_Keys($Servers) as $Key)
-			if(!$Servers[$Key]['Params']['IsAutoBalancing'])
+			if(!IsSet($Servers[$Key]['Params']['IsAutoBalancing']) || !$Servers[$Key]['Params']['IsAutoBalancing'])
 				UnSet($Servers[$Key]);
 		#-------------------------------------------------------------------------------
 		#Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: Servers = %s',print_r($Servers,true)));
