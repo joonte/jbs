@@ -62,7 +62,13 @@ case 'array':
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$Where = SPrintF("`ServersGroupID` = %u /*AND `ID` != %u*/ AND `IsActive` = 'yes' AND `IsSchemeChangeable` = 'yes' AND `IsReselling` = '%s'",$HostingOrder['ServersGroupID'],$HostingOrder['SchemeID'],$OldScheme['IsReselling']?'yes':'no');
+			$Where = Array(
+					SPrintF("`ServersGroupID` = %u",$HostingOrder['ServersGroupID']),
+					SPrintF("`IsReselling` = '%s'",$OldScheme['IsReselling']?'yes':'no')
+					);
+			#-------------------------------------------------------------------------------
+			if(!$__USER['IsAdmin'])
+				$Where[] = "`IsActive` = 'yes'";
 			#-------------------------------------------------------------------------------
 			$HostingSchemes = DB_Select($UniqID,Array('ID','Name'),Array('SortOn'=>'SortID','Where'=>$Where));
 			#-------------------------------------------------------------------------------
