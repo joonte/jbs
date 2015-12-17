@@ -558,54 +558,54 @@ function RegRu_Is_Available_Domain($Settings,$Domain){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 function RegRu_Domain_Transfer($Settings,$DomainName,$DomainZone,$Param){
-  /****************************************************************************/
-  $__args_types = Array('array','string','string','array');
-  #-----------------------------------------------------------------------------
-  $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
-  /****************************************************************************/
-  $HTTP = RegRu_Build_HTTP($Settings);
-  #-----------------------------------------------------------------------------
-  $Domain = Mb_StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone),'UTF-8');
-  #-----------------------------------------------------------------------------
-  $Query = Array(
-    #---------------------------------------------------------------------------
-    'username'              => $Settings['Login'],
-    'password'              => $Settings['Password'],
-    'domain_name'           => $Domain,
-    'enduser_ip'            => '77.73.25.114',
-    'period'                => '0',
-  );
-  #-----------------------------------------------------------------------------
-  if(In_Array($DomainZone,Array('ru','su','рф'))){
-    #---------------------------------------------------------------------------
-    $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/transfer");
-    #---------------------------------------------------------------------------
-    $Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
-    if(Is_Error($Result))
-      return ERROR | @Trigger_Error('[RegRu_Domain_Register]: не удалось выполнить запрос к серверу');
-    #---------------------------------------------------------------------------
-    $Result = Trim($Result['Body']);
-    #---------------------------------------------------------------------------
-    $Result = Json_Decode($Result,TRUE);
-    #---------------------------------------------------------------------------
-    if($Result['result'] == 'success'){
-      #foreach(Array_Keys($Result['answer']) as $Key)
-      #  Debug("[RegRu_Answer::Domain_Transfer]: " . $Key . " - " . $Result['answer'][$Key]);
-      #-------------------------------------------------------------------------
-      if($Result['answer']['dname'] == $Domain){
-        return Array('DomainID'=>(integer)$Result['answer']['service_id']);
-      #-------------------------------------------------------------------------
-      }
-    }
-    #---------------------------------------------------------------------------
-    if($Result['result'] == 'error')
-      return new gException('REGISTRATOR_ERROR',IsSet($Result['error_text'])?$Result['error_text']:'Регистратор вернул ошибку');
-    #---------------------------------------------------------------------------
-    return new gException('WRONG_ANSWER',$Result);
-  }
-  else {
-    return new gException('REGISTRATOR_ERROR',SPrintF("Трансфер доменов в зоне %s не реализован в текущей версии библиотеки.",$DomainZone));
-  }
+	/******************************************************************************/
+	$__args_types = Array('array','string','string','array');
+	#-------------------------------------------------------------------------------
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/******************************************************************************/
+	$HTTP = RegRu_Build_HTTP($Settings);
+	#-------------------------------------------------------------------------------
+	$Domain = Mb_StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone),'UTF-8');
+	#-------------------------------------------------------------------------------
+	$Query = Array(
+			'username'	=> $Settings['Login'],
+			'password'	=> $Settings['Password'],
+			'domain_name'	=> $Domain,
+			'enduser_ip'	=> '77.73.25.114',
+			'period'	=> '0',
+			);
+	#-------------------------------------------------------------------------------
+	if(In_Array($DomainZone,Array('ru','su','рф'))){
+		#-------------------------------------------------------------------------------
+		$Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/transfer");
+		#-------------------------------------------------------------------------------
+		$Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
+		if(Is_Error($Result))
+			return ERROR | @Trigger_Error('[RegRu_Domain_Register]: не удалось выполнить запрос к серверу');
+		#-------------------------------------------------------------------------------
+		$Result = Trim($Result['Body']);
+		#-------------------------------------------------------------------------------
+		$Result = Json_Decode($Result,TRUE);
+		#-------------------------------------------------------------------------------
+		if($Result['result'] == 'success'){
+			#-------------------------------------------------------------------------------
+			#foreach(Array_Keys($Result['answer']) as $Key)
+			#	Debug("[RegRu_Answer::Domain_Transfer]: " . $Key . " - " . $Result['answer'][$Key]);
+			#-------------------------------------------------------------------------------
+			if($Result['answer']['dname'] == $Domain)
+				return Array('DomainID'=>(integer)$Result['answer']['service_id']);
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		if($Result['result'] == 'error')
+			return new gException('REGISTRATOR_ERROR',IsSet($Result['error_text'])?$Result['error_text']:'Регистратор вернул ошибку');
+		#-------------------------------------------------------------------------------
+		return new gException('WRONG_ANSWER',$Result);
+		#-------------------------------------------------------------------------------
+	}else{
+		return new gException('REGISTRATOR_ERROR',SPrintF("Трансфер доменов в зоне %s не реализован в текущей версии библиотеки.",$DomainZone));
+	}
+	#-------------------------------------------------------------------------------
 }
 
 #-------------------------------------------------------------------------------

@@ -409,15 +409,33 @@ foreach($Servers as $Registrator){
 		#-------------------------------------------------------------------------------
 		foreach($DomainsOdd as $Odd){
 			#-------------------------------------------------------------------------------
-			$Message = SPrintF('Обнаружен тариф отсутствующий у регистратора: %s/%s',$Registrator['Params']['Name'],$Odd);
+			# проверяем наличие заказов по этому тарифу
+			$Count = DB_Count('DomainOrdersOwners',Array('Where'=>Array(SPrintF('`ServerID` = %u',$Registrator['ID']),SPrintF('`Name` = "%s"',$Odd))));
+			if(Is_Error($Count))
+				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: %s',$Message));
-			#-------------------------------------------------------------------------------
-			if($Settings['IsEvent']){
+			if($Count){
 				#-------------------------------------------------------------------------------
-				$Event = Array('Text' => $Message,'PriorityID' => 'Error','IsReaded' => FALSE);
-				$Event = Comp_Load('Events/EventInsert', $Event);
-				if(!$Event)
+				$Message = SPrintF('Обнаружен тариф отсутствующий у регистратора: %s/%s, число заказов: %u',$Registrator['Params']['Name'],$Odd,$Count);
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: %s',$Message));
+				#-------------------------------------------------------------------------------
+				if($Settings['IsEvent']){
+					#-------------------------------------------------------------------------------
+					$Event = Array('Text' => $Message,'PriorityID' => 'Error','IsReaded' => FALSE);
+					$Event = Comp_Load('Events/EventInsert', $Event);
+					if(!$Event)
+						return ERROR | @Trigger_Error(500);
+					#-------------------------------------------------------------------------------
+				}
+				#-------------------------------------------------------------------------------
+			}else{
+				#-------------------------------------------------------------------------------
+				# просто удаляем тариф
+				Debug(SPrintF('[comp/Tasks/GC/DomainCheckPriceList]: удаление тарифа отсутствующего у регистратора: %s/%s',$Registrator['Params']['Name'],$Odd));
+				#-------------------------------------------------------------------------------
+				$IsDelete = DB_Delete('DomainSchemes',Array('Where'=>SPrintF('`ServerID` = %u AND `Name` = "%s"',$Registrator['ID'],$Odd)));
+				if(Is_Error($IsDelete))
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------
 			}
