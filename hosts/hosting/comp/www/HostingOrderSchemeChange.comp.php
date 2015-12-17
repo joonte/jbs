@@ -68,7 +68,7 @@ case 'array':
 					);
 			#-------------------------------------------------------------------------------
 			if(!$__USER['IsAdmin'])
-				$Where[] = "`IsActive` = 'yes'";
+				$Where[] = "`IsActive` = 'yes' AND `IsSchemeChangeable` = 'yes'";
 			#-------------------------------------------------------------------------------
 			$HostingSchemes = DB_Select($UniqID,Array('ID','Name'),Array('SortOn'=>'SortID','Where'=>$Where));
 			#-------------------------------------------------------------------------------
