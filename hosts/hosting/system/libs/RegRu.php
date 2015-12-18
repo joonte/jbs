@@ -908,6 +908,13 @@ function RegRu_Domain_GetPrice($Settings,$DomainName,$DomainZone){
 	#-------------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/******************************************************************************/
+
+
+
+return Array();
+
+
+
 	$HTTP = RegRu_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	$Query = Array('username'=>$Settings['Login'],'password'=>$Settings['Password'],'tld'=>$DomainZone,'cat'=>'','limit'=>100500);
