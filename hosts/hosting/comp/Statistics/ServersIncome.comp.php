@@ -212,6 +212,9 @@ foreach($ServersGroups as $ServersGroup){
 	#----------------------------------------------------------------------------
 	$Table[] = Array(new Tag('TD',Array('colspan'=>5,'class'=>'Standard'),SPrintF('Общий доход от серверов группы: %s',$Comp)));
 	#----------------------------------------------------------------------------
+	if(SizeOf($Servers) > 1)
+		$Table[] = Array(new Tag('TD',Array('colspan'=>5,'class'=>'Standard'),SPrintF('Число аккаунтов в группе: %s / %s',$Accounts,$NumPaid)));
+	#----------------------------------------------------------------------------
 	# средняя стоимость аккаунта
 	$Comp = Comp_Load('Formats/Currency',$Balance / $NumPaid);
 	if(Is_Error($Comp))
