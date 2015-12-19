@@ -53,7 +53,18 @@ if(Is_Error($IsInsert))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-# Ordinar Services
+# счета на оплату
+
+
+
+
+
+
+
+
+
+
+# Штатные сервисы
 $Where = Array('`Code` != "Default"','`IsHidden` = "no"');
 #-------------------------------------------------------------------------------
 $Services = DB_Select('Services',Array('ID','Code','Name'),Array('Where'=>$Where));
@@ -73,7 +84,7 @@ $Insert = Array(
 		'Year'		=> Date('Y'),
 		'Month'		=> Date('m'),
 		'Day'		=> Date('d'),
-		'PackageID'	=> NULL,	# TODO надо сделать по тарифам
+		'PackageID'	=> NULL
 		);
 #-------------------------------------------------------------------------------
 foreach($Services as $Service){
