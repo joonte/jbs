@@ -51,6 +51,37 @@ $GLOBALS['TaskReturnInfo'] = Array(($DomainOrder['Params']['Name'])=>Array(SPrin
 switch($DomainOrder['StatusID']){
 case 'ForRegister':
 	#-------------------------------------------------------------------------------
+	# пробуем получить контактные данные по домену - возможно он уже зарегистрирован у нас же
+	$ContactDetail = $Server->GetContactDetail(SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($ContactDetail)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		#-------------------------------------------------------------------------------
+		# не зарегистрирован
+		break;
+	case 'array':
+		#-------------------------------------------------------------------------------
+		# домен уже зарегистрирован
+		$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'Active','RowsIDs'=>$DomainOrderID,'Comment'=>'Доменное имя зарегистрированно'));
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($Comp)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return ERROR | @Trigger_Error(400);
+		case 'array':
+			return TRUE;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	# проверяем стоимость регистрации домена
 	#-------------------------------------------------------------------------------
 	# выбрать цену регистрации. DomainConsider, ID заказа, последняя запись
