@@ -82,6 +82,43 @@ case 'ForRegister':
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	# JBS-1139: проверяем доменное имя во Whois, возможно его зарегистрировали у другого регистратора
+	$Comp = Comp_Load('www/API/WhoIs',Array('DomainName'=>$DomainOrder['DomainName'],'DomainZone'=>$DomainOrder['DomainZone']));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Comp)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return $Comp;
+	case 'array':
+		#-------------------------------------------------------------------------------
+		if(IsSet($Comp['Status']) && $Comp['Status'] == 'Borrowed'){
+			#-------------------------------------------------------------------------------
+			# домен занят
+			$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'Deleted','RowsIDs'=>$DomainOrderID,'Comment'=>'Домен уже кем-то занят'));
+			#-------------------------------------------------------------------------------
+			switch(ValueOf($Comp)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				return ERROR | @Trigger_Error(400);
+			case 'array':
+				return TRUE;
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/Tasks/DomainRegister]: $Comp[Status] = %s',print_r($Comp['Status'],true)));
+		#-------------------------------------------------------------------------------
+		break;
+		#-------------------------------------------------------------------------------
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	# проверяем стоимость регистрации домена
 	#-------------------------------------------------------------------------------
 	# выбрать цену регистрации. DomainConsider, ID заказа, последняя запись
@@ -130,15 +167,24 @@ case 'ForRegister':
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[comp/Tasks/DomainRegister]: Comment = %s',$Comment));
 		#-------------------------------------------------------------------------------
-		# задаём внешние параметры на вызов компонента
-		$GLOBALS['TaskReturnArray'] = Array(
-							'CompName'	=> 'www/API/StatusSet',
-							'CompParameters'=> Array('ModeID'=>'DomainOrders','StatusID'=>'Deleted','RowsIDs'=>$DomainOrderID,'Comment'=>$Comment)
-						);
+		$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'Deleted','RowsIDs'=>$DomainOrderID,'Comment'=>$Comment));
 		#-------------------------------------------------------------------------------
+		switch(ValueOf($Comp)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return ERROR | @Trigger_Error(400);
+		case 'array':
+			return TRUE;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
 		#-------------------------------------------------------------------------------
-		return TRUE;
-		#-------------------------------------------------------------------------------
+		# задаём внешние параметры на вызов компонента.... а подумавши, решил поставить статус прям отсюда.
+		#$GLOBALS['TaskReturnArray'] = Array(
+		#					'CompName'	=> 'www/API/StatusSet',
+		#					'CompParameters'=> Array('ModeID'=>'DomainOrders','StatusID'=>'Deleted','RowsIDs'=>$DomainOrderID,'Comment'=>$Comment)
+		#				);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
