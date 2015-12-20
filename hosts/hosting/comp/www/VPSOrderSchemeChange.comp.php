@@ -73,7 +73,7 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Where = Array(
-		SPrintF("`ServersGroupID` = %u",$DNSmanagerOrder['ServersGroupID']),
+		SPrintF("`ServersGroupID` = %u",$VPSOrder['ServersGroupID']),
 		SPrintF("`IsReselling` = '%s'",$OldScheme['IsReselling']?'yes':'no')
 		);
 #-------------------------------------------------------------------------------
