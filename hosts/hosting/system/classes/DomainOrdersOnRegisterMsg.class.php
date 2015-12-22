@@ -31,7 +31,7 @@ class DomainOrdersOnRegisterMsg extends Message {
 		case 'true':
 			#-------------------------------------------------------------------------------
 			// For RegRu only
-			if($Server->Settings['Params']['SystemID'] == 'RegRu' && In_Array($DomainZone,Array('ru','su','рф'))){
+			if($Server->Settings['Params']['SystemID'] == 'RegRu' && In_Array($this->params['Name'],Array('ru','su','рф'))){
 				#-------------------------------------------------------------------------------
 				$Domain = SprintF("%s.%s",$this->params['DomainName'],$this->params['Name']);
 				#-------------------------------------------------------------------------------
