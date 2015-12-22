@@ -738,61 +738,64 @@ function RegRu_Change_Contact_Detail($Settings,$Domain,$DomainZone,$Person){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 function RegRu_Get_Contact_Detail($Settings,$Domain){
-  /****************************************************************************/
-  $__args_types = Array('array','string');
-  #-----------------------------------------------------------------------------
-  $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
-  /****************************************************************************/
-  $HTTP = RegRu_Build_HTTP($Settings);
-  #-----------------------------------------------------------------------------
-  $Query = Array(
-    #---------------------------------------------------------------------------
-    'username'              => $Settings['Login'],
-    'password'              => $Settings['Password'],
-    'domain_name'           => $Domain,
-    'enduser_ip'            => '77.73.25.114',
-    'period'                => '0',
-  );
-  #---------------------------------------------------------------------------
-  $Settings['PrefixAPI'] = SprintF('https://api.reg.ru/api/regru2/%s','service/get_details');
-  #---------------------------------------------------------------------------
-  $Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
-  if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[RegRu_Get_Contact_Detail]: не удалось выполнить запрос к серверу');
-  #---------------------------------------------------------------------------
-  $Result = Trim($Result['Body']);
-  #---------------------------------------------------------------------------
-  $Result = Json_Decode($Result,TRUE);
-  #Debug("[RegRu_Answer::Get_Contact_Detail]: " . print_r($Result,TRUE));
-  #---------------------------------------------------------------------------
-  #---------------------------------------------------------------------------
-  if($Result['result'] == 'success' && $Result['answer']['services'][0]['dname'] == $Domain){
-    #-------------------------------------------------------------------------
-    $ContactInfo = Array();
-    #-------------------------------------------------------------------------
-    if(IsSet($Result['answer']['services'][0]['details']['e_mail']))
-      $ContactInfo['Email'] = $Result['answer']['services'][0]['details']['e_mail'];
-    #-------------------------------------------------------------------------
-    if(IsSet($Result['answer']['services'][0]['details']['phone']))
-      $ContactInfo['Phone'] = $Result['answer']['services'][0]['details']['phone'];
-    #-------------------------------------------------------------------------
-    if(IsSet($Result['answer']['services'][0]['details']['sms_security_number']))
-      $ContactInfo['CellPhone'] = $Result['answer']['services'][0]['details']['sms_security_number'];
-    #-------------------------------------------------------------------------
-    if(IsSet($Result['answer']['services'][0]['details']['p_addr']))
-      $ContactInfo['PostalAddress'] = $Result['answer']['services'][0]['details']['p_addr'];
-    #-------------------------------------------------------------------------
-    if(IsSet($Result['answer']['services'][0]['details'])){
-      $FullInfo = $Result['answer']['services'][0]['details'];
-    }else{
-      $FullInfo = Array('FullInfo'=>'Домен отсутствует у регистратора');
-    }
-    return Array('ContactInfo'=>$ContactInfo,'FullInfo'=>$FullInfo);
-  }
-  #---------------------------------------------------------------------------
-  #---------------------------------------------------------------------------
-  return new gException('WRONG_ANSWER',$Result['error_text']);
+	/******************************************************************************/
+	$__args_types = Array('array','string');
+	#-------------------------------------------------------------------------------
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/******************************************************************************/
+	$HTTP = RegRu_Build_HTTP($Settings);
+	#-------------------------------------------------------------------------------
+	$Query = Array(
+			'username'	=> $Settings['Login'],
+			'password'	=> $Settings['Password'],
+			'domain_name'	=> $Domain,
+			'enduser_ip'	=> '77.73.25.114',
+			'period'	=> '0',
+			);
+	#-------------------------------------------------------------------------------
+	$Settings['PrefixAPI'] = SprintF('https://api.reg.ru/api/regru2/%s','service/get_details');
+	#-------------------------------------------------------------------------------
+	$Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
+	if(Is_Error($Result))
+		return ERROR | @Trigger_Error('[RegRu_Get_Contact_Detail]: не удалось выполнить запрос к серверу');
+	#-------------------------------------------------------------------------------
+	$Result = Trim($Result['Body']);
+	#-------------------------------------------------------------------------------
+	$Result = Json_Decode($Result,TRUE);
+	#Debug("[RegRu_Answer::Get_Contact_Detail]: " . print_r($Result,TRUE));
+	#-------------------------------------------------------------------------------
+	if($Result['result'] == 'success' && $Result['answer']['services'][0]['dname'] == $Domain){
+		#-------------------------------------------------------------------------------
+		$ContactInfo = Array();
+		#-------------------------------------------------------------------------------
+		if(IsSet($Result['answer']['services'][0]['details']['e_mail']))
+			$ContactInfo['Email'] = $Result['answer']['services'][0]['details']['e_mail'];
+		#-------------------------------------------------------------------------------
+		if(IsSet($Result['answer']['services'][0]['details']['phone']))
+			$ContactInfo['Phone'] = $Result['answer']['services'][0]['details']['phone'];
+		#-------------------------------------------------------------------------------
+		if(IsSet($Result['answer']['services'][0]['details']['sms_security_number']))
+			$ContactInfo['CellPhone'] = $Result['answer']['services'][0]['details']['sms_security_number'];
+		#-------------------------------------------------------------------------------
+		if(IsSet($Result['answer']['services'][0]['details']['p_addr']))
+			$ContactInfo['PostalAddress'] = $Result['answer']['services'][0]['details']['p_addr'];
+		#-------------------------------------------------------------------------------
+		if(IsSet($Result['answer']['services'][0]['details'])){
+			$FullInfo = $Result['answer']['services'][0]['details'];
+		}else{
+			return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
+			#$FullInfo = Array('FullInfo'=>'Домен отсутствует у регистратора');
+		}
+		#-------------------------------------------------------------------------------
+		return Array('ContactInfo'=>$ContactInfo,'FullInfo'=>$FullInfo);
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return new gException('WRONG_ANSWER',$Result['error_text']);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 }
+
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
