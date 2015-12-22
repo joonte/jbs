@@ -38,7 +38,7 @@ if($TimeResult){
 		if($Out){
 			#-------------------------------------------------------------------------------
 			# отдаём кэш
-			Debug("[comp/www/API/Events]: UserID: " . $__USER['ID'] . ", результат найден в кэше");
+			Debug(SPrintF('[comp/www/API/Events]: UserID = %u; результат найден в кэше',$__USER['ID']));
 			#-------------------------------------------------------------------------------
 			Return($Out);
 			#-------------------------------------------------------------------------------
@@ -57,9 +57,23 @@ if($__USER['IsAdmin']){
 			"(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = (SELECT `GroupID` FROM `Users` WHERE `Users`.`ID` = `Edesks`.`UserID`)) = 'no'"
 			);
 	#-------------------------------------------------------------------------------
+        $Session = new Session((string)@$_COOKIE['SessionID']);
+	#-------------------------------------------------------------------------------
+	$IsLoad = $Session->Load();
+	if(Is_Error($IsLoad))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Tickets = @$Session->Data[Md5('Tickets')];
+	#-------------------------------------------------------------------------------
+	if(IsSet($Tickets['GroupExcludeID']) && $Tickets['GroupExcludeID'] != 'Default')
+		$Where[] = SPrintF('`TargetGroupID` != %u',$Tickets['GroupExcludeID']);
+	#-------------------------------------------------------------------------------
+	if(IsSet($Tickets['GroupOnlyID']) && $Tickets['GroupOnlyID'] != 'Default')
+		$Where[] = SPrintF('`TargetGroupID` = %u',$Tickets['GroupOnlyID']);
+	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$Where = SPrintF("`StatusID` != 'Closed' AND `UserID` = %u AND (SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = `Edesks`.`TargetGroupID`) = 'yes'",$__USER['ID']);
+	$Where = Array(SPrintF("`StatusID` != 'Closed' AND `UserID` = %u AND (SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = `Edesks`.`TargetGroupID`) = 'yes'",$__USER['ID']));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
