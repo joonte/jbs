@@ -9,6 +9,9 @@
    <Delete />
    <StatusSet />
   </After>
+  <Before>
+   <TicketsFilter />
+  </Before>
  </Comps>
  <Sequence />
 </Cut>
