@@ -396,7 +396,8 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 	$Doc = $XML['doc'];
 	#-------------------------------------------------------------------------------
 	if(!IsSet($Doc['error']))
-		return TRUE;
+		if(!IsSet($Doc['tparams']['func']))
+			return TRUE;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$IDNA = new Net_IDNA_php5();
