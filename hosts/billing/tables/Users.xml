@@ -77,7 +77,7 @@
      </UnActive>
      <!-- ****************************************************************** -->
      <UnStandardPrimaryGroup>
-      <Name>C нестандартной основной группой</Name>
+      <Name>C нестандартной группой</Name>
       <Where>`GroupID` != '2000000'</Where>
      </UnStandardPrimaryGroup>
     </Patterns>

@@ -3,79 +3,84 @@
 <XML>
 <!-- *********************************************************************** -->
 <Cut>
- <Comps>
-  <Before>
-   <PatternOut />
-   <Search />
-  </Before>
- </Comps>
+	<Comps>
+		<Before>
+			<PatternOut />
+			<Search />
+		</Before>
+	</Comps>
 </Cut>
 <!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
 <Source>
- <TableID>Groups</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>Name</ListElement>
-  <ListElement>IsDepartment</ListElement>
-  <ListElement>Comment</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Message>Группы не определены.</Message>
- </Conditions>
+	<TableID>Groups</TableID>
+	<ColumnsIDs>
+		<ListElement>ID</ListElement>
+		<ListElement>Name</ListElement>
+		<ListElement>IsDepartment</ListElement>
+		<ListElement>Comment</ListElement>
+	</ColumnsIDs>
+	<!-- *********************************************************************** -->
+	<Conditions>
+		<Message>Группы не определены.</Message>
+	</Conditions>
 </Source>
 <!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
 <Query>
- <SortOn>ParentName</SortOn>
- <IsDesc>0</IsDesc>
+	<SortOn>ParentName</SortOn>
+	<IsDesc>0</IsDesc>
 </Query>
 <!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
 <Comps>
- <After>
-  <Delete>
-   <Args>
-    <Comment>Выбранные группы</Comment>
-    <Send>
-     <TableID>Groups</TableID>
-    </Send>
-   </Args>
-  </Delete>
- </After>
+	<After>
+		<Delete>
+			<Args>
+				<Comment>Выбранные группы</Comment>
+				<Send>
+					<TableID>Groups</TableID>
+				</Send>
+			</Args>
+		</Delete>
+	</After>
 </Comps>
 <!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
 <Columns>
- <SelectID>
-  <Args>
-   <TableID>Groups</TableID>
-  </Args>
- </SelectID>
- <!-- ********************************************************************** -->
- <Edit>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/Administrator/GroupEdit</ListElement>
-   <ListElement>
-    <GroupID>%ID%</GroupID>
-   </ListElement>
-   <ListElement>Редактировать группу</ListElement>
-   <ListElement>Edit.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Edit>
- <!-- ********************************************************************** -->
- <Name>
-  <Head>Название группы</Head>
-  <Alias>IF(`IsDefault` != 'yes',`Name`,CONCAT('*',`Name`))</Alias>
- </Name>
- <!-- ********************************************************************** -->
- <ParentName>
-  <Head>Группа родитель</Head>
-  <Alias>(SELECT `Name` FROM `Groups` `Table` WHERE `Groups`.`ParentID` = `Table`.`ID`)</Alias>
- </ParentName>
- <!-- ********************************************************************** -->
+	<SelectID>
+		<Args>
+			<TableID>Groups</TableID>
+		</Args>
+	</SelectID>
+	<!-- ********************************************************************** -->
+	<Edit>
+		<IsSorted>0</IsSorted>
+		<Comp>Buttons/Window</Comp>
+		<Args>
+			<ListElement>/Administrator/GroupEdit</ListElement>
+			<ListElement>
+				<GroupID>%ID%</GroupID>
+			</ListElement>
+			<ListElement>Редактировать группу</ListElement>
+			<ListElement>Edit.gif</ListElement>
+		</Args>
+		<Attribs>
+			<class>TableSuperStandard</class>
+			<style>width:22px;</style>
+		</Attribs>
+	</Edit>
+	<!-- ********************************************************************** -->
+	<Name>
+		<Head>Название группы</Head>
+		<Alias>IF(`IsDefault` != 'yes',`Name`,CONCAT('*',`Name`))</Alias>
+	</Name>
+	<!-- ********************************************************************** -->
+	<ParentName>
+		<Head>Группа родитель</Head>
+		<Alias>(SELECT `Name` FROM `Groups` `Table` WHERE `Groups`.`ParentID` = `Table`.`ID`)</Alias>
+	</ParentName>
+	<!-- ********************************************************************** -->
 	<IsDepartment>
 		<Head>Отдел</Head>
 		<Prompt>Группа является отделом, т.е. в ней сотрудники хостинга, а не клиенты</Prompt>
@@ -93,19 +98,26 @@
 		<Comp>Formats/String</Comp>
 		<Args>
 			<UserID>%Comment%</UserID>
-			<Length>25</Length>
+			<Length>50</Length>
 		</Args>
 	</Comment>
+	<!-- ********************************************************************** -->
+	<UserCount>
+		<Head>Кол.</Head>
+		<Prompt>Количество юзеров в группе</Prompt>
+		<Alias>(SELECT COUNT(*) FROM `Users` WHERE `Users`.`GroupID` = `Groups`.`ID`)</Alias>
+	</UserCount>
 </Columns>
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>Edit</ListElement>
- <ListElement>Name</ListElement>
- <ListElement>ParentName</ListElement>
- <ListElement>IsDepartment</ListElement>
- <ListElement>Comment</ListElement>
+	<ListElement>SelectID</ListElement>
+	<ListElement>Edit</ListElement>
+	<ListElement>Name</ListElement>
+	<ListElement>ParentName</ListElement>
+	<ListElement>IsDepartment</ListElement>
+	<ListElement>Comment</ListElement>
+	<ListElement>UserCount</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
 </XML>
