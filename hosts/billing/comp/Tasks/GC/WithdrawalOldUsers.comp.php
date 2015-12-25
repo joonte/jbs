@@ -40,7 +40,8 @@ $Where = Array(
 			/* нет заказов */
 			'(SELECT COUNT(*) FROM `OrdersOwners` WHERE `UserID` = `Users`.`ID`) = 0',
 			/* нет выписанных счетов на оплату */
-			'(SELECT COUNT(*) FROM `InvoicesOwners` WHERE `UserID` = `Users`.`ID`) = 0',
+			# закомментировано 2015-12-25 в 00:01 - непонял, с какой целью я ввёл это условие...
+			#'(SELECT COUNT(*) FROM `InvoicesOwners` WHERE `UserID` = `Users`.`ID`) = 0',
 			/* есть договора с баллансом больше нуля */
 			'(SELECT SUM(`Balance`) FROM `ContractsOwners` WHERE `UserID` = `Users`.`ID`) > 0',
 			/* нет свежих постов в тикетницу */
