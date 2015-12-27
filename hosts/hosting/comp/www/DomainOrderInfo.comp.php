@@ -228,7 +228,7 @@ if($WhoIs){
 	#-------------------------------------------------------------------------------
 	$Table[] = 'Данные службы WhoIs';
 	#-------------------------------------------------------------------------------
-	$Table[] = new Tag('TD',Array('class'=>'Standard','colspan'=>2),new Tag('PRE',Array('style'=>'font-size:10px;'),$WhoIs));
+	$Table[] = new Tag('TD',Array('class'=>'Standard','colspan'=>2),new Tag('PRE',Array('style'=>'font-size:10px; width:260px; overflow:hidden;'),$WhoIs));
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Formats/Date/Extended',$DomainOrder['UpdateDate']);
 	if(Is_Error($Comp))
