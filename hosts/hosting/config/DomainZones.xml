@@ -420,16 +420,16 @@
  <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
 </UniqID>
-<UniqID>
- <Server>whois.ripn.net</Server>
- <Name>su</Name>
- <Available>No\sentries\sfound</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>paid-till:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
- <NsName>nserver:\s+([a-z0-9\.\-]{2,})</NsName>
- <Registrar>registrar:\s+([\w\-]{2,})</Registrar>
-</UniqID>
+	<UniqID>
+		<Server>whois.ripn.net</Server>
+		<Name>su</Name>
+		<Available>No\sentries\sfound</Available>
+		<NotAvailable>stop-list:</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>paid-till:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<NsName>nserver:\s+([a-z0-9\.\-]{2,})</NsName>
+		<Registrar>registrar:\s+([\w\-]{2,})</Registrar>
+	</UniqID>
 <UniqID>
  <Server>whois.nic.cc</Server>
  <Name>cc</Name>
