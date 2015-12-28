@@ -63,6 +63,7 @@
   <Type>Input</Type>
   <Attribs>
    <type>text</type>
+   <prompt>Не более 13 символов</prompt>
   </Attribs>
   <IsDuty>1</IsDuty>
   <Value />
