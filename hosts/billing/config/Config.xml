@@ -1692,6 +1692,13 @@
 			<ImageHeight>70</ImageHeight>
 		</InvoiceMake>
 		<!-- *********************************************************************** -->
+		<InvoiceDocumentGuest>
+			<IsActive>1</IsActive>
+			<ForcePaymentSystem>0</ForcePaymentSystem>
+			<DaysPay>32</DaysPay>
+			<RedirectAuthorized>0</RedirectAuthorized>
+		</InvoiceDocumentGuest>
+		<!-- *********************************************************************** -->
 	</User>
 	<!-- *********************************************************************** -->
 	<Administrator>

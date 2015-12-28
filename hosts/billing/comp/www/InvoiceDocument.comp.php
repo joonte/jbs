@@ -161,7 +161,7 @@ if($PaymentSystemID == 'QIWI' && !$IsPayed){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp1 = Comp_Load('Buttons/Standard',Array('onclick'=>SPrintF("document.location = '/InvoiceDownload?InvoiceID=%u&IsStamp=yes';",$Invoice['ID'])),'Скачать сёёт в формате PDF','PDF.gif');
+$Comp1 = Comp_Load('Buttons/Standard',Array('onclick'=>SPrintF("document.location = '/InvoiceDownload?InvoiceID=%u&IsStamp=yes';",$Invoice['ID'])),'Скачать счёт в формате PDF','PDF.gif');
 if(Is_Error($Comp1))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
