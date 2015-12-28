@@ -272,7 +272,7 @@ $Where = Array(
 		'`StatusID` = "Waiting"'						/* не оплачен */
 		);
 #-------------------------------------------------------------------------------
-$Invoice = DB_Select('Invoices',Array('ID','Summ'),Array('UNIQ','Where'=>$Where));
+$Invoice = DB_Select('Invoices',Array('ID','Summ'),Array('UNIQ','Where'=>$Where,'Limits'=>Array(0,1)));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Invoice)){
 case 'error':
