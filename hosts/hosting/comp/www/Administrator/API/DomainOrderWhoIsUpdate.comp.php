@@ -28,9 +28,9 @@ $IsReaded	= (boolean) @$Args['IsReaded'];
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/WhoIs.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','DomainName','StatusID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`) as `SchemeName`');
+$Columns = Array('ID','DomainName','StatusID','UserID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`) as `SchemeName`');
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainOrders',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
 case 'error':
@@ -47,7 +47,32 @@ $WhoIs = WhoIs_Check($DomainOrder['DomainName'],$DomainOrder['SchemeName']);
 #-------------------------------------------------------------------------------
 switch(ValueOf($WhoIs)){
 case 'error':
+	#-------------------------------------------------------------------------------
+	# JBS-1150 - сохраняем информацию о домене и ошибке в кэше, при повторе - тупо меняем дату обновления данных whois
+	$CacheID = Md5(SPrintF('WhoIs-error-%s.%s',$DomainOrder['DomainName'],$DomainOrder['SchemeName']));
+	#-------------------------------------------------------------------------------
+	$IsCheck = CacheManager::get($CacheID);
+	#-------------------------------------------------------------------------------
+	if($IsCheck){
+		#-------------------------------------------------------------------------------
+		$IsUpdate = DB_Update('DomainOrders',Array('UpdateDate'=>Time()),Array('ID'=>$DomainOrder['ID']));
+		if(Is_Error($IsUpdate))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Event = Array('UserID'=>$DomainOrder['UserID'],'PriorityID'=>'Warning','Text'=>SPrintF('Повторная ошибка получения данных WhoIs для домена %s.%s, проверка пропущена',$DomainOrder['DomainName'],$DomainOrder['SchemeName']));
+		#-------------------------------------------------------------------------------
+		$Event = Comp_Load('Events/EventInsert',$Event);
+		if(!$Event)
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		CacheManager::add($CacheID,1,3600);
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
 	return new gException('WHOIS_SERVER_ERROR','Ошибка сервера WhoIs');
+	#-------------------------------------------------------------------------------
 case 'exception':
 	return new gException('CAN_NOT_GET_WHOIS_DATA','Не удалось получить данные WhoIs',$WhoIs);
 case 'false':

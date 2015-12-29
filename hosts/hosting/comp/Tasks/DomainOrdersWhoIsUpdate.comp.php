@@ -31,7 +31,7 @@ if(Is_Error($ExecuteTime))
 $Where = Array(
 		"`StatusID` = 'Active' OR `StatusID` = 'ForTransfer' OR `StatusID` = 'OnTransfer'",
 		# как часто обновляем информацию WhoIs
-		SPRintF('UNIX_TIMESTAMP() - %u * 86400 > `UpdateDate`',$Settings['WhoIsUpdatePeriod']),
+		SPrintF('UNIX_TIMESTAMP() - %u * 86400 > `UpdateDate`',$Settings['WhoIsUpdatePeriod']),
 		# через сколько начинаем обновлять WhoIs, после установки статуса
 		SPrintF('UNIX_TIMESTAMP() - %u * 86400 > `StatusDate`',$Settings['WhoIsBeginUpdate'])
 		);
