@@ -45,6 +45,7 @@
 			<UseContractRegister>0</UseContractRegister>
 			<IsSupportContracts>0</IsSupportContracts>
 			<PersonID />
+			<RatelimitAPI>2</RatelimitAPI>
 		</Settings>
 	</WebNames>
 	<!-- ********************************************************************* -->
@@ -105,6 +106,7 @@
 			<UseContractRegister>0</UseContractRegister>
 			<IsSupportContracts>0</IsSupportContracts>
 			<PersonID />
+			<RatelimitAPI>20</RatelimitAPI>
 		</Settings>
 	</RegRu>
 	<!-- ********************************************************************* -->
@@ -380,11 +382,11 @@
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
 			<onclick>ChangeCheckBox('IsUpdatePrice'); return false;</onclick>
-			<prompt>Обновлять цены в биллинге при изменении цен у вышестоящего регистратора</prompt>
 		</CommentAttribs>
 		<Type>Input</Type>
 		<Attribs>
 			<type>checkbox</type>
+			<prompt>Обновлять цены в биллинге при изменении цен у вышестоящего регистратора</prompt>
 		</Attribs>
 		<IsDuty>0</IsDuty>
 		<Value>yes</Value>
@@ -396,15 +398,44 @@
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
 			<onclick>ChangeCheckBox('IsFetchNewDomains'); return false;</onclick>
-			<prompt>Автоматически создавать новые доменные зоны и уведомлять о отсутствующих</prompt>
 		</CommentAttribs>
 		<Type>Input</Type>
 		<Attribs>
 			<type>checkbox</type>
+			<prompt>Автоматически создавать новые доменные зоны и уведомлять о отсутствующих</prompt>
 		</Attribs>
 		<IsDuty>0</IsDuty>
 		<Value>yes</Value>
 	</IsFetchNewDomains>
+	<!-- *********************************************************************** -->
+	<IsFetchWhoIs>
+		<Check>Char</Check>
+		<Comment>Получать данные WhoIs</Comment>
+		<CommentAttribs>
+			<style>cursor:pointer;</style>
+			<onclick>ChangeCheckBox('IsFetchWhoIs'); return false;</onclick>
+		</CommentAttribs>
+		<Type>Input</Type>
+		<Attribs>
+			<type>checkbox</type>
+			<prompt>Разрешить получать данные WhoIs через API регистратора. Рекомендуется делать это только в крайнем случае, если по какой-то причине невозможно использовать WhoIs сервер доменной зоны (например, он вас забанил за слишком частые запросы)</prompt>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>yes</Value>
+	</IsFetchWhoIs>
+	<!-- *********************************************************************** -->
+	<RatelimitAPI>
+		<Check>Number</Check>
+		<Comment>Частота запросов к API</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Максимальная частота запросов к API регистратора (целое число, запросов в минуту). Используется при работе с WhoIs через регистратора, во всех остальных случаях - игнорируется. Рекомендуется указывать меньше чем реально разрешает регистратор.</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>2</Value>
+	</RatelimitAPI>
 	<!-- *********************************************************************** -->
         <!-- *********************************************************************** -->
 	<IsLogging>

@@ -11,6 +11,7 @@
 		<ExpirationDate>paid-till:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>nserver:\s+([a-z0-9\.\-]{2,})</NsName>
 		<Registrar>registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 	<UniqID>
@@ -22,6 +23,7 @@
 		<ExpirationDate>Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 	<UniqID>
@@ -33,6 +35,7 @@
 		<ExpirationDate>Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 	<UniqID>
@@ -44,6 +47,7 @@
 		<ExpirationDate>Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 <UniqID>
@@ -55,6 +59,7 @@
  <ExpirationDate>paid-till:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
  <NsName>nserver:\s+([a-z0-9\.\-]{2,})</NsName>
  <Registrar>registrar:\s+([\w\-]{2,})</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <!-- *********************************************************************** -->
 <UniqID>
@@ -66,6 +71,7 @@
  <ExpirationDate />
  <NsName>\t([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <!-- *********************************************************************** -->
 <UniqID>
@@ -77,6 +83,7 @@
  <ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -87,6 +94,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -97,6 +105,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -107,6 +116,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -117,6 +127,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -127,6 +138,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -137,6 +149,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -147,6 +160,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -157,6 +171,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -167,6 +182,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -177,6 +193,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -187,6 +204,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -197,6 +215,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -207,6 +226,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -217,6 +237,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -227,6 +248,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -237,6 +259,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -247,6 +270,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <!-- *********************************************************************** -->
 <UniqID>
@@ -258,6 +282,7 @@
  <ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -268,6 +293,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -278,6 +304,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -288,6 +315,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <!-- *********************************************************************** -->
 <UniqID>
@@ -299,6 +327,7 @@
  <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.net</Server>
@@ -309,6 +338,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.nic.biz</Server>
@@ -319,6 +349,7 @@
  <ExpirationDate>Domain\sExpiration\sDate:\s+([a-zA-Z]{3}\s[a-zA-Z]{3}\s[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}\sGMT\s[0-9]{4})</ExpirationDate>
  <NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.afilias.net</Server>
@@ -329,6 +360,7 @@
  <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.nic.us</Server>
@@ -339,6 +371,7 @@
  <ExpirationDate>Domain\sExpiration\sDate:\s+([a-zA-Z]{3}\s[a-zA-Z]{3}\s[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}\sGMT\s[0-9]{4})</ExpirationDate>
  <NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>in.whois-servers.net</Server>
@@ -349,6 +382,7 @@
  <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>co.in.whois-servers.net</Server>
@@ -359,6 +393,7 @@
  <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>net.in.whois-servers.net</Server>
@@ -369,6 +404,7 @@
  <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>org.in.whois-servers.net</Server>
@@ -379,6 +415,7 @@
  <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>gen.in.whois-servers.net</Server>
@@ -389,6 +426,7 @@
  <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>firm.in.whois-servers.net</Server>
@@ -399,6 +437,7 @@
  <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>in.whois-servers.net</Server>
@@ -409,6 +448,7 @@
  <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.dotmobiregistry.net</Server>
@@ -419,6 +459,7 @@
  <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 	<UniqID>
 		<Server>whois.ripn.net</Server>
@@ -429,6 +470,7 @@
 		<ExpirationDate>paid-till:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>nserver:\s+([a-z0-9\.\-]{2,})</NsName>
 		<Registrar>registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 <UniqID>
  <Server>whois.nic.cc</Server>
@@ -439,6 +481,7 @@
  <ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>Name\sServer:\s([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.aero</Server>
@@ -449,6 +492,7 @@
  <ExpirationDate>Expires\sOn:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.nic.asia</Server>
@@ -459,6 +503,7 @@
  <ExpirationDate>Domain\sExpiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>Nameservers:([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.nic.tv</Server>
@@ -469,6 +514,7 @@
  <ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>Name\sServer:\s([A-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.website.ws</Server>
@@ -479,6 +525,7 @@
  <ExpirationDate>Domain\sCurrently\sExpires:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
  <NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.nic.name</Server>
@@ -489,6 +536,7 @@
  <ExpirationDate />
  <NsName />
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.cnnic.net.cn</Server>
@@ -499,6 +547,7 @@
  <ExpirationDate>Expiration\sDate:\s([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
  <NsName>Name\sServer:([a-z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>cn.whois-servers.net</Server>
@@ -509,6 +558,7 @@
  <ExpirationDate>Expiration\sDate:\s([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
  <NsName>Name\sServer:([a-z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.twnic.net</Server>
@@ -519,6 +569,7 @@
  <ExpirationDate>Record\sexpires\son\s([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
  <NsName>\s{6}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.nic.uk</Server>
@@ -529,6 +580,7 @@
  <ExpirationDate>Renewal\sdate:\s+([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.nic.uk</Server>
@@ -539,6 +591,7 @@
  <ExpirationDate>Renewal\sdate:\s+([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.nic.uk</Server>
@@ -549,6 +602,7 @@
  <ExpirationDate>Renewal\sdate:\s+([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.nic.uk</Server>
@@ -559,6 +613,7 @@
  <ExpirationDate>Renewal\sdate:\s+([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.nic.kz</Server>
@@ -569,6 +624,7 @@
  <ExpirationDate />
  <NsName>server\.+\:\s([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.cctld.uz</Server>
@@ -579,6 +635,7 @@
  <ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})\.</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <!-- *********************************************************************** -->
 <UniqID>
@@ -590,6 +647,7 @@
  <ExpirationDate>Domain\sExpiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
  <NsName>Nameservers:([a-zA-Z0-9\.\-]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <!-- *********************************************************************** -->
 <UniqID>
@@ -601,6 +659,7 @@
  <ExpirationDate />
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <!-- *********************************************************************** -->
 <UniqID>
@@ -612,6 +671,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -622,6 +682,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -632,6 +693,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -642,6 +704,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -652,6 +715,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 <UniqID>
  <Server>whois.centralnic.com</Server>
@@ -662,6 +726,7 @@
  <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
  <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
  <Registrar>Default</Registrar>
+ <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 </UniqID>
 
 	<!-- *********************************************************************** -->
@@ -675,6 +740,7 @@
 		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 	<UniqID>
@@ -686,6 +752,7 @@
 		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 	<UniqID>
@@ -697,6 +764,7 @@
 		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 	<UniqID>
@@ -708,6 +776,7 @@
 		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 	<UniqID>
@@ -719,6 +788,7 @@
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 	<UniqID>
@@ -730,6 +800,7 @@
 		<ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 	<UniqID>
@@ -741,6 +812,7 @@
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 	<UniqID>
@@ -752,6 +824,7 @@
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 	<UniqID>
@@ -763,6 +836,7 @@
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 	<UniqID>
@@ -774,6 +848,7 @@
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 	<UniqID>
@@ -785,6 +860,7 @@
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 	<UniqID>
@@ -796,6 +872,7 @@
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 	<UniqID>
@@ -807,6 +884,7 @@
 		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 	<UniqID>
@@ -818,6 +896,7 @@
 		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</UniqID>
 	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
