@@ -105,11 +105,11 @@
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
 			<onclick>ChangeCheckBox('IsAutoBalancing'); return false;</onclick>
-			<prompt>Сервер принимает участие в автобалансировке - т.е. может быть автоматически назначен сервером по-умолчанию</prompt>
 		</CommentAttribs>
 		<Type>Input</Type>
 		<Attribs>
 			<type>checkbox</type>
+			<prompt>Сервер принимает участие в автобалансировке - т.е. может быть автоматически назначен сервером по-умолчанию</prompt>
 		</Attribs>
 		<IsDuty>0</IsDuty>
 		<Value>yes</Value>
@@ -121,11 +121,11 @@
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
 			<onclick>ChangeCheckBox('IsLogging'); return false;</onclick>
-			<prompt>Записывать в лог все запросы и ответы сервера</prompt>
 		</CommentAttribs>
 		<Type>Input</Type>
 		<Attribs>
 			<type>checkbox</type>
+			<prompt>Записывать в лог все запросы и ответы сервера</prompt>
 		</Attribs>
 		<IsDuty>0</IsDuty>
 		<Value>yes</Value>
@@ -184,11 +184,11 @@
 		<CommentAttribs>
 			<style>cursor:pointer;</style>
 			<onclick>ChangeCheckBox('IsUpdateDiskTemplates'); return false;</onclick>
-			<prompt>Обновлять список шаблонов, в соответствии со списком шаблонов доступных на сервере</prompt>
 		</CommentAttribs>
 		<Type>Input</Type>
 		<Attribs>
 			<type>checkbox</type>
+			<prompt>Обновлять список шаблонов, в соответствии со списком шаблонов доступных на сервере</prompt>
 		</Attribs>
 		<IsDuty>0</IsDuty>
 		<Value>yes</Value>
