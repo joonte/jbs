@@ -37,20 +37,15 @@ $DOM->AddText('Title','Заказ доменного имени');
 $Form = new Tag('FORM',Array('name'=>'DomainOrderForm','onsubmit'=>'return false;'));
 #-------------------------------------------------------------------------------
 if($HostingOrderID){
-  #-----------------------------------------------------------------------------
-  $Comp = Comp_Load(
-    'Form/Input',
-    Array(
-      'name'  => 'HostingOrderID',
-      'type'  => 'hidden',
-      'value' => $HostingOrderID
-    )
-  );
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $Form->AddChild($Comp);
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('name'=>'HostingOrderID','type'=>'hidden','value'=>$HostingOrderID));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Form->AddChild($Comp);
+	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
@@ -121,11 +116,12 @@ if($StepID){
       #-------------------------------------------------------------------------
       switch(ValueOf($WhoIs)){
         case 'exception':
-          return new Tag('WHOIS_ERROR','Ошибка получения данных WhoIs',$WhoIs);
+          return new gException('WHOIS_EXCEPTION',SPrintF('Ошибка получения данных WhoIs',$WhoIs));
         break;
         case 'array':
           return new gException('DOMAIN_IS_BORROWED','Выбранный Вами домен уже занят. Выберите другое имя.');
         case 'error':
+	  return new gException('WHOIS_ERROR',SPrintF('Ошибка получения данных WhoIs',$WhoIs));
           # No more...
         case 'false':
           # No more...
