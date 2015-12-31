@@ -30,7 +30,7 @@ function WhoIs_Parse($Domain){
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
+function WhoIs_Check($DomainName,$ZoneName){
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[system/libs/WhoIs]: run function WhoIs_Check, Domain = %s.%s',$DomainName,$ZoneName));
 	#-------------------------------------------------------------------------------
