@@ -11,8 +11,9 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-$DomainName = (string) @$Args['DomainName'];
-$DomainZone = (string) @$Args['DomainZone'];
+$DomainName	=  (string) @$Args['DomainName'];
+$DomainZone	=  (string) @$Args['DomainZone'];
+$IsAvalible	= (boolean) @$Args['IsAvalible'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('libs/WhoIs.php')))
 	return ERROR | @Trigger_Error(500);
@@ -23,7 +24,7 @@ $Config = Config();
 $Settings = $Config['Interface']['User']['Orders']['Domain']['DomainWhoIs'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$CacheID = Md5(SPrintF('%s-%s.%s',$__FILE__,$DomainName,$DomainZone));
+$CacheID = Md5(SPrintF('WhoIs-%s.%s',$DomainName,$DomainZone));
 #-------------------------------------------------------------------------------
 $IsCheck = CacheManager::get($CacheID);
 #-------------------------------------------------------------------------------
