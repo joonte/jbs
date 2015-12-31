@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- @author Великодный В.В. (Joonte Ltd.) -->
+<!-- @author Alex Keda, for www.host-food.ru -->
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
 <XML>
-	<!-- *********************************************************************** -->
-	<UniqID>
+	<ru>
 		<Server>whois.ripn.net</Server>
 		<Name>ru</Name>
 		<Available>No\sentries\sfound</Available>
@@ -12,9 +13,9 @@
 		<NsName>nserver:\s+([a-z0-9\.\-]{2,})</NsName>
 		<Registrar>registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
+	</ru>
 	<!-- *********************************************************************** -->
-	<UniqID>
+	<by>
 		<Server>whois.cctld.by</Server>
 		<Name>by</Name>
 		<Available>Object\sdoes\snot\sexists</Available>
@@ -24,9 +25,9 @@
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
+	</by>
 	<!-- *********************************************************************** -->
-	<UniqID>
+	<work>
 		<Server>whois.nic.work</Server>
 		<Name>work</Name>
 		<Available>Status:\sNot\sRegistered</Available>
@@ -36,9 +37,9 @@
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
+	</work>
 	<!-- *********************************************************************** -->
-	<UniqID>
+	<site>
 		<Server>whois.nic.site</Server>
 		<Name>site</Name>
 		<Available>DOMAIN\sNOT\sFOUND</Available>
@@ -48,420 +49,426 @@
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
+	</site>
 	<!-- *********************************************************************** -->
-<UniqID>
- <Server>whois.ripn.net</Server>
- <Name>рф</Name>
- <Available>No\sentries\sfound</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>paid-till:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
- <NsName>nserver:\s+([a-z0-9\.\-]{2,})</NsName>
- <Registrar>registrar:\s+([\w\-]{2,})</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<!-- *********************************************************************** -->
-<UniqID>
- <Server>whois.eu</Server>
- <Name>eu</Name>
- <Available>Status:\sAVAILABLE</Available>
- <NotAvailable>NOT\sAVAILABLE</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate />
- <NsName>\t([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<!-- *********************************************************************** -->
-<UniqID>
- <Server>whois.crsnic.net</Server>
- <Name>com</Name>
- <Available>No\smatch\sfor</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>ru.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>us.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>kr.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>jpn.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>cn.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>sa.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>qc.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>za.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>uy.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>br.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>no.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>hu.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>se.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>eu.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>gb.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>de.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>uk.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<!-- *********************************************************************** -->
-<UniqID>
- <Server>whois.crsnic.net</Server>
- <Name>net</Name>
- <Available>No\smatch\sfor</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>gb.net</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>se.net</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>uk.net</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<!-- *********************************************************************** -->
-<UniqID>
- <Server>whois.pir.org</Server>
- <Name>org</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.net</Server>
- <Name>ae.org</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.nic.biz</Server>
- <Name>biz</Name>
- <Available>Not\sfound</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Domain\sExpiration\sDate:\s+([a-zA-Z]{3}\s[a-zA-Z]{3}\s[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}\sGMT\s[0-9]{4})</ExpirationDate>
- <NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.afilias.net</Server>
- <Name>info</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.nic.us</Server>
- <Name>us</Name>
- <Available>Not\sfound</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Domain\sExpiration\sDate:\s+([a-zA-Z]{3}\s[a-zA-Z]{3}\s[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}\sGMT\s[0-9]{4})</ExpirationDate>
- <NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>in.whois-servers.net</Server>
- <Name>in</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>co.in.whois-servers.net</Server>
- <Name>co.in</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>net.in.whois-servers.net</Server>
- <Name>net.in</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>org.in.whois-servers.net</Server>
- <Name>org.in</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>gen.in.whois-servers.net</Server>
- <Name>gen.in</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>firm.in.whois-servers.net</Server>
- <Name>firm.in</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>in.whois-servers.net</Server>
- <Name>ind.in</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.dotmobiregistry.net</Server>
- <Name>mobi</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-	<UniqID>
+	<xn--p1ai>
+		<Server>whois.ripn.net</Server>
+		<Name>рф</Name>
+		<Available>No\sentries\sfound</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>paid-till:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<NsName>nserver:\s+([a-z0-9\.\-]{2,})</NsName>
+		<Registrar>registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</xn--p1ai>
+	<!-- *********************************************************************** -->
+	<eu>
+		<Server>whois.eu</Server>
+		<Name>eu</Name>
+		<Available>Status:\sAVAILABLE</Available>
+		<NotAvailable>NOT\sAVAILABLE</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate />
+		<NsName>\t([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</eu>
+	<!-- *********************************************************************** -->
+	<com>
+		<Server>whois.crsnic.net</Server>
+		<Name>com</Name>
+		<Available>No\smatch\sfor</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</com>
+	<!-- *********************************************************************** -->
+	<ru.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>ru.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</ru.com>
+	<!-- *********************************************************************** -->
+	<us.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>us.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</us.com>
+	<!-- *********************************************************************** -->
+	<kr.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>kr.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</kr.com>
+	<!-- *********************************************************************** -->
+	<jpn.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>jpn.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</jpn.com>
+	<!-- *********************************************************************** -->
+	<cn.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>cn.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</cn.com>
+	<!-- *********************************************************************** -->
+	<sa.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>sa.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</sa.com>
+	<!-- *********************************************************************** -->
+	<qc.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>qc.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</qc.com>
+	<!-- *********************************************************************** -->
+	<za.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>za.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</za.com>
+	<uy.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>uy.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</uy.com>
+	<br.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>br.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</br.com>
+	<no.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>no.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</no.com>
+	<hu.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>hu.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</hu.com>
+	<se.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>se.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</se.com>
+	<eu.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>eu.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</eu.com>
+	<gb.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>gb.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</gb.com>
+	<de.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>de.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</de.com>
+	<uk.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>uk.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</uk.com>
+	<net>
+		<Server>whois.crsnic.net</Server>
+		<Name>net</Name>
+		<Available>No\smatch\sfor</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</net>
+	<gb.net>
+		<Server>whois.centralnic.com</Server>
+		<Name>gb.net</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</gb.net>
+	<se.net>
+		<Server>whois.centralnic.com</Server>
+		<Name>se.net</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</se.net>
+	<uk.net>
+		<Server>whois.centralnic.com</Server>
+		<Name>uk.net</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</uk.net>
+	<org>
+		<Server>whois.pir.org</Server>
+		<Name>org</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</org>
+	<ae.org>
+		<Server>whois.centralnic.net</Server>
+		<Name>ae.org</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</ae.org>
+	<biz>
+		<Server>whois.nic.biz</Server>
+		<Name>biz</Name>
+		<Available>Not\sfound</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Domain\sExpiration\sDate:\s+([a-zA-Z]{3}\s[a-zA-Z]{3}\s[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}\sGMT\s[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</biz>
+	<info>
+		<Server>whois.afilias.net</Server>
+		<Name>info</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</info>
+	<us>
+		<Server>whois.nic.us</Server>
+		<Name>us</Name>
+		<Available>Not\sfound</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Domain\sExpiration\sDate:\s+([a-zA-Z]{3}\s[a-zA-Z]{3}\s[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}\sGMT\s[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</us>
+	<in>
+		<Server>in.whois-servers.net</Server>
+		<Name>in</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</in>
+	<co.in>
+		<Server>co.in.whois-servers.net</Server>
+		<Name>co.in</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</co.in>
+	<net.in>
+		<Server>net.in.whois-servers.net</Server>
+		<Name>net.in</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</net.in>
+	<org.in>
+		<Server>org.in.whois-servers.net</Server>
+		<Name>org.in</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</org.in>
+	<gen.in>
+		<Server>gen.in.whois-servers.net</Server>
+		<Name>gen.in</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</gen.in>
+	<firm.in>
+		<Server>firm.in.whois-servers.net</Server>
+		<Name>firm.in</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</firm.in>
+	<ind.in>
+		<Server>in.whois-servers.net</Server>
+		<Name>ind.in</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</ind.in>
+	<mobi>
+		<Server>whois.dotmobiregistry.net</Server>
+		<Name>mobi</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</mobi>
+	<su>
 		<Server>whois.ripn.net</Server>
 		<Name>su</Name>
 		<Available>No\sentries\sfound</Available>
@@ -471,267 +478,261 @@
 		<NsName>nserver:\s+([a-z0-9\.\-]{2,})</NsName>
 		<Registrar>registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
-<UniqID>
- <Server>whois.nic.cc</Server>
- <Name>cc</Name>
- <Available>No\smatch\sfor</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>Name\sServer:\s([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.aero</Server>
- <Name>aero</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>has\sbeen\sreserved</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Expires\sOn:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.nic.asia</Server>
- <Name>asia</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>Reserved\sby</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Domain\sExpiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>Nameservers:([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.nic.tv</Server>
- <Name>tv</Name>
- <Available>No\smatch\sfor</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>Name\sServer:\s([A-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.website.ws</Server>
- <Name>ws</Name>
- <Available>No\smatch\sfor</Available>
- <NotAvailable>not\sa\svalid\sname</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Domain\sCurrently\sExpires:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
- <NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.nic.name</Server>
- <Name>name</Name>
- <Available>No\smatch</Available>
- <MinChars>2</MinChars>
- <NotAvailable>Not\savailable\sfor</NotAvailable>
- <ExpirationDate />
- <NsName />
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.cnnic.net.cn</Server>
- <Name>cn</Name>
- <Available>no\smatching\srecord</Available>
- <NotAvailable>requested\sis\sin\sthe\sreserved\slist</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Expiration\sDate:\s([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
- <NsName>Name\sServer:([a-z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>cn.whois-servers.net</Server>
- <Name>com.cn</Name>
- <Available>no\smatching\srecord</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Expiration\sDate:\s([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
- <NsName>Name\sServer:([a-z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.twnic.net</Server>
- <Name>tw</Name>
- <Available>No\sFound</Available>
- <NotAvailable>reserved\sname</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Record\sexpires\son\s([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
- <NsName>\s{6}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.nic.uk</Server>
- <Name>uk</Name>
- <Available>No\smatch\sfor</Available>
- <NotAvailable>cannot\sbe\sregistered</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Renewal\sdate:\s+([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.nic.uk</Server>
- <Name>org.uk</Name>
- <Available>No\smatch\sfor</Available>
- <NotAvailable>cannot\sbe\sregistered</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Renewal\sdate:\s+([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.nic.uk</Server>
- <Name>co.uk</Name>
- <Available>No\smatch\sfor</Available>
- <NotAvailable>cannot\sbe\sregistered</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Renewal\sdate:\s+([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.nic.uk</Server>
- <Name>me.uk</Name>
- <Available>No\smatch\sfor</Available>
- <NotAvailable>cannot\sbe\sregistered</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Renewal\sdate:\s+([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.nic.kz</Server>
- <Name>kz</Name>
- <Available>Nothing\sfound</Available>
- <NotAvailable>cannot\sbe\sregistered</NotAvailable>
- <MinChars>1</MinChars>
- <ExpirationDate />
- <NsName>server\.+\:\s([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.cctld.uz</Server>
- <Name>uz</Name>
- <Available>not\sfound\sin|sdatabase</Available>
- <NotAvailable>can\snot\sbe\sregistered</NotAvailable>
- <MinChars>1</MinChars>
- <ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})\.</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<!-- *********************************************************************** -->
-<UniqID>
- <Server>me.whois-servers.net</Server>
- <Name>me</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Domain\sExpiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
- <NsName>Nameservers:([a-zA-Z0-9\.\-]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<!-- *********************************************************************** -->
-<UniqID>
- <Server>whois.nic.ch</Server>
- <Name>ch</Name>
- <Available>We\sdo\snot\shave\san\sentry\sin\sour\sdatabase\smatching\syour\squery.</Available>
- <NotAvailable>Default</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate />
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<!-- *********************************************************************** -->
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>pw</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>jp.net</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>in.net</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>3</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>co.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>la</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-<UniqID>
- <Server>whois.centralnic.com</Server>
- <Name>gr.com</Name>
- <Available>NOT\sFOUND</Available>
- <NotAvailable>name\sis\sreserved</NotAvailable>
- <MinChars>2</MinChars>
- <ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
- <NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
- <Registrar>Default</Registrar>
- <IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-</UniqID>
-
-	<!-- *********************************************************************** -->
-	<!-- *********************************************************************** -->
-	<UniqID>
+	</su>
+	<cc>
+		<Server>whois.nic.cc</Server>
+		<Name>cc</Name>
+		<Available>No\smatch\sfor</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:\s([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</cc>
+	<aero>
+		<Server>whois.aero</Server>
+		<Name>aero</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>has\sbeen\sreserved</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Expires\sOn:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</aero>
+	<asia>
+		<Server>whois.nic.asia</Server>
+		<Name>asia</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>Reserved\sby</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Domain\sExpiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Nameservers:([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</asia>
+	<tv>
+		<Server>whois.nic.tv</Server>
+		<Name>tv</Name>
+		<Available>No\smatch\sfor</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:\s([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</tv>
+	<ws>
+		<Server>whois.website.ws</Server>
+		<Name>ws</Name>
+		<Available>No\smatch\sfor</Available>
+		<NotAvailable>not\sa\svalid\sname</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Domain\sCurrently\sExpires:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</ws>
+	<name>
+		<Server>whois.nic.name</Server>
+		<Name>name</Name>
+		<Available>No\smatch</Available>
+		<MinChars>2</MinChars>
+		<NotAvailable>Not\savailable\sfor</NotAvailable>
+		<ExpirationDate />
+		<NsName />
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</name>
+	<cn>
+		<Server>whois.cnnic.net.cn</Server>
+		<Name>cn</Name>
+		<Available>no\smatching\srecord</Available>
+		<NotAvailable>requested\sis\sin\sthe\sreserved\slist</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Expiration\sDate:\s([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:([a-z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</cn>
+	<com.cn>
+		<Server>cn.whois-servers.net</Server>
+		<Name>com.cn</Name>
+		<Available>no\smatching\srecord</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Expiration\sDate:\s([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:([a-z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</com.cn>
+	<tw>
+		<Server>whois.twnic.net</Server>
+		<Name>tw</Name>
+		<Available>No\sFound</Available>
+		<NotAvailable>reserved\sname</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Record\sexpires\son\s([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>\s{6}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</tw>
+	<uk>
+		<Server>whois.nic.uk</Server>
+		<Name>uk</Name>
+		<Available>No\smatch\sfor</Available>
+		<NotAvailable>cannot\sbe\sregistered</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Renewal\sdate:\s+([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</uk>
+	<org.uk>
+		<Server>whois.nic.uk</Server>
+		<Name>org.uk</Name>
+		<Available>No\smatch\sfor</Available>
+		<NotAvailable>cannot\sbe\sregistered</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Renewal\sdate:\s+([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</org.uk>
+	<co.uk>
+		<Server>whois.nic.uk</Server>
+		<Name>co.uk</Name>
+		<Available>No\smatch\sfor</Available>
+		<NotAvailable>cannot\sbe\sregistered</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Renewal\sdate:\s+([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</co.uk>
+	<me.uk>
+		<Server>whois.nic.uk</Server>
+		<Name>me.uk</Name>
+		<Available>No\smatch\sfor</Available>
+		<NotAvailable>cannot\sbe\sregistered</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Renewal\sdate:\s+([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</me.uk>
+	<kz>
+		<Server>whois.nic.kz</Server>
+		<Name>kz</Name>
+		<Available>Nothing\sfound</Available>
+		<NotAvailable>cannot\sbe\sregistered</NotAvailable>
+		<MinChars>1</MinChars>
+		<ExpirationDate />
+		<NsName>server\.+\:\s([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</kz>
+	<uz>
+		<Server>whois.cctld.uz</Server>
+		<Name>uz</Name>
+		<Available>not\sfound\sin|sdatabase</Available>
+		<NotAvailable>can\snot\sbe\sregistered</NotAvailable>
+		<MinChars>1</MinChars>
+		<ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>\s{4}([a-zA-Z0-9\.\-]{2,}\.[a-z]{2,4})\.</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</uz>
+	<me>
+		<Server>me.whois-servers.net</Server>
+		<Name>me</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Domain\sExpiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Nameservers:([a-zA-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</me>
+	<ch>
+		<Server>whois.nic.ch</Server>
+		<Name>ch</Name>
+		<Available>We\sdo\snot\shave\san\sentry\sin\sour\sdatabase\smatching\syour\squery.</Available>
+		<NotAvailable>Default</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate />
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</ch>
+	<pw>
+		<Server>whois.centralnic.com</Server>
+		<Name>pw</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</pw>
+	<jp.net>
+		<Server>whois.centralnic.com</Server>
+		<Name>jp.net</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</jp.net>
+	<in.net>
+		<Server>whois.centralnic.com</Server>
+		<Name>in.net</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</in.net>
+	<co.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>co.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</co.com>
+	<la>
+		<Server>whois.centralnic.com</Server>
+		<Name>la</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</la>
+	<gr.com>
+		<Server>whois.centralnic.com</Server>
+		<Name>gr.com</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</gr.com>
+	<moscow>
 		<Server>whois.nic.moscow</Server>
 		<Name>moscow</Name>
 		<Available>Domain\snot\sfound.</Available>
@@ -741,9 +742,8 @@
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
-	<!-- *********************************************************************** -->
-	<UniqID>
+	</moscow>
+	<xn--80adxhks>
 		<Server>whois.nic.xn--80adxhks</Server>
 		<Name>москва</Name>
 		<Available>Domain\snot\sfound.</Available>
@@ -753,9 +753,8 @@
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
-	<!-- *********************************************************************** -->
-	<UniqID>
+	</xn--80adxhks>
+	<tatar>
 		<Server>whois.nic.tatar</Server>
 		<Name>tatar</Name>
 		<Available>The\squeried\sobject\sdoes\snot\sexist</Available>
@@ -765,9 +764,8 @@
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
-	<!-- *********************************************************************** -->
-	<UniqID>
+	</tatar>
+	<xn--d1acj3b>
 		<Server>whois.nic.xn--d1acj3b</Server>
 		<Name>дети</Name>
 		<Available>The\squeried\sobject\sdoes\snot\sexist</Available>
@@ -777,45 +775,8 @@
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
-	<!-- *********************************************************************** -->
-	<UniqID>
-		<Server>whois.nic.club</Server>
-		<Name>club</Name>
-		<Available>No\sDomain\sexists\sfor\sthe\ssearch\sstring</Available>
-		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
-		<MinChars>4</MinChars>
-		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
-		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
-		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
-		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
-	<!-- *********************************************************************** -->
-	<UniqID>
-		<Server>pro.whois-servers.net</Server>
-		<Name>pro</Name>
-		<Available>NOT\sFOUND</Available>
-		<NotAvailable>Governmental\sReserved\sName</NotAvailable>
-		<MinChars>3</MinChars>
-		<ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
-		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
-		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
-		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
-	<!-- *********************************************************************** -->
-	<UniqID>
-		<Server>whois.nic.review</Server>
-		<Name>review</Name>
-		<Available>The\squeried\sobject\sdoes\snot\sexist</Available>
-		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
-		<MinChars>4</MinChars>
-		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
-		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
-		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
-		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
-	<!-- *********************************************************************** -->
-	<UniqID>
+	</xn--d1acj3b>
+	<club>
 		<Server>whois.nic.club</Server>
 		<Name>club</Name>
 		<Available>Not\sfound</Available>
@@ -825,9 +786,30 @@
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
-	<!-- *********************************************************************** -->
-	<UniqID>
+	</club>
+	<pro>
+		<Server>pro.whois-servers.net</Server>
+		<Name>pro</Name>
+		<Available>NOT\sFOUND</Available>
+		<NotAvailable>Governmental\sReserved\sName</NotAvailable>
+		<MinChars>3</MinChars>
+		<ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</pro>
+	<review>
+		<Server>whois.nic.review</Server>
+		<Name>review</Name>
+		<Available>The\squeried\sobject\sdoes\snot\sexist</Available>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
+		<MinChars>4</MinChars>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</review>
+	<date>
 		<Server>whois.nic.date</Server>
 		<Name>date</Name>
 		<Available>No\sDomain\sexists\sfor\sthe\ssearch\sstring</Available>
@@ -837,9 +819,8 @@
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
-	<!-- *********************************************************************** -->
-	<UniqID>
+	</date>
+	<racing>
 		<Server>whois.nic.racing</Server>
 		<Name>racing</Name>
 		<Available>The\squeried\sobject\sdoes\snot\sexist</Available>
@@ -849,9 +830,9 @@
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
+	</racing>
 	<!-- *********************************************************************** -->
-	<UniqID>
+	<download>
 		<Server>whois.nic.download</Server>
 		<Name>download</Name>
 		<Available>No\sDomain\sexists\sfor\sthe\ssearch\sstring</Available>
@@ -861,9 +842,9 @@
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
+	</download>
 	<!-- *********************************************************************** -->
-	<UniqID>
+	<faith>
 		<Server>whois.nic.faith</Server>
 		<Name>faith</Name>
 		<Available>No\sDomain\sexists\sfor\sthe\ssearch\sstring</Available>
@@ -873,9 +854,9 @@
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
+	</faith>
 	<!-- *********************************************************************** -->
-	<UniqID>
+	<win>
 		<Server>whois.nic.win</Server>
 		<Name>win</Name>
 		<Available>The\squeried\sobject\sdoes\snot\sexist</Available>
@@ -885,9 +866,9 @@
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
+	</win>
 	<!-- *********************************************************************** -->
-	<UniqID>
+	<lol>
 		<Server>whois.nic.lol</Server>
 		<Name>lol</Name>
 		<Available>\sis\savailable\sfor\sregistration</Available>
@@ -897,7 +878,5 @@
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
-	</UniqID>
-	<!-- *********************************************************************** -->
-	<!-- *********************************************************************** -->
+	</lol>
 </XML>
