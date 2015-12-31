@@ -980,7 +980,7 @@ function RegRu_Domain_Check($Settings,$DomainName,$DomainZone){
 	#-------------------------------------------------------------------------------
 	$HTTP = RegRu_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
-	$Query = Array('username'=>$Settings['Login'],'password'=>$Settings['Password'],'input_format'=>'json','input_data'=>Json_Encode(Array('domains'=>Array('dname'=>$Domain))));
+	$Query = Array('username'=>$Settings['Login'],'password'=>$Settings['Password'],'domain_name'=>$Domain);
 	#-------------------------------------------------------------------------------
 	$Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/check");
 	#-------------------------------------------------------------------------------
@@ -995,19 +995,17 @@ function RegRu_Domain_Check($Settings,$DomainName,$DomainZone){
 	if($Result['result'] != 'success')
 		return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[RegRu_Domain_Check]: %s',print_r($Result,true)));
+	#Debug(SPrintF('[RegRu_Domain_Check]: %s',print_r($Result,true)));
 	#-------------------------------------------------------------------------------
 	# перебираем массив, составляем массив на выхлоп функции
-	$Out = Array();
+	foreach($Result['answer']['domains'] as $Value)
+		if($Value['dname'] == $Domain)
+			return TRUE;
 	#-------------------------------------------------------------------------------
-	foreach($Result['answer']['domains'] as $Value){
-		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[RegRu_Domain_Check]: Value = %s;',print_r($Value,true)));
-		#-------------------------------------------------------------------------------
-	}
+	#Debug(SPrintF('[RegRu_Domain_Check]: Value = %s;',print_r($Value,true)));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	return $Out;
+	return FALSE;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 }
