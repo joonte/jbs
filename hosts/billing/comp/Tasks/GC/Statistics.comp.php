@@ -53,17 +53,80 @@ if(Is_Error($IsInsert))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-# счета на оплату
-
-
-
-
-
-
-
-
-
-
+# счета на оплату, число самих счетов
+$Statistics = Array(
+		'Stamp'		=> Time(),
+		'Year'		=> Date('Y'),
+		'Month'		=> Date('m'),
+		'Day'		=> Date('d'),
+		'TableID'	=> 'Invoices',
+		'PackageID'	=> NULL,
+		);
+#-------------------------------------------------------------------------------
+$Wheres = Array(
+		'Total'		=> '1 = 1',
+		'Active'	=> '`StatusID` = "Payed" AND `CreateDate` > UNIX_TIMESTAMP() - 7*24*3600',
+		'New'		=> '`CreateDate` > UNIX_TIMESTAMP() - 7*24*3600',
+		'Waiting'	=> '`StatusID` = "Waiting" AND `CreateDate` > UNIX_TIMESTAMP() - 7*24*3600',
+		'Suspended'	=> '`StatusID` = "Rejected" AND `CreateDate` > UNIX_TIMESTAMP() - 7*24*3600',
+		);
+#-------------------------------------------------------------------------------
+foreach(Array_Keys($Wheres) as $Key){
+	#-------------------------------------------------------------------------------
+	$Count = DB_Count('Invoices',Array('Where'=>$Wheres[$Key]));
+	if(Is_Error($Count))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Statistics[$Key] = $Count;
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+$IsInsert = DB_Insert('Statistics',$Statistics);
+if(Is_Error($IsInsert))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# счета на оплату, суммы счетов
+$Statistics = Array(
+		'Stamp'		=> Time(),
+		'Year'		=> Date('Y'),
+		'Month'		=> Date('m'),
+		'Day'		=> Date('d'),
+		'TableID'	=> 'Invoices',
+		'PackageID'	=> 'Summ',
+		);
+#-------------------------------------------------------------------------------
+$Wheres = Array(
+		'Total'		=> '1=1',
+		'Active'	=> '`StatusID` = "Payed" AND `StatusDate` > UNIX_TIMESTAMP() - 7*24*3600',
+		'New'		=> '`StatusDate` > UNIX_TIMESTAMP() - 7*24*3600',
+		'Waiting'	=> '`StatusID` = "Waiting" AND `StatusDate` > UNIX_TIMESTAMP() - 7*24*3600',
+		'Suspended'	=> '`StatusID` = "Rejected" AND `StatusDate` > UNIX_TIMESTAMP() - 7*24*3600',
+		);
+#-------------------------------------------------------------------------------
+foreach(Array_Keys($Wheres) as $Key){
+	#-------------------------------------------------------------------------------
+        $Invoice = DB_Select('Invoices','SUM(`Summ`) AS `Summ`',Array('UNIQ','Where'=>$Wheres[$Key]));
+	switch(ValueOf($Invoice)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$Statistics[$Key] = $Invoice['Summ'];
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+$IsInsert = DB_Insert('Statistics',$Statistics);
+if(Is_Error($IsInsert))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # Штатные сервисы
 $Where = Array('`Code` != "Default"','`IsHidden` = "no"');
 #-------------------------------------------------------------------------------
