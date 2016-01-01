@@ -68,8 +68,36 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 			if($IsSuppoted && $Zone['IsUseRegistratorWhoIs'])
 				Debug(SPrintF('[comp/www/API/WhoIs]: принудительное использование WhoIs регистратора'));
 			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			# чекаем доменную зону
+			$Regulars = Regulars();
+			#-------------------------------------------------------------------------------
+			if(!Preg_Match($Regulars['DomainZone'],$ZoneName))
+				return ERROR | @Trigger_Error(SPrintF('[comp/www/API/WhoIs]: неверная доменная зона (%s)',$ZoneName));
+			#-------------------------------------------------------------------------------
+			# достаём список серверов на которых есть такой тариф
+			$Servers = DB_Select('DomainSchemes',Array('ServerID'),Array('Where'=>SPrintF('`Name` = "%s"',$ZoneName)));
+			#-------------------------------------------------------------------------------
+			switch(ValueOf($Servers)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				return new gException('REGISTRATOR_SERVER_NOT_FOUND','Не найдены активные сервера регистраторов');
+			case 'array':
+				#-------------------------------------------------------------------------------
+				$Array = Array();
+				#-------------------------------------------------------------------------------
+				foreach($Servers as $Server)
+					$Array[] = $Server['ServerID'];
+				#-------------------------------------------------------------------------------
+				break;
+				#-------------------------------------------------------------------------------
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
+			#-------------------------------------------------------------------------------
 			# достаём список активных серверов регистраторов
-			$Servers = DB_Select('Servers',Array('ID','Address','Params'),Array('Where'=>Array('(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) = 20000','`IsActive` = "yes"'),'SortOn'=>'Address'));
+			$Servers = DB_Select('Servers',Array('ID','Address','Params'),Array('Where'=>Array(SPrintF('`ID` IN (%s)',Implode(',',$Array)),'`IsActive` = "yes"'),'SortOn'=>'Address'));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($Servers)){
 			case 'error':
@@ -86,6 +114,11 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 			$UseServer = FALSE;
 			#-------------------------------------------------------------------------------
 			foreach($Servers as $iServer){
+				#-------------------------------------------------------------------------------
+				# если это не проверка доступности и в настройках сервера не стоит галка про получение WhoIs - пропускаем
+				if(!$IsAvalible)
+					if(!$iServer['Params']['IsFetchWhoIs'])
+						continue;
 				#-------------------------------------------------------------------------------
 				# достаём использованные запросы к регистратору, на данную минуту
 				$RatelimitID = SPrintF('ratelimit-%s-%s-00',$iServer['Address'],Date('H-i'));
@@ -105,6 +138,8 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 				CacheManager::add($RatelimitID,(IntVal($Ratelimit) + 1),120);
 				#-------------------------------------------------------------------------------
 				$UseServer = $iServer;
+				#-------------------------------------------------------------------------------
+				break;
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
