@@ -9,16 +9,24 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
-$UsersIDs   =   (array) @$Args['UsersIDs'];
-$MethodsIDs =   (array) @$Args['MethodsIDs'];
-$Logic      =  (string) @$Args['Logic'];
-$FromID     = (integer) @$Args['FromID'];
-$Theme      =  (string) @$Args['Theme'];
-$Message    =  (string) @$Args['Message'];
-$FiltersIDs =   (array) @$Args['FiltersIDs'];
+$UsersIDs		=   (array) @$Args['UsersIDs'];
+$MethodsIDs		=   (array) @$Args['MethodsIDs'];
+$Logic     		=  (string) @$Args['Logic'];
+$FromID    		= (integer) @$Args['FromID'];
+$Theme     		=  (string) @$Args['Theme'];
+$Message    		=  (string) @$Args['Message'];
+$FiltersIDs 		=   (array) @$Args['FiltersIDs'];
+$IsEmulateDisptch	= (boolean) @$Args['IsEmulateDisptch'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if(!$Theme)
+	return new gException('THEME_IS_EMPTY','Введите тему сообщения');
+#-------------------------------------------------------------------------------
+if(!$Message)
+	return new gException('MESSAGE_IS_EMPTY','Введите сообщение');
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Array = Array();
 #-------------------------------------------------------------------------------
@@ -161,12 +169,6 @@ if(Is_Error($Count))
 if(!$Count)
 	return new gException('SENDER_NOT_FOUND','Отправитель сообщения не найден');
 #-------------------------------------------------------------------------------
-if(!$Theme)
-	return new gException('THEME_IS_EMPTY','Введите тему сообщения');
-#-------------------------------------------------------------------------------
-if(!$Message)
-	return new gException('MESSAGE_IS_EMPTY','Введите сообщение');
-#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Count = 0;
 #-------------------------------------------------------------------------------
@@ -179,20 +181,26 @@ foreach($Users as $User)
 $Params = Array(Implode(',',$SendTo),$Theme,$Message,$FromID,'',Implode(',',$Methods));
 #-------------------------------------------------------------------------------
 #Debug(SPrintF('[comp/www/Administrator/API/Dispatch]: before send, UserIDs = %s',Implode(',',$UsersIDs)));
-#return Array('Status'=>'Ok','Users'=>SizeOf($Users));
-#-------------------------------------------------------------------------------
-$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$GLOBALS['__USER']['ID'],'TypeID'=>'Dispatch','Params'=>$Params));
-#-------------------------------------------------------------------------------
-switch(ValueOf($IsAdd)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	return ERROR | @Trigger_Error(400);
-case 'array':
-	# No more...
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
+if(!$IsEmulateDisptch){
+	#-------------------------------------------------------------------------------
+	$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$GLOBALS['__USER']['ID'],'TypeID'=>'Dispatch','Params'=>$Params));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($IsAdd)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		# No more...
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
+	$Messages['NotSend'] = "Это эмуляция";
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
