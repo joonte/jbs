@@ -24,6 +24,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','lib
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Config = Config();
+#-------------------------------------------------------------------------------
 $Settings = $Config['Invoices']['PaymentSystems'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -93,7 +94,7 @@ if(IntVal($Dates['DateLast']) < 1){
 # считаем за этот месяц
 $Table = Array(SPrintF('Статистика по дням, за последнюю неделю [%s]',Date('Y-m-d G:i:s',Time())));
 #-------------------------------------------------------------------------------
-$lastDayOfMonth = Date('d', MkTime(0, 0, 0, Date('m',Time()) + 1, 0, Date('Y',Time())));
+$LastDayOfMonth = Date('d', MkTime(0, 0, 0, Date('m',Time()) + 1, 0, Date('Y',Time())));
 #-------------------------------------------------------------------------------
 $Days = Array();
 #-------------------------------------------------------------------------------
@@ -150,12 +151,16 @@ if(Is_Error($Comp))
 $DOM->AddChild('Into',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $year; $year--){
+# массив с месяцами года
+$Months = Array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12');
+#-------------------------------------------------------------------------------
+for ($Year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $Year; $Year--){
 	#-------------------------------------------------------------------------------
-	$CacheID = Md5($__FILE__ . $year);
+	$CacheID = Md5($__FILE__ . $Year);
 	#-------------------------------------------------------------------------------
 	$Result = CacheManager::get($CacheID);
-	if($Result && $year != Date('Y', Time())){
+	#-------------------------------------------------------------------------------
+	if($Result && $Year != Date('Y', Time())){
 		#-------------------------------------------------------------------------------
 		$DOM->AddChild('Into',$Result);
 		#-------------------------------------------------------------------------------
@@ -163,8 +168,139 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 		#-------------------------------------------------------------------------------
 		$Table = Array();
 		#-------------------------------------------------------------------------------
-		$TimeBegin = MkTime(0, 0, 0, 1, 1, $year);
-		$TimeEnd   = MkTime(23, 59, 59, 12, 31, $year);
+		$TimeBegin = MkTime(0, 0, 0, 1, 1, $Year);
+		#-------------------------------------------------------------------------------
+		$TimeEnd   = MkTime(23, 59, 59, 12, 31, $Year);
+		#-------------------------------------------------------------------------------
+		Debug('[comp/www/Administrator/PaymentsSystemsStatistics]: period is %s -> %s',Date('Y-m-d G:i:s',$TimeBegin),Date('Y-m-d G:i:s',$TimeEnd));
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		# выбираем типы платёжных систем по которым были платежи в указанный период времени
+		$PSs = Array();
+		#-------------------------------------------------------------------------------
+		$Columns = Array('DISTINCT(`PaymentSystemID`) AS `PaymentSystemID`','SUM(`Summ`) AS `Summ`');
+		#-------------------------------------------------------------------------------
+		$Where = Array(
+				SPrintF('`StatusDate` BETWEEN %s AND %s',$TimeBegin,$TimeEnd),
+				'`StatusID` = "Payed"'
+				);
+		#-------------------------------------------------------------------------------
+		$PaymentSystems = DB_Select('Invoices',$Columns,Array('Where'=>$Where,'SortOn'=>'Summ','IsDesc'=>TRUE,'GroupBy'=>'PaymentSystemID'));
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($PaymentSystems)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			#-------------------------------------------------------------------------------
+			Debug('[comp/www/Administrator/PaymentsSystemsStatistics]: нет платёжных систем');
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		case 'array':
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/www/Administrator/PaymentsSystemsStatistics]: Число платёжных систем = %u',SizeOf($PaymentSystems)));
+			#-------------------------------------------------------------------------------
+			# достраиваем строки таблицы, по платёжным системам
+			foreach($PaymentSystems as $PaymentSystem)
+				$PSs[] = $PaymentSystem['PaymentSystemID'];
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		# первая строка таблицы
+		$Tr = new Tag('TR');
+		#-------------------------------------------------------------------------------
+		# первая колонка с именами строк
+		$Tr->AddChild(new Tag('TD',Array('align'=>'center','class'=>'Head'),'-'));
+		#-------------------------------------------------------------------------------
+		# строим колонки таблицы, по месяцам
+		foreach($Months as $Month)
+			$Tr->AddChild(new Tag('TD',Array('align'=>'center','class'=>'Head'),SPrintF('%s/%s',$Year,$Month)));
+		#-------------------------------------------------------------------------------
+		# добавляем первую строку в таблицу
+		$Table[] = $Tr;
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		# перебираем платёжные системы, достраиваем строки таблицы
+		foreach($PSs as $PaymentSystemID){
+			#-------------------------------------------------------------------------------
+			# строка таблицы
+			$Tr = new Tag('TR');
+			#-------------------------------------------------------------------------------
+			# название платёжной системы
+			$Tr->AddChild(new Tag('TD',Array('align'=>'center','class'=>'Standard'),$PaymentSystemID));
+			#-------------------------------------------------------------------------------
+			# перебираем месяцы
+			foreach($Months as $Month){
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/www/Administrator/PaymentsSystemsStatistics]: period is %s/%s',$Year,$Month));
+				#-------------------------------------------------------------------------------
+				$TimeBegin = MkTime(0, 0, 0, $Month, 1, $Year);
+				#-------------------------------------------------------------------------------
+				$LastDayOfMonth = date('d', mktime(0, 0, 0, $Month + 1, 0, $Year));
+				#-------------------------------------------------------------------------------
+				$TimeEnd   = MkTime(23, 59, 59, $Month, $LastDayOfMonth, $Year);
+				#-------------------------------------------------------------------------------
+				#-------------------------------------------------------------------------------
+				# достаём сумму за указанный месяц по данной платёжной системе
+				$Columns = Array('SUM(`Summ`) AS `Summ`');
+				#-------------------------------------------------------------------------------
+				$Where = Array(
+						SPrintF('`StatusDate` BETWEEN %s AND %s',$TimeBegin,$TimeEnd),
+						SPrintF('`PaymentSystemID` = "%s"',$PaymentSystemID),
+						'`StatusID` = "Payed"'
+						);
+				#-------------------------------------------------------------------------------
+				$Summ = DB_Select('Invoices',$Columns,Array('UNIQ','Where'=>$Where));
+				#-------------------------------------------------------------------------------
+				switch(ValueOf($Summ)){
+				case 'error':
+					return ERROR | @Trigger_Error(500);
+				case 'exception':
+					return ERROR | @Trigger_Error(400);
+				case 'array':
+					Debug(SPrintF('[comp/www/Administrator/PaymentsSystemsStatistics]: %s/%s, сумма для %s = %s',$Year,$Month,$PaymentSystemID,$Summ['Summ']));
+					break;
+				default:
+					return ERROR | @Trigger_Error(101);
+				}
+				#-------------------------------------------------------------------------------
+				# добавляем ячейку к строке
+				$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard'),Number_Format($Summ['Summ'],2,'.',' ')));
+				#-------------------------------------------------------------------------------			
+			}
+			#-------------------------------------------------------------------------------
+			# добавляем строку к таблице
+			$Table[] = $Tr;
+			#-------------------------------------------------------------------------------
+		}
+
+
+
+
+
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Tables/Extended',$Table);
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$DOM->AddChild('Into',$Comp);
+		#-------------------------------------------------------------------------------
+
+
+
+
+
+
+		#-------------------------------------------------------------------------------
+		$Table = Array();
+		#-------------------------------------------------------------------------------
+		$TimeBegin = MkTime(0, 0, 0, 1, 1, $Year);
+		$TimeEnd   = MkTime(23, 59, 59, 12, 31, $Year);
 		Debug("[comp/www/Administrator/PaymentsSystemsStatistics]: period is " . date('Y-m-d G:i:s' , $TimeBegin) . " -> " . date('Y-m-d G:i:s' , $TimeEnd));
 		#-------------------------------------------------------------------------------
 		# выбираем типы платёжных систем по которым были платежи в указанный период времени
@@ -186,7 +322,7 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 		}
 		#-------------------------------------------------------------------------------
 		$Tr = new Tag('TR');
-		$Tr->AddChild(new Tag('TD',Array('class'=>'Separator','colspan'=>(SizeOf($PaymentSystems)) + 3),new Tag('SPAN','Статистика за ' . $year . ' год')));
+		$Tr->AddChild(new Tag('TD',Array('class'=>'Separator','colspan'=>(SizeOf($PaymentSystems)) + 3),new Tag('SPAN','Статистика за ' . $Year . ' год')));
 		$Table[] = $Tr;
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
@@ -218,23 +354,23 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$Months = Array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12');
-		foreach($Months as $month){
+		foreach($Months as $Month){
 			#-------------------------------------------------------------------------------
-			$CacheID1 = Md5( $__FILE__ . $year . $month);
+			$CacheID1 = Md5( $__FILE__ . $Year . $Month);
 			#-------------------------------------------------------------------------------
 			$Result = CacheManager::get($CacheID1);
-			if($Result && $year != Date('Y', Time()) && $month != Date('m', Time())){
+			if($Result && $Year != Date('Y', Time()) && $Month != Date('m', Time())){
 				$Table[] = $Result;
 			}else{
-				Debug("[comp/www/Administrator/PaymentsSystemsStatistics]: period is $year $month");
-				$TimeBegin = MkTime(0, 0, 0, $month, 1, $year);
-				$lastDayOfMonth = date('d', mktime(0, 0, 0, $month + 1, 0, $year));
-				$TimeEnd   = MkTime(23, 59, 59, $month, $lastDayOfMonth, $year);
+				Debug("[comp/www/Administrator/PaymentsSystemsStatistics]: period is $Year $Month");
+				$TimeBegin = MkTime(0, 0, 0, $Month, 1, $Year);
+				$LastDayOfMonth = date('d', mktime(0, 0, 0, $Month + 1, 0, $Year));
+				$TimeEnd   = MkTime(23, 59, 59, $Month, $LastDayOfMonth, $Year);
 				#-------------------------------------------------------------------------------
 				$Tr = new Tag('TR');
 				#-------------------------------------------------------------------------------
 				# ячейка с датой
-				$Tr->AddChild(new Tag('TD',Array('align'=>'center','class'=>'Standard'),$year . "-" . $month . "-" . $lastDayOfMonth));
+				$Tr->AddChild(new Tag('TD',Array('align'=>'center','class'=>'Standard'),$Year . "-" . $Month . "-" . $LastDayOfMonth));
 				#-------------------------------------------------------------------------------
 				# ячейка с общей суммой за месяц
 				$Columns = Array('SUM(`Summ`) AS `Summ`');
@@ -246,7 +382,7 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 				case 'exception':
 					return ERROR | @Trigger_Error(400);
 				case 'array':
-					Debug("[comp/www/Administrator/PaymentsSystemsStatistics]: общая сумма за $year/$month = " . $Total['Summ']);
+					Debug("[comp/www/Administrator/PaymentsSystemsStatistics]: общая сумма за $Year/$Month = " . $Total['Summ']);
 					break;
 				default:
 					return ERROR | @Trigger_Error(101);
@@ -256,10 +392,10 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 				#-------------------------------------------------------------------------------
 				# ячейка со средним за месяц
 				# если это текущий год и текущий месяц - то расчёт будет иным
-				if(Date('Y', Time()) == $year && Date('m', Time()) == $month){
+				if(Date('Y', Time()) == $Year && Date('m', Time()) == $Month){
 					$AvgVal = Round((FloatVal($Total['Summ']) / Date('d', Time())),2);
 				}else{
-					$AvgVal = Round((FloatVal($Total['Summ']) / $lastDayOfMonth),2);
+					$AvgVal = Round((FloatVal($Total['Summ']) / $LastDayOfMonth),2);
 				}
 				$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard','style'=>'background-color:#B9CCDF;'),Number_Format($AvgVal,2,'.',' ')));
 				#-------------------------------------------------------------------------------
@@ -274,7 +410,7 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 					case 'exception':
 						return ERROR | @Trigger_Error(400);
 					case 'array':
-						Debug("[comp/www/Administrator/PaymentsSystemsStatistics]: сумма для " . $PaymentSystem['PaymentSystemID'] . " за $year/$month = " . $Summ['Summ']);
+						Debug("[comp/www/Administrator/PaymentsSystemsStatistics]: сумма для " . $PaymentSystem['PaymentSystemID'] . " за $Year/$Month = " . $Summ['Summ']);
 						break;
 					default:
 						return ERROR | @Trigger_Error(101);
@@ -300,8 +436,8 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 		# ячейка с датой
 		$Tr->AddChild(new Tag('TD',Array('align'=>'center','class'=>'Standard'),'Итого:'));
 		#-------------------------------------------------------------------------------
-		$TimeBegin = MkTime(0, 0, 0, 1, 1, $year);
-		$TimeEnd   = MkTime(23, 59, 59, 12, 31, $year);
+		$TimeBegin = MkTime(0, 0, 0, 1, 1, $Year);
+		$TimeEnd   = MkTime(23, 59, 59, 12, 31, $Year);
 		#-------------------------------------------------------------------------------
 		# ячейка с общей суммой за месяц
 		$Columns = Array('SUM(`Summ`) AS `Summ`');
@@ -313,7 +449,7 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 		case 'exception':
 			return ERROR | @Trigger_Error(400);
 		case 'array':
-			Debug("[comp/www/Administrator/PaymentsSystemsStatistics]: общая сумма за $year = " . $Total['Summ']);
+			Debug("[comp/www/Administrator/PaymentsSystemsStatistics]: общая сумма за $Year = " . $Total['Summ']);
 			break;
 		default:
 			return ERROR | @Trigger_Error(101);
@@ -322,7 +458,7 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 		#-------------------------------------------------------------------------------
 		# ячейка со средним за год
 		# если это текущий год - то расчёт будет иным
-		if(Date('Y', Time()) == $year){
+		if(Date('Y', Time()) == $Year){
 			$AvgVal = Round((FloatVal($Total['Summ']) / (Date('z', Time()) + 1)),2);
 		}else{
 			$AvgVal = Round((FloatVal($Total['Summ']) / (Date('z', $TimeEnd) + 1)),2);
@@ -340,7 +476,7 @@ for ($year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $yea
 			case 'exception':
 				return ERROR | @Trigger_Error(400);
 			case 'array':
-				Debug("[comp/www/Administrator/PaymentsSystemsStatistics]: сумма для " . $PaymentSystem['PaymentSystemID'] . " за $year = " . $Summ['Summ']);
+				Debug("[comp/www/Administrator/PaymentsSystemsStatistics]: сумма для " . $PaymentSystem['PaymentSystemID'] . " за $Year = " . $Summ['Summ']);
 				break;
 			default:
 				return ERROR | @Trigger_Error(101);
