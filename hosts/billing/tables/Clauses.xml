@@ -144,7 +144,7 @@
   <Comp>Formats/String</Comp>
   <Args>
    <ListElement>%Title%</ListElement>
-   <Length>45</Length>
+   <Length>35</Length>
   </Args>
  </Title>
  <!-- ********************************************************************** -->
@@ -153,7 +153,7 @@
   <Comp>Formats/String</Comp>
   <Args>
    <ListElement>%Partition%</ListElement>
-   <Length>30</Length>
+   <Length>20</Length>
    </Args>
  </Partition>
 	<!-- ********************************************************************** -->
