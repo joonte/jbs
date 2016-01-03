@@ -154,8 +154,8 @@
 			<Name>Превышение использования диска</Name>
 			<GroupID>1</GroupID>
 			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
+			<UseWhatsApp>0</UseWhatsApp>
+			<UseICQ>0</UseICQ>
 			<UseJabber>1</UseJabber>
 			<UseSMS>0</UseSMS>
 			<IsActive>1</IsActive>
