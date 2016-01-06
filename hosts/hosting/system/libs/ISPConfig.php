@@ -2,8 +2,8 @@
   /*-- ------------------------------------------------------*/
  /* @author Aleksey Babanin aleksey@alezhen.ru (AleZhen.RU) */
 /*--- -----------------------------------------------------*/
-if(Is_Error(System_Load('libs/Http.php')))
-  return ERROR | @Trigger_Error(500);
+if(Is_Error(System_Load('libs/HTTP.php')))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
 #-------------------------------------------------------------------------------
