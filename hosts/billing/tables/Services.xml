@@ -81,35 +81,45 @@
    <style>width:22px;</style>
   </Attribs>
  </Edit>
- <!-- ********************************************************************** -->
- <Group>
-  <Head>Группа</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Group%</ListElement>
-   <Length>15</Length>
-  </Args>
-  <Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `GroupID`)</Alias>
- </Group>
- <!-- ********************************************************************** -->
- <User>
-  <Head>Польз.</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%User%</ListElement>
-   <Length>15</Length>
-  </Args>
-  <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `UserID`)</Alias>
- </User>
- <!-- ********************************************************************** -->
- <Name>
-  <Head>Название услуги</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%NameShort%</ListElement>
-   <Length>25</Length>
-  </Args>
- </Name>
+	<!-- ********************************************************************** -->
+	<Group>
+		<Head>Группа</Head>
+		<Comp>Formats/String</Comp>
+		<Args>
+			<ListElement>%Group%</ListElement>
+			<Length>10</Length>
+		</Args>
+		<Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `GroupID`)</Alias>
+	</Group>
+	<!-- ********************************************************************** -->
+	<User>
+		<Head>Польз.</Head>
+		<Comp>Formats/String</Comp>
+		<Args>
+			<ListElement>%User%</ListElement>
+			<Length>10</Length>
+		</Args>
+		<Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `UserID`)</Alias>
+	</User>
+	<!-- ********************************************************************** -->
+	<Name>
+		<Head>Название услуги</Head>
+		<Comp>Formats/String</Comp>
+		<Args>
+			<ListElement>%NameShort%</ListElement>
+			<Length>25</Length>
+		</Args>
+	</Name>
+	<!-- ********************************************************************** -->
+	<ServicesGroupName>
+		<Head>Раздел</Head>
+		<Alias>(SELECT `Name` FROM `ServicesGroups` WHERE `Services`.`ServicesGroupID` = `ServicesGroups`.`ID`)</Alias>
+		<Comp>Formats/String</Comp>
+		<Args>
+			<ListElement>%ServicesGroupName%</ListElement>
+			<Length>15</Length>
+		</Args>
+	</ServicesGroupName>
 	<!-- ********************************************************************** -->
 	<Measure>
 		<Head>Ед.</Head>
@@ -138,8 +148,8 @@
 	</IsActive>
 	<!-- ********************************************************************** -->
 	<IsConditionally>
-	<Head>Усл.</Head>
-	<Prompt>Может быть оплачена условным счётом, самим пользователем</Prompt>
+		<Head>Усл.</Head>
+		<Prompt>Может быть оплачена условным счётом, самим пользователем</Prompt>
 		<Comp>BooleanEdit</Comp>
 		<Args>
 			<ListElement>Services</ListElement>
@@ -167,17 +177,18 @@
 <!-- ********************************************************************** -->
 <!-- ********************************************************************** -->
 <Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>Edit</ListElement>
- <ListElement>Group</ListElement>
- <ListElement>User</ListElement>
- <ListElement>Name</ListElement>
- <ListElement>Measure</ListElement>
- <ListElement>IsProtected</ListElement>
- <ListElement>IsActive</ListElement>
- <ListElement>IsConditionally</ListElement>
- <ListElement>Orders</ListElement>
- <ListElement>SortID</ListElement>
+	<ListElement>SelectID</ListElement>
+	<ListElement>Edit</ListElement>
+	<ListElement>Group</ListElement>
+	<ListElement>User</ListElement>
+	<ListElement>Name</ListElement>
+	<ListElement>ServicesGroupName</ListElement>
+	<ListElement>Measure</ListElement>
+	<ListElement>IsProtected</ListElement>
+	<ListElement>IsActive</ListElement>
+	<ListElement>IsConditionally</ListElement>
+	<ListElement>Orders</ListElement>
+	<ListElement>SortID</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
 </XML>
