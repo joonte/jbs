@@ -17,6 +17,11 @@ $Settings = $Config['Tasks']['Types']['Consider'];
 #Debug(Print_r($Settings,true));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecutePeriod'=>$Settings['ExecutePeriod']));
+if(Is_Error($ExecuteTime))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Where = Array('`ConsiderTypeID` = "Daily"','`Code` != "Default"','`IsProlong` = "yes"','`IsHidden` = "no"');
 #-------------------------------------------------------------------------------
 $Services = DB_Select('Services',Array('ID','Code','Name'),Array('Where'=>$Where));
@@ -249,8 +254,7 @@ foreach($Services as $Service){
 Debug(SPrintF('[comp/Orders/Consider]: no more orders, go to next day'));
 #-------------------------------------------------------------------------------
 #return MkTime(1,15,0,Date('n'),Date('j')+1,Date('Y'));
-# будем запускать раз в 6 часов
-return Time() + 6 * 60 * 60;
+return $ExecuteTime;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
