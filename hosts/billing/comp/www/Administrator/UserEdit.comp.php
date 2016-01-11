@@ -106,6 +106,10 @@ foreach(Array_Keys($NotificationMethods) as $MethodID){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Password = Comp_Load('Passwords/Generator');
+if(Is_Error($Password))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load(
 	'Form/Input',
 		Array(
@@ -119,7 +123,7 @@ $Comp = Comp_Load(
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Пароль'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),SPrintF('Например: %s',SubStr(Md5(MicroTime()),0,8)))),$Comp);
+$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Пароль'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),SPrintF('Например: %s',$Password))),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Groups = DB_Select('Groups',Array('ID','Name'));
