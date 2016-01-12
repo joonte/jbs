@@ -431,8 +431,13 @@ if($StepID){
 				if(Is_Error($Comp))
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------
-				if($ExtraIPScheme['ID'] == $ExtraIPSchemeID)
+				if($ExtraIPScheme['ID'] == $ExtraIPSchemeID || (!$ExtraIPSchemeID && !IsSet($IsChecked))){
+					#-------------------------------------------------------------------------------
 					$Comp->AddAttribs(Array('checked'=>'true'));
+					#-------------------------------------------------------------------------------
+					$IsChecked = TRUE;
+					#-------------------------------------------------------------------------------
+				}
 				#-------------------------------------------------------------------------------
 				$Comment = $ExtraIPScheme['Comment'];
 				#-------------------------------------------------------------------------------
@@ -448,7 +453,8 @@ if($StepID){
 				if(Is_Error($CostInstall))
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------
-				$Rows[] = new Tag(	'TR',
+				$Rows[] = new Tag(
+							'TR',
 							Array('OnClick'=>SPrintF('document.forms[\'ExtraIPOrderForm\'].ExtraIPSchemeID.value=%s',$ExtraIPScheme['ID'])),
 							new Tag('TD',Array('width'=>20),$Comp),
 							new Tag('TD',Array('class'=>'Comment','align'=>'right','style'=>'white-space: nowrap;'),$ExtraIPScheme['Name']),
