@@ -116,11 +116,11 @@ if(Is_Error($Comp))
 $Table[] = Array('IP адрес',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/TextArea',Array('name' =>'ExtraIP','style'=>'width:100%;','rows'=>5),$DSOrder['ExtraIP']);
+$Comp = Comp_Load('Form/TextArea',Array('name' =>'ExtraIP','style'=>'width:100%;','rows'=>5,'prompt'=>'вводить по одному адресу на строку'),$DSOrder['ExtraIP']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Дополнительные IP адреса'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'(вводить по одному адресу на строку)')),$Comp);
+$Table[] = Array('Дополнительные IP адреса',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$DSOrderID){
