@@ -632,8 +632,13 @@ if($StepID){
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			if($HostingScheme['ID'] == $HostingSchemeID)
+			if($HostingScheme['ID'] == $HostingSchemeID || (!$HostingSchemeID && !IsSet($IsChecked))){
+				#-------------------------------------------------------------------------------
 				$Comp->AddAttribs(Array('checked'=>'true'));
+				#-------------------------------------------------------------------------------
+				$IsChecked = TRUE;
+				#-------------------------------------------------------------------------------
+			}
 			#-------------------------------------------------------------------------------
 			$Comment = $HostingScheme['Comment'];
 			#-------------------------------------------------------------------------------
@@ -644,7 +649,17 @@ if($StepID){
 			if(Is_Error($CostMonth))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$Rows[] = new Tag('TR',Array('OnClick'=>SPrintF('document.forms[\'HostingOrderForm\'].HostingSchemeID.value=%s',$HostingScheme['ID'])),new Tag('TD',Array('width'=>20),$Comp),new Tag('TD',Array('class'=>'Comment'),$HostingScheme['Name']),new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth),new Tag('TD',Array('class'=>'Standard','align'=>'right'),SPrintF('%u Мб.',$HostingScheme['QuotaDisk'])),new Tag('TD',Array('class'=>'Standard','align'=>'right'),$HostingScheme['QuotaEmail']),new Tag('TD',Array('class'=>'Standard','align'=>'right'),$HostingScheme['QuotaDomains']),new Tag('TD',Array('class'=>'Standard','align'=>'right'),$HostingScheme['QuotaDBs']));
+			$Rows[] = new Tag(
+						'TR',
+						Array('OnClick'=>SPrintF('document.forms[\'HostingOrderForm\'].HostingSchemeID.value=%s',$HostingScheme['ID'])),
+						new Tag('TD',Array('width'=>20),$Comp),
+						new Tag('TD',Array('class'=>'Comment'),$HostingScheme['Name']),
+						new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth),
+						new Tag('TD',Array('class'=>'Standard','align'=>'right'),SPrintF('%u Мб.',$HostingScheme['QuotaDisk'])),
+						new Tag('TD',Array('class'=>'Standard','align'=>'right'),$HostingScheme['QuotaEmail']),
+						new Tag('TD',Array('class'=>'Standard','align'=>'right'),$HostingScheme['QuotaDomains']),
+						new Tag('TD',Array('class'=>'Standard','align'=>'right'),$HostingScheme['QuotaDBs'])
+					);
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------

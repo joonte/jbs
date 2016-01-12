@@ -446,26 +446,30 @@ if(!$StepID){
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			if($ISPswScheme['ID'] == $ISPswSchemeID)
+			if($ISPswScheme['ID'] == $ISPswSchemeID || (!$ISPswSchemeID && !IsSet($IsChecked))){
 				#-------------------------------------------------------------------------------
 				$Comp->AddAttribs(Array('checked'=>'true'));
 				#-------------------------------------------------------------------------------
-				$Comment = $ISPswScheme['Comment'];
+				$IsChecked = TRUE;
 				#-------------------------------------------------------------------------------
-				if($Comment)
-					$Rows[] = new Tag('TR',new Tag('TD',Array('colspan'=>2)),new Tag('TD',Array('colspan'=>2,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),$Comment));
-				#-------------------------------------------------------------------------------
-				$CostMonth = Comp_Load('Formats/Currency',$ISPswScheme['CostMonth']);
-				if(Is_Error($CostMonth))
-					return ERROR | @Trigger_Error(500);
-				#-------------------------------------------------------------------------------
-				$Rows[] = new Tag(
-						'TR',Array('OnClick'=>SPrintF('document.forms[\'ISPswOrderForm\'].ISPswSchemeID.value=%s',$ISPswScheme['ID'])),
-						new Tag('TD',Array('width'=>20),$Comp),
-						new Tag('TD',Array('class'=>'Comment'),$ISPswScheme['Name']),
-						new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth)
-						);
-				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+			$Comment = $ISPswScheme['Comment'];
+			#-------------------------------------------------------------------------------
+			if($Comment)
+				$Rows[] = new Tag('TR',new Tag('TD',Array('colspan'=>2)),new Tag('TD',Array('colspan'=>2,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),$Comment));
+			#-------------------------------------------------------------------------------
+			$CostMonth = Comp_Load('Formats/Currency',$ISPswScheme['CostMonth']);
+			if(Is_Error($CostMonth))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			$Rows[] = new Tag(
+					'TR',Array('OnClick'=>SPrintF('document.forms[\'ISPswOrderForm\'].ISPswSchemeID.value=%s',$ISPswScheme['ID'])),
+					new Tag('TD',Array('width'=>20),$Comp),
+					new Tag('TD',Array('class'=>'Comment'),$ISPswScheme['Name']),
+					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth)
+					);
+			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load('Tables/Extended',$Rows,Array('align'=>'center'));
