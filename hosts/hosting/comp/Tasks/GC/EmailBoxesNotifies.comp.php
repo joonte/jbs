@@ -31,130 +31,127 @@ case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
 	# No more...
-	break;
+	return TRUE;
 case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+foreach($Servers as $Server){
 	#-------------------------------------------------------------------------------
-	foreach($Servers as $Server){
+	#if($Server['Address'] != 's06.host-food.ru')
+	#	continue;
+	#-------------------------------------------------------------------------------
+	if(!$Server['IsActive'])
+		continue;
+	#-------------------------------------------------------------------------------
+	$ClassHostingServer = new HostingServer();
+	#-------------------------------------------------------------------------------
+	$IsSelected = $ClassHostingServer->Select((integer)$Server['ID']);
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($IsSelected)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'true':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$Users = $ClassHostingServer->GetEmailBoxes();
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Users)){
+	case 'error':
+		# No more...
+	case 'exception':
+		# No more...
+		continue 2;
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if(!Count($Users))
+		continue;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Array = Array();
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Users) as $UserID)
+		$Array[] = SPrintF("'%s'",$UserID);
+	#-------------------------------------------------------------------------------
+	$Where = SPrintF('`ServerID` = %u AND `Login` IN (%s)',$Server['ID'],Implode(',',$Array));
+	#-------------------------------------------------------------------------------
+	$HostingOrders = DB_Select('HostingOrdersOwners',Array('ID','UserID','Login'),Array('Where'=>$Where));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($HostingOrders)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		# No more...
+		continue 3;
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Heads = Array(SPrintF('From: admin@%s',$Server['Address']),'MIME-Version: 1.0','Content-Transfer-Encoding: 8bit',SPrintF('Content-Type: multipart/mixed; boundary="----==--%s"',HOST_ID));
+	#-------------------------------------------------------------------------------
+	foreach($HostingOrders as $HostingOrder){
 		#-------------------------------------------------------------------------------
-		#if($Server['Address'] != 's06.host-food.ru')
-		#	continue;
+		$Boxes = $Users[$HostingOrder['Login']];
 		#-------------------------------------------------------------------------------
-		if(!$Server['IsActive'])
-			continue;
-		#-------------------------------------------------------------------------------
-		$ClassHostingServer = new HostingServer();
-		#-------------------------------------------------------------------------------
-		$IsSelected = $ClassHostingServer->Select((integer)$Server['ID']);
-		#-------------------------------------------------------------------------------
-		switch(ValueOf($IsSelected)){
-		case 'error':
-			return ERROR | @Trigger_Error(500);
-		case 'exception':
-			return ERROR | @Trigger_Error(400);
-		case 'true':
+		foreach($Boxes as $Email=>$Box){
 			#-------------------------------------------------------------------------------
-			$Users = $ClassHostingServer->GetEmailBoxes();
+			$Total = Next($Box);
+			if(!$Total)
+				continue;
 			#-------------------------------------------------------------------------------
-			switch(ValueOf($Users)){
-			case 'error':
-				# No more...
-			case 'exception':
-				# No more...
-				break 2;
-			case 'array':
+			#-------------------------------------------------------------------------------
+			$Pieces = Explode('@',$Email);
+			#-------------------------------------------------------------------------------
+			$IDNAConverter = new IDNAConvert();
+			#-------------------------------------------------------------------------------
+			$Email = SPrintF('%s@%s',$Pieces[0],$IDNAConverter->encode($Pieces[1]));
+			#-------------------------------------------------------------------------------
+			if(!Preg_Match($Regulars['Email'],$Email))
+				continue;
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			$Used = Prev($Box);
+			#-------------------------------------------------------------------------------
+			$Usage = ($Used/$Total)*100;
+			#-------------------------------------------------------------------------------
+			if($Usage > $Settings['EmailBoxesNotifiesPercent']){
 				#-------------------------------------------------------------------------------
-				if(Count($Users)){
-					#-------------------------------------------------------------------------------
-					$Array = Array();
-					#-------------------------------------------------------------------------------
-					foreach(Array_Keys($Users) as $UserID)
-						$Array[] = SPrintF("'%s'",$UserID);
-					#-------------------------------------------------------------------------------
-					$Where = SPrintF('`ServerID` = %u AND `Login` IN (%s)',$Server['ID'],Implode(',',$Array));
-					#-------------------------------------------------------------------------------
-					$HostingOrders = DB_Select('HostingOrdersOwners',Array('ID','UserID','Login'),Array('Where'=>$Where));
-					#-------------------------------------------------------------------------------
-					switch(ValueOf($HostingOrders)){
-					case 'error':
-						return ERROR | @Trigger_Error(500);
-					case 'exception':
-						# No more...
-						break;
-					case 'array':
-						#-------------------------------------------------------------------------------
-						$Heads = Array(SPrintF('From: admin@%s',$Server['Address']),'MIME-Version: 1.0','Content-Transfer-Encoding: 8bit',SPrintF('Content-Type: multipart/mixed; boundary="----==--%s"',HOST_ID));
-						#-------------------------------------------------------------------------------
-						foreach($HostingOrders as $HostingOrder){
-							#-------------------------------------------------------------------------------
-							$Boxes = $Users[$HostingOrder['Login']];
-							#-------------------------------------------------------------------------------
-							foreach($Boxes as $Email=>$Box){
-								#-------------------------------------------------------------------------------
-								$Total = Next($Box);
-								if(!$Total)
-									continue;
-								#-------------------------------------------------------------------------------
-								#-------------------------------------------------------------------------------
-								$Pieces = Explode('@',$Email);
-								#-------------------------------------------------------------------------------
-								$IDNAConverter = new IDNAConvert();
-								#-------------------------------------------------------------------------------
-								$Email = SPrintF('%s@%s',$Pieces[0],$IDNAConverter->encode($Pieces[1]));
-								#-------------------------------------------------------------------------------
-								if(!Preg_Match($Regulars['Email'],$Email))
-									continue;
-								#-------------------------------------------------------------------------------
-								#-------------------------------------------------------------------------------
-								$Used = Prev($Box);
-								#-------------------------------------------------------------------------------
-								$Usage = ($Used/$Total)*100;
-								#-------------------------------------------------------------------------------
-								if($Usage > $Settings['EmailBoxesNotifiesPercent']){
-									#-------------------------------------------------------------------------------
-									$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'Email','Params'=>Array($Email,'Квота почтового ящика',TemplateReplace('Tasks.GC.EmailBoxesNotifies',Array('Email'=>$Email,'Usage'=>$Usage),FALSE),Implode("\n",$Heads))));
-									#-------------------------------------------------------------------------------
-									switch(ValueOf($IsAdd)){
-									case 'error':
-										return ERROR | @Trigger_Error(500);
-									case 'exception':
-										return ERROR | @Trigger_Error(400);
-									case 'array':
-										# No more...
-										break;
-									default:
-										return ERROR | @Trigger_Error(101);
-									}
-									#-------------------------------------------------------------------------------
-								}
-								#-------------------------------------------------------------------------------
-							}
-							#-------------------------------------------------------------------------------
-						}
-						#-------------------------------------------------------------------------------
-						break;
-						#-------------------------------------------------------------------------------
-					default:
-						return ERROR | @Trigger_Error(101);
-					}
-					#-------------------------------------------------------------------------------
+				$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'Email','Params'=>Array($Email,'Квота почтового ящика',TemplateReplace('Tasks.GC.EmailBoxesNotifies',Array('Email'=>$Email,'Usage'=>$Usage),FALSE),Implode("\n",$Heads))));
+				#-------------------------------------------------------------------------------
+				switch(ValueOf($IsAdd)){
+				case 'error':
+					return ERROR | @Trigger_Error(500);
+				case 'exception':
+					return ERROR | @Trigger_Error(400);
+				case 'array':
+					# No more...
+					break;
+				default:
+					return ERROR | @Trigger_Error(101);
 				}
 				#-------------------------------------------------------------------------------
-				break 2;
-				#-------------------------------------------------------------------------------
-			default:
-				return ERROR | @Trigger_Error(101);
 			}
 			#-------------------------------------------------------------------------------
-		default:
-			return ERROR | @Trigger_Error(101);
 		}
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	break;
-	#-------------------------------------------------------------------------------
-default:
-	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
