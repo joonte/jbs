@@ -29,144 +29,141 @@ case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
 	# No more...
-	break;
+	return TRUE;
 case 'array':
-	#-------------------------------------------------------------------------------
-	foreach($Servers as $Server){
-		#-------------------------------------------------------------------------------
-		#if($Server['Address'] != 's06.host-food.ru')
-		#	continue;
-		#-------------------------------------------------------------------------
-		if(!$Server['IsActive'])
-			continue;
-		#-------------------------------------------------------------------------------
-		$ClassHostingServer = new HostingServer();
-		#-------------------------------------------------------------------------
-		$IsSelected = $ClassHostingServer->Select((integer)$Server['ID']);
-		#-------------------------------------------------------------------------
-		switch(ValueOf($IsSelected)){
-		case 'error':
-			return ERROR | @Trigger_Error(500);
-		case 'exception':
-			return ERROR | @Trigger_Error(400);
-		case 'true':
-			break;
-		default:
-			return ERROR | @Trigger_Error(101);
-		}
-		#---------------------------------------------------------------------
-		$Accounts = $ClassHostingServer->GetDiskUsage();
-		#---------------------------------------------------------------------
-		switch(ValueOf($Accounts)){
-		case 'error':
-			# No more...
-		case 'exception':
-			#-------------------------------------------------------------------------------
-			# No more...
-			break;
-			#-------------------------------------------------------------------------------
-		case 'array':
-			#-------------------------------------------------------------------------------
-			$Array = Array();
-			#-------------------------------------------------------------------------------
-			foreach(Array_Keys($Accounts) as $UserID)
-				if(!$Accounts[$UserID]['Disabled'])
-					$Array[] = SPrintF("'%s'",$UserID);
-			#-------------------------------------------------------------------------------
-			# нет аккаутов - ничё не делаем
-			if(SizeOf($Array) == 0)
-				break;
-			#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
-			$HostingOrders = DB_Select('HostingOrdersOwners',Array('ID','UserID','Login'),Array('Where'=>SPrintF('`Login` IN (%s)',Implode(',',$Array))));
-			#-------------------------------------------------------------------------------
-			switch(ValueOf($HostingOrders)){
-			case 'error':
-				return ERROR | @Trigger_Error(500);
-			case 'exception':
-				# No more...
-				break;
-			case 'array':
-				#-------------------------------------------------------------------------------
-				foreach($HostingOrders as $Order){
-					#-------------------------------------------------------------------------------
-					# выбираем тех кто лимит иеет, в лимит укладывается
-					if($Accounts[$Order['Login']]['Limit'] > 0 && $Accounts[$Order['Login']]['Limit'] >= $Accounts[$Order['Login']]['Used']){
-						#-------------------------------------------------------------------------------
-						#Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s used %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
-						#-------------------------------------------------------------------------------
-						if($Accounts[$Order['Login']]['Limit'] < $Accounts[$Order['Login']]['Used'])
-							Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s overlimit, used %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
-						#-------------------------------------------------------------------------------
-						if(Ceil(($Accounts[$Order['Login']]['Used']/$Accounts[$Order['Login']]['Limit'])*100) > $Settings['DiskUsageNotifiesPercent']){
-							#-------------------------------------------------------------------------------
-							Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s used %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
-							#-------------------------------------------------------------------------------
-							if($Settings['IsNotify']){
-								#-------------------------------------------------------------------------------
-								$Array = Array('Login'=>$Order['Login'],'Used'=>$Accounts[$Order['Login']]['Used'],'Limit'=>$Accounts[$Order['Login']]['Limit']);
-								$IsSend = NotificationManager::sendMsg(new Message('DiskUsageNotice',(integer)$Order['UserID'],Array('Order'=>$Array)));
-								#-------------------------------------------------------------------------------
-								switch(ValueOf($IsSend)){
-								case 'error':
-									return ERROR | @Trigger_Error(500);
-								case 'exception':
-									# No more...
-								case 'true':
-									# No more...
-									break;
-								default:
-									return ERROR | @Trigger_Error(101);
-								}
-								#-------------------------------------------------------------------------------
-							}
-							#-------------------------------------------------------------------------------
-						}
-						#-------------------------------------------------------------------------------
-					}
-					#-------------------------------------------------------------------------------
-					#-------------------------------------------------------------------------------
-					# без лимитов
-					if($Accounts[$Order['Login']]['Limit'] < 0 ){
-						#-------------------------------------------------------------------------------
-						Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s does not have disk limit',$Order['Login']));
-						#-------------------------------------------------------------------------------
-						if($Settings['IsEventForNoLimits']){
-							#-------------------------------------------------------------------------------
-							$Event = Array(
-									'UserID'        => $Order['UserID'],
-									'PriorityID'    => 'Warning',
-									'Text'          => SPrintF('Обнаружен заказ хостинга (%s) с отсутствующим лимитом на дисковое пространство',$Order['Login']),
-									'IsReaded'      => FALSE
-									);
-							$Event = Comp_Load('Events/EventInsert',$Event);
-							if(!$Event)
-								return ERROR | @Trigger_Error(500);
-							#-------------------------------------------------------------------------------
-						}
-						#-------------------------------------------------------------------------------
-					}
-				#-------------------------------------------------------------------------------
-				}
-				#-------------------------------------------------------------------------------
-				break;
-				#-------------------------------------------------------------------------------
-			default:
-				return ERROR | @Trigger_Error(101);
-			}
-			#-------------------------------------------------------------------------------
-			break;
-			#-------------------------------------------------------------------------------
-		default:
-			return ERROR | @Trigger_Error(101);
-		}
-		#-------------------------------------------------------------------------------
-	}
-	#-------------------------------------------------------------------------------
 	break;
-	#-------------------------------------------------------------------------------
 default:
 	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+foreach($Servers as $Server){
+	#-------------------------------------------------------------------------------
+	#if($Server['Address'] != 's06.host-food.ru')
+	#	continue;
+	#-------------------------------------------------------------------------------
+	if(!$Server['IsActive'])
+		continue;
+	#-------------------------------------------------------------------------------
+	$ClassHostingServer = new HostingServer();
+	#-------------------------------------------------------------------------------
+	$IsSelected = $ClassHostingServer->Select((integer)$Server['ID']);
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($IsSelected)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'true':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$Accounts = $ClassHostingServer->GetDiskUsage();
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Accounts)){
+	case 'error':
+		# No more...
+	case 'exception':
+		#-------------------------------------------------------------------------------
+		# No more...
+		continue 2;
+		#-------------------------------------------------------------------------------
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Array = Array();
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Accounts) as $UserID)
+		if(!$Accounts[$UserID]['Disabled'])
+			$Array[] = SPrintF("'%s'",$UserID);
+	#-------------------------------------------------------------------------------
+	# нет аккаутов - ничё не делаем
+	if(SizeOf($Array) == 0)
+		continue;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$HostingOrders = DB_Select('HostingOrdersOwners',Array('ID','UserID','Login'),Array('Where'=>SPrintF('`Login` IN (%s)',Implode(',',$Array))));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($HostingOrders)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		# No more...
+		continue 2;
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	foreach($HostingOrders as $Order){
+		#-------------------------------------------------------------------------------
+		# выбираем тех кто лимит иеет, в лимит укладывается
+		if($Accounts[$Order['Login']]['Limit'] > 0 && $Accounts[$Order['Login']]['Limit'] >= $Accounts[$Order['Login']]['Used']){
+			#-------------------------------------------------------------------------------
+			#Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s used %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
+			#-------------------------------------------------------------------------------
+			if($Accounts[$Order['Login']]['Limit'] < $Accounts[$Order['Login']]['Used'])
+				Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s overlimit, used %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
+			#-------------------------------------------------------------------------------
+			if(Ceil(($Accounts[$Order['Login']]['Used']/$Accounts[$Order['Login']]['Limit'])*100) > $Settings['DiskUsageNotifiesPercent']){
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s used %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
+				#-------------------------------------------------------------------------------
+				if(!$Settings['IsNotify'])
+					continue;
+				#-------------------------------------------------------------------------------
+				$Array = Array('Login'=>$Order['Login'],'Used'=>$Accounts[$Order['Login']]['Used'],'Limit'=>$Accounts[$Order['Login']]['Limit']);
+				#-------------------------------------------------------------------------------
+				$IsSend = NotificationManager::sendMsg(new Message('DiskUsageNotice',(integer)$Order['UserID'],Array('Order'=>$Array)));
+				#-------------------------------------------------------------------------------
+				switch(ValueOf($IsSend)){
+				case 'error':
+					return ERROR | @Trigger_Error(500);
+				case 'exception':
+					# No more...
+				case 'true':
+					# No more...
+					break;
+				default:
+					return ERROR | @Trigger_Error(101);
+				}
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		# без лимитов
+		if($Accounts[$Order['Login']]['Limit'] < 0 ){
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s does not have disk limit',$Order['Login']));
+			#-------------------------------------------------------------------------------
+			if($Settings['IsEventForNoLimits']){
+				#-------------------------------------------------------------------------------
+				$Event = Array(
+						'UserID'        => $Order['UserID'],
+						'PriorityID'    => 'Warning',
+						'Text'          => SPrintF('Обнаружен заказ хостинга (%s) с отсутствующим лимитом на дисковое пространство',$Order['Login']),
+						'IsReaded'      => FALSE
+						);
+				$Event = Comp_Load('Events/EventInsert',$Event);
+				if(!$Event)
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+		}
+	#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
