@@ -162,6 +162,8 @@
   <Args>
    <ListElement>%Keys%</ListElement>
    <Length>25</Length>
+   <Url>NULL</Url>
+   <IsHtmlEncode>1</IsHtmlEncode>
   </Args>
  </Keys>
  <!-- ********************************************************************** -->
