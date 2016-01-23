@@ -1305,7 +1305,7 @@
 			<ResetOrdersDaysSettings>
 				<IsActive>1</IsActive>
 				<IsEvent>1</IsEvent>
-				<ResetDaysTo>28</ResetDaysTo>
+				<ResetDaysTo>25</ResetDaysTo>
 			</ResetOrdersDaysSettings>
 			<!-- ********************************************************************* -->
 			<CheckSoftWareSettings>
