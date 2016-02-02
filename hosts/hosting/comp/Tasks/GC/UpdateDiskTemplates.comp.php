@@ -28,59 +28,61 @@ switch(ValueOf($Servers)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	# No more...
-	break;
+	return TRUE;
 case 'array':
-	#---------------------------------------------------------------------------
-	foreach($Servers as $iServer){
-		#-------------------------------------------------------------------------------
-		if(!$iServer['Params']['IsUpdateDiskTemplates'])
-			continue;
-		#-------------------------------------------------------------------------------
-		$VPSServer = new VPSServer();
-		#-------------------------------------------------------------------------------
-		$IsSelected = $VPSServer->Select((integer)$iServer['ID']);
-		#-------------------------------------------------------------------------------
-		switch(ValueOf($IsSelected)){
-		case 'error':
-			return ERROR | @Trigger_Error(500);
-		case 'exception':
-			return ERROR | @Trigger_Error(400);
-		case 'true':
-			#-------------------------------------------------------------------------------
-			$Templates = $VPSServer->GetDiskTemplates();
-			#-------------------------------------------------------------------------------
-			switch(ValueOf($Templates)){
-			case 'error':
-				# No more...
-				break;
-			case 'exception':
-				# No more...
-				break;
-			case 'array':
-				#-------------------------------------------------------------------------------
-				if(SizeOf($Templates) < 1)
-					continue 2;
-				#-------------------------------------------------------------------------------
-				$iServer['Params']['DiskTemplate'] = Implode("\n",$Templates);
-				#-------------------------------------------------------------------------------
-				$IsUpdate = DB_Update('Servers',Array('Params'=>$iServer['Params']),Array('ID'=>$iServer['ID']));
-				if(Is_Error($IsUpdate))
-					return ERROR | @Trigger_Error(500);
-				#-------------------------------------------------------------------------------
-				break;
-				#-------------------------------------------------------------------------------
-			default:
-				return ERROR | @Trigger_Error(101);
-			}
-			break;
-		default:
-			return ERROR | @Trigger_Error(101);
-		}
-	}
 	break;
 default:
 	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+foreach($Servers as $iServer){
+	#-------------------------------------------------------------------------------
+	if(!$iServer['Params']['IsUpdateDiskTemplates'])
+		continue;
+	#-------------------------------------------------------------------------------
+	$VPSServer = new VPSServer();
+	#-------------------------------------------------------------------------------
+	$IsSelected = $VPSServer->Select((integer)$iServer['ID']);
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($IsSelected)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'true':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Templates = $VPSServer->GetDiskTemplates();
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Templates)){
+	case 'error':
+		# No more...
+		break;
+	case 'exception':
+		# No more...
+		break;
+	case 'array':
+		Debug(print_r($Templates,true));
+		#-------------------------------------------------------------------------------
+		if(SizeOf($Templates) < 1)
+			continue 2;
+		#-------------------------------------------------------------------------------
+		$iServer['Params']['DiskTemplate'] = Implode("\n",$Templates);
+		#-------------------------------------------------------------------------------
+		$IsUpdate = DB_Update('Servers',Array('Params'=>$iServer['Params']),Array('ID'=>$iServer['ID']));
+		if(Is_Error($IsUpdate))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		break;
+		#-------------------------------------------------------------------------------
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
