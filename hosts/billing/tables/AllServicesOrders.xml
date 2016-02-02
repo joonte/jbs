@@ -74,6 +74,11 @@
       <Where>`StatusID` = 'Active'</Where>
      </Active>
      <!-- ****************************************************************** -->
+     <Active>
+      <Name>Заблокированные заказы</Name>
+      <Where>`StatusID` = 'Suspended'</Where>
+     </Active>
+     <!-- ****************************************************************** -->
      <Deleted>
       <Name>Удаленные заказы</Name>
       <Where>`StatusID` = 'Deleted'</Where>
