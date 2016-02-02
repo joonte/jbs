@@ -116,7 +116,7 @@ foreach($Users as $User){
 	if(Is_Error($Summ))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Event = Array('UserID'=>$User['ID'],'PriorityID'=>'Billing','IsReaded'=>FALSE,'Text'=>SPrintF('Автоматическое списание денег (%s) у неактивного пользователя',$Summ));
+	$Event = Array('UserID'=>$User['ID'],'PriorityID'=>'Billing','IsReaded'=>FALSE,'Text'=>SPrintF('Автоматическое списание средств (%s) у неактивного пользователя',$Summ));
 	$Event = Comp_Load('Events/EventInsert',$Event);
 	if(!$Event)
 		return ERROR | @Trigger_Error(500);
