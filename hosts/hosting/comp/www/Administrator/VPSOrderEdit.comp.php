@@ -16,7 +16,13 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 #-------------------------------------------------------------------------------
 if($VPSOrderID){
 	#-------------------------------------------------------------------------------
-	$VPSOrder = DB_Select('VPSOrdersOwners',Array('UserID','ContractID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`','Domain','Login','IP','Password','SchemeID'),Array('UNIQ','ID'=>$VPSOrderID));
+	$Columns = Array(
+			'UserID','ContractID','Domain','Login','IP','Password','SchemeID',
+			'(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`',
+			'(SELECT `Params` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `Params`',
+			);
+	#-------------------------------------------------------------------------------
+	$VPSOrder = DB_Select('VPSOrdersOwners',$Columns,Array('UNIQ','ID'=>$VPSOrderID));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($VPSOrder)){
 	case 'error':
@@ -44,7 +50,8 @@ if($VPSOrderID){
 				'Login'		=> 'login',
 				'IP'		=> '127.0.0.1',
 				'Password'	=> $Password,
-				'SchemeID'	=> 1
+				'SchemeID'	=> 1,
+				'Params'	=> Array(),
 			);
 	#-------------------------------------------------------------------------------
 }
@@ -150,6 +157,44 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Доменное имя',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# Если это уже определённый заказ - выбираем дисковые шаблоны этого сервера.
+if($VPSOrderID){
+	#-------------------------------------------------------------------------------
+	$Server = DB_Select('Servers',Array('ID','Address','Params'),Array('UNIQ','ID'=>$VPSOrder['ServerID']));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Server)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return new gException('SERVER_NOT_FOUND','Сервер не найден');
+	case 'array':
+		# No more...
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$Array = Array();
+	#-------------------------------------------------------------------------------
+	foreach(Explode("\n",$Server['Params']['DiskTemplate']) as $Line){
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/www/Administrator/VPSOrderEdit]: Line = %s',$Line));
+		#-------------------------------------------------------------------------------
+		$Template = Explode('=',$Line);
+		#-------------------------------------------------------------------------------
+		$Array[$Template[0]] = IsSet($Template[1])?$Template[1]:$Template[0];
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Select',Array('name'=>'DiskTemplate','style'=>'width: 100%;'),$Array,((IsSet($VPSOrder['Params']['DiskTemplate'])?$VPSOrder['Params']['DiskTemplate']:'not_setted')));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array('Шаблон диска',$Comp);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$VPSOrderID){
