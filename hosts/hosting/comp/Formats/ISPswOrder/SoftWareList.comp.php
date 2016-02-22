@@ -17,8 +17,8 @@ $SW = Array(
 		# Типы заказываемого ПО
 		'pricelist_id'	=> Array(
 						0	=> 'не определено',
-						7	=> 'ISPmanager 4 Lite (без подд.)',
-						11	=> 'ISPmanager 4 Pro (без подд.)',
+						7	=> 'ISPmanager 4 Lite (б/п)',
+						11	=> 'ISPmanager 4 Pro (б/п)',
 						5	=> 'ISPmanager 4 Lite',
 						9	=> 'ISPmanager 4 Pro',
 						112	=> 'ISPmanager 4 Cluster',
