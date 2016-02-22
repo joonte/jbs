@@ -102,8 +102,8 @@ if(Is_Error($IsUpdate))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $GLOBALS['TaskReturnInfo']['Sended']	= Array(SizeOf(Array_Filter($SendedIDs)));
-$GLOBALS['TaskReturnInfo']['Estimated']	= Array(SizeOf(Array_Filter($SendToIDs)));
 $GLOBALS['TaskReturnInfo']['New']	= Array($Count);
+$GLOBALS['TaskReturnInfo']['Estimated']	= Array(SizeOf(Array_Filter($SendToIDs)));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(SizeOf($SendToIDs) > 0)
