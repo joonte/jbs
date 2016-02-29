@@ -70,7 +70,7 @@ if($Settings['slaveserver-edit']['UseForVPS']){
 	#-------------------------------------------------------------------------------
 	$Where = Array(SPrintF('`IP` = "%s"',$IP),'`StatusID` IN ("Active","OnCreate","SchemeChange","Suspended")');
 	#-------------------------------------------------------------------------------
-	$Order = DB_Select('VPSOrdersOwners',Array('ID','UserID','(SELECT `Email` FROM `Users` WHERE `ID` = `VPSOrdersOwners`.`UserID`) AS `Email`'),Array('UNIQ','Where'=>$Where));
+	$Order = DB_Select('VPSOrdersOwners',Array('ID','UserID','(SELECT `Email` FROM `Users` WHERE `ID` = `VPSOrdersOwners`.`UserID`) AS `Email`'),Array('UNIQ','Where'=>$Where,'Limits'=>Array(0,1)));
 	switch(ValueOf($Order)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
@@ -95,7 +95,7 @@ if($Settings['slaveserver-edit']['UseForDS']){
 	#-------------------------------------------------------------------------------
 	$Where = Array(SPrintF('`IP` = "%s" OR `ExtraIP` LIKE "%%%s%%"',$IP,$IP),'`StatusID` IN ("Active","OnCreate","SchemeChange","Suspended")');
 	#-------------------------------------------------------------------------------
-	$Order = DB_Select('DSOrdersOwners',Array('ID','UserID','(SELECT `Email` FROM `Users` WHERE `ID` = `DSOrdersOwners`.`UserID`) AS `Email`'),Array('UNIQ','Where'=>$Where));
+	$Order = DB_Select('DSOrdersOwners',Array('ID','UserID','(SELECT `Email` FROM `Users` WHERE `ID` = `DSOrdersOwners`.`UserID`) AS `Email`'),Array('UNIQ','Where'=>$Where,'Limits'=>Array(0,1)));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Order)){
 	case 'error':
