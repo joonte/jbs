@@ -273,9 +273,14 @@ button.Transparent,input.Transparent {
 }
 /* ------------------------- */
 button.Standard {
-    padding: 0px;
-    cursor:  pointer;
+	padding:		2px;
+	cursor:			pointer;
+	border:			1px solid silver;
+	border-radius:		5px;
+	-webkit-border-radius:	5px;
+	-moz-border-radius:	5px;
 }
+
 /* ------------------------- */
 img {
     border:      0px none;

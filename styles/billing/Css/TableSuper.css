@@ -75,11 +75,20 @@ td.TableSuperNoData {
 div.TableSuperNavigation {
     margin: 5px 5px 5px 5px;
 }
+
+/* ------------------------- */
 button.TableSuperIndexes {
-    text-align: center;
-    font-size:  12px;
-    width:      30px;
+	padding:		2px;
+	cursor:			pointer;
+	border-radius:		5px;
+	-webkit-border-radius:	5px;
+	-moz-border-radius:	5px;
+	text-align:		center;
+	font-size:		12px;
+	width:			30px;
+	border:			1px solid silver;
 }
+
 /* ------------------------- */
 /* ------------------------- */
 .HiLightOn{
