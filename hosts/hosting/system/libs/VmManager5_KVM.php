@@ -724,6 +724,11 @@ function VmManager5_KVM_Password_Change($Settings,$Login,$Password,$Params){
 			'atype'		=> 'atany',
 			'sok'		=> 'ok',
 			'su'		=> $Login,
+			'setgeoip'	=> 'off',
+			'secureip'	=> 'off',
+			'vk_status'	=> 'off',
+			'fb_status'	=> 'off',
+			'gl_status'	=> 'off',
 	);
         #---------------------------------------------------------------------------
 	$Response = HTTP_Send('/vmmgr',$HTTP,Array(),$Request);
