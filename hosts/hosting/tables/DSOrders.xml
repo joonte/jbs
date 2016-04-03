@@ -19,6 +19,7 @@
   <ListElement>OrderID</ListElement>
   <ListElement>UserID</ListElement>
   <ListElement>IP</ListElement>
+  <ListElement>ExtraIP</ListElement>
   <ListElement>DaysRemainded</ListElement>
   <ListElement>StatusID</ListElement>
   <ListElement>StatusDate</ListElement>
@@ -173,12 +174,18 @@
    <style>text-align:right;</style>
   </Attribs>
  </Number>
- <!-- ********************************************************************** -->
- <IP>
-  <Head>IP</Head>
-  <Prompt>IP адрес сервера</Prompt>
- </IP>
- <!-- ********************************************************************** -->
+	<!-- ********************************************************************** -->
+	<IP>
+		<Head>IP</Head>
+		<Prompt>IP адрес сервера</Prompt>
+		<Comp>Formats/DSOrder/IP</Comp>
+		<Args>
+			<ListElement>%IP%</ListElement>
+			<ListElement>%ExtraIP%</ListElement>
+			<Length>16</Length>
+		</Args>
+	</IP>
+	<!-- ********************************************************************** -->
  <Scheme>
   <Head>Тариф</Head>
   <Comp>Formats/String</Comp>
