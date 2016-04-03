@@ -436,7 +436,10 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 			'preset'			=> '#custom',
 			'mailrate'			=> $HostingScheme['mailrate'],	# TODO: отследить когда реализуют
 
-			'ftp_user_name'			=> $Login,
+			# настроил авторизацию системных пользователей в proftpd - и это нахрен не надо больше
+			'ftp_user'			=> 'off',
+			#'ftp_user_name'		=> $Login,
+
 			'emaildomain_name'		=> $Domain,
 			'webdomain_name'		=> $Domain,
 			'domain'			=> $Domain,
