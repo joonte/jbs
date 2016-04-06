@@ -895,7 +895,7 @@
 			<IsActive>1</IsActive>
 		</EdeskMessageCreate>
 		<!-- ********************************************************************* -->
-		<PartnersReneward>
+		<PartnersReward>
 			<Title>Финансы</Title>
 			<Name>Партнёрские начисления</Name>
 			<GroupID>1</GroupID>
@@ -905,7 +905,7 @@
 			<UseJabber>1</UseJabber>
 			<UseSMS>0</UseSMS>
 			<IsActive>1</IsActive>
-		</PartnersReneward>
+		</PartnersReward>
 		<!-- ********************************************************************* -->
 		<NotPayedInvoice>
 			<Name>Неоплаченные счета</Name>
