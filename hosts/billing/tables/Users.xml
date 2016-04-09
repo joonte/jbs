@@ -146,14 +146,16 @@
   <Alias>Name</Alias>
  </Owner>
  <!-- ********************************************************************** -->
- <Email>
-  <Head>Имя</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Name%</ListElement>
-   <Length>20</Length>
-  </Args>
- </Email>
+<Email>
+	<Head>Имя</Head>
+	<Comp>Formats/String</Comp>
+	<Args>
+		<ListElement>%Name%</ListElement>
+		<Length>20</Length>
+		<Url>NULL</Url>
+		<IsHtmlEncode>1</IsHtmlEncode>
+	</Args>
+</Email>
  <!-- ********************************************************************** -->
  <EnterDate>
   <Head>Дата входа</Head>

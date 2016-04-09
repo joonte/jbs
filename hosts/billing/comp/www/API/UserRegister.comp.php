@@ -36,6 +36,9 @@ $Email = StrToLower($Email);
 if(!Preg_Match($Regulars['Email'],$Email))
 	return new gException('WRONG_EMAIL','Неверно указан электронный адрес');
 #-------------------------------------------------------------------------------
+if(!Preg_Match($Regulars['UserName'],$Name))
+	return new gException('WRONG_USER_NAME','Вы ввели неверное имя');
+#-------------------------------------------------------------------------------
 $Count = DB_Count('Users',Array('Where'=>SPrintF("`Email` = '%s'",$Email)));
 if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);
@@ -54,9 +57,6 @@ if(Is_Error($IsCheck))
 if(Is_Exception($IsCheck))
 	return $IsCheck;
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-if(!Preg_Match($Regulars['Char'],$Name))
-	return new gException('WRONG_USER_NAME','Неверно указано Ваше имя');
 #-------------------------------------------------------------------------------
 if((!IsSet($GLOBALS['__USER']) && $_SERVER['REMOTE_ADDR'] != $_SERVER['SERVER_ADDR']) && $Settings['Captcha']['IsActive']){
 	#-------------------------------------------------------------------------------

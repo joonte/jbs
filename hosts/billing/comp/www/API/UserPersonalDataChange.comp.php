@@ -23,8 +23,8 @@ $Config = Config();
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
-if(!Preg_Match($Regulars['Char'],$Name))
-	return new gException('WRONG_NAME','Вы ввели неверное имя');
+if(!Preg_Match($Regulars['UserName'],$Name))
+	return new gException('WRONG_USER_NAME','Вы ввели неверное имя');
 #-------------------------------------------------------------------------------
 if(!$Sign)
 	return new gException('SIGN_IS_EMPTY','Укажите Вашу подпись');
