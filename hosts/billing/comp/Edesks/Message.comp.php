@@ -316,6 +316,8 @@ $Table = new Tag('TABLE',Array('class'=>'EdeskMessage','cellspacing'=>5,'height'
 #-------------------------------------------------------------------------------
 # JBS-1177 а код в подписи-то выполняется ...
 $Params['User']['Sign'] = Nl2Br(HtmlSpecialChars($Params['User']['Sign']));
+# JBS-1178 да и в имени пользователя - тоже
+$Params['User']['Name'] = Nl2Br(HtmlSpecialChars($Params['User']['Name']));
 #-------------------------------------------------------------------------------
 $Table->AddHTML(TemplateReplace(SPrintF('Edesks.Message.TABLE.%s',($__USER['Params']['Settings']['EdesksDisplay'] == 'Left')?'Left':'Right'),$Params));
 #-------------------------------------------------------------------------------
