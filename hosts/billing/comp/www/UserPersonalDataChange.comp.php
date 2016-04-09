@@ -48,7 +48,7 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array('Ваше имя',$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/TextArea',Array('name'=>'Sign','rows'=>3,'cols'=>30),$__USER['Sign']);
+$Comp = Comp_Load('Form/TextArea',Array('name'=>'Sign','rows'=>3,'prompt'=>'bbcode: link, img, color, b, p, bg',),$__USER['Sign']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

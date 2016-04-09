@@ -314,8 +314,13 @@ $Params['Links'] = IsSet($Span)?$Span->ToXMLString():'-';
 #-------------------------------------------------------------------------------
 $Table = new Tag('TABLE',Array('class'=>'EdeskMessage','cellspacing'=>5,'height'=>'100%','width'=>'100%'));
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # JBS-1177 а код в подписи-то выполняется ...
-$Params['User']['Sign'] = Nl2Br(HtmlSpecialChars($Params['User']['Sign']));
+#$Params['User']['Sign'] = Nl2Br(HtmlSpecialChars($Params['User']['Sign']));
+$Params['User']['Sign'] = Comp_Load('Edesks/Text',Array('String'=>$Params['User']['Sign'],'IsLockText'=>($OwnerID != @$GLOBALS['__USER']['ID'])));
+if(Is_Error($Text))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 # JBS-1178 да и в имени пользователя - тоже
 $Params['User']['Name'] = Nl2Br(HtmlSpecialChars($Params['User']['Name']));
 #-------------------------------------------------------------------------------
