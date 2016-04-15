@@ -1,10 +1,11 @@
 body {
-    cursor:      default;
-    margin:      0px;
-    padding:     0px;
-    font-family: Helvetica, sans-serif;
-    font-size:   12px;
+	cursor:		default;
+	margin:		0px;
+	padding:	0px;
+	font-family:	Helvetica, sans-serif;
+	font-size:	12px;
 }
+
 /* ------------------------- */
 table.ButtonsPanel {
     background-color:      #F1FCCE;
