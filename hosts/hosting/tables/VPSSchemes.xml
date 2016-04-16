@@ -1,256 +1,256 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Appearance>
-	<Row>
-		<Comp>Colors/Schemes</Comp>
-		<Args>
-			<ListElement>%IsActive%</ListElement>
-		</Args>
-	</Row>
-</Appearance>
-<!-- *********************************************************************** -->
-<Source>
- <TableID>VPSSchemes</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>CostMonth</ListElement>
-  <ListElement>CostInstall</ListElement>
-  <ListElement>disklimit</ListElement>
-  <ListElement>cpu</ListElement>
-  <ListElement>ncpu</ListElement>
-  <ListElement>mem</ListElement>
-  <ListElement>proc</ListElement>
-  <ListElement>IsActive</ListElement>
-  <ListElement>SortID</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Message>Тарифов на VPS не обнаружено.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <PatternOut>
-   <Args>
-    <Patterns>
-     <ListElement>
-      <Name>Индивидуальные тарифы</Name>
-      <Where>`UserID` != 1</Where>
-     </ListElement>
-    </Patterns>
-    <ActiveID>Default</ActiveID>
-   </Args>
-  </PatternOut>
-  <!-- ********************************************************************* -->
-  <Search>
-   <Args>
-    <ColumnsIDs>
-     <ListElement>UserID</ListElement>
-     <ListElement>GroupID</ListElement>
-     <ListElement>Name</ListElement>
-    </ColumnsIDs>
-   </Args>
-  </Search>
- </Before>
- <!-- ********************************************************************** -->
- <After>
-  <Delete>
-   <Args>
-    <Comment>Выбранные тарифы</Comment>
-    <Send>
-     <TableID>VPSSchemes</TableID>
-    </Send>
-   </Args>
-  </Delete>
- </After>
-</Comps>
-<!-- *********************************************************************** -->
-<Query>
- <SortOn>SortID</SortOn>
- <IsDesc>0</IsDesc>
-</Query>
-<!-- *********************************************************************** -->
-<Columns>
- <SelectID>
-  <Args>
-   <TableID>VPSSchemes</TableID>
-  </Args>
- </SelectID>
- <!-- ********************************************************************** -->
- <Info>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/VPSSchemeInfo</ListElement>
-   <ListElement>
-    <VPSSchemeID>%ID%</VPSSchemeID>
-   </ListElement>
-   <ListElement>Дополнительная информация</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Info>
- <!-- ********************************************************************** -->
- <Edit>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/Administrator/VPSSchemeEdit</ListElement>
-   <ListElement>
-    <VPSSchemeID>%ID%</VPSSchemeID>
-   </ListElement>
-   <ListElement>Редактировать тариф</ListElement>
-   <ListElement>Edit.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Edit>
- <!-- ********************************************************************** -->
- <Name>
-  <Head>Тариф</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Name%</ListElement>
-   <Length>10</Length>
-  </Args>
-  <Alias>CONCAT(IF(`IsReselling` = 'yes','*',''),`Name`)</Alias>
- </Name>
- <!-- ********************************************************************** -->
- <Group>
-  <Head>Группа</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Group%</ListElement>
-   <Length>15</Length>
-  </Args>
-  <Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `GroupID`)</Alias>
- </Group>
- <!-- ********************************************************************** -->
- <User>
-  <Head>Польз.</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%User%</ListElement>
-   <Length>15</Length>
-  </Args>
-  <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `UserID`)</Alias>
- </User>
- <!-- ********************************************************************** -->
- <CostMonth>
-  <Head>Цена</Head>
-  <Prompt>Цена в рублях за 1 месяц</Prompt>
-  <Comp>Formats/Currency</Comp>
-  <Args>
-   <ListElement>%CostMonth%</ListElement>
-  </Args>
- </CostMonth>
- <!-- ********************************************************************** -->
- <CostInstall>
-  <Head>Цена установки</Head>
-  <Prompt>Цена за подключение. Взимается единоразово, при заказе услуги</Prompt>
-  <Comp>Formats/Currency</Comp>
-  <Args>
-   <ListElement>%CostInstall%</ListElement>
-  </Args>
- </CostInstall>
- <!-- ********************************************************************** -->
- <ServersGroup>
-  <Head>Гр. серв.</Head>
-  <Prompt>Расположение сервера размещения</Prompt>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%ServersGroup%</ListElement>
-   <Length>10</Length>
-  </Args>
-  <Alias>(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`)</Alias>
- </ServersGroup>
- <!-- ********************************************************************** -->
- <disklimit>
-  <Head>Место</Head>
-  <Prompt>Объем выделяемого пространства в мегабайтах</Prompt>
- </disklimit>
- <!-- ********************************************************************** -->
- <OrderLink>
-  <Head>Ссылка</Head>
-  <Prompt>Ссылка на заказ этого тарифа, для сайта</Prompt>
-  <Comp>Formats/Order/OrderLink</Comp>
-  <Args>
-   <SchemeID>%ID%</SchemeID>
-   <Code>VPS</Code>
-  </Args>
- </OrderLink>
- <!-- ********************************************************************** -->
- <ncpu>
-   <Head># CPU</Head>
-   <Prompt>Количество процессоров</Prompt>
- </ncpu>
- <!-- ********************************************************************** -->
- <cpu>
-  <Head>CPU</Head>
-  <Prompt>Ограничение процессора, MHz</Prompt>
- </cpu>
- <!-- ********************************************************************** -->
- <mem>
-  <Head>RAM</Head>
-  <Prompt>Ограничение на использование оперативной памяти, Mb</Prompt>
- </mem>
- <!-- ********************************************************************** -->
- <proc>
-  <Head>Процессов</Head>
-  <Prompt>Максимальное число запускаемых процессов</Prompt>
- </proc>
-	<!-- ********************************************************************** -->
-	<IsActive>
-		<Head>Актив.</Head>
-		<Prompt>Тариф активен?</Prompt>
-		<Comp>BooleanEdit</Comp>
-		<Args>
-			<ListElement>VPSSchemes</ListElement>
-			<ListElement>IsActive</ListElement>
-			<ListElement>%ID%</ListElement>
-			<ListElement>%IsActive%</ListElement>
-		</Args>
-		<Comp>Formats/Logic</Comp>
-	</IsActive>
-	<!-- ********************************************************************** -->
-	<Orders>
-		<Head>Зак.</Head>
-		<Prompt>Кол-во активных заказов данного тарифа</Prompt>
-		<Alias>(SELECT COUNT(*) FROM `VPSOrders` WHERE `VPSSchemes`.`ID` = `VPSOrders`.`SchemeID` AND `VPSOrders`.`StatusID` = 'Active')</Alias>
-		<Attribs>
-			<style>text-align:right;</style>
-		</Attribs>
-	</Orders>
 	<!-- *********************************************************************** -->
-	<SortID>
-		<Args>
-			<TableID>VPSSchemes</TableID>
-		</Args>
-	</SortID>
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>Info</ListElement>
- <ListElement>Edit</ListElement>
- <ListElement>Name</ListElement>
- <ListElement>Group</ListElement>
- <ListElement>User</ListElement>
- <ListElement>ServersGroup</ListElement>
- <ListElement>CostMonth</ListElement>
- <ListElement>disklimit</ListElement>
- <ListElement>cpu</ListElement>
- <ListElement>mem</ListElement>
- <ListElement>IsActive</ListElement>
- <ListElement>OrderLink</ListElement>
- <ListElement>Orders</ListElement>
- <ListElement>SortID</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<Appearance>
+		<Row>
+			<Comp>Colors/Schemes</Comp>
+			<Args>
+				<ListElement>%IsActive%</ListElement>
+			</Args>
+		</Row>
+	</Appearance>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>VPSSchemes</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>CostMonth</ListElement>
+			<ListElement>CostInstall</ListElement>
+			<ListElement>disklimit</ListElement>
+			<ListElement>cpu</ListElement>
+			<ListElement>ncpu</ListElement>
+			<ListElement>mem</ListElement>
+			<ListElement>proc</ListElement>
+			<ListElement>IsActive</ListElement>
+			<ListElement>SortID</ListElement>
+		</ColumnsIDs>
+		<Conditions>
+			<Message>Тарифов на VPS не обнаружено.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<PatternOut>
+				<Args>
+					<Patterns>
+						<ListElement>
+							<Name>Индивидуальные тарифы</Name>
+							<Where>`UserID` != 1</Where>
+						</ListElement>
+					</Patterns>
+					<ActiveID>Default</ActiveID>
+				</Args>
+			</PatternOut>
+			<!-- ********************************************************************* -->
+			<Search>
+				<Args>
+					<ColumnsIDs>
+						<ListElement>UserID</ListElement>
+						<ListElement>GroupID</ListElement>
+						<ListElement>Name</ListElement>
+					</ColumnsIDs>
+				</Args>
+			</Search>
+		</Before>
+		<!-- ********************************************************************** -->
+		<After>
+			<Delete>
+				<Args>
+					<Comment>Выбранные тарифы</Comment>
+					<Send>
+						<TableID>VPSSchemes</TableID>
+					</Send>
+				</Args>
+			</Delete>
+		</After>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Query>
+		<SortOn>SortID</SortOn>
+		<IsDesc>0</IsDesc>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<SelectID>
+			<Args>
+				<TableID>VPSSchemes</TableID>
+			</Args>
+		</SelectID>
+		<!-- ********************************************************************** -->
+		<Info>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/VPSSchemeInfo</ListElement>
+				<ListElement>
+					<VPSSchemeID>%ID%</VPSSchemeID>
+				</ListElement>
+				<ListElement>Дополнительная информация</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Info>
+		<!-- ********************************************************************** -->
+		<Edit>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/Administrator/VPSSchemeEdit</ListElement>
+				<ListElement>
+					<VPSSchemeID>%ID%</VPSSchemeID>
+				</ListElement>
+				<ListElement>Редактировать тариф</ListElement>
+				<ListElement>Edit.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Edit>
+		<!-- ********************************************************************** -->
+		<Name>
+			<Head>Тариф</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Name%</ListElement>
+				<Length>10</Length>
+			</Args>
+			<Alias>CONCAT(IF(`IsReselling` = 'yes','*',''),`Name`)</Alias>
+		</Name>
+		<!-- ********************************************************************** -->
+		<Group>
+			<Head>Группа</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Group%</ListElement>
+				<Length>15</Length>
+			</Args>
+			<Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `GroupID`)</Alias>
+		</Group>
+		<!-- ********************************************************************** -->
+		<User>
+			<Head>Польз.</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%User%</ListElement>
+				<Length>15</Length>
+			</Args>
+			<Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `UserID`)</Alias>
+		</User>
+		<!-- ********************************************************************** -->
+		<CostMonth>
+			<Head>Цена</Head>
+			<Prompt>Цена в рублях за 1 месяц</Prompt>
+			<Comp>Formats/Currency</Comp>
+			<Args>
+				<ListElement>%CostMonth%</ListElement>
+			</Args>
+		</CostMonth>
+		<!-- ********************************************************************** -->
+		<CostInstall>
+			<Head>Цена установки</Head>
+			<Prompt>Цена за подключение. Взимается единоразово, при заказе услуги</Prompt>
+			<Comp>Formats/Currency</Comp>
+			<Args>
+				<ListElement>%CostInstall%</ListElement>
+			</Args>
+		</CostInstall>
+		<!-- ********************************************************************** -->
+		<ServersGroup>
+			<Head>Гр. серв.</Head>
+			<Prompt>Расположение сервера размещения</Prompt>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%ServersGroup%</ListElement>
+				<Length>10</Length>
+			</Args>
+			<Alias>(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`)</Alias>
+		</ServersGroup>
+		<!-- ********************************************************************** -->
+		<disklimit>
+			<Head>Место</Head>
+			<Prompt>Объем выделяемого пространства в мегабайтах</Prompt>
+		</disklimit>
+		<!-- ********************************************************************** -->
+		<OrderLink>
+			<Head>Ссылка</Head>
+			<Prompt>Ссылка на заказ этого тарифа, для сайта</Prompt>
+			<Comp>Formats/Order/OrderLink</Comp>
+			<Args>
+				<SchemeID>%ID%</SchemeID>
+				<Code>VPS</Code>
+			</Args>
+		</OrderLink>
+		<!-- ********************************************************************** -->
+		<ncpu>
+			<Head># CPU</Head>
+			<Prompt>Количество процессоров</Prompt>
+		</ncpu>
+		<!-- ********************************************************************** -->
+		<cpu>
+			<Head>CPU</Head>
+			<Prompt>Ограничение процессора, MHz</Prompt>
+		</cpu>
+		<!-- ********************************************************************** -->
+		<mem>
+			<Head>RAM</Head>
+			<Prompt>Ограничение на использование оперативной памяти, Mb</Prompt>
+		</mem>
+		<!-- ********************************************************************** -->
+		<proc>
+			<Head>Процессов</Head>
+			<Prompt>Максимальное число запускаемых процессов</Prompt>
+		</proc>
+		<!-- ********************************************************************** -->
+		<IsActive>
+			<Head>Актив.</Head>
+			<Prompt>Тариф активен?</Prompt>
+			<Comp>BooleanEdit</Comp>
+			<Args>
+				<ListElement>VPSSchemes</ListElement>
+				<ListElement>IsActive</ListElement>
+				<ListElement>%ID%</ListElement>
+				<ListElement>%IsActive%</ListElement>
+			</Args>
+			<Comp>Formats/Logic</Comp>
+		</IsActive>
+		<!-- ********************************************************************** -->
+		<Orders>
+			<Head>Зак.</Head>
+			<Prompt>Кол-во активных заказов данного тарифа</Prompt>
+			<Alias>(SELECT COUNT(*) FROM `VPSOrders` WHERE `VPSSchemes`.`ID` = `VPSOrders`.`SchemeID` AND `VPSOrders`.`StatusID` = 'Active')</Alias>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</Orders>
+		<!-- *********************************************************************** -->
+		<SortID>
+			<Args>
+				<TableID>VPSSchemes</TableID>
+			</Args>
+		</SortID>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Info</ListElement>
+		<ListElement>Edit</ListElement>
+		<ListElement>Name</ListElement>
+		<ListElement>Group</ListElement>
+		<ListElement>User</ListElement>
+		<ListElement>ServersGroup</ListElement>
+		<ListElement>CostMonth</ListElement>
+		<ListElement>disklimit</ListElement>
+		<ListElement>cpu</ListElement>
+		<ListElement>mem</ListElement>
+		<ListElement>IsActive</ListElement>
+		<ListElement>OrderLink</ListElement>
+		<ListElement>Orders</ListElement>
+		<ListElement>SortID</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

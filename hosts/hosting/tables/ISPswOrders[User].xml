@@ -1,158 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<RootID>ISPswOrders</RootID>
-<Cut>
- <Comps>
-  <Before>
-   <DateSelect />
-   <PatternOut />
-   <Search />
-   <ISPswSearch />
-  </Before>
-  <After>
-   <StatusSet />
-  </After>
- </Comps>
- <Sequence />
-</Cut>
-<!-- *********************************************************************** -->
-<Source>
- <Conditions>
-  <Where>
-   <UniqID>`UserID` = @local.__USER_ID</UniqID>
-  </Where>
-  <Message>У Вас нет заказов на лицензии ISPsystem.</Message>
- </Conditions>
- <Adding>
-  <Message>По данному договору заказов на лицензии ISPsystem не обнаружено.</Message>
- </Adding>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <ContractFilter>
-   <Comp>Contracts/SelectFilter</Comp>
-   <Args type="array" />
-  </ContractFilter>
- </Before>
-</Comps>
-<!-- *********************************************************************** -->
-<Columns>
- <Info>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/ISPswOrderInfo</ListElement>
-   <ListElement>
-    <ISPswOrderID>%ID%</ISPswOrderID>
-   </ListElement>
-   <ListElement>Дополнительная информация</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Info>
- <!-- ********************************************************************** -->
- <Pay>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/ISPswOrderPay</ListElement>
-   <ListElement>
-    <ISPswOrderID>%ID%</ISPswOrderID>
-   </ListElement>
-   <ListElement>Оплатить заказ</ListElement>
-   <ListElement>Pay.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Pay>
- <!-- ********************************************************************** -->
- <SchemeChange>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/ISPswOrderSchemeChange</ListElement>
-   <ListElement>
-    <ISPswOrderID>%ID%</ISPswOrderID>
-   </ListElement>
-   <ListElement>Сменить тарифный план</ListElement>
-   <ListElement>SchemeChange.png</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </SchemeChange>
- <!-- ********************************************************************** -->
- <ExtendedMenu>
-  <IsSorted>0</IsSorted>
-  <Comp>Menus/List</Comp>
-  <Args>
-   <ListElement>User/ListMenu/ISPswOrder.xml</ListElement>
-   <Replace>
-    <ServiceOrderID>%ID%</ServiceOrderID>
-    <ServiceID>%ServiceID%</ServiceID>
-   </Replace>
-  </Args>
- </ExtendedMenu>
- <!-- ********************************************************************** -->
- <IPChange>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/ISPswChangeIP</ListElement>
-   <ListElement>
-    <ISPswOrderID>%ID%</ISPswOrderID>
-   </ListElement>
-   <ListElement>Сменить IP адрес лицензии</ListElement>
-   <ListElement>Password.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </IPChange>
 	<!-- *********************************************************************** -->
-	<Manage>
-		<IsSorted>0</IsSorted>
-		<Comp>Buttons/Standard</Comp>
-		<Args>
-			<ListElement>
-				<onclick>OrderManage(%ID%,%ServiceID%);</onclick>
-			</ListElement>
-			<ListElement>Перейти в панель управления</ListElement>
-			<ListElement>HostingManage.gif</ListElement>
-			<ListElement>OrderManage.js</ListElement>
-		</Args>
-		<Attribs>
-			<class>TableSuperStandard</class>
-			<style>width:22px;</style>
-		</Attribs>
-	</Manage>
+	<RootID>ISPswOrders</RootID>
+	<Cut>
+		<Comps>
+			<Before>
+				<DateSelect/>
+				<PatternOut/>
+				<Search/>
+				<ISPswSearch/>
+			</Before>
+			<After>
+				<StatusSet/>
+			</After>
+		</Comps>
+		<Sequence/>
+	</Cut>
 	<!-- *********************************************************************** -->
-</Columns>
-<!-- *********************************************************************** -->
-<!-- *********************************************************************** -->
-<Sequence>
-	<ListElement>SelectID</ListElement>
-	<ListElement>Info</ListElement>
-	<ListElement>Pay</ListElement>
-	<ListElement>SchemeChange</ListElement>
-	<ListElement>IPChange</ListElement>
-	<ListElement>Manage</ListElement>
-	<ListElement>ExtendedMenu</ListElement>
-	<ListElement>Number</ListElement>
-	<ListElement>IP</ListElement>
-	<ListElement>Scheme</ListElement>
-	<ListElement>Expiration</ListElement>
-	<ListElement>Status</ListElement>
-	<ListElement>StatusOver</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<Source>
+		<Conditions>
+			<Where>
+				<UniqID>`UserID` = @local.__USER_ID</UniqID>
+			</Where>
+			<Message>У Вас нет заказов на лицензии ISPsystem.</Message>
+		</Conditions>
+		<Adding>
+			<Message>По данному договору заказов на лицензии ISPsystem не обнаружено.</Message>
+		</Adding>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<ContractFilter>
+				<Comp>Contracts/SelectFilter</Comp>
+				<Args type="array"/>
+			</ContractFilter>
+		</Before>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<Info>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/ISPswOrderInfo</ListElement>
+				<ListElement>
+					<ISPswOrderID>%ID%</ISPswOrderID>
+				</ListElement>
+				<ListElement>Дополнительная информация</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Info>
+		<!-- ********************************************************************** -->
+		<Pay>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/ISPswOrderPay</ListElement>
+				<ListElement>
+					<ISPswOrderID>%ID%</ISPswOrderID>
+				</ListElement>
+				<ListElement>Оплатить заказ</ListElement>
+				<ListElement>Pay.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Pay>
+		<!-- ********************************************************************** -->
+		<SchemeChange>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/ISPswOrderSchemeChange</ListElement>
+				<ListElement>
+					<ISPswOrderID>%ID%</ISPswOrderID>
+				</ListElement>
+				<ListElement>Сменить тарифный план</ListElement>
+				<ListElement>SchemeChange.png</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</SchemeChange>
+		<!-- ********************************************************************** -->
+		<ExtendedMenu>
+			<IsSorted>0</IsSorted>
+			<Comp>Menus/List</Comp>
+			<Args>
+				<ListElement>User/ListMenu/ISPswOrder.xml</ListElement>
+				<Replace>
+					<ServiceOrderID>%ID%</ServiceOrderID>
+					<ServiceID>%ServiceID%</ServiceID>
+				</Replace>
+			</Args>
+		</ExtendedMenu>
+		<!-- ********************************************************************** -->
+		<IPChange>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/ISPswChangeIP</ListElement>
+				<ListElement>
+					<ISPswOrderID>%ID%</ISPswOrderID>
+				</ListElement>
+				<ListElement>Сменить IP адрес лицензии</ListElement>
+				<ListElement>Password.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</IPChange>
+		<!-- *********************************************************************** -->
+		<Manage>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Standard</Comp>
+			<Args>
+				<ListElement>
+					<onclick>OrderManage(%ID%,%ServiceID%);</onclick>
+				</ListElement>
+				<ListElement>Перейти в панель управления</ListElement>
+				<ListElement>HostingManage.gif</ListElement>
+				<ListElement>OrderManage.js</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Manage>
+		<!-- *********************************************************************** -->
+	</Columns>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Info</ListElement>
+		<ListElement>Pay</ListElement>
+		<ListElement>SchemeChange</ListElement>
+		<ListElement>IPChange</ListElement>
+		<ListElement>Manage</ListElement>
+		<ListElement>ExtendedMenu</ListElement>
+		<ListElement>Number</ListElement>
+		<ListElement>IP</ListElement>
+		<ListElement>Scheme</ListElement>
+		<ListElement>Expiration</ListElement>
+		<ListElement>Status</ListElement>
+		<ListElement>StatusOver</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

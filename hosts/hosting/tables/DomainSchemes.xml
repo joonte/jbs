@@ -1,250 +1,250 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Appearance>
-	<Row>
-		<Comp>Colors/Schemes</Comp>
-		<Args>
-			<ListElement>%IsActive%</ListElement>
-		</Args>
-	</Row>
-</Appearance>
-<!-- *********************************************************************** -->
-<Source>
-	<TableID>DomainSchemes</TableID>
-	<ColumnsIDs>
-		<ListElement>ID</ListElement>
-		<ListElement>UserID</ListElement>
+	<!-- *********************************************************************** -->
+	<Appearance>
+		<Row>
+			<Comp>Colors/Schemes</Comp>
+			<Args>
+				<ListElement>%IsActive%</ListElement>
+			</Args>
+		</Row>
+	</Appearance>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>DomainSchemes</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>UserID</ListElement>
+			<ListElement>Name</ListElement>
+			<ListElement>CostOrder</ListElement>
+			<ListElement>CostProlong</ListElement>
+			<ListElement>CostTransfer</ListElement>
+			<ListElement>IsActive</ListElement>
+			<ListElement>IsTransfer</ListElement>
+			<ListElement>SortID</ListElement>
+		</ColumnsIDs>
+		<!-- *********************************************************************** -->
+		<Conditions>
+			<Message>Тарифов на домены не обнаружено.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<PatternOut>
+				<Args>
+					<Patterns>
+						<Active>
+							<Name>Активные</Name>
+							<Where>`IsActive` = 'yes'</Where>
+						</Active>
+						<ActiveForTransfer>
+							<Name>Возможен перенос</Name>
+							<Where>`IsTransfer` = 'yes'</Where>
+						</ActiveForTransfer>
+						<WithOrders>
+							<Name>С заказами</Name>
+							<Where>(SELECT COUNT(*) FROM `DomainOrders` WHERE `DomainSchemes`.`ID` = `DomainOrders`.`SchemeID` AND `DomainOrders`.`StatusID` = 'Active') &gt; 0</Where>
+						</WithOrders>
+						<WithOutOrders>
+							<Name>Без заказов</Name>
+							<Where>(SELECT COUNT(*) FROM `DomainOrders` WHERE `DomainSchemes`.`ID` = `DomainOrders`.`SchemeID` AND `DomainOrders`.`StatusID` = 'Active') = 0</Where>
+						</WithOutOrders>
+						<Individual>
+							<Name>Индивидуальные тарифы</Name>
+							<Where>`UserID` != 1</Where>
+						</Individual>
+					</Patterns>
+					<ActiveID>Active</ActiveID>
+				</Args>
+			</PatternOut>
+			<!-- ********************************************************************* -->
+			<Search>
+				<Args>
+					<ColumnsIDs>
+						<ListElement>UserID</ListElement>
+						<ListElement>GroupID</ListElement>
+						<ListElement>Name</ListElement>
+					</ColumnsIDs>
+				</Args>
+			</Search>
+		</Before>
+		<!-- ********************************************************************** -->
+		<After>
+			<Delete>
+				<Args>
+					<Comment>Выбранные тарифы</Comment>
+					<Send>
+						<TableID>DomainSchemes</TableID>
+					</Send>
+				</Args>
+			</Delete>
+		</After>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Query>
+		<SortOn>SortID</SortOn>
+		<IsDesc>0</IsDesc>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<SelectID>
+			<Args>
+				<TableID>DomainSchemes</TableID>
+			</Args>
+		</SelectID>
+		<!-- ********************************************************************** -->
+		<Info>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/DomainSchemeInfo</ListElement>
+				<ListElement>
+					<DomainSchemeID>%ID%</DomainSchemeID>
+				</ListElement>
+				<ListElement>Дополнительная информация</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Info>
+		<!-- ********************************************************************** -->
+		<Edit>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/Administrator/DomainSchemeEdit</ListElement>
+				<ListElement>
+					<DomainSchemeID>%ID%</DomainSchemeID>
+				</ListElement>
+				<ListElement>Редактировать тариф</ListElement>
+				<ListElement>Edit.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Edit>
+		<!-- ********************************************************************** -->
+		<Name>
+			<Head>Зона</Head>
+		</Name>
+		<!-- ********************************************************************** -->
+		<Group>
+			<Head>Группа</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Group%</ListElement>
+				<Length>15</Length>
+			</Args>
+			<Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `GroupID`)</Alias>
+		</Group>
+		<!-- ********************************************************************** -->
+		<User>
+			<Head>Польз.</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%User%</ListElement>
+				<Length>15</Length>
+			</Args>
+			<Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `UserID`)</Alias>
+		</User>
+		<!-- ********************************************************************** -->
+		<CostOrder>
+			<Head>Цена зак.</Head>
+			<Prompt>Стоимость регистрации доменного имени</Prompt>
+			<Comp>Formats/Currency</Comp>
+			<Args>
+				<ListElement>%CostOrder%</ListElement>
+			</Args>
+		</CostOrder>
+		<!-- ********************************************************************** -->
+		<CostProlong>
+			<Head>Цена продл.</Head>
+			<Prompt>Стоимость продления уже зарегистрированного доменного имени</Prompt>
+			<Comp>Formats/Currency</Comp>
+			<Args>
+				<ListElement>%CostProlong%</ListElement>
+			</Args>
+		</CostProlong>
+		<!-- ********************************************************************** -->
+		<CostTransfer>
+			<Head>Цена перен.</Head>
+			<Prompt>Стоимость переноса уже зарегистрированного доменного имени от друого регистратора к нам</Prompt>
+			<Comp>Formats/Currency</Comp>
+			<Args>
+				<ListElement>%CostTransfer%</ListElement>
+			</Args>
+		</CostTransfer>
+		<!-- ********************************************************************** -->
+		<Registrator>
+			<Head>Регистратор</Head>
+			<Comp>Formats/System/Param</Comp>
+			<Args>
+				<Params>%Registrator%</Params>
+				<Key>Name</Key>
+			</Args>
+			<Alias>(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`)</Alias>
+		</Registrator>
+		<!-- ********************************************************************** -->
+		<IsActive>
+			<Head>Актив.</Head>
+			<Prompt>Тариф активен?</Prompt>
+			<Comp>BooleanEdit</Comp>
+			<Args>
+				<ListElement>DomainSchemes</ListElement>
+				<ListElement>IsActive</ListElement>
+				<ListElement>%ID%</ListElement>
+				<ListElement>%IsActive%</ListElement>
+			</Args>
+		</IsActive>
+		<!-- ********************************************************************** -->
+		<IsTransfer>
+			<Head>Перен.</Head>
+			<Prompt>Возможен перенос от другого регистратора на данный тарифный план</Prompt>
+			<Comp>BooleanEdit</Comp>
+			<Args>
+				<ListElement>DomainSchemes</ListElement>
+				<ListElement>IsTransfer</ListElement>
+				<ListElement>%ID%</ListElement>
+				<ListElement>%IsTransfer%</ListElement>
+			</Args>
+		</IsTransfer>
+		<!-- ********************************************************************** -->
+		<Orders>
+			<Head>Зак.</Head>
+			<Prompt>Кол-во активных заказов данного тарифа</Prompt>
+			<Alias>(SELECT COUNT(*) FROM `DomainOrders` WHERE `DomainSchemes`.`ID` = `DomainOrders`.`SchemeID` AND `DomainOrders`.`StatusID` = 'Active')</Alias>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</Orders>
+		<!-- ********************************************************************** -->
+		<SortID>
+			<Args>
+				<TableID>DomainSchemes</TableID>
+			</Args>
+		</SortID>
+	</Columns>
+	<!-- ********************************************************************** -->
+	<!-- ********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Info</ListElement>
+		<ListElement>Edit</ListElement>
 		<ListElement>Name</ListElement>
+		<ListElement>Group</ListElement>
+		<ListElement>User</ListElement>
 		<ListElement>CostOrder</ListElement>
 		<ListElement>CostProlong</ListElement>
 		<ListElement>CostTransfer</ListElement>
+		<ListElement>Registrator</ListElement>
 		<ListElement>IsActive</ListElement>
 		<ListElement>IsTransfer</ListElement>
+		<ListElement>Orders</ListElement>
 		<ListElement>SortID</ListElement>
-	</ColumnsIDs>
+	</Sequence>
 	<!-- *********************************************************************** -->
-	<Conditions>
-		<Message>Тарифов на домены не обнаружено.</Message>
-	</Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
-	<Before>
-		<PatternOut>
-			<Args>
-				<Patterns>
-					<Active>
-						<Name>Активные</Name>
-						<Where>`IsActive` = 'yes'</Where>
-					</Active>
-					<ActiveForTransfer>
-						<Name>Возможен перенос</Name>
-						<Where>`IsTransfer` = 'yes'</Where>
-					</ActiveForTransfer>
-					<WithOrders>
-						<Name>С заказами</Name>
-						<Where>(SELECT COUNT(*) FROM `DomainOrders` WHERE `DomainSchemes`.`ID` = `DomainOrders`.`SchemeID` AND `DomainOrders`.`StatusID` = 'Active') > 0</Where>
-					</WithOrders>
-					<WithOutOrders>
-						<Name>Без заказов</Name>
-						<Where>(SELECT COUNT(*) FROM `DomainOrders` WHERE `DomainSchemes`.`ID` = `DomainOrders`.`SchemeID` AND `DomainOrders`.`StatusID` = 'Active') = 0</Where>
-					</WithOutOrders>
-					<Individual>
-						<Name>Индивидуальные тарифы</Name>
-						<Where>`UserID` != 1</Where>
-					</Individual>
-				</Patterns>
-				<ActiveID>Active</ActiveID>
-			</Args>
-		</PatternOut>
-		<!-- ********************************************************************* -->
-  <Search>
-   <Args>
-    <ColumnsIDs>
-     <ListElement>UserID</ListElement>
-     <ListElement>GroupID</ListElement>
-     <ListElement>Name</ListElement>
-    </ColumnsIDs>
-   </Args>
-  </Search>
- </Before>
- <!-- ********************************************************************** -->
- <After>
-  <Delete>
-   <Args>
-    <Comment>Выбранные тарифы</Comment>
-    <Send>
-     <TableID>DomainSchemes</TableID>
-    </Send>
-   </Args>
-  </Delete>
- </After>
-</Comps>
-<!-- *********************************************************************** -->
-<Query>
- <SortOn>SortID</SortOn>
- <IsDesc>0</IsDesc>
-</Query>
-<!-- *********************************************************************** -->
-<Columns>
- <SelectID>
-  <Args>
-   <TableID>DomainSchemes</TableID>
-  </Args>
- </SelectID>
- <!-- ********************************************************************** -->
- <Info>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/DomainSchemeInfo</ListElement>
-   <ListElement>
-    <DomainSchemeID>%ID%</DomainSchemeID>
-   </ListElement>
-   <ListElement>Дополнительная информация</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Info>
- <!-- ********************************************************************** -->
- <Edit>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/Administrator/DomainSchemeEdit</ListElement>
-   <ListElement>
-    <DomainSchemeID>%ID%</DomainSchemeID>
-   </ListElement>
-   <ListElement>Редактировать тариф</ListElement>
-   <ListElement>Edit.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Edit>
- <!-- ********************************************************************** -->
- <Name>
-  <Head>Зона</Head>
- </Name>
- <!-- ********************************************************************** -->
- <Group>
-  <Head>Группа</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Group%</ListElement>
-   <Length>15</Length>
-  </Args>
-  <Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `GroupID`)</Alias>
- </Group>
- <!-- ********************************************************************** -->
- <User>
-  <Head>Польз.</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%User%</ListElement>
-   <Length>15</Length>
-  </Args>
-  <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `UserID`)</Alias>
- </User>
-	<!-- ********************************************************************** -->
-	<CostOrder>
-		<Head>Цена зак.</Head>
-		<Prompt>Стоимость регистрации доменного имени</Prompt>
-		<Comp>Formats/Currency</Comp>
-		<Args>
-			<ListElement>%CostOrder%</ListElement>
-		</Args>
-	</CostOrder>
-	<!-- ********************************************************************** -->
-	<CostProlong>
-		<Head>Цена продл.</Head>
-		<Prompt>Стоимость продления уже зарегистрированного доменного имени</Prompt>
-		<Comp>Formats/Currency</Comp>
-		<Args>
-			<ListElement>%CostProlong%</ListElement>
-		</Args>
-	</CostProlong>
-	<!-- ********************************************************************** -->
-	<CostTransfer>
-		<Head>Цена перен.</Head>
-		<Prompt>Стоимость переноса уже зарегистрированного доменного имени от друого регистратора к нам</Prompt>
-		<Comp>Formats/Currency</Comp>
-		<Args>
-			<ListElement>%CostTransfer%</ListElement>
-		</Args>
-	</CostTransfer>
-	<!-- ********************************************************************** -->
-	<Registrator>
-		<Head>Регистратор</Head>
-		<Comp>Formats/System/Param</Comp>
-		<Args>
-			<Params>%Registrator%</Params>
-			<Key>Name</Key>
-		</Args>
-		<Alias>(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`)</Alias>
-	</Registrator>
-	<!-- ********************************************************************** -->
-	<IsActive>
-		<Head>Актив.</Head>
-		<Prompt>Тариф активен?</Prompt>
-		<Comp>BooleanEdit</Comp>
-		<Args>
-			<ListElement>DomainSchemes</ListElement>
-			<ListElement>IsActive</ListElement>
-			<ListElement>%ID%</ListElement>
-			<ListElement>%IsActive%</ListElement>
-		</Args>
-	</IsActive>
-	<!-- ********************************************************************** -->
-	<IsTransfer>
-		<Head>Перен.</Head>
-		<Prompt>Возможен перенос от другого регистратора на данный тарифный план</Prompt>
-		<Comp>BooleanEdit</Comp>
-		<Args>
-			<ListElement>DomainSchemes</ListElement>
-			<ListElement>IsTransfer</ListElement>
-			<ListElement>%ID%</ListElement>
-			<ListElement>%IsTransfer%</ListElement>
-		</Args>
-	</IsTransfer>
-	<!-- ********************************************************************** -->
-	<Orders>
-		<Head>Зак.</Head>
-		<Prompt>Кол-во активных заказов данного тарифа</Prompt>
-		<Alias>(SELECT COUNT(*) FROM `DomainOrders` WHERE `DomainSchemes`.`ID` = `DomainOrders`.`SchemeID` AND `DomainOrders`.`StatusID` = 'Active')</Alias>
-		<Attribs>
-			<style>text-align:right;</style>
-		</Attribs>
-	</Orders>
-	<!-- ********************************************************************** -->
-	<SortID>
-		<Args>
-			<TableID>DomainSchemes</TableID>
-		</Args>
-	</SortID>
-</Columns>
-<!-- ********************************************************************** -->
-<!-- ********************************************************************** -->
-<Sequence>
-	<ListElement>SelectID</ListElement>
-	<ListElement>Info</ListElement>
-	<ListElement>Edit</ListElement>
-	<ListElement>Name</ListElement>
-	<ListElement>Group</ListElement>
-	<ListElement>User</ListElement>
-	<ListElement>CostOrder</ListElement>
-	<ListElement>CostProlong</ListElement>
-	<ListElement>CostTransfer</ListElement>
-	<ListElement>Registrator</ListElement>
-	<ListElement>IsActive</ListElement>
-	<ListElement>IsTransfer</ListElement>
-	<ListElement>Orders</ListElement>
-	<ListElement>SortID</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
 </XML>

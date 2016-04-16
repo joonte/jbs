@@ -1,80 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<RootID>DSSchemes</RootID>
-<Cut>
- <Comps>
-  <Before>
-   <PatternOut />
-   <Search />
-  </Before>
-  <After>
-   <Delete />
-  </After>
- </Comps>
- <Sequence />
-</Cut>
-<!-- *********************************************************************** -->
-<Source>
- <Conditions>
-  <Where>
-   <UniqID>(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH)) AND `IsActive` = 'yes'</UniqID>
-  </Where>
-  <Message>Для Вас не определены тарифы на арнеду серверов.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Columns>
- <!-- ********************************************************************** -->
- <DSOrder>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/DSOrder</ListElement>
-   <ListElement>
-    <DSSchemeID>%ID%</DSSchemeID>
-   </ListElement>
-   <ListElement>Новый заказ</ListElement>
-   <ListElement>Add.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </DSOrder>
- <!-- ********************************************************************** -->
-	<Name>
-		<Head>Тариф</Head>
-		<Comp>Formats/Order/Notice</Comp>
-		<Args>
-			<ListElement>DSSchemes</ListElement>
-			<ListElement>%ID%</ListElement>
-			<ListElement>Formats/String</ListElement>
-			<ListElement>%Name%</ListElement>
-			<ListElement>7</ListElement>
-			<ListElement>%AdminNotice%</ListElement>
-			<ListElement>%UserNotice%</ListElement>
-			<ListElement>1</ListElement>
-		</Args>
-		<Attribs>
-			<style>text-align:right;</style>
-		</Attribs>
-	</Name>
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>Info</ListElement>
- <ListElement>DSOrder</ListElement>
- <ListElement>Name</ListElement>
-<!-- проблема - в админской части .xml захардкожено имя таблицы, а у юзеров используется временая таблица, с другим именем =(
+	<!-- *********************************************************************** -->
+	<RootID>DSSchemes</RootID>
+	<Cut>
+		<Comps>
+			<Before>
+				<PatternOut/>
+				<Search/>
+			</Before>
+			<After>
+				<Delete/>
+			</After>
+		</Comps>
+		<Sequence/>
+	</Cut>
+	<!-- *********************************************************************** -->
+	<Source>
+		<Conditions>
+			<Where>
+				<UniqID>(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH)) AND `IsActive` = 'yes'</UniqID>
+			</Where>
+			<Message>Для Вас не определены тарифы на арнеду серверов.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<!-- ********************************************************************** -->
+		<DSOrder>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/DSOrder</ListElement>
+				<ListElement>
+					<DSSchemeID>%ID%</DSSchemeID>
+				</ListElement>
+				<ListElement>Новый заказ</ListElement>
+				<ListElement>Add.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</DSOrder>
+		<!-- ********************************************************************** -->
+		<Name>
+			<Head>Тариф</Head>
+			<Comp>Formats/Order/Notice</Comp>
+			<Args>
+				<ListElement>DSSchemes</ListElement>
+				<ListElement>%ID%</ListElement>
+				<ListElement>Formats/String</ListElement>
+				<ListElement>%Name%</ListElement>
+				<ListElement>7</ListElement>
+				<ListElement>%AdminNotice%</ListElement>
+				<ListElement>%UserNotice%</ListElement>
+				<ListElement>1</ListElement>
+			</Args>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</Name>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>Info</ListElement>
+		<ListElement>DSOrder</ListElement>
+		<ListElement>Name</ListElement>
+		<!-- проблема - в админской части .xml захардкожено имя таблицы, а у юзеров используется временая таблица, с другим именем =(
      <ListElement>ServersGroup</ListElement>
      -->
- <ListElement>CostMonth</ListElement>
- <ListElement>CPU</ListElement>
- <ListElement>ram</ListElement>
- <ListElement>raid</ListElement>
- <ListElement>disks</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+		<ListElement>CostMonth</ListElement>
+		<ListElement>CPU</ListElement>
+		<ListElement>ram</ListElement>
+		<ListElement>raid</ListElement>
+		<ListElement>disks</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

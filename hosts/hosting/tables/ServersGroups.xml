@@ -1,149 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Alex Keda, for www.host-food.ru -->
 <XML>
-<!-- *********************************************************************** -->
-<Cut>
+	<!-- *********************************************************************** -->
+	<Cut>
+		<Comps>
+			<Before>
+				<PatternOut/>
+				<Search/>
+			</Before>
+		</Comps>
+	</Cut>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>ServersGroups</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>Name</ListElement>
+			<ListElement>Comment</ListElement>
+			<ListElement>FunctionID</ListElement>
+			<ListElement>IsCheckUsers</ListElement>
+			<ListElement>SortID</ListElement>
+		</ColumnsIDs>
+		<Conditions>
+			<Message>Групп серверов не обнаружено.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
 	<Comps>
-		<Before>
-			<PatternOut />
-			<Search />
-		</Before>
+		<After>
+			<Delete>
+				<Args>
+					<Comment>Выбранные группы</Comment>
+					<Send>
+						<TableID>ServersGroups</TableID>
+					</Send>
+				</Args>
+			</Delete>
+		</After>
 	</Comps>
-</Cut>
-<!-- *********************************************************************** -->
-<Source>
-	<TableID>ServersGroups</TableID>
-	<ColumnsIDs>
-		<ListElement>ID</ListElement>
+	<!-- *********************************************************************** -->
+	<Query>
+		<SortOn>SortID</SortOn>
+		<IsDesc>0</IsDesc>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<SelectID>
+			<Args>
+				<TableID>ServersGroups</TableID>
+			</Args>
+		</SelectID>
+		<!-- ********************************************************************** -->
+		<Edit>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/Administrator/ServersGroupEdit</ListElement>
+				<ListElement>
+					<ServersGroupID>%ID%</ServersGroupID>
+				</ListElement>
+				<ListElement>Редактировать группу серверов</ListElement>
+				<ListElement>Edit.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Edit>
+		<!-- ********************************************************************** -->
+		<Name>
+			<Head>Название</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Name%</ListElement>
+				<Length>20</Length>
+			</Args>
+		</Name>
+		<!-- ********************************************************************** -->
+		<FunctionID>
+			<Head>Балансировка</Head>
+			<Prompt>По какому принципу новые заказы распределяются по серверам группы</Prompt>
+			<Comp>Formats/System/BalancingType</Comp>
+			<Args>
+				<ListElement>%FunctionID%</ListElement>
+				<Length>20</Length>
+			</Args>
+		</FunctionID>
+		<!-- ********************************************************************** -->
+		<Service>
+			<Head>Сервис</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Service%</ListElement>
+				<Length>20</Length>
+			</Args>
+			<Alias>IF(ISNULL(`ServiceID`),'без сервиса',(SELECT `Item` FROM `Services` WHERE `Services`.`ID` = `ServersGroups`.`ServiceID`))</Alias>
+		</Service>
+		<!-- ********************************************************************** -->
+		<IsCheckUsers>
+			<Head>Пр.</Head>
+			<Prompt>Проводить проверку акканутов на сервере - искать лишние или недостающие, по отношению к биллингу</Prompt>
+			<Comp>BooleanEdit</Comp>
+			<Args>
+				<ListElement>ServersGroups</ListElement>
+				<ListElement>IsCheckUsers</ListElement>
+				<ListElement>%ID%</ListElement>
+				<ListElement>%IsCheckUsers%</ListElement>
+			</Args>
+		</IsCheckUsers>
+		<!-- ********************************************************************** -->
+		<Comment>
+			<Head>Комментарий</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Comment%</ListElement>
+				<Length>30</Length>
+			</Args>
+		</Comment>
+		<!-- ********************************************************************** -->
+		<Servers>
+			<Head>Серв.</Head>
+			<Prompt>Количество серверов в этой группе</Prompt>
+			<Alias>(SELECT COUNT(*) FROM `Servers` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`)</Alias>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</Servers>
+		<!-- ********************************************************************** -->
+		<SortID>
+			<Args>
+				<TableID>ServersGroups</TableID>
+			</Args>
+		</SortID>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Edit</ListElement>
 		<ListElement>Name</ListElement>
+		<ListElement>Service</ListElement>
 		<ListElement>Comment</ListElement>
 		<ListElement>FunctionID</ListElement>
 		<ListElement>IsCheckUsers</ListElement>
+		<ListElement>Servers</ListElement>
 		<ListElement>SortID</ListElement>
-	</ColumnsIDs>
-	<Conditions>
-		<Message>Групп серверов не обнаружено.</Message>
-	</Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
-	<After>
-		<Delete>
-			<Args>
-				<Comment>Выбранные группы</Comment>
-				<Send>
-					<TableID>ServersGroups</TableID>
-				</Send>
-			</Args>
-		</Delete>
-	</After>
-</Comps>
-<!-- *********************************************************************** -->
-<Query>
-	<SortOn>SortID</SortOn>
-	<IsDesc>0</IsDesc>
-</Query>
-<!-- *********************************************************************** -->
-<Columns>
-	<SelectID>
-		<Args>
-			<TableID>ServersGroups</TableID>
-		</Args>
-	</SelectID>
-	<!-- ********************************************************************** -->
-	<Edit>
-		<IsSorted>0</IsSorted>
-		<Comp>Buttons/Window</Comp>
-		<Args>
-			<ListElement>/Administrator/ServersGroupEdit</ListElement>
-			<ListElement>
-				<ServersGroupID>%ID%</ServersGroupID>
-			</ListElement>
-			<ListElement>Редактировать группу серверов</ListElement>
-			<ListElement>Edit.gif</ListElement>
-		</Args>
-		<Attribs>
-			<class>TableSuperStandard</class>
-			<style>width:22px;</style>
-		</Attribs>
-	</Edit>
-	<!-- ********************************************************************** -->
-	<Name>
-		<Head>Название</Head>
-		<Comp>Formats/String</Comp>
-		<Args>
-			<ListElement>%Name%</ListElement>
-			<Length>20</Length>
-		</Args>
-	</Name>
-	<!-- ********************************************************************** -->
-	<FunctionID>
-		<Head>Балансировка</Head>
-		<Prompt>По какому принципу новые заказы распределяются по серверам группы</Prompt>
-			<Comp>Formats/System/BalancingType</Comp>
-	<Args>
-			<ListElement>%FunctionID%</ListElement>
-			<Length>20</Length>
-		</Args>
-	</FunctionID>
-	<!-- ********************************************************************** -->
-	<Service>
-		<Head>Сервис</Head>
-		<Comp>Formats/String</Comp>
-		<Args>
-			<ListElement>%Service%</ListElement>
-			<Length>20</Length>
-		</Args>
-		<Alias>IF(ISNULL(`ServiceID`),'без сервиса',(SELECT `Item` FROM `Services` WHERE `Services`.`ID` = `ServersGroups`.`ServiceID`))</Alias>
-	</Service>
-	<!-- ********************************************************************** -->
-	<IsCheckUsers>
-		<Head>Пр.</Head>
-		<Prompt>Проводить проверку акканутов на сервере - искать лишние или недостающие, по отношению к биллингу</Prompt>
-		<Comp>BooleanEdit</Comp>
-		<Args>
-			<ListElement>ServersGroups</ListElement>
-			<ListElement>IsCheckUsers</ListElement>
-			<ListElement>%ID%</ListElement>
-			<ListElement>%IsCheckUsers%</ListElement>
-		</Args>
-	</IsCheckUsers>
-	<!-- ********************************************************************** -->
-	<Comment>
-		<Head>Комментарий</Head>
-		<Comp>Formats/String</Comp>
-		<Args>
-			<ListElement>%Comment%</ListElement>
-			<Length>30</Length>
-		</Args>
-	</Comment>
-	<!-- ********************************************************************** -->
-	<Servers>
-		<Head>Серв.</Head>
-		<Prompt>Количество серверов в этой группе</Prompt>
-		<Alias>(SELECT COUNT(*) FROM `Servers` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`)</Alias>
-		<Attribs>
-			<style>text-align:right;</style>
-		</Attribs>
-	</Servers>
-	<!-- ********************************************************************** -->
-	<SortID>
-		<Args>
-			<TableID>ServersGroups</TableID>
-		</Args>
-	</SortID>
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
-	<ListElement>SelectID</ListElement>
-	<ListElement>Edit</ListElement>
-	<ListElement>Name</ListElement>
-	<ListElement>Service</ListElement>
-	<ListElement>Comment</ListElement>
-	<ListElement>FunctionID</ListElement>
-	<ListElement>IsCheckUsers</ListElement>
-	<ListElement>Servers</ListElement>
-	<ListElement>SortID</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

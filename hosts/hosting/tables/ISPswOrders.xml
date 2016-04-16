@@ -1,225 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Appearance>
- <Row>
-  <Comp>Colors/ISPswOrders</Comp>
-  <Args>
-   <ListElement>%StatusID%</ListElement>
-  </Args>
- </Row>
-</Appearance>
-<!-- *********************************************************************** -->
-<Source>
- <TableID>ISPswOrdersOwners</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>OrderID</ListElement>
-  <ListElement>UserID</ListElement>
-  <ListElement>IP</ListElement>
-  <ListElement>DaysRemainded</ListElement>
-  <ListElement>StatusID</ListElement>
-  <ListElement>StatusDate</ListElement>
-  <ListElement>ServiceID</ListElement>
-  <ListElement>UserNotice</ListElement>
-  <ListElement>AdminNotice</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Message>Заказов на лицензии ISPsystem не обнаружено.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <DateSelect>
-   <Comp>Tables/Forms/DateSelect</Comp>
-   <Args>
-    <ListElement>OrderDate</ListElement>
-   </Args>
-   <NoBlock />
-  </DateSelect>
-  <!-- ********************************************************************* -->
-  <PatternOut>
-   <Args>
-    <Patterns>
-     <Yesterday>
-      <Name>Заказы за вчера</Name>
-      <Where>`OrderDate` &gt; BEGIN_DAY() - 86400</Where>
-     </Yesterday>
-     <!-- ****************************************************************** -->
-     <Today>
-      <Name>Заказы за сегодня</Name>
-      <Where>`OrderDate` &gt; BEGIN_DAY()</Where>
-     </Today>
-     <!-- ****************************************************************** -->
-     <Week>
-      <Name>Заказы за текущую неделю</Name>
-      <Where>`OrderDate` &gt; BEGIN_WEEK()</Where>
-     </Week>
-     <!-- ****************************************************************** -->
-     <Month>
-      <Name>Заказы за текущий месяц</Name>
-      <Where>`OrderDate` &gt; BEGIN_MONTH()</Where>
-     </Month>
-     <!-- ****************************************************************** -->
-     <Waiting>
-      <Name>Заказы для оплаты</Name>
-      <Where>`StatusID` = 'Waiting'</Where>
-     </Waiting>
-     <!-- ****************************************************************** -->
-     <OnCreate>
-      <Name>Заказы на создании</Name>
-      <Where>`StatusID` = 'OnCreate'</Where>
-     </OnCreate>
-     <!-- ****************************************************************** -->
-     <Active>
-      <Name>Активные заказы</Name>
-      <Where>`StatusID` = 'Active'</Where>
-     </Active>
-     <!-- ****************************************************************** -->
-     <Suspended>
-      <Name>Заблокированные заказы </Name>
-      <Where>`StatusID` = 'Suspended'</Where>
-     </Suspended>
-     <!-- ****************************************************************** -->
-     <Deleted>
-      <Name>Удаленные заказы</Name>
-      <Where>`StatusID` = 'Deleted'</Where>
-     </Deleted>
-     <!-- ****************************************************************** -->
-     <NoLicenseID>
-      <Name>Без назначенных лицензий</Name>
-      <Where>`LicenseID` IS NULL</Where>
-     </NoLicenseID>
-     <!-- ****************************************************************** -->
-    </Patterns>
-    <ActiveID>Week</ActiveID>
-   </Args>
-  </PatternOut>
-  <!-- ********************************************************************* -->
-  <Search>
-   <Args>
-    <ColumnsIDs>
-     <ListElement>OrderID</ListElement>
-     <ListElement>UserID</ListElement>
-     <ListElement>IP</ListElement>
-     <ListElement>(SELECT `Name` FROM `ISPswSchemes` WHERE `ISPswSchemes`.`ID` = `ISPswOrdersOwners`.`SchemeID`)</ListElement>
-     <ListElement>(SELECT `elid` FROM `ISPswLicenses` WHERE `ISPswOrdersOwners`.`LicenseID`=`ISPswLicenses`.`ID`)</ListElement>
-     <ListElement>AdminNotice</ListElement>
-    </ColumnsIDs>
-   </Args>
-  </Search>
-  <!-- ********************************************************************* -->
-  <ISPswSearch>
-   <Comp>ISPswOrders/Search</Comp>
-   <Args type="array" />
-   <NoBlock />
-  </ISPswSearch>
- </Before>
- <!-- ********************************************************************** -->
- <After>
-  <Delete>
-   <Args>
-    <Comment>Выбранные заказы</Comment>
-    <Send>
-     <TableID>ISPswOrders</TableID>
-    </Send>
-   </Args>
-  </Delete>
-  <!-- ********************************************************************* -->
-  <StatusSet>
-   <Comp>Statuses/Set</Comp>
-   <Args>
-    <ListElement>ISPswOrders</ListElement>
-   </Args>
-  </StatusSet>
- </After>
-</Comps>
-<!-- *********************************************************************** -->
-<Query>
- <SortOn>Number</SortOn>
-</Query>
-<!-- *********************************************************************** -->
-<Columns>
- <SelectID>
-  <Args>
-   <TableID>ISPswOrders</TableID>
-  </Args>
- </SelectID>
- <!-- ********************************************************************** -->
- <!-- ********************************************************************** -->
- <ExtendedMenu>
-  <IsSorted>0</IsSorted>
-  <Comp>Menus/List</Comp>
-  <Args>
-   <ListElement>Administrator/ListMenu/ISPswOrder.xml</ListElement>
-   <Replace>
-    <ServiceOrderID>%ID%</ServiceOrderID>
-    <ServiceID>%ServiceID%</ServiceID>
-   </Replace>
-  </Args>
- </ExtendedMenu>
- <!-- ********************************************************************** -->
- <Number>
-  <Head>Номер</Head>
-  <Comp>Formats/Order/Notice</Comp>
-  <Args>
-   <ListElement>Orders</ListElement>
-   <ListElement>%OrderID%</ListElement>
-   <ListElement>Formats/Order/Number</ListElement>
-   <ListElement>%OrderID%</ListElement>
-   <ListElement>10</ListElement>
-   <ListElement>%AdminNotice%</ListElement>
-   <ListElement>%UserNotice%</ListElement>
-  </Args>
-  <Alias>ID</Alias>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
- </Number>
- <!-- ********************************************************************** -->
- <Scheme>
-  <Head>Тариф</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Scheme%</ListElement>
-   <Length>15</Length>
-  </Args>
-  <Alias>(SELECT `Name` FROM `ISPswSchemes` WHERE `ISPswSchemes`.`ID` = `ISPswOrdersOwners`.`SchemeID`)</Alias>
- </Scheme>
- <!-- ********************************************************************** -->
- <Expiration>
-  <Head>Дата оконч.</Head>
-  <Prompt>Дата окончания заказа | остаток дней</Prompt>
-  <Comp>Formats/ISPswOrder/ExpirationDate</Comp>
-  <Args>
-   <ListElement>%DaysRemainded%</ListElement>
-  </Args>
-  <Alias>DaysRemainded</Alias>
- </Expiration>
- <!-- ********************************************************************** -->
- <IP>
-  <Head>IP адрес</Head>
-  <Prompt>IP адрес на который зарегистрирована лицензия</Prompt>
- </IP>
- <!-- ********************************************************************** -->
- <Status>
-  <Args>
-   <ModeID>ISPswOrders</ModeID>
-  </Args>
- </Status>
-</Columns>
-<Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>ExtendedMenu</ListElement>
- <ListElement>Number</ListElement>
- <ListElement>Owner</ListElement>
- <ListElement>IP</ListElement>
- <ListElement>Scheme</ListElement>
- <ListElement>Expiration</ListElement>
- <ListElement>Status</ListElement>
- <ListElement>StatusOver</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Appearance>
+		<Row>
+			<Comp>Colors/ISPswOrders</Comp>
+			<Args>
+				<ListElement>%StatusID%</ListElement>
+			</Args>
+		</Row>
+	</Appearance>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>ISPswOrdersOwners</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>OrderID</ListElement>
+			<ListElement>UserID</ListElement>
+			<ListElement>IP</ListElement>
+			<ListElement>DaysRemainded</ListElement>
+			<ListElement>StatusID</ListElement>
+			<ListElement>StatusDate</ListElement>
+			<ListElement>ServiceID</ListElement>
+			<ListElement>UserNotice</ListElement>
+			<ListElement>AdminNotice</ListElement>
+		</ColumnsIDs>
+		<Conditions>
+			<Message>Заказов на лицензии ISPsystem не обнаружено.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<DateSelect>
+				<Comp>Tables/Forms/DateSelect</Comp>
+				<Args>
+					<ListElement>OrderDate</ListElement>
+				</Args>
+				<NoBlock/>
+			</DateSelect>
+			<!-- ********************************************************************* -->
+			<PatternOut>
+				<Args>
+					<Patterns>
+						<Yesterday>
+							<Name>Заказы за вчера</Name>
+							<Where>`OrderDate` &gt; BEGIN_DAY() - 86400</Where>
+						</Yesterday>
+						<!-- ****************************************************************** -->
+						<Today>
+							<Name>Заказы за сегодня</Name>
+							<Where>`OrderDate` &gt; BEGIN_DAY()</Where>
+						</Today>
+						<!-- ****************************************************************** -->
+						<Week>
+							<Name>Заказы за текущую неделю</Name>
+							<Where>`OrderDate` &gt; BEGIN_WEEK()</Where>
+						</Week>
+						<!-- ****************************************************************** -->
+						<Month>
+							<Name>Заказы за текущий месяц</Name>
+							<Where>`OrderDate` &gt; BEGIN_MONTH()</Where>
+						</Month>
+						<!-- ****************************************************************** -->
+						<Exists>
+							<Name>Существующие заказы</Name>
+							<Where>`StatusID` != 'Waiting' AND `StatusID` != 'Deleted'</Where>
+						</Exists>
+						<Waiting>
+							<Name>Заказы для оплаты</Name>
+							<Where>`StatusID` = 'Waiting'</Where>
+						</Waiting>
+						<!-- ****************************************************************** -->
+						<OnCreate>
+							<Name>Заказы на создании</Name>
+							<Where>`StatusID` = 'OnCreate'</Where>
+						</OnCreate>
+						<!-- ****************************************************************** -->
+						<Active>
+							<Name>Активные заказы</Name>
+							<Where>`StatusID` = 'Active'</Where>
+						</Active>
+						<!-- ****************************************************************** -->
+						<Suspended>
+							<Name>Заблокированные заказы </Name>
+							<Where>`StatusID` = 'Suspended'</Where>
+						</Suspended>
+						<!-- ****************************************************************** -->
+						<Deleted>
+							<Name>Удаленные заказы</Name>
+							<Where>`StatusID` = 'Deleted'</Where>
+						</Deleted>
+						<!-- ****************************************************************** -->
+						<NoLicenseID>
+							<Name>Без назначенных лицензий</Name>
+							<Where>`LicenseID` IS NULL</Where>
+						</NoLicenseID>
+						<!-- ****************************************************************** -->
+					</Patterns>
+					<ActiveID>Week</ActiveID>
+				</Args>
+			</PatternOut>
+			<!-- ********************************************************************* -->
+			<Search>
+				<Args>
+					<ColumnsIDs>
+						<ListElement>OrderID</ListElement>
+						<ListElement>UserID</ListElement>
+						<ListElement>IP</ListElement>
+						<ListElement>(SELECT `Name` FROM `ISPswSchemes` WHERE `ISPswSchemes`.`ID` = `ISPswOrdersOwners`.`SchemeID`)</ListElement>
+						<ListElement>(SELECT `elid` FROM `ISPswLicenses` WHERE `ISPswOrdersOwners`.`LicenseID`=`ISPswLicenses`.`ID`)</ListElement>
+						<ListElement>AdminNotice</ListElement>
+					</ColumnsIDs>
+				</Args>
+			</Search>
+			<!-- ********************************************************************* -->
+			<ISPswSearch>
+				<Comp>ISPswOrders/Search</Comp>
+				<Args type="array"/>
+				<NoBlock/>
+			</ISPswSearch>
+		</Before>
+		<!-- ********************************************************************** -->
+		<After>
+			<Delete>
+				<Args>
+					<Comment>Выбранные заказы</Comment>
+					<Send>
+						<TableID>ISPswOrders</TableID>
+					</Send>
+				</Args>
+			</Delete>
+			<!-- ********************************************************************* -->
+			<StatusSet>
+				<Comp>Statuses/Set</Comp>
+				<Args>
+					<ListElement>ISPswOrders</ListElement>
+				</Args>
+			</StatusSet>
+		</After>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Query>
+		<SortOn>Number</SortOn>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<SelectID>
+			<Args>
+				<TableID>ISPswOrders</TableID>
+			</Args>
+		</SelectID>
+		<!-- ********************************************************************** -->
+		<!-- ********************************************************************** -->
+		<ExtendedMenu>
+			<IsSorted>0</IsSorted>
+			<Comp>Menus/List</Comp>
+			<Args>
+				<ListElement>Administrator/ListMenu/ISPswOrder.xml</ListElement>
+				<Replace>
+					<ServiceOrderID>%ID%</ServiceOrderID>
+					<ServiceID>%ServiceID%</ServiceID>
+				</Replace>
+			</Args>
+		</ExtendedMenu>
+		<!-- ********************************************************************** -->
+		<Number>
+			<Head>Номер</Head>
+			<Comp>Formats/Order/Notice</Comp>
+			<Args>
+				<ListElement>Orders</ListElement>
+				<ListElement>%OrderID%</ListElement>
+				<ListElement>Formats/Order/Number</ListElement>
+				<ListElement>%OrderID%</ListElement>
+				<ListElement>10</ListElement>
+				<ListElement>%AdminNotice%</ListElement>
+				<ListElement>%UserNotice%</ListElement>
+			</Args>
+			<Alias>ID</Alias>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</Number>
+		<!-- ********************************************************************** -->
+		<Scheme>
+			<Head>Тариф</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Scheme%</ListElement>
+				<Length>15</Length>
+			</Args>
+			<Alias>(SELECT `Name` FROM `ISPswSchemes` WHERE `ISPswSchemes`.`ID` = `ISPswOrdersOwners`.`SchemeID`)</Alias>
+		</Scheme>
+		<!-- ********************************************************************** -->
+		<Expiration>
+			<Head>Дата оконч.</Head>
+			<Prompt>Дата окончания заказа | остаток дней</Prompt>
+			<Comp>Formats/ISPswOrder/ExpirationDate</Comp>
+			<Args>
+				<ListElement>%DaysRemainded%</ListElement>
+			</Args>
+			<Alias>DaysRemainded</Alias>
+		</Expiration>
+		<!-- ********************************************************************** -->
+		<IP>
+			<Head>IP адрес</Head>
+			<Prompt>IP адрес на который зарегистрирована лицензия</Prompt>
+		</IP>
+		<!-- ********************************************************************** -->
+		<Status>
+			<Args>
+				<ModeID>ISPswOrders</ModeID>
+			</Args>
+		</Status>
+	</Columns>
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>ExtendedMenu</ListElement>
+		<ListElement>Number</ListElement>
+		<ListElement>Owner</ListElement>
+		<ListElement>IP</ListElement>
+		<ListElement>Scheme</ListElement>
+		<ListElement>Expiration</ListElement>
+		<ListElement>Status</ListElement>
+		<ListElement>StatusOver</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

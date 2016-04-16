@@ -1,63 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<RootID>VPSSchemes</RootID>
-<Cut>
- <Comps>
-  <Before>
-   <PatternOut />
-   <Search />
-  </Before>
-  <After>
-   <Delete />
-  </After>
- </Comps>
- <Sequence />
-</Cut>
-<!-- *********************************************************************** -->
-<Source>
- <Conditions>
-  <Where>
-   <UniqID>(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH)) AND `IsActive` = 'yes'</UniqID>
-  </Where>
-  <Message>Для Вас не определены тарифы на виртуальные сервера.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Columns>
- <!-- ********************************************************************** -->
- <VPSOrder>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/VPSOrder</ListElement>
-   <ListElement>
-    <VPSSchemeID>%ID%</VPSSchemeID>
-   </ListElement>
-   <ListElement>Новый заказ</ListElement>
-   <ListElement>Add.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </VPSOrder>
- <!-- ********************************************************************** -->
-</Columns>
-<!-- *********************************************************************** -->
-
-<Sequence>
- <ListElement>Info</ListElement>
- <ListElement>VPSOrder</ListElement>
- <ListElement>Name</ListElement>
- <ListElement>ServersGroup</ListElement>
- <ListElement>CostMonth</ListElement>
- <ListElement>CostInstall</ListElement>
- <ListElement>disklimit</ListElement>
- <ListElement>ncpu</ListElement>
- <ListElement>cpu</ListElement>
- <ListElement>mem</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<RootID>VPSSchemes</RootID>
+	<Cut>
+		<Comps>
+			<Before>
+				<PatternOut/>
+				<Search/>
+			</Before>
+			<After>
+				<Delete/>
+			</After>
+		</Comps>
+		<Sequence/>
+	</Cut>
+	<!-- *********************************************************************** -->
+	<Source>
+		<Conditions>
+			<Where>
+				<UniqID>(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH)) AND `IsActive` = 'yes'</UniqID>
+			</Where>
+			<Message>Для Вас не определены тарифы на виртуальные сервера.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<!-- ********************************************************************** -->
+		<VPSOrder>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/VPSOrder</ListElement>
+				<ListElement>
+					<VPSSchemeID>%ID%</VPSSchemeID>
+				</ListElement>
+				<ListElement>Новый заказ</ListElement>
+				<ListElement>Add.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</VPSOrder>
+		<!-- ********************************************************************** -->
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>Info</ListElement>
+		<ListElement>VPSOrder</ListElement>
+		<ListElement>Name</ListElement>
+		<ListElement>ServersGroup</ListElement>
+		<ListElement>CostMonth</ListElement>
+		<ListElement>CostInstall</ListElement>
+		<ListElement>disklimit</ListElement>
+		<ListElement>ncpu</ListElement>
+		<ListElement>cpu</ListElement>
+		<ListElement>mem</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

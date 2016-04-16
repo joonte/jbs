@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Alex Keda, for www.host-food.ru -->
 <XML>
-<!-- *********************************************************************** -->
-<Appearance>
-	<Row>
-		<Comp>Colors/Servers</Comp>
-		<Args>
-			<ListElement>%IsActive%</ListElement>
-			<ListElement>%IsDefault%</ListElement>
-		</Args>
-	</Row>
-</Appearance>
-<!-- *********************************************************************** -->
-<Cut>
+	<!-- *********************************************************************** -->
+	<Appearance>
+		<Row>
+			<Comp>Colors/Servers</Comp>
+			<Args>
+				<ListElement>%IsActive%</ListElement>
+				<ListElement>%IsDefault%</ListElement>
+			</Args>
+		</Row>
+	</Appearance>
+	<!-- *********************************************************************** -->
+	<Cut>
+		<Comps>
+			<Before>
+				<PatternOut/>
+				<Search/>
+			</Before>
+		</Comps>
+	</Cut>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>Servers</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>TemplateID</ListElement>
+			<ListElement>Protocol</ListElement>
+			<ListElement>Address</ListElement>
+			<ListElement>Port</ListElement>
+			<ListElement>IsDefault</ListElement>
+			<ListElement>IsActive</ListElement>
+			<ListElement>AdminNotice</ListElement>
+			<ListElement>SortID</ListElement>
+			<ListElement>(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) AS `ServiceID`</ListElement>
+		</ColumnsIDs>
+		<Conditions>
+			<Message>Серверов не обнаружено.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
 	<Comps>
 		<Before>
-			<PatternOut />
-			<Search />
-		</Before>
-	</Comps>
-</Cut>
-<!-- *********************************************************************** -->
-<Source>
-	<TableID>Servers</TableID>
-	<ColumnsIDs>
-		<ListElement>ID</ListElement>
-		<ListElement>TemplateID</ListElement>
-		<ListElement>Protocol</ListElement>
-		<ListElement>Address</ListElement>
-		<ListElement>Port</ListElement>
-		<ListElement>IsDefault</ListElement>
-		<ListElement>IsActive</ListElement>
-		<ListElement>AdminNotice</ListElement>
-		<ListElement>SortID</ListElement>
-		<ListElement>(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) AS `ServiceID`</ListElement>
-	</ColumnsIDs>
-	<Conditions>
-		<Message>Серверов не обнаружено.</Message>
-	</Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
-	<Before>
-<!--
+			<!--
 		<Search>
 			<Args>
 				<ColumnsIDs>
@@ -59,176 +59,175 @@
 			</Args>
 		</Search>
 -->
-		<!-- ********************************************************************* -->
-		<ServersSearch>
-			<Comp>Servers/Search</Comp>
-			<Args type="array" />
-			<NoBlock />
-		</ServersSearch>
-	</Before>
+			<!-- ********************************************************************* -->
+			<ServersSearch>
+				<Comp>Servers/Search</Comp>
+				<Args type="array"/>
+				<NoBlock/>
+			</ServersSearch>
+		</Before>
+		<!-- *********************************************************************** -->
+		<After>
+			<Delete>
+				<Args>
+					<Comment>Выбранные сервера</Comment>
+					<Send>
+						<TableID>Servers</TableID>
+					</Send>
+				</Args>
+			</Delete>
+		</After>
+	</Comps>
 	<!-- *********************************************************************** -->
-	<After>
-		<Delete>
+	<Query>
+		<SortOn>ServersGroup,Address</SortOn>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<SelectID>
 			<Args>
-				<Comment>Выбранные сервера</Comment>
-				<Send>
-					<TableID>Servers</TableID>
-				</Send>
+				<TableID>Servers</TableID>
 			</Args>
-		</Delete>
-	</After>
-</Comps>
-<!-- *********************************************************************** -->
-<Query>
-	<SortOn>ServersGroup,Address</SortOn>
-</Query>
-<!-- *********************************************************************** -->
-<Columns>
-	<SelectID>
-		<Args>
-			<TableID>Servers</TableID>
-		</Args>
-	</SelectID>
+		</SelectID>
+		<!-- ********************************************************************** -->
+		<Edit>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/Administrator/ServerEdit</ListElement>
+				<ListElement>
+					<ServerID>%ID%</ServerID>
+				</ListElement>
+				<ListElement>Редактировать сервер</ListElement>
+				<ListElement>Edit.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Edit>
+		<!-- ********************************************************************** -->
+		<ServersGroup>
+			<Head>Группа</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%ServersGroup%</ListElement>
+				<Length>40</Length>
+			</Args>
+			<Alias>IF(ISNULL(`ServersGroupID`),'-',(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`))</Alias>
+		</ServersGroup>
+		<!-- ********************************************************************** -->
+		<TemplateID>
+			<Head>Шаблон</Head>
+		</TemplateID>
+		<!-- ********************************************************************** -->
+		<Address>
+			<Head>Адрес</Head>
+		</Address>
+		<!-- ********************************************************************** -->
+		<Port>
+			<Head>Порт</Head>
+		</Port>
+		<!-- ********************************************************************** -->
+		<Protocol>
+			<Head>Прот.</Head>
+		</Protocol>
+		<!-- ********************************************************************** -->
+		<AdminNotice>
+			<Head>-</Head>
+			<Comp>Notice</Comp>
+			<Args>
+				<ListElement>Servers</ListElement>
+				<ListElement>%ID%</ListElement>
+				<ListElement>%AdminNotice%</ListElement>
+			</Args>
+		</AdminNotice>
+		<!-- ********************************************************************** -->
+		<IsDefault>
+			<Head>Осн. в гр.</Head>
+			<Prompt>Новые аккаунты, в данной группе серверов, будут создаваться на данном сервере</Prompt>
+			<Comp>Formats/Logic</Comp>
+			<Args>
+				<ListElement>%IsDefault%</ListElement>
+			</Args>
+		</IsDefault>
+		<!-- ********************************************************************** -->
+		<IsActive>
+			<Head>Акт.</Head>
+			<Prompt>Сервер активен - будет участвовать в опросах, на нём будут работать сервисы, создаваться новые аккаунты и т.п.</Prompt>
+			<Comp>BooleanEdit</Comp>
+			<Args>
+				<ListElement>Servers</ListElement>
+				<ListElement>IsActive</ListElement>
+				<ListElement>%ID%</ListElement>
+				<ListElement>%IsActive%</ListElement>
+			</Args>
+		</IsActive>
+		<!-- ********************************************************************** -->
+		<Orders>
+			<Head>Зак.</Head>
+			<Prompt>Кол-во заказов находящихся на данном сервере</Prompt>
+			<Alias>(SELECT COUNT(*) FROM `Orders` WHERE `Servers`.`ID` = `Orders`.`ServerID`)</Alias>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</Orders>
+		<!-- ********************************************************************** -->
+		<Reputation>
+			<Head>-</Head>
+			<Comp>Servers/Reputation</Comp>
+			<Args>
+				<ListElement>%Address%</ListElement>
+			</Args>
+		</Reputation>
+		<!-- ********************************************************************** -->
+		<IsOK>
+			<Head>-</Head>
+			<Comp>Servers/IsOK</Comp>
+			<Args>
+				<ListElement>%IsOK%</ListElement>
+				<ListElement>%ID%</ListElement>
+			</Args>
+			<Alias>IsOK</Alias>
+		</IsOK>
+		<!-- ********************************************************************** -->
+		<SortID>
+			<Args>
+				<TableID>Servers</TableID>
+			</Args>
+		</SortID>
+		<!-- ********************************************************************** -->
+		<ExtendedMenu>
+			<IsSorted>0</IsSorted>
+			<Comp>Menus/List</Comp>
+			<Args>
+				<ListElement>Administrator/ListMenu/Server.xml</ListElement>
+				<Replace>
+					<ID>%ID%</ID>
+					<ServiceID>%ServiceID%</ServiceID>
+				</Replace>
+			</Args>
+		</ExtendedMenu>
+		<!-- ********************************************************************** -->
+	</Columns>
 	<!-- ********************************************************************** -->
-	<Edit>
-		<IsSorted>0</IsSorted>
-		<Comp>Buttons/Window</Comp>
-		<Args>
-			<ListElement>/Administrator/ServerEdit</ListElement>
-			<ListElement>
-				<ServerID>%ID%</ServerID>
-			</ListElement>
-			<ListElement>Редактировать сервер</ListElement>
-			<ListElement>Edit.gif</ListElement>
-		</Args>
-		<Attribs>
-			<class>TableSuperStandard</class>
-			<style>width:22px;</style>
-		</Attribs>
-	</Edit>
 	<!-- ********************************************************************** -->
-	<ServersGroup>
-		<Head>Группа</Head>
-		<Comp>Formats/String</Comp>
-		<Args>
-			<ListElement>%ServersGroup%</ListElement>
-			<Length>40</Length>
-		</Args>
-		<Alias>IF(ISNULL(`ServersGroupID`),'-',(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`))</Alias>
-	</ServersGroup>
-	<!-- ********************************************************************** -->
-	<TemplateID>
-		<Head>Шаблон</Head>
-	</TemplateID>
-	<!-- ********************************************************************** -->
-	<Address>
-		<Head>Адрес</Head>
-	</Address>
-	<!-- ********************************************************************** -->
-	<Port>
-		<Head>Порт</Head>
-	</Port>
-	<!-- ********************************************************************** -->
-	<Protocol>
-		<Head>Прот.</Head>
-	</Protocol>
-	<!-- ********************************************************************** -->
-	<AdminNotice>
-		<Head>-</Head>
-		<Comp>Notice</Comp>
-		<Args>
-			<ListElement>Servers</ListElement>
-			<ListElement>%ID%</ListElement>
-			<ListElement>%AdminNotice%</ListElement>
-		</Args>
-	</AdminNotice>
-	<!-- ********************************************************************** -->
-	<IsDefault>
-		<Head>Осн. в гр.</Head>
-		<Prompt>Новые аккаунты, в данной группе серверов, будут создаваться на данном сервере</Prompt>
-		<Comp>Formats/Logic</Comp>
-		<Args>
-			<ListElement>%IsDefault%</ListElement>
-		</Args>
-	</IsDefault>
-	<!-- ********************************************************************** -->
-	<IsActive>
-		<Head>Акт.</Head>
-		<Prompt>Сервер активен - будет участвовать в опросах, на нём будут работать сервисы, создаваться новые аккаунты и т.п.</Prompt>
-		<Comp>BooleanEdit</Comp>
-		<Args>
-			<ListElement>Servers</ListElement>
-			<ListElement>IsActive</ListElement>
-			<ListElement>%ID%</ListElement>
-			<ListElement>%IsActive%</ListElement>
-
-		</Args>
-	</IsActive>
-	<!-- ********************************************************************** -->
-	<Orders>
-		<Head>Зак.</Head>
-		<Prompt>Кол-во заказов находящихся на данном сервере</Prompt>
-		<Alias>(SELECT COUNT(*) FROM `Orders` WHERE `Servers`.`ID` = `Orders`.`ServerID`)</Alias>
-		<Attribs>
-			<style>text-align:right;</style>
-		</Attribs>
-	</Orders>
-	<!-- ********************************************************************** -->
-	<Reputation>
-		<Head>-</Head>
-		<Comp>Servers/Reputation</Comp>
-		<Args>
-			<ListElement>%Address%</ListElement>
-		</Args>
-	</Reputation>
-	<!-- ********************************************************************** -->
-	<IsOK>
-		<Head>-</Head>
-		<Comp>Servers/IsOK</Comp>
-		<Args>
-			<ListElement>%IsOK%</ListElement>
-			<ListElement>%ID%</ListElement>
-		</Args>
-		<Alias>IsOK</Alias>
-	</IsOK>
-	<!-- ********************************************************************** -->
-	<SortID>
-		<Args>
-			<TableID>Servers</TableID>
-		</Args>
-	</SortID>
-	<!-- ********************************************************************** -->
-	<ExtendedMenu>
-		<IsSorted>0</IsSorted>
-		<Comp>Menus/List</Comp>
-		<Args>
-			<ListElement>Administrator/ListMenu/Server.xml</ListElement>
-			<Replace>
-				<ID>%ID%</ID>
-				<ServiceID>%ServiceID%</ServiceID>
-			</Replace>
-		</Args>
-	</ExtendedMenu>
-<!-- ********************************************************************** -->
-</Columns>
-<!-- ********************************************************************** -->
-<!-- ********************************************************************** -->
-<Sequence>
-	<ListElement>SelectID</ListElement>
-	<ListElement>Edit</ListElement>
-	<ListElement>ExtendedMenu</ListElement>
-	<ListElement>ServersGroup</ListElement>
-	<ListElement>TemplateID</ListElement>
-	<ListElement>Protocol</ListElement>
-	<ListElement>AdminNotice</ListElement>
-	<ListElement>Address</ListElement>
-	<ListElement>Port</ListElement>
-	<ListElement>IsDefault</ListElement>
-	<ListElement>IsActive</ListElement>
-	<ListElement>Orders</ListElement>
-	<ListElement>Reputation</ListElement>
-	<ListElement>IsOK</ListElement>
-	<ListElement>SortID</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Edit</ListElement>
+		<ListElement>ExtendedMenu</ListElement>
+		<ListElement>ServersGroup</ListElement>
+		<ListElement>TemplateID</ListElement>
+		<ListElement>Protocol</ListElement>
+		<ListElement>AdminNotice</ListElement>
+		<ListElement>Address</ListElement>
+		<ListElement>Port</ListElement>
+		<ListElement>IsDefault</ListElement>
+		<ListElement>IsActive</ListElement>
+		<ListElement>Orders</ListElement>
+		<ListElement>Reputation</ListElement>
+		<ListElement>IsOK</ListElement>
+		<ListElement>SortID</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

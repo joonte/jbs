@@ -1,121 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<RootID>DSOrders</RootID>
-<Cut>
- <Comps>
-  <Before>
-   <DateSelect />
-   <PatternOut />
-   <Search />
-   <DSSearch />
-  </Before>
-  <After>
-   <StatusSet />
-  </After>
- </Comps>
- <Sequence />
-</Cut>
-<!-- *********************************************************************** -->
-<Source>
- <Conditions>
-  <Where>
-   <UniqID>`UserID` = @local.__USER_ID</UniqID>
-  </Where>
-  <Message>У Вас нет заказов на аренду сервера.</Message>
- </Conditions>
- <Adding>
-  <Message>По данному договору заказов на аренду серверов не обнаружено.</Message>
- </Adding>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <ContractFilter>
-   <Comp>Contracts/SelectFilter</Comp>
-   <Args type="array" />
-  </ContractFilter>
- </Before>
-</Comps>
-<!-- *********************************************************************** -->
-<Columns>
- <Info>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/DSOrderInfo</ListElement>
-   <ListElement>
-    <DSOrderID>%ID%</DSOrderID>
-   </ListElement>
-   <ListElement>Дополнительная информация</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Info>
- <!-- ********************************************************************** -->
- <Pay>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/DSOrderPay</ListElement>
-   <ListElement>
-    <DSOrderID>%ID%</DSOrderID>
-   </ListElement>
-   <ListElement>Оплатить заказ</ListElement>
-   <ListElement>Pay.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Pay>
- <!-- ********************************************************************** -->
- <!-- ********************************************************************** -->
- <!-- ********************************************************************** -->
- <PasswordChange>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/DSPasswordChange</ListElement>
-   <ListElement>
-    <DSOrderID>%ID%</DSOrderID>
-   </ListElement>
-   <ListElement>Сменить пароль</ListElement>
-   <ListElement>Password.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </PasswordChange>
- <!-- *********************************************************************** -->
- <ExtendedMenu>
-  <IsSorted>0</IsSorted>
-  <Comp>Menus/List</Comp>
-  <Args>
-   <ListElement>User/ListMenu/DSOrder.xml</ListElement>
-   <Replace>
-    <ServiceOrderID>%ID%</ServiceOrderID>
-    <ServiceID>%ServiceID%</ServiceID>
-   </Replace>
-  </Args>
- </ExtendedMenu>
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>Info</ListElement>
- <ListElement>Pay</ListElement>
- <ListElement>ExtendedMenu</ListElement>
- <ListElement>Number</ListElement>
- <ListElement>IP</ListElement>
- <ListElement>Scheme</ListElement>
- <ListElement>Expiration</ListElement>
- <ListElement>Status</ListElement>
- <ListElement>StatusOver</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<RootID>DSOrders</RootID>
+	<Cut>
+		<Comps>
+			<Before>
+				<DateSelect/>
+				<PatternOut/>
+				<Search/>
+				<DSSearch/>
+			</Before>
+			<After>
+				<StatusSet/>
+			</After>
+		</Comps>
+		<Sequence/>
+	</Cut>
+	<!-- *********************************************************************** -->
+	<Source>
+		<Conditions>
+			<Where>
+				<UniqID>`UserID` = @local.__USER_ID</UniqID>
+			</Where>
+			<Message>У Вас нет заказов на аренду сервера.</Message>
+		</Conditions>
+		<Adding>
+			<Message>По данному договору заказов на аренду серверов не обнаружено.</Message>
+		</Adding>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<ContractFilter>
+				<Comp>Contracts/SelectFilter</Comp>
+				<Args type="array"/>
+			</ContractFilter>
+		</Before>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<Info>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/DSOrderInfo</ListElement>
+				<ListElement>
+					<DSOrderID>%ID%</DSOrderID>
+				</ListElement>
+				<ListElement>Дополнительная информация</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Info>
+		<!-- ********************************************************************** -->
+		<Pay>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/DSOrderPay</ListElement>
+				<ListElement>
+					<DSOrderID>%ID%</DSOrderID>
+				</ListElement>
+				<ListElement>Оплатить заказ</ListElement>
+				<ListElement>Pay.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Pay>
+		<!-- ********************************************************************** -->
+		<!-- ********************************************************************** -->
+		<!-- ********************************************************************** -->
+		<PasswordChange>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/DSPasswordChange</ListElement>
+				<ListElement>
+					<DSOrderID>%ID%</DSOrderID>
+				</ListElement>
+				<ListElement>Сменить пароль</ListElement>
+				<ListElement>Password.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</PasswordChange>
+		<!-- *********************************************************************** -->
+		<ExtendedMenu>
+			<IsSorted>0</IsSorted>
+			<Comp>Menus/List</Comp>
+			<Args>
+				<ListElement>User/ListMenu/DSOrder.xml</ListElement>
+				<Replace>
+					<ServiceOrderID>%ID%</ServiceOrderID>
+					<ServiceID>%ServiceID%</ServiceID>
+				</Replace>
+			</Args>
+		</ExtendedMenu>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Info</ListElement>
+		<ListElement>Pay</ListElement>
+		<ListElement>ExtendedMenu</ListElement>
+		<ListElement>Number</ListElement>
+		<ListElement>IP</ListElement>
+		<ListElement>Scheme</ListElement>
+		<ListElement>Expiration</ListElement>
+		<ListElement>Status</ListElement>
+		<ListElement>StatusOver</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

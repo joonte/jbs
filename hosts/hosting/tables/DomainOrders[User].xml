@@ -1,136 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<RootID>DomainOrders</RootID>
-<Cut>
- <Comps>
-  <Before>
-   <PatternOut />
-   <Search />
-  </Before>
-  <After>
-   <StatusSet />
-  </After>
- </Comps>
- <Sequence />
-</Cut>
-<!-- *********************************************************************** -->
-<Source>
- <Conditions>
-  <Where>
-   <UniqID>`UserID` = @local.__USER_ID</UniqID>
-  </Where>
-  <Message>У Вас нет заказов на домены.</Message>
- </Conditions>
- <Adding>
-  <Message>По данному договору заказов на домены не обнаружено.</Message>
- </Adding>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <ContractFilter>
-   <Comp>Contracts/SelectFilter</Comp>
-   <Args type="array" />
-  </ContractFilter>
- </Before>
-</Comps>
-<!-- *********************************************************************** -->
-<Columns>
- <Info>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/DomainOrderInfo</ListElement>
-   <ListElement>
-    <DomainOrderID>%ID%</DomainOrderID>
-   </ListElement>
-   <ListElement>Дополнительная информация</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Info>
- <!-- ********************************************************************** -->
- <Pay>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/DomainOrderPay</ListElement>
-   <ListElement>
-    <DomainOrderID>%ID%</DomainOrderID>
-   </ListElement>
-   <ListElement>Оплатить заказ</ListElement>
-   <ListElement>Pay.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Pay>
- <!-- ********************************************************************** -->
- <NsChange>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/DomainOrderNsChange</ListElement>
-   <ListElement>
-    <DomainOrderID>%ID%</DomainOrderID>
-   </ListElement>
-   <ListElement>Сменить серверы имен</ListElement>
-   <ListElement>SchemeChange.png</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </NsChange>
- <!-- ********************************************************************** -->
- <DomainSelectOwner>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/DomainSelectOwner</ListElement>
-   <ListElement>
-    <DomainOrderID>%ID%</DomainOrderID>
-   </ListElement>
-   <ListElement>Определить владельца домена</ListElement>
-   <ListElement>DomainSelectOwner.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </DomainSelectOwner>
- <!-- ********************************************************************** -->
- <ExtendedMenu>
-  <IsSorted>0</IsSorted>
-  <Comp>Menus/List</Comp>
-  <Args>
-   <ListElement>User/ListMenu/DomainOrder.xml</ListElement>
-   <Replace>
-    <ServiceOrderID>%ID%</ServiceOrderID>
-    <ServiceID>%ServiceID%</ServiceID>
-   </Replace>
-  </Args>
- </ExtendedMenu>
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>Info</ListElement>
- <ListElement>Pay</ListElement>
- <ListElement>NsChange</ListElement>
- <ListElement>DomainSelectOwner</ListElement>
- <ListElement>ExtendedMenu</ListElement>
- <ListElement>Number</ListElement>
- <ListElement>DomainName</ListElement>
- <ListElement>Scheme</ListElement>
- <ListElement>Expiration</ListElement>
- <ListElement>Status</ListElement>
- <ListElement>StatusOver</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<RootID>DomainOrders</RootID>
+	<Cut>
+		<Comps>
+			<Before>
+				<PatternOut/>
+				<Search/>
+			</Before>
+			<After>
+				<StatusSet/>
+			</After>
+		</Comps>
+		<Sequence/>
+	</Cut>
+	<!-- *********************************************************************** -->
+	<Source>
+		<Conditions>
+			<Where>
+				<UniqID>`UserID` = @local.__USER_ID</UniqID>
+			</Where>
+			<Message>У Вас нет заказов на домены.</Message>
+		</Conditions>
+		<Adding>
+			<Message>По данному договору заказов на домены не обнаружено.</Message>
+		</Adding>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<ContractFilter>
+				<Comp>Contracts/SelectFilter</Comp>
+				<Args type="array"/>
+			</ContractFilter>
+		</Before>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<Info>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/DomainOrderInfo</ListElement>
+				<ListElement>
+					<DomainOrderID>%ID%</DomainOrderID>
+				</ListElement>
+				<ListElement>Дополнительная информация</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Info>
+		<!-- ********************************************************************** -->
+		<Pay>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/DomainOrderPay</ListElement>
+				<ListElement>
+					<DomainOrderID>%ID%</DomainOrderID>
+				</ListElement>
+				<ListElement>Оплатить заказ</ListElement>
+				<ListElement>Pay.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Pay>
+		<!-- ********************************************************************** -->
+		<NsChange>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/DomainOrderNsChange</ListElement>
+				<ListElement>
+					<DomainOrderID>%ID%</DomainOrderID>
+				</ListElement>
+				<ListElement>Сменить серверы имен</ListElement>
+				<ListElement>SchemeChange.png</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</NsChange>
+		<!-- ********************************************************************** -->
+		<DomainSelectOwner>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/DomainSelectOwner</ListElement>
+				<ListElement>
+					<DomainOrderID>%ID%</DomainOrderID>
+				</ListElement>
+				<ListElement>Определить владельца домена</ListElement>
+				<ListElement>DomainSelectOwner.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</DomainSelectOwner>
+		<!-- ********************************************************************** -->
+		<ExtendedMenu>
+			<IsSorted>0</IsSorted>
+			<Comp>Menus/List</Comp>
+			<Args>
+				<ListElement>User/ListMenu/DomainOrder.xml</ListElement>
+				<Replace>
+					<ServiceOrderID>%ID%</ServiceOrderID>
+					<ServiceID>%ServiceID%</ServiceID>
+				</Replace>
+			</Args>
+		</ExtendedMenu>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Info</ListElement>
+		<ListElement>Pay</ListElement>
+		<ListElement>NsChange</ListElement>
+		<ListElement>DomainSelectOwner</ListElement>
+		<ListElement>ExtendedMenu</ListElement>
+		<ListElement>Number</ListElement>
+		<ListElement>DomainName</ListElement>
+		<ListElement>Scheme</ListElement>
+		<ListElement>Expiration</ListElement>
+		<ListElement>Status</ListElement>
+		<ListElement>StatusOver</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

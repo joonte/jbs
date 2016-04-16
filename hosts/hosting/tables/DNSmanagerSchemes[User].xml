@@ -6,14 +6,14 @@
 	<Cut>
 		<Comps>
 			<Before>
-				<PatternOut />
-				<Search />
+				<PatternOut/>
+				<Search/>
 			</Before>
 			<After>
-				<Delete />
+				<Delete/>
 			</After>
 		</Comps>
-		<Sequence />
+		<Sequence/>
 	</Cut>
 	<!-- *********************************************************************** -->
 	<Source>
@@ -50,7 +50,7 @@
 		<ListElement>Name</ListElement>
 		<ListElement>ServersGroup</ListElement>
 		<ListElement>CostMonth</ListElement>
-		<ListElement>DomainLimit</ListElement>	
+		<ListElement>DomainLimit</ListElement>
 	</Sequence>
 	<!-- *********************************************************************** -->
 </XML>

@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<RootID>HostingSchemes</RootID>
-<Cut>
- <Comps>
-  <Before>
-   <PatternOut />
-   <Search />
-  </Before>
-  <After>
-   <Delete />
-  </After>
- </Comps>
- <Sequence />
-</Cut>
-<!-- *********************************************************************** -->
-<Source>
- <Conditions>
-  <Where>
-   <UniqID>(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH)) AND `IsActive` = 'yes'</UniqID>
-  </Where>
-  <Message>Для Вас не определены тарифы на хостинг.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Columns>
- <!-- ********************************************************************** -->
- <HostingOrder>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/HostingOrder</ListElement>
-   <ListElement>
-    <HostingSchemeID>%ID%</HostingSchemeID>
-   </ListElement>
-   <ListElement>Новый заказ</ListElement>
-   <ListElement>Add.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </HostingOrder>
- <!-- ********************************************************************** -->
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>Info</ListElement>
- <ListElement>HostingOrder</ListElement>
- <ListElement>Name</ListElement>
- <ListElement>ServersGroup</ListElement>
- <ListElement>CostMonth</ListElement>
- <ListElement>QuotaDisk</ListElement>
- <ListElement>QuotaDBs</ListElement>
- <ListElement>QuotaFTP</ListElement>
- <ListElement>QuotaEmail</ListElement>
- <ListElement>mailrate</ListElement>
- <ListElement>QuotaDomains</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<RootID>HostingSchemes</RootID>
+	<Cut>
+		<Comps>
+			<Before>
+				<PatternOut/>
+				<Search/>
+			</Before>
+			<After>
+				<Delete/>
+			</After>
+		</Comps>
+		<Sequence/>
+	</Cut>
+	<!-- *********************************************************************** -->
+	<Source>
+		<Conditions>
+			<Where>
+				<UniqID>(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH)) AND `IsActive` = 'yes'</UniqID>
+			</Where>
+			<Message>Для Вас не определены тарифы на хостинг.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<!-- ********************************************************************** -->
+		<HostingOrder>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/HostingOrder</ListElement>
+				<ListElement>
+					<HostingSchemeID>%ID%</HostingSchemeID>
+				</ListElement>
+				<ListElement>Новый заказ</ListElement>
+				<ListElement>Add.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</HostingOrder>
+		<!-- ********************************************************************** -->
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>Info</ListElement>
+		<ListElement>HostingOrder</ListElement>
+		<ListElement>Name</ListElement>
+		<ListElement>ServersGroup</ListElement>
+		<ListElement>CostMonth</ListElement>
+		<ListElement>QuotaDisk</ListElement>
+		<ListElement>QuotaDBs</ListElement>
+		<ListElement>QuotaFTP</ListElement>
+		<ListElement>QuotaEmail</ListElement>
+		<ListElement>mailrate</ListElement>
+		<ListElement>QuotaDomains</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

@@ -25,9 +25,9 @@
 			<ListElement>IsActive</ListElement>
 			<ListElement>SortID</ListElement>
 		</ColumnsIDs>
-	<Conditions>
-		<Message>Тарифов на хостинг не обнаружено.</Message>
-	</Conditions>
+		<Conditions>
+			<Message>Тарифов на хостинг не обнаружено.</Message>
+		</Conditions>
 	</Source>
 	<!-- *********************************************************************** -->
 	<Comps>
@@ -66,158 +66,157 @@
 			</Delete>
 		</After>
 	</Comps>
-
-<!-- *********************************************************************** -->
-<Query>
- <SortOn>SortID</SortOn>
- <IsDesc>0</IsDesc>
-</Query>
-<!-- *********************************************************************** -->
-<Columns>
- <SelectID>
-  <Args>
-   <TableID>HostingSchemes</TableID>
-  </Args>
- </SelectID>
- <!-- ********************************************************************** -->
- <Info>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/HostingSchemeInfo</ListElement>
-   <ListElement>
-    <HostingSchemeID>%ID%</HostingSchemeID>
-   </ListElement>
-   <ListElement>Дополнительная информация</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Info>
- <!-- ********************************************************************** -->
- <Edit>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/Administrator/HostingSchemeEdit</ListElement>
-   <ListElement>
-    <HostingSchemeID>%ID%</HostingSchemeID>
-   </ListElement>
-   <ListElement>Редактировать тариф</ListElement>
-   <ListElement>Edit.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Edit>
- <!-- ********************************************************************** -->
- <Name>
-  <Head>Тариф</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Name%</ListElement>
-   <Length>10</Length>
-  </Args>
-  <Alias>CONCAT(IF(`IsReselling` = 'yes','*',''),`Name`)</Alias>
- </Name>
- <!-- ********************************************************************** -->
- <Group>
-  <Head>Группа</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Group%</ListElement>
-   <Length>15</Length>
-  </Args>
-  <Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `GroupID`)</Alias>
- </Group>
- <!-- ********************************************************************** -->
- <User>
-  <Head>Польз.</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%User%</ListElement>
-   <Length>15</Length>
-  </Args>
-  <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `UserID`)</Alias>
- </User>
- <!-- ********************************************************************** -->
- <CostMonth>
-  <Head>Цена</Head>
-  <Prompt>Цена в рублях за 1 месяц</Prompt>
-  <Comp>Formats/Currency</Comp>
-  <Args>
-   <ListElement>%CostMonth%</ListElement>
-  </Args>
-<!--  <Attribs>
+	<!-- *********************************************************************** -->
+	<Query>
+		<SortOn>SortID</SortOn>
+		<IsDesc>0</IsDesc>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<SelectID>
+			<Args>
+				<TableID>HostingSchemes</TableID>
+			</Args>
+		</SelectID>
+		<!-- ********************************************************************** -->
+		<Info>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/HostingSchemeInfo</ListElement>
+				<ListElement>
+					<HostingSchemeID>%ID%</HostingSchemeID>
+				</ListElement>
+				<ListElement>Дополнительная информация</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Info>
+		<!-- ********************************************************************** -->
+		<Edit>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/Administrator/HostingSchemeEdit</ListElement>
+				<ListElement>
+					<HostingSchemeID>%ID%</HostingSchemeID>
+				</ListElement>
+				<ListElement>Редактировать тариф</ListElement>
+				<ListElement>Edit.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Edit>
+		<!-- ********************************************************************** -->
+		<Name>
+			<Head>Тариф</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Name%</ListElement>
+				<Length>10</Length>
+			</Args>
+			<Alias>CONCAT(IF(`IsReselling` = 'yes','*',''),`Name`)</Alias>
+		</Name>
+		<!-- ********************************************************************** -->
+		<Group>
+			<Head>Группа</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Group%</ListElement>
+				<Length>15</Length>
+			</Args>
+			<Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `GroupID`)</Alias>
+		</Group>
+		<!-- ********************************************************************** -->
+		<User>
+			<Head>Польз.</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%User%</ListElement>
+				<Length>15</Length>
+			</Args>
+			<Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `UserID`)</Alias>
+		</User>
+		<!-- ********************************************************************** -->
+		<CostMonth>
+			<Head>Цена</Head>
+			<Prompt>Цена в рублях за 1 месяц</Prompt>
+			<Comp>Formats/Currency</Comp>
+			<Args>
+				<ListElement>%CostMonth%</ListElement>
+			</Args>
+			<!--  <Attribs>
    <style>text-align:right;</style>
   </Attribs> -->
- </CostMonth>
- <!-- ********************************************************************** -->
- <ServersGroup>
-  <Head>Гр. серв.</Head>
-  <Prompt>Расположение сервера размещения</Prompt>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%ServersGroup%</ListElement>
-   <Length>10</Length>
-  </Args>
-  <Alias>(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`)</Alias>
- </ServersGroup>
- <!-- ********************************************************************** -->
- <OrderLink>
-  <Head>Ссылка</Head>
-  <Prompt>Ссылка на заказ этого тарифа, для сайта</Prompt>
-  <Comp>Formats/Order/OrderLink</Comp>
-  <Args>
-   <SchemeID>%ID%</SchemeID>
-   <Code>Hosting</Code>
-  </Args>
- </OrderLink>
- <!-- ********************************************************************** -->
- <QuotaDisk>
-  <Head>Место</Head>
-  <Prompt>Объем выделяемого пространства в мегабайтах</Prompt>
-<!--  <Attribs>
+		</CostMonth>
+		<!-- ********************************************************************** -->
+		<ServersGroup>
+			<Head>Гр. серв.</Head>
+			<Prompt>Расположение сервера размещения</Prompt>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%ServersGroup%</ListElement>
+				<Length>10</Length>
+			</Args>
+			<Alias>(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`)</Alias>
+		</ServersGroup>
+		<!-- ********************************************************************** -->
+		<OrderLink>
+			<Head>Ссылка</Head>
+			<Prompt>Ссылка на заказ этого тарифа, для сайта</Prompt>
+			<Comp>Formats/Order/OrderLink</Comp>
+			<Args>
+				<SchemeID>%ID%</SchemeID>
+				<Code>Hosting</Code>
+			</Args>
+		</OrderLink>
+		<!-- ********************************************************************** -->
+		<QuotaDisk>
+			<Head>Место</Head>
+			<Prompt>Объем выделяемого пространства в мегабайтах</Prompt>
+			<!--  <Attribs>
    <style>text-align:right;</style>
   </Attribs> -->
- </QuotaDisk>
- <!-- ********************************************************************** -->
- <QuotaDomains>
-  <Head>Дом.</Head>
-  <Prompt>Кол-во дополнительных доменов</Prompt>
-<!--  <Attribs>
+		</QuotaDisk>
+		<!-- ********************************************************************** -->
+		<QuotaDomains>
+			<Head>Дом.</Head>
+			<Prompt>Кол-во дополнительных доменов</Prompt>
+			<!--  <Attribs>
    <style>text-align:right;</style>
   </Attribs> -->
- </QuotaDomains>
- <!-- ********************************************************************** -->
- <QuotaEmail>
-  <Head>Почт.</Head>
-  <Prompt>Кол-во почтовых ящиков</Prompt>
-<!--  <Attribs>
+		</QuotaDomains>
+		<!-- ********************************************************************** -->
+		<QuotaEmail>
+			<Head>Почт.</Head>
+			<Prompt>Кол-во почтовых ящиков</Prompt>
+			<!--  <Attribs>
    <style>text-align:right;</style>
   </Attribs> -->
- </QuotaEmail>
- <!-- ********************************************************************** -->
- <QuotaDBs>
-  <Head>Баз</Head>
-  <Prompt>Кол-во баз данных</Prompt>
-<!--  <Attribs>
+		</QuotaEmail>
+		<!-- ********************************************************************** -->
+		<QuotaDBs>
+			<Head>Баз</Head>
+			<Prompt>Кол-во баз данных</Prompt>
+			<!--  <Attribs>
    <style>text-align:right;</style>
   </Attribs> -->
- </QuotaDBs>
- <!-- ********************************************************************** -->
-  <QuotaFTP>
-  <Head>FTP</Head>
-  <Prompt>Кол-во ftp-аккаунтов</Prompt>
- </QuotaFTP>
- <!-- ********************************************************************** -->
- <mailrate>
-  <Head>Email</Head>
-  <Prompt>Максимальное количество отправляемых писем, в час</Prompt>
- </mailrate>
- <!-- ********************************************************************** -->
+		</QuotaDBs>
+		<!-- ********************************************************************** -->
+		<QuotaFTP>
+			<Head>FTP</Head>
+			<Prompt>Кол-во ftp-аккаунтов</Prompt>
+		</QuotaFTP>
+		<!-- ********************************************************************** -->
+		<mailrate>
+			<Head>Email</Head>
+			<Prompt>Максимальное количество отправляемых писем, в час</Prompt>
+		</mailrate>
+		<!-- ********************************************************************** -->
 		<IsActive>
 			<Head>Актив.</Head>
 			<Prompt>Тариф активен?</Prompt>
