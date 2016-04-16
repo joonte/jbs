@@ -645,7 +645,7 @@
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</uz>
 	<me>
-		<Server>me.whois-servers.net</Server>
+		<Server>whois.nic.me</Server>
 		<Name>me</Name>
 		<Available>NOT\sFOUND</Available>
 		<NotAvailable>Default</NotAvailable>
