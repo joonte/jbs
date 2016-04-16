@@ -67,6 +67,7 @@
 							<Name>Существующие заказы</Name>
 							<Where>`StatusID` != 'Waiting' AND `StatusID` != 'Deleted'</Where>
 						</Exists>
+						<!-- ****************************************************************** -->
 						<Waiting>
 							<Name>Заказы для оплаты</Name>
 							<Where>`StatusID` = 'Waiting'</Where>
