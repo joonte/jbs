@@ -26,7 +26,7 @@ if(!Preg_Match($Regulars['Email'],$Email))
 if(!Preg_Match($Regulars['Password'],$Password))
 	return new gException('WRONG_PASSWORD','Недопустимый пароль');
 #-------------------------------------------------------------------------------
-$Users = DB_Select('Users',Array('ID','Name','Email','Watchword','UniqID','IsActive','EnterIP','EnterDate'),Array('SortOn'=>'ID','Where'=>SPrintF("Email = '%s'",StrToLower($Email))));
+$Users = DB_Select('Users',Array('ID','Name','Email','Watchword','UniqID','IsActive','LockReason','EnterIP','EnterDate'),Array('SortOn'=>'ID','Where'=>SPrintF("Email = '%s'",StrToLower($Email))));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Users)){
 case 'error':
@@ -43,7 +43,7 @@ default:
 $User = Current($Users);
 #-------------------------------------------------------------------------------
 if(!$User['IsActive'])
-	return new gException('USER_UNACTIVE','Пользователь отключен');
+	return new gException('USER_UNACTIVE',($User['LockReason'])?$User['LockReason']:'Пользователь отключен');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($User['Watchword'] != Md5($Password) && $User['Watchword'] != Sha1($Password)){

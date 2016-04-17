@@ -21,7 +21,7 @@ $Columns = Array(
 			'ID','RegisterDate','Name','GroupID','Email','EmailConfirmed',
 			'Sign','OwnerID','IsManaged','LayPayMaxDays',
 			'LayPayMaxSumm','LayPayThreshold','EnterDate','EnterIP',
-			'Rating','IsActive','IsNotifies','IsHidden','IsProtected','AdminNotice','Params',
+			'Rating','IsActive','LockReason','IsNotifies','IsHidden','IsProtected','AdminNotice','Params',
 			'(SELECT COUNT(*) FROM `OrdersOwners` WHERE `OrdersOwners`.`UserID`=`Users`.`ID`) AS `NumOrders`',
 			'(SELECT COUNT(*) FROM `OrdersOwners` WHERE `OrdersOwners`.`UserID`=`Users`.`ID` AND `OrdersOwners`.`StatusID`="Active") AS `NumActiveOrders`',
 			'(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID`=`Users`.`ID`) AS `TotalPayments`',
@@ -239,6 +239,17 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Активный пользователь',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($User['LockReason']){
+	#-------------------------------------------------------------------------------
+	$LockReason = Comp_Load('Formats/String',$User['LockReason'],25);
+	if(Is_Error($LockReason))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array('Причина блокировки',$LockReason);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Formats/Logic',$User['IsNotifies']);

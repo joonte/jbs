@@ -14,23 +14,24 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 #-------------------------------------------------------------------------------
 $Args = Args();
 #-------------------------------------------------------------------------------
-$UserID          = (integer) @$Args['UserID'];
-$Name            =  (string) @$Args['Name'];
-$Email           =  (string) @$Args['Email'];
-$Password        =  (string) @$Args['Password'];
-$GroupID         = (integer) @$Args['GroupID'];
-$OwnerID         = (integer) @$Args['OwnerID'];
-$IsManaged       = (boolean) @$Args['IsManaged'];
-$IsInheritGroup  = (boolean) @$Args['IsInheritGroup'];
-$LayPayMaxDays   = (integer) @$Args['LayPayMaxDays'];
-$LayPayMaxSumm   =  (double) @$Args['LayPayMaxSumm'];
-$LayPayThreshold =  (double) @$Args['LayPayThreshold'];
-$Rating          =  (double) @$Args['Rating'];
-$IsActive        = (boolean) @$Args['IsActive'];
-$IsNotifies      = (boolean) @$Args['IsNotifies'];
-$IsHidden        = (boolean) @$Args['IsHidden'];
-$IsProtected     = (boolean) @$Args['IsProtected'];
-$AdminNotice     =  (string) @$Args['AdminNotice'];
+$UserID		= (integer) @$Args['UserID'];
+$Name		=  (string) @$Args['Name'];
+$Email		=  (string) @$Args['Email'];
+$Password	=  (string) @$Args['Password'];
+$GroupID	= (integer) @$Args['GroupID'];
+$OwnerID	= (integer) @$Args['OwnerID'];
+$IsManaged	= (boolean) @$Args['IsManaged'];
+$IsInheritGroup	= (boolean) @$Args['IsInheritGroup'];
+$LayPayMaxDays	= (integer) @$Args['LayPayMaxDays'];
+$LayPayMaxSumm	=  (double) @$Args['LayPayMaxSumm'];
+$LayPayThreshold=  (double) @$Args['LayPayThreshold'];
+$Rating		=  (double) @$Args['Rating'];
+$IsActive	= (boolean) @$Args['IsActive'];
+$LockReason	=  (string) @$Args['LockReason'];
+$IsNotifies	= (boolean) @$Args['IsNotifies'];
+$IsHidden	= (boolean) @$Args['IsHidden'];
+$IsProtected	= (boolean) @$Args['IsProtected'];
+$AdminNotice	=  (string) @$Args['AdminNotice'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Name = Trim($Name);
@@ -133,6 +134,7 @@ $IUser = Array(
 		'LayPayThreshold'	=> $LayPayThreshold,
 		'Rating'		=> $Rating,
 		'IsActive'		=> $IsActive,
+		'LockReason'		=> $LockReason,
 		'IsNotifies'		=> $IsNotifies,
 		'IsHidden'		=> $IsHidden,
 		'IsProtected'		=> $IsProtected,

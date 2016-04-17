@@ -21,7 +21,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$User = DB_Select('Users',Array('ID','Email','Name','GroupID','OwnerID','IsManaged','IsInheritGroup','LayPayMaxDays','LayPayMaxSumm','LayPayThreshold','Rating','IsActive','IsNotifies','IsHidden','IsProtected','AdminNotice','Params'),Array('UNIQ','ID'=>$UserID));
+$User = DB_Select('Users',Array('ID','Email','Name','GroupID','OwnerID','IsManaged','IsInheritGroup','LayPayMaxDays','LayPayMaxSumm','LayPayThreshold','Rating','IsActive','LockReason','IsNotifies','IsHidden','IsProtected','AdminNotice','Params'),Array('UNIQ','ID'=>$UserID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($User)){
 case 'error':
@@ -209,14 +209,24 @@ if(Is_Error($Comp))
 $Table[] = Array('Рейтинг',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes','onclick'=>"form.LockReason.disabled = checked;"));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($User['IsActive'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsActive\'); return false;'),'Активный пользователь'),$Comp);
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsActive\'); document.getElementsByName(\'LockReason\')[0].disabled = document.getElementsByName(\'IsActive\')[0].checked?true:false; return false;'),'Активный пользователь'),$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'LockReason','value'=>$User['LockReason'],'prompt'=>'Сообщение для пользователя, отображаемое при попытке входа'));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if($User['IsActive'])
+	$Comp->AddAttribs(Array('disabled'=>'yes'));
+#-------------------------------------------------------------------------------
+$Table[] = Array('Причина блокировки',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsNotifies','value'=>'yes'));
