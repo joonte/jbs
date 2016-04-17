@@ -42,10 +42,8 @@ if($DSSchemeID){
 			'CostMonth'			=> 3000,
 			'CostInstall'			=> 300,
 			'ServerID'			=> 1,
-			'NumServers'			=> 10,
-			'RemainServers'			=> 10,
-			'IsCalculateNumServers'		=> TRUE,
 			'IsActive'			=> TRUE,
+			'IsBroken'			=> FALSE,
 			'IsProlong'			=> TRUE,
 			'MinDaysPay'			=> 31,
 			'MinDaysProlong'		=> 14,
@@ -155,30 +153,6 @@ if(Is_Error($Comp))
 $Table[] = Array('Управляющий сервер',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'NumServers','value'=>$DSScheme['NumServers']));
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array('Всего серверов',$Comp);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'RemainServers','value'=>$DSScheme['RemainServers']));
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array('Осталось серверов',$Comp);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsCalculateNumServers','value'=>'yes'));
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-if($DSScheme['IsCalculateNumServers'])
-	$Comp->AddAttribs(Array('checked'=>'yes'));
-#-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsCalculateNumServers\'); return false;'),'Автоматический пересчёт числа серверов'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'тариф отключается, если нет серверов')),$Comp);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
@@ -187,6 +161,16 @@ if($DSScheme['IsActive'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsActive\'); return false;'),'Тариф активен'),$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsBroken','value'=>'yes'));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if($DSScheme['IsBroken'])
+	$Comp->AddAttribs(Array('checked'=>'yes'));
+#-------------------------------------------------------------------------------
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsBroken\'); return false;'),'Сервер сломан'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProlong','value'=>'yes'));
@@ -316,6 +300,13 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Предустановленная ОС',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input', Array('type'=>'text','name'=>'Switch','value'=>$DSScheme['Switch'],'prompt'=>'Порт коммутатора к которому подключен сервер. Используется только при ручном управлении через собственные скрипты, поэтому вводить можно в каком угодно виде, хоть номер порта, хоть с указанием свича - обрабатываться введённое значение будет вашими скриптами. Например: "24" или "ex2200 ge-0/0/24"'));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Порт коммутатора',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Описание сервера, для пользователя';
