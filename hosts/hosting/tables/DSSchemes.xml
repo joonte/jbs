@@ -18,8 +18,6 @@
 			<ListElement>ID</ListElement>
 			<ListElement>Name</ListElement>
 			<ListElement>CostMonth</ListElement>
-			<ListElement>NumServers</ListElement>
-			<ListElement>RemainServers</ListElement>
 			<ListElement>CPU</ListElement>
 			<ListElement>ram</ListElement>
 			<ListElement>raid</ListElement>
@@ -176,22 +174,6 @@
 			</Attribs>
 		</CostMonth>
 		<!-- ********************************************************************** -->
-		<NumServers>
-			<Head>Вс.</Head>
-			<Prompt>Общее число таких серверов</Prompt>
-			<Attribs>
-				<style>text-align:right;</style>
-			</Attribs>
-		</NumServers>
-		<!-- ********************************************************************** -->
-		<RemainServers>
-			<Head>Ост.</Head>
-			<Prompt>Сколько серверов осталось</Prompt>
-			<Attribs>
-				<style>text-align:right;</style>
-			</Attribs>
-		</RemainServers>
-		<!-- ********************************************************************** -->
 		<ServersGroup>
 			<Head>Гр. серв.</Head>
 			<Prompt>Датацентр</Prompt>
@@ -286,8 +268,6 @@
 		<ListElement>raid</ListElement>
 		<ListElement>disks</ListElement>
 		<ListElement>IsActive</ListElement>
-		<ListElement>NumServers</ListElement>
-		<ListElement>RemainServers</ListElement>
 		<ListElement>OrderLink</ListElement>
 		<ListElement>SortID</ListElement>
 	</Sequence>

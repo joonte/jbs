@@ -72,8 +72,6 @@
 <IsOK>Logic</IsOK>
 -->
 <!-- *********************************************************************** -->
-<!-- added by lissyara, 2011-07-05 in 09:48 MSK -->
-<IsCalculateNumServers>Logic</IsCalculateNumServers>
 <!-- added by lissyara, 2011-09-09 in 10:41 MSK -->
 <IsInternal>Logic</IsInternal>
 <IsUsed>Logic</IsUsed>
@@ -85,4 +83,6 @@
 <IsAutoProlong>Logic</IsAutoProlong>
 <!-- added by lissyara, 2015-01-25 in 19:37 for JBS-910 -->
 <IsCheckUsers>Logic</IsCheckUsers>
+<!-- added by lissyara, 2016-04-17 in 19:06 for JBS-1182 -->
+<IsBroken>Logic</IsBroken>
 </XML>

@@ -20,10 +20,10 @@ if(Is_Error($ExecuteTime))
 if(!$Settings['IsActive'])
 	return 24*3600;
 #-------------------------------------------------------------------------------
-# select all SchemeID
-$UpdateSchemes = DB_Select('DSSchemes',Array('`ID` AS `SchemeID`','NumServers','IsCalculateNumServers'));
+# достаём все неактивные тарифы, с несломанными серверами
+$Schemes = DB_Select('DSSchemes',Array('`ID` AS `SchemeID`'),Array('Where'=>Array('`IsActive` = "no"','`IsBroken` = "no"')));
 #-------------------------------------------------------------------------------
-switch(ValueOf($UpdateSchemes)){
+switch(ValueOf($Schemes)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
@@ -32,66 +32,32 @@ case 'exception':
 	return (Time() + 3600);
 	#-------------------------------------------------------------------------------
 case 'array':
-	#-------------------------------------------------------------------------------
-	foreach($UpdateSchemes as $UpdateScheme){
-		#-------------------------------------------------------------------------------
-		# get UsedServers
-		$Where = Array(
-				SPrintF('`SchemeID` = %u',$UpdateScheme['SchemeID']),
-				"`StatusID` = 'Active' OR `StatusID` = 'Suspended' OR `StatusID` = 'Frozen' OR `StatusID` = 'OnCreate'"
-				);
-		#-------------------------------------------------------------------------------
-		$IsSelect = DB_Select('DSOrders', Array('COUNT(*) AS `Used`'), Array('UNIQ', 'Where'=>$Where));
-		if(Is_Error($IsSelect))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		#Debug(SPrintF('[comp/Tasks/DSCalculateNumServers]: SchemeID = %s; Used = %s',$UpdateScheme['SchemeID'],$IsSelect['Used']));
-		#-------------------------------------------------------------------------------
-		# check config for tariff
-		if($UpdateScheme['IsCalculateNumServers']){
-			#-------------------------------------------------------------------------------
-			# compare number servers
-			if($UpdateScheme['NumServers'] < $IsSelect['Used'])
-				return ERROR | @Trigger_Error(SPrintF("[comp/DSOrders/DSCalculateNumServers]: error, NumServers (%u) < UsedServers (%u)",$UpdateScheme['NumServers'],$IsSelect['Used']));
-			#-------------------------------------------------------------------------------
-			# update number servers
-			$IsUpdate = DB_Update('DSSchemes',Array('RemainServers'=>($UpdateScheme['NumServers'] - $IsSelect['Used'])),Array('ID'=>$UpdateScheme['SchemeID']));
-			if(Is_Error($IsUpdate))
-				return ERROR | @Trigger_Error(500);
-			#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
-			# check RemainServers for this scheme - if it '0' - disable tariff
-			$RemainServers = DB_Select('DSSchemes',Array('NumServers','RemainServers','IsCalculateNumServers'),Array('UNIQ','ID'=>$UpdateScheme['SchemeID']));
-			#-------------------------------------------------------------------------------
-			switch(ValueOf($RemainServers)){
-			case 'error':
-				return ERROR | @Trigger_Error(500);
-			case 'exception':
-				return ERROR | @Trigger_Error(400);
-			case 'array':
-				#-------------------------------------------------------------------------------
-				if($RemainServers['RemainServers'] < 1){
-					#-------------------------------------------------------------------------------
-					$IsUpdate = DB_Update('DSSchemes',Array('IsActive'=>FALSE),Array('ID'=>$UpdateScheme['SchemeID']));
-					if(Is_Error($IsUpdate))
-						return ERROR | @Trigger_Error(500);
-					#-------------------------------------------------------------------------------
-				}
-				#-------------------------------------------------------------------------------
-				break;
-				#-------------------------------------------------------------------------------
-			default:
-				return ERROR | @Trigger_Error(101);
-			}
-			#-------------------------------------------------------------------------------
-		}
-		#-------------------------------------------------------------------------------
-	}
-	#-------------------------------------------------------------------------------
 	break;
-	#-------------------------------------------------------------------------------
 default:
 	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+foreach($Schemes as $Scheme){
+	#-------------------------------------------------------------------------------
+	# достаём число юзающихся серверов
+	$Where = Array(SPrintF('`SchemeID` = %u',$Scheme['SchemeID']),"`StatusID` != 'Deleted' AND `StatusID` != 'Waiting'");
+	#-------------------------------------------------------------------------------
+	$Count = DB_Count('DSOrders',Array('Where'=>$Where));
+	if(Is_Error($Count))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	# если чё-то насчитали - сервер используется. пропускаем цикл
+	if($Count)
+		continue;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	# устанавливаем тариф активным - т.к. заказов на него нет
+	$IsUpdate = DB_Update('DSSchemes',Array('IsActive'=>TRUE),Array('ID'=>$Scheme['SchemeID']));
+	if(Is_Error($IsUpdate))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

@@ -158,7 +158,7 @@ if($StepID){
 			SPrintF('(SELECT `SortID` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupSortID`',$UniqID),
 			);
 	#-------------------------------------------------------------------------------
-	$DSSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('ServersGroupSortID','SortID'),'Where'=>"`IsActive` = 'yes' AND `RemainServers` > 0"));
+	$DSSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('ServersGroupSortID','SortID'),'Where'=>"`IsActive` = 'yes'"));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($DSSchemes)){
 	case 'error':
