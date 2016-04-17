@@ -369,6 +369,7 @@ CREATE TABLE `Users` (
   `LayPayMaxSumm` decimal(11,2) default '0.00',
   `LayPayThreshold` decimal(11,2) default '0.00',
   `IsActive` enum('no','yes') default 'yes',
+  `LockReason` char(255),
   `IsNotifies` enum('no','yes') default 'yes',
   `IsHidden` enum('no','yes') default 'no',
   `IsProtected` enum('no','yes') default 'no',
