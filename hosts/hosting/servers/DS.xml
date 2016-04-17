@@ -19,13 +19,21 @@
 <SystemID>
 	<!-- *********************************************************************** -->
 	<NullSystem>
-		<Name>Ручное управление</Name>
+		<Name>Без системы управления</Name>
 		<Settings>
 			<Port>1000</Port>
 			<Protocol>tcp</Protocol>
 		</Settings>
 	</NullSystem>
 	<!-- ********************************************************************* -->
+	<Scripting>
+		<Name>Ручное управление</Name>
+		<Settings>
+			<Port>1000</Port>
+			<Protocol>tcp</Protocol>
+		</Settings>
+	</Scripting>
+	<!-- *********************************************************************** -->
 	<DCImanager5>
 		<Name>DCImanager 5</Name>
 		<Settings>
@@ -47,7 +55,8 @@
 		<Comment>Система управления</Comment>
 		<Type>Select</Type>
 		<Options>
-			<NullSystem>Ручное управление</NullSystem>
+			<NullSystem>Без системы управления</NullSystem>
+			<Scripting>Ручное управление (скрипты)</Scripting>
 			<DCImanager5>DCImanager 5</DCImanager5>
 		</Options>
 		<Check>/^[A-Za-zА-Яа-я0-9\-]{2,25}$/u</Check>
@@ -225,7 +234,7 @@
 	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
 	<PortUp>
-		<Title>-Управление портами коммутатора (только для ручного режима)</Title>
+		<Title>-Управление портами коммутатора (только для ручного управления)</Title>
 		<Check>Char</Check>
 		<Comment>Включение порта</Comment>
 		<Type>Input</Type>
