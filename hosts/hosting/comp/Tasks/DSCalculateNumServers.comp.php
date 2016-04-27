@@ -20,8 +20,8 @@ if(Is_Error($ExecuteTime))
 if(!$Settings['IsActive'])
 	return 24*3600;
 #-------------------------------------------------------------------------------
-# достаём все неактивные тарифы, с несломанными серверами
-$Schemes = DB_Select('DSSchemes',Array('`ID` AS `SchemeID`'),Array('Where'=>Array('`IsActive` = "no"','`IsBroken` = "no"')));
+# достаём все тарифы с несломанными серверами
+$Schemes = DB_Select('DSSchemes',Array('`ID` AS `SchemeID`'),Array('Where'=>Array('`IsBroken` = "no"')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Schemes)){
 case 'error':
@@ -47,14 +47,11 @@ foreach($Schemes as $Scheme){
 	if(Is_Error($Count))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
+	# если чё-то насчитали - сервер используется.
+	$IsActive = ($Count)?FALSE:TRUE;
 	#-------------------------------------------------------------------------------
-	# если чё-то насчитали - сервер используется. пропускаем цикл
-	if($Count)
-		continue;
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	# устанавливаем тариф активным - т.к. заказов на него нет
-	$IsUpdate = DB_Update('DSSchemes',Array('IsActive'=>TRUE),Array('ID'=>$Scheme['SchemeID']));
+	# устанавливаем статус тарифа
+	$IsUpdate = DB_Update('DSSchemes',Array('IsActive'=>$IsActive),Array('ID'=>$Scheme['SchemeID']));
 	if(Is_Error($IsUpdate))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
