@@ -27,6 +27,7 @@ if(Is_Error($Comp))
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
 $Send['com'] .= SPrintF('%s, %s (%s)',$Comp,Translit($__USER['Name']),$__USER['Email']);
+$Send['com'] = URLEncode(Str_Replace('#','',$Send['com']));
 #-------------------------------------------------------------------------------
 # замена устаревшего RUR на новое обозначение RUB
 $Send['currency'] = ($Settings['Valute'] == 'RUR')?'RUB':$Settings['Valute'];
