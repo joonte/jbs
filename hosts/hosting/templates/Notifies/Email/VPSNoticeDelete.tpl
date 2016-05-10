@@ -7,7 +7,7 @@
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Уведомляем Вас о том, что оканчивается срок блокировки Вашего заказа №{$VPSOrder.OrderID|string_format:"%05u"} на виртуальный выделенный сервер (VPS).
-IP адрес: {$VPSOrder.Login|default:'$VPSOrder.Login'}
+IP адрес: {$VPSOrder.IP|default:'$VPSOrder.IP'}
 Дата удаления заказа {$ExpDate|date_format:"%d.%m.%Y"}
 
 {if !$MethodSettings.CutSign}
