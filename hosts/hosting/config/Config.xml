@@ -1011,6 +1011,7 @@
 				<DomainCheckPriceList>Проверка цен на домены у вышестоящих регистраторов</DomainCheckPriceList>
 				<DomainSchemeCheckWhoIsDatabase>Проверка тарифов на домены, на предмет нахождения в базе WhoIs</DomainSchemeCheckWhoIsDatabase>
 				<UpTimeAgregate>Агрегация стастистики мониторинга серверов</UpTimeAgregate>
+				<ExtraIPCheckOnCreate>Проверка зависших созданий IP адресов</ExtraIPCheckOnCreate>
 			</DailyTasks>
 			<!-- ********************************************************************* -->
 		</GC>
