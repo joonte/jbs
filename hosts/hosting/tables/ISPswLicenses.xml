@@ -71,6 +71,10 @@
 							<Name>Заказанные</Name>
 							<Where>(SELECT `ID` FROM `ISPswOrdersOwners` WHERE `ISPswOrdersOwners`.`LicenseID` = `ISPswLicenses`.`ID` LIMIT 1) IS NOT NULL</Where>
 						</ItIsOrdered>
+						<ExpiredUpdates>
+							<Name>Без обновлений</Name>
+							<Where>`update_expiredate` &lt; UNIX_TIMESTAMP()</Where>
+						</ExpiredUpdates>
 					</Patterns>
 				</Args>
 			</PatternOut>
