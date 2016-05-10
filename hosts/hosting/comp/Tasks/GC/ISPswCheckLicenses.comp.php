@@ -125,6 +125,7 @@ foreach($Doc as $License){
 					'CreateDate'		=> Time(),
 					'ip_change_date'	=> StrToTime($License['ip_change_date']),
 					'lickey_change_date'	=> StrToTime($License['lickey_change_date']),
+					'update_expiredate'	=> StrToTime($License['update_expiredate']),
 					'StatusDate'		=> Time(),
 					'ExpireDate'		=> $ExpireDate,
 					'Flag'			=> 'Locked'
@@ -200,6 +201,7 @@ foreach($Doc as $License){
 						'ISPname'		=> (IsSet($License['licname'])?$License['licname']:'Имя не задано'),
 						'ip_change_date'	=> StrToTime($License['ip_change_date']),
 						'lickey_change_date'	=> StrToTime($License['lickey_change_date']),
+						'update_expiredate'	=> StrToTime($License['update_expiredate']),
 						'ExpireDate'		=> $ExpireDate
 					),
 					Array(
