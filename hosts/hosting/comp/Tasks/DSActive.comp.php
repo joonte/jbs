@@ -13,7 +13,7 @@ if(Is_Error(System_Load('classes/DSServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$DSOrder = DB_Select('DSOrdersOwners',Array('ID','UserID','SchemeID','ServerID','IP'),Array('UNIQ','ID'=>$DSOrderID));
+$DSOrder = DB_Select('DSOrdersOwners',Array('ID','OrderID','UserID','SchemeID','ServerID','IP'),Array('UNIQ','ID'=>$DSOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DSOrder)){
 case 'error':
@@ -27,9 +27,9 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$DSServer = new DSServer();
+$ClassDSServer = new DSServer();
 #-------------------------------------------------------------------------------
-$IsSelected = $DSServer->Select((integer)$DSOrder['ServerID']);
+$IsSelected = $ClassDSServer->Select((integer)$DSOrder['ServerID']);
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsSelected)){
 case 'error':
@@ -43,13 +43,33 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsActive = $DSServer->Active($DSOrder['IP']);
+$DSScheme = DB_Select('DSSchemes','*',Array('UNIQ','ID'=>$DSOrder['SchemeID']));
+#-------------------------------------------------------------------------------
+switch(ValueOf($DSScheme)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Args = Array();
+#-------------------------------------------------------------------------------
+# добавляем к аргументам настройки порта коммутатора
+$Args[] = $DSScheme['Switch'];
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$IsActive = Call_User_Func_Array(Array($ClassDSServer,'Active'),$Args);
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsActive)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return $IsActive;
+	return $IsCreate;
 case 'true':
 	break;
 default:
@@ -60,12 +80,15 @@ default:
 $Event = Array(
 		'UserID'	=> $DSOrder['UserID'],
 		'PriorityID'	=> 'Billing',
-		'Text'		=> SPrintF('Включен арендованный сервер, IP %s',$DSOrder['IP'])
+		'Text'		=> SPrintF('Подключен к сети арендованный сервер, заказ #%s, тариф (%s), IP адрес %s',$DSOrder['OrderID'],$DSScheme['Name'],$DSOrder['IP'])
 		);
 #-------------------------------------------------------------------------------
 $Event = Comp_Load('Events/EventInsert',$Event);
 if(!$Event)
 	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$GLOBALS['TaskReturnInfo'] = Array(($ClassDSServer->Settings['Address'])=>Array($DSScheme['Name']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;

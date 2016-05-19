@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('classes/DSServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DSOrder = DB_Select('DSOrdersOwners',Array('ID','UserID','IP','SchemeID','ServerID','(SELECT `ProfileID` FROM `Contracts` WHERE `Contracts`.`ID` = `DSOrdersOwners`.`ContractID`) as `ProfileID`'),Array('UNIQ','ID'=>$DSOrderID));
+$DSOrder = DB_Select('DSOrdersOwners',Array('ID','OrderID','UserID','IP','SchemeID','ServerID','(SELECT `ProfileID` FROM `Contracts` WHERE `Contracts`.`ID` = `DSOrdersOwners`.`ContractID`) as `ProfileID`'),Array('UNIQ','ID'=>$DSOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DSOrder)){
 case 'error':
@@ -26,9 +26,9 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$DSServer = new DSServer();
+$ClassDSServer = new DSServer();
 #-------------------------------------------------------------------------------
-$IsSelected = $DSServer->Select((integer)$DSOrder['ServerID']);
+$IsSelected = $ClassDSServer->Select((integer)$DSOrder['ServerID']);
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsSelected)){
 case 'error':
@@ -55,35 +55,14 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Args = Array();
 #-------------------------------------------------------------------------------
-$ProfileID = (integer)$DSOrder['ProfileID'];
-#-------------------------------------------------------------------------------
-if($ProfileID){
-	# TODO а это вообще нужно тут? не домен же...
-	#-------------------------------------------------------------------------------
-	$Profile = DB_Select('Profiles',Array('TemplateID','Attribs'),Array('UNIQ','ID'=>$ProfileID));
-	#-------------------------------------------------------------------------------
-	switch(ValueOf($Profile)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		# No more...
-		break;
-	case 'array':
-		break;
-	default:
-		return ERROR | @Trigger_Error(101);
-	}
-	#-------------------------------------------------------------------------------
-	$Args[] = $Profile['TemplateID'];
-	#-------------------------------------------------------------------------------
-	$Args[] = $Profile['Attribs'];
-	#-------------------------------------------------------------------------------
-}
+# добавляем к аргументам настройки порта коммутатора
+$Args[] = $DSScheme['Switch'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsCreate = Call_User_Func_Array(Array($DSServer,'Create'),$Args);
+$IsCreate = Call_User_Func_Array(Array($ClassDSServer,'Create'),$Args);
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsCreate)){
 case 'error':
@@ -114,7 +93,7 @@ default:
 $Event = Array(
 		'UserID'	=> $DSOrder['UserID'],
 		'PriorityID'	=> 'Billing',
-		'Text'		=> SPrintF('Арендованный сервер, IP адрес: %s, тариф %s, идаентификатор %s, включен',$DSOrder['IP'],$DSScheme['Name'],$DSScheme['PackageID'])
+		'Text'		=> SPrintF('Активирован арендованный сервер, заказ #%s, тариф (%s), IP адрес %s',$DSOrder['OrderID'],$DSScheme['Name'],$DSOrder['IP'])
 		);
 #-------------------------------------------------------------------------------
 $Event = Comp_Load('Events/EventInsert',$Event);
