@@ -259,7 +259,7 @@ case 'ForRegister':
 					'TargetGroupID' => 3100000,
 					'TargetUserID'  => 100,
 					'PriorityID'    => 'Low',
-					'Message'       => trim(Strip_Tags($Clause['Text'])),
+					'Message'       => Trim(Strip_Tags($Clause['Text'])),
 					'UserID'        => $DomainOrder['UserID'],
 					'Flags'		=> 'CloseOnSee'
 					);

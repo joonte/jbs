@@ -94,6 +94,7 @@
 	see http://jira.joonte.com/browse/JBS-834 -->
 <IsTransfer>Logic</IsTransfer>
 <!-- *********************************************************************** -->
+<IsNoDuplicate>Logic</IsNoDuplicate>
 
 </XML>
 
