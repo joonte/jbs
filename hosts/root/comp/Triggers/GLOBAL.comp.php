@@ -73,6 +73,8 @@ if(IsSet($Order['Row']['ServiceID'])){
 	# проверяем, надо ли создавать тикет для данного статуса
 	$Params = @$Service['Params']['Statuses'][$Order['StatusID']];
 	#-------------------------------------------------------------------------------
+	$OrderID = (IsSet($Order['Row']['OrderID'])?$Order['Row']['OrderID']:$Order['Row']['ID']);
+	#-------------------------------------------------------------------------------
 	if(IsSet($Params['ClauseID']) && $Params['ClauseID']){
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s->%s) задан идентфикатор статьи ClauseID = %u',$Order['ModeID'],$Order['StatusID'],$Params['ClauseID']));
@@ -82,7 +84,7 @@ if(IsSet($Order['Row']['ServiceID'])){
 		if(IsSet($Params['IsNoDuplicate']) && $Params['IsNoDuplicate']){
 			#-------------------------------------------------------------------------------
 			# проверяем, не создан ли уже тикет по этому поводу
-			$Count = DB_Count('Edesks',Array('Where'=>SPrintF("`Theme` LIKE '%%[OrderID=%u]%%'",$Order['Row']['OrderID'])));
+			$Count = DB_Count('Edesks',Array('Where'=>SPrintF("`Theme` LIKE '%%[OrderID/%u]%%'",$OrderID)));
 			#-------------------------------------------------------------------------------
 			if(Is_Error($Count))
 				return ERROR | @Trigger_Error(500);
@@ -116,7 +118,7 @@ if(IsSet($Order['Row']['ServiceID'])){
 			}
 			#-------------------------------------------------------------------------------
 			$CompParams = Array(
-						'Theme'		=> SPrintF('[OrderID=%u] %s',$Order['Row']['OrderID'],$Clause['Title']),
+						'Theme'		=> SPrintF('[OrderID/%u] %s',$OrderID,$Clause['Title']),
 						'TargetGroupID' => 3100000,
 						'TargetUserID'  => 100,
 						'PriorityID'    => 'Low',
