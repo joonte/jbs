@@ -24,7 +24,7 @@ function DirectAdmin_Get_Domains($Settings){
   /****************************************************************************/
   $HTTP = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -50,7 +50,7 @@ function DirectAdmin_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
   /****************************************************************************/
   $HTTP = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -141,7 +141,7 @@ function DirectAdmin_Active($Settings,$Login,$IsReseller = FALSE){
   /****************************************************************************/
   $HTTP = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -171,7 +171,7 @@ function DirectAdmin_Suspend($Settings,$Login,$IsReseller = FALSE){
   /****************************************************************************/
   $HTTP = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -201,7 +201,7 @@ function DirectAdmin_Delete($Settings,$Login,$IsReseller = FALSE){
   /****************************************************************************/
   $HTTP = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -231,7 +231,7 @@ function DirectAdmin_Scheme_Change($Settings,$Login,$HostingScheme){
   /****************************************************************************/
   $HTTP = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
@@ -287,7 +287,7 @@ function DirectAdmin_Password_Change($Settings,$Login,$Password,$Params){
   /****************************************************************************/
   $HTTP = Array(
     #---------------------------------------------------------------------------
-    'Address'  => $Settings['IP'],
+    'Address'  => $Settings['Params']['IP'],
     'Port'     => $Settings['Port'],
     'Host'     => $Settings['Address'],
     'Protocol' => $Settings['Protocol'],
