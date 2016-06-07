@@ -517,7 +517,7 @@ function RuCenter_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
     switch($CodeID){
      case '200':
         #-----------------------------------------------------------------------
-        if(!Preg_Match('/nic-hdl:\s([0-9]+\/[A-Z\-]+)/',$Result,$ContractID))
+        if(!Preg_Match('/login:\s([0-9]+\/[A-Z\-]+)/',$Result,$ContractID))
           return new gException('LOGIN_NOT_FOUND','Неудалось получить номер договора');
         else
           $ContractID = Next($ContractID);
@@ -578,7 +578,7 @@ function RuCenter_Contract_Register($Settings,$PepsonID,$Person,$DomainZone){
       switch($CodeID){
       case '200':
         #-----------------------------------------------------------------------
-        if(!Preg_Match('/nic-hdl:([0-9A-Za-z\-]+)/',$Result,$NicHDL))
+        if(!Preg_Match('/login:([0-9A-Za-z\-]+)/',$Result,$NicHDL))
           return Array('TicketID'=>SPrintF('%s:%s',$ContractID,Next($NicHDL)));
         #-----------------------------------------------------------------------
         return new gException('LOGIN_NOT_FOUND','Неудалось получить номер договора');
