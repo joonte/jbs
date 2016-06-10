@@ -1309,6 +1309,7 @@
 			<Hosting>
 				<IsNoDomain>1</IsNoDomain>
 				<CheckIsNoDomain>0</CheckIsNoDomain>
+				<IsAllowSchemeDecrease>0</IsAllowSchemeDecrease>
 			</Hosting>
 		</Orders>
 		<!-- *********************************************************************** -->
