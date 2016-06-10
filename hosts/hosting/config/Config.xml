@@ -1310,6 +1310,7 @@
 				<IsNoDomain>1</IsNoDomain>
 				<CheckIsNoDomain>0</CheckIsNoDomain>
 				<IsAllowSchemeDecrease>0</IsAllowSchemeDecrease>
+				<SchemeChangePeriod>1</SchemeChangePeriod>
 			</Hosting>
 		</Orders>
 		<!-- *********************************************************************** -->

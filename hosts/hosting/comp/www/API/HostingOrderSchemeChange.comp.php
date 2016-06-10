@@ -15,6 +15,11 @@ $NewSchemeID    = (integer) @$Args['NewSchemeID'];
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+$Config = Config();
+#-------------------------------------------------------------------------------
+$Settings = $Config['Interface']['User']['Orders']['Hosting'];
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','SchemeID','StatusDate','(SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`)) AS `ServersGroupID`','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`)) AS `Params`','StatusID');
 #-------------------------------------------------------------------------------
 $HostingOrder = DB_Select('HostingOrdersOwners',$Columns,Array('UNIQ','ID'=>$HostingOrderID));
@@ -52,22 +57,6 @@ default:
 if(!In_Array($HostingOrder['StatusID'],Array('Active','Suspended')))
 	return new gException('ORDER_NOT_ACTIVE','Тариф можно изменить только для активного или заблокированного заказа');
 #-------------------------------------------------------------------------------
-if(!$__USER['IsAdmin']){
-	#-------------------------------------------------------------------------------
-	$LastChange = Time() - $HostingOrder['StatusDate'];
-	#-------------------------------------------------------------------------------
-	if($LastChange < 86400){
-		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Formats/Date/Remainder',$LastChange);
-		if(Is_Error($Comp))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		#return new gException('TIME_NOT_EXPIRED',SPrintF('Тарифный план можно менять только 1 раз в сутки, сменить тарифный план можно только через %s, однако, в случае необходимости Вы можете обратиться в службу поддержки',$Comp));
-		#-------------------------------------------------------------------------------
-	}
-	#-------------------------------------------------------------------------------
-}
-#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $OldScheme = DB_Select('HostingSchemes',Array('IsSchemeChange','QuotaDisk','Name','IsProlong','ID'),Array('UNIQ','ID'=>$HostingOrder['SchemeID']));
 #-------------------------------------------------------------------------------
@@ -100,6 +89,24 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+if(!$__USER['IsAdmin']){
+	#-------------------------------------------------------------------------------
+	$LastChange = Time() - $HostingOrder['StatusDate'];
+	#-------------------------------------------------------------------------------
+	# если снижение тарифа, то заодно проверяем прошло ли разрешённое время
+	if($OldScheme['QuotaDisk'] > $NewScheme['QuotaDisk'] && $LastChange < IntVal($Settings['SchemeChangePeriod'])*3600){
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Formats/Date/Remainder',(IntVal($Settings['SchemeChangePeriod'])*3600 - $LastChange));
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		return new gException('TIME_NOT_EXPIRED',SPrintF('В меньшую сторону тариф можно менять только каждые %u час(ов). Вы сможете изменить тарифный план только через %s',$Settings['SchemeChangePeriod'],$Comp),new gException('TIME_NOT_EXPIRED_2','Однако, в случае необходимости, Вы можете обратиться в службу поддержки, и сотрудники сделают это до указанного времени'));
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if($HostingOrder['SchemeID'] == $NewScheme['ID'])
 	return new gException('SCHEMES_MATCHED','Старый и новый тарифные планы совпадают');
 #-------------------------------------------------------------------------------
@@ -109,7 +116,7 @@ if(!$NewScheme['IsSchemeChangeable'])
 if($OldScheme['QuotaDisk'] > $NewScheme['QuotaDisk']){
 	#-------------------------------------------------------------------------------
 	if($OldScheme['IsProlong'])
-		if(!$__USER['IsAdmin'])
+		if(!$__USER['IsAdmin'] && !$Settings['IsAllowSchemeDecrease'])
 			return new gException('QUOTA_DISK_ERROR','Дисковое пространство на новом тарифном плане, меньше чем на текущем. Для смены тарифа обратитесь в Центр Поддержки.');
 	#-------------------------------------------------------------------------------
 }
