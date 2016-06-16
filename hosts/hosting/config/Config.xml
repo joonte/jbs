@@ -1312,6 +1312,11 @@
 				<IsAllowSchemeDecrease>0</IsAllowSchemeDecrease>
 				<SchemeChangePeriod>1</SchemeChangePeriod>
 			</Hosting>
+			<!-- *********************************************************************** -->
+			<VPS>
+				<EmailConfirmRequire>1</EmailConfirmRequire>
+				<MobileConfirmRequire>0</MobileConfirmRequire>
+			</VPS>
 		</Orders>
 		<!-- *********************************************************************** -->
 		<Notes>
