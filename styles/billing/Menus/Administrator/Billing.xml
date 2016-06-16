@@ -4,15 +4,6 @@
 <!-- *********************************************************************** -->
 <Items>
  <ListElement>
-  <Text>Логи системы</Text>
-  <Prompt>Просмотр логов и журналов событий биллинговой системы</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/Logs</UniqID>
-  </Paths>
-  <Href>/Administrator/Logs</Href>
- </ListElement>
- <!-- *********************************************************************** -->
- <ListElement>
   <Text>Логи пользователей</Text>
   <Prompt>Просмотр истории HTTP запросов к биллингу</Prompt>
   <Paths>
