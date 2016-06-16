@@ -1311,6 +1311,8 @@
 				<CheckIsNoDomain>0</CheckIsNoDomain>
 				<IsAllowSchemeDecrease>0</IsAllowSchemeDecrease>
 				<SchemeChangePeriod>1</SchemeChangePeriod>
+				<EmailConfirmRequire>0</EmailConfirmRequire>
+				<MobileConfirmRequire>0</MobileConfirmRequire>
 			</Hosting>
 			<!-- *********************************************************************** -->
 			<VPS>
