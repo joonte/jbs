@@ -7,6 +7,22 @@ RewriteEngine On
 #RedirectPermanent      /API/Events     https://www.ya.ru/
 
 
+<FilesMatch "\.(xml)$">
+	Order allow,deny
+	Deny from all
+</FilesMatch>
+
+<FilesMatch "\.(log)$">
+	Order allow,deny
+	Deny from all
+</FilesMatch>
+
+<FilesMatch "\.(ini)$">
+	Order allow,deny
+	Deny from all
+</FilesMatch>
+
+
 RewriteCond %{REQUEST_URI} (.*)
 RewriteRule (install|public|styles|index.php) - [L]
 #RewriteCond %{HTTPS} !=on
