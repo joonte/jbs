@@ -1295,17 +1295,6 @@
 <Interface>
 	<User>
 		<Orders>
-			<Domain>
-				<Transfer>
-					<IsSelectRegistrator>0</IsSelectRegistrator>
-				</Transfer>
-				<!-- *********************************************************************** -->
-				<DomainWhoIs>
-					<IsSchemesOnly>1</IsSchemesOnly>
-					<CacheTime>1800</CacheTime>
-				</DomainWhoIs>
-			</Domain>
-			<!-- *********************************************************************** -->
 			<Hosting>
 				<IsNoDomain>1</IsNoDomain>
 				<CheckIsNoDomain>0</CheckIsNoDomain>
@@ -1315,10 +1304,43 @@
 				<MobileConfirmRequire>0</MobileConfirmRequire>
 			</Hosting>
 			<!-- *********************************************************************** -->
+			<Domain>
+				<Transfer>
+					<IsSelectRegistrator>0</IsSelectRegistrator>
+				</Transfer>
+				<!-- *********************************************************************** -->
+				<DomainWhoIs>
+					<IsSchemesOnly>1</IsSchemesOnly>
+					<CacheTime>1800</CacheTime>
+				</DomainWhoIs>
+				<EmailConfirmRequire>0</EmailConfirmRequire>
+				<MobileConfirmRequire>0</MobileConfirmRequire>
+			</Domain>
+			<!-- *********************************************************************** -->
 			<VPS>
 				<EmailConfirmRequire>1</EmailConfirmRequire>
 				<MobileConfirmRequire>0</MobileConfirmRequire>
 			</VPS>
+			<!-- *********************************************************************** -->
+			<DS>
+				<EmailConfirmRequire>0</EmailConfirmRequire>
+				<MobileConfirmRequire>0</MobileConfirmRequire>
+			</DS>
+			<!-- *********************************************************************** -->
+			<ExtraIP>
+				<EmailConfirmRequire>0</EmailConfirmRequire>
+				<MobileConfirmRequire>0</MobileConfirmRequire>
+			</ExtraIP>
+			<!-- *********************************************************************** -->
+			<ISPsw>
+				<EmailConfirmRequire>0</EmailConfirmRequire>
+				<MobileConfirmRequire>0</MobileConfirmRequire>
+			</ISPsw>
+			<!-- *********************************************************************** -->
+			<DNSmanager>
+				<EmailConfirmRequire>0</EmailConfirmRequire>
+				<MobileConfirmRequire>0</MobileConfirmRequire>
+			</DNSmanager>
 		</Orders>
 		<!-- *********************************************************************** -->
 		<Notes>
