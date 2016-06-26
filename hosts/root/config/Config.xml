@@ -78,6 +78,7 @@
 			<IsCheckReferer>1</IsCheckReferer>
 			<IsNoReferer>0</IsNoReferer>
 			<CSRFCheck>0</CSRFCheck>
+			<Hidden>Password,SessionID</Hidden>
 		</Security>
 	</Modules>
 	<!-- *********************************************************************** -->

@@ -10,7 +10,7 @@ function IO_Read($Path,$IsUseLinks = TRUE){
 	#-------------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/******************************************************************************/
-	Debug(SPrintF('[IO_Read]: открытие файла (%s)',$Path));
+	Debug(SPrintF('[IO_Read]: открытие файла (%s)',Preg_Match('#/sessions/#is',$Path)?' ***HIDDEN*** ':$Path));
 	#-------------------------------------------------------------------------------
 	if(!File_Exists($Path))
 		return ERROR | @Trigger_Error('[IO_Read]: файл не существует');
