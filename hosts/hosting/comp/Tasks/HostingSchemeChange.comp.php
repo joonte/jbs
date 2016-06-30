@@ -144,11 +144,16 @@ case 'exception':
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	# если разрешено уменьшение тарифа, то события о неудачной смене сразу ставим почитанными
+	$Config = Config();
+	#-------------------------------------------------------------------------------
+	$IsAllowSchemeDecrease = $Config['Interface']['User']['Orders']['Hosting']['IsAllowSchemeDecrease'];
+	#-------------------------------------------------------------------------------
 	$Event = Array(
 			'UserID'	=> $HostingOrder['UserID'],
 			'PriorityID'	=> 'Error',
-			'Text'		=> SPrintF('Не удалось сменить тарифный план заказу хостинга [%s] в автоматическом режиме, причина (%s)',$HostingOrder['Login'],$SchemeChange->String),
-			'IsReaded'	=> FALSE
+			'Text'		=> SPrintF('Не удалось сменить тарифный план (%s->%s) заказу хостинга [%s] в автоматическом режиме, причина (%s)',$HostingOrder['SchemeName'],$HostingNewScheme['Name'],$HostingOrder['Login'],$SchemeChange->String),
+			'IsReaded'	=> $IsAllowSchemeDecrease
 			);
 	#-------------------------------------------------------------------------------
 	$Event = Comp_Load('Events/EventInsert',$Event);
