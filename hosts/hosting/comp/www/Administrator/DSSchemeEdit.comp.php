@@ -52,7 +52,7 @@ if($DSSchemeID){
 			'MinOrdersPeriod'		=> 0,
 			'SortID'			=> 10,
 			'CPU'				=> '2x Opteron 2GHz, 2 ядра',
-			'ram'				=> 2048,
+			'ram'				=> 2,
 			'raid'				=> '3Ware 9650SE-4LPML, 256Mb cache',
 			'disks'				=> 'SATA 500Gb + SATA 500Gb',
 			'chrate'			=> 8,
@@ -246,7 +246,7 @@ $Comp = Comp_Load(
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 
-$Table[] = Array('Объём оперативной памяти, Mb',$Comp);
+$Table[] = Array('Объём оперативной памяти, Gb',$Comp);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
 	'Form/Input',

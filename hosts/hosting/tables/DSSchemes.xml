@@ -215,7 +215,7 @@
 		<!-- ********************************************************************** -->
 		<ram>
 			<Head>RAM</Head>
-			<Prompt>Оперативная памяти, Mb</Prompt>
+			<Prompt>Оперативная памяти, Gb</Prompt>
 			<Attribs>
 				<style>text-align:center;</style>
 			</Attribs>
