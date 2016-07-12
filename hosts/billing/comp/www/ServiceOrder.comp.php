@@ -146,7 +146,7 @@ foreach($ServiceFields as $ServiceField){
 	switch($ServiceField['TypeID']){
 	case 'Input':
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Input',Array('name'=>$FieldID,'type'=>'text','prompt'=>$ServiceField['Prompt'],'value'=>$ServiceField['Default'],'style'=>'width: 100%;'));
+		$Comp = Comp_Load('Form/Input',Array('name'=>$FieldID,'type'=>'text','prompt'=>$ServiceField['Prompt'],'value'=>$ServiceField['Default'],'style'=>'width: 300px;'));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
@@ -154,7 +154,7 @@ foreach($ServiceFields as $ServiceField){
 		#-------------------------------------------------------------------------------
 	case 'TextArea':
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/TextArea',Array('name'=>$FieldID,'rows'=>4,'prompt'=>$ServiceField['Prompt'],'cols'=>25),$ServiceField['Default']);
+		$Comp = Comp_Load('Form/TextArea',Array('name'=>$FieldID,'rows'=>4,'prompt'=>$ServiceField['Prompt'],'style'=>'width:100%;'),$ServiceField['Default']);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
