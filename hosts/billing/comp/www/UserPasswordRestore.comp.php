@@ -8,7 +8,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(Is_Error(System_Load('classes/DOM.class.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM = new DOM();
 #-------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ $Links = &Links();
 $Links['DOM'] = &$DOM;
 #-------------------------------------------------------------------------------
 if(Is_Error($DOM->Load('Main')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Восстановление пароля');
 #-------------------------------------------------------------------------------
@@ -27,52 +27,31 @@ $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
 $Messages = Messages();
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'name'   => 'Email',
-    'size'   => 25,
-    'prompt' => $Messages['Prompts']['Email'],
-    'type'   => 'text'
-  )
-);
+$Comp = Comp_Load('Form/Input',Array('name'=>'Email','prompt'=>$Messages['Prompts']['Email'],'type'=>'text'));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table = Array(Array('Ваш email',$Comp));
 #-------------------------------------------------------------------------------
 $Img = new Tag('IMG',Array('id'=>'Protect','align'=>'left','width'=>80,'height'=>30,'alt'=>'Включите отображение картинок','src'=>SPrintF('/Protect?Rand=%u',Rand(1000,9999))));
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'name'  => 'Protect',
-    'size'  => 8,
-    'type'  => 'text'
-  )
-);
+$Comp = Comp_Load('Form/Input',Array('name'=>'Protect','type'=>'text'));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Защитный код',new Tag('DIV',$Img,new Tag('SPAN',' = '),$Comp));
+$Table[] = Array('Защитный код',$Img);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'    => 'button',
-    'size'    => 15,
-    'onclick' => 'UserPasswordRestore();',
-    'value'   => 'Восстановить'
-  )
-);
+$Table[] = Array('Цифры на изображении',$Comp);
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'button','size'=>15,'onclick'=>'UserPasswordRestore();','value'=>'Восстановить'));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = $Comp;
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Standard',$Table);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Form = new Tag('FORM',Array('name'=>'UserPasswordRestoreForm','onsubmit'=>'return false;'),$Comp);
 #-------------------------------------------------------------------------------
@@ -81,9 +60,11 @@ $DOM->AddChild('Into',$Form);
 $Out = $DOM->Build();
 #-------------------------------------------------------------------------------
 if(Is_Error($Out))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $Out;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>
