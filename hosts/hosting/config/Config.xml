@@ -799,6 +799,7 @@
    <IsActive>1</IsActive>
    <StartHour>1</StartHour>
    <StartMinutes>20</StartMinutes>
+   <DeleteTimeout>30</DeleteTimeout>
   </DSForDelete>
   <!-- ********************************************************************* -->
   <DSCreate>
