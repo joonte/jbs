@@ -294,6 +294,7 @@
      <BankID>1001</BankID>
      <TargetBankID>1001</TargetBankID>
      <PaymentTypeCD>PC</PaymentTypeCD>
+     <paymentType></paymentType>
      <ShowCaseID>1010</ShowCaseID>
      <ShopID />
      <scid />
