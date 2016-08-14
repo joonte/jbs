@@ -284,24 +284,13 @@
     <Name>Яндекс.Деньги</Name>
     <SystemDescription>Яндекс.Деньги — это платежная система, которая позволяет оплачивать различные товары и услуги; совершать безопасные платежи в интернете; надежно хранить всю информацию о ваших зачислениях и платежах.</SystemDescription>
     <Send>
-     <CurrencyID>643</CurrencyID>
-     <wbp_InactivityPeriod>2</wbp_InactivityPeriod>
-     <wbp_ShopAddress>wn1.paycash.ru:8828</wbp_ShopAddress>
-     <wbp_ShopEncryptionKey />
-     <wbp_ShopKeyID />
-     <wbp_Version>1.0</wbp_Version>
-     <wbp_CorrespondentID />
-     <BankID>1001</BankID>
-     <TargetBankID>1001</TargetBankID>
-     <PaymentTypeCD>PC</PaymentTypeCD>
+<!--     <CurrencyID>643</CurrencyID> -->
      <paymentType></paymentType>
-     <ShowCaseID>1010</ShowCaseID>
-     <ShopID />
+     <ShopId />
      <scid />
      <Sum>auto</Sum>
      <orderNumber>auto</orderNumber>
      <customerNumber>auto</customerNumber>
-     <md5>auto</md5>
     </Send>
     <Comp>Yandex</Comp>
     <!-- for production, use https://money.yandex.ru/eshop.xml -->

@@ -25,17 +25,17 @@ $Comp = Comp_Load('Formats/Invoice/Number',$InvoiceID);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Md5 = Array(
-  $Send['Sum'],
-  $Send['CurrencyID'],
-  $Send['BankID'],
-  $Send['ShopID'],
-  $Send['orderNumber'],
-  $Send['customerNumber'],
-  $Settings['Hash']
-);
+#$Md5 = Array(
+#  $Send['Sum'],
+#  $Send['CurrencyID'],
+#  $Send['BankID'],
+#  $Send['ShopID'],
+#  $Send['orderNumber'],
+#  $Send['customerNumber'],
+#  $Settings['Hash']
+#);
 #-------------------------------------------------------------------------------
-$Send['md5'] = Md5(Implode(';',$Md5));
+#$Send['md5'] = Md5(Implode(';',$Md5));
 #-------------------------------------------------------------------------------
 return $Send;
 #-------------------------------------------------------------------------------
