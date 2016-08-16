@@ -69,7 +69,7 @@ switch(ValueOf($IsActive)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return $IsCreate;
+	return $IsActive;
 case 'true':
 	break;
 default:
