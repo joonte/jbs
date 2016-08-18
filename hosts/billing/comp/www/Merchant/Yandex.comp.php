@@ -16,7 +16,7 @@ if(!Count($Args))
 # yandex protocol version = commonHTTP-3.0
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$ArgsIDs = Array('requestDatetime','action','md5','shopId','orderNumber','customerNumber','orderCreatedDatetime','orderSumAmount','orderSumCurrencyPaycash','orderSumBankPaycash','shopSumAmount','shopSumCurrencyPaycash','shopSumBankPaycash','orderIsPaid');
+$ArgsIDs = Array('requestDatetime','action','md5','shopId','orderNumber','customerNumber','orderCreatedDatetime','orderSumAmount','orderSumCurrencyPaycash','orderSumBankPaycash','shopSumAmount','shopSumCurrencyPaycash','shopSumBankPaycash');
 #-------------------------------------------------------------------------------
 foreach($ArgsIDs as $ArgID)
 	$Args[$ArgID] = @$Args[$ArgID];
@@ -30,7 +30,7 @@ $Settings = $Config['Invoices']['PaymentSystems']['Yandex'];
 $Md5 = Array(
 	$Args['action'],
 	$Args['orderSumAmount'],
-	$Args['shopSumCurrencyPaycash'],
+	$Args['orderSumCurrencyPaycash'],
 	$Args['orderSumBankPaycash'],
 	$Args['shopId'],
 	$Args['invoiceId'],
@@ -44,7 +44,7 @@ if(StrToUpper(Md5(Implode(';',$Md5))) != $Args['md5'])
 #-------------------------------------------------------------------------------
 $Date = Date('c', Time());
 #-------------------------------------------------------------------------------
-$ShopID = $Settings['Send']['ShopID'];
+$ShopId = $Settings['Send']['ShopId'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Invoice = DB_Select('Invoices',Array('ID','Summ'),Array('UNIQ','ID'=>$OrderID));
