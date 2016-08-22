@@ -95,7 +95,7 @@ foreach($Servers as $Server){
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
 		# No more...
-		continue 3;
+		continue 2;
 	case 'array':
 		break;
 	default:
