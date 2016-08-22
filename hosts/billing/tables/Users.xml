@@ -61,6 +61,11 @@
       <Where>UNIX_TIMESTAMP() - `EnterDate` &lt; 300</Where>
      </OnLine>
      <!-- ****************************************************************** -->
+     <WithPayedInvoices>
+      <Name>С оплаченными счетами</Name>
+      <Where>(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID` = `Users`.`ID` AND `InvoicesOwners`.`IsPosted` = 'yes') &gt; 0</Where>
+     </WithPayedInvoices>
+     <!-- ****************************************************************** -->
      <Referals>
       <Name>Рефералов</Name>
       <Where>`OwnerID` IS NOT NULL</Where>
