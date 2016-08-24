@@ -433,7 +433,10 @@ if($PaymentSystem['IsContinuePaying']){
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Form = new Tag('FORM',Array('action'=>$PaymentSystem['Cpp'],'method'=>'POST'),new Tag('BR'),new Tag('DIV',$Comp));
+	# если тестовый режим - то другой URL
+	$Cpp = (IsSet($PaymentSystem['TestMode']) && $PaymentSystem['TestMode'])?$PaymentSystem['TestModeCpp']:$PaymentSystem['Cpp'];
+	#-------------------------------------------------------------------------------
+	$Form = new Tag('FORM',Array('action'=>$Cpp,'method'=>'POST'),new Tag('BR'),new Tag('DIV',$Comp));
 	#-------------------------------------------------------------------------------
 	$Send = Comp_Load(SPrintF('Invoices/PaymentSystems/%s',$PaymentSystem['Comp']),$PaymentSystemID,$Invoice['ID'],$Invoice['Summ']);
 	if(Is_Error($Send))

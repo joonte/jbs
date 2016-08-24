@@ -293,8 +293,9 @@
      <customerNumber>auto</customerNumber>
     </Send>
     <Comp>Yandex</Comp>
-    <!-- for production, use https://money.yandex.ru/eshop.xml -->
-    <Cpp>https://demomoney.yandex.ru/eshop.xml</Cpp>
+    <TestMode>1</TestMode>
+    <Cpp>https://money.yandex.ru/eshop.xml</Cpp>
+    <TestModeCpp>https://demomoney.yandex.ru/eshop.xml</TestModeCpp>
     <Hash />
     <ContractsTypes>
      <Default>1</Default>
