@@ -167,7 +167,7 @@
 		<Orders>
 			<Head>Зак.</Head>
 			<Prompt>Кол-во заказов находящихся на данном сервере</Prompt>
-			<Alias>(SELECT COUNT(*) FROM `Orders` WHERE `Servers`.`ID` = `Orders`.`ServerID`)</Alias>
+			<Alias>(SELECT COUNT(*) FROM `Orders` WHERE `Servers`.`ID` = `Orders`.`ServerID` AND (`StatusID` = 'Suspended' OR `StatusID` = 'Active'))</Alias>
 			<Attribs>
 				<style>text-align:right;</style>
 			</Attribs>
