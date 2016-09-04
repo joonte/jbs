@@ -206,7 +206,7 @@ if($StepID){
 	$IsSupportContracts = $DomainScheme['Params']['IsSupportContracts'];
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	if(!In_Array($DomainScheme['Name'],Array('ru','su','рф'))){
+	if(!In_Array($DomainScheme['Name'],Array('su'))){
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'AuthInfo','prompt'=>'Пароль (authinfo) домена. Для переноса домена, его необходимо получить у прежнего регистратора.'));
 		if(Is_Error($Comp))

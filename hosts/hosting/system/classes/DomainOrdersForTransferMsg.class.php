@@ -35,7 +35,7 @@ public function getParams(){
 	$SchemeName = DB_Select('DomainSchemes', 'Name as SchemeName', Array('UNIQ', 'ID' => $this->params['SchemeID']));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	if(In_Array($SchemeName['SchemeName'],Array('ru','su','рф'))){
+	if(In_Array($SchemeName['SchemeName'],Array('su'))){
 		#-------------------------------------------------------------------------------
 		if(IsSet($Registrar) && IsSet($PrefixRegistrar)){
 			#-------------------------------------------------------------------------------

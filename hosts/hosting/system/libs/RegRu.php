@@ -575,7 +575,7 @@ function RegRu_Domain_Transfer($Settings,$DomainName,$DomainZone,$Param){
 			'period'	=> '0',
 			);
 	#-------------------------------------------------------------------------------
-	if(In_Array($DomainZone,Array('ru','su','рф'))){
+	if(In_Array($DomainZone,Array('su'))){
 		#-------------------------------------------------------------------------------
 		$Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/transfer");
 		#-------------------------------------------------------------------------------

@@ -66,7 +66,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(!In_Array($DomainScheme['Name'],Array('ru','su','рф')))
+if(!In_Array($DomainScheme['Name'],Array('su')))
 	if(!$IsNoBasket)
 		if(StrLen($AuthInfo) < 3 || StrLen($AuthInfo) > 40)
 			return new gException('INCORRECT_AUTHINFO','Указан неверный код переноса домена');

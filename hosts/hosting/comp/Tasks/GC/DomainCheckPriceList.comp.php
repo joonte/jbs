@@ -160,7 +160,7 @@ foreach($Servers as $Registrator){
 		if($NewPriceProlong > $NewPriceReg)
 			$NewPriceTransfer = $NewPriceProlong;
 		#-------------------------------------------------------------------------------
-		$NewPriceTransfer = (In_Array($Key,Array('ru','su','рф')))?0:$NewPriceTransfer;
+		$NewPriceTransfer = (In_Array($Key,Array('su')))?0:$NewPriceTransfer;
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		# проверяем наличие такого тарифа в биллинге

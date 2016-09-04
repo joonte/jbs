@@ -511,7 +511,7 @@ case 'array':
 				#-------------------------------------------------------------------------------
 				$Params['DomainOrder'] = $DomainOrder;
 				#-------------------------------------------------------------------------
-				if(In_Array($DomainOrder['Name'],Array('ru','su','рф'))){
+				if(In_Array($DomainOrder['Name'],Array('su'))){
 					#-------------------------------------------------------------------------------
 					$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.ForTransfer.USSR',$Params));
 					#-------------------------------------------------------------------------
@@ -571,7 +571,7 @@ case 'array':
 				$Params['TransferDaysRemainded'] = Ceil(($DomainOrder['StatusDate'] + 180*24*3600 - Time())/(24*3600));
 				$Params['DomainOrder'] = $DomainOrder;
 				#-------------------------------------------------------------------------------
-				if(In_Array($DomainOrder['Name'],Array('ru','su','рф'))){
+				if(In_Array($DomainOrder['Name'],Array('su'))){
 					#-------------------------------------------------------------------------------
 					$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.OnTransfer.USSR',$Params));
 					#-------------------------------------------------------------------------------

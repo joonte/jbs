@@ -523,7 +523,8 @@ function WebNames_Get_List_Domains($Settings){
 #-------------------------------------------------------------------------------
 function WebNames_Domain_Transfer($Settings,$DomainName,$DomainZone,$Params){
 	#-------------------------------------------------------------------------------
-	if(In_Array($DomainZone,Array('ru','su','рф'))){
+	# c 30 августа 2016 года перенос стал аналогичен прочим доменам, через AuthInfo
+	if(In_Array($DomainZone,Array('su'))){
 		# ну до того там мутно всё...
 		# пеернос этих доменов по параметрам аналогичен регистрации.
 		# только 'thisPage' другой
@@ -543,7 +544,7 @@ function WebNames_Domain_Transfer($Settings,$DomainName,$DomainZone,$Params){
 			'interface_lang'     => 'en',
 			'domain_name'        => SPrintF('%s.%s',$DomainName,$DomainZone),
 			'notpaid'            => 0,
-			'period'             => 1,
+			'period'             => ((In_Array($DomainZone,Array('ru','su','рф')))?0:1),
 			'authinfo'           => $Params['AuthInfo'],
 		);
 	#-------------------------------------------------------------------------------

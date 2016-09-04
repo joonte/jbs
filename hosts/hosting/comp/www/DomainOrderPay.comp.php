@@ -73,7 +73,7 @@ $StatusID = $DomainOrder['StatusID'];
 if(!In_Array($StatusID,Array('Waiting','Active','Suspended','ForTransfer')))
 	return new gException('ORDER_CAN_NOT_PAY','Заказ домена не может быть оплачен');
 #-------------------------------------------------------------------------------
-if($StatusID == 'ForTransfer' && !In_Array($DomainOrder['SchemeName'],Array('ru','su','рф')) && StrLen($DomainOrder['AuthInfo']) < 3)
+if($StatusID == 'ForTransfer' && !In_Array($DomainOrder['SchemeName'],Array('su')) && StrLen($DomainOrder['AuthInfo']) < 3)
 	return new gException('NEED_AUTHINFO','До оплаты домена, введите пароль (AuthInfo) для домена');
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];

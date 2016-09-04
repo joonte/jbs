@@ -34,7 +34,7 @@ default:
 #-------------------------------------------------------------------------------
 foreach($DomainOrders as $DomainOrder){
 	#-------------------------------------------------------------------------------
-	if(!($DomainOrder['StatusID'] == 'ForTransfer' || ($DomainOrder['StatusID'] == 'OnTransfer' && In_Array($DomainOrder['Name'],Array('ru','su','рф'))))){
+	if(!($DomainOrder['StatusID'] == 'ForTransfer' || ($DomainOrder['StatusID'] == 'OnTransfer' && In_Array($DomainOrder['Name'],Array('su'))))){
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF("[Tasks/GC/DeleteDomainForTransfer]: Домен не попал в условие: '%s.%s', статус: '%s'",$DomainOrder['DomainName'],$DomainOrder['Name'],$DomainOrder['StatusID']));
 		#-------------------------------------------------------------------------------
