@@ -2185,7 +2185,7 @@ set @Text = '<NOBODY>
   </TR>
   <TR>
    <TD>За web-услуги по счету №%Invoice.Number%</TD>
-   <TD align="right">%PaymentSystem.Send.wbp_ShopKeyID%</TD>
+   <TD align="right">%PaymentSystem.Send.ShopId%</TD>
    <TD align="right">%Invoice.Foreign% руб</TD>
   </TR>
  </TABLE>
