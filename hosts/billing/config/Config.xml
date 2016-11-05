@@ -1712,12 +1712,6 @@
 			<Events>
 				<ShowUnReaded>1</ShowUnReaded>
 			</Events>
-			<!-- *********************************************************************** -->
-			<Tasks>
-				<ShowUnExecuted>1</ShowUnExecuted>
-				<CheckCronRun>1</CheckCronRun>
-				<CronDownTime>1200</CronDownTime>
-			</Tasks>
 		</Notes>
 		<!-- *********************************************************************** -->
 	</Administrator>

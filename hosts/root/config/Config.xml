@@ -55,6 +55,13 @@
 				<MakeCheckCache>1</MakeCheckCache>
 			</CheckCache>
 			<!-- *********************************************************************** -->
+			<Tasks>
+				<ShowUnExecuted>1</ShowUnExecuted>
+				<CheckCronRun>1</CheckCronRun>
+				<CronDownTime>1200</CronDownTime>
+				<AllowKill>1</AllowKill>
+				<KillTimeout>600</KillTimeout>
+			</Tasks>
 		</Notes>
 		<!-- *********************************************************************** -->
 	</Administrator>
