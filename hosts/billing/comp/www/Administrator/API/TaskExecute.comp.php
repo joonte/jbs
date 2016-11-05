@@ -41,9 +41,9 @@ $Tmp = System_Element('tmp');
 if(Is_Error($Tmp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Marker = FOpen(SPrintF('%s/TaskLastExecute.txt',$Tmp), 'w');
-FWrite($Marker, Date('YmdHis'));
-FClose($Marker);
+$IsWrite = IO_Write(SPrintF('%s/TaskLastExecute.txt',$Tmp),Date('YmdHis'),TRUE);
+if(Is_Error($IsWrite))
+	return ERROR | @Trigger_Error('[TaskExecute_ERROR]: не удалось записать данные в маркерный файл');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $TaskID = $Task['ID'];
