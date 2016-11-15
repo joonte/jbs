@@ -155,6 +155,8 @@ CREATE TABLE `EdesksMessages` (
   `IsNotify` ENUM('no','yes') NOT NULL DEFAULT 'no',
   `IsVisible` ENUM('yes','no') NOT NULL DEFAULT 'yes', 
   `VoteBall` INT(2) NOT NULL DEFAULT '0',
+  `IP` CHAR(40) NOT NULL DEFAULT '127.0.0.127',
+  `UA` TEXT NOT NULL,
   PRIMARY KEY  (`ID`),
   KEY `EdesksMessagesCreateDate` (`CreateDate`),
   KEY `IsNotify` (`IsNotify`),

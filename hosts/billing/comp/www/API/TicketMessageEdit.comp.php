@@ -160,9 +160,11 @@ if($Count + 1 > IntVal($Settings['MaxMessages']))
 if($Message){
 	#-------------------------------------------------------------------------------
 	$ITicketMessage = Array(
-				'UserID'  => ($UserID > 0 && $__USER['IsAdmin'])?$UserID:$__USER['ID'],
-				'EdeskID' => $Ticket['ID'],
-				'Content' => $Message
+				'UserID'	=> ($UserID > 0 && $__USER['IsAdmin'])?$UserID:$__USER['ID'],
+				'EdeskID'	=> $Ticket['ID'],
+				'Content'	=> $Message,
+				'IP'		=> IsSet($GLOBALS['_SERVER']['REMOTE_ADDR'])?$GLOBALS['_SERVER']['REMOTE_ADDR']:'',
+				'UA'		=> IsSet($GLOBALS['_SERVER']['HTTP_USER_AGENT'])?$GLOBALS['_SERVER']['HTTP_USER_AGENT']:'',
 				);
 	#-------------------------------------------------------------------------------
 	if(IsSet($NotVisible))

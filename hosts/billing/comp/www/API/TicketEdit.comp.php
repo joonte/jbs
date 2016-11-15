@@ -92,158 +92,178 @@ if(($Settings['IsActive'] && IsSet($_SERVER["REMOTE_PORT"])) || ($Settings['IsEm
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $ITicket = Array(
-  #-----------------------------------------------------------------------------
-  'TargetGroupID' => $TargetGroupID,
-  'PriorityID'    => $PriorityID,
-  'Theme'         => $Theme,
-  'UpdateDate'    => Time(),
-  'Flags'	  => $Flags
-);
+		'TargetGroupID'	=> $TargetGroupID,
+		'PriorityID'	=> $PriorityID,
+		'Theme'		=> $Theme,
+		'UpdateDate'	=> Time(),
+		'Flags'		=> $Flags,
+		);
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
 if($UserID){
-  #-----------------------------------------------------------------------------
-  $User = DB_Select('Users','ID',Array('UNIQ','ID'=>$UserID));
-  #-----------------------------------------------------------------------------
-  switch(ValueOf($User)){
-    case 'error':
-      return ERROR | @Trigger_Error(500);
-    case 'exception':
-      return new gException('USER_NOT_FOUND','Пользователь не найден');
-    case 'array':
-      #-------------------------------------------------------------------------
-      $Permission = Permission_Check('UserRead',(integer)$__USER['ID'],(integer)$User['ID']);
-      #-------------------------------------------------------------------------
-      switch(ValueOf($Permission)){
-        case 'error':
-          return ERROR | @Trigger_Error(500);
-        case 'exception':
-          return ERROR | @Trigger_Error(400);
-        case 'false':
-          return ERROR | @Trigger_Error(700);
-        case 'true':
-          $ITicket['UserID'] = $User['ID'];
-        break 2;
-        default:
-          return ERROR | @Trigger_Error(101);
-      }
-    default:
-      return ERROR | @Trigger_Error(101);
-  }
-}else
-  $ITicket['UserID'] = $__USER['ID'];
+	#-------------------------------------------------------------------------------
+	$User = DB_Select('Users','ID',Array('UNIQ','ID'=>$UserID));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($User)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return new gException('USER_NOT_FOUND','Пользователь не найден');
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$Permission = Permission_Check('UserRead',(integer)$__USER['ID'],(integer)$User['ID']);
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Permission)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'false':
+		return ERROR | @Trigger_Error(700);
+	case 'true':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$ITicket['UserID'] = $User['ID'];
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
+	$ITicket['UserID'] = $__USER['ID'];
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Is_Error(DB_Transaction($TransactionID = UniqID('TicketEdit'))))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($TargetUserID){
-  #-----------------------------------------------------------------------------
-  $User = DB_Select('Users','ID',Array('UNIQ','ID'=>$TargetUserID));
-  #-----------------------------------------------------------------------------
-  switch(ValueOf($User)){
-    case 'error':
-      return ERROR | @Trigger_Error(500);
-    case 'exception':
-      return new gException('WORKER_NOT_FOUND','Сотрудник не найден');
-    case 'array':
-      #-------------------------------------------------------------------------
-      $Permission = Permission_Check('UserRead',(integer)$__USER['ID'],(integer)$User['ID']);
-      #-------------------------------------------------------------------------
-      switch(ValueOf($Permission)){
-        case 'error':
-          return ERROR | @Trigger_Error(500);
-        case 'exception':
-          return ERROR | @Trigger_Error(400);
-        case 'false':
-          return ERROR | @Trigger_Error(700);
-        case 'true':
-          $ITicket['TargetUserID'] = $User['ID'];
-        break 2;
-        default:
-          return ERROR | @Trigger_Error(101);
-      }
-    default:
-      return ERROR | @Trigger_Error(101);
-  }
-}else
-  $ITicket['TargetUserID'] = ($UserID?$__USER['ID']:100);
+	#-------------------------------------------------------------------------------
+	$User = DB_Select('Users','ID',Array('UNIQ','ID'=>$TargetUserID));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($User)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return new gException('WORKER_NOT_FOUND','Сотрудник не найден');
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Permission = Permission_Check('UserRead',(integer)$__USER['ID'],(integer)$User['ID']);
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Permission)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'false':
+		return ERROR | @Trigger_Error(700);
+	case 'true':
+		break;  
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$ITicket['TargetUserID'] = $User['ID'];
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
+	$ITicket['TargetUserID'] = ($UserID?$__USER['ID']:100);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(IsSet($NotifyEmail))
-  $ITicket['NotifyEmail'] = $NotifyEmail;
+	$ITicket['NotifyEmail'] = $NotifyEmail;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $TicketID = DB_Insert('Edesks',$ITicket);
 if(Is_Error($TicketID))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Edesks','IsNotNotify'=>TRUE,'IsNoTrigger'=>TRUE,'StatusID'=>($UserID?'Opened':'Newest'),'RowsIDs'=>$TicketID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Comp)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return ERROR | @Trigger_Error(400);
-  case 'array':
-    #---------------------------------------------------------------------------
-    $ITicketMessage = Array(
-      #-------------------------------------------------------------------------
-      'UserID'  => $__USER['ID'],
-      'EdeskID' => $TicketID,
-      'Content' => $Message
-    );
-    #---------------------------------------------------------------------------
-    $Upload = Upload_Get('TicketMessageFile',(IsSet($Args['TicketMessageFile'])?$Args['TicketMessageFile']:FALSE));
-    #---------------------------------------------------------------------------
-    switch(ValueOf($Upload)){
-      case 'error':
-        return ERROR | @Trigger_Error(500);
-      case 'exception':
-        # No more...
-      break;
-      case 'array':
-        #-----------------------------------------------------------------------
-        $ITicketMessage['FileName'] = $Upload['Name'];
-      break;
-      default:
-        return ERROR | @Trigger_Error(101);
-    }
-    #---------------------------------------------------------------------------
-    $MessageID = DB_Insert('EdesksMessages',$ITicketMessage);
-    if(Is_Error($MessageID))
-      return ERROR | @Trigger_Error(500);
-    #---------------------------------------------------------------------------
-    if(IsSet($ITicketMessage['FileName']))
-      if(!SaveUploadedFile('EdesksMessages', $MessageID, $Upload['Data']))
-        return new gException('CANNOT_SAVE_UPLOADED_FILE','Не удалось сохранить загруженный файл');
-    #---------------------------------------------------------------------------
-    if(!$UserID){
-      #-------------------------------------------------------------------------
-      $Event = Array(
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+$ITicketMessage = Array(
+			'UserID'	=> $__USER['ID'],
+			'EdeskID'	=> $TicketID,
+			'Content'	=> $Message,
+			);
+#-------------------------------------------------------------------------------
+$Upload = Upload_Get('TicketMessageFile',(IsSet($Args['TicketMessageFile'])?$Args['TicketMessageFile']:FALSE));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Upload)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	# No more...
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	$ITicketMessage['FileName'] = $Upload['Name'];
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+$MessageID = DB_Insert('EdesksMessages',$ITicketMessage);
+if(Is_Error($MessageID))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if(IsSet($ITicketMessage['FileName']))
+	if(!SaveUploadedFile('EdesksMessages', $MessageID, $Upload['Data']))
+		return new gException('CANNOT_SAVE_UPLOADED_FILE','Не удалось сохранить загруженный файл');
+#-------------------------------------------------------------------------------
+if(!$UserID){
+	#-------------------------------------------------------------------------------
+	$Event = Array(
 			'UserID'	=> $__USER['ID'],
 			'PriorityID'	=> 'Billing',
 			'Text'		=> SPrintF('Создан запрос в службу поддержки с темой (%s)',$Theme)
-      		    );
-      $Event = Comp_Load('Events/EventInsert',$Event);
-      if(!$Event)
-        return ERROR | @Trigger_Error(500);
-    }
-    #---------------------------------------------------------------------------
-    if(Is_Error(DB_Commit($TransactionID)))
-      return ERROR | @Trigger_Error(500);
-    #---------------------------------------------------------------------------
-    # JBS-641: generate messages
-    if($Config['Tasks']['Types']['TicketsMessages']['IsImmediately']){
-      #---------------------------------------------------------------------------
-      $Comp = Comp_Load('Tasks/TicketsMessages');
-      if(Is_Error($Comp))
-        return ERROR | @Trigger_Error(500);
-      #---------------------------------------------------------------------------
-    }
-    #---------------------------------------------------------------------------
-    return Array('Status'=>'Ok');
-  default:
-    return ERROR | @Trigger_Error(101);
+			);
+	#-------------------------------------------------------------------------------
+	$Event = Comp_Load('Events/EventInsert',$Event);
+	if(!$Event)
+		return ERROR | @Trigger_Error(500);
 }
+#-------------------------------------------------------------------------------
+if(Is_Error(DB_Commit($TransactionID)))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+# JBS-641: generate messages
+if($Config['Tasks']['Types']['TicketsMessages']['IsImmediately']){
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Tasks/TicketsMessages');
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+return Array('Status'=>'Ok');
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>

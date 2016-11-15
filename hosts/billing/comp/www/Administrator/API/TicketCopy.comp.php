@@ -125,7 +125,9 @@ if(Is_Error($EdeskID))
 $IMessage = Array(
 		'UserID'	=> $FromID,
 		'EdeskID'	=> $EdeskID,
-		'Content'	=> $Message['Content']
+		'Content'	=> $Message['Content'],
+		'IP'		=> $Message['IP'],
+		'UA'		=> $Message['UA']
 		);
 #-------------------------------------------------------------------------------
 $IsInsert = DB_Insert('EdesksMessages',$IMessage);
