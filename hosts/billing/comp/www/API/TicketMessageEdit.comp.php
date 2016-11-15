@@ -163,7 +163,7 @@ if($Message){
 				'UserID'	=> ($UserID > 0 && $__USER['IsAdmin'])?$UserID:$__USER['ID'],
 				'EdeskID'	=> $Ticket['ID'],
 				'Content'	=> $Message,
-				'IP'		=> IsSet($GLOBALS['_SERVER']['REMOTE_ADDR'])?$GLOBALS['_SERVER']['REMOTE_ADDR']:'',
+				'IP'		=> IsSet($GLOBALS['_SERVER']['REMOTE_ADDR'])?$GLOBALS['_SERVER']['REMOTE_ADDR']:'127.0.0.127',
 				'UA'		=> IsSet($GLOBALS['_SERVER']['HTTP_USER_AGENT'])?$GLOBALS['_SERVER']['HTTP_USER_AGENT']:'',
 				);
 	#-------------------------------------------------------------------------------
