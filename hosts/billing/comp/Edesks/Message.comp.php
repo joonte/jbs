@@ -326,9 +326,22 @@ if(Is_Error($Text))
 $Params['User']['Name'] = Nl2Br(HtmlSpecialChars($Params['User']['Name']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($GLOBALS['__USER']['IsAdmin'] && $IP != '127.0.0.127'){
+if($GLOBALS['__USER']['IsAdmin'] && $IP != '127.0.0.127' && $IP != '127.0.0.1'){
 	#-------------------------------------------------------------------------------
-	$UserInfoImage = HtmlSpecialChars(SPrintF('IP: %s / %s<BR />',$IP,(Extension_Loaded('geoip'))?geoip_country_name_by_name($IP):'GeoIP not avalible'));
+	if(Extension_Loaded('geoip')){
+		#-------------------------------------------------------------------------------
+		$Country = geoip_country_name_by_name($IP);
+		#-------------------------------------------------------------------------------
+		if($GeoIP = @geoip_record_by_name($IP))
+			if($GeoIP['city'])
+				$City = $GeoIP['city'];
+		#-------------------------------------------------------------------------------
+		#Debug(SPrintF('@geoip_record_by_name = %s',print_r(@geoip_record_by_name($IP),true)));
+	}
+	#Debug(SPrintF('@City = %s',print_r(@$City,true)));
+	#-------------------------------------------------------------------------------
+	$UserInfoImage = HtmlSpecialChars(SPrintF('IP: %s %s %s<BR />',$IP,(IsSet($Country))?SPrintF(' / %s',$Country):'GeoIP not avalible',(IsSet($City))?SPrintF(' / %s',$City):''));
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$UserInfoImage .= HtmlSpecialChars(HtmlSpecialChars($UA, ENT_QUOTES),ENT_QUOTES);
 	#-------------------------------------------------------------------------------
