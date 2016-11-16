@@ -208,6 +208,8 @@ $ITicketMessage = Array(
 			'UserID'	=> $__USER['ID'],
 			'EdeskID'	=> $TicketID,
 			'Content'	=> $Message,
+			'IP'		=> IsSet($GLOBALS['_SERVER']['REMOTE_ADDR'])?$GLOBALS['_SERVER']['REMOTE_ADDR']:'127.0.0.127',
+			'UA'		=> IsSet($GLOBALS['_SERVER']['HTTP_USER_AGENT'])?$GLOBALS['_SERVER']['HTTP_USER_AGENT']:'',
 			);
 #-------------------------------------------------------------------------------
 $Upload = Upload_Get('TicketMessageFile',(IsSet($Args['TicketMessageFile'])?$Args['TicketMessageFile']:FALSE));
