@@ -340,10 +340,10 @@ if($GLOBALS['__USER']['IsAdmin'] && $IP != '127.0.0.127' && $IP != '127.0.0.1'){
 	}
 	#Debug(SPrintF('@City = %s',print_r(@$City,true)));
 	#-------------------------------------------------------------------------------
-	$UserInfoImage = HtmlSpecialChars(SPrintF('IP: %s %s %s<BR />',$IP,(IsSet($Country))?SPrintF(' / %s',$Country):'GeoIP not avalible',(IsSet($City))?SPrintF(' / %s',$City):''));
+	$IPInfo = SPrintF('IP: %s %s %s',$IP,(IsSet($Country))?SPrintF(' / %s',$Country):'GeoIP not avalible',(IsSet($City))?SPrintF(' / %s',$City):'');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$UserInfoImage .= HtmlSpecialChars(HtmlSpecialChars($UA, ENT_QUOTES),ENT_QUOTES);
+	$UserInfoImage = HtmlSpecialChars(SprintF('%s<BR />%s',HtmlSpecialChars($IPInfo,ENT_QUOTES),HtmlSpecialChars($UA,ENT_QUOTES)),ENT_QUOTES);
 	#-------------------------------------------------------------------------------
 	$Params['UserInfoImage'] = SPrintF('<IMG height="16" width="16" src="SRC:{Images/Icons/Info.gif}" align="top" onmouseover="PromptShow(event,\'%s\',this);"/>',$UserInfoImage);
 	#-------------------------------------------------------------------------------
