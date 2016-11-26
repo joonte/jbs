@@ -879,4 +879,16 @@
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</lol>
+	<!-- *********************************************************************** -->
+	<construction>
+		<Server>whois.donuts.co</Server>
+		<Name>construction</Name>
+		<Available>Domain\snot\sfound.</Available>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</construction>
 </XML>
