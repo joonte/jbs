@@ -22,7 +22,7 @@ case 'error':
 case 'exception':
 	#-------------------------------------------------------------------------------
 	# No more...
-	Debug('[comp/Tasks/GC/DomainFindOddg]: Регистраторы не найдены');
+	Debug('[comp/Tasks/GC/DomainFindOdd]: Регистраторы не найдены');
 	#-------------------------------------------------------------------------------
 	return TRUE;
 	#-------------------------------------------------------------------------------
@@ -88,7 +88,7 @@ foreach($Servers as $NowReg){
 		#-------------------------------------------------------------------------------
 		if(!$RegDomains['Status']){
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/GC/DomainFindOddg]: У регистратора %s не найдено доменов',$NowReg['Params']['Name']));
+			Debug(SPrintF('[comp/Tasks/GC/DomainFindOdd]: У регистратора %s не найдено доменов',$NowReg['Params']['Name']));
 			#-------------------------------------------------------------------------------
 			break;
 			#-------------------------------------------------------------------------------
@@ -114,7 +114,7 @@ foreach($Servers as $NowReg){
 		case 'exception':
 			#-------------------------------------------------------------------------------
 			# No more...
-			Debug("[comp/Tasks/GC/DomainFindOddg]: Нет доменов");
+			Debug("[comp/Tasks/GC/DomainFindOdd]: Нет доменов");
 			#-------------------------------------------------------------------------------
 			break;
 			#-------------------------------------------------------------------------------
@@ -126,7 +126,7 @@ foreach($Servers as $NowReg){
 			foreach ($Domains as $Domain)
 				$BillDomains[] = Mb_StrToLower($Domain['Domain'],'UTF-8');
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/GC/DomainFindOddg]: [%s] доменов у регистратора %s, в биллинге %s',$NowReg['Params']['Name'],SizeOf($RegDomains['Domains']),SizeOf($BillDomains)));
+			Debug(SPrintF('[comp/Tasks/GC/DomainFindOdd]: [%s] доменов у регистратора %s, в биллинге %s',$NowReg['Params']['Name'],SizeOf($RegDomains['Domains']),SizeOf($BillDomains)));
 			#-------------------------------------------------------------------------------
 			# сортируем массивы
 			ASort($RegDomains['Domains']);
@@ -187,7 +187,7 @@ foreach($Servers as $NowReg){
 						#-------------------------------------------------------------------------------
 						$Message = SPrintF('У регистратора %s найден лишний домен %s',$NowReg['Params']['Name'],$DomainOdd);
 						#-------------------------------------------------------------------------------
-						Debug(SPrintF('[comp/Tasks/GC/DomainFindOddg]: %s',$Message));
+						Debug(SPrintF('[comp/Tasks/GC/DomainFindOdd]: %s',$Message));
 						#-------------------------------------------------------------------------------
 						$Event = Array('Text' => $Message,'PriorityID' => 'Error','IsReaded' => FALSE);
 						$Event = Comp_Load('Events/EventInsert', $Event);
@@ -196,18 +196,18 @@ foreach($Servers as $NowReg){
 						#-------------------------------------------------------------------------------
 					}else{
 						#-------------------------------------------------------------------------------
-						Debug(SPrintF('[comp/Tasks/GC/DomainFindOddg]: Домен %s/%s, в биллинге есть, но его статус не соответствует критериям выборки',$DomainOdd,$NowReg['Params']['Name']));
+						Debug(SPrintF('[comp/Tasks/GC/DomainFindOdd]: Домен %s/%s, в биллинге есть, но его статус не соответствует критериям выборки',$DomainOdd,$NowReg['Params']['Name']));
 						#-------------------------------------------------------------------------------
-						# JBS-595 - проверяем не на переносе ли он - возможно перенеос завершилсяa
+						# JBS-595 - проверяем не на переносе ли он - возможно перенеос завершился
 						$Columns = Array('`DomainOrdersOwners`.`ID` AS `ID`','StatusID','ExpirationDate','`DomainOrdersOwners`.`UserID` AS `UserID`');
 						#-------------------------------------------------------------------------------
-						$IsTransfer = DB_Select(Array('DomainOrdersOwners','DomainSchemes'),$Columns,Array('UNIQ','Where'=>$Where));
+						$IsTransfer = DB_Select(Array('DomainOrdersOwners','DomainSchemes'),$Columns,Array('UNIQ','Where'=>$Where,'Limits'=>Array(0,1)));
 						#-------------------------------------------------------------------------------
 						switch(ValueOf($IsTransfer)){
 						case 'error':
 							return ERROR | @Trigger_Error(500);
 						case 'exception':
-							Debug(SPrintF('[comp/Tasks/GC/DomainFindOddg]: Домен %s, регистратор не соответсвует %s',$DomainOdd,$NowReg['Params']['Name']));
+							Debug(SPrintF('[comp/Tasks/GC/DomainFindOdd]: Домен %s, регистратор не соответсвует %s',$DomainOdd,$NowReg['Params']['Name']));
 							break;
 						case 'array':
 							#-------------------------------------------------------------------------------
@@ -227,7 +227,7 @@ foreach($Servers as $NowReg){
 									#-------------------------------------------------------------------------------
 								}
 								#-------------------------------------------------------------------------------
-								Debug(SPrintF('[comp/Tasks/GC/DomainFindOddg]: %s',$Message));
+								Debug(SPrintF('[comp/Tasks/GC/DomainFindOdd]: %s',$Message));
 								#-------------------------------------------------------------------------------
 								# TODO подправляем регистратора, т.к. у меня первый же перенос - задание на перенос
 								# одному регистратору, а домен перенесли к другому...
@@ -267,7 +267,7 @@ foreach($Servers as $NowReg){
 								#-------------------------------------------------------------------------------
 							}else{
 								#-------------------------------------------------------------------------------
-								Debug(SPrintF('[comp/Tasks/GC/DomainFindOddg]: Домен %s ещё не удалён у регистратора',$DomainOdd));
+								Debug(SPrintF('[comp/Tasks/GC/DomainFindOdd]: Домен %s ещё не удалён у регистратора',$DomainOdd));
 								#-------------------------------------------------------------------------------
 							}
 							#-------------------------------------------------------------------------------
@@ -287,7 +287,7 @@ foreach($Servers as $NowReg){
 				#-------------------------------------------------------------------------------
 				foreach($DomainsOdd as $DomainOdd){
 					#-------------------------------------------------------------------------------
-					Debug(SPrintF('[comp/Tasks/GC/DomainFindOddg]: Найден домен %s отсутствующий у регистратора %s',$DomainOdd,$NowReg['Params']['Name']));
+					Debug(SPrintF('[comp/Tasks/GC/DomainFindOdd]: Найден домен %s отсутствующий у регистратора %s',$DomainOdd,$NowReg['Params']['Name']));
 					#-------------------------------------------------------------------------------
 					# Ищщем параметры этого заказа на домен
 					$Where = Array(
