@@ -198,7 +198,7 @@ foreach($Servers as $NowReg){
 						#-------------------------------------------------------------------------------
 						Debug(SPrintF('[comp/Tasks/GC/DomainFindOdd]: Домен %s/%s, в биллинге есть, но его статус не соответствует критериям выборки',$DomainOdd,$NowReg['Params']['Name']));
 						#-------------------------------------------------------------------------------
-						# JBS-595 - проверяем не на переносе ли он - возможно перенеос завершился
+						# JBS-595 - проверяем не на переносе ли он - возможно перенос завершился
 						$Columns = Array('`DomainOrdersOwners`.`ID` AS `ID`','StatusID','ExpirationDate','`DomainOrdersOwners`.`UserID` AS `UserID`');
 						#-------------------------------------------------------------------------------
 						$IsTransfer = DB_Select(Array('DomainOrdersOwners','DomainSchemes'),$Columns,Array('UNIQ','Where'=>$Where,'Limits'=>Array(0,1)));
@@ -215,7 +215,7 @@ foreach($Servers as $NowReg){
 							if(Is_Error($Comp))
 								return ERROR | @Trigger_Error(500);
 							#-------------------------------------------------------------------------------
-							if(In_Array($IsTransfer['StatusID'],Array('ForTransfer','OnTransfer')) || ($IsTransfer['StatusID'] == 'Deleted' && $IsTransfer['ExpirationDate'] > Time() + 90 * 24 * 3600)){
+							if(In_Array($IsTransfer['StatusID'],Array('ForTransfer','OnTransfer')) || ($IsTransfer['StatusID'] == 'Deleted' && $IsTransfer['ExpirationDate'] > Time() + 30 * 24 * 3600)){
 								#-------------------------------------------------------------------------------
 								if($IsTransfer['StatusID'] == 'Deleted'){
 									#-------------------------------------------------------------------------------

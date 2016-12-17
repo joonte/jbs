@@ -537,15 +537,17 @@ function WebNames_Domain_Transfer($Settings,$DomainName,$DomainZone,$Params){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Query = Array(
-			'thisPage'           => 'pispInitiateTransfer',
-			'username'           => $Settings['Login'],
-			'password'           => $Settings['Password'],
-			'interface_revision' => 1,
-			'interface_lang'     => 'en',
-			'domain_name'        => SPrintF('%s.%s',$DomainName,$DomainZone),
-			'notpaid'            => 0,
-			'period'             => ((In_Array($DomainZone,Array('ru','su','рф')))?0:1),
-			'authinfo'           => $Params['AuthInfo'],
+			'thisPage'		=> 'pispInitiateTransfer',
+			'username'		=> $Settings['Login'],
+			'password'		=> $Settings['Password'],
+			'interface_revision'	=> 1,
+			'interface_lang'	=> 'en',
+			'domain_name'		=> SPrintF('%s.%s',$DomainName,$DomainZone),
+			'notpaid'		=> 0,
+			'period'		=> ((In_Array($DomainZone,Array('ru','su','рф')))?0:1),
+			'transfer_voice'	=> Preg_Replace('/\s+/', '', $Params['Person']['CellPhone']),
+			'transfer_email'	=> $Params['Person']['Email'],
+			'authinfo'		=> $Params['AuthInfo'],
 		);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
