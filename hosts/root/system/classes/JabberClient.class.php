@@ -40,7 +40,7 @@ class JabberClient
 	var $username;
 	var $password;
 	var $use_ssl;
-	var $resource = 'functions_jabber.phpbb.php';
+	var $resource = 'Joonte.Billing.System';
 
 	var $enable_logging;
 	var $log_array;
