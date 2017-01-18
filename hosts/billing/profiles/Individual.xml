@@ -30,18 +30,6 @@
   <Value />
  </Inn>
  <!-- ********************************************************************** -->
- <Kpp>
-  <Check>Kpp</Check>
-  <Comment>КПП</Comment>
-  <Example>632946014</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-  </Attribs>
-  <IsDuty>0</IsDuty>
-  <Value />
- </Kpp>
- <!-- ********************************************************************** -->
  <SvLine>
   <Check>/^[0-9]{1,3}$/u</Check>
   <Comment>Серия свидетельства</Comment>
