@@ -17,7 +17,7 @@ $Settings = $Config['Tasks']['Types']['Consider'];
 #Debug(Print_r($Settings,true));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecutePeriod'=>$Settings['ExecutePeriod']));
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecutePeriod'=>@$Settings['ExecutePeriod'],'ExecuteTime'=>@$Settings['ExecuteTime'],));
 if(Is_Error($ExecuteTime))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

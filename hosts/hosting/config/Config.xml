@@ -1080,6 +1080,7 @@
 			<Name>Учет заказов штатных услуг</Name>
 			<Params type="array" />
 			<ExecutePeriod>04:00</ExecutePeriod>
+			<ExecuteTime>0</ExecuteTime>
 			<PerIteration>15</PerIteration>
 			<SleepTime>20</SleepTime>
 			<IsActive>1</IsActive>
