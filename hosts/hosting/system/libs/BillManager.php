@@ -69,7 +69,7 @@ function BillManager_Find_Free_License($ISPswScheme){
 	# делаем тот же запрос снова, только без части про IP и с датой
 	$Where = Array(SPrintF("`pricelist_id` = '%s'",$ISPswScheme['pricelist_id']),'UNIX_TIMESTAMP() - `ip_change_date` > 24 * 3600 * 31',"`IsInternal` = 'yes'","`IsUsed` = 'no'","`Flag` != 'Locked'");
 	#-------------------------------------------------------------------------------
-	$ISPswLicenses = DB_Select('ISPswLicenses','*',Array('UNIQ','Where'=>$Where,'Limits'=>Array(0,1),'SortOn'=>'update_expiredate',,'IsDesc'=>TRUE));
+	$ISPswLicenses = DB_Select('ISPswLicenses','*',Array('UNIQ','Where'=>$Where,'Limits'=>Array(0,1),'SortOn'=>'update_expiredate','IsDesc'=>TRUE));
 	switch(ValueOf($ISPswLicenses)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
