@@ -51,13 +51,13 @@ function BillManager_Find_Free_License($ISPswScheme){
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[system/libs/BillManager.php]: no free licenses, pricelist_id = %s; IP = %s',$ISPswScheme['pricelist_id'],$ISPswScheme['IP']));
+		Debug(SPrintF('[system/libs/BillManager.php]: exact IP, no free licenses, pricelist_id = %s; IP = %s',$ISPswScheme['pricelist_id'],$ISPswScheme['IP']));
 		#-------------------------------------------------------------------------------
 		break;
 		#-------------------------------------------------------------------------------
 	case 'array':
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[system/libs/BillManager.php]: found free license, pricelist_id = %s; elid = %s',$ISPswScheme['pricelist_id'],$ISPswLicenses['elid']));
+		Debug(SPrintF('[system/libs/BillManager.php]: exact IP, found free license, pricelist_id = %s; elid = %s',$ISPswScheme['pricelist_id'],$ISPswLicenses['elid']));
 		#-------------------------------------------------------------------------------
 		return Array('elid'=>$ISPswLicenses['elid'],'LicenseID'=>$ISPswLicenses['ID']);
 		#-------------------------------------------------------------------------------
@@ -69,7 +69,7 @@ function BillManager_Find_Free_License($ISPswScheme){
 	# делаем тот же запрос снова, только без части про IP и с датой
 	$Where = Array(SPrintF("`pricelist_id` = '%s'",$ISPswScheme['pricelist_id']),'UNIX_TIMESTAMP() - `ip_change_date` > 24 * 3600 * 31',"`IsInternal` = 'yes'","`IsUsed` = 'no'","`Flag` != 'Locked'");
 	#-------------------------------------------------------------------------------
-	$ISPswLicenses = DB_Select('ISPswLicenses','*',Array('UNIQ','Where'=>$Where,'Limits'=>Array(0,1)));
+	$ISPswLicenses = DB_Select('ISPswLicenses','*',Array('UNIQ','Where'=>$Where,'Limits'=>Array(0,1),'SortOn'=>'update_expiredate',,'IsDesc'=>TRUE));
 	switch(ValueOf($ISPswLicenses)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
