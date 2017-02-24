@@ -151,6 +151,7 @@
 		<ListElement>Number</ListElement>
 		<ListElement>Scheme</ListElement>
 		<ListElement>Expiration</ListElement>
+		<ListElement>Domain</ListElement>
 		<ListElement>Status</ListElement>
 		<ListElement>StatusOver</ListElement>
 	</Sequence>
