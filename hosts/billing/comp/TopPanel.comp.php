@@ -114,7 +114,7 @@ if(!IsSet($GLOBALS['__USER'])){
 		#-------------------------------------------------------------------------------
 		if(SizeOf($Contracts) > 3){
 			#-------------------------------------------------------------------------------
-			$UniqID = UniqID('ID');
+			$UniqID = UniqID('ID'); $UniqID2 = UniqID('ID2');
 			#-------------------------------------------------------------------------------
 			$Table->AddChild(
 					new Tag('TR',
@@ -122,9 +122,9 @@ if(!IsSet($GLOBALS['__USER'])){
 							Array(
 								'colspan'	=> 4,
 								'style'		=> 'cursor:pointer;',
-								'onclick'	=> SPrintF("var Style = document.getElementById('%s').style;Style.display = (Style.display != 'none'?'none':'');",$UniqID)
+								'onclick'	=> SPrintF("var Style = document.getElementById('%s').style; Style.display = (Style.display != 'none'?'none':''); document.getElementById('%s').innerHTML = (Style.display != 'none'?'Кликните чтобы свернуть список ваших договоров<hr size=1>':'Просмотр списка ваших договоров')",$UniqID,$UniqID2)
 								),
-								'Просмотр списка ваших договоров'
+								new Tag('DIV',Array('id'=>$UniqID2,'name'=>$UniqID2),'Просмотр списка ваших договоров')
 							)
 						)
 					);
