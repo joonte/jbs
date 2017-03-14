@@ -655,7 +655,7 @@ CREATE TABLE IF NOT EXISTS `ExtraIPSchemes` (
 	`PackageID` char(30) DEFAULT '',
 	`CostDay` decimal(11,2) DEFAULT '0.00',
 	`CostMonth` decimal(11,2) DEFAULT '0.00',
-	`CostInsall` decimal(11,2) NOT NULL,
+	`CostInstall` decimal(11,2) NOT NULL,
 	`AddressType` CHAR( 8 ) NOT NULL DEFAULT 'IPv4',
 	`Comment` char(255) NOT NULL,
 	`IsActive` enum('no','yes') DEFAULT 'yes',
