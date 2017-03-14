@@ -143,7 +143,7 @@ if($StepID){
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
-	#Debug(SPrintF('[comp/www/DomainTransfer]: WhoIs = %s',print_r($WhoIs,true)));
+	Debug(SPrintF('[comp/www/DomainTransfer]: WhoIs = %s',print_r($WhoIs,true)));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if(($WhoIs['ExpirationDate'] - Time()) / 86400 < $DomainScheme['DaysBeforeTransfer'])
