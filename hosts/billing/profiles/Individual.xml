@@ -187,6 +187,7 @@
    <Type>Input</Type>
    <Attribs>
     <type>text</type>
+    <onblur>if(value.substring(0,3) == '+7 '){if(value.charAt(3) != '9'){value = SPrintF('+7 9%s',value.substring(4));}}</onblur>
    </Attribs>
    <IsDuty>1</IsDuty>
    <Value />
