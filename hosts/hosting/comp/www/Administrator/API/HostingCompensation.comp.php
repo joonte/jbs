@@ -14,9 +14,9 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 #-------------------------------------------------------------------------------
 $Args = Args();
 #-------------------------------------------------------------------------------
-$HostingOrderID  = (integer) @$Args['HostingOrderID'];
-$ServerID = (integer) @$Args['ServerID'];
-$DaysReserved    = (integer) @$Args['DaysReserved'];
+$HostingOrderID	= (integer) @$Args['HostingOrderID'];
+$ServerID	= (integer) @$Args['ServerID'];
+$DaysReserved	= (integer) @$Args['DaysReserved'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$DaysReserved)
