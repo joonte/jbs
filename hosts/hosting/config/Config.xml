@@ -995,6 +995,13 @@
 				<IsActive>1</IsActive>
 			</UpTimeAgregateSettings>
 			<!-- ********************************************************************* -->
+			<CheckOrphanedDomainOwners>
+				<IsActive>1</IsActive>
+				<Limit>3</Limit>
+				<DayOfWeek>1</DayOfWeek>
+				<SendToGroupIDs>3100000</SendToGroupIDs>
+			</CheckOrphanedDomainOwners>
+			<!-- ********************************************************************* -->
 			<!-- задачи -->
 			<DailyTasks>
 				<EraseDeletedOrders>Удаление заказов в статусе Удален</EraseDeletedOrders>
@@ -1012,6 +1019,7 @@
 				<DomainCheckPriceList>Проверка цен на домены у вышестоящих регистраторов</DomainCheckPriceList>
 				<DomainSchemeCheckWhoIsDatabase>Проверка тарифов на домены, на предмет нахождения в базе WhoIs</DomainSchemeCheckWhoIsDatabase>
 				<UpTimeAgregate>Агрегация стастистики мониторинга серверов</UpTimeAgregate>
+				<CheckOrphanedDomainOwners>Проверка владельцев доменных имён</CheckOrphanedDomainOwners>
 				<ExtraIPCheckOnCreate>Проверка зависших созданий IP адресов</ExtraIPCheckOnCreate>
 			</DailyTasks>
 			<!-- ********************************************************************* -->
