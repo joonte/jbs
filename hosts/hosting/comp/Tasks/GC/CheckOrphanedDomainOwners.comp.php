@@ -138,9 +138,9 @@ foreach($Domains as $Domain){
 # ищщем сотрудников указанной группы
 $Employers = Array();
 #-------------------------------------------------------------------------------
-foreach(Explode(',',$Config['SendToGroupIDs']) as $SendToGroupID){
+foreach(Explode(',',$Settings['SendToGroupIDs']) as $SendToGroupID){
 	#-------------------------------------------------------------------------------
-	$Entrance = Tree_Entrance('Groups',$SendToGroupID);
+	$Entrance = Tree_Entrance('Groups',(integer)$SendToGroupID);
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Entrance)){
 	case 'error':
@@ -257,7 +257,7 @@ if(StrLen($Message) < 20)
 #-------------------------------------------------------------------------------
 foreach($Employers as $Employer){
 	#-------------------------------------------------------------------------------
-	$msg = new DispatchMsg(Array('Theme'=>$Theme,'Message'=>$Message), (integer)$Employer['ID'], 100 /*$FromID*/);
+	$msg = new DispatchMsg(Array('Theme'=>$Theme,'Message'=>$Message), IntVal($Employer), 100 /*$FromID*/);
 	#-------------------------------------------------------------------------------
 	$IsSend = NotificationManager::sendMsg($msg);
 	#-------------------------------------------------------------------------------
@@ -266,10 +266,11 @@ foreach($Employers as $Employer){
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
 		# No more...
+		break;
 	case 'true':
 		#-------------------------------------------------------------------------------
 		# No more...
-		Debug(SPrintF("[comp/Tasks/GC/CheckOrphanedDomainOwners]: Сообщение для сотрудника #%s отослано",$Employer['ID']));
+		Debug(SPrintF("[comp/Tasks/GC/CheckOrphanedDomainOwners]: Сообщение для сотрудника #%s отослано",$Employer));
 		#-------------------------------------------------------------------------------
 		break;
 		#-------------------------------------------------------------------------------
