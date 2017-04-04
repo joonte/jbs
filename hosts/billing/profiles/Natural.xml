@@ -1,361 +1,361 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<ProfileName>%Sourname% %Name%</ProfileName>
-<!-- *********************************************************************** -->
-<Attribs>
- <Sourname>
-  <Title>Общая информация</Title>
-  <Check>Sourname</Check>
-  <Comment>Фамилия</Comment>
-  <Example>Иванов</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </Sourname>
- <!-- ********************************************************************** -->
- <Name>
-  <Check>Name</Check>
-  <Comment>Имя</Comment>
-  <Example>Петр</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </Name>
- <!-- ********************************************************************** -->
- <Lastname>
-  <Check>Lastname</Check>
-  <Comment>Отчество</Comment>
-  <Example>Викторович</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </Lastname>
- <!-- ********************************************************************** -->
- <BornDate>
-  <Check>BornDate</Check>
-  <IsDuty>1</IsDuty>
-  <Comment>Дата рождения</Comment>
-  <Example>18.03.1986</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-   <onblur>value = value.charAt(0).toUpperCase() + value.substring(1).toLowerCase();</onblur>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </BornDate>
- <!-- ********************************************************************** -->
- <Phone>
-  <Check>Phone</Check>
-  <Comment>Телефон</Comment>
-  <Example>+7 495 7558899</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </Phone>
- <!-- ********************************************************************** -->
- <CellPhone>
-  <Check>Phone</Check>
-  <Comment>Мобильный телефон</Comment>
-  <Example>+7 926 7558899</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-   <onblur>if(value.substring(0,3) == '+7 '){if(value.charAt(3) != '9'){value = SPrintF('+7 9%s',value.substring(4));}}</onblur>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </CellPhone>
- <!-- ********************************************************************** -->
- <Fax>
-  <Check>Phone</Check>
-  <Comment>Факс</Comment>
-  <Example>+7 095 1551891</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-  </Attribs>
-  <IsDuty>0</IsDuty>
-  <Value />
- </Fax>
- <!-- ********************************************************************** -->
- <Email>
-  <Check>Email</Check>
-  <Comment>Электронный адрес</Comment>
-  <Example>alexander@yandex.ru</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value>%Email%</Value>
- </Email>
- <!-- ********************************************************************** -->
- <PasportCountry>
-  <Title>Паспортные данные</Title>
-  <Check>Country</Check>
-  <Comment>Страна</Comment>
-  <Example>Россия</Example>
-  <Type>Select</Type>
-  <Options>
-   <AU>Австралия</AU>
-   <AT>Австрия</AT>
-   <AZ>Азербайджан</AZ>
-   <AM>Армения</AM>
-   <BY>Беларусь</BY>
-   <BG>Болгария</BG>
-   <UK>Великобритания</UK>
-   <DE>Германия</DE>
-   <GE>Грузия</GE>
-   <IL>Израиль</IL>
-   <IT>Италия</IT>
-   <KZ>Казахстан</KZ>
-   <KG>Киргизия</KG>
-   <CA>Канада</CA>
-   <CC>Кокосовые острова</CC>
-   <LV>Латвия</LV>
-   <LT>Литва</LT>
-   <MT>Мальта</MT>
-   <MD>Молдова</MD>
-   <NL>Нидерланды</NL>
-   <NO>Норвегия</NO>
-   <PL>Польша</PL>
-   <RU>Россия</RU>
-   <US>США</US>
-   <TJ>Таджикистан</TJ>
-   <TM>Туркмения</TM>
-   <UZ>Узбекистан</UZ>
-   <UA>Украина</UA>
-   <FI>Финляндия</FI>
-   <CZ>Чехия</CZ>
-   <EE>Эстония</EE>
-   <JP>Япония</JP>
-  </Options>
-  <Attribs>
-   <size>1</size>
-   <style>width: 100%;</style>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value>RU</Value>
- </PasportCountry>
- <!-- ********************************************************************** -->
- <PasportLine>
-  <Check>PasportLine</Check>
-  <Comment>Серия паспорта</Comment>
-  <Example>3422</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </PasportLine>
- <!-- ********************************************************************** -->
- <PasportNum>
-  <Check>PasportNum</Check>
-  <Comment>Номер паспорта</Comment>
-  <Example>427789</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </PasportNum>
- <!-- ********************************************************************** -->
- <PasportWhom>
-  <Check>PasportWhom</Check>
-  <Comment>Паспорт выдан</Comment>
-  <Example>15 отделением милиции г. Москвы</Example>
-  <Type>TextArea</Type>
-  <Attribs>
-   <rows>3</rows>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </PasportWhom>
- <!-- ********************************************************************** -->
- <PasportDate>
-  <Check>PasportDate</Check>
-  <Comment>Дата выдачи паспорта</Comment>
-  <Example>01.06.2001</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </PasportDate>
- <!-- ********************************************************************** -->
- <pCountry>
-  <Title>Почтовый адрес</Title>
-  <Check>Country</Check>
-  <Comment>Страна</Comment>
-  <Example>Россия</Example>
-  <Type>Select</Type>
-  <Options>
-   <AU>Австралия</AU>
-   <AT>Австрия</AT>
-   <AZ>Азербайджан</AZ>
-   <AM>Армения</AM>
-   <BY>Беларусь</BY>
-   <BG>Болгария</BG>
-   <UK>Великобритания</UK>
-   <DE>Германия</DE>
-   <GE>Грузия</GE>
-   <IL>Израиль</IL>
-   <IT>Италия</IT>
-   <KZ>Казахстан</KZ>
-   <KG>Киргизия</KG>
-   <CA>Канада</CA>
-   <CC>Кокосовые острова</CC>
-   <LV>Латвия</LV>
-   <LT>Литва</LT>
-   <MT>Мальта</MT>
-   <MD>Молдова</MD>
-   <NL>Нидерланды</NL>
-   <NO>Норвегия</NO>
-   <PL>Польша</PL>
-   <RU>Россия</RU>
-   <US>США</US>
-   <TJ>Таджикистан</TJ>
-   <TM>Туркмения</TM>
-   <UZ>Узбекистан</UZ>
-   <UA>Украина</UA>
-   <FI>Финляндия</FI>
-   <CZ>Чехия</CZ>
-   <EE>Эстония</EE>
-   <JP>Япония</JP>
-  </Options>
-  <Attribs>
-   <size>1</size>
-   <style>width: 100%;</style>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value>RU</Value>
- </pCountry>
- <!-- ********************************************************************** -->
- <pState>
-  <Check>State</Check>
-  <Comment>Область / край</Comment>
-  <Example>Московская обл.</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </pState>
- <!-- ********************************************************************** -->
- <pCity>
-  <Check>City</Check>
-  <Comment>Город / населенный пункт</Comment>
-  <Example>Москва</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </pCity>
- <!-- ********************************************************************** -->
- <pDistrict>
-  <Check>District</Check>
-  <Comment>Район</Comment>
-  <Example>Ивановский</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-   <onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
-  </Attribs>
-  <IsDuty>0</IsDuty>
-  <Value />
- </pDistrict>
- <!-- ********************************************************************** -->
- <pIndex>
-  <Check>Index</Check>
-  <Comment>Почтовый индекс</Comment>
-  <Example>101000</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </pIndex>
- <!-- ********************************************************************** -->
- <pType>
-  <Check>Type</Check>
-  <Comment>Тип адреса</Comment>
-  <Example>Улица</Example>
-  <Type>Select</Type>
-  <Options>
-   <Street>улица</Street>
-   <Alleyway>переулок</Alleyway>
-   <Area>площадь</Area>
-   <Thoroughfare>проезд</Thoroughfare>
-   <Alley>аллея</Alley>
-   <Avenue>проспект</Avenue>
-   <Boulevard>бульвар</Boulevard>
-   <Wharf>набережная</Wharf>
-   <Highway>шоссе</Highway>
-   <Pobox>а/я</Pobox>
-   <Deadend>тупик</Deadend>
-   <Block>квартал</Block>
-   <Village>деревня</Village>
-   <No>n/a</No>
-  </Options>
-  <Attribs>
-   <size>1</size>
-   <style>width: 100%;</style>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value>Street</Value>
- </pType>
- <!-- ********************************************************************** -->
- <pAddress>
-  <Check>Address</Check>
-  <Comment>Адрес</Comment>
-  <Example>Ленина, д. 51, кв. 7</Example>
-  <Type>TextArea</Type>
-  <Attribs>
-   <rows>3</rows>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </pAddress>
- <!-- ********************************************************************** -->
- <pRecipient>
-  <Check>Recipient</Check>
-  <Comment>Получатель</Comment>
-  <Example>Иванову Петру Викторовичу</Example>
-  <Type>TextArea</Type>
-  <Attribs>
-   <rows>3</rows>
-   <onblur>var Matrix = value.split(' ');Result = '';for(var i=0;i&lt;Matrix.length;i++){ var Element = Trim(Matrix[i]);if(Element){ Result += SPrintF('%s%s ',Element.charAt(0).toUpperCase(),Element.substring(1).toLowerCase()); } } value = Trim(Result);</onblur>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </pRecipient>
-</Attribs>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<ProfileName>%Sourname% %Name%</ProfileName>
+	<!-- *********************************************************************** -->
+	<Attribs>
+		<Sourname>
+			<Title>Общая информация</Title>
+			<Check>Sourname</Check>
+			<Comment>Фамилия</Comment>
+			<Example>Иванов</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</Sourname>
+		<!-- ********************************************************************** -->
+		<Name>
+			<Check>Name</Check>
+			<Comment>Имя</Comment>
+			<Example>Петр</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</Name>
+		<!-- ********************************************************************** -->
+		<Lastname>
+			<Check>Lastname</Check>
+			<Comment>Отчество</Comment>
+			<Example>Викторович</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</Lastname>
+		<!-- ********************************************************************** -->
+		<BornDate>
+			<Check>BornDate</Check>
+			<IsDuty>1</IsDuty>
+			<Comment>Дата рождения</Comment>
+			<Example>18.03.1986</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+				<onblur>value = value.charAt(0).toUpperCase() + value.substring(1).toLowerCase();</onblur>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</BornDate>
+		<!-- ********************************************************************** -->
+		<Phone>
+			<Check>Phone</Check>
+			<Comment>Телефон</Comment>
+			<Example>+7 495 7558899</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</Phone>
+		<!-- ********************************************************************** -->
+		<CellPhone>
+			<Check>Phone</Check>
+			<Comment>Мобильный телефон</Comment>
+			<Example>+7 926 7558899</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+				<onblur>if(value.substring(0,3) == '+7 '){if(value.charAt(3) != '9'){value = SPrintF('+7 9%s',value.substring(4));}}</onblur>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</CellPhone>
+		<!-- ********************************************************************** -->
+		<Fax>
+			<Check>Phone</Check>
+			<Comment>Факс</Comment>
+			<Example>+7 095 1551891</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+			</Attribs>
+			<IsDuty>0</IsDuty>
+			<Value/>
+		</Fax>
+		<!-- ********************************************************************** -->
+		<Email>
+			<Check>Email</Check>
+			<Comment>Электронный адрес</Comment>
+			<Example>alexander@yandex.ru</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value>%Email%</Value>
+		</Email>
+		<!-- ********************************************************************** -->
+		<PasportCountry>
+			<Title>Паспортные данные</Title>
+			<Check>Country</Check>
+			<Comment>Страна</Comment>
+			<Example>Россия</Example>
+			<Type>Select</Type>
+			<Options>
+				<AU>Австралия</AU>
+				<AT>Австрия</AT>
+				<AZ>Азербайджан</AZ>
+				<AM>Армения</AM>
+				<BY>Беларусь</BY>
+				<BG>Болгария</BG>
+				<UK>Великобритания</UK>
+				<DE>Германия</DE>
+				<GE>Грузия</GE>
+				<IL>Израиль</IL>
+				<IT>Италия</IT>
+				<KZ>Казахстан</KZ>
+				<KG>Киргизия</KG>
+				<CA>Канада</CA>
+				<CC>Кокосовые острова</CC>
+				<LV>Латвия</LV>
+				<LT>Литва</LT>
+				<MT>Мальта</MT>
+				<MD>Молдова</MD>
+				<NL>Нидерланды</NL>
+				<NO>Норвегия</NO>
+				<PL>Польша</PL>
+				<RU>Россия</RU>
+				<US>США</US>
+				<TJ>Таджикистан</TJ>
+				<TM>Туркмения</TM>
+				<UZ>Узбекистан</UZ>
+				<UA>Украина</UA>
+				<FI>Финляндия</FI>
+				<CZ>Чехия</CZ>
+				<EE>Эстония</EE>
+				<JP>Япония</JP>
+			</Options>
+			<Attribs>
+				<size>1</size>
+				<style>width: 100%;</style>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value>RU</Value>
+		</PasportCountry>
+		<!-- ********************************************************************** -->
+		<PasportLine>
+			<Check>PasportLine</Check>
+			<Comment>Серия паспорта</Comment>
+			<Example>3422</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</PasportLine>
+		<!-- ********************************************************************** -->
+		<PasportNum>
+			<Check>PasportNum</Check>
+			<Comment>Номер паспорта</Comment>
+			<Example>427789</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</PasportNum>
+		<!-- ********************************************************************** -->
+		<PasportWhom>
+			<Check>PasportWhom</Check>
+			<Comment>Паспорт выдан</Comment>
+			<Example>15 отделением милиции г. Москвы</Example>
+			<Type>TextArea</Type>
+			<Attribs>
+				<rows>3</rows>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</PasportWhom>
+		<!-- ********************************************************************** -->
+		<PasportDate>
+			<Check>PasportDate</Check>
+			<Comment>Дата выдачи паспорта</Comment>
+			<Example>01.06.2001</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</PasportDate>
+		<!-- ********************************************************************** -->
+		<pCountry>
+			<Title>Почтовый адрес</Title>
+			<Check>Country</Check>
+			<Comment>Страна</Comment>
+			<Example>Россия</Example>
+			<Type>Select</Type>
+			<Options>
+				<AU>Австралия</AU>
+				<AT>Австрия</AT>
+				<AZ>Азербайджан</AZ>
+				<AM>Армения</AM>
+				<BY>Беларусь</BY>
+				<BG>Болгария</BG>
+				<UK>Великобритания</UK>
+				<DE>Германия</DE>
+				<GE>Грузия</GE>
+				<IL>Израиль</IL>
+				<IT>Италия</IT>
+				<KZ>Казахстан</KZ>
+				<KG>Киргизия</KG>
+				<CA>Канада</CA>
+				<CC>Кокосовые острова</CC>
+				<LV>Латвия</LV>
+				<LT>Литва</LT>
+				<MT>Мальта</MT>
+				<MD>Молдова</MD>
+				<NL>Нидерланды</NL>
+				<NO>Норвегия</NO>
+				<PL>Польша</PL>
+				<RU>Россия</RU>
+				<US>США</US>
+				<TJ>Таджикистан</TJ>
+				<TM>Туркмения</TM>
+				<UZ>Узбекистан</UZ>
+				<UA>Украина</UA>
+				<FI>Финляндия</FI>
+				<CZ>Чехия</CZ>
+				<EE>Эстония</EE>
+				<JP>Япония</JP>
+			</Options>
+			<Attribs>
+				<size>1</size>
+				<style>width: 100%;</style>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value>RU</Value>
+		</pCountry>
+		<!-- ********************************************************************** -->
+		<pState>
+			<Check>State</Check>
+			<Comment>Область / край</Comment>
+			<Example>Московская обл.</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</pState>
+		<!-- ********************************************************************** -->
+		<pCity>
+			<Check>City</Check>
+			<Comment>Город / населенный пункт</Comment>
+			<Example>Москва</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</pCity>
+		<!-- ********************************************************************** -->
+		<pDistrict>
+			<Check>District</Check>
+			<Comment>Район</Comment>
+			<Example>Ивановский</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+			</Attribs>
+			<IsDuty>0</IsDuty>
+			<Value/>
+		</pDistrict>
+		<!-- ********************************************************************** -->
+		<pIndex>
+			<Check>Index</Check>
+			<Comment>Почтовый индекс</Comment>
+			<Example>101000</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</pIndex>
+		<!-- ********************************************************************** -->
+		<pType>
+			<Check>Type</Check>
+			<Comment>Тип адреса</Comment>
+			<Example>Улица</Example>
+			<Type>Select</Type>
+			<Options>
+				<Street>улица</Street>
+				<Alleyway>переулок</Alleyway>
+				<Area>площадь</Area>
+				<Thoroughfare>проезд</Thoroughfare>
+				<Alley>аллея</Alley>
+				<Avenue>проспект</Avenue>
+				<Boulevard>бульвар</Boulevard>
+				<Wharf>набережная</Wharf>
+				<Highway>шоссе</Highway>
+				<Pobox>а/я</Pobox>
+				<Deadend>тупик</Deadend>
+				<Block>квартал</Block>
+				<Village>деревня</Village>
+				<No>n/a</No>
+			</Options>
+			<Attribs>
+				<size>1</size>
+				<style>width: 100%;</style>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value>Street</Value>
+		</pType>
+		<!-- ********************************************************************** -->
+		<pAddress>
+			<Check>Address</Check>
+			<Comment>Адрес</Comment>
+			<Example>Ленина, д. 51, кв. 7</Example>
+			<Type>TextArea</Type>
+			<Attribs>
+				<rows>3</rows>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</pAddress>
+		<!-- ********************************************************************** -->
+		<pRecipient>
+			<Check>Recipient</Check>
+			<Comment>Получатель</Comment>
+			<Example>Иванову Петру Викторовичу</Example>
+			<Type>TextArea</Type>
+			<Attribs>
+				<rows>3</rows>
+				<onblur>var Matrix = value.split(' ');Result = '';for(var i=0;i&lt;Matrix.length;i++){ var Element = Trim(Matrix[i]);if(Element){ Result += SPrintF('%s%s ',Element.charAt(0).toUpperCase(),Element.substring(1).toLowerCase()); } } value = Trim(Result);</onblur>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</pRecipient>
+	</Attribs>
+	<!-- *********************************************************************** -->
 </XML>

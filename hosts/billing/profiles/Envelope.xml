@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<ProfileName>%pRecipient%</ProfileName>
-<!-- *********************************************************************** -->
-<Attribs>
- <pIndex>
-  <Check>Index</Check>
-  <Comment>Почтовый индекс</Comment>
-  <Example>101000</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </pIndex>
- <!-- ********************************************************************** -->
- <pCity>
-  <Check>City</Check>
-  <Comment>Город / населенный пункт</Comment>
-  <Example>Москва</Example>
-  <Type>Input</Type>
-  <Attribs>
-   <type>text</type>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </pCity>
- <!-- ********************************************************************** -->
- <pAddress>
-  <Check>Address</Check>
-  <Comment>Улица, дом, квартира</Comment>
-  <Example>ул. Ленина, д. 51, кв. 7</Example>
-  <Type>TextArea</Type>
-  <Attribs>
-   <rows>3</rows>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value>ул. </Value>
- </pAddress>
- <!-- ********************************************************************** -->
- <pRecipient>
-  <Check>Recipient</Check>
-  <Comment>Получатель</Comment>
-  <Example>Иванову Петру Викторовичу</Example>
-  <Type>TextArea</Type>
-  <Attribs>
-   <rows>3</rows>
-  </Attribs>
-  <IsDuty>1</IsDuty>
-  <Value />
- </pRecipient>
-</Attribs>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<ProfileName>%pRecipient%</ProfileName>
+	<!-- *********************************************************************** -->
+	<Attribs>
+		<pIndex>
+			<Check>Index</Check>
+			<Comment>Почтовый индекс</Comment>
+			<Example>101000</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</pIndex>
+		<!-- ********************************************************************** -->
+		<pCity>
+			<Check>City</Check>
+			<Comment>Город / населенный пункт</Comment>
+			<Example>Москва</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</pCity>
+		<!-- ********************************************************************** -->
+		<pAddress>
+			<Check>Address</Check>
+			<Comment>Улица, дом, квартира</Comment>
+			<Example>ул. Ленина, д. 51, кв. 7</Example>
+			<Type>TextArea</Type>
+			<Attribs>
+				<rows>3</rows>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value>ул. </Value>
+		</pAddress>
+		<!-- ********************************************************************** -->
+		<pRecipient>
+			<Check>Recipient</Check>
+			<Comment>Получатель</Comment>
+			<Example>Иванову Петру Викторовичу</Example>
+			<Type>TextArea</Type>
+			<Attribs>
+				<rows>3</rows>
+			</Attribs>
+			<IsDuty>1</IsDuty>
+			<Value/>
+		</pRecipient>
+	</Attribs>
+	<!-- *********************************************************************** -->
 </XML>
