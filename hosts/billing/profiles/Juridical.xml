@@ -190,7 +190,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());form.aSourname.value = value;</onblur>
+				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase()); value = value.replace(/\s+/g,''); form.aSourname.value = value;</onblur>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -203,7 +203,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());form.aName.value = value;</onblur>
+				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase()); value = value.replace(/\s+/g,''); form.aName.value = value;</onblur>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -216,7 +216,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());form.aLastname.value = value;</onblur>
+				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase()); value = value.replace(/\s+/g,''); form.aLastname.value = value;</onblur>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -230,7 +230,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
+				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase()); value = value.replace(/\s+/g,'');</onblur>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -243,7 +243,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
+				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase()); value = value.replace(/\s+/g,'');</onblur>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -256,7 +256,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase());</onblur>
+				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase()); value = value.replace(/\s+/g,'');</onblur>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
