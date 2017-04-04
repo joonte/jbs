@@ -13,7 +13,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase()); value = value.replace(/\s+/g,'');</onblur>
+				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -26,7 +26,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase()); value = value.replace(/\s+/g,'');</onblur>
+				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -39,7 +39,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase()); value = value.replace(/\s+/g,'');</onblur>
+				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -138,7 +138,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+				<onblur>value = FirstCapitalLetter(value);</onblur>
 			</Attribs>
 			<IsDuty>0</IsDuty>
 			<Value/>
@@ -151,7 +151,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+				<onblur>value = FirstCapitalLetter(value);</onblur>
 			</Attribs>
 			<IsDuty>0</IsDuty>
 			<Value/>
@@ -164,7 +164,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+				<onblur>value = FirstCapitalLetter(value);</onblur>
 			</Attribs>
 			<IsDuty>0</IsDuty>
 			<Value/>

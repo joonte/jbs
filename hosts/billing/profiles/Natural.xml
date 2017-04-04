@@ -13,7 +13,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase()); value = value.replace(/\s+/g,'');</onblur>
+				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -26,7 +26,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1).toLowerCase()); value = value.replace(/\s+/g,'');</onblur>
+				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -39,7 +39,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1)); value = value.replace(/\s+/g,'');</onblur>
+				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -78,7 +78,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>if(value.substring(0,3) == '+7 '){if(value.charAt(3) != '9'){value = SPrintF('+7 9%s',value.substring(4));}}</onblur>
+				<onblur>value = RussianCellPhone(value);</onblur>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -259,7 +259,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+				<onblur>value = FirstCapitalLetter(value);</onblur>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -272,7 +272,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+				<onblur>value = FirstCapitalLetter(value);</onblur>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -285,7 +285,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
-				<onblur>value = SPrintF('%s%s',value.charAt(0).toUpperCase(),value.substring(1));</onblur>
+				<onblur>value = FirstCapitalLetter(value);</onblur>
 			</Attribs>
 			<IsDuty>0</IsDuty>
 			<Value/>
