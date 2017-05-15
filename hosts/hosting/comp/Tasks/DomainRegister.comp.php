@@ -103,7 +103,27 @@ case 'ForRegister':
 			case 'exception':
 				return ERROR | @Trigger_Error(400);
 			case 'array':
+				#-------------------------------------------------------------------------------
+				# обновляем данные whois - так, на всякий
+				$Comp = Comp_Load('www/Administrator/API/DomainOrderWhoIsUpdate',Array('DomainOrderID'=>$DomainOrderID,'IsReaded'=>TRUE));
+				if(Is_Error($Comp))
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+				switch(ValueOf($Comp)){
+				case 'error':
+					return ERROR | @Trigger_Error(500);
+				case 'exception':
+					break;
+				case 'array':
+					break;
+				case 'true':
+					break;
+				default:
+					return ERROR | @Trigger_Error(101);
+				}
+				#-------------------------------------------------------------------------------
 				return TRUE;
+				#-------------------------------------------------------------------------------
 			default:
 				return ERROR | @Trigger_Error(101);
 			}
