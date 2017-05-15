@@ -187,6 +187,7 @@
 			<Type>TextArea</Type>
 			<Attribs>
 				<rows>3</rows>
+				<prompt>Каким учреждением выдан паспорт. Данные следует вводить так, как они написаны в паспорте, сокращения недопустимы.</prompt>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
