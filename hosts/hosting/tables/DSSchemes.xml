@@ -26,6 +26,7 @@
 			<ListElement>AdminNotice</ListElement>
 			<ListElement>SortID</ListElement>
 			<ListElement>IsActive</ListElement>
+			<ListElement>IsBroken</ListElement>
 		</ColumnsIDs>
 		<!-- *********************************************************************** -->
 		<Conditions>
@@ -71,7 +72,7 @@
 	</Comps>
 	<!-- *********************************************************************** -->
 	<Query>
-		<SortOn>SortID</SortOn>
+		<SortOn>Name</SortOn>
 		<IsDesc>0</IsDesc>
 	</Query>
 	<!-- *********************************************************************** -->
@@ -246,6 +247,18 @@
 			</Args>
 		</IsActive>
 		<!-- ********************************************************************** -->
+		<IsBroken>
+			<Head>Сл.</Head>
+			<Prompt>Сервер неисправен, тариф нельзя заказать</Prompt>
+			<Comp>BooleanEdit</Comp>
+			<Args>
+				<ListElement>DSSchemes</ListElement>
+				<ListElement>IsBroken</ListElement>
+				<ListElement>%ID%</ListElement>
+				<ListElement>%IsBroken%</ListElement>
+			</Args>
+		</IsBroken>
+		<!-- ********************************************************************** -->
 		<SortID>
 			<Args>
 				<TableID>DSSchemes</TableID>
@@ -267,6 +280,7 @@
 		<ListElement>ram</ListElement>
 		<ListElement>raid</ListElement>
 		<ListElement>disks</ListElement>
+		<ListElement>IsBroken</ListElement>
 		<ListElement>IsActive</ListElement>
 		<ListElement>OrderLink</ListElement>
 		<ListElement>SortID</ListElement>
