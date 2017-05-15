@@ -874,7 +874,7 @@
 		<Available>\sis\savailable\sfor\sregistration</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>3</MinChars>
-		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<ExpirationDate>Registry\sExpiry\sDate:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -891,4 +891,15 @@
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</construction>
+	<online>
+		<Server>whois.centralnic.com</Server>
+		<Name>online</Name>
+		<Available>DOMAIN\sNOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>2</MinChars>
+		<ExpirationDate>Registry\sExpiry\sDate:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</online>
 </XML>
