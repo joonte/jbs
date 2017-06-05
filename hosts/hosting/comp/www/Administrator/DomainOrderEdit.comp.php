@@ -10,6 +10,7 @@ Eval(COMP_INIT);
 $Args = Args();
 #-------------------------------------------------------------------------------
 $DomainOrderID = (integer) @$Args['DomainOrderID'];
+$IsShowAllZones= (boolean) @$Args['IsShowAllZones'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 	return ERROR | @Trigger_Error(500);
@@ -60,7 +61,7 @@ $Table[] = Array('Доменное имя',$Comp);
 #-------------------------------------------------------------------------------
 $UniqID = UniqID('DomainSchemes');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Services/Schemes','DomainSchemes',$DomainOrder['UserID'],Array('Name','ServerID'),$UniqID);
+$Comp = Comp_Load('Services/Schemes','DomainSchemes',$DomainOrder['UserID'],Array('Name','ServerID'),$UniqID,($IsShowAllZones)?Array():'`IsActive` = "yes"');
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -179,11 +180,22 @@ if(Is_Error($Comp))
 $Table[] = Array('IP адрес',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>SPrintF("FormEdit('/Administrator/API/DomainOrderEdit','DomainOrderEditForm','%s');",$Title),'value'=>'Сохранить'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>SPrintF("FormEdit('/Administrator/API/DomainOrderEdit','DomainOrderEditForm','%s');",$Title),'value'=>'Сохранить','prompt'=>'Сохранить изменения'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = $Comp;
+$Comp1 = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>SPrintF("javascript:ShowWindow('/Administrator/DomainOrderEdit',{DomainOrderID:%u,IsShowAllZones:1});",$DomainOrderID),'value'=>'Открыть с полным списком доменов','prompt'=>'Открыть форму редактирования заново, с полным списком доменных зон (сейчас отображаются только активные)'));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Div = new Tag('DIV',Array('style'=>'text-align: right;'));
+#-------------------------------------------------------------------------------
+if(!$IsShowAllZones)
+	$Div->AddChild($Comp1);
+#-------------------------------------------------------------------------------
+$Div->AddChild($Comp);
+#-------------------------------------------------------------------------------
+$Table[] = $Div;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Standard',$Table);
