@@ -797,6 +797,7 @@
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+		<RegistrationMessage>Обращаем ваше внимание, что при регистрации домена в доменной зоне .pro на ваш почтовый адрес будет выслано письмо со ссылкой, для подтверждении регистрации. Если вы не пройдёте по этой ссылке, то через 2-3 недели домен перестанет работать, т.к. владелец доменной зоны снимет его с делегирования.</RegistrationMessage>
 	</pro>
 	<review>
 		<Server>whois.nic.review</Server>

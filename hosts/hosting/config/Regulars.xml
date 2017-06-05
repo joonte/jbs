@@ -34,4 +34,6 @@ see: http://forum.lissyara.su/viewtopic.php?f=17&t=34580
 <!-- .дети -->
 <DomainName_xn--d1acj3b>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</DomainName_xn--d1acj3b>
 <DomainName_moscow>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</DomainName_moscow>
+<!-- ибо задолбал чел, пытаяющийся раз за разом кириллицу зарегать -->
+<DomainName_pro>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</DomainName_pro>
 </XML>

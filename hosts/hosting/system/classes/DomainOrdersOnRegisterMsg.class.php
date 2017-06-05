@@ -30,10 +30,12 @@ class DomainOrdersOnRegisterMsg extends Message {
 			return ERROR | @Trigger_Error(500);
 		case 'true':
 			#-------------------------------------------------------------------------------
+			$DomainZone = $this->params['Name'];
+			#-------------------------------------------------------------------------------
 			// For RegRu only
-			if($Server->Settings['Params']['SystemID'] == 'RegRu' && In_Array($this->params['Name'],Array('ru','su','рф'))){
+			if($Server->Settings['Params']['SystemID'] == 'RegRu' && In_Array($DomainZone,Array('ru','su','рф'))){
 				#-------------------------------------------------------------------------------
-				$Domain = SprintF("%s.%s",$this->params['DomainName'],$this->params['Name']);
+				$Domain = SprintF("%s.%s",$this->params['DomainName'],$DomainZone);
 				#-------------------------------------------------------------------------------
 				$Result = $Server->GetUploadID($Domain);
 				#-------------------------------------------------------------------------------
@@ -55,6 +57,14 @@ class DomainOrdersOnRegisterMsg extends Message {
 				}
 				#-------------------------------------------------------------------------------
 			}
+			#-------------------------------------------------------------------------------
+			// сообщение добавляемое к письму о регистрации домена. пока есть только у .pro доменов, из-за особенностей регистрации
+			$DomainZones = System_XML('config/DomainZones.xml');
+			if(Is_Error($DomainZones))
+				return ERROR | @Trigger_Error('[WhoIs_Parse]: не удалось загрузить базу WhoIs серверов');
+			#-------------------------------------------------------------------------------
+			if(IsSet($DomainZones[$DomainZone]['RegistrationMessage']))
+				$this->params['RegistrationMessage'] = $DomainZones[$DomainZone]['RegistrationMessage'];
 			#-------------------------------------------------------------------------------
 			break;
 			#-------------------------------------------------------------------------------
