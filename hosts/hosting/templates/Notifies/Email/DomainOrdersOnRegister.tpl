@@ -7,7 +7,9 @@
 
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ #{$OrderID|string_format:"%05u"} на регистрацию домена {$DomainName|default:'$DomainName'}.{$Name|default:'$Name'} был отправлен на регистрацию.
 {if isset($RegistrationMessage)}
+
 {$RegistrationMessage|default:'$RegistrationMessage'}
+
 {/if}
 {if isset($UploadID)}
 
