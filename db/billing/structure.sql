@@ -594,7 +594,7 @@ CREATE TABLE `ServicesFields` (
   `ID` int(11) NOT NULL auto_increment,
   `ServiceID` int(11) NOT NULL,
   `Name` varchar(255) default '',
-  `Prompt` varchar(255) default '',
+  `Prompt` TEXT,
   `TypeID` varchar(255) default '',
   `Options` varchar(255) default '',
   `Default` varchar(255) default '',
