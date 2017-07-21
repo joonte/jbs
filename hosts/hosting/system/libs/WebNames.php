@@ -536,6 +536,8 @@ function WebNames_Domain_Transfer($Settings,$DomainName,$DomainZone,$Params){
 	$HTTP = WebNames_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	Debug(print_r($Params,true));
+	#-------------------------------------------------------------------------------
 	$Query = Array(
 			'thisPage'		=> 'pispInitiateTransfer',
 			'username'		=> $Settings['Login'],

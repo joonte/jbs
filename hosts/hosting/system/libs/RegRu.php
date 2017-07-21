@@ -911,19 +911,13 @@ function RegRu_Domain_GetPrice($Settings,$DomainName,$DomainZone){
 	#-------------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/******************************************************************************/
-
-
-
-return Array();
-
-
-
 	$HTTP = RegRu_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
-	$Query = Array('username'=>$Settings['Login'],'password'=>$Settings['Password'],'tld'=>$DomainZone,'cat'=>'','limit'=>100500);
+	$Query = Array('username'=>$Settings['Login'],'password'=>$Settings['Password'],'input_format'=>'json');
 	#-------------------------------------------------------------------------------
-	$Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/get_premium");
+	$Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/get_premium_prices");
 	#-------------------------------------------------------------------------------
+	$Query['input_data'] = Json_Encode(Array('currency'=>'RUR','domains'=>Array(SPrintF('%s.%s',$DomainName,$DomainZone))));
 	$Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
 	if(Is_Error($Result))
 		return ERROR | @Trigger_Error('[RegRu_Domain_GetPrice]: не удалось выполнить запрос к серверу');
@@ -935,30 +929,20 @@ return Array();
 	if($Result['result'] != 'success')
 		return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
 	#-------------------------------------------------------------------------------
-	#Debug(SPrintF('[RegRu_Domain_PriceList]: %s',print_r($Result,true)));
+	Debug(SPrintF('[RegRu_Domain_GetPrice]: %s',print_r($Result,true)));
 	#-------------------------------------------------------------------------------
-	$Domain = SPrintF('%s.%s',$DomainName,$DomainZone);
-	#-------------------------------------------------------------------------------
-	# перебираем массив, ищщем домен в нём
+	# перебираем массив, составляем массив на выхлоп функции
 	$Out = Array();
 	#-------------------------------------------------------------------------------
 	foreach(Array_Keys($Result['answer']['domains']) as $Key){
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF('[RegRu_Domain_PriceList]: Key = %s; Array = %s',$Key,print_r($Result['answer']['domains'][$Key],true)));
+		Debug(SPrintF('[RegRu_Domain_GetPrice]: Key = %s; Array = %s',$Key,print_r($Result['answer']['domains'][$Key],true)));
 		#-------------------------------------------------------------------------------
-		#ebug(SPrintF('[RegRu_Domain_PriceList]: Key = %s; name = %s; price = %s',$Key,$Result['answer']['domains'][$Key]['name'],$Result['answer']['domains'][$Key]['price']));
+		if($Result['answer']['domains'][$Key]['domain_name'] == SPrintF('%s.%s',$DomainName,$DomainZone))
+			$Out['price'] = $Result['answer']['domains'][$Key]['register_price'];
 		#-------------------------------------------------------------------------------
-		if($Domain == Mb_StrToLower($Result['answer']['domains'][$Key]['name'],'UTF-8')){
-			#-------------------------------------------------------------------------------
-			$Out['price'] = $Result['answer']['domains'][$Key]['price'];
-			#-------------------------------------------------------------------------------
-			$Out['premium'] = 'yes';
-			#-------------------------------------------------------------------------------
-			break;
-			#-------------------------------------------------------------------------------
-		}
+		$Out['currency'] = $Result['answer']['currency'];
 		#-------------------------------------------------------------------------------
-
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
