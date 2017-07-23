@@ -58,7 +58,7 @@
 		<Available>No\sentries\sfound</Available>
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>2</MinChars>
-		<ExpirationDate>paid-till:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<ExpirationDate>paid-till:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>nserver:\s+([a-z0-9\.\-]{2,})</NsName>
 		<Registrar>registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -475,7 +475,7 @@
 		<Available>No\sentries\sfound</Available>
 		<NotAvailable>stop-list:</NotAvailable>
 		<MinChars>3</MinChars>
-		<ExpirationDate>paid-till:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<ExpirationDate>paid-till:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>nserver:\s+([a-z0-9\.\-]{2,})</NsName>
 		<Registrar>registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -739,7 +739,7 @@
 		<Available>Domain\snot\sfound.</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>3</MinChars>
-		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -750,7 +750,7 @@
 		<Available>Domain\snot\sfound.</Available>
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>3</MinChars>
-		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -761,7 +761,7 @@
 		<Available>The\squeried\sobject\sdoes\snot\sexist</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>3</MinChars>
-		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -772,7 +772,7 @@
 		<Available>The\squeried\sobject\sdoes\snot\sexist</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>3</MinChars>
-		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -783,7 +783,7 @@
 		<Available>Not\sfound</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>4</MinChars>
-		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -806,7 +806,7 @@
 		<Available>The\squeried\sobject\sdoes\snot\sexist</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>4</MinChars>
-		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -817,7 +817,7 @@
 		<Available>No\sDomain\sexists\sfor\sthe\ssearch\sstring</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>3</MinChars>
-		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -828,7 +828,7 @@
 		<Available>The\squeried\sobject\sdoes\snot\sexist</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>4</MinChars>
-		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -840,7 +840,7 @@
 		<Available>No\sDomain\sexists\sfor\sthe\ssearch\sstring</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>4</MinChars>
-		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -852,7 +852,7 @@
 		<Available>No\sDomain\sexists\sfor\sthe\ssearch\sstring</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>4</MinChars>
-		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -864,7 +864,7 @@
 		<Available>The\squeried\sobject\sdoes\snot\sexist</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>2</MinChars>
-		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -876,7 +876,7 @@
 		<Available>\sis\savailable\sfor\sregistration</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>3</MinChars>
-		<ExpirationDate>Registry\sExpiry\sDate:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<ExpirationDate>Registry\sExpiry\sDate:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -888,7 +888,7 @@
 		<Available>Domain\snot\sfound.</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>2</MinChars>
-		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\.[0-9]{2}\.[0-9]{2})</ExpirationDate>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
