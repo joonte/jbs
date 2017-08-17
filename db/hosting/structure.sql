@@ -40,7 +40,7 @@ CREATE TABLE `Servers` (
 	`Params` LONGTEXT,				-- набор переменных необходимых для взаимодействия с сервером
 	`Monitoring` TEXT,				-- какие сервисы мониторить
 	`TestDate` int(11) default '0',			-- дата последнего тестирования мониторингом
-	`IsOK` int(3) NULL DEFAULT NULL,			-- с каким итогом был последний мониторинг
+	`IsOK` int(3) NULL DEFAULT NULL,		-- с каким итогом был последний мониторинг
 	`AdminNotice` TEXT,				-- примечание к серверу
 	`SortID` int(11) default '10',			-- поле для сортировки
 	PRIMARY KEY(`ID`),
@@ -114,6 +114,7 @@ CREATE TABLE `DomainSchemes` (
   `DaysToProlong` int(11) default '31',
   `DaysBeforeTransfer` INT(3) DEFAULT '60',
   `DaysAfterTransfer` INT(3) DEFAULT '60',
+  `Params` VARCHAR(1024) NOT NULL,
   PRIMARY KEY  (`ID`),
   KEY `DomainSchemesGroupID` (`GroupID`),
   CONSTRAINT `DomainSchemesGroupID` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
