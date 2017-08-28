@@ -13,7 +13,7 @@ if(Is_Error(System_Load('libs/Tree.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$User = DB_Select('Users',Array('ID','GroupID','RegisterDate','Name','Sign','Email','EmailConfirmed','UniqID','Params','LayPayMaxSumm','LayPayThreshold','EnterIP','EnterDate','Params'),Array('UNIQ','ID'=>$UserID));
+$User = DB_Select('Users',Array('ID','GroupID','RegisterDate','Name','Sign','Email','EmailConfirmed','UniqID','IsActive','LockReason','LayPayMaxSumm','LayPayThreshold','EnterIP','EnterDate','Params'),Array('UNIQ','ID'=>$UserID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($User)){
 case 'error':
@@ -254,6 +254,11 @@ $GLOBALS['__USER']['IsAdmin'] = $IsAdmin;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!IsSet($GLOBALS['__USER']['IsEmulate'])){
+	#-------------------------------------------------------------------------------
+	# если юзер задисаблен, не пускаем его дальше
+	if(!$User['IsActive'])
+		return new gException('USER_UNACTIVE',($User['LockReason'])?$User['LockReason']:'Пользователь отключен');
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Cached = CacheManager::get(Md5(SPrintF('LastLogon_%s',$User['Email'])));
 	#-------------------------------------------------------------------------------
