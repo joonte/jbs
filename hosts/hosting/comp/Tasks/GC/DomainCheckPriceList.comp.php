@@ -371,7 +371,7 @@ foreach($Servers as $Registrator){
 			}
 			#-------------------------------------------------------------------------------
 			# JBS-1228: прописываем в параметры тарифа цены полученные от регистратора
-			$IsUpdate = DB_Update('DomainSchemes',Array('Params'=>$Prices[$Key]),Array('ID'=>$Schemes[$Key]['ID']));
+			$IsUpdate = DB_Update('DomainSchemes',Array('Params'=>$Prices[$Key]),Array('ID'=>$IsInsert));
 			if(Is_Error($IsUpdate))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
