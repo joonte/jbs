@@ -89,14 +89,18 @@ if($StepID){
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
-	$IDNAConverter = new IDNAConvert();
 	#-------------------------------------------------------------------------------
-	$Key = SPrintF('DomainName_%s',$IDNAConverter->encode($DomainScheme['Name']));
 	#-------------------------------------------------------------------------------
-	if(!IsSet($Regulars[$Key]))
-		$Key = 'DomainName';
+	$DomainZones = System_XML('config/DomainZones.xml');
+	if(Is_Error($DomainZones))
+		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	if(!Preg_Match($Regulars[$Key],$DomainName))
+	$AllZones = Array();
+	#-------------------------------------------------------------------------------
+	foreach($DomainZones as $DomainZone)
+		$AllZones[$DomainZone['Name']] = $DomainZone;
+	#-------------------------------------------------------------------------------
+	if(!Preg_Match($AllZones[$DomainScheme['Name']]['Regular'],$DomainName))
 		return new gException('WRONG_DOMAIN_NAME','Неверное имя домена');
 	#-------------------------------------------------------------------------------
 	if(!$DomainScheme['IsActive'])

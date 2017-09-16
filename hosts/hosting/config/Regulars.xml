@@ -17,23 +17,4 @@ see: http://forum.lissyara.su/viewtopic.php?f=17&t=34580
 -->
 <DnsDomain>/^([0-9a-z]([0-9a-z\-])*[0-9a-z]\.)+([0-9a-z]([0-9a-z\-])*[0-9a-z]\.)+[0-9a-z\-]{1,32}$/i</DnsDomain>
 <!-- *********************************************************************** -->
-<!-- added by lissyara 2013-03-04 in 15:56 MSK for JBS-58 -->
-<!-- .рф -->
-<DomainName_xn--p1ai>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</DomainName_xn--p1ai>
-<!-- .ru -->
-<DomainName_ru>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</DomainName_ru>
-<!-- work -->
-<DomainName_work>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</DomainName_work>
-<!-- .ws -->
-<DomainName_ws>/^[0-9a-z]([0-9a-z\-]*[0-9a-z]){3,62}$/ui</DomainName_ws>
-<!-- *********************************************************************** -->
-<!-- .орг -->
-<DomainName_xn--c1avg>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</DomainName_xn--c1avg>
-<!-- .москва -->
-<DomainName_xn--80adxhks>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</DomainName_xn--80adxhks>
-<!-- .дети -->
-<DomainName_xn--d1acj3b>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</DomainName_xn--d1acj3b>
-<DomainName_moscow>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</DomainName_moscow>
-<!-- ибо задолбал чел, пытаяющийся раз за разом кириллицу зарегать -->
-<DomainName_pro>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</DomainName_pro>
 </XML>
