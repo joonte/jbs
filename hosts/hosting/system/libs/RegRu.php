@@ -62,7 +62,7 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
         return new gException('WRONG_PROFILE_ID','Неверный идентификатор профиля');
     }
     #---------------------------------------------------------------------------
-  }elseif(In_Array($DomainZone,Array('info','biz','org','com','net','be','cc','tv','pro','site'))){
+  }elseif(In_Array($DomainZone,Array('info','biz','org','com','net','be','cc','tv','pro','site','xyz'))){
     #---------------------------------------------------------------------------
     switch($PepsonID){
       case 'Natural':
