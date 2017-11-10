@@ -1,192 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<!-- *********************************************************************** -->
-<Contracts>
-	<Enclosures>
-		<Types>
-			<HostingRules>
-				<Name>Регламент на услуги хостинга</Name>
-				<IsActive>1</IsActive>
-			</HostingRules>
-			<!-- ******************************************************************** -->
-			<VPSRules>
-				<Name>Регламент на услуги виртуальных серверов</Name>
-				<IsActive>1</IsActive>
-			</VPSRules>
-			<!-- ******************************************************************** -->
-			<DSRules>
-				<Name>Регламент на услуги аренды серверов</Name>
-				<IsActive>1</IsActive>
-			</DSRules>
-			<!-- ******************************************************************** -->
-			<DomainRules>
-				<Name>Регламент на услуги регистрации и продления доменов</Name>
-				<IsActive>1</IsActive>
-			</DomainRules>
-			<!-- ******************************************************************** -->
-			<ExtraIPRules>
-				<Name>Регламент на услуги аренды IP адресов</Name>
-				<IsActive>1</IsActive>
-			</ExtraIPRules>
-			<!-- ******************************************************************** -->
-			<ISPswRules>
-				<Name>Регламент на покупку софта ISPsystem</Name>
-				<IsActive>1</IsActive>
-			</ISPswRules>
-			<!-- ******************************************************************** -->
-			<DNSmanagerRules>
-				<Name>Регламент на услугу вторичного DNS</Name>
-				<IsActive>1</IsActive>
-			</DNSmanagerRules>
-		</Types>
-	</Enclosures>
-</Contracts>
-<!-- *********************************************************************** -->
-<!-- *********************************************************************** -->
-<Servers>
-	<Balancing>
-		<Functions>
-			<NotDefined>
-				<Name>Без балансировки</Name>
-			</NotDefined>
-			<!-- *********************************************************************** -->
-			<ByAllCapacity>
-				<Name>Активные и блокированные аккаунты</Name>
-			</ByAllCapacity>
-			<!-- *********************************************************************** -->
-			<ByActiveCapacity>
-				<Name>Только по активным аккаунтам</Name>
-			</ByActiveCapacity>
-			<!-- *********************************************************************** -->
-			<ByRandom>
-				<Name>Случайным образом</Name>
-			</ByRandom>
-		</Functions>
-	</Balancing>
 	<!-- *********************************************************************** -->
-</Servers>
-<!-- *********************************************************************** -->
-<!-- *********************************************************************** -->
-<Notifies>
-	<Types>
-		<HostingOrdersActive>
-			<Name>Активация заказа</Name>
-			<Title>Заказы хостинга</Title>
-			<Code>Hosting</Code>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</HostingOrdersActive>
-		<!-- ********************************************************************* -->
-		<HostingNoticeSuspend>
-			<Name>Уведомление о блокировке заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</HostingNoticeSuspend>
-		<!-- ********************************************************************* -->
-		<HostingOrdersSuspended>
-			<Name>Блокировка заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</HostingOrdersSuspended>
-		<!-- ********************************************************************* -->
-		<HostingNoticeDelete>
-			<Name>Уведомление о удалении заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</HostingNoticeDelete>
-		<!-- ********************************************************************* -->
-		<HostingOrdersDeleted>
-			<Name>Удаление заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</HostingOrdersDeleted>
-		<!-- ********************************************************************* -->
-		<HostingPasswordChange>
-			<Name>Смена пароля на заказ</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</HostingPasswordChange>
-		<!-- ********************************************************************* -->
-		<HostingCPUUsageNotice>
-			<Name>Превышение процессорного времени</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>0</UseSMS>
-			<IsActive>1</IsActive>
-		</HostingCPUUsageNotice>
-		<!-- ********************************************************************* -->
-		<DiskUsageNotice>
-			<Name>Превышение использования диска</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>0</UseWhatsApp>
-			<UseICQ>0</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>0</UseSMS>
-			<IsActive>1</IsActive>
-		</DiskUsageNotice>
-		<!-- ********************************************************************* -->
-		<!-- ********************************************************************* -->
-		<DomainOrdersOnRegister>
-			<Title>Заказы доменов</Title>
-			<Name>Домен поступил на регистрацию</Name>
-			<Code>Domain</Code>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</DomainOrdersOnRegister>
-		<!-- ********************************************************************* -->
-		<DomainOrdersActive>
-			<Name>Активация заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</DomainOrdersActive>
-		<!-- ********************************************************************* -->
-		<!-- а нету такого уведомления. и было ли - не понятно. а вот шаблон отличается, тут Domain а везде Domain
+	<!-- *********************************************************************** -->
+	<Contracts>
+		<Enclosures>
+			<Types>
+				<HostingRules>
+					<Name>Регламент на услуги хостинга</Name>
+					<IsActive>1</IsActive>
+				</HostingRules>
+				<!-- ******************************************************************** -->
+				<VPSRules>
+					<Name>Регламент на услуги виртуальных серверов</Name>
+					<IsActive>1</IsActive>
+				</VPSRules>
+				<!-- ******************************************************************** -->
+				<DSRules>
+					<Name>Регламент на услуги аренды серверов</Name>
+					<IsActive>1</IsActive>
+				</DSRules>
+				<!-- ******************************************************************** -->
+				<DomainRules>
+					<Name>Регламент на услуги регистрации и продления доменов</Name>
+					<IsActive>1</IsActive>
+				</DomainRules>
+				<!-- ******************************************************************** -->
+				<ExtraIPRules>
+					<Name>Регламент на услуги аренды IP адресов</Name>
+					<IsActive>1</IsActive>
+				</ExtraIPRules>
+				<!-- ******************************************************************** -->
+				<ISPswRules>
+					<Name>Регламент на покупку софта ISPsystem</Name>
+					<IsActive>1</IsActive>
+				</ISPswRules>
+				<!-- ******************************************************************** -->
+				<DNSmanagerRules>
+					<Name>Регламент на услугу вторичного DNS</Name>
+					<IsActive>1</IsActive>
+				</DNSmanagerRules>
+			</Types>
+		</Enclosures>
+	</Contracts>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Servers>
+		<Balancing>
+			<Functions>
+				<NotDefined>
+					<Name>Без балансировки</Name>
+				</NotDefined>
+				<!-- *********************************************************************** -->
+				<ByAllCapacity>
+					<Name>Активные и блокированные аккаунты</Name>
+				</ByAllCapacity>
+				<!-- *********************************************************************** -->
+				<ByActiveCapacity>
+					<Name>Только по активным аккаунтам</Name>
+				</ByActiveCapacity>
+				<!-- *********************************************************************** -->
+				<ByRandom>
+					<Name>Случайным образом</Name>
+				</ByRandom>
+			</Functions>
+		</Balancing>
+		<!-- *********************************************************************** -->
+	</Servers>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Notifies>
+		<Types>
+			<HostingOrdersActive>
+				<Name>Активация заказа</Name>
+				<Title>Заказы хостинга</Title>
+				<Code>Hosting</Code>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</HostingOrdersActive>
+			<!-- ********************************************************************* -->
+			<HostingNoticeSuspend>
+				<Name>Уведомление о блокировке заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</HostingNoticeSuspend>
+			<!-- ********************************************************************* -->
+			<HostingOrdersSuspended>
+				<Name>Блокировка заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</HostingOrdersSuspended>
+			<!-- ********************************************************************* -->
+			<HostingNoticeDelete>
+				<Name>Уведомление о удалении заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</HostingNoticeDelete>
+			<!-- ********************************************************************* -->
+			<HostingOrdersDeleted>
+				<Name>Удаление заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</HostingOrdersDeleted>
+			<!-- ********************************************************************* -->
+			<HostingPasswordChange>
+				<Name>Смена пароля на заказ</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</HostingPasswordChange>
+			<!-- ********************************************************************* -->
+			<HostingCPUUsageNotice>
+				<Name>Превышение процессорного времени</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>0</UseSMS>
+				<IsActive>1</IsActive>
+			</HostingCPUUsageNotice>
+			<!-- ********************************************************************* -->
+			<DiskUsageNotice>
+				<Name>Превышение использования диска</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>0</UseWhatsApp>
+				<UseICQ>0</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>0</UseSMS>
+				<IsActive>1</IsActive>
+			</DiskUsageNotice>
+			<!-- ********************************************************************* -->
+			<!-- ********************************************************************* -->
+			<DomainOrdersOnRegister>
+				<Title>Заказы доменов</Title>
+				<Name>Домен поступил на регистрацию</Name>
+				<Code>Domain</Code>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</DomainOrdersOnRegister>
+			<!-- ********************************************************************* -->
+			<DomainOrdersActive>
+				<Name>Активация заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</DomainOrdersActive>
+			<!-- ********************************************************************* -->
+			<!-- а нету такого уведомления. и было ли - не понятно. а вот шаблон отличается, тут Domain а везде Domain
 		<DomainNsChange>
 			<Name>Смена серверов DNS</Name>
 			<GroupID>1</GroupID>
@@ -198,1214 +198,1214 @@
 			<IsActive>1</IsActive>
 		</DomainNsChange>
 		-->
-		<!-- ********************************************************************* -->
-		<DomainNoticeSuspend>
-			<Name>Уведомление о блокировке заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</DomainNoticeSuspend>
-		<!-- ********************************************************************* -->
-		<DomainOrdersSuspended>
-			<Name>Блокировка заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</DomainOrdersSuspended>
-		<!-- ********************************************************************* -->
-		<DomainNoticeDelete>
-			<Name>Уведомление о удалении заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</DomainNoticeDelete>
-		<!-- ********************************************************************* -->
-		<DomainOrdersDeleted>
-			<Name>Удаление заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</DomainOrdersDeleted>
-		<!-- ********************************************************************* -->
-		<!-- added by lissyara 2011-08-11 in 14:06 MSK *************************** -->
-		<!-- ********************************************************************* -->
-		<VPSOrdersActive>
-			<Name>Активация заказа</Name>
-			<Title>Заказы VPS (виртуальных серверов)</Title>
-			<Code>VPS</Code>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</VPSOrdersActive>
-		<!-- ********************************************************************* -->
-		<VPSNoticeSuspend>
-			<Name>Уведомление о блокировке заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</VPSNoticeSuspend>
-		<!-- ********************************************************************* -->
-		<VPSOrdersSuspended>
-			<Name>Блокировка заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</VPSOrdersSuspended>
-		<!-- ********************************************************************* -->
-		<VPSNoticeDelete>
-			<Name>Уведомление о удалении заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</VPSNoticeDelete>
-		<!-- ********************************************************************* -->
-		<VPSOrdersDeleted>
-			<Name>Удаление заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</VPSOrdersDeleted>
-		<!-- ********************************************************************* -->
-		<VPSPasswordChange>
-			<Name>Смена пароля на заказ</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</VPSPasswordChange>
-		<!-- ********************************************************************* -->
-		<!-- added by lissyara 2013-05-30 in 23:46 MSK *************************** -->
-		<!-- ********************************************************************* -->
-		<DSOrdersActive>
-			<Name>Активация заказа</Name>
-			<Title>Заказы DS (выделенных серверов)</Title>
-			<Code>DS</Code>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</DSOrdersActive>
-		<!-- ********************************************************************* -->
-		<DSNoticeSuspend>
-			<Name>Уведомление о блокировке заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</DSNoticeSuspend>
-		<!-- ********************************************************************* -->
-		<DSOrdersSuspended>
-			<Name>Блокировка заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</DSOrdersSuspended>
-		<!-- ********************************************************************* -->
-		<DSNoticeDelete>
-			<Name>Уведомление о удалении заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</DSNoticeDelete>
-		<!-- ********************************************************************* -->
-		<DSOrdersDeleted>
-			<Name>Удаление заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</DSOrdersDeleted>
-		<!-- ********************************************************************* -->
-		<!-- added by lissyara 2011-08-11 in 14:10 MSK *************************** -->
-		<!-- ********************************************************************* -->
-		<ExtraIPOrdersActive>
-			<Name>Активация заказа</Name>
-			<Title>Заказы выделенных IP адресов</Title>
-			<Code>ExtraIP</Code>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</ExtraIPOrdersActive>
-		<!-- ********************************************************************* -->
-		<ExtraIPNoticeDelete>
-			<Name>Уведомление о удалении заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</ExtraIPNoticeDelete>
-		<!-- ********************************************************************* -->
-		<ExtraIPOrdersDeleted>
-			<Name>Удаление заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</ExtraIPOrdersDeleted>
-		<!-- ********************************************************************* -->
-		<!-- added by lissyara 2013-05-30 in 14:06 MSK *************************** -->
-		<!-- ********************************************************************* -->
-		<ISPswOrdersActive>
-			<Name>Активация заказа</Name>
-			<Title>Заказы программного обеспечения ISPsystem</Title>
-			<Code>ISPsw</Code>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</ISPswOrdersActive>
-		<!-- ********************************************************************* -->
-		<ISPswNoticeSuspend>
-			<Name>Уведомление о блокировке заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</ISPswNoticeSuspend>
-		<!-- ********************************************************************* -->
-		<ISPswOrdersSuspended>
-			<Name>Блокировка заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</ISPswOrdersSuspended>
-		<!-- ********************************************************************* -->
-		<ISPswNoticeDelete>
-			<Name>Уведомление о удалении заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</ISPswNoticeDelete>
-		<!-- ********************************************************************* -->
-		<ISPswOrdersDeleted>
-			<Name>Удаление заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
-			<IsActive>1</IsActive>
-		</ISPswOrdersDeleted>
-		<!-- ********************************************************************* -->
-		<!-- added by lissyara 2014-12-26 in 16:41 MSK -->
-		<!-- ********************************************************************* -->
-		<DNSmanagerOrdersActive>
-			<Name>Активация заказа</Name>
-			<Title>Заказы на вторичные DNS сервера (DNSmanager)</Title>
-			<Code>DNSmanager</Code>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>0</UseWhatsApp>
-			<UseICQ>0</UseICQ>
-			<UseJabber>0</UseJabber>
-			<UseSMS>0</UseSMS>
-			<IsActive>1</IsActive>
-		</DNSmanagerOrdersActive>
-		<!-- ********************************************************************* -->
-		<DNSmanagerNoticeSuspend>
-			<Name>Уведомление о блокировке заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>0</UseWhatsApp>
-			<UseICQ>0</UseICQ>
-			<UseJabber>0</UseJabber>
-			<UseSMS>0</UseSMS>
-			<IsActive>1</IsActive>
-		</DNSmanagerNoticeSuspend>
-		<!-- ********************************************************************* -->
-		<DNSmanagerOrdersSuspended>
-			<Name>Блокировка заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>0</UseWhatsApp>
-			<UseICQ>0</UseICQ>
-			<UseJabber>0</UseJabber>
-			<UseSMS>0</UseSMS>
-			<IsActive>1</IsActive>
-		</DNSmanagerOrdersSuspended>
-		<!-- ********************************************************************* -->
-		<DNSmanagerNoticeDelete>
-			<Name>Уведомление о удалении заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>0</UseWhatsApp>
-			<UseICQ>0</UseICQ>
-			<UseJabber>0</UseJabber>
-			<UseSMS>0</UseSMS>
-			<IsActive>1</IsActive>
-		</DNSmanagerNoticeDelete>
-		<!-- ********************************************************************* -->
-		<DNSmanagerOrdersDeleted>
-			<Name>Удаление заказа</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>0</UseWhatsApp>
-			<UseICQ>0</UseICQ>
-			<UseJabber>0</UseJabber>
-			<UseSMS>0</UseSMS>
-			<IsActive>1</IsActive>
-		</DNSmanagerOrdersDeleted>
-		<!-- ********************************************************************* -->
-		<DNSmanagerPasswordChange>
-			<Name>Смена пароля на заказ</Name>
-			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>0</UseWhatsApp>
-			<UseICQ>0</UseICQ>
-			<UseJabber>0</UseJabber>
-			<UseSMS>0</UseSMS>
-			<IsActive>1</IsActive>
-		</DNSmanagerPasswordChange>
-		<!-- ********************************************************************* -->
-	</Types>
-</Notifies>
-<!-- *********************************************************************** -->
-<!-- *********************************************************************** -->
-<MotionDocuments>
- <Types>
-  <Contract>
-   <Name>Договор</Name>
-  </Contract>
-  <ContractEnclosure>
-   <Name>Приложение к договору</Name>
-  </ContractEnclosure>
-  <WorksCompliteReport>
-   <Name>Акт вып. работ</Name>
-  </WorksCompliteReport>
- </Types>
-</MotionDocuments>
-<!-- *********************************************************************** -->
-<!-- *********************************************************************** -->
-<Tasks>
- <Types>
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <DomainForDelete>
-   <Name>Заказы на домены для удаления</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </DomainForDelete>
-	<!-- ********************************************************************* -->
-	<DomainOrdersWhoIsUpdate>
-		<Name>Синхронизация доменов с базой WhoIs</Name>
-		<Params type="array" />
-		<ExecuteTime>05:00</ExecuteTime>
-		<ExecutePeriod>00:02</ExecutePeriod>
-		<Limit>5</Limit>
-		<IsActive>1</IsActive>
-		<WhoIsUpdatePeriod>1</WhoIsUpdatePeriod>
-		<WhoIsBeginUpdate>3</WhoIsBeginUpdate>
-	</DomainOrdersWhoIsUpdate>
-	<!-- ********************************************************************* -->
-  <DomainNsChange>
-   <Name>Смена именных серверов</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-    <Ns1Name>Адрес первого сервера имен</Ns1Name>
-    <Ns1IP>IP адрес первого сервера имен</Ns1IP>
-    <Ns2Name>Адрес второго сервера имен</Ns2Name>
-    <Ns2IP>IP адрес второго сервера имен</Ns2IP>
-    <Ns3Name>Адрес дополнительного сервера имен</Ns3Name>
-    <Ns3IP>IP адрес дополнительного сервера имен</Ns3IP>
-    <Ns4Name>Адрес расширенного сервера имен</Ns4Name>
-    <Ns4IP>IP адрес расширенного сервера имен</Ns4IP>
-    <TicketID>Номер заявки</TicketID>
-   </Params>
-   <IsActive>1</IsActive>
-  </DomainNsChange>
-  <!-- ********************************************************************* -->
-  <DomainPathRegister>
-   <Name>Выбрать алгоритм регистрации</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-    <AdditionalTaskExecuted>Дополнительная задача</AdditionalTaskExecuted> 
-   </Params>
-   <IsActive>1</IsActive>
-  </DomainPathRegister>
-  <!-- ********************************************************************* -->
-  <DomainContractRegister>
-   <Name>Зарегистрировать договор для домена</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-    <TicketID>Номер заявки</TicketID>
-   </Params>
-   <IsActive>1</IsActive>
-  </DomainContractRegister>
-  <!-- ********************************************************************* -->
-  <DomainRegister>
-   <Name>Зарегистрировать домен</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-    <TicketID>Номер заявки</TicketID>
-    <AdditionalTaskExecuted>Дополнительная задача</AdditionalTaskExecuted>
-   </Params>
-   <IsActive>1</IsActive>
-  </DomainRegister>
-  <!-- ********************************************************************* -->
-  <DomainProlong>
-   <Name>Продлить домен</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-    <TicketID>Номер заявки</TicketID>
-   </Params>
-   <IsActive>1</IsActive>
-  </DomainProlong>
-  <!-- ********************************************************************* -->
-  <DomainOrdersRegStatusUpdate>
-   <Name>Проверка наличия домена у регистратора</Name>
-   <SleepTime>2592000</SleepTime>
-   <IsActive>1</IsActive>
-  </DomainOrdersRegStatusUpdate>
-  <!-- ********************************************************************* -->
-  <DomainTransfer>
-   <Name>Перенести домен</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </DomainTransfer>
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <HostingForDelete>
-   <Name>Заказы на хостинг для удаления</Name>
-   <Params type="array" />
-   <ExecuteTime>1:10</ExecuteTime>
-   <IsActive>1</IsActive>
-   <HostingDeleteTimeout>20</HostingDeleteTimeout>
-  </HostingForDelete>
-  <!-- ********************************************************************* -->
-  <HostingSchemeChange>
-   <Name>Смена тарифного плана</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-    <HostingSchemeID>Идентификатор тарифа</HostingSchemeID>
-   </Params>
-   <IsActive>1</IsActive>
-  </HostingSchemeChange>
-  <!-- ********************************************************************* -->
-  <HostingCreate>
-   <Name>Создание хостинг-аккаунта</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </HostingCreate>
-  <!-- ********************************************************************* -->
-  <HostingActive>
-   <Name>Активация заказа хостинга</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </HostingActive>
-  <!-- ********************************************************************* -->
-  <HostingSuspend>
-   <Name>Блокировка заказа хостинга</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </HostingSuspend>
-  <!-- ********************************************************************* -->
-  <HostingDelete>
-   <Name>Удаление заказа хостинга</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </HostingDelete>
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <HostingCPUUsage>
-   <Name>Учёт используемого процессорного времени пользователями хостинга</Name>
-   <Params type="array" />
-   <IsActive>0</IsActive>
-   <ExecuteTime>10:00</ExecuteTime>
-   <ExecuteDays>1</ExecuteDays>
-   <!-- за какой период считаем среднее значение и смотрим превышения -->
-   <PeriodToLock>7</PeriodToLock>
-   <!-- блокировать превышающих -->
-   <LockOverlimits>0</LockOverlimits>
-   <!-- автоматически разблокировать залоченных -->
-   <UnLockOverlimits>1</UnLockOverlimits>
-   <UnLockOverlimitsTime>22:15</UnLockOverlimitsTime>
-   <!-- уведомлять превышающих -->
-   <NotifyOverlimits>1</NotifyOverlimits>
-   <!-- множитель, с которого начинаются уведомления
+			<!-- ********************************************************************* -->
+			<DomainNoticeSuspend>
+				<Name>Уведомление о блокировке заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</DomainNoticeSuspend>
+			<!-- ********************************************************************* -->
+			<DomainOrdersSuspended>
+				<Name>Блокировка заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</DomainOrdersSuspended>
+			<!-- ********************************************************************* -->
+			<DomainNoticeDelete>
+				<Name>Уведомление о удалении заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</DomainNoticeDelete>
+			<!-- ********************************************************************* -->
+			<DomainOrdersDeleted>
+				<Name>Удаление заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</DomainOrdersDeleted>
+			<!-- ********************************************************************* -->
+			<!-- added by lissyara 2011-08-11 in 14:06 MSK *************************** -->
+			<!-- ********************************************************************* -->
+			<VPSOrdersActive>
+				<Name>Активация заказа</Name>
+				<Title>Заказы VPS (виртуальных серверов)</Title>
+				<Code>VPS</Code>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</VPSOrdersActive>
+			<!-- ********************************************************************* -->
+			<VPSNoticeSuspend>
+				<Name>Уведомление о блокировке заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</VPSNoticeSuspend>
+			<!-- ********************************************************************* -->
+			<VPSOrdersSuspended>
+				<Name>Блокировка заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</VPSOrdersSuspended>
+			<!-- ********************************************************************* -->
+			<VPSNoticeDelete>
+				<Name>Уведомление о удалении заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</VPSNoticeDelete>
+			<!-- ********************************************************************* -->
+			<VPSOrdersDeleted>
+				<Name>Удаление заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</VPSOrdersDeleted>
+			<!-- ********************************************************************* -->
+			<VPSPasswordChange>
+				<Name>Смена пароля на заказ</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</VPSPasswordChange>
+			<!-- ********************************************************************* -->
+			<!-- added by lissyara 2013-05-30 in 23:46 MSK *************************** -->
+			<!-- ********************************************************************* -->
+			<DSOrdersActive>
+				<Name>Активация заказа</Name>
+				<Title>Заказы DS (выделенных серверов)</Title>
+				<Code>DS</Code>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</DSOrdersActive>
+			<!-- ********************************************************************* -->
+			<DSNoticeSuspend>
+				<Name>Уведомление о блокировке заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</DSNoticeSuspend>
+			<!-- ********************************************************************* -->
+			<DSOrdersSuspended>
+				<Name>Блокировка заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</DSOrdersSuspended>
+			<!-- ********************************************************************* -->
+			<DSNoticeDelete>
+				<Name>Уведомление о удалении заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</DSNoticeDelete>
+			<!-- ********************************************************************* -->
+			<DSOrdersDeleted>
+				<Name>Удаление заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</DSOrdersDeleted>
+			<!-- ********************************************************************* -->
+			<!-- added by lissyara 2011-08-11 in 14:10 MSK *************************** -->
+			<!-- ********************************************************************* -->
+			<ExtraIPOrdersActive>
+				<Name>Активация заказа</Name>
+				<Title>Заказы выделенных IP адресов</Title>
+				<Code>ExtraIP</Code>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</ExtraIPOrdersActive>
+			<!-- ********************************************************************* -->
+			<ExtraIPNoticeDelete>
+				<Name>Уведомление о удалении заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</ExtraIPNoticeDelete>
+			<!-- ********************************************************************* -->
+			<ExtraIPOrdersDeleted>
+				<Name>Удаление заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</ExtraIPOrdersDeleted>
+			<!-- ********************************************************************* -->
+			<!-- added by lissyara 2013-05-30 in 14:06 MSK *************************** -->
+			<!-- ********************************************************************* -->
+			<ISPswOrdersActive>
+				<Name>Активация заказа</Name>
+				<Title>Заказы программного обеспечения ISPsystem</Title>
+				<Code>ISPsw</Code>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</ISPswOrdersActive>
+			<!-- ********************************************************************* -->
+			<ISPswNoticeSuspend>
+				<Name>Уведомление о блокировке заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</ISPswNoticeSuspend>
+			<!-- ********************************************************************* -->
+			<ISPswOrdersSuspended>
+				<Name>Блокировка заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</ISPswOrdersSuspended>
+			<!-- ********************************************************************* -->
+			<ISPswNoticeDelete>
+				<Name>Уведомление о удалении заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</ISPswNoticeDelete>
+			<!-- ********************************************************************* -->
+			<ISPswOrdersDeleted>
+				<Name>Удаление заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>1</UseWhatsApp>
+				<UseICQ>1</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>1</UseSMS>
+				<IsActive>1</IsActive>
+			</ISPswOrdersDeleted>
+			<!-- ********************************************************************* -->
+			<!-- added by lissyara 2014-12-26 in 16:41 MSK -->
+			<!-- ********************************************************************* -->
+			<DNSmanagerOrdersActive>
+				<Name>Активация заказа</Name>
+				<Title>Заказы на вторичные DNS сервера (DNSmanager)</Title>
+				<Code>DNSmanager</Code>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>0</UseWhatsApp>
+				<UseICQ>0</UseICQ>
+				<UseJabber>0</UseJabber>
+				<UseSMS>0</UseSMS>
+				<IsActive>1</IsActive>
+			</DNSmanagerOrdersActive>
+			<!-- ********************************************************************* -->
+			<DNSmanagerNoticeSuspend>
+				<Name>Уведомление о блокировке заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>0</UseWhatsApp>
+				<UseICQ>0</UseICQ>
+				<UseJabber>0</UseJabber>
+				<UseSMS>0</UseSMS>
+				<IsActive>1</IsActive>
+			</DNSmanagerNoticeSuspend>
+			<!-- ********************************************************************* -->
+			<DNSmanagerOrdersSuspended>
+				<Name>Блокировка заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>0</UseWhatsApp>
+				<UseICQ>0</UseICQ>
+				<UseJabber>0</UseJabber>
+				<UseSMS>0</UseSMS>
+				<IsActive>1</IsActive>
+			</DNSmanagerOrdersSuspended>
+			<!-- ********************************************************************* -->
+			<DNSmanagerNoticeDelete>
+				<Name>Уведомление о удалении заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>0</UseWhatsApp>
+				<UseICQ>0</UseICQ>
+				<UseJabber>0</UseJabber>
+				<UseSMS>0</UseSMS>
+				<IsActive>1</IsActive>
+			</DNSmanagerNoticeDelete>
+			<!-- ********************************************************************* -->
+			<DNSmanagerOrdersDeleted>
+				<Name>Удаление заказа</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>0</UseWhatsApp>
+				<UseICQ>0</UseICQ>
+				<UseJabber>0</UseJabber>
+				<UseSMS>0</UseSMS>
+				<IsActive>1</IsActive>
+			</DNSmanagerOrdersDeleted>
+			<!-- ********************************************************************* -->
+			<DNSmanagerPasswordChange>
+				<Name>Смена пароля на заказ</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>0</UseWhatsApp>
+				<UseICQ>0</UseICQ>
+				<UseJabber>0</UseJabber>
+				<UseSMS>0</UseSMS>
+				<IsActive>1</IsActive>
+			</DNSmanagerPasswordChange>
+			<!-- ********************************************************************* -->
+		</Types>
+	</Notifies>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<MotionDocuments>
+		<Types>
+			<Contract>
+				<Name>Договор</Name>
+			</Contract>
+			<ContractEnclosure>
+				<Name>Приложение к договору</Name>
+			</ContractEnclosure>
+			<WorksCompliteReport>
+				<Name>Акт вып. работ</Name>
+			</WorksCompliteReport>
+		</Types>
+	</MotionDocuments>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Tasks>
+		<Types>
+			<!-- ********************************************************************* -->
+			<!-- ********************************************************************* -->
+			<DomainForDelete>
+				<Name>Заказы на домены для удаления</Name>
+				<Params type="array"/>
+				<IsActive>1</IsActive>
+			</DomainForDelete>
+			<!-- ********************************************************************* -->
+			<DomainOrdersWhoIsUpdate>
+				<Name>Синхронизация доменов с базой WhoIs</Name>
+				<Params type="array"/>
+				<ExecuteTime>05:00</ExecuteTime>
+				<ExecutePeriod>00:02</ExecutePeriod>
+				<Limit>5</Limit>
+				<IsActive>1</IsActive>
+				<WhoIsUpdatePeriod>1</WhoIsUpdatePeriod>
+				<WhoIsBeginUpdate>3</WhoIsBeginUpdate>
+			</DomainOrdersWhoIsUpdate>
+			<!-- ********************************************************************* -->
+			<DomainNsChange>
+				<Name>Смена именных серверов</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+					<Ns1Name>Адрес первого сервера имен</Ns1Name>
+					<Ns1IP>IP адрес первого сервера имен</Ns1IP>
+					<Ns2Name>Адрес второго сервера имен</Ns2Name>
+					<Ns2IP>IP адрес второго сервера имен</Ns2IP>
+					<Ns3Name>Адрес дополнительного сервера имен</Ns3Name>
+					<Ns3IP>IP адрес дополнительного сервера имен</Ns3IP>
+					<Ns4Name>Адрес расширенного сервера имен</Ns4Name>
+					<Ns4IP>IP адрес расширенного сервера имен</Ns4IP>
+					<TicketID>Номер заявки</TicketID>
+				</Params>
+				<IsActive>1</IsActive>
+			</DomainNsChange>
+			<!-- ********************************************************************* -->
+			<DomainPathRegister>
+				<Name>Выбрать алгоритм регистрации</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+					<AdditionalTaskExecuted>Дополнительная задача</AdditionalTaskExecuted>
+				</Params>
+				<IsActive>1</IsActive>
+			</DomainPathRegister>
+			<!-- ********************************************************************* -->
+			<DomainContractRegister>
+				<Name>Зарегистрировать договор для домена</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+					<TicketID>Номер заявки</TicketID>
+				</Params>
+				<IsActive>1</IsActive>
+			</DomainContractRegister>
+			<!-- ********************************************************************* -->
+			<DomainRegister>
+				<Name>Зарегистрировать домен</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+					<TicketID>Номер заявки</TicketID>
+					<AdditionalTaskExecuted>Дополнительная задача</AdditionalTaskExecuted>
+				</Params>
+				<IsActive>1</IsActive>
+			</DomainRegister>
+			<!-- ********************************************************************* -->
+			<DomainProlong>
+				<Name>Продлить домен</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+					<TicketID>Номер заявки</TicketID>
+				</Params>
+				<IsActive>1</IsActive>
+			</DomainProlong>
+			<!-- ********************************************************************* -->
+			<DomainOrdersRegStatusUpdate>
+				<Name>Проверка наличия домена у регистратора</Name>
+				<SleepTime>2592000</SleepTime>
+				<IsActive>1</IsActive>
+			</DomainOrdersRegStatusUpdate>
+			<!-- ********************************************************************* -->
+			<DomainTransfer>
+				<Name>Перенести домен</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</DomainTransfer>
+			<!-- ********************************************************************* -->
+			<!-- ********************************************************************* -->
+			<!-- ********************************************************************* -->
+			<HostingForDelete>
+				<Name>Заказы на хостинг для удаления</Name>
+				<Params type="array"/>
+				<ExecuteTime>1:10</ExecuteTime>
+				<IsActive>1</IsActive>
+				<HostingDeleteTimeout>20</HostingDeleteTimeout>
+			</HostingForDelete>
+			<!-- ********************************************************************* -->
+			<HostingSchemeChange>
+				<Name>Смена тарифного плана</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+					<HostingSchemeID>Идентификатор тарифа</HostingSchemeID>
+				</Params>
+				<IsActive>1</IsActive>
+			</HostingSchemeChange>
+			<!-- ********************************************************************* -->
+			<HostingCreate>
+				<Name>Создание хостинг-аккаунта</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</HostingCreate>
+			<!-- ********************************************************************* -->
+			<HostingActive>
+				<Name>Активация заказа хостинга</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</HostingActive>
+			<!-- ********************************************************************* -->
+			<HostingSuspend>
+				<Name>Блокировка заказа хостинга</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</HostingSuspend>
+			<!-- ********************************************************************* -->
+			<HostingDelete>
+				<Name>Удаление заказа хостинга</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</HostingDelete>
+			<!-- ********************************************************************* -->
+			<!-- ********************************************************************* -->
+			<HostingCPUUsage>
+				<Name>Учёт используемого процессорного времени пользователями хостинга</Name>
+				<Params type="array"/>
+				<IsActive>0</IsActive>
+				<ExecuteTime>10:00</ExecuteTime>
+				<ExecuteDays>1</ExecuteDays>
+				<!-- за какой период считаем среднее значение и смотрим превышения -->
+				<PeriodToLock>7</PeriodToLock>
+				<!-- блокировать превышающих -->
+				<LockOverlimits>0</LockOverlimits>
+				<!-- автоматически разблокировать залоченных -->
+				<UnLockOverlimits>1</UnLockOverlimits>
+				<UnLockOverlimitsTime>22:15</UnLockOverlimitsTime>
+				<!-- уведомлять превышающих -->
+				<NotifyOverlimits>1</NotifyOverlimits>
+				<!-- множитель, с которого начинаются уведомления
 	(т.е. у юзера лимит 2%, множитель 1.5, значит уведомлять его начнёт только с 3%) -->
-   <NotifyRatio>1.5</NotifyRatio>
-   <!-- по каким дням блокировать -->
-   <LockDays>1</LockDays>
-   <!-- множитель, с которого начинаются блокировки
+				<NotifyRatio>1.5</NotifyRatio>
+				<!-- по каким дням блокировать -->
+				<LockDays>1</LockDays>
+				<!-- множитель, с которого начинаются блокировки
 	(т.е. у юзера лимит 2%, множитель 2.0, значит залочит его после DaysOverlimits
 	дней превышения, случившихся за PeriodToLock, и если в эти дни у него было от 4% и выше) -->
-   <LockRatio>2.0</LockRatio>
-   <!-- начиная с какого процента лочить юзеров
+				<LockRatio>2.0</LockRatio>
+				<!-- начиная с какого процента лочить юзеров
 	(на мелких тарифах, мелких сайтах, мелких лимитах - лучше вообще не лочить - говна много, эффекта мало) -->
-   <LockBeginFrom>2</LockBeginFrom>
-   <LockNotifyFrom>1</LockNotifyFrom>
-   <CreateTicket>1</CreateTicket>
-   <IsEvent>0</IsEvent>
-  </HostingCPUUsage>
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <VPSForDelete>
-   <Name>Заказы на VPS для удаления</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-   <StartHour>1</StartHour>
-   <StartMinutes>15</StartMinutes>
-   <DeleteTimeout>20</DeleteTimeout>
-  </VPSForDelete>
-  <!-- ********************************************************************* -->
-  <VPSSchemeChange>
-   <Name>Смена тарифного плана</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-    <VPSSchemeID>Идентификатор тарифа</VPSSchemeID>
-   </Params>
-   <IsActive>1</IsActive>
-  </VPSSchemeChange>
-  <!-- ********************************************************************* -->
-  <VPSCreate>
-   <Name>Создание аккаунта VPS</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </VPSCreate>
-  <!-- ********************************************************************* -->
-  <VPSActive>
-   <Name>Активация заказа VPS</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </VPSActive>
-  <!-- ********************************************************************* -->
-  <VPSSuspend>
-   <Name>Блокировка заказа VPS</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </VPSSuspend>
-  <!-- ********************************************************************* -->
-  <VPSDelete>
-   <Name>Удаление заказа VPS</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </VPSDelete>
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <ServersQuestioning>
-   <Name>Опрос серверов</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </ServersQuestioning>
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <DSForDelete>
-   <Name>Заказы арендованных серверов для удаления</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-   <StartHour>1</StartHour>
-   <StartMinutes>20</StartMinutes>
-   <DeleteTimeout>30</DeleteTimeout>
-  </DSForDelete>
-  <!-- ********************************************************************* -->
-  <DSCreate>
-   <Name>Установка арендованного сервера</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </DSCreate>
-  <!-- ********************************************************************* -->
-  <DSActive>
-   <Name>Подключение арендованного сервера</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </DSActive>
-  <!-- ********************************************************************* -->
-  <DSSuspend>
-   <Name>Отключение арендованого сервера</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </DSSuspend>
-  <!-- ********************************************************************* -->
-  <DSDelete>
-   <Name>Деинсталляция арендованного сервера</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </DSDelete>
-  <!-- ********************************************************************* -->
-  <DSCalculateNumServers>
-   <Name>Пересчёт числа свободных/занятых выделенных серверов</Name>
-   <Params>
-    <Params type="array" />
-   </Params>
-  <ExecutePeriod>00:10</ExecutePeriod>
-  <IsActive>1</IsActive>
-  </DSCalculateNumServers>
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <ExtraIPActive>
-   <Name>Активация заказа выделенного IP адреса</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </ExtraIPActive>
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <ExtraIPForDelete>
-   <Name>Заказы на IP адреса для удаления</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-   <StartHour>1</StartHour>
-   <StartMinutes>15</StartMinutes>
-  </ExtraIPForDelete>
-  <!-- ********************************************************************* -->
-  <ExtraIPCreate>
-   <Name>Подключение выделенного IP адреса</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </ExtraIPCreate>
-  <!-- ********************************************************************* -->
-  <ExtraIPDelete>
-   <Name>Удаление заказа IP адреса</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </ExtraIPDelete>
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <ISPswForDelete>
-   <Name>Заказы на ПО ISPsystem для удаления</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-   <StartHour>1</StartHour>
-   <StartMinutes>50</StartMinutes>
-   <DeleteTimeout>20</DeleteTimeout>
-  </ISPswForDelete>
-  <!-- ********************************************************************* -->
-  <ISPswSchemeChange>
-   <Name>Смена тарифного плана</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-    <ISPswSchemeID>Идентификатор тарифа</ISPswSchemeID>
-   </Params>
-   <IsActive>1</IsActive>
-  </ISPswSchemeChange>
-  <!-- ********************************************************************* -->
-  <ISPswCreate>
-   <Name>Покупка ПО ISPsystem</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </ISPswCreate>
-  <!-- ********************************************************************* -->
-  <ISPswActive>
-   <Name>Активация заказа ПО ISPsystem</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </ISPswActive>
-  <!-- ********************************************************************* -->
-  <ISPswSuspend>
-   <Name>Блокировка заказа ПО ISPsystem</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </ISPswSuspend>
-  <!-- ********************************************************************* -->
-  <ISPswDelete>
-   <Name>Удаление заказа ПО ISPsystem</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </ISPswDelete>
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-  <EmailBoxesNotifies>
-   <Name>Уведомления об окончании квоты почтовых ящиков</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-  </EmailBoxesNotifies>
-  <!-- ********************************************************************* -->
-  <ServersUpTime>
-   <Name>Мониторинг серверов</Name>
-   <Params type="array" />
-   <IsActive>1</IsActive>
-   <SocketTimeout>5</SocketTimeout>
-   <ExecutePeriod>00:10</ExecutePeriod>
-   <DaysAgregate>1</DaysAgregate>
-  </ServersUpTime>
-  <!-- ********************************************************************* -->
-  <!-- ********************************************************************* -->
-		<GC>
+				<LockBeginFrom>2</LockBeginFrom>
+				<LockNotifyFrom>1</LockNotifyFrom>
+				<CreateTicket>1</CreateTicket>
+				<IsEvent>0</IsEvent>
+			</HostingCPUUsage>
 			<!-- ********************************************************************* -->
-			<ServersCheckUsersSettings>
+			<!-- ********************************************************************* -->
+			<!-- ********************************************************************* -->
+			<!-- ********************************************************************* -->
+			<VPSForDelete>
+				<Name>Заказы на VPS для удаления</Name>
+				<Params type="array"/>
 				<IsActive>1</IsActive>
-				<ExcludeServerAccounts />
-			</ServersCheckUsersSettings>
+				<StartHour>1</StartHour>
+				<StartMinutes>15</StartMinutes>
+				<DeleteTimeout>20</DeleteTimeout>
+			</VPSForDelete>
 			<!-- ********************************************************************* -->
-			<UpdateDiskTemplatesSettings>
+			<VPSSchemeChange>
+				<Name>Смена тарифного плана</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+					<VPSSchemeID>Идентификатор тарифа</VPSSchemeID>
+				</Params>
 				<IsActive>1</IsActive>
-			</UpdateDiskTemplatesSettings>
+			</VPSSchemeChange>
 			<!-- ********************************************************************* -->
-			<DiskUsageNotifiesSettings>
+			<VPSCreate>
+				<Name>Создание аккаунта VPS</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
 				<IsActive>1</IsActive>
-				<IsNotify>1</IsNotify>
-				<DiskUsageNotifiesPercent>90</DiskUsageNotifiesPercent>
-				<IsEventForNoLimits>1</IsEventForNoLimits>
-			</DiskUsageNotifiesSettings>
+			</VPSCreate>
 			<!-- ********************************************************************* -->
-			<EmailBoxesNotifiesSettings>
+			<VPSActive>
+				<Name>Активация заказа VPS</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
 				<IsActive>1</IsActive>
-				<EmailBoxesNotifiesPercent>80</EmailBoxesNotifiesPercent>
-			</EmailBoxesNotifiesSettings>
+			</VPSActive>
 			<!-- ********************************************************************* -->
-			<ISPswCheckLicensesSettings>
+			<VPSSuspend>
+				<Name>Блокировка заказа VPS</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
 				<IsActive>1</IsActive>
-			</ISPswCheckLicensesSettings>
+			</VPSSuspend>
 			<!-- ********************************************************************* -->
-			<DomainCheckPriceListSettings>
+			<VPSDelete>
+				<Name>Удаление заказа VPS</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
 				<IsActive>1</IsActive>
-				<IsEvent>1</IsEvent>
-				<IsDomainSchemeCreate>0</IsDomainSchemeCreate>
-				<DomainUpdatePriceUp>1</DomainUpdatePriceUp>
-				<DomainUpdatePriceLow>0</DomainUpdatePriceLow>
-				<DomainMinMarginPercent>8</DomainMinMarginPercent>
-				<DomainMinMarginSumm>50</DomainMinMarginSumm>
-				<DomainPriceDeviationPercent>4</DomainPriceDeviationPercent>
-				<DomainPriceDeviationSumm>25</DomainPriceDeviationSumm>
-			</DomainCheckPriceListSettings>
+			</VPSDelete>
 			<!-- ********************************************************************* -->
-			<DomainSchemeCheckWhoIsDatabaseSettings>
+			<!-- ********************************************************************* -->
+			<ServersQuestioning>
+				<Name>Опрос серверов</Name>
+				<Params type="array"/>
 				<IsActive>1</IsActive>
-				<IsEvent>1</IsEvent>
-			</DomainSchemeCheckWhoIsDatabaseSettings>
+			</ServersQuestioning>
 			<!-- ********************************************************************* -->
-			<UpTimeAgregateSettings>
+			<!-- ********************************************************************* -->
+			<!-- ********************************************************************* -->
+			<!-- ********************************************************************* -->
+			<DSForDelete>
+				<Name>Заказы арендованных серверов для удаления</Name>
+				<Params type="array"/>
 				<IsActive>1</IsActive>
-			</UpTimeAgregateSettings>
+				<StartHour>1</StartHour>
+				<StartMinutes>20</StartMinutes>
+				<DeleteTimeout>30</DeleteTimeout>
+			</DSForDelete>
 			<!-- ********************************************************************* -->
-			<CheckOrphanedDomainOwners>
+			<DSCreate>
+				<Name>Установка арендованного сервера</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
 				<IsActive>1</IsActive>
-				<Limit>3</Limit>
-				<DayOfWeek>1</DayOfWeek>
-				<SendToGroupIDs>3100000</SendToGroupIDs>
-			</CheckOrphanedDomainOwners>
+			</DSCreate>
 			<!-- ********************************************************************* -->
-			<!-- задачи -->
-			<DailyTasks>
-				<EraseDeletedOrders>Удаление заказов в статусе Удален</EraseDeletedOrders>
-				<CheckBalance>Проверка балланса регистраторов, поставщиков</CheckBalance>
-				<ISPswCheckLicenses>Синхронизация лицензий с ISPsystem</ISPswCheckLicenses>
-				<ServersCheckUsers>Синхронизация аккаунтов биллинга и серверов</ServersCheckUsers>
-				<UpdateDiskTemplates>Обновление шаблонов дисков на VPS</UpdateDiskTemplates>
-				<DiskUsageNotifies>Уведомление о заканчивающемся месте на хостинге</DiskUsageNotifies>
-				<EmailBoxesNotifies>Уведомление o заканчивающейся квоте почтовых ящиков</EmailBoxesNotifies>
-				<DomainAutoProlongation>Автопродление истекающих доменов</DomainAutoProlongation>
-				<SetSuspendExpiredDomain>Блокировка просроченных доменов</SetSuspendExpiredDomain>
-				<DomainPathRegisterNotify>Уведомления о доменах с неопределёнными владельцами</DomainPathRegisterNotify>
-				<DeleteDomainForTransfer>Удаление доменов в статусе &quot;Для переноса&quot;</DeleteDomainForTransfer>
-				<DomainFindOdd>Поиск доменов отсутствующих в биллинге/у регистратора</DomainFindOdd>
-				<DomainCheckPriceList>Проверка цен на домены у вышестоящих регистраторов</DomainCheckPriceList>
-				<DomainSchemeCheckWhoIsDatabase>Проверка тарифов на домены, на предмет нахождения в базе WhoIs</DomainSchemeCheckWhoIsDatabase>
-				<UpTimeAgregate>Агрегация стастистики мониторинга серверов</UpTimeAgregate>
-				<CheckOrphanedDomainOwners>Проверка владельцев доменных имён</CheckOrphanedDomainOwners>
-				<ExtraIPCheckOnCreate>Проверка зависших созданий IP адресов</ExtraIPCheckOnCreate>
-			</DailyTasks>
+			<DSActive>
+				<Name>Подключение арендованного сервера</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</DSActive>
 			<!-- ********************************************************************* -->
-		</GC>
-		<!-- ********************************************************************* -->
-		<DNSmanagerForDelete>
-			<Name>Заказы на вторичный DNS для удаления</Name>
-			<Params type="array" />
-			<ExecuteTime>1:10</ExecuteTime>
-			<IsActive>1</IsActive>
-			<DNSmanagerDeleteTimeout>20</DNSmanagerDeleteTimeout>
-		</DNSmanagerForDelete>
-  <!-- ********************************************************************* -->
-  <DNSmanagerSchemeChange>
-   <Name>Смена тарифного плана</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-    <DNSmanagerSchemeID>Идентификатор тарифа</DNSmanagerSchemeID>
-   </Params>
-   <IsActive>1</IsActive>
-  </DNSmanagerSchemeChange>
-  <!-- ********************************************************************* -->
-  <DNSmanagerCreate>
-   <Name>Создание аккаунта на вторичный DNS</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </DNSmanagerCreate>
-  <!-- ********************************************************************* -->
-  <DNSmanagerActive>
-   <Name>Активация заказа вторичного DNS</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </DNSmanagerActive>
-  <!-- ********************************************************************* -->
-  <DNSmanagerSuspend>
-   <Name>Блокировка заказа вторичного DNS</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </DNSmanagerSuspend>
-  <!-- ********************************************************************* -->
-  <DNSmanagerDelete>
-   <Name>Удаление заказа вторичного DNS</Name>
-   <Params>
-    <ID>Идентификатор заказа</ID>
-   </Params>
-   <IsActive>1</IsActive>
-  </DNSmanagerDelete>
-		<!-- *********************************************************************** -->
-		<!-- *********************************************************************** -->
-		<!-- *********************************************************************** -->
-		<ServersAutoBalance>
-			<Name>Автобалансировка серверов</Name>
-			<Params type="array" />
-			<ExecutePeriod>04:00</ExecutePeriod>
-			<IsActive>1</IsActive>
-			<IsEvent>1</IsEvent>
-		</ServersAutoBalance>
-		<!-- *********************************************************************** -->
-		<Consider>
-			<Name>Учет заказов штатных услуг</Name>
-			<Params type="array" />
-			<ExecutePeriod>04:00</ExecutePeriod>
-			<ExecuteTime>0</ExecuteTime>
-			<PerIteration>15</PerIteration>
-			<SleepTime>20</SleepTime>
-			<IsActive>1</IsActive>
-		</Consider>
-		<!-- *********************************************************************** -->
-		<NoticeDelete>
-			<Name>Уведомления об удалении заказов штатных услуг</Name>
-			<Params type="array" />
-			<ExecuteTime>04:25</ExecuteTime>
-			<IsActive>1</IsActive>
-		</NoticeDelete>
-		<!-- *********************************************************************** -->
-		<NoticeSuspend>
-			<Name>Уведомления об окончании заказов штатных услуг</Name>
-			<Params type="array" />
-			<ExecuteTime>04:20</ExecuteTime>
-			<IsActive>1</IsActive>
-		</NoticeSuspend>
-		<!-- *********************************************************************** -->
-	</Types>
-</Tasks>
-<!-- *********************************************************************** -->
-<!-- *********************************************************************** -->
-<Statuses>
- <HostingOrders>
-  <Waiting>
-   <Name>Ожидание оплаты</Name>
-  </Waiting>
-  <OnCreate>
-   <Name>На создании</Name>
-  </OnCreate>
-  <Active>
-   <Name>Активен</Name>
-  </Active>
-  <SchemeChange>
-   <Name>На смене тарифа</Name>
-  </SchemeChange>
-  <Suspended>
-   <Name>Заблокирован</Name>
-  </Suspended>
-  <Deleted>
-   <Name>Удален</Name>
-  </Deleted>
- </HostingOrders>
- <VPSOrders>
-  <Waiting>
-   <Name>Ожидание оплаты</Name>
-  </Waiting>
-  <OnCreate>
-   <Name>На создании</Name>
-  </OnCreate>
-  <Active>
-   <Name>Активен</Name>
-  </Active>
-  <SchemeChange>
-   <Name>На смене тарифа</Name>
-  </SchemeChange>
-  <Suspended>
-   <Name>Заблокирован</Name>
-  </Suspended>
-  <Deleted>
-   <Name>Удален</Name>
-  </Deleted>
- </VPSOrders>
- <DSOrders>
-  <Waiting>
-   <Name>Ожидание оплаты</Name>
-  </Waiting>
-  <OnCreate>
-   <Name>Установка сервера</Name>
-  </OnCreate>
-  <Active>
-   <Name>Активен</Name>
-  </Active>
-  <Suspended>
-   <Name>Сервер выключен</Name>
-  </Suspended>
-  <Deleted>
-   <Name>Сервер удалён</Name>
-  </Deleted>
- </DSOrders>
- <DomainOrders>
-  <Waiting>
-   <Name>Ожидание оплаты</Name>
-  </Waiting>
-  <ClaimForRegister>
-   <Name>Заявка на регистрацию</Name>
-  </ClaimForRegister>
-  <ForContractRegister>
-   <Name>Для регистрации договора</Name>
-  </ForContractRegister>
-  <OnContractRegister>
-   <Name>На регистрации договора</Name>
-  </OnContractRegister>
-  <ForRegister>
-   <Name>Для регистрации</Name>
-  </ForRegister>
-  <OnRegister>
-   <Name>На регистрации</Name>
-  </OnRegister>
-  <OnDelegating>
-   <Name>На делегировании</Name>
-  </OnDelegating>
-  <Active>
-   <Name>Активен</Name>
-  </Active>
-  <ForProlong>
-   <Name>Для продления</Name>
-  </ForProlong>
-  <OnProlong>
-   <Name>На продлении</Name>
-  </OnProlong>
-  <ForNsChange>
-   <Name>Для изменения именных серверов</Name>
-  </ForNsChange>
-  <OnNsChange>
-   <Name>На изменении именных серверов</Name>
-  </OnNsChange>
-  <Suspended>
-   <Name>Заблокирован</Name>
-  </Suspended>
-  <ForTransfer>
-   <Name>Для переноса</Name>
-  </ForTransfer>
-  <OnTransfer>
-   <Name>На переносе</Name>
-  </OnTransfer>
-  <Deleted>
-   <Name>Удален</Name>
-  </Deleted>
- </DomainOrders>
- <!-- IP addresses -->
- <ExtraIPOrders>
-  <Waiting>
-   <Name>Ожидание оплаты</Name>
-  </Waiting>
-  <OnCreate>
-   <Name>На создании</Name>
-  </OnCreate>
-  <Active>
-   <Name>Активен</Name>
-  </Active>
-  <Deleted>
-   <Name>Удален</Name>
-  </Deleted>
- </ExtraIPOrders>
- <!-- ISPsystem software -->
- <ISPswOrders>
-  <Waiting>
-   <Name>Ожидание оплаты</Name>
-  </Waiting>
-  <OnCreate>
-   <Name>На создании</Name>
-  </OnCreate>
-  <Active>
-   <Name>Активен</Name>
-  </Active>
-  <SchemeChange>
-   <Name>На смене тарифа</Name>
-  </SchemeChange>
-  <Suspended>
-   <Name>Заблокирован</Name>
-  </Suspended>
-  <Deleted>
-   <Name>Удален</Name>
-  </Deleted>
- </ISPswOrders>
- <!-- лицензии в биллинге ISPsystems -->
- <ISPswLicenses>
-  <Waiting>
-   <Name>Ожидание оплаты</Name>
-   <status>1</status>
-  </Waiting>
-  <OnCreate>
-   <Name>На создании</Name>
-   <status>4</status>
-  </OnCreate>
-  <Active>
-   <Name>Активна</Name>
-   <status>2</status>
-  </Active>
-  <Suspended>
-   <Name>Заблокирована</Name>
-   <status>3</status>
-  </Suspended>
-  <Deleted>
-   <Name>Удалена</Name>
-   <status>4</status>
-  </Deleted>
- </ISPswLicenses>
- <!-- *********************************************************************** -->
- <DNSmanagerOrders>
-  <Waiting>
-   <Name>Ожидание оплаты</Name>
-  </Waiting>
-  <OnCreate>
-   <Name>На создании</Name>
-  </OnCreate>
-  <Active>
-   <Name>Активен</Name>
-  </Active>
-  <SchemeChange>
-   <Name>На смене тарифа</Name>
-  </SchemeChange>
-  <Suspended>
-   <Name>Заблокирован</Name>
-  </Suspended>
-  <Deleted>
-   <Name>Удален</Name>
-  </Deleted>
- </DNSmanagerOrders>
-</Statuses>
-<!-- *********************************************************************** -->
-<Interface>
-	<User>
-		<Orders>
-			<Hosting>
-				<IsNoDomain>1</IsNoDomain>
-				<CheckIsNoDomain>0</CheckIsNoDomain>
-				<IsAllowSchemeDecrease>0</IsAllowSchemeDecrease>
-				<SchemeChangePeriod>1</SchemeChangePeriod>
-				<EmailConfirmRequire>0</EmailConfirmRequire>
-				<MobileConfirmRequire>0</MobileConfirmRequire>
-			</Hosting>
+			<DSSuspend>
+				<Name>Отключение арендованого сервера</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</DSSuspend>
+			<!-- ********************************************************************* -->
+			<DSDelete>
+				<Name>Деинсталляция арендованного сервера</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</DSDelete>
+			<!-- ********************************************************************* -->
+			<DSCalculateNumServers>
+				<Name>Пересчёт числа свободных/занятых выделенных серверов</Name>
+				<Params>
+					<Params type="array"/>
+				</Params>
+				<ExecutePeriod>00:10</ExecutePeriod>
+				<IsActive>1</IsActive>
+			</DSCalculateNumServers>
+			<!-- ********************************************************************* -->
+			<!-- ********************************************************************* -->
+			<ExtraIPActive>
+				<Name>Активация заказа выделенного IP адреса</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</ExtraIPActive>
+			<!-- ********************************************************************* -->
+			<!-- ********************************************************************* -->
+			<ExtraIPForDelete>
+				<Name>Заказы на IP адреса для удаления</Name>
+				<Params type="array"/>
+				<IsActive>1</IsActive>
+				<StartHour>1</StartHour>
+				<StartMinutes>15</StartMinutes>
+			</ExtraIPForDelete>
+			<!-- ********************************************************************* -->
+			<ExtraIPCreate>
+				<Name>Подключение выделенного IP адреса</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</ExtraIPCreate>
+			<!-- ********************************************************************* -->
+			<ExtraIPDelete>
+				<Name>Удаление заказа IP адреса</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</ExtraIPDelete>
+			<!-- ********************************************************************* -->
+			<!-- ********************************************************************* -->
+			<!-- ********************************************************************* -->
+			<!-- ********************************************************************* -->
+			<ISPswForDelete>
+				<Name>Заказы на ПО ISPsystem для удаления</Name>
+				<Params type="array"/>
+				<IsActive>1</IsActive>
+				<StartHour>1</StartHour>
+				<StartMinutes>50</StartMinutes>
+				<DeleteTimeout>20</DeleteTimeout>
+			</ISPswForDelete>
+			<!-- ********************************************************************* -->
+			<ISPswSchemeChange>
+				<Name>Смена тарифного плана</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+					<ISPswSchemeID>Идентификатор тарифа</ISPswSchemeID>
+				</Params>
+				<IsActive>1</IsActive>
+			</ISPswSchemeChange>
+			<!-- ********************************************************************* -->
+			<ISPswCreate>
+				<Name>Покупка ПО ISPsystem</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</ISPswCreate>
+			<!-- ********************************************************************* -->
+			<ISPswActive>
+				<Name>Активация заказа ПО ISPsystem</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</ISPswActive>
+			<!-- ********************************************************************* -->
+			<ISPswSuspend>
+				<Name>Блокировка заказа ПО ISPsystem</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</ISPswSuspend>
+			<!-- ********************************************************************* -->
+			<ISPswDelete>
+				<Name>Удаление заказа ПО ISPsystem</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</ISPswDelete>
+			<!-- ********************************************************************* -->
+			<!-- ********************************************************************* -->
+			<EmailBoxesNotifies>
+				<Name>Уведомления об окончании квоты почтовых ящиков</Name>
+				<Params type="array"/>
+				<IsActive>1</IsActive>
+			</EmailBoxesNotifies>
+			<!-- ********************************************************************* -->
+			<ServersUpTime>
+				<Name>Мониторинг серверов</Name>
+				<Params type="array"/>
+				<IsActive>1</IsActive>
+				<SocketTimeout>5</SocketTimeout>
+				<ExecutePeriod>00:10</ExecutePeriod>
+				<DaysAgregate>1</DaysAgregate>
+			</ServersUpTime>
+			<!-- ********************************************************************* -->
+			<!-- ********************************************************************* -->
+			<GC>
+				<!-- ********************************************************************* -->
+				<ServersCheckUsersSettings>
+					<IsActive>1</IsActive>
+					<ExcludeServerAccounts/>
+				</ServersCheckUsersSettings>
+				<!-- ********************************************************************* -->
+				<UpdateDiskTemplatesSettings>
+					<IsActive>1</IsActive>
+				</UpdateDiskTemplatesSettings>
+				<!-- ********************************************************************* -->
+				<DiskUsageNotifiesSettings>
+					<IsActive>1</IsActive>
+					<IsNotify>1</IsNotify>
+					<DiskUsageNotifiesPercent>90</DiskUsageNotifiesPercent>
+					<IsEventForNoLimits>1</IsEventForNoLimits>
+				</DiskUsageNotifiesSettings>
+				<!-- ********************************************************************* -->
+				<EmailBoxesNotifiesSettings>
+					<IsActive>1</IsActive>
+					<EmailBoxesNotifiesPercent>80</EmailBoxesNotifiesPercent>
+				</EmailBoxesNotifiesSettings>
+				<!-- ********************************************************************* -->
+				<ISPswCheckLicensesSettings>
+					<IsActive>1</IsActive>
+				</ISPswCheckLicensesSettings>
+				<!-- ********************************************************************* -->
+				<DomainCheckPriceListSettings>
+					<IsActive>1</IsActive>
+					<IsEvent>1</IsEvent>
+					<IsDomainSchemeCreate>0</IsDomainSchemeCreate>
+					<DomainUpdatePriceUp>1</DomainUpdatePriceUp>
+					<DomainUpdatePriceLow>0</DomainUpdatePriceLow>
+					<DomainMinMarginPercent>8</DomainMinMarginPercent>
+					<DomainMinMarginSumm>50</DomainMinMarginSumm>
+					<DomainPriceDeviationPercent>4</DomainPriceDeviationPercent>
+					<DomainPriceDeviationSumm>25</DomainPriceDeviationSumm>
+				</DomainCheckPriceListSettings>
+				<!-- ********************************************************************* -->
+				<DomainSchemeCheckWhoIsDatabaseSettings>
+					<IsActive>1</IsActive>
+					<IsEvent>1</IsEvent>
+				</DomainSchemeCheckWhoIsDatabaseSettings>
+				<!-- ********************************************************************* -->
+				<UpTimeAgregateSettings>
+					<IsActive>1</IsActive>
+				</UpTimeAgregateSettings>
+				<!-- ********************************************************************* -->
+				<CheckOrphanedDomainOwners>
+					<IsActive>1</IsActive>
+					<Limit>3</Limit>
+					<DayOfWeek>1</DayOfWeek>
+					<SendToGroupIDs>3100000</SendToGroupIDs>
+				</CheckOrphanedDomainOwners>
+				<!-- ********************************************************************* -->
+				<!-- задачи -->
+				<DailyTasks>
+					<EraseDeletedOrders>Удаление заказов в статусе Удален</EraseDeletedOrders>
+					<CheckBalance>Проверка балланса регистраторов, поставщиков</CheckBalance>
+					<ISPswCheckLicenses>Синхронизация лицензий с ISPsystem</ISPswCheckLicenses>
+					<ServersCheckUsers>Синхронизация аккаунтов биллинга и серверов</ServersCheckUsers>
+					<UpdateDiskTemplates>Обновление шаблонов дисков на VPS</UpdateDiskTemplates>
+					<DiskUsageNotifies>Уведомление о заканчивающемся месте на хостинге</DiskUsageNotifies>
+					<EmailBoxesNotifies>Уведомление o заканчивающейся квоте почтовых ящиков</EmailBoxesNotifies>
+					<DomainAutoProlongation>Автопродление истекающих доменов</DomainAutoProlongation>
+					<SetSuspendExpiredDomain>Блокировка просроченных доменов</SetSuspendExpiredDomain>
+					<DomainPathRegisterNotify>Уведомления о доменах с неопределёнными владельцами</DomainPathRegisterNotify>
+					<DeleteDomainForTransfer>Удаление доменов в статусе "Для переноса"</DeleteDomainForTransfer>
+					<DomainFindOdd>Поиск доменов отсутствующих в биллинге/у регистратора</DomainFindOdd>
+					<DomainCheckPriceList>Проверка цен на домены у вышестоящих регистраторов</DomainCheckPriceList>
+					<DomainSchemeCheckWhoIsDatabase>Проверка тарифов на домены, на предмет нахождения в базе WhoIs</DomainSchemeCheckWhoIsDatabase>
+					<UpTimeAgregate>Агрегация стастистики мониторинга серверов</UpTimeAgregate>
+					<CheckOrphanedDomainOwners>Проверка владельцев доменных имён</CheckOrphanedDomainOwners>
+					<ExtraIPCheckOnCreate>Проверка зависших созданий IP адресов</ExtraIPCheckOnCreate>
+				</DailyTasks>
+				<!-- ********************************************************************* -->
+			</GC>
+			<!-- ********************************************************************* -->
+			<DNSmanagerForDelete>
+				<Name>Заказы на вторичный DNS для удаления</Name>
+				<Params type="array"/>
+				<ExecuteTime>1:10</ExecuteTime>
+				<IsActive>1</IsActive>
+				<DNSmanagerDeleteTimeout>20</DNSmanagerDeleteTimeout>
+			</DNSmanagerForDelete>
+			<!-- ********************************************************************* -->
+			<DNSmanagerSchemeChange>
+				<Name>Смена тарифного плана</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+					<DNSmanagerSchemeID>Идентификатор тарифа</DNSmanagerSchemeID>
+				</Params>
+				<IsActive>1</IsActive>
+			</DNSmanagerSchemeChange>
+			<!-- ********************************************************************* -->
+			<DNSmanagerCreate>
+				<Name>Создание аккаунта на вторичный DNS</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</DNSmanagerCreate>
+			<!-- ********************************************************************* -->
+			<DNSmanagerActive>
+				<Name>Активация заказа вторичного DNS</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</DNSmanagerActive>
+			<!-- ********************************************************************* -->
+			<DNSmanagerSuspend>
+				<Name>Блокировка заказа вторичного DNS</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</DNSmanagerSuspend>
+			<!-- ********************************************************************* -->
+			<DNSmanagerDelete>
+				<Name>Удаление заказа вторичного DNS</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</DNSmanagerDelete>
 			<!-- *********************************************************************** -->
-			<Domain>
-				<Transfer>
-					<IsSelectRegistrator>0</IsSelectRegistrator>
-				</Transfer>
+			<!-- *********************************************************************** -->
+			<!-- *********************************************************************** -->
+			<ServersAutoBalance>
+				<Name>Автобалансировка серверов</Name>
+				<Params type="array"/>
+				<ExecutePeriod>04:00</ExecutePeriod>
+				<IsActive>1</IsActive>
+				<IsEvent>1</IsEvent>
+			</ServersAutoBalance>
+			<!-- *********************************************************************** -->
+			<Consider>
+				<Name>Учет заказов штатных услуг</Name>
+				<Params type="array"/>
+				<ExecutePeriod>04:00</ExecutePeriod>
+				<ExecuteTime>0</ExecuteTime>
+				<PerIteration>15</PerIteration>
+				<SleepTime>20</SleepTime>
+				<IsActive>1</IsActive>
+			</Consider>
+			<!-- *********************************************************************** -->
+			<NoticeDelete>
+				<Name>Уведомления об удалении заказов штатных услуг</Name>
+				<Params type="array"/>
+				<ExecuteTime>04:25</ExecuteTime>
+				<IsActive>1</IsActive>
+			</NoticeDelete>
+			<!-- *********************************************************************** -->
+			<NoticeSuspend>
+				<Name>Уведомления об окончании заказов штатных услуг</Name>
+				<Params type="array"/>
+				<ExecuteTime>04:20</ExecuteTime>
+				<IsActive>1</IsActive>
+			</NoticeSuspend>
+			<!-- *********************************************************************** -->
+		</Types>
+	</Tasks>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Statuses>
+		<HostingOrders>
+			<Waiting>
+				<Name>Ожидание оплаты</Name>
+			</Waiting>
+			<OnCreate>
+				<Name>На создании</Name>
+			</OnCreate>
+			<Active>
+				<Name>Активен</Name>
+			</Active>
+			<SchemeChange>
+				<Name>На смене тарифа</Name>
+			</SchemeChange>
+			<Suspended>
+				<Name>Заблокирован</Name>
+			</Suspended>
+			<Deleted>
+				<Name>Удален</Name>
+			</Deleted>
+		</HostingOrders>
+		<VPSOrders>
+			<Waiting>
+				<Name>Ожидание оплаты</Name>
+			</Waiting>
+			<OnCreate>
+				<Name>На создании</Name>
+			</OnCreate>
+			<Active>
+				<Name>Активен</Name>
+			</Active>
+			<SchemeChange>
+				<Name>На смене тарифа</Name>
+			</SchemeChange>
+			<Suspended>
+				<Name>Заблокирован</Name>
+			</Suspended>
+			<Deleted>
+				<Name>Удален</Name>
+			</Deleted>
+		</VPSOrders>
+		<DSOrders>
+			<Waiting>
+				<Name>Ожидание оплаты</Name>
+			</Waiting>
+			<OnCreate>
+				<Name>Установка сервера</Name>
+			</OnCreate>
+			<Active>
+				<Name>Активен</Name>
+			</Active>
+			<Suspended>
+				<Name>Сервер выключен</Name>
+			</Suspended>
+			<Deleted>
+				<Name>Сервер удалён</Name>
+			</Deleted>
+		</DSOrders>
+		<DomainOrders>
+			<Waiting>
+				<Name>Ожидание оплаты</Name>
+			</Waiting>
+			<ClaimForRegister>
+				<Name>Заявка на регистрацию</Name>
+			</ClaimForRegister>
+			<ForContractRegister>
+				<Name>Для регистрации договора</Name>
+			</ForContractRegister>
+			<OnContractRegister>
+				<Name>На регистрации договора</Name>
+			</OnContractRegister>
+			<ForRegister>
+				<Name>Для регистрации</Name>
+			</ForRegister>
+			<OnRegister>
+				<Name>На регистрации</Name>
+			</OnRegister>
+			<OnDelegating>
+				<Name>На делегировании</Name>
+			</OnDelegating>
+			<Active>
+				<Name>Активен</Name>
+			</Active>
+			<ForProlong>
+				<Name>Для продления</Name>
+			</ForProlong>
+			<OnProlong>
+				<Name>На продлении</Name>
+			</OnProlong>
+			<ForNsChange>
+				<Name>Для изменения именных серверов</Name>
+			</ForNsChange>
+			<OnNsChange>
+				<Name>На изменении именных серверов</Name>
+			</OnNsChange>
+			<Suspended>
+				<Name>Заблокирован</Name>
+			</Suspended>
+			<ForTransfer>
+				<Name>Для переноса</Name>
+			</ForTransfer>
+			<OnTransfer>
+				<Name>На переносе</Name>
+			</OnTransfer>
+			<Deleted>
+				<Name>Удален</Name>
+			</Deleted>
+		</DomainOrders>
+		<!-- IP addresses -->
+		<ExtraIPOrders>
+			<Waiting>
+				<Name>Ожидание оплаты</Name>
+			</Waiting>
+			<OnCreate>
+				<Name>На создании</Name>
+			</OnCreate>
+			<Active>
+				<Name>Активен</Name>
+			</Active>
+			<Deleted>
+				<Name>Удален</Name>
+			</Deleted>
+		</ExtraIPOrders>
+		<!-- ISPsystem software -->
+		<ISPswOrders>
+			<Waiting>
+				<Name>Ожидание оплаты</Name>
+			</Waiting>
+			<OnCreate>
+				<Name>На создании</Name>
+			</OnCreate>
+			<Active>
+				<Name>Активен</Name>
+			</Active>
+			<SchemeChange>
+				<Name>На смене тарифа</Name>
+			</SchemeChange>
+			<Suspended>
+				<Name>Заблокирован</Name>
+			</Suspended>
+			<Deleted>
+				<Name>Удален</Name>
+			</Deleted>
+		</ISPswOrders>
+		<!-- лицензии в биллинге ISPsystems -->
+		<ISPswLicenses>
+			<Waiting>
+				<Name>Ожидание оплаты</Name>
+				<status>1</status>
+			</Waiting>
+			<OnCreate>
+				<Name>На создании</Name>
+				<status>4</status>
+			</OnCreate>
+			<Active>
+				<Name>Активна</Name>
+				<status>2</status>
+			</Active>
+			<Suspended>
+				<Name>Заблокирована</Name>
+				<status>3</status>
+			</Suspended>
+			<Deleted>
+				<Name>Удалена</Name>
+				<status>4</status>
+			</Deleted>
+		</ISPswLicenses>
+		<!-- *********************************************************************** -->
+		<DNSmanagerOrders>
+			<Waiting>
+				<Name>Ожидание оплаты</Name>
+			</Waiting>
+			<OnCreate>
+				<Name>На создании</Name>
+			</OnCreate>
+			<Active>
+				<Name>Активен</Name>
+			</Active>
+			<SchemeChange>
+				<Name>На смене тарифа</Name>
+			</SchemeChange>
+			<Suspended>
+				<Name>Заблокирован</Name>
+			</Suspended>
+			<Deleted>
+				<Name>Удален</Name>
+			</Deleted>
+		</DNSmanagerOrders>
+	</Statuses>
+	<!-- *********************************************************************** -->
+	<Interface>
+		<User>
+			<Orders>
+				<Hosting>
+					<IsNoDomain>1</IsNoDomain>
+					<CheckIsNoDomain>0</CheckIsNoDomain>
+					<IsAllowSchemeDecrease>0</IsAllowSchemeDecrease>
+					<SchemeChangePeriod>1</SchemeChangePeriod>
+					<EmailConfirmRequire>0</EmailConfirmRequire>
+					<MobileConfirmRequire>0</MobileConfirmRequire>
+				</Hosting>
 				<!-- *********************************************************************** -->
-				<DomainWhoIs>
-					<IsSchemesOnly>1</IsSchemesOnly>
-					<CacheTime>1800</CacheTime>
-				</DomainWhoIs>
-				<EmailConfirmRequire>0</EmailConfirmRequire>
-				<MobileConfirmRequire>0</MobileConfirmRequire>
-			</Domain>
+				<Domain>
+					<Transfer>
+						<IsSelectRegistrator>0</IsSelectRegistrator>
+					</Transfer>
+					<!-- *********************************************************************** -->
+					<DomainWhoIs>
+						<IsSchemesOnly>1</IsSchemesOnly>
+						<CacheTime>1800</CacheTime>
+					</DomainWhoIs>
+					<EmailConfirmRequire>0</EmailConfirmRequire>
+					<MobileConfirmRequire>0</MobileConfirmRequire>
+				</Domain>
+				<!-- *********************************************************************** -->
+				<VPS>
+					<EmailConfirmRequire>1</EmailConfirmRequire>
+					<MobileConfirmRequire>0</MobileConfirmRequire>
+				</VPS>
+				<!-- *********************************************************************** -->
+				<DS>
+					<EmailConfirmRequire>0</EmailConfirmRequire>
+					<MobileConfirmRequire>0</MobileConfirmRequire>
+				</DS>
+				<!-- *********************************************************************** -->
+				<ExtraIP>
+					<EmailConfirmRequire>0</EmailConfirmRequire>
+					<MobileConfirmRequire>0</MobileConfirmRequire>
+				</ExtraIP>
+				<!-- *********************************************************************** -->
+				<ISPsw>
+					<EmailConfirmRequire>0</EmailConfirmRequire>
+					<MobileConfirmRequire>0</MobileConfirmRequire>
+				</ISPsw>
+				<!-- *********************************************************************** -->
+				<DNSmanager>
+					<EmailConfirmRequire>0</EmailConfirmRequire>
+					<MobileConfirmRequire>0</MobileConfirmRequire>
+				</DNSmanager>
+			</Orders>
 			<!-- *********************************************************************** -->
-			<VPS>
-				<EmailConfirmRequire>1</EmailConfirmRequire>
-				<MobileConfirmRequire>0</MobileConfirmRequire>
-			</VPS>
+			<Notes>
+				<NoticeOrders>
+					<OrdersExpiring>1</OrdersExpiring>
+					<OrdersSuspended>1</OrdersSuspended>
+					<OrdersWaiting>1</OrdersWaiting>
+					<OrdersClaimForRegister>1</OrdersClaimForRegister>
+					<OrdersForTransfer>1</OrdersForTransfer>
+					<OrdersOnTransfer>1</OrdersOnTransfer>
+				</NoticeOrders>
+			</Notes>
 			<!-- *********************************************************************** -->
-			<DS>
-				<EmailConfirmRequire>0</EmailConfirmRequire>
-				<MobileConfirmRequire>0</MobileConfirmRequire>
-			</DS>
-			<!-- *********************************************************************** -->
-			<ExtraIP>
-				<EmailConfirmRequire>0</EmailConfirmRequire>
-				<MobileConfirmRequire>0</MobileConfirmRequire>
-			</ExtraIP>
-			<!-- *********************************************************************** -->
-			<ISPsw>
-				<EmailConfirmRequire>0</EmailConfirmRequire>
-				<MobileConfirmRequire>0</MobileConfirmRequire>
-			</ISPsw>
-			<!-- *********************************************************************** -->
-			<DNSmanager>
-				<EmailConfirmRequire>0</EmailConfirmRequire>
-				<MobileConfirmRequire>0</MobileConfirmRequire>
-			</DNSmanager>
-		</Orders>
+		</User>
 		<!-- *********************************************************************** -->
-		<Notes>
-			<NoticeOrders>
-				<OrdersExpiring>1</OrdersExpiring>
-				<OrdersSuspended>1</OrdersSuspended>
-				<OrdersWaiting>1</OrdersWaiting>
-				<OrdersClaimForRegister>1</OrdersClaimForRegister>
-				<OrdersForTransfer>1</OrdersForTransfer>
-				<OrdersOnTransfer>1</OrdersOnTransfer>
-			</NoticeOrders>
-		</Notes>
-		<!-- *********************************************************************** -->
-	</User>
+		<Administrator>
+			<Servers>
+				<PasswordShow>0</PasswordShow>
+				<AllowManage>0</AllowManage>
+			</Servers>
+		</Administrator>
+	</Interface>
 	<!-- *********************************************************************** -->
-	<Administrator>
-		<Servers>
-			<PasswordShow>0</PasswordShow>
-			<AllowManage>0</AllowManage>
-		</Servers>
-	</Administrator>
-</Interface>
-<!-- *********************************************************************** -->
-<Other>
+	<Other>
+		<!-- *********************************************************************** -->
+		<Libs>
+			<WhoIs>
+				<UseSystemApplication>0</UseSystemApplication>
+			</WhoIs>
+		</Libs>
+		<!-- *********************************************************************** -->
+		<ISPswSettingURL>
+			<!-- *********************************************************************** -->
+			<xset-up-param>
+				<IsActive>1</IsActive>
+				<LAN>192.168.0.0/16</LAN>
+			</xset-up-param>
+			<!-- *********************************************************************** -->
+			<dnsparam>
+				<IsActive>1</IsActive>
+				<dnsparam-email>root@isp.su</dnsparam-email>
+				<dnsparam-mx>mail mail</dnsparam-mx>
+				<dnsparam-ns>dns0.isp.su. dns1.isp.su.</dnsparam-ns>
+				<dnsparam-nsips/>
+				<dnsparam-subdom>www ftp mail smtp pop imap4</dnsparam-subdom>
+			</dnsparam>
+			<!-- *********************************************************************** -->
+			<slaveserver-edit>
+				<IsActive>1</IsActive>
+				<UseForVPS>1</UseForVPS>
+				<UseForDS>1</UseForDS>
+			</slaveserver-edit>
+			<!-- *********************************************************************** -->
+		</ISPswSettingURL>
+		<!-- *********************************************************************** -->
+	</Other>
 	<!-- *********************************************************************** -->
-	<Libs>
-		<WhoIs>
-			<UseSystemApplication>0</UseSystemApplication>
-		</WhoIs>
-	</Libs>
-	<!-- *********************************************************************** -->
-	<ISPswSettingURL>
-		<!-- *********************************************************************** -->
-		<xset-up-param>
-			<IsActive>1</IsActive>
-			<LAN>192.168.0.0/16</LAN>
-		</xset-up-param>
-		<!-- *********************************************************************** -->
-		<dnsparam>
-			<IsActive>1</IsActive>
-			<dnsparam-email>root@isp.su</dnsparam-email>
-			<dnsparam-mx>mail mail</dnsparam-mx>
-			<dnsparam-ns>dns0.isp.su. dns1.isp.su.</dnsparam-ns>
-			<dnsparam-nsips></dnsparam-nsips>
-			<dnsparam-subdom>www ftp mail smtp pop imap4</dnsparam-subdom>
-		</dnsparam>
-		<!-- *********************************************************************** -->
-		<slaveserver-edit>
-			<IsActive>1</IsActive>
-			<UseForVPS>1</UseForVPS>
-			<UseForDS>1</UseForDS>
-		</slaveserver-edit>
-		<!-- *********************************************************************** -->
-	</ISPswSettingURL>
-	<!-- *********************************************************************** -->
-</Other>
-<!-- *********************************************************************** -->
 </XML>
