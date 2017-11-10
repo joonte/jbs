@@ -19,14 +19,14 @@
 	<Name>/^[А-ЯЁ]{1}[а-яё\-\s]{1,50}$/u</Name>
 	<Lastname>/^[А-ЯЁ]{1}[а-яё\-\s]{1,50}$/u</Lastname>
 	<BornDate>/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/u</BornDate>
-	<Country>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Country>
+	<Country>/^[A-ZА-ЯёЁа-я\-\s]{2,100}$/u</Country>
 	<PasportLine>/^[0-9a-zA-Zа-яА-ЯёЁ\-]{1,10}$/u</PasportLine>
 	<PasportNum>/^[0-9a-zA-Z]{1,10}$/u</PasportNum>
 	<PasportWhom>/^.{5,250}$/u</PasportWhom>
 	<PasportDate>/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/u</PasportDate>
-	<State>/^[А-ЯёЁа-я\.\-\s\)\(]{1,60}$/u</State>
-	<City>/^[А-ЯёЁа-я0-9\.\-\s]{1,100}$/u</City>
-	<District>/^[А-ЯёЁа-я\-\s]{1,100}$/u</District>
+	<State>/^[А-ЯёЁа-я\.\-\s\)\(]{2,60}$/u</State>
+	<City>/^[А-ЯёЁа-я0-9\.\-\s]{2,100}$/u</City>
+	<District>/^[А-ЯёЁа-я\-\s]{2,100}$/u</District>
 	<Index>/^[A-Za-z0-9\s]{3,10}$/u</Index>
 	<Type>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Type>
 	<Address>/^[^\\]{1,150}$/u</Address>
@@ -51,6 +51,7 @@
 		/с+у+(к+а+|ч+а+|к+и+)/u
 		/п+и+д+(а+|о+р+)/u
 		/х+у+(е+|э+|ё+|й+|я+)/u
+		/у+б+л+ю+д+/u
 		/ч+м+(о+|ы+)/u
 		/п+р+и+д+у+р+о+/u
 		/д+а+у+н+/u
