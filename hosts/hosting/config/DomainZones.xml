@@ -88,7 +88,7 @@
 		<Available>No\smatch\sfor</Available>
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>2</MinChars>
-		<Regular>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</Regular>
+		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
 		<ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Default</Registrar>
@@ -312,7 +312,7 @@
 		<Available>No\smatch\sfor</Available>
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>3</MinChars>
-		<Regular>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</Regular>
+		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
 		<ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Default</Registrar>
@@ -360,7 +360,7 @@
 		<Available>NOT\sFOUND</Available>
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>2</MinChars>
-		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
+		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
 		<ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
 		<NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Default</Registrar>
@@ -396,7 +396,7 @@
 		<Available>NOT\sFOUND</Available>
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>3</MinChars>
-		<Regular>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</Regular>
+		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
 		<ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
 		<NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Default</Registrar>
@@ -516,7 +516,7 @@
 		<Available>No\sentries\sfound</Available>
 		<NotAvailable>stop-list:</NotAvailable>
 		<MinChars>3</MinChars>
-		<Regular>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</Regular>
+		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
 		<ExpirationDate>paid-till:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>nserver:\s+([a-z0-9\.\-]{2,})</NsName>
 		<Registrar>registrar:\s+([\w\-]{2,})</Registrar>
@@ -528,7 +528,7 @@
 		<Available>No\smatch\sfor</Available>
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>2</MinChars>
-		<Regular>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</Regular>
+		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
 		<ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
 		<NsName>Name\sServer:\s([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Default</Registrar>
@@ -564,7 +564,7 @@
 		<Available>No\smatch\sfor</Available>
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>2</MinChars>
-		<Regular>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</Regular>
+		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
 		<ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
 		<NsName>Name\sServer:\s([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Default</Registrar>
@@ -587,7 +587,7 @@
 		<Name>name</Name>
 		<Available>No\smatch</Available>
 		<MinChars>2</MinChars>
-		<Regular>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</Regular>
+		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
 		<NotAvailable>Not\savailable\sfor</NotAvailable>
 		<ExpirationDate/>
 		<NsName/>
@@ -732,7 +732,7 @@
 		<Available>NOT\sFOUND</Available>
 		<NotAvailable>name\sis\sreserved</NotAvailable>
 		<MinChars>2</MinChars>
-		<Regular>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</Regular>
+		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
 		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
 		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
 		<Registrar>Default</Registrar>
@@ -978,7 +978,7 @@
 		<Available>DOMAIN\sNOT\sFOUND</Available>
 		<NotAvailable>name\sis\sreserved</NotAvailable>
 		<MinChars>2</MinChars>
-		<Regular>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</Regular>
+		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
 		<ExpirationDate>Registry\sExpiry\sDate:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
 		<Registrar>Default</Registrar>
@@ -1002,7 +1002,7 @@
 		<Available>DOMAIN\sNOT\sFOUND</Available>
 		<NotAvailable>name\sis\sreserved</NotAvailable>
 		<MinChars>2</MinChars>
-		<Regular>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</Regular>
+		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
 		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
 		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
 		<Registrar>Default</Registrar>
