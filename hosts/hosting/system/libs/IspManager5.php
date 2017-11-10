@@ -811,7 +811,7 @@ function IspManager5_Password_Change($Settings,$Login,$Password,$Params){
 	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'usrparam','su'=>$Login,'sok'=>'ok','atype'=>'atany','passwd'=>$Password,'confirm'=>$Password/*,'email'=>$Params['Email']*/,'experience'=>'expert','setgeoip'=>'off','secureip'=>'off','vk_status'=>'off','fb_status'=>'off','gl_status'=>'off','disable_totp'=>'on');
+	$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'usrparam','su'=>$Login,'sok'=>'ok','atype'=>'atany','passwd'=>$Password,'confirm'=>$Password,'email'=>$Params['Email'],'experience'=>'expert','setgeoip'=>'off','secureip'=>'off','vk_status'=>'off','fb_status'=>'off','gl_status'=>'off','disable_totp'=>'on');
 	#-------------------------------------------------------------------------------
 	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
