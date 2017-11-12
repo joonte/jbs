@@ -633,8 +633,10 @@
 				</Send>
 				<Comp>SberBank</Comp>
 				<Cpp>/Merchant/SberBank?redirect=1</Cpp>
+				<TestModeCpp>/Merchant/SberBank?redirect=1</TestModeCpp>
 				<Login/>
 				<Password/>
+				<TestMode>1</TestMode>
 				<ContractsTypes>
 					<Default>1</Default>
 					<Natural>1</Natural>
