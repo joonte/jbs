@@ -636,6 +636,7 @@
 				<TestModeCpp>/Merchant/SberBank?redirect=1</TestModeCpp>
 				<Login/>
 				<Password/>
+				<Hash/>
 				<TestMode>1</TestMode>
 				<ContractsTypes>
 					<Default>1</Default>
