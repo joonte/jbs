@@ -49,7 +49,7 @@ foreach($Services as $Service){
 	#	continue;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Columns = Array('*','(SELECT `Balance` FROM `Contracts` WHERE `HostingOrdersOwners`.`ContractID` = `ID`) as `Balance`');
+	$Columns = Array('*',SPrintF('(SELECT `Balance` FROM `Contracts` WHERE `%sOrdersOwners`.`ContractID` = `ID`) as `Balance`',$Service['Code']));
 	#-------------------------------------------------------------------------------
 	$Where = "`DaysRemainded` IN (1,5,10,15) AND `StatusID` = 'Active'";
 	#-------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ foreach($Services as $Service){
 	foreach($Orders as $Order){
 		#-------------------------------------------------------------------------------
 		$Balance = Comp_Load('Formats/Currency',$Order['Balance']);
-		if(Is_Error($Summ))
+		if(Is_Error($Balance))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		$Order['Balance'] = $Balance;
