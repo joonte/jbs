@@ -7,6 +7,7 @@
 
 Уведомляем Вас о том, что оканчивается срок действия Вашего заказа №{$ISPswOrder.OrderID|string_format:"%05u"} на ПО ISPsystem.
 До окончания заказа {$ISPswOrder.DaysRemainded|default:'$ISPswOrder.DaysRemainded'} дн.
+Баланс договора: {$ISPswOrder.Balance|default:'$ISPswOrder.Balance'}
 IP адрес заказа: {$ISPswOrder.IP|default:'$ISPswOrder.IP'}.
 
 {if !$MethodSettings.CutSign}

@@ -7,6 +7,7 @@
 
 Уведомляем Вас о том, что оканчивается срок аренды выделенного сервера, заказ №{$DSOrder.OrderID|string_format:"%05u"}.
 До окончания заказа {$DSOrder.DaysRemainded|default:'$DSOrder.DaysRemainded'} дн.
+Баланс договора: {$DSOrder.Balance|default:'$DSOrder.Balance'}
 IP адрес: {$DSOrder.IP|default:'$DSOrder.IP'}
 
 {if !$MethodSettings.CutSign}
