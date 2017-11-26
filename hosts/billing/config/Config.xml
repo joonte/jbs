@@ -1263,6 +1263,7 @@
 				<!-- ********************************************************************* -->
 				<!-- обработка неоплаченных счетов -->
 				<Invoices>
+					<IsActive>1</IsActive>
 					<DaysBeforeNotice>7</DaysBeforeNotice>
 					<DaysBeforeDeleted>14</DaysBeforeDeleted>
 					<DaysBeforeErase>90</DaysBeforeErase>
