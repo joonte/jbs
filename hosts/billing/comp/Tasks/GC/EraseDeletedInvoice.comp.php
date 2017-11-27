@@ -133,11 +133,16 @@ if(File_Exists($SberBankFileDB)){
 	#-------------------------------------------------------------------------------
 	foreach(Array_Keys($Out) as $InvoiceID){
 		#-------------------------------------------------------------------------------
-		$IsWrite = IO_Write($SberBankFileDB,SPrintF("%s\t%s\n",$InvoiceID,$Out[$InvoiceID]));
+		$IsWrite = IO_Write($SberBankFileDB,SPrintF("%s\t\t%s\n",$InvoiceID,$Out[$InvoiceID]));
 		if(Is_Error($IsWrite))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 	}
+	#-------------------------------------------------------------------------------
+	$IsWrite = IO_Write($SberBankFileDB,SPrintF("#end of saved codes\n"));
+	if(Is_Error($IsWrite))
+		return ERROR | @Trigger_Error(500);
+
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
