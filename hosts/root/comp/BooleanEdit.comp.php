@@ -18,7 +18,7 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Data = SPrintF('{TableID:\'%s\', ColumnID:\'%s\', RowID:\'%u\'}',$TableID,$ColumnID,$RowID);
 #-------------------------------------------------------------------------------
-$Func = SPrintF('jQuery.post("/Administrator/API/BooleanEdit",%s); TableSuperReload(); return false;',$Data);
+$Func = SPrintF('jQuery.post("/Administrator/API/BooleanEdit",%s); setTimeout("TableSuperReload();",100); return false;',$Data);
 #-------------------------------------------------------------------------------
 $A = new Tag('A',Array('href'=>'#ChangeValue','onclick' => $Func),$Comp);
 #-------------------------------------------------------------------------------
