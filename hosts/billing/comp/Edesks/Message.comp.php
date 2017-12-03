@@ -336,9 +336,18 @@ if($GLOBALS['__USER']['IsAdmin'] && $IP != '127.0.0.127' && $IP != '127.0.0.1'){
 			if($GeoIP['city'])
 				$City = $GeoIP['city'];
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF('@geoip_record_by_name = %s',print_r(@geoip_record_by_name($IP),true)));
+		#Debug(SPrintF("[comp/Edesks/Message]: @geoip_record_by_name = %s",print_r(@geoip_record_by_name($IP),true)));
+		#-------------------------------------------------------------------------------
 	}
-	#Debug(SPrintF('@City = %s',print_r(@$City,true)));
+	#-------------------------------------------------------------------------------
+	#Debug(SPrintF("[comp/Edesks/Message]: @City = %s",print_r(@$City,true)));
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	# города бывают не всегда латиницей. пример - Орёл
+	if(IsSet($City))
+		$City = @Iconv('','ISO-8859-1//IGNORE',$City);
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF("[comp/Edesks/Message]: City = %s",@$City));
 	#-------------------------------------------------------------------------------
 	$IPInfo = SPrintF('IP: %s %s %s',$IP,(IsSet($Country))?SPrintF(' / %s',$Country):'GeoIP not avalible',(IsSet($City))?SPrintF(' / %s',$City):'');
 	#-------------------------------------------------------------------------------
