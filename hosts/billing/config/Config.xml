@@ -1797,6 +1797,13 @@
 				<Length>7</Length>
 			</Change>
 		</PasswordChecker>
+		<!-- *********************************************************************** -->
+		<PasswordBruteForce>
+			<IsActive>1</IsActive>
+			<BruteForceMaxAttempts>10</BruteForceMaxAttempts>
+			<BruteForcePeriod>600</BruteForcePeriod>
+		</PasswordBruteForce>
+		<!-- *********************************************************************** -->
 	</Other>
 	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
