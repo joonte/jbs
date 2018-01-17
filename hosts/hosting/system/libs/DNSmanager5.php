@@ -541,7 +541,7 @@ function DNSmanager5_Password_Change($Settings,$Login,$Password,$Params){
 			'su'		=> $Login,
 			'sok'		=> 'ok',
 			'atype'		=> 'atany',         # разрешаем доступ к панели с любого IP
-			'password'	=> $Password,
+			'passwd'	=> $Password,
 			'confirm'	=> $Password,
 			);
 	#-------------------------------------------------------------------------------
