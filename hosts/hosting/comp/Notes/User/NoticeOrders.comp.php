@@ -515,6 +515,16 @@ case 'array':
 					#-------------------------------------------------------------------------------
 					$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.ForTransfer.USSR',$Params));
 					#-------------------------------------------------------------------------
+				}elseif(In_Array($DomainOrder['Name'],Array('ru','рф'))){
+					#-------------------------------------------------------------------------
+					$Summ = Comp_Load('Formats/Currency',$DomainOrder['CostTransfer']);
+					if(Is_Error($Summ))
+						return ERROR | @Trigger_Error(500);
+					#------------------------------------------------------------------------------
+					$Params['Summ'] = $Summ;
+					#-------------------------------------------------------------------------------
+					$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.ForTransfer.ru',$Params));
+					#-------------------------------------------------------------------------------
 				}else{
 					#-------------------------------------------------------------------------
 					if(Is_Null($DomainOrder['ProfileID']) && !$DomainOrder['PersonID']){
