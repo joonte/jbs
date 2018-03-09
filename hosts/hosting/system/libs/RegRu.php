@@ -575,8 +575,11 @@ function RegRu_Domain_Transfer($Settings,$DomainName,$DomainZone,$Param){
 			'enduser_ip'	=> '77.73.25.114',
 			'period'	=> '0',
 			);
+	if(IsSet($Param['AuthInfo']))
+		if($Param['AuthInfo'])
+			$Query['authinfo']	= $Param['AuthInfo'];
 	#-------------------------------------------------------------------------------
-	if(In_Array($DomainZone,Array('su'))){
+	if(In_Array($DomainZone,Array('su','ru','рф'))){
 		#-------------------------------------------------------------------------------
 		$Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/transfer");
 		#-------------------------------------------------------------------------------
