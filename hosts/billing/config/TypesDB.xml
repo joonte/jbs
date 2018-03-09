@@ -90,10 +90,6 @@
 	see http://jira.joonte.com/browse/JBS-779 -->
 <IsNoAction>Logic</IsNoAction>
 <!-- *********************************************************************** -->
-<!-- added by lissyara 2015-02-07 in 17:29 MSK
-	see http://jira.joonte.com/browse/JBS-834 -->
-<IsTransfer>Logic</IsTransfer>
-<!-- *********************************************************************** -->
 <IsNoDuplicate>Logic</IsNoDuplicate>
 
 </XML>

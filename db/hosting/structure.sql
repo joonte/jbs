@@ -102,6 +102,7 @@ CREATE TABLE `DomainSchemes` (
   `IsActive` enum('no','yes') default 'no',
   `IsProlong` enum('no','yes') default 'no',
   `IsTransfer` enum('no','yes') default 'no',
+  `IsAutoBalanced` ENUM('yes','no') NOT NULL DEFAULT 'no',
   `CostOrder` decimal(11,2) default '0.00',
   `CostProlong` decimal(11,2) default '0.00',
   `CostTransfer` decimal(11,2) default '0.00',

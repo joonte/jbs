@@ -39,6 +39,7 @@ if($DomainSchemeID){
 				'IsActive'		=> TRUE,
 				'IsTransfer'		=> TRUE,
 				'IsProlong'		=> TRUE,
+				'IsAutoBalanced'	=> FALSE,
 				'CostOrder'		=> 500,
 				'CostProlong'		=> 500,
 				'CostTransfer'		=> 0,
@@ -117,6 +118,16 @@ if($DomainScheme['IsProlong'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsProlong\'); return false;'),'Возможность продления'),$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsAutoBalanced','value'=>'yes'));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if($DomainScheme['IsAutoBalanced'])
+	$Comp->AddAttribs(Array('checked'=>'yes'));
+#-------------------------------------------------------------------------------
+$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsAutoBalanced\'); return false;','prompt'=>'При изменении цены на регистрацию, будет автоматически выбираться регистратор с наименьшей стоимостью доменной зоны. Необходимо проставить галочки для одинаковых зон более чем у одного регистратора. Очень удобно когда случаются какие-то акции. Если юзеры сами выбирают регистратора, то эту галочку не надо ставить'),'АвтоБалансировка тарифа'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Summ',Array('name'=>'CostOrder','value'=>SPrintF('%01.2f',$DomainScheme['CostOrder'])));

@@ -49,6 +49,9 @@
 <!-- HostingSchemes, DomainSchemes -->
 <IsActive>Logic</IsActive>
 <IsProlong>Logic</IsProlong>
+<IsTransfer>Logic</IsTransfer>
+<IsAutoBalanced>Logic</IsAutoBalanced>
+<!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
 <!-- HostingOrders -->
 <Password>Crypt</Password>

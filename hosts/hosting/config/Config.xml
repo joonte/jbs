@@ -978,6 +978,7 @@
 					<IsActive>1</IsActive>
 					<IsEvent>1</IsEvent>
 					<IsDomainSchemeCreate>0</IsDomainSchemeCreate>
+					<IsAutoBalanced>0</IsAutoBalanced>
 					<DomainUpdatePriceUp>1</DomainUpdatePriceUp>
 					<DomainUpdatePriceLow>0</DomainUpdatePriceLow>
 					<DomainMinMarginPercent>8</DomainMinMarginPercent>
