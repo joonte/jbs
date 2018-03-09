@@ -18,7 +18,7 @@ if(!$Settings['IsActive'])
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Where = Array(
-		'`StatusID` != "Closed"',
+		'`StatusID` != "Closed"', '`Flags` != "DenyClose"',
 		SPrintF('`StatusDate` < %u',(Time() - $Settings['CloseEdesksDays'] * 24 * 60 * 60)),
 		SPrintF('`SeenByUser` < %u',(Time() - $Settings['CloseEdesksDays'] * 24 * 60 * 60))
 		);
