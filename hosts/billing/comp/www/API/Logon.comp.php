@@ -108,6 +108,24 @@ if(Time() - $User['EnterDate'] > 86400){
 #-------------------------------------------------------------------------------
 $UserID = $User['ID'];
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# для JBS-1243 - чтобы использовать при заказе с сайта. договор выбираем один, самый последний по дате
+$Contracts = DB_Select('Contracts',Array('ID','Customer'),Array('UNIQ','IsDesc'=>TRUE,'SortOn'=>'StatusDate','Limits'=>Array(0,1),'Where'=>SPrintF("`UserID` = %u AND `TypeID` != 'NaturalPartner'",$UserID)));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Contracts)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	$ContractID = 0;
+	break;
+case 'array':
+	$ContractID = $Contracts['ID'];
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $SessionID = UniqID(SPrintF('%s%s',$IsRemember?'REMEBMER':'SESSION',MD5($UserID)));
 #-------------------------------------------------------------------------------
 $Session = new Session($SessionID);
@@ -145,7 +163,8 @@ if(!$Event)
 CacheManager::add($CacheID,0,IntVal($Settings['BruteForcePeriod']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return Array('Status'=>'Ok','SessionID'=>$SessionID,'User'=>$User,'Home'=>SPrintF('/%s/Home',$User['InterfaceID']));
+#Debug(print_r(Array('Status'=>'Ok','SessionID'=>$SessionID,'User'=>$User,'Home'=>SPrintF('/%s/Home',$User['InterfaceID']),'ContractID'=>$ContractID,'UserID'=>$UserID),true));
+return Array('Status'=>'Ok','SessionID'=>$SessionID,'User'=>$User,'Home'=>SPrintF('/%s/Home',$User['InterfaceID']),'ContractID'=>$ContractID,'UserID'=>$UserID);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
