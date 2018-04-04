@@ -2,6 +2,15 @@
 <!-- @author Alex Keda, for www.host-food.ru -->
 <XML>
 <!-- *********************************************************************** -->
+<Appearance>
+	<Row>
+		<Comp>Colors/Politics</Comp>
+		<Args>
+			<ListElement>%ExpirationDate%</ListElement>
+		</Args>
+	</Row>
+</Appearance>
+<!-- *********************************************************************** -->
 <Source>
 	<TableID>Politics</TableID>
 	<ColumnsIDs>
@@ -15,6 +24,7 @@
 		<ListElement>DaysPay</ListElement>
 		<ListElement>Discont</ListElement>
 		<ListElement>AdminNotice</ListElement>
+		<ListElement>ExpirationDate</ListElement>
 	</ColumnsIDs>
 	<Conditions>
 		<Message>Ценовых политик не обнаружено.</Message>

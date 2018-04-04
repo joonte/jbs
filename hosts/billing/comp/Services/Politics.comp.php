@@ -47,7 +47,8 @@ $Columns = Array(
 		'ToSchemesGroupID',
 		'DaysDiscont',
 		'Discont',
-		'ID'
+		'ID',
+		'ExpirationDate'
 		);
 #-------------------------------------------------------------------------------
 $Politics = DB_Select($UniqID,$Columns,Array('Where'=>$Where,'GroupBy'=>'UniqScheme','SortOn'=>'Discont','IsDesc'=>TRUE));
@@ -61,11 +62,20 @@ case 'exception':
 case 'array':
 	#-----------------------------------------------------------------------
 	foreach($Politics as $Politic){
-		$IsInsert = DB_Insert('Bonuses',Array('UserID'=>$UserID,'ServiceID'=>$Politic['ToServiceID'],'SchemeID'=>$Politic['ToSchemeID'],'SchemesGroupID'=>$Politic['ToSchemesGroupID'],'DaysReserved'=>($Politic['DaysDiscont']?$Politic['DaysDiscont']:$DaysPay),'Discont'=>$Politic['Discont'],'Comment'=>SPrintF('Добавлено политикой #%u, оплата %s',$Politic['ID'],$ServiceInfo)));
-		if(Is_Error($IsInsert))
-			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		# сравниваем дату окончания политики с текущей
+		if($Politic['ExpirationDate'] > Time()){
+			#-------------------------------------------------------------------------------
+			$IsInsert = DB_Insert('Bonuses',Array('UserID'=>$UserID,'ServiceID'=>$Politic['ToServiceID'],'SchemeID'=>$Politic['ToSchemeID'],'SchemesGroupID'=>$Politic['ToSchemesGroupID'],'DaysReserved'=>($Politic['DaysDiscont']?$Politic['DaysDiscont']:$DaysPay),'Discont'=>$Politic['Discont'],'Comment'=>SPrintF('Добавлено политикой #%u, оплата %s',$Politic['ID'],$ServiceInfo)));
+			if(Is_Error($IsInsert))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
 	}
+	#-------------------------------------------------------------------------------
 	break;
+	#-------------------------------------------------------------------------------
 default:
 	return ERROR | @Trigger_Error(101);
 }
