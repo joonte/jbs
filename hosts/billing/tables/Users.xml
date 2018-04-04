@@ -1,221 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
- <!-- *********************************************************************** -->
-<Appearance>
- <Row>
-  <Comp>Colors/Users</Comp>
-  <Args>
-   <ListElement>%OwnerID%</ListElement>
-  </Args>
- </Row>
-</Appearance>
-<!-- *********************************************************************** -->
-<Source>
- <TableID>Users</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>OwnerID</ListElement>
-  <ListElement>RegisterDate</ListElement>
-  <ListElement>Name</ListElement>
-  <ListElement>Email</ListElement>
-  <ListElement>EnterDate</ListElement>
-  <ListElement>EnterIP</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Message>Пользователей не зарегистрировано.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Query>
- <SortOn>RegisterDate</SortOn>
-</Query>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <PatternOut>
-   <Args>
-    <Patterns>
-     <Yesterday>
-      <Name>Зарегистрированные за вчера</Name>
-      <Where>`RegisterDate` &gt; BEGIN_DAY() - 86400</Where>
-     </Yesterday>
-     <!-- ****************************************************************** -->
-     <Today>
-      <Name>Зарегистрированные за сегодня</Name>
-      <Where>`RegisterDate` &gt; BEGIN_DAY()</Where>
-     </Today>
-     <!-- ****************************************************************** -->
-     <Week>
-      <Name>Зарегистрированные за текущую неделю</Name>
-      <Where>`RegisterDate` &gt; BEGIN_WEEK()</Where>
-     </Week>
-     <!-- ****************************************************************** -->
-     <Month>
-      <Name>Зарегистрированные за текущий месяц</Name>
-      <Where>`RegisterDate` &gt; BEGIN_MONTH()</Where>
-     </Month>
-     <!-- ****************************************************************** -->
-     <OnLine>
-      <Name>Кто сейчас в системе</Name>
-      <Where>UNIX_TIMESTAMP() - `EnterDate` &lt; 300</Where>
-     </OnLine>
-     <!-- ****************************************************************** -->
-     <WithPayedInvoices>
-      <Name>С оплаченными счетами</Name>
-      <Where>(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID` = `Users`.`ID` AND `InvoicesOwners`.`IsPosted` = 'yes') &gt; 0</Where>
-     </WithPayedInvoices>
-     <!-- ****************************************************************** -->
-     <Referals>
-      <Name>Рефералов</Name>
-      <Where>`OwnerID` IS NOT NULL</Where>
-     </Referals>
-     <!-- ****************************************************************** -->
-     <NoOrder>
-      <Name>Не осуществившие заказ</Name>
-      <Where>`ID` > 200 AND (SELECT COUNT(*) FROM `OrdersOwners` WHERE `Users`.`ID` = `OrdersOwners`.`UserID`) &lt; 1</Where>
-     </NoOrder>
-     <!-- ****************************************************************** -->
-     <UnActive>
-      <Name>Не активные пользователи</Name>
-      <Where>`IsActive` = 'no'</Where>
-     </UnActive>
-     <!-- ****************************************************************** -->
-     <UnStandardPrimaryGroup>
-      <Name>C нестандартной группой</Name>
-      <Where>`GroupID` != '2000000'</Where>
-     </UnStandardPrimaryGroup>
-    </Patterns>
-    <ActiveID>Week</ActiveID>
-   </Args>
-  </PatternOut>
-  <!-- ********************************************************************* -->
-  <Search>
-   <Args>
-    <ColumnsIDs>
-     <ListElement>ID</ListElement>
-     <ListElement>GroupID</ListElement>
-     <ListElement>Name</ListElement>
-     <ListElement>Email</ListElement>
-     <ListElement>EnterIP</ListElement>
-     <ListElement>Params</ListElement>
-     <ListElement>AdminNotice</ListElement>
-    </ColumnsIDs>
-   </Args>
-  </Search>
- </Before>
- <!-- ********************************************************************** -->
- <After>
-  <Delete>
-   <Args>
-    <Comment>Выбранные пользователи</Comment>
-    <Send>
-     <TableID>Users</TableID>
-    </Send>
-   </Args>
-  </Delete>
- </After>
-</Comps>
-<!-- *********************************************************************** -->
-<Columns>
- <SelectID>
-  <Args>
-   <TableID>Users</TableID>
-  </Args>
- </SelectID>
- <!-- ********************************************************************** -->
- <!-- ********************************************************************** -->
- <RegisterDate>
-  <Head>Дата рег.</Head>
-  <Comp>Formats/Date/Extended</Comp>
-  <Args>
-   <ListElement>%RegisterDate%</ListElement>
-  </Args>
- </RegisterDate>
- <!-- ********************************************************************** -->
- <Group>
-  <Head>Группа</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Group%</ListElement>
-   <Length>10</Length>
-  </Args>
-  <Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `Users`.`GroupID`)</Alias>
- </Group>
- <!-- ********************************************************************** -->
- <Owner>
-  <Head>Пользователь</Head>
-  <Args>
-   <UserID>%ID%</UserID>
-  </Args>
-  <Alias>Name</Alias>
- </Owner>
- <!-- ********************************************************************** -->
-<Email>
-	<Head>Имя</Head>
-	<Comp>Formats/String</Comp>
-	<Args>
-		<ListElement>%Name%</ListElement>
-		<Length>20</Length>
-		<Url>NULL</Url>
-		<IsHtmlEncode>1</IsHtmlEncode>
-	</Args>
-</Email>
- <!-- ********************************************************************** -->
- <EnterDate>
-  <Head>Дата входа</Head>
-  <Comp>Formats/Date/Extended</Comp>
-  <Args>
-   <ListElement>%EnterDate%</ListElement>
-  </Args>
- </EnterDate>
- <!-- ********************************************************************** -->
- <Balances>
-  <Head>Сум. бал.</Head>
-  <Prompt>Общая сумма балансов договоров</Prompt>
-  <Comp>Formats/Currency</Comp>
-  <Args>
-   <ListElement>%Balances%</ListElement>
-  </Args>
-  <Alias>(SELECT SUM(`Balance`) FROM `Contracts` WHERE `Contracts`.`UserID` = `Users`.`ID`)</Alias>
- </Balances>
- <!-- ********************************************************************** -->
- <Invoices>
-  <Head>Сум. cч.</Head>
-  <Prompt>Общая сумма оплаченных счетов</Prompt>
-  <Comp>Formats/Currency</Comp>
-  <Args>
-   <ListElement>%Invoices%</ListElement>
-  </Args>
-  <Alias>(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID` = `Users`.`ID` AND `InvoicesOwners`.`IsPosted` = 'yes')</Alias>
- </Invoices>
- <!-- ********************************************************************** -->
-	<Orders>
-		<Head>Кол. зак.</Head>
-		<Prompt>Кол-во оплаченных заказов</Prompt>
-		<Alias>(SELECT COUNT(*) FROM `OrdersOwners` WHERE `OrdersOwners`.`UserID` = `Users`.`ID` AND `OrdersOwners`.`IsPayed` = 'yes')</Alias>
-		<Attribs>
-			<align>right</align>
-		</Attribs>
-		<Comp>Formats/String</Comp>
-		<Args>
-			<ListElement>%Orders%</ListElement>
-			<Length>20</Length>
-			<Url>/Administrator/ServicesOrders?Search=%Email%&amp;PatternOutID=Default</Url>
-		</Args>
-	</Orders>
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>RegisterDate</ListElement>
- <ListElement>Owner</ListElement>
- <ListElement>Group</ListElement>
- <ListElement>Email</ListElement>
- <ListElement>EnterDate</ListElement>
- <ListElement>Balances</ListElement>
- <ListElement>Invoices</ListElement>
- <ListElement>Orders</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Appearance>
+		<Row>
+			<Comp>Colors/Users</Comp>
+			<Args>
+				<ListElement>%OwnerID%</ListElement>
+			</Args>
+		</Row>
+	</Appearance>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>Users</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>OwnerID</ListElement>
+			<ListElement>RegisterDate</ListElement>
+			<ListElement>Name</ListElement>
+			<ListElement>Email</ListElement>
+			<ListElement>EnterDate</ListElement>
+			<ListElement>EnterIP</ListElement>
+		</ColumnsIDs>
+		<Conditions>
+			<Message>Пользователей не зарегистрировано.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Query>
+		<SortOn>RegisterDate</SortOn>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<PatternOut>
+				<Args>
+					<Patterns>
+						<Yesterday>
+							<Name>Зарегистрированные за вчера</Name>
+							<Where>`RegisterDate` &gt; BEGIN_DAY() - 86400</Where>
+						</Yesterday>
+						<!-- ****************************************************************** -->
+						<Today>
+							<Name>Зарегистрированные за сегодня</Name>
+							<Where>`RegisterDate` &gt; BEGIN_DAY()</Where>
+						</Today>
+						<!-- ****************************************************************** -->
+						<Week>
+							<Name>Зарегистрированные за текущую неделю</Name>
+							<Where>`RegisterDate` &gt; BEGIN_WEEK()</Where>
+						</Week>
+						<!-- ****************************************************************** -->
+						<Month>
+							<Name>Зарегистрированные за текущий месяц</Name>
+							<Where>`RegisterDate` &gt; BEGIN_MONTH()</Where>
+						</Month>
+						<!-- ****************************************************************** -->
+						<OnLine>
+							<Name>Кто сейчас в системе</Name>
+							<Where>UNIX_TIMESTAMP() - `EnterDate` &lt; 300</Where>
+						</OnLine>
+						<!-- ****************************************************************** -->
+						<WithPayedInvoices>
+							<Name>С оплаченными счетами</Name>
+							<Where>(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID` = `Users`.`ID` AND `InvoicesOwners`.`IsPosted` = 'yes') &gt; 0</Where>
+						</WithPayedInvoices>
+						<!-- ****************************************************************** -->
+						<Referals>
+							<Name>Рефералов</Name>
+							<Where>`OwnerID` IS NOT NULL</Where>
+						</Referals>
+						<!-- ****************************************************************** -->
+						<NoOrder>
+							<Name>Не осуществившие заказ</Name>
+							<Where>`ID` &gt; 200 AND (SELECT COUNT(*) FROM `OrdersOwners` WHERE `Users`.`ID` = `OrdersOwners`.`UserID`) &lt; 1</Where>
+						</NoOrder>
+						<!-- ****************************************************************** -->
+						<UnActive>
+							<Name>Не активные пользователи</Name>
+							<Where>`IsActive` = 'no'</Where>
+						</UnActive>
+						<!-- ****************************************************************** -->
+						<UnStandardPrimaryGroup>
+							<Name>C нестандартной группой</Name>
+							<Where>`GroupID` != '2000000'</Where>
+						</UnStandardPrimaryGroup>
+					</Patterns>
+					<ActiveID>Week</ActiveID>
+				</Args>
+			</PatternOut>
+			<!-- ********************************************************************* -->
+			<Search>
+				<Args>
+					<ColumnsIDs>
+						<ListElement>ID</ListElement>
+						<ListElement>GroupID</ListElement>
+						<ListElement>Name</ListElement>
+						<ListElement>Email</ListElement>
+						<ListElement>EnterIP</ListElement>
+						<ListElement>Params</ListElement>
+						<ListElement>AdminNotice</ListElement>
+					</ColumnsIDs>
+				</Args>
+			</Search>
+		</Before>
+		<!-- ********************************************************************** -->
+		<After>
+			<Delete>
+				<Args>
+					<Comment>Выбранные пользователи</Comment>
+					<Send>
+						<TableID>Users</TableID>
+					</Send>
+				</Args>
+			</Delete>
+		</After>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<SelectID>
+			<Args>
+				<TableID>Users</TableID>
+			</Args>
+		</SelectID>
+		<!-- ********************************************************************** -->
+		<!-- ********************************************************************** -->
+		<RegisterDate>
+			<Head>Дата рег.</Head>
+			<Comp>Formats/Date/Extended</Comp>
+			<Args>
+				<ListElement>%RegisterDate%</ListElement>
+			</Args>
+		</RegisterDate>
+		<!-- ********************************************************************** -->
+		<Group>
+			<Head>Группа</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Group%</ListElement>
+				<Length>10</Length>
+			</Args>
+			<Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `Users`.`GroupID`)</Alias>
+		</Group>
+		<!-- ********************************************************************** -->
+		<Owner>
+			<Head>Пользователь</Head>
+			<Args>
+				<UserID>%ID%</UserID>
+			</Args>
+			<Alias>Name</Alias>
+		</Owner>
+		<!-- ********************************************************************** -->
+		<Email>
+			<Head>Имя</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Name%</ListElement>
+				<Length>20</Length>
+				<Url>NULL</Url>
+				<IsHtmlEncode>1</IsHtmlEncode>
+			</Args>
+		</Email>
+		<!-- ********************************************************************** -->
+		<EnterDate>
+			<Head>Дата входа</Head>
+			<Comp>Formats/Date/Extended</Comp>
+			<Args>
+				<ListElement>%EnterDate%</ListElement>
+			</Args>
+		</EnterDate>
+		<!-- ********************************************************************** -->
+		<Balances>
+			<Head>Сум. бал.</Head>
+			<Prompt>Общая сумма балансов договоров</Prompt>
+			<Comp>Formats/Currency</Comp>
+			<Args>
+				<ListElement>%Balances%</ListElement>
+			</Args>
+			<Alias>(SELECT SUM(`Balance`) FROM `Contracts` WHERE `Contracts`.`UserID` = `Users`.`ID`)</Alias>
+		</Balances>
+		<!-- ********************************************************************** -->
+		<Invoices>
+			<Head>Сум. cч.</Head>
+			<Prompt>Общая сумма оплаченных счетов</Prompt>
+			<Comp>Formats/Currency</Comp>
+			<Args>
+				<ListElement>%Invoices%</ListElement>
+			</Args>
+			<Alias>(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID` = `Users`.`ID` AND `InvoicesOwners`.`IsPosted` = 'yes')</Alias>
+		</Invoices>
+		<!-- ********************************************************************** -->
+		<Orders>
+			<Head>Кол. зак.</Head>
+			<Prompt>Кол-во оплаченных заказов</Prompt>
+			<Alias>(SELECT COUNT(*) FROM `OrdersOwners` WHERE `OrdersOwners`.`UserID` = `Users`.`ID` AND `OrdersOwners`.`IsPayed` = 'yes')</Alias>
+			<Attribs>
+				<align>right</align>
+			</Attribs>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Orders%</ListElement>
+				<Length>20</Length>
+				<Url>/Administrator/ServicesOrders?Search=%Email%&amp;PatternOutID=Default</Url>
+			</Args>
+		</Orders>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>RegisterDate</ListElement>
+		<ListElement>Owner</ListElement>
+		<ListElement>Group</ListElement>
+		<ListElement>Email</ListElement>
+		<ListElement>EnterDate</ListElement>
+		<ListElement>Balances</ListElement>
+		<ListElement>Invoices</ListElement>
+		<ListElement>Orders</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>
