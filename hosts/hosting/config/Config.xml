@@ -963,6 +963,7 @@
 					<IsNotify>1</IsNotify>
 					<DiskUsageNotifiesPercent>90</DiskUsageNotifiesPercent>
 					<IsEventForNoLimits>1</IsEventForNoLimits>
+					<IsEventForOverLimits>1</IsEventForOverLimits>
 				</DiskUsageNotifiesSettings>
 				<!-- ********************************************************************* -->
 				<EmailBoxesNotifiesSettings>

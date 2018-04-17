@@ -1247,7 +1247,6 @@ function IspManager5_Get_Disk_Usage($Settings){
 	$Out = Array();
 	#-----------------------------------------------------------------------------
 	# перебираем функции
-#	foreach(Array('user','reseller') as $Func){
 	foreach(Array('user') as $Func){
 		#-----------------------------------------------------------------------------
 		$Response = HTTP_Send('/ispmgr',$HTTP,Array(),Array('authinfo'=>$authinfo,'out'=>'xml','func'=>$Func));
@@ -1285,13 +1284,15 @@ function IspManager5_Get_Disk_Usage($Settings){
 				if(!IsSet($User['quota_used']))
 					$User['quota_used'] = -1;
 				#-----------------------------------------------------------------------------
-				$Out[$User['name']] = Array('Limit'=>$User['quota_total'],'Used'=>$User['quota_used'],'Disabled'=>(($User['active'] == 'on')?TRUE:FALSE));
+				$Out[$User['name']] = Array('Limit'=>$User['quota_total'],'Used'=>$User['quota_used'],'Disabled'=>(($User['active'] == 'off')?TRUE:FALSE));
 				#-----------------------------------------------------------------------------
 			}
 			#-----------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
 	}
+	#-------------------------------------------------------------------------------
+	#Debug(SPrintF('[IspManager5_Get_Disk_Usage]: %s',print_r($Out,true)));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return $Out;
