@@ -128,19 +128,19 @@ foreach($Servers as $Server){
 		# выбираем тех кто лимит имеет
 		if($Accounts[$Order['Login']]['Limit'] > 0){
 			#-------------------------------------------------------------------------------
-			#Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s used %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
+			#Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s/%s used %s/%s',$Order['Login'],$Server['Address'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
 			#-------------------------------------------------------------------------------
 			# лимит есть, но используется больше чем ограничение
 			if($Accounts[$Order['Login']]['Limit'] < $Accounts[$Order['Login']]['Used']){
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: избыточное использование диска аккаунтом %s, используется %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
+				Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: избыточное использование диска аккаунтом %s/%s, используется %s/%s',$Order['Login'],$Server['Address'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
 				#-------------------------------------------------------------------------------
 				if($Settings['IsEventForOverLimits']){
 					#-------------------------------------------------------------------------------
 					$Event = Array(
 							'UserID'        => $Order['UserID'],
 							'PriorityID'    => 'Warning',
-							'Text'          => SPrintF('Обнаружен заказ хостинга (%s) с превышением (%s/%s) использования дискового пространства',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']),
+							'Text'          => SPrintF('Обнаружен заказ хостинга (%s/%s) с превышением (%s/%s) использования дискового пространства',$Order['Login'],$Server['Address'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']),
 							'IsReaded'      => FALSE
 							);
 					$Event = Comp_Load('Events/EventInsert',$Event);
@@ -155,7 +155,7 @@ foreach($Servers as $Server){
 			# шлём оповещения, если процент использования больше чем в настройках
 			if(Ceil(($Accounts[$Order['Login']]['Used']/$Accounts[$Order['Login']]['Limit'])*100) > $Settings['DiskUsageNotifiesPercent']){
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s used %s/%s',$Order['Login'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
+				Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: аккаунт %s/%s, использование %s/%s',$Order['Login'],$Server['Address'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
 				#-------------------------------------------------------------------------------
 				if(!$Settings['IsNotify'])
 					continue;
@@ -184,14 +184,14 @@ foreach($Servers as $Server){
 		# аккаунты без ограничений на место
 		if($Accounts[$Order['Login']]['Limit'] < 1 ){
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: аккаунт %s не имеет ограничения на использование диска',$Order['Login']));
+			Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: аккаунт %s/%s не имеет ограничения на использование диска',$Order['Login'],$Server['Address']));
 			#-------------------------------------------------------------------------------
 			if($Settings['IsEventForNoLimits']){
 				#-------------------------------------------------------------------------------
 				$Event = Array(
 						'UserID'        => $Order['UserID'],
 						'PriorityID'    => 'Warning',
-						'Text'          => SPrintF('Обнаружен заказ хостинга (%s) с отсутствующим лимитом на дисковое пространство',$Order['Login']),
+						'Text'          => SPrintF('Обнаружен заказ хостинга (%s/%s) с отсутствующим лимитом на дисковое пространство',$Order['Login'],$Server['Address']),
 						'IsReaded'      => FALSE
 						);
 				$Event = Comp_Load('Events/EventInsert',$Event);
