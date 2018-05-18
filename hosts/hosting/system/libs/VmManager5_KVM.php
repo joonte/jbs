@@ -1152,8 +1152,8 @@ function VmManager5_KVM_CheckIsActive($Settings,$Login){
 	foreach($VPSs as $VPS)
 		if(IsSet($VPS['id']))
 			if($VPS['name'] == $Login)
-				if(IsSet($VPS['stoped']))
-					if(IsSet($VPS['admdown']))
+				if(IsSet($VPS['vmpowered']) && $VPS['vmpowered'] == 'off')
+					if(IsSet($VPS['vmstatus']) && $VPS['vmstatus'] == 'admdown')
 						return FALSE;
 	#-----------------------------------------------------------------------------
 	# not found, or enabled
@@ -1170,6 +1170,13 @@ function VmManager5_KVM_Reboot($Settings,$Login){
 	#-------------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/******************************************************************************/
+	# проверяем - активна ли машина, а то если задизабленную ребутнуть - она включается
+	if(!VmManager5_KVM_CheckIsActive($Settings,$Login)){
+		#-------------------------------------------------------------------------------
+		return new gException('ACCOUNT_REBOOT_ERROR_IsDisabled','Не удалось перезагрузить виртуальный сервер - он выключен администратором');
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
 	$authinfo = SPrintF('%s:%s',$Settings['Login'],$Settings['Password']);
 	#-------------------------------------------------------------------------------
 	$HTTP = VmManager5_KVM_Build_HTTP($Settings);
