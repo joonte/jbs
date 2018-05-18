@@ -253,30 +253,32 @@ case 'reversed':
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
-	$After = $Contract['Balance'] - $Invoice['Summ'];
+	# UPDATE 2018-04-30 in 20:32 MSK
+	# ничего не делаем. эти придурки независимо от суммы возврата присылают сумму которая была оплачена
+	#$After = $Contract['Balance'] - $Invoice['Summ'];
 	#-------------------------------------------------------------------------------
-	$IsUpdate = DB_Update('Contracts',Array('Balance'=>$After),Array('ID'=>$Invoice['ContractID']));
-	if(Is_Error($IsUpdate))
-		return ERROR | @Trigger_Error(500);
+	#$IsUpdate = DB_Update('Contracts',Array('Balance'=>$After),Array('ID'=>$Invoice['ContractID']));
+	#if(Is_Error($IsUpdate))
+	#	return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	# заносим запись в историю операций с контрактами
 	$Number = Comp_Load('Formats/Invoice/Number',$Invoice['ID']);
 	if(Is_Error($Number))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$IPosting = Array(
-			'ContractID' => $Invoice['ContractID'],
-			'ServiceID'  => 2000,
-			'Comment'    => SPrintF('Возврат средств зачисленных по счёту #%u (транзакция отменена)',$Number),
-			'Before'     => $Contract['Balance'],
-			'After'      => $After
-			);
+	#$IPosting = Array(
+	#		'ContractID' => $Invoice['ContractID'],
+	#		'ServiceID'  => 2000,
+	#		'Comment'    => SPrintF('Возврат средств зачисленных по счёту #%u (транзакция отменена)',$Number),
+	#		'Before'     => $Contract['Balance'],
+	#		'After'      => $After
+	#		);
 	#-------------------------------------------------------------------------------
-	$PostingID = DB_Insert('Postings',$IPosting);
-	if(Is_Error($PostingID))
-		return ERROR | @Trigger_Error(500);
+	#$PostingID = DB_Insert('Postings',$IPosting);
+	#if(Is_Error($PostingID))
+	#	return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Event = Array('UserID'=>$Invoice['UserID'],'PriorityID'=>'Billing','IsReaded'=>FALSE,'Text'=>SPrintF('Осуществлён автоматический возврат средств по счёту #%u, процессинговый центр прислал статус "%s"',$Number,$Args['operation']));
+	$Event = Array('UserID'=>$Invoice['UserID'],'PriorityID'=>'Billing','IsReaded'=>FALSE,'Text'=>SPrintF('Произведён возврат средств по счёту #%u, процессинговый центр прислал статус "%s". Сумму сбербанк не присылает, необходимо списывать самостоятельно.',$Number,$Args['operation']));
 	$Event = Comp_Load('Events/EventInsert',$Event);
 	if(!$Event)
 		return ERROR | @Trigger_Error(500);
