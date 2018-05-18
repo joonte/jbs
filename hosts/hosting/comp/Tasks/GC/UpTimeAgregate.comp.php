@@ -19,7 +19,7 @@ if(!$Settings['IsActive'])
 	return TRUE;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$UpTimes = DB_Select('ServersUpTime',Array('ServerID','Service','TestDate','Day','Month','Year','AVG(`UpTime`) as `UpTime`','Count(`UpTime`) as `Count`'),Array('GroupBy'=>Array('ServerID','Service','Day','Month','Year')));
+$UpTimes = DB_Select('ServersUpTime',Array('ServerID','Service','TestDate','Day','Month','Year','AVG(`UpTime`) as `UpTime`','Count(`UpTime`) as `Count`'),Array('Where'=>'`TestDate` > UNIX_TIMESTAMP() - 30*24*3600','GroupBy'=>Array('ServerID','Service','Day','Month','Year')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($UpTimes)){
 case 'error':
