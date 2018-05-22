@@ -30,6 +30,7 @@
 <!-- *********************************************************************** -->
 <!-- Invoices -->
 <IsPosted>Logic</IsPosted>
+<IsCheckSent>Logic</IsCheckSent>
 <IsConditionally>Logic</IsConditionally>
 <AllowConditionally>Logic</AllowConditionally>
 <IsAutoInvoicing>Logic</IsAutoInvoicing>

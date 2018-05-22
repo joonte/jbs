@@ -143,6 +143,18 @@
 	<Invoices>
 		<AllowConditionally>0</AllowConditionally>
 		<EventOnNegativeBalance>0</EventOnNegativeBalance>
+		<!-- *********************************************************************** -->
+		<Kassa_54-FZ>
+			<TaxationSystem>SIMPLIFIED_IN_OUT</TaxationSystem>
+			<Komtet>
+				<IsActive>0</IsActive>
+				<Hash/>
+				<Cpp>https://kassa.komtet.ru</Cpp>
+				<ShopId/>
+				<QueueId/>
+			</Komtet>
+		</Kassa_54-FZ>
+		<!-- *********************************************************************** -->
 		<PaymentSystems>
 			<PayMaster>
 				<Name>PayMaster</Name>
@@ -170,6 +182,7 @@
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>1</Is54-FZ>
 			</PayMaster>
 			<!-- ********************************************************************* -->
 			<WebMoneyR>
@@ -197,6 +210,7 @@
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>0</Is54-FZ>
 			</WebMoneyR>
 			<!-- ********************************************************************* -->
 			<WebMoneyZ>
@@ -224,6 +238,7 @@
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>0</Is54-FZ>
 			</WebMoneyZ>
 			<!-- ********************************************************************* -->
 			<WebMoneyU>
@@ -251,6 +266,7 @@
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>0</Is54-FZ>
 			</WebMoneyU>
 			<!-- ********************************************************************* -->
 			<WebMoneyE>
@@ -278,6 +294,7 @@
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>0</Is54-FZ>
 			</WebMoneyE>
 			<!-- ********************************************************************* -->
 			<Yandex>
@@ -311,6 +328,7 @@
 				<MinimumPayment>1.00</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>1</Is54-FZ>
 			</Yandex>
 			<!-- ********************************************************************* -->
 			<QIWI>
@@ -346,6 +364,7 @@
 				<MaximumPayment>15000.00</MaximumPayment>
 				<IsActive>0</IsActive>
 				<IsLogging>0</IsLogging>
+				<Is54-FZ>1</Is54-FZ>
 			</QIWI>
 			<!-- ******************************************************************** -->
 			<ZPayment>
@@ -375,6 +394,7 @@
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>1</Is54-FZ>
 			</ZPayment>
 			<!-- ********************************************************************* -->
 			<EasyPay>
@@ -404,6 +424,7 @@
 				<MinimumPayment>2</MinimumPayment>
 				<MaximumPayment>11000</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>1</Is54-FZ>
 			</EasyPay>
 			<!-- ********************************************************************* -->
 			<Egold>
@@ -439,6 +460,7 @@
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>1</Is54-FZ>
 			</Egold>
 			<!-- ********************************************************************* -->
 			<RBKMoney>
@@ -470,6 +492,7 @@
 				<MinimumPayment>1.00</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>1</Is54-FZ>
 			</RBKMoney>
 			<!-- ********************************************************************* -->
 			<ROBOKASSA>
@@ -502,6 +525,7 @@
 				<MinimumPayment>1.00</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>1</Is54-FZ>
 			</ROBOKASSA>
 			<!-- ********************************************************************* -->
 			<InterKassa>
@@ -531,6 +555,7 @@
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>25000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>1</Is54-FZ>
 			</InterKassa>
 			<!-- ********************************************************************* -->
 			<MailRu>
@@ -563,6 +588,7 @@
 				<MinimumPayment>1.00</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>1</Is54-FZ>
 			</MailRu>
 			<!-- ********************************************************************* -->
 			<W1>
@@ -591,6 +617,7 @@
 				<MinimumPayment>1.00</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>1</Is54-FZ>
 			</W1>
 			<!-- ********************************************************************* -->
 			<Uniteller>
@@ -605,8 +632,8 @@
 				<Comp>Uniteller</Comp>
 				<Cpp>https://wpay.uniteller.ru/pay/</Cpp>
 				<!-- тестовый интерфейс
-		     	<Cpp>https://test.wpay.uniteller.ru/pay/</Cpp>
-			-->
+				<Cpp>https://test.wpay.uniteller.ru/pay/</Cpp>
+				-->
 				<Hash/>
 				<ContractsTypes>
 					<Default>1</Default>
@@ -622,6 +649,7 @@
 				<MinimumPayment>1.00</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>1</Is54-FZ>
 			</Uniteller>
 			<!-- ********************************************************************* -->
 			<SberBank>
@@ -652,6 +680,7 @@
 				<MinimumPayment>1.00</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>1</Is54-FZ>
 			</SberBank>
 			<!-- ********************************************************************* -->
 			<Moneybookers>
@@ -689,6 +718,7 @@
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>0</Is54-FZ>
 			</Moneybookers>
 			<!-- ********************************************************************* -->
 			<Checkout>
@@ -719,6 +749,7 @@
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>0</Is54-FZ>
 			</Checkout>
 			<!-- ********************************************************************* -->
 			<OKPAY>
@@ -748,6 +779,7 @@
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>1</Is54-FZ>
 			</OKPAY>
 			<!-- ********************************************************************* -->
 			<OnPay>
@@ -779,6 +811,7 @@
 				<MinimumPayment>5.00</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
+				<Is54-FZ>1</Is54-FZ>
 			</OnPay>
 			<!-- ********************************************************************* -->
 			<Natural>
@@ -800,6 +833,7 @@
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>1000000.00</MaximumPayment>
 				<IsActive>1</IsActive>
+				<Is54-FZ>0</Is54-FZ>
 			</Natural>
 			<!-- ********************************************************************* -->
 			<Juridical>
@@ -821,6 +855,7 @@
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>1000000.00</MaximumPayment>
 				<IsActive>1</IsActive>
+				<Is54-FZ>0</Is54-FZ>
 			</Juridical>
 			<!-- ********************************************************************* -->
 			<Individual>
@@ -842,6 +877,7 @@
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>1000000.00</MaximumPayment>
 				<IsActive>1</IsActive>
+				<Is54-FZ>0</Is54-FZ>
 			</Individual>
 			<!-- ********************************************************************* -->
 			<InOffice>
@@ -863,6 +899,7 @@
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>1000000.00</MaximumPayment>
 				<IsActive>1</IsActive>
+				<Is54-FZ>1</Is54-FZ>
 			</InOffice>
 		</PaymentSystems>
 	</Invoices>
@@ -1249,6 +1286,13 @@
 				<IsActive>0</IsActive>
 				<CreateNewUserAccounts>1</CreateNewUserAccounts>
 			</CheckEmail>
+			<!-- ********************************************************************* -->
+			<Taxation>
+				<Name>Налоговая, 54-ФЗ</Name>
+				<Params type="array"/>
+				<ExecutePeriod>01:00</ExecutePeriod>
+				<IsActive>1</IsActive>
+			</Taxation>
 			<!-- ********************************************************************* -->
 			<!-- ********************************************************************* -->
 			<GC>

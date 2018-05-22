@@ -71,7 +71,7 @@ if(!$PaymentSystem['ContractsTypes'][$Contract['TypeID']])
 if(Is_Error(DB_Transaction($TransactionID = UniqID('InvoiceMake'))))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IInvoice = Array('ContractID'=>$Contract['ID'],'PaymentSystemID'=>$PaymentSystemID);
+$IInvoice = Array('ContractID'=>$Contract['ID'],'PaymentSystemID'=>$PaymentSystemID,'IsCheckSent'=>TRUE);
 #-------------------------------------------------------------------------------
 $InvoiceID = DB_Insert('Invoices',$IInvoice);
 if(Is_Error($InvoiceID))
