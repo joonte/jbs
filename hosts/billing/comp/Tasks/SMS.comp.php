@@ -154,7 +154,7 @@ if($User['GroupID'] == '3000000')
 #-------------------------------------------------------------------------------
 if(FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']) >= 0){
 	#-------------------------------------------------------------------------------
-	$IsSelect = DB_Select('InvoicesOwners','SUM(`Summ`) AS `Summ`',Array('UNIQ','Where'=>SPrintF('`UserID` = %u AND `IsPosted` = "yes"',$UserID)));
+	$IsSelect = DB_Select('InvoicesOwners','SUM(`Summ`) AS `Summ`',Array('UNIQ','Where'=>SPrintF('`UserID` = %u AND `IsPosted` = "yes" AND StatusDate > UNIX_TIMESTAMP() - %u * 24 * 60 *60',$UserID,$ServerSettings['Params']['ExceptionsPaidInvoicesPeriod'])));
 	switch(ValueOf($IsSelect)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);

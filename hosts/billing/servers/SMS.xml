@@ -184,6 +184,19 @@
 		<Value>-1</Value>
 	</ExceptionsPaidInvoices>
 	<!-- *********************************************************************** -->
+	<ExceptionsPaidInvoicesPeriod>
+		<Check>/^[0-9]{1,7}$/u</Check>
+		<Comment>За какой период счета</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Период в днях, в который счета были оплачены. 0-999999</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>365</Value>
+	</ExceptionsPaidInvoicesPeriod>
+	<!-- *********************************************************************** -->
 	<ExceptionsSchemeID>
 		<Check>/^[0-9\,]{1,64}$/u</Check>
 		<Comment>Идентификаторы тарифов</Comment>

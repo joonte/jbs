@@ -87,7 +87,7 @@ if($Methods['SMS']['IsActive']){
 		# прочкать SMSExceptionsPaidInvoices, если надо - получить сумму счетов, надпись по итогам вывести
 		if(FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']) >= 0){
 			#-------------------------------------------------------------------------------
-			$IsSelect = DB_Select('InvoicesOwners','SUM(`Summ`) AS `Summ`',Array('UNIQ','Where'=>SPrintF('`UserID` = %u AND `IsPosted` = "yes"',$__USER['ID'])));
+			$IsSelect = DB_Select('InvoicesOwners','SUM(`Summ`) AS `Summ`',Array('UNIQ','Where'=>SPrintF('`UserID` = %u AND `IsPosted` = "yes" AND `StatusDate` > UNIX_TIMESTAMP() - %u * 24 * 60 *60',$__USER['ID'],$ServerSettings['Params']['ExceptionsPaidInvoicesPeriod'])));
 			switch(ValueOf($IsSelect)){
 			case 'error':
 				return ERROR | @Trigger_Error(500);
