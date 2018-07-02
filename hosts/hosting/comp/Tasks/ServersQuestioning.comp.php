@@ -126,6 +126,8 @@ case 'true':
 					#-------------------------------------------------------------------------------
 					$Parked = $Users[$Order['Login']];
 					#-------------------------------------------------------------------------------
+					ASort($Parked);
+					#-------------------------------------------------------------------------------
 					$IsUpdate = DB_Update(SPrintF('%sOrders',$Server['Code']),Array('Domain'=>(Count($Parked)?Current($Parked):'not-found'),'Parked'=>Implode(',',$Parked)),Array('ID'=>$Order['ID']));
 					if(Is_Error($IsUpdate))
 						return ERROR | @Trigger_Error(500);
