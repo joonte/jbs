@@ -833,7 +833,7 @@
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>1000000.00</MaximumPayment>
 				<IsActive>1</IsActive>
-				<Is54-FZ>0</Is54-FZ>
+				<Is54-FZ>1</Is54-FZ>
 			</Natural>
 			<!-- ********************************************************************* -->
 			<Juridical>

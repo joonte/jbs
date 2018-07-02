@@ -9,15 +9,22 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
+Debug(SPrintF("[comp/www/Merchant/Komtet]: Args = %s",print_r($Args,true)));
 
 
+# Получить JSON как строку
+$json_str = file_get_contents('php://input');
+# Получить объект
+$json_obj = json_decode($json_str);
+Debug(SPrintF("[comp/www/Merchant/Komtet]: json_obj = %s",print_r($json_obj,true)));
+$Headers = Apache_Request_Headers();
+Debug(SPrintF("[comp/www/Merchant/Komtet]: X-HMAC-Signature = %s",@$Headers['X-HMAC-Signature']));
 
+#$headers = apache_request_headers();
 
-
-
-
-
-
+#foreach ($headers as $header => $value) {
+#	Debug(SPrintF("[comp/www/Merchant/Komtet]: %s: %s",$header,$value));
+#}
 
 
 
@@ -49,19 +56,19 @@ foreach($ArgsIDs as $ArgID)
 #-------------------------------------------------------------------------------
 UkSort($Args, "strcasecmp");
 #-------------------------------------------------------------------------------
-#Debug(SPrintF("[comp/www/Merchant/SberBank]: Args = %s",print_r($Args,true)));
+#Debug(SPrintF("[comp/www/Merchant/Komtet]: Args = %s",print_r($Args,true)));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # файл в котором хранятся номера счетов и адреса редиректа
 $Tmp = System_Element('tmp');
 if(Is_Error($Tmp))
-	return ERROR | @Trigger_Error('[SberBank_Get_Tmp]: не удалось найти временную папку');
+	return ERROR | @Trigger_Error('[Komtet_Get_Tmp]: не удалось найти временную папку');
 #-------------------------------------------------------------------------------
-$SberBankFileDB = SPrintF('%s/SberBank.txt',$Tmp);
+$KomtetFileDB = SPrintF('%s/Komtet.txt',$Tmp);
 #-------------------------------------------------------------------------------
-if(!File_Exists($SberBankFileDB)){
+if(!File_Exists($KomtetFileDB)){
 	#-------------------------------------------------------------------------------
-	$IsWrite = IO_Write($SberBankFileDB,"#Invoice\tURL\n");
+	$IsWrite = IO_Write($KomtetFileDB,"#Invoice\tURL\n");
 	if(Is_Error($IsWrite))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -72,7 +79,7 @@ $OrderID = $Args['orderNumber'];
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-$Settings = $Config['Invoices']['PaymentSystems']['SberBank'];
+$Settings = $Config['Invoices']['PaymentSystems']['Komtet'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Invoice = DB_Select('InvoicesOwners',Array('ID','UserID','Summ','ContractID'),Array('UNIQ','ID'=>$OrderID));
@@ -96,7 +103,7 @@ $InvoiceID = $Invoice['ID'];
 if(IsSet($Args['redirect'])){
 	#-------------------------------------------------------------------------------
 	# возможный вариант - повторная попытка оплаты. достаём данные по этому счёту
-	$IsRead = IO_Read($SberBankFileDB);
+	$IsRead = IO_Read($KomtetFileDB);
 	if(Is_Error($IsRead))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -104,11 +111,11 @@ if(IsSet($Args['redirect'])){
 	#-------------------------------------------------------------------------------
 	foreach($Lines as $Line){
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF("[comp/www/Merchant/SberBank]: Line = %s",$Line));
+		#Debug(SPrintF("[comp/www/Merchant/Komtet]: Line = %s",$Line));
 		#-------------------------------------------------------------------------------
 		List($InvoiceTMP, $URL) = Preg_Split("/[\s]+/",$Line);
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF("[comp/www/Merchant/SberBank]: InvoiceTMP = %s; URL = %s",$InvoiceTMP,$URL));
+		#Debug(SPrintF("[comp/www/Merchant/Komtet]: InvoiceTMP = %s; URL = %s",$InvoiceTMP,$URL));
 		#-------------------------------------------------------------------------------
 		if($InvoiceTMP == $InvoiceID){
 			#-------------------------------------------------------------------------------
@@ -155,7 +162,7 @@ if(IsSet($Args['redirect'])){
 	#-------------------------------------------------------------------------------
 	$Result = HTTP_Send('/payment/rest/register.do',$HTTP,Array(),$Query);
 	if(Is_Error($Result))
-		return ERROR | @Trigger_Error('[SberBank_Get_Invoice_URL]: не удалось выполнить запрос к серверу');
+		return ERROR | @Trigger_Error('[Komtet_Get_Invoice_URL]: не удалось выполнить запрос к серверу');
 	#-------------------------------------------------------------------------------
 	$Result = Trim($Result['Body']);
 	#-------------------------------------------------------------------------------
@@ -166,7 +173,7 @@ if(IsSet($Args['redirect'])){
 	if(IsSet($Result['formUrl'])){
 		#-------------------------------------------------------------------------------
 		# сохраняем переданный URL
-		$IsWrite = IO_Write($SberBankFileDB,SPrintF("%s\t\t%s\n",$InvoiceID,$Result['formUrl']));
+		$IsWrite = IO_Write($KomtetFileDB,SPrintF("%s\t\t%s\n",$InvoiceID,$Result['formUrl']));
 		if(Is_Error($IsWrite))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
@@ -177,7 +184,7 @@ if(IsSet($Args['redirect'])){
 	}else{
 		#-------------------------------------------------------------------------------
 		# ошибка, нет УРЛ
-		return ERROR | @Trigger_Error('[comp/www/Merchant/SberBank]: URL не передан, какая-то ошибка');
+		return ERROR | @Trigger_Error('[comp/www/Merchant/Komtet]: URL не передан, какая-то ошибка');
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -187,7 +194,7 @@ if(IsSet($Args['redirect'])){
 #-------------------------------------------------------------------------------
 if(!$Args['status']){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF("[comp/www/Merchant/SberBank]: операция неуспешна, status = %s",$Args['status']));
+	Debug(SPrintF("[comp/www/Merchant/Komtet]: операция неуспешна, status = %s",$Args['status']));
 	#-------------------------------------------------------------------------------
 	return "Not success operation, ignored...";
 	#-------------------------------------------------------------------------------
@@ -201,21 +208,21 @@ foreach($ArgsIDs as $ArgID)
 		if($Args[$ArgID])
 			$Values .= SPrintF('%s;%s;',$ArgID,$Args[$ArgID]);
 #-------------------------------------------------------------------------------
-#Debug(SPrintF("[comp/www/Merchant/SberBank]: Values = %s",$Values));
+#Debug(SPrintF("[comp/www/Merchant/Komtet]: Values = %s",$Values));
 #-------------------------------------------------------------------------------
 if($Args['checksum'] != StrToUpper(Hash_Hmac('sha256',$Values,$Settings['Hash'])))
-	return ERROR | @Trigger_Error('[comp/www/Merchant/SberBank]: проверка подлинности завершилась не удачей');
+	return ERROR | @Trigger_Error('[comp/www/Merchant/Komtet]: проверка подлинности завершилась не удачей');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # если сумма не задана, или равна нулю
 if(!IsSet($Args['amount']) || !$Args['amount']){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF("[comp/www/Merchant/SberBank]: параметр 'amount' не передан, проверка суммы платежа невозможна"));
+	Debug(SPrintF("[comp/www/Merchant/Komtet]: параметр 'amount' не передан, проверка суммы платежа невозможна"));
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
 	if($Invoice['Summ'] != $Args['amount'] / 100)
-		return ERROR | @Trigger_Error('[comp/www/Merchant/SberBank]: сумма платежа не совпадает, %s != %s',$Invoice['Summ'],($Args['amount'] / 100));
+		return ERROR | @Trigger_Error('[comp/www/Merchant/Komtet]: сумма платежа не совпадает, %s != %s',$Invoice['Summ'],($Args['amount'] / 100));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
@@ -249,7 +256,7 @@ case 'reversed':
 	# если сумма совпадает - отменяем транзакцию
 	if(!IsSet($Args['amount']) || $Args['amount'] != $Invoice['Summ'] * 100){
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF("[comp/www/Merchant/SberBank]: переданная сумма (%s) не совпадает с суммой счёта (%s)",$Args['amount']/100,$Invoice['Summ']));
+		Debug(SPrintF("[comp/www/Merchant/Komtet]: переданная сумма (%s) не совпадает с суммой счёта (%s)",$Args['amount']/100,$Invoice['Summ']));
 		#-------------------------------------------------------------------------------
 		return "Summ does not match";
 		#-------------------------------------------------------------------------------
@@ -260,7 +267,7 @@ case 'reversed':
 	$Comment = 'Отменён (выполнена транзакция разблокировки	средств или выполнена операция по возврату платежа после списания средств)';
 	#-------------------------------------------------------------------------------
 	#----------------------------------TRANSACTION----------------------------------
-	if(Is_Error(DB_Transaction($TransactionID = UniqID('Merchant/SberBank'))))
+	if(Is_Error(DB_Transaction($TransactionID = UniqID('Merchant/Komtet'))))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -317,7 +324,7 @@ case 'reversed':
 	#-------------------------------------------------------------------------------
 default:
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Invoices/PaymentSystems/SberBank]: статус "%s", счёт #%u проигнорирован',$Args['operation'],$InvoiceID));
+	Debug(SPrintF('[comp/Invoices/PaymentSystems/Komtet]: статус "%s", счёт #%u проигнорирован',$Args['operation'],$InvoiceID));
 	return "OK\n";
 	#-------------------------------------------------------------------------------
 }
