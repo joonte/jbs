@@ -63,6 +63,12 @@ default:
 // перебираем полученных пользователей.
 foreach($Users as $User){
 	#-------------------------------------------------------------------------------
+	# убираем рефералов юзера, т.к. некоторым начислется от них, потом этим таском списывается...
+	$IsUpdate = DB_Update('Users',Array('OwnerID'=>NULL,'IsManaged'=>FALSE),Array('ID'=>$User['ID']));
+	if(Is_Error($IsUpdate))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	# выбираем меньшую из дат, т.к. мог не входить никогда
 	$EnterDate = (($User['EnterDate'] > $User['RegisterDate'])?$User['EnterDate']:$User['RegisterDate']);
 	Debug(SPrintF('[comp/Tasks/GC/WithdrawalOldUsers]: автоматическое списание денег с балланса юзера (%s) не заходившего в биллинг %s дней',$User['Email'],Ceil((Time() - $EnterDate)/(24*3600))));
