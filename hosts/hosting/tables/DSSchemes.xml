@@ -209,6 +209,11 @@
 		<disks>
 			<Head>HDD</Head>
 			<Prompt>Установленные жёсткие диски, размер</Prompt>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%disks%</ListElement>
+				<Length>8</Length>
+			</Args>
 			<Attribs>
 				<style>text-align:right;</style>
 			</Attribs>
