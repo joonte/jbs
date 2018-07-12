@@ -66,7 +66,7 @@ foreach($SendToIDs as $User){
 	Debug(SPrintF('[comp/Tasks/Dispatch]: send message to UserID = %s;',$User));
 	#-------------------------------------------------------------------------
 	$msg = new DispatchMsg($Replace, (integer)$User, $Task['Params']['FromID']);
-	$IsSend = NotificationManager::sendMsg($msg,$Methods);
+	$IsSend = NotificationManager::sendMsg($msg,$Methods,$Task['Params']['IsForceDelivery']);
 	#-------------------------------------------------------------------------
 	switch(ValueOf($IsSend)){
 	case 'error':

@@ -930,6 +930,17 @@
 				<IsActive>1</IsActive>
 			</ToTicketsMessages>
 			<!-- ********************************************************************* -->
+			<Dispatch>
+				<Name>Сообщения от администрации (рассылки)</Name>
+				<GroupID>1</GroupID>
+				<UseEmail>1</UseEmail>
+				<UseWhatsApp>0</UseWhatsApp>
+				<UseICQ>0</UseICQ>
+				<UseJabber>1</UseJabber>
+				<UseSMS>0</UseSMS>
+				<IsActive>1</IsActive>
+			</Dispatch>
+			<!-- ********************************************************************* -->
 			<EdeskCreate>
 				<Title>Обсуждения</Title>
 				<Name>Создание нового обсуждения</Name>
@@ -1138,6 +1149,7 @@
 					<FromID>Идентификатор отправителя</FromID>
 					<SendedIDs>Кому уже отправлено</SendedIDs>
 					<Methods>Методы</Methods>
+					<IsForceDelivery>Принудительная доставка</IsForceDelivery>
 				</Params>
 				<ExecutePeriod>00:01</ExecutePeriod>
 				<Limit>10</Limit>

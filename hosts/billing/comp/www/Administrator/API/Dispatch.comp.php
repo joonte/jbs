@@ -17,6 +17,7 @@ $Theme     		=  (string) @$Args['Theme'];
 $Message    		=  (string) @$Args['Message'];
 $FiltersIDs 		=   (array) @$Args['FiltersIDs'];
 $IsEmulateDisptch	= (boolean) @$Args['IsEmulateDisptch'];
+$IsForceDelivery	= (boolean) @$Args['IsForceDelivery'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
@@ -178,7 +179,7 @@ foreach($Users as $User)
 	$SendTo[] = $User['ID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Params = Array(Implode(',',$SendTo),$Theme,$Message,$FromID,'',Implode(',',$Methods));
+$Params = Array(Implode(',',$SendTo),$Theme,$Message,$FromID,'',Implode(',',$Methods),$IsForceDelivery);
 #-------------------------------------------------------------------------------
 #Debug(SPrintF('[comp/www/Administrator/API/Dispatch]: before send, UserIDs = %s',Implode(',',$UsersIDs)));
 if(!$IsEmulateDisptch){

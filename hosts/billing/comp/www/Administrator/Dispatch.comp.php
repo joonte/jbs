@@ -232,6 +232,16 @@ $Span = new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckB
 $Table[] = Array($Comp,$Span);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+# Галочка про принудительную доставку
+$Comp = Comp_Load('Form/Input',Array('name'=>'IsForceDelivery','value'=>'yes','type'=>'checkbox','checked'=>'yes','prompt'=>'Принудительная доставка сообщений тем кто в настройках уведомлений отключил получение рассылок от администрации'));
+if(Is_Error($Comp))
+return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Span = new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsForceDelivery\'); return false;'),'"Принудительная доставка сообщений"');
+#-------------------------------------------------------------------------------
+$Table[] = Array($Comp,$Span);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Users = DB_Select('Users',Array('ID','Name','Email'),Array('Where'=>"(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = `Users`.`GroupID`) = 'yes' OR `ID` = 100"));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Users)){
