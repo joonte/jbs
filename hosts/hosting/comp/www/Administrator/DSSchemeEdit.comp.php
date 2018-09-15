@@ -59,6 +59,7 @@ if($DSSchemeID){
 			'trafflimit'			=> 1000,
 			'traffcorrelation'		=> '1:4',
 			'OS'				=> 'FreeBSD 10.1',
+			'Switch'			=> 'ex2200 ge-0/0/11',
 			'UserNotice'			=> 'Идеальный сервер для высоконагруженного проекта ...',
 			'AdminNotice'			=> 'второй диск скоро посыпется, надо заменить',
 			);
