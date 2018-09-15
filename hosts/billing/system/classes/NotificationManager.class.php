@@ -31,7 +31,7 @@ class NotificationManager {
 		}
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$User = DB_Select('Users',Array('ID','Name','Sign','Email','UniqID','IsNotifies','Params'),Array('UNIQ','ID'=>$msg->getTo()));
+		$User = DB_Select('Users',Array('ID','Name','Sign','Email','UniqID','IsActive','IsNotifies','Params'),Array('UNIQ','ID'=>$msg->getTo()));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($User)){
 		case 'error':
@@ -43,6 +43,11 @@ class NotificationManager {
 			$TypeID = $msg->getTemplate();
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[system/classes/NotificationManager]: TypeID = %s',$TypeID));
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			if(!$User['IsActive'])
+				return new gException('USER_DISABLED','Пользователь отключен');
+			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			if($TypeID != 'UserPasswordRestore')
 				if(!$User['IsNotifies'])
