@@ -95,7 +95,8 @@ function RussianCellPhone(Phone){
 //------------------------------------------------------------------------------
 function FirstCapitalLetter(Word){
 	//------------------------------------------------------------------------------
-	return SPrintF('%s%s',Word.charAt(0).toUpperCase(),Word.substring(1).toLowerCase());
+	//return SPrintF('%s%s',Word.charAt(0).toUpperCase(),Word.substring(1).toLowerCase());
+	return SPrintF('%s%s',Word.charAt(0).toUpperCase(),Word.substring(1));
 	//------------------------------------------------------------------------------
 }
 
