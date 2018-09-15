@@ -727,7 +727,7 @@
 				<Send>
 					<sid/>
 					<total>auto</total>
-					<cart_order_id>auto</cart_order_id>
+					<invoice_id>auto</invoice_id>
 					<id_type>1</id_type>
 					<demo>Y</demo>
 					<c_description_1>Payment for invoice #</c_description_1>
