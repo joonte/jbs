@@ -36,7 +36,7 @@ if($Eval){
 		#-------------------------------------------------------------------------------
 		$Result = Crypt_Decode(Str_Replace(" ",'+',$Eval),$Settings['EvalKey']);
 		if(!Is_Error($Result))
-			$DOM->AddAttribs('Body',Array('onload'=>$Result));
+			$DOM->AddAttribs('Body',Array('onload'=>$Result . 'return true;'));
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[comp/www/Home]: Eval Result = %s',$Result));
 		#-------------------------------------------------------------------------------
