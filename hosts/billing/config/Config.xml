@@ -331,6 +331,41 @@
 				<Is54-FZ>1</Is54-FZ>
 			</Yandex>
 			<!-- ********************************************************************* -->
+			<Yandex.p2p>
+				<Name>Яндекс.Деньги, прямой платёж</Name>
+				<SystemDescription>Яндекс.Деньги — это платежная система, которая позволяет оплачивать различные товары и услуги; совершать безопасные платежи в интернете; надежно хранить всю информацию о ваших зачислениях и платежах.</SystemDescription>
+				<Send>
+					<receiver />
+					<sum>auto</sum>
+					<label>auto</label>
+					<short-dest>Payment for invoice #</short-dest>
+<!--					<need-fio>0</need-fio>
+					<need-email>0</need-email>
+					<need-phone>0</need-phone>
+					<need-address>0</need-address>
+-->
+				</Send>
+				<Comp>Yandex.p2p</Comp>
+				<Cpp>https://money.yandex.ru/quickpay/confirm.xml</Cpp>
+				<Hash/>
+				<formcomment>ИП "Рогов и Копытов"</formcomment>
+				<ContractsTypes>
+					<Default>1</Default>
+					<Natural>1</Natural>
+					<Juridical>1</Juridical>
+					<Individual>1</Individual>
+				</ContractsTypes>
+				<IsContinuePaying>1</IsContinuePaying>
+				<Course>1</Course>
+				<IsCourseUpdate>0</IsCourseUpdate>
+				<Measure>руб</Measure>
+				<Valute>RUR</Valute>
+				<MinimumPayment>2.00</MinimumPayment>
+				<MaximumPayment>15000.00</MaximumPayment>
+				<IsActive>0</IsActive>
+				<Is54-FZ>0</Is54-FZ>
+			</Yandex.p2p>
+			<!-- ********************************************************************* -->
 			<QIWI>
 				<Name>QIWI</Name>
 				<SystemDescription>Платёжная система использующая номер мобильного телефона в качестве номера кошелька. Большая сеть терминалов для оплаты.</SystemDescription>
