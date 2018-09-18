@@ -16,18 +16,6 @@ if(!Count($Args))
 # yandex protocol version = commonHTTP-3.0
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-#[22:57:17.44][44122] [Security module]: (notification_type) = (p2p-incoming)
-#[22:57:17.44][44122] [Security module]: (amount) = (899.44)
-#[22:57:17.44][44122] [Security module]: (datetime) = (2018-09-15T19:57:17Z)
-#[22:57:17.44][44122] [Security module]: (codepro) = (false)
-#[22:57:17.44][44122] [Security module]: (sender) = (41001000040)
-#[22:57:17.44][44122] [Security module]: (sha1_hash) = (7a73cb4f07419a6d79291ac883bea507debe565c)
-#[22:57:17.44][44122] [Security module]: (test_notification) = (true)
-#[22:57:17.44][44122] [Security module]: (operation_label) = (EMPTY)
-#[22:57:17.44][44122] [Security module]: (operation_id) = (test-notification)
-#[22:57:17.44][44122] [Security module]: (currency) = (643)
-#[22:57:17.44][44122] [Security module]: (label) = (EMPTY)
-
 $ArgsIDs = Array(
 		'notification_type',
 		'operation_id',
@@ -59,6 +47,8 @@ foreach($ArgsIDs as $ArgID)
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Config = Config();
+#-------------------------------------------------------------------------------
+$Date = Date('c', Time());
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(StrLen($Args['sha1_hash']) > 1){
