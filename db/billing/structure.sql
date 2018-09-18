@@ -98,6 +98,7 @@ CREATE TABLE `Invoices` (
   `PaymentSystemID` char(50) default '',
   `Summ` decimal(11,2) default '0.00',
   `IsPosted` enum('no','yes') default 'no',
+  `IsCheckSent` enum('no','yes') default 'yes',
   `StatusID` char(30) default 'UnSeted',
   `StatusDate` int(11) default '0',
   PRIMARY KEY  (`ID`),
