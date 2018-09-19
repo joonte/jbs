@@ -26,7 +26,7 @@ $Send['amount'] = Round($Summ/$Settings['Course'],2) * 100;
 $Send['orderNumber'] = $InvoiceID;
 #-------------------------------------------------------------------------------
 $Valute = Array(
-		'RUR'	=> 643,
+		'RUB'	=> 643,
 		'USD'	=> 840,
 		'EUR'	=> 978,
 		'UAH'	=> 980,

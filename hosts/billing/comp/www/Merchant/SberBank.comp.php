@@ -185,7 +185,7 @@ if(!IsSet($Args['amount']) || !$Args['amount']){
 }else{
 	#-------------------------------------------------------------------------------
 	if($Invoice['Summ'] != $Args['amount'] / 100)
-		return ERROR | @Trigger_Error('[comp/www/Merchant/SberBank]: сумма платежа не совпадает, %s != %s',$Invoice['Summ'],($Args['amount'] / 100));
+		return ERROR | @Trigger_Error(SPrintF('[comp/www/Merchant/SberBank]: сумма платежа не совпадает, %s != %s',$Invoice['Summ'],($Args['amount'] / 100)));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------

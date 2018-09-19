@@ -2232,7 +2232,7 @@ set @Text = '<NOBODY>
   <TR>
    <TD>За web-услуги по счету №%Invoice.Number%</TD>
    <TD align="right">%PaymentSystem.Send.LMI_PAYEE_PURSE%</TD>
-   <TD align="right">%Invoice.Foreign% RUR</TD>
+   <TD align="right">%Invoice.Foreign% RUB</TD>
   </TR>
  </TABLE>
 </NOBODY>';

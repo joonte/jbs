@@ -222,7 +222,7 @@ if(!IsSet($Args['amount']) || !$Args['amount']){
 }else{
 	#-------------------------------------------------------------------------------
 	if($Invoice['Summ'] != $Args['amount'] / 100)
-		return ERROR | @Trigger_Error('[comp/www/Merchant/Komtet]: сумма платежа не совпадает, %s != %s',$Invoice['Summ'],($Args['amount'] / 100));
+		return ERROR | @Trigger_Error(SPrintF('[comp/www/Merchant/Komtet]: сумма платежа не совпадает, %s != %s',$Invoice['Summ'],($Args['amount'] / 100)));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------

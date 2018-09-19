@@ -178,7 +178,7 @@
 				<Course>1</Course>
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>WMR</Measure>
-				<Valute>RUR</Valute>
+				<Valute>RUB</Valute>
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
@@ -206,7 +206,7 @@
 				<Course>1</Course>
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>WMR</Measure>
-				<Valute>RUR</Valute>
+				<Valute>RUB</Valute>
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
@@ -324,7 +324,7 @@
 				<Course>1</Course>
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>руб</Measure>
-				<Valute>RUR</Valute>
+				<Valute>RUB</Valute>
 				<MinimumPayment>1.00</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
@@ -359,7 +359,7 @@
 				<Course>1</Course>
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>руб</Measure>
-				<Valute>RUR</Valute>
+				<Valute>RUB</Valute>
 				<MinimumPayment>2.00</MinimumPayment>
 				<MaximumPayment>15000.00</MaximumPayment>
 				<IsActive>0</IsActive>
@@ -394,7 +394,7 @@
 				<Course>1</Course>
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>руб</Measure>
-				<Valute>RUR</Valute>
+				<Valute>RUB</Valute>
 				<MinimumPayment>1.00</MinimumPayment>
 				<MaximumPayment>15000.00</MaximumPayment>
 				<IsActive>0</IsActive>
@@ -424,8 +424,8 @@
 				<IsContinuePaying>1</IsContinuePaying>
 				<Course>1</Course>
 				<IsCourseUpdate>0</IsCourseUpdate>
-				<Measure>RUR</Measure>
-				<Valute>RUR</Valute>
+				<Measure>RUB</Measure>
+				<Valute>RUB</Valute>
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
@@ -505,7 +505,7 @@
 					<eshopId/>
 					<recipientAmount>auto</recipientAmount>
 					<orderId>auto</orderId>
-					<recipientCurrency>RUR</recipientCurrency>
+					<recipientCurrency>RUB</recipientCurrency>
 					<successUrl>auto</successUrl>
 					<failUrl>auto</failUrl>
 					<serviceName>Payment for invoice #</serviceName>
@@ -523,7 +523,7 @@
 				<Course>1</Course>
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>руб</Measure>
-				<Valute>RUR</Valute>
+				<Valute>RUB</Valute>
 				<MinimumPayment>1.00</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
@@ -556,7 +556,7 @@
 				<Course>1</Course>
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>руб</Measure>
-				<Valute>RUR</Valute>
+				<Valute>RUB</Valute>
 				<MinimumPayment>1.00</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
@@ -619,7 +619,7 @@
 				<Course>1</Course>
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>руб</Measure>
-				<Valute>RUR</Valute>
+				<Valute>RUB</Valute>
 				<MinimumPayment>1.00</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
@@ -648,7 +648,7 @@
 				<Course>1</Course>
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>руб</Measure>
-				<Valute>RUR</Valute>
+				<Valute>RUB</Valute>
 				<MinimumPayment>1.00</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
@@ -680,7 +680,7 @@
 				<Course>1</Course>
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>руб</Measure>
-				<Valute>RUR</Valute>
+				<Valute>RUB</Valute>
 				<MinimumPayment>1.00</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
@@ -711,7 +711,7 @@
 				<Course>1</Course>
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>руб</Measure>
-				<Valute>RUR</Valute>
+				<Valute>RUB</Valute>
 				<MinimumPayment>1.00</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
@@ -787,6 +787,39 @@
 				<Is54-FZ>0</Is54-FZ>
 			</Checkout>
 			<!-- ********************************************************************* -->
+			<PayPal>
+				<Name>PayPal</Name>
+				<SystemDescription>Система PayPal является простым и безопасным средством перечисления и приёма денежных ресурсов в сети Интернет. PayPal предоставляет возможность выбора наиболее удобного и оптимального способа оплаты, в том числе используя кредитные карты, банковские счета, PayPal Smart Connect или остаток средств на кошельках, при этом обеспечивая конфиденциальность финансовой информации.
+				</SystemDescription>
+				<Send>
+					<business/>
+					<amount>auto</amount>
+					<item_name>Payment for invoice #</item_name>
+					<item_number>auto</item_number>
+					<currency_code>auto</currency_code>
+					<cancel_return>auto</cancel_return>
+					<return>auto</return>
+					<notify_url>auto</notify_url>
+				</Send>
+				<Comp>PayPal</Comp>
+				<Cpp>https://www.paypal.com/cgi-bin/webscr</Cpp>
+				<ContractsTypes>
+					<Default>1</Default>
+					<Natural>1</Natural>
+					<Juridical>1</Juridical>
+					<Individual>1</Individual>
+				</ContractsTypes>
+				<IsContinuePaying>1</IsContinuePaying>
+				<Course>1</Course>
+				<IsCourseUpdate>0</IsCourseUpdate>
+				<Measure>RUB</Measure>
+				<Valute>RUB</Valute>
+				<MinimumPayment>0.01</MinimumPayment>
+				<MaximumPayment>250000.00</MaximumPayment>
+				<IsActive>0</IsActive>
+				<Is54-FZ>0</Is54-FZ>
+			</PayPal>
+			<!-- ********************************************************************* -->
 			<OKPAY>
 				<Name>OKPAY</Name>
 				<SystemDescription>электронная валюта с мгновенными денежными переводами и возможностью защиты интересов покупателя</SystemDescription>
@@ -842,7 +875,7 @@
 				<Course>1</Course>
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>руб</Measure>
-				<Valute>RUR</Valute>
+				<Valute>RUB</Valute>
 				<MinimumPayment>5.00</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
@@ -886,7 +919,7 @@
 				<Course>1</Course>
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>руб</Measure>
-				<Valute>RUR</Valute>
+				<Valute>RUB</Valute>
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>1000000.00</MaximumPayment>
 				<IsActive>1</IsActive>
@@ -908,7 +941,7 @@
 				<Course>1</Course>
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>руб</Measure>
-				<Valute>RUR</Valute>
+				<Valute>RUB</Valute>
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>1000000.00</MaximumPayment>
 				<IsActive>1</IsActive>
@@ -930,7 +963,7 @@
 				<Course>1</Course>
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>руб</Measure>
-				<Valute>RUR</Valute>
+				<Valute>RUB</Valute>
 				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>1000000.00</MaximumPayment>
 				<IsActive>1</IsActive>
