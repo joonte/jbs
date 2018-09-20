@@ -8,7 +8,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 $Args = Args();
-Debug(SPrintF("[comp/www/Merchant/PayPal]: before Args = %s",print_r($Args,true)));
+#Debug(SPrintF("[comp/www/Merchant/PayPal]: before Args = %s",print_r($Args,true)));
 #-------------------------------------------------------------------------------
 if(!Count($Args))
 	return "No args...\n";
@@ -18,7 +18,7 @@ $ArgsIDs = Array('invoice','mc_gross','payment_status','payer_email');
 foreach($ArgsIDs as $ArgID)
 	$Args[$ArgID] = @$Args[$ArgID];
 #-------------------------------------------------------------------------------
-Debug(SPrintF("[comp/www/Merchant/PayPal]: Args = %s",print_r($Args,true)));
+#Debug(SPrintF("[comp/www/Merchant/PayPal]: Args = %s",print_r($Args,true)));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $OrderID = $Args['invoice'];
@@ -89,8 +89,8 @@ if(!$Args['payment_status'] || $Args['payment_status'] != 'Completed'){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($Invoice['Summ'] != $Args['mc_gross'])
-	return ERROR | @Trigger_Error(SPrintF('[comp/www/Merchant/PayPal]: сумма платежа не совпадает, %s != %s',$Invoice['Summ'],$Args['mc_gross']));
+if(Round($Invoice['Summ']/$Settings['Course'],2) != $Args['mc_gross'])
+	return ERROR | @Trigger_Error(SPrintF('[comp/www/Merchant/PayPal]: сумма платежа не совпадает, %s != %s',Round($Invoice['Summ']/$Settings['Course'],2),$Args['mc_gross']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Users/Init',100);
