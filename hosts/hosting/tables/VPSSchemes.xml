@@ -216,7 +216,6 @@
 				<ListElement>%ID%</ListElement>
 				<ListElement>%IsActive%</ListElement>
 			</Args>
-			<Comp>Formats/Logic</Comp>
 		</IsActive>
 		<!-- ********************************************************************** -->
 		<Orders>
