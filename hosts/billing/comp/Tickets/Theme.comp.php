@@ -10,7 +10,7 @@ $__args_list = Array('TicketID','Theme','Length');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Comp = Comp_Load('Formats/String',$Theme,$Length);
+$Comp = Comp_Load('Formats/String',HtmlSpecialChars($Theme),$Length);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #$SPAN = new Tag('SPAN', $Theme);
