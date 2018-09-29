@@ -67,7 +67,7 @@ switch(ValueOf($Ticket)){
         #-----------------------------------------------------------------------
         $Table[] = Array('Дата обращения',$Comp);
         #-----------------------------------------------------------------------
-        $Theme = Comp_Load('Formats/String',$Ticket['Theme'],25);
+        $Theme = Comp_Load('Formats/String',HtmlSpecialChars($Ticket['Theme']),25);
         if(Is_Error($Theme))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
