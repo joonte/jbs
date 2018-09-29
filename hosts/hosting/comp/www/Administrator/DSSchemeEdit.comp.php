@@ -56,7 +56,7 @@ if($DSSchemeID){
 			'raid'				=> '3Ware 9650SE-4LPML, 256Mb cache',
 			'disks'				=> 'SATA 500Gb + SATA 500Gb',
 			'chrate'			=> 8,
-			'trafflimit'			=> 1000,
+			'trafflimit'			=> 8000,
 			'traffcorrelation'		=> '1:4',
 			'OS'				=> 'FreeBSD 10.1',
 			'Switch'			=> 'ex2200 ge-0/0/11',
@@ -282,14 +282,14 @@ if(Is_Error($Comp))
 $Table[] = Array('Скорость канала, мегабит',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'trafflimit','value'=>$DSScheme['trafflimit']));
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'trafflimit','value'=>$DSScheme['trafflimit'],'prompt'=>'Если ввести ноль - то это безлимит и поле не будет отображаться в информации о тарифе'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Месячный трафик, Gb',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'text','name' =>'traffcorrelation','value'=>$DSScheme['traffcorrelation']));
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name' =>'traffcorrelation','value'=>$DSScheme['traffcorrelation'],'prompt'=>'Если ввести ноль - то это безлимит и поле не будет отображаться в информации о тарифе'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
