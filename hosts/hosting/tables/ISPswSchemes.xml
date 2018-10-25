@@ -153,7 +153,7 @@
 				<ListElement>%Discount%</ListElement>
 				<Length>3</Length>
 			</Args>
-			<Alias>(IF(`Discount` > 0, CONCAT(`Discount`,IF(`Discount` > 0,'%','')),'нет'))</Alias>
+			<Alias>(IF(`Discount` > -1, CONCAT(`Discount`,IF(`Discount` > -1,'%','')),'нет'))</Alias>
 		</Discount>
 		<!-- ********************************************************************** -->
 		<SoftWareGroup>
