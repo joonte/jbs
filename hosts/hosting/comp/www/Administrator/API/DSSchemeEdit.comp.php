@@ -21,6 +21,7 @@ $PackageID		=  (string) @$Args['PackageID'];
 $CostDay		=   (float) @$Args['CostDay'];
 $CostMonth		=   (float) @$Args['CostMonth'];
 $CostInstall		=   (float) @$Args['CostInstall'];
+$Discount		=  (double) @$Args['Discount'];
 $ServerID		= (integer) @$Args['ServerID'];
 $IsActive		= (boolean) @$Args['IsActive'];
 $IsBroken		= (boolean) @$Args['IsBroken'];
@@ -78,6 +79,20 @@ if($MinDaysPay > $MaxDaysPay)
 	return new gException('WRONG_MIN_DAYS_PAY','Минимальное кол-во дней оплаты не можеть быть больше максимального');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+if($Discount < 0){
+	#-------------------------------------------------------------------------------
+	$Discount = -1;
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
+	$Discount = IntVal($Discount);
+	#-------------------------------------------------------------------------------
+	if($Discount > 100)
+		$Discount = 100;
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $IDSScheme = Array(
 			'GroupID'		=> $GroupID,
 			'UserID'		=> $UserID,
@@ -86,6 +101,7 @@ $IDSScheme = Array(
 			'CostDay'		=> $CostDay,
 			'CostMonth'		=> $CostMonth,
 			'CostInstall'		=> $CostInstall,
+			'Discount'		=> $Discount,
 			'ServerID'		=> $ServerID,
 			'IsActive'		=> $IsActive,
 			'IsBroken'		=> $IsBroken,

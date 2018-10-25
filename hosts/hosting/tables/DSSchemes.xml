@@ -175,6 +175,17 @@
 			</Attribs>
 		</CostMonth>
 		<!-- ********************************************************************** -->
+		<Discount>
+			<Head>Скидка</Head>
+			<Prompt>Персональная скидка на тарифный план</Prompt>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Discount%</ListElement>
+				<Length>3</Length>
+			</Args>
+			<Alias>(IF(`Discount` > 0, CONCAT(`Discount`,IF(`Discount` > 0,'%','')),'нет'))</Alias>
+		</Discount>
+		<!-- ********************************************************************** -->
 		<ServersGroup>
 			<Head>Гр. серв.</Head>
 			<Prompt>Датацентр</Prompt>
@@ -281,6 +292,7 @@
 		<ListElement>User</ListElement>
 		<ListElement>ServersGroup</ListElement>
 		<ListElement>CostMonth</ListElement>
+		<ListElement>Discount</ListElement>
 		<ListElement>CPU</ListElement>
 		<ListElement>ram</ListElement>
 		<ListElement>raid</ListElement>

@@ -21,6 +21,7 @@ $PackageID		=  (string) @$Args['PackageID'];
 $CostDay		=   (float) @$Args['CostDay'];
 $CostMonth		=   (float) @$Args['CostMonth'];
 $CostInstall		=   (float) @$Args['CostInstall'];
+$Discount		=  (double) @$Args['Discount'];
 $AddressType		=  (string) @$Args['AddressType'];
 $Servers		=   (array) @$Args['Servers'];
 $Comment		=  (string) @$Args['Comment'];
@@ -62,6 +63,21 @@ if($MinDaysProlong > $MinDaysPay)
 if($MinDaysPay > $MaxDaysPay)
 	return new gException('WRONG_MIN_DAYS_PAY','Минимальное кол-во дней оплаты не можеть быть больше максимального');
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($Discount < 0){
+	#-------------------------------------------------------------------------------
+	$Discount = -1;
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
+	$Discount = IntVal($Discount);
+	#-------------------------------------------------------------------------------
+	if($Discount > 100)
+	$Discount = 100;
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $IExtraIPScheme = Array(
 			'GroupID'		=> $GroupID,
 			'UserID'		=> $UserID,
@@ -70,6 +86,7 @@ $IExtraIPScheme = Array(
 			'CostDay'		=> $CostDay,
 			'CostMonth'		=> $CostMonth,
 			'CostInstall'		=> $CostInstall,
+			'Discount'		=> $Discount,
 			'AddressType'		=> $AddressType,
 			'Params'		=> Array('Servers'=>$Servers),
 			'Comment'		=> $Comment,

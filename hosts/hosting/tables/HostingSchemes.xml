@@ -149,10 +149,18 @@
 			<Args>
 				<ListElement>%CostMonth%</ListElement>
 			</Args>
-			<!--  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs> -->
 		</CostMonth>
+		<!-- ********************************************************************** -->
+		<Discount>
+			<Head>Скидка</Head>
+			<Prompt>Персональная скидка на тарифный план</Prompt>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Discount%</ListElement>
+				<Length>3</Length>
+			</Args>
+			<Alias>(IF(`Discount` > -1, CONCAT(`Discount`,IF(`Discount` > -1,'%','')),'нет'))</Alias>
+		</Discount>
 		<!-- ********************************************************************** -->
 		<ServersGroup>
 			<Head>Гр. серв.</Head>
@@ -254,6 +262,7 @@
 		<ListElement>User</ListElement>
 		<ListElement>ServersGroup</ListElement>
 		<ListElement>CostMonth</ListElement>
+		<ListElement>Discount</ListElement>
 		<ListElement>QuotaDisk</ListElement>
 		<ListElement>IsActive</ListElement>
 		<ListElement>OrderLink</ListElement>

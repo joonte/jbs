@@ -145,6 +145,16 @@
 			</Args>
 		</CostMonth>
 		<!-- ********************************************************************** -->
+		<Discount>
+			<Head>Скидка</Head>
+			<Prompt>Персональная скидка на тарифный план</Prompt>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Discount%</ListElement>
+				<Length>3</Length>
+			</Args>
+			<Alias>(IF(`Discount` > 0, CONCAT(`Discount`,IF(`Discount` > 0,'%','')),'нет'))</Alias>
+		</Discount>
 		<!-- ********************************************************************** -->
 		<SoftWareGroup>
 			<Head>Гр. ПО.</Head>
@@ -199,6 +209,7 @@
 		<ListElement>Group</ListElement>
 		<ListElement>User</ListElement>
 		<ListElement>CostMonth</ListElement>
+		<ListElement>Discount</ListElement>
 		<ListElement>IsActive</ListElement>
 		<ListElement>Orders</ListElement>
 		<ListElement>SortID</ListElement>

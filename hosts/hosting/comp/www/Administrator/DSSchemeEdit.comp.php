@@ -41,6 +41,7 @@ if($DSSchemeID){
 			'CostDay'			=> 100,
 			'CostMonth'			=> 3000,
 			'CostInstall'			=> 300,
+			'Discount'			=> -1,
 			'ServerID'			=> 1,
 			'IsActive'			=> TRUE,
 			'IsBroken'			=> FALSE,
@@ -126,6 +127,21 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Стоимость установки/подключения',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+                'Form/Input',
+                Array(
+                        'type'  => 'text',
+                        'name'  => 'Discount',
+                        'value' => SPrintF('%01.0f',$DSScheme['Discount']),
+                        'prompt'=> 'Если указано число от нуля до 100, то при оплате испльзуется именно указанная скидка, все глобальные скидки и бонусы игнорируются. При указании отрицательного числа - используются глобальные скидки и бонусы',
+                        )
+                );
+if(Is_Error($Comp))
+        return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Скидка'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Скидка на этот тариф')),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) = 40000','SortOn'=>'Address'));

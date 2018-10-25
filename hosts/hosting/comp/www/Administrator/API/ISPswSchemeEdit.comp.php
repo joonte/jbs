@@ -23,6 +23,7 @@ $Name			=  (string) @$Args['Name'];
 $PackageID		=  (string) @$Args['PackageID'];
 $CostDay		=   (float) @$Args['CostDay'];
 $CostMonth		=   (float) @$Args['CostMonth'];
+$Discount		=  (double) @$Args['Discount'];
 $Comment		=  (string) @$Args['Comment'];
 $IsActive		= (boolean) @$Args['IsActive'];
 $IsProlong		= (boolean) @$Args['IsProlong'];
@@ -82,6 +83,20 @@ if(!In_Array($ConsiderTypeID,Array('Upon','Daily')))
 	return new gException('WRONG_CONSIDER_TYPE','Тип учёта может быть только Разово/Ежедневно');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+if($Discount < 0){
+	#-------------------------------------------------------------------------------
+	$Discount = -1;
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
+	$Discount = IntVal($Discount);
+	#-------------------------------------------------------------------------------
+	if($Discount > 100)
+		$Discount = 100;
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $IISPswScheme = Array(
 			#-------------------------------------------------------------------------------
 			'GroupID'		=> $GroupID,
@@ -91,6 +106,7 @@ $IISPswScheme = Array(
 			'PackageID'		=> $PackageID,
 			'CostDay'		=> $CostDay,
 			'CostMonth'		=> $CostMonth,
+			'Discount'		=> $Discount,
 			'Comment'		=> $Comment,
 			'IsActive'		=> $IsActive,
 			'IsProlong'		=> $IsProlong,

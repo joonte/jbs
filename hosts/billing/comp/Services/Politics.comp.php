@@ -9,6 +9,40 @@ $__args_list = Array('UserID','GroupID','ServiceID','SchemeID','DaysPay','Servic
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
+# достаём скидку для тарифа. возможно, прогонять все политики и не надо
+$Service = DB_Select('Services',Array('ID','Code','Name'),Array('UNIQ','ID'=>$ServiceID));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Service)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Scheme = DB_Select(SPrintF('%sSchemes',$Service['Code']),Array('ID','Discount'),Array('UNIQ','ID'=>$SchemeID));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Scheme)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# не применяем ничего, задана скидка
+#if($Scheme['Discount'] > -1)
+#	return TRUE;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Entrance = Tree_Path('Groups',(integer)$GroupID);
 #-----------------------------------------------------------------
 switch(ValueOf($Entrance)){

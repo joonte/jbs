@@ -40,6 +40,7 @@ if($VPSSchemeID){
 				'CostDay'		=> 40,
 				'CostMonth'		=> 1200,
 				'CostInstall'		=> 100,
+				'Discount'		=> -1,
 				'ServersGroupID'	=> 1,
 				'Comment'		=> 'Идеальный тариф для ...',
 				'IsReselling'		=> FALSE,
@@ -147,6 +148,21 @@ $Comp = Comp_Load('Form/Summ',Array('name'=>'CostInstall','value'=>SPrintF('%01.
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 $Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Стоимость подключения'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Цена за инсталляцию')),$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+		'Form/Input',
+		Array(
+			'type'  => 'text',
+			'name'  => 'Discount',
+			'value' => SPrintF('%01.0f',$VPSScheme['Discount']),
+			'prompt'=> 'Если указано число от нуля до 100, то при оплате испльзуется именно указанная скидка, все глобальные скидки и бонусы игнорируются. При указании отрицательного числа - используются глобальные скидки и бонусы',
+			)
+		);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Скидка'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Скидка на этот тариф')),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Options = Array();

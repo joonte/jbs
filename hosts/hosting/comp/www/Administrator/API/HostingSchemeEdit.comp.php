@@ -20,6 +20,7 @@ $Name                  =  (string) @$Args['Name'];
 $PackageID             =  (string) @$Args['PackageID'];
 $CostDay               =   (float) @$Args['CostDay'];
 $CostMonth             =   (float) @$Args['CostMonth'];
+$Discount	       =  (double) @$Args['Discount'];
 $ServersGroupID        = (integer) @$Args['ServersGroupID'];
 $HardServerID          = (integer) @$Args['HardServerID'];
 $Comment               =  (string) @$Args['Comment'];
@@ -168,6 +169,21 @@ if($MinDaysProlong > $MinDaysPay)
 if($MinDaysPay > $MaxDaysPay)
   return new gException('WRONG_MIN_DAYS_PAY','Минимальное кол-во дней оплаты не можеть быть больше максимального');
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($Discount < 0){
+	#-------------------------------------------------------------------------------
+	$Discount = -1;
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
+	$Discount = IntVal($Discount);
+	#-------------------------------------------------------------------------------
+	if($Discount > 100)
+		$Discount = 100;
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $IHostingScheme = Array(
   #-----------------------------------------------------------------------------
   'GroupID'               => $GroupID,
@@ -176,6 +192,7 @@ $IHostingScheme = Array(
   'PackageID'             => $PackageID,
   'CostDay'               => $CostDay,
   'CostMonth'             => $CostMonth,
+  'Discount'		  => $Discount,
   'ServersGroupID'        => $ServersGroupID,
   'HardServerID'          => $HardServerID,
   'Comment'               => $Comment,
