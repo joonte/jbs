@@ -41,6 +41,12 @@ $trafflimit		=   (float) @$Args['trafflimit'];
 $traffcorrelation	=  (string) @$Args['traffcorrelation'];
 $OS			=  (string) @$Args['OS'];
 $Switch			=  (string) @$Args['Switch'];
+$IPaddr			=  (string) @$Args['IPaddr'];
+$DSuser			=  (string) @$Args['DSuser'];
+$DSpass			=  (string) @$Args['DSpass'];
+$ILOaddr		=  (string) @$Args['ILOaddr'];
+$ILOuser		=  (string) @$Args['ILOuser'];
+$ILOpass		=  (string) @$Args['ILOpass'];
 $UserNotice		=  (string) @$Args['UserNotice'];
 $AdminNotice		=  (string) @$Args['AdminNotice'];
 #-------------------------------------------------------------------------------
@@ -121,6 +127,12 @@ $IDSScheme = Array(
 			'traffcorrelation'	=> $traffcorrelation,
 			'OS'			=> $OS,
 			'Switch'		=> $Switch,
+			'IPaddr'		=> $IPaddr,
+			'DSuser'		=> $DSuser,
+			'DSpass'		=> $DSpass,
+			'ILOaddr'		=> $ILOaddr,
+			'ILOuser'		=> $ILOuser,
+			'ILOpass'		=> $ILOpass,
 			'UserNotice'		=> $UserNotice,
 			'AdminNotice'		=> $AdminNotice
 );

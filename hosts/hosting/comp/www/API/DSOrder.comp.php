@@ -25,7 +25,7 @@ $Regulars = Regulars();
 if(!$DSSchemeID)
 	return new gException('DS_SCHEME_NOT_DEFINED','Сервер не выбран');
 #-------------------------------------------------------------------------------
-$DSScheme = DB_Select('DSSchemes',Array('ID','Name','ServerID','IsActive'),Array('UNIQ','ID'=>$DSSchemeID));
+$DSScheme = DB_Select('DSSchemes',Array('ID','Name','ServerID','IsActive','IPaddr'),Array('UNIQ','ID'=>$DSSchemeID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DSScheme)){
 case 'error':
@@ -98,6 +98,9 @@ if(Is_Error($OrderID))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $IDSOrder = Array('OrderID'=>$OrderID,'SchemeID'=>$DSScheme['ID']);
+#-------------------------------------------------------------------------------
+if($DSScheme['IPaddr'])
+	$IDSOrder['IP'] = $DSScheme['IPaddr'];
 #-------------------------------------------------------------------------------
 $DSOrderID = DB_Insert('DSOrders',$IDSOrder);
 if(Is_Error($DSOrderID))

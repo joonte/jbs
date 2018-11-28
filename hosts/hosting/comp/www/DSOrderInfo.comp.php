@@ -21,6 +21,12 @@ $DSOrderID = (integer) @$Args['DSOrderID'];
 $Columns = Array(
 			'*',
 			'(SELECT `Name` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `Scheme`',
+			'(SELECT `IPaddr` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `IPaddr`',
+			'(SELECT `DSuser` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `DSuser`',
+			'(SELECT `DSpass` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `DSpass`',
+			'(SELECT `ILOaddr` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `ILOaddr`',
+			'(SELECT `ILOuser` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `ILOuser`',
+			'(SELECT `ILOpass` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `ILOpass`',
 			'(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` =  (SELECT `ServerID` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`))) as `ServersGroupName`',
 			'(SELECT `IsAutoProlong` FROM `Orders` WHERE `DSOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',
 			'(SELECT `UserNotice` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DSOrdersOwners`.`OrderID`) AS `UserNotice`',
@@ -119,6 +125,35 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Автопродление',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Table[] = 'Прочее';
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($DSOrder['IPaddr'])
+	$Table[] = Array('IP адрес сервера',$DSOrder['IPaddr']);
+#-------------------------------------------------------------------------------
+if($DSOrder['DSuser'])
+	$Table[] = Array('Пользователь ОС',$DSOrder['DSuser']);
+#-------------------------------------------------------------------------------
+if($DSOrder['DSpass'])
+	$Table[] = Array('Пароль пользователя ОС',$DSOrder['DSpass']);
+#-------------------------------------------------------------------------------
+if($DSOrder['ILOaddr']){
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Formats/String',$DSOrder['ILOaddr'],35,$DSOrder['ILOaddr']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array('Адрес IPMI/iLO',new Tag('TD',Array('class'=>'Standard'),$Comp));
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+if($DSOrder['ILOuser'])
+	$Table[] = Array('Пользователь IPMI/iLO',$DSOrder['ILOuser']);
+#-------------------------------------------------------------------------------
+if($DSOrder['ILOpass'])
+	$Table[] = Array('Пароль IPMI/iLO',$DSOrder['ILOpass']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Statuses/State','DSOrders',$DSOrder);

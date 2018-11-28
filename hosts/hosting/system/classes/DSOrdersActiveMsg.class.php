@@ -6,10 +6,27 @@
  *  Copyright © 2012 Vitaly Velikodnyy
  *
  */
- class DSOrdersActiveMsg extends Message {
-     public function __construct(array $params, $toUser) {
-         parent::__construct('DSOrdersActive', $toUser);
+class DSOrdersActiveMsg extends Message {
+	#-------------------------------------------------------------------------------
+	public function __construct(array $params, $toUser) {
+		#-------------------------------------------------------------------------------
+		parent::__construct('DSOrdersActive', $toUser, $params);
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	public function getParams() {
+		#-------------------------------------------------------------------------------
+		$DSScheme = DB_Select('DSSchemes', Array('*'), Array('UNIQ', 'Where' => SPrintF('`ID` = %u',$this->params['SchemeID'])));
+		#-------------------------------------------------------------------------------
+		if (!Is_Array($DSScheme))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$this->params['DSScheme'] = $DSScheme;
+		#-------------------------------------------------------------------------------
+		return $this->params;
+		#-------------------------------------------------------------------------------
+	}
+}
 
-         $this->setParams($params);
-     }
- }
+?>

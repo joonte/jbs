@@ -76,7 +76,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DSOrders','StatusID'=>'Active','RowsIDs'=>$DSOrder['ID'],'Comment'=>'Заказ создан на сервере'));
+$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DSOrders','StatusID'=>'Active','RowsIDs'=>$DSOrder['ID'],'Comment'=>'Сервер активирован'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Comp)){
 case 'error':
@@ -99,6 +99,9 @@ $Event = Array(
 $Event = Comp_Load('Events/EventInsert',$Event);
 if(!$Event)
 	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$GLOBALS['TaskReturnInfo'] = Array(($ClassDSServer->Settings['Address'])=>Array($DSScheme['Name']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;
