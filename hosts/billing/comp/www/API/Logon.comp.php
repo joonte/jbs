@@ -39,14 +39,22 @@ $Result = CacheManager::get($CacheID);
 #-------------------------------------------------------------------------------
 if($Result){
 	#-------------------------------------------------------------------------------
-	if($Result > $Settings['BruteForceMaxAttempts']){
+	if(In_Array(@$_SERVER['REMOTE_ADDR'],Explode(',',$Settings['ExcludeIPs']))){
 		#-------------------------------------------------------------------------------
-		CacheManager::add($CacheID,$Result + 1,IntVal($Settings['BruteForcePeriod']));
+		Debug(SPrintF('[comp/www/API/Logon]: перебор пароля для %s; с адреса %s (ИСКЛЮЧЕНИЕ); попыток %s',$Email,@$_SERVER['REMOTE_ADDR'],$Result));
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/www/API/Logon]: перебор пароля для %s; с адреса %s; попыток %s',$Email,@$_SERVER['REMOTE_ADDR'],$Result));
+	}else{
 		#-------------------------------------------------------------------------------
-		if($Settings['IsActive'])
-			return new gException('BRUTE_PASSWORD_ATTEMPT','Попытка перебора пароля');
+		if($Result > $Settings['BruteForceMaxAttempts']){
+			#-------------------------------------------------------------------------------
+			CacheManager::add($CacheID,$Result + 1,IntVal($Settings['BruteForcePeriod']));
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/www/API/Logon]: перебор пароля для %s; с адреса %s; попыток %s',$Email,@$_SERVER['REMOTE_ADDR'],$Result));
+			#-------------------------------------------------------------------------------
+			if($Settings['IsActive'])
+				return new gException('BRUTE_PASSWORD_ATTEMPT','Попытка перебора пароля');
+			#-------------------------------------------------------------------------------
+		}
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------

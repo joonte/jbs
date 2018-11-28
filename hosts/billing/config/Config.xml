@@ -814,7 +814,7 @@
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>RUB</Measure>
 				<Valute>RUB</Valute>
-				<MinimumPayment>10</MinimumPayment>
+				<MinimumPayment>0.01</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
 				<Is54-FZ>0</Is54-FZ>
@@ -1930,6 +1930,7 @@
 			<IsActive>1</IsActive>
 			<BruteForceMaxAttempts>10</BruteForceMaxAttempts>
 			<BruteForcePeriod>600</BruteForcePeriod>
+			<ExcludeIPs>127.0.0.1</ExcludeIPs>
 		</PasswordBruteForce>
 		<!-- *********************************************************************** -->
 	</Other>
