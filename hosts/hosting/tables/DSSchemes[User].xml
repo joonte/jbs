@@ -19,7 +19,7 @@
 	<Source>
 		<Conditions>
 			<Where>
-				<UniqID>(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH)) AND `IsActive` = 'yes'</UniqID>
+				<UniqID>(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH)) AND `IsActive` = 'yes' AND `IsBroken` = 'no'</UniqID>
 			</Where>
 			<Message>Для Вас не определены тарифы на арнеду серверов.</Message>
 		</Conditions>
