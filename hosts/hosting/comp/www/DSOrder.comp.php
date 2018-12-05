@@ -142,6 +142,13 @@ if($StepID){
 	#-------------------------------------------------------------------------------
 	$NoBody->AddChild($A);
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>'Order("DS");','value'=>'Продолжить'));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$NoBody->AddChild($Comp);
+	#-------------------------------------------------------------------------------
 	$Table = Array(Array('Базовый договор',$NoBody));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -158,7 +165,7 @@ if($StepID){
 			SPrintF('(SELECT `SortID` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupSortID`',$UniqID),
 			);
 	#-------------------------------------------------------------------------------
-	$DSSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('ServersGroupSortID','SortID'),'Where'=>"`IsActive` = 'yes'"));
+	$DSSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('ServersGroupSortID','CostMonth','Name','SortID'),'Where'=>Array('`IsActive` = "yes"','`IsBroken` = "no"')));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($DSSchemes)){
 	case 'error':
