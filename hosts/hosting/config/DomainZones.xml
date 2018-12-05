@@ -47,7 +47,7 @@
 		<Name>site</Name>
 		<Available>DOMAIN\sNOT\sFOUND</Available>
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
-		<MinChars>1</MinChars>
+		<MinChars>3</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
 		<ExpirationDate>Registry\sExpiry\sDate:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
@@ -1001,7 +1001,7 @@
 		<Name>space</Name>
 		<Available>DOMAIN\sNOT\sFOUND</Available>
 		<NotAvailable>name\sis\sreserved</NotAvailable>
-		<MinChars>2</MinChars>
+		<MinChars>3</MinChars>
 		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
 		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
 		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
