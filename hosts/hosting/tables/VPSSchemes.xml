@@ -161,8 +161,8 @@
 		</CostInstall>
 		<!-- ********************************************************************** -->
                 <Discount>
-			<Head>Скидка</Head>
-			<Prompt>Персональная скидка на тарифный план</Prompt>
+			<Head>Скид.</Head>
+			<Prompt>Скидка для этого тарифа</Prompt>
 			<Comp>Formats/String</Comp>
 			<Args>
 				<ListElement>%Discount%</ListElement>
