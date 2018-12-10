@@ -89,7 +89,7 @@
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>2</MinChars>
 		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
-		<ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
+		<ExpirationDate>Registry\sExpiry\sDate:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Default</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
