@@ -581,6 +581,24 @@ function RegRu_Domain_Transfer($Settings,$DomainName,$DomainZone,$Param){
 	#-------------------------------------------------------------------------------
 	if(In_Array($DomainZone,Array('su','ru','рф'))){
 		#-------------------------------------------------------------------------------
+		Debug(SPrintF("[RegRu_Answer::Domain_Transfer]: Params = %s",print_r($Param,true)));
+		#-------------------------------------------------------------------------------
+		if($Param['PersonID'] == 'Juridical'){
+			#-------------------------------------------------------------------------------
+			$Query['org_r']		= SPrintF('%s "%s"',$Param['Person']['CompanyFormFull'],$Param['Person']['CompanyName']);
+			$Query['code']		= $Param['Person']['Inn'];
+			$Query['address_r']	= SPrintF('%s, %s, %s, %s %s',$Param['Person']['jIndex'],$Param['Person']['jState'],$Param['Person']['jCity'],$Param['Person']['jType'],$Param['Person']['jAddress']);
+			#-------------------------------------------------------------------------------
+		}else{
+			#-------------------------------------------------------------------------------
+			$Query['person_r']	= SPrintF('%s %s %s',$Param['Person']['Sourname'],$Param['Person']['Name'],$Param['Person']['Lastname']);
+			$Query['birth_date']	= $Param['Person']['BornDate'];
+			$Query['passport']	= SPrintF('%s %s выдан %s %s',$Param['Person']['PasportLine'],$Param['Person']['PasportNum'],$Param['Person']['PasportWhom'],$Param['Person']['PasportDate']);
+			$Query['p_addr']	= SPrintF('%s, %s, %s, %s %s, %s',$Param['Person']['pIndex'],$Param['Person']['pState'],$Param['Person']['pCity'],$Param['Person']['pType'],$Param['Person']['pAddress'],$Param['Person']['pRecipient']);
+			$Query['country']             = IsSet($Param['Person']['PasportCountry'])?$Param['Person']['PasportCountry']:$Param['Person']['pCountry'];
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
 		$Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/transfer");
 		#-------------------------------------------------------------------------------
 		$Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
