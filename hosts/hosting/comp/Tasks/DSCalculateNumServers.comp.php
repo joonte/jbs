@@ -41,7 +41,7 @@ default:
 foreach($Schemes as $Scheme){
 	#-------------------------------------------------------------------------------
 	# достаём число юзающихся серверов
-	$Where = Array(SPrintF('`SchemeID` = %u',$Scheme['SchemeID']),"`StatusID` != 'Deleted' AND `StatusID` != 'Waiting'");
+	$Where = Array(SPrintF('`SchemeID` = %u AND `StatusID` IN (%s)',$Scheme['SchemeID']),Implode(','Array('OnCreate','Active','Suspended','OnService')));
 	#-------------------------------------------------------------------------------
 	$Count = DB_Count('DSOrders',Array('Where'=>$Where));
 	if(Is_Error($Count))
