@@ -11,7 +11,7 @@ $Config = Config();
 #-------------------------------------------------------------------------------
 $DeleteTimeout = $Config['Tasks']['Types']['DSForDelete']['DeleteTimeout'] * 24 * 3600;
 #-------------------------------------------------------------------------------
-$Where = Array('`StatusID` = "Suspended"','`StatusDate` + 2592000 - UNIX_TIMESTAMP() <= 0');
+$Where = Array('`StatusID` = "Suspended"',SPrintF('`StatusDate` + %u - UNIX_TIMESTAMP() <= 0',$DeleteTimeout));
 #-------------------------------------------------------------------------------
 $DSOrders = DB_Select('DSOrders','ID',Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
