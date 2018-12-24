@@ -10,9 +10,9 @@
 
 {if $DSScheme.IPaddr || $IP != 'noassign'}
 {if $IP != 'noassign'}
-IP адрес:		{$IP}
+IP адрес заказа:	{$IP}
 {else}
-IP адрес:		{$DSScheme.IPaddr}
+IP адрес заказа:	{$DSScheme.IPaddr}
 {/if}
 {if $DSScheme.DSuser}
 Пользователь:		{$DSScheme.DSuser}
