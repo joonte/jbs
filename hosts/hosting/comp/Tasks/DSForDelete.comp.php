@@ -27,7 +27,10 @@ case 'array':
 	#-------------------------------------------------------------------------------
 	foreach($DSOrders as $DSOrder){
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DSOrders','StatusID'=>'Deleted','RowsIDs'=>$DSOrder['ID'],'Comment'=>'Срок блокировки заказа окончен'));
+		/* заказ выделенного сервера, нельзя просто удалить - он снова будет доступен для заказа.
+		необходимо удалить данные с дисков, сменить пароли IPMI/iLO и т.п... 
+		поэтому статус при удалении - OnService, а не Deleted */
+		$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DSOrders','StatusID'=>'OnService','RowsIDs'=>$DSOrder['ID'],'Comment'=>'Срок блокировки заказа окончен'));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($Comp)){
 		case 'error':

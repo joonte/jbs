@@ -1168,6 +1168,9 @@
 			<Suspended>
 				<Name>Сервер выключен</Name>
 			</Suspended>
+			<OnService>
+				<Name>Сервер на обслуживании</Name>
+			</OnService>
 			<Deleted>
 				<Name>Сервер удалён</Name>
 			</Deleted>
