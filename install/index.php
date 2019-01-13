@@ -38,7 +38,7 @@ if(In_Array('exec',Explode(',',StrToLower(Ini_Get("disable_functions"))))){
 /* added by lissyara, 2012-01-01 in 19:20 MSK, for JBS-241 */
 $Result = Exec('whereis -b mysql');
 $Result = Explode(" ",$Result);
-if($Result[1]){
+if(@$Result[1]){
 	$MySQLbin = $Result[1];
 	#echo $MySQLbin;
 }else{
@@ -109,7 +109,7 @@ echo <<<EOD
  </HEAD>
  <BODY>
   <TABLE class="Standard" cellspacing="5" cellpadding="0" style="max-width:600px;">
-   <CAPTION>Установка биллинговой системы Joonte Billing System 2007-2015</CAPTION>
+   <CAPTION>Установка биллинговой системы Joonte Billing System 2007-2019</CAPTION>
 EOD;
 
 function __ShutDown_Function__() {
@@ -530,7 +530,7 @@ if($__STEP_ID == 1){
   #-----------------------------------------------------------------------------
   $Tests[] = 'Проверка модулей PHP';
   #-----------------------------------------------------------------------------
-  $Extensions = Array('gd','json','libxml','mbstring','mysqli','mysql','openssl','xml','iconv');
+  $Extensions = Array('gd','json','libxml','mbstring','mysqli','openssl','xml','iconv');
   #-----------------------------------------------------------------------------
   foreach($Extensions as $Extension){
     #---------------------------------------------------------------------------
@@ -788,7 +788,7 @@ $Echo = <<<EOD
     </UL>
     После входа в систему воспользуйтесь руководством <A target="blank" href="http://wiki.joonte.com/index.php?title=Документация:Первый_запуск_системы">[первый запуск]</A>.
     <BR />
-    В случае, если, после установки Вы увидите сообщения об ошибках, Вы можете обратиться за их полным описанием в файл <U>jbs-errors.log</U>, который находиться в текущей папке установки или в случае отсутствия прав записи в папке /tmp.
+    В случае, если, после установки Вы увидите сообщения об ошибках, Вы можете обратиться за их полным описанием в файл <U>jbs-errors.log</U>, который находиться в текущей папке установки или, в случае отсутствия прав записи, в папке /tmp.
    </TD>
   </TR>
  </TR>
