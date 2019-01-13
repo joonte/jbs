@@ -14,10 +14,8 @@ $Config = Config();
 $Settings = $Config['Invoices']['PaymentSystems']['SberBank'];
 #-------------------------------------------------------------------------------
 $Send = $Settings['Send'];
-
-DEBUG(print_r($Settings,true));
-
-
+#-------------------------------------------------------------------------------
+#DEBUG(print_r($Settings,true));
 #-------------------------------------------------------------------------------
 /* сумма, в копейках */
 $Send['amount'] = Round($Summ/$Settings['Course'],2) * 100;
