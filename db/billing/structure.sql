@@ -426,7 +426,7 @@ CREATE TABLE `Orders` (
   `ExpirationDate` int(11) default '0',
   `Keys` char(255) default '',
   `IsPayed` enum('no','yes') default 'no',
-  `DaysRemainded` INT(11) NOT NULL,
+  `DaysRemainded` INT(11) default '0',
   `StatusID` char(30) default 'UnSeted',
   `StatusDate` int(11) default '0',
   `Params` LONGTEXT NOT NULL,
