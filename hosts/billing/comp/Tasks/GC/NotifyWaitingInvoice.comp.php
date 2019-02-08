@@ -39,7 +39,7 @@ case 'array':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
 			# счёт на поплнение? нету таких в соверменности, и быть не должно.
-			continue;
+			continue 2;
 		case 'array':
 			break;
 		default:

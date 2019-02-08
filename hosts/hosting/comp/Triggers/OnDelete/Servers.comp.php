@@ -50,7 +50,7 @@ if($Server['IsDefault'] && IntVal($Server['ServersGroupID']) > 0){
 if($Server['TemplateID'] == 'EmailClient'){
 	#-------------------------------------------------------------------------------
 	if(!$Config['Tasks']['Types']['CheckEmail']['IsActive'])
-		break;
+		return TRUE;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Count = DB_Count('Servers',Array('Where'=>SPrintF('`TemplateID` = "EmailClient" AND `IsActive` = "yes" AND `IsDefault` = "yes" AND `ID` != %u',$Server['ID'])));
@@ -61,8 +61,6 @@ if($Server['TemplateID'] == 'EmailClient'){
 	if(!$Count)
 		return new gException('DELETE_DENIED',SPrintF('Удаление сервера (%s) не возможно, т.к. это единственный или активный по умолчанию сервер для приёма почты. Для возможности удаления, сделайте активным другой сервер с шаблоном (EmailClient) или отключите задание (%s)',$Server['Address'],$Config['Tasks']['Types']['CheckEmail']['Name']));
 	#-------------------------------------------------------------------------------
-	break;
-	#-------------------------------------------------------------------------------
 }
 
 #-------------------------------------------------------------------------------
@@ -70,7 +68,7 @@ if($Server['TemplateID'] == 'EmailClient'){
 if(In_Array($Server['TemplateID'],Array('ICQ','Jabber','SMS'))){
 	#-------------------------------------------------------------------------------
 	if(!$Config['Tasks']['Types'][$Server['TemplateID']]['IsActive'])
-		break;
+		return TRUE;
 	#-------------------------------------------------------------------------------
 	$Count = DB_Count('Servers',Array('Where'=>SPrintF('`TemplateID` = "%s" AND `IsActive` = "yes" AND `IsDefault` = "yes" AND `ID` != %u',$Server['TemplateID'],$Server['ID'])));
 	#-------------------------------------------------------------------------------

@@ -22,6 +22,8 @@ $CacheID = 'TableSuper[Indexes]';
 if(!$NoBody = Cache_Get($CacheID)){
   #-----------------------------------------------------------------------------
   $Count = $Template['Source']['Count'];
+  #Debug(SPrintF('[comp/Tables/Forms/Indexes]: $Count = %s',print_r($Count,true)));
+  #Debug(SPrintF('[comp/Tables/Forms/Indexes]: $Template = %s',print_r($Template,true)));
   #-----------------------------------------------------------------------------
   if($Count < 1)
     return FALSE;

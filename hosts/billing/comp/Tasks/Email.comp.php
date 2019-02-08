@@ -34,7 +34,7 @@ $Boundary = "\r\n\r\n------==--" . HOST_ID;
 $Message = SPrintF("%s\r\nContent-Transfer-Encoding: 8bit\r\nContent-Type: text/plain; charset=UTF-8\r\n\r\n%s",$Boundary,$Message);
 #-------------------------------------------------------------------------------
 # достаём вложения, если они есть, и прикладываем к сообщению
-if(IsSet($Attachments) && SizeOf($Attachments) && Is_Array($Attachments)){
+if(IsSet($Attachments) && Is_Array($Attachments) && SizeOf($Attachments)){
 	#-------------------------------------------------------------------------------
 	# достаём данные юзера которому идёт письмо
 	$User = DB_Select('Users', Array('ID','Params'), Array('UNIQ', 'ID' => $ID));

@@ -26,7 +26,7 @@ $Messages = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # проверяем необходимые для работы модули
-$Extensions = Array('hash','gd','json','libxml','mbstring','mysql','openssl','xml','zlib','imap','mailparse','fileinfo','geoip');
+$Extensions = Array('hash','gd','json','libxml','mbstring','openssl','xml','zlib','imap','mailparse','fileinfo','geoip');
 # модули для WhatsApp
 $Extensions = Array_Merge($Extensions,Array('pdo_sqlite','sockets','mcrypt'));
 #-------------------------------------------------------------------------------

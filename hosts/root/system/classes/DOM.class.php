@@ -18,7 +18,7 @@ public $TemplateID = NULL;
 *
 * @param string <иницилиазирующая строка>
 */
-public function DOM($Source = NULL){
+public function __construct($Source = NULL){
   /****************************************************************************/
   $__args_types = Array('string,object');
   #-----------------------------------------------------------------------------

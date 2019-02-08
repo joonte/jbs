@@ -104,9 +104,11 @@ if(!Is_Null($UniqID)){
 		return ERROR | @Trigger_Error(400);
 	#-------------------------------------------------------------------------------
 	$Columns = Array();
+	#Debug(SPrintF('[billing/comp/Services/Schemes]: Rows = %s',print_r($Rows,true)));
 	#-------------------------------------------------------------------------------
 	foreach($Rows as $Row)
 		$Columns[] = SPrintF('%s %s',$Row['Field'],$Row['Type']);
+	#Debug(SPrintF('[billing/comp/Services/Schemes]: Columns = %s',print_r($Columns,true)));
 	#-------------------------------------------------------------------------------
 	$Create = SPrintF('CREATE TEMPORARY TABLE `%s` (%s) ENGINE=MEMORY DEFAULT CHARSET=utf8',$UniqID,Implode(',',$Columns));
 	#-------------------------------------------------------------------------------
@@ -116,6 +118,7 @@ if(!Is_Null($UniqID)){
 	#-------------------------------------------------------------------------------
 	foreach($Result as $Scheme){
 		#-------------------------------------------------------------------------------
+		#Debug(SPrintF('[billing/comp/Services/Schemes]: Scheme = %s',print_r($Scheme,true)));
 		$IsInsert = DB_Insert($UniqID,$Scheme);
 		if(Is_Error($IsInsert))
 			return ERROR | @Trigger_Error(500);

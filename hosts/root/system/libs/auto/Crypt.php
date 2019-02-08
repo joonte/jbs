@@ -22,11 +22,11 @@ function Crypt_Encode($String, $Key = HOST_ID){
       if(!Is_Resource($Module))
         return ERROR | @Trigger_Error('[Crypt_Encode]: не удалось открыть дескриптор');
       #-------------------------------------------------------------------------
-      $Iv = @MCrypt_Create_Iv(MCrypt_Enc_Get_Iv_Size($Module),MCRYPT_RAND);
+      $Iv = @MCrypt_Create_Iv(@MCrypt_Enc_Get_Iv_Size($Module),MCRYPT_RAND);
       if(!$Iv)
         return ERROR | @Trigger_Error('[Crypt_Encode]: не удалось создать IV');
       #-------------------------------------------------------------------------
-      $Key = SubStr($Key,0,MCrypt_Enc_Get_Key_Size($Module));
+      $Key = SubStr($Key,0,@MCrypt_Enc_Get_Key_Size($Module));
       #Debug(SPrintF("[system/libs/auto/Crypt]: Encode Key = %s",$Key));
       #-------------------------------------------------------------------------
       $IsInit = @MCrypt_Generic_Init($Module,$Key,$Iv);
@@ -63,11 +63,11 @@ function Crypt_Decode($String,$Key = HOST_ID){
       if(!Is_Resource($Module))
         return ERROR | @Trigger_Error('[Crypt_Decode]: не удалось открыть дескриптор');
       #-------------------------------------------------------------------------
-      $Iv = @MCrypt_Create_Iv(MCrypt_Enc_Get_Iv_Size($Module),MCRYPT_RAND);
+      $Iv = @MCrypt_Create_Iv(@MCrypt_Enc_Get_Iv_Size($Module),MCRYPT_RAND);
       if(!$Iv)
         return ERROR | @Trigger_Error('[Crypt_Decode]: не удалось создать IV');
       #-------------------------------------------------------------------------
-      $Key = SubStr($Key,0,MCrypt_Enc_Get_Key_Size($Module));
+      $Key = SubStr($Key,0,@MCrypt_Enc_Get_Key_Size($Module));
       #Debug(SPrintF("[system/libs/auto/Crypt]: Decode Key = %s",$Key));
       #-------------------------------------------------------------------------
       $IsInit = @MCrypt_Generic_Init($Module,$Key,$Iv);
