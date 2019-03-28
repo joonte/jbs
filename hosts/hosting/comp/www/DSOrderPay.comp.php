@@ -73,7 +73,7 @@ switch(ValueOf($DSOrder)){
         #-----------------------------------------------------------------------
         $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/OrderPay.js}')));
         #-----------------------------------------------------------------------
-        if(!In_Array($DSOrder['StatusID'],Array('Waiting','Active','Suspended')))
+        if(!In_Array($DSOrder['StatusID'],Array('Waiting','Active','Suspended','OnService')))
           return new gException('ORDER_CAN_NOT_PAY','Аренда сервера не может быть оплачена');
         #-----------------------------------------------------------------------
         $__USER = $GLOBALS['__USER'];
