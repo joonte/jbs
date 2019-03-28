@@ -202,7 +202,8 @@ foreach($Doc as $License){
 						'ip_change_date'	=> StrToTime($License['ip_change_date']),
 						'lickey_change_date'	=> StrToTime($License['lickey_change_date']),
 						'update_expiredate'	=> StrToTime($License['update_expiredate']),
-						'ExpireDate'		=> $ExpireDate
+						'ExpireDate'		=> $ExpireDate,
+						'CreateDate'		=> StrToTime($License['createdate'])
 					),
 					Array(
 						'Where'			=> SPrintF('`elid` = %u',$License['id'])
