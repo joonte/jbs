@@ -288,7 +288,7 @@ case 'reversed':
 	#if(Is_Error($PostingID))
 	#	return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Event = Array('UserID'=>$Invoice['UserID'],'PriorityID'=>'Billing','IsReaded'=>FALSE,'Text'=>SPrintF('Произведён возврат средств по счёту #%u, процессинговый центр прислал статус "%s". Требуется списание в ручном режиме'));
+	$Event = Array('UserID'=>$Invoice['UserID'],'PriorityID'=>'Billing','IsReaded'=>FALSE,'Text'=>SPrintF('Произведён возврат средств по счёту #%u, процессинговый центр прислал статус "%s". Требуется списание в ручном режиме',$Number,$Args['operation']));
 	$Event = Comp_Load('Events/EventInsert',$Event);
 	if(!$Event)
 		return ERROR | @Trigger_Error(500);
