@@ -63,7 +63,7 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
     }
     #---------------------------------------------------------------------------
     # вообще, наверное надо тут любую зону ставить ... 
-  }elseif(In_Array($DomainZone,Array('info','biz','org','com','net','be','cc','tv','pro','site','xyz','space','website'))){
+  }elseif(In_Array($DomainZone,Array('info','biz','org','com','net','be','cc','tv','pro','site','xyz','space','website','store'))){
     #---------------------------------------------------------------------------
     switch($PepsonID){
       case 'Natural':

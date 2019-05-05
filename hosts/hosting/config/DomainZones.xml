@@ -1035,4 +1035,17 @@
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 		<RegistrationMessage>Обращаем ваше внимание, что при регистрации домена в доменной зоне .xyz на ваш почтовый адрес будет выслано письмо со ссылкой, для подтверждении регистрации. Если вы не пройдёте по этой ссылке, то через 2 недели домен перестанет работать, т.к. владелец доменной зоны снимет его с делегирования.</RegistrationMessage>
 	</xyz>
+	<store>
+		<Server>whois.nic.store</Server>
+		<Name>store</Name>
+		<Available>DOMAIN\sNOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>2</MinChars>
+		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
+		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+		<RegistrationMessage>Обращаем ваше внимание, что при регистрации домена в доменной зоне .xyz на ваш почтовый адрес будет выслано письмо со ссылкой, для подтверждении регистрации. Если вы не пройдёте по этой ссылке, то через 2 недели домен перестанет работать, т.к. владелец доменной зоны снимет его с делегирования.</RegistrationMessage>
+	</store>
 </XML>
