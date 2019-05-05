@@ -17,6 +17,7 @@
 			<ListElement>ID</ListElement>
 			<ListElement>CostMonth</ListElement>
 			<ListElement>CostInstall</ListElement>
+			<ListElement>preset</ListElement>
 			<ListElement>disklimit</ListElement>
 			<ListElement>cpu</ListElement>
 			<ListElement>ncpu</ListElement>
@@ -171,6 +172,16 @@
 			<Alias>(IF(`Discount` > -1, CONCAT(`Discount`,IF(`Discount` > -1,'%','')),'нет'))</Alias>
 		</Discount>
 		<!-- ********************************************************************** -->
+                <preset>
+			<Head>шабл.</Head>
+			<Prompt>Шаблон используемый при создании виртуальной машины</Prompt>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%preset%</ListElement>
+				<Length>5</Length>
+			</Args>
+		</preset>
+		<!-- ********************************************************************** -->
 		<ServersGroup>
 			<Head>Гр. серв.</Head>
 			<Prompt>Расположение сервера размещения</Prompt>
@@ -255,6 +266,7 @@
 		<ListElement>ServersGroup</ListElement>
 		<ListElement>CostMonth</ListElement>
 		<ListElement>Discount</ListElement>
+		<ListElement>preset</ListElement>
 		<ListElement>disklimit</ListElement>
 		<ListElement>cpu</ListElement>
 		<ListElement>mem</ListElement>

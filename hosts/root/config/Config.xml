@@ -74,7 +74,7 @@
 	<Libs>
 		<HTTP>
 			<SocketTimeout>60</SocketTimeout>
-			<StreamTimeout>120</StreamTimeout>
+			<StreamTimeout>240</StreamTimeout>
 		</HTTP>
 	</Libs>
 	<!-- *********************************************************************** -->

@@ -453,6 +453,7 @@ CREATE TABLE IF NOT EXISTS `VPSSchemes` (
 	`chrate` int(4) NOT NULL,
 	`maxdesc` int(9) NOT NULL,
 	-- VmManager
+	`preset` CHAR(16) NOT NULL,
 	`blkiotune` int(9) NOT NULL,
 	`isolimitsize` INT(11) NOT NULL DEFAULT '0',
 	`isolimitnum` INT(2) NOT NULL DEFAULT '0',
