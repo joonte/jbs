@@ -10,24 +10,27 @@
 
 {if $DSScheme.IPaddr || $IP != 'noassign'}
 {if $IP != 'noassign'}
-IP адрес заказа:	{$IP}
+IP адрес заказа:		{$IP}
 {else}
-IP адрес заказа:	{$DSScheme.IPaddr}
+IP адрес заказа:		{$DSScheme.IPaddr}
+{/if}
+{if $DSScheme.OS}
+Предустановленная система:	{$DSScheme.OS}
 {/if}
 {if $DSScheme.DSuser}
-Пользователь:		{$DSScheme.DSuser}
+Пользователь:			{$DSScheme.DSuser}
 {if $DSScheme.DSpass}
-Пароль:			{$DSScheme.DSpass}
+Пароль:				{$DSScheme.DSpass}
 {/if}
 {/if}
 {/if}
 
 {if $DSScheme.ILOaddr}
-Интерфейс iLO/IPMI:	{$DSScheme.ILOaddr}
+Интерфейс iLO/IPMI:		{$DSScheme.ILOaddr}
 {if $DSScheme.ILOuser}
-Пользователь iLO/IPMI:	{$DSScheme.ILOuser}
+Пользователь iLO/IPMI:		{$DSScheme.ILOuser}
 {if $DSScheme.ILOpass}
-Пароль iLO/IPMI:	{$DSScheme.ILOpass}
+Пароль iLO/IPMI:		{$DSScheme.ILOpass}
 {/if}
 {/if}
 {/if}
