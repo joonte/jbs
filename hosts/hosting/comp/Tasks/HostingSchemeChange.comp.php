@@ -152,7 +152,7 @@ case 'exception':
 	$Event = Array(
 			'UserID'	=> $HostingOrder['UserID'],
 			'PriorityID'	=> 'Error',
-			'Text'		=> SPrintF('Не удалось сменить тарифный план (%s->%s) заказу хостинга [%s] в автоматическом режиме, причина (%s)',$HostingOrder['SchemeName'],$HostingNewScheme['Name'],$HostingOrder['Login'],$SchemeChange->String),
+			'Text'		=> SPrintF('Не удалось сменить тарифный план (%s->%s) заказу хостинга [%s], причина (%s)',$HostingOrder['SchemeName'],$HostingNewScheme['Name'],$HostingOrder['Login'],$SchemeChange->String),
 			'IsReaded'	=> $IsAllowSchemeDecrease
 			);
 	#-------------------------------------------------------------------------------
