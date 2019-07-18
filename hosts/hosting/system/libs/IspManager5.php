@@ -788,7 +788,8 @@ function IspManager5_Scheme_Change($Settings,$Login,$HostingScheme){
 	$Doc = $XML['doc'];
 	#-------------------------------------------------------------------------------
 	if(IsSet($Doc['error']))
-		return new gException('SCHEME_CHANGE_ERROR','Не удалось изменить тарифный план для заказа хостинга');
+		//return new gException('SCHEME_CHANGE_ERROR','Не удалось изменить тарифный план для заказа хостинга');
+		return new gException('SCHEME_CHANGE_ERROR','Используемые ресурсы превышают лимиты нового тарифного плана');
 	#-------------------------------------------------------------------------------
 	if(!$Settings['Params']['NoRestartSchemeChange'] && $Version == 'Lite')
 		IspManager5_Service_Restart($Settings,'httpd');
