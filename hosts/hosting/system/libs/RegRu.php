@@ -115,7 +115,7 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
       break;
       case 'Juridical':
         #-----------------------------------------------------------------------
-        $CompanyEn = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyFormFull']));
+        $CompanyEn = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm']));
         #-----------------------------------------------------------------------
         $Query['o_company'] = $CompanyEn;
         $Query['a_company'] = $CompanyEn;
