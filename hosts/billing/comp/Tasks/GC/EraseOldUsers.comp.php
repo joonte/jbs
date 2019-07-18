@@ -69,7 +69,7 @@ foreach($Users as $User){
 		$Event = Array(
 				'PriorityID'    => 'Billing',
 				'IsReaded'	=> ($Settings['IsEvent']?FALSE:TRUE),
-				'Text'          => SPrintF('Удалён пользователь (%s / %s) не заходивший в биллинг %s дней',$User['Email'],$User['Name'],Ceil((Time() - $EnterDate)/(24*3600)))
+				'Text'          => SPrintF('Удалён пользователь (%s / %s / #%s ) не заходивший в биллинг %s дней',$User['Email'],$User['Name'],$User['ID'],Ceil((Time() - $EnterDate)/(24*3600)))
 			);
 		$Event = Comp_Load('Events/EventInsert',$Event);
 		if(!$Event)
