@@ -109,6 +109,8 @@ switch($DSOrder['StatusID']){
       default:
          return ERROR | @Trigger_Error(101);
     }
+  case 'OnService':
+    # ничего не делаем, сделается в Suspended
   case 'Suspended':
     #---------------------------------------------------------------------------
     $IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$DSOrder['UserID'],'TypeID'=>'DSActive','Params'=>Array($DSOrder['ID'])));

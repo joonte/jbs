@@ -46,7 +46,7 @@ switch(ValueOf($DSOrder)){
         #-----------------------------------------------------------------------
         $StatusID = $DSOrder['StatusID'];
         #-----------------------------------------------------------------------
-        if(!In_Array($StatusID,Array('Waiting','Active','Suspended')))
+        if(!In_Array($StatusID,Array('Waiting','Active','Suspended','OnService')))
           return new gException('DS_ORDER_CAN_NOT_PAY','Заказ не может быть оплачен');
         #-----------------------------------------------------------------------
         $UserID = $DSOrder['UserID'];
@@ -211,6 +211,8 @@ switch(ValueOf($DSOrder)){
                         default:
                           return ERROR | @Trigger_Error(101);
                       }
+                    case 'OnService':
+		    	# ничего, делаем Suspended
                     case 'Suspended':
                       #---------------------------------------------------------
                       $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DSOrders','StatusID'=>'Active','RowsIDs'=>$DSOrderID,'Comment'=>($PayMessage)?$PayMessage:'Заказ оплачен и будет активирован'));
