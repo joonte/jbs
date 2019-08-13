@@ -55,10 +55,10 @@ switch(ValueOf($Invoices)){
             return ERROR | @Trigger_Error(500);
           #---------------------------------------------------------------------
           if($Invoice['IsPosted'])
-            return new gException('ACCOUNT_PAYED',SPrintF('Счет №%s оплачен и не может быть отменен',$Number));
+            return new gException('ACCOUNT_PAYED',SPrintF('Счёт №%s оплачен и не может быть отменен',$Number));
           #---------------------------------------------------------------------
           if($Invoice['StatusID'] == 'Rejected')
-            return new gException('ACCOUNT_REJECTED',SPrintF('Счет №%s уже отменен',$Number));
+            return new gException('ACCOUNT_REJECTED',SPrintF('Счёт №%s уже отменен',$Number));
           #---------------------------------------------------------------------
           $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Invoices','StatusID'=>'Rejected','RowsIDs'=>$Invoice['ID']));
           #---------------------------------------------------------------------

@@ -150,7 +150,7 @@ if($Summ > $PaymentSystem['MaximumPayment']){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Invoices','StatusID'=>'Waiting','RowsIDs'=>$InvoiceID,'Comment'=>($PayMessage)?$PayMessage:'Счет сформирован и ожидает оплаты'));
+$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Invoices','StatusID'=>'Waiting','RowsIDs'=>$InvoiceID,'Comment'=>($PayMessage)?$PayMessage:'Счёт сформирован и ожидает оплаты'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Comp)){
 case 'error':

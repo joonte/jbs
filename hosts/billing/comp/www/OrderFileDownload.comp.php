@@ -22,7 +22,7 @@ switch(ValueOf($OrderField)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return new gException('ACCOUNT_NOT_FOUND','Счет не найден');
+	return new gException('ACCOUNT_NOT_FOUND','Счёт не найден');
 case 'array':
 	#-------------------------------------------------------------------------------
 	$Permission = Permission_Check('OrdersFieldsRead',(integer)$GLOBALS['__USER']['ID'],(integer)$OrderField['UserID']);

@@ -26,7 +26,7 @@ switch(ValueOf($Invoice)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return new gException('INVOICE_NOT_FOUND','Счет не найден');
+	return new gException('INVOICE_NOT_FOUND','Счёт не найден');
 case 'array':
 	break;
 default:
@@ -54,7 +54,7 @@ default:
 #-------------------------------------------------------------------------------
 if($Invoice['IsPosted'])
 	if(!$__USER['IsAdmin'])
-		return new gException('ACCOUNT_PAYED','Счет оплачен и не может быть изменен');
+		return new gException('ACCOUNT_PAYED','Счёт оплачен и не может быть изменен');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Form = new Tag('FORM',Array('name'=>'InvoiceEditForm','onsubmit'=>'return false;'));

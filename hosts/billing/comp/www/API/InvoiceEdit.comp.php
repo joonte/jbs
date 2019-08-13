@@ -53,7 +53,7 @@ $InvoiceID = $Invoice['ID'];
 #-------------------------------------------------------------------------------
 if($Invoice['IsPosted'])
 	if(!$__USER['IsAdmin'])
-		return new gException('ACCOUNT_PAYED','Счет оплачен и не может быть изменен');
+		return new gException('ACCOUNT_PAYED','Счёт оплачен и не может быть изменен');
 #-------------------------------------------------------------------------------
 # сумму счёта можно править только в случае если это пополнение средств, и ничего другого
 $InvoiceItems = DB_Select('InvoicesItems','*',Array('Where'=>SPrintF('`InvoiceID` = %u ',$InvoiceID)));
