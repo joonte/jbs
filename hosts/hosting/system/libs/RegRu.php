@@ -46,13 +46,13 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
       break;
       case 'Juridical':
         #-----------------------------------------------------------------------
-        $Query['org']                 = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyFormFull']));
-        $Query['org_r']               = SPrintF('%s "%s"',$Person['CompanyFormFull'],$Person['CompanyName']);
+        $Query['org']                 = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm']));
+        $Query['org_r']               = SPrintF('%s "%s"',$Person['CompanyForm'],$Person['CompanyName']);
         $Query['code']                = $Person['Inn'];
         $Query['kpp']                 = $Person['Kpp'];
         $Query['country']             = $Person['jCountry'];
         $Query['address_r']           = SPrintF('%s, %s, %s, %s %s',$Person['jIndex'],$Person['jState'],$Person['jCity'],$Person['jType'],$Person['jAddress']);
-        $Query['p_addr']              = SPrintF('%s, %s, %s, %s %s, %s "%s"',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['CompanyFormFull'],$Person['CompanyName']);
+        $Query['p_addr']              = SPrintF('%s, %s, %s, %s %s, %s "%s"',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['CompanyForm'],$Person['CompanyName']);
         $Query['phone']               = $Person['Phone'];
 	$Query['sms_security_number'] = $Person['CellPhone'];
         $Query['fax']                 = $Person['Fax'];
@@ -252,56 +252,64 @@ function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name
   return new gException('WRONG_ANSWER',$Result);
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 function RegRu_Domain_Prolong($Settings,$DomainName,$DomainZone,$Years,$ContractID,$DomainID){
-  /****************************************************************************/
-  $__args_types = Array('array','string','string','integer','string');
-  #-----------------------------------------------------------------------------
-  $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
-  /****************************************************************************/
-  $HTTP = RegRu_Build_HTTP($Settings);
-  #-----------------------------------------------------------------------------
-  $Domain = Mb_StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone),'UTF-8');
-  #-----------------------------------------------------------------------------
-  $Query = Array(
-    #---------------------------------------------------------------------------
-    'username'              => $Settings['Login'],
-    'password'              => $Settings['Password'],
-    'period'                => $Years,
-  );
-  # Только для обеспечения совместимости со старым алгоритмом.
-  # Удалить через 2-3 мес после релиза!!!
-  if(IsSet($DomainID)&&(integer)$DomainID>0)
-    $Query['service_id'] = $DomainID;
-  else
-    $Query['domain_name'] = $Domain;
-  #-----------------------------------------------------------------------------
-  $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","service/renew");
-  #---------------------------------------------------------------------------
-  $Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
-  if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[RegRu_Domain_Prolong]: не удалось выполнить запрос к серверу');
-  #-----------------------------------------------------------------------------
-  $Result = Trim($Result['Body']);
-  #-----------------------------------------------------------------------------
-  $Result = Json_Decode($Result,TRUE);
-  #-----------------------------------------------------------------------------
-  #Debug($Result);
-  #-----------------------------------------------------------------------------
-  if($Result['result'] == 'success'){
-    #foreach(Array_Keys($Result['answer']) as $Key)
-    #  Debug("[RegRu_Answer::Domain_Prolong]: " . $Key . " - " . $Result['answer'][$Key]);
-    #---------------------------------------------------------------------------
-    if($Result['answer']['status'] == 'renew_success')
-      return Array('TicketID'=>(integer)$Result['answer']['service_id']);
-    #---------------------------------------------------------------------------
-  }
-  #-----------------------------------------------------------------------------
-  if($Result['result'] == 'error'){
-    return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
-  }
-  #-----------------------------------------------------------------------------
-  return new gException('WRONG_ANSWER',$Result);
+	/******************************************************************************/
+	$__args_types = Array('array','string','string','integer','string');
+	#-------------------------------------------------------------------------------
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/******************************************************************************/
+	$HTTP = RegRu_Build_HTTP($Settings);
+	#-------------------------------------------------------------------------------
+	$Domain = Mb_StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone),'UTF-8');
+	#-------------------------------------------------------------------------------
+	$Query = Array(
+			'username'	=> $Settings['Login'],
+			'password'	=> $Settings['Password'],
+			'period'	=> $Years,
+			);
+	#-------------------------------------------------------------------------------
+	# Только для обеспечения совместимости со старым алгоритмом.
+	# Удалить через 2-3 мес после релиза!!!
+	if(IsSet($DomainID)&&(integer)$DomainID>0)
+		$Query['service_id'] = $DomainID;
+	else
+		$Query['domain_name'] = $Domain;
+	#-------------------------------------------------------------------------------
+	# added by lissyara, 2019-07-25 in 19:39 MSK
+	# какой-то сбой у reg.ru, не понимает отсутствие параметра. сроки исправления не говорят.
+	$Query['pay_type'] = 'prepay';
+	#-------------------------------------------------------------------------------
+	$Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","service/renew");
+	#-------------------------------------------------------------------------------
+	$Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
+	if(Is_Error($Result))
+		return ERROR | @Trigger_Error('[RegRu_Domain_Prolong]: не удалось выполнить запрос к серверу');
+	#-------------------------------------------------------------------------------
+	$Result = Trim($Result['Body']);
+	#-------------------------------------------------------------------------------
+	$Result = Json_Decode($Result,TRUE);
+	#-------------------------------------------------------------------------------
+	#Debug($Result);
+	#-------------------------------------------------------------------------------
+	if($Result['result'] == 'success'){
+		#-------------------------------------------------------------------------------
+		#foreach(Array_Keys($Result['answer']) as $Key)
+		#Debug("[RegRu_Answer::Domain_Prolong]: " . $Key . " - " . $Result['answer'][$Key]);
+		#-------------------------------------------------------------------------------
+		if($Result['answer']['status'] == 'renew_success')
+			return Array('TicketID'=>(integer)$Result['answer']['service_id']);
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	if($Result['result'] == 'error')
+		return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
+	#-------------------------------------------------------------------------------
+	return new gException('WRONG_ANSWER',$Result);
+	#-------------------------------------------------------------------------------
 }
+
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 function RegRu_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID,$DomainID,$Ns1Name,$Ns1IP,$Ns2Name,$Ns2IP,$Ns3Name,$Ns3IP,$Ns4Name,$Ns4IP){
   /****************************************************************************/
