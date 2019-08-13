@@ -115,7 +115,7 @@ if(!$Confirm && !$Code){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/www/API/Confirm]: Confirm1 = %s; Confirm2 = %s;',$Confirm1,$Confirm2));
+	#Debug(SPrintF('[comp/www/API/Confirm]: Confirm1 = %s; Confirm2 = %s;',$Confirm1,$Confirm2));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Executor = DB_Select('Users',Array('Sign','Email'),Array('UNIQ','ID'=>100));
@@ -151,6 +151,7 @@ if(!$Confirm && !$Code){
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load(SPrintF('Tasks/%s',$Method),NULL,$Value,((In_Array($Method,Array('SMS','WhatsApp')))?$Message1:$Message2),$__USER['ID'],TRUE,TRUE);
 		#-------------------------------------------------------------------------------
+		Debug(print_r($Comp,true));
 		if(Is_Error($Comp))
 			return new gException('ERROR_MESSAGE_SEND','Не удалось отправить сообщение');
 		#-------------------------------------------------------------------------------

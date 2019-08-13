@@ -9,29 +9,11 @@ $__args_list = Array('Task', 'Mobile', 'Message', 'UserID', 'ChargeFree', 'IsImm
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('libs/Server.php')))
+if(Is_Error(System_Load('libs/HTTP.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$ServerSettings = SelectServerSettingsByTemplate('SMS');
-#-------------------------------------------------------------------------------
-switch(ValueOf($ServerSettings)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'] = 'server with template: SMS, params: IsActive, IsDefault not found';
-	#-------------------------------------------------------------------------------
-	if(IsSet($GLOBALS['IsCron']))
-		return 3600;
-	#-------------------------------------------------------------------------------
-	return $ServerSettings;
-	#-------------------------------------------------------------------------------
-case 'array':
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
-}
+$Message = Trim($Message);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # проверяем, можно ли отправлять в заданное время
@@ -115,7 +97,28 @@ if($TransferTime){
 Debug(SPrintF('[comp/Tasks/SMS]: отправка SMS сообщения для (%u)', $Mobile));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Message = Trim($Message);
+$ServersSettings = Comp_Load('Servers/SMSSelectServer',$Mobile);
+#-------------------------------------------------------------------------------
+switch(ValueOf($ServersSettings)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+case 'integer':
+	#-------------------------------------------------------------------------------
+	# чопик для крона, когад сервер не найден
+	return $ServersSettings;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(100);
+}
+#-------------------------------------------------------------------------------
+$ServerSettings = $ServersSettings[0];
+#-------------------------------------------------------------------------------
+$MobileCountry = $ServersSettings[1];
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($ServerSettings['Params']['PrefixString'])
 	$Message = SPrintF('%s %s',$ServerSettings['Params']['PrefixString'],$Message);
@@ -207,15 +210,6 @@ Debug(SPrintF('[comp/Tasks/SMS]: Отправитель (%s)', $ServerSettings['
 if (Is_Error(System_Load(SPrintF('classes/%s.class.php', $ServerSettings['Params']['Provider']))))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Regulars = Regulars();
-$MobileCountry = 'PriceDefault';
-$RegCountrys = array('PriceRu' => $Regulars['SMSPriceRu'], 'PriceUa' => $Regulars['SMSPriceUa'], 'PriceSng' => $Regulars['SMSPriceSng'], 'PriceZone1' => $Regulars['SMSPriceZone1'], 'PriceZone2' => $Regulars['SMSPriceZone2']);
-#-------------------------------------------------------------------------------
-foreach ($RegCountrys as $RegCountryKey => $RegCountry)
-	if (Preg_Match($RegCountry, $Mobile))
-		$MobileCountry = $RegCountryKey;
-Debug(SPrintF('[comp/Tasks/SMS]: Страна определена (%s)', $MobileCountry));
 #-------------------------------------------------------------------------------
 if (!IsSet($ServerSettings['Params'][$MobileCountry]))
 	return ERROR | @Trigger_Error(500);
@@ -375,7 +369,7 @@ if(!IsSet($Links[$LinkID])){
 $SMS = &$Links[$LinkID];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsMessage = $SMS->send($Mobile, $Message,$ServerSettings['Params']['Sender']);
+$IsMessage = $SMS->send($Mobile,$Message,$ServerSettings['Params']['Sender']);
 switch (ValueOf($IsMessage)) {
 case 'false':
 	#-------------------------------------------------------------------------------
@@ -392,10 +386,11 @@ case 'false':
 	}
 	#-------------------------------------------------------------------------------
 	if(Is_Null($Task))
-		return 'Пожалуйста, попробуйте повторить попытку позже';
+		#return 'Пожалуйста, попробуйте повторить попытку позже';
+		return ERROR | @Trigger_Error('Пожалуйста, попробуйте повторить попытку позже');
 	#-------------------------------------------------------------------------------
 	UnSet($Links[$LinkID]);
-	return 3600;
+		return 3600;
 	#-------------------------------------------------------------------------------
 case 'true':
 	#-------------------------------------------------------------------------------

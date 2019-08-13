@@ -34,24 +34,31 @@ $Notifies = $Config['Notifies'];
 $Methods = $Notifies['Methods'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$ServerSettings = SelectServerSettingsByTemplate('SMS');
-#-------------------------------------------------------------------------------
-switch(ValueOf($ServerSettings)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	#-------------------------------------------------------------------------------
-	if($Methods['SMS']['IsActive'])
-		return $ServerSettings;
-	#-------------------------------------------------------------------------------
-case 'array':
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
-}
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 if($Methods['SMS']['IsActive']){
+	#-------------------------------------------------------------------------------
+	$ServersSettings = Comp_Load('Servers/SMSSelectServer',$__USER['Params']['NotificationMethods']['SMS']['Address']);
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($ServersSettings)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		break;
+	case 'integer':
+		#-------------------------------------------------------------------------------
+		# чопик для крона, когад сервер не найден
+		return $ServersSettings;
+		#-------------------------------------------------------------------------------
+	default:
+		return ERROR | @Trigger_Error(100);
+	}
+	#-------------------------------------------------------------------------------
+	$ServerSettings = $ServersSettings[0];
+	#-------------------------------------------------------------------------------
+	$MobileCountry = $ServersSettings[1];
+	#-------------------------------------------------------------------------------
+	$SMSPrice = $ServersSettings[1];
 	#-------------------------------------------------------------------------------
 	if($__USER['Params']['NotificationMethods']['SMS']['Confirmed'] == 0){
 		#-------------------------------------------------------------------------------
@@ -59,31 +66,8 @@ if($Methods['SMS']['IsActive']){
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
-		$Regulars = Regulars();
-		$MobileCountry = 'PriceDefault';
-		$RegCountrys = array(
-					'PriceRu'	=> $Regulars['SMSPriceRu'],
-					'PriceUa'	=> $Regulars['SMSPriceUa'],
-					'PriceSng'	=> $Regulars['SMSPriceSng'],
-					'PriceZone1'	=> $Regulars['SMSPriceZone1'],
-					'PriceZone2'	=> $Regulars['SMSPriceZone2']
-					);
+		$Message = SPrintF('SMS платные (%s), включайте только "Уведомления о блокировках заказов"',$SMSPrice);
 		#-------------------------------------------------------------------------------
-		foreach ($RegCountrys as $RegCountryKey => $RegCountry)
-			if (Preg_Match($RegCountry, $__USER['Params']['NotificationMethods']['SMS']['Address']))
-				$MobileCountry = $RegCountryKey;
-		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/www/UserNotifiesSet]: Страна определена (%s)', $MobileCountry));
-		#-------------------------------------------------------------------------------
-		if(!IsSet($ServerSettings['Params'][$MobileCountry]))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Formats/Currency',Str_Replace(',','.',$ServerSettings['Params'][$MobileCountry]));
-		if(Is_Error($Comp))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		$Message = SPrintF('SMS платные (%s), включайте только "Уведомления о блокировках заказов"',$Comp);
 		# прочкать SMSExceptionsPaidInvoices, если надо - получить сумму счетов, надпись по итогам вывести
 		if(FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']) >= 0){
 			#-------------------------------------------------------------------------------
@@ -98,6 +82,7 @@ if($Methods['SMS']['IsActive']){
 				$Comp = Comp_Load('Formats/Currency',$IsSelect['Summ']);
 				if(Is_Error($Comp))
 					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
 				Debug(SPrintF('[comp/www/UserNotifiesSet]: оплачено счетов на сумму (%s)', $Comp));
 				#-------------------------------------------------------------------------------
 				$Comp = Comp_Load('Formats/Currency',FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']));
@@ -111,8 +96,13 @@ if($Methods['SMS']['IsActive']){
 			default:
 				return ERROR | @Trigger_Error(100);
 			}
-		#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
 		}
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		if(Str_Replace(',','.',$ServerSettings['Params'][$MobileCountry]) == 0)
+			$Message = SPrintF('Для вашей страны (%s) сообщения через SMS бесплатны',$MobileCountry);
+		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$Row2 = Array(new Tag('TD', Array('colspan' => (SizeOf($Methods) + 1), 'class' => 'Standard', 'style' => 'background-color:#FDF6D3;'), $Message));
 		#-------------------------------------------------------------------------------
