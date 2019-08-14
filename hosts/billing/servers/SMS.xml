@@ -93,9 +93,9 @@
 	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
 	<PriceRu>
-		<Title>Россия</Title>
+		<Title>Стоимость SMS сообщений для пользователей</Title>
 		<Check>/^[0-9\.]{1,6}$/u</Check>
-		<Comment>Стоимость</Comment>
+		<Comment>Россия</Comment>
 		<Type>Input</Type>
 		<Attribs>
 			<prompt>Цена SMS для телефонов Российской Федерации (для ввода нулевого значения, используйте 0.00)</prompt>
@@ -106,27 +106,9 @@
 		<Value>0.50</Value>
 	</PriceRu>
 	<!-- *********************************************************************** -->
-	<PriceRuActive>
-		<Check>/^[0-9]{1,4}$/u</Check>
-		<Comment>Использовать</Comment>
-		<Type>Select</Type>
-		<Options>
-			<yes>Да</yes>
-			<no>Нет</no>
-		</Options>
-		<Attribs>
-			<size>1</size>
-			<prompt>Использовать ли этот сервер для отправки получателям этой страны. Если страна разрешена на нескольких серверах - используется с наименьшей стоимостью для клиента</prompt>
-			<style>width: 100%;</style>
-		</Attribs>
-		<IsDuty>1</IsDuty>
-                <Value>yes</Value>
-	</PriceRuActive>
-	<!-- *********************************************************************** -->
 	<PriceUa>
-		<Title>Украина</Title>
 		<Check>/^[0-9\.]{1,6}$/u</Check>
-		<Comment>Стоимость</Comment>
+		<Comment>Украина</Comment>
 		<Type>Input</Type>
 		<Attribs>
 			<prompt>Цена SMS для телефонов Украины (для ввода нулевого значения, используйте 0.00)</prompt>
@@ -137,27 +119,9 @@
 		<Value>1.00</Value>
 	</PriceUa>
 	<!-- *********************************************************************** -->
-	<PriceUaActive>
-		<Check>/^[0-9]{1,4}$/u</Check>
-		<Comment>Использовать</Comment>
-		<Type>Select</Type>
-		<Options>
-			<yes>Да</yes>
-			<no>Нет</no>
-		</Options>
-		<Attribs>
-			<size>1</size>
-			<prompt>Использовать ли этот сервер для отправки получателям этой страны. Если страна разрешена на нескольких серверах - используется с наименьшей стоимостью для клиента</prompt>
-			<style>width: 100%;</style>
-		</Attribs>
-		<IsDuty>1</IsDuty>
-                <Value>yes</Value>
-	</PriceUaActive>
-	<!-- *********************************************************************** -->
 	<PriceSng>
-		<Title>СНГ</Title>
 		<Check>/^[0-9\.]{1,6}$/u</Check>
-		<Comment>Стоимость</Comment>
+		<Comment>Украина</Comment>
 		<Type>Input</Type>
 		<Attribs>
 			<prompt>Цена SMS для телефонов СНГ (почти вся территория СССР)</prompt>
@@ -168,27 +132,9 @@
 		<Value>2.00</Value>
 	</PriceSng>
 	<!-- *********************************************************************** -->
-	<PriceSngActive>
-		<Check>/^[0-9]{1,4}$/u</Check>
-		<Comment>Использовать</Comment>
-		<Type>Select</Type>
-		<Options>
-			<yes>Да</yes>
-			<no>Нет</no>
-		</Options>
-		<Attribs>
-			<size>1</size>
-			<prompt>Использовать ли этот сервер для отправки получателям этой страны. Если страна разрешена на нескольких серверах - используется с наименьшей стоимостью для клиента</prompt>
-			<style>width: 100%;</style>
-		</Attribs>
-		<IsDuty>1</IsDuty>
-                <Value>yes</Value>
-	</PriceSngActive>
-	<!-- *********************************************************************** -->
 	<PriceZone1>
-		<Title>Зона 1 (994|213|244|376|54|93|880|973|591....)</Title>
 		<Check>/^[0-9\.]{1,6}$/u</Check>
-		<Comment>Стоимость</Comment>
+		<Comment>Зона 1 (994|213|244|376...)</Comment>
 		<Type>Input</Type>
 		<Attribs>
 			<prompt>Цена SMS для телефонов зоны 1</prompt>
@@ -199,27 +145,9 @@
 		<Value>3.00</Value>
 	</PriceZone1>
 	<!-- *********************************************************************** -->
-	<PriceZone1Active>
-		<Check>/^[0-9]{1,4}$/u</Check>
-		<Comment>Использовать</Comment>
-		<Type>Select</Type>
-		<Options>
-			<yes>Да</yes>
-			<no>Нет</no>
-		</Options>
-		<Attribs>
-			<size>1</size>
-			<prompt>Использовать ли этот сервер для отправки получателям этой страны. Если страна разрешена на нескольких серверах - используется с наименьшей стоимостью для клиента</prompt>
-			<style>width: 100%;</style>
-		</Attribs>
-		<IsDuty>1</IsDuty>
-                <Value>yes</Value>
-	</PriceZone1Active>
-	<!-- *********************************************************************** -->
 	<PriceZone2>
-		<Title>Зона 2 (44|359|30|45|86|53|371|373....)</Title>
 		<Check>/^[0-9\.]{1,6}$/u</Check>
-		<Comment>Стоимость</Comment>
+		<Comment>Зона 2 (44|359|30|45....)</Comment>
 		<Type>Input</Type>
 		<Attribs>
 			<prompt>Цена SMS для телефонов зоны 2</prompt>
@@ -230,27 +158,9 @@
 		<Value>4.00</Value>
 	</PriceZone2>
 	<!-- *********************************************************************** -->
-	<PriceZone2Active>
-		<Check>/^[0-9]{1,4}$/u</Check>
-		<Comment>Использовать</Comment>
-		<Type>Select</Type>
-		<Options>
-			<yes>Да</yes>
-			<no>Нет</no>
-		</Options>
-		<Attribs>
-			<size>1</size>
-			<prompt>Использовать ли этот сервер для отправки получателям этой страны. Если страна разрешена на нескольких серверах - используется с наименьшей стоимостью для клиента</prompt>
-			<style>width: 100%;</style>
-		</Attribs>
-		<IsDuty>1</IsDuty>
-                <Value>yes</Value>
-	</PriceZone2Active>
-	<!-- *********************************************************************** -->
 	<PriceDefault>
-		<Title>Остальные страны, не попавшие под фильтры выше</Title>
 		<Check>/^[0-9\.]{1,6}$/u</Check>
-		<Comment>Стоимость</Comment>
+		<Comment>Остальные страны</Comment>
 		<Type>Input</Type>
 		<Attribs>
 			<prompt>Цена для всех остальных, чей телефон не входит ни в одну из явно перечисленных зон</prompt>
@@ -260,23 +170,6 @@
 		<IsDuty>1</IsDuty>
 		<Value>5.00</Value>
 	</PriceDefault>
-	<!-- *********************************************************************** -->
-	<PriceDefaultActive>
-		<Check>/^[0-9]{1,4}$/u</Check>
-		<Comment>Использовать</Comment>
-		<Type>Select</Type>
-		<Options>
-			<yes>Да</yes>
-			<no>Нет</no>
-		</Options>
-		<Attribs>
-			<size>1</size>
-			<prompt>Использовать ли этот сервер для отправки получателям этой страны. Если страна разрешена на нескольких серверах - используется с наименьшей стоимостью для клиента</prompt>
-			<style>width: 100%;</style>
-		</Attribs>
-		<IsDuty>1</IsDuty>
-                <Value>yes</Value>
-	</PriceDefaultActive>
 	<!-- *********************************************************************** -->
 	<ExceptionsPaidInvoices>
 		<Title>Исключения</Title>

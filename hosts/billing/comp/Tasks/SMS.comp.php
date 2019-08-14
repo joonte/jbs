@@ -121,7 +121,7 @@ $MobileCountry = $ServersSettings[1];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($ServerSettings['Params']['PrefixString'])
-	$Message = SPrintF('%s %s',$ServerSettings['Params']['PrefixString'],$Message);
+	$Message = SPrintF("%s\n%s",$ServerSettings['Params']['PrefixString'],$Message);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $GLOBALS['TaskReturnInfo'] = $Mobile;
