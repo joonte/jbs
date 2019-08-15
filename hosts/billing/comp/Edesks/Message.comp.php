@@ -328,7 +328,7 @@ $Params['User']['Name'] = Nl2Br(HtmlSpecialChars($Params['User']['Name']));
 #-------------------------------------------------------------------------------
 if($GLOBALS['__USER']['IsAdmin'] && $IP != '127.0.0.127' && $IP != '127.0.0.1'){
 	#-------------------------------------------------------------------------------
-	if(Extension_Loaded('geoip')){
+	if(Extension_Loaded('geoip') && (geoip_db_avail(GEOIP_COUNTRY_EDITION))){
 		#-------------------------------------------------------------------------------
 		$Country = geoip_country_name_by_name($IP);
 		#-------------------------------------------------------------------------------
@@ -347,7 +347,7 @@ if($GLOBALS['__USER']['IsAdmin'] && $IP != '127.0.0.127' && $IP != '127.0.0.1'){
 	if(IsSet($City))
 		$City = @Iconv('','ISO-8859-1//IGNORE',$City);
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF("[comp/Edesks/Message]: City = %s",@$City));
+	#Debug(SPrintF("[comp/Edesks/Message]: City = %s",@$City));
 	#-------------------------------------------------------------------------------
 	$IPInfo = SPrintF('IP: %s %s %s',$IP,(IsSet($Country))?SPrintF(' / %s',$Country):'GeoIP not avalible',(IsSet($City))?SPrintF(' / %s',$City):'');
 	#-------------------------------------------------------------------------------
