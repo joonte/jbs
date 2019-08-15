@@ -373,9 +373,9 @@ class AESCipher
         if ($this->version >= 3) {
             $rawPadded = $this->pad($raw);
 
-            return mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $this->key, $rawPadded, MCRYPT_MODE_CBC, $this->iv);
+            return @mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $this->key, $rawPadded, MCRYPT_MODE_CBC, $this->iv);
         } else {
-            return mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $this->key, $raw, 'ctr', $this->counter->Next());
+            return @mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $this->key, $raw, 'ctr', $this->counter->Next());
         }
     }
 
