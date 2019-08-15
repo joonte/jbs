@@ -801,8 +801,14 @@ function RegRu_Get_Contact_Detail($Settings,$Domain){
 		if(IsSet($Result['answer']['services'][0]['details']['e_mail']))
 			$ContactInfo['Email'] = $Result['answer']['services'][0]['details']['e_mail'];
 		#-------------------------------------------------------------------------------
+		if(IsSet($Result['answer']['services'][0]['details']['a_email']))
+			$ContactInfo['Email'] = $Result['answer']['services'][0]['details']['a_email'];
+		#-------------------------------------------------------------------------------
 		if(IsSet($Result['answer']['services'][0]['details']['phone']))
 			$ContactInfo['Phone'] = $Result['answer']['services'][0]['details']['phone'];
+		#-------------------------------------------------------------------------------
+		if(IsSet($Result['answer']['services'][0]['details']['a_phone']))
+			$ContactInfo['Phone'] = $Result['answer']['services'][0]['details']['a_phone'];
 		#-------------------------------------------------------------------------------
 		if(IsSet($Result['answer']['services'][0]['details']['sms_security_number']))
 			$ContactInfo['CellPhone'] = $Result['answer']['services'][0]['details']['sms_security_number'];
@@ -811,13 +817,20 @@ function RegRu_Get_Contact_Detail($Settings,$Domain){
 			$ContactInfo['PostalAddress'] = $Result['answer']['services'][0]['details']['p_addr'];
 		#-------------------------------------------------------------------------------
 		if(IsSet($Result['answer']['services'][0]['details'])){
+			#-------------------------------------------------------------------------------
 			$FullInfo = $Result['answer']['services'][0]['details'];
+			#-------------------------------------------------------------------------------
 		}else{
+			#-------------------------------------------------------------------------------
 			return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
 			#$FullInfo = Array('FullInfo'=>'Домен отсутствует у регистратора');
+			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
+		#Debug(SPrintF('[RegRu_Answer::Get_Contact_Detail]: ContactInfo = %s',print_r($ContactInfo,TRUE)));
+		#-------------------------------------------------------------------------------
 		return Array('ContactInfo'=>$ContactInfo,'FullInfo'=>$FullInfo);
+		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
