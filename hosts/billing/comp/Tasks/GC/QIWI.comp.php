@@ -86,7 +86,7 @@ $n = 8 - StrLen($Result) % 8;
 $pad = Str_Pad($Result, StrLen($Result) + $n, ' ');
 #-------------------------------------------------------------------------------
 # crypt message
-$crypted = mcrypt_encrypt(MCRYPT_3DES, $key, $pad, MCRYPT_MODE_ECB, "\0\0\0\0\0\0\0\0");
+$crypted = @mcrypt_encrypt(MCRYPT_3DES, $key, $pad, MCRYPT_MODE_ECB, "\0\0\0\0\0\0\0\0");
 #-------------------------------------------------------------------------------
 $Result = "qiwi" . Str_Pad($Settings['Send']['from'], 10, "0", STR_PAD_LEFT) . "\n";
 #-------------------------------------------------------------------------------
@@ -95,7 +95,7 @@ $Result .= base64_encode($crypted);
 # send message to QIWI server
 $HTTP = Array('Protocol'=>($Settings['Send']['UseSSL'])?'ssl':'tcp','Port'=>($Settings['Send']['UseSSL'])?'443':'80','Address'=>'ishop.qiwi.ru','Host'=>'ishop.qiwi.ru','IsLogging'=>$Settings['IsLogging']);
 #-------------------------------------------------------------------------------
-$Send = HTTP_Send('/xml',$HTTP,Array(),$Result,Array('Content-type: text/xml; encoding=utf-8'));
+$Send = HTTP_Send('/xml',$HTTP,Array(),Array($Result),Array('Content-type: text/xml; encoding=utf-8'));
 #-------------------------------------------------------------------------------
 if(Is_Error($Send))
 	return TRUE;
