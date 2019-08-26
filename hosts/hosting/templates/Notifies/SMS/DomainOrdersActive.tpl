@@ -3,7 +3,7 @@
  *  Copyright © 2015 Alex Keda, for www.host-food.ru
  *}
 
-Домена {$DomainName|default:'$DomainName'}.{$Name|default:'$Name'} активирован {$StatusDate|date_format:"%d.%m.%Y"}
+Домен {$DomainName|default:'$DomainName'}.{$Name|default:'$Name'} активирован {$StatusDate|date_format:"%d.%m.%Y"}
 
 {if !$MethodSettings.CutSign}
 --
