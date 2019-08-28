@@ -124,7 +124,7 @@ switch(ValueOf($ServiceOrder)){
                     case 'array':
                       #---------------------------------------------------------
                       if($ServiceField['TypeID'] != 'Select')
-                        continue;
+                        break;
                       #---------------------------------------------------------
                       $Options = Explode("\n",$ServiceField['Options']);
                       #---------------------------------------------------------
