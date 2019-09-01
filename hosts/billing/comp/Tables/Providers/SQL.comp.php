@@ -42,9 +42,7 @@ $Where = Array_Merge($Where,$AddingWhere);
 #-------------------------------------------------------------------------------
 $Where = Implode(' AND ',$Where);
 #-------------------------------------------------------------------------------
-// а вот на php 5.6 нормально работало с GroupBy'=>$Query['GroupBy']
-// TODO разобраться в причинах.
-$Count = DB_Count($TableID, Array('Where'=>$Where/*, 'GroupBy'=>$Query['GroupBy']*/));
+$Count = DB_Count($TableID, Array('Where'=>$Where, 'GroupBy'=>$Query['GroupBy']));
 if(Is_Error($Count))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
