@@ -500,7 +500,7 @@ class awLabel implements awPositionable {
 		}
 		
 		// Hide last label
-		if($key === count($this->texts) - 1 and $this->hideLast) {
+		if($key === @count($this->texts) - 1 and $this->hideLast) {
 			return;
 		}
 	

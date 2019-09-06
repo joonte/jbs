@@ -38,7 +38,7 @@ if($Type == 'Theme'){
 	$SendedIDs = (StrLen($jParams['SendedIDs']) > 0)?SPrintF(' %s ',(SubStr_Count($jParams['SendedIDs'],',') + 1)):'0';
 	$SendToIDs = (StrLen($jParams['SendToIDs']) > 0)?SPrintF(' %s ',(SubStr_Count($jParams['SendToIDs'],',') + 1)):'0';
 	#-------------------------------------------------------------------------------
-	return SPrintF(' %s ',($SendedIDs + $SendToIDs));
+	return SPrintF(' %s ',(IntVal($SendedIDs) + IntVal($SendToIDs)));
 	#-------------------------------------------------------------------------------
 }elseif($Type == 'SendedIDs'){
 	#-------------------------------------------------------------------------------
