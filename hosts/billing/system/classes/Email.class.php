@@ -84,26 +84,24 @@ class Email implements Dispatcher {
           $emailHeads[] = SPrintF('Message-ID: %s',$msg->getParam('Message-ID'));
 
         $Params = Array();
-	if($msg->getParam('Recipient')){
-	  $Params[] = $msg->getParam('Recipient');
-	}else{
-	  $Params[] = $recipient['Email'];
-	}
-	$Params[] = $theme;
+	$Attribs = Array();
+	$Params[] = $msg->getParam('ToRecipient');
 	$Params[] = $message;
-	$Params[] = Implode("\r\n", $emailHeads);
-	$Params[] = $recipient['ID'];
-	if($msg->getParam('EmailAttachments')){
-		$Params[] = $msg->getParam('EmailAttachments');
-	}else{
-		$Params[] = 'не определено';
-	}
+	$Params[] = Array(
+				'Theme'		=> $theme,
+				'Heads'		=> Implode("\r\n", $emailHeads),
+				'Attachments'	=> $msg->getParam('EmailAttachments'),
+				'UserID'	=> $recipient['ID'],
+				'TimeBegin'	=> $msg->getParam('TimeBegin'),
+				'TimeEnd'	=> $msg->getParam('TimeEnd')
+				);
         $taskParams = Array(
             'UserID' => $recipient['ID'],
             'TypeID' => 'Email',
             'Params' => $Params
         );
-
+	#Debug(SPrintF('[system/classes/Email] taskParams = %s',print_r($taskParams,true)));
+	#Debug(SPrintF('[system/classes/Email] msg = %s',print_r($msg,true)));
         $result = Comp_Load('www/Administrator/API/TaskEdit',$taskParams);
         switch(ValueOf($result)) {
             case 'error':

@@ -192,7 +192,13 @@ INSERT INTO `Permissions` (`Name`,`HostID`,`UserGroupID`,`UserID`,`OwnerGroupID`
 
 /* added by lissyara, for  JBS-1032, 2015-04-07 in 13:03 MSK  */
 ('PaymentSystemsCollationDelete','billing',1,1,4000000,1,1,'no'),
-('PaymentSystemsCollationDelete','billing',3000000,100,1,1,2,'yes')
+('PaymentSystemsCollationDelete','billing',3000000,100,1,1,2,'yes'),
+
+/* added by lissyara, for  JBS-1125, 2019-09-04 in 20:10 MSK */
+('ContactRead','billing',1,1,4000000,1,1,'yes'),
+('ContactRead','billing',3000000,100,1,1,2,'yes'),
+('ContactsDelete','billing',1,1,4000000,1,1,'yes'),
+('ContactsDelete','billing',3000000,100,1,1,2,'yes')
 
 ;
 

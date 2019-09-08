@@ -62,29 +62,10 @@ foreach($Users as $User){
 			UnSet($Attribs[$AttribID]);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$NotificationMethods = @$User['Params']['NotificationMethods'];
-	#-------------------------------------------------------------------------------
-	foreach(Array_Keys($Template['NotificationMethods']) as $Key){
-		#-------------------------------------------------------------------------------
-		if(!IsSet($NotificationMethods[$Key]))
-			$NotificationMethods[$Key] = Array();
-		#-------------------------------------------------------------------------------
-		foreach(Array_Keys($Template['NotificationMethods'][$Key]) as $Value)
-			if(!IsSet($NotificationMethods[$Key][$Value]))
-				$NotificationMethods[$Key][$Value] = $Template['NotificationMethods'][$Key][$Value];
-		#-------------------------------------------------------------------------------
-	}
-	#-------------------------------------------------------------------------------
-	foreach(Array_Keys($NotificationMethods) as $Key)
-		if(!IsSet($Template['NotificationMethods'][$Key]))
-			UnSet($NotificationMethods[$Key]);
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
 	$Params = Array();
 	#-------------------------------------------------------------------------------
 	$Params['Settings'] = $Attribs;
 	#-------------------------------------------------------------------------------
-	$Params['NotificationMethods'] = $NotificationMethods;
 	#-------------------------------------------------------------------------------
 	if(IsSet($User['Params']['IsAutoRegistered']) && $User['Params']['IsAutoRegistered']){
 		#-------------------------------------------------------------------------------

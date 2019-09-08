@@ -58,8 +58,10 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
-if($__USER['Params']['NotificationMethods']['SMS']['Address'] && $__USER['Params']['NotificationMethods']['SMS']['Confirmed'])
-	$Send['user_phone'] = $__USER['Params']['NotificationMethods']['SMS']['Address'];
+# выбираем телефон юзера, первый из списка, если он вообще есть
+foreach($__USER['Contacts'] as $Contact)
+	if($Contact['MethodID'] == 'SMS')
+		$Send['user_phone'] = $Contact['Address'];
 #-------------------------------------------------------------------------------
 $Send['user_email'] = $__USER['Email'];
 #-------------------------------------------------------------------------------

@@ -18,7 +18,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 $Config = Config();
 #-------------------------------------------------------------------------------
 $Columns = Array(
-			'ID','RegisterDate','Name','GroupID','Email','EmailConfirmed',
+			'ID','RegisterDate','Name','GroupID','Email',
 			'Sign','OwnerID','IsManaged','LayPayMaxDays',
 			'LayPayMaxSumm','LayPayThreshold','EnterDate','EnterIP',
 			'Rating','IsActive','LockReason','IsNotifies','IsHidden','IsProtected','AdminNotice','Params',
@@ -96,34 +96,31 @@ $Table[] = Array('Подпись',new Tag('PRE',Array('class'=>'Standard'),$Sign
 $Table[] = 'Контактная информация';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Table[] = Array('Электронный адрес',$User['Email']);
+$Contacts = DB_Select('Contacts','*',Array('Where'=>SPrintF('`UserID` = %u',$User['ID']),'SortOn'=>Array('MethodID','Address')));
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-if($User['EmailConfirmed'] > 0){
-	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Formats/Date/Extended',$User['EmailConfirmed']);
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	$Table[] = Array('Email подтверждён',$Comp);
-	#-------------------------------------------------------------------------------
+switch(ValueOf($Contacts)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$NotificationMethods = $User['Params']['NotificationMethods'];
-#-------------------------------------------------------------------------------
-foreach(Array_Keys($NotificationMethods) as $MethodID){
+foreach($Contacts as $Contact){
 	#-------------------------------------------------------------------------------
-	if($NotificationMethods[$MethodID]['Address'])
-		$Table[] = Array($Config['Notifies']['Methods'][$MethodID]['Name'],$NotificationMethods[$MethodID]['Address']);
+	$Table[] = Array($Config['Notifies']['Methods'][$Contact['MethodID']]['Name'],($Contact['IsPrimary'])?SPrintF('%s [*]',$Contact['Address']):$Contact['Address']);
 	#-------------------------------------------------------------------------------
-	if($NotificationMethods[$MethodID]['Confirmed']){
+	if($Contact['Confirmed']){
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Formats/Date/Extended',$NotificationMethods[$MethodID]['Confirmed']);
+		$Comp = Comp_Load('Formats/Date/Extended',$Contact['Confirmed']);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$Table[] = Array(SPrintF('%s подтверждён',$Config['Notifies']['Methods'][$MethodID]['Name']),$Comp);
+		$Table[] = Array(SPrintF('%s подтверждён',$Config['Notifies']['Methods'][$Contact['MethodID']]['Name']),$Comp);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------

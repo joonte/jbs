@@ -48,19 +48,20 @@ class SMS implements Dispatcher {
 
         $recipient = $msg->getParam('User');
 
-        if(!$recipient['Params']['NotificationMethods']['SMS']['Address'])
-            throw new jException('Mobile phone number not found for user: '.$recipient['ID']);
-
         $taskParams = Array(
             'UserID' => $recipient['ID'],
             'TypeID' => 'SMS',
             'Params' => Array(
-                $recipient['Params']['NotificationMethods']['SMS']['Address'],
+                $msg->getParam('ToRecipient'),
                 $message,
-                $recipient['ID'],
-		($msg->getParam('ChargeFree'))?TRUE:FALSE
-            )
-        );
+		Array(
+			'UserID'	=> $recipient['ID'],
+			'ChargeFree'	=> ($msg->getParam('ChargeFree'))?TRUE:FALSE,
+			'TimeBegin'	=> $msg->getParam('TimeBegin'),
+			'TimeEnd'	=> $msg->getParam('TimeEnd')
+            		)
+        	)
+	);
         
 	#Debug(SPrintF('[system/classes/SMS.class.php]: msg = %s,',print_r($msg,true)));
         $result = Comp_Load('www/Administrator/API/TaskEdit',$taskParams);

@@ -1109,6 +1109,7 @@
 				<IsActive>1</IsActive>
 				<IsEvent>1</IsEvent>
 				<CutSign>0</CutSign>
+				<IsShort>0</IsShort>
 				<Message/>
 			</Email>
 			<!-- ********************************************************************* -->
@@ -1117,6 +1118,7 @@
 				<IsActive>0</IsActive>
 				<IsEvent>1</IsEvent>
 				<CutSign>1</CutSign>
+				<IsShort>0</IsShort>
 				<Message>Чтобы ссылки в сообщениях были активными, добавьте наш номер (%s) в список контактов</Message>
 			</WhatsApp>
 			<!-- ********************************************************************* -->
@@ -1126,6 +1128,7 @@
 				<Provider>SMSpilot</Provider>
 				<IsEvent>1</IsEvent>
 				<CutSign>1</CutSign>
+				<IsShort>1</IsShort>
 				<Message/>
 			</SMS>
 			<!-- ********************************************************************* -->
@@ -1134,6 +1137,7 @@
 				<IsActive>0</IsActive>
 				<IsEvent>1</IsEvent>
 				<CutSign>1</CutSign>
+				<IsShort>0</IsShort>
 				<Message>Добавьте наш номер (%s) в список контактов и авторизуйте его. Обратите внимание, что наш робот не умеет отгадывать загадки и решать логические задачи - поэтому он не сможет пройти тесты по защите от спама</Message>
 			</ICQ>
 			<!-- ********************************************************************* -->
@@ -1142,6 +1146,7 @@
 				<IsActive>0</IsActive>
 				<IsEvent>1</IsEvent>
 				<CutSign>1</CutSign>
+				<IsShort>0</IsShort>
 				<Message>Добавьте наш номер (%s) в список контактов и авторизуйте его. Обратите внимание, что наш робот не умеет отгадывать загадки и решать логические задачи - поэтому он не сможет пройти тесты по защите от спама</Message>
 			</Jabber>
 		</Methods>
@@ -1158,11 +1163,8 @@
 				<Name>Эл. сообщение</Name>
 				<Params>
 					<Email>Адрес</Email>
-					<Theme>Тема</Theme>
 					<Message>Сообщение</Message>
-					<Heads>Заголовки</Heads>
-					<ID>Идентификатор пользователя</ID>
-					<EmailAttachments>Вложения</EmailAttachments>
+					<Attribs type="array"/>
 				</Params>
 				<IsActive>1</IsActive>
 			</Email>
@@ -1172,7 +1174,7 @@
 				<Params>
 					<UIN>UIN</UIN>
 					<Message>Сообщение</Message>
-					<ID>Идентификатор пользователя</ID>
+					<Attribs type="array"/>
 				</Params>
 				<IsActive>1</IsActive>
 			</ICQ>
@@ -1182,7 +1184,7 @@
 				<Params>
 					<JabberID>JabberID</JabberID>
 					<Message>Сообщение</Message>
-					<ID>Идентификатор пользователя</ID>
+					<Attribs type="array"/>
 				</Params>
 				<IsActive>0</IsActive>
 			</Jabber>
@@ -1192,8 +1194,7 @@
 				<Params>
 					<Mobile>Номер мобильного телефона</Mobile>
 					<Message>Сообщение</Message>
-					<ID>Идентификатор пользователя</ID>
-					<ChargeFree>Сообщение бесплатное</ChargeFree>
+					<Attribs type="array"/>
 				</Params>
 				<IsActive>1</IsActive>
 			</SMS>
@@ -1203,7 +1204,7 @@
 				<Params>
 					<Mobile>Номер мобильного телефона</Mobile>
 					<Message>Сообщение</Message>
-					<ID>Идентификатор пользователя</ID>
+					<Attribs type="array"/>
 				</Params>
 				<IsActive>1</IsActive>
 			</WhatsApp>

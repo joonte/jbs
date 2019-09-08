@@ -34,9 +34,16 @@ $Notifies = $Config['Notifies'];
 $Methods = $Notifies['Methods'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// TODO сделать персональные настройки для каждого контактного адреса.
+// иначе такие вот костыли плодятся - тупо выбираем первый попавшийся адрес
+foreach($__USER['Contacts'] as $Contact)
+	if($Contact['MethodID'] == 'SMS')
+		$Mobile = $Contact;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if($Methods['SMS']['IsActive']){
 	#-------------------------------------------------------------------------------
-	$ServersSettings = Comp_Load('Servers/SMSSelectServer',$__USER['Params']['NotificationMethods']['SMS']['Address']);
+	$ServersSettings = Comp_Load('Servers/SMSSelectServer',$Mobile['Address']);
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($ServersSettings)){
 	case 'error':
@@ -60,7 +67,7 @@ if($Methods['SMS']['IsActive']){
 	#-------------------------------------------------------------------------------
 	$SMSPrice = $ServersSettings[2];
 	#-------------------------------------------------------------------------------
-	if($__USER['Params']['NotificationMethods']['SMS']['Confirmed'] == 0){
+	if(!$Mobile['Confirmed']){
 		#-------------------------------------------------------------------------------
 		$Row2 = Array(new Tag('TD', Array('colspan' => (SizeOf($Methods) + 1), 'class' => 'Standard', 'style' => 'background-color:#FDF6D3;'), 'Для настройки SMS уведомлений, подтвердите свой номер телефона'));
 		#-------------------------------------------------------------------------------
@@ -108,7 +115,7 @@ if($Methods['SMS']['IsActive']){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	if(FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']) == 0 && $__USER['Params']['NotificationMethods']['SMS']['Confirmed'] > 0)
+	if(FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']) == 0 && $Mobile['Confirmed'])
 		UnSet($Row2);
 	#-------------------------------------------------------------------------------
 }
@@ -226,7 +233,7 @@ foreach(Array_Keys($Types) as $TypeID){
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		// Если контакт не подтвержден то не выводить активными галочки для смс.
-		if($MethodID != 'Email' && !$__USER['Params']['NotificationMethods'][$MethodID]['Confirmed']){
+		if($MethodID != 'Email' && !$Mobile['Confirmed']){
 			#-------------------------------------------------------------------------------
 			$Comp->AddAttribs(Array('disabled'=>'true'));
 			#-------------------------------------------------------------------------------

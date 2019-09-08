@@ -9,8 +9,9 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
-$TableID =  (string) @$Args['TableID'];
-$RowID   = (integer) @$Args['RowID'];
+$TableID	=  (string) @$Args['TableID'];
+$RowID		= (integer) @$Args['RowID'];
+$NewWindow	=  (string) @$Args['NewWindow'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 	return ERROR | @Trigger_Error(500);
@@ -32,6 +33,9 @@ default:
 if($GLOBALS['__USER']['ID'] != $UserNotice['UserID'])
 	if(!$GLOBALS['__USER']['IsAdmin'])
 		return ERROR | @Trigger_Error(700);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$NoticeEdit = ($NewWindow)?SprintF("NoticeEdit('NoticeEditForm','%s');",$NewWindow):'NoticeEdit();';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $DOM = new DOM();
@@ -58,7 +62,7 @@ if(Is_Error($Comp))
 $Table[] = $Comp;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"form.UserNotice.value = '';NoticeEdit();",'value'=>'Удалить'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>SprintF("form.UserNotice.value = '';%s",$NoticeEdit),'value'=>'Удалить'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -68,7 +72,7 @@ if(!$UserNotice['UserNotice'])
 $Div = new Tag('DIV',Array('align'=>'right'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>'NoticeEdit();','value'=>'Изменить'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>$NoticeEdit,'value'=>'Изменить'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -81,7 +85,7 @@ $Comp = Comp_Load('Tables/Standard',$Table);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Form = new Tag('FORM',Array('name'=>'NoticeEditForm','onsubmit'=>'return false;','OnKeyPress'=>'ctrlEnterEvent(event) && NoticeEdit();'),$Comp);
+$Form = new Tag('FORM',Array('name'=>'NoticeEditForm','onsubmit'=>'return false;','OnKeyPress'=>SPrintF('ctrlEnterEvent(event) && %s',$NoticeEdit)),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('name'=>'TableID','type'=>'hidden','value'=>$TableID));

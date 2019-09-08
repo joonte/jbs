@@ -17,34 +17,23 @@ if(!CacheManager::isEnabled())
 $Config = Config();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-foreach(Array_Keys($Config['Notifies']['Methods']) as $MethodID){
+# перебираем контакты юзера, выводим их
+foreach($GLOBALS['__USER']['Contacts'] as $Contact){
 	#-------------------------------------------------------------------------------
-	if($MethodID == 'Email')
-		$GLOBALS['__USER']['Params']['NotificationMethods'][$MethodID] = Array('Address'=>$GLOBALS['__USER']['Email'],'Confirmed'=>$GLOBALS['__USER']['EmailConfirmed']);
-	#-------------------------------------------------------------------------------
-	$Settings = $Config['Interface']['User']['Notes'][$MethodID];
-	#-------------------------------------------------------------------------------
-	$NotificationMethods = $GLOBALS['__USER']['Params']['NotificationMethods'];
-	#-------------------------------------------------------------------------------
-	if($NotificationMethods[$MethodID]['Address'] && !$NotificationMethods[$MethodID]['Confirmed'] && $Settings['ConfirmRequire']){
+	foreach(Array_Keys($Config['Notifies']['Methods']) as $MethodID){
 		#-------------------------------------------------------------------------------
-		$NoBody = new Tag('NOBODY');
-		$NoBody->AddHTML(TemplateReplace('Notes.User.Confirmation', Array('Address'=>$NotificationMethods[$MethodID]['Address'],'Method'=>$Config['Notifies']['Methods'][$MethodID])));
-		$NoBody->AddChild(new Tag('STRONG', new Tag('A', Array('href' => "javascript:ShowWindow('/UserPersonalDataChange');"), '[Мои настройки]')));
+		if(!$Config['Notifies']['Methods'][$MethodID]['IsActive'])
+			continue;
 		#-------------------------------------------------------------------------------
-		$Result[] = $NoBody;
-		#-------------------------------------------------------------------------------
-	}
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	if(!$NotificationMethods[$MethodID]['Address'] && $Settings['Require']){
-		#-------------------------------------------------------------------------------
-		$NoBody = new Tag('NOBODY');
-		Debug(print_r($Config['Notifies']['Methods'][$MethodID],true));
-		$NoBody->AddHTML(TemplateReplace('Notes.User.Confirmation.NoAddress', Array('Method'=>$Config['Notifies']['Methods'][$MethodID])));
-		$NoBody->AddChild(new Tag('STRONG', new Tag('A', Array('href' => "javascript:ShowWindow('/UserPersonalDataChange');"), '[Мои настройки]')));
-		#-------------------------------------------------------------------------------
-		$Result[] = $NoBody;
+		if($Contact['MethodID'] == $MethodID && !$Contact['Confirmed'] && $Config['Interface']['User']['Notes'][$MethodID]['ConfirmRequire']){
+			#-------------------------------------------------------------------------------
+			$NoBody = new Tag('NOBODY');
+			$NoBody->AddHTML(TemplateReplace('Notes.User.Confirmation', Array('Address'=>$Contact['Address'],'Method'=>$Config['Notifies']['Methods'][$MethodID])));
+			$NoBody->AddChild(new Tag('STRONG', new Tag('A', Array('href' => SPrintF("javascript:ShowWindow('/ContactEdit?ContactID=%u');",$Contact['ID'])), '[Мои настройки]')));
+			#-------------------------------------------------------------------------------
+			$Result[] = $NoBody;
+			#-------------------------------------------------------------------------------
+		}
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -52,5 +41,6 @@ foreach(Array_Keys($Config['Notifies']['Methods']) as $MethodID){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $Result;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 ?>

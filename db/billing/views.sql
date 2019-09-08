@@ -346,4 +346,15 @@ SELECT
 FROM
 	`PaymentSystemsCollation`;
 
+#-------------------------------------------------------------------------------
+DROP VIEW IF EXISTS `ContactsOwners`;
+DROP TABLE IF EXISTS `ContactsOwners`;
+CREATE
+   VIEW `ContactsOwners` AS
+SELECT
+   `Contacts`.*
+FROM
+   `Contacts`;
+
+
 

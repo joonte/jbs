@@ -13,7 +13,7 @@ if(Is_Error(System_Load('libs/Tree.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$User = DB_Select('Users',Array('ID','GroupID','RegisterDate','Name','Sign','Email','EmailConfirmed','UniqID','IsActive','LockReason','LayPayMaxSumm','LayPayThreshold','EnterIP','EnterDate','Params'),Array('UNIQ','ID'=>$UserID));
+$User = DB_Select('Users',Array('ID','GroupID','RegisterDate','Name','Sign','Email','UniqID','IsActive','LockReason','LayPayMaxSumm','LayPayThreshold','EnterIP','EnterDate','Params'),Array('UNIQ','ID'=>$UserID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($User)){
 case 'error':
@@ -41,6 +41,23 @@ case 'true':
 default:
 	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// выбираем контакты пользователя, нет-нет да нужны
+$Contacts = DB_Select('Contacts','*',Array('Where'=>SPrintF('`UserID` = %u',$User['ID']),'SortOn'=>Array('MethodID','Address')));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Contacts)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+$User['Contacts'] = $Contacts;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #if($UserID != 100){

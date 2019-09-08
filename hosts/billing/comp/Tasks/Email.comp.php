@@ -4,7 +4,7 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('Task','Email','Theme','Message','Heads','ID','Attachments');
+$__args_list = Array('Task','Email','Message','Attribs');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
@@ -13,12 +13,14 @@ if(Is_Error(System_Load('libs/Server.php','classes/SendMailSmtp.class.php')))
         return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/Tasks/Email]: отправка письма для (%s), тема (%s)',$Email,$Theme));
+Debug(SPrintF('[comp/Tasks/Email]: отправка письма для (%s), тема (%s)',$Email,$Attribs['Theme']));
+#-------------------------------------------------------------------------------
+#Debug(SPrintF('[comp/Tasks/Email]: %s',print_r($Attribs,true)));
 #-------------------------------------------------------------------------------
 $GLOBALS['TaskReturnInfo'] = $Email;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Array 		= Explode("\n",$Heads);
+$Array 		= Explode("\n",$Attribs['Heads']);
 #-------------------------------------------------------------------------------
 $Array[]	= 'X-Priority: 3';
 $Array[]	= 'X-MSMail-Priority: Normal';
@@ -34,18 +36,18 @@ $Boundary = "\r\n\r\n------==--" . HOST_ID;
 $Message = SPrintF("%s\r\nContent-Transfer-Encoding: 8bit\r\nContent-Type: text/plain; charset=UTF-8\r\n\r\n%s",$Boundary,$Message);
 #-------------------------------------------------------------------------------
 # достаём вложения, если они есть, и прикладываем к сообщению
-if(IsSet($Attachments) && Is_Array($Attachments) && SizeOf($Attachments)){
+if(IsSet($Attribs['Attachments']) && Is_Array($Attribs['Attachments']) && SizeOf($Attribs['Attachments'])){
 	#-------------------------------------------------------------------------------
 	# достаём данные юзера которому идёт письмо
-	$User = DB_Select('Users', Array('ID','Params'), Array('UNIQ', 'ID' => $ID));
+	$User = DB_Select('Users', Array('ID','Params'), Array('UNIQ', 'ID' => $Attribs['UserID']));
 	if(!Is_Array($User))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	if($User['Params']['Settings']['SendEdeskFilesToEmail'] == "Yes"){
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF('[comp/Tasks/Email]: письмо содержит %u вложений',SizeOf($Attachments)));
+		#Debug(SPrintF('[comp/Tasks/Email]: письмо содержит %u вложений',SizeOf($Attribs['Attachments'])));
 		#-------------------------------------------------------------------------------
-		foreach ($Attachments as $Attachment){
+		foreach ($Attribs['Attachments'] as $Attachment){
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[comp/Tasks/Email]: обработка вложения (%s), размер (%s), тип (%s)',$Attachment['Name'],$Attachment['Size'],$Attachment['Mime']));
 			#-------------------------------------------------------------------------------
@@ -83,15 +85,16 @@ default:
 if(Is_Array($Settings)){
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[comp/Tasks/Email]: отправка через SMTP'));
+	#-------------------------------------------------------------------------------
 	$mailSMTP = new SendMailSmtpClass($Settings['Login'],$Settings['Password'], SPrintF('%s://%s',$Settings['Protocol'],$Settings['Address']), '', $Settings['Port']);   
 	#-------------------------------------------------------------------------------
-	$IsMail = $mailSMTP->send($Email, $Theme, $Message, $Heads);
+	$IsMail = $mailSMTP->send($Email, $Attribs['Theme'], $Message, $Heads);
 	if(!$IsMail)
 		return ERROR | @Trigger_Error('[comp/Tasks/Email]: ошибка отправки почты через SMTP ');
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$IsMail = @Mail($Email,Mb_Encode_MimeHeader($Theme),$Message,$Heads);
+	$IsMail = @Mail($Email,Mb_Encode_MimeHeader($Attribs['Theme']),$Message,$Heads);
 	if(!$IsMail)
 		return ERROR | @Trigger_Error('[comp/Tasks/Email]: ошибка отправки сообщения, проверьте работу функции mail в PHP');
 	#-------------------------------------------------------------------------------
@@ -105,8 +108,8 @@ if(!$Config['Notifies']['Methods']['Email']['IsEvent'])
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Event = Array(
-		'UserID'=> $ID,
-		'Text'	=> SPrintF('Сообщение для (%s) с темой (%s) отправлено по электронной почте',$Email,$Theme)
+		'UserID'=> $Attribs['UserID'],
+		'Text'	=> SPrintF('Сообщение для (%s) с темой (%s) отправлено по электронной почте',$Email,$Attribs['Theme'])
 		);
 $Event = Comp_Load('Events/EventInsert',$Event);
 #-------------------------------------------------------------------------------

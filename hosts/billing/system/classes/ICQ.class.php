@@ -55,16 +55,13 @@ class ICQ implements Dispatcher {
 		#-------------------------------------------------------------------------------
 		$recipient = $msg->getParam('User');
 		#-------------------------------------------------------------------------------
-		if(!$recipient['Params']['NotificationMethods']['ICQ']['Address'])
-			throw new jException("ICQ UIN not found for user: ".$recipient['ID']);
-		#-------------------------------------------------------------------------------
 		$taskParams = Array(
 					'UserID'	=> $recipient['ID'],
 					'TypeID'	=> 'ICQ',
 					'Params'	=> Array(
-								$recipient['Params']['NotificationMethods']['ICQ']['Address'],
+								$msg->getParam('ToRecipient'),
 								$message,
-								$recipient['ID']
+								Array('UserID'=>$recipient['ID'],'TimeBegin'=>$msg->getParam('TimeBegin'),'TimeEnd'=>$msg->getParam('TimeEnd'))
 								)
 					);
 		#-------------------------------------------------------------------------------

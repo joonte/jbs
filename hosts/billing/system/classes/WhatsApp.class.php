@@ -48,16 +48,13 @@ class WhatsApp implements Dispatcher {
 
         $recipient = $msg->getParam('User');
 
-        if(!$recipient['Params']['NotificationMethods']['WhatsApp']['Address'])
-            throw new jException("Mobile not found for user: ".$recipient['ID']);
-
         $taskParams = Array(
             'UserID' => $recipient['ID'],
             'TypeID' => 'WhatsApp',
             'Params' => Array(
-                $recipient['Params']['NotificationMethods']['WhatsApp']['Address'],
+                $msg->getParam('ToRecipient'),
                 $message,
-                $recipient['ID']
+		Array('UserID'=>$recipient['ID'],'TimeBegin'=>$msg->getParam('TimeBegin'),'TimeEnd'=>$msg->getParam('TimeEnd'))
             )
         );
 

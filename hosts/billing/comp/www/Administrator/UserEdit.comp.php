@@ -21,7 +21,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$User = DB_Select('Users',Array('ID','Email','Name','GroupID','OwnerID','IsManaged','IsInheritGroup','LayPayMaxDays','LayPayMaxSumm','LayPayThreshold','Rating','IsActive','LockReason','IsNotifies','IsHidden','IsProtected','AdminNotice','Params'),Array('UNIQ','ID'=>$UserID));
+$User = DB_Select('Users',Array('ID','Email','Name','GroupID','OwnerID','IsManaged','IsInheritGroup','LayPayMaxDays','LayPayMaxSumm','LayPayThreshold','Rating','IsActive','LockReason','IsNotifies','IsHidden','IsProtected','AdminNotice'),Array('UNIQ','ID'=>$UserID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($User)){
 case 'error':
@@ -67,43 +67,19 @@ $Table[] = Array('Имя клиента',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
-	'Form/Input',
+		'Form/Input',
 		Array(
-			'name'      => 'Email',
-			'size'      => 25,
-			'type'      => 'text',
-			'prompt'    => "Почтовый адрес (логин в биллинге) пользователя",
-			'value'     => $User['Email'],
-		)
-	);
+			'name'	=> 'Email',
+			'size'	=> 25,
+			'type'	=> 'text',
+			'prompt'=> "Почтовый адрес (логин в биллинге) пользователя",
+			'value'	=> $User['Email'],
+			)
+		);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Почтовый адрес',$Comp);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$NotificationMethods = $User['Params']['NotificationMethods'];
-#-------------------------------------------------------------------------------
-foreach(Array_Keys($NotificationMethods) as $MethodID){
-	#-------------------------------------------------------------------------------
-	if(!IsSet($Config['Notifies']['Methods'][$MethodID]))
-		continue;
-	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load(
-		'Form/Input',
-			Array(
-				'name'      => $MethodID,
-				'type'      => 'text',
-				'prompt'    => $Messages['Prompts'][$MethodID],
-				'value'     => $User['Params']['NotificationMethods'][$MethodID]['Address'],
-				)
-			);
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	$Table[] = Array($Config['Notifies']['Methods'][$MethodID]['Name'],$Comp);
-	#-------------------------------------------------------------------------------
-}
+$Table[] = Array('Почтовый адрес для входа',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Password = Comp_Load('Passwords/Generator');

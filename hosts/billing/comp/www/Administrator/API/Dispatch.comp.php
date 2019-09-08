@@ -148,14 +148,23 @@ default:
 $Array = $Messages = Array();
 #-------------------------------------------------------------------------------
 # массив счётчиков по методам
-foreach($Methods as $Method)
-	$Array[$Method] = 0;
+foreach($Methods as $Method){
+	#-------------------------------------------------------------------------------
+	// считаем количество подвтерждённых контактов в базе, для выбранных юзеров
+	$Where = Array(
+			SPrintF('`UserID` IN (%s)',Implode(',',$UsersIDs)),
+			SPrintF('`MethodID` = "%s"',$Method),
+			'`IsActive` = "yes"'
+			);
+	#-------------------------------------------------------------------------------
+	$Count = DB_Count('Contacts',Array('Where'=>$Where));
+	if(Is_Error($Count))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Array[$Method] = $Count;
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
-# перебираем всех юзеров, исключаем тех у кого не подтверждены методы уведомления
-foreach($Users as $User)
-	foreach($Methods as $Method)
-		if($Method == 'Email' || ($User['Params']['NotificationMethods'][$Method]['Address'] && $User['Params']['NotificationMethods'][$Method]['Confirmed']))
-			$Array[$Method]++;
 #-------------------------------------------------------------------------------
 # массив счётчиков со значениями больше нуля
 foreach(Array_Keys($Array) as $Key)

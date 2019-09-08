@@ -3,7 +3,7 @@
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('Task','Mobile','Message','ID');
+$__args_list = Array('Task','Mobile','Message','Attribs');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
@@ -112,7 +112,7 @@ if(Is_Error($IsMessage)){
 if(!$Config['Notifies']['Methods']['WhatsApp']['IsEvent'])
 	return TRUE;
 #-------------------------------------------------------------------------------
-$Event = Comp_Load('Events/EventInsert',Array('UserID'=>$ID,'Text'=>SPrintF('Сообщение для (%u) через службу WhatsApp отправлено',$Mobile)));
+$Event = Comp_Load('Events/EventInsert',Array('UserID'=>$Attribs['UserID'],'Text'=>SPrintF('Сообщение для (%u) через службу WhatsApp отправлено',$Mobile)));
 #-------------------------------------------------------------------------------
 if(!$Event)
 	return ERROR | @Trigger_Error(500);

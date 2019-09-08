@@ -4,7 +4,7 @@
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('TableID','RowID','UserNotice','IsDisabled');
+$__args_list = Array('TableID','RowID','UserNotice','IsDisabled','NewWindow');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
@@ -17,8 +17,11 @@ $Attribs = Array(
 		'height'	=> 16
 		);
 #-------------------------------------------------------------------------------
+if($NewWindow)
+	$NewWindow = SPrintF(",NewWindow: '%s'",$NewWindow);
+#-------------------------------------------------------------------------------
 if(!$IsDisabled || $GLOBALS['__USER']['IsAdmin'])
-	$Attribs['onclick']	= SPrintF("ShowWindow('/NoticeEdit',{TableID:'%s',RowID:%u});",$TableID,$RowID);
+	$Attribs['onclick']	= SPrintF("ShowWindow('/NoticeEdit',{TableID:'%s',RowID:%u%s});",$TableID,$RowID,($NewWindow)?$NewWindow:'');
 #-------------------------------------------------------------------------------
 $Img = new Tag('IMG',$Attribs);
 #-------------------------------------------------------------------------------

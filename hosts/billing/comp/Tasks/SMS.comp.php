@@ -4,7 +4,7 @@
 /** @author Rootden for Lowhosting.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('Task', 'Mobile', 'Message', 'UserID', 'ChargeFree', 'IsImmediately');
+$__args_list = Array('Task','Mobile','Message','Attribs');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
@@ -13,49 +13,49 @@ if(Is_Error(System_Load('libs/HTTP.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+Debug(SPrintF('[comp/Tasks/SMS]: %s',print_r($Attribs,true)));
+#-------------------------------------------------------------------------------
 $Message = Trim($Message);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # проверяем, можно ли отправлять в заданное время
-$User = DB_Select('Users', Array('GroupID','Params'), Array('UNIQ', 'ID' => $UserID));
+$User = DB_Select('Users', Array('GroupID','Params'), Array('UNIQ', 'ID' => $Attribs['UserID']));
 if(!Is_Array($User))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IsImmediately = (IsSet($IsImmediately)?$IsImmediately:FALSE);
+$IsImmediately = (IsSet($Attribs['IsImmediately'])?$Attribs['IsImmediately']:FALSE);
 #-------------------------------------------------------------------------------
 $TransferTime = FALSE;
 #-------------------------------------------------------------------------------
 # возможно, параметры не заданы/требуется немедленная отправка - время не опредлеяем
 if(!$IsImmediately){
 	#-------------------------------------------------------------------------------
-	$SMSBeginTime = $User['Params']['Settings']['SMSBeginTime'];
-	$SMSBeginTime = IntVal(SubStr($SMSBeginTime,StrPos($SMSBeginTime,'_')+1,StrLen($SMSBeginTime)));
+	$TimeBegin = $Attribs['TimeBegin'];
 	#-------------------------------------------------------------------------------
-	$SMSEndTime = $User['Params']['Settings']['SMSEndTime'];
-	$SMSEndTime = IntVal(SubStr($SMSEndTime,StrPos($SMSEndTime,'_')+1,StrLen($SMSEndTime)));
+	$TimeEnd = $Attribs['TimeEnd'];
 	#-------------------------------------------------------------------------------
 	# время окончания, если оно 0:00 - это больше чем 23:00, например... надо 0->24
-	$SMSEndTime = (($SMSEndTime == 0)?24:$SMSEndTime);
+	$TimeEnd = (($TimeEnd == 0)?24:$TimeEnd);
 	#-------------------------------------------------------------------------------
-	if($SMSBeginTime != $SMSEndTime){
+	if($TimeBegin != $TimeEnd){
 		#-------------------------------------------------------------------------------
 		# если обычный период, например 9:00-18:00
-		if($SMSBeginTime < $SMSEndTime){
+		if($TimeBegin < $TimeEnd){
 			#-------------------------------------------------------------------------------
-			if(Date('G') >= $SMSBeginTime && Date('G') < $SMSEndTime){
+			if(Date('G') >= $TimeBegin && Date('G') < $TimeEnd){
 				# OK
 			}else{
 				#-------------------------------------------------------------------------------
-				if(Date('G') < $SMSBeginTime){
+				if(Date('G') < $TimeBegin){
 					#-------------------------------------------------------------------------------
 					# сегодня попзже
-					$TransferTime = MkTime($SMSBeginTime,0,0,Date('n'),Date('j'),Date('Y'));
+					$TransferTime = MkTime($TimeBegin,0,0,Date('n'),Date('j'),Date('Y'));
 					Debug(SPrintF('[comp/Tasks/SMS]: Перенос отправки сообщения (%u) на %s',$Mobile,Date('Y-m-d/H:i:s',$TransferTime)));
 					#-------------------------------------------------------------------------------
 				}else{
 					#-------------------------------------------------------------------------------
 					# завтра пораньше
-					$TransferTime = MkTime($SMSBeginTime,0,0,Date('n'),Date('j')+1,Date('Y'));
+					$TransferTime = MkTime($TimeBegin,0,0,Date('n'),Date('j')+1,Date('Y'));
 					Debug(SPrintF('[comp/Tasks/SMS]: Перенос отправки сообщения (%u) на завтра, %s',$Mobile,Date('Y-m-d/H:i:s',$TransferTime)));
 					#-------------------------------------------------------------------------------
 				}
@@ -64,10 +64,10 @@ if(!$IsImmediately){
 		}else{
 			#-------------------------------------------------------------------------------
 			# период типа 21:00-8:00
-			if(Date('G') < $SMSBeginTime && Date('G') >= $SMSEndTime){
+			if(Date('G') < $TimeBegin && Date('G') >= $TimeEnd){
 				#-------------------------------------------------------------------------------
-				# время типа 12:00 - требуется перенос на SMSBeginTime, сегодня
-				$TransferTime = MkTime($SMSBeginTime,0,0,Date('n'),Date('j'),Date('Y'));
+				# время типа 12:00 - требуется перенос на TimeBegin, сегодня
+				$TransferTime = MkTime($TimeBegin,0,0,Date('n'),Date('j'),Date('Y'));
 				Debug(SPrintF('[comp/Tasks/SMS]: Перенос отправки сообщения (%u) на %s', $Mobile,Date('Y-m-d/H:i:s',$TransferTime)));
 				#-------------------------------------------------------------------------------
 			}else{
@@ -84,7 +84,7 @@ if($TransferTime){
 	#-------------------------------------------------------------------------------
 	$GLOBALS['TaskReturnInfo'] = SPrintF("transfer send to %s",Date('Y-m-d/H:i:s',$TransferTime));
 	#-------------------------------------------------------------------------------
-	$Event = Array('UserID' => $UserID, 'PriorityID' => 'Billing', 'Text' => SPrintF('Отправка SMS сообщения для номера (%s) перенесена на (%s), согласно клиентским настройкам',$Mobile,Date('Y-m-d/H:i:s',$TransferTime)));
+	$Event = Array('UserID' => $Attribs['UserID'], 'PriorityID' => 'Billing', 'Text' => SPrintF('Отправка SMS сообщения для номера (%s) перенесена на (%s), согласно клиентским настройкам',$Mobile,Date('Y-m-d/H:i:s',$TransferTime)));
 	$Event = Comp_Load('Events/EventInsert', $Event);
 	if(!$Event)
 		return ERROR | @Trigger_Error(500);
@@ -151,13 +151,13 @@ if(!IsSet($ServerSettings['Params']['ExceptionsSchemeID']))
 # TODO: однако, надо через Tree_Entrance('Groups',3000000) искать
 #-------------------------------------------------------------------------------
 if($User['GroupID'] == '3000000')
-	$ChargeFree = TRUE;
+	$Attribs['ChargeFree'] = TRUE;
 #-------------------------------------------------------------------------------
 // Проверяем пользователя на исключения оплаты, сумма оплаченных счетов.
 #-------------------------------------------------------------------------------
 if(FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']) >= 0){
 	#-------------------------------------------------------------------------------
-	$IsSelect = DB_Select('InvoicesOwners','SUM(`Summ`) AS `Summ`',Array('UNIQ','Where'=>SPrintF('`UserID` = %u AND `IsPosted` = "yes" AND StatusDate > UNIX_TIMESTAMP() - %u * 24 * 60 *60',$UserID,$ServerSettings['Params']['ExceptionsPaidInvoicesPeriod'])));
+	$IsSelect = DB_Select('InvoicesOwners','SUM(`Summ`) AS `Summ`',Array('UNIQ','Where'=>SPrintF('`UserID` = %u AND `IsPosted` = "yes" AND StatusDate > UNIX_TIMESTAMP() - %u * 24 * 60 *60',$Attribs['UserID'],$ServerSettings['Params']['ExceptionsPaidInvoicesPeriod'])));
 	switch(ValueOf($IsSelect)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
@@ -166,7 +166,7 @@ if(FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']) >= 0){
 	case 'array':
 		#-------------------------------------------------------------------------------
 		if($IsSelect['Summ'] >= FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']))
-			$ChargeFree = true;
+			$Attribs['ChargeFree'] = TRUE;
 			//Debug(SPrintF('[comp/Tasks/SMS]: Оплаченных счетов (%s)', $IsSelect['Summ']));
 		#-------------------------------------------------------------------------------
 		break;
@@ -183,14 +183,14 @@ if(FloatVal($ServerSettings['Params']['ExceptionsPaidInvoices']) >= 0){
 #-------------------------------------------------------------------------------
 if($ServerSettings['Params']['ExceptionsSchemeID'] != 0){
 	#-------------------------------------------------------------------------------
-	$OrderHostings = DB_Select('HostingOrdersOwners', 'SchemeID', Array('Where' => SPrintF('`UserID` = %u AND `StatusID` = "Active"', $UserID)));
+	$OrderHostings = DB_Select('HostingOrdersOwners', 'SchemeID', Array('Where' => SPrintF('`UserID` = %u AND `StatusID` = "Active"', $Attribs['UserID'])));
 	if (Is_Error($OrderHostings))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$LimitSchemeID = Explode(',',$ServerSettings['Params']['ExceptionsSchemeID']);
 	foreach($OrderHostings as $OrderHosting){
 		if(In_Array((integer) $OrderHosting['SchemeID'], $LimitSchemeID)){
-			$ChargeFree = true;
+			$Attribs['ChargeFree'] = TRUE;
 			break;
 		}
 	}
@@ -235,7 +235,7 @@ if($MessageLength <= 70){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($ChargeFree)
+if($Attribs['ChargeFree'])
 	$SMSCost = 0;
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Formats/Currency',$SMSCost);
@@ -248,7 +248,7 @@ Debug(SPrintF('[comp/Tasks/SMS]: Стоимость сообщения (%s) вс
 if ($SMSCost > 0){
 	#-------------------------------------------------------------------------------
 	$Where = Array(
-			SPrintF('`UserID` = %u', $UserID),
+			SPrintF('`UserID` = %u', $Attribs['UserID']),
 			SPrintF('`Balance` >= %s', $SMSCost),
 			'`TypeID` != "NaturalPartner"',
 			);
@@ -280,7 +280,7 @@ if ($SMSCost > 0){
 		Debug("[comp/Tasks/SMS]: Недостаточно денежных средств на любом договоре клиента");
 		if($Config['Notifies']['Methods']['SMS']['IsEvent']){
 			#-------------------------------------------------------------------------------
-			$Event = Array('UserID' => $UserID, 'PriorityID' => 'Error', 'Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), недостаточно денежных средств на любом договоре клиента', $Mobile));
+			$Event = Array('UserID' => $Attribs['UserID'], 'PriorityID' => 'Error', 'Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), недостаточно денежных средств на любом договоре клиента', $Mobile));
 			$Event = Comp_Load('Events/EventInsert', $Event);
 			if(!$Event)
 				return ERROR | @Trigger_Error(500);
@@ -318,7 +318,7 @@ if(!IsSet($Links[$LinkID])){
 		Debug("[comp/Tasks/SMS]: Подключаемся и получаем баланс -> Error:'".$SMS->error."'");
 		if($Config['Notifies']['Methods']['SMS']['IsEvent']){
 			#-------------------------------------------------------------------------------
-			$Event = Array('UserID' => $UserID, 'PriorityID' => 'Error', 'Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), %s', $Mobile, 'шлюз временно недоступен.'));
+			$Event = Array('UserID' => $Attribs['UserID'], 'PriorityID' => 'Error', 'Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), %s', $Mobile, 'шлюз временно недоступен.'));
 			$Event = Comp_Load('Events/EventInsert', $Event);
 			if(!$Event)
 				return ERROR | @Trigger_Error(500);
@@ -349,7 +349,7 @@ if(!IsSet($Links[$LinkID])){
 		#-------------------------------------------------------------------------------
 		if ($Config['Notifies']['Methods']['SMS']['IsEvent']) {
 			#-------------------------------------------------------------------------------
-			$Event = Array('UserID' => $UserID, 'PriorityID' => 'Error', 'Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), %s', $Mobile, 'временно нет средств на шлюзе.'));
+			$Event = Array('UserID' => $Attribs['UserID'], 'PriorityID' => 'Error', 'Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), %s', $Mobile, 'временно нет средств на шлюзе.'));
 			$Event = Comp_Load('Events/EventInsert', $Event);
 			if (!$Event)
 				return ERROR | @Trigger_Error(500);
@@ -377,8 +377,8 @@ case 'false':
 	#-------------------------------------------------------------------------------
 	if ($Config['Notifies']['Methods']['SMS']['IsEvent']) {
 		#-------------------------------------------------------------------------------
-		#$Event = Array('UserID' => $UserID,'PriorityID' => 'Error','Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), %s', $Mobile, 'шлюз временно недоступен.'));
-		$Event = Array('UserID' => $UserID,'PriorityID' => 'Error','Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), причина (%s)',$Mobile,$SMS->error));
+		#$Event = Array('UserID' => $Attribs['UserID'],'PriorityID' => 'Error','Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), %s', $Mobile, 'шлюз временно недоступен.'));
+		$Event = Array('UserID' => $Attribs['UserID'],'PriorityID' => 'Error','Text' => SPrintF('Не удалось отправить SMS сообщение для (%s), причина (%s)',$Mobile,$SMS->error));
 		$Event = Comp_Load('Events/EventInsert', $Event);
 		if (!$Event)
 			return ERROR | @Trigger_Error(500);
@@ -396,7 +396,7 @@ case 'true':
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[comp/Tasks/SMS]: Отправка успешна, ответ шлюза: %s',$SMS->success));
 	#-------------------------------------------------------------------------------
-	if(!$ChargeFree && IsSet($After)){
+	if(!$Attribs['ChargeFree'] && IsSet($After)){
 		#------------------------------TRANSACTION--------------------------------------
 		if (Is_Error(DB_Transaction($TransactionID = UniqID('PostingSMS'))))
 			return ERROR | @Trigger_Error(500);
@@ -444,7 +444,7 @@ if (!$Config['Notifies']['Methods']['SMS']['IsEvent'])
 	return TRUE;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Event = Array('UserID'=>$UserID,'Text'=>SPrintF('SMS сообщение для (%s) отправлено', $Mobile));
+$Event = Array('UserID'=>$Attribs['UserID'],'Text'=>SPrintF('SMS сообщение для (%s) отправлено', $Mobile));
 #-------------------------------------------------------------------------------
 $Event = Comp_Load('Events/EventInsert', $Event);
 #-------------------------------------------------------------------------------
