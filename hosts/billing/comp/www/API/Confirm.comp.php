@@ -220,7 +220,7 @@ if(!$Confirm && !$Code){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$IsUpdate = DB_Update('Contacts',Array('Confirmed'=>Time()),Array('ID'=>$ContactID));
+	$IsUpdate = DB_Update('Contacts',Array('Confirmed'=>Time(),'IsActive'=>TRUE),Array('ID'=>$ContactID));
 	if (Is_Error($IsUpdate))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

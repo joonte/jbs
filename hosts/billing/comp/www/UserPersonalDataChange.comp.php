@@ -126,7 +126,7 @@ foreach($__USER['Contacts'] as $Contact){
 	$Table[] = Array(
 			new Tag('TD',$Comp),
 			new Tag('TD',Array('class'=>'Head','style'=>SPrintF('background:%s;',($Contact['Confirmed'])?'#D5F66C':'WhiteSmoke')),$Methods[$Contact['MethodID']]['Name']),
-			new Tag('TD',Array('class'=>'Head'),new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ContactEdit?ContactID=%u');",$Contact['ID']),'title'=>'Кликните для изменения настроек контактного адреса'),$Contact['Address'])),
+			new Tag('TD',Array('class'=>'Head'),new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ContactEdit?ContactID=%u');",$Contact['ID']),'title'=>'Кликните для изменения настроек и подтверждения контактного адреса'),$Contact['Address'])),
 			new Tag('TD',Array('class'=>'Head','style'=>SPrintF('background:%s;',($Contact['IsPrimary'])?'#D5F66C':'WhiteSmoke')),($Contact['IsPrimary'])?'Да':'-'),
 			new Tag('TD',Array('class'=>'Head','style'=>SPrintF('background:%s;',($Contact['IsActive'])?'#D5F66C':'WhiteSmoke')),($Contact['IsActive'])?'Да':'Нет'),
 			new Tag('TD',Array('class'=>'Head'),new Tag('IMG',Array('class'=>'Button','onclick'=>$OnClick,'onmouseover'=>"PromptShow(event,'Удалить контактный адрес',this);",'src'=>'SRC:{Images/Icons/Flush.gif}')))

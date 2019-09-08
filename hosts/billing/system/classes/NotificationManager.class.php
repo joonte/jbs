@@ -73,8 +73,8 @@ class NotificationManager {
 					return new gException('NOTIFIES_RECIPIENT_DISABLED','Уведомления для получателя отключены');
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-			// достаём контакты юзера
-			$Where = Array(SPrintF('`UserID` = %u',$User['ID']),'`Confirmed` > 0','`IsActive` = "yes"');
+			// достаём контакты юзера (у новых юзеров почтовыый адрес не подтверждён, но он первичный)
+			$Where = Array(SPrintF('`UserID` = %u',$User['ID']),'`Confirmed` > 0 OR `IsPrimary` = "yes"','`IsActive` = "yes"');
 			#-------------------------------------------------------------------------------
 			$Contacts = DB_Select('Contacts',Array('ID','MethodID','Address','TimeBegin','TimeEnd'),Array('Where'=>$Where));
 			#-------------------------------------------------------------------------------

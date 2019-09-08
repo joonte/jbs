@@ -196,7 +196,7 @@ if($Contact['Confirmed']){
 	#-------------------------------------------------------------------------------
 	$Attribs 		= Array('type'=>'button','prompt'=>'Нажмите для получения кода подтверждения');
 	$Attribs['onclick']     = SPrintF('form.AddressCode.disabled=false; form.CheckButton.disabled=false; Confirm(\'%s\',form.Address.value,form.ContactID.value);',$Contact['MethodID']);
-	$Attribs['value']       = 'Подтвердить';
+	$Attribs['value']       = 'Получить код подтвержения';
 	$Attribs['prompt']      = 'Нажмите для получения кода подтверждения';
 	#-------------------------------------------------------------------------------
 	$Confirm = Comp_Load('Form/Input',$Attribs);
