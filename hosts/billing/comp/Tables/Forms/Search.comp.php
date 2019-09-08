@@ -46,7 +46,8 @@ if($Search){
 	#-------------------------------------------------------------------------------
 	$Where = SPrintF('( %s )', $Query);
 	#-------------------------------------------------------------------------------
-	$Users = DB_Select('Users','ID',Array('Where'=>SPrintF("`Email` LIKE '%s' OR `Name` LIKE '%s'",$dSearch,$dSearch)));
+	# 'Where'=>SPrintF("`Email` LIKE '%s' OR `Name` LIKE '%s'",$dSearch,$dSearch)
+	$Users = DB_Select('Users','ID',Array('Where'=>SPrintF("`Name` LIKE '%s' OR (SELECT COUNT(*) FROM `Contacts` WHERE `Contacts`.`UserID` = `Users`.`ID` AND `Address` LIKE '%s') > 0",$dSearch,$dSearch)));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Users)){
 	case 'error':
