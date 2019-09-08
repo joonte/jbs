@@ -4,20 +4,42 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('Task','Email','Message','Attribs');
+$__args_list = Array('Task','Address','Message','Attribs');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
+// возможно, параметры не заданы/требуется немедленная отправка - время не опредлеяем
+if(!IsSet($Attribs['IsImmediately']) || !$Attribs['IsImmediately']){
+	#-------------------------------------------------------------------------------
+	// проверяем, можно ли отправлять в заданное время
+	$TransferTime = Comp_Load('Formats/Task/TransferTime',$Attribs['UserID'],$Address,'Email',$Attribs['TimeBegin'],$Attribs['TimeEnd']);
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($TransferTime)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'integer':
+		return $TransferTime;
+	case 'false':
+		break;
+	default:
+		return ERROR | @Trigger_Error(100);
+	}
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if(Is_Error(System_Load('libs/Server.php','classes/SendMailSmtp.class.php')))
         return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/Tasks/Email]: отправка письма для (%s), тема (%s)',$Email,$Attribs['Theme']));
+Debug(SPrintF('[comp/Tasks/Email]: отправка письма для (%s), тема (%s)',$Address,$Attribs['Theme']));
 #-------------------------------------------------------------------------------
 #Debug(SPrintF('[comp/Tasks/Email]: %s',print_r($Attribs,true)));
 #-------------------------------------------------------------------------------
-$GLOBALS['TaskReturnInfo'] = $Email;
+$GLOBALS['TaskReturnInfo'] = $Address;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Array 		= Explode("\n",$Attribs['Heads']);
@@ -88,13 +110,13 @@ if(Is_Array($Settings)){
 	#-------------------------------------------------------------------------------
 	$mailSMTP = new SendMailSmtpClass($Settings['Login'],$Settings['Password'], SPrintF('%s://%s',$Settings['Protocol'],$Settings['Address']), '', $Settings['Port']);   
 	#-------------------------------------------------------------------------------
-	$IsMail = $mailSMTP->send($Email, $Attribs['Theme'], $Message, $Heads);
+	$IsMail = $mailSMTP->send($Address, $Attribs['Theme'], $Message, $Heads);
 	if(!$IsMail)
 		return ERROR | @Trigger_Error('[comp/Tasks/Email]: ошибка отправки почты через SMTP ');
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$IsMail = @Mail($Email,Mb_Encode_MimeHeader($Attribs['Theme']),$Message,$Heads);
+	$IsMail = @Mail($Address,Mb_Encode_MimeHeader($Attribs['Theme']),$Message,$Heads);
 	if(!$IsMail)
 		return ERROR | @Trigger_Error('[comp/Tasks/Email]: ошибка отправки сообщения, проверьте работу функции mail в PHP');
 	#-------------------------------------------------------------------------------
@@ -109,7 +131,7 @@ if(!$Config['Notifies']['Methods']['Email']['IsEvent'])
 #-------------------------------------------------------------------------------
 $Event = Array(
 		'UserID'=> $Attribs['UserID'],
-		'Text'	=> SPrintF('Сообщение для (%s) с темой (%s) отправлено по электронной почте',$Email,$Attribs['Theme'])
+		'Text'	=> SPrintF('Сообщение для (%s) с темой (%s) отправлено по электронной почте',$Address,$Attribs['Theme'])
 		);
 $Event = Comp_Load('Events/EventInsert',$Event);
 #-------------------------------------------------------------------------------

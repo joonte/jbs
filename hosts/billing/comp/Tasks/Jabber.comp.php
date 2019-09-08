@@ -8,8 +8,30 @@ $__args_list = Array('Task','JabberID','Message','Attribs');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-#if(!$Theme)
-$Theme = 'message theme is empty';
+// возможно, параметры не заданы/требуется немедленная отправка - время не опредлеяем
+if(!IsSet($Attribs['IsImmediately']) || !$Attribs['IsImmediately']){
+	#-------------------------------------------------------------------------------
+	// проверяем, можно ли отправлять в заданное время
+	$TransferTime = Comp_Load('Formats/Task/TransferTime',$Attribs['UserID'],$Address,'Jabber',$Attribs['TimeBegin'],$Attribs['TimeEnd']);
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($TransferTime)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'integer':
+		return $TransferTime;
+	case 'false':
+		break;
+	default:
+		return ERROR | @Trigger_Error(100);
+	}
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(!IsSet($Attribs['Theme']) || !$Attribs['Theme'])
+	$Theme = 'message theme is empty';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/Tasks/Jabber]: отправка Jabber сообщения для (%s)', $JabberID));
