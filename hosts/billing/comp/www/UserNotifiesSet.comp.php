@@ -36,12 +36,14 @@ $Methods = $Notifies['Methods'];
 #-------------------------------------------------------------------------------
 // TODO сделать персональные настройки для каждого контактного адреса.
 // иначе такие вот костыли плодятся - тупо выбираем первый попавшийся адрес
+$Mobile = Array('Address'=>0,'Confirmed'=>0);
+#-------------------------------------------------------------------------------
 foreach($__USER['Contacts'] as $Contact)
 	if($Contact['MethodID'] == 'SMS')
 		$Mobile = $Contact;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($Methods['SMS']['IsActive']){
+if($Methods['SMS']['IsActive'] && $Mobile['Confirmed']){
 	#-------------------------------------------------------------------------------
 	$ServersSettings = Comp_Load('Servers/SMSSelectServer',$Mobile['Address']);
 	#-------------------------------------------------------------------------------
@@ -152,8 +154,9 @@ case 'exception':
 	break;
 case 'array':
 	#-------------------------------------------------------------------------------
-	foreach($Rows as $Row)
+	foreach($Rows as $Row){
 		$uNotifies[$Row['MethodID']][] = $Row['TypeID'];
+	}
 	#-------------------------------------------------------------------------------
 	break;
 	#-------------------------------------------------------------------------------
@@ -167,8 +170,10 @@ $Code = 'Default';
 #-------------------------------------------------------------------------------
 foreach(Array_Keys($Types) as $TypeID){
 	#-------------------------------------------------------------------------------
-	#Debug(SPrintF('[comp/www/UserNotifiesSet]: TypeID = %s',$TypeID));
+	Debug(SPrintF('[comp/www/UserNotifiesSet]: TypeID = %s',$TypeID));
+	Debug(SPrintF('[comp/www/UserNotifiesSet]: $Types = %s',print_r($Types,true)));
 	$Type = $Types[$TypeID];
+	Debug(SPrintF('[comp/www/UserNotifiesSet]: TypeID = %s',$TypeID));
 	#-------------------------------------------------------------------------------
 	$Entrance = Tree_Entrance('Groups',(integer)$Type['GroupID']);
 	#-------------------------------------------------------------------------------
@@ -193,6 +198,7 @@ foreach(Array_Keys($Types) as $TypeID){
 	$Code = IsSet($Type['Code'])?$Type['Code']:$Code;
 	$Regulars = SPrintF('/^%s/',$Code);
 	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[comp/www/UserNotifiesSet]: TypeID = %s',$TypeID));
 	if(Preg_Match($Regulars,$TypeID)){
 		#-------------------------------------------------------------------------------
 		# код уведомления совпадает с уведомлением
@@ -213,6 +219,7 @@ foreach(Array_Keys($Types) as $TypeID){
 	#-------------------------------------------------------------------------------
 	foreach(Array_Keys($Methods) as $MethodID){
 		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/www/UserNotifiesSet]: MethodID = %s',$MethodID));
 		$Method = $Methods[$MethodID];
 		#-------------------------------------------------------------------------------
 		if(!$Method['IsActive'])
@@ -233,7 +240,7 @@ foreach(Array_Keys($Types) as $TypeID){
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		// Если контакт не подтвержден то не выводить активными галочки для смс.
-		if($MethodID != 'Email' && !$Mobile['Confirmed']){
+		if($MethodID != 'Email' && !$__USER['Contacts'][$MethodID]['Confirmed']){
 			#-------------------------------------------------------------------------------
 			$Comp->AddAttribs(Array('disabled'=>'true'));
 			#-------------------------------------------------------------------------------
