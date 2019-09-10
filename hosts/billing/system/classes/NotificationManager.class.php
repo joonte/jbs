@@ -177,8 +177,8 @@ class NotificationManager {
 			$msg->setParam('MethodID',$MethodID);
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-			if(!class_exists($MethodID))
-				return new gException('DISPATCHER_NOT_FOUND', 'Dispatcher not found: '.$MethodID);
+			#if(!class_exists($MethodID))
+			#	return new gException('DISPATCHER_NOT_FOUND', 'Dispatcher not found: '.$MethodID);
             		#-------------------------------------------------------------------------------
 			#$dispatcher = $MethodID::get();
 			#$dispatcher = call_user_func($MethodID.'::get', true);
