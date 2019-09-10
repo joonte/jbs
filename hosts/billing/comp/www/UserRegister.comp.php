@@ -105,7 +105,7 @@ $Comp = Comp_Load('Form/Input',Array('name'=>'Email','size'=>25,'class'=>'Duty',
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = new Tag('TD',Array('width'=>430,'colspan'=>2,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),'Пожалуйста, проверьте правильность электронного адреса, т.к. он будет являться основным каналом нашей связи с Вами, а так же будет использоваться Вами для входа в свой личный кабинет.');
+$Table[] = new Tag('TD',Array('width'=>430,'colspan'=>2,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),'Пожалуйста, проверьте правильность электронного адреса, т.к. он будет являться основным каналом связи и будет использоваться для входа в личный кабинет.');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Электронный адрес (логин)'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Например: ivanov@ivanovich.ru')),$Comp);
@@ -143,7 +143,7 @@ $Comp = Comp_Load('Form/Input',Array('name'=>'Name','size'=>25,'class'=>'Duty','
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Ваше имя'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Например: Иван Иванович')),$Comp);
+$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Имя'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Например: Иван Иванович')),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Img = new Tag('IMG',Array('id'=>'Protect','align'=>'left','width'=>80,'height'=>30,'alt'=>'Включите отображение картинок','src'=>SPrintF('/Protect?Rand=%u',Rand(1000,9999))));
