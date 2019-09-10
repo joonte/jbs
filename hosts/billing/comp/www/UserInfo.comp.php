@@ -26,6 +26,7 @@ $Columns = Array(
 			'(SELECT COUNT(*) FROM `OrdersOwners` WHERE `OrdersOwners`.`UserID`=`Users`.`ID` AND `OrdersOwners`.`StatusID`="Active") AS `NumActiveOrders`',
 			'(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID`=`Users`.`ID`) AS `TotalPayments`',
 			'(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID`=`Users`.`ID` AND `InvoicesOwners`.`StatusID`="Payed") AS `SummPayments`',
+			'(SELECT SUM(`Balance`) FROM `ContractsOwners` WHERE `ContractsOwners`.`UserID`=`Users`.`ID`) AS `BalanceSumm`'
 		);
 #-------------------------------------------------------------------------------
 $User = DB_Select('Users',$Columns,Array('UNIQ','ID'=>$UserID));
@@ -193,6 +194,13 @@ if(Is_Error($Comp))
 $Table[] = Array('Оплачено счетов на сумму',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Comp = Comp_Load('Formats/Currency',$User['BalanceSumm']);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Сумма балансов всех счетов',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if($User['NumOrders'] != $User['NumActiveOrders'])
 	$Table[] = Array('Всего заказано услуг',$User['NumOrders']);
 #-------------------------------------------------------------------------------
@@ -208,6 +216,48 @@ if($User['TotalPayments'] != $User['SummPayments']){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$Table[] = Array('Выписано счетов на сумму',$Comp);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($User['BalanceSumm'] > 0){
+	#-------------------------------------------------------------------------------
+	$Table[] = 'Договора с ненулевым баллансом';
+	#-------------------------------------------------------------------------------
+	$Contracts = DB_Select('ContractsOwners',Array('ID','Customer','TypeID','Balance'),Array('Where'=>SPrintF('`UserID` = %u AND `Balance` != 0',$User['ID']),'SortOn'=>Array('TypeID','Customer')));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Contracts)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	foreach($Contracts as $Contract){
+		#-------------------------------------------------------------------------------
+		$Number = Comp_Load('Formats/Contract/Number',$Contract['ID']);
+		if(Is_Error($Number))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Name = Comp_Load('Formats/String',SPrintF('#%s: %s',$Number,$Contract['Customer']),25);
+		if(Is_Error($Name))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Formats/Currency',$Contract['Balance']);
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Tr = new Tag('TR');
+		$Tr->AddChild(new Tag('TD',Array(),$Name));
+		$Tr->AddChild(new Tag('TD',Array('class'=>'Standard'),$Comp));
+		#-------------------------------------------------------------------------------
+		$Table[] = $Tr;
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
