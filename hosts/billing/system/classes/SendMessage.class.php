@@ -4,13 +4,15 @@
  *  Joonte Billing System
  *
  *  Copyright © 2012 Joonte Software
+ * 
+ *  rewritten by Alex Keda, for www.host-food.ru, 2019-09-10 in 13:00 MSK
  *
  */
 
 /**
  *
  */
-class Email implements Dispatcher {
+class SendMessage implements Dispatcher {
     /** Instance of email dispatcher. */
     private static $instance;
 
@@ -21,7 +23,8 @@ class Email implements Dispatcher {
 
     public static function get() {
         if (!isset(self::$instance)) {
-            self::$instance = new Email();
+            #self::$instance = new Email();
+	    self::$instance = new SendMessage();
         }
 
         return self::$instance;
@@ -29,16 +32,27 @@ class Email implements Dispatcher {
 
     public function send(Msg $msg) {
         // Get template file path.
-        $templatePath = SPrintF('Notifies/Email/%s.tpl', $msg->getTemplate());
+        $templatePath = SPrintF('Notifies/%s/%s.tpl',$msg->getParam('MethodID'),$msg->getTemplate());
 
         $smarty = JSmarty::get();
         $smarty->clearAllAssign();
 
+	// конфиг
+	$Config = Config();
+	$smarty->assign('Config',$Config);
+
+	//Debug(SPrintF('[system/classes/SendMessage.class.php]: Msg = %s',print_r($msg,true)));
+
         if (!$smarty->templateExists($templatePath)) {
-            throw new jException('Template file not found: '.$templatePath);
+		Debug(SPrintF('[system/classes/SendMessage]: шаблон по типу сообщения не найден (%s)',$templatePath));
+		// пробуем новый шаблон
+		$templatePath = SPrintF('Notifies/%s/%s.tpl',$msg->getParam('MethodSettings')['MessageTemplate'],$msg->getTemplate());
+		if (!$smarty->templateExists($templatePath)) {
+	            throw new jException('Template file not found: '.$templatePath);
+		}
         }
 
-        $smarty->assign('Config', Config());
+        //$smarty->assign('Config', Config());
 
         foreach(array_keys($msg->getParams()) as $paramName) {
             $smarty->assign($paramName, $msg->getParam($paramName));
@@ -73,6 +87,8 @@ class Email implements Dispatcher {
 
         $sender = $msg->getParam('From');
 
+	Debug(SPrintF('[system/classes/SendMessage] sender = %s',print_r($sender,true)));
+
         $emailHeads = Array(
 				SPrintF('From: %s', $sender['Email']),
 				'MIME-Version: 1.0',
@@ -93,15 +109,17 @@ class Email implements Dispatcher {
 				'Attachments'	=> $msg->getParam('EmailAttachments'),
 				'UserID'	=> $recipient['ID'],
 				'TimeBegin'	=> $msg->getParam('TimeBegin'),
-				'TimeEnd'	=> $msg->getParam('TimeEnd')
+				'TimeEnd'	=> $msg->getParam('TimeEnd'),
+				'ChargeFree'	=> ($msg->getParam('ChargeFree'))?TRUE:FALSE
+
 				);
         $taskParams = Array(
             'UserID' => $recipient['ID'],
-            'TypeID' => 'Email',
+            'TypeID' => $msg->getParam('MethodID'),
             'Params' => $Params
         );
-	#Debug(SPrintF('[system/classes/Email] taskParams = %s',print_r($taskParams,true)));
-	#Debug(SPrintF('[system/classes/Email] msg = %s',print_r($msg,true)));
+	#Debug(SPrintF('[system/classes/SendMessage] taskParams = %s',print_r($taskParams,true)));
+	#Debug(SPrintF('[system/classes/SendMessage] msg = %s',print_r($msg,true)));
         $result = Comp_Load('www/Administrator/API/TaskEdit',$taskParams);
         switch(ValueOf($result)) {
             case 'error':

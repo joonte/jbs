@@ -173,12 +173,16 @@ class NotificationManager {
 			$msg->setParam('TimeBegin',$Contact['TimeBegin']);	// время начала рассылки
 			$msg->setParam('TimeEnd',$Contact['TimeEnd']);		// время конца рассылки
 			#-------------------------------------------------------------------------------
+			// JBS-1283, надо сохранить метод, понадобится
+			$msg->setParam('MethodID',$MethodID);
+			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			if(!class_exists($MethodID))
 				return new gException('DISPATCHER_NOT_FOUND', 'Dispatcher not found: '.$MethodID);
             		#-------------------------------------------------------------------------------
 			#$dispatcher = $MethodID::get();
-			$dispatcher = call_user_func($MethodID.'::get', true);
+			#$dispatcher = call_user_func($MethodID.'::get', true);
+			$dispatcher = Call_User_Func('SendMessage::get',true);
 			#-------------------------------------------------------------------------------
 			try {
 				#-------------------------------------------------------------------------------
