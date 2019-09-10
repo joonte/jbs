@@ -3,7 +3,7 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('Task','JabberID','Message','Attribs');
+$__args_list = Array('Task','Address','Message','Attribs');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
@@ -30,13 +30,9 @@ if(!IsSet($Attribs['IsImmediately']) || !$Attribs['IsImmediately']){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(!IsSet($Attribs['Theme']) || !$Attribs['Theme'])
-	$Theme = 'message theme is empty';
+Debug(SPrintF('[comp/Tasks/Jabber]: отправка Jabber сообщения для (%s)', $Address));
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/Tasks/Jabber]: отправка Jabber сообщения для (%s)', $JabberID));
-#-------------------------------------------------------------------------------
-$GLOBALS['TaskReturnInfo'] = $JabberID;
+$GLOBALS['TaskReturnInfo'] = $Address;
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('classes/JabberClient.class.php','libs/Server.php')))
 	return ERROR | @Trigger_Error(500);
@@ -94,7 +90,7 @@ if(!IsSet($Links[$LinkID])) {
 $JabberClient = &$Links[$LinkID];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsMessage = $JabberClient->send_message($JabberID, $Message, $Theme);
+$IsMessage = $JabberClient->send_message($Address,$Message,$Attribs['Theme']);
 if(Is_Error($IsMessage)){
 	#-------------------------------------------------------------------------------
 	UnSet($Links[$LinkID]);
@@ -112,7 +108,7 @@ if(!$Config['Notifies']['Methods']['Jabber']['IsEvent'])
 	return TRUE;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Event = Comp_Load('Events/EventInsert', Array('UserID'=>$Attribs['UserID'],'Text'=>SPrintF('Сообщение для (%s) через службу Jabber отправлено', $JabberID)));
+$Event = Comp_Load('Events/EventInsert', Array('UserID'=>$Attribs['UserID'],'Text'=>SPrintF('Сообщение для (%s) через службу Jabber отправлено', $Address)));
 if(!$Event)
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

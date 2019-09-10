@@ -3,7 +3,7 @@
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('Task','Mobile','Message','Attribs');
+$__args_list = Array('Task','Address','Message','Attribs');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
@@ -30,7 +30,7 @@ if(!IsSet($Attribs['IsImmediately']) || !$Attribs['IsImmediately']){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/Tasks/WhatsApp]: отправка WhatsApp сообщения для (%u)',$Mobile));
+Debug(SPrintF('[comp/Tasks/WhatsApp]: отправка WhatsApp сообщения для (%u)',$Address));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Config = Config();
@@ -44,7 +44,7 @@ if(!$Config['Notifies']['Methods']['WhatsApp']['IsActive']){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$GLOBALS['TaskReturnInfo'] = $Mobile;
+$GLOBALS['TaskReturnInfo'] = $Address;
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('classes/WhatsApp/whatsprot.class.php','libs/Server.php')))
 	return ERROR | @Trigger_Error(500);
@@ -121,7 +121,7 @@ if(!File_Exists(SPrintF('%s/info.update.txt',$DataFolder))){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsMessage = $WhatsAppClient->sendMessage($Mobile,$Message);
+$IsMessage = $WhatsAppClient->sendMessage($Address,$Message);
 if(Is_Error($IsMessage)){
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[comp/Tasks/WhatsApp]: error sending message, see error file: %s',$LogFile));
@@ -134,7 +134,7 @@ if(Is_Error($IsMessage)){
 if(!$Config['Notifies']['Methods']['WhatsApp']['IsEvent'])
 	return TRUE;
 #-------------------------------------------------------------------------------
-$Event = Comp_Load('Events/EventInsert',Array('UserID'=>$Attribs['UserID'],'Text'=>SPrintF('Сообщение для (%u) через службу WhatsApp отправлено',$Mobile)));
+$Event = Comp_Load('Events/EventInsert',Array('UserID'=>$Attribs['UserID'],'Text'=>SPrintF('Сообщение для (%u) через службу WhatsApp отправлено',$Address)));
 #-------------------------------------------------------------------------------
 if(!$Event)
 	return ERROR | @Trigger_Error(500);
