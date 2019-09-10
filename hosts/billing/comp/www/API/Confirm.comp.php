@@ -131,20 +131,20 @@ if(!$Confirm && !$Code){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# сообщение для SMS и часть остальных вариантов оповещения
-	$Message1 = SPrintF('Ваш проверочный код: %s',$Confirm1);
+	$MessageSmall = SPrintF('Ваш проверочный код: %s',$Confirm1);
 	#-------------------------------------------------------------------------------
-	$Message2 = "%s\r\n\r\nДля подтверждения вашего контактного адреса, вы можете пройти по этой ссылке:\r\n%s\r\nЕсли ссылка не открывается, то скопируйте и вставьте её в адресную строку браузера\r\n\r\n--\r\n%s\r\n";
+	$MessageBig = "%s\r\n\r\nДля подтверждения вашего контактного адреса, вы можете пройти по этой ссылке:\r\n%s\r\nЕсли ссылка не открывается, то скопируйте и вставьте её в адресную строку браузера\r\n\r\n--\r\n%s\r\n";
 	#-------------------------------------------------------------------------------
 	$Url = SPrintF('http://%s/API/Confirm?Method=%s&ContactID=%u&Value=%s&Code=%s/%s',HOST_ID,$Method,$ContactID,$Value,$Confirm1,$Confirm2);
 	#-------------------------------------------------------------------------------
-	$Message2 = SPrintF($Message2,$Message1,$Url,$Executor['Sign']);
+	$MessageBig = SPrintF($MessageBig,$MessageSmall,$Url,$Executor['Sign']);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Theme = SPrintF('Подтверждение %s адреса',$Config['Notifies']['Methods'][$Method]['Name']);
 	#-------------------------------------------------------------------------------
 	$Heads = Array(SPrintF('From: %s',$Executor['Email']),'MIME-Version: 1.0','Content-Transfer-Encoding: 8bit',SPrintF('Content-Type: multipart/mixed; boundary="----==--%s"',HOST_ID));
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load(SPrintF('Tasks/%s',$Method),NULL,$Value,($Config['Notifies']['Methods'][$Method]['IsShort'])?$Message1:$Message2,Array('Heads'=>Implode("\n",$Heads),'UserID'=>$__USER['ID'],'Theme'=>$Theme,'TimeBegin'=>0,'TimeEnd'=>0,'ChargeFree'=>TRUE));
+	$Comp = Comp_Load(SPrintF('Tasks/%s',$Method),NULL,$Value,($Config['Notifies']['Methods'][$Method]['MessageTemplate'] == 'Small')?$MessageSmall:$MessageBig,Array('Heads'=>Implode("\n",$Heads),'UserID'=>$__USER['ID'],'Theme'=>$Theme,'TimeBegin'=>0,'TimeEnd'=>0,'ChargeFree'=>TRUE));
 	if(Is_Error($Comp))
 		return new gException('ERROR_MESSAGE_SEND','Не удалось отправить сообщение');
 	#-------------------------------------------------------------------------------
