@@ -29,6 +29,7 @@ $IsProlong		= (boolean) @$Args['IsProlong'];
 $IsConditionally	= (boolean) @$Args['IsConditionally'];
 $Statuses		=   (array) @$Args['Statuses'];
 $IsAutoInvoicing	= (boolean) @$Args['IsAutoInvoicing'];
+$Priority		= (integer) @$Args['Priority'];
 $SortID			= (integer) @$Args['SortID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -91,6 +92,7 @@ $IService = Array(
 		'IsConditionally'	=> $IsConditionally,
 		'IsAutoInvoicing'	=> $IsAutoInvoicing,
 		'Params'		=> Array('Statuses'=>$Statuses),
+		'Priority'		=> $Priority,
 		'SortID'		=> $SortID
 		#-------------------------------------------------------------------------------
 		);

@@ -77,9 +77,10 @@ if(!$Event)
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Columns = Array('OrderID','Amount','(SELECT `ServiceID` FROM `Orders` WHERE `Orders`.`ID` = `OrderID`) as `ServiceID`');
+// TODO разобраться, нахрена тут выбирается ServiceID из сторонней таблицы - он есть же в InvoicesItems
+$Columns = Array('OrderID','Amount','(SELECT `ServiceID` FROM `Orders` WHERE `Orders`.`ID` = `OrderID`) as `ServiceID`','(SELECT `Priority` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) AS `Priority`');
 #-------------------------------------------------------------------------------
-$Items = DB_Select('InvoicesItems',$Columns,Array('SortOn'=>'Summ','IsDesc'=>TRUE,'Where'=>SPrintF('`InvoiceID` = %u',$Invoice['ID'])));
+$Items = DB_Select('InvoicesItems',$Columns,Array('SortOn'=>Array('Priority','Summ'),'IsDesc'=>TRUE,'Where'=>SPrintF('`InvoiceID` = %u',$Invoice['ID'])));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Items)){
 case 'error':

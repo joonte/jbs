@@ -30,6 +30,7 @@
   <ListElement>IsProtected</ListElement>
   <ListElement>IsActive</ListElement>
   <ListElement>IsConditionally</ListElement>
+  <ListElement>Priority</ListElement>
   <ListElement>SortID</ListElement>
  </ColumnsIDs>
  <Conditions>
@@ -162,11 +163,19 @@
 	<Orders>
 		<Head>Кол.</Head>
 		<Prompt>Количество заказов на данный сервис</Prompt>
-		<Alias>(SELECT COUNT(*) FROM `Orders` WHERE `Services`.`ID` = `Orders`.`ServiceID`)</Alias>
+		<Alias>(SELECT COUNT(*) FROM `Orders` WHERE `Services`.`ID` = `Orders`.`ServiceID` AND `StatusID` = 'Active')</Alias>
 		<Attribs>
 			<style>text-align:right;</style>
 		</Attribs>
 	</Orders>
+	<!-- ********************************************************************** -->
+	<Priority>
+		<Head>Пр.</Head>
+		<Prompt>Приоритет оплаты</Prompt>
+		<Attribs>
+			<style>text-align:right;</style>
+		</Attribs>
+	</Priority>
 	<!-- ********************************************************************** -->
 	<SortID>
 		<Args>
@@ -187,6 +196,7 @@
 	<ListElement>IsProtected</ListElement>
 	<ListElement>IsActive</ListElement>
 	<ListElement>IsConditionally</ListElement>
+	<ListElement>Priority</ListElement>
 	<ListElement>Orders</ListElement>
 	<ListElement>SortID</ListElement>
 </Sequence>

@@ -528,6 +528,7 @@ CREATE TABLE `Services` (
   `IsConditionally` enum('no','yes') default 'no',
   `IsAutoInvoicing` enum('no','yes') default 'yes',
   `Params` LONGTEXT,
+  `Priority` INT(3) DEFAULT '100',
   `SortID` int(11) default '10',
   PRIMARY KEY  (`ID`),
   KEY `ServicesGroupID` (`GroupID`),
