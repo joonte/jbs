@@ -2,4 +2,4 @@
  *  Joonte Billing System
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
-{extends file='Notifies/Email/VPSOrdersDeleted.tpl'}
+{extends file='Notifies/Big/VPSOrdersDeleted.tpl'}

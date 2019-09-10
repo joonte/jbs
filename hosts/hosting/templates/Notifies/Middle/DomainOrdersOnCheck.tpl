@@ -2,5 +2,5 @@
  *  Joonte Billing System
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
-{extends file='Notifies/Email/DomainOrdersOnCheck.tpl'}
+{extends file='Notifies/Big/DomainOrdersOnCheck.tpl'}
 
