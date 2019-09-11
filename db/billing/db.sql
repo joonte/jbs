@@ -34,6 +34,13 @@ VALUES
 UNLOCK TABLES;
 
 -- SEPARATOR
+INSERT INTO `Contacts` (`UserID`,`Address`)
+	SELECT `Users`.`ID`,`Users`.`Email` FROM `Users` ORDER BY `ID`;
+-- SEPARATOR
+UPDATE `Contacts` SET `CreateDate` = UNIX_TIMESTAMP(), `MethodID` = 'Email', `IsPrimary` = 'yes', `IsActive` = 'yes';
+
+
+-- SEPARATOR
 
 DELETE FROM `Tasks` WHERE `ID` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
 LOCK TABLES `Tasks` WRITE;
