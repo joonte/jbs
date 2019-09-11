@@ -546,13 +546,13 @@ CREATE TABLE `Services` (
 DROP TABLE IF EXISTS `Notifies`;
 CREATE TABLE `Notifies` (
   `ID` int(11) NOT NULL auto_increment,
-  `UserID` int(11) NOT NULL,
-  `MethodID` char(30) default '',
+  `ContactID` INT(11) NOT NULL,
   `TypeID` char(255) default '',
   PRIMARY KEY  (`ID`),
-  KEY `NotifiesUserID` (`UserID`),
-  CONSTRAINT `NotifiesUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `NotifiesContactID` (`ContactID`),
+  CONSTRAINT `NotifiesContactID` FOREIGN KEY (`ContactID`) REFERENCES `Contacts` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 --
 -- Table structure for table `Events`

@@ -26,14 +26,6 @@
   </Paths>
   <Href>javascript:ShowWindow('/UserPasswordChange');</Href>
  </ListElement>
- <!-- *********************************************************************** -->
- <ListElement>
-  <Text>Уведомления</Text>
-  <Paths>
-   <UniqID>^\/UserNotifiesSet$</UniqID>
-  </Paths>
-  <Href>javascript:ShowWindow('/UserNotifiesSet');</Href>
- </ListElement>
 </Items>
 <!-- *********************************************************************** -->
 </XML>

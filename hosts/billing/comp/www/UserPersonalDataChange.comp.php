@@ -47,16 +47,16 @@ $Comp = Comp_Load(
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('TD',Array('colspan'=>2),'Ваше имя'),new Tag('TD',Array('colspan'=>3),$Comp));
+$Table[] = Array(new Tag('TD',Array('colspan'=>2),'Ваше имя'),new Tag('TD',Array('colspan'=>4),$Comp));
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/TextArea',Array('name'=>'Sign','rows'=>3,'prompt'=>'bbcode: link, img, color, b, p, bg',),$__USER['Sign']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('TD',Array('colspan'=>2),'Подпись'),new Tag('TD',Array('colspan'=>3),$Comp));
+$Table[] = Array(new Tag('TD',Array('colspan'=>2),'Подпись'),new Tag('TD',Array('colspan'=>4),$Comp));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('TD',Array('colspan'=>6,'class'=>'Separator'),'Ваши контактные данные'));
+$Table[] = Array(new Tag('TD',Array('colspan'=>7,'class'=>'Separator'),'Ваши контактные данные'));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # TODO исправляем юзера - проверить что это реально надо, и надо тут
@@ -89,12 +89,14 @@ if(Is_Error($Comp))
 $Tr->AddChild(new Tag('TD',Array('class'=>'Head','align'=>'center'),$Comp));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Formats/String','Уведомления для адреса - если включены, то на адрес будут приходить сообщения',5);
+$Comp = Comp_Load('Formats/String','Уведомления для адреса - если включены, то на адрес будут приходить сообщения. Для настройки индивидуальных уведомлений, кликните по значению в строке',5);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Tr->AddChild(new Tag('TD',Array('class'=>'Head','align'=>'center'),$Comp));
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Tr->AddChild(new Tag('TD',Array('class'=>'Head','align'=>'center'),'*'));
 #-------------------------------------------------------------------------------
 $Tr->AddChild(new Tag('TD',Array('class'=>'Head','align'=>'center'),'*'));
 #-------------------------------------------------------------------------------
@@ -113,23 +115,44 @@ foreach($__USER['Contacts'] as $Contact){
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	if($Contact['IsPrimary']){
 		#-------------------------------------------------------------------------------
-		$OnClick = "ShowAlert('Этот адрес удалить нельзя, т.к. он используетс для входа в биллинг. Для удаления, вначале назначьте другой адрес в качестве логина','Warning')";
+		$IsPrimary = "ShowAlert('Этот адрес удалить нельзя, т.к. он используетс для входа в биллинг. Для удаления, вначале назначьте другой адрес в качестве логина','Warning')";
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
-		$OnClick = SPrintF("ShowConfirm('Вы подтверждаете удаление контакта?','ContactDelete(%s);');",$Contact['ID']);
+		$IsPrimary = SPrintF("ShowConfirm('Вы подтверждаете удаление контакта?','ContactDelete(%s);');",$Contact['ID']);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if($Contact['IsActive']){
+		#-------------------------------------------------------------------------------
+		$IsActive = SPrintF("javascript:ShowWindow('/UserNotifiesSet?ContactID=%u');",$Contact['ID']);
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		$IsActive = "ShowAlert('Уведомления для этого адреса нельзя настроить, они для него не включены. Для включения уведомлений подтвердите адрес и поставьте галочку \"Использовать для уведомлений\"','Warning')";
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$Table[] = Array(
+			// примечание
 			new Tag('TD',$Comp),
+			// тип контакта
 			new Tag('TD',Array('class'=>'Head','style'=>SPrintF('background:%s;',($Contact['Confirmed'])?'#D5F66C':'WhiteSmoke')),$Methods[$Contact['MethodID']]['Name']),
+			// адрес
 			new Tag('TD',Array('class'=>'Head'),new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ContactEdit?ContactID=%u');",$Contact['ID']),'title'=>'Кликните для изменения настроек и подтверждения контактного адреса'),$Contact['Address'])),
+			// это логин?
 			new Tag('TD',Array('class'=>'Head','style'=>SPrintF('background:%s;',($Contact['IsPrimary'])?'#D5F66C':'WhiteSmoke')),($Contact['IsPrimary'])?'Да':'-'),
+			// уведомления разрешены
 			new Tag('TD',Array('class'=>'Head','style'=>SPrintF('background:%s;',($Contact['IsActive'])?'#D5F66C':'WhiteSmoke')),($Contact['IsActive'])?'Да':'Нет'),
-			new Tag('TD',Array('class'=>'Head'),new Tag('IMG',Array('class'=>'Button','onclick'=>$OnClick,'onmouseover'=>"PromptShow(event,'Удалить контактный адрес',this);",'src'=>'SRC:{Images/Icons/Flush.gif}')))
+			// редактирование уведомлений
+			new Tag('TD',Array('class'=>'Head'),new Tag('IMG',Array('class'=>'Button','onclick'=>$IsActive,'onmouseover'=>"PromptShow(event,'Изменение настроек уведомлений',this);",'src'=>'SRC:{Images/Icons/Notice.gif}','width'=>16))),
+			// удаление
+			new Tag('TD',Array('class'=>'Head'),new Tag('IMG',Array('class'=>'Button','onclick'=>$IsPrimary,'onmouseover'=>"PromptShow(event,'Удалить контактный адрес',this);",'src'=>'SRC:{Images/Icons/Flush.gif}')))
 			);
 	#-------------------------------------------------------------------------------
 }
@@ -139,10 +162,10 @@ $Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>'javascript:Sho
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('TD',Array('colspan'=>6,'align'=>'right'),$Comp));
+$Table[] = Array(new Tag('TD',Array('colspan'=>7,'align'=>'right'),$Comp));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('TD',Array('colspan'=>6,'class'=>'Separator'),'Данные для участия в обсуждениях'));
+$Table[] = Array(new Tag('TD',Array('colspan'=>7,'class'=>'Separator'),'Данные для участия в обсуждениях'));
 #-------------------------------------------------------------------------------
 $Foto = GetUploadedFileSize('Users',$__USER['ID']);
 #-------------------------------------------------------------------------------
@@ -150,7 +173,7 @@ $Comp = Comp_Load('Upload','UserFoto',$Foto?SPrintF('%01.2f Кб.',$Foto/1024):'
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('TD',Array('colspan'=>2),'Аватар (90x110)'),new Tag('TD',Array('colspan'=>4),$Comp));
+$Table[] = Array(new Tag('TD',Array('colspan'=>2),'Аватар (90x110)'),new Tag('TD',Array('colspan'=>5),$Comp));
 #-------------------------------------------------------------------------------
 if($Foto){
 	#-------------------------------------------------------------------------------
@@ -158,9 +181,9 @@ if($Foto){
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Table[] = Array(new Tag('TD',Array('colspan'=>2),new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsClear\'); return false;'),'Удалить фотографию')),new Tag('TD',Array('colspan'=>4),$Comp));
+	$Table[] = Array(new Tag('TD',Array('colspan'=>2),new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsClear\'); return false;'),'Удалить фотографию')),new Tag('TD',Array('colspan'=>6),$Comp));
 	#-------------------------------------------------------------------------------
-	$Table[] = Array(new Tag('TD',Array('colspan'=>6,'align'=>'right'),new Tag('IMG',Array('src'=>SPrintF('/UserFoto?UserID=%u',$__USER['ID'])))));
+	$Table[] = Array(new Tag('TD',Array('colspan'=>7,'align'=>'right'),new Tag('IMG',Array('src'=>SPrintF('/UserFoto?UserID=%u',$__USER['ID'])))));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
