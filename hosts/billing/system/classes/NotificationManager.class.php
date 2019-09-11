@@ -148,7 +148,7 @@ class NotificationManager {
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			# проверяем, не отключены ли такие оповещения в настройках юзера
-			$Count = DB_Count('Notifies', Array('Where' => SPrintF("`UserID` = %u AND `MethodID` = '%s' AND `TypeID` = '%s'",$msg->getTo(),$MethodID,$TypeID)));
+			$Count = DB_Count('Notifies', Array('Where' => SPrintF("`ContactID` = %u AND `TypeID` = '%s'",$msg->getTo(),$TypeID)));
 			if (Is_Error($Count))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------

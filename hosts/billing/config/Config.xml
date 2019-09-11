@@ -1186,7 +1186,7 @@
 					<Message>Сообщение</Message>
 					<Attribs type="array"/>
 				</Params>
-				<IsActive>0</IsActive>
+				<IsActive>1</IsActive>
 			</Jabber>
 			<!-- ********************************************************************* -->
 			<SMS>

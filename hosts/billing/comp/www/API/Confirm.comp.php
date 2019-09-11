@@ -234,24 +234,18 @@ if(!$Confirm && !$Code){
 	#-------------------------------------------------------------------------------
 	if($Settings['SettingsReset']){
 		#-------------------------------------------------------------------------------
-		// Отключаем все уведомлепния в настройках
+		// Отключаем все уведомления в настройках
 		$Notifies = $Config['Notifies'];
 		#-------------------------------------------------------------------------------
 		foreach(Array_Keys($Notifies['Types']) as $TypeID){
 			#-------------------------------------------------------------------------------
-			$Where = Array(
-					SPrintF("`UserID` = %u",$__USER['ID']),
-					SPrintF("`MethodID` = '%s'",$Method),
-					SPrintF("`TypeID` = '%s'",$TypeID)
-					);
-			#-------------------------------------------------------------------------------
-			$Count = DB_Count('Notifies',Array('Where'=>$Where));
+			$Count = DB_Count('Notifies',Array('Where'=>SPrintF("`ContactID` = %u",$ContactID)));
 			if(Is_Error($Count))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
 			if(!$Count){
 				#-------------------------------------------------------------------------------
-				$INotify = Array('UserID'=>$__USER['ID'],'MethodID'=>$Method,'TypeID'=>$TypeID);
+				$INotify = Array('ContactID'=>$ContactID,'TypeID'=>$TypeID);
 				#-------------------------------------------------------------------------------
 				$IsInsert = DB_Insert('Notifies', $INotify);
 				if(Is_Error($IsInsert))
