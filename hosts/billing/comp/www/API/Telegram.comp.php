@@ -19,6 +19,8 @@ if(Is_Error(System_Load('libs/HTTP.php','libs/Server.php','libs/Telegram.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Config = Config();
+#-------------------------------------------------------------------------------
 $Settings = SelectServerSettingsByTemplate('Telegram');
 #-------------------------------------------------------------------------------
 switch(ValueOf($Settings)){
@@ -33,7 +35,6 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-#Debug(SPrintF('[comp/www/API/Telegramm]: Settings = %s',print_r($Settings,true)));
 // проверяем секретный ключ, убеждаемся что сообщение пришло от телеграмма
 if(!$Secret || $Secret != $Settings['Params']['Secret'])
 	return new gException('SECRET_KEY_NOT_MATCH','Секретный ключ не совпадает с ключом из настроек');
@@ -46,15 +47,13 @@ $Data = Json_Decode(File_Get_Contents('php://input'));
 #-------------------------------------------------------------------------------
 $Data = $Data->{'message'};
 #-------------------------------------------------------------------------------
-#Debug(SPrintF('[comp/www/API/Telegramm]: Data->message = %s',print_r($Data,true)));
-#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // достаём сообщение, если оно есть
 $Message = (IsSet($Data->{'text'}))?$Data->{'text'}:'';
 #-------------------------------------------------------------------------------
 $ChatID = $Data->{'chat'}->{'id'}; // вернет ID отправителя
 #-------------------------------------------------------------------------------
-#Debug(SPrintF('[comp/www/API/Telegramm]: ChatID = %u; Message = %s',$ChatID,$Message));
+Debug(SPrintF('[comp/www/API/Telegramm]: входящее сообщение от ChatID = %u',$ChatID));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // если в сообщении написано /start - выводим подсказку
@@ -93,6 +92,16 @@ foreach($Words as $Word){
 		#-------------------------------------------------------------------------------
 		if($Count){
 			#-------------------------------------------------------------------------------
+			$Contact = DB_Select('Contacts',Array('UserID','Address','ExternalID'),Array('UNIQ','Where'=>SPrintF('`Confirmation` = "%s"',$Word)));
+			if(!Is_Array($Contact))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			$Event = Array('UserID'=>$Contact['UserID'],'PriorityID'=>'Billing','Text'=>SPrintF('Контактный адрес (%s/%s) подтверждён через "%s"',$Contact['Address'],$Contact['ExternalID'],$Config['Notifies']['Methods']['Telegram']['Name']));
+			#-------------------------------------------------------------------------------
+			$Event = Comp_Load('Events/EventInsert',$Event);
+			if(!$Event)
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
 			// код найден в базе, проставляем что контакт подтверждён
 			$IsUpdated = DB_Update('Contacts',Array('Confirmed'=>Time(),'Confirmation'=>'','ExternalID'=>$ChatID),Array('Where'=>SPrintF('`Confirmation` = "%s"',$Word)));
 			if(Is_Error($IsUpdated))
@@ -102,6 +111,7 @@ foreach($Words as $Word){
 			// шлём сообщение о успешной активации
 			if(!TgSendMessage($Settings,$ChatID,$Settings['Params']['ConfirmSuccess']))
 				return new gException('ERROR_SEND_SUCCESS_ACTIVATE_MESSAGE','Ошибка отправки сообщения о успешной активации на сервер Telegramm');
+			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			// вываливаемся из скрипта, вообще
 			return Array('Status'=>'Ok');
