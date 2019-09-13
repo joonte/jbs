@@ -127,7 +127,9 @@ class SendMessage implements Dispatcher{
 					'UserID'	=> $recipient['ID'],
 					'TimeBegin'	=> $msg->getParam('TimeBegin'),
 					'TimeEnd'	=> $msg->getParam('TimeEnd'),
-					'ChargeFree'	=> ($msg->getParam('ChargeFree'))?TRUE:FALSE
+					'ChargeFree'	=> ($msg->getParam('ChargeFree'))?TRUE:FALSE,
+					'ExternalID'	=> $msg->getParam('ExternalID'),
+					'ContactID'	=> $msg->getParam('ContactID')
 				);
 		#-------------------------------------------------------------------------------
 		$taskParams = Array(

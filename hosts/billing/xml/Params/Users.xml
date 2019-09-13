@@ -57,6 +57,23 @@
 		<Value>Yes</Value>
 	</SendEdeskFilesToEmail>
 	<!-- *********************************************************************** -->
+	<SendEdeskFilesToTelegram>
+		<Comment>Присылать вложения к тикетам на Telegram</Comment>
+		<Type>Select</Type>
+		<Options>
+			<Yes>Да</Yes>
+			<No>Нет</No>
+		</Options>
+		<Check>Char</Check>
+		<Attribs>
+			<size>1</size>
+			<style>width: 100%;</style>
+			<prompt>Присылать или нет прикрепленные к тикету файлы на Telegram</prompt>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>Yes</Value>
+	</SendEdeskFilesToTelegram>
+	<!-- *********************************************************************** -->
 	<EdeskButtons>
 		<Comment>Показывать только персональные кнопки</Comment>
 		<Type>Select</Type>

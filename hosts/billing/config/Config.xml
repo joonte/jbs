@@ -983,6 +983,7 @@
 				<UseWhatsApp>1</UseWhatsApp>
 				<UseICQ>1</UseICQ>
 				<UseJabber>1</UseJabber>
+				<UseTelegram>1</UseTelegram>
 				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</FromTicketsMessages>
@@ -994,6 +995,7 @@
 				<UseWhatsApp>0</UseWhatsApp>
 				<UseICQ>0</UseICQ>
 				<UseJabber>1</UseJabber>
+				<UseTelegram>1</UseTelegram>
 				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</ToTicketsMessages>
@@ -1005,6 +1007,7 @@
 				<UseWhatsApp>0</UseWhatsApp>
 				<UseICQ>0</UseICQ>
 				<UseJabber>1</UseJabber>
+				<UseTelegram>1</UseTelegram>
 				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</Dispatch>
@@ -1017,6 +1020,7 @@
 				<UseWhatsApp>1</UseWhatsApp>
 				<UseICQ>1</UseICQ>
 				<UseJabber>1</UseJabber>
+				<UseTelegram>1</UseTelegram>
 				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</EdeskCreate>
@@ -1028,6 +1032,7 @@
 				<UseWhatsApp>1</UseWhatsApp>
 				<UseICQ>1</UseICQ>
 				<UseJabber>1</UseJabber>
+				<UseTelegram>1</UseTelegram>
 				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</EdeskMessageCreate>
@@ -1040,6 +1045,7 @@
 				<UseWhatsApp>1</UseWhatsApp>
 				<UseICQ>1</UseICQ>
 				<UseJabber>1</UseJabber>
+				<UseTelegram>1</UseTelegram>
 				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</PartnersReward>
@@ -1051,6 +1057,7 @@
 				<UseWhatsApp>1</UseWhatsApp>
 				<UseICQ>1</UseICQ>
 				<UseJabber>1</UseJabber>
+				<UseTelegram>1</UseTelegram>
 				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</NotPayedInvoice>
@@ -1062,6 +1069,7 @@
 				<UseWhatsApp>1</UseWhatsApp>
 				<UseICQ>1</UseICQ>
 				<UseJabber>1</UseJabber>
+				<UseTelegram>1</UseTelegram>
 				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</ConditionallyPayedInvoice>
@@ -1073,6 +1081,7 @@
 				<UseWhatsApp>0</UseWhatsApp>
 				<UseICQ>0</UseICQ>
 				<UseJabber>0</UseJabber>
+				<UseTelegram>1</UseTelegram>
 				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</CreateAndSendInvoices>
@@ -1084,6 +1093,7 @@
 				<UseWhatsApp>1</UseWhatsApp>
 				<UseICQ>1</UseICQ>
 				<UseJabber>1</UseJabber>
+				<UseTelegram>1</UseTelegram>
 				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</NegativeContractBalance>
@@ -1095,6 +1105,7 @@
 				<UseWhatsApp>1</UseWhatsApp>
 				<UseICQ>1</UseICQ>
 				<UseJabber>1</UseJabber>
+				<UseTelegram>1</UseTelegram>
 				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 				<Code/>
@@ -1149,6 +1160,15 @@
 				<MessageTemplate>Middle</MessageTemplate>
 				<Message>Добавьте наш номер (%s) в список контактов и авторизуйте его. Обратите внимание, что наш робот не умеет отгадывать загадки и решать логические задачи - поэтому он не сможет пройти тесты по защите от спама</Message>
 			</Jabber>
+			<!-- ********************************************************************* -->
+			<Telegram>
+				<Name>Telegram сообщения</Name>
+				<IsActive>0</IsActive>
+				<IsEvent>1</IsEvent>
+				<CutSign>1</CutSign>
+				<MessageTemplate>Middle</MessageTemplate>
+				<Message>Сообщение в конфиге для телеги</Message>
+			</Telegram>
 		</Methods>
 		<!-- ********************************************************************** -->
 	</Notifies>
@@ -1188,6 +1208,16 @@
 				</Params>
 				<IsActive>1</IsActive>
 			</Jabber>
+			<!-- ********************************************************************* -->
+			<Telegram>
+				<Name>Сообщение по Telegram</Name>
+				<Params>
+					<Address>JabberID</Address>
+					<Message>Сообщение</Message>
+					<Attribs type="array"/>
+				</Params>
+				<IsActive>1</IsActive>
+			</Telegram>
 			<!-- ********************************************************************* -->
 			<SMS>
 				<Name>SMS сообщение</Name>
@@ -1800,25 +1830,32 @@
 				</Email>
 				<!-- *********************************************************************** -->
 				<WhatsApp>
-					<SettingsReset>1</SettingsReset>
+					<SettingsReset>0</SettingsReset>
 					<Require>0</Require>
 					<ConfirmRequire>1</ConfirmRequire>
-					<ConfirmInterval>300</ConfirmInterval>
+					<ConfirmInterval>30</ConfirmInterval>
 				</WhatsApp>
 				<!-- *********************************************************************** -->
 				<ICQ>
-					<SettingsReset>1</SettingsReset>
+					<SettingsReset>0</SettingsReset>
 					<Require>0</Require>
 					<ConfirmRequire>1</ConfirmRequire>
-					<ConfirmInterval>300</ConfirmInterval>
+					<ConfirmInterval>30</ConfirmInterval>
 				</ICQ>
 				<!-- *********************************************************************** -->
 				<Jabber>
 					<SettingsReset>0</SettingsReset>
 					<Require>0</Require>
 					<ConfirmRequire>1</ConfirmRequire>
-					<ConfirmInterval>300</ConfirmInterval>
+					<ConfirmInterval>30</ConfirmInterval>
 				</Jabber>
+				<!-- *********************************************************************** -->
+				<Telegram>
+					<SettingsReset>0</SettingsReset>
+					<Require>0</Require>
+					<ConfirmRequire>1</ConfirmRequire>
+					<ConfirmInterval>30</ConfirmInterval>
+				</Telegram>
 				<!-- *********************************************************************** -->
 				<SMS>
 					<SettingsReset>1</SettingsReset>

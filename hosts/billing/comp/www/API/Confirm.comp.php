@@ -61,15 +61,15 @@ if($Contact['Confirmed']){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$ServerSettings = SelectServerSettingsByTemplate($Method);
+$Server = SelectServerSettingsByTemplate($Method);
 #-------------------------------------------------------------------------------
-switch(ValueOf($ServerSettings)){
+switch(ValueOf($Server)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
 	#-------------------------------------------------------------------------------
 	if($Method != 'Email')
-		return $ServerSettings;
+		return $Server;
 	#-------------------------------------------------------------------------------
 case 'array':
 	break;
@@ -81,9 +81,7 @@ default:
 $Settings = $Config['Interface']['User']['Notes'][$Method];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Cache = Array(
-		'Limit'		=> SPrintF('li-%s-%s-%s',$Method,$Value,$__USER['ID']),
-		);
+$Cache = SPrintF('li-%s-%s-%s',$Method,$Value,$__USER['ID']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$Confirm && !$Code){
@@ -94,7 +92,7 @@ if(!$Confirm && !$Code){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	// Защита от агрессивно настроенных, любителей долбить кнопку раз за разом
-	$Result = CacheManager::get($Cache['Limit']);
+	$Result = CacheManager::get($Cache);
 	#-------------------------------------------------------------------------------
 	if($Result){
 		#-------------------------------------------------------------------------------
@@ -107,22 +105,45 @@ if(!$Confirm && !$Code){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Confirm1 = Comp_Load('Passwords/Generator',4,TRUE);
-	if(Is_Error($Confirm1))
+	// телеграмм, он особенный, с логикой наоборот...
+	if($Method = 'Telegram'){
+		#-------------------------------------------------------------------------------
+		// генерим 2 раза по 3 цифры, чтоб проще было клиенту...
+		$C1 = Comp_Load('Passwords/Generator',3,TRUE);
+		if(Is_Error($C1))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$C2 = Comp_Load('Passwords/Generator',3,TRUE);
+		if(Is_Error($C2))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		// пихаем значения в базу
+		$IsUpdate = DB_Update('Contacts',Array('Confirmation'=>SPrintF('%s%s',$C1,$C2)),Array('ID'=>$ContactID));
+		if(Is_Error($IsUpdate))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		// Выводим юзеру инструкцию
+		return new gException('SHOW_TELEGRAMM_INSTRUCTIONS',SPrintF($Server['Params']['ConfirmInstructions'],SPrintF('%s-%s',$C1,$C2),$Server['Params']['BotName']));
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$ConfirmShort = Comp_Load('Passwords/Generator',4,TRUE);
+	if(Is_Error($ConfirmShort))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Confirm2 = Comp_Load('Passwords/Generator');
-	if(Is_Error($Confirm2))
+	$ConfirmLong = Comp_Load('Passwords/Generator');
+	if(Is_Error($ConfirmLong))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# строка подтверждения будет содержать сразу оба подтверждения - и короткое и длинное
-	$IsUpdate = DB_Update('Contacts',Array('Confirmation'=>SPrintF('%s/%s',$Confirm1,$Confirm2)),Array('ID'=>$ContactID));
+	$IsUpdate = DB_Update('Contacts',Array('Confirmation'=>SPrintF('%s/%s',$ConfirmShort,$ConfirmLong)),Array('ID'=>$ContactID));
 	if(Is_Error($IsUpdate))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	#Debug(SPrintF('[comp/www/API/Confirm]: Confirm1 = %s; Confirm2 = %s;',$Confirm1,$Confirm2));
+	#Debug(SPrintF('[comp/www/API/Confirm]: ConfirmShort = %s; ConfirmLong = %s;',$ConfirmShort,$ConfirmLong));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Executor = DB_Select('Users',Array('Sign','Email'),Array('UNIQ','ID'=>100));
@@ -131,11 +152,11 @@ if(!$Confirm && !$Code){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# сообщение для SMS и часть остальных вариантов оповещения
-	$MessageSmall = SPrintF('Ваш проверочный код: %s',$Confirm1);
+	$MessageSmall = SPrintF('Ваш проверочный код: %s',$ConfirmShort);
 	#-------------------------------------------------------------------------------
 	$MessageBig = "%s\r\n\r\nДля подтверждения вашего контактного адреса, вы можете пройти по этой ссылке:\r\n%s\r\nЕсли ссылка не открывается, то скопируйте и вставьте её в адресную строку браузера\r\n\r\n--\r\n%s\r\n";
 	#-------------------------------------------------------------------------------
-	$Url = SPrintF('http://%s/API/Confirm?Method=%s&ContactID=%u&Value=%s&Code=%s/%s',HOST_ID,$Method,$ContactID,$Value,$Confirm1,$Confirm2);
+	$Url = SPrintF('http://%s/API/Confirm?Method=%s&ContactID=%u&Value=%s&Code=%s/%s',HOST_ID,$Method,$ContactID,$Value,$ConfirmShort,$ConfirmLong);
 	#-------------------------------------------------------------------------------
 	$MessageBig = SPrintF($MessageBig,$MessageSmall,$Url,$Executor['Sign']);
 	#-------------------------------------------------------------------------------
@@ -155,7 +176,7 @@ if(!$Confirm && !$Code){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	CacheManager::add($Cache['Limit'],Time(),IntVal($Settings['ConfirmInterval']));
+	CacheManager::add($Cache,Time(),IntVal($Settings['ConfirmInterval']));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return Array('Status' => 'Ok');
@@ -220,7 +241,7 @@ if(!$Confirm && !$Code){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$IsUpdate = DB_Update('Contacts',Array('Confirmed'=>Time(),'IsActive'=>TRUE),Array('ID'=>$ContactID));
+	$IsUpdate = DB_Update('Contacts',Array('Confirmed'=>Time(),'Confirmation'=>'','IsActive'=>TRUE),Array('ID'=>$ContactID));
 	if (Is_Error($IsUpdate))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

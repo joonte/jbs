@@ -113,7 +113,12 @@ default:
 #-------------------------------------------------------------------------------
 foreach($Contacts as $Contact){
 	#-------------------------------------------------------------------------------
-	$Table[] = Array($Config['Notifies']['Methods'][$Contact['MethodID']]['Name'],($Contact['IsPrimary'])?SPrintF('%s [*]',$Contact['Address']):$Contact['Address']);
+	$Address = ($Contact['IsPrimary'])?SPrintF('%s [*]',$Contact['Address']):$Contact['Address'];
+	// для телеграмма кастыль
+	if($Contact['MethodID'] == 'Telegram' && $Contact['ExternalID'])
+		$Address = SPrintF('ChatID = %s',$Contact['ExternalID']);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array($Config['Notifies']['Methods'][$Contact['MethodID']]['Name'],$Address);
 	#-------------------------------------------------------------------------------
 	if($Contact['Confirmed']){
 		#-------------------------------------------------------------------------------

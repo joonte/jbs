@@ -76,7 +76,7 @@ class NotificationManager {
 			// достаём контакты юзера (у новых юзеров почтовыый адрес не подтверждён, но он первичный)
 			$Where = Array(SPrintF('`UserID` = %u',$User['ID']),'`Confirmed` > 0 OR `IsPrimary` = "yes"','`IsActive` = "yes"');
 			#-------------------------------------------------------------------------------
-			$Contacts = DB_Select('Contacts',Array('ID','MethodID','Address','TimeBegin','TimeEnd'),Array('Where'=>$Where));
+			$Contacts = DB_Select('Contacts',Array('ID','MethodID','Address','ExternalID','TimeBegin','TimeEnd'),Array('Where'=>$Where));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($Contacts)){
 			case 'error':
@@ -172,6 +172,8 @@ class NotificationManager {
 			$msg->setParam('ToRecipient',$Contact['Address']);	// контактный адрес 
 			$msg->setParam('TimeBegin',$Contact['TimeBegin']);	// время начала рассылки
 			$msg->setParam('TimeEnd',$Contact['TimeEnd']);		// время конца рассылки
+			$msg->setParam('ContactID',$Contact['ID']);		// идентификатор контакта
+			$msg->setParam('ExternalID',$Contact['ExternalID']);	// ChatID для телеги
 			#-------------------------------------------------------------------------------
 			// JBS-1283, надо сохранить метод, понадобится
 			$msg->setParam('MethodID',$MethodID);
