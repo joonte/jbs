@@ -9,7 +9,8 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
-$ContactID = (integer) @$Args['ContactID'];
+$ContactID	= (integer) @$Args['ContactID'];
+$MethodID	=  (string) @$Args['MethodID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 	return ERROR | @Trigger_Error(500);
@@ -28,13 +29,13 @@ if($ContactID){
 	#-------------------------------------------------------------------------------
 	$Contact = Array(
 				'UserID'	=> $GLOBALS['__USER']['ID'],
-				'MethodID'	=> 'Email',
+				'MethodID'	=> ($MethodID)?$MethodID:'Email',
 				'Address'	=> '',
 				'Confirmed'	=> '',
 				'TimeBegin'	=> 00,
 				'TimeEnd'	=> 00,
 				'IsPrimary'	=> FALSE,
-				'IsActive'	=> TRUE
+				'IsActive'	=> TRUE,
 			);      
 	#-------------------------------------------------------------------------------
 }
@@ -72,18 +73,25 @@ $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
-// ccылка в шапочке окна
-$A = new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/UserNotifiesSet?ContactID=%u');",$Contact['ID']),'title'=>'Кликните для изменения настроек уведомлений'),'[уведомления]');
-#-------------------------------------------------------------------------------
-$NoBody = new Tag('NOBODY',new Tag('SPAN',SPrintF('%s: %s',$Contact['MethodID'],$Contact['Address'])));
-#-------------------------------------------------------------------------------
-$NoBody->AddChild($A);
-#-------------------------------------------------------------------------------
-$Tr = new Tag('TR');
-#-------------------------------------------------------------------------------
-$Tr->AddChild(new Tag('TD',Array('class'=>'Separator','colspan'=>2),$NoBody));
-#-------------------------------------------------------------------------------
-$Table = Array($Tr);
+if($ContactID){
+	#-------------------------------------------------------------------------------
+	// ccылка в шапочке окна, если редактирование
+	$A = new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/UserNotifiesSet?ContactID=%u');",$Contact['ID']),'title'=>'Кликните для изменения настроек уведомлений'),'[уведомления]');
+	#-------------------------------------------------------------------------------
+	$NoBody = new Tag('NOBODY',new Tag('SPAN',SPrintF('%s: %s',$Contact['MethodID'],$Contact['Address'])));
+	#-------------------------------------------------------------------------------
+	$NoBody->AddChild($A);
+	#-------------------------------------------------------------------------------
+	$Tr = new Tag('TR');
+	#-------------------------------------------------------------------------------
+	$Tr->AddChild(new Tag('TD',Array('class'=>'Separator','colspan'=>2),$NoBody));
+	#-------------------------------------------------------------------------------
+	$Table = Array($Tr);
+}else{
+	#---------------------------------------------------------------------------
+	$Table = Array();
+	#---------------------------------------------------------------------------
+}
 #---------------------------------------------------------------------------
 #---------------------------------------------------------------------------
 $Options = Array();
@@ -93,9 +101,9 @@ $Config = Config();
 $Messages = Messages();
 #---------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-foreach(Array_Keys($Config['Notifies']['Methods']) as $MethodID)
-	if($Config['Notifies']['Methods'][$MethodID]['IsActive'])
-		$Options[$MethodID] = $Config['Notifies']['Methods'][$MethodID]['Name'];
+foreach(Array_Keys($Config['Notifies']['Methods']) as $iMethodID)
+	if($Config['Notifies']['Methods'][$iMethodID]['IsActive'])
+		$Options[$iMethodID] = $Config['Notifies']['Methods'][$iMethodID]['Name'];
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'MethodID','style'=>'width: 100%'),$Options,$Contact['MethodID']);
 if(Is_Error($Comp))
@@ -105,6 +113,16 @@ if($ContactID)
 	$Comp->AddAttribs(Array('disabled'=>'true'));
 #-------------------------------------------------------------------------------
 $Table[] = Array('Тип адреса',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// ввиду отсутсвия нормальных подсказок, делаем в две стадии, вначале тип контакта выбрать, затем уже сам контакт вводить
+if($MethodID || $ContactID){	// метод или конткт задан, вторая стадия, или редактирвоание
+
+
+
+
+
+
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
@@ -246,6 +264,24 @@ $Comp = Comp_Load(
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 
+
+
+}else{	// вторая стадия/редактирвоание -> первая, добавление нового
+$Comp = Comp_Load(
+		'Form/Input',
+		Array(
+			'type'		=> 'button',
+			'onclick'=>"ShowWindow('/ContactEdit',FormGet(form));",
+			'value'		=> 'Продолжить'
+			)
+		);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+
+
+
+
+}
 #$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>'ConfirmSubmit();','value'=>'Сохранить'));
 #if(Is_Error($Comp))
 #return ERROR | @Trigger_Error(500);

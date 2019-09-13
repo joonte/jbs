@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `Contacts` (
 	`IsActive` enum('no','yes') DEFAULT 'no',	-- можно использовать для оповещений
 	`UserNotice` text,				-- примечание пользователя о этом контакте
 	PRIMARY KEY (`ID`),
+	KEY `Confirmation` (`Confirmation`),
 	KEY `ContactsUserID` (`UserID`),
 	/* внешний ключ на таблицу юзеров */
 	CONSTRAINT `ContactsUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
