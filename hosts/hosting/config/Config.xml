@@ -76,88 +76,48 @@
 				<Title>Заказы хостинга</Title>
 				<Code>Hosting</Code>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</HostingOrdersActive>
 			<!-- ********************************************************************* -->
 			<HostingNoticeSuspend>
 				<Name>Уведомление о блокировке заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</HostingNoticeSuspend>
 			<!-- ********************************************************************* -->
 			<HostingOrdersSuspended>
 				<Name>Блокировка заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</HostingOrdersSuspended>
 			<!-- ********************************************************************* -->
 			<HostingNoticeDelete>
 				<Name>Уведомление о удалении заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</HostingNoticeDelete>
 			<!-- ********************************************************************* -->
 			<HostingOrdersDeleted>
 				<Name>Удаление заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</HostingOrdersDeleted>
 			<!-- ********************************************************************* -->
 			<HostingPasswordChange>
 				<Name>Смена пароля на заказ</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</HostingPasswordChange>
 			<!-- ********************************************************************* -->
 			<HostingCPUUsageNotice>
 				<Name>Превышение процессорного времени</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</HostingCPUUsageNotice>
 			<!-- ********************************************************************* -->
 			<DiskUsageNotice>
 				<Name>Превышение использования диска</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>0</UseWhatsApp>
-				<UseICQ>0</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</DiskUsageNotice>
 			<!-- ********************************************************************* -->
@@ -167,22 +127,12 @@
 				<Name>Домен поступил на регистрацию</Name>
 				<Code>Domain</Code>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</DomainOrdersOnRegister>
 			<!-- ********************************************************************* -->
 			<DomainOrdersActive>
 				<Name>Активация заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</DomainOrdersActive>
 			<!-- ********************************************************************* -->
@@ -190,11 +140,6 @@
 		<DomainNsChange>
 			<Name>Смена серверов DNS</Name>
 			<GroupID>1</GroupID>
-			<UseEmail>1</UseEmail>
-			<UseWhatsApp>1</UseWhatsApp>
-			<UseICQ>1</UseICQ>
-			<UseJabber>1</UseJabber>
-			<UseSMS>1</UseSMS>
 			<IsActive>1</IsActive>
 		</DomainNsChange>
 		-->
@@ -202,44 +147,24 @@
 			<DomainNoticeSuspend>
 				<Name>Уведомление о блокировке заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</DomainNoticeSuspend>
 			<!-- ********************************************************************* -->
 			<DomainOrdersSuspended>
 				<Name>Блокировка заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</DomainOrdersSuspended>
 			<!-- ********************************************************************* -->
 			<DomainNoticeDelete>
 				<Name>Уведомление о удалении заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</DomainNoticeDelete>
 			<!-- ********************************************************************* -->
 			<DomainOrdersDeleted>
 				<Name>Удаление заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</DomainOrdersDeleted>
 			<!-- ********************************************************************* -->
@@ -250,66 +175,36 @@
 				<Title>Заказы VPS (виртуальных серверов)</Title>
 				<Code>VPS</Code>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</VPSOrdersActive>
 			<!-- ********************************************************************* -->
 			<VPSNoticeSuspend>
 				<Name>Уведомление о блокировке заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</VPSNoticeSuspend>
 			<!-- ********************************************************************* -->
 			<VPSOrdersSuspended>
 				<Name>Блокировка заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</VPSOrdersSuspended>
 			<!-- ********************************************************************* -->
 			<VPSNoticeDelete>
 				<Name>Уведомление о удалении заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</VPSNoticeDelete>
 			<!-- ********************************************************************* -->
 			<VPSOrdersDeleted>
 				<Name>Удаление заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</VPSOrdersDeleted>
 			<!-- ********************************************************************* -->
 			<VPSPasswordChange>
 				<Name>Смена пароля на заказ</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</VPSPasswordChange>
 			<!-- ********************************************************************* -->
@@ -320,55 +215,30 @@
 				<Title>Заказы DS (выделенных серверов)</Title>
 				<Code>DS</Code>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</DSOrdersActive>
 			<!-- ********************************************************************* -->
 			<DSNoticeSuspend>
 				<Name>Уведомление о блокировке заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</DSNoticeSuspend>
 			<!-- ********************************************************************* -->
 			<DSOrdersSuspended>
 				<Name>Блокировка заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</DSOrdersSuspended>
 			<!-- ********************************************************************* -->
 			<DSNoticeDelete>
 				<Name>Уведомление о удалении заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</DSNoticeDelete>
 			<!-- ********************************************************************* -->
 			<DSOrdersDeleted>
 				<Name>Удаление заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</DSOrdersDeleted>
 			<!-- ********************************************************************* -->
@@ -379,33 +249,18 @@
 				<Title>Заказы выделенных IP адресов</Title>
 				<Code>ExtraIP</Code>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</ExtraIPOrdersActive>
 			<!-- ********************************************************************* -->
 			<ExtraIPNoticeDelete>
 				<Name>Уведомление о удалении заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</ExtraIPNoticeDelete>
 			<!-- ********************************************************************* -->
 			<ExtraIPOrdersDeleted>
 				<Name>Удаление заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</ExtraIPOrdersDeleted>
 			<!-- ********************************************************************* -->
@@ -416,55 +271,30 @@
 				<Title>Заказы программного обеспечения ISPsystem</Title>
 				<Code>ISPsw</Code>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</ISPswOrdersActive>
 			<!-- ********************************************************************* -->
 			<ISPswNoticeSuspend>
 				<Name>Уведомление о блокировке заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</ISPswNoticeSuspend>
 			<!-- ********************************************************************* -->
 			<ISPswOrdersSuspended>
 				<Name>Блокировка заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</ISPswOrdersSuspended>
 			<!-- ********************************************************************* -->
 			<ISPswNoticeDelete>
 				<Name>Уведомление о удалении заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</ISPswNoticeDelete>
 			<!-- ********************************************************************* -->
 			<ISPswOrdersDeleted>
 				<Name>Удаление заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</ISPswOrdersDeleted>
 			<!-- ********************************************************************* -->
@@ -475,66 +305,36 @@
 				<Title>Заказы на вторичные DNS сервера (DNSmanager)</Title>
 				<Code>DNSmanager</Code>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>0</UseWhatsApp>
-				<UseICQ>0</UseICQ>
-				<UseJabber>0</UseJabber>
-				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</DNSmanagerOrdersActive>
 			<!-- ********************************************************************* -->
 			<DNSmanagerNoticeSuspend>
 				<Name>Уведомление о блокировке заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>0</UseWhatsApp>
-				<UseICQ>0</UseICQ>
-				<UseJabber>0</UseJabber>
-				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</DNSmanagerNoticeSuspend>
 			<!-- ********************************************************************* -->
 			<DNSmanagerOrdersSuspended>
 				<Name>Блокировка заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>0</UseWhatsApp>
-				<UseICQ>0</UseICQ>
-				<UseJabber>0</UseJabber>
-				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</DNSmanagerOrdersSuspended>
 			<!-- ********************************************************************* -->
 			<DNSmanagerNoticeDelete>
 				<Name>Уведомление о удалении заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>0</UseWhatsApp>
-				<UseICQ>0</UseICQ>
-				<UseJabber>0</UseJabber>
-				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</DNSmanagerNoticeDelete>
 			<!-- ********************************************************************* -->
 			<DNSmanagerOrdersDeleted>
 				<Name>Удаление заказа</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>0</UseWhatsApp>
-				<UseICQ>0</UseICQ>
-				<UseJabber>0</UseJabber>
-				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</DNSmanagerOrdersDeleted>
 			<!-- ********************************************************************* -->
 			<DNSmanagerPasswordChange>
 				<Name>Смена пароля на заказ</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>0</UseWhatsApp>
-				<UseICQ>0</UseICQ>
-				<UseJabber>0</UseJabber>
-				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</DNSmanagerPasswordChange>
 			<!-- ********************************************************************* -->

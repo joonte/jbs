@@ -979,36 +979,18 @@
 				<Title>Центр поддержки</Title>
 				<Name>Новое сообщение от службы поддержки</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseTelegram>1</UseTelegram>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</FromTicketsMessages>
 			<!-- ********************************************************************* -->
 			<ToTicketsMessages>
 				<Name>Новое сообщение в службу поддержки</Name>
 				<GroupID>3000000</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>0</UseWhatsApp>
-				<UseICQ>0</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseTelegram>1</UseTelegram>
-				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</ToTicketsMessages>
 			<!-- ********************************************************************* -->
 			<Dispatch>
 				<Name>Сообщения от администрации (рассылки)</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>0</UseWhatsApp>
-				<UseICQ>0</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseTelegram>1</UseTelegram>
-				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</Dispatch>
 			<!-- ********************************************************************* -->
@@ -1016,24 +998,12 @@
 				<Title>Обсуждения</Title>
 				<Name>Создание нового обсуждения</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseTelegram>1</UseTelegram>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</EdeskCreate>
 			<!-- ********************************************************************* -->
 			<EdeskMessageCreate>
 				<Name>Новое сообщение в обсуждении</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseTelegram>1</UseTelegram>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 			</EdeskMessageCreate>
 			<!-- ********************************************************************* -->
@@ -1041,72 +1011,36 @@
 				<Title>Финансы</Title>
 				<Name>Партнёрские начисления</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseTelegram>1</UseTelegram>
-				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</PartnersReward>
 			<!-- ********************************************************************* -->
 			<NotPayedInvoice>
 				<Name>Неоплаченные счета</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseTelegram>1</UseTelegram>
-				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</NotPayedInvoice>
 			<!-- ********************************************************************* -->
 			<ConditionallyPayedInvoice>
 				<Name>Условно оплаченные счета</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseTelegram>1</UseTelegram>
-				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</ConditionallyPayedInvoice>
 			<!-- ********************************************************************* -->
 			<CreateAndSendInvoices>
 				<Name>Автоматически выписанные счета</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>0</UseWhatsApp>
-				<UseICQ>0</UseICQ>
-				<UseJabber>0</UseJabber>
-				<UseTelegram>1</UseTelegram>
-				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</CreateAndSendInvoices>
 			<!-- ********************************************************************* -->
 			<NegativeContractBalance>
 				<Name>Оповещение о отрицательном баллансе</Name>
 				<GroupID>1</GroupID>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseTelegram>1</UseTelegram>
-				<UseSMS>0</UseSMS>
 				<IsActive>1</IsActive>
 			</NegativeContractBalance>
 			<!-- ********************************************************************* -->
 			<OrdersSuspend>
 				<Title>Заказы на прочие услуги</Title>
 				<Name>Другие заказанные услуги</Name>
-				<UseEmail>1</UseEmail>
-				<UseWhatsApp>1</UseWhatsApp>
-				<UseICQ>1</UseICQ>
-				<UseJabber>1</UseJabber>
-				<UseTelegram>1</UseTelegram>
-				<UseSMS>1</UseSMS>
 				<IsActive>1</IsActive>
 				<Code/>
 				<GroupID>1</GroupID>

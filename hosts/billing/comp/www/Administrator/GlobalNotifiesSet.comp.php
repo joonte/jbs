@@ -91,7 +91,8 @@ foreach(Array_Keys($Types) as $TypeID){
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		if($Types[$TypeID][$UseName])
+		// если задано и включено, или не задано
+		if((IsSet($Types[$TypeID][$UseName]) && $Types[$TypeID][$UseName]) || !IsSet($Types[$TypeID][$UseName]))
 			$Comp->AddAttribs(Array('checked'=>'true'));
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------

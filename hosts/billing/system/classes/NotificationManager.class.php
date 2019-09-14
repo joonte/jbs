@@ -141,6 +141,8 @@ class NotificationManager {
 				# проверяем, не отключены ли такие оповещения глобально
 				$UseName = SPrintF('Use%s',$MethodID);
 				#-------------------------------------------------------------------------------
+				// если задано и не включено. вариант что не задано - это включено. так же и в настройках
+				// ./hosts/billing/comp/www/Administrator/GlobalNotifiesSet.comp.php
 				if(IsSet($Notifies['Types'][$TypeID][$UseName]) && !$Notifies['Types'][$TypeID][$UseName])
 					continue;
 				#-------------------------------------------------------------------------------
