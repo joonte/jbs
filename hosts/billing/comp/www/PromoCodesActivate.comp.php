@@ -7,6 +7,9 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
+$Args = Args();
+#-------------------------------------------------------------------------------
+$Code	=  (string) @$Args['Code'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 	return ERROR | @Trigger_Error(500);
@@ -34,7 +37,8 @@ $Comp = Comp_Load(
 		'Form/Input',
 		Array(
 			'name'  => 'Code',
-			'type'  => 'text'
+			'type'  => 'text',
+			'value'	=> $Code
 			)
 		);
 if(Is_Error($Comp))

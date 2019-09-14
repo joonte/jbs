@@ -131,7 +131,15 @@
   </Args>
  </ServiceID>
  <!-- ********************************************************************** -->
- <!-- ********************************************************************** -->
+<PromoLink>
+	<Head>Ссылка</Head>
+	<Prompt>Ссылка на активацию промокода, для рассылок</Prompt>
+	<Comp>Formats/System/PromoLink</Comp>
+	<Args>
+		<Code>%Code%</Code>
+	</Args>
+</PromoLink>
+<!-- ********************************************************************** -->
  <Discont>
   <Head>Скидка</Head>
   <Comp>Formats/Percent</Comp>
@@ -163,6 +171,7 @@
  <ListElement>MaxAmount</ListElement>
  <ListElement>Amount</ListElement>
  <ListElement>Discont</ListElement>
+ <ListElement>PromoLink</ListElement>
  <ListElement>Comment</ListElement>
 </Sequence>
 <!-- *********************************************************************** -->
