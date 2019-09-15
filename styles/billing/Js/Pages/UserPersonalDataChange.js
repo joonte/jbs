@@ -112,9 +112,6 @@ function ContactDelete($ContactID){
 			ShowAlert(ExceptionsStack($Answer.Exception),'Warning');
 			break;
 		case 'Ok':
-			//GetURL(SPrintF('%s?IsUpdate=yes',document.location));
-			//------------------------------------------------------------------------------
-			//ShowWindow('/UserPersonalDataChange');
 			break;
 		default:
 			alert('Не известный ответ');
@@ -133,7 +130,6 @@ function ContactDelete($ContactID){
 	}
 	//------------------------------------------------------------------------------
 	ShowProgress('Удаление контакта');
-	//ShowWindow('/UserPersonalDataChange');
 	setTimeout(
 		//------------------------------------------------------------------------------
 		function (){
