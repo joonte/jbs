@@ -152,7 +152,7 @@ foreach($__USER['Contacts'] as $Contact){
 			// редактирование уведомлений
 			new Tag('TD',Array('class'=>'Head'),new Tag('IMG',Array('class'=>'Button','onclick'=>$IsActive,'onmouseover'=>"PromptShow(event,'Изменение настроек уведомлений',this);",'src'=>'SRC:{Images/Icons/Notice.gif}','width'=>16))),
 			// удаление
-			new Tag('TD',Array('class'=>'Head'),new Tag('IMG',Array('class'=>'Button','onclick'=>$IsPrimary,'onmouseover'=>"PromptShow(event,'Удалить контактный адрес',this);",'src'=>'SRC:{Images/Icons/Flush.gif}')))
+			new Tag('TD',Array('class'=>'Head'),new Tag('IMG',Array('class'=>'Button','onclick'=>$IsPrimary,'onmouseover'=>"PromptShow(event,'Удалить контактный адрес',this);",'src'=>'SRC:{Images/Icons/Flush1.gif}')))
 			);
 	#-------------------------------------------------------------------------------
 }
