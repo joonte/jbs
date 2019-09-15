@@ -96,7 +96,7 @@ foreach($Words as $Word){
 			if(!Is_Array($Contact))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$Event = Array('UserID'=>$Contact['UserID'],'PriorityID'=>'Billing','Text'=>SPrintF('Контактный адрес (%s/%s) подтверждён через "%s"',$Contact['Address'],$Contact['ExternalID'],$Config['Notifies']['Methods']['Telegram']['Name']));
+			$Event = Array('UserID'=>$Contact['UserID'],'PriorityID'=>'Billing','Text'=>SPrintF('Контактный адрес (%s/%s) подтверждён через "%s"',$Contact['Address'],$ChatID,$Config['Notifies']['Methods']['Telegram']['Name']));
 			#-------------------------------------------------------------------------------
 			$Event = Comp_Load('Events/EventInsert',$Event);
 			if(!$Event)
