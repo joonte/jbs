@@ -100,7 +100,7 @@ foreach($Messages as $Message){
 							'Theme'			=> $Message['Theme'],
 							'Message'		=> $Message['Content'],
 							'Message-ID'		=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
-							'Attachments'	=> (IsSet($Attachments)?$Attachments:Array())
+							'Attachments'		=> (IsSet($Attachments)?$Attachments:Array())
 							);
 				#-------------------------------------------------------------------------------
 				$msg = new Message('ToTicketsMessages', $TargetUserID, $msgParams);
@@ -163,7 +163,7 @@ foreach($Messages as $Message){
 								'Theme'			=> $Message['Theme'],
 								'Message'		=> $Message['Content'],
 								'Message-ID'		=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
-								'Attachments'	=> (IsSet($Attachments)?$Attachments:Array())
+								'Attachments'		=> (IsSet($Attachments)?$Attachments:Array())
 								);
 					#-------------------------------------------------------------------------------
 					$msg = new Message('ToTicketsMessages',(integer)$Employer['ID'], $msgParams);
@@ -222,7 +222,7 @@ foreach($Messages as $Message){
 						'Theme'			=> $Message['Theme'],
 						'Message'		=> $Message['Content'],
 						'Message-ID'		=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
-						'Attachments'	=> (IsSet($Attachments)?$Attachments:Array())
+						'Attachments'		=> (IsSet($Attachments)?$Attachments:Array())
 						);
 			#Debug(SPrintF('[comp/Tasks/TicketsMessages]: msgParams = %s',print_r($msgParams,true)));
 			#-------------------------------------------------------------------------------

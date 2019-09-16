@@ -32,7 +32,6 @@ if(!IsSet($Attribs['IsImmediately']) || !$Attribs['IsImmediately']){
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/Tasks/Telegram]: отправка Telegram сообщения для (%s)', $Address));
 #-------------------------------------------------------------------------------
-$GLOBALS['TaskReturnInfo'] = $Address;
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('libs/HTTP.php','libs/Telegram.php','libs/Server.php')))
 	return ERROR | @Trigger_Error(500);
@@ -65,12 +64,12 @@ if(!TgSendMessage($Settings,$Attribs['ExternalID'],$Message))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # достаём данные юзера которому идёт письмо
-$User = DB_Select('Users',Array('ID','Params'),Array('UNIQ','ID'=>$Attribs['UserID']));
+$User = DB_Select('Users',Array('ID','Params','Email'),Array('UNIQ','ID'=>$Attribs['UserID']));
 if(!Is_Array($User))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($User['Params']['Settings']['SendEdeskFilesToTelegram'] == "Yes")
-	if(!TgSendFile($Settings,$Attribs['ExternalID'],$Attribs['Attachments']))
+	if(!TgSendFile($Settings,$Attribs['ExternalID'],Is_Array($Attribs['Attachments'])?$Attribs['Attachments']:Array()))
 		Debug(SPrintF('[comp/Tasks/Telegram]: не удалось отправить файл в Telegram '));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -83,6 +82,9 @@ if(!$Config['Notifies']['Methods']['Telegram']['IsEvent'])
 $Event = Comp_Load('Events/EventInsert', Array('UserID'=>$Attribs['UserID'],'Text'=>SPrintF('Сообщение для (%s) через службу Telegram отправлено', $Address)));
 if(!$Event)
 	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$GLOBALS['TaskReturnInfo'][$User['Email']]	= Array($Address,$Attribs['ExternalID']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;
