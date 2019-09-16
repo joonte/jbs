@@ -40,7 +40,7 @@ if($MessageID){
 	if(!$__USER['IsAdmin']){
 		#-------------------------------------------------------------------------------
 		# проверить, что номер сообщения максимальный в этом треде
-		$LastMessage = DB_Select('EdesksMessages',Array('MAX(`ID`) AS `ID`','UserID','CreateDate'),Array('UNIQ','Where'=>SPrintF('`EdeskID` = (SELECT `EdeskID` FROM `EdesksMessages` WHERE `ID` = %u)',$MessageID)));
+		$LastMessage = DB_Select('EdesksMessages',Array('ID','UserID','CreateDate'),Array('UNIQ','Where'=>SPrintF('`EdeskID` = (SELECT `EdeskID` FROM `EdesksMessages` WHERE `ID` = %u)',$MessageID),'SortOn'=>'ID','IsDesc'=>TRUE));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($LastMessage)){
 		case 'error':
