@@ -49,7 +49,9 @@ class SendMessage implements Dispatcher{
 			Debug(SPrintF('[system/classes/SendMessage]: шаблон по типу сообщения не найден (%s)',$templatePath));
 			#-------------------------------------------------------------------------------
 			// пробуем новый шаблон
-			$templatePath = SPrintF('Notifies/%s/%s.tpl',$msg->getParam('MethodSettings')['MessageTemplate'],$msg->getTemplate());
+			$MethodSettings = $msg->getParam('MethodSettings');
+			#-------------------------------------------------------------------------------
+			$templatePath = SPrintF('Notifies/%s/%s.tpl',$MethodSettings['MessageTemplate'],$msg->getTemplate());
 			#-------------------------------------------------------------------------------
 			if(!$smarty->templateExists($templatePath)){
 				#-------------------------------------------------------------------------------
@@ -113,8 +115,6 @@ class SendMessage implements Dispatcher{
 		if($msg->getParam('Message-ID'))
 			$emailHeads[] = SPrintF('Message-ID: %s',$msg->getParam('Message-ID'));
 		#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		$Attribs = Array();
 		#-------------------------------------------------------------------------------
 		$Params = Array();
 		#-------------------------------------------------------------------------------

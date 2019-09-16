@@ -107,6 +107,8 @@ foreach($Servers as $Server){
 	#-------------------------------------------------------------------------------
 	foreach($HostingOrders as $HostingOrder){
 		#-------------------------------------------------------------------------------
+		#Debug(SPrintF('[comp/Tasks/GC/EmailBoxesNotifies] HostingOrder.Login = %s',$HostingOrder['Login']));
+		#-------------------------------------------------------------------------------
 		$Boxes = $Users[$HostingOrder['Login']];
 		#-------------------------------------------------------------------------------
 		foreach($Boxes as $Email=>$Box){
@@ -114,6 +116,9 @@ foreach($Servers as $Server){
 			$Total = Next($Box);
 			if(!$Total)
 				continue;
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			#Debug(SPrintF('[comp/Tasks/GC/EmailBoxesNotifies] HostingOrder.Login = %s; Email = %s',$HostingOrder['Login'],$Email));
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			$Pieces = Explode('@',$Email);
@@ -130,9 +135,34 @@ foreach($Servers as $Server){
 			#-------------------------------------------------------------------------------
 			$Usage = ($Used/$Total)*100;
 			#-------------------------------------------------------------------------------
-			if($Usage > $Settings['EmailBoxesNotifiesPercent']){
+			if($Usage > $Settings['EmailBoxesNotifiesPercent'] /*&& 1 == 2*/){
 				#-------------------------------------------------------------------------------
-				$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'Email','Params'=>Array($Email,'Квота почтового ящика',TemplateReplace('Tasks.GC.EmailBoxesNotifies',Array('Email'=>$Email,'Usage'=>$Usage),FALSE),Implode("\n",$Heads))));
+				// готовим сообщение и отпарвляем
+				// TODO подумать над настройками. сейчас это ня чщики уходят, если передалать на NotificationManager - будет уходить владельцам аккаунтов, но, они смогут это отключать
+				$Params = Array();
+				#-------------------------------------------------------------------------------
+				$Params[] = $Email;
+				$Params[] = TemplateReplace('Tasks.GC.EmailBoxesNotifies',Array('Email'=>$Email,'Usage'=>$Usage),FALSE);
+				$Params[] = Array(
+						'Theme'		=> 'Квота почтового ящика',
+						'Heads'		=> Implode("\r\n", $Heads),
+						'Attachments'	=> '',
+						'UserID'	=> $HostingOrder['UserID'],
+						'TimeBegin'	=> 0,
+						'TimeEnd'	=> 0,
+						'ChargeFree'	=> FALSE,
+						'ExternalID'	=> '',
+						'ContactID'	=> 0		// в отпарвке почты не юзается
+						);
+				#-------------------------------------------------------------------------------
+				$taskParams = Array(
+							'UserID'	=> $HostingOrder['UserID'],
+							'TypeID'	=> 'Email',
+							'Params'	=> $Params
+							);
+				#-------------------------------------------------------------------------------
+				#-------------------------------------------------------------------------------
+				$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',$taskParams);
 				#-------------------------------------------------------------------------------
 				switch(ValueOf($IsAdd)){
 				case 'error':

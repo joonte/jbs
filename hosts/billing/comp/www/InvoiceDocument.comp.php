@@ -239,27 +239,39 @@ if($IsPayed){
 					#-------------------------------------------------------------------------------
 					$IsConfirmed = FALSE;
 					#-------------------------------------------------------------------------------
-					if(IsSet($Settings[$Service['Code']]['EmailConfirmRequire']))
-						if($Settings[$Service['Code']]['EmailConfirmRequire'])
-							foreach($GLOBALS['__USER']['Contacts'] as $Contact)
-								if($Contact['MethodID'] == 'Email')
-									if($Contact['Confirmed'])
-										$IsConfirmed = TRUE;
+					if(IsSet($Settings[$Service['Code']]['EmailConfirmRequire']) && $Settings[$Service['Code']]['EmailConfirmRequire']){
+						#-------------------------------------------------------------------------------
+						foreach($GLOBALS['__USER']['Contacts'] as $Contact)
+							if($Contact['MethodID'] == 'Email')
+								if($Contact['Confirmed'])
+									$IsConfirmed = TRUE;
+						#-------------------------------------------------------------------------------
+					}else{
+						#-------------------------------------------------------------------------------
+						$IsConfirmed = TRUE;
+						#-------------------------------------------------------------------------------
+					}
 					#-------------------------------------------------------------------------------
-					if(!IsConfirmed)
+					if(!$IsConfirmed)
 						$Message = "Для оплаты и активации заказанной услуги требуется подтверждённый почтовый адрес. Нажмите \"Мои настройки\" и подтвердите ваш почтовый адрес";
 					#-------------------------------------------------------------------------------
 					#-------------------------------------------------------------------------------
 					$IsConfirmed = FALSE;
 					#-------------------------------------------------------------------------------
-					if(IsSet($Settings[$Service['Code']]['MobileConfirmRequire']))
-						if($Settings[$Service['Code']]['MobileConfirmRequire'])
-							foreach($GLOBALS['__USER']['Contacts'] as $Contact)
-								if($Contact['MethodID'] == 'SMS')
-									if($Contact['Confirmed'])
-										$IsConfirmed = TRUE;
+					if(IsSet($Settings[$Service['Code']]['MobileConfirmRequire']) && $Settings[$Service['Code']]['MobileConfirmRequire']){
+						#-------------------------------------------------------------------------------
+						foreach($GLOBALS['__USER']['Contacts'] as $Contact)
+							if($Contact['MethodID'] == 'SMS')
+								if($Contact['Confirmed'])
+									$IsConfirmed = TRUE;
+						#-------------------------------------------------------------------------------
+					}else{
+						#-------------------------------------------------------------------------------
+						$IsConfirmed = TRUE;
+						#-------------------------------------------------------------------------------
+					}
 					#-------------------------------------------------------------------------------
-					if(!IsConfirmed)
+					if(!$IsConfirmed)
 						$Message = "Для оплаты и активации заказанной услуги требуется подтверждённый номер мобильного телефона. Нажмите \"Мои настройки\" и подтвердите ваш телефон";
 					#-------------------------------------------------------------------------------
 				}
