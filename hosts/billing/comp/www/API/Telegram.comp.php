@@ -59,7 +59,7 @@ Debug(SPrintF('[comp/www/API/Telegramm]: входящее сообщение о�
 // если в сообщении написано /start - выводим подсказку
 if($Message == '/start'){
 	#-------------------------------------------------------------------------------
-	if(!TgSendMessage($Settings,$ChatID,$Settings['Params']['StartMessage']))
+	if(!TgSendMessage($Settings,$ChatID,SPrintF($Settings['Params']['StartMessage'],$Settings['Params']['BotName'])))
 		return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки стартового сообщения на сервер Telegramm');
 	#-------------------------------------------------------------------------------
 	return Array('Status'=>'Ok');
@@ -130,7 +130,7 @@ foreach($Words as $Word){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // сюда мы попали если ничего не найдено
-if(!TgSendMessage($Settings,$ChatID,$Settings['Params']['StartMessage']))
+if(!TgSendMessage($Settings,$ChatID,SPrintF($Settings['Params']['StartMessage'],$Settings['Params']['BotName'])))
 	return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки стартового сообщения на сервер Telegramm');
 #-------------------------------------------------------------------------------
 if(!TgSendMessage($Settings,$ChatID,$Settings['Params']['StubMessage']))
