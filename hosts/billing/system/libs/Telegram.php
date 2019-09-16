@@ -57,6 +57,8 @@ function TgSendFile($Settings,$ChatID,$Attachments = Array()){
 	$HTTP = TgBuild_HTTP($Settings);
 	$HTTP['Charset'] = '';
 	#-------------------------------------------------------------------------------
+	#Debug(SPrintF('[TgSendFile]: Attachments = %s',print_r($Attachments,true)));
+	#-------------------------------------------------------------------------------
 	foreach ($Attachments as $Attachment){
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[system/libs/Telegram]: обработка вложения (%s), размер (%s), тип (%s)',$Attachment['Name'],$Attachment['Size'],$Attachment['Mime']));

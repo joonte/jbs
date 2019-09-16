@@ -123,7 +123,7 @@ class SendMessage implements Dispatcher{
 		$Params[] = Array(
 					'Theme'		=> $theme,
 					'Heads'		=> Implode("\r\n", $emailHeads),
-					'Attachments'	=> $msg->getParam('EmailAttachments'),
+					'Attachments'	=> $msg->getParam('Attachments'),
 					'UserID'	=> $recipient['ID'],
 					'TimeBegin'	=> $msg->getParam('TimeBegin'),
 					'TimeEnd'	=> $msg->getParam('TimeEnd'),

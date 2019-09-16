@@ -399,7 +399,7 @@ foreach($Orders as $Order){
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		# а вложений, в принципе, может и не быть ... 
-		$msgParams = Array('EmailAttachments'=>(SizeOf($EmailAttachments) > 0)?$EmailAttachments:'не определено');
+		$msgParams = Array('Attachments'=>(SizeOf($EmailAttachments) > 0)?$EmailAttachments:Array());
 		#-------------------------------------------------------------------------------
 		$msg = new Message('CreateAndSendInvoices', $Order['UserID'], $msgParams);
 		$IsSend = NotificationManager::sendMsg($msg);

@@ -71,7 +71,7 @@ foreach($Messages as $Message){
 		#-------------------------------------------------------------------------------
 		$Data = GetUploadedFile('EdesksMessages', $Message['ID']);
 		#-------------------------------------------------------------------------------
-		$EmailAttachments = Array(
+		$Attachments = Array(
 					Array(
 						'Name'	=> $Upload['Name'],
 						'Size'	=> GetUploadedFileSize('EdesksMessages',$Message['ID']),
@@ -100,7 +100,7 @@ foreach($Messages as $Message){
 							'Theme'			=> $Message['Theme'],
 							'Message'		=> $Message['Content'],
 							'Message-ID'		=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
-							'EmailAttachments'	=> (IsSet($EmailAttachments)?$EmailAttachments:'не определено')
+							'Attachments'	=> (IsSet($Attachments)?$Attachments:Array())
 							);
 				#-------------------------------------------------------------------------------
 				$msg = new Message('ToTicketsMessages', $TargetUserID, $msgParams);
@@ -163,7 +163,7 @@ foreach($Messages as $Message){
 								'Theme'			=> $Message['Theme'],
 								'Message'		=> $Message['Content'],
 								'Message-ID'		=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
-								'EmailAttachments'	=> (IsSet($EmailAttachments)?$EmailAttachments:'не определено')
+								'Attachments'	=> (IsSet($Attachments)?$Attachments:Array())
 								);
 					#-------------------------------------------------------------------------------
 					$msg = new Message('ToTicketsMessages',(integer)$Employer['ID'], $msgParams);
@@ -222,7 +222,7 @@ foreach($Messages as $Message){
 						'Theme'			=> $Message['Theme'],
 						'Message'		=> $Message['Content'],
 						'Message-ID'		=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
-						'EmailAttachments'	=> (IsSet($EmailAttachments)?$EmailAttachments:'не определено')
+						'Attachments'	=> (IsSet($Attachments)?$Attachments:Array())
 						);
 			#Debug(SPrintF('[comp/Tasks/TicketsMessages]: msgParams = %s',print_r($msgParams,true)));
 			#-------------------------------------------------------------------------------
