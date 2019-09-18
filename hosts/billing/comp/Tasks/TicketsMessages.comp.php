@@ -59,31 +59,22 @@ foreach($Messages as $Message){
 	$TargetUserID = (integer)$Message['TargetUserID'];
 	$TargetGroupID = (integer)$Message['TargetGroupID'];
 	#-------------------------------------------------------------------------------
-	$Upload = Upload_Get('TicketMessageFile',$Message['FileName']);
 	#-------------------------------------------------------------------------------
-	switch(ValueOf($Upload)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		# No more...
-		break;
-	case 'array':
+	// если файл существует, собираем массив вложений
+	if(GetUploadedFileSize('EdesksMessages',$Message['ID'])){
 		#-------------------------------------------------------------------------------
-		$Data = GetUploadedFile('EdesksMessages', $Message['ID']);
+		// достаём сам файл
+		$File = GetUploadedFile('EdesksMessages',$Message['ID']);
 		#-------------------------------------------------------------------------------
 		$Attachments = Array(
 					Array(
-						'Name'	=> $Upload['Name'],
+						'Name'	=> $Message['FileName'],
 						'Size'	=> GetUploadedFileSize('EdesksMessages',$Message['ID']),
 						'Mime'	=> GetFileMimeType('EdesksMessages',$Message['ID']),
-						'Data'	=> Chunk_Split(Base64_Encode($Data['Data']))
-						),
+						'Data'	=> Chunk_Split(Base64_Encode($File['Data']))
+						)
 					);
 		#-------------------------------------------------------------------------------
-		break;
-		#-------------------------------------------------------------------------------
-	default:
-		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -99,7 +90,7 @@ foreach($Messages as $Message){
 							'TicketID'		=> $Message['EdeskID'],
 							'Theme'			=> $Message['Theme'],
 							'Message'		=> $Message['Content'],
-							'Message-ID'		=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
+							'MessageID'		=> $Message['ID'],
 							'Attachments'		=> (IsSet($Attachments)?$Attachments:Array())
 							);
 				#-------------------------------------------------------------------------------
@@ -162,7 +153,7 @@ foreach($Messages as $Message){
 								'TicketID'		=> $Message['EdeskID'],
 								'Theme'			=> $Message['Theme'],
 								'Message'		=> $Message['Content'],
-								'Message-ID'		=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
+								'MessageID'		=> $Message['ID'],
 								'Attachments'		=> (IsSet($Attachments)?$Attachments:Array())
 								);
 					#-------------------------------------------------------------------------------
@@ -221,7 +212,7 @@ foreach($Messages as $Message){
 						'TicketID'		=> $Message['EdeskID'],
 						'Theme'			=> $Message['Theme'],
 						'Message'		=> $Message['Content'],
-						'Message-ID'		=> SPrintF('<%s@%s>',$Message['ID'],HOST_ID),
+						'MessageID'		=> $Message['ID'],
 						'Attachments'		=> (IsSet($Attachments)?$Attachments:Array())
 						);
 			#Debug(SPrintF('[comp/Tasks/TicketsMessages]: msgParams = %s',print_r($msgParams,true)));

@@ -17,6 +17,7 @@ $Flags			=  (string) @$Args['Flags'];
 $OpenTicketUserID	= (integer) @$Args['OpenTicketUserID'];
 $UserID			= (integer) @$Args['UserID'];
 $MaxID			= (integer) @$Args['MaxID'];
+$IsInternal		= (boolean) @$Args['IsInternal'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 	return ERROR | @Trigger_Error(500);
@@ -35,7 +36,8 @@ if(IsSet($__USER['IsEmulate']) && $__USER['ID'] != $OpenTicketUserID)
 	return new gException('DENY_WRITE_MESSAGE_FROM_ANOTHER_USER','Нельзя писать сообщения от имени другого пользователя');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($__USER['IsAdmin']){
+// для админов, не внтренний постинг - те. через веб интерфейс. всё что внутри с флажком - не проверяем
+if($__USER['IsAdmin'] && !$IsInternal){
 	#-------------------------------------------------------------------------------
 	if(!IsSet($GLOBALS['IsCron'])){
 		#-------------------------------------------------------------------------------

@@ -27,7 +27,7 @@ function Upload_Get($Name,$Hash = FALSE){
   $Path = SPrintF('%s/%s',$Uploads,$Hash);
   #-----------------------------------------------------------------------------
   if(!File_Exists($Path))
-    return new gException('FILE_NOT_FOUND','Файл не найден на сервере');
+    return new gException('FILE_NOT_FOUND',SPrintF('Файл не найден на сервере: %s',$Path));
   #-----------------------------------------------------------------------------
   $Data = IO_Read($Path);
   if(Is_Error($Data))

@@ -59,8 +59,20 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(!TgSendMessage($Settings,$Attribs['ExternalID'],$Message))
+if($TgMessageIDs = TgSendMessage($Settings,$Attribs['ExternalID'],$Message,(IsSet($Attribs['MessageID'])?TRUE:FALSE))){
+	#-------------------------------------------------------------------------------
+	// если есть идентфикатор сообщения - сохраняем сооветствие
+	if(IsSet($Attribs['MessageID']))
+		foreach($TgMessageIDs as $TgMessageID)
+			if(!TgSaveThreadID($Attribs['MessageID'],$TgMessageID))
+				return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
+	// если не отправилось, ждём час и пробуем снова
 	return 3600;
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # достаём данные юзера которому идёт письмо
@@ -68,9 +80,23 @@ $User = DB_Select('Users',Array('ID','Params','Email'),Array('UNIQ','ID'=>$Attri
 if(!Is_Array($User))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if($User['Params']['Settings']['SendEdeskFilesToTelegram'] == "Yes")
-	if(!TgSendFile($Settings,$Attribs['ExternalID'],Is_Array($Attribs['Attachments'])?$Attribs['Attachments']:Array()))
-		Debug(SPrintF('[comp/Tasks/Telegram]: не удалось отправить файл в Telegram '));
+if($User['Params']['Settings']['SendEdeskFilesToTelegram'] == "Yes"){
+	#-------------------------------------------------------------------------------
+	if($TgMessageIDs = TgSendFile($Settings,$Attribs['ExternalID'],Is_Array($Attribs['Attachments'])?$Attribs['Attachments']:Array(),(IsSet($Attribs['MessageID'])?TRUE:FALSE))){
+		#-------------------------------------------------------------------------------
+		// если есть идентфикатор сообщения - сохраняем сооветствие
+		if(IsSet($Attribs['MessageID']))
+			foreach($TgMessageIDs as $TgMessageID)
+				if(!TgSaveThreadID($Attribs['MessageID'],$TgMessageID))
+					return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/Tasks/Telegram]: не удалось отправить файл в Telegram'));
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Config = Config();
