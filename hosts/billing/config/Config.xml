@@ -185,6 +185,34 @@
 				<Is54-FZ>1</Is54-FZ>
 			</PayMaster>
 			<!-- ********************************************************************* -->
+			<WebMoneyP>
+				<Name>WebMoney P</Name>
+				<SystemDescription>WebMoney Transfer — международная система расчетов и среда для ведения бизнеса в сети. Основана в 1998 г.</SystemDescription>
+				<Send>
+					<LMI_PAYEE_PURSE/>
+					<LMI_SIM_MODE/>
+					<LMI_PAYMENT_DESC>Payment for invoice #</LMI_PAYMENT_DESC>
+				</Send>
+				<Comp>WebMoney</Comp>
+				<Cpp>https://merchant.webmoney.ru/lmi/payment.asp</Cpp>
+				<Hash/>
+				<ContractsTypes>
+					<Default>1</Default>
+					<Natural>1</Natural>
+					<Juridical>1</Juridical>
+					<Individual>1</Individual>
+				</ContractsTypes>
+				<IsContinuePaying>1</IsContinuePaying>
+				<Course>1</Course>
+				<IsCourseUpdate>0</IsCourseUpdate>
+				<Measure>WMP</Measure>
+				<Valute>RUB</Valute>
+				<MinimumPayment>0.01</MinimumPayment>
+				<MaximumPayment>250000.00</MaximumPayment>
+				<IsActive>0</IsActive>
+				<Is54-FZ>0</Is54-FZ>
+			</WebMoneyP>
+			<!-- ********************************************************************* -->
 			<WebMoneyR>
 				<Name>WebMoney WMR</Name>
 				<SystemDescription>WebMoney Transfer — международная система расчетов и среда для ведения бизнеса в сети. Основана в 1998 г.</SystemDescription>

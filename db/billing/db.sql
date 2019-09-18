@@ -2203,6 +2203,10 @@ set @Text = '<P>@link:Invoices/PaymentSystems/WebMoneyZ</P>';
 INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
 VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/WebMoneyU','Шаблон платежной системы WebMoneyU',@Text);
 
+INSERT INTO `Clauses` (`AuthorID`,`EditorID`,`GroupID`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
+VALUES (100,100,6,'yes','yes','Invoices/PaymentSystems/WebMoneyP','Шаблон платежной системы WebMoneyP','<P>@link:Invoices/PaymentSystems/WebMoneyZ</P>');
+
+
 -- SEPARATOR
 set @Text = '<NOBODY>
  <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
@@ -3067,6 +3071,10 @@ INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',15,'Uniteller','VISA','
 -- SEPARATOR
 -- added by lissyara 2017-11-10 in 09:12 MSK, for JBS-1230
 INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',15,'SberBank','VISA','Visa.MasterCard.png','Оплата при помощи пластиковой карты МИР, VISA или MasterCard.','МИР/VISA/MasterCard','');
+-- SEPARATOR
+-- added by lissyara, 2019-09-14 in 20:58 MSK, for new webmoney rouble
+INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'WebMoneyP','WebMoney Рубль','WMRM.gif','Оплата при помощи электронных денег платёжной системы WebMoney, валюта платежа - Российский рубль.','WebMoney P','');
+
 -- SEPARATOR
 UNLOCK TABLES;
 -- SEPARATOR
