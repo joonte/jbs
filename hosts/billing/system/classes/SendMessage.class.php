@@ -112,8 +112,8 @@ class SendMessage implements Dispatcher{
 					);
 		#-------------------------------------------------------------------------------
 		// added by lissyara 2013-02-13 in 15:45 MSK, for JBS-609
-		if($msg->getParam('Message-ID'))
-			$emailHeads[] = SPrintF('Message-ID: %s',$msg->getParam('Message-ID'));
+		if($msg->getParam('MessageID'))
+			$emailHeads[] = SPrintF('Message-ID: <%s@%s>',$msg->getParam('MessageID'),HOST_ID);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$Params = Array();
@@ -121,21 +121,22 @@ class SendMessage implements Dispatcher{
 		$Params[] = $msg->getParam('ToRecipient');
 		$Params[] = $message;
 		$Params[] = Array(
-					'Theme'		=> $theme,
-					'Heads'		=> Implode("\r\n", $emailHeads),
-					'Attachments'	=> $msg->getParam('Attachments'),
-					'UserID'	=> $recipient['ID'],
-					'TimeBegin'	=> $msg->getParam('TimeBegin'),
-					'TimeEnd'	=> $msg->getParam('TimeEnd'),
-					'ChargeFree'	=> ($msg->getParam('ChargeFree'))?TRUE:FALSE,
-					'ExternalID'	=> $msg->getParam('ExternalID'),
-					'ContactID'	=> $msg->getParam('ContactID')
+					'Theme'		=> $theme,					// тема сообщения
+					'Heads'		=> Implode("\r\n", $emailHeads),		// почтовые заголовки
+					'Attachments'	=> $msg->getParam('Attachments'),		// массив с вложениями, TODO разобраться а чё иногда вдруг не массив?
+					'UserID'	=> $recipient['ID'],				// идентфикатор пользователя
+					'TimeBegin'	=> $msg->getParam('TimeBegin'),			// время начала рассылки
+					'TimeEnd'	=> $msg->getParam('TimeEnd'),			// время окончания рассылки
+					'ChargeFree'	=> ($msg->getParam('ChargeFree'))?TRUE:FALSE,	// платно или бесплатно отправлять
+					'ExternalID'	=> $msg->getParam('ExternalID'),		// внешний идентфикатор, для телеги
+					'ContactID'	=> $msg->getParam('ContactID'),			// идентфикатор контакта
+					'MessageID'	=> $msg->getParam('MessageID')			// идентфикатор сообщения, из тикетниы
 				);
 		#-------------------------------------------------------------------------------
 		$taskParams = Array(
-					'UserID'	=> $recipient['ID'],
-					'TypeID'	=> $msg->getParam('MethodID'),
-					'Params'	=> $Params
+					'UserID'	=> $recipient['ID'],				// идентифкатор юзера-получателя
+					'TypeID'	=> $msg->getParam('MethodID'),			// метод оповещения
+					'Params'	=> $Params					// массив параметров
 					);
 		#-------------------------------------------------------------------------------
 		#Debug(SPrintF('[system/classes/SendMessage] taskParams = %s',print_r($taskParams,true)));

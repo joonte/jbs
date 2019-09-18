@@ -61,7 +61,7 @@ class NotificationManager {
 			#-------------------------------------------------------------------------------
 			$TypeID = $msg->getTemplate();
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[system/classes/NotificationManager]: TypeID = %s',$TypeID));
+			Debug(SPrintF('[system/classes/NotificationManager]: пользователь %s, тип уведомления TypeID = %s',$User['Email'],$TypeID));
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			if(!$User['IsActive'])
@@ -128,6 +128,7 @@ class NotificationManager {
 			$MethodID = $Contact['MethodID'];
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
+			#Debug(SPrintF('[system/classes/NotificationManager]: перебираем юзера %s, контакт %s/%s',$User['Email'],$TypeID,$Contact['Address']));
 			// если это не активный метод, или его нет в массиве методов оповещения - пропускаем контакт
 			if(!$Notifies['Methods'][$MethodID]['IsActive'] || !In_Array($MethodID,$Methods))
 				continue;
@@ -155,8 +156,10 @@ class NotificationManager {
 			}
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
+			#Debug(SPrintF('[system/classes/NotificationManager]: перебираем юзера %s, контакт %s/%s, перед проверкой персональных настроек',$User['Email'],$TypeID,$Contact['Address']));
+			#-------------------------------------------------------------------------------
 			# проверяем, не отключены ли такие оповещения в настройках юзера
-			$Count = DB_Count('Notifies', Array('Where' => SPrintF("`ContactID` = %u AND `TypeID` = '%s'",$msg->getTo(),$TypeID)));
+			$Count = DB_Count('Notifies', Array('Where' => SPrintF("`ContactID` = %u AND `TypeID` = '%s'",$Contact['ID'],$TypeID)));
 			if (Is_Error($Count))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
