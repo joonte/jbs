@@ -110,7 +110,10 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[comp/www/API/Telegramm]: НЕ найдено: EdeskID = %s',$Edesk['EdeskID']));
 			#-------------------------------------------------------------------------------
-			break;
+			if(!TgSendMessage($Settings,$ChatID,$Settings['Params']['EdeskNotFound']))
+				return new gException('ERROR_SEND_EdeskNotFound_MESSAGE','Ошибка отправки сообщения о не найденном тикете');
+			#-------------------------------------------------------------------------------
+			return Array('Status'=>'Ok');
 			#-------------------------------------------------------------------------------
 		case 'array':
 			#-------------------------------------------------------------------------------
@@ -180,7 +183,6 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 					}else{
 						#-------------------------------------------------------------------------------
 						// более одного юзера. проверяем какой из владеющих этой телегой участвует в треде
-						// SELECT * , (SELECT `UserID` FROM `Edesks` WHERE `EdesksMessagesOwners`.`EdeskID` = `Edesks`.`ID`) AS `EdeskUserID` FROM EdesksMessagesOwners WHERE EdeskID = (SELECT EdeskID FROM EdesksMessagesOwners WHERE ID = 347401)
 						$Owners = DB_Select('EdesksMessagesOwners',$Columns,Array('Where'=>SPrintF('`EdeskID` = (SELECT `EdeskID` FROM `EdesksMessagesOwners` WHERE `ID` = %u)',$MessageID)));
 						#-------------------------------------------------------------------------------
 						switch(ValueOf($Owners)){
