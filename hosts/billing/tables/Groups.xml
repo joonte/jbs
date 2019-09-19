@@ -54,6 +54,22 @@
 		</Args>
 	</SelectID>
 	<!-- ********************************************************************** -->
+	<Info>
+		<IsSorted>0</IsSorted>
+		<Comp>Buttons/Window</Comp>
+		<Args>
+			<ListElement>/Administrator/GroupInfo</ListElement>
+			<ListElement>
+				<GroupID>%ID%</GroupID>
+			</ListElement>
+			<ListElement>Дополнительная информация</ListElement>
+		</Args>
+		<Attribs>
+			<class>TableSuperStandard</class>
+			<style>width:22px;</style>
+		</Attribs>
+	</Info>
+	<!-- *********************************************************************** -->
 	<Edit>
 		<IsSorted>0</IsSorted>
 		<Comp>Buttons/Window</Comp>
@@ -113,6 +129,7 @@
 <Sequence>
 	<ListElement>SelectID</ListElement>
 	<ListElement>Edit</ListElement>
+	<ListElement>Info</ListElement>
 	<ListElement>Name</ListElement>
 	<ListElement>ParentName</ListElement>
 	<ListElement>IsDepartment</ListElement>
