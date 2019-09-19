@@ -60,7 +60,8 @@ foreach($Edesks as $Edesk){
 			return new gException('DENY_CLOSE_TICKET',SPrintF('Тикет #%s запрещено закрывать',$Number));
 		#-------------------------------------------------------------------------------
 		if($Edesk['StatusID'] == 'Closed')
-			return new gException('TICKET_CLOSED',SPrintF('Тикет #%s уже закрыт',$Number));
+			break;
+			#return new gException('TICKET_CLOSED',SPrintF('Тикет #%s уже закрыт',$Number));
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Edesks','StatusID'=>'Closed','RowsIDs'=>$Edesk['ID']));
 		#-------------------------------------------------------------------------------
