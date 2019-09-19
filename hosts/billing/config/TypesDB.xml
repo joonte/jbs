@@ -96,6 +96,9 @@
 <!-- added by lissyara 2019-09-04 in 00:43 MSK
 	see http://jira.joonte.com/browse/JBS-1125 -->
 <IsPrimary>Logic</IsPrimary>
+<!-- *********************************************************************** -->
+<!-- уведомления тикетницы, забыл тип проставить -->
+<IsNotify>Logic</IsNotify>
 
 </XML>
 

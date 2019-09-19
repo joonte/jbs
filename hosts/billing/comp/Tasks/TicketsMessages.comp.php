@@ -56,8 +56,8 @@ default:
 #-------------------------------------------------------------------------------
 foreach($Messages as $Message){
 	#-------------------------------------------------------------------------------
-	$TargetUserID = (integer)$Message['TargetUserID'];
-	$TargetGroupID = (integer)$Message['TargetGroupID'];
+	$TargetUserID	= (integer)$Message['TargetUserID'];
+	$TargetGroupID	= (integer)$Message['TargetGroupID'];
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	// если файл существует, собираем массив вложений
@@ -75,48 +75,82 @@ foreach($Messages as $Message){
 						)
 					);
 		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		$Attachments = Array();
+		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if($TargetGroupID != 1){
 		#-------------------------------------------------------------------------------
+		// оповещения сотрудников о новых тикетах и ответах в старые
+		#-------------------------------------------------------------------------------
+		// массивы, будем складывать туда тех кому слать оповещения
+		$Recipients = $NotifyAllNewEdesks = $NotifyAllNewMessages = Array();
+		#-------------------------------------------------------------------------------
+		// ищем всех сотрудников, перебираем их, смотрим у кого включена настройка - оповещать о всех тикетах.
+		$Entrance = Tree_Entrance('Groups',3000000);
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($Entrance)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return ERROR | @Trigger_Error(400);
+		case 'array':
+			#-------------------------------------------------------------------------------
+			$Employers = DB_Select('Users',Array('ID','Params'),Array('Where'=>SPrintF('`GroupID` IN (%s)',Implode(',',$Entrance))));
+			#-------------------------------------------------------------------------------
+			switch(ValueOf($Employers)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				return ERROR | @Trigger_Error(400);
+			case 'array':
+				#-------------------------------------------------------------------------------
+				foreach($Employers as $Employer)
+					if($Employer['Params']['Settings']['NotifyAllNewEdesks'] == 'Yes')
+						$NotifyAllNewEdesks[] = $Employer['ID'];
+				#-------------------------------------------------------------------------------
+				foreach($Employers as $Employer)
+					if($Employer['Params']['Settings']['NotifyAllNewMessages'] == 'Yes')
+						$NotifyAllNewMessages[] = $Employer['ID'];
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF("[comp/Tasks/TicketsMessages]: найдено %u сотрудников, оповещаются о всех новых тикетах %u, о всех новых сообщениях %u ",SizeOf($Employers),SizeOf($NotifyAllNewEdesks),SizeOf($NotifyAllNewMessages)));
+				#-------------------------------------------------------------------------------
+				break;
+				#-------------------------------------------------------------------------------
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		// массивы сотрудников, найденные ранее, объединям с массивом конкретной группы которой назначен тикет, или юзера, которому он назначен
+		#-------------------------------------------------------------------------------
+		// юзер сообщения соответствует владельцу тикета
 		$IsOwner = ($Message['UserID'] == ($OwnerID = $Message['OwnerID']));
 		#-------------------------------------------------------------------------------
 		if($IsOwner){
 			#-------------------------------------------------------------------------------
 			if($TargetUserID != 100){
 				#-------------------------------------------------------------------------------
-				$msgParams = Array(
-							'TicketID'		=> $Message['EdeskID'],
-							'Theme'			=> $Message['Theme'],
-							'Message'		=> $Message['Content'],
-							'MessageID'		=> $Message['ID'],
-							'Attachments'		=> (IsSet($Attachments)?$Attachments:Array())
-							);
+				// тикет кому-то назначен, конкретному сотруднику
 				#-------------------------------------------------------------------------------
-				$msg = new Message('ToTicketsMessages', $TargetUserID, $msgParams);
-				$IsSend = NotificationManager::sendMsg($msg);
-				#-------------------------------------------------------------------------------
-				switch(ValueOf($IsSend)){
-				case 'error':
-					return ERROR | @Trigger_Error(500);
-				case 'exception':
-					# No more...
-				case 'true':
-					#-------------------------------------------------------------------------------
-					$MessagesCount++;
-					# Update -> `IsNotify`='yes'
-					$IsUpdate = DB_Update('EdesksMessages',Array('IsNotify'=>'yes'),Array('ID'=>$Message['ID']));
-					if(Is_Error($IsUpdate))
-						return ERROR | @Trigger_Error(500);
-					#-------------------------------------------------------------------------------
-					break;
-					#-------------------------------------------------------------------------------
-				default:
-					return ERROR | @Trigger_Error(101);
-				}
+				// докидываем сотрудников кому надо оповещения о таких тикетах
+				$Recipients = Array_Unique(Array_Merge(Array($TargetUserID),$NotifyAllNewMessages));
 				#-------------------------------------------------------------------------------
 			}else{
+				#-------------------------------------------------------------------------------
+				// тикет никому не назначен (назначен системному пользователю с ID = 100), новый тикет
+				#-------------------------------------------------------------------------------
+				// добавляем в получатели тех кого надо оповещать о всех новых тикетах
+				$Recipients = $NotifyAllNewEdesks;
 				#-------------------------------------------------------------------------------
 				$Entrance = Tree_Entrance('Groups',$TargetGroupID);
 				#-------------------------------------------------------------------------------
@@ -131,62 +165,69 @@ foreach($Messages as $Message){
 					return ERROR | @Trigger_Error(101);
 				}
 				#-------------------------------------------------------------------------------
-				$String = Implode(',',$Entrance);
-				#-------------------------------------------------------------------------------
-				$Employers = DB_Select('Users','ID',Array('Where'=>SPrintF('`GroupID` IN (%s)',$String)));
+				$Employers = DB_Select('Users','ID',Array('Where'=>SPrintF('`GroupID` IN (%s)',Implode(',',$Entrance))));
 				#-------------------------------------------------------------------------------
 				switch(ValueOf($Employers)){
 				case 'error':
 					return ERROR | @Trigger_Error(500);
 				case 'exception':
 					# No more...
-					continue 2;
-				case 'array':
 					break;
+				case 'array':
+					#-------------------------------------------------------------------------------
+					// добавляем найденных сотрудников отдела, которому назначен тикет
+					foreach($Employers as $Employer)
+						if(!In_Array($Employer['ID'],$Recipients))
+							$Recipients[] = $Employer['ID'];
+					#-------------------------------------------------------------------------------
+					break;
+					#-------------------------------------------------------------------------------
 				default:
 					return ERROR | @Trigger_Error(101);
 				}
 				#-------------------------------------------------------------------------------
-				foreach($Employers as $Employer){
-					#-------------------------------------------------------------------------------
-					$msgParams = Array(
-								'TicketID'		=> $Message['EdeskID'],
-								'Theme'			=> $Message['Theme'],
-								'Message'		=> $Message['Content'],
-								'MessageID'		=> $Message['ID'],
-								'Attachments'		=> (IsSet($Attachments)?$Attachments:Array())
-								);
-					#-------------------------------------------------------------------------------
-					$msg = new Message('ToTicketsMessages',(integer)$Employer['ID'], $msgParams);
-					$IsSend = NotificationManager::sendMsg($msg);
-					#-------------------------------------------------------------------------------
-					switch(ValueOf($IsSend)){
-					case 'error':
-						return ERROR | @Trigger_Error(500);
-					case 'exception':
-						# No more...
-					case 'true':
-						#-------------------------------------------------------------------------------
-						$MessagesCount++;
-						# Update -> `IsNotify`='yes'
-						$IsUpdate = DB_Update('EdesksMessages',Array('IsNotify'=>'yes'),Array('ID'=>$Message['ID']));
-						if(Is_Error($IsUpdate))
-							return ERROR | @Trigger_Error(500);
-						#-------------------------------------------------------------------------------
-						break;
-						#-------------------------------------------------------------------------------
-					default:
-						return ERROR | @Trigger_Error(101);
-					}
-					#-------------------------------------------------------------------------------
-				}
+			}
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			// отправляем сообщениям получателям
+			foreach($Recipients as $Recipient){
 				#-------------------------------------------------------------------------------
-				break;
+				$msgParams = Array(
+							'TicketID'		=> $Message['EdeskID'],
+							'Theme'			=> $Message['Theme'],
+							'Message'		=> $Message['Content'],
+							'MessageID'		=> $Message['ID'],
+							'Attachments'		=> $Attachments
+							);
+				#-------------------------------------------------------------------------------
+				$msg = new Message('ToTicketsMessages',(integer)$Recipient, $msgParams);
+				#-------------------------------------------------------------------------------
+				$IsSend = NotificationManager::sendMsg($msg);
+				#-------------------------------------------------------------------------------
+				switch(ValueOf($IsSend)){
+				case 'error':
+					return ERROR | @Trigger_Error(500);
+				case 'exception':
+					# No more...
+				case 'true':
+					#-------------------------------------------------------------------------------
+					$MessagesCount++;
+					#-------------------------------------------------------------------------------
+					$IsUpdate = DB_Update('EdesksMessages',Array('IsNotify'=>TRUE),Array('ID'=>$Message['ID']));
+					if(Is_Error($IsUpdate))
+						return ERROR | @Trigger_Error(500);
+					#-------------------------------------------------------------------------------
+					break;
+					#-------------------------------------------------------------------------------
+				default:
+					return ERROR | @Trigger_Error(101);
+				}
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
 		}else{
 			#-------------------------------------------------------------------------------
+			// оповещение пользователей о новых ответах от сотрудников
 			$String = $Message['Content'];
 			#-------------------------------------------------------------------------------
 			switch($Message['StatusID']){
@@ -213,15 +254,15 @@ foreach($Messages as $Message){
 						'Theme'			=> $Message['Theme'],
 						'Message'		=> $Message['Content'],
 						'MessageID'		=> $Message['ID'],
-						'Attachments'		=> (IsSet($Attachments)?$Attachments:Array())
+						'Attachments'		=> $Attachments
 						);
-			#Debug(SPrintF('[comp/Tasks/TicketsMessages]: msgParams = %s',print_r($msgParams,true)));
 			#-------------------------------------------------------------------------------
 			if(StrLen($Message['NotifyEmail']) > 5)
 				$msgParams['Recipient'] = $Message['NotifyEmail'];
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			$msg = new FromTicketsMessagesMsg($msgParams, (integer)$OwnerID);
+			#-------------------------------------------------------------------------------
 			$IsSend = NotificationManager::sendMsg($msg);
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($IsSend)){
@@ -232,8 +273,8 @@ foreach($Messages as $Message){
 			case 'true':
 				#-------------------------------------------------------------------------------
 				$MessagesCount++;
-				# Update -> `IsNotify`='yes'
-				$IsUpdate = DB_Update('EdesksMessages',Array('IsNotify'=>'yes'),Array('ID'=>$Message['ID']));
+				#-------------------------------------------------------------------------------
+				$IsUpdate = DB_Update('EdesksMessages',Array('IsNotify'=>TRUE),Array('ID'=>$Message['ID']));
 				if(Is_Error($IsUpdate))
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------

@@ -74,8 +74,11 @@
 		<Value>Yes</Value>
 	</SendEdeskFilesToTelegram>
 	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
 	<EdeskButtons>
+		<Title>Настройки администраторов</Title>
 		<Comment>Показывать только персональные кнопки</Comment>
+		<IsAdmin>1</IsAdmin>
 		<Type>Select</Type>
 		<Options>
 			<Yes>Да</Yes>
@@ -90,6 +93,42 @@
 		<IsDuty>1</IsDuty>
 		<Value>No</Value>
 	</EdeskButtons>
+	<!-- *********************************************************************** -->
+	<NotifyAllNewEdesks>
+		<Comment>Оповещать о всех новых тикетах</Comment>
+		<IsAdmin>1</IsAdmin>
+		<Type>Select</Type>
+		<Options>
+			<Yes>Да</Yes>
+			<No>Нет</No>
+		</Options>
+		<Check>Char</Check>
+		<Attribs>
+			<size>1</size>
+			<style>width: 100%;</style>
+			<prompt>Присылать оповещения о всех новых тикетах в техподдержку, а не только тех которые назначены на вашу группу</prompt>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>No</Value>
+	</NotifyAllNewEdesks>
+	<!-- *********************************************************************** -->
+	<NotifyAllNewMessages>
+		<Comment>Оповещать о всех новых сообщениях</Comment>
+		<IsAdmin>1</IsAdmin>
+		<Type>Select</Type>
+		<Options>
+			<Yes>Да</Yes>
+			<No>Нет</No>
+		</Options>
+		<Check>Char</Check>
+		<Attribs>
+			<size>1</size>
+			<style>width: 100%;</style>
+			<prompt>Присылать оповещения о всех новых сообщениях в техподдержку, включая и тикеты назначенные на других сотрудников</prompt>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>No</Value>
+	</NotifyAllNewMessages>
 	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
 	<CreateInvoicesAutomatically>
