@@ -225,7 +225,7 @@ if($User['IsHidden'])
 $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsHidden\'); return false;'),'Скрытый пользователь'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProtected','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProtected','value'=>'yes','prompt'=>'Этот пользователь не может сбросить пароль через форму восстановления пароля'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
