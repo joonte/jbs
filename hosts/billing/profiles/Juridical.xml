@@ -163,15 +163,16 @@
 			<Type>Select</Type>
 			<Options>
 				<Director>Директор</Director>
-				<General>Генеральный директор</General>
 				<HeadMan>Глава</HeadMan>
+				<General>Генеральный директор</General>
 				<Executive>Исполнительный директор</Executive>
 				<Commerce>Коммерческий директор</Commerce>
 				<DeputyDirector>Заместитель директора</DeputyDirector>
 				<Chairperson>Председатель</Chairperson>
-				<Chairperson>Первый секретарь</Chairperson>
-				<Chairman>Председатель</Chairman>
+				<ChairmanOfTheBoard>Председатель Правления</ChairmanOfTheBoard>
 				<CouncilChairman>Председатель совета</CouncilChairman>
+				<FirstSecretary>Первый секретарь</FirstSecretary>
+				<Chairman>Председатель</Chairman>
 				<Rector>Ректор</Rector>
 				<President>Президент</President>
 			</Options>

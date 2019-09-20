@@ -91,7 +91,11 @@ if(Is_Error($Comp))
 $Table[] = Array('Сумма',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Table[] = Array('Чек выслан',($Invoice['IsCheckSent'] && $Invoice['IsPosted'])?'да':'нет');
+$Comp = Comp_Load('Formats/Logic',($Invoice['IsCheckSent'] && $Invoice['IsPosted']));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Чек выслан',$Comp);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Statuses/State','Invoices',$Invoice);
 if(Is_Error($Comp))

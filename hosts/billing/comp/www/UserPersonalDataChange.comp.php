@@ -138,21 +138,37 @@ foreach($__USER['Contacts'] as $Contact){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	$Comp1 = Comp_Load('Formats/Logic',$Contact['IsPrimary']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Comp2 = Comp_Load('Formats/Logic',$Contact['IsActive']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
 	$Table[] = Array(
+			#-------------------------------------------------------------------------------
 			// примечание
 			new Tag('TD',$Comp),
+			#-------------------------------------------------------------------------------
 			// тип контакта
 			new Tag('TD',Array('class'=>'Head','style'=>SPrintF('background:%s;',($Contact['Confirmed'])?'#D5F66C':'WhiteSmoke')),$Methods[$Contact['MethodID']]['Name']),
+			#-------------------------------------------------------------------------------
 			// адрес
 			new Tag('TD',Array('class'=>'Head'),new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/ContactEdit?ContactID=%u');",$Contact['ID']),'title'=>'Кликните для изменения настроек и подтверждения контактного адреса'),$Contact['Address'])),
+			#-------------------------------------------------------------------------------
 			// это логин?
-			new Tag('TD',Array('class'=>'Head','style'=>SPrintF('background:%s;',($Contact['IsPrimary'])?'#D5F66C':'WhiteSmoke')),($Contact['IsPrimary'])?'Да':'-'),
+			new Tag('TD',Array('class'=>'Head','style'=>SPrintF('background:%s;',($Contact['IsPrimary'])?'#D5F66C':'WhiteSmoke')),$Comp1),
+			#-------------------------------------------------------------------------------
 			// уведомления разрешены
-			new Tag('TD',Array('class'=>'Head','style'=>SPrintF('background:%s;',($Contact['IsActive'])?'#D5F66C':'WhiteSmoke')),($Contact['IsActive'])?'Да':'Нет'),
+			new Tag('TD',Array('class'=>'Head','style'=>SPrintF('background:%s;',($Contact['IsActive'])?'#D5F66C':'WhiteSmoke')),$Comp2),
+			#-------------------------------------------------------------------------------
 			// редактирование уведомлений
 			new Tag('TD',Array('class'=>'Head'),new Tag('IMG',Array('class'=>'Button','onclick'=>$IsActive,'onmouseover'=>"PromptShow(event,'Изменение настроек уведомлений',this);",'src'=>'SRC:{Images/Icons/Notice.gif}','width'=>16))),
+			#-------------------------------------------------------------------------------
 			// удаление
 			new Tag('TD',Array('class'=>'Head'),new Tag('IMG',Array('class'=>'Button','onclick'=>$IsPrimary,'onmouseover'=>"PromptShow(event,'Удалить контактный адрес',this);",'src'=>'SRC:{Images/Icons/Flush1.gif}')))
+			#-------------------------------------------------------------------------------
 			);
 	#-------------------------------------------------------------------------------
 }
