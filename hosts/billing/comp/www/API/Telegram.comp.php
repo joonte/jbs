@@ -10,9 +10,6 @@ Eval(COMP_INIT);
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 $Secret		=  (string) @$Args['Secret'];	// секретный ключ
-// эти данные используются при отправке
-$UserID		= (integer) @$Args['UserID'];	// идентификатор юзера в телеграмме
-$Text		=  (string) @$Args['Text'];	// текст сообщения
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('libs/HTTP.php','libs/Server.php','libs/Telegram.php')))
@@ -27,7 +24,7 @@ switch(ValueOf($Settings)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return new gException('NO_TELEGRAM_SERVERS','Отсуствует настроенный сервер Telegramm');
+	return new gException('NO_TELEGRAM_SERVERS','Отсуствует настроенный сервер Telegram');
 case 'array':
 	break;
 default:
@@ -43,7 +40,7 @@ if(!$Secret || $Secret != $Settings['Params']['Secret'])
 // телега на вебхук шлёт данные постом, json. читаем их.
 $Data = Json_Decode(File_Get_Contents('php://input'));
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/www/API/Telegramm]: Data = %s',print_r($Data,true)));
+Debug(SPrintF('[comp/www/API/Telegram]: Data = %s',print_r($Data,true)));
 #-------------------------------------------------------------------------------
 $Data = $Data->{'message'};
 #-------------------------------------------------------------------------------
@@ -69,14 +66,14 @@ $ChatID = IntVal($Data->{'chat'}->{'id'}); // вернет ID отправите
 if(!$ChatID)
 	return new gException('NO_CHAT_ID','Не удалось определить отправителя сообщения');
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/www/API/Telegramm]: входящее сообщение от ChatID = %u',$ChatID));
+Debug(SPrintF('[comp/www/API/Telegram]: входящее сообщение от ChatID = %u',$ChatID));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // если в сообщении написано /start - выводим подсказку
 if($Message == '/start'){
 	#-------------------------------------------------------------------------------
 	if(!TgSendMessage($Settings,$ChatID,SPrintF($Settings['Params']['StartMessage'],$Settings['Params']['BotName'])))
-		return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки стартового сообщения на сервер Telegramm');
+		return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки стартового сообщения на сервер Telegram');
 	#-------------------------------------------------------------------------------
 	return Array('Status'=>'Ok');
 	#-------------------------------------------------------------------------------
@@ -88,16 +85,16 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 	#-------------------------------------------------------------------------------
 	//$Message = SPrintF("%s\n\n[hidden]Data = %s[/hidden]",Trim($Message),print_r($Data,true));
 	#-------------------------------------------------------------------------------
-	$Message = SPrintF("%s\n\n[hidden]posted via Telegramm, chat_id = %s[/hidden]",Trim($Message),$ChatID);
+	$Message = SPrintF("%s\n\n[hidden]posted via Telegram, chat_id = %s[/hidden]",Trim($Message),$ChatID);
 	#-------------------------------------------------------------------------------
 	$ReplyToID = $Data->{'reply_to_message'}->{'message_id'};
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/www/API/Telegramm]: ответ на сообщение = %u',$ReplyToID));
+	Debug(SPrintF('[comp/www/API/Telegram]: ответ на сообщение = %u',$ReplyToID));
 	#-------------------------------------------------------------------------------
 	// проверяем соответствие телеграммовского идентфикатора и нашего
 	if($MessageID = TgFindThreadID($ReplyToID)){
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/www/API/Telegramm]: reply_to_message->message_id = %u; MessageID = %u',$ReplyToID,$MessageID));
+		Debug(SPrintF('[comp/www/API/Telegram]: reply_to_message->message_id = %u; MessageID = %u',$ReplyToID,$MessageID));
 		#-------------------------------------------------------------------------------
 		// проверяем наличие такого тикета
 		$Columns = Array('*','(SELECT `UserID` FROM `Edesks` WHERE `EdesksMessagesOwners`.`EdeskID` = `Edesks`.`ID`) AS `EdeskUserID`');
@@ -108,7 +105,7 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/www/API/Telegramm]: НЕ найдено: EdeskID = %s',$Edesk['EdeskID']));
+			Debug(SPrintF('[comp/www/API/Telegram]: НЕ найдено: EdeskID = %s',$Edesk['EdeskID']));
 			#-------------------------------------------------------------------------------
 			if(!TgSendMessage($Settings,$ChatID,$Settings['Params']['EdeskNotFound']))
 				return new gException('ERROR_SEND_EdeskNotFound_MESSAGE','Ошибка отправки сообщения о не найденном тикете');
@@ -117,7 +114,7 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 			#-------------------------------------------------------------------------------
 		case 'array':
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/www/API/Telegramm]: найдено: EdeskID = %s',$Edesk['EdeskID']));
+			Debug(SPrintF('[comp/www/API/Telegram]: найдено: EdeskID = %s',$Edesk['EdeskID']));
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			// ищем отправителя по идентфикатору отправителя
@@ -128,7 +125,7 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 			// возможны варианты. идеальный - такой отправитель один, не идеальный - таких несколько, и странный - такого нет
 			if($Count == 1){
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/www/API/Telegramm]: найден один пользователь для ChatID = %s',$ChatID));
+				Debug(SPrintF('[comp/www/API/Telegram]: найден один пользователь для ChatID = %s',$ChatID));
 				#-------------------------------------------------------------------------------
 				// просто выбираем данные отправителя
 				$Contact = DB_Select('Contacts',Array('UserID'),Array('UNIQ','Where'=>SPrintF('`ExternalID` = %u',$ChatID)));
@@ -151,7 +148,7 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 			}elseif($Count > 1){
 				#-------------------------------------------------------------------------------
 				// достаём всех, смотрим кто из них участвовал в треде. возможно: один, много, никто
-				Debug(SPrintF('[comp/www/API/Telegramm]: найдено %u пользователей для ChatID = %s',$Count,$ChatID));
+				Debug(SPrintF('[comp/www/API/Telegram]: найдено %u пользователей для ChatID = %s',$Count,$ChatID));
 				#-------------------------------------------------------------------------------
 				$Contacts = DB_Select('Contacts',Array('UserID'),Array('Where'=>SPrintF('`ExternalID` = %u',$ChatID)));
 				#-------------------------------------------------------------------------------
@@ -171,14 +168,14 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 							$UserIDs[] = $Contact['UserID'];
 					#-------------------------------------------------------------------------------
 					#-------------------------------------------------------------------------------
-					Debug(SPrintF('[comp/www/API/Telegramm]: найдены контакты (%s) c ChatID = %s',Implode(',',$UserIDs),$ChatID));
+					Debug(SPrintF('[comp/www/API/Telegram]: найдены контакты (%s) c ChatID = %s',Implode(',',$UserIDs),$ChatID));
 					#-------------------------------------------------------------------------------
 					// если один элемент в массиве - юзер найден
 					if(SizeOf($UserIDs) == 1){
 						#-------------------------------------------------------------------------------
 						$UserID = $UserIDs[0];
 						#-------------------------------------------------------------------------------
-						Debug(SPrintF('[comp/www/API/Telegramm]: найден контакт %s, ChatID = %s',$UserID,$ChatID));
+						Debug(SPrintF('[comp/www/API/Telegram]: найден контакт %s, ChatID = %s',$UserID,$ChatID));
 						#-------------------------------------------------------------------------------
 					}else{
 						#-------------------------------------------------------------------------------
@@ -196,7 +193,7 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 								#-------------------------------------------------------------------------------
 								if(In_Array($Owner['UserID'],$UserIDs)){
 									#-------------------------------------------------------------------------------
-									Debug(SPrintF('[comp/www/API/Telegramm]: перебором отвечавших в тред найден контакт (%s) c ChatID = %s',$UserID,$ChatID));
+									Debug(SPrintF('[comp/www/API/Telegram]: перебором отвечавших в тред найден контакт (%s) c ChatID = %s',$UserID,$ChatID));
 									#-------------------------------------------------------------------------------
 									$UserID = $Owner['UserID'];
 									#-------------------------------------------------------------------------------
@@ -226,6 +223,7 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 			// тут либо юзер найден, либо нет. если нет - назначаем его гостем
 			$UserID = IsSet($UserID)?$UserID:10;
 			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/www/API/Telegram]: инициализируем пользователя (%s)',$UserID));
 			// инициализируюем юзера, иначе статус не проставится
 			$Init = Comp_Load('Users/Init',IsSet($UserID)?$UserID:100);
 			if(Is_Error($Init))
@@ -304,7 +302,7 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 	}else{
 		#-------------------------------------------------------------------------------
 		// не найдено соответсвтие идентификатора в телеграмме и номера сообщения в тикетнцие
-		Debug(SPrintF('[comp/www/API/Telegramm]: НЕ найдено соответствие сообщения в телеграмм и тикета: Data->reply_to_message->message_id = %s',$Data->{'reply_to_message'}->{'message_id'}));
+		Debug(SPrintF('[comp/www/API/Telegram]: НЕ найдено соответствие сообщения в телеграмм и тикета: Data->reply_to_message->message_id = %s',$Data->{'reply_to_message'}->{'message_id'}));
 		#-------------------------------------------------------------------------------
 		if(!TgSendMessage($Settings,$ChatID,$Settings['Params']['EdeskNotFound']))
 			return new gException('ERROR_SEND_EdeskNotFound_MESSAGE','Ошибка отправки сообщения о не найденном тикете');
@@ -328,7 +326,7 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 		// удаляем дефисы
 		$Word = str_replace ('-','',$Word) ;
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF('[comp/www/API/Telegramm]: Word = %s',$Word));
+		#Debug(SPrintF('[comp/www/API/Telegram]: Word = %s',$Word));
 		// если это число - ищем по базе
 		if(IntVal($Word) != 0){
 			#-------------------------------------------------------------------------------
@@ -357,11 +355,11 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 				#-------------------------------------------------------------------------------
 				// шлём сообщение о успешной активации
 				if(!TgSendMessage($Settings,$ChatID,$Settings['Params']['ConfirmSuccess']))
-					return new gException('ERROR_SEND_SUCCESS_ACTIVATE_MESSAGE','Ошибка отправки сообщения о успешной активации на сервер Telegramm');
+					return new gException('ERROR_SEND_SUCCESS_ACTIVATE_MESSAGE','Ошибка отправки сообщения о успешной активации на сервер Telegram');
 				#-------------------------------------------------------------------------------
 				// шлём сообщение со справочной информацией
 				if(!TgSendMessage($Settings,$ChatID,$Settings['Params']['StubMessage']))
-					return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки сообщения-затычки на сервер Telegramm');
+					return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки сообщения-затычки на сервер Telegram');
 				#-------------------------------------------------------------------------------
 				// вываливаемся из скрипта, вообще
 				return Array('Status'=>'Ok');
@@ -384,10 +382,10 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 #-------------------------------------------------------------------------------
 // сюда мы попали если ничего не найдено
 if(!TgSendMessage($Settings,$ChatID,SPrintF($Settings['Params']['StartMessage'],$Settings['Params']['BotName'])))
-	return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки стартового сообщения на сервер Telegramm');
+	return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки стартового сообщения на сервер Telegram');
 #-------------------------------------------------------------------------------
 if(!TgSendMessage($Settings,$ChatID,$Settings['Params']['StubMessage']))
-	return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки сообщения-затычки на сервер Telegramm');
+	return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки сообщения-затычки на сервер Telegram');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return Array('Status'=>'Ok');

@@ -62,7 +62,7 @@ default:
 if($TgMessageIDs = TgSendMessage($Settings,$Attribs['ExternalID'],$Message,(IsSet($Attribs['MessageID'])?TRUE:FALSE))){
 	#-------------------------------------------------------------------------------
 	// если есть идентфикатор сообщения - сохраняем сооветствие
-	if(IsSet($Attribs['MessageID']))
+	if(IsSet($Attribs['MessageID']) && Is_Array($TgMessageIDs))
 		foreach($TgMessageIDs as $TgMessageID)
 			if(!TgSaveThreadID($Attribs['MessageID'],$TgMessageID))
 				return ERROR | @Trigger_Error(500);
