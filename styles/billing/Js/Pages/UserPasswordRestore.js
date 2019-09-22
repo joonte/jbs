@@ -55,7 +55,7 @@ function ReloadProtect(){
 //------------------------------------------------------------------------------
 function UserPasswordRestore(){
 	//------------------------------------------------------------------------------
-	$Form = document.forms['UserPasswordRestoreForm'];
+	$Form = document.forms['UserPasswordRestoreForm2'];
 	//------------------------------------------------------------------------------
 	$HTTP = new HTTP();
 	//------------------------------------------------------------------------------
@@ -88,8 +88,8 @@ function UserPasswordRestore(){
 			//------------------------------------------------------------------------------
 			var $Protect = document.getElementById('Protect');
 			//------------------------------------------------------------------------------
-			if($Protect)
-				$Protect.src = '/Protect?Rand=' + (Math.round(Math.random()*8999) + 1000);
+			//if($Protect)
+			//	$Protect.src = '/Protect?Rand=' + (Math.round(Math.random()*8999) + 1000);
 			//------------------------------------------------------------------------------
 			ShowAlert(ExceptionsStack($Answer.Exception),'Warning');
 			//------------------------------------------------------------------------------
