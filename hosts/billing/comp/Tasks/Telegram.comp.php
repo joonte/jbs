@@ -31,6 +31,7 @@ if(!IsSet($Attribs['IsImmediately']) || !$Attribs['IsImmediately']){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/Tasks/Telegram]: отправка Telegram сообщения для (%s)', $Address));
+Debug(SPrintF('[comp/Tasks/Telegram]: Attribs = %s',print_r($Attribs,true)));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('libs/HTTP.php','libs/Telegram.php','libs/Server.php')))
@@ -58,13 +59,16 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// параметры, нужны для базы отправленных сообщений
+$Attribs['MessageID']	= IsSet($Attribs['MessageID'])?$Attribs['MessageID']:0;
+$Attribs['TicketID']	= IsSet($Attribs['TicketID'])?$Attribs['TicketID']:0;
 #-------------------------------------------------------------------------------
-if($TgMessageIDs = TgSendMessage($Settings,$Attribs['ExternalID'],$Message,(IsSet($Attribs['MessageID'])?TRUE:FALSE))){
+if($TgMessageIDs = TgSendMessage($Settings,$Attribs['ExternalID'],$Message,($Attribs['MessageID'])?TRUE:FALSE)){
 	#-------------------------------------------------------------------------------
-	// если есть идентфикатор сообщения - сохраняем сооветствие
-	if(IsSet($Attribs['MessageID']) && Is_Array($TgMessageIDs))
+	// сохраняем сооветствие отправленного сообщения и кому оно ушло
+	if(Is_Array($TgMessageIDs))
 		foreach($TgMessageIDs as $TgMessageID)
-			if(!TgSaveThreadID($Attribs['MessageID'],$TgMessageID))
+			if(!TgSaveThreadID($Attribs['UserID'],$Attribs['TicketID'],$Attribs['MessageID'],$TgMessageID))
 				return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 }else{
@@ -80,21 +84,32 @@ $User = DB_Select('Users',Array('ID','Params','Email'),Array('UNIQ','ID'=>$Attri
 if(!Is_Array($User))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if($User['Params']['Settings']['SendEdeskFilesToTelegram'] == "Yes"){
+// шлём файл, если он есть
+$Attribs['Attachments'] = Is_Array($Attribs['Attachments'])?$Attribs['Attachments']:Array();
+#-------------------------------------------------------------------------------
+if(SizeOf($Attribs['Attachments']) > 0){
 	#-------------------------------------------------------------------------------
-	if($TgMessageIDs = TgSendFile($Settings,$Attribs['ExternalID'],Is_Array($Attribs['Attachments'])?$Attribs['Attachments']:Array(),(IsSet($Attribs['MessageID'])?TRUE:FALSE))){
+	// шлём файл, если он есть
+	if($User['Params']['Settings']['SendEdeskFilesToTelegram'] == "Yes"){
 		#-------------------------------------------------------------------------------
-		// если есть идентфикатор сообщения - сохраняем сооветствие
-		if(IsSet($Attribs['MessageID']))
+		if($TgMessageIDs = TgSendFile($Settings,$Attribs['ExternalID'],$Attribs['Attachments'],(IsSet($Attribs['MessageID'])?TRUE:FALSE))){
+			#-------------------------------------------------------------------------------
+			// сохраняем сооветствие отправленнго файла и кому он ушёл
 			foreach($TgMessageIDs as $TgMessageID)
-				if(!TgSaveThreadID($Attribs['MessageID'],$TgMessageID))
+				if(!TgSaveThreadID($Attribs['UserID'],$Attribs['TicketID'],$Attribs['MessageID'],$TgMessageID))
 					return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-	}else{
-		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/Tasks/Telegram]: не удалось отправить файл в Telegram'));
+			#-------------------------------------------------------------------------------
+		}else{
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/Tasks/Telegram]: не удалось отправить файл в Telegram'));
+			#-------------------------------------------------------------------------------
+		}
 		#-------------------------------------------------------------------------------
 	}
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[comp/Tasks/Telegram]: отсутствуют файлы приложенные к сообщению'));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------

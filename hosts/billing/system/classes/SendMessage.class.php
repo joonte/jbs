@@ -130,7 +130,8 @@ class SendMessage implements Dispatcher{
 					'ChargeFree'	=> ($msg->getParam('ChargeFree'))?TRUE:FALSE,	// платно или бесплатно отправлять
 					'ExternalID'	=> $msg->getParam('ExternalID'),		// внешний идентфикатор, для телеги
 					'ContactID'	=> $msg->getParam('ContactID'),			// идентфикатор контакта
-					'MessageID'	=> $msg->getParam('MessageID')			// идентфикатор сообщения, из тикетниы
+					'MessageID'	=> $msg->getParam('MessageID'),			// идентфикатор сообщения, из тикетниы
+					'TicketID'	=> $msg->getParam('TicketID')			// номер тикета
 				);
 		#-------------------------------------------------------------------------------
 		$taskParams = Array(

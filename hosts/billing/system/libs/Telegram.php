@@ -271,12 +271,12 @@ function TgRegWebHook($Settings){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // сохраняем MessageID, просто в файлик, нефига ради такого колонку в базе держать. пока, по крайней мере
-function TgSaveThreadID($MessageID,$TgMessageID){
+function TgSaveThreadID($UserID,$TicketID,$MessageID,$TgMessageID){
 	#-------------------------------------------------------------------------------
 	$FileDB = TgCreateThreadDB();
 	#-------------------------------------------------------------------------------
-	# сохраняем переданный URL
-	$IsWrite = IO_Write($FileDB,SPrintF("%s\t\t%s\n",$MessageID,$TgMessageID));
+	# сохраняем переданные данные
+	$IsWrite = IO_Write($FileDB,SPrintF("%s\t%s\t%s\t\t%s\n",$UserID,$TicketID,$MessageID,$TgMessageID));
 	if(Is_Error($IsWrite))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -302,10 +302,10 @@ function TgFindThreadID($TgMessageID){
 	#-------------------------------------------------------------------------------
 	foreach($Lines as $Line){
 		#-------------------------------------------------------------------------------
-		List($MessageID, $TgMessageIDtmp) = Preg_Split("/[\s]+/",$Line);
+		List($UserID,$TicketID,$MessageID,$TgMessageIDtmp) = Preg_Split("/[\s]+/",$Line);
 		#-------------------------------------------------------------------------------
 		if($TgMessageIDtmp == $TgMessageID)
-			return $MessageID;
+			return Array('UserID'=>$UserID,'TicketID'=>$TicketID,'MessageID'=>$MessageID);
                 #-------------------------------------------------------------------------------
         }
 	#-------------------------------------------------------------------------------
@@ -329,7 +329,7 @@ function TgCreateThreadDB(){
 	#-------------------------------------------------------------------------------
 	if(!File_Exists($FileDB)){
 		#-------------------------------------------------------------------------------
-		$IsWrite = IO_Write($FileDB,"#MessageID\tTgMessageID\n");
+		$IsWrite = IO_Write($FileDB,"#UserID\tTicketID\tMessageID\tTgMessageID\n");
 		if(Is_Error($IsWrite))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
