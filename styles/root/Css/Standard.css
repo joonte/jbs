@@ -3,7 +3,7 @@ body {
 	margin:		0px;
 	padding:	0px;
 	font-family:	Verdana, Helvetica, Arial, sans-serif;
-//	font-size:	12px;
+	font-size:	12px;
 }
 
 /* ------------------------- */
@@ -47,6 +47,7 @@ div.Note {
 	background-color: #FEFAE4;
 	border: 1px solid #F07D00;
 	padding: 2px 2px 4px 4px;
+	margin-bottom: 3px;
 }
 /* ------------------------- */
 p {
