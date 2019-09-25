@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -12,11 +11,11 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Comp = Comp_Load('Formats/String',HtmlSpecialChars($Theme),$Length);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
-#$SPAN = new Tag('SPAN', $Theme);
-#Debug(print_r($SPAN,true));
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-return $TextDiv = new Tag('DIV',Array('style'=>'overflow: hidden;width:300%;','onclick'=>SPrintF("ShowWindow('/TicketRead',{TicketID:%u});",$TicketID)),$Comp);
+#-------------------------------------------------------------------------------
+return $TextDiv = new Tag('DIV',Array('style'=>'overflow:hidden; cursor:pointer;','onclick'=>SPrintF("ShowWindow('/TicketRead',{TicketID:%u});",$TicketID)),$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>

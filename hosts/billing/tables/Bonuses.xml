@@ -92,10 +92,6 @@
    <ListElement>Редактировать бонус на услугу</ListElement>
    <ListElement>Edit.gif</ListElement>
   </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
  </Edit>
  <!-- ********************************************************************** -->
  <CreateDate>

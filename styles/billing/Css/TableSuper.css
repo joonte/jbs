@@ -53,16 +53,16 @@ table.TableSuperData > tbody > tr:nth-child(odd) {
 
     white-space:      nowrap;
 }
-td.TableSuperStandard {
+.TableSuperStandard {
     padding:          2px 3px 2px 3px;
     border-bottom:    1px solid #707680;
     overflow:         visible;
     white-space:      nowrap;
 }
-td.TableSuperWhite {
+.TableSuperWhite {
     background-color: #FFFFFF;
 }
-td.TableSuperNoData {
+.TableSuperNoData {
     background-color:      #FFFFFF;
     border:                1px solid #DCDCDC;
     -webkit-border-radius: 5px;

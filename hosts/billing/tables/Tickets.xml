@@ -135,6 +135,7 @@
    <ListElement>%PriorityID%</ListElement>
   </Args>
   <Alias>PriorityID</Alias>
+  <LongName>Приоритет</LongName>
  </Priority>
  <!-- ********************************************************************** -->
  <Number>
@@ -155,6 +156,7 @@
    <Length>10</Length>
   </Args>
   <Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `TargetGroupID`)</Alias>
+  <LongName>Отдел</LongName>
  </TargetGroup>
  <!-- ********************************************************************** -->
  <Theme>
@@ -165,9 +167,11 @@
    <ListElement>%Theme%</ListElement>
    <Length>45</Length>
   </Args>
+  <!--
   <Attribs>
    <class>Button</class>
   </Attribs>
+  -->
  </Theme>
  <!-- ********************************************************************** -->
  <Messages>
@@ -198,6 +202,7 @@
    <Length>10</Length>
   </Args>
   <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `EdesksOwners`.`TargetUserID`)</Alias>
+  <LongName>Сотрудник</LongName>
  </TargetUser>
  <!-- ********************************************************************** -->
  <UpdateDate>

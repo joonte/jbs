@@ -200,6 +200,7 @@
 			<Attribs>
 				<style>text-align:right;</style>
 			</Attribs>
+			<LongName>Номер заказа</LongName>
 		</Number>
 		<!-- ********************************************************************** -->
 		<DomainName>
@@ -211,6 +212,7 @@
 				<Length>15</Length>
 				<DomainZone>%DomainZone%</DomainZone>
 			</Args>
+			<LongName>Имя домена</LongName>
 		</DomainName>
 		<!-- ********************************************************************** -->
 		<Scheme>
@@ -233,6 +235,7 @@
 				<ListElement>%Expiration%</ListElement>
 			</Args>
 			<Alias>(SELECT SUM(`YearsRemainded`) FROM `DomainConsider` WHERE `DomainConsider`.`DomainOrderID` = `DomainOrdersOwners`.`ID` AND `DomainConsider`.`YearsRemainded` &gt; 0)</Alias>
+			<LongName>Дата окончания/остаток дней</LongName>
 		</Expiration>
 		<!-- ********************************************************************** -->
 		<Status>

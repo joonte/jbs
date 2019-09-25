@@ -86,10 +86,7 @@
    <ListElement>Просмотреть запрос</ListElement>
    <ListElement>TicketRead.gif</ListElement>
   </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
+  <LongName>Просмотреть</LongName>
  </Read>
 </Columns>
 <!-- *********************************************************************** -->
