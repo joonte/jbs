@@ -9,6 +9,9 @@ $__args_list = Array('UserID','Length');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
+
+Debug(SPrintF('[comp/Users/Smart]: UserID = %s; $Length = %s',$UserID,$Length));
+
 $User = DB_Select('Users',Array('ID','Name','Email','AdminNotice','IsActive','Params'),Array('UNIQ','ID'=>$UserID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($User)){
@@ -18,19 +21,22 @@ case 'exception':
 	return ERROR | @Trigger_Error(400);
 case 'array':
 	#-------------------------------------------------------------------------------
+	$Span = new Tag('SPAN',Array('style'=>'display;'));
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Menus/List','Administrator/ListMenu/User.xml', $User);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Tr = new Tag('TR',new Tag('TD',Array('style'=>'width: 5px'),$Comp));
+	$Span->AddChild(new Tag('SPAN',Array('style'=>'display: inline-block; vertical-align: middle;'),$Comp));
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Notice','Users',$User['ID'],$User['AdminNotice']);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Tr->AddChild(new Tag('TD',$Comp));
+	$Span->AddChild(new Tag('SPAN',Array('style'=>'display: inline-block; vertical-align: middle;'),$Comp));
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Formats/String',$User['Email'],$Length);
+	$Comp = Comp_Load('Formats/String',$User['Email'],$Length + 10); /* разобраться почему раньше хватало? */
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -41,9 +47,9 @@ case 'array':
 	# неактивный юзер
 	$Color = $User['IsActive']?$Color:'848484';
 	#-------------------------------------------------------------------------------
-	$Tr->AddChild(new Tag('TD',Array('style'=>SPrintF('color:#%s;',$Color) . 'white-space: nowrap;'),$User['Email']));
+	$Span->AddChild(new Tag('SPAN',Array('style'=>SPrintF('display: inline-block; vertical-align: middle; white-space: nowrap; color:#%s;',$Color)),$Comp));
 	#-------------------------------------------------------------------------------
-	return new Tag('TABLE',Array('cellspacing'=>2,'cellpadding'=>0),$Tr);
+	return $Span;
 default:
 	return ERROR | @Trigger_Error(101);
 }

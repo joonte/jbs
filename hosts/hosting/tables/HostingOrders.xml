@@ -147,6 +147,7 @@
 			<Args>
 				<TableID>HostingOrders</TableID>
 			</Args>
+			<LongName>Выбрать для групповой операции</LongName>
 		</SelectID>
 		<!-- ********************************************************************** -->
 		<!-- ********************************************************************** -->
@@ -160,6 +161,7 @@
 					<ServiceID>%ServiceID%</ServiceID>
 				</Replace>
 			</Args>
+			<LongName>Расширенное меню</LongName>
 		</ExtendedMenu>
 		<!-- ********************************************************************** -->
 		<Number>
@@ -178,6 +180,7 @@
 			<Attribs>
 				<style>text-align:right;</style>
 			</Attribs>
+			<LongName>Номер заказа</LongName>
 		</Number>
 		<!-- ********************************************************************** -->
 		<Scheme>
@@ -188,6 +191,7 @@
 				<Length>10</Length>
 			</Args>
 			<Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `HostingSchemes`.`ServersGroupID`),')') FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`)</Alias>
+			<LongName>Тарифный план</LongName>
 		</Scheme>
 		<!-- ********************************************************************** -->
 		<Expiration>
@@ -198,6 +202,7 @@
 				<ListElement>%DaysRemainded%</ListElement>
 			</Args>
 			<Alias>DaysRemainded</Alias>
+			<LongName>Дата окончания заказа/остаток дней</LongName>
 		</Expiration>
 		<!-- ********************************************************************** -->
 		<Domain>
@@ -208,6 +213,7 @@
 				<ListElement>%Parked%</ListElement>
 				<Length>15</Length>
 			</Args>
+			<LongName>Доменные имена</LongName>
 		</Domain>
 		<!-- ********************************************************************** -->
 		<Status>

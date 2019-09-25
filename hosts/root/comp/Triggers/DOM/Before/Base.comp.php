@@ -24,12 +24,15 @@ foreach($Comp as $Css)
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
-//$Comp = Comp_Load('Css',Array(BROWSER_ID));
-//if(!Is_Error($Comp)){
-//  #---------------------------------------------------------------------------
-//  foreach($Comp as $Css)
-//    $DOM->AddChild('Head',$Css);
-//}
+/*
+$Comp = Comp_Load('Css',Array(BROWSER_ID));
+if(!Is_Error($Comp)){
+	#-------------------------------------------------------------------------------
+	foreach($Comp as $Css)
+		$DOM->AddChild('Head',$Css);
+	#-------------------------------------------------------------------------------
+}
+*/
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Standard.js}')));
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/DOM.js}')));

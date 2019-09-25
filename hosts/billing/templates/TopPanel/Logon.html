@@ -1,0 +1,10 @@
+<!-- @author Alex Keda, for www.host-food.ru -->
+<TD>
+	<UL class="menu-main">
+		<LI>Email: <INPUT class="TopPanel" type="text" id="TopPanelEmail" size="20" /></LI>
+		<LI>Пароль: <INPUT class="TopPanel" type="password" id="TopPanelPassword" size="10" onkeydown="if(event.keyCode == 13) TopPanelLogon();" /></LI>
+		<LI><INPUT type="checkbox" id="TopPanelIsRemember" name="TopPanelIsRemember" /><SPAN onclick="ChangeCheckBox('TopPanelIsRemember'); return false;" style="font-size:11px; cursor:pointer;">[запомнить]</SPAN></LI>
+		<LI><A class="TopPanel" href="javascript:TopPanelLogon();">Вход</A></LI>
+		<LI><A class="Image" href="/Rss/News"><IMG alt="Новости компании" border="0" src="SRC:{Images/Icons/TopPanelRss.gif}" style="display:block;" width="32" height="32" /></A></LI>
+	</UL>
+</TD>

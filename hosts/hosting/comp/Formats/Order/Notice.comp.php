@@ -10,7 +10,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 #Debug(SPrintF('[comp/Formats/Order/Notice]: Table = %s; ID = %s; OldComp = %s; Value = %s; Length = %s; AdminNotice = %s; UserNotice = %s;',$Table,$ID,$OldComp,$Value,$Length,$AdminNotice,$UserNotice));
-$Tr = new Tag('TR');
+$Span = new Tag('SPAN',Array('style'=>'display;'));
 #-------------------------------------------------------------------------------
 # user notice
 #-------------------------------------------------------------------------------
@@ -19,7 +19,7 @@ $Comp = Comp_Load('UserNotice',$Table,$ID,$UserNotice,$IsDisabled);
 if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Tr->AddChild(new Tag('TD',$Comp));
+$Span->AddChild(new Tag('SPAN',Array('style'=>'display: inline-block; vertical-align: middle;'),$Comp));
 #-------------------------------------------------------------------------------
 if($GLOBALS['__USER']['IsAdmin']){
 	#-------------------------------------------------------------------------------
@@ -28,7 +28,7 @@ if($GLOBALS['__USER']['IsAdmin']){
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Tr->AddChild(new Tag('TD',$Comp));
+	$Span->AddChild(new Tag('SPAN',Array('style'=>'display: inline-block; vertical-align: middle;'),$Comp));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
@@ -39,10 +39,10 @@ $Comp = Comp_Load($OldComp,$Value,$Length);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Tr->AddChild(new Tag('TD',$Comp));
+$Span->AddChild(new Tag('SPAN',$Comp));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return new Tag('TABLE',Array('cellspacing'=>2,'cellpadding'=>0),$Tr);
+return $Span;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 

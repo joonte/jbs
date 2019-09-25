@@ -4,10 +4,13 @@
  <HEAD id="Head">
   <TITLE id="Title"></TITLE>
   <LINK rel="alternate" type="application/rss+xml" title="Новости компании" href="/Rss/News" />
+  <LINK href="SRC:{Css/Mobile.css}" rel="stylesheet" media="only screen and (max-width:900px)" />
+  <META name="viewport" content="width=device-width; initial-scale=1" />
   <META http-equiv="Content-Type" content="text/html; charset=utf-8" />
  </HEAD>
  <BODY id="Body">
-  <TABLE cellspacing="0" align="center" cellpadding="0" width="1000">
+ <DIV style="max-width: 1000px; margin: auto;">
+  <TABLE cellspacing="0" align="center" cellpadding="0">
    <TR>
     <TD>
      <TABLE cellspacing="0" height="100%" cellpadding="0">
@@ -58,5 +61,6 @@
    </TR>
   </TABLE>
   <DIV id="Floating" />
+  </DIV>
  </BODY>
 </HTML>

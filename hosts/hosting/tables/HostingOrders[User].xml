@@ -50,10 +50,7 @@
 				</ListElement>
 				<ListElement>Дополнительная информация</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
+			<LongName>Информация о заказе</LongName>
 		</Info>
 		<!-- ********************************************************************** -->
 		<Pay>
@@ -67,10 +64,7 @@
 				<ListElement>Оплатить заказ</ListElement>
 				<ListElement>Pay.gif</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
+			<LongName>Оплатить (продлить) заказ</LongName>
 		</Pay>
 		<!-- ********************************************************************** -->
 		<SchemeChange>
@@ -84,10 +78,7 @@
 				<ListElement>Сменить тарифный план</ListElement>
 				<ListElement>SchemeChange.png</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
+			<LongName>Сменить тарифный план</LongName>
 		</SchemeChange>
 		<!-- ********************************************************************** -->
 		<Manage>
@@ -101,10 +92,7 @@
 				<ListElement>HostingManage.gif</ListElement>
 				<ListElement>OrderManage.js</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
+			<LongName>Перейти в панель управления</LongName>
 		</Manage>
 		<!-- ********************************************************************** -->
 		<PasswordChange>
@@ -119,10 +107,7 @@
 				<ListElement>Сменить пароль</ListElement>
 				<ListElement>Password.gif</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
+			<LongName>Сменить пароль для заказа</LongName>
 		</PasswordChange>
 		<!-- *********************************************************************** -->
 		<ExtendedMenu>
@@ -135,6 +120,7 @@
 					<ServiceID>%ServiceID%</ServiceID>
 				</Replace>
 			</Args>
+			<LongName>Дополнительные операции</LongName>
 		</ExtendedMenu>
 		<!-- *********************************************************************** -->
 	</Columns>

@@ -1,4 +1,4 @@
-table.TableSuperData {
+.TableSuperData {
     background-color:      #FFFFFF;
     border-left:           1px solid #707680;
     border-right:          1px solid #707680;
@@ -15,7 +15,7 @@ table.TableSuperData > tbody > tr:nth-child(odd) {
   background-color: whitesmoke;
 }
 */
-td.TableSuperHeadUnActive {
+.TableSuperHeadUnActive {
     border-bottom:         1px solid #707680;
 
     background-color:      #DCDCDC;
@@ -27,7 +27,7 @@ td.TableSuperHeadUnActive {
 
     white-space:      nowrap;
 }
-td.TableSuperHeadActive {
+.TableSuperHeadActive {
     border-bottom:         1px solid #707680;
 
     background-color:      #505050;
@@ -40,7 +40,7 @@ td.TableSuperHeadActive {
 
     white-space:      nowrap;
 }
-td.TableSuperHeadOrdered {
+.TableSuperHeadOrdered {
     border-bottom:         1px solid #707680;
 
     background-color:      #F9E47D;

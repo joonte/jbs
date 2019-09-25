@@ -27,7 +27,7 @@ if(!Cache_IsExists($CacheID)){
   Cache_Add($CacheID,TRUE);
 }
 #-------------------------------------------------------------------------------
-$Img = new Tag('IMG',Array('alt'=>$Title,'height'=>22,'width'=>22,'src'=>SPrintF('SRC:{Images/Icons/%s}',$Icon)));
+$Img = new Tag('IMG',Array('alt'=>$Title,'class'=>'Button',/*'height'=>22,'width'=>22,*/'src'=>SPrintF('SRC:{Images/Icons/%s}',$Icon)));
 #-------------------------------------------------------------------------------
 $Attribs['class'] = 'Standard';
 #-------------------------------------------------------------------------------

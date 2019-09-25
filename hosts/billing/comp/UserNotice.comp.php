@@ -13,8 +13,8 @@ $Attribs = Array(
 		'class'		=> 'Button',
 		'alt'		=> 'Заметка',
 		'src'		=> SPrintF('SRC:{Images/Icons/%s}',$UserNotice?'Notice3.gif':'Notice1.gif'),
-		'width'		=> 16,
-		'height'	=> 16
+/*		'width'		=> 16,
+		'height'	=> 16*/
 		);
 #-------------------------------------------------------------------------------
 if($NewWindow)

@@ -2,8 +2,8 @@ body {
 	cursor:		default;
 	margin:		0px;
 	padding:	0px;
-	font-family:	Helvetica, sans-serif;
-	font-size:	12px;
+	font-family:	Verdana, Helvetica, Arial, sans-serif;
+//	font-size:	12px;
 }
 
 /* ------------------------- */
@@ -151,6 +151,7 @@ ol.Standard {
 }
 /* ------------------------- */
 table {
+    //font-size: 100%;
     font-size: 12px;
 }
 /* ------------------------- */

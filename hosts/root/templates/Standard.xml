@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <HTML>
- <HEAD id="Head">
-  <TITLE id="Title"></TITLE>
-  <META http-equiv="Content-Type" content="text/html; charset=utf-8" />
- </HEAD>
- <BODY id="Body">
-  <DIV class="Title" id="Title" />
-  <TABLE id="Main" width="100%" cellspacing="5" cellpadding="0">
-   <TR>
-    <TD id="Into" />
-   </TR>
-   </TABLE>
-  <DIV id="Floating" />
- </BODY>
+	<HEAD id="Head">
+	<TITLE id="Title"></TITLE>
+	<META http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</HEAD>
+<BODY id="Body">
+<DIV class="Title" id="Title" />
+<TABLE id="Main" width="100%" cellspacing="5" cellpadding="0">
+<TR>
+	<TD id="Into" />
+</TR>
+</TABLE>
+<DIV id="Floating" />
+</BODY>
 </HTML>

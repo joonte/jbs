@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Великодный В.В. (Joonte Ltd.) -->
+<DIV style="max-width: 1000px;">
 <TABLE width="100%" cellspacing="0" cellpadding="0">
- <TR height="55">
-  <TD width="10">
-   <IMG width="10" height="55" src="SRC:{Images/TopPanelLeft.png}" style="display:block;" id="TopPanelLeft" />
-  </TD>
-  <TD>
-   <TABLE width="100%" cellspacing="0" cellpadding="0">
-    <TR height="35">
-     <TD valign="bottom" style="background-image:url(SRC:{Images/TopPanelBg.png});">
-	 <TABLE>
-	   <TR><TD>
-      <TABLE id="TopPanelMenu" height="100%" cellspacing="0" cellpadding="0" />
-	  </TD><TD><!-- INPUT type="text" /--></TD></TR>
-	  </TABLE>
-     </TD>
-    </TR>
-    <TR height="20" style="background-image:url(SRC:{Images/TopPanelMiddleBg.png});">
-     <TD id="TopPanelMiddle" />
-    </TR>
-   </TABLE>
-  </TD>
-  <TD width="10">
-   <IMG width="10" height="55" src="SRC:{Images/TopPanelRight.png}" style="display:block;" id="TopPanelRight" />
-  </TD>
- </TR>
+<TR height="55">
+	<TD width="10">
+		<IMG width="10" height="55" src="SRC:{Images/TopPanelLeft.png}" style="display:block;" id="TopPanelLeft" />
+	</TD>
+	<TD>
+		<TABLE width="100%" cellspacing="0" cellpadding="0">
+		<TR height="35">
+			<TD valign="bottom" style="background-image:url(SRC:{Images/TopPanelBg.png});">
+				<TABLE>
+				<TR>
+					<TD><TABLE id="TopPanelMenu" height="100%" cellspacing="0" cellpadding="0" /></TD>
+					<TD><!-- INPUT type="text" /--></TD>
+				</TR>
+				</TABLE>
+			</TD>
+		</TR>
+		<TR height="20" style="background-image:url(SRC:{Images/TopPanelMiddleBg.png});">
+			<TD id="TopPanelMiddle" />
+		</TR>
+		</TABLE>
+	</TD>
+	<TD width="10">
+		<IMG width="10" height="55" src="SRC:{Images/TopPanelRight.png}" style="display:block;" id="TopPanelRight" />
+	</TD>
+</TR>
 </TABLE>
+</DIV>
+

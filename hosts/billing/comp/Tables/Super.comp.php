@@ -163,9 +163,9 @@ $Links[$LinkID] = &$Template;
 #-------------------------------------------------------------------------------
 if(Count($Before)){
   #-----------------------------------------------------------------------------
-  $Table = new Tag('TABLE',Array('cellspacing'=>0,'cellpadding'=>0,'width'=>'100%'));
+  $Table = new Tag('TABLE',Array('cellspacing'=>0,'cellpadding'=>0,'width'=>'100%','role'=>'table'));
   #-----------------------------------------------------------------------------
-  $Tr = new Tag('TR');
+  $Tr = new Tag('TR',Array('role'=>'row'));
   #-----------------------------------------------------------------------------
   foreach($Before as $Before){
     #---------------------------------------------------------------------------
@@ -183,9 +183,9 @@ if(Count($Before)){
       if(IsSet($Before['NoBlock'])){
         #-----------------------------------------------------------------------
         if(Count($Tr->Childs))
-          $Table->AddChild(new Tag('TR',new Tag('TD',new Tag('TABLE',Array('cellspacing'=>0),$Tr))));
+          $Table->AddChild(new Tag('TR',Array('role'=>'row'),new Tag('TD',new Tag('TABLE',Array('cellspacing'=>0,'role'=>'table'),$Tr))));
         #-----------------------------------------------------------------------
-        $Table->AddChild(new Tag('TR',new Tag('TD',$Comp)));
+        $Table->AddChild(new Tag('TR',Array('role'=>'row'),new Tag('TD',$Comp)));
         #-----------------------------------------------------------------------
         $Tr = new Tag('TR');
       }else
