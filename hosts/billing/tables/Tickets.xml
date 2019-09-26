@@ -167,11 +167,6 @@
    <ListElement>%Theme%</ListElement>
    <Length>45</Length>
   </Args>
-  <!--
-  <Attribs>
-   <class>Button</class>
-  </Attribs>
-  -->
  </Theme>
  <!-- ********************************************************************** -->
  <Messages>
@@ -185,6 +180,7 @@
   <Attribs>
    <style>text-align:right;</style>
   </Attribs>
+  <LongName>Число сообщений</LongName>
  </Messages>
  <!-- ********************************************************************** -->
  <Status>

@@ -166,8 +166,10 @@ function ShowWindow($Url,$Args){
             style.width  = '';
             style.height = '';
             //------------------------------------------------------------------
-            $wMax = document.body.clientWidth - 150;
-            $hMax = document.body.clientHeight - 100;
+            //$wMax = document.body.clientWidth - 150;
+            //$hMax = document.body.clientHeight - 100;
+            $wMax = document.body.clientWidth - 10;
+            $hMax = document.body.clientHeight - 10;
             //------------------------------------------------------------------
             var $IsWidthResize = (offsetWidth > $wMax);
             //------------------------------------------------------------------

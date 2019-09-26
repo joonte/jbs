@@ -118,7 +118,7 @@ $.fn.extend({
 //------------------------------------------------------------------------------
 //дальше пойдет код окошка с запросом
 $(document).ready(function(){
-	$('#image').click(function(){
+	$('#ButtonImage').click(function(){
 		var $UserInput = prompt("Please enter image url","http://");
 		if($UserInput){
 			$('#Message').insertAtCaret('[image]' + $UserInput + '[/image]');

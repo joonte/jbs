@@ -73,7 +73,8 @@ table.TableSuperData > tbody > tr:nth-child(odd) {
 }
 /* ------------------------- */
 div.TableSuperNavigation {
-    margin: 5px 5px 5px 5px;
+	margin:		5px 5px 5px 5px;
+	overflow:	hidden;
 }
 
 /* ------------------------- */

@@ -1,7 +1,7 @@
 /* для мобильников */
 table thead {
 	display: none;
-	font-size: 200%;
+/*	font-size: 200%;*/
 }
 
 tr.TableSuperStandard {
@@ -13,7 +13,7 @@ tr.TableSuperStandard {
 td.TableSuperStandard {
 	display: block;
 	text-align: right;
-	font-size: 200%;
+/*	font-size: 200%;*/
 	border-bottom: 1px solid #707680;
 	border-right: 1px solid transparent;
 	padding:	12px;
@@ -27,11 +27,13 @@ td.TableSuperStandard:last-child {
 td.TableSuperStandard:before {
 	content: attr(data-label);
 	float: left;
-	//text-transform: uppercase;
-	//font-weight: bold;
+	/*
+	text-transform: uppercase;
+	font-weight: bold;
+	*/
 }
 
-// увеличиваем кнопки
+/* увеличиваем кнопки */
 img.Button {
 	width:	44;
 }
@@ -40,15 +42,39 @@ table {
 	font-size: 100%;
 }
 
+/* прячем кнопки в тикетнице, они не дают окно меньше делать */
+#ButtonTextQuote	{ display: none; }
+#ButtonImage		{ display: none; }
+#ButtonTextSize		{ display: none; }
+#ButtonTextColor	{ display: none; }
+#ButtonTextLock		{ display: none; }
 
+/* прячем панель поиска */
+#TableSuperFormSearch	{ display: none; }
+/* прячем панель фильтра по группам, в тикетнице */
+#EdeskGroupFilters	{ display: none; }
+/* прячем установку статуса внизу супертаблицы */
+#AfterSuperTableSetStatus { display: none; }
+/* прячем фотку юзера в тикете */
+#EdeskUserFoto		{ display: none; }
+/* подписи под текстом тикета */
+#EdeskLeftDiv		{ display: none; }
+
+/* прячем главное меню сайта на малых разрешениях 
+ * и боковое меню тоже убираем
+ */
+#TopPanelMenu		{ display: none; }
+#MenuLeft		{ display: none; }
+/* показываем кнопку отображения меню */
+#HiddenMenuButtons	{ display: block; }
 
 /**/
 
-//.menu-main {
+/*.menu-main {
 //	list-style: none;	/*убираем маркеры списка*/
-//	margin-top: auto;
+/*	margin-top: auto;
 //	//padding-left: 20;	/*убираем левый отступ, равный 40px*/
-//}
+/*}
 
 //.menu-main li {display: inline-block; height: 30px; display: text-align: top;}
 //.menu-main ul {display: flex; vertical-align: top;}
@@ -58,5 +84,5 @@ table {
 //		display:block
 //	}
 //}
-
+*/
 

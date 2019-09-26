@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Великодный В.В. (Joonte Ltd.) -->
-<DIV style="max-width: 1000px;">
 <TABLE width="100%" cellspacing="0" cellpadding="0">
 <TR height="55">
 	<TD width="10">
@@ -28,5 +27,4 @@
 	</TD>
 </TR>
 </TABLE>
-</DIV>
 

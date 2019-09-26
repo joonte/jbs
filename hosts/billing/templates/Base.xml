@@ -4,8 +4,6 @@
  <HEAD id="Head">
   <TITLE id="Title"></TITLE>
   <LINK rel="alternate" type="application/rss+xml" title="Новости компании" href="/Rss/News" />
-  <LINK href="SRC:{Css/Mobile.css}" rel="stylesheet" media="only screen and (max-width:900px)" />
-  <META name="viewport" content="width=device-width; initial-scale=1" />
   <META http-equiv="Content-Type" content="text/html; charset=utf-8" />
  </HEAD>
  <BODY id="Body">
@@ -31,6 +29,9 @@
     <TD />
    </TR>
    <TR>
+    <TD id="HiddenMenuButtons"></TD>
+   </TR>
+   <TR>
     <TD id="Context">
      <TABLE cellspacing="0" cellpadding="0" width="100%" height="100%">
       <TR>
@@ -53,7 +54,7 @@
       <TR>
        <TD id="Copyright" />
        <TD align="right">
-        <A title="Биллинг для хостинга и регистрации доменов" href="http://www.joonte.com/" style="font-size:11px;color:#848484;">Биллинг Joonte 2007-##CURR_YEAR## (##VERSION##)</A>
+	<A title="Биллинг для хостинга и регистрации доменов" href="http://www.joonte.com/" style="font-size:11px;color:#848484;">Биллинг Joonte 2007-##CURR_YEAR## (##VERSION##)</A>
        </TD>
       </TR>
      </TABLE>

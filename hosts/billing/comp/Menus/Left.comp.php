@@ -83,7 +83,7 @@ foreach(Array_Keys($Items) as $ItemID){
 #-------------------------------------------------------------------------------
 $Table = new Tag('TABLE',Array('class'=>'MenuLeft','cellspacing'=>0,'cellpadding'=>0,'width'=>'100%'),new Tag('TR',new Tag('TD',$Table),new Tag('TD',Array('width'=>2,'style'=>'background-image:url(SRC:{Images/MenuLeftLine.png});')))); 
 #-------------------------------------------------------------------------------
-return new Tag('TD',Array('align'=>'right','valign'=>'top','width'=>180),$Table);
+return new Tag('TD',Array('id'=>'MenuLeft','align'=>'right','valign'=>'top','width'=>180),$Table);
 #-------------------------------------------------------------------------------
 
 

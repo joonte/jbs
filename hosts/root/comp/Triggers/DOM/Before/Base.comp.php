@@ -46,6 +46,12 @@ $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'S
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',new Tag('LINK',Array('rel'=>'stylesheet','type'=>'text/css','href'=>'SRC:{others/jQuery/smoothness/jquery-ui-custom.css}')));
 #-------------------------------------------------------------------------------
+// мобильный стиль. настрйоку про max-width:900px возможно стоит в конфиг вынести
+$DOM->AddChild('Head',new Tag('LINK',Array('rel'=>'stylesheet','href'=>'SRC:{Css/Mobile.css}','media'=>'only screen and (max-width:900px)')));
+#-------------------------------------------------------------------------------
+// для мобильных устройств, чтоб не умничали и присылали реально разрешение браузера
+$DOM->AddChild('Head',new Tag('META',Array('name'=>'viewport','content'=>'width=device-width; initial-scale=1')));
+#-------------------------------------------------------------------------------
 $DOM->AddHTML('Floating',TemplateReplace('Triggers.DOM.Before.Base.TABLE'));
 #-------------------------------------------------------------------------------
 $DOM->AddHTML('Floating',TemplateReplace('Triggers.DOM.Before.Base.DIV'));

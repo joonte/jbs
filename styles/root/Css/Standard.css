@@ -152,7 +152,7 @@ ol.Standard {
 }
 /* ------------------------- */
 table {
-    //font-size: 100%;
+    /* font-size: 100%; */
     font-size: 12px;
 }
 /* ------------------------- */
@@ -430,6 +430,8 @@ select {
 	border-width:	1px;
 }
 
+/* скрываем кнопки с меню сайта - они тока на мобильной версии нужны */
+tr.HiddenMenuButtons	{ display: none; }
 
 
 
