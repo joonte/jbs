@@ -55,10 +55,6 @@
    </ListElement>
    <ListElement>Дополнительная информация</ListElement>
   </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
  </Info>
  <!-- ********************************************************************** -->
  <Edit>
@@ -72,10 +68,6 @@
    <ListElement>Изменить счёт</ListElement>
    <ListElement>Edit.gif</ListElement>
   </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
  </Edit>
  <!-- ********************************************************************** -->
  <InvoiceDownloadPDF>
@@ -88,10 +80,6 @@
    <ListElement>Загрузить счёт в PDF</ListElement>
    <ListElement>PDF.gif</ListElement>
   </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
  </InvoiceDownloadPDF>
  <!-- ********************************************************************** -->
  <InvoiceDownloadTIFF>
@@ -104,10 +92,6 @@
    <ListElement>Загрузить счёт в TIFF</ListElement>
    <ListElement>Image.gif</ListElement>
   </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
  </InvoiceDownloadTIFF>
  <!-- ********************************************************************** -->
  <InvoiceDocument>
@@ -121,10 +105,6 @@
    <ListElement>Просмотреть (оплатить)</ListElement>
    <ListElement>Dollar.gif</ListElement>
   </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
  </InvoiceDocument>
 </Columns>
 <!-- *********************************************************************** -->

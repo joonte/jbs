@@ -36,7 +36,7 @@ case 'array':
 	#-------------------------------------------------------------------------------
 	$Span->AddChild(new Tag('SPAN',Array('style'=>'display: inline-block; vertical-align: middle;'),$Comp));
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Formats/String',$User['Email'],$Length + 10); /* разобраться почему раньше хватало? */
+	$Comp = Comp_Load('Formats/String',$User['Email'],$Length + 15); /* разобраться почему раньше хватало? */
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

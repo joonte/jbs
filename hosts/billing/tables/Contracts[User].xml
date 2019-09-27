@@ -37,10 +37,6 @@
    </ListElement>
    <ListElement>Дополнительная информация</ListElement>
   </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
  </Info>
  <!-- ********************************************************************** -->
  <ContractDownload>
@@ -53,10 +49,6 @@
    <ListElement>Загрузить договор</ListElement>
    <ListElement>PDF.gif</ListElement>
   </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
  </ContractDownload>
  <!-- ********************************************************************** -->
  <Edit>
@@ -70,10 +62,6 @@
    <ListElement>Изменить тип учёта</ListElement>
    <ListElement>Edit.gif</ListElement>
   </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
  </Edit>
  <!-- ********************************************************************** -->
  <Balance>
