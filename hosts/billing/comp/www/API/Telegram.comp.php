@@ -72,6 +72,7 @@ Debug(SPrintF('[comp/www/API/Telegram]: входящее сообщение от
 // если в сообщении написано /start - выводим подсказку
 if($Message == '/start'){
 	#-------------------------------------------------------------------------------
+	// TODO надо проверить есть ли такой телеграмм у кого-то. если есть - другое сообщение надо слать - справку или рассказ что и почему
 	if(!TgSendMessage($Settings,$ChatID,SPrintF($Settings['Params']['StartMessage'],$Settings['Params']['BotName'])))
 		return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки стартового сообщения на сервер Telegram');
 	#-------------------------------------------------------------------------------
@@ -133,11 +134,16 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 			Debug(SPrintF('[comp/www/API/Telegram]: тикет НЕ найден: TicketID = %s',$Attribs['TicketID']));
 			#-------------------------------------------------------------------------------
 			// TODO надо создать новый тикет
-			if($TgMessageID = TgSendMessage($Settings,$ChatID,$Settings['Params']['EdeskNotFound'])){
+			if($TgMessageIDs = TgSendMessage($Settings,$ChatID,$Settings['Params']['EdeskNotFound'])){
 				#-------------------------------------------------------------------------------
-				// записываем в базу какому юзеру мы отправили это сообщение
-				if(!TgSaveThreadID($Attribs['UserID'],0,0,$TgMessageID))
-					return ERROR | @Trigger_Error(500);
+				// сохраняем сооветствие отправленного сообщения и кому оно ушло
+				if(Is_Array($TgMessageIDs))
+					foreach($TgMessageIDs as $TgMessageID)
+						if(!TgSaveThreadID($Attribs['UserID'],0,0,$TgMessageID))
+							return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+				// выходим
+				return Array('Status'=>'Ok');
 				#-------------------------------------------------------------------------------
 			}else{
 				#-------------------------------------------------------------------------------
@@ -227,17 +233,23 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 		if(Is_Error($IsUpdate))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		// постим от админа, т.к. пост может идти от другого юзера в ответ на...
-		$GLOBALS['__USER']['ID']	= 100;
-		$GLOBALS['__USER']['IsAdmin']	= TRUE;
+		// цитируем предыдущее сообщение, если это не от администратора
+		if(!$GLOBALS['__USER']['IsAdmin'])
+			$Message = SPrintF('[quote]%s[/quote]%s',$Data->{'reply_to_message'}->{'text'},($Message)?$Message:'');
 		#-------------------------------------------------------------------------------
-		// цитируем предыдущее сообщение
-		$Message = SPrintF('[quote]%s[/quote]%s',$Data->{'reply_to_message'}->{'text'},($Message)?$Message:'текст сообщения отсуствует');
+		// текста может и не быть, даже от админа
+		if(!$Message)
+			$Message = 'текст сообщения отсуствует';
 		#-------------------------------------------------------------------------------
 		$Params = Array('Message'=>$Message,'TicketID'=>$Attribs['TicketID'],'UserID'=>$UserID,'IsInternal'=>TRUE);
 		#-------------------------------------------------------------------------------
 		if(IsSet($Hash))
 			$Params['TicketMessageFile'] = $Hash;
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		// постим от админа, т.к. пост может идти от другого юзера в ответ на...
+		$GLOBALS['__USER']['ID']	= 100;
+		$GLOBALS['__USER']['IsAdmin']	= TRUE;
 		#-------------------------------------------------------------------------------
 		$IsAdd = Comp_Load('www/API/TicketMessageEdit',$Params);
 		if(Is_Error($IsAdd))
