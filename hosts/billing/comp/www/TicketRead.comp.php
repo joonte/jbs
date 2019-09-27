@@ -94,7 +94,7 @@ if(Is_Error($Comp))
 $Form = new Tag('FORM',Array('name'=>'TicketReadForm','onsubmit'=>'return false;','OnKeyPress'=>'ctrlEnterEvent(event,true) && TicketAddMessage();'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$MaxMessageID = DB_Select('EdesksMessagesOwners','MAX(`ID`) AS `MaxMessageID`',Array('UNIQ','Where'=>SPrintF('`EdeskID` = %u',$Ticket['ID'])));
+$MaxMessageID = DB_Select('EdesksMessagesOwners',Array('MAX(`ID`) AS `MaxMessageID`','COUNT(*) AS `NumMessages`'),Array('UNIQ','Where'=>SPrintF('`EdeskID` = %u',$Ticket['ID'])));
 #-------------------------------------------------------------------------------
 switch(ValueOf($MaxMessageID)){
 case 'error':
@@ -287,7 +287,7 @@ $Array = Array(
 		'style'		=> SPrintF('background:%s; width:%s;',$color,$WindowWidth),
 		//'style'		=> SPrintF('background:%s; width:%u;',$color,Max(@$_COOKIE['wScreen']/1.5,630)),
 		'rows'		=> 5,
-		'AutoFocus'	=> 'yes',
+		'AutoFocus'	=> 'yes'
 		);
 #-------------------------------------------------------------------------------
 # подсказка, если есть, и разная для юзеров/админов
@@ -305,7 +305,15 @@ if($PlaceHolder){
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/TextArea',$Array);
+if($__USER['ID'] != $Ticket['UserID']){
+	#-------------------------------------------------------------------------------
+	// если это первое сообщение в теме
+	if($MaxMessageID['NumMessages'] == 1)
+		$Hi = "Доброго времени суток\n--\n";
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/TextArea',$Array,IsSet($Hi)?$Hi:'');
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
