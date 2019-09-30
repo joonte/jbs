@@ -202,6 +202,13 @@
 				<ModeID>Contracts</ModeID>
 			</Args>
 		</Status>
+		<!-- ********************************************************************** -->
+		<Orders>
+			<Head>Кол.</Head>
+			<Prompt>Количество заказов на этом договоре</Prompt>
+			<Alias>(SELECT COUNT(*) FROM `Orders` WHERE `Orders`.`ContractID` = `Contracts`.`ID`)</Alias>
+		</Orders>
+		<!-- ********************************************************************** -->
 	</Columns>
 	<!-- *********************************************************************** -->
 	<Sequence>
@@ -214,6 +221,7 @@
 		<ListElement>IsUponConsider</ListElement>
 		<ListElement>Balance</ListElement>
 		<ListElement>Status</ListElement>
+		<ListElement>Orders</ListElement>
 		<ListElement>StatusOver</ListElement>
 	</Sequence>
 	<!-- *********************************************************************** -->
