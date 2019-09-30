@@ -1,5 +1,5 @@
 
-INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'WebMoneyP','WebMoney Рубль','WMRM.gif','Оплата при помощи электронных денег платёжной системы WebMoney, валюта платежа - Российский рубль.','WebMoney P','');
+INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',999,'WebMoneyP','WebMoney Рубль','WMRM.gif','Оплата при помощи электронных денег платёжной системы WebMoney, валюта платежа - Российский рубль.','WebMoney P','');
 
 -- SEPARATOR
 
