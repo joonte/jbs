@@ -28,9 +28,12 @@
    <TR height="10">
     <TD />
    </TR>
-   <TR>
-    <TD id="HiddenMenuButtons"></TD>
-   </TR>
+    <TR id="HiddenMenuButtons" class="HiddenMenuButtons">
+     <TD>
+      <INPUT type="button" value="Основное меню" class="Button" onclick="JavaScript: $('#TopPanelMenu').slideToggle();" />
+      <INPUT type="button" value="Расширенное меню" class="Button" onclick="JavaScript: $('#MenuLeft').slideToggle();" />
+     </TD>
+    </TR>
    <TR>
     <TD id="Context">
      <TABLE cellspacing="0" cellpadding="0" width="100%" height="100%">
