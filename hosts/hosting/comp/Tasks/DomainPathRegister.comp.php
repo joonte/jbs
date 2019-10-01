@@ -17,7 +17,8 @@ switch(ValueOf($DomainOrder)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return ERROR | @Trigger_Error(400);
+	// могли удалить даже удалённый заказ
+	return TRUE;
 case 'array':
 	break;
 default:
