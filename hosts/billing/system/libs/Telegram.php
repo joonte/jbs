@@ -163,7 +163,7 @@ function TgGetFile($Settings,$FileID){
 		#-------------------------------------------------------------------------------
 		$File	= @File_Get_Contents(SPrintF('https://api.telegram.org/file/bot%s/%s',$Settings['Params']['Token'],$Result['result']['file_path']),FALSE,$Context);
 		#-------------------------------------------------------------------------------
-		$FilePath = SPrintF('%s/%s',$Tmp,$Result['result']['file_id']);
+		$FilePath = SPrintF('%s/files/%s',$Tmp,$Result['result']['file_id']);
 		#-------------------------------------------------------------------------------
 		$IsWrited = IO_Write($FilePath,$File,TRUE);
 		if(Is_Error($IsWrited))
