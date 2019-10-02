@@ -56,10 +56,43 @@ table {
 #EdeskGroupFilters	{ display: none; }
 /* прячем установку статуса внизу супертаблицы */
 #AfterSuperTableSetStatus { display: none; }
-/* прячем фотку юзера в тикете */
-#EdeskUserFoto		{ display: none; }
-/* подписи под текстом тикета */
-#EdeskLeftDiv		{ display: none; }
+/* прячем фотку юзера в тикете 
+#EdeskUserFoto		{ display: none; }*/
+/* стиль для тикетницы, на мобильном и так места мало, убираем пустое по сторонам таблицы */
+#Main			{ border-spacing: 0 0; }
+
+div.PostProfile {
+	display: none;
+	width: auto;
+	border-width: 0 0 1px 0;
+	padding-bottom: 5px;
+	margin: 0;
+	margin-bottom: 0px;
+	margin-bottom: 5px;
+	min-height: 40px;
+	overflow: hidden;
+	float: none;
+}
+
+div.PostBody {
+	display: block;
+	width: auto;
+	float: none;
+	padding: 0;
+	padding-bottom: 5px;
+	min-height: 40px;
+	overflow: hidden;
+}
+
+div.EdeskMessageInfo {
+	width: auto;
+}
+
+/* уменьшаем пустое место по сторонам сообщения в тикетнице */
+div.EdeskMessage {
+	margin:         1px 1px 1px 1px;
+}
+
 
 /* прячем главное меню сайта на малых разрешениях 
  * и боковое меню тоже убираем
@@ -68,22 +101,5 @@ table {
 #MenuLeft		{ display: none; }
 /* показываем кнопку отображения меню */
 #HiddenMenuButtons	{ display: block; }
-
 /**/
-
-/*.menu-main {
-//	list-style: none;	/*убираем маркеры списка*/
-/*	margin-top: auto;
-//	//padding-left: 20;	/*убираем левый отступ, равный 40px*/
-/*}
-
-//.menu-main li {display: inline-block; height: 30px; display: text-align: top;}
-//.menu-main ul {display: flex; vertical-align: top;}
-
-//@media(max-width:900px) {
-//	.menu-main li{
-//		display:block
-//	}
-//}
-*/
 

@@ -147,7 +147,6 @@ if((integer)$FileLength){
 	#-------------------------------------------------------------------------------
 	$Params2 = Array('Delete'=>$Delete,'FileName'=>$FileName,'FileSize'=>SPrintF('%01.2f',$FileLength/1024),'MessageID'=>$MessageID);
 	#-------------------------------------------------------------------------------
-	#$Table->AddHTML(TemplateReplace('Edesks.Message.Uploaded',$Params));
 	$Params['File'] = TemplateReplace('Edesks.Message.Uploaded',$Params2);
 	#-------------------------------------------------------------------------------
 }else{
@@ -313,11 +312,8 @@ if(IsSet($GLOBALS['__USER']) /*&& Mb_StrLen($Content) < 1000*/){
 #-------------------------------------------------------------------------------
 $Params['Links'] = IsSet($Span)?$Span->ToXMLString():'-';
 #-------------------------------------------------------------------------------
-$Table = new Tag('TABLE',Array('class'=>'EdeskMessage','cellspacing'=>5,'height'=>'100%','width'=>'100%'));
-#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # JBS-1177 а код в подписи-то выполняется ...
-#$Params['User']['Sign'] = Nl2Br(HtmlSpecialChars($Params['User']['Sign']));
 $Params['User']['Sign'] = Comp_Load('Edesks/Text',Array('String'=>$Params['User']['Sign'],'IsLockText'=>($OwnerID != @$GLOBALS['__USER']['ID'])));
 if(Is_Error($Text))
 	return ERROR | @Trigger_Error(500);
@@ -358,6 +354,7 @@ if($GLOBALS['__USER']['IsAdmin'] && $IP != '127.0.0.127' && $IP != '127.0.0.1'){
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
+$Table = new Tag('DIV',Array('class'=>'EdeskMessage'));
 #-------------------------------------------------------------------------------
 $Table->AddHTML(TemplateReplace(SPrintF('Edesks.Message.TABLE.%s',($__USER['Params']['Settings']['EdesksDisplay'] == 'Left')?'Left':'Right'),$Params));
 #-------------------------------------------------------------------------------

@@ -1,41 +1,34 @@
 <!-- 
 /** @author Alex Keda, for www.host-food.ru  */
 -->
+<DIV class="EdeskMessageInfo">
+	<DIV style="overflow: hidden; white-space: nowrap;">
+		<DIV id="" class="LeftDiv">#%MessageID% | %CreateDate% | %UserInfoImage% %User.Name% [%Group.Name%]</DIV>
+		<DIV id="" class="RightDiv">%Delete%</DIV>
+	</DIV>
+</DIV>
+
+<DIV class="PostProfile">
+	<DIV id="EdeskUserFoto"><IMG class="UserFoto" alt="Персональная фотография" src="/UserFoto?UserID=%User.ID%" /></DIV>
+	<DIV style="font-size:10px;">%EnterDate%</DIV>
+	<DIV width="51"><IMG alt="Статус пользователя" height="21" width="51" src="SRC:{Images/Icons/%Status%.gif}" style="margin-top:5px;"/></DIV>
+</DIV>
+
+<DIV class="PostBody EdeskMessageContent" style="background-color:#%BgColor%;">
+	<SPAN>%Text%</SPAN>
+	<HR  size="1" />
+	<SPAN style="font-size:10px;">%User.Sign%</SPAN>
+</DIV>
 
 <TR>
-	<TD height="25" class="EdeskMessageInfo">
-		<DIV style="overflow: hidden; white-space: nowrap;">
-			<DIV id="" class="LeftDiv">#%MessageID% | %CreateDate% | %UserInfoImage% %User.Name% [%Group.Name%]</DIV>
-			<DIV id="" class="RightDiv">%Delete%</DIV>
+	<TD class="EdeskMessageInfo" align="right" style="font-size:11px;" width="100%">
+		<DIV>
+			<DIV id="" class="LeftDiv">%Links%</DIV>
+			<DIV id="" class="RightDiv"> </DIV>
 		</DIV>
 	</TD>
-	<TD rowspan="2" valign="top" width="90">
-		<DIV id="EdeskUserFoto">
-		<IMG class="UserFoto" alt="Персональная фотография" height="110" width="90" src="/UserFoto?UserID=%User.ID%" />
-		<TABLE width="100%" cellspacing="0" cellpadding="0">
-			<TR>
-				<TD style="font-size:10px;">%EnterDate%</TD>
-				<TD width="51"><IMG alt="Статус пользователя" height="21" width="51" src="SRC:{Images/Icons/%Status%.gif}" style="margin-top:5px;"/></TD>
-			</TR>
-		</TABLE>
-		</DIV>
-	</TD>
 </TR>
 
-<TR>
-	<TD height="100" class="EdeskMessageContent" style="background-color:#%BgColor%;">
-		<SPAN>%Text%</SPAN>
-		<HR  size="1" />
-		<SPAN style="font-size:10px;">%User.Sign%</SPAN>
-	</TD>
-</TR>
-
-<TR>
-	<TD colspan="2" style="font-size:11px;" class="EdeskMessageInfo">
-		<DIV id="EdeskLeftDiv" class="LeftDiv">%Links%</DIV>
-		<DIV id="" class="RightDiv"> </DIV>
-	</TD>
-</TR>
 
 <!-- приаттаченый к тикету файл, если он есть. иначе - пробел -->
 %File%
