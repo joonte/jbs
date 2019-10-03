@@ -798,7 +798,8 @@ function ShowAnswer($Comment,$Button,$Value,$Eval){
     //--------------------------------------------------------------------------
     var $Body = document.body;
     //--------------------------------------------------------------------------
-    left = $Body.scrollLeft + ($Body.clientWidth  - $Answer.offsetWidth)/2;
+    // 40 пикселов - это кастыль. надо менять методику вычисления
+    left = 40 + $Body.scrollLeft + ($Body.clientWidth  - $Answer.offsetWidth)/2;
     top  = $Body.scrollTop + Math.max(($Body.clientHeight - $Answer.offsetHeight)/2,10);
   }
 }

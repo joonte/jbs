@@ -10,11 +10,13 @@
 
 <DIV class="PostProfile">
 	<DIV id="EdeskUserFoto"><IMG class="UserFoto" alt="Персональная фотография" src="/UserFoto?UserID=%User.ID%" /></DIV>
-	<DIV style="font-size:10px;">%EnterDate%</DIV>
-	<DIV width="51"><IMG alt="Статус пользователя" height="21" width="51" src="SRC:{Images/Icons/%Status%.gif}" style="margin-top:5px;"/></DIV>
+	<DIV style="width: 92px;">
+		<DIV style="font-size:10px; padding: 5px;" class="LeftDiv">%EnterDate%</DIV>
+		<DIV style="width: 51px;" class="RightDiv"><IMG alt="Статус пользователя" height="21" width="51" src="SRC:{Images/Icons/%Status%.gif}" style="margin-top:5px;"/></DIV>
+	</DIV>
 </DIV>
 
-<DIV class="PostBody EdeskMessageContent" style="background-color:#%BgColor%;">
+<DIV class="EdeskMessageContent" style="background-color:#%BgColor%;">
 	<SPAN>%Text%</SPAN>
 	<HR  size="1" />
 	<SPAN style="font-size:10px;">%User.Sign%</SPAN>

@@ -43,14 +43,14 @@ table.Edesk {
 td.EdeskMessageInfo {
     border:           1px solid #EAEAEA;
     background-color: #F8F8F8;
-    background-Image: url(../../root/Images/CaptionBg.png);
+    background-image: url(../../root/Images/CaptionBg.png);
     padding:          5px;
 }
 .EdeskMessageInfo {
 	border:			1px solid #EAEAEA;
 	background-color:	#F8F8F8;
-	background-Image:	url(../../root/Images/CaptionBg.png);
-/*	padding:		5px;*/
+	background-image:	url(../../root/Images/CaptionBg.png);
+	padding:		5px;
 	width:			78%;
 }
 /*-------------------------------------------------------------------------------*/
@@ -105,8 +105,8 @@ td.Standard div.LeftDiv {
 
 .PostProfile {
 	margin:			5px 0 10px 0;
-	min-height:		60px;
-	border:			1px solid transparent;
+	min-height:		140px;
+/*	border:			1px solid transparent;*/
 	border-top-width:	1px;
 	border-right-width:	1px;
 	border-bottom-width:	1px;
@@ -121,12 +121,17 @@ td.Standard div.LeftDiv {
 	display:		inline;
 }
 
-.PostBody {
+.EdeskMessageContent {
 	padding:		0;
 	line-height:		1.48em;
+	min-height:		140px;
 	width:			78%;
-	float:			left;
+/*	float:			left;*/
 	position:		relative;
+	background-color: #FFFFFF;
+	border:           1px solid #DCDCDC;
+	padding:          5px;
+
 }
 
 
