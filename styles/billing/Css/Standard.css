@@ -149,3 +149,7 @@ pp-rounded-5px{
 	border-radius:		5px;
 }
 
+/* прячем кнопку "назад", в тикетнице */
+#EdeskBackButton        { display: none; }
+
+

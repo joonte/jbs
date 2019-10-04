@@ -44,7 +44,7 @@ table {
 }
 
 /* отображаем кнопку "назад", в тикете */
-#EdeskBackButton	{ display: inline-block; }
+#EdeskBackButton	{ display: inline-block !important; }
 
 /* прячем кнопки в тикетнице, они не дают окно меньше делать */
 #ButtonTextQuote	{ display: none; }
