@@ -5,15 +5,26 @@
     rewritten by Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
+$__args_list = Array('Args');
+/******************************************************************************/
+/******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Args = Args();
+$Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-$TicketID = (integer) @$Args['TicketID'];
+$TicketID	= (integer) @$Args['TicketID'];
+$IsInternal	= (boolean) @$Args['IsInternal'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// если это мобильный, или ширина окна меньше 400 пикселов - отпарвляем на мобильную версию
+if((IsSet($_COOKIE['IsMobile']) && $_COOKIE['IsMobile']) || @$_COOKIE['wScreen'] < 400)
+	if(!$IsInternal)
+		return Array('Status'=>'Url','Location'=>SPrintF('/TicketMessages?TicketID=%u',$TicketID));
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Columns = Array(
 		'ID','UserID','Theme','UpdateDate','StatusID','SeenByPersonal','LastSeenBy','Flags',
@@ -135,23 +146,41 @@ if(Is_Error($Comp))
 $Form->AddChild($Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// передаём, внутренний ли вызов был
+$Comp = Comp_Load('Form/Input',Array('name'=>'IsInternal','type'=>'hidden','value'=>($IsInternal)?1:0));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Form->AddChild($Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// передаём, админ ли ходит
+$Comp = Comp_Load('Form/Input',Array('name'=>'IsAdmin','type'=>'hidden','value'=>($GLOBALS['__USER']['IsAdmin'])?1:0));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Form->AddChild($Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Tr = new Tag('TR');
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Upload','TicketMessageFile');
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Tr->AddChild(new Tag('NOBODY',new Tag('TD',Array('class'=>'Comment'),'Прикрепить файл'),new Tag('TD',$Comp)));
+$Tr->AddChild(new Tag('NOBODY',new Tag('TD',Array('class'=>'Comment','id'=>'EdeskAddFileText'),'Прикрепить файл'),new Tag('TD',$Comp)));
 #-------------------------------------------------------------------------------
-if($__USER['ID'] == $Ticket['UserID']){	# is ordinar user
+// если это обычный юзер, то ему кнопок не надо
+if($__USER['ID'] == $Ticket['UserID']){
 	#-------------------------------------------------------------------------------
 	# add SeenByUser field
 	$IsUpdate = DB_Update('Edesks',Array('SeenByUser'=>Time()),Array('ID'=>$TicketID));
 	if(Is_Error($IsUpdate))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-}else{	# is support
+}else{
 	#-------------------------------------------------------------------------------
+	// это техподдержка, достаём шаблоны ответов
 	$Articles = DB_Select('Clauses','*',Array('Where'=>"`GroupID` = 11 AND `IsPublish` = 'yes'",'SortOn'=>'Partition'));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Articles)){
@@ -168,24 +197,25 @@ if($__USER['ID'] == $Ticket['UserID']){	# is ordinar user
 		#-------------------------------------------------------------------
 		foreach($Articles as $Article){
 			#-------------------------------------------------------------------------------
-			# prepare text: delete tags, begin/end space
-			$Text = trim(Strip_Tags($Article['Text']));
-			# delete space on string begin
+			// уадляем теги, пустоту в начале и конце
+			$Text = Trim(Strip_Tags($Article['Text']));
+			// удаляем пробелы в начале строки
 			$Text = Str_Replace("\n ","\n",$Text);
-			# delete double spaces
+			// удаляем дублированные пробелы
 			$Text = Str_Replace("  "," ",$Text);
-			# delete carrier return
+			// удаляем вовзрат каретки
 			$Text = Str_Replace("\r","",$Text);
-			# delete many \n
+			// удаляем дублликаты переносов строк
 			$Text = Str_Replace("\n\n","\n",$Text);
-			# prepare for java script
+			// готовим жаба-скрипты
 			$Text = Str_Replace("\n",'\\n',$Text);
 			# format: SortOrder:ImageName.gif
-			# button image, get image name
+			// картинка кнопки, достаём её
 			$Partition = Explode(":", $Article['Partition']);
+			// достаём расширение картинки
 			$Extension = IsSet($Partition[1])?Explode(".", StrToLower($Partition[1])):'';
 			#-------------------------------------------------------------------------------
-			# если есть чё-то после точки, и если оно похоже на расширение картинки, ставим это как картинку
+			// если есть чё-то после точки, и если оно похоже на расширение картинки, ставим это как картинку
 			$Image = 'Info.gif'; #дефолтовую информационную картинку
 			if(IsSet($Extension[1]) && In_Array($Extension[1],Array('png','gif','jpg','jpeg')))
 				$Image = $Partition[1];
@@ -193,11 +223,11 @@ if($__USER['ID'] == $Ticket['UserID']){	# is ordinar user
 			# делаем кнопку, если это системная кнопка или этого админа
 			if((!Preg_Match('/@/',$Partition[0]) && $Partition[0] < 2000 && $__USER['Params']['Settings']['EdeskButtons'] == "No") || StrToLower($Partition[0]) == StrToLower($__USER['Email'])){
 				#-------------------------------------------------------------------------------
-				$Comp = Comp_Load('Buttons/Standard',Array('onclick' => SPrintF("form.Message.value += '%s';form.Message.focus();",$Text),'style'=>'cursor: pointer;'),$Article['Title'],$Image);
+				$Comp = Comp_Load('Buttons/Standard',Array('onclick'=>SPrintF("form.Message.value += '%s';form.Message.focus();",$Text),'style'=>'cursor: pointer;'),$Article['Title'],$Image);
 				if(Is_Error($Comp))
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------
-				$Tr->AddChild(new Tag('TD',$Comp));
+				$Tr->AddChild(new Tag('TD',Array('id'=>'EdeskAdminButton'),$Comp));
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
@@ -218,16 +248,19 @@ if($__USER['ID'] == $Ticket['UserID']){	# is ordinar user
 #-------------------------------------------------------------------------------
 $Table[] = new Tag('TABLE',$Tr);
 #-------------------------------------------------------------------------------
-if($__USER['ID'] == $Ticket['UserID']){	# ordinar user
+// разная подсказка в окне сообщения, и разный цвет фона
+if($__USER['ID'] == $Ticket['UserID']){
 	#-------------------------------------------------------------------------------
-	$color = "white";
+	// обычный юзер, владелец тикета
+	$Color = "white";
 	$PlaceHolder = "Введите ваше сообщение";
 	#-------------------------------------------------------------------------------
-}else{	# support
+}else{
 	#-------------------------------------------------------------------------------
+	// техподдржка
 	if($Ticket['LastSeenBy'] == $__USER['ID']){
 		#-------------------------------------------------------------------------------
-		$color = "white";
+		$Color = "white";
 		$PlaceHolder = FALSE;
 		#-------------------------------------------------------------------------------
 	}else{
@@ -237,29 +270,29 @@ if($__USER['ID'] == $Ticket['UserID']){	# ordinar user
 		#-------------------------------------------------------------------------------
 		if($TimePeriod < 60){
 			#-------------------------------------------------------------------------------
-			$color = "lightcoral";
+			$Color = "lightcoral";
 			#-------------------------------------------------------------------------------
 		}elseif($TimePeriod < 120){
 			#-------------------------------------------------------------------------------
-			$color = "lightpink";
+			$Color = "lightpink";
 			#-------------------------------------------------------------------------------
 		}elseif($TimePeriod < 180){
 			#-------------------------------------------------------------------------------
-			$color = "khaki";
+			$Color = "khaki";
 			#-------------------------------------------------------------------------------
 		}elseif($TimePeriod < 240){
 			#-------------------------------------------------------------------------------
-			$color = "lemonchiffon";
+			$Color = "lemonchiffon";
 			#-------------------------------------------------------------------------------
 		}elseif($TimePeriod < 300){
 			#-------------------------------------------------------------------------------
-			$color = "gainsboro";
+			$Color = "gainsboro";
 			#-------------------------------------------------------------------------------
 		}else{
 			#-------------------------------------------------------------------------------
 			if($PlaceHolder)
 				$PlaceHolder = SPrintF('Тикет был просмотрен сотрудником %s, %s в %s',$Ticket['LastSeenByName'],Date('Y-m-d',$Ticket['SeenByPersonal']),Date('H:i:s',$Ticket['SeenByPersonal']));
-			$color = "white";
+			$Color = "white";
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
@@ -269,14 +302,14 @@ if($__USER['ID'] == $Ticket['UserID']){	# ordinar user
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // ширина окна тикетов - на мобильном и десктопе разная
-if(IsSet($_COOKIE['IsMobile']) && $_COOKIE['IsMobile']){
+if((IsSet($_COOKIE['IsMobile']) && $_COOKIE['IsMobile']) || $IsInternal){
 	#-------------------------------------------------------------------------------
 	// мобильный - 100% ширина
 	$WindowWidth = '100%';
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$WindowWidth = Max(@$_COOKIE['wScreen']/1.5,630);
+	$WindowWidth = Ceil(Max(@$_COOKIE['wScreen']/1.5,630));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
@@ -284,11 +317,12 @@ if(IsSet($_COOKIE['IsMobile']) && $_COOKIE['IsMobile']){
 $Array = Array(
 		'name'		=> 'Message',
 		'id'		=> 'Message',
-		'style'		=> SPrintF('background:%s; width:%s;',$color,$WindowWidth),
-		//'style'		=> SPrintF('background:%s; width:%u;',$color,Max(@$_COOKIE['wScreen']/1.5,630)),
 		'rows'		=> 5,
-		'AutoFocus'	=> 'yes'
+		'AutoFocus'	=> 'yes',
+		'style'		=> SPrintF('background:%s; width:%s;',$Color,$WindowWidth)
 		);
+#-------------------------------------------------------------------------------
+//'style'               => SPrintF('background:%s; width:%u;',$Color,Max(@$_COOKIE['wScreen']/1.5,630)),
 #-------------------------------------------------------------------------------
 # подсказка, если есть, и разная для юзеров/админов
 if($PlaceHolder){
@@ -424,7 +458,7 @@ $Tr = new Tag('TR',$Comp);
 #-------------------------------------------------------------------------------
 $Img = new Tag('IMG',Array('width'=>1,'height'=>20,'src'=>'SRC:{Images/SeparateLine.png}'));
 #-------------------------------------------------------------------------------
-$Tr->AddChild(new Tag('TD',Array('align'=>'center','width'=>10),$Img));
+$Tr->AddChild(new Tag('TD',Array('id'=>'EdeskSeparator','align'=>'center','width'=>10),$Img));
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Buttons/Standard',Array(),'Предыдущий запрос','Previos.gif');
 if(Is_Error($Comp))
@@ -457,7 +491,7 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$Tr->AddChild(new Tag('TD',Array('width'=>30),$Comp));
+$Tr->AddChild(new Tag('TD',Array('width'=>30,'id'=>'EdeskPrevious'),$Comp));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Buttons/Standard',Array(),'Следующий запрос','Next.gif');
@@ -489,23 +523,39 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$Tr->AddChild(new Tag('TD',Array('width'=>30),$Comp));
+$Tr->AddChild(new Tag('TD',Array('width'=>30,'id'=>'EdeskNext'),$Comp));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Tr->AddChild(new Tag('TD'));
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
+// кнопка отправить
+$Submit = Comp_Load(
 		'Form/Input',
 		Array(
 			'type'    => 'button',
 			'onclick' => IsSet($GLOBALS['__USER']['IsEmulate'])?"javascript:ShowConfirm('Вы действительно хотите написать в тикет от чужого имени?','TicketAddMessage();');":'TicketAddMessage();',
-			'value'   => 'Добавить'
+			'value'   => 'Добавить',
+			'style'=>'display: inline-block;'
 			)
 		);
-if(Is_Error($Comp))
+if(Is_Error($Submit))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Div = new Tag('DIV',$Comp,new Tag('SPAN','и'));
+// кнопка назад, тока для мобильных
+$Back = Comp_Load(
+		'Form/Input',
+		Array(
+			'id'		=> 'EdeskBackButton',
+			'type'		=> 'button',
+			'onclick'	=> SPrintF('document.location = "%s";',($GLOBALS['__USER']['IsAdmin'])?'/Administrator/Tickets':'/Tickets'),
+			'value'		=> 'Назад',
+			)
+		);
+if(Is_Error($Back))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Div = new Tag('DIV',$Back,$Submit,new Tag('SPAN','и'));
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($__USER['ID'] == $Ticket['UserID']){ # is ordinar user
 	#-------------------------------------------------------------------------------
@@ -544,14 +594,7 @@ case 'exception':
 	break;
 case 'array':
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load(
-			'Form/Input',
-			Array(
-				'name'    => 'IsNext',
-				'type'    => 'checkbox',
-				'value'   => $Next['ID']
-				)
-			);
+	$Comp = Comp_Load('Form/Input',Array('name'=>'IsNext','type'=>'checkbox','value'=>$Next['ID']));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -568,13 +611,23 @@ $Tr->AddChild(new Tag('TD',Array('align'=>'right'),$Div));
 #-------------------------------------------------------------------------------
 $Table[] = new Tag('TABLE',Array('width'=>'100%'),$Tr);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Tables/Standard',$Table);
+$Comp = Comp_Load('Tables/Standard',$Table,Array('width'=>'100%'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Iframe = new Tag('IFRAME',Array('id'=>'TicketReadMessages','src'=>SPrintF('/TicketMessages?TicketID=%u',$Ticket['ID']),'width'=>'100%','style'=>SPrintF('height:%u;',Max(@$_COOKIE['hScreen']/2.5,240))),'Загрузка...');
 #-------------------------------------------------------------------------------
-$Form->AddChild(new Tag('TABLE',new Tag('TR',new Tag('TD',$Iframe)),new Tag('TR',new Tag('TD',$Comp))));
+if($IsInternal){
+	#-------------------------------------------------------------------------------
+	// это внутренний вызов компонента, iframe не нужен
+	$Form->AddChild($Comp);
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
+	$Iframe = new Tag('IFRAME',Array('id'=>'TicketReadMessages','src'=>SPrintF('/TicketMessages?TicketID=%u&Iframe=1',$Ticket['ID']),'width'=>'100%','style'=>SPrintF('height:%u;',Max(@$_COOKIE['hScreen']/2.5,240))),'Загрузка...');
+	#-------------------------------------------------------------------------------
+	$Form->AddChild(new Tag('TABLE',new Tag('TR',new Tag('TD',$Iframe)),new Tag('TR',new Tag('TD',$Comp))));
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Into',$Form);
 #-------------------------------------------------------------------------------
@@ -582,7 +635,7 @@ if(Is_Error($DOM->Build(FALSE)))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return Array('Status'=>'Ok','DOM'=>$DOM->Object);
+return Array('Status'=>'Ok','DOM'=>$DOM->Object,'Form'=>$Form);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 

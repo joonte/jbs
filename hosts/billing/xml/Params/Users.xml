@@ -5,25 +5,9 @@
 <!-- *********************************************************************** -->
 <Settings>
 	<!-- настройки интерфейса пользователя -->
-	<EdesksDisplay>
-		<Title>Настройки интерфейса, "Система поддержки пользователей" (Тикеты)</Title>
-		<Comment>Положение текста в тикете</Comment>
-		<Type>Select</Type>
-		<Options>
-			<Right>Правое</Right>
-			<Left>Левое</Left>
-		</Options>
-		<Check>ID</Check>
-		<Attribs>
-			<size>1</size>
-			<style>width: 100%;</style>
-			<prompt>Как отображать в системе поддержки аватары и текст</prompt>
-		</Attribs>
-		<IsDuty>0</IsDuty>
-		<Value>Left</Value>
-	</EdesksDisplay>
 	<!-- *********************************************************************** -->
 	<EdeskImagesPreview>
+		<Title>Настройки интерфейса, "Система поддержки пользователей" (Тикеты)</Title>
 		<Comment>Отображать миниатюры изображений</Comment>
 		<Type>Select</Type>
 		<Options>

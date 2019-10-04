@@ -36,6 +36,9 @@ function ShowWindow($Url,$Args){
       case 'Eval':
         eval($Answer.Eval);
       break;
+      case 'Url':
+        GetURL($Answer.Location);
+      break;
       case 'Ok':
         //----------------------------------------------------------------------
         LockPage('Window');

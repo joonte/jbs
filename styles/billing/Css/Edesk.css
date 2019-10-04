@@ -50,8 +50,9 @@ td.EdeskMessageInfo {
 	border:			1px solid #EAEAEA;
 	background-color:	#F8F8F8;
 	background-image:	url(../../root/Images/CaptionBg.png);
+	background-repeat:	no-repeat;
 	padding:		5px;
-	width:			78%;
+	width:			100%;
 }
 /*-------------------------------------------------------------------------------*/
 /*-------------------------------------------------------------------------------*/
@@ -104,7 +105,7 @@ td.Standard div.LeftDiv {
 
 
 .PostProfile {
-	margin:			5px 0 10px 0;
+/*	margin:			5px 0 10px 0;*/
 	min-height:		140px;
 /*	border:			1px solid transparent;*/
 	border-top-width:	1px;
@@ -134,6 +135,7 @@ td.Standard div.LeftDiv {
 
 }
 
-
-
+/* прячем кнопку "назад", в тикетнице 
+#EdeskBackButton	{ display: none; }
+*/
 

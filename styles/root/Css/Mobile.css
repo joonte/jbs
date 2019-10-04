@@ -43,6 +43,9 @@ table {
 	font-size: 100%;
 }
 
+/* отображаем кнопку "назад", в тикете */
+#EdeskBackButton	{ display: inline-block; }
+
 /* прячем кнопки в тикетнице, они не дают окно меньше делать */
 #ButtonTextQuote	{ display: none; }
 #ButtonImage		{ display: none; }
@@ -56,8 +59,17 @@ table {
 #EdeskGroupFilters	{ display: none; }
 /* прячем установку статуса внизу супертаблицы */
 #AfterSuperTableSetStatus { display: none; }
-/* прячем фотку юзера в тикете 
-#EdeskUserFoto		{ display: none; }*/
+/* прячем админские кнопки в тикетнице */
+#EdeskAdminButton	{ display: none; }
+/* кнопки следующего/предыдущего запросов */
+#EdeskPrevious		{ display: none; }
+#EdeskNext		{ display: none; }
+/* текст про добавление файла, и так разберутся что это за дырка */
+#EdeskAddFileText	{ display: none; }
+/* сепаратор между кнопками и действием - кнопки-то убрали уже */
+#EdeskSeparator		{ display: none; }
+/* верхний логотип - прячем на малых разрешениях */
+#TopLogo		{ display: none; }
 /* стиль для тикетницы, на мобильном и так места мало, убираем пустое по сторонам таблицы */
 #Main			{ border-spacing: 0 0; }
 

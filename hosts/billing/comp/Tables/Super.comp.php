@@ -131,7 +131,8 @@ if (IsSet($Args['InPage'])) {
 
 $Source = &$Template['Source'];
 
-$Form = new Tag('FORM',Array('id'=>'TableSuperForm','name'=>'TableSuperForm','method'=>'POST','onsubmit'=>'return false;'),new Tag('INPUT',Array('type'=>'submit','style'=>'display:none;')));
+//$Form = new Tag('FORM',Array('id'=>'TableSuperForm','name'=>'TableSuperForm','method'=>'POST','onsubmit'=>'return false;'),new Tag('INPUT',Array('type'=>'submit','style'=>'display:none;')));
+$Form = new Tag('FORM',Array('id'=>'TableSuperForm','name'=>'TableSuperForm','method'=>'POST','onsubmit'=>'return false;'),new Tag('DIV',Array('style'=>'display:none;')));
 
 $Links = Links();
 
