@@ -61,7 +61,12 @@ function PromptShow($event,$Text,$Object){
 		var $OffsetX = $Body.clientWidth - ($event.clientX + $Prompt.offsetWidth);
 		var $OffsetY = $Body.clientHeight - ($event.clientY + $Prompt.offsetHeight);
 		//------------------------------------------------------------------------------
-		left = $Body.scrollLeft + $event.clientX + ($OffsetX <0?$OffsetX:0);
+		// по какой-то причине ширина Prompt.offsetWidth не определяется. ноль всегда.
+		left = $Body.scrollLeft + $event.clientX + (($OffsetX <= 0)?$OffsetX:-$Prompt.offsetWidth);
+		// кастыль, т.к. ширина не определяется
+		if(($Body.clientWidth - $event.clientX) < 150)
+			left = $Body.scrollLeft + $event.clientX + (($OffsetX <= 0)?$OffsetX:-$Prompt.offsetWidth) - 50;
+		//------------------------------------------------------------------------------
 		top  = $Body.scrollTop + $event.clientY + ($OffsetY <0?$OffsetY - 20:0) + 20;
 		//------------------------------------------------------------------------------
 	}
