@@ -564,7 +564,6 @@ case 'array':
 			}
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-
 		}elseif($Order['StatusID'] == 'OnTransfer' && $Settings['OrdersOnTransfer']){
 			#-------------------------------------------------------------------------------
 			$Columns = Array('ID','AuthInfo','DomainName','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`) AS `Name`','StatusDate');
@@ -597,7 +596,42 @@ case 'array':
 			}
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-
+		}elseif($Order['StatusID'] == 'Deleted' && $Settings['OrdersDeleted']){
+			#-------------------------------------------------------------------------------
+			// показываем сообщение о возможности восстановления, для услуг хостинга и ВПС
+			if(!In_Array($Order['Code'],Array('Hosting','VPS')))
+				continue;
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			// данные услуги - имя юзера, домен, тариф  ...
+			$Columns = Array(
+					'ID','Login',
+					SPrintF('(SELECT `Name` FROM `%1$sSchemes` WHERE `%1$sOrdersOwners`.`SchemeID` = `%1$sSchemes`.`ID`) as `SchemeName`',$Order['Code']),
+					SPrintF('(SELECT `IsProlong` FROM `%1$sSchemes` WHERE `%1$sOrdersOwners`.`SchemeID` = `%1$sSchemes`.`ID`) as `IsProlong`',$Order['Code']),
+					);
+			$ServiceOrder = DB_Select(SPrintF('%sOrdersOwners',$Order['Code']),$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
+			#-------------------------------------------------------------------------------
+			switch(ValueOf($Orders)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				return ERROR | @Trigger_Error(400);
+			case 'array':
+				#-------------------------------------------------------------------------------
+				$Params['ServiceOrder'] = $ServiceOrder;
+				#-------------------------------------------------------------------------------
+				break;
+				#-------------------------------------------------------------------------------
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
+			#-------------------------------------------------------------------------
+			$NoBody = new Tag('NOBODY');
+			#-------------------------------------------------------------------------
+			$NoBody->AddHTML(TemplateReplace('Notes.User.NoticeOrders.Deleted',$Params));
+			#-------------------------------------------------------------------------------
+			$Result[] = $NoBody;
+			#-------------------------------------------------------------------------------
 		}else{
 			# ничё не делаем?
 		}

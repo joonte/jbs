@@ -1166,6 +1166,7 @@
 					<OrdersClaimForRegister>1</OrdersClaimForRegister>
 					<OrdersForTransfer>1</OrdersForTransfer>
 					<OrdersOnTransfer>1</OrdersOnTransfer>
+					<OrdersDeleted>1</OrdersDeleted>
 				</NoticeOrders>
 			</Notes>
 			<!-- *********************************************************************** -->
