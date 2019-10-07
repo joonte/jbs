@@ -57,6 +57,8 @@ if(!$PaymentSystemID)
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
+$Messages = Messages();
+#-------------------------------------------------------------------------------
 $PaymentSystems = $Config['Invoices']['PaymentSystems'];
 #-------------------------------------------------------------------------------
 if(!IsSet($PaymentSystems[$PaymentSystemID]))
@@ -135,7 +137,7 @@ if($Summ < $PaymentSystem['MinimumPayment']){
 	if(Is_Error(DB_Roll($TransactionID)))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	return new gException('PAYMENT_SYSTEM_MinimumPayment','Сумма платежа меньше, чем разрешено платёжной системой');
+	return new gException('PAYMENT_SYSTEM_MinimumPayment',SPrintF($Messages['Warnings']['Invoices']['SummTooSmall'],$PaymentSystem['MinimumPayment']));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------

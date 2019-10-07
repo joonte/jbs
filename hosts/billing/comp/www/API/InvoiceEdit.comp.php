@@ -103,6 +103,8 @@ default:
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
+$Messages = Messages();
+#-------------------------------------------------------------------------------
 $PaymentSystems = $Config['Invoices']['PaymentSystems'];
 #-------------------------------------------------------------------------------
 if(!$PaymentSystemID)
@@ -124,7 +126,7 @@ if($Summ){
 	#-------------------------------------------------------------------------------
 	# проверяем минимально домустимую сумму счёта
 	if($Summ < $PaymentSystem['MinimumPayment'])
-		return new gException('PAYMENT_SYSTEM_MinimumPayment','Сумма платежа меньше, чем разрешено платёжной системой');
+		return new gException('PAYMENT_SYSTEM_MinimumPayment',SPrintF($Messages['Warnings']['Invoices']['SummTooSmall'],$PaymentSystem['MinimumPayment']));
 	#-------------------------------------------------------------------------------
 	# проверяем максимально допустимую сумму счёта
 	if($Summ > $PaymentSystem['MaximumPayment'])
