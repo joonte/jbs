@@ -1,3 +1,9 @@
+
+/* заголовки супертаблиц, по дефолту у TH жирный шрифт, некрасиво. */
+table thead th {
+	font-weight: normal;
+}
+
 .TableSuperData {
     background-color:      #FFFFFF;
     border-left:           1px solid #707680;
@@ -10,74 +16,74 @@
     font-size:             12px;
     width:                 100%;
 }
-/* disable, because broken line colors 
+/* disable, because broken line colors
 table.TableSuperData > tbody > tr:nth-child(odd) {
-  background-color: whitesmoke;
+	background-color: whitesmoke;
 }
 */
+
 .TableSuperHeadUnActive {
-    border-bottom:         1px solid #707680;
-
-    background-color:      #DCDCDC;
-    background-image:      url(../Images/TableSuperHeadUnActive.png);
-    color:                 #505050;
-    font-size:             12px;
-    padding:               2px 3px 2px 3px;
-    text-align:            left;
-
-    white-space:      nowrap;
+	border-bottom:		1px solid #707680;
+	background-color:	#DCDCDC;
+	background-image:	url(../Images/TableSuperHeadUnActive.png);
+	color:			#505050;
+	font-size:		12px;
+	padding:		2px 3px 2px 3px;
+	text-align:		left;
+	white-space:		nowrap;
 }
+
 .TableSuperHeadActive {
-    border-bottom:         1px solid #707680;
-
-    background-color:      #505050;
-    background-image:      url(../Images/TableSuperHeadUnActive.png);
-    color:                 #6F9006;
-    cursor:                pointer;
-    font-size:             12px;
-    padding:               2px 3px 2px 3px;
-    text-align:            left;
-
-    white-space:      nowrap;
+	border-bottom:		1px solid #707680;
+	background-color:	#505050;
+	background-image:	url(../Images/TableSuperHeadUnActive.png);
+	color:			#6F9006;
+	cursor:			pointer;
+	font-size:		12px;
+	padding:		2px 3px 2px 3px;
+	text-align:		left;
+	white-space:		nowrap;
 }
+
 .TableSuperHeadOrdered {
-    border-bottom:         1px solid #707680;
-
-    background-color:      #F9E47D;
-    background-image:      url(../Images/TableSuperHeadOrdered.png);
-    color:                 #505050;
-    cursor:                pointer;
-    font-size:             12px;
-    padding:               2px 5px 2px 5px;
-    text-align:            left;
-
-    white-space:      nowrap;
+	border-bottom:		1px solid #707680;
+	background-color:	#F9E47D;
+	background-image:	url(../Images/TableSuperHeadOrdered.png);
+	color:			#505050;
+	cursor:			pointer;
+	font-size:		12px;
+	padding:		2px 5px 2px 5px;
+	text-align:		left;
+	white-space:		nowrap;
 }
+
 .TableSuperStandard {
-    padding:          2px 3px 2px 3px;
-    border-bottom:    1px solid #707680;
-    overflow:         visible;
-    white-space:      nowrap;
-}
-.TableSuperWhite {
-    background-color: #FFFFFF;
-}
-.TableSuperNoData {
-    background-color:      #FFFFFF;
-    border:                1px solid #DCDCDC;
-    -webkit-border-radius: 5px;
-    -moz-border-radius:    5px;
-    border-radius:         5px;
-    padding:               5px;
-    text-align:            center;
-}
-/* ------------------------- */
-div.TableSuperNavigation {
-	margin:		5px 5px 5px 5px;
-	overflow:	hidden;
+	padding:		2px 3px 2px 3px;
+	border-bottom:		1px solid #707680;
+	overflow:		visible;
+	white-space:		nowrap;
 }
 
-/* ------------------------- */
+/* нигде не используется */
+.TableSuperWhite {
+	background-color: #FFFFFF;
+}
+
+.TableSuperNoData {
+	background-color:	#FFFFFF;
+	border:			1px solid #DCDCDC;
+	-webkit-border-radius:	5px;
+	-moz-border-radius:	5px;
+	border-radius:		5px;
+	padding:		5px;
+	text-align:		center;
+}
+
+div.TableSuperNavigation {
+	margin:			5px 5px 5px 5px;
+	overflow:		hidden;
+}
+
 button.TableSuperIndexes {
 	padding:		2px;
 	cursor:			pointer;
@@ -90,10 +96,9 @@ button.TableSuperIndexes {
 	border:			1px solid silver;
 }
 
-/* ------------------------- */
-/* ------------------------- */
+/* где-то помоему отсалось, стиль приемняется скриптом */
 .HiLightOn{
-	background-color: #ccbbff;
+	background-color:	#ccbbff;
 }
 
 

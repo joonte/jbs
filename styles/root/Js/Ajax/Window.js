@@ -196,10 +196,19 @@ function ShowWindow($Url,$Args){
 					style.width  = '';
 					style.height = '';
 					//------------------------------------------------------------------------------
-					//$wMax = document.body.clientWidth - 150;
-					//$hMax = document.body.clientHeight - 100;
-					$wMax = document.body.clientWidth - 10;
-					$hMax = document.body.clientHeight - 10;
+					if(document.body.clientWidth > 1600){
+						$wMax = document.body.clientWidth - 300;
+						$hMax = document.body.clientHeight - 100;
+					}else if(document.body.clientWidth > 1200){
+						$wMax = document.body.clientWidth - 200;
+						$hMax = document.body.clientHeight - 100;
+					}else if(document.body.clientWidth > 800){
+						$wMax = document.body.clientWidth - 150;
+						$hMax = document.body.clientHeight - 100;
+					}else{
+						$wMax = document.body.clientWidth - 10;
+						$hMax = document.body.clientHeight - 10;
+					}
 					//------------------------------------------------------------------------------
 					var $IsWidthResize = (offsetWidth > $wMax);
 					//------------------------------------------------------------------------------

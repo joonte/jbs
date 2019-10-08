@@ -2,131 +2,138 @@
 Стиль левого меню
 ----------------------------------------------------------------------------- */
 span.MenuLeft {
-    color:       #505050;
-    font-weight: bold;
+	color:			#505050;
+	font-weight:		bold;
 }
+
 div.MenuLeft {
-    border-bottom: 1px dotted #DCDCDC;
+	border-bottom:		1px dotted #DCDCDC;
 }
+
 a.MenuLeft:link {
-    /* No more...*/
+	/* No more...*/
 }
+
 a.MenuLeft:visited {
-    /* No more...*/
+	/* No more...*/
 }
+
 a.MenuLeft:hover {
-    /* No more...*/
+	/* No more...*/
 }
+
 /* -----------------------------------------------------------------------------
 Стиль верхней панели и меню
 ----------------------------------------------------------------------------- */
 a.TopPanelPick:link {
-    color: #F07D00;
+	color:			#F07D00;
 }
+
 a.TopPanelPick:visited {
-    color: #F07D00;
+	color:			#F07D00;
 }
+
 a.TopPanelPick:hover {
-    color: #F07D00;
+	color:			#F07D00;
 }
+
 input.TopPanel {
-    background-color: transparent;
-    border:           none;
-    padding:          2px;
+	background-color:	transparent;
+	border:			none;
+	padding:		2px;
 }
+
 /* -----------------------------------------------------------------------------
 Пользовательская фотография
 ----------------------------------------------------------------------------- */
 img.UserFoto {
-	border: 1px solid #DCDCDC;
-	height: 110px;
+	border:			1px solid #DCDCDC;
+	height:			110px;
 }
+
 /* -----------------------------------------------------------------------------
 Формат обсуждений и сообщений
 ----------------------------------------------------------------------------- */
 /* цитата */
 div.QuoteText{
-    border:           1px solid #7799E6;
-    background-color: #E3EAFA;
-    padding:          2px 5px 2px 5px;
+	border:			1px solid #7799E6;
+	background-color:	#E3EAFA;
+	padding:		2px 5px 2px 5px;
 }
+
 /* скрытый текст */
 div.LockText {
-	border:           1px solid #FF0000;
-	background-color: #FFE4E1;
-	padding:          2px 5px 2px 5px;
+	border:			1px solid #FF0000;
+	background-color:	#FFE4E1;
+	padding:		2px 5px 2px 5px;
 }
+
 /* ------------------------- */
 #ClauseImage {
-    cursor:                pointer;
-    border:                5px solid #F9E47D;
-    -webkit-border-radius: 5px;
-    -moz-border-radius:    5px;
-    border-radius:         5px;
+	cursor:			pointer;
+	border:			5px solid #F9E47D;
+	-webkit-border-radius:	5px;
+	-moz-border-radius:	5px;
+	border-radius:		5px;
 }
 
 .WhoisInfo {
-    display: block;
-    background-color: whitesmoke;
-    border: 1px #DCDCDC solid;
-    font-weight: bold;
-    font-size: 14px;
-
-    border-right-width: 0px;
-    border-left-width: 0px;
+	display:		block;
+	background-color:	whitesmoke;
+	border:			1px #DCDCDC solid;
+	font-weight:		bold;
+	font-size:		14px;
+	border-right-width:	0px;
+	border-left-width:	0px;
 }
 
 .WhoisInfo ul {
-    display: block;
-    float: left;
-    
-    padding: 0px;
-    margin:  0px;
-
-    width: 100%;
+	display:		block;
+	float:			left;
+	padding:		0px;
+	margin:			0px;
+	width:			100%;
 }
 
 .WhoisInfo li {
-    float: left;
-
-    border-bottom-width: 1px;
-    border-bottom-color: #DCDCDC;
-    border-bottom-style: solid;
-
-    list-style: none;
-
-    height: 20px;
-    padding-left: 40px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin: 0px;
+	float:			left;
+	border-bottom-width:	1px;
+	border-bottom-color:	#DCDCDC;
+	border-bottom-style:	solid;
+	list-style:		none;
+	height:			20px;
+	padding-left:		40px;
+	padding-top:		10px;
+	padding-bottom:		10px;
+	margin:			0px;
 }
 
 pre.Whois {
-    display: block;
-    width: 100%;
-
-    background-color: #FFFFFF;
+	display:		block;
+	width:			100%;
+	background-color:	#FFFFFF;
 }
 
 /* added by lissyara, for JBS-11 */
 img.TicketSmall {
-	width:	200px;
-	cursor:	pointer;
+	width:			200px;
+	cursor:			pointer;
 }
+
 img.TicketOrig {
-	width:	auto;
-	cursor:	pointer;
+	width:			auto;
+	cursor:			pointer;
 }
 
 /* новый интерфейс оплаты */
 ul.pp-showcases{
-	list-style:	none;
-	margin:		0 0 -20px 20px;
-	padding:	0;
-	font-size:	12px;
-	overflow:	hidden;
+	list-style:		none;
+	margin:			0 0 -20px 20px;
+	padding:		0;
+	font-size:		12px;
+	overflow:		hidden;
 }
+
 ul.pp-showcases li{
 	float:			left;
 	width:			148px;

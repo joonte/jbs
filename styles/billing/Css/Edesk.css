@@ -1,8 +1,9 @@
 /*-------------------------------------------------------------------------------*/
 /*-------------------------------------------------------------------------------*/
 table.TableSuperData {
-    width: 100%;
+	width: 100%;
 }
+
 /*-------------------------------------------------------------------------------*/
 /*
 td.EdeskInfo {
@@ -30,6 +31,7 @@ td.EdeskTheme {
     padding:          5px;
 }
 */
+
 /*-------------------------------------------------------------------------------*/
 /*
 table.Edesk {
@@ -39,13 +41,15 @@ table.Edesk {
     border-bottom:    1px solid #DCDCDC;
 }
 */
+
 /*-------------------------------------------------------------------------------*/
 td.EdeskMessageInfo {
-    border:           1px solid #EAEAEA;
-    background-color: #F8F8F8;
-    background-image: url(../../root/Images/CaptionBg.png);
-    padding:          5px;
+	border:			1px solid #EAEAEA;
+	background-color:	#F8F8F8;
+	background-image:	url(../../root/Images/CaptionBg.png);
+	padding:		5px;
 }
+
 .EdeskMessageInfo {
 	border:			1px solid #EAEAEA;
 	background-color:	#F8F8F8;
@@ -54,6 +58,7 @@ td.EdeskMessageInfo {
 	padding:		5px;
 	width:			100%;
 }
+
 /*-------------------------------------------------------------------------------*/
 /*-------------------------------------------------------------------------------*/
 /* see http://forum.lissyara.su/viewtopic.php?f=17&t=37569 */
@@ -61,12 +66,14 @@ div.LeftDiv {
 	float:			left;
 	white-space:		normal;
 }
+
 /*-------------------------------------------------------------------------------*/
 div.RightDiv {
-    float:            right;
-    overflow:         hidden;
-    white-space:      normal;
+	float:			right;
+	overflow:		hidden;
+	white-space:		normal;
 }
+
 /*-------------------------------------------------------------------------------*/
 /*-------------------------------------------------------------------------------*/
 /*
@@ -81,29 +88,32 @@ td.EdeskMessageContent {
     padding:          5px;
 }
 */
+
 /*-------------------------------------------------------------------------------*/
 /*
 table.EdeskMessage {
     border-bottom:    1px solid #DCDCDC; *//* #707680; *//*
 }
 */
+
 .EdeskMessage {
-	border-bottom:	1px solid #DCDCDC; /* #707680; */
-	margin:		5px 5px 5px 5px;
-	height:		100%;
+	border-bottom:		1px solid #DCDCDC; /* #707680; */
+	margin:			5px 5px 5px 5px;
+	height:			100%;
 }
+
 /*-------------------------------------------------------------------------------*/
 td.Standard div.RightDiv {
-    float:	right;
-    text-align:	right;
+	float:			right;
+	text-align:		right;
 }
+
 /*-------------------------------------------------------------------------------*/
 td.Standard div.LeftDiv {
-    float:            left;
+	float:			left;
 }
+
 /*-------------------------------------------------------------------------------*/
-
-
 .PostProfile {
 /*	margin:			5px 0 10px 0;*/
 	min-height:		140px;
@@ -129,10 +139,9 @@ td.Standard div.LeftDiv {
 	width:			78%;
 /*	float:			left;*/
 	position:		relative;
-	background-color: #FFFFFF;
-	border:           1px solid #DCDCDC;
-	padding:          5px;
-
+	background-color:	#FFFFFF;
+	border:			1px solid #DCDCDC;
+	padding:		5px;
 }
 
 
