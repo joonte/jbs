@@ -197,7 +197,7 @@ function ShowWindow($Url,$Args){
 					style.height = '';
 					//------------------------------------------------------------------------------
 					if(document.body.clientWidth > 1600){
-						$wMax = document.body.clientWidth - 300;
+						$wMax = 1200;
 						$hMax = document.body.clientHeight - 100;
 					}else if(document.body.clientWidth > 1200){
 						$wMax = document.body.clientWidth - 200;

@@ -65,10 +65,6 @@
 				<ListElement>Оплатить заказ</ListElement>
 				<ListElement>Pay.gif</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</Pay>
 		<!-- ********************************************************************** -->
 		<NsChange>
@@ -82,10 +78,6 @@
 				<ListElement>Сменить серверы имен</ListElement>
 				<ListElement>SchemeChange.png</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</NsChange>
 		<!-- ********************************************************************** -->
 		<DomainSelectOwner>
@@ -99,10 +91,6 @@
 				<ListElement>Определить владельца домена</ListElement>
 				<ListElement>DomainSelectOwner.gif</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</DomainSelectOwner>
 		<!-- ********************************************************************** -->
 		<ExtendedMenu>
