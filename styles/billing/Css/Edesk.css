@@ -142,6 +142,7 @@ td.Standard div.LeftDiv {
 	background-color:	#FFFFFF;
 	border:			1px solid #DCDCDC;
 	padding:		5px;
+	overflow:		hidden;
 }
 
 

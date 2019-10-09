@@ -50,10 +50,6 @@
 				</ListElement>
 				<ListElement>Дополнительная информация</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</Info>
 		<!-- ********************************************************************** -->
 		<Pay>
@@ -67,10 +63,6 @@
 				<ListElement>Оплатить заказ</ListElement>
 				<ListElement>Pay.gif</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</Pay>
 		<!-- ********************************************************************** -->
 		<ExtendedMenu>
@@ -94,7 +86,7 @@
 		<ListElement>Pay</ListElement>
 		<ListElement>ExtendedMenu</ListElement>
 		<ListElement>Number</ListElement>
-		<ListElement>Login</ListElement>
+		<ListElement>IP</ListElement>
 		<ListElement>Scheme</ListElement>
 		<ListElement>Expiration</ListElement>
 		<ListElement>Status</ListElement>

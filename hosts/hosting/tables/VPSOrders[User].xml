@@ -50,10 +50,6 @@
 				</ListElement>
 				<ListElement>Дополнительная информация</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</Info>
 		<!-- ********************************************************************** -->
 		<Pay>
@@ -67,10 +63,6 @@
 				<ListElement>Оплатить заказ</ListElement>
 				<ListElement>Pay.gif</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</Pay>
 		<!-- ********************************************************************** -->
 		<SchemeChange>
@@ -84,10 +76,6 @@
 				<ListElement>Сменить тарифный план</ListElement>
 				<ListElement>SchemeChange.png</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</SchemeChange>
 		<!-- ********************************************************************** -->
 		<Manage>
@@ -101,10 +89,6 @@
 				<ListElement>HostingManage.gif</ListElement>
 				<ListElement>OrderManage.js</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</Manage>
 		<!-- ********************************************************************** -->
 		<PasswordChange>
@@ -119,10 +103,6 @@
 				<ListElement>Сменить пароль</ListElement>
 				<ListElement>Password.gif</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</PasswordChange>
 		<!-- ********************************************************************** -->
 		<Reboot>
@@ -136,10 +116,6 @@
 				<ListElement>Перезагрузить виртуальный сервер</ListElement>
 				<ListElement>VPSReboot.png</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</Reboot>
 		<!-- ********************************************************************** -->
 		<ExtendedMenu>

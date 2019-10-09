@@ -56,10 +56,6 @@
 				<ListElement>Редактировать группу ПО</ListElement>
 				<ListElement>Edit.gif</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</Edit>
 		<!-- ********************************************************************** -->
 		<!-- ********************************************************************** -->
@@ -76,9 +72,6 @@
 			<Args>
 				<TableID>ISPswGroups</TableID>
 			</Args>
-			<Attribs>
-				<style>width:22px;</style>
-			</Attribs>
 		</SortID>
 		<!-- ********************************************************************** -->
 		<Comment>

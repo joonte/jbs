@@ -50,10 +50,6 @@
 				</ListElement>
 				<ListElement>Дополнительная информация</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</Info>
 		<!-- ********************************************************************** -->
 		<Pay>
@@ -67,10 +63,6 @@
 				<ListElement>Оплатить заказ</ListElement>
 				<ListElement>Pay.gif</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</Pay>
 		<!-- ********************************************************************** -->
 		<SchemeChange>
@@ -84,10 +76,6 @@
 				<ListElement>Сменить тарифный план</ListElement>
 				<ListElement>SchemeChange.png</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</SchemeChange>
 		<!-- ********************************************************************** -->
 		<ExtendedMenu>
@@ -113,10 +101,7 @@
 				<ListElement>Сменить IP адрес лицензии</ListElement>
 				<ListElement>Password.gif</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
+			<LongName>Сменить IP адрес</LongName>
 		</IPChange>
 		<!-- *********************************************************************** -->
 		<Manage>
@@ -130,10 +115,6 @@
 				<ListElement>HostingManage.gif</ListElement>
 				<ListElement>OrderManage.js</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</Manage>
 		<!-- *********************************************************************** -->
 	</Columns>

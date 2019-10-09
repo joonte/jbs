@@ -84,10 +84,6 @@
 				</ListElement>
 				<ListElement>Дополнительная информация</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</Info>
 		<!-- ********************************************************************** -->
 		<Edit>
@@ -101,10 +97,6 @@
 				<ListElement>Редактировать тариф</ListElement>
 				<ListElement>Edit.gif</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</Edit>
 		<!-- ********************************************************************** -->
 		<Name>
@@ -193,9 +185,6 @@
 			<Args>
 				<TableID>ISPswSchemes</TableID>
 			</Args>
-			<Attribs>
-				<style>width:22px;</style>
-			</Attribs>
 		</SortID>
 	</Columns>
 	<!-- *********************************************************************** -->

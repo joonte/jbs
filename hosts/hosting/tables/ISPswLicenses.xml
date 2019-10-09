@@ -132,10 +132,6 @@
 				<ListElement>Редактировать лицензию ISPsystem</ListElement>
 				<ListElement>Edit.gif</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</Edit>
 		<!-- ********************************************************************** -->
 		<ExtendedMenu>
@@ -150,6 +146,7 @@
 		<elid>
 			<Head>elid</Head>
 			<Prompt>Уникальный идентификатор лицензии, по биллингу ISPsystem</Prompt>
+			<LongName>Идентификатор</LongName>
 		</elid>
 		<!-- ********************************************************************** -->
 		<IP>
@@ -165,6 +162,7 @@
 				<Length>15</Length>
 			</Args>
 			<Alias>ISPname</Alias>
+			<LongName>Имя лицензии</LongName>
 		</ISPname>
 		<!-- ********************************************************************** -->
 		<Status>
@@ -176,6 +174,7 @@
 		<Flag>
 			<Head>Флаг</Head>
 			<Prompt>Флаг установленный на лицензию</Prompt>
+			<LongName>Флаг</LongName>
 		</Flag>
 		<!-- ********************************************************************** -->
 		<IsInternal>
@@ -188,6 +187,7 @@
 				<ListElement>%ID%</ListElement>
 				<ListElement>%IsInternal%</ListElement>
 			</Args>
+			<LongName>Внутренняя лицензия</LongName>
 		</IsInternal>
 		<!-- ********************************************************************** -->
 		<IsUsed>
@@ -200,6 +200,7 @@
 				<ListElement>%ID%</ListElement>
 				<ListElement>%IsUsed%</ListElement>
 			</Args>
+			<LongName>Лицензия используется</LongName>
 		</IsUsed>
 		<!-- ********************************************************************** -->
 		<pricelist_id>
@@ -210,6 +211,7 @@
 				<ListElement>1</ListElement>
 				<ListElement>%pricelist_id%</ListElement>
 			</Args>
+			<LongName>Идентфикатор тарифа</LongName>
 		</pricelist_id>
 		<!-- *********************************************************************** -->
 		<period>
@@ -221,11 +223,13 @@
 				<ListElement>%pricelist_id%</ListElement>
 				<ListElement>%period%</ListElement>
 			</Args>
+			<LongName>Период</LongName>
 		</period>
 		<!-- *********************************************************************** -->
 		<addon>
 			<Head>Узл.</Head>
 			<Prompt>Количество узлов кластера</Prompt>
+			<LongName>Узлов кластера</LongName>
 		</addon>
 		<!-- *********************************************************************** -->
 	</Columns>

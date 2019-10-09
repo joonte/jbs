@@ -94,10 +94,6 @@
 				</ListElement>
 				<ListElement>Дополнительная информация</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</Info>
 		<!-- ********************************************************************** -->
 		<Edit>
@@ -111,10 +107,6 @@
 				<ListElement>Редактировать тариф</ListElement>
 				<ListElement>Edit.gif</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</Edit>
 		<!-- ********************************************************************** -->
 		<!--	<Name>
@@ -171,9 +163,6 @@
 			<Args>
 				<ListElement>%CostMonth%</ListElement>
 			</Args>
-			<Attribs>
-				<style>text-align:center;</style>
-			</Attribs>
 		</CostMonth>
 		<!-- ********************************************************************** -->
 		<Discount>
@@ -216,6 +205,7 @@
 				<ListElement>%raid%</ListElement>
 				<Length>7</Length>
 			</Args>
+			<LongName>RAID</LongName>
 		</raid>
 		<!-- ********************************************************************** -->
 		<disks>
@@ -226,17 +216,13 @@
 				<ListElement>%disks%</ListElement>
 				<Length>8</Length>
 			</Args>
-			<Attribs>
-				<style>text-align:right;</style>
-			</Attribs>
+			<LongName>Диски</LongName>
 		</disks>
 		<!-- ********************************************************************** -->
 		<ram>
 			<Head>RAM</Head>
 			<Prompt>Оперативная памяти, Gb</Prompt>
-			<Attribs>
-				<style>text-align:center;</style>
-			</Attribs>
+			<LongName>Оперативная память</LongName>
 		</ram>
 		<!-- ********************************************************************** -->
 		<CPU>
@@ -247,9 +233,7 @@
 				<ListElement>%CPU%</ListElement>
 				<Length>10</Length>
 			</Args>
-			<Attribs>
-				<style>text-align:left;</style>
-			</Attribs>
+			<LongName>Процессор</LongName>
 		</CPU>
 		<!-- ********************************************************************** -->
 		<IsActive>

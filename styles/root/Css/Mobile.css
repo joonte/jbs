@@ -59,6 +59,10 @@ table {
 #EdeskGroupFilters	{ display: none; }
 /* прячем установку статуса внизу супертаблицы */
 #AfterSuperTableSetStatus { display: none; }
+/* прячем слово шаблон вверху у фильтра таблицы */
+#BeforeSuperTablePattern { display: none; }
+/* прячем селектор с какой по какую дату */
+#TableSuperDateSelect	{ display: none; }
 /* прячем админские кнопки в тикетнице */
 #EdeskAdminButton	{ display: none; }
 /* кнопки следующего/предыдущего запросов */

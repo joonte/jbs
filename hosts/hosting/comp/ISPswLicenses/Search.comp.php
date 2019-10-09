@@ -19,7 +19,7 @@ $Template = &$Links[$LinkID];
 /******************************************************************************/
 $Tr = new Tag('TR');
 #-------------------------------------------------------------------------------
-$ISPswSchemes = DB_Select('ISPswSchemes',Array('ID','Name','CostMonth',Array('SortOn'=>'Name'));
+$ISPswSchemes = DB_Select('ISPswSchemes',Array('ID','Name','CostMonth'),Array('SortOn'=>'Name'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($ISPswSchemes)){
   case 'error':

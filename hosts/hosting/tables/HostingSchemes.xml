@@ -89,7 +89,6 @@
 				</ListElement>
 				<ListElement>Дополнительная информация</ListElement>
 			</Args>
-			<LongName>Информация о тарифе</LongName>
 		</Info>
 		<!-- ********************************************************************** -->
 		<Edit>
@@ -103,7 +102,6 @@
 				<ListElement>Редактировать тариф</ListElement>
 				<ListElement>Edit.gif</ListElement>
 			</Args>
-			<LongName>Редактировать тариф</LongName>
 		</Edit>
 		<!-- ********************************************************************** -->
 		<Name>
@@ -114,7 +112,6 @@
 				<Length>10</Length>
 			</Args>
 			<Alias>CONCAT(IF(`IsReselling` = 'yes','*',''),`Name`)</Alias>
-			<LongName>Наименование тарифа</LongName>
 		</Name>
 		<!-- ********************************************************************** -->
 		<Group>
@@ -125,7 +122,6 @@
 				<Length>15</Length>
 			</Args>
 			<Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `GroupID`)</Alias>
-			<LongName>Группа с правами</LongName>
 		</Group>
 		<!-- ********************************************************************** -->
 		<User>
@@ -136,7 +132,6 @@
 				<Length>15</Length>
 			</Args>
 			<Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `UserID`)</Alias>
-			<LongName>Пользователь с правами</LongName>
 		</User>
 		<!-- ********************************************************************** -->
 		<CostMonth>
@@ -179,19 +174,16 @@
 				<SchemeID>%ID%</SchemeID>
 				<Code>Hosting</Code>
 			</Args>
-			<LongName>Ссылка на заказ</LongName>
 		</OrderLink>
 		<!-- ********************************************************************** -->
 		<QuotaDisk>
 			<Head>Место</Head>
 			<Prompt>Объем выделяемого пространства в мегабайтах</Prompt>
-			<LongName>Дисковая квота</LongName>
 		</QuotaDisk>
 		<!-- ********************************************************************** -->
 		<QuotaDomains>
 			<Head>Дом.</Head>
 			<Prompt>Кол-во дополнительных доменов</Prompt>
-			<LongName>Число доменных имён</LongName>
 		</QuotaDomains>
 		<!-- ********************************************************************** -->
 		<QuotaEmail>
@@ -228,7 +220,6 @@
 				<ListElement>%ID%</ListElement>
 				<ListElement>%IsActive%</ListElement>
 			</Args>
-			<LongName>Тариф активен</LongName>
 		</IsActive>
 		<!-- ********************************************************************** -->
 		<Orders>
@@ -238,14 +229,12 @@
 			<Attribs>
 				<style>text-align:right;</style>
 			</Attribs>
-			<LongName>Число активных заказов</LongName>
 		</Orders>
 		<!-- *********************************************************************** -->
 		<SortID>
 			<Args>
 				<TableID>HostingSchemes</TableID>
 			</Args>
-			<LongName>Порядок сортировки</LongName>
 		</SortID>
 	</Columns>
 	<!-- *********************************************************************** -->

@@ -105,10 +105,6 @@
 				</ListElement>
 				<ListElement>Дополнительная информация</ListElement>
 			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
 		</Info>
 		<!-- ********************************************************************** -->
 		<Edit>
@@ -159,6 +155,7 @@
 			<Args>
 				<ListElement>%CostOrder%</ListElement>
 			</Args>
+			<LongName>Цена заказа</LongName>
 		</CostOrder>
 		<!-- ********************************************************************** -->
 		<CostProlong>
@@ -168,6 +165,7 @@
 			<Args>
 				<ListElement>%CostProlong%</ListElement>
 			</Args>
+			<LongName>Цена продления</LongName>
 		</CostProlong>
 		<!-- ********************************************************************** -->
 		<CostTransfer>
@@ -177,6 +175,7 @@
 			<Args>
 				<ListElement>%CostTransfer%</ListElement>
 			</Args>
+			<LongName>Цена преноса</LongName>
 		</CostTransfer>
 		<!-- ********************************************************************** -->
 		<Registrator>
@@ -187,6 +186,7 @@
 				<Key>Name</Key>
 			</Args>
 			<Alias>(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`)</Alias>
+			<LongName>Регистратор</LongName>
 		</Registrator>
 		<!-- ********************************************************************** -->
 		<IsActive>

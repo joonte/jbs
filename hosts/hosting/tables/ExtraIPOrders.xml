@@ -16,7 +16,6 @@
 		<ColumnsIDs>
 			<ListElement>ID</ListElement>
 			<ListElement>OrderID</ListElement>
-			<ListElement>Login</ListElement>
 			<ListElement>UserID</ListElement>
 			<ListElement>DaysRemainded</ListElement>
 			<ListElement>StatusID</ListElement>
@@ -198,10 +197,11 @@
 			<Alias>DaysRemainded</Alias>
 		</Expiration>
 		<!-- ********************************************************************** -->
-		<Login>
+		<IP>
 			<Head>IP</Head>
 			<Prompt>Выданный IP адрес</Prompt>
-		</Login>
+			<Alias>Login</Alias>
+		</IP>
 		<!-- ********************************************************************** -->
 		<!-- ********************************************************************** -->
 		<Status>
