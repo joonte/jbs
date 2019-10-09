@@ -119,7 +119,7 @@ switch(ValueOf($Servers)){
 if(!Count($Tr->Childs))
   return FALSE;
 #-------------------------------------------------------------------------------
-return new Tag('TABLE',Array('class'=>'Standard','cellspacing'=>5),$Tr);
+return new Tag('TABLE',Array('class'=>'Standard','cellspacing'=>5,'id'=>'TableSuperOrderFilter'),$Tr);
 #-------------------------------------------------------------------------------
 
 ?>

@@ -1,193 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Appearance>
- <Row>
-  <Comp>Colors/Postings</Comp>
-  <Args>
-   <ListElement>%Summ%</ListElement>
-  </Args>
- </Row>
-</Appearance>
-<!-- *********************************************************************** -->
-<Source>
- <TableID>PostingsOwners</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>UserID</ListElement>
-  <ListElement>ContractID</ListElement>
-  <ListElement>CreateDate</ListElement>
-  <ListElement>Before</ListElement>
-  <ListElement>After</ListElement>
-  <ListElement>(`After` - `Before`) AS `Summ`</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Message>Операции не найдены.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <PatternOut>
-   <Args>
-    <Patterns>
-     <Yesterday>
-      <Name>Операции за вчера</Name>
-      <Where>`CreateDate` &gt; BEGIN_DAY() - 86400</Where>
-     </Yesterday>
-     <!-- ****************************************************************** -->
-     <Today>
-      <Name>Операции за сегодня</Name>
-      <Where>`CreateDate` &gt; BEGIN_DAY()</Where>
-     </Today>
-     <!-- ****************************************************************** -->
-     <Week>
-      <Name>Операции за текущую неделю</Name>
-      <Where>`CreateDate` &gt; BEGIN_WEEK()</Where>
-     </Week>
-     <!-- ****************************************************************** -->
-     <Month>
-      <Name>Операции за текущий месяц</Name>
-      <Where>`CreateDate` &gt; BEGIN_MONTH()</Where>
-     </Month>
-    </Patterns>
-    <ActiveID>Week</ActiveID>
-   </Args>
-  </PatternOut>
-  <!-- ********************************************************************* -->
-  <Search>
-   <Args>
-    <ColumnsIDs>
-     <ListElement>ID</ListElement>
-     <ListElement>UserID</ListElement>
-     <ListElement>(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `ServiceID`)</ListElement>
-     <ListElement>Comment</ListElement>
-    </ColumnsIDs>
-   </Args>
-  </Search>
- </Before>
- <!-- ********************************************************************** -->
- <After>
-  <Delete>
-   <Args>
-    <Comment>Выбранные операции</Comment>
-    <Send>
-     <TableID>Postings</TableID>
-    </Send>
-   </Args>
-  </Delete>
- </After>
-</Comps>
-<!-- *********************************************************************** -->
-<Query>
- <SortOn>Number</SortOn>
-</Query>
-<!-- *********************************************************************** -->
-<Columns>
- <SelectID>
-  <Args>
-   <TableID>Postings</TableID>
-  </Args>
- </SelectID>
- <!-- ********************************************************************** -->
- <ContractID>
-  <Head>Договор</Head>
-  <Comp>Formats/Contract/Number</Comp>
-  <Args>
-   <ListElement>%ContractID%</ListElement>
-  </Args>
- </ContractID>
- <!-- ********************************************************************** -->
- <CreateDate>
-  <Head>Дата</Head>
-  <Comp>Formats/Date/Extended</Comp>
-  <Args>
-   <ListElement>%CreateDate%</ListElement>
-  </Args>
- </CreateDate>
- <!-- ********************************************************************** -->
- <Number>
-  <Head>Номер</Head>
-  <Comp>Formats/Contract/Posting/Number</Comp>
-  <Args>
-   <ListElement>%ID%</ListElement>
-  </Args>
-  <Alias>`ID`</Alias>
-  <Attribs>
-   <style>text-align:center;</style>
-  </Attribs>
- </Number>
- <!-- ********************************************************************** -->
- <Service>
-  <Head>Тип операции</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Service%</ListElement>
-   <Length>20</Length>
-  </Args>
-  <Alias>(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `ServiceID`)</Alias>
- </Service>
- <!-- ********************************************************************** -->
- <Comment>
-  <Head>Комментарий</Head>
-  <IsSorted>0</IsSorted>
-  <Alias>IF(LENGTH(`Comment`) &gt; 0,`Comment`,'-')</Alias>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Comment%</ListElement>
-   <Length>25</Length>
-  </Args>
- </Comment>
- <!-- ********************************************************************** -->
- <Summ>
-  <Head>Сумма</Head>
-  <Comp>Formats/Float</Comp>
-  <Args>
-   <ListElement>%Summ%</ListElement>
-   <ListElement>2</ListElement>
-  </Args>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
- </Summ>
- <!-- ********************************************************************** -->
- <Before>
-  <Head>До</Head>
-  <Comp>Formats/Float</Comp>
-  <Args>
-   <ListElement>%Before%</ListElement>
-   <ListElement>2</ListElement>
-  </Args>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
- </Before>
- <!-- ********************************************************************** -->
- <After>
-  <Head>После</Head>
-  <Comp>Formats/Float</Comp>
-  <Args>
-   <ListElement>%After%</ListElement>
-   <ListElement>2</ListElement>
-  </Args>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
- </After>
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>Number</ListElement>
- <ListElement>CreateDate</ListElement>
- <ListElement>Owner</ListElement>
- <ListElement>ContractID</ListElement>
- <ListElement>Service</ListElement>
- <ListElement>Comment</ListElement>
- <ListElement>Summ</ListElement>
- <ListElement>Before</ListElement>
- <ListElement>After</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Appearance>
+		<Row>
+			<Comp>Colors/Postings</Comp>
+			<Args>
+				<ListElement>%Summ%</ListElement>
+			</Args>
+		</Row>
+	</Appearance>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>PostingsOwners</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>UserID</ListElement>
+			<ListElement>ContractID</ListElement>
+			<ListElement>CreateDate</ListElement>
+			<ListElement>Before</ListElement>
+			<ListElement>After</ListElement>
+			<ListElement>(`After` - `Before`) AS `Summ`</ListElement>
+		</ColumnsIDs>
+		<Conditions>
+			<Message>Операции не найдены.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<PatternOut>
+				<Args>
+					<Patterns>
+						<Yesterday>
+							<Name>Операции за вчера</Name>
+							<Where>`CreateDate` &gt; BEGIN_DAY() - 86400</Where>
+						</Yesterday>
+						<!-- ****************************************************************** -->
+						<Today>
+							<Name>Операции за сегодня</Name>
+							<Where>`CreateDate` &gt; BEGIN_DAY()</Where>
+						</Today>
+						<!-- ****************************************************************** -->
+						<Week>
+							<Name>Операции за текущую неделю</Name>
+							<Where>`CreateDate` &gt; BEGIN_WEEK()</Where>
+						</Week>
+						<!-- ****************************************************************** -->
+						<Month>
+							<Name>Операции за текущий месяц</Name>
+							<Where>`CreateDate` &gt; BEGIN_MONTH()</Where>
+						</Month>
+					</Patterns>
+					<ActiveID>Week</ActiveID>
+				</Args>
+			</PatternOut>
+			<!-- ********************************************************************* -->
+			<Search>
+				<Args>
+					<ColumnsIDs>
+						<ListElement>ID</ListElement>
+						<ListElement>UserID</ListElement>
+						<ListElement>(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `ServiceID`)</ListElement>
+						<ListElement>Comment</ListElement>
+					</ColumnsIDs>
+				</Args>
+			</Search>
+		</Before>
+		<!-- ********************************************************************** -->
+		<After>
+			<Delete>
+				<Args>
+					<Comment>Выбранные операции</Comment>
+					<Send>
+						<TableID>Postings</TableID>
+					</Send>
+				</Args>
+			</Delete>
+		</After>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Query>
+		<SortOn>Number</SortOn>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<SelectID>
+			<Args>
+				<TableID>Postings</TableID>
+			</Args>
+		</SelectID>
+		<!-- ********************************************************************** -->
+		<ContractID>
+			<Head>Договор</Head>
+			<Comp>Formats/Contract/Number</Comp>
+			<Args>
+				<ListElement>%ContractID%</ListElement>
+			</Args>
+			<LongName>Договор</LongName>
+		</ContractID>
+		<!-- ********************************************************************** -->
+		<CreateDate>
+			<Head>Дата</Head>
+			<Comp>Formats/Date/Extended</Comp>
+			<Args>
+				<ListElement>%CreateDate%</ListElement>
+			</Args>
+		</CreateDate>
+		<!-- ********************************************************************** -->
+		<Number>
+			<Head>Номер</Head>
+			<Comp>Formats/Contract/Posting/Number</Comp>
+			<Args>
+				<ListElement>%ID%</ListElement>
+			</Args>
+			<Alias>`ID`</Alias>
+		</Number>
+		<!-- ********************************************************************** -->
+		<Service>
+			<Head>Тип операции</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Service%</ListElement>
+				<Length>20</Length>
+			</Args>
+			<Alias>(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `ServiceID`)</Alias>
+		</Service>
+		<!-- ********************************************************************** -->
+		<Comment>
+			<Head>Комментарий</Head>
+			<IsSorted>0</IsSorted>
+			<Alias>IF(LENGTH(`Comment`) &gt; 0,`Comment`,'-')</Alias>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Comment%</ListElement>
+				<Length>25</Length>
+			</Args>
+		</Comment>
+		<!-- ********************************************************************** -->
+		<Summ>
+			<Head>Сумма</Head>
+			<Comp>Formats/Float</Comp>
+			<Args>
+				<ListElement>%Summ%</ListElement>
+				<ListElement>2</ListElement>
+			</Args>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</Summ>
+		<!-- ********************************************************************** -->
+		<Before>
+			<Head>До</Head>
+			<Comp>Formats/Float</Comp>
+			<Args>
+				<ListElement>%Before%</ListElement>
+				<ListElement>2</ListElement>
+			</Args>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</Before>
+		<!-- ********************************************************************** -->
+		<After>
+			<Head>После</Head>
+			<Comp>Formats/Float</Comp>
+			<Args>
+				<ListElement>%After%</ListElement>
+				<ListElement>2</ListElement>
+			</Args>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</After>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Number</ListElement>
+		<ListElement>CreateDate</ListElement>
+		<ListElement>Owner</ListElement>
+		<ListElement>ContractID</ListElement>
+		<ListElement>Service</ListElement>
+		<ListElement>Comment</ListElement>
+		<ListElement>Summ</ListElement>
+		<ListElement>Before</ListElement>
+		<ListElement>After</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

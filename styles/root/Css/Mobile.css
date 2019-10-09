@@ -63,6 +63,8 @@ table {
 #BeforeSuperTablePattern { display: none; }
 /* прячем селектор с какой по какую дату */
 #TableSuperDateSelect	{ display: none; }
+/* фильтр по серверу размещения и тарифу */
+#TableSuperOrderFilter	{ display: none; }
 /* прячем админские кнопки в тикетнице */
 #EdeskAdminButton	{ display: none; }
 /* кнопки следующего/предыдущего запросов */

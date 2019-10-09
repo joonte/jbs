@@ -1,197 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Appearance>
- <Row>
-  <Comp>Colors/Tasks</Comp>
-  <Args>
-   <ListElement>%Errors%</ListElement>
-   <ListElement>%IsExecuted%</ListElement>
-   <ListElement>%IsActive%</ListElement>
-  </Args>
- </Row>
-</Appearance>
-<!-- *********************************************************************** -->
-<Source>
- <TableID>Tasks</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>CreateDate</ListElement>
-  <ListElement>UserID</ListElement>
-  <ListElement>ExecuteDate</ListElement>
-  <ListElement>TypeID</ListElement>
-  <ListElement>Errors</ListElement>
-  <ListElement>IsExecuted</ListElement>
-  <ListElement>IsActive</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Message>Задач не обнаружено.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <PatternOut>
-   <Args>
-    <Patterns>
-     <Manual>
-      <Name>Все ошибочные задания</Name>
-      <Where>(`IsActive` = 'no' OR `Errors` &gt; 0) AND `IsExecuted` = 'no'</Where>
-     </Manual>
-     <!-- ****************************************************************** -->
-     <InJob>
-      <Name>Все текущие задания</Name>
-      <Where>`IsExecuted` = 'no'</Where>
-     </InJob>
-     <!-- ****************************************************************** -->
-     <InJobNotSystem>
-      <Name>Все текущие, не системные</Name>
-      <Where>`IsExecuted` = 'no' AND `UserID` &gt; 99</Where>
-     </InJobNotSystem>
-     <!-- ****************************************************************** -->
-     <Executed>
-      <Name>Все выполненные задания</Name>
-      <Where>`IsExecuted` = 'yes'</Where>
-     </Executed>
-     <!-- ****************************************************************** -->
-     <System>
-      <Name>Все системные задания</Name>
-      <Where>`UserID` = 1</Where>
-     </System>
-    </Patterns>
-    <ActiveID>Manual</ActiveID>
-   </Args>
-  </PatternOut>
-  <!-- ********************************************************************* -->
-  <Search>
-   <Args>
-    <ColumnsIDs>
-     <ListElement>ID</ListElement>
-     <ListElement>UserID</ListElement>
-     <ListElement>TypeID</ListElement>
-     <ListElement>Params</ListElement>
-    </ColumnsIDs>
-   </Args>
-  </Search>
- </Before>
- <!-- ********************************************************************** -->
- <!-- ********************************************************************* -->
- <After>
-  <Executed>
-   <Comp>Tasks/Executed</Comp>
-   <Args type="array" />
-  </Executed>
-  <!-- ********************************************************************* -->
-  <Activate>
-   <Comp>Tasks/Activated</Comp>
-   <Args type="array" />
-  </Activate>
-  <!-- ********************************************************************* -->
-  <Delete>
-   <Args>
-    <Comment>Выбранные задачи</Comment>
-    <Send>
-     <TableID>Tasks</TableID>
-    </Send>
-   </Args>
-  </Delete>
- </After>
-</Comps>
-<!-- *********************************************************************** -->
-<!-- ********************************************************************* -->
-<Query>
- <SortOn>Number</SortOn>
-</Query>
-<!-- *********************************************************************** -->
-<Columns>
- <SelectID>
-  <Args>
-   <TableID>Tasks</TableID>
-  </Args>
- </SelectID>
- <!-- ********************************************************************** -->
- <ExtendedMenu>
-  <IsSorted>0</IsSorted>
-  <Comp>Menus/List</Comp>
-  <Args>
-   <ListElement>Administrator/ListMenu/Tasks.xml</ListElement>
-   <Replace>%ID%</Replace>
-  </Args>
- </ExtendedMenu>
- <!-- ********************************************************************** -->
- <Number>
-  <Head>Номер</Head>
-  <Comp>Formats/Task/Number</Comp>
-  <Args>
-   <ListElement>%ID%</ListElement>
-  </Args>
-  <Alias>ID</Alias>
-  <Attribs>
-   <style>text-align:center;</style>
-  </Attribs>
- </Number>
- <!-- ********************************************************************** -->
- <CreateDate>
-  <Head>Дата созд.</Head>
-  <Comp>Formats/Date/Extended</Comp>
-  <Args>
-   <ListElement>%CreateDate%</ListElement>
-  </Args>
- </CreateDate>
- <!-- ********************************************************************** -->
- <ExecuteDate>
-  <Head>Дата выпол.</Head>
-  <Comp>Formats/Date/Extended</Comp>
-  <Args>
-   <ListElement>%ExecuteDate%</ListElement>
-  </Args>
- </ExecuteDate>
- <!-- ********************************************************************** -->
- <Type>
-  <Head>Тип задачи</Head>
-  <Comp>Formats/Task/Type</Comp>
-  <Args>
-   <ListElement>%Type%</ListElement>
-   <ListElement>35</ListElement>
-  </Args>
-  <Alias>TypeID</Alias>
- </Type>
- <!-- ********************************************************************** -->
- <Errors>
-  <Head>Ошибок</Head>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
- </Errors>
- <!-- ********************************************************************** -->
- <IsExecuted>
-  <Head>Вып.</Head>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsExecuted%</ListElement>
-  </Args>
- </IsExecuted>
- <!-- ********************************************************************** -->
- <IsActive>
-  <Head>Акт.</Head>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsActive%</ListElement>
-  </Args>
- </IsActive>
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>ExtendedMenu</ListElement>
- <ListElement>Number</ListElement>
- <ListElement>Owner</ListElement>
- <ListElement>ExecuteDate</ListElement>
- <ListElement>Type</ListElement>
- <ListElement>Errors</ListElement>
- <ListElement>IsExecuted</ListElement>
- <ListElement>IsActive</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Appearance>
+		<Row>
+			<Comp>Colors/Tasks</Comp>
+			<Args>
+				<ListElement>%Errors%</ListElement>
+				<ListElement>%IsExecuted%</ListElement>
+				<ListElement>%IsActive%</ListElement>
+			</Args>
+		</Row>
+	</Appearance>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>Tasks</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>CreateDate</ListElement>
+			<ListElement>UserID</ListElement>
+			<ListElement>ExecuteDate</ListElement>
+			<ListElement>TypeID</ListElement>
+			<ListElement>Errors</ListElement>
+			<ListElement>IsExecuted</ListElement>
+			<ListElement>IsActive</ListElement>
+		</ColumnsIDs>
+		<Conditions>
+			<Message>Задач не обнаружено.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<PatternOut>
+				<Args>
+					<Patterns>
+						<Manual>
+							<Name>Все ошибочные задания</Name>
+							<Where>(`IsActive` = 'no' OR `Errors` &gt; 0) AND `IsExecuted` = 'no'</Where>
+						</Manual>
+						<!-- ****************************************************************** -->
+						<InJob>
+							<Name>Все текущие задания</Name>
+							<Where>`IsExecuted` = 'no'</Where>
+						</InJob>
+						<!-- ****************************************************************** -->
+						<InJobNotSystem>
+							<Name>Все текущие, не системные</Name>
+							<Where>`IsExecuted` = 'no' AND `UserID` &gt; 99</Where>
+						</InJobNotSystem>
+						<!-- ****************************************************************** -->
+						<Executed>
+							<Name>Все выполненные задания</Name>
+							<Where>`IsExecuted` = 'yes'</Where>
+						</Executed>
+						<!-- ****************************************************************** -->
+						<System>
+							<Name>Все системные задания</Name>
+							<Where>`UserID` = 1</Where>
+						</System>
+					</Patterns>
+					<ActiveID>Manual</ActiveID>
+				</Args>
+			</PatternOut>
+			<!-- ********************************************************************* -->
+			<Search>
+				<Args>
+					<ColumnsIDs>
+						<ListElement>ID</ListElement>
+						<ListElement>UserID</ListElement>
+						<ListElement>TypeID</ListElement>
+						<ListElement>Params</ListElement>
+					</ColumnsIDs>
+				</Args>
+			</Search>
+		</Before>
+		<!-- ********************************************************************** -->
+		<!-- ********************************************************************* -->
+		<After>
+			<Executed>
+				<Comp>Tasks/Executed</Comp>
+				<Args type="array"/>
+			</Executed>
+			<!-- ********************************************************************* -->
+			<Activate>
+				<Comp>Tasks/Activated</Comp>
+				<Args type="array"/>
+			</Activate>
+			<!-- ********************************************************************* -->
+			<Delete>
+				<Args>
+					<Comment>Выбранные задачи</Comment>
+					<Send>
+						<TableID>Tasks</TableID>
+					</Send>
+				</Args>
+			</Delete>
+		</After>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<!-- ********************************************************************* -->
+	<Query>
+		<SortOn>Number</SortOn>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<SelectID>
+			<Args>
+				<TableID>Tasks</TableID>
+			</Args>
+		</SelectID>
+		<!-- ********************************************************************** -->
+		<ExtendedMenu>
+			<IsSorted>0</IsSorted>
+			<Comp>Menus/List</Comp>
+			<Args>
+				<ListElement>Administrator/ListMenu/Tasks.xml</ListElement>
+				<Replace>%ID%</Replace>
+			</Args>
+		</ExtendedMenu>
+		<!-- ********************************************************************** -->
+		<Number>
+			<Head>Номер</Head>
+			<Comp>Formats/Task/Number</Comp>
+			<Args>
+				<ListElement>%ID%</ListElement>
+			</Args>
+			<Alias>ID</Alias>
+		</Number>
+		<!-- ********************************************************************** -->
+		<CreateDate>
+			<Head>Дата созд.</Head>
+			<Comp>Formats/Date/Extended</Comp>
+			<Args>
+				<ListElement>%CreateDate%</ListElement>
+			</Args>
+		</CreateDate>
+		<!-- ********************************************************************** -->
+		<ExecuteDate>
+			<Head>Дата выпол.</Head>
+			<Comp>Formats/Date/Extended</Comp>
+			<Args>
+				<ListElement>%ExecuteDate%</ListElement>
+			</Args>
+		</ExecuteDate>
+		<!-- ********************************************************************** -->
+		<Type>
+			<Head>Тип задачи</Head>
+			<Comp>Formats/Task/Type</Comp>
+			<Args>
+				<ListElement>%Type%</ListElement>
+				<ListElement>35</ListElement>
+			</Args>
+			<Alias>TypeID</Alias>
+		</Type>
+		<!-- ********************************************************************** -->
+		<Errors>
+			<Head>Ошибок</Head>
+			<LongName>Ошибок</LongName>
+		</Errors>
+		<!-- ********************************************************************** -->
+		<IsExecuted>
+			<Head>Вып.</Head>
+			<Comp>Formats/Logic</Comp>
+			<Args>
+				<ListElement>%IsExecuted%</ListElement>
+			</Args>
+		</IsExecuted>
+		<!-- ********************************************************************** -->
+		<IsActive>
+			<Head>Акт.</Head>
+			<Comp>Formats/Logic</Comp>
+			<Args>
+				<ListElement>%IsActive%</ListElement>
+			</Args>
+		</IsActive>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>ExtendedMenu</ListElement>
+		<ListElement>Number</ListElement>
+		<ListElement>Owner</ListElement>
+		<ListElement>ExecuteDate</ListElement>
+		<ListElement>Type</ListElement>
+		<ListElement>Errors</ListElement>
+		<ListElement>IsExecuted</ListElement>
+		<ListElement>IsActive</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

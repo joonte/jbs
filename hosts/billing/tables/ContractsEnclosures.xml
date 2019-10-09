@@ -1,152 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Appearance>
- <Row>
-  <Comp>Colors/ContractsEnclosures</Comp>
-  <Args>
-   <ListElement>%StatusID%</ListElement>
-  </Args>
- </Row>
-</Appearance>
-<!-- *********************************************************************** -->
-<Source>
- <TableID>ContractsEnclosuresOwners</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>CreateDate</ListElement>
-  <ListElement>UserID</ListElement>
-  <ListElement>TypeID</ListElement>
-  <ListElement>StatusID</ListElement>
-  <ListElement>StatusDate</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Where>
-   <UniqID>(SELECT `TypeID` FROM `Contracts` WHERE `Contracts`.`ID` = `ContractsEnclosuresOwners`.`ContractID`) != 'Default'</UniqID>
-  </Where>
-  <Message>Приложений не обнаружено.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <PatternOut>
-   <Args>
-    <Patterns>
-     <Waiting>
-      <Name>Ожидающиеся приложения</Name>
-      <Where>`StatusID` = 'Waiting'</Where>
-     </Waiting>
-     <!-- ****************************************************************** -->
-     <Complite>
-      <Name>Заключенные приложения</Name>
-      <Where>`StatusID` = 'Complite'</Where>
-     </Complite>
-    </Patterns>
-    <ActiveID>Waiting</ActiveID>
-   </Args>
-  </PatternOut>
-  <!-- ********************************************************************* -->
-  <Search>
-   <Args>
-    <ColumnsIDs>
-     <ListElement>ID</ListElement>
-     <ListElement>UserID</ListElement>
-     <ListElement>TypeID</ListElement>
-    </ColumnsIDs>
-   </Args>
-  </Search>
- </Before>
- <!-- ********************************************************************** -->
- <After>
-  <Delete>
-   <Args>
-    <Comment>Выбранные приложения</Comment>
-    <Send>
-     <TableID>ContractsEnclosures</TableID>
-    </Send>
-   </Args>
-  </Delete>
-  <!-- ********************************************************************* -->
-  <StatusSet>
-   <Comp>Statuses/Set</Comp>
-   <Args>
-    <ListElement>ContractsEnclosures</ListElement>
-   </Args>
-  </StatusSet>
- </After>
-</Comps>
-<!-- *********************************************************************** -->
-<Query>
- <SortOn>CreateDate</SortOn>
-</Query>
-<!-- *********************************************************************** -->
-<Columns>
- <SelectID>
-  <Args>
-   <TableID>ContractsEnclosures</TableID>
-  </Args>
- </SelectID>
- <!-- ********************************************************************** -->
- <ContractEnclosureDownload>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Standard</Comp>
-  <Args>
-   <ListElement>
-    <onclick>AjaxCall('/ContractEnclosureDownload',{ContractEnclosureID:%ID%},'Формирование приложения к договору','document.location = $Answer.Location');</onclick>
-   </ListElement>
-   <ListElement>Загрузить приложение к договору</ListElement>
-   <ListElement>PDF.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </ContractEnclosureDownload>
- <!-- ********************************************************************** -->
- <CreateDate>
-  <Head>Дата форм.</Head>
-  <Comp>Formats/Date/Standard</Comp>
-  <Args>
-   <ListElement>%CreateDate%</ListElement>
-  </Args>
- </CreateDate>
- <!-- ********************************************************************** -->
- <Customer>
-  <Head>Договор</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Customer%</ListElement>
-   <Length>15</Length>
-  </Args>
-  <Alias>(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `ContractsEnclosuresOwners`.`ContractID`)</Alias>
- </Customer>
- <!-- ********************************************************************** -->
- <TypeID>
-  <Head>Тип</Head>
-  <Comp>Formats/Contract/Enclosure/Type</Comp>
-  <Args>
-   <ListElement>%TypeID%</ListElement>
-   <ListElement>20</ListElement>
-  </Args>
- </TypeID>
- <!-- ********************************************************************** -->
- <Status>
-  <Args>
-   <ModeID>ContractsEnclosures</ModeID>
-  </Args>
- </Status>
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>ContractEnclosureDownload</ListElement>
- <ListElement>Customer</ListElement>
- <ListElement>Owner</ListElement>
- <ListElement>TypeID</ListElement>
- <ListElement>Status</ListElement>
- <ListElement>StatusOver</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Appearance>
+		<Row>
+			<Comp>Colors/ContractsEnclosures</Comp>
+			<Args>
+				<ListElement>%StatusID%</ListElement>
+			</Args>
+		</Row>
+	</Appearance>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>ContractsEnclosuresOwners</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>CreateDate</ListElement>
+			<ListElement>UserID</ListElement>
+			<ListElement>TypeID</ListElement>
+			<ListElement>StatusID</ListElement>
+			<ListElement>StatusDate</ListElement>
+		</ColumnsIDs>
+		<Conditions>
+			<Where>
+				<UniqID>(SELECT `TypeID` FROM `Contracts` WHERE `Contracts`.`ID` = `ContractsEnclosuresOwners`.`ContractID`) != 'Default'</UniqID>
+			</Where>
+			<Message>Приложений не обнаружено.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<PatternOut>
+				<Args>
+					<Patterns>
+						<Waiting>
+							<Name>Ожидающиеся приложения</Name>
+							<Where>`StatusID` = 'Waiting'</Where>
+						</Waiting>
+						<!-- ****************************************************************** -->
+						<Complite>
+							<Name>Заключенные приложения</Name>
+							<Where>`StatusID` = 'Complite'</Where>
+						</Complite>
+					</Patterns>
+					<ActiveID>Waiting</ActiveID>
+				</Args>
+			</PatternOut>
+			<!-- ********************************************************************* -->
+			<Search>
+				<Args>
+					<ColumnsIDs>
+						<ListElement>ID</ListElement>
+						<ListElement>UserID</ListElement>
+						<ListElement>TypeID</ListElement>
+					</ColumnsIDs>
+				</Args>
+			</Search>
+		</Before>
+		<!-- ********************************************************************** -->
+		<After>
+			<Delete>
+				<Args>
+					<Comment>Выбранные приложения</Comment>
+					<Send>
+						<TableID>ContractsEnclosures</TableID>
+					</Send>
+				</Args>
+			</Delete>
+			<!-- ********************************************************************* -->
+			<StatusSet>
+				<Comp>Statuses/Set</Comp>
+				<Args>
+					<ListElement>ContractsEnclosures</ListElement>
+				</Args>
+			</StatusSet>
+		</After>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Query>
+		<SortOn>CreateDate</SortOn>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<SelectID>
+			<Args>
+				<TableID>ContractsEnclosures</TableID>
+			</Args>
+		</SelectID>
+		<!-- ********************************************************************** -->
+		<ContractEnclosureDownload>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Standard</Comp>
+			<Args>
+				<ListElement>
+					<onclick>AjaxCall('/ContractEnclosureDownload',{ContractEnclosureID:%ID%},'Формирование приложения к договору','document.location = $Answer.Location');</onclick>
+				</ListElement>
+				<ListElement>Загрузить приложение к договору</ListElement>
+				<ListElement>PDF.gif</ListElement>
+			</Args>
+			<LongName>Скачать приложение</LongName>
+		</ContractEnclosureDownload>
+		<!-- ********************************************************************** -->
+		<CreateDate>
+			<Head>Дата форм.</Head>
+			<Comp>Formats/Date/Standard</Comp>
+			<Args>
+				<ListElement>%CreateDate%</ListElement>
+			</Args>
+		</CreateDate>
+		<!-- ********************************************************************** -->
+		<Customer>
+			<Head>Договор</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Customer%</ListElement>
+				<Length>15</Length>
+			</Args>
+			<Alias>(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `ContractsEnclosuresOwners`.`ContractID`)</Alias>
+		</Customer>
+		<!-- ********************************************************************** -->
+		<TypeID>
+			<Head>Тип</Head>
+			<Comp>Formats/Contract/Enclosure/Type</Comp>
+			<Args>
+				<ListElement>%TypeID%</ListElement>
+				<ListElement>20</ListElement>
+			</Args>
+			<LongName>Тип приложения</LongName>
+		</TypeID>
+		<!-- ********************************************************************** -->
+		<Status>
+			<Args>
+				<ModeID>ContractsEnclosures</ModeID>
+			</Args>
+		</Status>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>ContractEnclosureDownload</ListElement>
+		<ListElement>Customer</ListElement>
+		<ListElement>Owner</ListElement>
+		<ListElement>TypeID</ListElement>
+		<ListElement>Status</ListElement>
+		<ListElement>StatusOver</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

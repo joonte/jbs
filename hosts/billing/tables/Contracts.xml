@@ -143,9 +143,6 @@
 				<ListElement>%ID%</ListElement>
 			</Args>
 			<Alias>ID</Alias>
-			<Attribs>
-				<style>text-align:center;</style>
-			</Attribs>
 		</Number>
 		<!-- ********************************************************************** -->
 		<CreateDate>
@@ -183,6 +180,7 @@
 				<ListElement>Ежемесячный</ListElement>
 				<ListElement>По факту</ListElement>
 			</Args>
+			<LongName>Тип учёта</LongName>
 		</IsUponConsider>
 		<!-- ********************************************************************** -->
 		<Balance>
@@ -195,6 +193,7 @@
 			<Attribs>
 				<style>text-align:right;background-color:#FFFFFF;font-size:14px;border:2px solid #C1F17B;</style>
 			</Attribs>
+			<LongName>Баланс</LongName>
 		</Balance>
 		<!-- ********************************************************************** -->
 		<Status>

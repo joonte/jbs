@@ -1,233 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author vvelikodny -->
 <XML>
-<!-- *********************************************************************** -->
-<Appearance>
-	<Row>
-		<Comp>Colors/Edesks</Comp>
-		<Args>
-			<ListElement>%StatusID%</ListElement>
-			<ListElement>%PriorityID%</ListElement>
-		</Args>
-	</Row>
-</Appearance>
-<!-- *********************************************************************** -->
-<Source>
-	<TableID>EdesksOwners</TableID>
-	<ColumnsIDs>
-		<ListElement>ID</ListElement>
-		<ListElement>CreateDate</ListElement>
-		<ListElement>UserID</ListElement>
-		<ListElement>Theme</ListElement>
-		<ListElement>UpdateDate</ListElement>
-		<ListElement>PriorityID</ListElement>
-		<ListElement>TargetGroupID</ListElement>
-		<ListElement>TargetUserID</ListElement>
-		<ListElement>StatusID</ListElement>
-		<ListElement>StatusDate</ListElement>
-	</ColumnsIDs>
 	<!-- *********************************************************************** -->
-	<Conditions>
-		<Where>
-			<UniqID>(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = `EdesksOwners`.`TargetGroupID`) = 'yes'</UniqID>
-			<Define>(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = (SELECT `GroupID` FROM `Users` WHERE `Users`.`ID` = `EdesksOwners`.`UserID`)) = 'no'</Define>
-		</Where>
-		<Message>Нет запросов в центр поддержки.</Message>
-	</Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<!-- *********************************************************************** -->
-<Comps>
-	<Before>
-		<PatternOut>
+	<Appearance>
+		<Row>
+			<Comp>Colors/Edesks</Comp>
 			<Args>
-				<Patterns>
-					<Newest>
-						<Name>Новые запросы</Name>
-						<Where>`StatusID` = 'Newest'</Where>
-					</Newest>
-					<!-- ****************************************************************** -->
-					<Opened>
-						<Name>Открытые запросы</Name>
-						<Where>`StatusID` != 'Closed' AND `Flags` != 'CloseOnSee'</Where>
-					</Opened>
-					<!-- ****************************************************************** -->
-					<Working>
-						<Name>Запросы ожидающие ответа</Name>
-						<Where>`StatusID` = 'Working'</Where>
-					</Working>
-					<!-- ****************************************************************** -->
-					<Closed>
-						<Name>Закрытые запросы</Name>
-						<Where>`StatusID` = 'Closed'</Where>
-					</Closed>
-				</Patterns>
-				<ActiveID>Opened</ActiveID>
+				<ListElement>%StatusID%</ListElement>
+				<ListElement>%PriorityID%</ListElement>
 			</Args>
-		</PatternOut>
-		<!-- ********************************************************************* -->
-		<Search>
-			<Args>
-				<ColumnsIDs>
-					<ListElement>ID</ListElement>
-					<ListElement>UserID</ListElement>
-					<ListElement>TargetUserID</ListElement>
-					<ListElement>PriorityID</ListElement>
-					<ListElement>Theme</ListElement>
-					<ListElement>Content</ListElement>
-				</ColumnsIDs>
-			</Args>
-		</Search>
+		</Row>
+	</Appearance>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>EdesksOwners</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>CreateDate</ListElement>
+			<ListElement>UserID</ListElement>
+			<ListElement>Theme</ListElement>
+			<ListElement>UpdateDate</ListElement>
+			<ListElement>PriorityID</ListElement>
+			<ListElement>TargetGroupID</ListElement>
+			<ListElement>TargetUserID</ListElement>
+			<ListElement>StatusID</ListElement>
+			<ListElement>StatusDate</ListElement>
+		</ColumnsIDs>
+		<!-- *********************************************************************** -->
+		<Conditions>
+			<Where>
+				<UniqID>(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = `EdesksOwners`.`TargetGroupID`) = 'yes'</UniqID>
+				<Define>(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = (SELECT `GroupID` FROM `Users` WHERE `Users`.`ID` = `EdesksOwners`.`UserID`)) = 'no'</Define>
+			</Where>
+			<Message>Нет запросов в центр поддержки.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<PatternOut>
+				<Args>
+					<Patterns>
+						<Newest>
+							<Name>Новые запросы</Name>
+							<Where>`StatusID` = 'Newest'</Where>
+						</Newest>
+						<!-- ****************************************************************** -->
+						<Opened>
+							<Name>Открытые запросы</Name>
+							<Where>`StatusID` != 'Closed' AND `Flags` != 'CloseOnSee'</Where>
+						</Opened>
+						<!-- ****************************************************************** -->
+						<Working>
+							<Name>Запросы ожидающие ответа</Name>
+							<Where>`StatusID` = 'Working'</Where>
+						</Working>
+						<!-- ****************************************************************** -->
+						<Closed>
+							<Name>Закрытые запросы</Name>
+							<Where>`StatusID` = 'Closed'</Where>
+						</Closed>
+					</Patterns>
+					<ActiveID>Opened</ActiveID>
+				</Args>
+			</PatternOut>
+			<!-- ********************************************************************* -->
+			<Search>
+				<Args>
+					<ColumnsIDs>
+						<ListElement>ID</ListElement>
+						<ListElement>UserID</ListElement>
+						<ListElement>TargetUserID</ListElement>
+						<ListElement>PriorityID</ListElement>
+						<ListElement>Theme</ListElement>
+						<ListElement>Content</ListElement>
+					</ColumnsIDs>
+				</Args>
+			</Search>
+			<!-- ********************************************************************** -->
+			<TicketsFilter>
+				<Comp>Tickets/Filter</Comp>
+				<Args type="array"/>
+				<NoBlock/>
+			</TicketsFilter>
+		</Before>
 		<!-- ********************************************************************** -->
-		<TicketsFilter>
-			<Comp>Tickets/Filter</Comp>
-			<Args type="array" />
-			<NoBlock />
-		</TicketsFilter>
-	</Before>
-	<!-- ********************************************************************** -->
-	<After>
-		<Delete>
+		<After>
+			<Delete>
+				<Args>
+					<Comment>Выбранные запросы</Comment>
+					<Send>
+						<TableID>Edesks</TableID>
+					</Send>
+				</Args>
+			</Delete>
+			<!-- ********************************************************************* -->
+			<StatusSet>
+				<Comp>Statuses/Set</Comp>
+				<Args>
+					<ListElement>Edesks</ListElement>
+				</Args>
+			</StatusSet>
+		</After>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Query>
+		<GroupBy>ID</GroupBy>
+		<SortOn>UpdateDate</SortOn>
+		<IsDesc>0</IsDesc>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<SelectID>
 			<Args>
-				<Comment>Выбранные запросы</Comment>
-				<Send>
-					<TableID>Edesks</TableID>
-				</Send>
+				<TableID>Edesks</TableID>
 			</Args>
-		</Delete>
-		<!-- ********************************************************************* -->
-		<StatusSet>
-			<Comp>Statuses/Set</Comp>
+		</SelectID>
+		<!-- ********************************************************************** -->
+		<ExtendedMenu>
+			<IsSorted>0</IsSorted>
+			<Comp>Menus/List</Comp>
 			<Args>
-				<ListElement>Edesks</ListElement>
+				<ListElement>Administrator/ListMenu/Tickets.xml</ListElement>
+				<Replace>%ID%</Replace>
 			</Args>
-		</StatusSet>
-	</After>
-</Comps>
-<!-- *********************************************************************** -->
-<!-- *********************************************************************** -->
-<Query>
- <GroupBy>ID</GroupBy>
- <SortOn>UpdateDate</SortOn>
- <IsDesc>0</IsDesc>
-</Query>
-<!-- *********************************************************************** -->
-<Columns>
- <SelectID>
-  <Args>
-   <TableID>Edesks</TableID>
-  </Args>
- </SelectID>
- <!-- ********************************************************************** -->
- <ExtendedMenu>
-  <IsSorted>0</IsSorted>
-  <Comp>Menus/List</Comp>
-  <Args>
-   <ListElement>Administrator/ListMenu/Tickets.xml</ListElement>
-   <Replace>%ID%</Replace>
-  </Args>
- </ExtendedMenu>
- <!-- ********************************************************************** -->
- <Priority>
-  <IsSorted>0</IsSorted>
-  <Comp>Tickets/Priority</Comp>
-  <Args>
-   <ListElement>%PriorityID%</ListElement>
-  </Args>
-  <Alias>PriorityID</Alias>
-  <LongName>Приоритет</LongName>
- </Priority>
- <!-- ********************************************************************** -->
- <Number>
-  <Head>Номер</Head>
-  <Comp>Formats/Edesk/Number</Comp>
-  <Args>
-   <ListElement>%ID%</ListElement>
-  </Args>
-  <Alias>ID</Alias>
- </Number>
- <!-- ********************************************************************** -->
- <TargetGroup>
-  <Head>Отдел</Head>
-  <Prompt>Отдел запроса</Prompt>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%TargetGroup%</ListElement>
-   <Length>10</Length>
-  </Args>
-  <Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `TargetGroupID`)</Alias>
-  <LongName>Отдел</LongName>
- </TargetGroup>
- <!-- ********************************************************************** -->
- <Theme>
-  <Head>Тема</Head>
-  <Comp>Tickets/Theme</Comp>
-  <Args>
-   <ListElement>%ID%</ListElement>
-   <ListElement>%Theme%</ListElement>
-   <Length>45</Length>
-  </Args>
- </Theme>
- <!-- ********************************************************************** -->
- <Messages>
-  <IsSorted>0</IsSorted>
-  <Head>Сообщ.</Head>
-  <Prompt>Кол-во новых сообщений к их общему количеству в запросе</Prompt>
-  <Comp>Tickets/Messages</Comp>
-  <Args>
-   <ListElement>%ID%</ListElement>
-  </Args>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
-  <LongName>Число сообщений</LongName>
- </Messages>
- <!-- ********************************************************************** -->
- <Status>
-  <Args>
-   <ModeID>Edesks</ModeID>
-  </Args>
- </Status>
- <!-- ********************************************************************** -->
- <TargetUser>
-  <Head>Сотрудник</Head>
-  <Prompt>Ответственный сотрудник</Prompt>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%TargetUser%</ListElement>
-   <Length>10</Length>
-  </Args>
-  <Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `EdesksOwners`.`TargetUserID`)</Alias>
-  <LongName>Сотрудник</LongName>
- </TargetUser>
- <!-- ********************************************************************** -->
- <UpdateDate>
-  <Head>Обновлен</Head>
-  <Alias>UNIX_TIMESTAMP() - `UpdateDate`</Alias>
-  <Comp>Formats/Date/Remainder</Comp>
-  <Args>
-   <ListElement>%UpdateDate%</ListElement>
-  </Args>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
- </UpdateDate>
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>ExtendedMenu</ListElement>
- <!--
- <ListElement>Priority</ListElement>
- -->
- <ListElement>Number</ListElement>
- <ListElement>Owner</ListElement>
- <ListElement>TargetGroup</ListElement>
- <ListElement>Theme</ListElement>
- <ListElement>Messages</ListElement>
- <ListElement>Status</ListElement>
- <ListElement>TargetUser</ListElement>
- <ListElement>UpdateDate</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+		</ExtendedMenu>
+		<!-- ********************************************************************** -->
+		<Priority>
+			<IsSorted>0</IsSorted>
+			<Comp>Tickets/Priority</Comp>
+			<Args>
+				<ListElement>%PriorityID%</ListElement>
+			</Args>
+			<Alias>PriorityID</Alias>
+		</Priority>
+		<!-- ********************************************************************** -->
+		<Number>
+			<Head>Номер</Head>
+			<Comp>Formats/Edesk/Number</Comp>
+			<Args>
+				<ListElement>%ID%</ListElement>
+			</Args>
+			<Alias>ID</Alias>
+		</Number>
+		<!-- ********************************************************************** -->
+		<TargetGroup>
+			<Head>Отдел</Head>
+			<Prompt>Отдел запроса</Prompt>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%TargetGroup%</ListElement>
+				<Length>10</Length>
+			</Args>
+			<Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `TargetGroupID`)</Alias>
+			<LongName>Отдел</LongName>
+		</TargetGroup>
+		<!-- ********************************************************************** -->
+		<Theme>
+			<Head>Тема</Head>
+			<Comp>Tickets/Theme</Comp>
+			<Args>
+				<ListElement>%ID%</ListElement>
+				<ListElement>%Theme%</ListElement>
+				<Length>45</Length>
+			</Args>
+		</Theme>
+		<!-- ********************************************************************** -->
+		<Messages>
+			<IsSorted>0</IsSorted>
+			<Head>Сообщ.</Head>
+			<Prompt>Кол-во новых сообщений к их общему количеству в запросе</Prompt>
+			<Comp>Tickets/Messages</Comp>
+			<Args>
+				<ListElement>%ID%</ListElement>
+			</Args>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+			<LongName>Число сообщений</LongName>
+		</Messages>
+		<!-- ********************************************************************** -->
+		<Status>
+			<Args>
+				<ModeID>Edesks</ModeID>
+			</Args>
+		</Status>
+		<!-- ********************************************************************** -->
+		<TargetUser>
+			<Head>Сотрудник</Head>
+			<Prompt>Ответственный сотрудник</Prompt>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%TargetUser%</ListElement>
+				<Length>10</Length>
+			</Args>
+			<Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `EdesksOwners`.`TargetUserID`)</Alias>
+			<LongName>Сотрудник</LongName>
+		</TargetUser>
+		<!-- ********************************************************************** -->
+		<UpdateDate>
+			<Head>Обновлен</Head>
+			<Alias>UNIX_TIMESTAMP() - `UpdateDate`</Alias>
+			<Comp>Formats/Date/Remainder</Comp>
+			<Args>
+				<ListElement>%UpdateDate%</ListElement>
+			</Args>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</UpdateDate>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>ExtendedMenu</ListElement>
+		<ListElement>Number</ListElement>
+		<ListElement>Owner</ListElement>
+		<ListElement>TargetGroup</ListElement>
+		<ListElement>Theme</ListElement>
+		<ListElement>Messages</ListElement>
+		<ListElement>Status</ListElement>
+		<ListElement>TargetUser</ListElement>
+		<ListElement>UpdateDate</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>
