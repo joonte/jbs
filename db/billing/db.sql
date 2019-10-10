@@ -444,16 +444,24 @@ set @Text = '<NOBODY>
 <tbody>
 	<tr>
 		<td valign="top">4.6.</td>
-		<td align="justify" width="95%">Все заявки обрабатываются в порядке поступления. Максимальный срок обработки заявки СПТ - 12 часов.	
-4.7. Вне очереди обрабатываются заявки с приоритетом "Высокий".</td>
+		<td align="justify" width="95%">Все заявки обрабатываются в порядке поступления. Максимальный срок обработки заявки СПТ - 12 часов.</td>
 	</tr>
 </tbody>
 </table>
 <table style="width: 100%;">
 <tbody>
 	<tr>
+		<td valign="top">4.7.</td>
+		<td align="justify" width="95%">Вне очереди обрабатываются заявки с приоритетом "Высокий".</td>
+	</tr>
+</tbody>
+</table>
+
+<table style="width: 100%;">
+<tbody>
+	<tr>
 		<td valign="top">4.8.</td>
-		<td align="justify" width="95%">Заявки по другим каналам (в частности, ICQ) не обрабатываются.</td>
+		<td align="justify" width="95%">Заявки по другим каналам (в частности, Telegram, Jabber, SMS) не обрабатываются.</td>
 	</tr>
 </tbody>
 </table>
