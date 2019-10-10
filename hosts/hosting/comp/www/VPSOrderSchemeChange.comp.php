@@ -80,7 +80,7 @@ $Where = Array(
 if(!$__USER['IsAdmin'])
 	$Where[] = "`IsActive` = 'yes' AND `IsSchemeChangeable` = 'yes'";
 #-------------------------------------------------------------------------------
-$VPSSchemes = DB_Select($UniqID,Array('ID','Name'),Array('SortOn'=>'SortID','Where'=>$Where));
+$VPSSchemes = DB_Select($UniqID,Array('ID','Name','disklimit'),Array('SortOn'=>'SortID','Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($VPSSchemes)){
 case 'error':
@@ -113,7 +113,7 @@ if($VPSOrder['Params']['SystemID'] == 'VmManager5_KVM')
 	$Table[] = new Tag('TD',Array('colspan'=>2,'width'=>300,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),'Обращаем ваше внимание, что ваш виртуальный сервер использует тип виртуализации KVM. В связи с этим, изменение тарифного плана возможно только в большую сторону, уменьшить размер диска - невозможно.');
 #-------------------------------------------------------------------------------
 foreach($VPSSchemes as $VPSScheme)
-	$Options[$VPSScheme['ID']] = $VPSScheme['Name'];
+	$Options[$VPSScheme['ID']] = SPrintF('%s / %s Gb',$VPSScheme['Name'],$VPSScheme['disklimit']/1024);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'NewSchemeID'),$Options,NULL,$VPSOrder['SchemeID']);
 if(Is_Error($Comp))

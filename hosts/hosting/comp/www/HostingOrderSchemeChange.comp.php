@@ -85,7 +85,7 @@ $Where = Array(
 if(!$__USER['IsAdmin'])
 	$Where[] = "`IsActive` = 'yes' AND `IsSchemeChangeable` = 'yes'";
 #-------------------------------------------------------------------------------
-$HostingSchemes = DB_Select($UniqID,Array('ID','Name'),Array('SortOn'=>'SortID','Where'=>$Where));
+$HostingSchemes = DB_Select($UniqID,Array('ID','Name','QuotaDisk'),Array('SortOn'=>'SortID','Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingSchemes)){
 case 'error':
@@ -116,7 +116,7 @@ $DOM->AddText('Title','Смена тарифного плана');
 $Table = $Options = Array();
 #-------------------------------------------------------------------------------
 foreach($HostingSchemes as $HostingScheme)
-	$Options[$HostingScheme['ID']] = $HostingScheme['Name'];
+	$Options[$HostingScheme['ID']] = SPrintF('%s / %s Mb',$HostingScheme['Name'],$HostingScheme['QuotaDisk']);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'NewSchemeID'),$Options,NULL,$HostingOrder['SchemeID']);
 if(Is_Error($Comp))
