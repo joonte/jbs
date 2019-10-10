@@ -35,10 +35,11 @@ td.TableSuperStandard:before {
 
 
 /* увеличиваем кнопки */
+/*
 img.Button {
 	width:	44;
 }
-
+*/
 table {
 	font-size: 100%;
 }
@@ -121,4 +122,7 @@ div.EdeskMessage {
 /* показываем кнопку отображения меню */
 #HiddenMenuButtons	{ display: block; }
 /**/
+
+/* добавляем пустое место внизу страницы - чтобы вылезающая клава не перекрывала окна ввода */
+#PageDownSpace		{ height: 250px; }
 
