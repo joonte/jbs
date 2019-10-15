@@ -66,6 +66,8 @@ table {
 #TableSuperDateSelect	{ display: none; }
 /* фильтр по серверу размещения и тарифу */
 #TableSuperOrderFilter	{ display: none; }
+/* прячем текст у кнопки удаления, внизу таблицы */
+#TableSuperDeleteText	{ display: none; }
 /* прячем админские кнопки в тикетнице */
 #EdeskAdminButton	{ display: none; }
 /* кнопки следующего/предыдущего запросов */
