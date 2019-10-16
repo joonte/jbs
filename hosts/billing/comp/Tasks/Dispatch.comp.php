@@ -59,23 +59,28 @@ $Count = 0;
 $Replace = Array('Theme'=>$Task['Params']['Theme'],'Message'=>$Task['Params']['Message']);
 #-------------------------------------------------------------------------------
 foreach($SendToIDs as $User){
-	# пропускаем циклы, если счётчик уже больше 10
+	#-------------------------------------------------------------------------------
+	// пропускаем циклы, если счётчик уже больше 10
 	if($Count > $Settings['Limit'] - 1)
 		continue;
 	#-------------------------------------------------------------------------
 	Debug(SPrintF('[comp/Tasks/Dispatch]: send message to UserID = %s;',$User));
 	#-------------------------------------------------------------------------
 	$msg = new DispatchMsg($Replace, (integer)$User, $Task['Params']['FromID']);
-	$IsSend = NotificationManager::sendMsg($msg,$Methods,Array('IsForceDelivery'=>$Task['Params']['IsForceDelivery']));
+	$IsSend = NotificationManager::sendMsg($msg,$Methods,Array('IsForceDelivery'=>$Task['Params']['IsForceDelivery'],'IsHTML'=>$Task['Params']['IsHTML'],'HTML'=>$Task['Params']['HTML'],'Headers'=>$Task['Params']['Headers']));
 	#-------------------------------------------------------------------------
 	switch(ValueOf($IsSend)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
-		# Исключение - системные юзеры, например...
+		#-------------------------------------------------------------------------------
+		// Исключение - системные юзеры, например...
 		$SendedIDs[] = $User;
+		#-------------------------------------------------------------------------------
 		Array_Shift($SendToIDs);
+		#-------------------------------------------------------------------------------
 		break;
+		#-------------------------------------------------------------------------------
 	case 'true':
 		#-------------------------------------------------------------------------
 		$Count++;
@@ -83,6 +88,7 @@ foreach($SendToIDs as $User){
 		Array_Shift($SendToIDs);
 		#-------------------------------------------------------------------------
 		break;
+		#-------------------------------------------------------------------------------
 	default:
 		return ERROR | @Trigger_Error(101);
 	}
@@ -95,6 +101,7 @@ foreach($SendToIDs as $User){
 $Task['Params']['SendToIDs'] = Implode(',',Array_Filter($SendToIDs));
 $Task['Params']['SendedIDs'] = Implode(',',Array_Filter($SendedIDs));
 $UTasks = Array('Params'=>$Task['Params']);
+#-------------------------------------------------------------------------------
 $IsUpdate = DB_Update('Tasks',$UTasks,Array('ID'=>$Task['ID']));
 #-------------------------------------------------------------------------------
 if(Is_Error($IsUpdate))
@@ -111,6 +118,7 @@ if(SizeOf($SendToIDs) > 0)
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>

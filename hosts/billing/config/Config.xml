@@ -1205,12 +1205,15 @@
 				<Name>Рассылка</Name>
 				<Params>
 					<SendToIDs>Кому шлём</SendToIDs>
+					<Headers>Заголовки</Headers>
 					<Theme>Тема</Theme>
 					<Message>Сообщение</Message>
+					<HTML>Сообщение в виде HTML</HTML>
 					<FromID>Идентификатор отправителя</FromID>
 					<SendedIDs>Кому уже отправлено</SendedIDs>
 					<Methods>Методы</Methods>
 					<IsForceDelivery>Принудительная доставка</IsForceDelivery>
+					<IsHTML>Это HTML сообщение</IsHTML>
 				</Params>
 				<ExecutePeriod>00:01</ExecutePeriod>
 				<Limit>10</Limit>

@@ -108,13 +108,22 @@ class SendMessage implements Dispatcher{
 					SPrintF('From: %s', $sender['Email']),
 					'MIME-Version: 1.0',
 					'Content-Transfer-Encoding: 8bit',
-					SPrintF('Content-Type: multipart/mixed; boundary="----==--%s"',HOST_ID)
+					SPrintF('Content-Type: multipart/related; boundary="----==--%s"',HOST_ID)
 					);
 		#-------------------------------------------------------------------------------
 		// added by lissyara 2013-02-13 in 15:45 MSK, for JBS-609
 		if($msg->getParam('MessageID'))
 			$emailHeads[] = SPrintF('Message-ID: <%s@%s>',$msg->getParam('MessageID'),HOST_ID);
 		#-------------------------------------------------------------------------------
+		// JBS-1315, возможны дополнительные заголовки
+		if($msg->getParam('Headers')){
+			#-------------------------------------------------------------------------------
+			$Lines = Explode("\n", Trim($msg->getParam('Headers')));
+			#-------------------------------------------------------------------------------
+			foreach($Lines as $Line)
+				$emailHeads[] = Trim($Line);
+			#-------------------------------------------------------------------------------
+		}
 		#-------------------------------------------------------------------------------
 		$Params = Array();
 		#-------------------------------------------------------------------------------
@@ -131,7 +140,8 @@ class SendMessage implements Dispatcher{
 					'ExternalID'	=> $msg->getParam('ExternalID'),		// внешний идентфикатор, для телеги
 					'ContactID'	=> $msg->getParam('ContactID'),			// идентфикатор контакта
 					'MessageID'	=> $msg->getParam('MessageID'),			// идентфикатор сообщения, из тикетниы
-					'TicketID'	=> $msg->getParam('TicketID')			// номер тикета
+					'TicketID'	=> $msg->getParam('TicketID'),			// номер тикета
+					'HTML'		=> $msg->getParam('HTML')			// текст сообщения в HTML (используется в рассылках, только для Email)
 				);
 		#-------------------------------------------------------------------------------
 		$taskParams = Array(

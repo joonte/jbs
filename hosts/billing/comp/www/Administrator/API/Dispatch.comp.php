@@ -18,6 +18,9 @@ $Message    		=  (string) @$Args['Message'];
 $FiltersIDs 		=   (array) @$Args['FiltersIDs'];
 $IsEmulateDisptch	= (boolean) @$Args['IsEmulateDisptch'];
 $IsForceDelivery	= (boolean) @$Args['IsForceDelivery'];
+$IsHTML			= (boolean) @$Args['IsHTML'];
+$Headers		=  (string) @$Args['Headers'];
+$HTML			=  (string) @$Args['HTML'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
@@ -25,7 +28,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 if(!$Theme)
 	return new gException('THEME_IS_EMPTY','Введите тему сообщения');
 #-------------------------------------------------------------------------------
-if(!$Message)
+if(!$Message && !$HTML)
 	return new gException('MESSAGE_IS_EMPTY','Введите сообщение');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -37,10 +40,22 @@ foreach($UsersIDs as $UserID)
 $UsersIDs = $Array;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// собираем массив с методами отправки сообщений
 $Methods = Array();
 #-------------------------------------------------------------------------------
 foreach($MethodsIDs as $Method)
 	$Methods[] = $Method;
+#-------------------------------------------------------------------------------
+if($IsHTML){
+	#-------------------------------------------------------------------------------
+	// если отправка в режиме HTML, то метод - только почтой
+	$Methods = Array('Email');
+	#-------------------------------------------------------------------------------
+	// окучиваем собственно html, приводим в порядок переносы строк
+	$HTML = Str_Replace("\r","",$HTML);
+	$HTML = Str_Replace("\n","\r\n",$HTML);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 if(!Count($Methods))
 	return new gException('METHODS_NOT_SELECTED','Методы рассылки не выбраны');
@@ -188,7 +203,7 @@ foreach($Users as $User)
 	$SendTo[] = $User['ID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Params = Array(Implode(',',$SendTo),$Theme,$Message,$FromID,'',Implode(',',$Methods),$IsForceDelivery);
+$Params = Array(Implode(',',$SendTo),$Headers,$Theme,$Message,$HTML,$FromID,'',Implode(',',$Methods),$IsForceDelivery,$IsHTML);
 #-------------------------------------------------------------------------------
 #Debug(SPrintF('[comp/www/Administrator/API/Dispatch]: before send, UserIDs = %s',Implode(',',$UsersIDs)));
 if(!$IsEmulateDisptch){
