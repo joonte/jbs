@@ -7,7 +7,7 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','classes/VPSServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Args = Args();
@@ -42,6 +42,7 @@ if($VPSSchemeID){
 				'CostInstall'		=> 100,
 				'Discount'		=> -1,
 				'ServersGroupID'	=> 1,
+				'Node'			=> '',
 				'Comment'		=> 'Идеальный тариф для ...',
 				'IsReselling'		=> FALSE,
 				'IsActive'		=> TRUE,
@@ -91,7 +92,7 @@ $Links = &Links();
 $Links['DOM'] = &$DOM;
 #-------------------------------------------------------------------------------
 if(Is_Error($DOM->Load('Window')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Title = ($VPSSchemeID?SPrintF('Редактирование тарифа VPS: %s',$VPSScheme['Name']):'Добавление нового тарифа виртуального сервера');
 #-------------------------------------------------------------------------------
@@ -101,53 +102,42 @@ $Table = Array('Общая информация');
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Owner','Владелец тарифа',$VPSScheme['GroupID'],$VPSScheme['UserID']);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = $Comp;
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'name'  => 'Name',
-    'value' => $VPSScheme['Name']
-  )
-);
+$Comp = Comp_Load('Form/Input', Array('type'=>'text','name'=>'Name','value'=>$VPSScheme['Name']));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Название тарифного плана',$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'name'  => 'PackageID',
-    'value' => $VPSScheme['PackageID']
-  ),
-  'Точное имя пакета в панели управления'
-);
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'PackageID','value'=>$VPSScheme['PackageID']),'Точное имя пакета в панели управления');
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Идентификатор пакета в панели',$Comp);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Summ',Array('name'=>'CostDay','value'=>SPrintF('%01.2f',$VPSScheme['CostDay'])));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Стоимость дня'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Используется в расчетах стоимости')),$Comp);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Summ',Array('name'=>'CostMonth','value'=>SPrintF('%01.2f',$VPSScheme['CostMonth'])));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Стоимость месяца'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Используется для отображения')),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Summ',Array('name'=>'CostInstall','value'=>SPrintF('%01.2f',$VPSScheme['CostInstall'])));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 $Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Стоимость подключения'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Цена за инсталляцию')),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -185,18 +175,54 @@ default:
 $Options = Array();
 #-------------------------------------------------------------------------------
 foreach($ServersGroups as $ServersGroup)
-  $Options[$ServersGroup['ID']] = $ServersGroup['Name'];
+	$Options[$ServersGroup['ID']] = $ServersGroup['Name'];
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'ServersGroupID','style'=>'width: 240px',),$Options,$VPSScheme['ServersGroupID']);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Группа серверов',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// выбор ноды кластера
+$Servers = DB_Select('Servers',Array('ID','Address','Params'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) = 30000','SortOn'=>'Address'));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Servers)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	$Options = Array(''=>'Автоматический выбор');
+	#-------------------------------------------------------------------------------
+	// перебираем сервера, перебираем ноды у серверов
+	foreach($Servers as $Server)
+		if($Server['Params']['NodeList'])
+			foreach(Explode("\n",$Server['Params']['NodeList']) as $Node)
+				$Options[$Node] = $Node;
+	#-------------------------------------------------------------------------------
+	// серверов более одного (параметр автовыбор + 2 ноды)
+	if(SizeOf($Options) > 2){
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Form/Select',Array('name'=>'Node[]','multiple'=>'','size'=>SizeOf($Options),'style'=>'width: 240px','prompt'=>'На какиих нодах кластера должен находится этот тариф. Если нода не совпадает - будет выполнена автоматическая миграция. Если стоит автовыбор - миграция происходит только в том случае, если на ноде запрещено создание новых виртуальных машин - тогда происходит миграция туда где можно. Подробности и примеры использования - смотрите в документации'),$Options,Explode(',',$VPSScheme['Node']));
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Table[] = Array('Нода кластера',$Comp);
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+        break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes'));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($VPSScheme['IsActive'])
   $Comp->AddAttribs(Array('checked'=>'yes'));

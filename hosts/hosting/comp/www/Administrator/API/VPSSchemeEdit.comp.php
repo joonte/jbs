@@ -23,6 +23,7 @@ $CostMonth		=   (float) @$Args['CostMonth'];
 $CostInstall		=   (float) @$Args['CostInstall'];
 $Discount		=  (double) @$Args['Discount'];
 $ServersGroupID		= (integer) @$Args['ServersGroupID'];
+$Node			=   (array) @$Args['Node'];
 $Comment		=  (string) @$Args['Comment'];
 $IsReselling		= (boolean) @$Args['IsReselling'];
 $IsActive		= (boolean) @$Args['IsActive'];
@@ -60,38 +61,48 @@ $backup			=  (string) @$Args['backup'];
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Groups',Array('ID'=>$GroupID));
 if(Is_Error($Count))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if(!$Count)
-  return new gException('GROUP_NOT_FOUND','Группа не найден');
+	return new gException('GROUP_NOT_FOUND','Группа не найден');
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Users',Array('ID'=>$UserID));
 if(Is_Error($Count))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if(!$Count)
-  return new gException('USER_NOT_FOUND','Пользователь не найден');
+	return new gException('USER_NOT_FOUND','Пользователь не найден');
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
 if(!Preg_Match('/^[A-Za-zА-ЯёЁа-я0-9\s\.\-]+$/u',$Name))
-  return new gException('WRONG_SCHEME_NAME','Неверное имя тарифа');
+	return new gException('WRONG_SCHEME_NAME','Неверное имя тарифа');
 #-------------------------------------------------------------------------------
 $Count = DB_Count('ServersGroups',Array('ID'=>$ServersGroupID));
 if(Is_Error($Count))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if(!$Count)
-  return new gException('SERVERS_GROUP_NOT_FOUND','Группа серверов не найдена');
+	return new gException('SERVERS_GROUP_NOT_FOUND','Группа серверов не найдена');
+#-------------------------------------------------------------------------------
+// убираем пустые значения
+$Nodes = Array();
+#-------------------------------------------------------------------------------
+Debug(print_r($Node,true));
+foreach($Node as $Value)
+	if($Value)
+		$Nodes[] = $Value;
+Debug(print_r($Nodes,true));
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$MinDaysPay)
-  return new gException('MIN_DAYS_PAY_NOT_DEFINED','Минимальное кол-во дней оплаты не указано');
+	return new gException('MIN_DAYS_PAY_NOT_DEFINED','Минимальное кол-во дней оплаты не указано');
 #-------------------------------------------------------------------------------
 if($MinDaysProlong > $MinDaysPay)
-  return new gException('WRONG_MIN_DAYS_PROLONG','Минимальное число дней продления не может быть больше минимального числа дней оплаты');
+	return new gException('WRONG_MIN_DAYS_PROLONG','Минимальное число дней продления не может быть больше минимального числа дней оплаты');
 #-------------------------------------------------------------------------------
 if($MinDaysPay > $MaxDaysPay)
-  return new gException('WRONG_MIN_DAYS_PAY','Минимальное кол-во дней оплаты не можеть быть больше максимального');
+	return new gException('WRONG_MIN_DAYS_PAY','Минимальное кол-во дней оплаты не можеть быть больше максимального');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($Discount < 0){
@@ -119,6 +130,7 @@ $IVPSScheme = Array(
   'CostInstall'		=> $CostInstall,
   'Discount'            => $Discount,
   'ServersGroupID'      => $ServersGroupID,
+  'Node'		=> (SizeOf($Nodes) > 0)?Implode(',',$Node):'',
   'Comment'             => $Comment,
   'IsReselling'         => $IsReselling,
   'IsActive'            => $IsActive,

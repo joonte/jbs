@@ -13,7 +13,7 @@ if(Is_Error(System_Load('classes/VPSServer.class.php')))
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-$Settings = $Config['Tasks']['Types']['GC']['UpdateDiskTemplatesSettings'];
+$Settings = $Config['Tasks']['Types']['GC']['UpdateNodeListSettings'];
 #-------------------------------------------------------------------------------
 if(!$Settings['IsActive'])
 	return TRUE;
@@ -34,7 +34,7 @@ default:
 #-------------------------------------------------------------------------------
 foreach($Servers as $iServer){
 	#-------------------------------------------------------------------------------
-	if(!$iServer['Params']['IsUpdateDiskTemplates'])
+	if(!$iServer['Params']['IsUpdateNodeList'])
 		continue;
 	#-------------------------------------------------------------------------------
 	$VPSServer = new VPSServer();
@@ -53,9 +53,9 @@ foreach($Servers as $iServer){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Templates = $VPSServer->GetDiskTemplates();
+	$NodeList = $VPSServer->GetNodeList();
 	#-------------------------------------------------------------------------------
-	switch(ValueOf($Templates)){
+	switch(ValueOf($NodeList)){
 	case 'error':
 		# No more...
 		break;
@@ -64,12 +64,12 @@ foreach($Servers as $iServer){
 		break;
 	case 'array':
 		#-------------------------------------------------------------------------------
-		Debug(print_r($Templates,true));
+		Debug(SPrintF('[comp/Tasks/GC/UpdateNodeList]: NodeList = %s',print_r($NodeList,true)));
 		#-------------------------------------------------------------------------------
-		if(SizeOf($Templates) < 1)
+		if(SizeOf($NodeList) < 1)
 			continue 2;
 		#-------------------------------------------------------------------------------
-		$iServer['Params']['DiskTemplate'] = Implode("\n",$Templates);
+		$iServer['Params']['NodeList'] = Implode("\n",Array_Keys($NodeList));
 		#-------------------------------------------------------------------------------
 		$IsUpdate = DB_Update('Servers',Array('Params'=>$iServer['Params']),Array('ID'=>$iServer['ID']));
 		if(Is_Error($IsUpdate))

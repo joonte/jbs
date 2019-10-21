@@ -429,6 +429,7 @@ CREATE TABLE IF NOT EXISTS `VPSSchemes` (
 	`CostInstall` decimal(11,2) DEFAULT '0.00',
 	`Discount` DOUBLE NOT NULL DEFAULT '-1',
 	`ServersGroupID` int(11) NOT NULL,
+	`Node` char(255) default '',				-- нода кластера
 	`Comment` char(255) NOT NULL,
 	`IsReselling` enum('no','yes') DEFAULT 'no',
 	`IsActive` enum('no','yes') DEFAULT 'yes',

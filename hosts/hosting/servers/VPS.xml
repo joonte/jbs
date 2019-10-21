@@ -45,6 +45,7 @@
 			<Theme>Orion</Theme>
 			<Language>ru</Language>
 			<DiskTemplate>FreeBSD-10-amd64</DiskTemplate>
+			<NodeList>kvm01</NodeList>
 			<Url>https://kvm01.isp.su:1500/vmmgr</Url>
 		</Settings>
 	</VmManager5_KVM>
@@ -130,6 +131,36 @@
 		<IsDuty>0</IsDuty>
 		<Value>yes</Value>
 	</IsLogging>
+	<!-- *********************************************************************** -->
+	<NodeList>
+		<Check>Char</Check>
+		<Comment>Ноды (узлы) кластера</Comment>
+		<Type>TextArea</Type>
+		<Attribs>
+			<prompt>Список нод кластера, по одной на строку. По умолчанию берётся с сервера автоматически (раз в сутки). Это поле в общем-то нужно только для первого запуска, чтобы сразу внести имена и не ждать</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+			<rows>4</rows>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value />
+	</NodeList>
+	<!-- *********************************************************************** -->
+	<IsUpdateNodeList>
+		<Check>Char</Check>
+		<Comment>Обновлять список узлов кластера</Comment>
+		<CommentAttribs>
+			<style>cursor:pointer;</style>
+			<onclick>ChangeCheckBox('IsUpdateNodeList'); return false;</onclick>
+		</CommentAttribs>
+		<Type>Input</Type>
+		<Attribs>
+			<type>checkbox</type>
+			<prompt>Обновлять список узлов кластера, в соответствии со списком узлов на управляющем сервере</prompt>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>yes</Value>
+	</IsUpdateNodeList>
 	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
 	<Domain>

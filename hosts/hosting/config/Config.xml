@@ -758,6 +758,10 @@
 					<IsActive>1</IsActive>
 				</UpdateDiskTemplatesSettings>
 				<!-- ********************************************************************* -->
+				<UpdateNodeListSettings>
+					<IsActive>1</IsActive>
+				</UpdateNodeListSettings>
+				<!-- ********************************************************************* -->
 				<DiskUsageNotifiesSettings>
 					<IsActive>1</IsActive>
 					<IsNotify>1</IsNotify>
@@ -811,6 +815,7 @@
 					<ISPswCheckLicenses>Синхронизация лицензий с ISPsystem</ISPswCheckLicenses>
 					<ServersCheckUsers>Синхронизация аккаунтов биллинга и серверов</ServersCheckUsers>
 					<UpdateDiskTemplates>Обновление шаблонов дисков на VPS</UpdateDiskTemplates>
+					<UpdateNodeList>Обновление списка узлов кластера VPS</UpdateNodeList>
 					<DiskUsageNotifies>Уведомление о заканчивающемся месте на хостинге</DiskUsageNotifies>
 					<EmailBoxesNotifies>Уведомление o заканчивающейся квоте почтовых ящиков</EmailBoxesNotifies>
 					<DomainAutoProlongation>Автопродление истекающих доменов</DomainAutoProlongation>
