@@ -185,6 +185,17 @@
 			<Alias>(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`)</Alias>
 		</ServersGroup>
 		<!-- ********************************************************************** -->
+		<Node>
+			<Head>Ноды</Head>
+			<Prompt>На каких нодах кластера размещать заказы этого тарифа</Prompt>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Node%</ListElement>
+				<Length>10</Length>
+			</Args>
+			<Alias>(IF(`Node` != '',`Node`,'-'))</Alias>
+		</Node>
+		<!-- ********************************************************************** -->
 		<disklimit>
 			<Head>Место</Head>
 			<Prompt>Объем выделяемого пространства в мегабайтах</Prompt>
@@ -260,6 +271,7 @@
 		<ListElement>Group</ListElement>
 		<ListElement>User</ListElement>
 		<ListElement>ServersGroup</ListElement>
+		<ListElement>Node</ListElement>
 		<ListElement>CostMonth</ListElement>
 		<ListElement>Discount</ListElement>
 		<ListElement>preset</ListElement>
