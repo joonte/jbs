@@ -10,113 +10,126 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(Is_Error(System_Load('classes/VPSServer.class.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $VPSOrder = DB_Select('VPSOrdersOwners',Array('ID','Login','IP','Password','Domain','UserID','OrderID','SchemeID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`','Login','(SELECT `Name` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`OldSchemeID`) as `SchemeName`'),Array('UNIQ','ID'=>$VPSOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($VPSOrder)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return ERROR | @Trigger_Error(400);
-  case 'array':
-    #---------------------------------------------------------------------------
-    $VPSOrderID = (integer)$VPSOrder['ID'];
-    #---------------------------------------------------------------------------
-    $VPSNewScheme = DB_Select('VPSSchemes','*',Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
-    #---------------------------------------------------------------------------
-    switch(ValueOf($VPSNewScheme)){
-      case 'error':
-        return ERROR | @Trigger_Error(500);
-      case 'exception':
-        return ERROR | @Trigger_Error(400);
-      case 'array':
-        #-----------------------------------------------------------------------
-        $VPSServer = new VPSServer();
-        #-----------------------------------------------------------------------
-        $IsSelected = $VPSServer->Select((integer)$VPSOrder['ServerID']);
-        #-----------------------------------------------------------------------
-        switch(ValueOf($IsSelected)){
-          case 'error':
-            return ERROR | @Trigger_Error(500);
-          case 'exception':
-            return ERROR | @Trigger_Error(400);
-          case 'true':
-	    #-------------------------------------------------------------------
-	    $VPSNewScheme['Domain'] = $VPSOrder['Domain'];
-	    #-------------------------------------------------------------------
-	    $GLOBALS['TaskReturnInfo'] = Array(($VPSServer->Settings['Address'])=>Array($VPSOrder['Login'],$VPSOrder['IP']),$VPSOrder['SchemeName']=>Array($VPSNewScheme['Name']));
-            #-------------------------------------------------------------------
-            $SchemeChange = $VPSServer->SchemeChange($VPSOrder,$VPSNewScheme);
-            #-------------------------------------------------------------------
-            switch(ValueOf($SchemeChange)){
-              case 'error':
-                return ERROR | @Trigger_Error(500);
-              case 'exception':
-                #---------------------------------------------------------------
-                $IsUpdate = DB_Update('VPSOrders',Array('SchemeID'=>$VPSSchemeID),Array('ID'=>$VPSOrderID));
-                if(Is_Error($IsUpdate))
-                  return ERROR | @Trigger_Error(500);
-                #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'Active','RowsIDs'=>$VPSOrderID,'Comment'=>$SchemeChange->String));
-                #---------------------------------------------------------------
-                switch(ValueOf($Comp)){
-                  case 'error':
-                    return ERROR | @Trigger_Error(500);
-                  case 'exception':
-                    return ERROR | @Trigger_Error(400);
-                  case 'array':
-                    #-----------------------------------------------------------
-		    $Event = Array(
-		    			'UserID'	=> $VPSOrder['UserID'],
-					'PriorityID'	=> 'Error',
-					'Text'		=> SPrintF('Не удалось сменить тарифный план заказу VPS [%s] в автоматическом режиме, причина (%s)',$VPSOrder['Login'],$SchemeChange->String),
-					'IsReaded'	=> FALSE
-		                  );
-                    $Event = Comp_Load('Events/EventInsert',$Event);
-                    if(!$Event)
-                      return ERROR | @Trigger_Error(500);
-                    #-----------------------------------------------------------
-                    return TRUE;
-                  default:
-                    return ERROR | @Trigger_Error(101);
-                }
-              case 'true':
-                #---------------------------------------------------------------
-                $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'Active','RowsIDs'=>$VPSOrderID,'Comment'=>'Тарифный план изменен'));
-                #---------------------------------------------------------------
-                switch(ValueOf($Comp)){
-                  case 'error':
-                    return ERROR | @Trigger_Error(500);
-                  case 'exception':
-                    return ERROR | @Trigger_Error(400);
-                  case 'array':
-		    #-----------------------------------------------------------
-                    $Event = Array(
-                                   'UserID'        => $VPSOrder['UserID'],
-                                   'PriorityID'    => 'Hosting',
-                                   'Text'          => SPrintF('Успешно изменён тарифный план (%s->%s) заказа на VPS [%s], сервер (%s)',$VPSOrder['SchemeName'],$VPSNewScheme['Name'],$VPSOrder['Login'],$VPSServer->Settings['Address']),
-                                  );
-                    $Event = Comp_Load('Events/EventInsert',$Event);
-                    if(!$Event)
-                      return ERROR | @Trigger_Error(500);
-                    #-----------------------------------------------------------
-                    return TRUE;
-                  default:
-                    return ERROR | @Trigger_Error(101);
-                }
-              default:
-                return ERROR | @Trigger_Error(101);
-            }
-          default:
-            return ERROR | @Trigger_Error(101);
-        }
-      default:
-         return ERROR | @Trigger_Error(101);
-    }
-  default:
-    return ERROR | @Trigger_Error(101);
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$VPSOrderID = (integer)$VPSOrder['ID'];
+#-------------------------------------------------------------------------------
+$VPSNewScheme = DB_Select('VPSSchemes','*',Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
+#-------------------------------------------------------------------------------
+switch(ValueOf($VPSNewScheme)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$VPSServer = new VPSServer();
+#-------------------------------------------------------------------------------
+$IsSelected = $VPSServer->Select((integer)$VPSOrder['ServerID']);
+#-------------------------------------------------------------------------------
+switch(ValueOf($IsSelected)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'true':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$VPSNewScheme['Domain'] = $VPSOrder['Domain'];
+#-------------------------------------------------------------------------------
+$GLOBALS['TaskReturnInfo'] = Array(($VPSServer->Settings['Address'])=>Array($VPSOrder['Login'],$VPSOrder['IP']),$VPSOrder['SchemeName']=>Array($VPSNewScheme['Name']));
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$SchemeChange = $VPSServer->SchemeChange($VPSOrder,$VPSNewScheme);
+#-------------------------------------------------------------------------------
+switch(ValueOf($SchemeChange)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	#-------------------------------------------------------------------------------
+	$IsUpdate = DB_Update('VPSOrders',Array('SchemeID'=>$VPSSchemeID),Array('ID'=>$VPSOrderID));
+	if(Is_Error($IsUpdate))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'Active','RowsIDs'=>$VPSOrderID,'Comment'=>$SchemeChange->String));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Comp)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$Event = Array(
+			'UserID'	=> $VPSOrder['UserID'],
+			'PriorityID'	=> 'Error',
+			'Text'		=> SPrintF('Не удалось сменить тарифный план заказу VPS [%s] в автоматическом режиме, причина (%s)',$VPSOrder['Login'],$SchemeChange->String),
+			'IsReaded'	=> FALSE
+
+			);
+	$Event = Comp_Load('Events/EventInsert',$Event);
+	if(!$Event)
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	return TRUE;
+	#-------------------------------------------------------------------------------
+case 'true':
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'VPSOrders','StatusID'=>'Active','RowsIDs'=>$VPSOrderID,'Comment'=>'Тарифный план изменен'));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Comp)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$Event = Array(
+			'UserID'        => $VPSOrder['UserID'],
+			'PriorityID'    => 'Hosting',
+			'Text'          => SPrintF('Успешно изменён тарифный план (%s->%s) заказа на VPS [%s], сервер (%s)',$VPSOrder['SchemeName'],$VPSNewScheme['Name'],$VPSOrder['Login'],$VPSServer->Settings['Address']),
+			);
+	$Event = Comp_Load('Events/EventInsert',$Event);
+	if(!$Event)
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	return TRUE;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>
