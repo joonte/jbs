@@ -40,6 +40,8 @@ function VmManager5_KVM_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 	#-------------------------------------------------------------------------------
 	if(!IsSet($Doc['error'])){
 		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[VmManager5_KVM_Create]: юзер %s найден, проверяем его виртуалки',$VPSOrder['Login']));
+		#-------------------------------------------------------------------------------
 		# ошибки нет, юзер существует. достаём его идентификатор
 		if(!IsSet($Doc['id']))
 			return new gException('USER_ID_MISSING','Отсутствует идентификатор созданного пользователя');
@@ -55,6 +57,8 @@ function VmManager5_KVM_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[VmManager5_KVM_Create]: юзер %s НЕ найден, созадём его',$VPSOrder['Login']));
+		#-------------------------------------------------------------------------------
 		# предполагаем, что это ошибка проверки, а значит юзер не существует
 		# создаём юзера
 		$Request = Array(
@@ -68,8 +72,6 @@ function VmManager5_KVM_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 				'passwd'		=> $VPSOrder['Password'],
 				'confirm'		=> $VPSOrder['Password'],
 				);
-		#-------------------------------------------------------------------------------
-		$Request = Array('func'=>'user.edit','elid'=>$VPSOrder['Login']);
 		#-------------------------------------------------------------------------------
 		$XML = VmManager5_KVM_Request($Settings,$Request);
 		#-------------------------------------------------------------------------------
@@ -112,9 +114,9 @@ function VmManager5_KVM_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 	#-------------------------------------------------------------------------------
 	# создаём виртуалку
 	$Request = Array(
-			'func'			=> 'vm.edit',		# Целевая функция
+			'func'			=> 'vm.edit',					# Целевая функция
 			'sok'			=> 'ok',
-			'hostnode'		=> 'auto',
+			'hostnode'		=> $VPSScheme['Node'],				// нода кластера
 			'blkiotune'		=> Ceil($VPSScheme['blkiotune']),		# "вес" дисковых операций
 			'password'		=> $VPSOrder['Password'],
 			'confirm'		=> $VPSOrder['Password'],
