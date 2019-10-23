@@ -158,13 +158,20 @@ if(!In_Array($VmInfo['hostnode'],Explode(',',$VPSNewScheme['Node']))){
 	#Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: VmInfo[hostnode] = %s',$VmInfo['hostnode']));
 	#Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: $VPSNewScheme[Node] = %s',$VPSNewScheme['Node']));
 	#-------------------------------------------------------------------------------
-	// несовпадаение узлов, выбираем случайный узел куда мигрировать, из списка разрешённых (TODO по уму надо где мапяти/диска больше)
-	$ToNodes = Explode(',',$VPSNewScheme['Node']);
-	$NewNode = $ToNodes[Array_Rand($ToNodes)];
+	// несовпадаение узлов, выбираем первый узел из массива $Nodes (он с наименьшей загрузкой) совпадающий с узлами куда можно мигрировать
+	foreach($NodeList as $Node){
+		#-------------------------------------------------------------------------------
+		if(In_Array($Node['name'],Explode(',',$VPSNewScheme['Node']))){
+			#-------------------------------------------------------------------------------
+			$Migrate = $Node['id'];
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
-	$Migrate = $NodeList[$NewNode]['id'];
-	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: необходима миграция между нодами %s->%s',$VmInfo['hostnode'],$NewNode));
+	Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: необходима миграция между нодами %s->%s',$VmInfo['hostnode'],$Node['name']));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
@@ -172,8 +179,7 @@ if(!In_Array($VmInfo['hostnode'],Explode(',',$VPSNewScheme['Node']))){
 // если требуется миграция, делаем её
 if(IsSet($Migrate)){
 	#-------------------------------------------------------------------------------
-	// достаём информацию о виртуалке
-	$IsMigrate = $VPSServer->VmMigrate((integer)$VmInfo['id'],(integer)$NodeList[$NewNode]['id']);
+	$IsMigrate = $VPSServer->VmMigrate((integer)$VmInfo['id'],(integer)$Node['id']);
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($IsMigrate)){
 	case 'error':
@@ -186,7 +192,7 @@ if(IsSet($Migrate)){
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: запущена миграция между нодами %s->%s',$VmInfo['hostnode'],$NewNode));
+	Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: запущена миграция между нодами %s->%s',$VmInfo['hostnode'],$Node['name']));
 	#-------------------------------------------------------------------------------
 	// создаём событие
 	$Event = Array(
@@ -198,7 +204,7 @@ if(IsSet($Migrate)){
 	if(!$Event)
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'] = Array(($VPSServer->Settings['Address'])=>Array($VmInfo['hostnode'],$NewNode));
+	$GLOBALS['TaskReturnInfo'] = Array(($VPSServer->Settings['Address'])=>Array($VmInfo['hostnode'],$Node['name']));
 	#-------------------------------------------------------------------------------
 	return 100;
 	#-------------------------------------------------------------------------------
