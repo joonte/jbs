@@ -125,11 +125,11 @@ foreach($Words as $Word){
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			// шлём сообщение о успешной активации
-			if(!TgSendMessage($Settings,$SenderID,$Settings['Params']['ConfirmSuccess']))
+			if(!$Viber->MessageSend($SenderID,$Settings['Params']['ConfirmSuccess']))
 				return new gException('ERROR_SEND_SUCCESS_ACTIVATE_MESSAGE','Ошибка отправки сообщения о успешной активации на сервер Viber');
 			#-------------------------------------------------------------------------------
 			// шлём сообщение со справочной информацией
-			if(!TgSendMessage($Settings,$SenderID,$Settings['Params']['StubMessage']))
+			if(!$Viber->MessageSend($SenderID,$Settings['Params']['StubMessage']))
 				return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки сообщения-затычки на сервер Viber');
 			#-------------------------------------------------------------------------------
 			// вываливаемся из скрипта, вообще

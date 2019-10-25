@@ -1131,6 +1131,15 @@
 				<MessageTemplate>Middle</MessageTemplate>
 				<Message>Сообщение в конфиге для телеги</Message>
 			</Telegram>
+			<!-- ********************************************************************* -->
+			<Viber>
+				<Name>Viber сообщения</Name>
+				<IsActive>0</IsActive>
+				<IsEvent>1</IsEvent>
+				<CutSign>1</CutSign>
+				<MessageTemplate>Middle</MessageTemplate>
+				<Message>Сообщение в конфиге для Viber</Message>
+			</Viber>
 		</Methods>
 		<!-- ********************************************************************** -->
 	</Notifies>
@@ -1174,12 +1183,22 @@
 			<Telegram>
 				<Name>Сообщение по Telegram</Name>
 				<Params>
-					<Address>JabberID</Address>
+					<Address>ChatID</Address>
 					<Message>Сообщение</Message>
 					<Attribs type="array"/>
 				</Params>
 				<IsActive>1</IsActive>
 			</Telegram>
+			<!-- ********************************************************************* -->
+			<Viber>
+				<Name>Сообщение по Viber</Name>
+				<Params>
+					<Address>ChatID</Address>
+					<Message>Сообщение</Message>
+					<Attribs type="array"/>
+				</Params>
+				<IsActive>1</IsActive>
+			</Viber>
 			<!-- ********************************************************************* -->
 			<SMS>
 				<Name>SMS сообщение</Name>
@@ -1821,6 +1840,13 @@
 					<ConfirmRequire>1</ConfirmRequire>
 					<ConfirmInterval>30</ConfirmInterval>
 				</Telegram>
+				<!-- *********************************************************************** -->
+				<Viber>
+					<SettingsReset>0</SettingsReset>
+					<Require>0</Require>
+					<ConfirmRequire>1</ConfirmRequire>
+					<ConfirmInterval>30</ConfirmInterval>
+				</Viber>
 				<!-- *********************************************************************** -->
 				<SMS>
 					<SettingsReset>1</SettingsReset>

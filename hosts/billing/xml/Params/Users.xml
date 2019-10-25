@@ -58,6 +58,23 @@
 		<Value>Yes</Value>
 	</SendEdeskFilesToTelegram>
 	<!-- *********************************************************************** -->
+	<SendEdeskFilesToViber>
+		<Comment>Присылать вложения к тикетам на Viber</Comment>
+		<Type>Select</Type>
+		<Options>
+			<Yes>Да</Yes>
+			<No>Нет</No>
+		</Options>
+		<Check>Char</Check>
+		<Attribs>
+			<size>1</size>
+			<style>width: 100%;</style>
+			<prompt>Присылать или нет прикрепленные к тикету файлы на Viber</prompt>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>Yes</Value>
+	</SendEdeskFilesToViber>
+	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
 	<EdeskButtons>
 		<Title>Настройки администраторов</Title>
