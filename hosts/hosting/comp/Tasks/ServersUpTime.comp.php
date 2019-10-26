@@ -26,7 +26,7 @@ if(!$Cache)
 	$Cache = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Servers = DB_Select('Servers',Array('ID','Address','Port','Monitoring','(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) AS `GroupName`'),Array('SortOn'=>Array('ServersGroupID','Address')));
+$Servers = DB_Select('Servers',Array('ID','Address','TemplateID','Port','Monitoring','IsActive','IsDefault','(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) AS `GroupName`'),Array('SortOn'=>Array('ServersGroupID','Address')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Servers)){
 case 'error':
@@ -160,6 +160,64 @@ foreach($Servers as $Server){
 	#-------------------------------------------------------------------------------
 	$Cache[$Group][] = $Server['Address'];
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// вебхуки, телеграмма и вайбера
+	if($Server['IsActive'] && $Server['IsDefault'] && In_Array($Server['TemplateID'],Array('Telegram','Viber'))){
+		#-------------------------------------------------------------------------------
+		// кэшируем данные о вебхуках, на сутки наверное...
+		$CacheWebHookID = 'CacheWebHook';
+		#-------------------------------------------------------------------------------
+		$CacheWebHook = CacheManager::get($CacheWebHookID);
+		if(!$CacheWebHook)
+			$CacheWebHook = Array();
+		#-------------------------------------------------------------------------------
+		// если есть кэшированное значение - пропускаем
+		if(In_Array($Server['TemplateID'],Array_Keys($CacheWebHook))){
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/Tasks/ServersUpTime]: WebHook last register time = %s',Date('Y-m-d/H:i:s',$CacheWebHook[$Server['TemplateID']])));
+			#-------------------------------------------------------------------------------
+			continue;
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		// библиотеки для работы
+		if(Is_Error(System_Load('libs/HTTP.php','libs/Server.php',SPrintF('libs/%s.php',$Server['TemplateID']))))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$ServerSettings = SelectServerSettingsByTemplate($Server['TemplateID']);
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($ServerSettings)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return new gException('NO_WEB_HOOK_SERVER',SPrintF('Отсуствует настроенный сервер %s',$Server['TemplateID']));
+		case 'array':
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		// надо телегу на класс переделать и функции переименовать. Вайбер красивее получился.
+		if($ServerSettings['TemplateID'] == 'Viber'){
+			#-------------------------------------------------------------------------------
+			$Viber = new Viber($ServerSettings['Params']['Token']);
+			#-------------------------------------------------------------------------------
+			if($Viber->SetWebHook())
+				$CacheWebHook[$Server['TemplateID']] = Time();
+			#-------------------------------------------------------------------------------
+		}else{
+			#-------------------------------------------------------------------------------
+			if(TgSetWebHook($ServerSettings))
+				$CacheWebHook[$Server['TemplateID']] = Time();
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		// на 30 дней кэшируем =)
+		CacheManager::add($CacheWebHookID,$CacheWebHook,30 * 24 * 3600);
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
