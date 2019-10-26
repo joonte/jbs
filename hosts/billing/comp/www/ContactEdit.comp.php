@@ -217,10 +217,11 @@ if($MethodID || $ContactID){	// метод или конткт задан, вт�
 		#-------------------------------------------------------------------------------
 	}elseif($Config['Notifies']['Methods'][$Contact['MethodID']]['IsActive'] && $ContactID){
 		#-------------------------------------------------------------------------------
+		// требуется подтверждение адреса
 		$Attribs 		= Array('type'=>'button','prompt'=>'Нажмите для получения кода подтверждения');
-		$Attribs['onclick']     = SPrintF('form.AddressCode.disabled=false; form.CheckButton.disabled=false; Confirm(\'%s\',form.Address.value,form.ContactID.value);',$Contact['MethodID']);
-		$Attribs['value']       = 'Получить код подтвержения';
-		$Attribs['prompt']      = 'Нажмите для получения кода подтверждения';
+		$Attribs['onclick']	= SPrintF('form.AddressCode.disabled=false; form.CheckButton.disabled=false; Confirm(\'%s\',form.Address.value,form.ContactID.value);',$Contact['MethodID']);
+		$Attribs['value']	= 'Получить код подтвержения';
+		$Attribs['prompt']	= 'Нажмите для получения кода подтверждения';
 		#-------------------------------------------------------------------------------
 		$Confirm = Comp_Load('Form/Input',$Attribs);
 		#-------------------------------------------------------------------------------

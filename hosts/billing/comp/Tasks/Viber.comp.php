@@ -94,6 +94,8 @@ if(SizeOf($Attribs['Attachments']) > 0){
 	#-------------------------------------------------------------------------------
 	// шлём файл, если он есть
 	if($User['Params']['Settings']['SendEdeskFilesToViber'] == "Yes"){
+		if($Viber->FileSend($Attribs['ExternalID'],$Attribs['Attachments']))
+			Debug(SPrintF('[comp/Tasks/Viber]: отправлен файл в Viber'));
 /*
 		#-------------------------------------------------------------------------------
 		if($TgMessageIDs = TgSendFile($Settings,$Attribs['ExternalID'],$Attribs['Attachments'],(IsSet($Attribs['MessageID'])?TRUE:FALSE))){

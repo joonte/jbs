@@ -63,7 +63,8 @@ function Confirm($Method,$Value,$ContactID) {
 			//------------------------------------------------------------------------------
 		case 'Exception':
 			//------------------------------------------------------------------------------
-			ShowAlert(ExceptionsStack($Answer.Exception), 'Warning');
+			// вайбер - он особенно особенный - даже по сравнению с телегой
+			ShowAlert(ExceptionsStack($Answer.Exception), ($Method == 'Viber')?'/styles/' + window.location.hostname + '/Images/Viber.png':'Warning');
 			//------------------------------------------------------------------------------
 			break;
 			//------------------------------------------------------------------------------

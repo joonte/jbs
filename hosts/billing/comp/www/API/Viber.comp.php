@@ -150,9 +150,6 @@ foreach($Words as $Word){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // сюда мы попали если ничего не найдено
-if(!$Viber->MessageSend($SenderID,SPrintF($Settings['Params']['StartMessage'],$Settings['Params']['BotName'])))
-	return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки стартового сообщения на сервер Viber');
-#-------------------------------------------------------------------------------
 if(!$Viber->MessageSend($SenderID,$Settings['Params']['StubMessage']))
 	return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки сообщения-затычки на сервер Viber');
 #-------------------------------------------------------------------------------
