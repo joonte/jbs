@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ProfileID = (integer) @$Args['ProfileID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/HTMLDoc.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/WkHtmlToPdf.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Executor = Comp_Load('www/Administrator/API/ProfileCompile',Array('ProfileID'=>100));
@@ -91,7 +91,7 @@ switch(ValueOf($Executor)){
           $Out = Str_Replace(SPrintF('%%%s%%',$LinkID),$Text?$Text:'-',$Out);
         }
         #-----------------------------------------------------------------------
-        $PDF = HTMLDoc_CreatePDF('Envelope',$Out);
+        $PDF = WkHtmlToPdf_CreatePDF('Envelope',$Out);
         #-----------------------------------------------------------------------
         switch(ValueOf($PDF)){
           case 'error':

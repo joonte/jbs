@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $OrderFieldID = (integer) @$Args['OrderFieldID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/HTMLDoc.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/WkHtmlToPdf.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

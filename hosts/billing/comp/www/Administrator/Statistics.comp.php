@@ -16,7 +16,7 @@ $FinishDate    = (integer) @$Args['FinishDate'];
 $StatisticsIDs =   (array) @$Args['StatisticsIDs'];
 $Details       =   (array) @$Args['Details'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/HTMLDoc.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/WkHtmlToPdf.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 # Формирование отчетов
@@ -126,7 +126,7 @@ EOD;
   #-----------------------------------------------------------------------------
   echo '<P style="color:#6F9006;">Статистика сформирована</P>';
   #-----------------------------------------------------------------------------
-  $PDF = HTMLDoc_CreatePDF('Statistics',$DOM,$Folder);
+  $PDF = WkHtmlToPdf_CreatePDF('Statistics',$DOM,$Folder);
   #-----------------------------------------------------------------------------
   switch(ValueOf($PDF)){
     case 'error':

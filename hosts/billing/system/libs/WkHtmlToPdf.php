@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 #-------------------------------------------------------------------------------
-function HTMLDoc_CreatePDF($ModeID,$HTML,$Prefix = '/'){
+function WkHtmlToPdf_CreatePDF($ModeID,$HTML,$Prefix = '/'){
 	/******************************************************************************/
 	$__args_types = Array('string','string,object','string');
 	#-------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ function HTMLDoc_CreatePDF($ModeID,$HTML,$Prefix = '/'){
 	#-------------------------------------------------------------------------------
 	$Config = Config();
 	#-------------------------------------------------------------------------------
-	$Settings = $Config['HTMLDOC'];
+	$Settings = $Config['WkHtmlToPdf'];
 	#-------------------------------------------------------------------------------
 	$Modes = $Settings['Modes'];
 	#-------------------------------------------------------------------------------
@@ -78,7 +78,7 @@ function HTMLDoc_CreatePDF($ModeID,$HTML,$Prefix = '/'){
 	#-------------------------------------------------------------------------------
 	$Tmp = System_Element('tmp');
 	if(Is_Error($Tmp))
-		return ERROR | @Trigger_Error('[HTMLDoc_CreatePDF]: временная папка не найдена');
+		return ERROR | @Trigger_Error('[WkHtmlToPdf_CreatePDF]: временная папка не найдена');
 	#-------------------------------------------------------------------------------
 	$Logs = SPrintF('%s/logs',$Tmp);
 	#-------------------------------------------------------------------------------
@@ -86,27 +86,21 @@ function HTMLDoc_CreatePDF($ModeID,$HTML,$Prefix = '/'){
 		if(!@MkDir($Logs,0777,TRUE))
 			return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$HTML = @Mb_Convert_Encoding($HTML,$Settings['ConvertToCharset']);
-	if(!$HTML)
-		return ERROR | @Trigger_Error('[HTMLDoc_CreatePDF]: не удалось преобразовать кодировку');
+	$UniqID = UniqID('WkHtmlToPdf');
 	#-------------------------------------------------------------------------------
-	$UniqID = UniqID('HTMLDOC');
-	#-------------------------------------------------------------------------------
-	$File = IO_Write($Path = SPrintF('%s/%s',$Tmp,$UniqID),$HTML);
+	$File = IO_Write($Path = SPrintF('%s/%s.html',$Tmp,$UniqID),$HTML);
 	//Debug($File);
 	if(Is_Error($File))
-		return ERROR | @Trigger_Error('[HTMLDoc_CreatePDF]: не удалось создать временный файл');
+		return ERROR | @Trigger_Error('[WkHtmlToPdf_CreatePDF]: не удалось создать временный файл');
 	#-------------------------------------------------------------------------------
-	$Command = SPrintF('htmldoc %s %s',$Mode,$Path);
+	$Command = SPrintF("wkhtmltopdf --encoding utf-8 --custom-header 'meta' 'charset=utf-8' %s %s -",$Mode,$Path);
 	#-------------------------------------------------------------------------------
 	//Debug($Command);
 	#-------------------------------------------------------------------------------
-	if(!PutENV('HTMLDOC_NOCGI=1'))
-		return ERROR | @Trigger_Error('[HTMLDoc_CreatePDF]: не удалось установить переменную окружения HTMLDOC_NOCGI');
 	#-------------------------------------------------------------------------------
-	$HTMLDOC = @Proc_Open($Command,Array(Array('pipe','r'),Array('pipe','w'),Array('file',$Log = SPrintF('%s/HTMLDOC.log',$Logs),'a')),$Pipes);
-	if(!Is_Resource($HTMLDOC))
-		return ERROR | @Trigger_Error('[HTMLDoc_CreatePDF]: не удалось открыть процесс');
+	$WkHtmlToPdf = @Proc_Open($Command,Array(Array('pipe','r'),Array('pipe','w'),Array('file',$Log = SPrintF('%s/WkHtmlToPdf.log',$Logs),'a')),$Pipes);
+	if(!Is_Resource($WkHtmlToPdf))
+		return ERROR | @Trigger_Error('[WkHtmlToPdf_CreatePDF]: не удалось открыть процесс');
 	#-------------------------------------------------------------------------------
 	$StdOut = &$Pipes[1];
 	#-------------------------------------------------------------------------------
@@ -115,13 +109,13 @@ function HTMLDoc_CreatePDF($ModeID,$HTML,$Prefix = '/'){
 	while(!Feof($StdOut))
 		$Result .= FRead($StdOut,1024);
 	#-------------------------------------------------------------------------------
-	Proc_Close($HTMLDOC);
+	Proc_Close($WkHtmlToPdf);
 	#-------------------------------------------------------------------------------
 	if(!UnLink($Path))
-		return ERROR | @Trigger_Error('[HTMLDoc_CreatePDF]: не удалось удалить временный файл');
+		return ERROR | @Trigger_Error('[WkHtmlToPdf_CreatePDF]: не удалось удалить временный файл');
 	#-------------------------------------------------------------------------------
 	if(!$Result)
-		return ERROR | @Trigger_Error(SPrintF('[HTMLDoc_CreatePDF]: ошибка формирования PDF, смотрите (%s)',$Log));
+		return ERROR | @Trigger_Error(SPrintF('[WkHtmlToPdf_CreatePDF]: ошибка формирования PDF, смотрите (%s)',$Log));
 	#-------------------------------------------------------------------------------
 	return $Result;
 	#-------------------------------------------------------------------------------

@@ -12,7 +12,7 @@ $Args = Args();
 $FileID = (integer) @$Args['FileID'];
 $TypeID =  (string) @$Args['TypeID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','libs/HTMLDoc.php','libs/Upload.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','libs/WkHtmlToPdf.php','libs/Upload.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $TypeID = DB_Escape($TypeID);

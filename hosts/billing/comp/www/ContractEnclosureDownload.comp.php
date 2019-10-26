@@ -11,7 +11,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ContractEnclosureID = (integer) @$Args['ContractEnclosureID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','libs/HTMLDoc.php','libs/Upload.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','libs/WkHtmlToPdf.php','libs/Upload.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $File = GetUploadedFile('ContractsEnclosures',$ContractEnclosureID);
-$PDF = HTMLDoc_CreatePDF('ContractEnclosure',$File['Data']);
+$PDF = WkHtmlToPdf_CreatePDF('ContractEnclosure',$File['Data']);
 #-------------------------------------------------------------------------------
 switch(ValueOf($PDF)){
 case 'error':

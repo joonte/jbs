@@ -11,7 +11,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $MotionDocumentID = (integer) @$Args['MotionDocumentID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','libs/HTMLDoc.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','libs/WkHtmlToPdf.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

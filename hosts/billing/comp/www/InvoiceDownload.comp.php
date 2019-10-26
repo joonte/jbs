@@ -18,7 +18,7 @@ $IsNoHeaders	= (boolean) @$Args['IsNoHeaders'];
 #-------------------------------------------------------------------------------
 #Debug(SPrintF('[comp/www/InvoiceDownload]: Args = %s',print_r($Args,true)));
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/HTMLDoc.php','libs/Upload.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/WkHtmlToPdf.php','libs/Upload.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ switch(ValueOf($Invoice)){
          return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
 	#Debug(print_r($Out,true));
-        $File = HTMLDoc_CreatePDF('Invoice',$Out);
+        $File = WkHtmlToPdf_CreatePDF('Invoice',$Out);
         #-----------------------------------------------------------------------
         switch(ValueOf($File)){
           case 'error':

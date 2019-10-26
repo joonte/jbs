@@ -12,7 +12,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ClauseID = (string) @$Args['ClauseID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/DOM.class.php','libs/HTMLDoc.php')))
+if(Is_Error(System_Load('classes/DOM.class.php','libs/WkHtmlToPdf.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Clauses/Load',$ClauseID);
@@ -38,7 +38,7 @@ $Out = $DOM->Build();
 if(Is_Error($Out))
  return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$PDF = HTMLDoc_CreatePDF('Clause',$Out);
+$PDF = WkHtmlToPdf_CreatePDF('Clause',$Out);
 #-------------------------------------------------------------------------------
 switch(ValueOf($PDF)){
   case 'error':

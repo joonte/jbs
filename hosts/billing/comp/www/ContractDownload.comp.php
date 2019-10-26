@@ -11,7 +11,7 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $ContractID = (integer) @$Args['ContractID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','libs/HTMLDoc.php','libs/Upload.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','libs/WkHtmlToPdf.php','libs/Upload.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Contract = DB_Select('Contracts',Array('ID','UserID'),Array('UNIQ','ID'=>$ContractID));
@@ -53,7 +53,7 @@ default:
 #-------------------------------------------------------------------------------
 # генерим PDF
 $File = GetUploadedFile('Contracts',$Contract['ID']);
-$PDF = HTMLDoc_CreatePDF('Contract',$File['Data']);
+$PDF = WkHtmlToPdf_CreatePDF('Contract',$File['Data']);
 #-------------------------------------------------------------------------------
 switch(ValueOf($PDF)){
 case 'error':

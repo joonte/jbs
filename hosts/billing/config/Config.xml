@@ -1624,19 +1624,18 @@
 	</Services>
 	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
-	<HTMLDOC>
-		<ConvertToCharset>CP1251</ConvertToCharset>
+	<WkHtmlToPdf>
 		<Modes>
-			<Contract>-t pdf14 --size A4 --pagemode document --webpage --no-title --embedfonts --header1 ... --header ... --footer .1. --headingfont Times --bodyfont Times --headfootsize 13.0 --headfootfont Times-Roman --charset cp-1251 --links --pagelayout twoleft --permissions all</Contract>
-			<ContractEnclosure>-t pdf14 --size A4 --pagemode document --webpage --no-title --embedfonts --header ... --header1 ... --footer .1. --headingfont Times --bodyfont Times --headfootsize 13.0 --headfootfont Times-Roman --charset cp-1251 --links --permissions all</ContractEnclosure>
-			<Invoice>-t pdf14 --size A4 --pagemode document --webpage --no-title --embedfonts --header ... --header1 ... --footer ... --headingfont Times --bodyfont Times --headfootsize 13.0 --headfootfont Times-Roman --charset cp-1251 --links --jpeg=100 --no-compression --permissions all</Invoice>
-			<WorksCompliteReport>-t pdf14 --size A4 --pagemode document --webpage --no-title --embedfonts --header ... --header1 ... --footer .1. --headingfont Times --bodyfont Times --headfootsize 13.0 --headfootfont Times-Roman --charset cp-1251 --links --permissions all</WorksCompliteReport>
-			<Envelope>-t pdf14 --size 29x21cm --browserwidth 1280 --left 1cm --top 1cm --right 1cm --bottom 1cm --pagemode outline --webpage --no-title --embedfonts --header1 ... --header ... --footer ... --headingfont Arial --bodyfont Arial --fontsize 12.0 --headfootfont Arial --charset cp-1251 --links --pagelayout one --permissions all</Envelope>
-			<Clause>-t pdf14 --size A4 --pagemode document --webpage --no-title --embedfonts --header1 ... --header ... --footer .1. --headingfont Times --bodyfont Times --headfootsize 13.0 --headfootfont Times-Roman --charset cp-1251 --links --pagelayout twoleft --permissions all</Clause>
-			<Statistics>-t pdf14 --size 29x21cm --browserwidth 1280 --left 1cm --top 1cm --right 1cm --bottom 1cm --pagemode outline --webpage --no-title --embedfonts --header1 ... --header ... --footer .1. --headingfont Arial --bodyfont Arial --fontsize 12.0 --headfootfont Arial --charset cp-1251 --links --pagelayout one --permissions all</Statistics>
-			<VerifyReport>-t pdf14 --size 29x21cm --browserwidth 1280 --left 1cm --top 1cm --right 1cm --bottom 1cm --pagemode outline --webpage --no-title --embedfonts --header1 ... --header ... --footer .1. --headingfont Arial --bodyfont Arial --fontsize 12.0 --headfootfont Arial --charset cp-1251 --links --pagelayout one --permissions all</VerifyReport>
+			<Contract>--page-size A4</Contract>
+			<ContractEnclosure>--page-size A4</ContractEnclosure>
+			<Invoice>--page-size A4</Invoice>
+			<WorksCompliteReport>--page-size A4</WorksCompliteReport>
+			<Envelope>--page-size A4 --orientation Landscape</Envelope>
+			<Clause>--page-size A4</Clause>
+			<Statistics>--page-size A4 --orientation Landscape</Statistics>
+			<VerifyReport>--page-size A4 --orientation Landscape</VerifyReport>
 		</Modes>
-	</HTMLDOC>
+	</WkHtmlToPdf>
 	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
 	<Executor>
