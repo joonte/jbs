@@ -174,7 +174,7 @@ foreach($Servers as $Server){
 		// если есть кэшированное значение - пропускаем
 		if(In_Array($Server['TemplateID'],Array_Keys($CacheWebHook))){
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/ServersUpTime]: WebHook last register time = %s',Date('Y-m-d/H:i:s',$CacheWebHook[$Server['TemplateID']])));
+			Debug(SPrintF('[comp/Tasks/ServersUpTime]: WebHook for %s; last register time = %s',$Server['TemplateID'],Date('Y-m-d/H:i:s',$CacheWebHook[$Server['TemplateID']])));
 			#-------------------------------------------------------------------------------
 			continue;
 			#-------------------------------------------------------------------------------
