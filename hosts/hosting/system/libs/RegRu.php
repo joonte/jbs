@@ -1,255 +1,81 @@
 <?php
 #-------------------------------------------------------------------------------
-/** @author Великодный В.В. (Joonte Ltd.) */
+/** @author Великодный В.В. (Joonte Ltd.) 
+ * rewritten by Alex Keda, for www.host-food.ru */
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('libs/HTTP.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name,$Ns1IP,$Ns2Name,$Ns2IP,$Ns3Name,$Ns3IP,$Ns4Name,$Ns4IP,$ContractID = '',$IsPrivateWhoIs,$PepsonID = 'Default',$Person = Array()){
-  /****************************************************************************/
-  $__args_types = Array('array','string','string','integer','string','string','string','string','string','string','string','string','boolean','string','string','array');
-  #-----------------------------------------------------------------------------
-  $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
-  /****************************************************************************/
-  $HTTP = RegRu_Build_HTTP($Settings);
-  #-----------------------------------------------------------------------------
-  $Domain = Mb_StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone),'UTF-8');
-  #-----------------------------------------------------------------------------
-  $Query = Array(
-    #---------------------------------------------------------------------------
-    'username'              => $Settings['Login'],
-    'password'              => $Settings['Password'],
-    'domain_name'           => $Domain,
-    'enduser_ip'            => '127.0.0.1',	// see JBS-225
-    'pay_type'              => 'prepay',
-    'private_person_flag'   => $IsPrivateWhoIs,
-  );
-  #-----------------------------------------------------------------------------
-  $Query['period'] = $Years;
-  #-----------------------------------------------------------------------------
-  if(In_Array($DomainZone,Array('ru','su','рф'))){
-    #---------------------------------------------------------------------------
-    switch($PepsonID){
-      case 'Natural':
-        #-----------------------------------------------------------------------
-        $Query['person']              = SPrintF('%s %s %s',Translit($Person['Name']),Mb_SubStr(Translit($Person['Lastname']),0,1),Translit($Person['Sourname']));
-        $Query['private_person_flag'] = 1;
-        $Query['person_r']            = SPrintF('%s %s %s',$Person['Sourname'],$Person['Name'],$Person['Lastname']);
-        $Query['passport']            = SPrintF('%s %s выдан %s %s',$Person['PasportLine'],$Person['PasportNum'],$Person['PasportWhom'],$Person['PasportDate']);
-        $Query['birth_date']          = $Person['BornDate'];
-        $Query['country']             = IsSet($Person['PasportCountry'])?$Person['PasportCountry']:$Person['pCountry'];
-        $Query['p_addr']              = SPrintF('%s, %s, %s, %s %s, %s',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['pRecipient']);
-        $Query['phone']               = $Person['Phone'];
-	$Query['sms_security_number'] = $Person['CellPhone'];
-        $Query['fax']                 = $Person['Fax'];
-        $Query['e_mail']              = $Person['Email'];
-      break;
-      case 'Juridical':
-        #-----------------------------------------------------------------------
-        $Query['org']                 = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm']));
-        $Query['org_r']               = SPrintF('%s "%s"',$Person['CompanyForm'],$Person['CompanyName']);
-        $Query['code']                = $Person['Inn'];
-        $Query['kpp']                 = $Person['Kpp'];
-        $Query['country']             = $Person['jCountry'];
-        $Query['address_r']           = SPrintF('%s, %s, %s, %s %s',$Person['jIndex'],$Person['jState'],$Person['jCity'],$Person['jType'],$Person['jAddress']);
-        $Query['p_addr']              = SPrintF('%s, %s, %s, %s %s, %s "%s"',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['CompanyForm'],$Person['CompanyName']);
-        $Query['phone']               = $Person['Phone'];
-	$Query['sms_security_number'] = $Person['CellPhone'];
-        $Query['fax']                 = $Person['Fax'];
-        $Query['e_mail']              = $Person['Email'];
-      break;
-      default:
-        return new gException('WRONG_PROFILE_ID','Неверный идентификатор профиля');
-    }
-    #---------------------------------------------------------------------------
-    # вообще, наверное надо тут любую зону ставить ... 
-  }elseif(In_Array($DomainZone,Array('info','biz','org','com','net','be','cc','tv','pro','site','xyz','space','website','store'))){
-    #---------------------------------------------------------------------------
-    switch($PepsonID){
-      case 'Natural':
-        #-----------------------------------------------------------------------
-        $Query['o_company'] = 'Private person';
-        $Query['a_company'] = 'Private person';
-        $Query['t_company'] = 'Private person';
-        $Query['b_company'] = 'Private person';
-        #-----------------------------------------------------------------------
-        $Query['o_country_code'] = $Person['pCountry'];
-        $Query['a_country_code'] = $Person['pCountry'];
-        $Query['t_country_code'] = $Person['pCountry'];
-        $Query['b_country_code'] = $Person['pCountry'];
-        #-----------------------------------------------------------------------
-        $Query['o_postcode'] = $Person['pIndex'];
-        $Query['a_postcode'] = $Person['pIndex'];
-        $Query['t_postcode'] = $Person['pIndex'];
-        $Query['b_postcode'] = $Person['pIndex'];
-        #-----------------------------------------------------------------------
-        $Query['o_first_name'] = Translit($Person['Name']);
-        $Query['a_first_name'] = Translit($Person['Name']);
-        $Query['t_first_name'] = Translit($Person['Name']);
-        $Query['b_first_name'] = Translit($Person['Name']);
-        #-----------------------------------------------------------------------
-        $Query['o_last_name'] = Translit($Person['Sourname']);
-        $Query['a_last_name'] = Translit($Person['Sourname']);
-        $Query['t_last_name'] = Translit($Person['Sourname']);
-        $Query['b_last_name'] = Translit($Person['Sourname']);
-        #-----------------------------------------------------------------------
-        $Query['o_email'] = $Person['Email'];
-        $Query['a_email'] = $Person['Email'];
-        $Query['t_email'] = $Person['Email'];
-        $Query['b_email'] = $Person['Email'];
-        #-----------------------------------------------------------------------
-        $Query['o_addr'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
-        $Query['a_addr'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
-        $Query['t_addr'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
-        $Query['b_addr'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
-        #-----------------------------------------------------------------------
-        $Query['o_city'] = Translit($Person['pCity']);
-        $Query['a_city'] = Translit($Person['pCity']);
-        $Query['t_city'] = Translit($Person['pCity']);
-        $Query['b_city'] = Translit($Person['pCity']);
-        #-----------------------------------------------------------------------
-        $Query['o_state'] = Translit($Person['pState']);
-        $Query['a_state'] = Translit($Person['pState']);
-        $Query['t_state'] = Translit($Person['pState']);
-        $Query['b_state'] = Translit($Person['pState']);
-      break;
-      case 'Juridical':
-        #-----------------------------------------------------------------------
-        $CompanyEn = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm']));
-        #-----------------------------------------------------------------------
-        $Query['o_company'] = $CompanyEn;
-        $Query['a_company'] = $CompanyEn;
-        $Query['t_company'] = $CompanyEn;
-        $Query['b_company'] = $CompanyEn;
-        #-----------------------------------------------------------------------
-        $Query['o_country_code'] = $Person['jCountry'];
-        $Query['a_country_code'] = $Person['jCountry'];
-        $Query['t_country_code'] = $Person['jCountry'];
-        $Query['b_country_code'] = $Person['jCountry'];
-        #-----------------------------------------------------------------------
-        $Query['o_postcode'] = $Person['jIndex'];
-        $Query['a_postcode'] = $Person['jIndex'];
-        $Query['t_postcode'] = $Person['jIndex'];
-        $Query['b_postcode'] = $Person['jIndex'];
-        #-----------------------------------------------------------------------
-        $Query['o_first_name'] = Translit($Person['dName']);
-        $Query['a_first_name'] = Translit($Person['dName']);
-        $Query['t_first_name'] = Translit($Person['dName']);
-        $Query['b_first_name'] = Translit($Person['dName']);
-        #-----------------------------------------------------------------------
-        $Query['o_last_name'] = Translit($Person['dSourname']);
-        $Query['a_last_name'] = Translit($Person['dSourname']);
-        $Query['t_last_name'] = Translit($Person['dSourname']);
-        $Query['b_last_name'] = Translit($Person['dSourname']);
-        #-----------------------------------------------------------------------
-        $Query['o_email'] = $Person['Email'];
-        $Query['a_email'] = $Person['Email'];
-        $Query['t_email'] = $Person['Email'];
-        $Query['b_email'] = $Person['Email'];
-        #-----------------------------------------------------------------------
-        $Query['o_addr'] = Translit(SPrintF('%s %s',$Person['jType'],$Person['jAddress']));
-        $Query['a_addr'] = Translit(SPrintF('%s %s',$Person['jType'],$Person['jAddress']));
-        $Query['t_addr'] = Translit(SPrintF('%s %s',$Person['jType'],$Person['jAddress']));
-        $Query['b_addr'] = Translit(SPrintF('%s %s',$Person['jType'],$Person['jAddress']));
-        #-----------------------------------------------------------------------
-        $Query['o_city'] = Translit($Person['jCity']);
-        $Query['a_city'] = Translit($Person['jCity']);
-        $Query['t_city'] = Translit($Person['jCity']);
-        $Query['b_city'] = Translit($Person['jCity']);
-        #-----------------------------------------------------------------------
-        $Query['o_state'] = Translit($Person['jState']);
-        $Query['a_state'] = Translit($Person['jState']);
-        $Query['t_state'] = Translit($Person['jState']);
-        $Query['b_state'] = Translit($Person['jState']);
-      break;
-      default:
-        return new gException('WRONG_PERSON_TYPE_ID','Неверный идентификатор типа персоны');
-    }
-    #---------------------------------------------------------------------------
-    #---------------------------------------------------------------------------
-    if($DomainZone == 'pro')
-      $Query['pro_profession'] = 'Other';
-    #---------------------------------------------------------------------------
-    #---------------------------------------------------------------------------
-    $Phone = $Person['Phone'];
-    #---------------------------------------------------------------------------
-    if($Phone){
-      #-------------------------------------------------------------------------
-      $Phone = Preg_Split('/\s+/',$Phone);
-      #-------------------------------------------------------------------------
-      $Phone = SPrintF('%s.%s%s',Current($Phone),Next($Phone),Next($Phone));
-      #-------------------------------------------------------------------------
-      $Query['o_phone'] = $Phone;
-      $Query['a_phone'] = $Phone;
-      $Query['t_phone'] = $Phone;
-      $Query['b_phone'] = $Phone;
-    }else{
-      #-------------------------------------------------------------------------
-      $Query['o_phone'] = '';
-      $Query['a_phone'] = '';
-      $Query['t_phone'] = '';
-      $Query['b_phone'] = '';
-    }
-    #---------------------------------------------------------------------------
-    $Fax = $Person['Fax'];
-    #---------------------------------------------------------------------------
-    if($Fax){
-      #-------------------------------------------------------------------------
-      $Fax = Preg_Split('/\s+/',$Fax);
-      #-------------------------------------------------------------------------
-      $Fax = SPrintF('%s.%s%s',Current($Fax),Next($Fax),Next($Fax));
-      #-------------------------------------------------------------------------
-      $Query['o_fax'] = $Fax;
-      $Query['a_fax'] = $Fax;
-      $Query['t_fax'] = $Fax;
-      $Query['b_fax'] = $Fax;
-    }else{
-      #-------------------------------------------------------------------------
-      $Query['o_fax'] = '';
-      $Query['a_fax'] = '';
-      $Query['t_fax'] = '';
-      $Query['b_fax'] = '';
-    }
-  }else
-    return new gException('WRONG_ZONE_NAME','Указанная зона не поддерживается в автоматическом режиме');
-  #-----------------------------------------------------------------------------
-  $Query['ns0'] = $Ns1Name;
-  $Query['ns1'] = $Ns2Name;
-  #-----------------------------------------------------------------------------
-  if($Ns1IP && $Ns2IP){
-    #---------------------------------------------------------------------------
-    $Query['ns0ip'] = $Ns1IP;
-    $Query['ns1ip'] = $Ns2IP;
-  }
-  #-----------------------------------------------------------------------------
-  $Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/create");
-  #-----------------------------------------------------------------------------
-  $Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
-  if(Is_Error($Result))
-    return ERROR | @Trigger_Error('[RegRu_Domain_Register]: не удалось выполнить запрос к серверу');
-  #-----------------------------------------------------------------------------
-  $Result = Trim($Result['Body']);
-  #-----------------------------------------------------------------------------
-  $Result = Json_Decode($Result,TRUE);
-  #-----------------------------------------------------------------------------
-  if($Result['result'] == 'success'){
-    if(IsSet($Result['error_code'])){
-      return new gException('REGISTRATOR_ERROR_1',$Result['error_code']);
-    }else{
-      foreach(Array_Keys($Result['answer']) as $Key)
-        Debug(SPrintF("[RegRu_Answer::Domain_Register]: %s => %s",$Key,$Result['answer'][$Key]));
-      #---------------------------------------------------------------------------
-      if($Result['answer']['dname'] == $Domain){
-        return Array('TicketID'=>(integer)$Result['answer']['service_id']);
-      #---------------------------------------------------------------------------
-      }
-    }
-  }
-  #-----------------------------------------------------------------------------
-  if($Result['result'] == 'error')
-    return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
-  #-----------------------------------------------------------------------------
-  return new gException('WRONG_ANSWER',$Result);
+function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name,$Ns1IP,$Ns2Name,$Ns2IP,$Ns3Name,$Ns3IP,$Ns4Name,$Ns4IP,$ContractID = '',$IsPrivateWhoIs,$PersonID = 'Default',$Person = Array()){
+	/******************************************************************************/
+	$__args_types = Array('array','string','string','integer','string','string','string','string','string','string','string','string','boolean','string','string','array');
+	#-------------------------------------------------------------------------------
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/******************************************************************************/
+	$HTTP = RegRu_Build_HTTP($Settings);
+	#-------------------------------------------------------------------------------
+	$Domain = Mb_StrToLower(SPrintF('%s.%s',$DomainName,$DomainZone),'UTF-8');
+	#-------------------------------------------------------------------------------
+	$Query = Array(
+			'username'		=> $Settings['Login'],
+			'password'		=> $Settings['Password'],
+			'domain_name'		=> $Domain,
+			'enduser_ip'		=> '127.0.0.1',	// see JBS-225
+			'pay_type'		=> 'prepay',
+			'private_person_flag'	=> $IsPrivateWhoIs,
+			);
+	#-------------------------------------------------------------------------------
+	$Query['period'] = $Years;
+	#-------------------------------------------------------------------------------
+	// собираем параметры в отдельной функции, она же юзается в переносе
+	$Query = RegRu_Build_Query($Query,$DomainZone,$Person,$PersonID);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Query['ns0'] = $Ns1Name;
+	$Query['ns1'] = $Ns2Name;
+	#-------------------------------------------------------------------------------
+	if($Ns1IP && $Ns2IP){
+		#-------------------------------------------------------------------------------
+		$Query['ns0ip'] = $Ns1IP;
+		$Query['ns1ip'] = $Ns2IP;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	$Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/create");
+	#-------------------------------------------------------------------------------
+	$Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
+	if(Is_Error($Result))
+		return ERROR | @Trigger_Error('[RegRu_Domain_Register]: не удалось выполнить запрос к серверу');
+	#-------------------------------------------------------------------------------
+	$Result = Trim($Result['Body']);
+	#-------------------------------------------------------------------------------
+	$Result = Json_Decode($Result,TRUE);
+	#-------------------------------------------------------------------------------
+	if($Result['result'] == 'success'){
+		#-------------------------------------------------------------------------------
+		if(IsSet($Result['error_code'])){
+			#-------------------------------------------------------------------------------
+			return new gException('REGISTRATOR_ERROR_1',$Result['error_code']);
+			#-------------------------------------------------------------------------------
+		}else{
+			#-------------------------------------------------------------------------------
+			foreach(Array_Keys($Result['answer']) as $Key)
+				Debug(SPrintF("[RegRu_Answer::Domain_Register]: %s => %s",$Key,$Result['answer'][$Key]));
+			#-------------------------------------------------------------------------------
+			if($Result['answer']['dname'] == $Domain)
+				return Array('TicketID'=>(integer)$Result['answer']['service_id']);
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	if($Result['result'] == 'error')
+		return new gException('REGISTRATOR_ERROR','Регистратор вернул ошибку');
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return new gException('WRONG_ANSWER',$Result);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -583,58 +409,41 @@ function RegRu_Domain_Transfer($Settings,$DomainName,$DomainZone,$Param){
 			'enduser_ip'	=> '77.73.25.114',
 			'period'	=> '0',
 			);
+	#-------------------------------------------------------------------------------
 	if(IsSet($Param['AuthInfo']))
 		if($Param['AuthInfo'])
 			$Query['authinfo']	= $Param['AuthInfo'];
 	#-------------------------------------------------------------------------------
-	if(In_Array($DomainZone,Array('su','ru','рф'))){
+	// собираем параметры в отдельной функции, она же юзается в регистрации
+	$Query = RegRu_Build_Query($Query,$DomainZone,$Param['Person'],$Param['PersonID']);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/transfer");
+	#-------------------------------------------------------------------------------
+	$Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
+	if(Is_Error($Result))
+		return ERROR | @Trigger_Error('[RegRu_Domain_Register]: не удалось выполнить запрос к серверу');
+	#-------------------------------------------------------------------------------
+	$Result = Trim($Result['Body']);
+	#-------------------------------------------------------------------------------
+	$Result = Json_Decode($Result,TRUE);
+	#-------------------------------------------------------------------------------
+	if($Result['result'] == 'success'){
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF("[RegRu_Answer::Domain_Transfer]: Params = %s",print_r($Param,true)));
+		#foreach(Array_Keys($Result['answer']) as $Key)
+		#	Debug("[RegRu_Answer::Domain_Transfer]: " . $Key . " - " . $Result['answer'][$Key]);
 		#-------------------------------------------------------------------------------
-		if($Param['PersonID'] == 'Juridical'){
-			#-------------------------------------------------------------------------------
-			$Query['org_r']		= SPrintF('%s "%s"',$Param['Person']['CompanyFormFull'],$Param['Person']['CompanyName']);
-			$Query['code']		= $Param['Person']['Inn'];
-			$Query['address_r']	= SPrintF('%s, %s, %s, %s %s',$Param['Person']['jIndex'],$Param['Person']['jState'],$Param['Person']['jCity'],$Param['Person']['jType'],$Param['Person']['jAddress']);
-			#-------------------------------------------------------------------------------
-		}else{
-			#-------------------------------------------------------------------------------
-			$Query['person_r']	= SPrintF('%s %s %s',$Param['Person']['Sourname'],$Param['Person']['Name'],$Param['Person']['Lastname']);
-			$Query['birth_date']	= $Param['Person']['BornDate'];
-			$Query['passport']	= SPrintF('%s %s выдан %s %s',$Param['Person']['PasportLine'],$Param['Person']['PasportNum'],$Param['Person']['PasportWhom'],$Param['Person']['PasportDate']);
-			$Query['p_addr']	= SPrintF('%s, %s, %s, %s %s, %s',$Param['Person']['pIndex'],$Param['Person']['pState'],$Param['Person']['pCity'],$Param['Person']['pType'],$Param['Person']['pAddress'],$Param['Person']['pRecipient']);
-			$Query['country']             = IsSet($Param['Person']['PasportCountry'])?$Param['Person']['PasportCountry']:$Param['Person']['pCountry'];
-			#-------------------------------------------------------------------------------
-		}
+		if($Result['answer']['dname'] == $Domain)
+			return Array('DomainID'=>(integer)$Result['answer']['service_id']);
 		#-------------------------------------------------------------------------------
-		$Settings['PrefixAPI'] = SprintF("https://api.reg.ru/api/regru2/%s","domain/transfer");
-		#-------------------------------------------------------------------------------
-		$Result = HTTP_Send($Settings['PrefixAPI'],$HTTP,Array(),$Query);
-		if(Is_Error($Result))
-			return ERROR | @Trigger_Error('[RegRu_Domain_Register]: не удалось выполнить запрос к серверу');
-		#-------------------------------------------------------------------------------
-		$Result = Trim($Result['Body']);
-		#-------------------------------------------------------------------------------
-		$Result = Json_Decode($Result,TRUE);
-		#-------------------------------------------------------------------------------
-		if($Result['result'] == 'success'){
-			#-------------------------------------------------------------------------------
-			#foreach(Array_Keys($Result['answer']) as $Key)
-			#	Debug("[RegRu_Answer::Domain_Transfer]: " . $Key . " - " . $Result['answer'][$Key]);
-			#-------------------------------------------------------------------------------
-			if($Result['answer']['dname'] == $Domain)
-				return Array('DomainID'=>(integer)$Result['answer']['service_id']);
-			#-------------------------------------------------------------------------------
-		}
-		#-------------------------------------------------------------------------------
-		if($Result['result'] == 'error')
-			return new gException('REGISTRATOR_ERROR',IsSet($Result['error_text'])?$Result['error_text']:'Регистратор вернул ошибку');
-		#-------------------------------------------------------------------------------
-		return new gException('WRONG_ANSWER',$Result);
-		#-------------------------------------------------------------------------------
-	}else{
-		return new gException('REGISTRATOR_ERROR',SPrintF("Трансфер доменов в зоне %s не реализован в текущей версии библиотеки.",$DomainZone));
 	}
+	#-------------------------------------------------------------------------------
+	if($Result['result'] == 'error')
+		return new gException('REGISTRATOR_ERROR',IsSet($Result['error_text'])?$Result['error_text']:'Регистратор вернул ошибку');
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return new gException('WRONG_ANSWER',$Result);
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 }
 
@@ -1065,7 +874,208 @@ function RegRu_Build_HTTP($Settings){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
-
+function RegRu_Build_Query($Query,$DomainZone,$Person,$PersonID){
+        #-------------------------------------------------------------------------------
+        if(In_Array($DomainZone,Array('ru','su','рф'))){
+		#-------------------------------------------------------------------------------
+		switch($PersonID){
+		case 'Natural':
+			#-------------------------------------------------------------------------------
+			$Query['person']              = SPrintF('%s %s %s',Translit($Person['Name']),Mb_SubStr(Translit($Person['Lastname']),0,1),Translit($Person['Sourname']));
+			$Query['private_person_flag'] = 1;
+			$Query['person_r']            = SPrintF('%s %s %s',$Person['Sourname'],$Person['Name'],$Person['Lastname']);
+			$Query['passport']            = SPrintF('%s %s выдан %s %s',$Person['PasportLine'],$Person['PasportNum'],$Person['PasportWhom'],$Person['PasportDate']);
+			$Query['birth_date']          = $Person['BornDate'];
+			$Query['country']             = IsSet($Person['PasportCountry'])?$Person['PasportCountry']:$Person['pCountry'];
+			$Query['p_addr']              = SPrintF('%s, %s, %s, %s %s, %s',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['pRecipient']);
+			$Query['phone']               = $Person['Phone'];
+			$Query['sms_security_number'] = $Person['CellPhone'];
+			$Query['fax']                 = $Person['Fax'];
+			$Query['e_mail']              = $Person['Email'];
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		case 'Juridical':
+			#-------------------------------------------------------------------------------
+			$Query['org']                 = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm']));
+			$Query['org_r']               = SPrintF('%s "%s"',$Person['CompanyForm'],$Person['CompanyName']);
+			$Query['code']                = $Person['Inn'];
+			$Query['kpp']                 = $Person['Kpp'];
+			$Query['country']             = $Person['jCountry'];
+			$Query['address_r']           = SPrintF('%s, %s, %s, %s %s',$Person['jIndex'],$Person['jState'],$Person['jCity'],$Person['jType'],$Person['jAddress']);
+			$Query['p_addr']              = SPrintF('%s, %s, %s, %s %s, %s "%s"',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['CompanyForm'],$Person['CompanyName']);
+			$Query['phone']               = $Person['Phone'];
+			$Query['sms_security_number'] = $Person['CellPhone'];
+			$Query['fax']                 = $Person['Fax'];
+			$Query['e_mail']              = $Person['Email'];
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		default:
+			return new gException('WRONG_PROFILE_ID','Неверный идентификатор профиля');
+		}
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		switch($PersonID){
+		case 'Natural':
+			#-------------------------------------------------------------------------------
+			$Query['o_company'] = 'Private person';
+			$Query['a_company'] = 'Private person';
+			$Query['t_company'] = 'Private person';
+			$Query['b_company'] = 'Private person';
+			#-------------------------------------------------------------------------------
+			$Query['o_country_code'] = $Person['pCountry'];
+			$Query['a_country_code'] = $Person['pCountry'];
+			$Query['t_country_code'] = $Person['pCountry'];
+			$Query['b_country_code'] = $Person['pCountry'];
+			#-------------------------------------------------------------------------------
+			$Query['o_postcode'] = $Person['pIndex'];
+			$Query['a_postcode'] = $Person['pIndex'];
+			$Query['t_postcode'] = $Person['pIndex'];
+			$Query['b_postcode'] = $Person['pIndex'];
+			#-------------------------------------------------------------------------------
+			$Query['o_first_name'] = Translit($Person['Name']);
+			$Query['a_first_name'] = Translit($Person['Name']);
+			$Query['t_first_name'] = Translit($Person['Name']);
+			$Query['b_first_name'] = Translit($Person['Name']);
+			#-------------------------------------------------------------------------------
+			$Query['o_last_name'] = Translit($Person['Sourname']);
+			$Query['a_last_name'] = Translit($Person['Sourname']);
+			$Query['t_last_name'] = Translit($Person['Sourname']);
+			$Query['b_last_name'] = Translit($Person['Sourname']);
+			#-------------------------------------------------------------------------------
+			$Query['o_email'] = $Person['Email'];
+			$Query['a_email'] = $Person['Email'];
+			$Query['t_email'] = $Person['Email'];
+			$Query['b_email'] = $Person['Email'];
+			#-------------------------------------------------------------------------------
+			$Query['o_addr'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
+			$Query['a_addr'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
+			$Query['t_addr'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
+			$Query['b_addr'] = Translit(SPrintF('%s %s',$Person['pType'],$Person['pAddress']));
+			#-------------------------------------------------------------------------------
+			$Query['o_city'] = Translit($Person['pCity']);
+			$Query['a_city'] = Translit($Person['pCity']);
+			$Query['t_city'] = Translit($Person['pCity']);
+			$Query['b_city'] = Translit($Person['pCity']);
+			#-------------------------------------------------------------------------------
+			$Query['o_state'] = Translit($Person['pState']);
+			$Query['a_state'] = Translit($Person['pState']);
+			$Query['t_state'] = Translit($Person['pState']);
+			$Query['b_state'] = Translit($Person['pState']);
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		case 'Juridical':
+			#-------------------------------------------------------------------------------
+			$CompanyEn = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm']));
+			#-------------------------------------------------------------------------------
+			$Query['o_company'] = $CompanyEn;
+			$Query['a_company'] = $CompanyEn;
+			$Query['t_company'] = $CompanyEn;
+			$Query['b_company'] = $CompanyEn;
+			#-------------------------------------------------------------------------------
+			$Query['o_country_code'] = $Person['jCountry'];
+			$Query['a_country_code'] = $Person['jCountry'];
+			$Query['t_country_code'] = $Person['jCountry'];
+			$Query['b_country_code'] = $Person['jCountry'];
+			#-------------------------------------------------------------------------------
+			$Query['o_postcode'] = $Person['jIndex'];
+			$Query['a_postcode'] = $Person['jIndex'];
+			$Query['t_postcode'] = $Person['jIndex'];
+			$Query['b_postcode'] = $Person['jIndex'];
+			#-------------------------------------------------------------------------------
+			$Query['o_first_name'] = Translit($Person['dName']);
+			$Query['a_first_name'] = Translit($Person['dName']);
+			$Query['t_first_name'] = Translit($Person['dName']);
+			$Query['b_first_name'] = Translit($Person['dName']);
+			#-------------------------------------------------------------------------------
+			$Query['o_last_name'] = Translit($Person['dSourname']);
+			$Query['a_last_name'] = Translit($Person['dSourname']);
+			$Query['t_last_name'] = Translit($Person['dSourname']);
+			$Query['b_last_name'] = Translit($Person['dSourname']);
+			#-------------------------------------------------------------------------------
+			$Query['o_email'] = $Person['Email'];
+			$Query['a_email'] = $Person['Email'];
+			$Query['t_email'] = $Person['Email'];
+			$Query['b_email'] = $Person['Email'];
+			#-------------------------------------------------------------------------------
+			$Query['o_addr'] = Translit(SPrintF('%s %s',$Person['jType'],$Person['jAddress']));
+			$Query['a_addr'] = Translit(SPrintF('%s %s',$Person['jType'],$Person['jAddress']));
+			$Query['t_addr'] = Translit(SPrintF('%s %s',$Person['jType'],$Person['jAddress']));
+			$Query['b_addr'] = Translit(SPrintF('%s %s',$Person['jType'],$Person['jAddress']));
+			#-------------------------------------------------------------------------------
+			$Query['o_city'] = Translit($Person['jCity']);
+			$Query['a_city'] = Translit($Person['jCity']);
+			$Query['t_city'] = Translit($Person['jCity']);
+			$Query['b_city'] = Translit($Person['jCity']);
+			#-------------------------------------------------------------------------------
+			$Query['o_state'] = Translit($Person['jState']);
+			$Query['a_state'] = Translit($Person['jState']);
+			$Query['t_state'] = Translit($Person['jState']);
+			$Query['b_state'] = Translit($Person['jState']);
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		default:
+			return new gException('WRONG_PERSON_TYPE_ID','Неверный идентификатор типа персоны');
+		}
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		if($DomainZone == 'pro')
+			$Query['pro_profession'] = 'Other';
+		#-------------------------------------------------------------------------------
+		$Phone = $Person['Phone'];
+		#-------------------------------------------------------------------------------
+		if($Phone){
+			#-------------------------------------------------------------------------------
+			$Phone = Preg_Split('/\s+/',$Phone);
+			#-------------------------------------------------------------------------------
+			$Phone = SPrintF('%s.%s%s',Current($Phone),Next($Phone),Next($Phone));
+			#-------------------------------------------------------------------------------
+			$Query['o_phone'] = $Phone;
+			$Query['a_phone'] = $Phone;
+			$Query['t_phone'] = $Phone;
+			$Query['b_phone'] = $Phone;
+		}else{
+			#-------------------------------------------------------------------------------
+			$Query['o_phone'] = '';
+			$Query['a_phone'] = '';
+			$Query['t_phone'] = '';
+			$Query['b_phone'] = '';
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		$Fax = $Person['Fax'];
+		#-------------------------------------------------------------------------------
+		if($Fax){
+			#-------------------------------------------------------------------------------
+			$Fax = Preg_Split('/\s+/',$Fax);
+			#-------------------------------------------------------------------------------
+			$Fax = SPrintF('%s.%s%s',Current($Fax),Next($Fax),Next($Fax));
+			#-------------------------------------------------------------------------------
+			$Query['o_fax'] = $Fax;
+			$Query['a_fax'] = $Fax;
+			$Query['t_fax'] = $Fax;
+			$Query['b_fax'] = $Fax;
+			#-------------------------------------------------------------------------------
+		}else{
+			#-------------------------------------------------------------------------------
+			$Query['o_fax'] = '';
+			$Query['a_fax'] = '';
+			$Query['t_fax'] = '';
+			$Query['b_fax'] = '';
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return $Query;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+}
 
 
 ?>
