@@ -50,6 +50,13 @@ styles/_HOSTNAME_/Images/Viber.png
 		<Value />
 	</Token>
 	<!-- *********************************************************************** -->
+	<Secret>
+		<Comment>Токен для доступа к API</Comment>
+		<Type>Hidden</Type>
+		<IsDuty>0</IsDuty>
+		<Value />
+	</Secret>
+	<!-- *********************************************************************** -->
 	<ConfirmInstructions>
 		<Check>/^[^\\]{1,1024}$/u</Check>
 		<Comment>Инструкция подтверждения</Comment>
