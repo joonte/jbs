@@ -301,15 +301,17 @@ if($__USER['ID'] == $Ticket['UserID']){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$WindowWidth = '100%';
 // ширина окна тикетов - на мобильном и десктопе разная
 if($GLOBALS['IsMobile'] || $IsInternal){
 	#-------------------------------------------------------------------------------
 	// мобильный - 100% ширина
-	$WindowWidth = '100%';
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$WindowWidth = Ceil(Max(@$_COOKIE['wScreen']/1.5,630));
+	// бывает маленькое окно на десктопе, и разрешение маленькое бывает. и кука бывает не задана
+	if(IntVal(@$_COOKIE['wScreen']) === 0 || @$_COOKIE['wScreen'] > 670)
+		$WindowWidth = SPrintF('%spx',Ceil(Max(@$_COOKIE['wScreen']/1.5,630)));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
@@ -318,13 +320,15 @@ if($GLOBALS['IsMobile'] || $IsInternal){
 //$WindowWidth = '100%';
 //$WindowWidth = Ceil(Min(@$_COOKIE['wScreen']/1.5,630));
 #-------------------------------------------------------------------------------
+Debug(SPrintF('[comp/www/TicketRead]: wScreen = %s; WindowWidth = %s',@$_COOKIE['wScreen'],$WindowWidth));
 # параметры для области ввода текста
 $Array = Array(
 		'name'		=> 'Message',
 		'id'		=> 'Message',
 		'rows'		=> 5,
 		'AutoFocus'	=> 'yes',
-		'style'		=> SPrintF('background:%s; width:%s;',$Color,$WindowWidth)
+		//'OnChange'	=>'function() {  $(this).each(function() {    autoResize(this);   }); }',
+		'style'		=> SPrintF('resize:vertical; background:%s; width:%s;',$Color,$WindowWidth)
 		);
 #-------------------------------------------------------------------------------
 //'style'               => SPrintF('background:%s; width:%u;',$Color,Max(@$_COOKIE['wScreen']/1.5,630)),
