@@ -59,6 +59,9 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Telegram = new Telegram($Settings['Params']['Token'],$Settings['Params']['Secret']);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 // вырезаем некоторые теги, очень уж мешаются при просмотре сообщений
 $Message = Preg_Replace('/\[size=([0-9]+)\](.+)\[\/size\]/sU','\\2',$Message);
 $Message = Preg_Replace('/\[color=([a-z]+)\](.+)\[\/color\]/sU','<i>\\2</i>',$Message);
@@ -69,12 +72,12 @@ $Message = Preg_Replace('/\[quote\](.+)\[\/quote\]/sU',"<i>\\1</i>\n",$Message);
 $Attribs['MessageID']	= IsSet($Attribs['MessageID'])?$Attribs['MessageID']:0;
 $Attribs['TicketID']	= IsSet($Attribs['TicketID'])?$Attribs['TicketID']:0;
 #-------------------------------------------------------------------------------
-if($TgMessageIDs = TgSendMessage($Settings,$Attribs['ExternalID'],$Message,($Attribs['MessageID'])?TRUE:FALSE)){
+if($TgMessageIDs = $Telegram->MessageSend($Attribs['ExternalID'],$Message,($Attribs['MessageID'])?TRUE:FALSE)){
 	#-------------------------------------------------------------------------------
 	// сохраняем сооветствие отправленного сообщения и кому оно ушло
 	if(Is_Array($TgMessageIDs))
 		foreach($TgMessageIDs as $TgMessageID)
-			if(!TgSaveThreadID($Attribs['UserID'],$Attribs['TicketID'],$Attribs['MessageID'],$TgMessageID))
+			if(!$Telegram->SaveThreadID($Attribs['UserID'],$Attribs['TicketID'],$Attribs['MessageID'],$TgMessageID))
 				return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 }else{
@@ -98,11 +101,11 @@ if(SizeOf($Attribs['Attachments']) > 0){
 	// шлём файл, если он есть
 	if($User['Params']['Settings']['SendEdeskFilesToTelegram'] == "Yes"){
 		#-------------------------------------------------------------------------------
-		if($TgMessageIDs = TgSendFile($Settings,$Attribs['ExternalID'],$Attribs['Attachments'],(IsSet($Attribs['MessageID'])?TRUE:FALSE))){
+		if($TgMessageIDs = $Telegram->FileSend($Attribs['ExternalID'],$Attribs['Attachments'],(IsSet($Attribs['MessageID'])?TRUE:FALSE))){
 			#-------------------------------------------------------------------------------
 			// сохраняем сооветствие отправленнго файла и кому он ушёл
 			foreach($TgMessageIDs as $TgMessageID)
-				if(!TgSaveThreadID($Attribs['UserID'],$Attribs['TicketID'],$Attribs['MessageID'],$TgMessageID))
+				if(!$Telegram->SaveThreadID($Attribs['UserID'],$Attribs['TicketID'],$Attribs['MessageID'],$TgMessageID))
 					return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
 		}else{

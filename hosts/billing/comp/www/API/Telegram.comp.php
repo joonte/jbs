@@ -37,6 +37,9 @@ if(!$Secret || $Secret != $Settings['Params']['Secret'])
 	return new gException('SECRET_KEY_NOT_MATCH','Секретный ключ не совпадает с ключом из настроек');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Telegram = new Telegram($Settings['Params']['Token'],$Settings['Params']['Secret']);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 // телега на вебхук шлёт данные постом, json. читаем их.
 $Data = Json_Decode(File_Get_Contents('php://input'));
 #-------------------------------------------------------------------------------
@@ -73,7 +76,7 @@ Debug(SPrintF('[comp/www/API/Telegram]: входящее сообщение от
 if($Message == '/start'){
 	#-------------------------------------------------------------------------------
 	// TODO надо проверить есть ли такой телеграмм у кого-то. если есть - другое сообщение надо слать - справку или рассказ что и почему
-	if(!TgSendMessage($Settings,$ChatID,SPrintF($Settings['Params']['StartMessage'],$Settings['Params']['BotName'])))
+	if(!$Telegram->MessageSend($ChatID,SPrintF($Settings['Params']['StartMessage'],$Settings['Params']['BotName'])))
 		return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки стартового сообщения на сервер Telegram');
 	#-------------------------------------------------------------------------------
 	return Array('Status'=>'Ok');
@@ -93,7 +96,7 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 	Debug(SPrintF('[comp/www/API/Telegram]: ответ на сообщение = %u',$ReplyToID));
 	#-------------------------------------------------------------------------------
 	// ищем тикет
-	$Attribs = TgFindThreadID($ReplyToID);
+	$Attribs = $Telegram->FindThreadID($ReplyToID);
 	#-------------------------------------------------------------------------------
 	// проверяем соответствие телеграммовского идентфикатора и нашего
 	if($Attribs && $Attribs['TicketID'] != 0){
@@ -118,7 +121,7 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[comp/www/API/Telegram]: НЕ найдено: EdeskID = %s',$Edesk['EdeskID']));
 			#-------------------------------------------------------------------------------
-			if(!TgSendMessage($Settings,$ChatID,$Settings['Params']['EdeskNotFound']))
+			if(!$Telegram->MessageSend($ChatID,$Settings['Params']['EdeskNotFound']))
 				return new gException('ERROR_SEND_EdeskNotFound_MESSAGE','Ошибка отправки сообщения о не найденном тикете');
 			#-------------------------------------------------------------------------------
 			return Array('Status'=>'Ok');
@@ -134,12 +137,12 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 			Debug(SPrintF('[comp/www/API/Telegram]: тикет НЕ найден: TicketID = %s',$Attribs['TicketID']));
 			#-------------------------------------------------------------------------------
 			// TODO надо создать новый тикет
-			if($TgMessageIDs = TgSendMessage($Settings,$ChatID,$Settings['Params']['EdeskNotFound'])){
+			if($TgMessageIDs = $Telegram->MessageSend($ChatID,$Settings['Params']['EdeskNotFound'])){
 				#-------------------------------------------------------------------------------
 				// сохраняем сооветствие отправленного сообщения и кому оно ушло
 				if(Is_Array($TgMessageIDs))
 					foreach($TgMessageIDs as $TgMessageID)
-						if(!TgSaveThreadID($Attribs['UserID'],0,0,$TgMessageID))
+						if(!$Telegram->SaveThreadID($Attribs['UserID'],0,0,$TgMessageID))
 							return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------
 				// выходим
@@ -170,7 +173,7 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 			Debug(SPrintF('[comp/www/API/Telegram]: пользователь с идентфикатором (%s) не существует',$Attribs['UserID']));
 			#-------------------------------------------------------------------------------
 			// сообщаем об этом
-			TgSendMessage($Settings,$ChatID,'Пользователь от имени которого вы отправляете сообщение не существует');
+			$Telegram->MessageSend($ChatID,'Пользователь от имени которого вы отправляете сообщение не существует');
 				return new gException('ERROR_SEND_USER_NOT_FOUND_MESSAGE','Ошибка отправки сообщения о не найденном пользователе');
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
@@ -205,7 +208,7 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 		if(IsSet($FileID)){
 			#-------------------------------------------------------------------------------
 			// какой-то файл есть
-			if($FileData = TgGetFile($Settings,$FileID)){
+			if($FileData = $Telegram->GetFile($FileID)){
 				#-------------------------------------------------------------------------------
 				// говорим что не интерактивно, чтоб размер не проверяло
 				$GLOBALS['IsCron'] = TRUE;
@@ -267,7 +270,7 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 		// не найдено соответсвтие идентификатора в телеграмме и номера сообщения в тикетнцие
 		Debug(SPrintF('[comp/www/API/Telegram]: НЕ найдено соответствие сообщения в телеграмм и тикета: Data->reply_to_message->message_id = %s',$Data->{'reply_to_message'}->{'message_id'}));
 		#-------------------------------------------------------------------------------
-		if(!TgSendMessage($Settings,$ChatID,$Settings['Params']['EdeskNotFound']))
+		if(!$Telegram->MessageSend($ChatID,$Settings['Params']['EdeskNotFound']))
 			return new gException('ERROR_SEND_EdeskNotFound_MESSAGE','Ошибка отправки сообщения о не найденном тикете');
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
@@ -321,11 +324,11 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 				#-------------------------------------------------------------------------------
 				#-------------------------------------------------------------------------------
 				// шлём сообщение о успешной активации
-				if(!TgSendMessage($Settings,$ChatID,$Settings['Params']['ConfirmSuccess']))
+				if(!$Telegram->MessageSend($ChatID,$Settings['Params']['ConfirmSuccess']))
 					return new gException('ERROR_SEND_SUCCESS_ACTIVATE_MESSAGE','Ошибка отправки сообщения о успешной активации на сервер Telegram');
 				#-------------------------------------------------------------------------------
 				// шлём сообщение со справочной информацией
-				if(!TgSendMessage($Settings,$ChatID,$Settings['Params']['StubMessage']))
+				if(!$Telegram->MessageSend($ChatID,$Settings['Params']['StubMessage']))
 					return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки сообщения-затычки на сервер Telegram');
 				#-------------------------------------------------------------------------------
 				// вываливаемся из скрипта, вообще
@@ -348,10 +351,10 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // сюда мы попали если ничего не найдено
-if(!TgSendMessage($Settings,$ChatID,SPrintF($Settings['Params']['StartMessage'],$Settings['Params']['BotName'])))
+if(!$Telegram->MessageSend($ChatID,SPrintF($Settings['Params']['StartMessage'],$Settings['Params']['BotName'])))
 	return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки стартового сообщения на сервер Telegram');
 #-------------------------------------------------------------------------------
-if(!TgSendMessage($Settings,$ChatID,$Settings['Params']['StubMessage']))
+if(!$Telegram->MessageSend($ChatID,$Settings['Params']['StubMessage']))
 	return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки сообщения-затычки на сервер Telegram');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

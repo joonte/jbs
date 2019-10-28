@@ -93,26 +93,9 @@ $Attribs['Attachments'] = Is_Array($Attribs['Attachments'])?$Attribs['Attachment
 if(SizeOf($Attribs['Attachments']) > 0){
 	#-------------------------------------------------------------------------------
 	// шлём файл, если он есть
-	if($User['Params']['Settings']['SendEdeskFilesToViber'] == "Yes"){
+	if($User['Params']['Settings']['SendEdeskFilesToViber'] == "Yes")
 		if($Viber->FileSend($Attribs['ExternalID'],$Attribs['Attachments']))
 			Debug(SPrintF('[comp/Tasks/Viber]: отправлен файл в Viber'));
-/*
-		#-------------------------------------------------------------------------------
-		if($TgMessageIDs = TgSendFile($Settings,$Attribs['ExternalID'],$Attribs['Attachments'],(IsSet($Attribs['MessageID'])?TRUE:FALSE))){
-			#-------------------------------------------------------------------------------
-			// сохраняем сооветствие отправленнго файла и кому он ушёл
-			foreach($TgMessageIDs as $TgMessageID)
-				if(!TgSaveThreadID($Attribs['UserID'],$Attribs['TicketID'],$Attribs['MessageID'],$TgMessageID))
-					return ERROR | @Trigger_Error(500);
-			#-------------------------------------------------------------------------------
-		}else{
-			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/Viber]: не удалось отправить файл в Viber'));
-			#-------------------------------------------------------------------------------
-		}
-		#-------------------------------------------------------------------------------
-*/
-	}
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
