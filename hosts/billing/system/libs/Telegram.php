@@ -85,7 +85,15 @@ class Telegram
 			if($IsReply)
 				$Query['reply_markup'] = Json_Encode(Array('force_reply'=>TRUE));
 			#-------------------------------------------------------------------------------
-			$Result = $this->API('sendDocument',$Query,$Attachment);
+			// по дефолту, метод sendDocument
+			$Method = 'sendDocument';
+			#-------------------------------------------------------------------------------
+			// если это картинка - меняем метод
+			$Mime = Explode('/',$Attachment['Mime']);
+			if($Mime[0] == 'image')
+				$Method = 'sendPhoto';
+			#-------------------------------------------------------------------------------
+			$Result = $this->API($Method,$Query,$Attachment);
 			#-------------------------------------------------------------------------------
 			if(IsSet($Result['ok']) && $Result['ok']){
 				#-------------------------------------------------------------------------------
@@ -218,16 +226,19 @@ class Telegram
 		#-------------------------------------------------------------------------------
 		$Url = SPrintF('/bot%s/%s',$this->Token,$Method);
 		#-------------------------------------------------------------------------------
-		if($Method == 'sendDocument'){
+		if($Method == 'sendDocument' || $Method == 'sendPhoto'){
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[system/libs/Telegram]: обработка вложения (%s), размер (%s), тип (%s)',$Attachment['Name'],$Attachment['Size'],$Attachment['Mime']));
+			#-------------------------------------------------------------------------------
+			// имя поля в форме
+			$FieldName = ($Method == 'sendPhoto')?'photo':'document';
 			#-------------------------------------------------------------------------------
 			$HTTP['Charset'] = '';
 			#-------------------------------------------------------------------------------
 			$Boundary = SPrintF('------------------------%s',Md5(Rand()));
 			#-------------------------------------------------------------------------------
 			$Body = SPrintF("--%s\r\n",$Boundary);
-			$Body = SPrintF("%sContent-Disposition: form-data; name=\"document\"; filename=\"%s\"\r\n",$Body,$Attachment['Name']);
+			$Body = SPrintF("%sContent-Disposition: form-data; name=\"%s\"; filename=\"%s\"\r\n",$Body,$FieldName,$Attachment['Name']);
 			$Body = SPrintF("%sContent-Type: %s\r\n",$Body,$Attachment['Mime']);
 			$Body = SPrintF("%s\r\n%s",$Body,Base64_Decode($Attachment['Data']));
 			$Body = SPrintF("%s\r\n--%s--\r\n\r\n",$Body,$Boundary);
