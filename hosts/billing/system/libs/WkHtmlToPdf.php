@@ -27,6 +27,9 @@ function WkHtmlToPdf_CreatePDF($ModeID,$HTML,$Prefix = '/'){
 				# No more...
 			}
 			#-------------------------------------------------------------------------------
+			// задаём 100% ширину таблиц
+			$Table->AddAttribs(Array('width'=>'100%'),TRUE);
+			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
 		$Tds = $HTML->GetByTagName('TD');
@@ -93,7 +96,7 @@ function WkHtmlToPdf_CreatePDF($ModeID,$HTML,$Prefix = '/'){
 	if(Is_Error($File))
 		return ERROR | @Trigger_Error('[WkHtmlToPdf_CreatePDF]: не удалось создать временный файл');
 	#-------------------------------------------------------------------------------
-	$Command = SPrintF("wkhtmltopdf --encoding utf-8 --custom-header 'meta' 'charset=utf-8' %s %s -",$Mode,$Path);
+	$Command = SPrintF("wkhtmltopdf --margin-left 20mm --margin-top 20mm --margin-right 20mm --margin-bottom 20mm --encoding utf-8 --custom-header 'meta' 'charset=utf-8' %s %s -",$Mode,$Path);
 	#-------------------------------------------------------------------------------
 	//Debug($Command);
 	#-------------------------------------------------------------------------------

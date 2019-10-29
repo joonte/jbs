@@ -154,10 +154,6 @@ set @Text = '<NOBODY>
     <TD>%Executor.Phone%</TD>
    </TR>
    <TR>
-    <TD>Факс</TD>
-    <TD>%Executor.Fax%</TD>
-   </TR>
-   <TR>
     <TD>Электронный адрес</TD>
     <TD>%Executor.Email%</TD>
    </TR>
@@ -223,10 +219,6 @@ set @Text = '<NOBODY>
    <TR>
     <TD>Телефон</TD>
     <TD>%Executor.Phone%</TD>
-   </TR>
-   <TR>
-    <TD>Факс</TD>
-    <TD>%Executor.Fax%</TD>
    </TR>
    <TR>
     <TD>Электронный адрес</TD>
@@ -1020,10 +1012,6 @@ set @Text = '<FONT size="1">
    <TD>%Customer.Phone%</TD>
   </TR>
   <TR>
-   <TD>Факс</TD>
-   <TD>%Customer.Fax%</TD>
-  </TR>
-  <TR>
    <TD>Электронный адрес</TD>
    <TD>%Customer.Email%</TD>
   </TR>
@@ -1208,10 +1196,6 @@ set @Text = '<FONT size="1">
   <TR>
    <TD>Телефон</TD>
    <TD>%Customer.Phone%</TD>
-  </TR>
-  <TR>
-   <TD>Факс</TD>
-   <TD>%Customer.Fax%</TD>
   </TR>
   <TR>
    <TD>Электронный адрес</TD>
@@ -2001,7 +1985,7 @@ VALUES (4,100,100,'yes','yes','yes','Contracts/Enclosures/Template','Шабло�
 
 -- SEPARATOR
 -- Шаблоны счетов платежных систем
-set @Text = '<TABLE border="1" cellpadding="5" cellspacing="0">
+set @Text = '<TABLE border="1" cellpadding="5" cellspacing="0" width="100%">
  <THEAD>
   <TR bgcolor="#DCDCDC">
    <TD align="center">Наименование услуги</TD>
@@ -2291,7 +2275,7 @@ set @Text = '<NOBODY>
  <P><B>Внимание!</B><BR />
  <SPAN>Оплата счёта должна производиться Заказчиком. Оплата счёта третьими лицами не допускается.</SPAN></P>
  <H1>Образец платежного поручения</H1>
- <TABLE border="1" cellpadding="5" cellspacing="0">
+ <TABLE border="1" cellpadding="5" cellspacing="0" widht="100%">
   <TR>
    <TD>ИНН %Executor.Inn%</TD>
    <TD>КПП %Executor.Kpp%</TD>
@@ -2370,7 +2354,7 @@ set @Text = '<NOBODY>
  <P><B>Внимание!</B><BR />
  <SPAN>Оплата счёта должна производиться Заказчиком. Оплата счёта третьими лицами не допускается.</SPAN></P>
  <H1>Образец платежного поручения</H1>
- <TABLE border="1" cellpadding="5" cellspacing="0">
+ <TABLE border="1" cellpadding="5" cellspacing="0" widht="100%">
   <TR>
    <TD>ИНН %Executor.Inn%</TD>
    <TD>КПП %Executor.Kpp%</TD>
@@ -2449,7 +2433,7 @@ set @Text = '<NOBODY>
  <P><B>Внимание!</B><BR />
  <SPAN>Оплата счёта должна производиться Заказчиком. Оплата счёта третьими лицами не допускается.</SPAN></P>
  <H1>Образец платежного поручения</H1>
- <TABLE border="1" cellpadding="5" cellspacing="0">
+ <TABLE border="1" cellpadding="5" cellspacing="0" widht="100%">
   <TR>
    <TD>ИНН %Executor.Inn%</TD>
    <TD>КПП %Executor.Kpp%</TD>
@@ -2527,7 +2511,7 @@ set @Text = '<NOBODY>
  <P><B>Внимание!</B><BR />
  <SPAN>Оплата счёта должна производиться Заказчиком. Оплата счёта третьими лицами не допускается.</SPAN></P>
  <H1>Образец платежного поручения</H1>
- <TABLE border="1" cellpadding="5" cellspacing="0">
+ <TABLE border="1" cellpadding="5" cellspacing="0" widht="100%">
   <TR>
    <TD>ИНН %Executor.Inn%</TD>
    <TD>КПП %Executor.Kpp%</TD>
