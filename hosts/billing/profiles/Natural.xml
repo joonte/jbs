@@ -84,6 +84,17 @@
 			<Value/>
 		</CellPhone>
 		<!-- ********************************************************************** -->
+		<Fax>
+			<Check>Phone</Check>
+			<Comment>Факс</Comment>
+			<Example>+7 495 7558899</Example>
+			<Type>Input</Type>
+			<Attribs>
+				<type>text</type>
+			</Attribs>
+			<IsDuty>0</IsDuty>
+			<Value/>
+		</Fax>
 		<!-- ********************************************************************** -->
 		<Email>
 			<Check>Email</Check>
