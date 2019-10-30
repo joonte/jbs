@@ -137,7 +137,7 @@ if(!$Iframe){
 	$DOM->AddChild('Into',$TicketRead['Form']);
 	#-------------------------------------------------------------------------------
 	// тема странциы
-	$DOM->AddChild('Head',new Tag('TITLE',$TicketRead['DOM']->{'Childs'}[0]->{'Childs'}[0]->{'Text'}));
+	$DOM->AddChild('Head',new Tag('TITLE',$TicketRead['Title']));
 	#-------------------------------------------------------------------------------
 	// события
 	$DOM->AddAttribs('Body',Array('onload'=>'CheckEvents();'));
