@@ -165,12 +165,13 @@ if(!IsSet($GLOBALS['__USER'])){
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
-			$Table->AddChild(new Tag('TR',
+			$Table->AddChild(
+					new Tag('TR',
 					new Tag('TD',Array('style'=>'text-align:left;'),SPrintF('#%s',$ContractID)),
 	    				new Tag('TD',Array('style'=>'text-align:left;overflow-x:hidden','width'=>'70%'),$Contract['Customer']),
 					new Tag('TD',Array('style'=>'text-align:left;'),SPrintF('баланс: %s',$Comp)),
-					new Tag('TD',Array('style'=>'text-align:left'),$A))
-					);
+					new Tag('TD',Array('style'=>'text-align:left'),$A)
+					));
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
@@ -337,6 +338,13 @@ if(!IsSet($GLOBALS['__USER'])){
 }
 #-------------------------------------------------------------------------------
 $DOM->AddChild('TopPanelMenu',$Tr);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// достаём все ссылки - нужны для построения мобильного меню (кстати, для незалогиненых - надо ещё и формы доставать)
+$MenuLinks = $DOM->GetByTagName('A');
+//Debug(SprintF('[comp/TopPanel]: DOM = %s',print_r($DOM->Links['TopPanelMenu'],true)));
+Debug(SprintF('[comp/TopPanel]: MenuLinks = %s',print_r($MenuLinks,true)));
+//echo $ddd;
 #-------------------------------------------------------------------------------
 if(IsSet($_COOKIE['Email']))
 	$DOM->AddAttribs('TopPanelEmail',Array('value'=>$_COOKIE['Email']));
