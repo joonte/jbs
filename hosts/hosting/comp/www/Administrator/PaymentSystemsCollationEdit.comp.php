@@ -135,14 +135,14 @@ if(Is_Error($Comp))
 $Table[] = Array('Описание',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('name'=>'IsActive','type'=>'checkbox','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('name'=>'IsActive','id'=>'IsActive','type'=>'checkbox','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Collation['IsActive'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsActive\'); return false;'),'Активен'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsActive'),'Активен'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'SortID','style'=>'width: 100%;','value'=>$Collation['SortID'],'prompt'=>'В каком порядке сортировать группы, при отображении'));

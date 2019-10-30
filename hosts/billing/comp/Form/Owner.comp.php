@@ -39,14 +39,14 @@ if(Is_Error($Comp))
 if(!$IsChecked)
   $Comp->AddAttribs(Array('disabled'=>TRUE));
 #-------------------------------------------------------------------------------
-$Checkbox = Comp_Load('Form/Input',Array('type'=>'checkbox','onclick'=>'form.GroupID.disabled = !checked;if(!checked) { form.GroupID.value = 4000000; }'));
+$Checkbox = Comp_Load('Form/Input',Array('type'=>'checkbox','id'=>'OwnerGroup','onclick'=>'form.GroupID.disabled = !checked;if(!checked) { form.GroupID.value = 4000000; }'));
 if(Is_Error($Checkbox))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($IsChecked)
   $Checkbox->AddAttribs(Array('checked'=>TRUE));
 #-------------------------------------------------------------------------------
-$Table->AddChild(new Tag('TR',new Tag('TD',$Checkbox),new Tag('TD','Группа'),new Tag('TD',$Comp)));
+$Table->AddChild(new Tag('TR',new Tag('TD',$Checkbox),new Tag('TD',new Tag('LABEL',Array('for'=>'OwnerGroup'),'Группа')),new Tag('TD',$Comp)));
 #-------------------------------------------------------------------------------
 $UniqID = UniqID('ID');
 #-------------------------------------------------------------------------------
@@ -56,14 +56,14 @@ $Comp = Comp_Load('Users/Select','UserID',$UserID,$UniqID,!$IsChecked);
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Checkbox = Comp_Load('Form/Input',Array('type'=>'checkbox','onclick'=>SPrintF("form['%s'].disabled = !checked;if(!checked) { form.UserID.value = 1; }",$UniqID)));
+$Checkbox = Comp_Load('Form/Input',Array('type'=>'checkbox','id'=>'OwnerUser','onclick'=>SPrintF("form['%s'].disabled = !checked;if(!checked) { form.UserID.value = 1; }",$UniqID)));
 if(Is_Error($Checkbox))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($IsChecked)
   $Checkbox->AddAttribs(Array('checked'=>TRUE));
 #-------------------------------------------------------------------------------
-$Table->AddChild(new Tag('TR',new Tag('TD',$Checkbox),new Tag('TD','Пользователь'),new Tag('TD',$Comp)));
+$Table->AddChild(new Tag('TR',new Tag('TD',$Checkbox),new Tag('TD',new Tag('LABEL',Array('for'=>'OwnerUser'),'Пользователь')),new Tag('TD',$Comp)));
 #-------------------------------------------------------------------------------
 return $Table;
 #-------------------------------------------------------------------------------

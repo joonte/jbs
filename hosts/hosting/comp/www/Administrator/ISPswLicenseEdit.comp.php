@@ -174,24 +174,22 @@ if(Is_Error($Comp))
 $Table[] = Array('Флаг',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsInternal','value'=>'yes'),$ISPswLicense['IsInternal']);
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsInternal','id'=>'IsInternal','value'=>'yes'),$ISPswLicense['IsInternal']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 if($ISPswLicense['IsInternal'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-----------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsInternal\'); return false;'),'Внутренняя лицензия'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsInternal'),'Внутренняя лицензия'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsUsed','value'=>'yes'),$ISPswLicense['IsUsed']);
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsUsed','id'=>'IsUsed','value'=>'yes'),$ISPswLicense['IsUsed']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 if($ISPswLicense['IsUsed'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-----------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsUsed\'); return false;'),'Используется'),$Comp);
-#-----------------------------------------------------------------------------
-#-----------------------------------------------------------------------------
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsUsed'),'Используется'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # ISPname 

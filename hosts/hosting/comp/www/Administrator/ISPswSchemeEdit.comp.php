@@ -175,54 +175,54 @@ $Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Скидка'),new Tag('BR'),n
 $Table[] = 'Описание тарифа';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','id'=>'IsActive','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($ISPswScheme['IsActive'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsActive\'); return false;'),'Тариф активен'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsActive'),'Тариф активен'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProlong','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProlong','id'=>'IsProlong','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($ISPswScheme['IsProlong'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsProlong\'); return false;'),'Возможность продления'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsProlong'),'Возможность продления'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSchemeChangeable','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSchemeChangeable','id'=>'IsSchemeChangeable','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($ISPswScheme['IsSchemeChangeable'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsSchemeChangeable\'); return false;'),'Возможность перехода на тариф'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsSchemeChangeable'),'Возможность перехода на тариф'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSchemeChange','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSchemeChange','id'=>'IsSchemeChange','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($ISPswScheme['IsSchemeChange'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsSchemeChange\'); return false;'),'Возможность перехода с тарифа'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsSchemeChange'),'Возможность перехода с тарифа'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsInternal','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsInternal','id'=>'IsInternal','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($ISPswScheme['IsInternal'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsInternal\'); return false;'),'Внутренний тариф'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsInternal'),'Внутренний тариф'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'MinDaysPay','value'=>$ISPswScheme['MinDaysPay']));
@@ -323,13 +323,13 @@ $Div = new Tag('DIV',Array('align'=>'right'));
 #-------------------------------------------------------------------------------
 if($ISPswSchemeID){
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','onclick'=>'form.ISPswSchemeID.value = (checked?0:value);','value'=>$ISPswSchemeID,'name'=>'CreateNewTariff'));
+	$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','onclick'=>'form.ISPswSchemeID.value = (checked?0:value);','value'=>$ISPswSchemeID,'id'=>'IsCreateNewScheme'));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$Div->AddChild($Comp);
 	#-------------------------------------------------------------------------------
-	$Div->AddChild(new Tag('SPAN',Array('class'=>'Comment'),'создать новый тариф'));
+	$Div->AddChild(new Tag('LABEL',Array('class'=>'Comment','for'=>'IsCreateNewScheme'),'создать новый тариф'));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------

@@ -144,11 +144,11 @@ if(!$ISPswOrderID){
   #-----------------------------------------------------------------------------
   $Table[] = Array('Дней до окончания',$Comp);
   #-----------------------------------------------------------------------------
-  $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsCreate','value'=>'yes','style'=>'width: 100%;'));
+  $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsCreate','id'=>'IsCreate','value'=>'yes','style'=>'width: 100%;'));
   if(Is_Error($Comp))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
-  $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsCreate\'); return false;'),'Создать заказ на сервере'),$Comp);
+  $Table[] = Array(new Tag('LABEL',Array('for'=>'IsCreate'),'Создать заказ на сервере'),$Comp);
 }
 #-------------------------------------------------------------------------------
 $Table[] = 'Параметры доступа';

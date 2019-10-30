@@ -284,54 +284,54 @@ $Table[] = 'Описание тарифа';
 #-------------------------------------------------------------------------------
 $Table[] = $Comp;
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsReselling','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsReselling','id'=>'IsReselling','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsReselling'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsReselling\'); return false;'),'Права реселлера'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsReselling'),'Права реселлера'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','id'=>'IsActive','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsActive'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsActive\'); return false;'),'Тариф активен'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsActive'),'Тариф активен'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProlong','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProlong','id'=>'IsProlong','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsProlong'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsProlong\'); return false;'),'Возможность продления'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsProlong'),'Возможность продления'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSchemeChangeable','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSchemeChangeable','id'=>'IsSchemeChangeable','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsSchemeChangeable'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsSchemeChangeable\'); return false;'),'Возможность перехода на тариф'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsSchemeChangeable'),'Возможность перехода на тариф'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSchemeChange','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSchemeChange','id'=>'IsSchemeChange','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsSchemeChange'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsSchemeChange\'); return false;'),'Возможность перехода с тарифа'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsSchemeChange'),'Возможность перехода с тарифа'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
@@ -572,44 +572,44 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Кол-во пользователей'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Для реселлеров в ISPmanager')),$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsShellAccess','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsShellAccess','id'=>'IsShellAccess','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsShellAccess'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsShellAccess\'); return false;'),'Secure Shell (SSH)'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'cPanel, ISPmanager, DirectAdmin')),$Comp);
+$Table[] = Array(new Tag('NOBODY',new Tag('LABEL',Array('for'=>'IsShellAccess'),'Secure Shell (SSH)'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'cPanel, ISPmanager, DirectAdmin')),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSSLAccess','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSSLAccess','id'=>'IsSSLAccess','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsSSLAccess'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsSSLAccess\'); return false;'),'Secure Sockets Layer (SSL)'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'ISPmanager, DirectAdmin')),$Comp);
+$Table[] = Array(new Tag('NOBODY',new Tag('LABEL',Array('for'=>'IsSSLAccess'),'Secure Sockets Layer (SSL)'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'ISPmanager, DirectAdmin')),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsCGIAccess','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsCGIAccess','id'=>'IsCGIAccess','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsCGIAccess'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsCGIAccess\'); return false;'),'Common Gateway Interface (CGI)'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'ISPmanager, DirectAdmin')),$Comp);
+$Table[] = Array(new Tag('NOBODY',new Tag('LABEL',Array('for'=>'IsCGIAccess'),'Common Gateway Interface (CGI)'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'ISPmanager, DirectAdmin')),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsDnsControll','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsDnsControll','id'=>'IsDnsControll','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsDnsControll'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsDnsControll\'); return false;'),'Возможность DNS управления'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Plesk, DirectAdmin')),$Comp);
+$Table[] = Array(new Tag('NOBODY',new Tag('LABEL',Array('for'=>'IsDnsControll'),'Возможность DNS управления'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Plesk, DirectAdmin')),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = '-Ограничения для ISPmanager';
@@ -788,54 +788,54 @@ if(Is_Error($Comp))
 $Table[] = Array('Ограничение отправки почты [в час]',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSSIAccess','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSSIAccess','id'=>'IsSSIAccess','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsSSIAccess'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclics'=>'ChangeCheckBox(\'IsSSIAccess\'); return false;'),'Server Side Includes (SSI)'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsSSIAccess'),'Server Side Includes (SSI)'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsPHPModAccess','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsPHPModAccess','id'=>'IsPHPModAccess','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsPHPModAccess'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPHPModAccess\'); return false;'),'PHP как модуль'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsPHPModAccess'),'PHP как модуль'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsPHPCGIAccess','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsPHPCGIAccess','id'=>'IsPHPCGIAccess','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsPHPCGIAccess'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPHPCGIAccess\'); return false;'),'PHP как CGI'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsPHPCGIAccess'),'PHP как CGI'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsPHPFastCGIAccess','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsPHPFastCGIAccess','id'=>'IsPHPFastCGIAccess','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsPHPFastCGIAccess'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPHPFastCGIAccess\'); return false;'),'PHP как FastCGI'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsPHPFastCGIAccess'),'PHP как FastCGI'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsPHPSafeMode','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsPHPSafeMode','id'=>'IsPHPSafeMode','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsPHPSafeMode'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPHPSafeMode\'); return false;'),'Безопасный режим PHP'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsPHPSafeMode'),'Безопасный режим PHP'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = '-Ограничения для cPanel';
@@ -907,306 +907,306 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array('Кол-во веб-приложений',$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsCreateDomains','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsCreateDomains','id'=>'IsCreateDomains','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsCreateDomains'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsCreateDomains\'); return false;'),'Возможность создания доменов'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsCreateDomains'),'Возможность создания доменов'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageHosting','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageHosting','id'=>'IsManageHosting','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsManageHosting'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsManageHosting\'); return false;'),'Управление физическим хостингом'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsManageHosting'),'Управление физическим хостингом'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageQuota','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageQuota','id'=>'IsManageQuota','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsManageQuota'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsManageQuota\'); return false;'),'Установка квот на дисковое пространство'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsManageQuota'),'Установка квот на дисковое пространство'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageSubdomains','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageSubdomains','id'=>'IsManageSubdomains','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsManageSubdomains'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsManageSubdomains\'); return false;'),'Управление субдоменами'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsManageSubdomains'),'Управление субдоменами'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsChangeLimits','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsChangeLimits','id'=>'IsChangeLimits','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsChangeLimits'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsChangeLimits\'); return false;'),'Управление квотами домена'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsChangeLimits'),'Управление квотами домена'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageLog','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageLog','id'=>'IsManageLog','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsManageLog'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsManageLog\'); return false;'),'Управление ротацией логов'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsManageLog'),'Управление ротацией логов'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageCrontab','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageCrontab','id'=>'IsManageCrontab','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsManageCrontab'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsManageCrontab\'); return false;'),'Управление заданиями по расписанию'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsManageCrontab'),'Управление заданиями по расписанию'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageAnonFtp','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageAnonFtp','id'=>'IsManageAnonFtp','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsManageAnonFtp'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsManageAnonFtp\'); return false;'),'Управление анонимными FTP'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsManageAnonFtp'),'Управление анонимными FTP'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageWebapps','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageWebapps','id'=>'IsManageWebapps','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsManageWebapps'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsManageWebapps\'); return false;'),'Управление веб-приложениями'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsManageWebapps'),'Управление веб-приложениями'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageMaillists','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageMaillists','id'=>'IsManageMaillists','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsManageMaillists'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsManageMaillists\'); return false;'),'Управление списками рассылки'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsManageMaillists'),'Управление списками рассылки'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageDrWeb','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageDrWeb','id'=>'IsManageDrWeb','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsManageDrWeb'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsManageDrWeb\'); return false;'),'Управление антивирусом DrWeb'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsManageDrWeb'),'Управление антивирусом DrWeb'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsMakeDumps','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsMakeDumps','id'=>'IsMakeDumps','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsMakeDumps'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsMakeDumps\'); return false;'),'Управление резервными копиями'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsMakeDumps'),'Управление резервными копиями'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSiteBuilder','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSiteBuilder','id'=>'IsSiteBuilder','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsSiteBuilder'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsSiteBuilder\'); return false;'),'Доступ к Site Builder'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsSiteBuilder'),'Доступ к Site Builder'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsRemoteInterface','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsRemoteInterface','id'=>'IsRemoteInterface','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsRemoteInterface'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsRemoteInterface\'); return false;'),'Удаленный интерфейс'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsRemoteInterface'),'Удаленный интерфейс'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManagePerformance','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManagePerformance','id'=>'IsManagePerformance','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsManagePerformance'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsManagePerformance\'); return false;'),'Управление нагрузкой'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsManagePerformance'),'Управление нагрузкой'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsCpAccess','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsCpAccess','id'=>'IsCpAccess','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsCpAccess'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsCpAccess\'); return false;'),'Доступ к панели управления'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsCpAccess'),'Доступ к панели управления'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageDomainAliases','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageDomainAliases','id'=>'IsManageDomainAliases','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsManageDomainAliases'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsManageDomainAliases\'); return false;'),'Управление альтернативными доменами'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsManageDomainAliases'),'Управление альтернативными доменами'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageIISAppPool','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageIISAppPool','id'=>'IsManageIISAppPool','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsManageIISAppPool'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsManageIISAppPool\'); return false;'),'Управление пулом IIS'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsManageIISAppPool'),'Управление пулом IIS'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsDashBoard','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsDashBoard','id'=>'IsDashBoard','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsDashBoard'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsDashBoard\'); return false;'),'Доступ к рабочему столу'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsDashBoard'),'Доступ к рабочему столу'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsStdGIU','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsStdGIU','id'=>'IsStdGIU','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsStdGIU'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsStdGIU\'); return false;'),'Использование GUI'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsStdGIU'),'Использование GUI'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageDashboard','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageDashboard','id'=>'IsManageDashboard','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsManageDashboard'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsManageDashboard\'); return false;'),'Управление рабочим столом'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsManageDashboard'),'Управление рабочим столом'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageSubFtp','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManageSubFtp','id'=>'IsManageSubFtp','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsManageSubFtp'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsManageSubFtp\'); return false;'),'Управление дополнительными FTP'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsManageSubFtp'),'Управление дополнительными FTP'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'ISManageSpamFilter','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'ISManageSpamFilter','id'=>'ISManageSpamFilter','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['ISManageSpamFilter'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'ISManageSpamFilter\'); return false;'),'Управление почтовым фильтром'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'ISManageSpamFilter'),'Управление почтовым фильтром'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsLocalBackups','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsLocalBackups','id'=>'IsLocalBackups','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsLocalBackups'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsLocalBackups\'); return false;'),'Управление локальными резерными копиями'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsLocalBackups'),'Управление локальными резерными копиями'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsFtpBackups','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsFtpBackups','id'=>'IsFtpBackups','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsFtpBackups'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsFtpBackups\'); return false;'),'Управление FTP резерными копиями'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsFtpBackups'),'Управление FTP резерными копиями'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = '-Ограничения для DirectAdmin';
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsAnonimousFTP','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsAnonimousFTP','id'=>'IsAnonimousFTP','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsAnonimousFTP'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsAnonimousFTP\'); return false;'),'Анонимные FTP'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsAnonimousFTP'),'Анонимные FTP'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsPHPAccess','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsPHPAccess','id'=>'IsPHPAccess','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsPHPAccess'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPHPAccess\'); return false;'),'PHP интерфейс'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsPHPAccess'),'PHP интерфейс'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSpamAssasing','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSpamAssasing','id'=>'IsSpamAssasing','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsSpamAssasing'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsSpamAssasing\'); return false;'),'Почтовый антиспам'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsSpamAssasing'),'Почтовый антиспам'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsCatchAll','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsCatchAll','id'=>'IsCatchAll','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsCatchAll'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsCatchAll\'); return false;'),'Функция [catch all]'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsCatchAll'),'Функция [catch all]'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSystemInfo','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSystemInfo','id'=>'IsSystemInfo','value'=>'yes'));
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($HostingScheme['IsSystemInfo'])
   $Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsSystemInfo\'); return false;'),'Доступ к системной информации'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsSystemInfo'),'Доступ к системной информации'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = '-Дополнительные поля (для собственных нужд)';
@@ -1263,6 +1263,7 @@ if($HostingSchemeID){
     Array(
       'type'    => 'checkbox',
       'onclick' => 'form.HostingSchemeID.value = (checked?0:value);',
+      'id'      => 'IsCreateNewScheme',
       'value'   => $HostingSchemeID
     )
   );
@@ -1271,7 +1272,7 @@ if($HostingSchemeID){
   #-----------------------------------------------------------------------------
   $Div->AddChild($Comp);
   #-----------------------------------------------------------------------------
-  $Div->AddChild(new Tag('SPAN',Array('class'=>'Comment'),'создать новый тариф'));
+  $Div->AddChild(new Tag('LABEL',Array('class'=>'Comment','for'=>'IsCreateNewScheme'),'создать новый тариф'));
 }
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(

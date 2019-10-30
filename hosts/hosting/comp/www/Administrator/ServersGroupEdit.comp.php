@@ -138,14 +138,14 @@ if(Is_Error($Comp))
 $Table[] = Array('Функция балансировки',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('name'=>'IsCheckUsers','type'=>'checkbox','value'=>'yes','prompt'=>'Проводить проверку соответствия пользователей на серверах группы, и пользователей в биллинге - находить лишних или недостающих'));
+$Comp = Comp_Load('Form/Input',Array('name'=>'IsCheckUsers','id'=>'IsCheckUsers','type'=>'checkbox','value'=>'yes','prompt'=>'Проводить проверку соответствия пользователей на серверах группы, и пользователей в биллинге - находить лишних или недостающих'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($ServersGroup['IsCheckUsers'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsCheckUsers\'); return false;'),'Проверять аккаунты'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsCheckUsers'),'Проверять аккаунты'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Автоматический заказ услуги';
@@ -231,34 +231,34 @@ if(IsSet($ServersGroup['Params']['Count']) && $ServersGroup['Params']['Count'] >
 		$Table[] = Array('Параметры заказа',$Comp);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>$IsNoDuplicate,'value'=>'yes','prompt'=>'Не производить заказ, если у пользователя уже есть такая услуга с таким тарифом'));
+		$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>$IsNoDuplicate,'id'=>$IsNoDuplicate,'value'=>'yes','prompt'=>'Не производить заказ, если у пользователя уже есть такая услуга с таким тарифом'));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		if(IsSet($ServersGroup['Params'][$IsNoDuplicate]) && $ServersGroup['Params'][$IsNoDuplicate])
 			$Comp->AddAttribs(Array('checked'=>'yes'));
 		#-------------------------------------------------------------------------------
-		$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>SPrintF('ChangeCheckBox(\'%s\'); return false;',$IsNoDuplicate)),'Не дублировать'),$Comp);
+		$Table[] = Array(new Tag('LABEL',Array('for'=>$IsNoDuplicate),'Не дублировать'),$Comp);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>$IsZeroPriceOrder,'value'=>'yes','prompt'=>'Делать заказ только в случае если цена будет нулевая (т.е. прайс на услугу имеет нулевой ценник, или, имеются бонусы со 100% скидкой)'));
+		$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>$IsZeroPriceOrder,'id'=>$IsZeroPriceOrder,'value'=>'yes','prompt'=>'Делать заказ только в случае если цена будет нулевая (т.е. прайс на услугу имеет нулевой ценник, или, имеются бонусы со 100% скидкой)'));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		if(IsSet($ServersGroup['Params'][$IsZeroPriceOrder]) && $ServersGroup['Params'][$IsZeroPriceOrder])
 			$Comp->AddAttribs(Array('checked'=>'yes'));
 		#-------------------------------------------------------------------------------
-		$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>SPrintF('ChangeCheckBox(\'%s\'); return false;',$IsZeroPriceOrder)),'Нулевая цена на заказ'),$Comp);
+		$Table[] = Array(new Tag('LABEL',Array('for'=>$IsZeroPriceOrder),'Нулевая цена на заказ'),$Comp);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>$IsZeroPricePay,'value'=>'yes','prompt'=>'Оплачивать услугу только если цена нулевая. Т.е. если снять предыдущую галочку и поставить эту, то при ненулевой цене услуга будет заказана, но не оплачена.'));
+		$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>$IsZeroPricePay,'id'=>$IsZeroPricePay,'value'=>'yes','prompt'=>'Оплачивать услугу только если цена нулевая. Т.е. если снять предыдущую галочку и поставить эту, то при ненулевой цене услуга будет заказана, но не оплачена.'));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		if(IsSet($ServersGroup['Params'][$IsZeroPricePay]) && $ServersGroup['Params'][$IsZeroPricePay])
 			$Comp->AddAttribs(Array('checked'=>'yes'));
 		#-------------------------------------------------------------------------------
-		$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>SPrintF('ChangeCheckBox(\'%s\'); return false;',$IsZeroPricePay)),'Нулевая цена на оплату'),$Comp);
+		$Table[] = Array(new Tag('LABEL',Array('for'=>$IsZeroPricePay),'Нулевая цена на оплату'),$Comp);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$Scripts[] = SPrintF("GetSchemes('%s','%s','%s');",$ServersGroup['Params'][$Service],$Scheme,$ServersGroup['Params'][$Scheme]);

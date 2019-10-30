@@ -490,6 +490,16 @@ select {
 	border-width:		1px;
 }
 
+/* перевод чекбоксов со скриптов на label */
+label {
+	cursor:			pointer;
+}
+label.Comment {
+	color:			#6F9006;
+}
+
+
+
 /* скрываем кнопки с меню сайта - они тока на мобильной версии нужны */
 tr.HiddenMenuButtons		{ display: none; }
 

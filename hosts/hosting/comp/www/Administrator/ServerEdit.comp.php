@@ -316,24 +316,24 @@ if(!$TemplateID){
 	$Table[] = Array('Группа серверов',$Comp);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Input',Array('name'=>'IsActive','type'=>'checkbox','value'=>'yes'));
+	$Comp = Comp_Load('Form/Input',Array('name'=>'IsActive','id'=>'IsActive','type'=>'checkbox','value'=>'yes'));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	if($Server['IsActive'])
 		$Comp->AddAttribs(Array('checked'=>'yes'));
 	#-------------------------------------------------------------------------------
-	$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsActive\'); return false;'),'Активен'),$Comp);
+	$Table[] = Array(new Tag('LABEL',Array('for'=>'IsActive'),'Активен'),$Comp);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Input',Array('name'=>'IsDefault','type'=>'checkbox','value'=>'yes'));
+	$Comp = Comp_Load('Form/Input',Array('name'=>'IsDefault','id'=>'IsDefault','type'=>'checkbox','value'=>'yes'));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	if($Server['IsDefault'])
 		$Comp->AddAttribs(Array('checked'=>'yes'));
 	#-------------------------------------------------------------------------------
-	$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsDefault\'); return false;'),'Основной в группе'),$Comp);
+	$Table[] = Array(new Tag('LABEL',Array('for'=>'IsDefault'),'Основной в группе'),$Comp);
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load(
 			'Form/Input',

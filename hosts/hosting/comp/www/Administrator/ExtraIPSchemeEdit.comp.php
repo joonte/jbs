@@ -152,23 +152,23 @@ $Table[] = Array('Тип адреса',$Comp);
 #-------------------------------------------------------------------------------
 $Table[] = 'Параметры тарифа';
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','id'=>'IsActive','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($ExtraIPScheme['IsActive'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsActive\'); return false;'),'Тариф активен'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsActive'),'Тариф активен'),$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProlong','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProlong','id'=>'IsProlong','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($ExtraIPScheme['IsProlong'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsProlong\'); return false;'),'Возможность продления'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsProlong'),'Возможность продления'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
@@ -308,7 +308,7 @@ foreach($Servers as $Server){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>SPrintF("ChangeCheckBox('%s'); return false;",$Server['Address'])),$Text),$Comp);
+	$Table[] = Array(new Tag('LABEL',Array('for'=>$Server['Address']),$Text),$Comp);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
@@ -339,7 +339,8 @@ if($ExtraIPSchemeID){
 			Array(
 				'type'		=> 'checkbox',
 				'onclick'	=> 'form.ExtraIPSchemeID.value = (checked?0:value);',
-				'value'		=> $ExtraIPSchemeID
+				'value'		=> $ExtraIPSchemeID,
+				'id'		=> 'IsCreateNewScheme'
 				)
 			);
 	if(Is_Error($Comp))
@@ -347,7 +348,7 @@ if($ExtraIPSchemeID){
 	#-------------------------------------------------------------------------------
 	$Div->AddChild($Comp);
 	#-------------------------------------------------------------------------------
-	$Div->AddChild(new Tag('SPAN',Array('class'=>'Comment'),'создать новый тариф'));
+	$Div->AddChild(new Tag('LABEL',Array('class'=>'Comment','for'=>'IsCreateNewScheme'),'создать новый тариф'));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
