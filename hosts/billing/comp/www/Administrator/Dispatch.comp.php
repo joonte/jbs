@@ -113,7 +113,7 @@ foreach(Array_Keys($Methods) as $MethodID){
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Nobody->AddChild(new Tag('DIV',$Comp,new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>SPrintF('ChangeCheckBox(\'%s\'); return false;',$MethodID)),$Method['Name'])));
+	$Nobody->AddChild(new Tag('DIV',$Comp,new Tag('LABEL',Array('for'=>$MethodID),$Method['Name'])));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
@@ -200,7 +200,7 @@ if(Count($Filters)){
 		if(Is_Error($Name))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$Div->AddChild(new Tag('DIV',$Comp,new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>SPrintF('ChangeCheckBox(\'%s\'); return false;',$FilterID)),$Name)));
+		$Div->AddChild(new Tag('DIV',$Comp,new Tag('LABEL',Array('for'=>$FilterID),$Name)));
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -223,31 +223,31 @@ $Table = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # Галочка про "эмуляцию" рассылки
-$Comp = Comp_Load('Form/Input',Array('name'=>'IsEmulateDisptch','value'=>'yes','type'=>'checkbox','checked'=>'yes','prompt'=>'Рассылка не будет произведена, будет лишь отображено итоговое число получателей по выбранным фильтрам'));
+$Comp = Comp_Load('Form/Input',Array('name'=>'IsEmulateDisptch','id'=>'IsEmulateDisptch','value'=>'yes','type'=>'checkbox','checked'=>'yes','prompt'=>'Рассылка не будет произведена, будет лишь отображено итоговое число получателей по выбранным фильтрам'));
 if(Is_Error($Comp))
 return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Span = new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsEmulateDisptch\'); return false;'),'"Эмуляция" расылки');
+$Span = new Tag('LABEL',Array('for'=>'IsEmulateDisptch'),'"Эмуляция" расылки');
 #-------------------------------------------------------------------------------
 $Table[] = Array($Comp,$Span);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # Галочка про принудительную доставку
-$Comp = Comp_Load('Form/Input',Array('name'=>'IsForceDelivery','value'=>'yes','type'=>'checkbox','prompt'=>'Принудительная доставка сообщений тем кто в настройках уведомлений отключил получение рассылок от администрации'));
+$Comp = Comp_Load('Form/Input',Array('name'=>'IsForceDelivery','id'=>'IsForceDelivery','value'=>'yes','type'=>'checkbox','prompt'=>'Принудительная доставка сообщений тем кто в настройках уведомлений отключил получение рассылок от администрации'));
 if(Is_Error($Comp))
 return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Span = new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsForceDelivery\'); return false;'),'"Принудительная" доставка сообщений');
+$Span = new Tag('LABEL',Array('for'=>'IsForceDelivery'),'"Принудительная" доставка сообщений');
 #-------------------------------------------------------------------------------
 $Table[] = Array($Comp,$Span);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # Галочка про HTML формат
-$Comp = Comp_Load('Form/Input',Array('name'=>'IsHTML','value'=>'yes','type'=>'checkbox','prompt'=>'Отправка почтовых сообщений в формате HTML. Все остальные методы будут проигнорированы','onclick'=>'ShowHTMLform();'));
+$Comp = Comp_Load('Form/Input',Array('name'=>'IsHTML','id'=>'IsHTML','value'=>'yes','type'=>'checkbox','prompt'=>'Отправка почтовых сообщений в формате HTML. Все остальные методы будут проигнорированы','onclick'=>'ShowHTMLform();'));
 if(Is_Error($Comp))
 return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Span = new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsHTML\'); ShowHTMLform(); return false;'),'HTML формат Email сообщений');
+$Span = new Tag('LABEL',Array('for'=>'IsHTML'),'HTML формат Email сообщений');
 #-------------------------------------------------------------------------------
 $Table[] = Array($Comp,$Span);
 #-------------------------------------------------------------------------------

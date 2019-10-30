@@ -38,13 +38,14 @@ $Comp = Comp_Load(
   Array(
     'type'  => 'checkbox',
     'name'  => 'IsDelete',
+    'id'    => 'IsDelete',
     'value' => 'true'
   )
 );
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Div = new Tag('DIV',Array('align'=>'right'),$Comp,new Tag('SPAN',Array('class'=>'Comment','style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsDelete\'); return false;'),'удалить данные'));
+$Div = new Tag('DIV',Array('align'=>'right'),$Comp,new Tag('LABEL',Array('class'=>'Comment','for'=>'IsDelete'),'удалить данные'));
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',

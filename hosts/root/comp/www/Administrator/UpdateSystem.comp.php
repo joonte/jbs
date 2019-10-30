@@ -40,11 +40,11 @@ $Comp3 = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"form.action =
 if(Is_Error($Comp3))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Checkbox = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'Backup','checked'=>'yes','value'=>'yes'));
+$Checkbox = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'Backup','id'=>'Backup','checked'=>'yes','value'=>'yes'));
 if(Is_Error($Checkbox))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Backup = new Tag('NOBODY',new Tag('DIV',Array('class'=>'Standard'),'Структурировать базу данных'),$Checkbox,new Tag('SPAN',Array('style'=>'font-size:11px; cursor:pointer;','onclick'=>'ChangeCheckBox(\'Backup\'); return false;'),'сделать резервную копию базы'));
+$Backup = new Tag('NOBODY',new Tag('DIV',Array('class'=>'Standard'),'Структурировать базу данных'),$Checkbox,new Tag('LABEL',Array('style'=>'font-size:11px;','for'=>'Backup'),'сделать резервную копию базы'));
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Buttons/Panel',Array('Comp'=>$Comp1,'Name'=>'Проверить наличие обновлений'),$Img,Array('Comp'=>$Comp2,'Name'=>'Применить обновления'),$Img,Array('Comp'=>$Comp3,'Name'=>$Backup));
 if(Is_Error($Comp))

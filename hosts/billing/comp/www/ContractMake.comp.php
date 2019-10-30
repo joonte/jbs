@@ -91,11 +91,11 @@ if(!$TypeID){
   #-----------------------------------------------------------------------------
   $Table = Array(Array('Шаблон',$Comp));
   #-----------------------------------------------------------------------------
-  $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','checked'=>'true','name'=>'IsSimple'));
+  $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','checked'=>'true','name'=>'IsSimple','id'=>'IsSimple'));
   if(Is_Error($Comp))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
-  $Table[] = Array('Сформировать договор позже',new Tag('NOBODY',$Comp,new Tag('SPAN',Array('class'=>'Comment','style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsSimple\'); return false;'),'(заполнить минимальные данные)')));
+  $Table[] = Array('Сформировать договор позже',new Tag('NOBODY',$Comp,new Tag('LABEL',Array('class'=>'Comment','for'=>'IsSimple'),'(заполнить минимальные данные)')));
   #-----------------------------------------------------------------------------
   $Comp = Comp_Load(
     'Form/Input',

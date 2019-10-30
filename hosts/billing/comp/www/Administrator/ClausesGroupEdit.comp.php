@@ -99,24 +99,24 @@ $Table[] = Array('Описание',$Comp);
 $Table[] = 'Параметры доступа';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProtected','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProtected','id'=>'IsProtected','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($ClausesGroup['IsProtected'])
 	$Comp->AddAttribs(Array('checked'=>'true'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsProtected\'); return false;'),'Защищённая'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsProtected'),'Защищённая'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsPublish','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsPublish','id'=>'IsPublish','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($ClausesGroup['IsPublish'])
 	$Comp->AddAttribs(Array('checked'=>'true'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPublish\'); return false;'),'Опубликована'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsPublish'),'Опубликована'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(

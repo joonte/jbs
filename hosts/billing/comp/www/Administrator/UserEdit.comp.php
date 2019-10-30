@@ -135,24 +135,24 @@ $Table[] = 'Партнерская программа';
 #-------------------------------------------------------------------------------
 $Table[] = Array('Партнер',$Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManaged','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsManaged','id'=>'IsManaged','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($User['IsManaged'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsManaged\'); return false;'),'Возможность управления'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsManaged'),'Возможность управления'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsInheritGroup','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsInheritGroup','id'=>'IsInheritGroup','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($User['IsInheritGroup'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsInheritGroup\'); return false;'),'Наследовать группу патнера'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsInheritGroup'),'Наследовать группу патнера'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Условия отложенного платежа';
@@ -185,14 +185,14 @@ if(Is_Error($Comp))
 $Table[] = Array('Рейтинг',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes','onclick'=>"form.LockReason.disabled = checked;"));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','id'=>'IsActive','value'=>'yes','onclick'=>"form.LockReason.disabled = checked;"));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($User['IsActive'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsActive\'); document.getElementsByName(\'LockReason\')[0].disabled = document.getElementsByName(\'IsActive\')[0].checked?true:false; return false;'),'Активный пользователь'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsActive'),'Активный пользователь'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'LockReason','value'=>$User['LockReason'],'prompt'=>'Сообщение для пользователя, отображаемое при попытке входа'));
@@ -205,34 +205,34 @@ if($User['IsActive'])
 $Table[] = Array('Причина блокировки',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsNotifies','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsNotifies','id'=>'IsNotifies','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($User['IsNotifies'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsNotifies\'); return false;'),'Рассылать уведомления'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsNotifies'),'Рассылать уведомления'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsHidden','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsHidden','id'=>'IsHidden','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($User['IsHidden'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsHidden\'); return false;'),'Скрытый пользователь'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsHidden'),'Скрытый пользователь'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProtected','value'=>'yes','prompt'=>'Этот пользователь не может сбросить пароль через форму восстановления пароля'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProtected','id'=>'IsProtected','value'=>'yes','prompt'=>'Этот пользователь не может сбросить пароль через форму восстановления пароля'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($User['IsProtected'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsProtected\'); return false;'),'Защищенный пользователь'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsProtected'),'Защищенный пользователь'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/TextArea',Array('name'=>'AdminNotice','style'=>'width:100%;','rows'=>5),$User['AdminNotice']);

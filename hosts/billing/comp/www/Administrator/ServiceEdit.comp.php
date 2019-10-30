@@ -134,14 +134,14 @@ if(Is_Error($Comp))
 $Table[] = Array('Эмблема (72x72, *.jpg)',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsActive','id'=>'IsActive','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Service['IsActive'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsActive\'); return false;'),'Услуга активна'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsActive'),'Услуга активна'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Финансовые настройки';
@@ -219,34 +219,34 @@ if(Is_Error($Comp))
 $Table[] = Array('Партнёрские отчисления, %',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProlong','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsProlong','id'=>'IsProlong','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Service['IsProlong'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsProlong\'); return false;'),'Возможность продления'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsProlong'),'Возможность продления'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsConditionally','value'=>'yes','prompt'=>'Пользователь может продлевать эту услугу условным счётом, при условии что он её ранее оплачивал'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsConditionally','id'=>'IsConditionally','value'=>'yes','prompt'=>'Пользователь может продлевать эту услугу условным счётом, при условии что он её ранее оплачивал'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Service['IsConditionally'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsConditionally\'); return false;'),'Может быть оплачена условно'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsConditionally'),'Может быть оплачена условно'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsAutoInvoicing','value'=>'yes','prompt'=>'Разрешить автоматическую выписку счетов для данной услуги'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsAutoInvoicing','id'=>'IsAutoInvoicing','value'=>'yes','prompt'=>'Разрешить автоматическую выписку счетов для данной услуги'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Service['IsAutoInvoicing'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsAutoInvoicing\'); return false;'),'АвтоВыписка счетов'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsAutoInvoicing'),'АвтоВыписка счетов'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(IsSet($Service['Code'])){
@@ -286,14 +286,14 @@ if(IsSet($Service['Code'])){
 			$Table[] = Array('Выполняемый скрипт',$Comp);
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>SPrintF('Statuses[%s][IsNoAction]',$StatusID),'value'=>'yes','prompt'=>'Требуется в случаях, когда установка статуса не требует никаких действий от сотрудников - например продление оказываемых услуг. Обратите внимание, что при установке галочки, скрипт задаваемый для статуса выполняться не будет.'));
+			$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>SPrintF('Statuses[%s][IsNoAction]',$StatusID),'id'=>SPrintF('Statuses[%s][IsNoAction]',$StatusID),'value'=>'yes','prompt'=>'Требуется в случаях, когда установка статуса не требует никаких действий от сотрудников - например продление оказываемых услуг. Обратите внимание, что при установке галочки, скрипт задаваемый для статуса выполняться не будет.'));
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
 			if(IsSet($Service['Params']['Statuses'][$StatusID]['IsNoAction']) && $Service['Params']['Statuses'][$StatusID]['IsNoAction'])
 				$Comp->AddAttribs(Array('checked'=>'yes'));
 			#-------------------------------------------------------------------------------
-			$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>SPrintF('ChangeCheckBox(\'Statuses[%s][IsNoAction]\'); return false;',$StatusID)),'Не выполнять задачу'),$Comp);
+			$Table[] = Array(new Tag('LABEL',Array('for'=>SPrintF('Statuses[%s][IsNoAction]',$StatusID)),'Не выполнять задачу'),$Comp);
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
@@ -335,14 +335,14 @@ if(IsSet($Service['Code'])){
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		# не дублировать тикет
-		$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>SPrintF('Statuses[%s][IsNoDuplicate]',$StatusID),'value'=>'yes','prompt'=>'Не создавать дубликаты тикетов - тикет создаётся с идентификатором услуги в заголовке тикета, при повторной установке статуса (например, блокировке или активации при оплате) проверяется есть ли тикет с таким заголовком, если есть - то новый не создаётся. Актуально для одноразовых тикетов, например при активации выделенного сервера и т.п.'));
+		$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>SPrintF('Statuses[%s][IsNoDuplicate]',$StatusID),'id'=>SPrintF('Statuses[%s][IsNoDuplicate]',$StatusID),'value'=>'yes','prompt'=>'Не создавать дубликаты тикетов - тикет создаётся с идентификатором услуги в заголовке тикета, при повторной установке статуса (например, блокировке или активации при оплате) проверяется есть ли тикет с таким заголовком, если есть - то новый не создаётся. Актуально для одноразовых тикетов, например при активации выделенного сервера и т.п.'));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		if(IsSet($Service['Params']['Statuses'][$StatusID]['IsNoDuplicate']) && $Service['Params']['Statuses'][$StatusID]['IsNoDuplicate'])
 			$Comp->AddAttribs(Array('checked'=>'yes'));
 		#-------------------------------------------------------------------------------
-		$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>SPrintF('ChangeCheckBox(\'Statuses[%s][IsNoDuplicate]\'); return false;',$StatusID)),'Не дублировать тикет'),$Comp);
+		$Table[] = Array(new Tag('LABEL',Array('for'=>SPrintF('Statuses[%s][IsNoDuplicate]',$StatusID)),'Не дублировать тикет'),$Comp);
 
 		#-------------------------------------------------------------------------------
 	}

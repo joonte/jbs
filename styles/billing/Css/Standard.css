@@ -156,7 +156,11 @@ pp-rounded-5px{
 	border-radius:		5px;
 }
 
+/* перевод чекбоксов со скриптов на label */
+label {
+	cursor:pointer;
+}
+
 /* прячем кнопку "назад", в тикетнице */
 #EdeskBackButton        { display: none; }
-
 

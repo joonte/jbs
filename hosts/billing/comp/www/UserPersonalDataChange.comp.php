@@ -193,11 +193,11 @@ $Table[] = Array(new Tag('TD',Array('colspan'=>2),'Аватар (90x110)'),new T
 #-------------------------------------------------------------------------------
 if($Foto){
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsClear','value'=>'yes')  );
+	$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsClear','id'=>'IsClear','value'=>'yes')  );
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Table[] = Array(new Tag('TD',Array('colspan'=>2),new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsClear\'); return false;'),'Удалить фотографию')),new Tag('TD',Array('colspan'=>6),$Comp));
+	$Table[] = Array(new Tag('TD',Array('colspan'=>2),new Tag('LABEL',Array('for'=>'IsClear'),'Удалить фотографию')),new Tag('TD',Array('colspan'=>6),$Comp));
 	#-------------------------------------------------------------------------------
 	$Table[] = Array(new Tag('TD',Array('colspan'=>7,'align'=>'right'),new Tag('IMG',Array('src'=>SPrintF('/UserFoto?UserID=%u',$__USER['ID'])))));
 	#-------------------------------------------------------------------------------

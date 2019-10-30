@@ -536,13 +536,11 @@ if($StepID){
 		#-------------------------------------------------------------------------------
 		if($Settings['IsNoDomain']){
 			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load('Form/Input',Array('name'=>'IsNoDomain','type'=>'checkbox','onclick'=>"form.Domain.disabled = checked;form.StepID.value = document.getElementsByName('IsNoDomain')[0].checked?2:1;"));
+			$Comp = Comp_Load('Form/Input',Array('name'=>'IsNoDomain','id'=>'IsNoDomain','type'=>'checkbox','onclick'=>"form.Domain.disabled = checked;form.StepID.value = document.getElementsByName('IsNoDomain')[0].checked?2:1;"));
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$OnClick = "ChangeCheckBox('IsNoDomain'); document.getElementsByName('Domain')[0].disabled = document.getElementsByName('IsNoDomain')[0].checked?true:false; document.getElementsByName('StepID')[0].value = document.getElementsByName('IsNoDomain')[0].checked?2:1;";
-			#-------------------------------------------------------------------------------
-			$NoBody->AddChild(new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px; cursor:pointer;','onclick'=>$OnClick),'Заказать хостинг без домена')));
+			$NoBody->AddChild(new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('LABEL',Array('style'=>'font-size:10px;','for'=>'IsNoDomain'),'Заказать хостинг без домена')));
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------

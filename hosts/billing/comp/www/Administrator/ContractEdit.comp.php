@@ -93,6 +93,7 @@ switch(ValueOf($Contract)){
           'Form/Input',
           Array(
            'name'  => 'IsEnclosures',
+	   'id'    => 'IsEnclosures',
            'type'  => 'checkbox',
            'value' => 'yes'
           )
@@ -100,7 +101,7 @@ switch(ValueOf($Contract)){
         if(Is_Error($Comp))
           return ERROR | @Trigger_Error(500);
         #-----------------------------------------------------------------------
-        $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsEnclosures\'); return false;'),'Синхронизировать приложения'),$Comp);
+        $Table[] = Array(new Tag('LABEL',Array('for'=>'IsEnclosures'),'Синхронизировать приложения'),$Comp);
         #-----------------------------------------------------------------------
         $Comp = Comp_Load(
           'Form/Input',

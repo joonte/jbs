@@ -168,6 +168,7 @@ $Comp = Comp_Load(
   Array(
     'type'  => 'checkbox',
     'name'  => 'IsDuty',
+    'id'    => 'IsDuty',
     'value' => 'yes'
   )
 );
@@ -177,7 +178,7 @@ if(Is_Error($Comp))
 if($ServiceField['IsDuty'])
   $Comp->AddAttribs(Array('checked'=>'true'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsDuty\'); return false;'),'Обязательное поле'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsDuty'),'Обязательное поле'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
@@ -185,6 +186,7 @@ $Comp = Comp_Load(
   Array(
     'type'  => 'checkbox',
     'name'  => 'IsKey',
+    'id'    => 'IsKey',
     'value' => 'yes'
   )
 );
@@ -194,7 +196,7 @@ if(Is_Error($Comp))
 if($ServiceField['IsKey'])
   $Comp->AddAttribs(Array('checked'=>'true'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsKey\'); return false;'),'Ключевое поле'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsKey'),'Ключевое поле'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Validators = $Fields['Validators'];

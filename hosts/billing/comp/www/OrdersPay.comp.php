@@ -114,7 +114,7 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'UseBalance','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'UseBalance','id'=>'UseBalance','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -128,7 +128,7 @@ if($ContractsBalance['Balance'] > 0){
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'UseBalance\'); return false;'),'Использовать средства с балланса'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'UseBalance'),'Использовать средства с балланса'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Заказы для оплаты';

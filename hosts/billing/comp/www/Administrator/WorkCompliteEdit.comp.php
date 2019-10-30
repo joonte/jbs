@@ -158,11 +158,11 @@ $Table[] = new Tag('TD',Array('colspan'=>2,'width'=>'100%'),new Tag('TABLE',Arra
 #-------------------------------------------------------------------------------
 if(!$WorkCompliteID){
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Input',Array('name'=>'IsPostingMake','type'=>'checkbox','value'=>'yes','checked'=>'yes'));
+	$Comp = Comp_Load('Form/Input',Array('name'=>'IsPostingMake','id'=>'IsPostingMake','type'=>'checkbox','value'=>'yes','checked'=>'yes'));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPostingMake\'); return false;'),'Списать деньги'),new Tag('SPAN',$Comp,new Tag('SPAN',Array('style'=>'color:green;'),'(с договора будет списана соответствующая сумма)')));
+	$Table[] = Array(new Tag('LABEL',Array('for'=>'IsPostingMake'),'Списать деньги'),new Tag('SPAN',$Comp,new Tag('SPAN',Array('style'=>'color:green;'),'(с договора будет списана соответствующая сумма)')));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------

@@ -51,13 +51,14 @@ $Comp = Comp_Load(
   Array(
     'type'  => 'checkbox',
     'name'  => 'IsFormat',
+    'id'    => 'IsFormat',
     'value' => 'yes'
   )
 );
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsFormat\'); return false;'),'форматировать')));
+$Div->AddChild(new Tag('NOBODY',$Comp,new Tag('LABEL',Array('for'=>'IsFormat'),'форматировать')));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(

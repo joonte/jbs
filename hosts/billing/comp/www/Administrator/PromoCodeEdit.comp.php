@@ -223,6 +223,7 @@ $Comp = Comp_Load(
 		'Form/Input',
 		Array(
 			'name'		=> 'UseOwnerID',
+			'id'		=> 'UseOwnerID',
 			'type'		=> 'checkbox',
 			'onclick'	=> "form.SearchOwnerID.disabled = !checked; form.ForceOwner.disabled = !checked;",
 			'style'		=> 'width:100%'
@@ -234,13 +235,14 @@ if(Is_Error($Comp))
 if($PromoCode['OwnerID'] >= 2000)
 	$Comp->AddAttribs(Array('checked'=>TRUE));
 #-------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox("UseOwnerID"); document.getElementsByName("SearchOwnerID")[0].disabled = document.getElementsByName("UseOwnerID")[0].checked?false:true; document.getElementsByName("ForceOwner")[0].disabled = document.getElementsByName("UseOwnerID")[0].checked?false:true; return false;'),'Делать рефералами'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'UseOwnerID'),'Делать рефералами'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
 		'Form/Input',
 		Array(
 			'name'		=> 'ForceOwner',
+			'id'		=> 'ForceOwner',
 			'type'		=> 'checkbox',
 			'prompt'	=> 'Если пользователь уже чей-то реферал, менять реферала на указанного',
 			'style'		=> 'width:100%'
@@ -255,7 +257,7 @@ if($PromoCode['ForceOwner'])
 if($PromoCode['OwnerID'] < 2001)
 	$Comp->AddAttribs(Array('disabled'=>TRUE));
 #-------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox("ForceOwner"); return false;'),'Менять реферала'),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'ForceOwner'),'Менять реферала'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(

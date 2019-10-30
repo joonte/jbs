@@ -18,102 +18,81 @@ $Links = &Links();
 $Links['DOM'] = &$DOM;
 #-------------------------------------------------------------------------------
 if(Is_Error($DOM->Load(XML_HTTP_REQUEST?'Window':'Main')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title','Вход в биллинговую систему');
 #-------------------------------------------------------------------------------
 if(IsSet($GLOBALS['__USER'])){
-  #-----------------------------------------------------------------------------
-  $Comp = Comp_Load('Information','Вы авторизованы в биллинговой системе. Для выхода из системы, нажмите кнопку [выход] на панели верхнего меню.','Notice');
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $DOM->AddChild('Into',$Comp);
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Information','Вы авторизованы в биллинговой системе. Для выхода из системы, нажмите кнопку [выход] на панели верхнего меню.','Notice');
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$DOM->AddChild('Into',$Comp);
+	#-------------------------------------------------------------------------------
 }else{
-  #-----------------------------------------------------------------------------
-  $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Logon.js}'));
-  #-----------------------------------------------------------------------------
-  $DOM->AddChild('Head',$Script);
-  #-----------------------------------------------------------------------------
-  #-----------------------------------------------------------------------------
-  if(Is_Object($Exception)){
-    #---------------------------------------------------------------------------
-    if(XML_HTTP_REQUEST)
-      return $Exception;
-    #---------------------------------------------------------------------------
-    $String = HtmlSpecialChars($Exception->String);
-    #---------------------------------------------------------------------------
-    $DOM->AddAttribs('Body',Array('onload'=>SPrintF("ShowAlert('%s','Warning');",$String)));
-  }
-  #-----------------------------------------------------------------------------
-  $Messages = Messages();
-  #-----------------------------------------------------------------------------
-  $Table = Array();
-  #-----------------------------------------------------------------------------
-  $Comp = Comp_Load(
-    'Form/Input',
-    Array(
-      'name'    => 'Email',
-      'onclick' => '',
-      'type'    => 'text',
-      'class'   => 'InputField',
-      'prompt'  => $Messages['Prompts']['Email'],
-      'value'   => @$_COOKIE['Email']
-    )
-  );
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $Table[] = Array('E-mail:',$Comp);
-  #-----------------------------------------------------------------------------
-  $Comp = Comp_Load(
-    'Form/Input',
-    Array(
-      'name'      => 'Password',
-      'prompt'    => $Messages['Prompts']['User']['Password'],
-      'onkeydown' => 'if(IsEnter(event)) Logon(form.Email.value,form.Password.value,form.IsRemember.checked);',
-      'type'      => 'password',
-      'class'  => 'InputField'
-    )
-  );
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $Table[] = Array('Пароль:',$Comp);
-  #-----------------------------------------------------------------------------
-  $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsRemember'));
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $Tr = new Tag('TR',new Tag('TD',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsRemember\'); return false;'),'запомнить меня'),new Tag('TD',Array('style'=>'padding: 0px 5px 0px 5px;'),$Comp));
-  #-----------------------------------------------------------------------------
-  $Comp = Comp_Load(
-    'Form/Input',
-    Array(
-      'type'    => 'button',
-      'onclick' => "Logon(form.Email.value,form.Password.value,form.IsRemember.checked);",
-      'value'   => 'Войти'
-    )
-  );
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $Tr->AddChild(new Tag('TD',$Comp));
-  #-----------------------------------------------------------------------------
-  $Table[] = new Tag('TABLE',Array('cellspacing'=>0,'cellpadding'=>0,'align'=>'right'),$Tr);
-  #-----------------------------------------------------------------------------
-  $Comp = Comp_Load('Tables/Standard',$Table);
-  if(Is_Error($Comp))
-    return ERROR | @Trigger_Error(500);
-  #-----------------------------------------------------------------------------
-  $DOM->AddChild('Into',new Tag('FORM',Array('onsubmit'=>'return false;'),$Comp));
+	#-------------------------------------------------------------------------------
+	$Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Logon.js}'));
+	#-------------------------------------------------------------------------------
+	$DOM->AddChild('Head',$Script);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if(Is_Object($Exception)){
+		#-------------------------------------------------------------------------------
+		if(XML_HTTP_REQUEST)
+			return $Exception;
+		#-------------------------------------------------------------------------------
+		$String = HtmlSpecialChars($Exception->String);
+		#-------------------------------------------------------------------------------
+		$DOM->AddAttribs('Body',Array('onload'=>SPrintF("ShowAlert('%s','Warning');",$String)));
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	$Messages = Messages();
+	#-------------------------------------------------------------------------------
+	$Table = Array();
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('name'=>'Email','onclick'=>'','type'=>'text','class'=>'InputField','prompt'=>$Messages['Prompts']['Email'],'value'=>@$_COOKIE['Email']));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array('E-mail:',$Comp);
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('name'=>'Password','prompt'=>$Messages['Prompts']['User']['Password'],'onkeydown'=>'if(IsEnter(event)) Logon(form.Email.value,form.Password.value,form.IsRemember.checked);','type'=>'password','class'=>'InputField'));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array('Пароль:',$Comp);
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsRemember','id'=>'IsRemember'));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Tr = new Tag('TR',new Tag('TD',new Tag('LABEL',Array('for'=>'IsRemember'),'запомнить меня')),new Tag('TD',Array('style'=>'padding: 0px 5px 0px 5px;'),$Comp));
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"Logon(form.Email.value,form.Password.value,form.IsRemember.checked);",'value'=>'Войти'));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Tr->AddChild(new Tag('TD',$Comp));
+	#-------------------------------------------------------------------------------
+	$Table[] = new Tag('TABLE',Array('cellspacing'=>0,'cellpadding'=>0,'align'=>'right'),$Tr);
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Tables/Standard',$Table);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$DOM->AddChild('Into',new Tag('FORM',Array('onsubmit'=>'return false;'),$Comp));
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 $Out = $DOM->Build(!XML_HTTP_REQUEST);
 #-------------------------------------------------------------------------------
 if(Is_Error($Out))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return (XML_HTTP_REQUEST?Array('Status'=>'Ok','DOM'=>$DOM->Object):$Out);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 ?>

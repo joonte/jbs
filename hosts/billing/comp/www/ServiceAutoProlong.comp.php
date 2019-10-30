@@ -106,14 +106,14 @@ if(Is_Error($Number))
 $Table = Array(SPrintF('Настройки автопродления, услуга "%s", заказ #%s',$Service['NameShort'],$Number));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('name'=>'IsAutoProlong','type'=>'checkbox','value'=>'yes'));
+$Comp = Comp_Load('Form/Input',Array('name'=>'IsAutoProlong','id'=>'IsAutoProlong','type'=>'checkbox','value'=>'yes'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Order['IsAutoProlong'])
 	$Comp->AddAttribs(Array('checked'=>'yes'));
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsAutoProlong\'); return false;'),SPrintF('Автопродление услуги "%s", заказ #%s',$Service['NameShort'],$Number)),$Comp);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsAutoProlong'),SPrintF('Автопродление услуги "%s", заказ #%s',$Service['NameShort'],$Number)),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(

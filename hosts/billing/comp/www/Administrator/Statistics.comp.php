@@ -207,19 +207,19 @@ $Input = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'Details[]','va
 if(Is_Error($Input))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'ByDays\'); return false;'),'По дням'),$Input);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'ByDays'),'По дням'),$Input);
 #-------------------------------------------------------------------------------
 $Input = Comp_Load('Form/Input',Array('type'=>'checkbox','checked'=>'true','name'=>'Details[]','value'=>'ByMonth','id'=>'ByMonth'));
 if(Is_Error($Input))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'ByMonth\'); return false;'),'По месяцам'),$Input);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'ByMonth'),'По месяцам'),$Input);
 #-------------------------------------------------------------------------------
 $Input = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'Details[]','value'=>'ByQuarter','id'=>'ByQuarter'));
 if(Is_Error($Input))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'ByQuarter\'); return false;'),'По кварталам'),$Input);
+$Table[] = Array(new Tag('LABEL',Array('for'=>'ByQuarter'),'По кварталам'),$Input);
 #-------------------------------------------------------------------------------
 $Table[] = 'Виды отчетов';
 #-------------------------------------------------------------------------------
@@ -248,7 +248,7 @@ foreach($HostsIDs as $HostID){
     if(Is_Error($Input))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
-    $Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>SPrintF('ChangeCheckBox(\'%s\'); return false;',$StatisticID)),$Comp['Title']),$Input);
+    $Table[] = Array(new Tag('LABEL',Array('for'=>$StatisticID),$Comp['Title']),$Input);
   }
 }
 #-------------------------------------------------------------------------------

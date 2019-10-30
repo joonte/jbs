@@ -43,7 +43,7 @@
      <INPUT type="checkbox" id="TopPanelIsRemember" name="TopPanelIsRemember" />
     </TD>
     <TD valign="middle">
-     <SPAN onclick="ChangeCheckBox('TopPanelIsRemember'); return false;" style="font-size:11px; cursor:pointer;">[запомнить]</SPAN>
+     <LABEL for='TopPanelIsRemember' style="font-size:11px;">[запомнить]</LABEL>
     </TD>
     <TD width="5" />
     <TD>

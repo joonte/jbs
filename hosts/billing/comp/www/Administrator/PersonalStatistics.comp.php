@@ -78,11 +78,11 @@ if(!$IsCreate){
 	$Table[] = Array('Конечная дата',$Comp);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'ShowFired','value'=>'yes'));
+	$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'ShowFired','id'=>'ShowFired','value'=>'yes'));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Table[] = Array(new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'ShowFired\'); return false;'),'Показать уволенных'),$Comp);
+	$Table[] = Array(new Tag('LABEL',Array('for'=>'ShowFired'),'Показать уволенных'),$Comp);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>'form.submit();','value'=>'Сформировать'));

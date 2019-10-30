@@ -119,11 +119,11 @@ $Password = Comp_Load('Passwords/Generator');
 if(Is_Error($Password))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('name'=>'IsPasswordCreate','value'=>$Password,'type'=>'checkbox','onclick'=>'PasswordMode();'));
+$Comp = Comp_Load('Form/Input',Array('name'=>'IsPasswordCreate','id'=>'IsPasswordCreate','value'=>$Password,'type'=>'checkbox','onclick'=>'PasswordMode();'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$NoBody = new Tag('NOBODY',new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('SPAN',Array('style'=>'font-size:10px; cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsPasswordCreate\'); PasswordMode(); return false;'),'Вставить из примера')));
+$NoBody = new Tag('NOBODY',new Tag('DIV',Array('style'=>'margin-bottom:5px;'),$Comp,new Tag('LABEL',Array('style'=>'font-size:10px;','for'=>'IsPasswordCreate'),'Вставить из примера')));
 #-------------------------------------------------------------------------------
 $Messages = Messages();
 #-------------------------------------------------------------------------------

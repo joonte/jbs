@@ -88,7 +88,9 @@ $Comp = Comp_Load('Formats/Edesk/Number',$TicketID);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DOM->AddText('Title',HtmlSpecialChars(SPrintF('#%s | %s',$Comp,$Ticket['Theme'])));
+$Title = HtmlSpecialChars(SPrintF('#%s | %s',$Comp,$Ticket['Theme']));
+#-------------------------------------------------------------------------------
+$DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
@@ -573,11 +575,11 @@ $Div = new Tag('DIV',$Back,$Submit,new Tag('SPAN','и'));
 #-------------------------------------------------------------------------------
 if($__USER['ID'] == $Ticket['UserID']){ # is ordinar user
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Input',Array('name'=>'Flags','type'=>'checkbox','value'=>'Closed'));
+	$Comp = Comp_Load('Form/Input',Array('name'=>'Flags','type'=>'checkbox','value'=>'Closed','id'=>'Flags'));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'Flags\'); return false;'),'закрыть запрос (проблема решена)')));
+	$Div->AddChild(new Tag('NOBODY',$Comp,new Tag('LABEL',Array('for'=>'Flags'),'закрыть запрос (проблема решена)')));
 	#-------------------------------------------------------------------------------
 }else{ # user -> support
 	#-------------------------------------------------------------------------------
@@ -608,11 +610,11 @@ case 'exception':
 	break;
 case 'array':
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Input',Array('name'=>'IsNext','type'=>'checkbox','value'=>$Next['ID']));
+	$Comp = Comp_Load('Form/Input',Array('name'=>'IsNext','id'=>'IsNext','type'=>'checkbox','value'=>$Next['ID']));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Div->AddChild(new Tag('NOBODY',$Comp,new Tag('SPAN',Array('style'=>'cursor:pointer;','onclick'=>'ChangeCheckBox(\'IsNext\'); return false;'),'к следующему')));
+	$Div->AddChild(new Tag('NOBODY',$Comp,new Tag('LABEL',Array('for'=>'IsNext'),'к следующему')));
 	#-------------------------------------------------------------------------------
 	break;
 	#-------------------------------------------------------------------------------
@@ -649,7 +651,7 @@ if(Is_Error($DOM->Build(FALSE)))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return Array('Status'=>'Ok','DOM'=>$DOM->Object,'Form'=>$Form);
+return Array('Status'=>'Ok','DOM'=>$DOM->Object,'Form'=>$Form,'Title'=>$Title);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
