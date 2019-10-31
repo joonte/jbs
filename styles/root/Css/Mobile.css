@@ -1,4 +1,5 @@
 /* для мобильников */
+
 table thead {
 	display: none;
 /*	font-size: 200%;*/
@@ -121,8 +122,12 @@ div.EdeskMessage {
  */
 #TopPanelMenu		{ display: none; }
 #MenuLeft		{ display: none; }
+
 /* показываем кнопку отображения меню */
-#HiddenMenuButtons	{ display: block; }
+#HiddenMenuButtons	{ display: grid;}
+/* для оперы, блин */
+doesnotexist:-o-prefocus, #HiddenMenuButtons {display: block;}
+
 /**/
 
 /* добавляем пустое место внизу страницы - чтобы вылезающая клава не перекрывала окна ввода */

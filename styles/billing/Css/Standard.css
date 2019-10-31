@@ -159,3 +159,25 @@ pp-rounded-5px{
 /* прячем кнопку "назад", в тикетнице */
 #EdeskBackButton        { display: none; }
 
+div.MainMenu {
+	background-color:	Beige;
+	border:			1px solid gray;
+	padding:		2px;
+	margin:			2px;
+	float:			left;
+	min-width:		calc(50% - 12px);
+	display:		inline-block;
+	min-height:		15px;
+	text-align:		center;
+	vertical-align:		middle;
+}
+
+div.MainMenu:hover{
+	border:			1px solid blue;
+	/*background-color:	LightGrey;*/
+	background-color:	#ccbbff;
+	cursor:			pointer;
+}
+
+
+
