@@ -3065,7 +3065,7 @@ INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',15,'Uniteller','VISA','
 INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',15,'SberBank','VISA','Visa.MasterCard.png','Оплата при помощи пластиковой карты МИР, VISA или MasterCard.','МИР/VISA/MasterCard','');
 -- SEPARATOR
 -- added by lissyara, 2019-09-14 in 20:58 MSK, for new webmoney rouble
-INSERT INTO `PaymentSystemsCollation` VALUES ('','yes',999,'WebMoneyP','WebMoney Рубль','WMRM.gif','Оплата при помощи электронных денег платёжной системы WebMoney, валюта платежа - Российский рубль.','WebMoney P','');
+INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',999,'WebMoneyP','WebMoney Рубль','WMRM.gif','Оплата при помощи электронных денег платёжной системы WebMoney, валюта платежа - Российский рубль.','WebMoney P','');
 
 -- SEPARATOR
 UNLOCK TABLES;
