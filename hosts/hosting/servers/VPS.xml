@@ -58,9 +58,10 @@
 			<Protocol>ssl</Protocol>
 			<Theme>Orion</Theme>
 			<Language>ru</Language>
-			<DiskTemplate>Centos-7-x86_64</DiskTemplate>
+			<DiskTemplate>centos-7-x86_64-minimal</DiskTemplate>
 			<NodeList>kvm01</NodeList>
 			<Url>https://ovz.isp.su:1500/vemgr</Url>
+			<Prefix>o</Prefix>
 		</Settings>
 	</VmManager5_OVZ>
 	<!-- *********************************************************************** -->
