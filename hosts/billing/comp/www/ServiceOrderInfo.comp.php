@@ -165,7 +165,7 @@ case 'array':
 				break;
 				#-------------------------------------------------------------------------------
 			case 'Hidden':
-				continue 2;
+				break 2;
 			default:
 				# No more...
 			}
