@@ -465,6 +465,8 @@ CREATE TABLE IF NOT EXISTS `VPSSchemes` (
 	`limitpvtdns` INT(6) DEFAULT '0',
 	`limitpubdns` INT(6) DEFAULT '0',
 	`backup` CHAR(16) NOT NULL,
+	`fstype` CHAR(16) NOT NULL,
+	`IsTun` enum('no','yes') NOT NULL DEFAULT 'no',
 	PRIMARY KEY (`ID`),
 	KEY `VPSSchemesGroupID` (`GroupID`),
 	KEY `VPSSchemesUserID` (`UserID`),

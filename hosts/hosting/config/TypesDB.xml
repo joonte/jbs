@@ -88,4 +88,7 @@
 <!-- added by lissyara, 2018-11-28 in 12:50 for JBS-JBS-1264 -->
 <DSpass>Crypt</DSpass>
 <ILOpass>Crypt</ILOpass>
+<!-- added by lissyara, 2019-11-07 in 22:46 MSK for VeManager -->
+<IsTun>Logic</IsTun>
+
 </XML>

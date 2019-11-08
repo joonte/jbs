@@ -185,8 +185,9 @@ $Table[] = Array('Группа серверов',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // выбор ноды кластера
-$Servers = DB_Select('Servers',Array('ID','Address','Params'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) = 30000','SortOn'=>'Address'));
+$Servers = DB_Select('Servers',Array('ID','Address','Params'),Array('Where'=>Array(SPrintF('`ServersGroupID` = %u',$VPSScheme['ServersGroupID']),'(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) = 30000'),'SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
+Debug(print_r($Servers,true));
 switch(ValueOf($Servers)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
@@ -543,7 +544,7 @@ if(Is_Error($Comp))
 $Table[] = Array('Резервное копирование',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Table[] = '-Ограничения для VmManager 5 KVM';
+$Table[] = '-Ограничения для VmManager 5 KVM/OVZ';
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
 		'Form/Input',
@@ -625,6 +626,22 @@ if(Is_Error($Comp))
 $Table[] = Array('Количество снимков VM',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Select',Array('name'=>'fstype','style'=>'width: 100%;','prompt'=>'только для OVZ'),Array('simfs'=>'simfs','ploop'=>'ploop'),$VPSScheme['fstype']);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+$Table[] = Array('Тип файловой системы',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsTun','id'=>'IsTun','value'=>'yes','prompt'=>'только для OVZ'));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if($VPSScheme['IsTun'])
+	$Comp->AddAttribs(Array('checked'=>'yes'));
+#-------------------------------------------------------------------------------
+$Table[] = Array(new Tag('LABEL',Array('for'=>'IsTun'),'Разрешено использовать TUN'),$Comp);
+
+
 
 
 

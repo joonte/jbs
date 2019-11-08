@@ -58,6 +58,8 @@ $extns			=  (string) @$Args['extns'];
 $limitpvtdns		= (integer) @$Args['limitpvtdns'];
 $limitpubdns		= (integer) @$Args['limitpubdns'];
 $backup			=  (string) @$Args['backup'];
+$fstype			=  (string) @$Args['fstype'];
+$IsTun			= (boolean) @$Args['IsTun'];
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Groups',Array('ID'=>$GroupID));
 if(Is_Error($Count))
@@ -164,7 +166,9 @@ $IVPSScheme = Array(
   'extns'		=> $extns,
   'limitpvtdns'		=> $limitpvtdns,
   'limitpubdns'		=> $limitpubdns,
-  'backup'		=> $backup
+  'backup'		=> $backup,
+  'fstype'		=> $fstype,
+  'IsTun'		=> $IsTun
 );
 #-------------------------------------------------------------------------------
 if($VPSSchemeID){

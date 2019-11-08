@@ -10,6 +10,7 @@
 <!-- *********************************************************************** -->
 <Defaults>
 	<Address>kvm01.isp.su</Address>
+	<Login>admin</Login>
 	<Monitoring>HTTP=80 HTTPS=443</Monitoring>
 	<SortID>30000</SortID>
 </Defaults>
@@ -44,11 +45,24 @@
 			<Protocol>ssl</Protocol>
 			<Theme>Orion</Theme>
 			<Language>ru</Language>
-			<DiskTemplate>FreeBSD-10-amd64</DiskTemplate>
+			<DiskTemplate>FreeBSD-12-amd64</DiskTemplate>
 			<NodeList>kvm01</NodeList>
 			<Url>https://kvm01.isp.su:1500/vmmgr</Url>
 		</Settings>
 	</VmManager5_KVM>
+	<!-- *********************************************************************** -->
+	<VmManager5_OVZ>
+		<Name>VmManager5_OVZ</Name>
+		<Settings>
+			<Port>1500</Port>
+			<Protocol>ssl</Protocol>
+			<Theme>Orion</Theme>
+			<Language>ru</Language>
+			<DiskTemplate>Centos-7-x86_64</DiskTemplate>
+			<NodeList>kvm01</NodeList>
+			<Url>https://ovz.isp.su:1500/vemgr</Url>
+		</Settings>
+	</VmManager5_OVZ>
 	<!-- *********************************************************************** -->
 </SystemID>
 <!-- *********************************************************************** -->
@@ -62,6 +76,7 @@
 			<NullSystem>Ручное управление</NullSystem>
 			<VdsManager4>VdsManager4</VdsManager4>
 			<VmManager5_KVM>VmManager5_KVM</VmManager5_KVM>
+			<VmManager5_OVZ>VmManager5_OVZ</VmManager5_OVZ>
 		</Options>
 		<Check>/^[A-Za-zА-Яа-я0-9\-]{2,25}$/u</Check>
 		<Attribs>
