@@ -59,7 +59,7 @@
 			<Theme>Orion</Theme>
 			<Language>ru</Language>
 			<DiskTemplate>centos-7-x86_64-minimal</DiskTemplate>
-			<NodeList>kvm01</NodeList>
+			<NodeList>ovz01</NodeList>
 			<Url>https://ovz.isp.su:1500/vemgr</Url>
 			<Prefix>o</Prefix>
 		</Settings>
@@ -149,7 +149,7 @@
 	</IsLogging>
 	<!-- *********************************************************************** -->
 	<NodeList>
-		<Check>Char</Check>
+		<Check>Text</Check>
 		<Comment>Ноды (узлы) кластера</Comment>
 		<Type>TextArea</Type>
 		<Attribs>
