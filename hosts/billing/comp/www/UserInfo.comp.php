@@ -116,7 +116,7 @@ foreach($Contacts as $Contact){
 	$Address = ($Contact['IsPrimary'])?SPrintF('%s [*]',$Contact['Address']):$Contact['Address'];
 	#-------------------------------------------------------------------------------
 	// для телеграмма кастыль
-	if(($Contact['MethodID'] == 'Telegram' || $Contact['MethodID'] == 'Viber') && $Contact['ExternalID'])
+	if(In_Array($Contact['MethodID'],Array('Telegram','Viber','VKontakte')) && $Contact['ExternalID'])
 		$Address = SPrintF('ChatID = %s',$Contact['ExternalID']);
 	#-------------------------------------------------------------------------------
 	$Table[] = Array($Config['Notifies']['Methods'][$Contact['MethodID']]['Name'],$Address);

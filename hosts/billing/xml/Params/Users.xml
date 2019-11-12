@@ -75,6 +75,23 @@
 		<Value>Yes</Value>
 	</SendEdeskFilesToViber>
 	<!-- *********************************************************************** -->
+	<SendEdeskFilesToVKontakte>
+		<Comment>Присылать вложения к тикетам на VKontakte</Comment>
+		<Type>Select</Type>
+		<Options>
+			<Yes>Да</Yes>
+			<No>Нет</No>
+		</Options>
+		<Check>Char</Check>
+		<Attribs>
+			<size>1</size>
+			<style>width: 100%;</style>
+			<prompt>Присылать или нет прикрепленные к тикету файлы на VKontakte</prompt>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>Yes</Value>
+	</SendEdeskFilesToVKontakte>
+	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
 	<EdeskButtons>
 		<Title>Настройки администраторов</Title>

@@ -179,7 +179,7 @@ foreach($ServiceOrderFields as $ServiceOrderField){
 		}
 		#-------------------------------------------------------------------------------
 		if(!In_Array($Value,$Alternatives))
-			return new gException('OPTION_NOT_EXISTS',SPrintF('Не верное значение (%s) поля (%s)',$Value,$ServiceField['Name']));
+			return new gException('OPTION_NOT_EXISTS',SPrintF('Неверное значение (%s) поля (%s)',$Value,$ServiceField['Name']));
 		#-------------------------------------------------------------------------------
 		if($ServiceField['IsKey'])
 			$Keys[] = $Value;
@@ -193,7 +193,7 @@ foreach($ServiceOrderFields as $ServiceOrderField){
 		if($Value || $ServiceField['IsDuty']){
 			#-------------------------------------------------------------------------------
 			if(!Preg_Match($Regulars[$ServiceField['ValidatorID']],$Value))
-				return new gException('WRONG_FIELD_VALUE',SPrintF('Не верное значение поля (%s) ожидается (%s)',$ServiceField['Name'],$Validators[$ServiceField['ValidatorID']]['Name']));
+				return new gException('WRONG_FIELD_VALUE',SPrintF('Неверное значение поля (%s) ожидается (%s)',$ServiceField['Name'],$Validators[$ServiceField['ValidatorID']]['Name']));
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------

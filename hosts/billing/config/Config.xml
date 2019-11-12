@@ -1140,6 +1140,15 @@
 				<MessageTemplate>Middle</MessageTemplate>
 				<Message>Сообщение в конфиге для Viber</Message>
 			</Viber>
+			<!-- ********************************************************************* -->
+			<VKontakte>
+				<Name>VKontakte сообщения</Name>
+				<IsActive>0</IsActive>
+				<IsEvent>1</IsEvent>
+				<CutSign>1</CutSign>
+				<MessageTemplate>Middle</MessageTemplate>
+				<Message>Сообщение в конфиге для VKontakte</Message>
+			</VKontakte>
 		</Methods>
 		<!-- ********************************************************************** -->
 	</Notifies>
@@ -1199,6 +1208,16 @@
 				</Params>
 				<IsActive>1</IsActive>
 			</Viber>
+			<!-- ********************************************************************* -->
+			<VKontakte>
+				<Name>Сообщение через VKontakte</Name>
+				<Params>
+					<Address>VkUserID</Address>
+					<Message>Сообщение</Message>
+					<Attribs type="array"/>
+				</Params>
+				<IsActive>1</IsActive>
+			</VKontakte>
 			<!-- ********************************************************************* -->
 			<SMS>
 				<Name>SMS сообщение</Name>
@@ -1846,6 +1865,13 @@
 					<ConfirmRequire>1</ConfirmRequire>
 					<ConfirmInterval>30</ConfirmInterval>
 				</Viber>
+				<!-- *********************************************************************** -->
+				<VKontakte>
+					<SettingsReset>0</SettingsReset>
+					<Require>0</Require>
+					<ConfirmRequire>1</ConfirmRequire>
+					<ConfirmInterval>30</ConfirmInterval>
+				</VKontakte>
 				<!-- *********************************************************************** -->
 				<SMS>
 					<SettingsReset>1</SettingsReset>

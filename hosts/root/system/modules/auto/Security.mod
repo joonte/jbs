@@ -28,7 +28,7 @@ foreach($Array as $IP)
 #-------------------------------------------------------------------------------
 $Template = "/^(SELECT.*FROM.*|INSERT INTO|UPDATE .* SET).*/i";
 #-------------------------------------------------------------------------------
-$TemplateAPI = "#^/API/(ISPswSettingURL|Telegram|Viber|Confirm|Logon|Logout|Events|OrdersPay|.*OrderPay).*#";
+$TemplateAPI = "#^/API/(ISPswSettingURL|Telegram|Viber|VK|Confirm|Logon|Logout|Events|OrdersPay|.*OrderPay).*#";
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Hidden = Explode(',',$Settings['Hidden']);
