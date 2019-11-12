@@ -2,38 +2,40 @@
 
 table thead {
 	display: none;
-/*	font-size: 200%;*/
 }
 
 tr.TableSuperStandard {
-	margin-bottom: 10px;
-	display: block;
-	border-bottom: 1px solid #707680;
+	margin-bottom:	10px;
+	display:	block;
+	border-bottom:	1px solid #707680;
 }
 
 td.TableSuperStandard {
-	display: block;
-	text-align: right;
-/*	font-size: 200%;*/
-	border-bottom: 1px solid #707680;
-	border-right: 1px solid transparent;
+	display:	block;
+	text-align:	right;
+	border-bottom:	1px solid #707680;
+	border-right:	1px solid transparent;
 	padding:	12px;
 	font-weight:	normal;
 }
 
 td.TableSuperStandard:last-child {
-	border-bottom: 3px solid #707680;
+	border-bottom:	3px solid #707680;
 }
 
 td.TableSuperStandard:before {
-	content: attr(data-label);
-	float: left;
+	content:	attr(data-label);
+	float:		left;
+	display:	block;
 	/*
 	text-transform: uppercase;
 	font-weight: bold;
 	*/
 }
 
+tr.TableSuperStandardMobile {
+	display:	block;
+}
 
 /* увеличиваем кнопки */
 /*
@@ -42,7 +44,8 @@ img.Button {
 }
 */
 table {
-	font-size: 100%;
+	font-size:	100%;
+	word-wrap:	break-word;
 }
 
 /* отображаем кнопку "назад", в тикете */
