@@ -38,14 +38,6 @@
   <Level>1</Level>
  </ID400>
  <ID500>
-  <Text>Импорт данных</Text>
-  <Paths>
-   <UniqID>^\/Administrator\/(DataImport|Migration)$</UniqID>
-  </Paths>
-  <Href>/Administrator/DataImport</Href>
-  <Level>1</Level>
- </ID500>
- <ID600>
   <Text>Обслуживание системы</Text>
   <Prompt>Поиск проблем, обновление системы, информация о лицензии</Prompt>
   <Paths>
@@ -53,7 +45,7 @@
   </Paths>
   <Href>/Administrator/SystemMaintenance</Href>
   <Level>1</Level>
- </ID600>
+ </ID500>
  </Items>
 <!-- *********************************************************************** -->
 </XML>
