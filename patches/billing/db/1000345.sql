@@ -18,4 +18,16 @@ CREATE TABLE IF NOT EXISTS `Files` (
 	CONSTRAINT `FilesUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE */
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- SEPARATOR
+
+DELETE FROM `Tasks` WHERE `ID` IN (16);
+
+-- SEPARATOR
+
+INSERT INTO `Tasks`
+  (`ID`,`UserID`,`TypeID`,`Params`,`IsActive`)
+  VALUES
+  (16,1,'MoveFiles','[]','yes')
+  ;
+
 
