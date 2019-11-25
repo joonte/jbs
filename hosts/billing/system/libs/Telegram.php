@@ -24,7 +24,7 @@ class Telegram
 	// отправка сообщения
 	public function MessageSend($ChatID,$Text = 'not set',$IsReply = FALSE){
 		#-------------------------------------------------------------------------------
-		$Query = Array('chat_id'=>$ChatID,'text'=>$Text,'disable_web_page_preview'=>'TRUE','parse_mode'=>'HTML');
+		$Query = Array('chat_id'=>$ChatID,'text'=>Mb_SubStr($Text,0,4096),'disable_web_page_preview'=>'TRUE','parse_mode'=>'HTML');
 		#-------------------------------------------------------------------------------
 		// если надо показать меню что возможен ответ на сообщение
 		if($IsReply)
