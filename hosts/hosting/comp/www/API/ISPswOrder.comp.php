@@ -116,7 +116,7 @@ if($Count)
 	return new gException('SOFTWARE_EXISTS','Нельзя заказать вечную или триальную лицензию дважды для одного и того же IP адреса.');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsPermission = Permission_Check('ContractRead',(integer)$__USER['ID'],(integer)$Contract['UserID']);
+$IsPermission = Permission_Check('ContractsRead',(integer)$__USER['ID'],(integer)$Contract['UserID']);
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsPermission)){
 case 'error':

@@ -49,7 +49,7 @@ switch(ValueOf($VPSScheme)){
         #-----------------------------------------------------------------------
         $__USER = $GLOBALS['__USER'];
         #-----------------------------------------------------------------------
-        $IsPermission = Permission_Check('ContractRead',(integer)$__USER['ID'],(integer)$Contract['UserID']);
+        $IsPermission = Permission_Check('ContractsRead',(integer)$__USER['ID'],(integer)$Contract['UserID']);
         #-----------------------------------------------------------------------
         switch(ValueOf($IsPermission)){
           case 'error':
