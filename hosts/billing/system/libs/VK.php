@@ -22,7 +22,7 @@ class VK
 	// отправка сообщения
 	public function MessageSend($user_id,$Text = 'not set'){
 		#-------------------------------------------------------------------------------
-		$Query = Array('user_id'=>$user_id,'message'=>$Text);
+		$Query = Array('user_id'=>$user_id,'message'=>Mb_SubStr($Text,0,4096));
 		#-------------------------------------------------------------------------------
 		$Result = $this->API('messages.send',$Query);
 		#-------------------------------------------------------------------------------
