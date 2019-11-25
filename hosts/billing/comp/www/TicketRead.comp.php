@@ -26,6 +26,9 @@ if($GLOBALS['IsMobile'] || @$_COOKIE['wScreen'] < 400)
 		return Array('Status'=>'Url','Location'=>SPrintF('/TicketMessages?TicketID=%u',$TicketID));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Config = Config();
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Columns = Array(
 		'ID','UserID','Theme','UpdateDate','StatusID','SeenByPersonal','LastSeenBy','Flags',
 		'(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `Edesks`.`LastSeenBy`) AS `LastSeenByName`',
@@ -157,7 +160,7 @@ $Form->AddChild($Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // передаём, админ ли ходит
-$Comp = Comp_Load('Form/Input',Array('name'=>'IsAdmin','type'=>'hidden','value'=>($GLOBALS['__USER']['IsAdmin'])?1:0));
+$Comp = Comp_Load('Form/Input',Array('name'=>'IsAdmin','type'=>'hidden','value'=>($__USER['IsAdmin'])?1:0));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -166,7 +169,7 @@ $Form->AddChild($Comp);
 #-------------------------------------------------------------------------------
 $Tr = new Tag('TR');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Upload','TicketMessageFile');
+$Comp = Comp_Load('Upload','TicketMessageFile','-',($__USER['IsAdmin'])?$Config['Interface']['User']['Files']['EdesksMessages']['MaxFiles']:100500);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -549,7 +552,7 @@ $Submit = Comp_Load(
 		'Form/Input',
 		Array(
 			'type'    => 'button',
-			'onclick' => IsSet($GLOBALS['__USER']['IsEmulate'])?"javascript:ShowConfirm('Вы действительно хотите написать в тикет от чужого имени?','TicketAddMessage();');":'TicketAddMessage();',
+			'onclick' => IsSet($__USER['IsEmulate'])?"javascript:ShowConfirm('Вы действительно хотите написать в тикет от чужого имени?','TicketAddMessage();');":'TicketAddMessage();',
 			'value'   => 'Добавить',
 			'style'=>'display: inline-block;'
 			)
@@ -563,7 +566,7 @@ $Back = Comp_Load(
 		Array(
 			'id'		=> 'EdeskBackButton',
 			'type'		=> 'button',
-			'onclick'	=> SPrintF('document.location = "%s";',($GLOBALS['__USER']['IsAdmin'])?'/Administrator/Tickets':'/Tickets'),
+			'onclick'	=> SPrintF('document.location = "%s";',($__USER['IsAdmin'])?'/Administrator/Tickets':'/Tickets'),
 			'value'		=> 'Назад',
 			)
 		);
@@ -582,8 +585,6 @@ if($__USER['ID'] == $Ticket['UserID']){ # is ordinar user
 	$Div->AddChild(new Tag('NOBODY',$Comp,new Tag('LABEL',Array('for'=>'Flags'),'закрыть запрос (проблема решена)')));
 	#-------------------------------------------------------------------------------
 }else{ # user -> support
-	#-------------------------------------------------------------------------------
-	$Config = Config();
 	#-------------------------------------------------------------------------------
 	$Positions = $Config['Edesks']['Flags'];
 	#-------------------------------------------------------------------------------

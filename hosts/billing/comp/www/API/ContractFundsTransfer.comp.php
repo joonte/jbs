@@ -36,7 +36,7 @@ case 'array':
 	#---------------------------------------------------------------------------
 	$__USER = $GLOBALS['__USER'];
 	#---------------------------------------------------------------------------
-	$IsPermission = Permission_Check('ContractRead',(integer)$__USER['ID'],(integer)$FromContract['UserID']);
+	$IsPermission = Permission_Check('ContractsRead',(integer)$__USER['ID'],(integer)$FromContract['UserID']);
 	#---------------------------------------------------------------------------
 	switch(ValueOf($IsPermission)){
 	case 'error':
@@ -66,7 +66,7 @@ case 'array':
 	#---------------------------------------------------------------------------
 	$__USER = $GLOBALS['__USER'];
 	#---------------------------------------------------------------------------
-	$IsPermission = Permission_Check('ContractRead',(integer)$__USER['ID'],(integer)$ToContract['UserID']);
+	$IsPermission = Permission_Check('ContractsRead',(integer)$__USER['ID'],(integer)$ToContract['UserID']);
 	#---------------------------------------------------------------------------
 	switch(ValueOf($IsPermission)){
 	case 'error':

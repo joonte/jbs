@@ -167,7 +167,7 @@ switch(ValueOf($ContractEnclosure)){
                   $Document = Str_Replace(SPrintF('%%%s%%',$LinkID),$Text?$Text:'-',$Document);
                 }
                 #---------------------------------------------------------------
-		if(!SaveUploadedFile('ContractsEnclosures',$ContractEnclosureID,$Document))
+		if(!SaveUploadedFile(Array(Array('Data'=>$Document,'Name'=>SPrintF('ContractEnclosure%s.html',$ContractEnclosureID),'Size'=>Mb_StrLen($Document,'8bit'),'Mime'=>'text/html')),'ContractsEnclosures',$ContractEnclosureID))
                   return new gException('CANNOT_SAVE_FILE','Не удалось сохранить файл');
                 #---------------------------------------------------------------
                 return TRUE;

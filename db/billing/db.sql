@@ -2968,7 +2968,7 @@ UNLOCK TABLES;
 
 DELETE FROM `Config` WHERE `Param` = 'Copyright';
 INSERT INTO `Config` (`HostID`,`Param`,`Value`)
-VALUES ('billing','Copyright','ООО "Компания" 2000-2017 г.');
+VALUES ('billing','Copyright','ООО "Компания" 2000-2020 г.');
 UNLOCK TABLES;
 
 -- SEPARATOR

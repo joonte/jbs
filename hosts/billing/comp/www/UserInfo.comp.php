@@ -45,7 +45,7 @@ default:
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
-$IsPermission = Permission_Check('UserRead',(integer)$__USER['ID'],(integer)$User['ID']);
+$IsPermission = Permission_Check('UsersRead',(integer)$__USER['ID'],(integer)$User['ID']);
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsPermission)){
 case 'error':

@@ -36,7 +36,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Permission = Permission_Check('InvoiceRead',(integer)$GLOBALS['__USER']['ID'],(integer)$Invoice['UserID']);
+$Permission = Permission_Check('InvoicesRead',(integer)$GLOBALS['__USER']['ID'],(integer)$Invoice['UserID']);
 #-------------------------------------------------------------------------------
 switch(ValueOf($Permission)){
 case 'error':
@@ -52,10 +52,13 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(!GetUploadedFileSize('Invoices',$Invoice['ID']))
-		Debug(SPrintF('[comp/www/InvoiceDownload]: файл отсутствует ID = %s',$Invoice['ID']));
+$Files = GetUploadedFiles('Invoices',$Invoice['ID']);
 #-------------------------------------------------------------------------------
-$File = GetUploadedFile('Invoices',$Invoice['ID']);
+// перебираем, сохраняем в переменную последний
+foreach($Files as $File){
+	// и чего бы тут проверить?
+}
+#-------------------------------------------------------------------------------
 $Document = $File['Data'];
 #-------------------------------------------------------------------------------
 $DOM = new DOM($Document);
@@ -75,7 +78,6 @@ $Out = $DOM->Build();
 if(Is_Error($Out))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-#Debug(SPrintF('[comp/www/InvoiceDownload]: Out = %s',print_r($Out,true)));
 $File = WkHtmlToPdf_CreatePDF('Invoice',$Out);
 #-------------------------------------------------------------------------------
 switch(ValueOf($File)){

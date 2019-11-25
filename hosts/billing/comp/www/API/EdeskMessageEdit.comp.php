@@ -24,7 +24,7 @@ if(IsSet($GLOBALS['__USER']['IsEmulate']))
 if(!$Message)
 	return new gException('MESSAGE_IS_EMPTY','Введите сообщение');
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php','libs/Upload.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -113,23 +113,6 @@ if($MessageID){
 		#-------------------------------------------------------------------------------
 		$IEdeskMessage = Array('UserID'=>$__USER['ID'],'EdeskID'=>$Edesk['ID'],'Content'=>$Message);
 		#-------------------------------------------------------------------------------
-		$Upload = Upload_Get('EdesksMessageFile');
-		#-------------------------------------------------------------------------------
-		switch(ValueOf($Upload)){
-		case 'error':
-			return ERROR | @Trigger_Error(500);
-		case 'exception':
-			# No more...
-			break;
-		case 'array':
-			#-------------------------------------------------------------------------------
-			$IEdeskMessage['FileName'] = $Upload['Name'];
-			#-------------------------------------------------------------------------------
-			break;
-			#-------------------------------------------------------------------------------
-		default:
-			return ERROR | @Trigger_Error(101);
-		}
 		#-------------------------------------------------------------------------------
 		$Users = DB_Select('Users','ID',Array('Where'=>SPrintF('`ID` IN (SELECT `UserID` FROM `EdesksMessages` WHERE `EdeskID` = %u) AND `ID` != %u AND `ID` > 50',$Edesk['ID'],$__USER['ID'])));
 		#-------------------------------------------------------------------------------
@@ -169,9 +152,6 @@ if($MessageID){
 		if(Is_Error($MessageID))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		if(IsSet($IEdeskMessage['FileName']))
-			if(!SaveUploadedFile('EdesksMessages', $MessageID, $Upload['Data']))
-				return new gException('CANNOT_SAVE_UPLOADED_FILE','Не удалось сохранить загруженный файл');
 		#-------------------------------------------------------------------------------
 		$IsUpdate = DB_Update('Edesks',Array('UpdateDate'=>Time()),Array('ID'=>$Edesk['ID']));
 		#-------------------------------------------------------------------------------

@@ -274,7 +274,7 @@ if(IsSet($Data->{'reply_message'}->{'id'})){
 		$Params = Array('Message'=>$Message,'TicketID'=>$Attribs['TicketID'],'UserID'=>$UserID,'IsInternal'=>TRUE);
 		#-------------------------------------------------------------------------------
 		if(IsSet($Hash))
-			$Params['TicketMessageFile'] = $Hash;
+			$Params['TicketMessageFile'] = Array($Hash);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// постим от админа, т.к. пост может идти от другого юзера в ответ на...

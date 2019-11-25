@@ -168,7 +168,7 @@ switch(ValueOf($Contract)){
             if(Is_Error($IsUpdate))
               return ERROR | @Trigger_Error(500);
            #-------------------------------------------------------------------
-           if(!SaveUploadedFile('Contracts', $ContractID, $Document))
+	   if(!SaveUploadedFile(Array(Array('Data'=>$Document,'Name'=>SPrintF('Contract%s.html',$ContractID),'Size'=>Mb_StrLen($Document,'8bit'),'Mime'=>'text/html')),'Contracts',$ContractID))
              return new gException('CANNOT_SAVE_UPLOADED_FILE','Не удалось сохранить загруженный файл');
             #-------------------------------------------------------------------
             $ContractsEnclosures = DB_Select('ContractsEnclosures','ID',Array('Where'=>SPrintF('`ContractID` = %u',$ContractID)));

@@ -44,7 +44,7 @@ if($UserID){
       #-------------------------------------------------------------------------
       if(!In_Array($UserID,$UsersIDs)){
         #-----------------------------------------------------------------------
-        $IsPermission = Permission_Check('UserSwitch',(integer)$__USER['ID'],(integer)$UserID);
+        $IsPermission = Permission_Check('UsersSwitch',(integer)$__USER['ID'],(integer)$UserID);
         #-----------------------------------------------------------------------
         switch(ValueOf($IsPermission)){
           case 'error':

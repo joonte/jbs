@@ -25,7 +25,7 @@ if(!$Settings['IsActive'])
 $MessagesCount = 0;
 #-------------------------------------------------------------------------------
 $Columns = Array(
-		'ID','UserID','EdeskID','FileName','SUBSTR(`Content`,1,4096) AS `Content`',
+		'ID','UserID','EdeskID','SUBSTR(`Content`,1,4096) AS `Content`',
 		SPrintF('CONCAT("[%s-",`EdeskID`,"] ",(SELECT `Theme` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`)) as `Theme`',$Settings['KeyPrefix']),
 		'(SELECT `TargetGroupID` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `TargetGroupID`',
 		'(SELECT `TargetUserID` FROM `Edesks` WHERE `Edesks`.`ID` = `EdeskID`) as `TargetUserID`',
@@ -60,26 +60,11 @@ foreach($Messages as $Message){
 	$TargetGroupID	= (integer)$Message['TargetGroupID'];
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	// если файл существует, собираем массив вложений
-	if(GetUploadedFileSize('EdesksMessages',$Message['ID'])){
-		#-------------------------------------------------------------------------------
-		// достаём сам файл
-		$File = GetUploadedFile('EdesksMessages',$Message['ID']);
-		#-------------------------------------------------------------------------------
-		$Attachments = Array(
-					Array(
-						'Name'	=> $Message['FileName'],
-						'Size'	=> GetUploadedFileSize('EdesksMessages',$Message['ID']),
-						'Mime'	=> GetFileMimeType('EdesksMessages',$Message['ID']),
-						'Data'	=> Chunk_Split(Base64_Encode($File['Data']))
-						)
-					);
-		#-------------------------------------------------------------------------------
-	}else{
-		#-------------------------------------------------------------------------------
+	// если файлы добавлены, то собираем массив вложений
+	$Attachments = GetUploadedFiles('EdesksMessages',$Message['ID'],TRUE);
+	#-------------------------------------------------------------------------------
+	if(!Is_Array($Attachments))
 		$Attachments = Array();
-		#-------------------------------------------------------------------------------
-	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if($TargetGroupID != 1){
@@ -260,6 +245,7 @@ foreach($Messages as $Message){
 			if(StrLen($Message['NotifyEmail']) > 5)
 				$msgParams['Recipient'] = $Message['NotifyEmail'];
 			#-------------------------------------------------------------------------------
+			#Debug(print_r($msgParams,true));
 			#-------------------------------------------------------------------------------
 			$msg = new FromTicketsMessagesMsg($msgParams, (integer)$OwnerID);
 			#-------------------------------------------------------------------------------

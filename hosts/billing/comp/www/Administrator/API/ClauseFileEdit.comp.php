@@ -1,6 +1,5 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
@@ -11,39 +10,36 @@ Eval(COMP_INIT);
 $Args = Args();
 #-------------------------------------------------------------------------------
 $ClauseID = (integer) @$Args['ClauseID'];
-$Comment  =  (string) @$Args['Comment'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if(!$Comment)
-  return new gException('COMMENT_IS_EMPTY','Введите комментарий к файлу');
 #-------------------------------------------------------------------------------
-$Upload = Upload_Get('ClauseFile');
+$Files = Upload_Get('ClauseFile');
+
+$Files = Upload_Get('ClauseFile',(IsSet($Args['ClauseFile'])?$Args['ClauseFile']:FALSE));
 #-------------------------------------------------------------------------------
-switch(ValueOf($Upload)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return $Upload;
-  case 'array':
-    #---------------------------------------------------------------------------
-    $IClauseFile = Array(
-      #-------------------------------------------------------------------------
-      'ClauseID' => $ClauseID,
-      'FileName' => $Upload['Name'],
-      'FileData' => $Upload['Data'],
-      'Comment'  => $Comment,
-    );
-    #---------------------------------------------------------------------------
-    $ClauseFileID = DB_Insert('ClausesFiles',$IClauseFile);
-    if(Is_Error($ClauseFileID))
-      return ERROR | @Trigger_Error(500);
-    #---------------------------------------------------------------------------
-    return Array('Status'=>'Ok');
-  default:
-    return ERROR | @Trigger_Error(101);
+switch(ValueOf($Files)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	# No more...
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	// сохраняем файлы в таблицу
+	if(Is_Error(SaveUploadedFile($Files,'Clauses',$ClauseID)))
+		return new gException('CANNOT_SAVE_UPLOADED_FILES','Не удалось сохранить загруженные файлы');
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+return Array('Status'=>'Ok');
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>

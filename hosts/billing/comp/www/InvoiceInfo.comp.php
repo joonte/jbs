@@ -31,7 +31,7 @@ default:
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
-$IsPermission = Permission_Check('InvoiceRead',(integer)$__USER['ID'],(integer)$Invoice['UserID']);
+$IsPermission = Permission_Check('InvoicesRead',(integer)$__USER['ID'],(integer)$Invoice['UserID']);
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsPermission)){
 case 'error':

@@ -109,7 +109,7 @@ function TicketAddMessage(){
 				}else{
 					document.forms['TicketReadForm'].Message.value = '';
 					//------------------------------------------------------------------------------
-					UploadDelete('TicketReadForm','TicketMessageFile');
+					UploadDelete();
 					//------------------------------------------------------------------------------
 					document.getElementById('TicketReadMessages').contentWindow.document.location.reload();
 					//------------------------------------------------------------------------------

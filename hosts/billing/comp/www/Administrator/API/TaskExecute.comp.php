@@ -51,7 +51,7 @@ $TaskNowRunning = SPrintF('%s/TaskNowRunning.txt',$Tmp);
 #-------------------------------------------------------------------------------
 if(File_Exists($TaskNowRunning))
 	if(!UnLink($TaskNowRunning))
-		return ERROR | @Trigger_Error(SPrintF('[IO_RmDir]: ошибка при удалении файла (%s)',$TaskNowRunning));
+		return ERROR | @Trigger_Error(SPrintF('[comp/www/Administrator/API/TaskExecute]: ошибка при удалении файла (%s)',$TaskNowRunning));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $TaskID = $Task['ID'];
@@ -270,7 +270,7 @@ if(Is_Error($FreeLock))
 #-------------------------------------------------------------------------------
 if(File_Exists($TaskNowRunning))
 	if(!UnLink($TaskNowRunning))
-		return ERROR | @Trigger_Error(SPrintF('[IO_RmDir]: ошибка при удалении файла, после выполнения задания (%s)',$TaskNowRunning));
+		return ERROR | @Trigger_Error(SPrintF('[comp/www/Administrator/API/TaskExecute]: ошибка при удалении файла, после выполнения задания (%s)',$TaskNowRunning));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return Array('Status'=>'Ok');

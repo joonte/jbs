@@ -14,6 +14,9 @@ $UserID = (integer) @$Args['UserID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+$__USER = $GLOBALS['__USER'];
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $DOM = new DOM();
 #-------------------------------------------------------------------------------
 $Links = &Links();
@@ -90,7 +93,7 @@ if(Is_Error($Comp))
 $Table[] = Array('Отдел',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($GLOBALS['__USER']['IsAdmin']){
+if($__USER['IsAdmin']){
 	#-------------------------------------------------------------------------------
 	$Workers = DB_Select('Users',Array('ID','Name'),Array('Where'=>SPrintF("(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = `Users`.`GroupID`) = 'yes' OR `ID` = 100")));
 	#-------------------------------------------------------------------------------
@@ -110,7 +113,7 @@ if($GLOBALS['__USER']['IsAdmin']){
 	foreach($Workers as $Worker)
 		$Options[$Worker['ID']] = $Worker['Name'];
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Select',Array('name'=>'TargetUserID','style'=>'width: 100%'),$Options,$GLOBALS['__USER']['ID']);
+	$Comp = Comp_Load('Form/Select',Array('name'=>'TargetUserID','style'=>'width: 100%'),$Options,$__USER['ID']);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -134,13 +137,13 @@ $Table[] = 'Сообщение';
 #-------------------------------------------------------------------------------
 $Tr = new Tag('TR');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Upload','TicketMessageFile');
+$Comp = Comp_Load('Upload','TicketMessageFile','-',($__USER['IsAdmin'])?$Config['Interface']['User']['Files']['EdesksMessages']['MaxFiles']:100500);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Tr->AddChild(new Tag('NOBODY',new Tag('TD',Array('class'=>'Comment'),'Прикрепить файл'),new Tag('TD',$Comp)));
 #-------------------------------------------------------------------------------
-if($GLOBALS['__USER']['IsAdmin']){ # is support
+if($__USER['IsAdmin']){ # is support
 	#-------------------------------------------------------------------------------
 	$Articles = DB_Select('Clauses','*',Array('Where'=>"`GroupID` = 10 AND `IsPublish` = 'yes'",'SortOn'=>'Partition'));
 	#-------------------------------------------------------------------------------
@@ -220,7 +223,7 @@ $Table[] = $Comp;
 #-------------------------------------------------------------------------------
 $Disabled = Array();
 #-------------------------------------------------------------------------------
-if(!$GLOBALS['__USER']['IsAdmin'])
+if(!$__USER['IsAdmin'])
 	$Disabled[] = 'hidden';
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Edesks/Panel',$Disabled);
@@ -233,7 +236,7 @@ $Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"FormEdit('/API
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if($GLOBALS['__USER']['IsAdmin']){
+if($__USER['IsAdmin']){
 	#-------------------------------------------------------------------------------
 	# сотрудник, добавляем флаги
 	$Config = Config();
@@ -295,6 +298,8 @@ if(!$UserID){
 		#-------------------------------------------------------------------------------
 		foreach($Users as $User){
 			#-------------------------------------------------------------------------------
+			// достаём фотку юзера
+
 			$Block->AddHTML(TemplateReplace('www.TicketEdit',$User));
 			#-------------------------------------------------------------------------------
 			if(Count($Block->Childs)%2 == 0){

@@ -86,7 +86,7 @@ switch(ValueOf($Service)){
                   #-------------------------------------------------------------
                   $FieldID = SPrintF('ID%u',$ServiceFieldID);
                   #-------------------------------------------------------------
-                  $Value = (string) @$Args[$FieldID];
+                  $Value = /*(string)*/ @$Args[$FieldID];
                   #-------------------------------------------------------------
                   switch($ServiceField['TypeID']){
                     case 'File':
@@ -104,9 +104,9 @@ switch(ValueOf($Service)){
                         break;
                         case 'array':
                           #-----------------------------------------------------
-                          $IOrderField['FileName'] = $Upload['Name'];
+                          $IOrderField['FileName'] = $Upload[0]['Name'];
                           #-----------------------------------------------------
-                          $Value = Base64_Encode($Upload['Data']);
+                          $Value = Base64_Encode($Upload[0]['Data']);
                         break;
                         default:
                           return ERROR | @Trigger_Error(101);

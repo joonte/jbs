@@ -46,7 +46,7 @@ switch(ValueOf($Invoice)){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # проверяем, имеет ли юзер отношение к этому счёту
-$IsPermission = Permission_Check('InvoiceEdit',(integer)$GLOBALS['__USER']['ID'],(integer)$Invoice['UserID']);
+$IsPermission = Permission_Check('InvoicesEdit',(integer)$GLOBALS['__USER']['ID'],(integer)$Invoice['UserID']);
 #-------------------------------------------------------------------------
 switch(ValueOf($IsPermission)){
 case 'error':

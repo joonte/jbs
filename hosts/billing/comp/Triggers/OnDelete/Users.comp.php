@@ -42,8 +42,12 @@ if(Is_Error($IsDelete))
 	return new gException('USERs_EVENTS_CAN_NOT_DELETED',SPrintF('Не удалось удалить события пользователя [%s]',$User['Email']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(!DeleteUploadedFile('Users',$User['ID']))
-	return new gException('CANNOT_DELETE_FILE','Не удалось удалить связанный файл');
+// достаём все файлы и удаляем
+$Files = GetUploadedFilesInfo('Users',$Message['ID']);
+#-------------------------------------------------------------------------------
+foreach($Files as $File)
+	if(!DeleteUploadedFile($File['ID']))
+		return new gException('CANNOT_DELETE_FILE','Не удалось удалить связанный файл');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Personal = DB_Select('Users',Array('ID','Email'),Array('UNIQ','ID'=>$GLOBALS['__USER']['ID']));

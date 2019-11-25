@@ -15,7 +15,7 @@ $MessageID = (integer) @$Args['MessageID'];
 if(!$MessageID)
   return new gException('MESSAGE_ID_IS_EMPTY','Выберите сообщение');
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php','libs/Upload.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];

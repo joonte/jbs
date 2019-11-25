@@ -237,7 +237,7 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		// цитируем предыдущее сообщение, если это не от администратора
-		if(!$GLOBALS['__USER']['IsAdmin'])
+		if(!$GLOBALS['__USER']['IsAdmin'] && IsSet($Data->{'reply_to_message'}->{'text'}))
 			$Message = SPrintF('[quote]%s[/quote]%s',$Data->{'reply_to_message'}->{'text'},($Message)?$Message:'');
 		#-------------------------------------------------------------------------------
 		// текста может и не быть, даже от админа
@@ -247,7 +247,7 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 		$Params = Array('Message'=>$Message,'TicketID'=>$Attribs['TicketID'],'UserID'=>$UserID,'IsInternal'=>TRUE);
 		#-------------------------------------------------------------------------------
 		if(IsSet($Hash))
-			$Params['TicketMessageFile'] = $Hash;
+			$Params['TicketMessageFile'] = Array($Hash);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// постим от админа, т.к. пост может идти от другого юзера в ответ на...

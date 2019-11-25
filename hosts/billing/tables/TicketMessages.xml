@@ -43,7 +43,6 @@
   <ListElement>Content</ListElement>
   <ListElement>IP</ListElement>
   <ListElement>UA</ListElement>
-  <ListElement>FileName</ListElement>
   <ListElement>IsVisible</ListElement>
   <ListElement>VoteBall</ListElement>
  </ColumnsIDs>
@@ -70,7 +69,6 @@
    <ListElement>%Content%</ListElement>
    <ListElement>%IP%</ListElement>
    <ListElement>%UA%</ListElement>
-   <ListElement>%FileName%</ListElement>
    <ListElement>%IsVisible%</ListElement>
    <ListElement>%VoteBall%</ListElement>
   </Args>

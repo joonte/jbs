@@ -232,7 +232,7 @@ switch(ValueOf($Invoice)){
               $Document = Str_Replace(SPrintF('%%%s%%',$LinkID),$Text?$Text:'-',$Document);
             }
             #-------------------------------------------------------------------
-            if(!SaveUploadedFile('Invoices', $InvoiceID, $Document))
+            if(!SaveUploadedFile(Array(Array('Data'=>$Document,'Name'=>SPrintF('Invoice%s.html',$InvoiceID),'Size'=>Mb_StrLen($Document,'8bit'),'Mime'=>'text/html')),'Invoices',$InvoiceID))
               return new gException('CANNOT_SAVE_UPLOADED_FILE','Не удалось сохранить загруженный файл');
             #-------------------------------------------------------------------
             return TRUE;

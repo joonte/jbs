@@ -1022,19 +1022,6 @@
 				<IsActive>1</IsActive>
 			</Dispatch>
 			<!-- ********************************************************************* -->
-			<EdeskCreate>
-				<Title>Обсуждения</Title>
-				<Name>Создание нового обсуждения</Name>
-				<GroupID>1</GroupID>
-				<IsActive>1</IsActive>
-			</EdeskCreate>
-			<!-- ********************************************************************* -->
-			<EdeskMessageCreate>
-				<Name>Новое сообщение в обсуждении</Name>
-				<GroupID>1</GroupID>
-				<IsActive>1</IsActive>
-			</EdeskMessageCreate>
-			<!-- ********************************************************************* -->
 			<PartnersReward>
 				<Title>Финансы</Title>
 				<Name>Партнёрские начисления</Name>
@@ -1903,6 +1890,18 @@
 				<RedirectAuthorized>0</RedirectAuthorized>
 				<SendReportOnSearchError>0</SendReportOnSearchError>
 			</InvoiceDocumentGuest>
+			<!-- *********************************************************************** -->
+			<Files>
+				<EdesksMessages>
+					<MaxFiles>10</MaxFiles>
+					<AllowDelete>0</AllowDelete>
+				</EdesksMessages>
+				<!-- *********************************************************************** -->
+				<Profiles>
+					<MaxFiles>10</MaxFiles>
+					<AllowDelete>0</AllowDelete>
+				</Profiles>
+			</Files>
 			<!-- *********************************************************************** -->
 		</User>
 		<!-- *********************************************************************** -->

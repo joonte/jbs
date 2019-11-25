@@ -15,38 +15,44 @@ INSERT INTO `Permissions` (`Name`,`HostID`,`UserGroupID`,`UserID`,`OwnerGroupID`
 
 /* ----------------------------- */
 
-('ClauseEdit','billing',1,1,4000000,1,1,'no'),
-('ClauseEdit','billing',3000000,100,1,1,2,'yes'),
+('ClausesEdit','billing',1,1,4000000,1,1,'no'),
+('ClausesEdit','billing',3000000,100,1,1,2,'yes'),
 
-('UserRead','billing',1,1,4000000,1,1,'yes'),
-('UserRead','billing',3000000,100,1,1,2,'yes'),
+('ClausesRead','billing',1,1,4000000,1,1,'no'),
+('ClausesRead','billing',3000000,100,1,1,2,'yes'),
 
-('UserSwitch','billing',1,1,4000000,1,1,'yes'),
-('UserSwitch','billing',3000000,100,1,1,2,'yes'),
+('UsersRead','billing',1,1,4000000,1,1,'yes'),
+('UsersRead','billing',3000000,100,1,1,2,'yes'),
 
-('ProfileRead','billing',1,1,4000000,1,1,'yes'),
-('ProfileRead','billing',3000000,100,1,1,2,'yes'),
+('UsersSwitch','billing',1,1,4000000,1,1,'yes'),
+('UsersSwitch','billing',3000000,100,1,1,2,'yes'),
 
-('ProfileEdit','billing',1,1,4000000,1,1,'yes'),
-('ProfileEdit','billing',3000000,100,1,1,2,'yes'),
+('ProfilesRead','billing',1,1,4000000,1,1,'yes'),
+('ProfilesRead','billing',3000000,100,1,1,2,'yes'),
 
-('ContractRead','billing',1,1,4000000,1,1,'yes'),
-('ContractRead','billing',3000000,100,1,1,2,'yes'),
+('ProfilesEdit','billing',1,1,4000000,1,1,'yes'),
+('ProfilesEdit','billing',3000000,100,1,1,2,'yes'),
+
+('ContractsRead','billing',1,1,4000000,1,1,'yes'),
+('ContractsRead','billing',3000000,100,1,1,2,'yes'),
 
 ('ContractEnclosureRead','billing',1,1,4000000,1,1,'yes'),
 ('ContractEnclosureRead','billing',3000000,100,1,1,2,'yes'),
 
-('InvoiceRead','billing',1,1,4000000,1,1,'yes'),
-('InvoiceRead','billing',3000000,100,1,1,2,'yes'),
+('InvoicesRead','billing',1,1,4000000,1,1,'yes'),
+('InvoicesRead','billing',3000000,100,1,1,2,'yes'),
 
-('InvoiceEdit','billing',1,1,4000000,1,1,'yes'),
-('InvoiceEdit','billing',3000000,100,1,1,2,'yes'),
+('InvoicesEdit','billing',1,1,4000000,1,1,'yes'),
+('InvoicesEdit','billing',3000000,100,1,1,2,'yes'),
 
 ('WorksCompliteRead','billing',1,1,4000000,1,1,'yes'),
 ('WorksCompliteRead','billing',3000000,100,1,1,2,'yes'),
 
 ('EdeskRead','billing',1,1,1,1,1,'yes'),
 ('EdeskRead','billing',3000000,100,1,1,2,'yes'),
+
+('EdesksMessagesEdit','billing',1,1,1,1,1,'yes'),
+('EdesksMessagesEdit','billing',3000000,100,1,1,2,'yes'),
 
 ('TicketRead','billing',1,1,4000000,1,1,'yes'),
 ('TicketRead','billing',3000000,100,1,1,2,'yes'),
@@ -153,6 +159,9 @@ INSERT INTO `Permissions` (`Name`,`HostID`,`UserGroupID`,`UserID`,`OwnerGroupID`
 
 ('ServicesDelete','billing',1,1,4000000,1,1,'no'),
 ('ServicesDelete','billing',3000000,100,1,1,2,'yes'),
+
+('ServicesEdit','billing',1,1,4000000,1,1,'no'),
+('ServicesEdit','billing',3000000,100,1,1,2,'yes'),
 
 ('ServicesFieldsDelete','billing',1,1,4000000,1,1,'no'),
 ('ServicesFieldsDelete','billing',3000000,100,1,1,2,'yes'),

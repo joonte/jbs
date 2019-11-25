@@ -42,8 +42,13 @@ $IsDelete = DB_Delete('MotionDocuments',Array('Where'=>SPrintF('`ContractID` = %
 if(Is_Error($IsDelete))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if(!DeleteUploadedFile('Contracts', $Contract['ID']))
-        return new gException('CANNOT_DELETE_FILE','Не удалось удалить связанный файл');
+#-------------------------------------------------------------------------------
+// достаём все файлы и удаляем
+$Files = GetUploadedFilesInfo('Contracts',$Contract['ID']);
+#-------------------------------------------------------------------------------
+foreach($Files as $File)
+	if(!DeleteUploadedFile($File['ID']))
+		return new gException('CANNOT_DELETE_FILE','Не удалось удалить связанный файл');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;

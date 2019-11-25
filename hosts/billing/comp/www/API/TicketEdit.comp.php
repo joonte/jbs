@@ -116,7 +116,7 @@ if($UserID){
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
-	$Permission = Permission_Check('UserRead',(integer)$__USER['ID'],(integer)$User['ID']);
+	$Permission = Permission_Check('UsersRead',(integer)$__USER['ID'],(integer)$User['ID']);
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Permission)){
 	case 'error':
@@ -159,7 +159,7 @@ if($TargetUserID){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Permission = Permission_Check('UserRead',(integer)$__USER['ID'],(integer)$User['ID']);
+	$Permission = Permission_Check('UsersRead',(integer)$__USER['ID'],(integer)$User['ID']);
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Permission)){
 	case 'error':
@@ -212,9 +212,16 @@ $ITicketMessage = Array(
 			'UA'		=> IsSet($GLOBALS['_SERVER']['HTTP_USER_AGENT'])?$GLOBALS['_SERVER']['HTTP_USER_AGENT']:'',
 			);
 #-------------------------------------------------------------------------------
-$Upload = Upload_Get('TicketMessageFile',(IsSet($Args['TicketMessageFile'])?$Args['TicketMessageFile']:FALSE));
+$MessageID = DB_Insert('EdesksMessages',$ITicketMessage);
+if(Is_Error($MessageID))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-switch(ValueOf($Upload)){
+#-------------------------------------------------------------------------------
+// достаём файлы, если они есть
+$Files = Upload_Get('TicketMessageFile',(IsSet($Args['TicketMessageFile'])?$Args['TicketMessageFile']:FALSE));
+#-------------------------------------------------------------------------------
+
+switch(ValueOf($Files)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
@@ -222,7 +229,9 @@ case 'exception':
 	break;
 case 'array':
 	#-------------------------------------------------------------------------------
-	$ITicketMessage['FileName'] = $Upload['Name'];
+	// сохраняем файлы в таблицу
+	if(Is_Error(SaveUploadedFile($Files,'EdesksMessages',$MessageID)))
+		return new gException('CANNOT_SAVE_UPLOADED_FILES','Не удалось сохранить загруженные файлы');
 	#-------------------------------------------------------------------------------
 	break;
 	#-------------------------------------------------------------------------------
@@ -230,13 +239,6 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$MessageID = DB_Insert('EdesksMessages',$ITicketMessage);
-if(Is_Error($MessageID))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-if(IsSet($ITicketMessage['FileName']))
-	if(!SaveUploadedFile('EdesksMessages', $MessageID, $Upload['Data']))
-		return new gException('CANNOT_SAVE_UPLOADED_FILE','Не удалось сохранить загруженный файл');
 #-------------------------------------------------------------------------------
 if(!$UserID){
 	#-------------------------------------------------------------------------------

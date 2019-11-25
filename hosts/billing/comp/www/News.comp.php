@@ -60,7 +60,7 @@ $DOM->AddChild('Into',new Tag('TABLE',new Tag('TR',new Tag('TD',$A),new Tag('TD'
 #-------------------------------------------------------------------------------
 if(IsSet($GLOBALS['__USER'])){
 	#-------------------------------------------------------------------------------
-	$Permission = Permission_Check('ClauseEdit',(integer)$GLOBALS['__USER']['ID']);
+	$Permission = Permission_Check('ClausesEdit',(integer)$GLOBALS['__USER']['ID']);
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Permission)){
 	case 'error':

@@ -356,5 +356,16 @@ SELECT
 FROM
    `Contacts`;
 
+#-------------------------------------------------------------------------------
+DROP VIEW IF EXISTS `FilesOwners`;
+DROP TABLE IF EXISTS `FilesOwners`;
+CREATE
+   VIEW `FilesOwners` AS
+SELECT
+   `Files`.*,
+   100 as `UserID`
+FROM
+   `Files`;
+
 
 

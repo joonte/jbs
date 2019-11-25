@@ -51,7 +51,7 @@ if($ProfileID){
       return new gException('PROFILE_NOT_FOUND','Профиль не найден');
     case 'array':
       #-------------------------------------------------------------------------
-      $IsPermission = Permission_Check('ProfileRead',(integer)$__USER['ID'],(integer)$Profile['UserID']);
+      $IsPermission = Permission_Check('ProfilesRead',(integer)$__USER['ID'],(integer)$Profile['UserID']);
       #-------------------------------------------------------------------------
       switch(ValueOf($IsPermission)){
         case 'error':

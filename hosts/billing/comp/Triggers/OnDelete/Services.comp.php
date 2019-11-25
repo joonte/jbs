@@ -40,8 +40,12 @@ if(Is_Error($Count))
 if($Count)
 	return new gException('SERVICE_SERVERS_EXISTS',SPrintF('Услуга (%s) не может быть удалена, т.к. для неё настроены %u групп серверов',$Service['Name'],$Count));
 #-------------------------------------------------------------------------------
-if(!DeleteUploadedFile('Services',$Service['ID']))
-	return new gException('CANNOT_DELETE_FILE','Не удалось удалить связанный файл');
+// достаём все файлы и удаляем
+$Files = GetUploadedFilesInfo('Services',$Service['ID']);
+#-------------------------------------------------------------------------------
+foreach($Files as $File)
+	if(!DeleteUploadedFile($File['ID']))
+		return new gException('CANNOT_DELETE_FILE','Не удалось удалить связанный файл');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;

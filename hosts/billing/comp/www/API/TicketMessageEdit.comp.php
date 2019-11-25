@@ -172,9 +172,15 @@ if($Message){
 	if(IsSet($NotVisible))
 		$ITicketMessage['IsVisible'] = FALSE;
 	#-------------------------------------------------------------------------------
-	$Upload = Upload_Get('TicketMessageFile',(IsSet($Args['TicketMessageFile'])?$Args['TicketMessageFile']:FALSE));
+	$MessageID = DB_Insert('EdesksMessages',$ITicketMessage);
+	if(Is_Error($MessageID))
+		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	switch(ValueOf($Upload)){
+	#-------------------------------------------------------------------------------
+	// достаём файлы, если они есть
+	$Files = Upload_Get('TicketMessageFile',(IsSet($Args['TicketMessageFile'])?$Args['TicketMessageFile']:FALSE));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Files)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
@@ -182,22 +188,15 @@ if($Message){
 		break;
 	case 'array':
 		#-------------------------------------------------------------------------------
-		$ITicketMessage['FileName'] = $Upload['Name'];
+		// сохраняем файлы в таблицу
+		if(Is_Error(SaveUploadedFile($Files,'EdesksMessages',$MessageID)))
+			return new gException('CANNOT_SAVE_UPLOADED_FILES','Не удалось сохранить загруженные файлы');
 		#-------------------------------------------------------------------------------
 		break;
 		#-------------------------------------------------------------------------------
 	default:
 		return ERROR | @Trigger_Error(101);
 	}
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	$MessageID = DB_Insert('EdesksMessages',$ITicketMessage);
-	if(Is_Error($MessageID))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	if(IsSet($ITicketMessage['FileName']))
-		if(!SaveUploadedFile('EdesksMessages', $MessageID, $Upload['Data']))
-			return new gException('CANNOT_SAVE_UPLOADED_FILE','Не удалось сохранить загруженный файл');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if($__USER['ID'] != (integer)$Ticket['UserID']){

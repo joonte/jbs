@@ -39,7 +39,7 @@ switch(ValueOf($Invoices)){
     #---------------------------------------------------------------------------
     foreach($Invoices as $Invoice){
       #-------------------------------------------------------------------------
-      $IsPermission = Permission_Check('InvoiceEdit',(integer)$__USER['ID'],(integer)$Invoice['UserID']);
+      $IsPermission = Permission_Check('InvoicesEdit',(integer)$__USER['ID'],(integer)$Invoice['UserID']);
       #-------------------------------------------------------------------------
       switch(ValueOf($IsPermission)){
         case 'error':
