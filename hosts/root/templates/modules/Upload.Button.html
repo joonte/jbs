@@ -5,7 +5,7 @@
 <TR>
 	<TD class="Standard" id="Upload%Name%Info">%Info%</TD>
 	<TD width="30">
-		<INPUT id="upload_%Name%" style="font-weight:bold;" type="button" value=" + " onmouseover="PromptShow(event,'Максимальный размер файла = %MaxFileSize%Mb',this);" onclick="UploadShow(event,form.name,'%Name%');" />
+		<INPUT id="upload_%Name%" style="font-weight:bold;" type="button" value=" + " onmouseover="PromptShow(event,'Максимальный размер файла: %MaxFileSize%Mb; количество файлов: %FilesMax%',this);" onclick="UploadShow(event,form.name,'%Name%');" />
 		<INPUT id="upload_%Name%_max" type="hidden" value="%FilesMax%" />
 		<INPUT id="upload_%Name%_cnt" type="hidden" value="0" />
 	</TD>
