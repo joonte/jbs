@@ -131,7 +131,7 @@ function SaveUploadedFile($Files,$Table,$ID){
 				'CreateDate'	=> Time(),
 				'TableID'	=> $Table,
 				'RowID'		=> $ID,
-				'Name'		=> $File['Name'],
+				'Name'		=> Trim($File['Name']),
 				'Size'		=> $File['Size'],
 				'Mime'		=> $File['Mime']
 				);
