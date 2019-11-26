@@ -187,6 +187,9 @@ foreach(Array_Keys($Config['Notifies']['Types']) as $TypeID){
 	$Type = $Config['Notifies']['Types'][$TypeID];
 	#-------------------------------------------------------------------------------
 	// проверяем группу для уведомлений
+	if(!IsSet($Type['GroupID']))
+		continue;
+	#-------------------------------------------------------------------------------
 	$Entrance = Tree_Entrance('Groups',(integer)$Type['GroupID']);
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Entrance)){
