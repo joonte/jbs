@@ -1048,4 +1048,16 @@
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 		<RegistrationMessage>Обращаем ваше внимание, что при регистрации домена в доменной зоне .xyz на ваш почтовый адрес будет выслано письмо со ссылкой, для подтверждении регистрации. Если вы не пройдёте по этой ссылке, то через 2 недели домен перестанет работать, т.к. владелец доменной зоны снимет его с делегирования.</RegistrationMessage>
 	</store>
+	<codes>
+		<Server>whois.donuts.co</Server>
+		<Name>codes</Name>
+		<Available>Domain\snot\sfound.</Available>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
+		<MinChars>2</MinChars>
+		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
+		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</codes>
 </XML>
