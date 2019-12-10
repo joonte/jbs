@@ -168,6 +168,25 @@ switch(ValueOf($Contract)){
             if(Is_Error($IsUpdate))
               return ERROR | @Trigger_Error(500);
            #-------------------------------------------------------------------
+
+
+
+
+// достаём все файлы и удаляем
+$Files = GetUploadedFilesInfo('Contracts',$ContractID);
+#-------------------------------------------------------------------------------
+foreach($Files as $File)
+	if(!DeleteUploadedFile($File['ID']))
+		return new gException('CANNOT_DELETE_FILE','Не удалось удалить связанный файл');
+
+
+
+
+
+
+
+
+
 	   if(!SaveUploadedFile(Array(Array('Data'=>$Document,'Name'=>SPrintF('Contract%s.html',$ContractID),'Size'=>Mb_StrLen($Document,'8bit'),'Mime'=>'text/html')),'Contracts',$ContractID))
              return new gException('CANNOT_SAVE_UPLOADED_FILE','Не удалось сохранить загруженный файл');
             #-------------------------------------------------------------------

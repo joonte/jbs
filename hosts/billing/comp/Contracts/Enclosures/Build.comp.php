@@ -167,6 +167,20 @@ switch(ValueOf($ContractEnclosure)){
                   $Document = Str_Replace(SPrintF('%%%s%%',$LinkID),$Text?$Text:'-',$Document);
                 }
                 #---------------------------------------------------------------
+
+
+
+
+// достаём все файлы и удаляем
+$Files = GetUploadedFilesInfo('ContractsEnclosures',$ContractEnclosureID);
+#-------------------------------------------------------------------------------
+foreach($Files as $File)
+	if(!DeleteUploadedFile($File['ID']))
+		return new gException('CANNOT_DELETE_FILE','Не удалось удалить связанный файл');
+
+
+
+
 		if(!SaveUploadedFile(Array(Array('Data'=>$Document,'Name'=>SPrintF('ContractEnclosure%s.html',$ContractEnclosureID),'Size'=>Mb_StrLen($Document,'8bit'),'Mime'=>'text/html')),'ContractsEnclosures',$ContractEnclosureID))
                   return new gException('CANNOT_SAVE_FILE','Не удалось сохранить файл');
                 #---------------------------------------------------------------
