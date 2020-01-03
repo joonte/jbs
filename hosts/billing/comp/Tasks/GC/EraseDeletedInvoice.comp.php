@@ -19,7 +19,7 @@ if(!$Settings['IsActive'])
 #-------------------------------------------------------------------------------
 $Where = Array(
 		"`StatusID` = 'Rejected'","`IsPosted` = 'no'",
-		SPrintF("`StatusDate` < UNIX_TIMESTAMP( ) - %d *86400", $Settings['DaysBeforeErase'])
+		SPrintF("`StatusDate` < UNIX_TIMESTAMP() - %d*86400",$Settings['DaysBeforeErase'])
 		);
 #-------------------------------------------------------------------------------
 $Invoices = DB_Select('InvoicesOwners',Array('ID','UserID'),Array('SortOn'=>'CreateDate', 'IsDesc'=>TRUE, 'Where'=>$Where));
