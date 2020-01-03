@@ -61,7 +61,7 @@
        <TR>
         <TD id="Copyright" />
         <TD align="right">
-         <A title="Биллинг для хостинга и регистрации доменов" href="http://www.joonte.com/" style="font-size:11px;color:#848484;">Биллинг Joonte 2007-2019 (v2.6.3)</A>
+         <A title="Биллинг для хостинга и регистрации доменов" href="http://www.joonte.com/" style="font-size:11px;color:#848484;">Биллинг Joonte 2007-##CURR_YEAR## (##VERSION##)</A>
         </TD>
        </TR>
       </TABLE>
