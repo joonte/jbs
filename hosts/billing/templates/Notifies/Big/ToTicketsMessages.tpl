@@ -2,10 +2,12 @@
  *  Joonte Billing System
  *  Copyright © 2012 Vitaly Velikodnyy
  *}
+{assign var=ThemeOrig value="{$Theme|default:'$Theme'}" scope=global}
 {assign var=Theme value="Ответ на запрос №{$TicketID|string_format:"%08u"} с темой: {$Theme|default:'$Theme'}" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
-В службу поддержки поступило новое сообщение по запросу №{$TicketID|string_format:"%08u"}, с темой: {$Theme|default:'$Theme'}.
+В службу поддержки поступило новое сообщение по запросу №{$TicketID|string_format:"%08u"}, с темой:
+{$ThemeOrig|default:'$ThemeOrig'}.
 
 ---
 {$Message|default:'$Message'}
