@@ -21,11 +21,12 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 #-------------------------------------------------------------------------------
 $Columns = Array(
 			'ID','ContractID','OrderID','UserID','DomainName','ExpirationDate','AuthInfo','StatusID','SchemeID',
-			'Ns1Name','Ns2Name','Ns3Name','Ns4Name',
+			'CONCAT(`Ns1Name`,",",`Ns2Name`,",",`Ns3Name`,",",`Ns4Name`) AS `DNSs`',	// DNS for JBS-1337
 			'(SELECT `GroupID` FROM `Users` WHERE `DomainOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`',
 			'(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DomainOrdersOwners`.`OrderID`) as `IsPayed`',
 			'(SELECT `Balance` FROM `Contracts` WHERE `DomainOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`',
-			'(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`) as `SchemeName`'
+			'(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`) as `SchemeName`',
+			'(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `DomainOrdersOwners`.`ServerID`) AS `Params`'
 		);
 #-------------------------------------------------------------------------------
 $Where = ($DomainOrderID?SPrintF('`ID` = %u',$DomainOrderID):SPrintF('`OrderID` = %u',$OrderID));
@@ -60,6 +61,11 @@ case 'true':
 default:
 	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Config = Config();
+#-------------------------------------------------------------------------------
+$Settings = $Config['Interface']['User']['Orders']['Domain']['Prolong'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $DOM = new DOM();
@@ -306,7 +312,51 @@ if($YearsPay){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// начальная стоимость - либо ноль, либо наценка за использование не-наших ДНС серверов
 	$CostPay = 0.00;
+	#-------------------------------------------------------------------------------
+	if($Settings['ExternalDnsMarkUp'] > 0){
+		#-------------------------------------------------------------------------------
+		// составляем список ДНС серверов, заданных в общих настройках
+		$ExternalDnsList = Explode(',',$Settings['ExternalDnsList']);
+		#-------------------------------------------------------------------------------
+		if($DomainOrder['Params']['Ns1Name'])
+			$ExternalDnsList[] = StrToLower($DomainOrder['Params']['Ns1Name']);
+		#-------------------------------------------------------------------------------
+		if($DomainOrder['Params']['Ns2Name'])
+			$ExternalDnsList[] = StrToLower($DomainOrder['Params']['Ns2Name']);
+		#-------------------------------------------------------------------------------
+		if($DomainOrder['Params']['Ns3Name'])
+			$ExternalDnsList[] = StrToLower($DomainOrder['Params']['Ns3Name']);
+		#-------------------------------------------------------------------------------
+		if($DomainOrder['Params']['Ns4Name'])
+			$ExternalDnsList[] = StrToLower($DomainOrder['Params']['Ns4Name']);
+		#-------------------------------------------------------------------------------
+		// перебираем ДНС сервера установленные для этого домена
+		foreach(Explode(',',StrToLower($DomainOrder['DNSs'])) as $DNS){
+			#-------------------------------------------------------------------------------
+			if(!$DNS)
+				continue;
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/www/DomainOrderPay]: проверка DNS: %s',$DNS));
+			#-------------------------------------------------------------------------------
+			if(!In_Array($DNS,$ExternalDnsList)){
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/www/DomainOrderPay]: DNS (%s) not in list (%s)',$DNS,Implode(',',$ExternalDnsList)));
+				#-------------------------------------------------------------------------------
+				$CostPay = (double) $Settings['ExternalDnsMarkUp'];
+				#-------------------------------------------------------------------------------
+				$Message = SPrintF($Settings['ExternalDnsMessage'],$Settings['ExternalDnsMarkUp']);
+				#-------------------------------------------------------------------------------
+				break;
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$YearsRemainded = $YearsPay;
 	#-------------------------------------------------------------------------------
@@ -352,6 +402,11 @@ if($YearsPay){
 		$Table[] = new Tag('DIV',Array('align'=>'center'),$Comp);
 		#-------------------------------------------------------------------------------
 	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if(IsSet($Message))
+		$Table[] = new Tag('TR',new Tag('TD',Array('class'=>'Standard','colspan'=>2,'style'=>'background-color:#FDF6D3;max-width:350px;'),$Message));
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Formats/Currency',$CostPay);
 	if(Is_Error($Comp))
