@@ -65,6 +65,15 @@ foreach($Contacts as $Contact){
 			return new gException('ONLY_EMAIL_CAN_BE_PRIMARY_ADDRESS','Первичным адресом (логином), может быть только почтовый адрес');
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
+		// JBS-1346 проверяем что такая почта не является чьим-то логином кроме как у этого же юзера
+		$Count = DB_Count('Users',Array('Where'=>SPrintF('`Email` = "%s" AND `ID` != %u',$Contact['Address'],$UserID)));
+		if(Is_Error($Count))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		if($Count)
+			return new gException('ONLY_EMAIL_CAN_BE_PRIMARY_ADDRESS',SPrintF('Адрес (%s) уже является первичным у другого пользователя',$Contact['Address']));
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 		// обновляем поле с логином юзера
 		$IsUpdate = DB_Update('Users',Array('Email'=>$Contact['Address']),Array('ID'=>$UserID));
 		if(Is_Error($IsUpdate))
