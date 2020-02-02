@@ -125,7 +125,7 @@ if(IsSet($Data->{'reply_message'}->{'id'})){
 	// проверяем соответствие телеграммовского идентфикатора и нашего
 	if($Attribs && $Attribs['TicketID'] != 0){
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/www/API/VK]: reply_to_message->message_id = %u; UserID = %s; TicketID = %s; MessageID = %u',$ReplyToID,$Attribs['UserID'],$Attribs['TicketID'],$Attribs['MessageID']));
+		Debug(SPrintF('[comp/www/API/VK]: reply_message->message_id = %u; UserID = %s; TicketID = %s; MessageID = %u',$ReplyToID,$Attribs['UserID'],$Attribs['TicketID'],$Attribs['MessageID']));
 		#-------------------------------------------------------------------------------
 		// проверяем наличие такого треда
 		$Count = DB_Count('Edesks',Array('ID'=>$Attribs['TicketID']));
@@ -305,7 +305,7 @@ if(IsSet($Data->{'reply_message'}->{'id'})){
 	}else{
 		#-------------------------------------------------------------------------------
 		// не найдено соответсвтие идентификатора в телеграмме и номера сообщения в тикетнцие
-		Debug(SPrintF('[comp/www/API/VK]: НЕ найдено соответствие сообщения в VKontakte  и тикета: Data->reply_message->id = %s',$Data->{'reply_to_message'}->{'id'}));
+		Debug(SPrintF('[comp/www/API/VK]: НЕ найдено соответствие сообщения в VKontakte  и тикета: Data->reply_message->id = %s',$Data->{'reply_message'}->{'id'}));
 		#-------------------------------------------------------------------------------
 		if(!$Settings['Params']['IsSilent'])
 			if(!$VK->MessageSend($VkUserID,$Settings['Params']['EdeskNotFound']))
