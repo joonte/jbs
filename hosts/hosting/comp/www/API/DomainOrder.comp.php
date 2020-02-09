@@ -286,7 +286,7 @@ if($Count < 1){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>20000,'ServerID'=>$DomainScheme['ServerID']));
+$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>20000,'ServerID'=>$DomainScheme['ServerID'],'Params'=>''));
 if(Is_Error($OrderID))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

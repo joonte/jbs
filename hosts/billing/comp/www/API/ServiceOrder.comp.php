@@ -59,7 +59,7 @@ switch(ValueOf($Service)){
             if(Is_Error(DB_Transaction($TransactionID = UniqID('ServiceOrder'))))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $ServiceOrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>$ServiceID,'ServerID'=>$ServerSettings['ID']));
+            $ServiceOrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>$ServiceID,'ServerID'=>$ServerSettings['ID'],'Params'=>''));
             if(Is_Error($ServiceOrderID))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------

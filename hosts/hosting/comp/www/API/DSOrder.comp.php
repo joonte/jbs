@@ -93,11 +93,11 @@ if($Count < 1){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServerID'=>$DSScheme['ServerID'],'ServiceID'=>40000));
+$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServerID'=>$DSScheme['ServerID'],'ServiceID'=>40000,'Params'=>''));
 if(Is_Error($OrderID))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IDSOrder = Array('OrderID'=>$OrderID,'SchemeID'=>$DSScheme['ID']);
+$IDSOrder = Array('OrderID'=>$OrderID,'SchemeID'=>$DSScheme['ID'],'ExtraIP'=>'');
 #-------------------------------------------------------------------------------
 if($DSScheme['IPaddr'])
 	$IDSOrder['IP'] = $DSScheme['IPaddr'];
