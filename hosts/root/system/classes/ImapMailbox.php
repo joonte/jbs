@@ -506,7 +506,7 @@ class ImapMailbox {
 	public function decodeMimeStr($string, $charset = 'UTF-8') {
 		$newString = '';
 		$elements = imap_mime_header_decode($string);
-		for ($i = 0; $i < count($elements); $i++) {
+		for ($i = 0; $i < @count($elements); $i++) {
 			if ($elements[$i]->charset == 'default' || $elements[$i]->charset == 'X-UNKNOWN') {
 				$elements[$i]->charset = 'iso-8859-1';
 			}
