@@ -110,7 +110,7 @@ if(Is_Error(DB_Transaction($TransactionID = UniqID('DomainTransfer'))))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>20000,'IsPayed'=>TRUE,'ServerID'=>$DomainScheme['ServerID']));
+$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>20000,'IsPayed'=>TRUE,'ServerID'=>$DomainScheme['ServerID'],'Params'=>''));
 if(Is_Error($OrderID))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
