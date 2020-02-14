@@ -21,8 +21,8 @@ $Flags         =  (string) @$Args['Flags'];
 $NotifyEmail   =  (string) @$Args['NotifyEmail'];
 #-------------------------------------------------------------------------------
 # truncate $Theme & $Message
-$Theme		= substr($Theme, 0, 127);
-$Message	= substr($Message, 0, 62000);
+$Theme		= Mb_SubStr($Theme, 0, 127);
+$Message	= Mb_SubStr($Message, 0, 62000);
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 	return ERROR | @Trigger_Error(500);
