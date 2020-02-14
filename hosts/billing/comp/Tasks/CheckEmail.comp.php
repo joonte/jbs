@@ -588,6 +588,8 @@ foreach($Mails as $mailId){
 		$SaveHeaders = SPrintF("[hidden]\n%s[/hidden]\n",$mailbox->fetchHeader($mail->mId));
 	#-------------------------------------------------------------------------------
 	$Message = SPrintF("%s\n\n%s[size=10][color=gray]posted via email, from: %s[/color][/size]",Trim($textPlain),(IsSet($SaveHeaders))?$SaveHeaders:'',(($IsAdmin)?$User['Name']:$fromAddress));
+
+	$Message = Mb_Convert_Encoding($Message,'UTF-8');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# имеем 2 ситуации, задан или не задан $MessageID - соответственно, добавление в тикет или создание тикета
