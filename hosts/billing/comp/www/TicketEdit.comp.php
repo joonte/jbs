@@ -292,7 +292,7 @@ if(!$UserID){
 		break;
 	case 'array':
 		#-------------------------------------------------------------------------------
-		$Table = new Tag('TABLE',Array('class'=>'Standard','cellspacing'=>5),new Tag('CAPTION','Сейчас в сети'));
+		$Table = new Tag('TABLE',Array('class'=>'Standard','cellspacing'=>5,'id'=>'NowOnlineSupport'),new Tag('CAPTION','Сейчас в сети'));
 		#-------------------------------------------------------------------------------
 		$Block = new Tag('TR');
 		#-------------------------------------------------------------------------------

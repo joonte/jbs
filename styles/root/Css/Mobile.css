@@ -85,6 +85,8 @@ table {
 #TopLogo		{ display: none; }
 /* стиль для тикетницы, на мобильном и так места мало, убираем пустое по сторонам таблицы */
 #Main			{ border-spacing: 0 0; }
+/* создание нового тикета, прячем тех кто в онлайне */
+#NowOnlineSupport	{ display: none; }
 
 div.PostProfile {
 	display: none;
