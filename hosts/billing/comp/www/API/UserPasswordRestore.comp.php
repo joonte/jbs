@@ -67,7 +67,7 @@ foreach($ContactsIDs as $ContactsID)
 #-----------------------------------------------------------------------------
 Debug(SPrintF('[comp/www/API/UserPasswordRestore]: Result = %s',print_r($Result,true)));
 // идентификатор пользователя у нас есть в массиве что из кэша достали.
-$User = DB_Select('Users',Array('ID','IsProtected'),Array('UNIQ','ID'=>$UserID));
+$User = DB_Select('Users',Array('ID','IsProtected','IsActive','LockReason'),Array('UNIQ','ID'=>$UserID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($User)){
 case 'error':
@@ -80,6 +80,11 @@ case 'array':
 		return new gException('PASSWORD_RESTORE_DISABLED_FOR_USER','Для данного пользователя запрещена функция восстановления пароля');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	// убираем восстановление для залоченных
+	if(!$User['IsActive'])
+		return new gException('USER_UNACTIVE',($User['LockReason'])?$User['LockReason']:'Пользователь отключен');
+	#-----------------------------------------------------------------------------
+	#-----------------------------------------------------------------------------
 	$Password = Comp_Load('Passwords/Generator');
 	if(Is_Error($Password))
 		return ERROR | @Trigger_Error(500);
