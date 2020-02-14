@@ -253,7 +253,7 @@ if($__USER['IsAdmin']){
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// сумма
-		$Comp = Comp_Load('Form/Summ',Array('value'=>$InvoicesItem['Summ'],'OnKeyPress'=>'InvoiceSumm();','name'=>SPrintF('ItemSumms[%u]',$InvoicesItem['ID'])));
+		$Comp = Comp_Load('Form/Summ',Array('value'=>$InvoicesItem['Summ'],'onkeyup'=>'InvoiceSumm();','name'=>SPrintF('ItemSumms[%u]',$InvoicesItem['ID'])));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
