@@ -103,7 +103,7 @@ if(!IsSet($GLOBALS['__USER'])){
 	#-------------------------------------------------------------------------------
 	if(!$__USER['IsAdmin']){
 		#-------------------------------------------------------------------------------
-		$Contracts = DB_Select('Contracts',Array('ID','TypeID','Customer','Balance'),Array('Where'=>SPrintF('`UserID` = %u',$__USER['ID'])));
+		$Contracts = DB_Select('Contracts',Array('ID','TypeID','Customer','Balance','(SELECT COUNT(*) FROM `Orders` WHERE `Orders`.`ContractID` = `Contracts`.`ID`) AS `Orders`'),Array('Where'=>SPrintF('`UserID` = %u',$__USER['ID']),'SortOn'=>Array('Orders'),'IsDesc'=>TRUE));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($Contracts)){
 		case 'error':
@@ -128,7 +128,7 @@ if(!IsSet($GLOBALS['__USER'])){
 					new Tag('TR',
 						new Tag('TD',
 							Array(
-								'colspan'	=> 4,
+								'colspan'	=> 5,
 								'style'		=> 'cursor:pointer;',
 								'onclick'	=> SPrintF("var Style = document.getElementById('%s').style; Style.display = (Style.display != 'none'?'none':''); document.getElementById('%s').innerHTML = (Style.display != 'none'?'Кликните чтобы свернуть список ваших договоров<hr size=1>':'Просмотр списка ваших договоров')",$UniqID,$UniqID2)
 								),
@@ -165,11 +165,18 @@ if(!IsSet($GLOBALS['__USER'])){
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
+			// ширина колонки с именем договора - примерно 65%
+			$Width = Min(@$_COOKIE['wScreen']*0.65,650);
+			#-------------------------------------------------------------------------------
+			if($Width == 0)
+				$Width = 200;
+			#-------------------------------------------------------------------------------
 			$Table->AddChild(
 					new Tag('TR',
 					new Tag('TD',Array('style'=>'text-align:left;'),SPrintF('#%s',$ContractID)),
-	    				new Tag('TD',Array('style'=>'text-align:left;overflow-x:hidden','width'=>'70%'),$Contract['Customer']),
-					new Tag('TD',Array('style'=>'text-align:left;'),SPrintF('баланс: %s',$Comp)),
+	    				new Tag('TD',Array('style'=>'text-align:left;','width'=>$Width),new Tag('DIV',Array('style'=>SPrintF('width:%upx;overflow:hidden;white-space:nowrap;',$Width)),$Contract['Customer'])),
+					new Tag('TD',Array('style'=>'text-align:left;white-space:nowrap;'),SPrintF('бал: %s,',$Comp)),
+					new Tag('TD',Array('style'=>'text-align:left;white-space:nowrap;'),SPrintF('зак: %u',$Contract['Orders'])),
 					new Tag('TD',Array('style'=>'text-align:left'),$A)
 					));
 			#-------------------------------------------------------------------------------
