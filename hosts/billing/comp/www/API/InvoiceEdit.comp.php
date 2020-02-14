@@ -12,12 +12,22 @@ $Args = Args();
 $InvoiceID	= (integer) @$Args['InvoiceID'];
 $CreateDate	= (integer) @$Args['CreateDate'];
 $PaymentSystemID=  (string) @$Args['PaymentSystemID'];
+$ServiceIDs	=   (array) @$Args['ServiceIDs'];
+$Comments	=   (array) @$Args['Comments'];
+$Amounts	=   (array) @$Args['Amounts'];
+$ItemSumms	=   (array) @$Args['ItemSumms'];
+$IsDeletes	=   (array) @$Args['IsDeletes'];
 $Summ		=  (double) @$Args['Summ'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Invoice = DB_Select('InvoicesOwners',Array('ID','Summ','UserID','ContractID','IsPosted'),Array('UNIQ','ID'=>$InvoiceID));
+#-------------------------------------------------------------------------------
+if(!$Summ)
+	return new gException('ZERO_SUMM','Сумма счёта не может быть нулевой');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Invoice = DB_Select('InvoicesOwners',Array('ID','UserID','ContractID','IsPosted'),Array('UNIQ','ID'=>$InvoiceID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Invoice)){
 case 'error':
@@ -55,36 +65,9 @@ if($Invoice['IsPosted'])
 	if(!$__USER['IsAdmin'])
 		return new gException('ACCOUNT_PAYED','Счёт оплачен и не может быть изменен');
 #-------------------------------------------------------------------------------
-# сумму счёта можно править только в случае если это пополнение средств, и ничего другого
-$InvoiceItems = DB_Select('InvoicesItems','*',Array('Where'=>SPrintF('`InvoiceID` = %u ',$InvoiceID)));
-#-------------------------------------------------------------------------------
-switch(ValueOf($InvoiceItems)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	return ERROR | @Trigger_Error(400);
-case 'array':
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
-}
-#-------------------------------------------------------------------------------
 #-------------------------------TRANSACTION-------------------------------------
 if(Is_Error(DB_Transaction($TransactionID = UniqID('InvoiceEdit'))))
 	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-if($__USER['IsAdmin']){
-	#-------------------------------------------------------------------------------
-	if(SizeOf($InvoiceItems) > 1 && $Summ != $Invoice['Summ'])
-		return new gException('INVOICE_HAVE_MORE_ONE_ITEM','Сумму счёта можно изменять только если он на пополнение средств');
-	#-------------------------------------------------------------------------------
-	if($Summ != $Invoice['Summ'])
-		foreach($InvoiceItems as $InvoiceItem)
-			if($InvoiceItem['ServiceID'] != 1000)
-				return new gException('INVOICE_HAVE_NOT_1000_SERVICES','Сумму счёта можно изменять только если он на пополнение средств');
-	#-------------------------------------------------------------------------------		
-}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Contract = DB_Select('Contracts',Array('ID','CreateDate','TypeID'),Array('UNIQ','ID'=>$Invoice['ContractID']));
@@ -122,36 +105,51 @@ $PaymentSystem = $PaymentSystems[$PaymentSystemID];
 if(!$PaymentSystem['ContractsTypes'][$Contract['TypeID']])
 	return new gException('WRONG_CONTRACT_TYPE','Данный вид договора не может быть использован для выписывания счета данного типа');
 #-------------------------------------------------------------------------------
-if($Summ){
-	#-------------------------------------------------------------------------------
-	# проверяем минимально домустимую сумму счёта
-	if($Summ < $PaymentSystem['MinimumPayment'])
-		return new gException('PAYMENT_SYSTEM_MinimumPayment',SPrintF($Messages['Warnings']['Invoices']['SummTooSmall'],$PaymentSystem['MinimumPayment']));
-	#-------------------------------------------------------------------------------
-	# проверяем максимально допустимую сумму счёта
-	if($Summ > $PaymentSystem['MaximumPayment'])
-		return new gException('PAYMENT_SYSTEM_MaximumPayment','Сумма платежа больше, чем разрешено платёжной системой');
-	#-------------------------------------------------------------------------------
-}
 #-------------------------------------------------------------------------------
+$IInvoice = Array('PaymentSystemID'=>$PaymentSystemID);
 #-------------------------------------------------------------------------------
-$IInvoice = Array('CreateDate'=>$CreateDate,'PaymentSystemID'=>$PaymentSystemID);
-#-------------------------------------------------------------------------------
-if($__USER['IsAdmin'] && $Summ != $Invoice['Summ']){
-	#-------------------------------------------------------------------------------
-	#надо обновить сумму, в Invoices и в InvoicesItems
-	$IInvoice['Summ'] = $Summ;
-	#-------------------------------------------------------------------------------
-	$IsUpdate = DB_Update('InvoicesItems',Array('Summ'=>$Summ),Array('Where'=>SPrintF('`InvoiceID` = %u',$InvoiceID)));
-	if(Is_Error($IsUpdate))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-}
+if($__USER['IsAdmin'])
+	$IInvoice['CreateDate'] = $CreateDate;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IsUpdate = DB_Update('Invoices',$IInvoice,Array('ID'=>$InvoiceID));
 if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// правим поля счёта
+if($__USER['IsAdmin'] && Is_Array($ServiceIDs) && Count($ServiceIDs)){
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($ServiceIDs) as $Key){
+		#-------------------------------------------------------------------------------
+		if(IsSet($IsDeletes[$Key])){
+			#-------------------------------------------------------------------------------
+			// стоит галка про удаление элемента счёта
+			$IsDelete = DB_Delete('InvoicesItems',Array('ID'=>$Key));
+			if(Is_Error($IsDelete))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+		}else{
+			#-------------------------------------------------------------------------------
+			$IInvoicesItems = Array();
+			#-------------------------------------------------------------------------------
+			$IInvoicesItems['ServiceID'] = $ServiceIDs[$Key];
+			#-------------------------------------------------------------------------------
+			$IInvoicesItems['Comment'] = $Comments[$Key];
+			#-------------------------------------------------------------------------------
+			$IInvoicesItems['Amount'] = $Amounts[$Key];
+			#-------------------------------------------------------------------------------
+			$IInvoicesItems['Summ'] = $ItemSumms[$Key];
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			$IsUpdate = DB_Update('InvoicesItems',$IInvoicesItems,Array('ID'=>$Key));
+			if(Is_Error($IsUpdate))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+		}
+	}
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Invoices/Build',$InvoiceID);
