@@ -89,17 +89,18 @@ if(Is_Error($Password))
 $Comp = Comp_Load(
 	'Form/Input',
 		Array(
-			'name'      => 'Password',
-			'size'      => 25,
-			'type'      => 'password',
-			'prompt'    => 'Пароль пользователя',
-			'value'     => 'Default',
+			'name'	=> 'Password',
+			'id'	=> 'Password',
+			'size'	=> 25,
+			'type'	=> 'password',
+			'prompt'=> 'Пароль пользователя',
+			'value'	=> 'Default',
 		)
 	);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Пароль'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),SPrintF('Например: %s',$Password))),$Comp);
+$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Пароль'),new Tag('BR'),new Tag('DIV',Array('class'=>'Comment','style'=>'cursor:pointer;','onclick'=>SPrintF("var Pass = document.getElementById('Password'); Pass.type = (Pass.type == 'text')?'password':'text'; Pass.value = (Pass.value == 'Default')?'%s':'Default'",$Password)),SPrintF('Например: %s',$Password))),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Groups = DB_Select('Groups',Array('ID','Name'));
