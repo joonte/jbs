@@ -149,7 +149,7 @@ if(Count($__MESSAGES)){
 	foreach($GLOBALS['__MESSAGES'] as $Error)
 		$Rows[] = Array(new Tag('TD',Array('class'=>'Standard','style'=>'background-color:#FFCCCC;'),$Error));
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Tables/Extended',$Rows,Array('width'=>400),'Сообщения системы');
+	$Comp = Comp_Load('Tables/Extended',$Rows,Array('width'=>'100%'),'Сообщения системы');
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
