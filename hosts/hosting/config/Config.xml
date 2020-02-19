@@ -40,6 +40,11 @@
 					<Name>Регламент на услугу вторичного DNS</Name>
 					<IsActive>1</IsActive>
 				</DNSmanagerRules>
+				<!-- ******************************************************************** -->
+				<ProxyRules>
+					<Name>Регламент на услугу Прокси-сервер</Name>
+					<IsActive>1</IsActive>
+				</ProxyRules>
 			</Types>
 		</Enclosures>
 	</Contracts>
@@ -337,6 +342,34 @@
 				<GroupID>1</GroupID>
 				<IsActive>1</IsActive>
 			</DNSmanagerPasswordChange>
+			<!-- ********************************************************************* -->
+			<!-- added by lissyara 2020-02-18 in 11:01 MSK -->
+			<!-- ********************************************************************* -->
+			<ProxyOrdersActive>
+				<Name>Активация заказа</Name>
+				<Title>Заказы на Прокси-сервер</Title>
+				<Code>Proxy</Code>
+				<GroupID>1</GroupID>
+				<IsActive>1</IsActive>
+			</ProxyOrdersActive>
+			<!-- ********************************************************************* -->
+			<ProxyNoticeSuspend>
+				<Name>Уведомление о блокировке заказа</Name>
+				<GroupID>1</GroupID>
+				<IsActive>1</IsActive>
+			</ProxyNoticeSuspend>
+			<!-- ********************************************************************* -->
+			<ProxyNoticeDelete>
+				<Name>Уведомление о удалении заказа</Name>
+				<GroupID>1</GroupID>
+				<IsActive>1</IsActive>
+			</ProxyNoticeDelete>
+			<!-- ********************************************************************* -->
+			<ProxyOrdersDeleted>
+				<Name>Удаление заказа</Name>
+				<GroupID>1</GroupID>
+				<IsActive>1</IsActive>
+			</ProxyOrdersDeleted>
 			<!-- ********************************************************************* -->
 		</Types>
 	</Notifies>
@@ -882,6 +915,38 @@
 			</DNSmanagerDelete>
 			<!-- *********************************************************************** -->
 			<!-- *********************************************************************** -->
+			<ProxyForDelete>
+				<Name>Заказы на Прокси-сервер для удаления</Name>
+				<Params type="array"/>
+				<ExecuteTime>1:10</ExecuteTime>
+				<IsActive>1</IsActive>
+				<ProxyDeleteTimeout>20</ProxyDeleteTimeout>
+			</ProxyForDelete>
+			<!-- ********************************************************************* -->
+			<ProxyCreate>
+				<Name>Создание аккаунта на Прокси-сервер</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</ProxyCreate>
+			<!-- ********************************************************************* -->
+			<ProxyActive>
+				<Name>Активация заказа на Прокси-сервер</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</ProxyActive>
+			<!-- ********************************************************************* -->
+			<ProxyDelete>
+				<Name>Удаление заказа на Прокси-сервер</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</ProxyDelete>
+			<!-- *********************************************************************** -->
 			<!-- *********************************************************************** -->
 			<ServersAutoBalance>
 				<Name>Автобалансировка серверов</Name>
@@ -1110,6 +1175,21 @@
 				<Name>Удален</Name>
 			</Deleted>
 		</DNSmanagerOrders>
+		<!-- *********************************************************************** -->
+		<ProxyOrders>
+			<Waiting>
+				<Name>Ожидание оплаты</Name>
+			</Waiting>
+			<OnCreate>
+				<Name>На создании</Name>
+			</OnCreate>
+			<Active>
+				<Name>Активен</Name>
+			</Active>
+			<Deleted>
+				<Name>Удален</Name>
+			</Deleted>
+		</ProxyOrders>
 	</Statuses>
 	<!-- *********************************************************************** -->
 	<Interface>
@@ -1166,6 +1246,11 @@
 					<EmailConfirmRequire>0</EmailConfirmRequire>
 					<MobileConfirmRequire>0</MobileConfirmRequire>
 				</DNSmanager>
+				<!-- *********************************************************************** -->
+				<Proxy>
+					<EmailConfirmRequire>0</EmailConfirmRequire>
+					<MobileConfirmRequire>0</MobileConfirmRequire>
+				</Proxy>
 			</Orders>
 			<!-- *********************************************************************** -->
 			<Notes>

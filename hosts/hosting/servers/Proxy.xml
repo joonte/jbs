@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Name>Сервер Proxy</Name>
+<!-- *********************************************************************** -->
+<IsActive>1</IsActive>
+<!-- *********************************************************************** -->
+<ServiceID>53000</ServiceID>
+<!-- *********************************************************************** -->
+<Defaults>
+	<Address>proxy6.net</Address>
+	<Login>admin@isp.su</Login>
+	<Monitoring>HTTP=80 HTTPS=443</Monitoring>
+	<SortID>53000</SortID>
+        <AdminNotice>Адрес сервера: proxy6.net, IP вводить не надо
+Сгененрируйте токен и введите его в настройки.</AdminNotice>
+</Defaults>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<SystemID>
+	<!-- *********************************************************************** -->
+	<NullSystem>
+		<Name>Ручное управление</Name>
+		<Settings>
+			<Port>1000</Port>
+			<Protocol>tcp</Protocol>
+		</Settings>
+	</NullSystem>
+	<!-- ********************************************************************* -->
+	<Proxy6>
+		<Name>Proxy6.net</Name>
+		<Settings>
+			<Port>443</Port>
+			<Protocol>ssl</Protocol>
+			<Language>ru</Language>
+			<Url>https://www.proxy6.net/</Url>
+		</Settings>
+	</Proxy6>
+	<!-- ********************************************************************* -->
+</SystemID>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<Attribs>
+	<Token>
+		<Title>Прочие настройки</Title>
+		<Check>/^[^\\]{32,64}$/u</Check>
+		<Comment>Токен для доступа к API</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Токен используется для доступа к API, его можно сгенерировать в интерфейсе вышестоящего регистратора</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value />
+	</Token>
+	<!-- *********************************************************************** -->
+	<Countries>
+		<Check>/^[^\\]{2,128}$/u</Check>
+		<Comment>Список стран</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>Список стран в формате iso2, через запятую, обновляется автоматически, по ночам</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>ru,ua,fr,us,au,sg,gb.jp,de,nl</Value>
+	</Countries>
+	<!-- *********************************************************************** -->
+	<SystemID>
+		<Title>Общая информация</Title>
+		<Comment>Система управления</Comment>
+		<Type>Select</Type>
+		<Options>
+			<NullSystem>Ручное управление</NullSystem>
+			<Proxy6>Proxy6</Proxy6>
+		</Options>
+		<Check>/^[A-Za-zА-Яа-я0-9\-]{2,25}$/u</Check>
+		<Attribs>
+			<size>1</size>
+			<style>width: 100%;</style>
+			<onchange>SettingsUpdate();</onchange>
+			<prompt>Система управления используемая на сервере</prompt>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>Proxy6</Value>
+	</SystemID>
+	<!-- *********************************************************************** -->
+	<IP>
+		<Check>IP</Check>
+		<Comment>IP адрес</Comment>
+		<Type>Input</Type>
+		<Attribs>
+			<prompt>IPv4 адрес сервера</prompt>
+			<type>text</type>
+			<style>width: 100%;</style>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value />
+	</IP>
+	<!-- *********************************************************************** -->
+	<IsLogging>
+		<Check>Char</Check>
+		<Comment>Записывать запросы в лог</Comment>
+		<CommentAttribs>
+			<style>cursor:pointer;</style>
+			<onclick>ChangeCheckBox('IsLogging'); return false;</onclick>
+		</CommentAttribs>
+		<Type>Input</Type>
+		<Attribs>
+			<type>checkbox</type>
+			<prompt>Записывать в лог все запросы и ответы сервера</prompt>
+		</Attribs>
+		<IsDuty>0</IsDuty>
+		<Value>yes</Value>
+	</IsLogging>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+</Attribs>
+<!-- *********************************************************************** -->
+</XML>
+

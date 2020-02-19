@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+	<!-- *********************************************************************** -->
+	<RootID>ProxyOrders</RootID>
+	<Cut>
+		<Comps>
+			<Before>
+				<DateSelect/>
+				<PatternOut/>
+				<Search/>
+				<ProxySearch/>
+			</Before>
+			<After>
+				<StatusSet/>
+			</After>
+		</Comps>
+		<Sequence/>
+	</Cut>
+	<!-- *********************************************************************** -->
+	<Source>
+		<Conditions>
+			<Where>
+				<UniqID>`UserID` = @local.__USER_ID</UniqID>
+			</Where>
+			<Message>У Вас нет заказов на Прокси-сервер.</Message>
+		</Conditions>
+		<Adding>
+			<Message>По данному договору заказов на Прокси-сервер не обнаружено.</Message>
+		</Adding>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<ContractFilter>
+				<Comp>Contracts/SelectFilter</Comp>
+				<Args type="array"/>
+			</ContractFilter>
+		</Before>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<Info>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/ProxyOrderInfo</ListElement>
+				<ListElement>
+					<ProxyOrderID>%ID%</ProxyOrderID>
+				</ListElement>
+				<ListElement>Дополнительная информация</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Info>
+		<!-- ********************************************************************** -->
+		<Pay>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/ProxyOrderPay</ListElement>
+				<ListElement>
+					<ProxyOrderID>%ID%</ProxyOrderID>
+				</ListElement>
+				<ListElement>Оплатить заказ</ListElement>
+				<ListElement>Pay.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Pay>
+		<!-- ********************************************************************** -->
+		<SchemeChange>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/ProxyOrderSchemeChange</ListElement>
+				<ListElement>
+					<ProxyOrderID>%ID%</ProxyOrderID>
+				</ListElement>
+				<ListElement>Сменить тарифный план</ListElement>
+				<ListElement>SchemeChange.png</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</SchemeChange>
+		<!-- ********************************************************************** -->
+		<Manage>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Standard</Comp>
+			<Args>
+				<ListElement>
+					<onclick>OrderManage(%ID%,%ServiceID%);</onclick>
+				</ListElement>
+				<ListElement>Управлять заказом Proxy</ListElement>
+				<ListElement>HostingManage.gif</ListElement>
+				<ListElement>OrderManage.js</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Manage>
+		<!-- ********************************************************************** -->
+		<PasswordChange>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/OrderPasswordChange</ListElement>
+				<ListElement>
+					<ServiceOrderID>%ID%</ServiceOrderID>
+					<ServiceID>%ServiceID%</ServiceID>
+				</ListElement>
+				<ListElement>Сменить пароль</ListElement>
+				<ListElement>Password.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</PasswordChange>
+		<!-- *********************************************************************** -->
+		<ExtendedMenu>
+			<IsSorted>0</IsSorted>
+			<Comp>Menus/List</Comp>
+			<Args>
+				<ListElement>User/ListMenu/ProxyOrder.xml</ListElement>
+				<Replace>
+					<ServiceOrderID>%ID%</ServiceOrderID>
+					<ServiceID>%ServiceID%</ServiceID>
+				</Replace>
+			</Args>
+		</ExtendedMenu>
+		<!-- *********************************************************************** -->
+	</Columns>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Info</ListElement>
+		<ListElement>Pay</ListElement>
+		<ListElement>SchemeChange</ListElement>
+		<ListElement>Manage</ListElement>
+		<ListElement>PasswordChange</ListElement>
+		<ListElement>ExtendedMenu</ListElement>
+		<ListElement>Number</ListElement>
+		<ListElement>Expiration</ListElement>
+		<ListElement>Domain</ListElement>
+		<ListElement>Status</ListElement>
+		<ListElement>StatusOver</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
+</XML>
