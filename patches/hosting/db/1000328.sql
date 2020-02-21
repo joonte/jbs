@@ -169,6 +169,7 @@ CREATE TABLE `ProxySchemes` (
 	`CostDay` decimal(11,2) default '0.00',
 	`CostMonth` decimal(11,2) default '0.00',
 	`ServersGroupID` int(11) NOT NULL,
+	`HardServerID` int(11) NULL,
 	`Comment` char(255) default '',
 	`IsActive` enum('no','yes') default 'yes',
 	`IsProlong` enum('no','yes') default 'yes',
@@ -178,12 +179,13 @@ CREATE TABLE `ProxySchemes` (
 	`MinDaysProlong` INT(6) default '0',			/* минимальное число дней продления, для ранее оплаченных заказов */
 	`MaxDaysPay` int(6) default '0',			/* максимальное число дней оплаты заказа */
 	`MaxOrders` int(6) DEFAULT '0',				/* максимальное число заказов по этому тарифу, на одного пользователя */
-	`SortID` int(11) default '10',
+	`MinOrdersPeriod` int(6) DEFAULT '0',			/* минимальный период между закзаами */
 	--
 	-- Common
 	--
 	`IPtype` char(12) default 'IPv4',			/* тип заказываемого прокси сервера IPv6,IPv4,IPv4shared */
 	`Country` char(3) default 'ru',				-- страна
+	`SortID` int(11) default '10',
 
 	PRIMARY KEY  (`ID`),
 	KEY `ProxySchemesGroupID` (`GroupID`),
@@ -191,7 +193,9 @@ CREATE TABLE `ProxySchemes` (
 	KEY `ProxySchemesUserID` (`UserID`),
 	CONSTRAINT `ProxySchemesUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
 	KEY `ProxySchemesServersGroupID` (`ServersGroupID`),
-	CONSTRAINT `ProxySchemesServersGroupID` FOREIGN KEY (`ServersGroupID`) REFERENCES `ServersGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+	CONSTRAINT `ProxySchemesServersGroupID` FOREIGN KEY (`ServersGroupID`) REFERENCES `ServersGroups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+	KEY `ProxySchemesHardServerID` (`HardServerID`),
+	CONSTRAINT `ProxySchemesHardServerID` FOREIGN KEY (`HardServerID`) REFERENCES `Servers` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

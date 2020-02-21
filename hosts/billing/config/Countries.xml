@@ -1,0 +1,2514 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+	<abh>
+		<name>Абхазия</name>
+		<fullname>Республика Абхазия</fullname>
+		<english>Abkhazia</english>
+		<alpha2>ab</alpha2>
+		<alpha3>abh</alpha3>
+		<iso>895</iso>
+		<location>Азия</location>
+		<location-precise>Закавказье</location-precise>
+	</abh>
+	<aus>
+		<name>Австралия</name>
+		<fullname></fullname>
+		<english>Australia</english>
+		<alpha2>au</alpha2>
+		<alpha3>aus</alpha3>
+		<iso>036</iso>
+		<location>Океания</location>
+		<location-precise>Австралия и Новая Зеландия</location-precise>
+	</aus>
+	<aut>
+		<name>Австрия</name>
+		<fullname>Австрийская Республика</fullname>
+		<english>Austria</english>
+		<alpha2>at</alpha2>
+		<alpha3>aut</alpha3>
+		<iso>040</iso>
+		<location>Европа</location>
+		<location-precise>Западная Европа</location-precise>
+	</aut>
+	<aze>
+		<name>Азербайджан</name>
+		<fullname>Республика Азербайджан</fullname>
+		<english>Azerbaijan</english>
+		<alpha2>az</alpha2>
+		<alpha3>aze</alpha3>
+		<iso>031</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</aze>
+	<alb>
+		<name>Албания</name>
+		<fullname>Республика Албания</fullname>
+		<english>Albania</english>
+		<alpha2>al</alpha2>
+		<alpha3>alb</alpha3>
+		<iso>008</iso>
+		<location>Европа</location>
+		<location-precise>Южная Европа</location-precise>
+	</alb>
+	<dza>
+		<name>Алжир</name>
+		<fullname>Алжирская Народная Демократическая Республика</fullname>
+		<english>Algeria</english>
+		<alpha2>dz</alpha2>
+		<alpha3>dza</alpha3>
+		<iso>012</iso>
+		<location>Африка</location>
+		<location-precise>Северная Африка</location-precise>
+	</dza>
+	<asm>
+		<name>Американское Самоа</name>
+		<fullname></fullname>
+		<english>American Samoa</english>
+		<alpha2>as</alpha2>
+		<alpha3>asm</alpha3>
+		<iso>016</iso>
+		<location>Океания</location>
+		<location-precise>Полинезия</location-precise>
+	</asm>
+	<aia>
+		<name>Ангилья</name>
+		<fullname></fullname>
+		<english>Anguilla</english>
+		<alpha2>ai</alpha2>
+		<alpha3>aia</alpha3>
+		<iso>660</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</aia>
+	<ago>
+		<name>Ангола</name>
+		<fullname>Республика Ангола</fullname>
+		<english>Angola</english>
+		<alpha2>ao</alpha2>
+		<alpha3>ago</alpha3>
+		<iso>024</iso>
+		<location>Африка</location>
+		<location-precise>Центральная Африка</location-precise>
+	</ago>
+	<and>
+		<name>Андорра</name>
+		<fullname>Княжество Андорра</fullname>
+		<english>Andorra</english>
+		<alpha2>ad</alpha2>
+		<alpha3>and</alpha3>
+		<iso>020</iso>
+		<location>Европа</location>
+		<location-precise>Южная Европа</location-precise>
+	</and>
+	<ata>
+		<name>Антарктида</name>
+		<fullname></fullname>
+		<english>Antarctica</english>
+		<alpha2>aq</alpha2>
+		<alpha3>ata</alpha3>
+		<iso>010</iso>
+		<location>Антарктика</location>
+		<location-precise></location-precise>
+	</ata>
+	<atg>
+		<name>Антигуа и Барбуда</name>
+		<fullname></fullname>
+		<english>Antigua and Barbuda</english>
+		<alpha2>ag</alpha2>
+		<alpha3>atg</alpha3>
+		<iso>028</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</atg>
+	<arg>
+		<name>Аргентина</name>
+		<fullname>Аргентинская Республика</fullname>
+		<english>Argentina</english>
+		<alpha2>ar</alpha2>
+		<alpha3>arg</alpha3>
+		<iso>032</iso>
+		<location>Америка</location>
+		<location-precise>Южная Америка</location-precise>
+	</arg>
+	<arm>
+		<name>Армения</name>
+		<fullname>Республика Армения</fullname>
+		<english>Armenia</english>
+		<alpha2>am</alpha2>
+		<alpha3>arm</alpha3>
+		<iso>051</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</arm>
+	<abw>
+		<name>Аруба</name>
+		<fullname></fullname>
+		<english>Aruba</english>
+		<alpha2>aw</alpha2>
+		<alpha3>abw</alpha3>
+		<iso>533</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</abw>
+	<afg>
+		<name>Афганистан</name>
+		<fullname>Переходное Исламское Государство Афганистан</fullname>
+		<english>Afghanistan</english>
+		<alpha2>af</alpha2>
+		<alpha3>afg</alpha3>
+		<iso>004</iso>
+		<location>Азия</location>
+		<location-precise>Южная часть Центральной Азии</location-precise>
+	</afg>
+	<bhs>
+		<name>Багамы</name>
+		<fullname>Содружество Багамы</fullname>
+		<english>Bahamas</english>
+		<alpha2>bs</alpha2>
+		<alpha3>bhs</alpha3>
+		<iso>044</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</bhs>
+	<bgd>
+		<name>Бангладеш</name>
+		<fullname>Народная Республика Бангладеш</fullname>
+		<english>Bangladesh</english>
+		<alpha2>bd</alpha2>
+		<alpha3>bgd</alpha3>
+		<iso>050</iso>
+		<location>Азия</location>
+		<location-precise>Южная часть Центральной Азии</location-precise>
+	</bgd>
+	<brb>
+		<name>Барбадос</name>
+		<fullname></fullname>
+		<english>Barbados</english>
+		<alpha2>bb</alpha2>
+		<alpha3>brb</alpha3>
+		<iso>052</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</brb>
+	<bhr>
+		<name>Бахрейн</name>
+		<fullname>Королевство Бахрейн</fullname>
+		<english>Bahrain</english>
+		<alpha2>bh</alpha2>
+		<alpha3>bhr</alpha3>
+		<iso>048</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</bhr>
+	<blr>
+		<name>Беларусь</name>
+		<fullname>Республика Беларусь</fullname>
+		<english>Belarus</english>
+		<alpha2>by</alpha2>
+		<alpha3>blr</alpha3>
+		<iso>112</iso>
+		<location>Европа</location>
+		<location-precise>Восточная Европа</location-precise>
+	</blr>
+	<blz>
+		<name>Белиз</name>
+		<fullname></fullname>
+		<english>Belize</english>
+		<alpha2>bz</alpha2>
+		<alpha3>blz</alpha3>
+		<iso>084</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</blz>
+	<bel>
+		<name>Бельгия</name>
+		<fullname>Королевство Бельгии</fullname>
+		<english>Belgium</english>
+		<alpha2>be</alpha2>
+		<alpha3>bel</alpha3>
+		<iso>056</iso>
+		<location>Европа</location>
+		<location-precise>Западная Европа</location-precise>
+	</bel>
+	<ben>
+		<name>Бенин</name>
+		<fullname>Республика Бенин</fullname>
+		<english>Benin</english>
+		<alpha2>bj</alpha2>
+		<alpha3>ben</alpha3>
+		<iso>204</iso>
+		<location>Африка</location>
+		<location-precise>Западная Африка</location-precise>
+	</ben>
+	<bmu>
+		<name>Бермуды</name>
+		<fullname></fullname>
+		<english>Bermuda</english>
+		<alpha2>bm</alpha2>
+		<alpha3>bmu</alpha3>
+		<iso>060</iso>
+		<location>Америка</location>
+		<location-precise>Северная Америка</location-precise>
+	</bmu>
+	<bgr>
+		<name>Болгария</name>
+		<fullname>Республика Болгария</fullname>
+		<english>Bulgaria</english>
+		<alpha2>bg</alpha2>
+		<alpha3>bgr</alpha3>
+		<iso>100</iso>
+		<location>Европа</location>
+		<location-precise>Восточная Европа</location-precise>
+	</bgr>
+	<bol>
+		<name>Боливия, Многонациональное Государство</name>
+		<fullname>Многонациональное Государство Боливия</fullname>
+		<english>Bolivia, plurinational state of</english>
+		<alpha2>bo</alpha2>
+		<alpha3>bol</alpha3>
+		<iso>068</iso>
+		<location>Америка</location>
+		<location-precise>Южная Америка</location-precise>
+	</bol>
+	<bes>
+		<name>Бонайре, Саба и Синт-Эстатиус</name>
+		<fullname></fullname>
+		<english>Bonaire, Sint Eustatius and Saba</english>
+		<alpha2>bq</alpha2>
+		<alpha3>bes</alpha3>
+		<iso>535</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</bes>
+	<bih>
+		<name>Босния и Герцеговина</name>
+		<fullname></fullname>
+		<english>Bosnia and Herzegovina</english>
+		<alpha2>ba</alpha2>
+		<alpha3>bih</alpha3>
+		<iso>070</iso>
+		<location>Европа</location>
+		<location-precise>Южная Европа</location-precise>
+	</bih>
+	<bwa>
+		<name>Ботсвана</name>
+		<fullname>Республика Ботсвана</fullname>
+		<english>Botswana</english>
+		<alpha2>bw</alpha2>
+		<alpha3>bwa</alpha3>
+		<iso>072</iso>
+		<location>Африка</location>
+		<location-precise>Южная часть Африки</location-precise>
+	</bwa>
+	<bra>
+		<name>Бразилия</name>
+		<fullname>Федеративная Республика Бразилия</fullname>
+		<english>Brazil</english>
+		<alpha2>br</alpha2>
+		<alpha3>bra</alpha3>
+		<iso>076</iso>
+		<location>Америка</location>
+		<location-precise>Южная Америка</location-precise>
+	</bra>
+	<iot>
+		<name>Британская территория в Индийском океане</name>
+		<fullname></fullname>
+		<english>British Indian Ocean Territory</english>
+		<alpha2>io</alpha2>
+		<alpha3>iot</alpha3>
+		<iso>086</iso>
+		<location>Океания</location>
+		<location-precise>Индийский океан</location-precise>
+	</iot>
+	<brn>
+		<name>Бруней-Даруссалам</name>
+		<fullname></fullname>
+		<english>Brunei Darussalam</english>
+		<alpha2>bn</alpha2>
+		<alpha3>brn</alpha3>
+		<iso>096</iso>
+		<location>Азия</location>
+		<location-precise>Юго-Восточная Азия</location-precise>
+	</brn>
+	<bfa>
+		<name>Буркина-Фасо</name>
+		<fullname></fullname>
+		<english>Burkina Faso</english>
+		<alpha2>bf</alpha2>
+		<alpha3>bfa</alpha3>
+		<iso>854</iso>
+		<location>Африка</location>
+		<location-precise>Западная Африка</location-precise>
+	</bfa>
+	<bdi>
+		<name>Бурунди</name>
+		<fullname>Республика Бурунди</fullname>
+		<english>Burundi</english>
+		<alpha2>bi</alpha2>
+		<alpha3>bdi</alpha3>
+		<iso>108</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</bdi>
+	<btn>
+		<name>Бутан</name>
+		<fullname>Королевство Бутан</fullname>
+		<english>Bhutan</english>
+		<alpha2>bt</alpha2>
+		<alpha3>btn</alpha3>
+		<iso>064</iso>
+		<location>Азия</location>
+		<location-precise>Южная часть Центральной Азии</location-precise>
+	</btn>
+	<vut>
+		<name>Вануату</name>
+		<fullname>Республика Вануату</fullname>
+		<english>Vanuatu</english>
+		<alpha2>vu</alpha2>
+		<alpha3>vut</alpha3>
+		<iso>548</iso>
+		<location>Океания</location>
+		<location-precise>Меланезия</location-precise>
+	</vut>
+	<hun>
+		<name>Венгрия</name>
+		<fullname>Венгерская Республика</fullname>
+		<english>Hungary</english>
+		<alpha2>hu</alpha2>
+		<alpha3>hun</alpha3>
+		<iso>348</iso>
+		<location>Европа</location>
+		<location-precise>Восточная Европа</location-precise>
+	</hun>
+	<ven>
+		<name>Венесуэла Боливарианская Республика</name>
+		<fullname>Боливарийская Республика Венесуэла</fullname>
+		<english>Venezuela</english>
+		<alpha2>ve</alpha2>
+		<alpha3>ven</alpha3>
+		<iso>862</iso>
+		<location>Америка</location>
+		<location-precise>Южная Америка</location-precise>
+	</ven>
+	<vgb>
+		<name>Виргинские острова, Британские</name>
+		<fullname>Британские Виргинские острова</fullname>
+		<english>Virgin Islands, British</english>
+		<alpha2>vg</alpha2>
+		<alpha3>vgb</alpha3>
+		<iso>092</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</vgb>
+	<vir>
+		<name>Виргинские острова, США</name>
+		<fullname>Виргинские острова Соединенных Штатов</fullname>
+		<english>Virgin Islands, U.S.</english>
+		<alpha2>vi</alpha2>
+		<alpha3>vir</alpha3>
+		<iso>850</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</vir>
+	<vnm>
+		<name>Вьетнам</name>
+		<fullname>Социалистическая Республика Вьетнам</fullname>
+		<english>Vietnam</english>
+		<alpha2>vn</alpha2>
+		<alpha3>vnm</alpha3>
+		<iso>704</iso>
+		<location>Азия</location>
+		<location-precise>Юго-Восточная Азия</location-precise>
+	</vnm>
+	<gab>
+		<name>Габон</name>
+		<fullname>Габонская Республика</fullname>
+		<english>Gabon</english>
+		<alpha2>ga</alpha2>
+		<alpha3>gab</alpha3>
+		<iso>266</iso>
+		<location>Африка</location>
+		<location-precise>Центральная Африка</location-precise>
+	</gab>
+	<hti>
+		<name>Гаити</name>
+		<fullname>Республика Гаити</fullname>
+		<english>Haiti</english>
+		<alpha2>ht</alpha2>
+		<alpha3>hti</alpha3>
+		<iso>332</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</hti>
+	<guy>
+		<name>Гайана</name>
+		<fullname>Республика Гайана</fullname>
+		<english>Guyana</english>
+		<alpha2>gy</alpha2>
+		<alpha3>guy</alpha3>
+		<iso>328</iso>
+		<location>Америка</location>
+		<location-precise>Южная Америка</location-precise>
+	</guy>
+	<gmb>
+		<name>Гамбия</name>
+		<fullname>Республика Гамбия</fullname>
+		<english>Gambia</english>
+		<alpha2>gm</alpha2>
+		<alpha3>gmb</alpha3>
+		<iso>270</iso>
+		<location>Африка</location>
+		<location-precise>Западная Африка</location-precise>
+	</gmb>
+	<gha>
+		<name>Гана</name>
+		<fullname>Республика Гана</fullname>
+		<english>Ghana</english>
+		<alpha2>gh</alpha2>
+		<alpha3>gha</alpha3>
+		<iso>288</iso>
+		<location>Африка</location>
+		<location-precise>Западная Африка</location-precise>
+	</gha>
+	<glp>
+		<name>Гваделупа</name>
+		<fullname></fullname>
+		<english>Guadeloupe</english>
+		<alpha2>gp</alpha2>
+		<alpha3>glp</alpha3>
+		<iso>312</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</glp>
+	<gtm>
+		<name>Гватемала</name>
+		<fullname>Республика Гватемала</fullname>
+		<english>Guatemala</english>
+		<alpha2>gt</alpha2>
+		<alpha3>gtm</alpha3>
+		<iso>320</iso>
+		<location>Америка</location>
+		<location-precise>Центральная Америка</location-precise>
+	</gtm>
+	<gin>
+		<name>Гвинея</name>
+		<fullname>Гвинейская Республика</fullname>
+		<english>Guinea</english>
+		<alpha2>gn</alpha2>
+		<alpha3>gin</alpha3>
+		<iso>324</iso>
+		<location>Африка</location>
+		<location-precise>Западная Африка</location-precise>
+	</gin>
+	<gnb>
+		<name>Гвинея-Бисау</name>
+		<fullname>Республика Гвинея-Бисау</fullname>
+		<english>Guinea-Bissau</english>
+		<alpha2>gw</alpha2>
+		<alpha3>gnb</alpha3>
+		<iso>624</iso>
+		<location>Африка</location>
+		<location-precise>Западная Африка</location-precise>
+	</gnb>
+	<deu>
+		<name>Германия</name>
+		<fullname>Федеративная Республика Германия</fullname>
+		<english>Germany</english>
+		<alpha2>de</alpha2>
+		<alpha3>deu</alpha3>
+		<iso>276</iso>
+		<location>Европа</location>
+		<location-precise>Западная Европа</location-precise>
+	</deu>
+	<ggy>
+		<name>Гернси</name>
+		<fullname></fullname>
+		<english>Guernsey</english>
+		<alpha2>gg</alpha2>
+		<alpha3>ggy</alpha3>
+		<iso>831</iso>
+		<location>Европа</location>
+		<location-precise>Северная Европа</location-precise>
+	</ggy>
+	<gib>
+		<name>Гибралтар</name>
+		<fullname></fullname>
+		<english>Gibraltar</english>
+		<alpha2>gi</alpha2>
+		<alpha3>gib</alpha3>
+		<iso>292</iso>
+		<location>Европа</location>
+		<location-precise>Южная Европа</location-precise>
+	</gib>
+	<hnd>
+		<name>Гондурас</name>
+		<fullname>Республика Гондурас</fullname>
+		<english>Honduras</english>
+		<alpha2>hn</alpha2>
+		<alpha3>hnd</alpha3>
+		<iso>340</iso>
+		<location>Америка</location>
+		<location-precise>Центральная Америка</location-precise>
+	</hnd>
+	<hkg>
+		<name>Гонконг</name>
+		<fullname>Специальны административный регион Китая Гонконг</fullname>
+		<english>Hong Kong</english>
+		<alpha2>hk</alpha2>
+		<alpha3>hkg</alpha3>
+		<iso>344</iso>
+		<location>Азия</location>
+		<location-precise>Восточная Азия</location-precise>
+	</hkg>
+	<grd>
+		<name>Гренада</name>
+		<fullname></fullname>
+		<english>Grenada</english>
+		<alpha2>gd</alpha2>
+		<alpha3>grd</alpha3>
+		<iso>308</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</grd>
+	<grl>
+		<name>Гренландия</name>
+		<fullname></fullname>
+		<english>Greenland</english>
+		<alpha2>gl</alpha2>
+		<alpha3>grl</alpha3>
+		<iso>304</iso>
+		<location>Америка</location>
+		<location-precise>Северная Америка</location-precise>
+	</grl>
+	<grc>
+		<name>Греция</name>
+		<fullname>Греческая Республика</fullname>
+		<english>Greece</english>
+		<alpha2>gr</alpha2>
+		<alpha3>grc</alpha3>
+		<iso>300</iso>
+		<location>Европа</location>
+		<location-precise>Южная Европа</location-precise>
+	</grc>
+	<geo>
+		<name>Грузия</name>
+		<fullname></fullname>
+		<english>Georgia</english>
+		<alpha2>ge</alpha2>
+		<alpha3>geo</alpha3>
+		<iso>268</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</geo>
+	<gum>
+		<name>Гуам</name>
+		<fullname></fullname>
+		<english>Guam</english>
+		<alpha2>gu</alpha2>
+		<alpha3>gum</alpha3>
+		<iso>316</iso>
+		<location>Океания</location>
+		<location-precise>Микронезия</location-precise>
+	</gum>
+	<dnk>
+		<name>Дания</name>
+		<fullname>Королевство Дания</fullname>
+		<english>Denmark</english>
+		<alpha2>dk</alpha2>
+		<alpha3>dnk</alpha3>
+		<iso>208</iso>
+		<location>Европа</location>
+		<location-precise>Северная Европа</location-precise>
+	</dnk>
+	<jey>
+		<name>Джерси</name>
+		<fullname></fullname>
+		<english>Jersey</english>
+		<alpha2>je</alpha2>
+		<alpha3>jey</alpha3>
+		<iso>832</iso>
+		<location>Европа</location>
+		<location-precise>Северная Европа</location-precise>
+	</jey>
+	<dji>
+		<name>Джибути</name>
+		<fullname>Республика Джибути</fullname>
+		<english>Djibouti</english>
+		<alpha2>dj</alpha2>
+		<alpha3>dji</alpha3>
+		<iso>262</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</dji>
+	<dma>
+		<name>Доминика</name>
+		<fullname>Содружество Доминики</fullname>
+		<english>Dominica</english>
+		<alpha2>dm</alpha2>
+		<alpha3>dma</alpha3>
+		<iso>212</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</dma>
+	<dom>
+		<name>Доминиканская Республика</name>
+		<fullname></fullname>
+		<english>Dominican Republic</english>
+		<alpha2>do</alpha2>
+		<alpha3>dom</alpha3>
+		<iso>214</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</dom>
+	<egy>
+		<name>Египет</name>
+		<fullname>Арабская Республика Египет</fullname>
+		<english>Egypt</english>
+		<alpha2>eg</alpha2>
+		<alpha3>egy</alpha3>
+		<iso>818</iso>
+		<location>Африка</location>
+		<location-precise>Северная Африка</location-precise>
+	</egy>
+	<zmb>
+		<name>Замбия</name>
+		<fullname>Республика Замбия</fullname>
+		<english>Zambia</english>
+		<alpha2>zm</alpha2>
+		<alpha3>zmb</alpha3>
+		<iso>894</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</zmb>
+	<esh>
+		<name>Западная Сахара</name>
+		<fullname></fullname>
+		<english>Western Sahara</english>
+		<alpha2>eh</alpha2>
+		<alpha3>esh</alpha3>
+		<iso>732</iso>
+		<location>Африка</location>
+		<location-precise>Северная Африка</location-precise>
+	</esh>
+	<zwe>
+		<name>Зимбабве</name>
+		<fullname>Республика Зимбабве</fullname>
+		<english>Zimbabwe</english>
+		<alpha2>zw</alpha2>
+		<alpha3>zwe</alpha3>
+		<iso>716</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</zwe>
+	<isr>
+		<name>Израиль</name>
+		<fullname>Государство Израиль</fullname>
+		<english>Israel</english>
+		<alpha2>il</alpha2>
+		<alpha3>isr</alpha3>
+		<iso>376</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</isr>
+	<ind>
+		<name>Индия</name>
+		<fullname>Республика Индия</fullname>
+		<english>India</english>
+		<alpha2>in</alpha2>
+		<alpha3>ind</alpha3>
+		<iso>356</iso>
+		<location>Азия</location>
+		<location-precise>Южная часть Центральной Азии</location-precise>
+	</ind>
+	<idn>
+		<name>Индонезия</name>
+		<fullname>Республика Индонезия</fullname>
+		<english>Indonesia</english>
+		<alpha2>id</alpha2>
+		<alpha3>idn</alpha3>
+		<iso>360</iso>
+		<location>Азия</location>
+		<location-precise>Юго-Восточная Азия</location-precise>
+	</idn>
+	<jor>
+		<name>Иордания</name>
+		<fullname>Иорданское Хашимитское Королевство</fullname>
+		<english>Jordan</english>
+		<alpha2>jo</alpha2>
+		<alpha3>jor</alpha3>
+		<iso>400</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</jor>
+	<irq>
+		<name>Ирак</name>
+		<fullname>Республика Ирак</fullname>
+		<english>Iraq</english>
+		<alpha2>iq</alpha2>
+		<alpha3>irq</alpha3>
+		<iso>368</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</irq>
+	<irn>
+		<name>Иран, Исламская Республика</name>
+		<fullname>Исламская Республика Иран</fullname>
+		<english>Iran, Islamic Republic of</english>
+		<alpha2>ir</alpha2>
+		<alpha3>irn</alpha3>
+		<iso>364</iso>
+		<location>Азия</location>
+		<location-precise>Южная часть Центральной Азии</location-precise>
+	</irn>
+	<irl>
+		<name>Ирландия</name>
+		<fullname></fullname>
+		<english>Ireland</english>
+		<alpha2>ie</alpha2>
+		<alpha3>irl</alpha3>
+		<iso>372</iso>
+		<location>Европа</location>
+		<location-precise>Северная Европа</location-precise>
+	</irl>
+	<isl>
+		<name>Исландия</name>
+		<fullname>Республика Исландия</fullname>
+		<english>Iceland</english>
+		<alpha2>is</alpha2>
+		<alpha3>isl</alpha3>
+		<iso>352</iso>
+		<location>Европа</location>
+		<location-precise>Северная Европа</location-precise>
+	</isl>
+	<esp>
+		<name>Испания</name>
+		<fullname>Королевство Испания</fullname>
+		<english>Spain</english>
+		<alpha2>es</alpha2>
+		<alpha3>esp</alpha3>
+		<iso>724</iso>
+		<location>Европа</location>
+		<location-precise>Южная Европа</location-precise>
+	</esp>
+	<ita>
+		<name>Италия</name>
+		<fullname>Итальянская Республика</fullname>
+		<english>Italy</english>
+		<alpha2>it</alpha2>
+		<alpha3>ita</alpha3>
+		<iso>380</iso>
+		<location>Европа</location>
+		<location-precise>Южная Европа</location-precise>
+	</ita>
+	<yem>
+		<name>Йемен</name>
+		<fullname>Йеменская Республика</fullname>
+		<english>Yemen</english>
+		<alpha2>ye</alpha2>
+		<alpha3>yem</alpha3>
+		<iso>887</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</yem>
+	<cpv>
+		<name>Кабо-Верде</name>
+		<fullname>Республика Кабо-Верде</fullname>
+		<english>Cape Verde</english>
+		<alpha2>cv</alpha2>
+		<alpha3>cpv</alpha3>
+		<iso>132</iso>
+		<location>Африка</location>
+		<location-precise>Западная Африка</location-precise>
+	</cpv>
+	<kaz>
+		<name>Казахстан</name>
+		<fullname>Республика Казахстан</fullname>
+		<english>Kazakhstan</english>
+		<alpha2>kz</alpha2>
+		<alpha3>kaz</alpha3>
+		<iso>398</iso>
+		<location>Азия</location>
+		<location-precise>Южная часть Центральной Азии</location-precise>
+	</kaz>
+	<khm>
+		<name>Камбоджа</name>
+		<fullname>Королевство Камбоджа</fullname>
+		<english>Cambodia</english>
+		<alpha2>kh</alpha2>
+		<alpha3>khm</alpha3>
+		<iso>116</iso>
+		<location>Азия</location>
+		<location-precise>Юго-Восточная Азия</location-precise>
+	</khm>
+	<cmr>
+		<name>Камерун</name>
+		<fullname>Республика Камерун</fullname>
+		<english>Cameroon</english>
+		<alpha2>cm</alpha2>
+		<alpha3>cmr</alpha3>
+		<iso>120</iso>
+		<location>Африка</location>
+		<location-precise>Центральная Африка</location-precise>
+	</cmr>
+	<can>
+		<name>Канада</name>
+		<fullname></fullname>
+		<english>Canada</english>
+		<alpha2>ca</alpha2>
+		<alpha3>can</alpha3>
+		<iso>124</iso>
+		<location>Америка</location>
+		<location-precise>Северная Америка</location-precise>
+	</can>
+	<qat>
+		<name>Катар</name>
+		<fullname>Государство Катар</fullname>
+		<english>Qatar</english>
+		<alpha2>qa</alpha2>
+		<alpha3>qat</alpha3>
+		<iso>634</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</qat>
+	<ken>
+		<name>Кения</name>
+		<fullname>Республика Кения</fullname>
+		<english>Kenya</english>
+		<alpha2>ke</alpha2>
+		<alpha3>ken</alpha3>
+		<iso>404</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</ken>
+	<cyp>
+		<name>Кипр</name>
+		<fullname>Республика Кипр</fullname>
+		<english>Cyprus</english>
+		<alpha2>cy</alpha2>
+		<alpha3>cyp</alpha3>
+		<iso>196</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</cyp>
+	<kgz>
+		<name>Киргизия</name>
+		<fullname>Киргизская Республика</fullname>
+		<english>Kyrgyzstan</english>
+		<alpha2>kg</alpha2>
+		<alpha3>kgz</alpha3>
+		<iso>417</iso>
+		<location>Азия</location>
+		<location-precise>Южная часть Центральной Азии</location-precise>
+	</kgz>
+	<kir>
+		<name>Кирибати</name>
+		<fullname>Республика Кирибати</fullname>
+		<english>Kiribati</english>
+		<alpha2>ki</alpha2>
+		<alpha3>kir</alpha3>
+		<iso>296</iso>
+		<location>Океания</location>
+		<location-precise>Микронезия</location-precise>
+	</kir>
+	<chn>
+		<name>Китай</name>
+		<fullname>Китайская Народная Республика</fullname>
+		<english>China</english>
+		<alpha2>cn</alpha2>
+		<alpha3>chn</alpha3>
+		<iso>156</iso>
+		<location>Азия</location>
+		<location-precise>Восточная Азия</location-precise>
+	</chn>
+	<cck>
+		<name>Кокосовые (Килинг) острова</name>
+		<fullname></fullname>
+		<english>Cocos (Keeling) Islands</english>
+		<alpha2>cc</alpha2>
+		<alpha3>cck</alpha3>
+		<iso>166</iso>
+		<location>Океания</location>
+		<location-precise>Индийский океан</location-precise>
+	</cck>
+	<col>
+		<name>Колумбия</name>
+		<fullname>Республика Колумбия</fullname>
+		<english>Colombia</english>
+		<alpha2>co</alpha2>
+		<alpha3>col</alpha3>
+		<iso>170</iso>
+		<location>Америка</location>
+		<location-precise>Южная Америка</location-precise>
+	</col>
+	<com>
+		<name>Коморы</name>
+		<fullname>Союз Коморы</fullname>
+		<english>Comoros</english>
+		<alpha2>km</alpha2>
+		<alpha3>com</alpha3>
+		<iso>174</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</com>
+	<cog>
+		<name>Конго</name>
+		<fullname>Республика Конго</fullname>
+		<english>Congo</english>
+		<alpha2>cg</alpha2>
+		<alpha3>cog</alpha3>
+		<iso>178</iso>
+		<location>Африка</location>
+		<location-precise>Центральная Африка</location-precise>
+	</cog>
+	<cod>
+		<name>Конго, Демократическая Республика</name>
+		<fullname>Демократическая Республика Конго</fullname>
+		<english>Congo, Democratic Republic of the</english>
+		<alpha2>cd</alpha2>
+		<alpha3>cod</alpha3>
+		<iso>180</iso>
+		<location>Африка</location>
+		<location-precise>Центральная Африка</location-precise>
+	</cod>
+	<prk>
+		<name>Корея, Народно-Демократическая Республика</name>
+		<fullname>Корейская Народно-Демократическая Республика</fullname>
+		<english>Korea, Democratic People's republic of</english>
+		<alpha2>kp</alpha2>
+		<alpha3>prk</alpha3>
+		<iso>408</iso>
+		<location>Азия</location>
+		<location-precise>Восточная Азия</location-precise>
+	</prk>
+	<kor>
+		<name>Корея, Республика</name>
+		<fullname>Республика Корея</fullname>
+		<english>Korea, Republic of</english>
+		<alpha2>kr</alpha2>
+		<alpha3>kor</alpha3>
+		<iso>410</iso>
+		<location>Азия</location>
+		<location-precise>Восточная Азия</location-precise>
+	</kor>
+	<cri>
+		<name>Коста-Рика</name>
+		<fullname>Республика Коста-Рика</fullname>
+		<english>Costa Rica</english>
+		<alpha2>cr</alpha2>
+		<alpha3>cri</alpha3>
+		<iso>188</iso>
+		<location>Америка</location>
+		<location-precise>Центральная Америка</location-precise>
+	</cri>
+	<civ>
+		<name>Кот д'Ивуар</name>
+		<fullname>Республика Кот д'Ивуар</fullname>
+		<english>Cote d'Ivoire</english>
+		<alpha2>ci</alpha2>
+		<alpha3>civ</alpha3>
+		<iso>384</iso>
+		<location>Африка</location>
+		<location-precise>Западная Африка</location-precise>
+	</civ>
+	<cub>
+		<name>Куба</name>
+		<fullname>Республика Куба</fullname>
+		<english>Cuba</english>
+		<alpha2>cu</alpha2>
+		<alpha3>cub</alpha3>
+		<iso>192</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</cub>
+	<kwt>
+		<name>Кувейт</name>
+		<fullname>Государство Кувейт</fullname>
+		<english>Kuwait</english>
+		<alpha2>kw</alpha2>
+		<alpha3>kwt</alpha3>
+		<iso>414</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</kwt>
+	<cuw>
+		<name>Кюрасао</name>
+		<fullname></fullname>
+		<english>Curaçao</english>
+		<alpha2>cw</alpha2>
+		<alpha3>cuw</alpha3>
+		<iso>531</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</cuw>
+	<lao>
+		<name>Лаос</name>
+		<fullname>Лаосская Народно-Демократическая Республика</fullname>
+		<english>Lao People's Democratic Republic</english>
+		<alpha2>la</alpha2>
+		<alpha3>lao</alpha3>
+		<iso>418</iso>
+		<location>Азия</location>
+		<location-precise>Юго-Восточная Азия</location-precise>
+	</lao>
+	<lva>
+		<name>Латвия</name>
+		<fullname>Латвийская Республика</fullname>
+		<english>Latvia</english>
+		<alpha2>lv</alpha2>
+		<alpha3>lva</alpha3>
+		<iso>428</iso>
+		<location>Европа</location>
+		<location-precise>Северная Европа</location-precise>
+	</lva>
+	<lso>
+		<name>Лесото</name>
+		<fullname>Королевство Лесото</fullname>
+		<english>Lesotho</english>
+		<alpha2>ls</alpha2>
+		<alpha3>lso</alpha3>
+		<iso>426</iso>
+		<location>Африка</location>
+		<location-precise>Южная часть Африки</location-precise>
+	</lso>
+	<lbn>
+		<name>Ливан</name>
+		<fullname>Ливанская Республика</fullname>
+		<english>Lebanon</english>
+		<alpha2>lb</alpha2>
+		<alpha3>lbn</alpha3>
+		<iso>422</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</lbn>
+	<lby>
+		<name>Ливийская Арабская Джамахирия</name>
+		<fullname>Социалистическая Народная Ливийская Арабская Джамахирия</fullname>
+		<english>Libyan Arab Jamahiriya</english>
+		<alpha2>ly</alpha2>
+		<alpha3>lby</alpha3>
+		<iso>434</iso>
+		<location>Африка</location>
+		<location-precise>Северная Африка</location-precise>
+	</lby>
+	<lbr>
+		<name>Либерия</name>
+		<fullname>Республика Либерия</fullname>
+		<english>Liberia</english>
+		<alpha2>lr</alpha2>
+		<alpha3>lbr</alpha3>
+		<iso>430</iso>
+		<location>Африка</location>
+		<location-precise>Западная Африка</location-precise>
+	</lbr>
+	<lie>
+		<name>Лихтенштейн</name>
+		<fullname>Княжество Лихтенштейн</fullname>
+		<english>Liechtenstein</english>
+		<alpha2>li</alpha2>
+		<alpha3>lie</alpha3>
+		<iso>438</iso>
+		<location>Европа</location>
+		<location-precise>Западная Европа</location-precise>
+	</lie>
+	<ltu>
+		<name>Литва</name>
+		<fullname>Литовская Республика</fullname>
+		<english>Lithuania</english>
+		<alpha2>lt</alpha2>
+		<alpha3>ltu</alpha3>
+		<iso>440</iso>
+		<location>Европа</location>
+		<location-precise>Северная Европа</location-precise>
+	</ltu>
+	<lux>
+		<name>Люксембург</name>
+		<fullname>Великое Герцогство Люксембург</fullname>
+		<english>Luxembourg</english>
+		<alpha2>lu</alpha2>
+		<alpha3>lux</alpha3>
+		<iso>442</iso>
+		<location>Европа</location>
+		<location-precise>Западная Европа</location-precise>
+	</lux>
+	<mus>
+		<name>Маврикий</name>
+		<fullname>Республика Маврикий</fullname>
+		<english>Mauritius</english>
+		<alpha2>mu</alpha2>
+		<alpha3>mus</alpha3>
+		<iso>480</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</mus>
+	<mrt>
+		<name>Мавритания</name>
+		<fullname>Исламская Республика Мавритания</fullname>
+		<english>Mauritania</english>
+		<alpha2>mr</alpha2>
+		<alpha3>mrt</alpha3>
+		<iso>478</iso>
+		<location>Африка</location>
+		<location-precise>Западная Африка</location-precise>
+	</mrt>
+	<mdg>
+		<name>Мадагаскар</name>
+		<fullname>Республика Мадагаскар</fullname>
+		<english>Madagascar</english>
+		<alpha2>mg</alpha2>
+		<alpha3>mdg</alpha3>
+		<iso>450</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</mdg>
+	<myt>
+		<name>Майотта</name>
+		<fullname></fullname>
+		<english>Mayotte</english>
+		<alpha2>yt</alpha2>
+		<alpha3>myt</alpha3>
+		<iso>175</iso>
+		<location>Африка</location>
+		<location-precise>Южная часть Африки</location-precise>
+	</myt>
+	<mac>
+		<name>Макао</name>
+		<fullname>Специальный административный регион Китая Макао</fullname>
+		<english>Macao</english>
+		<alpha2>mo</alpha2>
+		<alpha3>mac</alpha3>
+		<iso>446</iso>
+		<location>Азия</location>
+		<location-precise>Восточная Азия</location-precise>
+	</mac>
+	<mwi>
+		<name>Малави</name>
+		<fullname>Республика Малави</fullname>
+		<english>Malawi</english>
+		<alpha2>mw</alpha2>
+		<alpha3>mwi</alpha3>
+		<iso>454</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</mwi>
+	<mys>
+		<name>Малайзия</name>
+		<fullname></fullname>
+		<english>Malaysia</english>
+		<alpha2>my</alpha2>
+		<alpha3>mys</alpha3>
+		<iso>458</iso>
+		<location>Азия</location>
+		<location-precise>Юго-Восточная Азия</location-precise>
+	</mys>
+	<mli>
+		<name>Мали</name>
+		<fullname>Республика Мали</fullname>
+		<english>Mali</english>
+		<alpha2>ml</alpha2>
+		<alpha3>mli</alpha3>
+		<iso>466</iso>
+		<location>Африка</location>
+		<location-precise>Западная Африка</location-precise>
+	</mli>
+	<umi>
+		<name>Малые Тихоокеанские отдаленные острова Соединенных Штатов</name>
+		<fullname></fullname>
+		<english>United States Minor Outlying Islands</english>
+		<alpha2>um</alpha2>
+		<alpha3>umi</alpha3>
+		<iso>581</iso>
+		<location>Океания</location>
+		<location-precise>Индийский океан</location-precise>
+	</umi>
+	<mdv>
+		<name>Мальдивы</name>
+		<fullname>Мальдивская Республика</fullname>
+		<english>Maldives</english>
+		<alpha2>mv</alpha2>
+		<alpha3>mdv</alpha3>
+		<iso>462</iso>
+		<location>Азия</location>
+		<location-precise>Южная часть Центральной Азии</location-precise>
+	</mdv>
+	<mlt>
+		<name>Мальта</name>
+		<fullname>Республика Мальта</fullname>
+		<english>Malta</english>
+		<alpha2>mt</alpha2>
+		<alpha3>mlt</alpha3>
+		<iso>470</iso>
+		<location>Европа</location>
+		<location-precise>Южная Европа</location-precise>
+	</mlt>
+	<mar>
+		<name>Марокко</name>
+		<fullname>Королевство Марокко</fullname>
+		<english>Morocco</english>
+		<alpha2>ma</alpha2>
+		<alpha3>mar</alpha3>
+		<iso>504</iso>
+		<location>Африка</location>
+		<location-precise>Северная Африка</location-precise>
+	</mar>
+	<mtq>
+		<name>Мартиника</name>
+		<fullname></fullname>
+		<english>Martinique</english>
+		<alpha2>mq</alpha2>
+		<alpha3>mtq</alpha3>
+		<iso>474</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</mtq>
+	<mhl>
+		<name>Маршалловы острова</name>
+		<fullname>Республика Маршалловы острова</fullname>
+		<english>Marshall Islands</english>
+		<alpha2>mh</alpha2>
+		<alpha3>mhl</alpha3>
+		<iso>584</iso>
+		<location>Океания</location>
+		<location-precise>Микронезия</location-precise>
+	</mhl>
+	<mex>
+		<name>Мексика</name>
+		<fullname>Мексиканские Соединенные Штаты</fullname>
+		<english>Mexico</english>
+		<alpha2>mx</alpha2>
+		<alpha3>mex</alpha3>
+		<iso>484</iso>
+		<location>Америка</location>
+		<location-precise>Центральная Америка</location-precise>
+	</mex>
+	<fsm>
+		<name>Микронезия, Федеративные Штаты</name>
+		<fullname>Федеративные штаты Микронезии</fullname>
+		<english>Micronesia, Federated States of</english>
+		<alpha2>fm</alpha2>
+		<alpha3>fsm</alpha3>
+		<iso>583</iso>
+		<location>Океания</location>
+		<location-precise>Микронезия</location-precise>
+	</fsm>
+	<moz>
+		<name>Мозамбик</name>
+		<fullname>Республика Мозамбик</fullname>
+		<english>Mozambique</english>
+		<alpha2>mz</alpha2>
+		<alpha3>moz</alpha3>
+		<iso>508</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</moz>
+	<mda>
+		<name>Молдова, Республика</name>
+		<fullname>Республика Молдова</fullname>
+		<english>Moldova</english>
+		<alpha2>md</alpha2>
+		<alpha3>mda</alpha3>
+		<iso>498</iso>
+		<location>Европа</location>
+		<location-precise>Восточная Европа</location-precise>
+	</mda>
+	<mco>
+		<name>Монако</name>
+		<fullname>Княжество Монако</fullname>
+		<english>Monaco</english>
+		<alpha2>mc</alpha2>
+		<alpha3>mco</alpha3>
+		<iso>492</iso>
+		<location>Европа</location>
+		<location-precise>Западная Европа</location-precise>
+	</mco>
+	<mng>
+		<name>Монголия</name>
+		<fullname></fullname>
+		<english>Mongolia</english>
+		<alpha2>mn</alpha2>
+		<alpha3>mng</alpha3>
+		<iso>496</iso>
+		<location>Азия</location>
+		<location-precise>Восточная Азия</location-precise>
+	</mng>
+	<msr>
+		<name>Монтсеррат</name>
+		<fullname></fullname>
+		<english>Montserrat</english>
+		<alpha2>ms</alpha2>
+		<alpha3>msr</alpha3>
+		<iso>500</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</msr>
+	<mmr>
+		<name>Мьянма</name>
+		<fullname>Союз Мьянма</fullname>
+		<english>Myanmar</english>
+		<alpha2>mm</alpha2>
+		<alpha3>mmr</alpha3>
+		<iso>104</iso>
+		<location>Азия</location>
+		<location-precise>Юго-Восточная Азия</location-precise>
+	</mmr>
+	<nam>
+		<name>Намибия</name>
+		<fullname>Республика Намибия</fullname>
+		<english>Namibia</english>
+		<alpha2>na</alpha2>
+		<alpha3>nam</alpha3>
+		<iso>516</iso>
+		<location>Африка</location>
+		<location-precise>Южная часть Африки</location-precise>
+	</nam>
+	<nru>
+		<name>Науру</name>
+		<fullname>Республика Науру</fullname>
+		<english>Nauru</english>
+		<alpha2>nr</alpha2>
+		<alpha3>nru</alpha3>
+		<iso>520</iso>
+		<location>Океания</location>
+		<location-precise>Микронезия</location-precise>
+	</nru>
+	<npl>
+		<name>Непал</name>
+		<fullname>Федеративная Демократическая Республика Непал</fullname>
+		<english>Nepal</english>
+		<alpha2>np</alpha2>
+		<alpha3>npl</alpha3>
+		<iso>524</iso>
+		<location>Азия</location>
+		<location-precise>Южная часть Центральной Азии</location-precise>
+	</npl>
+	<ner>
+		<name>Нигер</name>
+		<fullname>Республика Нигер</fullname>
+		<english>Niger</english>
+		<alpha2>ne</alpha2>
+		<alpha3>ner</alpha3>
+		<iso>562</iso>
+		<location>Африка</location>
+		<location-precise>Западная Африка</location-precise>
+	</ner>
+	<nga>
+		<name>Нигерия</name>
+		<fullname>Федеративная Республика Нигерия</fullname>
+		<english>Nigeria</english>
+		<alpha2>ng</alpha2>
+		<alpha3>nga</alpha3>
+		<iso>566</iso>
+		<location>Африка</location>
+		<location-precise>Западная Африка</location-precise>
+	</nga>
+	<nld>
+		<name>Нидерланды</name>
+		<fullname>Королевство Нидерландов</fullname>
+		<english>Netherlands</english>
+		<alpha2>nl</alpha2>
+		<alpha3>nld</alpha3>
+		<iso>528</iso>
+		<location>Европа</location>
+		<location-precise>Западная Европа</location-precise>
+	</nld>
+	<nic>
+		<name>Никарагуа</name>
+		<fullname>Республика Никарагуа</fullname>
+		<english>Nicaragua</english>
+		<alpha2>ni</alpha2>
+		<alpha3>nic</alpha3>
+		<iso>558</iso>
+		<location>Америка</location>
+		<location-precise>Центральная Америка</location-precise>
+	</nic>
+	<niu>
+		<name>Ниуэ</name>
+		<fullname>Республика Ниуэ</fullname>
+		<english>Niue</english>
+		<alpha2>nu</alpha2>
+		<alpha3>niu</alpha3>
+		<iso>570</iso>
+		<location>Океания</location>
+		<location-precise>Полинезия</location-precise>
+	</niu>
+	<nzl>
+		<name>Новая Зеландия</name>
+		<fullname></fullname>
+		<english>New Zealand</english>
+		<alpha2>nz</alpha2>
+		<alpha3>nzl</alpha3>
+		<iso>554</iso>
+		<location>Океания</location>
+		<location-precise>Австралия и Новая Зеландия</location-precise>
+	</nzl>
+	<ncl>
+		<name>Новая Каледония</name>
+		<fullname></fullname>
+		<english>New Caledonia</english>
+		<alpha2>nc</alpha2>
+		<alpha3>ncl</alpha3>
+		<iso>540</iso>
+		<location>Океания</location>
+		<location-precise>Меланезия</location-precise>
+	</ncl>
+	<nor>
+		<name>Норвегия</name>
+		<fullname>Королевство Норвегия</fullname>
+		<english>Norway</english>
+		<alpha2>no</alpha2>
+		<alpha3>nor</alpha3>
+		<iso>578</iso>
+		<location>Европа</location>
+		<location-precise>Северная Европа</location-precise>
+	</nor>
+	<are>
+		<name>Объединенные Арабские Эмираты</name>
+		<fullname></fullname>
+		<english>United Arab Emirates</english>
+		<alpha2>ae</alpha2>
+		<alpha3>are</alpha3>
+		<iso>784</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</are>
+	<omn>
+		<name>Оман</name>
+		<fullname>Султанат Оман</fullname>
+		<english>Oman</english>
+		<alpha2>om</alpha2>
+		<alpha3>omn</alpha3>
+		<iso>512</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</omn>
+	<bvt>
+		<name>Остров Буве</name>
+		<fullname></fullname>
+		<english>Bouvet Island</english>
+		<alpha2>bv</alpha2>
+		<alpha3>bvt</alpha3>
+		<iso>074</iso>
+		<location></location>
+		<location-precise>Южный океан</location-precise>
+	</bvt>
+	<imn>
+		<name>Остров Мэн</name>
+		<fullname></fullname>
+		<english>Isle of Man</english>
+		<alpha2>im</alpha2>
+		<alpha3>imn</alpha3>
+		<iso>833</iso>
+		<location>Европа</location>
+		<location-precise>Северная Европа</location-precise>
+	</imn>
+	<nfk>
+		<name>Остров Норфолк</name>
+		<fullname></fullname>
+		<english>Norfolk Island</english>
+		<alpha2>nf</alpha2>
+		<alpha3>nfk</alpha3>
+		<iso>574</iso>
+		<location>Океания</location>
+		<location-precise>Австралия и Новая Зеландия</location-precise>
+	</nfk>
+	<cxr>
+		<name>Остров Рождества</name>
+		<fullname></fullname>
+		<english>Christmas Island</english>
+		<alpha2>cx</alpha2>
+		<alpha3>cxr</alpha3>
+		<iso>162</iso>
+		<location>Азия</location>
+		<location-precise>Индийский океан</location-precise>
+	</cxr>
+	<hmd>
+		<name>Остров Херд и острова Макдональд</name>
+		<fullname></fullname>
+		<english>Heard Island and McDonald Islands</english>
+		<alpha2>hm</alpha2>
+		<alpha3>hmd</alpha3>
+		<iso>334</iso>
+		<location></location>
+		<location-precise>Индийский океан</location-precise>
+	</hmd>
+	<cym>
+		<name>Острова Кайман</name>
+		<fullname></fullname>
+		<english>Cayman Islands</english>
+		<alpha2>ky</alpha2>
+		<alpha3>cym</alpha3>
+		<iso>136</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</cym>
+	<cok>
+		<name>Острова Кука</name>
+		<fullname></fullname>
+		<english>Cook Islands</english>
+		<alpha2>ck</alpha2>
+		<alpha3>cok</alpha3>
+		<iso>184</iso>
+		<location>Океания</location>
+		<location-precise>Полинезия</location-precise>
+	</cok>
+	<tca>
+		<name>Острова Теркс и Кайкос</name>
+		<fullname></fullname>
+		<english>Turks and Caicos Islands</english>
+		<alpha2>tc</alpha2>
+		<alpha3>tca</alpha3>
+		<iso>796</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</tca>
+	<pak>
+		<name>Пакистан</name>
+		<fullname>Исламская Республика Пакистан</fullname>
+		<english>Pakistan</english>
+		<alpha2>pk</alpha2>
+		<alpha3>pak</alpha3>
+		<iso>586</iso>
+		<location>Азия</location>
+		<location-precise>Южная часть Центральной Азии</location-precise>
+	</pak>
+	<plw>
+		<name>Палау</name>
+		<fullname>Республика Палау</fullname>
+		<english>Palau</english>
+		<alpha2>pw</alpha2>
+		<alpha3>plw</alpha3>
+		<iso>585</iso>
+		<location>Океания</location>
+		<location-precise>Микронезия</location-precise>
+	</plw>
+	<pse>
+		<name>Палестинская территория, оккупированная</name>
+		<fullname>Оккупированная Палестинская территория</fullname>
+		<english>Palestinian Territory, Occupied</english>
+		<alpha2>ps</alpha2>
+		<alpha3>pse</alpha3>
+		<iso>275</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</pse>
+	<pan>
+		<name>Панама</name>
+		<fullname>Республика Панама</fullname>
+		<english>Panama</english>
+		<alpha2>pa</alpha2>
+		<alpha3>pan</alpha3>
+		<iso>591</iso>
+		<location>Америка</location>
+		<location-precise>Центральная Америка</location-precise>
+	</pan>
+	<vat>
+		<name>Папский Престол (Государство — город Ватикан)</name>
+		<fullname></fullname>
+		<english>Holy See (Vatican City State)</english>
+		<alpha2>va</alpha2>
+		<alpha3>vat</alpha3>
+		<iso>336</iso>
+		<location>Европа</location>
+		<location-precise>Южная Европа</location-precise>
+	</vat>
+	<png>
+		<name>Папуа-Новая Гвинея</name>
+		<fullname></fullname>
+		<english>Papua New Guinea</english>
+		<alpha2>pg</alpha2>
+		<alpha3>png</alpha3>
+		<iso>598</iso>
+		<location>Океания</location>
+		<location-precise>Меланезия</location-precise>
+	</png>
+	<pry>
+		<name>Парагвай</name>
+		<fullname>Республика Парагвай</fullname>
+		<english>Paraguay</english>
+		<alpha2>py</alpha2>
+		<alpha3>pry</alpha3>
+		<iso>600</iso>
+		<location>Америка</location>
+		<location-precise>Южная Америка</location-precise>
+	</pry>
+	<per>
+		<name>Перу</name>
+		<fullname>Республика Перу</fullname>
+		<english>Peru</english>
+		<alpha2>pe</alpha2>
+		<alpha3>per</alpha3>
+		<iso>604</iso>
+		<location>Америка</location>
+		<location-precise>Южная Америка</location-precise>
+	</per>
+	<pcn>
+		<name>Питкерн</name>
+		<fullname></fullname>
+		<english>Pitcairn</english>
+		<alpha2>pn</alpha2>
+		<alpha3>pcn</alpha3>
+		<iso>612</iso>
+		<location>Океания</location>
+		<location-precise>Полинезия</location-precise>
+	</pcn>
+	<pol>
+		<name>Польша</name>
+		<fullname>Республика Польша</fullname>
+		<english>Poland</english>
+		<alpha2>pl</alpha2>
+		<alpha3>pol</alpha3>
+		<iso>616</iso>
+		<location>Европа</location>
+		<location-precise>Восточная Европа</location-precise>
+	</pol>
+	<prt>
+		<name>Португалия</name>
+		<fullname>Португальская Республика</fullname>
+		<english>Portugal</english>
+		<alpha2>pt</alpha2>
+		<alpha3>prt</alpha3>
+		<iso>620</iso>
+		<location>Европа</location>
+		<location-precise>Южная Европа</location-precise>
+	</prt>
+	<pri>
+		<name>Пуэрто-Рико</name>
+		<fullname></fullname>
+		<english>Puerto Rico</english>
+		<alpha2>pr</alpha2>
+		<alpha3>pri</alpha3>
+		<iso>630</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</pri>
+	<mkd>
+		<name>Республика Македония</name>
+		<fullname></fullname>
+		<english>Macedonia, The Former Yugoslav Republic Of</english>
+		<alpha2>mk</alpha2>
+		<alpha3>mkd</alpha3>
+		<iso>807</iso>
+		<location>Европа</location>
+		<location-precise>Южная Европа</location-precise>
+	</mkd>
+	<reu>
+		<name>Реюньон</name>
+		<fullname></fullname>
+		<english>Reunion</english>
+		<alpha2>re</alpha2>
+		<alpha3>reu</alpha3>
+		<iso>638</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</reu>
+	<rus>
+		<name>Россия</name>
+		<fullname>Российская Федерация</fullname>
+		<english>Russian Federation</english>
+		<alpha2>ru</alpha2>
+		<alpha3>rus</alpha3>
+		<iso>643</iso>
+		<location>Европа</location>
+		<location-precise>Восточная Европа</location-precise>
+	</rus>
+	<rwa>
+		<name>Руанда</name>
+		<fullname>Руандийская Республика</fullname>
+		<english>Rwanda</english>
+		<alpha2>rw</alpha2>
+		<alpha3>rwa</alpha3>
+		<iso>646</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</rwa>
+	<rou>
+		<name>Румыния</name>
+		<fullname></fullname>
+		<english>Romania</english>
+		<alpha2>ro</alpha2>
+		<alpha3>rou</alpha3>
+		<iso>642</iso>
+		<location>Европа</location>
+		<location-precise>Восточная Европа</location-precise>
+	</rou>
+	<wsm>
+		<name>Самоа</name>
+		<fullname>Независимое Государство Самоа</fullname>
+		<english>Samoa</english>
+		<alpha2>ws</alpha2>
+		<alpha3>wsm</alpha3>
+		<iso>882</iso>
+		<location>Океания</location>
+		<location-precise>Полинезия</location-precise>
+	</wsm>
+	<smr>
+		<name>Сан-Марино</name>
+		<fullname>Республика Сан-Марино</fullname>
+		<english>San Marino</english>
+		<alpha2>sm</alpha2>
+		<alpha3>smr</alpha3>
+		<iso>674</iso>
+		<location>Европа</location>
+		<location-precise>Южная Европа</location-precise>
+	</smr>
+	<stp>
+		<name>Сан-Томе и Принсипи</name>
+		<fullname>Демократическая Республика Сан-Томе и Принсипи</fullname>
+		<english>Sao Tome and Principe</english>
+		<alpha2>st</alpha2>
+		<alpha3>stp</alpha3>
+		<iso>678</iso>
+		<location>Африка</location>
+		<location-precise>Центральная Африка</location-precise>
+	</stp>
+	<sau>
+		<name>Саудовская Аравия</name>
+		<fullname>Королевство Саудовская Аравия</fullname>
+		<english>Saudi Arabia</english>
+		<alpha2>sa</alpha2>
+		<alpha3>sau</alpha3>
+		<iso>682</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</sau>
+	<swz>
+		<name>Свазиленд</name>
+		<fullname>Королевство Свазиленд</fullname>
+		<english>Swaziland</english>
+		<alpha2>sz</alpha2>
+		<alpha3>swz</alpha3>
+		<iso>748</iso>
+		<location>Африка</location>
+		<location-precise>Южная часть Африки</location-precise>
+	</swz>
+	<shn>
+		<name>Святая Елена, Остров вознесения, Тристан-да-Кунья</name>
+		<fullname></fullname>
+		<english>Saint Helena, Ascension And Tristan Da Cunha</english>
+		<alpha2>sh</alpha2>
+		<alpha3>shn</alpha3>
+		<iso>654</iso>
+		<location>Африка</location>
+		<location-precise>Западная Африка</location-precise>
+	</shn>
+	<mnp>
+		<name>Северные Марианские острова</name>
+		<fullname>Содружество Северных Марианских островов</fullname>
+		<english>Northern Mariana Islands</english>
+		<alpha2>mp</alpha2>
+		<alpha3>mnp</alpha3>
+		<iso>580</iso>
+		<location>Океания</location>
+		<location-precise>Микронезия</location-precise>
+	</mnp>
+	<blm>
+		<name>Сен-Бартельми</name>
+		<fullname></fullname>
+		<english>Saint Barthélemy</english>
+		<alpha2>bl</alpha2>
+		<alpha3>blm</alpha3>
+		<iso>652</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</blm>
+	<maf>
+		<name>Сен-Мартен</name>
+		<fullname></fullname>
+		<english>Saint Martin (French Part)</english>
+		<alpha2>mf</alpha2>
+		<alpha3>maf</alpha3>
+		<iso>663</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</maf>
+	<sen>
+		<name>Сенегал</name>
+		<fullname>Республика Сенегал</fullname>
+		<english>Senegal</english>
+		<alpha2>sn</alpha2>
+		<alpha3>sen</alpha3>
+		<iso>686</iso>
+		<location>Африка</location>
+		<location-precise>Западная Африка</location-precise>
+	</sen>
+	<vct>
+		<name>Сент-Винсент и Гренадины</name>
+		<fullname></fullname>
+		<english>Saint Vincent and the Grenadines</english>
+		<alpha2>vc</alpha2>
+		<alpha3>vct</alpha3>
+		<iso>670</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</vct>
+	<lca>
+		<name>Сент-Люсия</name>
+		<fullname></fullname>
+		<english>Saint Lucia</english>
+		<alpha2>lc</alpha2>
+		<alpha3>lca</alpha3>
+		<iso>662</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</lca>
+	<kna>
+		<name>Сент-Китс и Невис</name>
+		<fullname></fullname>
+		<english>Saint Kitts and Nevis</english>
+		<alpha2>kn</alpha2>
+		<alpha3>kna</alpha3>
+		<iso>659</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</kna>
+	<spm>
+		<name>Сент-Пьер и Микелон</name>
+		<fullname></fullname>
+		<english>Saint Pierre and Miquelon</english>
+		<alpha2>pm</alpha2>
+		<alpha3>spm</alpha3>
+		<iso>666</iso>
+		<location>Америка</location>
+		<location-precise>Северная Америка</location-precise>
+	</spm>
+	<srb>
+		<name>Сербия</name>
+		<fullname>Республика Сербия</fullname>
+		<english>Serbia</english>
+		<alpha2>rs</alpha2>
+		<alpha3>srb</alpha3>
+		<iso>688</iso>
+		<location>Европа</location>
+		<location-precise>Южная Европа</location-precise>
+	</srb>
+	<syc>
+		<name>Сейшелы</name>
+		<fullname>Республика Сейшелы</fullname>
+		<english>Seychelles</english>
+		<alpha2>sc</alpha2>
+		<alpha3>syc</alpha3>
+		<iso>690</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</syc>
+	<sgp>
+		<name>Сингапур</name>
+		<fullname>Республика Сингапур</fullname>
+		<english>Singapore</english>
+		<alpha2>sg</alpha2>
+		<alpha3>sgp</alpha3>
+		<iso>702</iso>
+		<location>Азия</location>
+		<location-precise>Юго-Восточная Азия</location-precise>
+	</sgp>
+	<sxm>
+		<name>Синт-Мартен</name>
+		<fullname></fullname>
+		<english>Sint Maarten</english>
+		<alpha2>sx</alpha2>
+		<alpha3>sxm</alpha3>
+		<iso>534</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</sxm>
+	<syr>
+		<name>Сирийская Арабская Республика</name>
+		<fullname></fullname>
+		<english>Syrian Arab Republic</english>
+		<alpha2>sy</alpha2>
+		<alpha3>syr</alpha3>
+		<iso>760</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</syr>
+	<svk>
+		<name>Словакия</name>
+		<fullname>Словацкая Республика</fullname>
+		<english>Slovakia</english>
+		<alpha2>sk</alpha2>
+		<alpha3>svk</alpha3>
+		<iso>703</iso>
+		<location>Европа</location>
+		<location-precise>Восточная Европа</location-precise>
+	</svk>
+	<svn>
+		<name>Словения</name>
+		<fullname>Республика Словения</fullname>
+		<english>Slovenia</english>
+		<alpha2>si</alpha2>
+		<alpha3>svn</alpha3>
+		<iso>705</iso>
+		<location>Европа</location>
+		<location-precise>Южная Европа</location-precise>
+	</svn>
+	<gbr>
+		<name>Соединенное Королевство</name>
+		<fullname>Соединенное Королевство Великобритании и Северной Ирландии</fullname>
+		<english>United Kingdom</english>
+		<alpha2>gb</alpha2>
+		<alpha3>gbr</alpha3>
+		<iso>826</iso>
+		<location>Европа</location>
+		<location-precise>Северная Европа</location-precise>
+	</gbr>
+	<usa>
+		<name>Соединенные Штаты</name>
+		<fullname>Соединенные Штаты Америки</fullname>
+		<english>United States</english>
+		<alpha2>us</alpha2>
+		<alpha3>usa</alpha3>
+		<iso>840</iso>
+		<location>Америка</location>
+		<location-precise>Северная Америка</location-precise>
+	</usa>
+	<slb>
+		<name>Соломоновы острова</name>
+		<fullname></fullname>
+		<english>Solomon Islands</english>
+		<alpha2>sb</alpha2>
+		<alpha3>slb</alpha3>
+		<iso>090</iso>
+		<location>Океания</location>
+		<location-precise>Меланезия</location-precise>
+	</slb>
+	<som>
+		<name>Сомали</name>
+		<fullname>Сомалийская Республика</fullname>
+		<english>Somalia</english>
+		<alpha2>so</alpha2>
+		<alpha3>som</alpha3>
+		<iso>706</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</som>
+	<sdn>
+		<name>Судан</name>
+		<fullname>Республика Судан</fullname>
+		<english>Sudan</english>
+		<alpha2>sd</alpha2>
+		<alpha3>sdn</alpha3>
+		<iso>729</iso>
+		<location>Африка</location>
+		<location-precise>Северная Африка</location-precise>
+	</sdn>
+	<sur>
+		<name>Суринам</name>
+		<fullname>Республика Суринам</fullname>
+		<english>Suriname</english>
+		<alpha2>sr</alpha2>
+		<alpha3>sur</alpha3>
+		<iso>740</iso>
+		<location>Америка</location>
+		<location-precise>Южная Америка</location-precise>
+	</sur>
+	<sle>
+		<name>Сьерра-Леоне</name>
+		<fullname>Республика Сьерра-Леоне</fullname>
+		<english>Sierra Leone</english>
+		<alpha2>sl</alpha2>
+		<alpha3>sle</alpha3>
+		<iso>694</iso>
+		<location>Африка</location>
+		<location-precise>Западная Африка</location-precise>
+	</sle>
+	<tjk>
+		<name>Таджикистан</name>
+		<fullname>Республика Таджикистан</fullname>
+		<english>Tajikistan</english>
+		<alpha2>tj</alpha2>
+		<alpha3>tjk</alpha3>
+		<iso>762</iso>
+		<location>Азия</location>
+		<location-precise>Южная часть Центральной Азии</location-precise>
+	</tjk>
+	<tha>
+		<name>Таиланд</name>
+		<fullname>Королевство Таиланд</fullname>
+		<english>Thailand</english>
+		<alpha2>th</alpha2>
+		<alpha3>tha</alpha3>
+		<iso>764</iso>
+		<location>Азия</location>
+		<location-precise>Юго-Восточная Азия</location-precise>
+	</tha>
+	<twn>
+		<name>Тайвань (Китай)</name>
+		<fullname></fullname>
+		<english>Taiwan, Province of China</english>
+		<alpha2>tw</alpha2>
+		<alpha3>twn</alpha3>
+		<iso>158</iso>
+		<location>Азия</location>
+		<location-precise>Восточная Азия</location-precise>
+	</twn>
+	<tza>
+		<name>Танзания, Объединенная Республика</name>
+		<fullname>Объединенная Республика Танзания</fullname>
+		<english>Tanzania, United Republic Of</english>
+		<alpha2>tz</alpha2>
+		<alpha3>tza</alpha3>
+		<iso>834</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</tza>
+	<tls>
+		<name>Тимор-Лесте</name>
+		<fullname>Демократическая Республика Тимор-Лесте</fullname>
+		<english>Timor-Leste</english>
+		<alpha2>tl</alpha2>
+		<alpha3>tls</alpha3>
+		<iso>626</iso>
+		<location>Азия</location>
+		<location-precise>Юго-Восточная Азия</location-precise>
+	</tls>
+	<tgo>
+		<name>Того</name>
+		<fullname>Тоголезская Республика</fullname>
+		<english>Togo</english>
+		<alpha2>tg</alpha2>
+		<alpha3>tgo</alpha3>
+		<iso>768</iso>
+		<location>Африка</location>
+		<location-precise>Западная Африка</location-precise>
+	</tgo>
+	<tkl>
+		<name>Токелау</name>
+		<fullname></fullname>
+		<english>Tokelau</english>
+		<alpha2>tk</alpha2>
+		<alpha3>tkl</alpha3>
+		<iso>772</iso>
+		<location>Океания</location>
+		<location-precise>Полинезия</location-precise>
+	</tkl>
+	<ton>
+		<name>Тонга</name>
+		<fullname>Королевство Тонга</fullname>
+		<english>Tonga</english>
+		<alpha2>to</alpha2>
+		<alpha3>ton</alpha3>
+		<iso>776</iso>
+		<location>Океания</location>
+		<location-precise>Полинезия</location-precise>
+	</ton>
+	<tto>
+		<name>Тринидад и Тобаго</name>
+		<fullname>Республика Тринидад и Тобаго</fullname>
+		<english>Trinidad and Tobago</english>
+		<alpha2>tt</alpha2>
+		<alpha3>tto</alpha3>
+		<iso>780</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</tto>
+	<tuv>
+		<name>Тувалу</name>
+		<fullname></fullname>
+		<english>Tuvalu</english>
+		<alpha2>tv</alpha2>
+		<alpha3>tuv</alpha3>
+		<iso>798</iso>
+		<location>Океания</location>
+		<location-precise>Полинезия</location-precise>
+	</tuv>
+	<tun>
+		<name>Тунис</name>
+		<fullname>Тунисская Республика</fullname>
+		<english>Tunisia</english>
+		<alpha2>tn</alpha2>
+		<alpha3>tun</alpha3>
+		<iso>788</iso>
+		<location>Африка</location>
+		<location-precise>Северная Африка</location-precise>
+	</tun>
+	<tkm>
+		<name>Туркмения</name>
+		<fullname>Туркменистан</fullname>
+		<english>Turkmenistan</english>
+		<alpha2>tm</alpha2>
+		<alpha3>tkm</alpha3>
+		<iso>795</iso>
+		<location>Азия</location>
+		<location-precise>Южная часть Центральной Азии</location-precise>
+	</tkm>
+	<tur>
+		<name>Турция</name>
+		<fullname>Турецкая Республика</fullname>
+		<english>Turkey</english>
+		<alpha2>tr</alpha2>
+		<alpha3>tur</alpha3>
+		<iso>792</iso>
+		<location>Азия</location>
+		<location-precise>Западная Азия</location-precise>
+	</tur>
+	<uga>
+		<name>Уганда</name>
+		<fullname>Республика Уганда</fullname>
+		<english>Uganda</english>
+		<alpha2>ug</alpha2>
+		<alpha3>uga</alpha3>
+		<iso>800</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</uga>
+	<uzb>
+		<name>Узбекистан</name>
+		<fullname>Республика Узбекистан</fullname>
+		<english>Uzbekistan</english>
+		<alpha2>uz</alpha2>
+		<alpha3>uzb</alpha3>
+		<iso>860</iso>
+		<location>Азия</location>
+		<location-precise>Южная часть Центральной Азии</location-precise>
+	</uzb>
+	<ukr>
+		<name>Украина</name>
+		<fullname></fullname>
+		<english>Ukraine</english>
+		<alpha2>ua</alpha2>
+		<alpha3>ukr</alpha3>
+		<iso>804</iso>
+		<location>Европа</location>
+		<location-precise>Восточная Европа</location-precise>
+	</ukr>
+	<wlf>
+		<name>Уоллис и Футуна</name>
+		<fullname></fullname>
+		<english>Wallis and Futuna</english>
+		<alpha2>wf</alpha2>
+		<alpha3>wlf</alpha3>
+		<iso>876</iso>
+		<location>Океания</location>
+		<location-precise>Полинезия</location-precise>
+	</wlf>
+	<ury>
+		<name>Уругвай</name>
+		<fullname>Восточная Республика Уругвай</fullname>
+		<english>Uruguay</english>
+		<alpha2>uy</alpha2>
+		<alpha3>ury</alpha3>
+		<iso>858</iso>
+		<location>Америка</location>
+		<location-precise>Южная Америка</location-precise>
+	</ury>
+	<fro>
+		<name>Фарерские острова</name>
+		<fullname></fullname>
+		<english>Faroe Islands</english>
+		<alpha2>fo</alpha2>
+		<alpha3>fro</alpha3>
+		<iso>234</iso>
+		<location>Европа</location>
+		<location-precise>Северная Европа</location-precise>
+	</fro>
+	<fji>
+		<name>Фиджи</name>
+		<fullname>Республика островов Фиджи</fullname>
+		<english>Fiji</english>
+		<alpha2>fj</alpha2>
+		<alpha3>fji</alpha3>
+		<iso>242</iso>
+		<location>Океания</location>
+		<location-precise>Меланезия</location-precise>
+	</fji>
+	<phl>
+		<name>Филиппины</name>
+		<fullname>Республика Филиппины</fullname>
+		<english>Philippines</english>
+		<alpha2>ph</alpha2>
+		<alpha3>phl</alpha3>
+		<iso>608</iso>
+		<location>Азия</location>
+		<location-precise>Юго-Восточная Азия</location-precise>
+	</phl>
+	<fin>
+		<name>Финляндия</name>
+		<fullname>Финляндская Республика</fullname>
+		<english>Finland</english>
+		<alpha2>fi</alpha2>
+		<alpha3>fin</alpha3>
+		<iso>246</iso>
+		<location>Европа</location>
+		<location-precise>Северная Европа</location-precise>
+	</fin>
+	<flk>
+		<name>Фолклендские острова (Мальвинские)</name>
+		<fullname></fullname>
+		<english>Falkland Islands (Malvinas)</english>
+		<alpha2>fk</alpha2>
+		<alpha3>flk</alpha3>
+		<iso>238</iso>
+		<location>Америка</location>
+		<location-precise>Южная Америка</location-precise>
+	</flk>
+	<fra>
+		<name>Франция</name>
+		<fullname>Французская Республика</fullname>
+		<english>France</english>
+		<alpha2>fr</alpha2>
+		<alpha3>fra</alpha3>
+		<iso>250</iso>
+		<location>Европа</location>
+		<location-precise>Западная Европа</location-precise>
+	</fra>
+	<guf>
+		<name>Французская Гвиана</name>
+		<fullname></fullname>
+		<english>French Guiana</english>
+		<alpha2>gf</alpha2>
+		<alpha3>guf</alpha3>
+		<iso>254</iso>
+		<location>Америка</location>
+		<location-precise>Южная Америка</location-precise>
+	</guf>
+	<pyf>
+		<name>Французская Полинезия</name>
+		<fullname></fullname>
+		<english>French Polynesia</english>
+		<alpha2>pf</alpha2>
+		<alpha3>pyf</alpha3>
+		<iso>258</iso>
+		<location>Океания</location>
+		<location-precise>Полинезия</location-precise>
+	</pyf>
+	<atf>
+		<name>Французские Южные территории</name>
+		<fullname></fullname>
+		<english>French Southern Territories</english>
+		<alpha2>tf</alpha2>
+		<alpha3>atf</alpha3>
+		<iso>260</iso>
+		<location></location>
+		<location-precise>Индийский океан</location-precise>
+	</atf>
+	<hrv>
+		<name>Хорватия</name>
+		<fullname>Республика Хорватия</fullname>
+		<english>Croatia</english>
+		<alpha2>hr</alpha2>
+		<alpha3>hrv</alpha3>
+		<iso>191</iso>
+		<location>Европа</location>
+		<location-precise>Южная Европа</location-precise>
+	</hrv>
+	<caf>
+		<name>Центрально-Африканская Республика</name>
+		<fullname></fullname>
+		<english>Central African Republic</english>
+		<alpha2>cf</alpha2>
+		<alpha3>caf</alpha3>
+		<iso>140</iso>
+		<location>Африка</location>
+		<location-precise>Центральная Африка</location-precise>
+	</caf>
+	<tcd>
+		<name>Чад</name>
+		<fullname>Республика Чад</fullname>
+		<english>Chad</english>
+		<alpha2>td</alpha2>
+		<alpha3>tcd</alpha3>
+		<iso>148</iso>
+		<location>Африка</location>
+		<location-precise>Центральная Африка</location-precise>
+	</tcd>
+	<mne>
+		<name>Черногория</name>
+		<fullname>Республика Черногория</fullname>
+		<english>Montenegro</english>
+		<alpha2>me</alpha2>
+		<alpha3>mne</alpha3>
+		<iso>499</iso>
+		<location>Европа</location>
+		<location-precise>Южная Европа</location-precise>
+	</mne>
+	<cze>
+		<name>Чешская Республика</name>
+		<fullname></fullname>
+		<english>Czech Republic</english>
+		<alpha2>cz</alpha2>
+		<alpha3>cze</alpha3>
+		<iso>203</iso>
+		<location>Европа</location>
+		<location-precise>Восточная Европа</location-precise>
+	</cze>
+	<chl>
+		<name>Чили</name>
+		<fullname>Республика Чили</fullname>
+		<english>Chile</english>
+		<alpha2>cl</alpha2>
+		<alpha3>chl</alpha3>
+		<iso>152</iso>
+		<location>Америка</location>
+		<location-precise>Южная Америка</location-precise>
+	</chl>
+	<che>
+		<name>Швейцария</name>
+		<fullname>Швейцарская Конфедерация</fullname>
+		<english>Switzerland</english>
+		<alpha2>ch</alpha2>
+		<alpha3>che</alpha3>
+		<iso>756</iso>
+		<location>Европа</location>
+		<location-precise>Западная Европа</location-precise>
+	</che>
+	<swe>
+		<name>Швеция</name>
+		<fullname>Королевство Швеция</fullname>
+		<english>Sweden</english>
+		<alpha2>se</alpha2>
+		<alpha3>swe</alpha3>
+		<iso>752</iso>
+		<location>Европа</location>
+		<location-precise>Северная Европа</location-precise>
+	</swe>
+	<sjm>
+		<name>Шпицберген и Ян Майен</name>
+		<fullname></fullname>
+		<english>Svalbard and Jan Mayen</english>
+		<alpha2>sj</alpha2>
+		<alpha3>sjm</alpha3>
+		<iso>744</iso>
+		<location>Европа</location>
+		<location-precise>Северная Европа</location-precise>
+	</sjm>
+	<lka>
+		<name>Шри-Ланка</name>
+		<fullname>Демократическая Социалистическая Республика Шри-Ланка</fullname>
+		<english>Sri Lanka</english>
+		<alpha2>lk</alpha2>
+		<alpha3>lka</alpha3>
+		<iso>144</iso>
+		<location>Азия</location>
+		<location-precise>Южная часть Центральной Азии</location-precise>
+	</lka>
+	<ecu>
+		<name>Эквадор</name>
+		<fullname>Республика Эквадор</fullname>
+		<english>Ecuador</english>
+		<alpha2>ec</alpha2>
+		<alpha3>ecu</alpha3>
+		<iso>218</iso>
+		<location>Америка</location>
+		<location-precise>Южная Америка</location-precise>
+	</ecu>
+	<gnq>
+		<name>Экваториальная Гвинея</name>
+		<fullname>Республика Экваториальная Гвинея</fullname>
+		<english>Equatorial Guinea</english>
+		<alpha2>gq</alpha2>
+		<alpha3>gnq</alpha3>
+		<iso>226</iso>
+		<location>Африка</location>
+		<location-precise>Центральная Африка</location-precise>
+	</gnq>
+	<ala>
+		<name>Эландские острова</name>
+		<fullname></fullname>
+		<english>Åland Islands</english>
+		<alpha2>ax</alpha2>
+		<alpha3>ala</alpha3>
+		<iso>248</iso>
+		<location>Европа</location>
+		<location-precise>Северная Европа</location-precise>
+	</ala>
+	<slv>
+		<name>Эль-Сальвадор</name>
+		<fullname>Республика Эль-Сальвадор</fullname>
+		<english>El Salvador</english>
+		<alpha2>sv</alpha2>
+		<alpha3>slv</alpha3>
+		<iso>222</iso>
+		<location>Америка</location>
+		<location-precise>Центральная Америка</location-precise>
+	</slv>
+	<eri>
+		<name>Эритрея</name>
+		<fullname></fullname>
+		<english>Eritrea</english>
+		<alpha2>er</alpha2>
+		<alpha3>eri</alpha3>
+		<iso>232</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</eri>
+	<est>
+		<name>Эстония</name>
+		<fullname>Эстонская Республика</fullname>
+		<english>Estonia</english>
+		<alpha2>ee</alpha2>
+		<alpha3>est</alpha3>
+		<iso>233</iso>
+		<location>Европа</location>
+		<location-precise>Северная Европа</location-precise>
+	</est>
+	<eth>
+		<name>Эфиопия</name>
+		<fullname>Федеративная Демократическая Республика Эфиопия</fullname>
+		<english>Ethiopia</english>
+		<alpha2>et</alpha2>
+		<alpha3>eth</alpha3>
+		<iso>231</iso>
+		<location>Африка</location>
+		<location-precise>Восточная Африка</location-precise>
+	</eth>
+	<zaf>
+		<name>Южная Африка</name>
+		<fullname>Южно-Африканская Республика</fullname>
+		<english>South Africa</english>
+		<alpha2>za</alpha2>
+		<alpha3>zaf</alpha3>
+		<iso>710</iso>
+		<location>Африка</location>
+		<location-precise>Южная часть Африки</location-precise>
+	</zaf>
+	<sgs>
+		<name>Южная Джорджия и Южные Сандвичевы острова</name>
+		<fullname></fullname>
+		<english>South Georgia and the South Sandwich Islands</english>
+		<alpha2>gs</alpha2>
+		<alpha3>sgs</alpha3>
+		<iso>239</iso>
+		<location></location>
+		<location-precise>Южный океан</location-precise>
+	</sgs>
+	<ost>
+		<name>Южная Осетия</name>
+		<fullname>Республика Южная Осетия</fullname>
+		<english>South Ossetia</english>
+		<alpha2>os</alpha2>
+		<alpha3>ost</alpha3>
+		<iso>896</iso>
+		<location>Азия</location>
+		<location-precise>Закавказье</location-precise>
+	</ost>
+	<ssd>
+		<name>Южный Судан</name>
+		<fullname></fullname>
+		<english>South Sudan</english>
+		<alpha2>ss</alpha2>
+		<alpha3>ssd</alpha3>
+		<iso>728</iso>
+		<location>Африка</location>
+		<location-precise>Северная Африка</location-precise>
+	</ssd>
+	<jam>
+		<name>Ямайка</name>
+		<fullname></fullname>
+		<english>Jamaica</english>
+		<alpha2>jm</alpha2>
+		<alpha3>jam</alpha3>
+		<iso>388</iso>
+		<location>Америка</location>
+		<location-precise>Карибский бассейн</location-precise>
+	</jam>
+	<jpn>
+		<name>Япония</name>
+		<fullname></fullname>
+		<english>Japan</english>
+		<alpha2>jp</alpha2>
+		<alpha3>jpn</alpha3>
+		<iso>392</iso>
+		<location>Азия</location>
+		<location-precise>Восточная Азия</location-precise>
+	</jpn>
+</XML>

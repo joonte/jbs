@@ -72,7 +72,7 @@ switch(ValueOf($ProxySchemes)){
 }
 */
 #-------------------------------------------------------------------------------
-$Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) = 52000','SortOn'=>'Address'));
+$Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) = 53000','SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Servers)){
   case 'error':
