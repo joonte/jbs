@@ -22,6 +22,7 @@ $Columns = Array(
 			'*',
 			'(SELECT `Name` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `Scheme`',
 			'(SELECT `IPaddr` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `IPaddr`',
+			'(SELECT `OS` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `OS`',
 			'(SELECT `DSuser` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `DSuser`',
 			'(SELECT `DSpass` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `DSpass`',
 			'(SELECT `ILOaddr` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `ILOaddr`',
@@ -134,6 +135,9 @@ if($DSOrder['IPaddr'])
 	$Table[] = Array('IP адрес сервера',$DSOrder['IPaddr']);
 #-------------------------------------------------------------------------------
 if(In_Array($DSOrder['StatusID'],Array('OnCreate','Active','Suspended')) || $GLOBALS['__USER']['IsAdmin'] ){
+	#-------------------------------------------------------------------------------
+	if($DSOrder['OS'])
+		$Table[] = Array('Предустановленная ОС',$DSOrder['OS']);
 	#-------------------------------------------------------------------------------
 	if($DSOrder['DSuser'])
 		$Table[] = Array('Пользователь ОС',$DSOrder['DSuser']);
