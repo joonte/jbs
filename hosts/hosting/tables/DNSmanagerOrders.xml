@@ -198,7 +198,7 @@
 		<Expiration>
 			<Head>Дата оконч.</Head>
 			<Prompt>Дата окончания заказа | остаток дней</Prompt>
-			<Comp>Formats/DNSmanagerOrder/ExpirationDate</Comp>
+			<Comp>Formats/ExpirationDate</Comp>
 			<Args>
 				<ListElement>%DaysRemainded%</ListElement>
 			</Args>
