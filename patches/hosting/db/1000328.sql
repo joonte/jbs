@@ -168,6 +168,7 @@ CREATE TABLE `ProxySchemes` (
 	`PackageID` char(30) default '',
 	`CostDay` decimal(11,2) default '0.00',
 	`CostMonth` decimal(11,2) default '0.00',
+	`Discount` DOUBLE NOT NULL DEFAULT '-1',
 	`ServersGroupID` int(11) NOT NULL,
 	`HardServerID` int(11) NULL,
 	`Comment` char(255) default '',
