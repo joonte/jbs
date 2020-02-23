@@ -7,6 +7,9 @@
 
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ №{$OrderID|string_format:"%05u"} на ПО ISPsystem, IP адрес {$IP|default:'$IP'}, был удален.
 
+Для нового заказа, воспользуйтесь этой ссылкой:
+http://{$smarty.const.HOST_ID|default:'HOST_ID'}/ISPswSchemes
+
 {if !$MethodSettings.CutSign}
 --
 {$From.Sign|default:'$From.Sign'}

@@ -8,6 +8,10 @@
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ №{$OrderID|string_format:"%05u"} на регистрацию домена [{$DomainName|default:'$DomainName'}.{$Name|default:'$Name'}] был удален.
 Теперь Вы не являетесь владельцем данного доменного имени. Его в любой момент смогут занять другие лица.
 
+Если этот заказ вам всё ещё необходим, рекомендуем немедленно зарегистрировать домен заново - возможно его ещё не заняли.
+Для регистрации домена, воспользуйтесь этой ссылкой:
+http://{$smarty.const.HOST_ID|default:'HOST_ID'}/DomainWhoIs?DomainName={$DomainName|default:'$DomainName'}.{$Name|default:'$Name'}
+
 {if !$MethodSettings.CutSign}
 --
 {$From.Sign|default:'$From.Sign'}
