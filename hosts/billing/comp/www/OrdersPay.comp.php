@@ -184,7 +184,7 @@ foreach($Orders as $Order){
 	$Tr->AddChild(new Tag('TD',Array('class'=>'Standard'),$Order['SchemeName']));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Formats/DNSmanagerOrder/ExpirationDate',$Order['DaysRemainded']);
+	$Comp = Comp_Load('Formats/ExpirationDate',$Order['DaysRemainded']);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
