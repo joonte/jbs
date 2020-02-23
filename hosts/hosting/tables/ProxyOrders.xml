@@ -19,6 +19,7 @@
 			<ListElement>OrderID</ListElement>
 			<ListElement>UserID</ListElement>
 			<ListElement>IP</ListElement>
+			<ListElement>Host</ListElement>
 			<ListElement>Port</ListElement>
 			<ListElement>ProtocolType</ListElement>
 			<ListElement>DaysRemainded</ListElement>
@@ -103,6 +104,7 @@
 						<ListElement>OrderID</ListElement>
 						<ListElement>UserID</ListElement>
 						<ListElement>IP</ListElement>
+						<ListElement>Host</ListElement>
 						<ListElement>Port</ListElement>
 						<ListElement>Login</ListElement>
 						<ListElement>AdminNotice</ListElement>
@@ -191,9 +193,27 @@
 			<Alias>DaysRemainded</Alias>
 		</Expiration>
 		<!-- *********************************************************************** -->
-		<IP>
-			<Head>IP</Head>
-		</IP>
+		<HostPort>
+			<Head>Прокси</Head>
+			<Prompt>Адрес и порт куда необходимо подключаться</Prompt>
+			<Alias>CONCAT(`Host`,':',`Port`)</Alias>
+		</HostPort>
+		<!-- *********************************************************************** -->
+		<ProtocolType>
+			<Head>Пр.</Head>
+			<Prompt>Протокол взаимодействия с прокси-сервером</Prompt>
+		</ProtocolType>
+		<!-- *********************************************************************** -->
+		<Country>
+			<Head>Стр.</Head>
+			<Prompt>Страна размещения прокси-сервера</Prompt>
+			<Comp>Formats/CountryImage</Comp>
+			<Args>
+				<ListElement>%Country%</ListElement>
+			</Args>
+			<Alias>(SELECT `Country` FROM `ProxySchemes` WHERE `ProxySchemes`.`ID` = `ProxyOrdersOwners`.`SchemeID`)</Alias>
+		</Country>
+		<!-- *********************************************************************** -->
 		<!-- *********************************************************************** -->
 		<Status>
 			<Args>
@@ -208,8 +228,10 @@
 		<ListElement>ExtendedMenu</ListElement>
 		<ListElement>Number</ListElement>
 		<ListElement>Owner</ListElement>
+		<ListElement>Country</ListElement>
+		<ListElement>HostPort</ListElement>
+		<ListElement>ProtocolType</ListElement>
 		<ListElement>Expiration</ListElement>
-		<ListElement>IP</ListElement>
 		<ListElement>Status</ListElement>
 		<ListElement>StatusOver</ListElement>
 	</Sequence>

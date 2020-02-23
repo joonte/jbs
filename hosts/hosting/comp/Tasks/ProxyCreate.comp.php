@@ -57,7 +57,7 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // надо достать количество дней на которое заказывается услуга
-$Consider = DB_Select('OrdersConsider','*',Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$ProxyOrder['OrderID']),'IsDesc'=>TRUE,'Limits'=>Array(0,1)));
+$Consider = DB_Select('OrdersConsider','*',Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$ProxyOrder['OrderID']),'IsDesc'=>TRUE,'SortOn'=>'ID','Limits'=>Array(0,1)));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Consider)){
 case 'error':
@@ -72,7 +72,7 @@ default:
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Args = Array($ProxyScheme,$ProxyOrder,$Consider['DaysRemainded']);
+$Args = Array($ProxyScheme,$ProxyOrder,IntVal($Consider['DaysRemainded']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IsCreate = Call_User_Func_Array(Array($ClassProxyServer,'Create'),$Args);
@@ -82,7 +82,12 @@ case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
 	return $IsCreate;
-case 'true':
+case 'array':
+	#-------------------------------------------------------------------------------
+	// прописываем данные от прокси сервера
+	$IsUpdate = DB_Update('ProxyOrders',Array('Login'=>$IsCreate['user'],'Password'=>$IsCreate['pass'],'IP'=>$IsCreate['host'],'Port'=>$IsCreate['port'],'ProtocolType'=>(($IsCreate['type'] == 'http')?'https':'socks5')),Array('ID'=>$ProxyOrderID));
+	if(Is_Error($IsUpdate))
+		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ProxyOrders','StatusID'=>'Active','RowsIDs'=>$ProxyOrder['ID'],'Comment'=>'Заказ создан на сервере'));
 	#-------------------------------------------------------------------------------

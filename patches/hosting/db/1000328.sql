@@ -217,7 +217,8 @@ CREATE TABLE `ProxyOrders` (
 	`OldSchemeID` int(11) default NULL,
 	`Login` char(20) default '',		-- логин
 	`Password` char(64) default '',		-- пароль
-	`IP` char(64) default '0.0.0.0',	-- IP адрес прокси
+	`IP` char(64) default '0.0.0.0',	-- IP адрес прокси (с которого выходит в инет)
+	`Host` char(64) default '0.0.0.0',	-- IP адрес с которому надлежит коннектится клиенту
 	`Port` int(5) default '0',		-- порт прокси
 	`ProtocolType` char(9) default 'Https',	-- тип протокола прокси: SOCK5, HTTPS
 	`ConsiderDay` int(11) default '0',

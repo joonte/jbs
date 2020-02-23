@@ -149,8 +149,10 @@
 		<ListElement>PasswordChange</ListElement>
 		<ListElement>ExtendedMenu</ListElement>
 		<ListElement>Number</ListElement>
+		<ListElement>Country</ListElement>
+		<ListElement>HostPort</ListElement>
+		<ListElement>ProtocolType</ListElement>
 		<ListElement>Expiration</ListElement>
-		<ListElement>Domain</ListElement>
 		<ListElement>Status</ListElement>
 		<ListElement>StatusOver</ListElement>
 	</Sequence>
