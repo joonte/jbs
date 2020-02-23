@@ -379,6 +379,41 @@ CREATE DEFINER = CURRENT_USER TRIGGER `UpdateDNSmanagerStatus` AFTER UPDATE ON `
 DELIMITER ;
 
 
+# added by lissyara, 2020-02-22 in 18:25 MSK
+#-------------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS `ProxySchemesOnInsert`;
+DELIMITER |
+CREATE DEFINER = CURRENT_USER TRIGGER `ProxySchemesOnInsert` BEFORE INSERT ON `ProxySchemes`
+	FOR EACH ROW BEGIN
+		IF NEW.`CreateDate` = 0
+		THEN
+			SET NEW.`CreateDate` = UNIX_TIMESTAMP();
+		END IF;
+	END;
+|
+DELIMITER ;
+
+#-------------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS `ProxyOrdersOnDelete`;
+DELIMITER |
+CREATE DEFINER = CURRENT_USER TRIGGER `ProxyOrdersOnDelete` AFTER DELETE ON `ProxyOrders`
+	FOR EACH ROW BEGIN
+		DELETE FROM `Orders` WHERE `ID` = OLD.`OrderID`;
+	END;
+|
+DELIMITER ;
+
+#-------------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS `UpdateProxyStatus`;
+DELIMITER |
+CREATE DEFINER = CURRENT_USER TRIGGER `UpdateProxyStatus` AFTER UPDATE ON `ProxyOrders`
+	FOR EACH ROW BEGIN
+		UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate` WHERE `ID` = NEW.`OrderID`;
+	END;
+|
+DELIMITER ;
+
+
 
 
 

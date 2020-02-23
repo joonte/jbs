@@ -12,7 +12,7 @@ $Config = Config();
 $Theme = "Проверка баланса счета регистратора";
 $Message = "";
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/DomainServer.class.php','libs/BillManager.php','libs/Server.php')))
+if(Is_Error(System_Load('classes/DomainServer.class.php','libs/BillManager.php','libs/Server.php','classes/ProxyServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -43,14 +43,14 @@ case 'array':
 		$IsSelected = $Server->Select((integer)$NowReg['ID']);
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($IsSelected)){
-			case 'error':
-				return ERROR | @Trigger_Error(500);
-			case 'exception':
-				return new gException('TRANSFER_TO_OPERATOR','Задание не может быть выполнено автоматически и передано оператору');
-			case 'true':
-				break;
-			default:
-				return new gException('WRONG_STATUS','Регистратор не определён');
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return new gException('TRANSFER_TO_OPERATOR','Задание не может быть выполнено автоматически и передано оператору');
+		case 'true':
+			break;
+		default:
+			return new gException('WRONG_STATUS','Регистратор не определён');
 		}
 		#-------------------------------------------------------------------------------
 		$Balance = $Server->GetBalance();
@@ -114,28 +114,26 @@ case 'error':
 case 'exception':
 	Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Исключение при поиске сервера, Settings = %s',print_r($Settings,true)));
 	break;
-	case 'array':
+case 'array':
+	#-------------------------------------------------------------------------------
+	if(IntVal($Settings['Params']['BalanceLowLimit']) > 0){
 		#-------------------------------------------------------------------------------
-		if(IntVal($Settings['Params']['BalanceLowLimit']) > 0){
+		# получаем баланс
+		$Balances = BillManager_Get_Balance($Settings);
+		Debug("[comp/Tasks/GC/CheckBalance]: " . print_r($Balances, true) );
+		#-------------------------------------------------------------------------------
+		foreach($Balances as $Balance){
 			#-------------------------------------------------------------------------------
-			# получаем баланс
-			$Balances = BillManager_Get_Balance($Settings);
-			Debug("[comp/Tasks/GC/CheckBalance]: " . print_r($Balances, true) );
-			#-------------------------------------------------------------------------------
-			foreach($Balances as $Balance){
+			if(IsSet($Balance['project']) && $Balance['project'] == 'ISPsystem'){
 				#-------------------------------------------------------------------------------
-				if(IsSet($Balance['project']) && $Balance['project'] == 'ISPsystem'){
+				Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: %s / %s',$Balance['project'],$Balance['balance']));
+				#-------------------------------------------------------------------------------
+				#-------------------------------------------------------------------------------
+				if((double)$Balance['balance'] < IntVal($Settings['Params']['BalanceLowLimit'])){
 					#-------------------------------------------------------------------------------
-					Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: %s / %s',$Balance['project'],$Balance['balance']));
+					Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: add to message: %s / %s',$Balance['project'],$Balance['balance']));
 					#-------------------------------------------------------------------------------
-					#-------------------------------------------------------------------------------
-					if((double)$Balance['balance'] < IntVal($Settings['Params']['BalanceLowLimit'])){
-						#-------------------------------------------------------------------------------
-						Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: add to message: %s / %s',$Balance['project'],$Balance['balance']));
-						#-------------------------------------------------------------------------------
-						$Message .= SPrintF("Остаток на счете ISPsystem ниже допустимого минимума - %s \n",$Balance['balance']);
-						#-------------------------------------------------------------------------------
-					}
+					$Message .= SPrintF("Остаток на счете ISPsystem ниже допустимого минимума - %s \n",$Balance['balance']);
 					#-------------------------------------------------------------------------------
 				}
 				#-------------------------------------------------------------------------------
@@ -143,8 +141,10 @@ case 'exception':
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		break;
-		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
 default:
 	return ERROR | @Trigger_Error(101);
 }
@@ -163,7 +163,7 @@ case 'array':
 	#-------------------------------------------------------------------------------
 	if(IntVal($ServerSettings['Params']['BalanceLowLimit']) > 0){
 		#-------------------------------------------------------------------------------
-		if(Is_Error(System_Load(SPrintF('classes/%s.class.php', $ServerSettings['Params']['Provider']))))
+		if(Is_Error(System_Load(SPrintF('classes/%s.class.php',$ServerSettings['Params']['SystemID']))))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		$SMS = new $ServerSettings['Params']['Provider']($ServerSettings['Login'],$ServerSettings['Password'],$ServerSettings['Params']['ApiKey'],$ServerSettings['Params']['Sender']);
@@ -195,6 +195,83 @@ case 'array':
 	break;
 default:
 	return ERROR | @Trigger_Error(101);
+}
+
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// балланс Proxy6.net
+$Servers = DB_Select('Servers',Array('ID','Params'),Array('Where'=>Array('`IsActive` = "yes"','(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 53000')));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Servers)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	#-------------------------------------------------------------------------------
+	# No more...
+	Debug("[comp/Tasks/GC/CheckBalance]: Прокси-сервера не найдены");
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+case 'array':
+	#-------------------------------------------------------------------------------
+	$GLOBALS['TaskReturnInfo'] = Array();
+	#-------------------------------------------------------------------------------
+	foreach($Servers as $NowProxy){
+		#-------------------------------------------------------------------------------
+		$GLOBALS['TaskReturnInfo'][] = $NowProxy['Params']['Name'];
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Проверка баланса для %s (ID %d, тип %s)',$NowProxy['Params']['Name'],$NowProxy['ID'],$NowProxy['Params']['SystemID']));
+		#-------------------------------------------------------------------------------
+		$Server = new ProxyServer();
+		#-------------------------------------------------------------------------------
+		$IsSelected = $Server->Select((integer)$NowProxy['ID']);
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($IsSelected)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return new gException('TRANSFER_TO_OPERATOR','Задание не может быть выполнено автоматически и передано оператору');
+		case 'true':
+			break;
+		default:
+			return new gException('WRONG_STATUS','Прокси-сервер не определён');
+		}
+		#-------------------------------------------------------------------------------
+		$Balance = $Server->GetBalance();
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($Balance)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: ошибка получения балланса'));
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		case 'array':
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Прокси-сервер (%s), баланс: %s %s',$NowProxy['Params']['Name'],$Balance['balance'],$Balance['currency']));
+			#-------------------------------------------------------------------------------
+			if((float)$Balance['balance'] < IntVal($NowProxy['Params']['BalanceLowLimit'])){
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Баланс (%s) ниже порога уведомления',$NowProxy['Params']['Name']));
+				#-------------------------------------------------------------------------------
+				$Message .= SPrintF("Остаток на счете %s ниже допустимого минимума - %01.2f\n %s",$NowProxy['Params']['Name'],$Balance['balance'],$Balance['currency']);
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		default:
+			return new gException('WRONG_STATUS','Задание не может быть в данном статусе');
+		}
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+        return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

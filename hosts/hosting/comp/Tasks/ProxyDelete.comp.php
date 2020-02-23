@@ -12,7 +12,12 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('classes/ProxyServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$ProxyOrder = DB_Select('ProxyOrdersOwners',Array('ID','UserID','SchemeID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `ProxyOrdersOwners`.`OrderID`) AS `ServerID`','Login','(SELECT `Name` FROM `ProxySchemes` WHERE `ProxySchemes`.`ID` = `ProxyOrdersOwners`.`SchemeID`) as `SchemeName`'),Array('UNIQ','ID'=>$ProxyOrderID));
+$Columns = Array(
+		'ID','UserID','Login',
+		'(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `ProxyOrdersOwners`.`OrderID`) AS `ServerID`',
+		'(SELECT `Name` FROM `ProxySchemes` WHERE `ProxySchemes`.`ID` = `ProxyOrdersOwners`.`SchemeID`) as `SchemeName`'
+		);
+$ProxyOrder = DB_Select('ProxyOrdersOwners',$Columns,Array('UNIQ','ID'=>$ProxyOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($ProxyOrder)){
 case 'error':
@@ -32,19 +37,19 @@ case 'array':
 		return ERROR | @Trigger_Error(400);
 	case 'true':
 		#-------------------------------------------------------------------------------
-		$IsSuspend = $ClassProxyServer->Delete($ProxyOrderID);
+		$IsDelete = $ClassProxyServer->Delete($ProxyOrderID);
 		#-------------------------------------------------------------------------------
-		switch(ValueOf($IsSuspend)){
+		switch(ValueOf($IsDelete)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
-			return $IsSuspend;
+			return $IsDelete;
 		case 'true':
 			#-------------------------------------------------------------------------------
 			$Event = Array(
 					'UserID'	=> $ProxyOrder['UserID'],
 					'PriorityID'	=> 'Hosting',
-					'Text'		=> SPrintF('Заказ на прокси-сервер [%s], тариф (%s) заблокирован',$ProxyOrderID,$ProxyOrder['SchemeName'])
+					'Text'		=> SPrintF('Заказ на прокси-сервер [%s], тариф (%s) удален',$ProxyOrderID,$ProxyOrder['SchemeName'])
 					);
 			$Event = Comp_Load('Events/EventInsert',$Event);
 			if(!$Event)
