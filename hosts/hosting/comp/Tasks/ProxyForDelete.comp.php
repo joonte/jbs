@@ -4,67 +4,63 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('Task','ProxyOrderID');
-/******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/ProxyServer.class.php')))
+$Config = Config();
+#-------------------------------------------------------------------------------
+$Settings = $Config['Tasks']['Types']['ProxyForDelete'];
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# достаём время выполнения
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecuteTime'=>$Settings['ExecuteTime'],'ExecuteDays'=>@$Settings['ExecuteDays'],'DefaultTime'=>MkTime(1,10,0,Date('n'),Date('j')+1,Date('Y'))));
+if(Is_Error($ExecuteTime))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$ProxyOrder = DB_Select('ProxyOrdersOwners',Array('ID','UserID','SchemeID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `ProxyOrdersOwners`.`OrderID`) AS `ServerID`','Login','(SELECT `Name` FROM `ProxySchemes` WHERE `ProxySchemes`.`ID` = `ProxyOrdersOwners`.`SchemeID`) as `SchemeName`'),Array('UNIQ','ID'=>$ProxyOrderID));
+if(!$Settings['IsActive'])
+	return 3600;
 #-------------------------------------------------------------------------------
-switch(ValueOf($ProxyOrder)){
+#-------------------------------------------------------------------------------
+$Where = SPrintF("`StatusID` = 'Suspended' AND `StatusDate` + %s - UNIX_TIMESTAMP() <= 0",$Settings['ProxyDeleteTimeout'] * 7 * 3600);
+#-------------------------------------------------------------------------------
+$ProxyOrders = DB_Select('ProxyOrders','ID',Array('Where'=>$Where));
+#-------------------------------------------------------------------------------
+switch(ValueOf($ProxyOrders)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return ERROR | @Trigger_Error(400);
+	# No more...
+	break;
 case 'array':
 	#-------------------------------------------------------------------------------
-	$ClassProxyServer = new ProxyServer();
+	$GLOBALS['TaskReturnInfo'] = Array('Deleted'=>Array(SizeOf($ProxyOrders)));
 	#-------------------------------------------------------------------------------
-	$IsSelected = $ClassProxyServer->Select((integer)$ProxyOrder['ServerID']);
-	#-------------------------------------------------------------------------------
-	switch(ValueOf($IsSelected)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		return ERROR | @Trigger_Error(400);
-	case 'true':
+	foreach($ProxyOrders as $ProxyOrder){
 		#-------------------------------------------------------------------------------
-		$IsSuspend = $ClassProxyServer->Delete($ProxyOrderID);
+		$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'ProxyOrders','StatusID'=>'Deleted','RowsIDs'=>$ProxyOrder['ID'],'Comment'=>'Срок блокировки заказа окончен'));
 		#-------------------------------------------------------------------------------
-		switch(ValueOf($IsSuspend)){
+		switch(ValueOf($Comp)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
-			return $IsSuspend;
-		case 'true':
-			#-------------------------------------------------------------------------------
-			$Event = Array(
-					'UserID'	=> $ProxyOrder['UserID'],
-					'PriorityID'	=> 'Hosting',
-					'Text'		=> SPrintF('Заказ на прокси-сервер [%s], тариф (%s) заблокирован',$ProxyOrderID,$ProxyOrder['SchemeName'])
-					);
-			$Event = Comp_Load('Events/EventInsert',$Event);
-			if(!$Event)
-				return ERROR | @Trigger_Error(500);
-			#-------------------------------------------------------------------------------
-			$GLOBALS['TaskReturnInfo'] = Array(($ClassProxyServer->Settings['Address'])=>Array($ProxyOrder['Login'],$ProxyOrder['SchemeName']));
-			#-------------------------------------------------------------------------------
-			return TRUE;
-			#-------------------------------------------------------------------------------
+			return ERROR | @Trigger_Error(400);
+		case 'array':
+			# No more...
+			break;
 		default:
 			return ERROR | @Trigger_Error(101);
 		}
 		#-------------------------------------------------------------------------------
-	default:
-		return ERROR | @Trigger_Error(101);
 	}
+	#-------------------------------------------------------------------------------
+	break;
 	#-------------------------------------------------------------------------------
 default:
 	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+return $ExecuteTime;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 ?>
