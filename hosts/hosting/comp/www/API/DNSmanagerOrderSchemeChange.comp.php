@@ -9,8 +9,8 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
-$DNSmanagerOrderID = (integer) @$Args['DNSmanagerOrderID'];
-$NewSchemeID    = (integer) @$Args['NewSchemeID'];
+$DNSmanagerOrderID	= (integer) @$Args['DNSmanagerOrderID'];
+$NewSchemeID		= (integer) @$Args['NewSchemeID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);

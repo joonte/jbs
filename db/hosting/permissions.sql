@@ -107,8 +107,8 @@ VALUES
 ('ProxyOrdersPay','hosting',1,1,4000000,1,1,'yes'),
 ('ProxyOrdersPay','hosting',3000000,100,1,1,2,'yes'),
 
-('ProxyOrdersSchemeChange','hosting',1,1,4000000,1,1,'yes'),
-('ProxyOrdersSchemeChange','hosting',3000000,100,1,1,2,'yes'),
+('ProxyOrdersSettingsChange','hosting',1,1,4000000,1,1,'yes'),
+('ProxyOrdersSettingsChange','hosting',3000000,100,1,1,2,'yes'),
 
 ('ProxyManage','hosting',1,1,4000000,1,1,'yes'),
 ('ProxyManage','hosting',3000000,100,1,1,2,'yes'),

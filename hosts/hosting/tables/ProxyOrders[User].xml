@@ -73,58 +73,24 @@
 			</Attribs>
 		</Pay>
 		<!-- ********************************************************************** -->
-		<SchemeChange>
+		<SettingsChange>
 			<IsSorted>0</IsSorted>
 			<Comp>Buttons/Window</Comp>
 			<Args>
-				<ListElement>/ProxyOrderSchemeChange</ListElement>
+				<ListElement>/ProxyOrderSettingsChange</ListElement>
 				<ListElement>
 					<ProxyOrderID>%ID%</ProxyOrderID>
 				</ListElement>
-				<ListElement>Сменить тарифный план</ListElement>
+				<ListElement>Сменить настройки прокси-сервера</ListElement>
 				<ListElement>SchemeChange.png</ListElement>
 			</Args>
 			<Attribs>
 				<class>TableSuperStandard</class>
 				<style>width:22px;</style>
 			</Attribs>
-		</SchemeChange>
+		</SettingsChange>
 		<!-- ********************************************************************** -->
-		<Manage>
-			<IsSorted>0</IsSorted>
-			<Comp>Buttons/Standard</Comp>
-			<Args>
-				<ListElement>
-					<onclick>OrderManage(%ID%,%ServiceID%);</onclick>
-				</ListElement>
-				<ListElement>Управлять заказом Proxy</ListElement>
-				<ListElement>HostingManage.gif</ListElement>
-				<ListElement>OrderManage.js</ListElement>
-			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
-		</Manage>
 		<!-- ********************************************************************** -->
-		<PasswordChange>
-			<IsSorted>0</IsSorted>
-			<Comp>Buttons/Window</Comp>
-			<Args>
-				<ListElement>/OrderPasswordChange</ListElement>
-				<ListElement>
-					<ServiceOrderID>%ID%</ServiceOrderID>
-					<ServiceID>%ServiceID%</ServiceID>
-				</ListElement>
-				<ListElement>Сменить пароль</ListElement>
-				<ListElement>Password.gif</ListElement>
-			</Args>
-			<Attribs>
-				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
-			</Attribs>
-		</PasswordChange>
-		<!-- *********************************************************************** -->
 		<ExtendedMenu>
 			<IsSorted>0</IsSorted>
 			<Comp>Menus/List</Comp>
@@ -144,9 +110,7 @@
 		<ListElement>SelectID</ListElement>
 		<ListElement>Info</ListElement>
 		<ListElement>Pay</ListElement>
-		<ListElement>SchemeChange</ListElement>
-		<ListElement>Manage</ListElement>
-		<ListElement>PasswordChange</ListElement>
+		<ListElement>SettingsChange</ListElement>
 		<ListElement>ExtendedMenu</ListElement>
 		<ListElement>Number</ListElement>
 		<ListElement>Country</ListElement>

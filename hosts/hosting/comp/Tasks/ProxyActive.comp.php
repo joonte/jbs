@@ -37,7 +37,22 @@ case 'array':
 		return ERROR | @Trigger_Error(400);
 	case 'true':
 		#-------------------------------------------------------------------------------
-		$IsActive = $ClassProxyServer->Active($ProxyOrder['OrderID']);
+		// надо достать количество дней на которое продлевается услуга
+		$Consider = DB_Select('OrdersConsider','*',Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$ProxyOrder['OrderID']),'IsDesc'=>TRUE,'SortOn'=>'ID','Limits'=>Array(0,1)));
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($Consider)){
+		case 'error':
+		return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return ERROR | @Trigger_Error(400);
+		case 'array':
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$IsActive = $ClassProxyServer->Active($ProxyOrder,IntVal($Consider['DaysRemainded']));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($IsActive)){
 		case 'error':

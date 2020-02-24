@@ -920,7 +920,7 @@
 				<Params type="array"/>
 				<ExecuteTime>1:10</ExecuteTime>
 				<IsActive>1</IsActive>
-				<ProxyDeleteTimeout>20</ProxyDeleteTimeout>
+				<ProxyDeleteTimeout>1</ProxyDeleteTimeout>
 			</ProxyForDelete>
 			<!-- ********************************************************************* -->
 			<ProxyCreate>

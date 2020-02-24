@@ -28,8 +28,8 @@
 		</UniqID>
 		<!-- *********************************************************************** -->
 		<UniqID>
-			<Text>Сменить тарифный план</Text>
-			<Href>javascript:ShowWindow("/ProxyOrderSchemeChange",{ProxyOrderID:%ServiceOrderID%});</Href>
+			<Text>Сменить протокол</Text>
+			<Href>javascript:ShowWindow("/ProxyOrderSettingsChange",{ProxyOrderID:%ServiceOrderID%});</Href>
 			<Icon>SchemeChange.png</Icon>
 		</UniqID>
 		<!-- *********************************************************************** -->

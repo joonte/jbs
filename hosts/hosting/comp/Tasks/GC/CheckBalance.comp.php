@@ -85,7 +85,7 @@ case 'array':
 				#-------------------------------------------------------------------------------
 				Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Баланс (%s) ниже порога уведомления',$NowReg['Params']['Name']));
 				#-------------------------------------------------------------------------------
-				$Message .= SPrintF("Остаток на счете регистратора %s ниже допустимого минимума - %01.2f\n",$NowReg['Params']['Name'],$Balance['Prepay']);
+				$Message .= SPrintF("Остаток на счете регистратора %s ниже допустимого минимума: %01.2f\n",$NowReg['Params']['Name'],$Balance['Prepay']);
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
@@ -133,7 +133,7 @@ case 'array':
 					#-------------------------------------------------------------------------------
 					Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: add to message: %s / %s',$Balance['project'],$Balance['balance']));
 					#-------------------------------------------------------------------------------
-					$Message .= SPrintF("Остаток на счете ISPsystem ниже допустимого минимума - %s \n",$Balance['balance']);
+					$Message .= SPrintF("Остаток на счете ISPsystem ниже допустимого минимума: %s \n",$Balance['balance']);
 					#-------------------------------------------------------------------------------
 				}
 				#-------------------------------------------------------------------------------
@@ -163,7 +163,7 @@ case 'array':
 	#-------------------------------------------------------------------------------
 	if(IntVal($ServerSettings['Params']['BalanceLowLimit']) > 0){
 		#-------------------------------------------------------------------------------
-		if(Is_Error(System_Load(SPrintF('classes/%s.class.php',$ServerSettings['Params']['SystemID']))))
+		if(Is_Error(System_Load(SPrintF('classes/%s.class.php', $ServerSettings['Params']['Provider']))))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		$SMS = new $ServerSettings['Params']['Provider']($ServerSettings['Login'],$ServerSettings['Password'],$ServerSettings['Params']['ApiKey'],$ServerSettings['Params']['Sender']);
@@ -218,9 +218,9 @@ case 'array':
 	#-------------------------------------------------------------------------------
 	foreach($Servers as $NowProxy){
 		#-------------------------------------------------------------------------------
-		$GLOBALS['TaskReturnInfo'][] = $NowProxy['Params']['Name'];
+		$GLOBALS['TaskReturnInfo'][] = $NowProxy['Params']['SystemID'];
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Проверка баланса для %s (ID %d, тип %s)',$NowProxy['Params']['Name'],$NowProxy['ID'],$NowProxy['Params']['SystemID']));
+		Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Проверка баланса для ID %d, тип %s',$NowProxy['ID'],$NowProxy['Params']['SystemID']));
 		#-------------------------------------------------------------------------------
 		$Server = new ProxyServer();
 		#-------------------------------------------------------------------------------
@@ -250,13 +250,13 @@ case 'array':
 			#-------------------------------------------------------------------------------
 		case 'array':
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Прокси-сервер (%s), баланс: %s %s',$NowProxy['Params']['Name'],$Balance['balance'],$Balance['currency']));
+			Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Прокси-сервер (%s), баланс: %s %s',$NowProxy['Params']['SystemID'],$Balance['balance'],$Balance['currency']));
 			#-------------------------------------------------------------------------------
 			if((float)$Balance['balance'] < IntVal($NowProxy['Params']['BalanceLowLimit'])){
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Баланс (%s) ниже порога уведомления',$NowProxy['Params']['Name']));
+				Debug(SPrintF('[comp/Tasks/GC/CheckBalance]: Баланс (%s) ниже порога уведомления',$NowProxy['Params']['SystemID']));
 				#-------------------------------------------------------------------------------
-				$Message .= SPrintF("Остаток на счете %s ниже допустимого минимума - %01.2f\n %s",$NowProxy['Params']['Name'],$Balance['balance'],$Balance['currency']);
+				$Message .= SPrintF("Остаток на счете %s ниже допустимого минимума: %01.2f\n %s",$NowProxy['Params']['SystemID'],$Balance['balance'],$Balance['currency']);
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------

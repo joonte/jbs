@@ -13,7 +13,7 @@ if(Is_Error(System_Load('classes/ProxyServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array(
-		'ID','UserID','Login',
+		'ID','UserID','OrderID',
 		'(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `ProxyOrdersOwners`.`OrderID`) AS `ServerID`',
 		'(SELECT `Name` FROM `ProxySchemes` WHERE `ProxySchemes`.`ID` = `ProxyOrdersOwners`.`SchemeID`) as `SchemeName`'
 		);
@@ -37,7 +37,7 @@ case 'array':
 		return ERROR | @Trigger_Error(400);
 	case 'true':
 		#-------------------------------------------------------------------------------
-		$IsDelete = $ClassProxyServer->Delete($ProxyOrderID);
+		$IsDelete = $ClassProxyServer->Delete(IntVal($ProxyOrder['OrderID']));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($IsDelete)){
 		case 'error':

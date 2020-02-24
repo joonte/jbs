@@ -21,7 +21,7 @@ if(!$Settings['IsActive'])
 	return 3600;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Where = SPrintF("`StatusID` = 'Suspended' AND `StatusDate` + %s - UNIX_TIMESTAMP() <= 0",$Settings['ProxyDeleteTimeout'] * 7 * 3600);
+$Where = SPrintF("`StatusID` = 'Suspended' AND `StatusDate` + %s - UNIX_TIMESTAMP() <= 0",$Settings['ProxyDeleteTimeout'] * 24 * 3600);
 #-------------------------------------------------------------------------------
 $ProxyOrders = DB_Select('ProxyOrders','ID',Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
