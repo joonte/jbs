@@ -365,6 +365,8 @@ if($GLOBALS['__USER']['IsAdmin'] && $IP != '127.0.0.127' && $IP != '127.0.0.1'){
 		#-------------------------------------------------------------------------------
 		#Debug(SPrintF("[comp/Edesks/Message]: @geoip_record_by_name = %s",print_r(@geoip_record_by_name($IP),true)));
 		#-------------------------------------------------------------------------------
+		$CountryCode = @geoip_country_code3_by_name($IP);
+		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 	#Debug(SPrintF("[comp/Edesks/Message]: @City = %s",print_r(@$City,true)));
@@ -381,7 +383,19 @@ if($GLOBALS['__USER']['IsAdmin'] && $IP != '127.0.0.127' && $IP != '127.0.0.1'){
 	#-------------------------------------------------------------------------------
 	$UserInfoImage = HtmlSpecialChars(SprintF('%s<BR />%s',HtmlSpecialChars($IPInfo,ENT_QUOTES),HtmlSpecialChars($UA,ENT_QUOTES)),ENT_QUOTES);
 	#-------------------------------------------------------------------------------
-	$Params['UserInfoImage'] = SPrintF('<IMG height="16" width="16" src="SRC:{Images/Icons/Info.gif}" align="top" onmouseover="PromptShow(event,\'%s\',this);"/>',$UserInfoImage);
+	if(IsSet($CountryCode) && $CountryCode){
+		#-------------------------------------------------------------------------------
+		$Flag = Comp_Load('Formats/CountryImage',$CountryCode,16,$UserInfoImage,TRUE);
+		if(Is_Error($Flag))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Params['UserInfoImage'] = $Flag;
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		$Params['UserInfoImage'] = SPrintF('<IMG height="16" width="16" src="SRC:{Images/Icons/Info.gif}" align="top" onmouseover="PromptShow(event,\'%s\',this);"/>',$UserInfoImage);
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
