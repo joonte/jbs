@@ -96,7 +96,7 @@ if($DSOrderID){
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServiceID'=>40000,'IsPayed'=>TRUE,'ServerID'=>$DSScheme['ServerID']));
+	$OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServiceID'=>40000,'IsPayed'=>TRUE,'ServerID'=>$DSScheme['ServerID'],'Params'=>''));
 	if(Is_Error($OrderID))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

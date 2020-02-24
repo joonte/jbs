@@ -130,7 +130,7 @@ if($ISPswOrderID){
   }
 }else{
   #-----------------------------------------------------------------------------
-  $OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID'],'ServiceID'=>$Server['ServiceID'],'IsPayed'=>TRUE));
+  $OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID'],'ServiceID'=>$Server['ServiceID'],'IsPayed'=>TRUE,'Params'=>''));
   if(Is_Error($OrderID))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------

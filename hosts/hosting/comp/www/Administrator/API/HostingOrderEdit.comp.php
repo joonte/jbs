@@ -136,7 +136,7 @@ if($HostingOrderID){
 	#-------------------------------------------------------------------------------
 }else{
   #-----------------------------------------------------------------------------
-  $OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServiceID'=>10000,'IsPayed'=>TRUE,'ServerID'=>$Server['ID']));
+  $OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServiceID'=>10000,'IsPayed'=>TRUE,'ServerID'=>$Server['ID'],'Params'=>''));
   if(Is_Error($OrderID))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------

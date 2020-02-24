@@ -112,7 +112,7 @@ if($ExtraIPOrderID){
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$ServerID,'ServiceID'=>50000,'IsPayed'=>TRUE));
+	$OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$ServerID,'ServiceID'=>50000,'IsPayed'=>TRUE,'Params'=>''));
 	if(Is_Error($OrderID))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

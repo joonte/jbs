@@ -138,7 +138,7 @@ if($DNSmanagerOrderID){
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServiceID'=>$Server['ServiceID'],'IsPayed'=>TRUE,'ServerID'=>$Server['ID']));
+	$OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServiceID'=>$Server['ServiceID'],'IsPayed'=>TRUE,'ServerID'=>$Server['ID'],'Params'=>''));
 	if(Is_Error($OrderID))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
