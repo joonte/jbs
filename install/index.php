@@ -729,7 +729,7 @@ $Echo = <<<EOD
  <TR>
   <TD class="Separator">Установка базы данных</TD>
   <TR>
-   <TD class="Standard" style="background-color:#FCE5CC;">В данный момент с использованием утилиты <U>mysql</U> будет импортированна база данных системы.</TD>
+   <TD class="Standard" style="background-color:#FCE5CC;">В данный момент с использованием утилиты <U>mysql</U> будет импортирована база данных системы.</TD>
   </TR>
  </TR>
  <TR>

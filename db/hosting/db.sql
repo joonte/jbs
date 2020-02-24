@@ -2524,11 +2524,14 @@ INSERT INTO `Clauses` (`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtecte
 </NOBODY>');
 
 -- Proxy values
-
+LOCK TABLES `Tasks` WRITE;
+-- SEPARATOR
 DELETE FROM `Tasks` WHERE `ID` IN (95);
 -- SEPARATOR
 INSERT INTO `Tasks` (`ID`,`UserID`,`TypeID`,`Params`,`IsActive`) VALUES
 (95,1,'ProxyForDelete','[]','yes');
+-- SEPARATOR
+UNLOCK TABLES;
 
 -- SEPARATOR
 /* added by lissyara, 2020-02-22 in 21:37 MSK */
@@ -2670,13 +2673,15 @@ VALUES (9, 100, 100, 'Header:/ProxyOrders', 'Дополнительная усл
 </NOBODY>\n');
 
 -- SEPARATOR
-
+LOCK TABLES `Services` WRITE;
+-- SEPARATOR
 DELETE FROM `Services` WHERE `ID` = 53000;
 -- SEPARATOR
 
 INSERT INTO `Services` (`ID`, `GroupID`, `UserID`, `ServicesGroupID`, `Name`, `NameShort`, `Code`, `Item`, `Measure`, `ConsiderTypeID`, `CostOn`, `Cost`, `IsHidden`, `IsProtected`, `IsActive`, `IsProlong`, `SortID`,`Params`) VALUES
 (53000, 2000000, 1, 1100, 'Прокси-сервер', 'Прокси', 'Proxy', 'Прокси-сервер', 'дн.', 'Daily', 0.00, 0.00, 'no', 'yes', 'yes', 'yes', 53000,'');
-
+-- SEPARATOR
+UNLOCK TABLES;
 
 
 -- SEPARATOR
