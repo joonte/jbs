@@ -16,7 +16,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 #-------------------------------------------------------------------------------
 if($ProxyOrderID){
 	#-------------------------------------------------------------------------------
-	$ProxyOrder = DB_Select('ProxyOrdersOwners',Array('UserID','ContractID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `ProxyOrdersOwners`.`OrderID`) AS `ServerID`','Login','Password','SchemeID'),Array('UNIQ','ID'=>$ProxyOrderID));
+	$ProxyOrder = DB_Select('ProxyOrdersOwners',Array('UserID','ContractID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `ProxyOrdersOwners`.`OrderID`) AS `ServerID`','Login','Password','ProtocolType','SchemeID'),Array('UNIQ','ID'=>$ProxyOrderID));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($ProxyOrder)){
 	case 'error':
@@ -42,6 +42,7 @@ if($ProxyOrderID){
 				'ServerID'	=> 1,
 				'Login'		=> 'login',
 				'Password'	=> $Password,
+				'ProtocolType'	=> 'https',
 				'SchemeID'	=> 1
 			);
 	#-------------------------------------------------------------------------------
@@ -57,7 +58,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Title = ($ProxyOrderID?'Редактирование заказа на Proxy':'Добавление заказа на Proxy');
+$Title = ($ProxyOrderID?'Редактирование заказа на прокси-сервер':'Добавление заказа на прокси-сервер');
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Title);
 #-------------------------------------------------------------------------------
@@ -137,7 +138,7 @@ $Table[] = Array('Сервер размещения',$Comp);
 #-------------------------------------------------------------------------------
 if(!$ProxyOrderID){
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Input',Array('type'=>'text','size'=>5,'name'=>'DaysReserved','value'=>31));
+	$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'DaysReserved','value'=>31,'style'=>'width:100%;'));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -154,18 +155,27 @@ if(!$ProxyOrderID){
 #-------------------------------------------------------------------------------
 $Table[] = 'Параметры доступа';
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'Login','value'=>$ProxyOrder['Login']));
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'Login','value'=>$ProxyOrder['Login'],'style'=>'width:100%;'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Логин на сервере',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'Password','value'=>$ProxyOrder['Password']));
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'Password','value'=>$ProxyOrder['Password'],'style'=>'width:100%;'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Пароль от аккаунта',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Options = Array('https'=>'HTTPs','socks5'=>'SOCK5');
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Select',Array('name'=>'ProtocolType','style'=>'width: 100%;','prompt'=>'Протокол для подключения к проси-серверу'),$Options,$ProxyOrder['ProtocolType']);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Протокол',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick' => SPrintF("FormEdit('/Administrator/API/ProxyOrderEdit','ProxyOrderEditForm','%s');",$Title),'value'=>($ProxyOrderID?'Сохранить':'Добавить')));
