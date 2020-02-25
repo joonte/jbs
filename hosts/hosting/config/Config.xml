@@ -359,6 +359,12 @@
 				<IsActive>1</IsActive>
 			</ProxyNoticeSuspend>
 			<!-- ********************************************************************* -->
+			<ProxyOrdersSuspended>
+				<Name>Блокировка заказа</Name>
+				<GroupID>1</GroupID>
+				<IsActive>1</IsActive>
+			</ProxyOrdersSuspended>
+			<!-- ********************************************************************* -->
 			<ProxyNoticeDelete>
 				<Name>Уведомление о удалении заказа</Name>
 				<GroupID>1</GroupID>
@@ -939,6 +945,14 @@
 				<IsActive>1</IsActive>
 			</ProxyActive>
 			<!-- ********************************************************************* -->
+			<ProxySuspend>
+				<Name>Блокировка заказа вторичного DNS</Name>
+				<Params>
+					<ID>Идентификатор заказа</ID>
+				</Params>
+				<IsActive>1</IsActive>
+			</ProxySuspend>
+			<!-- ********************************************************************* -->
 			<ProxyDelete>
 				<Name>Удаление заказа на Прокси-сервер</Name>
 				<Params>
@@ -1186,6 +1200,9 @@
 			<Active>
 				<Name>Активен</Name>
 			</Active>
+			<Suspended>
+				<Name>Заблокирован</Name>
+			</Suspended>
 			<Deleted>
 				<Name>Удален</Name>
 			</Deleted>

@@ -16,7 +16,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 #-------------------------------------------------------------------------------
 if($ProxyOrderID){
 	#-------------------------------------------------------------------------------
-	$ProxyOrder = DB_Select('ProxyOrdersOwners',Array('UserID','ContractID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `ProxyOrdersOwners`.`OrderID`) AS `ServerID`','Login','Password','ProtocolType','SchemeID'),Array('UNIQ','ID'=>$ProxyOrderID));
+	$ProxyOrder = DB_Select('ProxyOrdersOwners',Array('UserID','ContractID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `ProxyOrdersOwners`.`OrderID`) AS `ServerID`','Host','Port','IP','Login','Password','ProtocolType','SchemeID'),Array('UNIQ','ID'=>$ProxyOrderID));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($ProxyOrder)){
 	case 'error':
@@ -40,9 +40,12 @@ if($ProxyOrderID){
 				'UserID'	=> 100,
 				'ContractID'	=> 0,
 				'ServerID'	=> 1,
+				'Host'		=> '11.22.33.44',
+				'Port'		=> 12345,
 				'Login'		=> 'login',
 				'Password'	=> $Password,
 				'ProtocolType'	=> 'https',
+				'IP'		=> '44.33.22.11',
 				'SchemeID'	=> 1
 			);
 	#-------------------------------------------------------------------------------
@@ -155,6 +158,20 @@ if(!$ProxyOrderID){
 #-------------------------------------------------------------------------------
 $Table[] = 'Параметры доступа';
 #-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'Host','value'=>$ProxyOrder['Host'],'style'=>'width:100%;'));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Адрес подключения',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'Port','value'=>$ProxyOrder['Port'],'style'=>'width:100%;'));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Порт подключения',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'Login','value'=>$ProxyOrder['Login'],'style'=>'width:100%;'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
@@ -176,6 +193,13 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Протокол',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/Input',Array('type'=>'text','name'=>'IP','value'=>$ProxyOrder['IP'],'style'=>'width:100%;'));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Внешний IP',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick' => SPrintF("FormEdit('/Administrator/API/ProxyOrderEdit','ProxyOrderEditForm','%s');",$Title),'value'=>($ProxyOrderID?'Сохранить':'Добавить')));

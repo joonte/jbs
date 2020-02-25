@@ -15,9 +15,12 @@ $Args = Args();
 $ProxyOrderID		= (integer) @$Args['ProxyOrderID'];
 $ContractID		= (integer) @$Args['ContractID'];
 $ServerID		=  (string) @$Args['ServerID'];
+$Host			=  (string) @$Args['Host'];
+$Port			= (integer) @$Args['Port'];
 $Login			=  (string) @$Args['Login'];
 $Password		=  (string) @$Args['Password'];
 $ProtocolType		=  (string) @$Args['ProtocolType'];
+$IP			=  (string) @$Args['IP'];
 $SchemeID		= (integer) @$Args['SchemeID'];
 $DaysReserved		= (integer) @$Args['DaysReserved'];
 $IsCreate		= (boolean) @$Args['IsCreate'];
@@ -107,9 +110,12 @@ if($ProxyOrderID){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IProxyOrder = Array(
+			'Host'		=> $Host,
+			'Port'		=> $Port,
 			'Login'		=> $Login,
 			'Password'	=> $Password,
 			'ProtocolType'	=> $ProtocolType,
+			'IP'		=> $IP,
 			'SchemeID'	=> $ProxyScheme['ID']
 			);
 #-------------------------------------------------------------------------------

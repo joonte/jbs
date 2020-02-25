@@ -85,7 +85,7 @@ case 'exception':
 case 'array':
 	#-------------------------------------------------------------------------------
 	// прописываем данные от прокси сервера
-	$IsUpdate = DB_Update('ProxyOrders',Array('Login'=>$IsCreate['user'],'Password'=>$IsCreate['pass'],'IP'=>$IsCreate['host'],'Port'=>$IsCreate['port'],'ProtocolType'=>(($IsCreate['type'] == 'http')?'https':'socks5')),Array('ID'=>$ProxyOrderID));
+	$IsUpdate = DB_Update('ProxyOrders',Array('Login'=>$IsCreate['user'],'Password'=>$IsCreate['pass'],'Host'=>$IsCreate['host'],'Port'=>$IsCreate['port'],'ProtocolType'=>(($IsCreate['type'] == 'http')?'https':'socks5'),'IP'=>$IsCreate['ip']),Array('ID'=>$ProxyOrderID));
 	if(Is_Error($IsUpdate))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
