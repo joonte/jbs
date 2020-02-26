@@ -155,7 +155,7 @@ INSERT INTO `Services` (`ID`, `GroupID`, `UserID`, `ServicesGroupID`, `Name`, `N
 (53000, 2000000, 1, 1100, 'Прокси-сервер', 'Прокси', 'Proxy', 'Прокси-сервер', 'дн.', 'Daily', 0.00, 0.00, 'no', 'yes', 'yes', 'yes', 53000,'');
 
 
-
+-- SEPARATOR
 
 DROP TABLE IF EXISTS `ProxySchemes`;
 -- SEPARATOR

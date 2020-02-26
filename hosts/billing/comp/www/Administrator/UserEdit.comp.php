@@ -100,7 +100,7 @@ $Comp = Comp_Load(
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Пароль'),new Tag('BR'),new Tag('DIV',Array('class'=>'Comment','style'=>'cursor:pointer;','onclick'=>SPrintF("var Pass = document.getElementById('Password');if(Pass.type == 'text'){Pass.type = 'password';Pass.value = 'Default';Pass.disabled = false;}else{Pass.type = 'text';Pass.value = '%s';Pass.disabled = true;}",$Password)),SPrintF('Например: %s',$Password))),$Comp);
+$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Пароль'),new Tag('BR'),new Tag('DIV',Array('onmouseover'=>"PromptShow(event,'Кликните для вставки пароля из примера',this);",'class'=>'Comment','style'=>'cursor:pointer;','onclick'=>SPrintF("var Pass = document.getElementById('Password');if(Pass.type == 'text'){Pass.type = 'password';Pass.value = 'Default';Pass.disabled = false;}else{Pass.type = 'text';Pass.value = '%s';Pass.disabled = true;}",$Password)),SPrintF('Например: %s',$Password))),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Groups = DB_Select('Groups',Array('ID','Name'));
