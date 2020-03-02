@@ -48,7 +48,7 @@ if($ProxySchemeID){
 				'IsProlong'		=> TRUE,
 				'IsSchemeChangeable'	=> TRUE,
 				'IsSchemeChange'	=> TRUE,
-				'MinDaysPay'		=> 30,
+				'MinDaysPay'		=> 31,
 				'MinDaysProlong'	=> 5,
 				'MaxDaysPay'		=> 1460,
 				'MaxOrders'		=> 0,
