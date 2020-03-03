@@ -134,7 +134,7 @@ case 'error':
 	#-------------------------------------------------------------------------------
 	$UTask['Errors'] = $Task['Errors'] + 1;
 	#-------------------------------------------------------------------------------
-	$UTask['Result'] = SPrintF("%s\n\n%s",$Task['Result'],$Log);
+	$UTask['Result'] = SPrintF("%s\n\n%s",Mb_Convert_Encoding($Task['Result'],'UTF-8'),$Log);
 	#-------------------------------------------------------------------------------
 	$Number = Comp_Load('Formats/Task/Number',$Task['ID']);
 	if(Is_Error($Number))
