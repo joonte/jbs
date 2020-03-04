@@ -1227,6 +1227,7 @@
 					</Transfer>
 					<Prolong>
 						<ExternalDnsMarkUp>0</ExternalDnsMarkUp>
+						<JuridicalOnly>1</JuridicalOnly>
 						<ExternalDnsList>exp1.nameself.com,exp2.nameself.com,ns1.expired.reg.ru,ns2.expired.reg.ru</ExternalDnsList>
 						<ExternalDnsMessage>У вашего домена используются сторонние ДНС сервера. При использовании наших серверов, на продление домена предоставляется скидка в размере %s рублей</ExternalDnsMessage>
 					</Prolong>

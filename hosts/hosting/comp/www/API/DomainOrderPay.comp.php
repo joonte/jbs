@@ -33,6 +33,7 @@ $Columns = Array(
 		'(SELECT `GroupID` FROM `Users` WHERE `DomainOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`',
 		'(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DomainOrdersOwners`.`OrderID`) as `IsPayed`',
 		'(SELECT `Balance` FROM `Contracts` WHERE `DomainOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`',
+		'(SELECT `TypeID` FROM `Contracts` WHERE `DomainOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractTypeID`',
 		'(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `DomainOrdersOwners`.`ServerID`) AS `Params`'
 		);
 #-------------------------------------------------------------------------------
@@ -261,7 +262,7 @@ if(FALSE){
 // начальная стоимость - либо ноль, либо наценка за использование не-наших ДНС серверов
 $CostPay = 0.00;
 #-------------------------------------------------------------------------------
-if($Settings['ExternalDnsMarkUp'] > 0){
+if($Settings['ExternalDnsMarkUp'] > 0 && (!$Settings['JuridicalOnly'] || In_Array($DomainOrder['ContractTypeID'],Array('Juridical','Individual')))){
 	#-------------------------------------------------------------------------------
 	// составляем список ДНС серверов, заданных в общих настройках
 	$ExternalDnsList = Explode(',',StrToLower($Settings['ExternalDnsList']));
