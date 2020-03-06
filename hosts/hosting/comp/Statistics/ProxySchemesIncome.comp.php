@@ -10,12 +10,12 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(Is_Error(System_Load('libs/Artichow.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Result = Array('Title'=>'Распределение доходов/заказов на хостинг по тарифам');
+$Result = Array('Title'=>'Распределение доходов/заказов на прокси-сервера по тарифам');
 #-------------------------------------------------------------------------------
 if(!$IsCreate)
-  return $Result;
+	return $Result;
 #-------------------------------------------------------------------------------
 $NoBody = new Tag('NOBODY');
 #-------------------------------------------------------------------------------
@@ -29,8 +29,8 @@ switch(ValueOf($ProxySchemes)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	Debug("[comp/Statistics/ProxySchemesIncome]: hosting shemes not found");
-	break;
+	Debug("[comp/Statistics/ProxySchemesIncome]: Proxy shemes not found");
+	return $Result;
 case 'array':
 	# All OK, Servers Groups found
 	break;

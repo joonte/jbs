@@ -10,12 +10,12 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(Is_Error(System_Load('libs/Artichow.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Result = Array('Title'=>'Распределение доходов/заказов на хостинг по тарифам');
 #-------------------------------------------------------------------------------
 if(!$IsCreate)
-  return $Result;
+	return $Result;
 #-------------------------------------------------------------------------------
 $NoBody = new Tag('NOBODY');
 #-------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
 	Debug("[comp/Statistics/VPSSchemesIncome]: hosting shemes not found");
-	break;
+	return $Result;
 case 'array':
 	# All OK, Servers Groups found
 	break;
