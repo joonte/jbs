@@ -133,7 +133,7 @@ foreach($ServersGroups as $ServersGroup){
 		}else{
 			#-------------------------------------------------------------------------------
 			# считаем стоимость одного дня для каждого аккаунта сервера
-			$Where = Array('`DaysRemainded` > 0',/*'`Discont` < 1','`Cost` > 0',*/SPrintF('`OrderID` IN (%s)',Implode(',',$Array)));
+			$Where = Array('`DaysRemainded` > 0',SPrintF('`OrderID` IN (%s)',Implode(',',$Array)));
 			#-------------------------------------------------------------------------------
 			$Incomes = DB_Select('OrdersConsider',Array('SUM(`DaysRemainded`*`Cost`*(1-`Discont`))/SUM(`DaysRemainded`) as `CostDay`'),Array('Where'=>$Where,'GroupBy'=>'OrderID'));
 			#-------------------------------------------------------------------------------
@@ -165,7 +165,7 @@ foreach($ServersGroups as $ServersGroup){
 				}
 				#-------------------------------------------------------------------------------
 				// если платных аккаунтов нет - пропускаем
-				Debug(SPrintF('[comp/Statistics/ServersIncome]: ServerIncome = %s; PaidAccounts = %s',$ServerIncome,$PaidAccounts));
+				#Debug(SPrintF('[comp/Statistics/ServersIncome]: ServerIncome = %s; PaidAccounts = %s',$ServerIncome,$PaidAccounts));
 				if($PaidAccounts == 0)
 					continue 2;
 				#-------------------------------------------------------------------------------

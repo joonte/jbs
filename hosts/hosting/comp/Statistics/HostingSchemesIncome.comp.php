@@ -77,44 +77,46 @@ foreach($HostingSchemes as $HostingScheme){
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		# считаем сумму всех оплаченных дней тарифа
-		$Where = Array('`DaysRemainded` > 0','`Discont` < 1','`Cost` > 0',SPrintF('`OrderID` IN (%s)',Implode(',',$Array)));
+		$Where = Array('`DaysRemainded` > 0',SPrintF('`OrderID` IN (%s)',Implode(',',$Array)));
 		#-------------------------------------------------------------------------------
-		$Income = DB_Select('OrdersConsider',Array('SUM(`DaysRemainded`*`Cost`*(1-`Discont`)) as `SummRemainded`','SUM(`DaysRemainded`) AS `DaysRemainded`'),Array('UNIQ','Where'=>$Where));
+		$Incomes = DB_Select('OrdersConsider',Array('SUM(`DaysRemainded`*`Cost`*(1-`Discont`))/SUM(`DaysRemainded`) as `CostDay`'),Array('Where'=>$Where,'GroupBy'=>'OrderID'));
 		#-------------------------------------------------------------------------------
-		switch(ValueOf($Income)){
+		switch(ValueOf($Incomes)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
+			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[comp/Statistics/HostingSchemesIncome]: no summ for scheme "%s"',$HostingScheme['Name']));
+			#-------------------------------------------------------------------------------
 			break;
+			#-------------------------------------------------------------------------------
 		case 'array':
 			#-------------------------------------------------------------------------------
-			# считаем все не-бесплатные аккаунты, по ним будут расчёты цены и доходов
-			$Count = DB_Select('OrdersConsider','DISTINCT(`OrderID`) AS `OrderID`',Array('Where'=>$Where));
+			// изначально, всё по нулям
+			$PaidAccounts = $SchemeIncome = $AccountIncome = 0;
 			#-------------------------------------------------------------------------------
-			switch(ValueOf($Count)){
-			case 'error':
-				return ERROR | @Trigger_Error(500);
-			case 'exception':
+			// перебираем аккаунты, считаем сумму дохода всего тарифа в ДЕНЬ, стоимость одного аккаунта, количество платных аккаунтов
+			foreach($Incomes as $Income){
 				#-------------------------------------------------------------------------------
-				$PaidAccounts = 0;
+				// если стомость аккаунта равна нулю, пропускаем его
+				if($Income['CostDay'] == 0)
+					continue;
 				#-------------------------------------------------------------------------------
-				break;
+				$PaidAccounts++;
 				#-------------------------------------------------------------------------------
-			case 'array':
+				$SchemeIncome = $SchemeIncome + $Income['CostDay'];
 				#-------------------------------------------------------------------------------
-				# All OK, accounts found
-				$PaidAccounts = SizeOf($Count);
-				#-------------------------------------------------------------------------------
-				break;
-				#-------------------------------------------------------------------------------
-			default:
-				return ERROR | @Trigger_Error(101);
 			}
 			#-------------------------------------------------------------------------------
-			$NumAccounts = SizeOf($Array);
+			// если платных аккаунтов нет - пропускаем
+			#Debug(SPrintF('[comp/Statistics/HostingSchemesIncome]: SchemeIncome = %s; PaidAccounts = %s',$SchemeIncome,$PaidAccounts));
+			if($PaidAccounts == 0)
+				break;
 			#-------------------------------------------------------------------------------
-			$SchemeIncome = (IntVal($Income['DaysRemainded']) > 0)?(($Income['SummRemainded'] / $Income['DaysRemainded']) * $PaidAccounts * 30):0;
+			// доход сервера
+			$SchemeIncome = $SchemeIncome * 30;             # 30 дней в месяце
+			// доход одного аккаунта
+			$AccountIncome = $SchemeIncome / $PaidAccounts; # только по платным аккаунтам
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
                         // для диаграмм
@@ -132,11 +134,11 @@ foreach($HostingSchemes as $HostingScheme){
 			}
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-			$SchemeIncome = Comp_Load('Formats/Currency',$SchemeIncome);# 30 дней в месяце
+			$SchemeIncome = Comp_Load('Formats/Currency',$SchemeIncome);
 			if(Is_Error($SchemeIncome))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$Table[] = Array($HostingScheme['Name'],SPrintF('%s / %s',$NumAccounts,$PaidAccounts),$SchemeIncome);
+			$Table[] = Array($HostingScheme['Name'],SPrintF('%s / %s',SizeOf($Array)/* num accounts */,$PaidAccounts),$SchemeIncome);
 			#-------------------------------------------------------------------------------
 			break;
 			#-------------------------------------------------------------------------------
