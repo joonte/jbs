@@ -502,7 +502,21 @@ label.Comment {
 	color:			#6F9006;
 }
 
-
+/* делаем однострочный стиль, чтобы обрезало то что не влезает, для всяких
+ * заголовков и строк - типа как название конторы в строке с баллансом */
+.CropTitle {
+	-ms-text-overflow:	ellipsis;
+	text-overflow:		ellipsis;
+	overflow:		hidden;
+	-ms-line-clamp:		1;
+	-webkit-line-clamp:	1;
+	line-clamp:		1;
+	display:		-webkit-box;
+	display:		box;
+	word-wrap:		break-word;
+	-webkit-box-orient:	vertical;
+	box-orient:		vertical;
+}
 
 /* скрываем кнопки с меню сайта - они тока на мобильной версии нужны */
 tr.HiddenMenuButtons		{ display: none; }

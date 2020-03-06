@@ -44,7 +44,7 @@
        <TR>
         <COMP id="MenuLeft" path="Menus/Left" />
         <TD valign="top">
-         <DIV class="Title" id="Title" />
+         <DIV class="Title CropTitle" id="Title" />
           <TABLE width="100%" cellspacing="5" cellpadding="0">
            <TR>
             <TD id="Into" />

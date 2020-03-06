@@ -165,16 +165,10 @@ if(!IsSet($GLOBALS['__USER'])){
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
-			// ширина колонки с именем договора - примерно 65%
-			$Width = Min(@$_COOKIE['wScreen']*0.65,650);
-			#-------------------------------------------------------------------------------
-			if($Width == 0)
-				$Width = 200;
-			#-------------------------------------------------------------------------------
 			$Table->AddChild(
 					new Tag('TR',
 					new Tag('TD',Array('style'=>'text-align:left;'),SPrintF('#%s',$ContractID)),
-	    				new Tag('TD',Array('style'=>'text-align:left;','width'=>$Width),new Tag('DIV',Array('style'=>SPrintF('width:%upx;overflow:hidden;white-space:nowrap;',$Width)),$Contract['Customer'])),
+	    				new Tag('TD',Array('style'=>'text-align:left;','width'=>'60%'),new Tag('DIV',Array('class'=>'CropTitle'),$Contract['Customer'])),
 					new Tag('TD',Array('style'=>'text-align:left;white-space:nowrap;'),SPrintF('бал: %s,',$Comp)),
 					new Tag('TD',Array('style'=>'text-align:left;white-space:nowrap;'),SPrintF('зак: %u',$Contract['Orders'])),
 					new Tag('TD',Array('style'=>'text-align:left'),$A)
