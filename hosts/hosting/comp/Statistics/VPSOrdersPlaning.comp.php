@@ -28,7 +28,6 @@ $Query = "CREATE TEMPORARY TABLE `%s`(
   `OrderID`        int(11),
   `Customer`       text,
   `Login`          char(20),
-  `Domain`         char(100),
   `ExpirationDate` int(11),
   `MinDaysPay`     int(6),
   `CostDay`        float(6,2),
@@ -46,7 +45,7 @@ $Epoches = 3;
 #-------------------------------------------------------------------------------
 $Incomes = Array();
 #-------------------------------------------------------------------------------
-$Orders = DB_Select(Array('VPSOrders','Orders','Contracts'),Array('ContractID','Balance','OrderID','Customer','Login','Domain','(UNIX_TIMESTAMP() + `DaysRemainded`*86400) as `ExpirationDate`','(SELECT `MinDaysPay` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrders`.`SchemeID`) as `MinDaysPay`','(SELECT `CostDay` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrders`.`SchemeID`) as `CostDay`'),Array('Where'=>SPrintF('(UNIX_TIMESTAMP() + `DaysRemainded`*86400) < %u AND `Orders`.`ID` = `VPSOrders`.`OrderID` AND `Contracts`.`ID` = `Orders`.`ContractID`',MkTime(0,0,1,(Date('n')+$Epoches))),'SortOn'=>'ExpirationDate'));
+$Orders = DB_Select(Array('VPSOrders','Orders','Contracts'),Array('ContractID','Balance','OrderID','Customer','Login','(UNIX_TIMESTAMP() + `DaysRemainded`*86400) as `ExpirationDate`','(SELECT `MinDaysPay` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrders`.`SchemeID`) as `MinDaysPay`','(SELECT `CostDay` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrders`.`SchemeID`) as `CostDay`'),Array('Where'=>SPrintF('(UNIX_TIMESTAMP() + `DaysRemainded`*86400) < %u AND `Orders`.`ID` = `VPSOrders`.`OrderID` AND `Contracts`.`ID` = `Orders`.`ContractID`',MkTime(0,0,1,(Date('n')+$Epoches))),'SortOn'=>'ExpirationDate'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Orders)){
   case 'error':
@@ -70,7 +69,7 @@ switch(ValueOf($Orders)){
 #-------------------------------------------------------------------------------
 $sMonth = Date('Y')*12 + Date('n');
 #-------------------------------------------------------------------------------
-$Head = Array(new Tag('TD',Array('class'=>'Head'),'Клиент'),new Tag('TD',Array('class'=>'Head'),'Логин'),new Tag('TD',Array('class'=>'Head'),'Домен'));
+$Head = Array(new Tag('TD',Array('class'=>'Head'),'Клиент'),new Tag('TD',Array('class'=>'Head'),'Логин'));
 #-------------------------------------------------------------------------------
 $Totals = $Labels = Array();
 #-------------------------------------------------------------------------------
@@ -137,7 +136,7 @@ $Table[] = $Head;
 #-------------------------------------------------------------------------------
 foreach($Incomes as $Income){
   #-----------------------------------------------------------------------------
-  $Line = Array($Income['Customer'],$Income['Login'],$Income['Domain']);
+  $Line = Array($Income['Customer'],$Income['Login']);
   #-----------------------------------------------------------------------------
   for($Month=$sMonth;$Month<=($sMonth+$Epoches);$Month++){
     #---------------------------------------------------------------------------
@@ -157,7 +156,7 @@ foreach($Incomes as $Income){
   $Table[] = $Line;
 }
 #-------------------------------------------------------------------------------
-$Lines = Array(new Tag('TD',Array('colspan'=>3),'Общие поступления'));
+$Lines = Array(new Tag('TD',Array('colspan'=>2),'Общие поступления'));
 #-------------------------------------------------------------------------------
 $Line = Array();
 #-------------------------------------------------------------------------------
@@ -188,7 +187,7 @@ $NoBody->AddChild(new Tag('BR'));
 #-------------------------------------------------------------------------------
 $NoBody->AddChild(new Tag('IMG',Array('src'=>$File)));
 #-------------------------------------------------------------------------------
-$Lines = Array(new Tag('TD',Array('colspan'=>3),'Общие поступления'));
+$Lines = Array(new Tag('TD',Array('colspan'=>2),'Общие поступления'));
 #-------------------------------------------------------------------------------
 $Result['DOM'] = $NoBody;
 #-------------------------------------------------------------------------------
