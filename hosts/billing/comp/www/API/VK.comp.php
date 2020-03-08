@@ -287,6 +287,9 @@ if(IsSet($Data->{'reply_message'}->{'id'})){
 			$Params['TicketMessageFile'] = $Hash;
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
+		// статус для тикета
+		$StatusID = ($GLOBALS['__USER']['IsAdmin'])?'Opened':'Working';
+		#-------------------------------------------------------------------------------
 		// постим от админа, т.к. пост может идти от другого юзера в ответ на...
 		$GLOBALS['__USER']['ID']	= 100;
 		$GLOBALS['__USER']['IsAdmin']	= TRUE;
@@ -297,7 +300,7 @@ if(IsSet($Data->{'reply_message'}->{'id'})){
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// ставим статус, так как постили по факту от админа, статус не встаёт
-		$IsStatus = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Edesks','IsNotNotify'=>TRUE,'IsNoTrigger'=>TRUE,'StatusID'=>'Working','Comment'=>'Сообщение через ВКонтакте','RowsIDs'=>$Attribs['TicketID']));
+		$IsStatus = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Edesks','IsNotNotify'=>TRUE,'IsNoTrigger'=>TRUE,'StatusID'=>$StatusID,'Comment'=>'Сообщение через ВКонтакте','RowsIDs'=>$Attribs['TicketID']));
 		if(Is_Error($IsAdd))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
