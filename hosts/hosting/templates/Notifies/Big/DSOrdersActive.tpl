@@ -10,9 +10,9 @@
 
 {if $DSScheme.IPaddr || $IP != 'noassign'}
 {if $IP != 'noassign'}
-IP адрес заказа:		{$IP}
+IP адрес сервера:		{$IP}
 {else}
-IP адрес заказа:		{$DSScheme.IPaddr}
+IP адрес сервера:		{$DSScheme.IPaddr}
 {/if}
 {if $DSScheme.OS}
 Предустановленная система:	{$DSScheme.OS}
