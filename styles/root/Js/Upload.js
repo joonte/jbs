@@ -88,13 +88,13 @@ function UploadDelete($Hash = false){
 	if(!$Hash){
 		//------------------------------------------------------------------------------
 		/* а собственно нахрена? страница же перезагрузится...
-		 * nucomment by lissyara, 2020-03-10 in 09:41 MSK - а если добавленеи в существующий тикет - то нет */
+		 * uncomment by lissyara, 2020-03-10 in 09:41 MSK - а если добавленеи в существующий тикет - то нет */
 		// проходит по значениям
 		for (let $Hash of $Hashes)
 			UploadDelete($Hash)
 		//------------------------------------------------------------------------------
 		// счётчик скидываем в ноль
-		if(typeof document.getElementById(SPrintF('upload_%s_cnt',$UploadFileName)) !== null)
+		if(document.getElementById(SPrintF('upload_%s_cnt',$UploadFileName)))
 			document.getElementById(SPrintF('upload_%s_cnt',$UploadFileName)).value = 0;
 		//------------------------------------------------------------------------------
 		var $Count = 0;
