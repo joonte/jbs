@@ -887,7 +887,7 @@ function RegRu_Build_Query($Query,$DomainZone,$Person,$PersonID){
 			$Query['passport']            = SPrintF('%s %s выдан %s %s',$Person['PasportLine'],$Person['PasportNum'],$Person['PasportWhom'],$Person['PasportDate']);
 			$Query['birth_date']          = $Person['BornDate'];
 			$Query['country']             = IsSet($Person['PasportCountry'])?$Person['PasportCountry']:$Person['pCountry'];
-			$Query['p_addr']              = SPrintF('%s, %s, %s, %s %s, %s',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['pRecipient']);
+			$Query['p_addr']              = SPrintF('%s, %s, %s, %s %s, %s',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],Mb_SubStr($Person['pRecipient'],0,45));
 			$Query['phone']               = $Person['Phone'];
 			$Query['sms_security_number'] = $Person['CellPhone'];
 			$Query['fax']                 = $Person['Fax'];
@@ -903,7 +903,7 @@ function RegRu_Build_Query($Query,$DomainZone,$Person,$PersonID){
 			$Query['kpp']                 = $Person['Kpp'];
 			$Query['country']             = $Person['jCountry'];
 			$Query['address_r']           = SPrintF('%s, %s, %s, %s %s',$Person['jIndex'],$Person['jState'],$Person['jCity'],$Person['jType'],$Person['jAddress']);
-			$Query['p_addr']              = SPrintF('%s, %s, %s, %s %s, %s "%s"',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],$Person['CompanyForm'],$Person['CompanyName']);
+			$Query['p_addr']              = SPrintF('%s, %s, %s, %s %s, %s',$Person['pIndex'],$Person['pState'],$Person['pCity'],$Person['pType'],$Person['pAddress'],Mb_SubStr(SPrintF('%s "%s"',$Person['CompanyForm'],$Person['CompanyName']),0,45));
 			$Query['phone']               = $Person['Phone'];
 			$Query['sms_security_number'] = $Person['CellPhone'];
 			$Query['fax']                 = $Person['Fax'];
