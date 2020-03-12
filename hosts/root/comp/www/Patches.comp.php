@@ -113,34 +113,6 @@ if($Backup && !Preg_Match('/^Windows/',Php_UName('s'))){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsDelete = DB_Delete('Tasks',Array('ID'=>10));
-if(Is_Error($IsDelete))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$IsInsert = DB_Insert('Tasks',Array('ID'=>10,'UserID'=>1,'TypeID'=>'RecoveryProfiles','Params'=>Array(),'IsActive'=>TRUE));
-if(Is_Error($IsInsert))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$IsDelete = DB_Delete('Tasks',Array('ID'=>11));
-if(Is_Error($IsDelete))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$IsInsert = DB_Insert('Tasks',Array('ID'=>11,'UserID'=>1,'TypeID'=>'RecoveryServers','Params'=>Array(),'IsActive'=>TRUE));
-if(Is_Error($IsInsert))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$IsDelete = DB_Delete('Tasks',Array('ID'=>12));
-if(Is_Error($IsDelete))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$IsInsert = DB_Insert('Tasks',Array('ID'=>12,'UserID'=>1,'TypeID'=>'RecoveryUsers','Params'=>Array(),'IsActive'=>TRUE));
-if(Is_Error($IsInsert))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 $HostsIDs = Array_Reverse($GLOBALS['HOST_CONF']['HostsIDs']);
 #-------------------------------------------------------------------------------
 echo "\n\n-- Патчи базы данных\n\n";
@@ -422,6 +394,41 @@ if(File_Exists($MyCnf))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IsUpdate = DB_Update('Config',Array('Value'=>'TRUE'),Array('Where'=>"`Param` = 'IsInitDB'"));
+if(Is_Error($IsUpdate))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// активируем задания, добавляем отсутствующие обязательные
+$IsDelete = DB_Delete('Tasks',Array('ID'=>10));
+if(Is_Error($IsDelete))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$IsInsert = DB_Insert('Tasks',Array('ID'=>10,'UserID'=>1,'TypeID'=>'RecoveryProfiles','Params'=>Array(),'IsActive'=>TRUE));
+if(Is_Error($IsInsert))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$IsDelete = DB_Delete('Tasks',Array('ID'=>11));
+if(Is_Error($IsDelete))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$IsInsert = DB_Insert('Tasks',Array('ID'=>11,'UserID'=>1,'TypeID'=>'RecoveryServers','Params'=>Array(),'IsActive'=>TRUE));
+if(Is_Error($IsInsert))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$IsDelete = DB_Delete('Tasks',Array('ID'=>12));
+if(Is_Error($IsDelete))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$IsInsert = DB_Insert('Tasks',Array('ID'=>12,'UserID'=>1,'TypeID'=>'RecoveryUsers','Params'=>Array(),'IsActive'=>TRUE));
+if(Is_Error($IsInsert))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// активируем все системные задания 
+$IsUpdate = DB_Update('Tasks',Array('IsActive'=>TRUE,'IsExecuted'=>FALSE),Array('Where'=>'`UserID` = 1'));
 if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
