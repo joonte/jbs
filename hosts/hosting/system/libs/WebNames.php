@@ -988,10 +988,10 @@ function WebNames_Build_Query($Query = Array(),$Params){
 			#-------------------------------------------------------------------------------
 		case 'Juridical':
 			#-------------------------------------------------------------------------------
-			$Query['o_company']	= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyFormFull']));
-			$Query['a_company']	= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyFormFull']));
-			$Query['t_company']	= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyFormFull']));
-			$Query['b_company']	= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyFormFull']));
+			$Query['o_company']	= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyForm']));
+			$Query['a_company']	= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyForm']));
+			$Query['t_company']	= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyForm']));
+			$Query['b_company']	= SPrintF('%s %s',Translit($Params['Person']['CompanyName']),Translit($Params['Person']['CompanyForm']));
 			#-------------------------------------------------------------------------------
 			$Query['o_country_code']= $Params['Person']['jCountry'];
 			$Query['a_country_code']= $Params['Person']['jCountry'];
