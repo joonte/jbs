@@ -87,6 +87,8 @@ table {
 #Main			{ border-spacing: 0 0; }
 /* создание нового тикета, прячем тех кто в онлайне */
 #NowOnlineSupport	{ display: none; }
+/* окно для ввода телефона для оплаты через QIWI, прячем подсказку напротив */
+#QiwiPhone		{ display: none; }
 
 div.PostProfile {
 	display: none;

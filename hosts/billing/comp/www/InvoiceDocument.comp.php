@@ -108,10 +108,10 @@ if($PaymentSystemID == 'QIWI' && !$IsPayed){
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$Table[] = Array('Телефонный номер',$Comp);
+		$Table[] = Array(new Tag('DIV',Array('id'=>'QiwiPhone'),'Телефонный номер'),$Comp);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Tables/Standard',$Table,Array('width'=>400));
+		$Comp = Comp_Load('Tables/Standard',$Table,Array('width'=>'100%'));
 		#-------------------------------------------------------------------------------
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
