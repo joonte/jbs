@@ -1822,6 +1822,7 @@
 					<Require>1</Require>
 					<ConfirmRequire>1</ConfirmRequire>
 					<ConfirmInterval>300</ConfirmInterval>
+					<TimeoutRequestConfirm>60</TimeoutRequestConfirm>
 				</Email>
 				<!-- *********************************************************************** -->
 				<WhatsApp>
@@ -1829,6 +1830,7 @@
 					<Require>0</Require>
 					<ConfirmRequire>1</ConfirmRequire>
 					<ConfirmInterval>30</ConfirmInterval>
+					<TimeoutRequestConfirm>60</TimeoutRequestConfirm>
 				</WhatsApp>
 				<!-- *********************************************************************** -->
 				<ICQ>
@@ -1836,6 +1838,7 @@
 					<Require>0</Require>
 					<ConfirmRequire>1</ConfirmRequire>
 					<ConfirmInterval>30</ConfirmInterval>
+					<TimeoutRequestConfirm>60</TimeoutRequestConfirm>
 				</ICQ>
 				<!-- *********************************************************************** -->
 				<Jabber>
@@ -1843,6 +1846,7 @@
 					<Require>0</Require>
 					<ConfirmRequire>1</ConfirmRequire>
 					<ConfirmInterval>30</ConfirmInterval>
+					<TimeoutRequestConfirm>60</TimeoutRequestConfirm>
 				</Jabber>
 				<!-- *********************************************************************** -->
 				<Telegram>
@@ -1850,6 +1854,7 @@
 					<Require>0</Require>
 					<ConfirmRequire>1</ConfirmRequire>
 					<ConfirmInterval>30</ConfirmInterval>
+					<TimeoutRequestConfirm>60</TimeoutRequestConfirm>
 				</Telegram>
 				<!-- *********************************************************************** -->
 				<Viber>
@@ -1857,6 +1862,7 @@
 					<Require>0</Require>
 					<ConfirmRequire>1</ConfirmRequire>
 					<ConfirmInterval>30</ConfirmInterval>
+					<TimeoutRequestConfirm>60</TimeoutRequestConfirm>
 				</Viber>
 				<!-- *********************************************************************** -->
 				<VKontakte>
@@ -1864,6 +1870,7 @@
 					<Require>0</Require>
 					<ConfirmRequire>1</ConfirmRequire>
 					<ConfirmInterval>30</ConfirmInterval>
+					<TimeoutRequestConfirm>60</TimeoutRequestConfirm>
 				</VKontakte>
 				<!-- *********************************************************************** -->
 				<SMS>
@@ -1871,6 +1878,7 @@
 					<Require>0</Require>
 					<ConfirmRequire>1</ConfirmRequire>
 					<ConfirmInterval>300</ConfirmInterval>
+					<TimeoutRequestConfirm>60</TimeoutRequestConfirm>
 				</SMS>
 				<!-- *********************************************************************** -->
 				<Invoices>

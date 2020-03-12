@@ -12,10 +12,6 @@ $Result = Array();
 #-------------------------------------------------------------------------------
 #if(!CacheManager::isEnabled())
 #	return $Result;
-// первые минут 15 не напоминаем что надо что-то вводить контакты
-if($GLOBALS['__USER']['RegisterDate'] + 900 > Time())
-	return $Result;
-
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Config = Config();
@@ -32,6 +28,12 @@ foreach(Array_Keys($Config['Notifies']['Methods']) as $MethodID){
 	// если метод не активен - пропускаем
 	if(!$Config['Notifies']['Methods'][$MethodID]['IsActive'])
 		continue;
+	#-------------------------------------------------------------------------------
+	// проверяем, может этот тип контакта не надо требовать - если юзер свежезареганный
+	if(IntVal($Config['Interface']['User']['Notes'][$MethodID]['TimeoutRequestConfirm']) > 0)
+		if($GLOBALS['__USER']['RegisterDate'] + IntVal($Config['Interface']['User']['Notes'][$MethodID]['TimeoutRequestConfirm'])*60 > Time())
+			continue;
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	// перебираем контакты пользователя
 	foreach($GLOBALS['__USER']['Contacts'] as $Contact){
@@ -65,7 +67,7 @@ foreach($Array as $MethodID)
 // снова перебираем методы - проверяем - добавлены ли такие типы контактов у клиента
 foreach(Array_Keys($Config['Notifies']['Methods']) as $MethodID){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Notes/User/AddressConfirmation]: MethodID = %s',$MethodID));
+	#Debug(SPrintF('[comp/Notes/User/AddressConfirmation]: MethodID = %s',$MethodID));
 	#-------------------------------------------------------------------------------
 	// если какой-то мессенджер задан, то ввод сотальных не требуем
 	if(In_Array($MethodID,Array_Merge($Messengers,Array('Jabber'))) && IsSet($IM))
@@ -76,7 +78,13 @@ foreach(Array_Keys($Config['Notifies']['Methods']) as $MethodID){
 	if(In_Array($MethodID,$Array))
 		continue;
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Notes/User/AddressConfirmation]: need MethodID = %s',$MethodID));
+	// проверяем, может этот тип контакта не надо требовать - если юзер свежезареганный
+	if(IntVal($Config['Interface']['User']['Notes'][$MethodID]['TimeoutRequestConfirm']) > 0)
+		if($GLOBALS['__USER']['RegisterDate'] + IntVal($Config['Interface']['User']['Notes'][$MethodID]['TimeoutRequestConfirm'])*60 > Time())
+			continue;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	#Debug(SPrintF('[comp/Notes/User/AddressConfirmation]: need MethodID = %s',$MethodID));
 	#-------------------------------------------------------------------------------
 	// если требуется такой тип контакта - просим его ввести
         if($Config['Interface']['User']['Notes'][$MethodID]['Require']){
