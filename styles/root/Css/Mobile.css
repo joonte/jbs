@@ -91,6 +91,11 @@ table {
 #QiwiPhone		{ display: none; }
 /* вторая кнопка оплаты счёта, вверху страницы */
 #MobilePaymentButton	{ display: inline-block !important; }
+/* скрываем элементы корзины, в мобильной версии */
+#BasketItemComment	{ display: none; }
+#BasketServiceName	{ display: none; }
+#BasketServiceCode	{ display: inline-block !important; }
+
 
 div.PostProfile {
 	display: none;

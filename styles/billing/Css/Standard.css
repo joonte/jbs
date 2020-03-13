@@ -160,6 +160,9 @@ pp-rounded-5px{
 #EdeskBackButton        { display: none; }
 /* прячем вторую кнопку оплаты счёта, в не-мобильном варианте */
 #MobilePaymentButton	{ display: none; }
+/* скрываем элементы корзины, в НЕ мобильной версии */
+#BasketServiceCode	{ display: none; }
+
 
 div.MainMenu {
 	background-color:	Beige;
