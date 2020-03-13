@@ -36,7 +36,7 @@ switch(ValueOf($Contracts)){
    #----------------------------------------------------------------------------
    foreach($Contracts as $Contract){
      #--------------------------------------------------------------------------
-     $Row = Array(new Tag('TD',Array('class'=>'Comment'),$Contract['Customer']));
+     $Row = Array(new Tag('TD',Array('class'=>'Comment'),Mb_SubStr($Contract['Customer'],0.25)));
      #--------------------------------------------------------------------------
      $Comp = Comp_Load('Formats/Currency',$Contract['Credit']);
      if(Is_Error($Comp))
