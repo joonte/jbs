@@ -38,7 +38,7 @@ $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','ServiceID','ContractID','OrderID','Summ','Amount','Comment','(SELECT `Measure` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `Measure`','(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `ServiceCode`','(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `ContractID`) as `Customer`');
+$Columns = Array('ID','ServiceID','ContractID','OrderID','Summ','Amount','Comment','(SELECT `Measure` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `Measure`','(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `ServiceCode`','(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `ContractID`) as `Customer`','(SELECT `TypeID` FROM `Contracts` WHERE `Contracts`.`ID` = `ContractID`) as `TypeID`');
 #-------------------------------------------------------------------------------
 $Basket = DB_Select('BasketOwners',$Columns,Array('Where'=>SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']),'SortOn'=>'ContractID'));
 #-------------------------------------------------------------------------------
@@ -131,7 +131,7 @@ case 'array':
 					Array(
 						'onclick'	=> SPrintF("ShowWindow('/InvoiceMake',{ContractID:%u,StepID:1});",$Item['ContractID']),
 						'type'		=> 'button',
-						'value'		=> 'Выписать счёт'
+						'value'		=> (In_Array($Item['TypeID'],Array('Individual','Juridical')))?'Выписать счёт':'Оплатить'
 						)
 					);
 			if(Is_Error($Comp))
