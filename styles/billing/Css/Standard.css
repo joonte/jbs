@@ -158,6 +158,8 @@ pp-rounded-5px{
 
 /* прячем кнопку "назад", в тикетнице */
 #EdeskBackButton        { display: none; }
+/* прячем вторую кнопку оплаты счёта, в не-мобильном варианте */
+#MobilePaymentButton	{ display: none; }
 
 div.MainMenu {
 	background-color:	Beige;

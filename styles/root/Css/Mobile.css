@@ -89,6 +89,8 @@ table {
 #NowOnlineSupport	{ display: none; }
 /* окно для ввода телефона для оплаты через QIWI, прячем подсказку напротив */
 #QiwiPhone		{ display: none; }
+/* вторая кнопка оплаты счёта, вверху страницы */
+#MobilePaymentButton	{ display: inline-block !important; }
 
 div.PostProfile {
 	display: none;
