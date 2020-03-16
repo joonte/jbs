@@ -49,15 +49,25 @@ foreach($Services as $Service){
 	#	continue;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Columns = Array('*',SPrintF('(SELECT `Balance` FROM `Contracts` WHERE `%sOrdersOwners`.`ContractID` = `ID`) as `Balance`',$Service['Code']));
+	$Columns = Array(
+				'*',
+				SPrintF('(SELECT `Balance` FROM `Contracts` WHERE `%sOrdersOwners`.`ContractID` = `ID`) AS `Balance`',$Service['Code']),
+				SPrintF('(SELECT `Name` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `SchemeName`,',$Service['Code'])
+			);
 	#-------------------------------------------------------------------------------
-	$Where = "`DaysRemainded` IN (1,5,10,15) AND `StatusID` = 'Active'";
+	$Where = "`DaysRemainded` IN (1,2,3,5,10,15) AND `StatusID` = 'Active'";
 	#-------------------------------------------------------------------------------
 	if($Service['Code'] == 'Domain'){
 		#-------------------------------------------------------------------------------
-		$Columns[] = '(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`';
+		$Columns[] = '(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) AS `DomainZone`';
+		$Columns[] = '(SELECT `CostProlong` FROM `DomainSchemes` WHERE `DomainOrdersOwners`.`SchemeID` = `ID`) AS `Cost`';
 		#-------------------------------------------------------------------------------
 		$Where = "`StatusID` = 'Active' AND CEIL((`ExpirationDate` - UNIX_TIMESTAMP())/86400) IN (1,2,3,5,10,15,30)";
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		// добавляем выборку ценника за месяц
+		$Columns[] = SPrintF('(SELECT `CostMonth` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `Cost`,',$Service['Code']);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -84,6 +94,13 @@ foreach($Services as $Service){
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		$Order['Balance'] = $Balance;
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$Cost = Comp_Load('Formats/Currency',$Order['Cost']);
+		if(Is_Error($Cost))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Order['Cost'] = $Cost;
 		#-------------------------------------------------------------------------------
 		if($Service['Code'] == 'Domain'){
 			#-------------------------------------------------------------------------------

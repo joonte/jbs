@@ -6,8 +6,10 @@
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Уведомляем Вас о том, что оканчивается срок действия Вашего заказа №{$ProxyOrder.OrderID|string_format:"%05u"} на прокси-сервер.
-До окончания заказа {$ProxyOrder.DaysRemainded|default:'$ProxyOrder.DaysRemainded'} дн.
-Баланс договора: {$ProxyOrder.Balance|default:'$ProxyOrder.Balance'}
+До окончания заказа:	{$ProxyOrder.DaysRemainded|default:'$ProxyOrder.DaysRemainded'} дн.
+Баланс договора:	{$ProxyOrder.Balance|default:'$ProxyOrder.Balance'}
+Тарифный план:		"{$ProxyOrder.SchemeName|default:'$ProxyOrder.SchemeName'}"
+Стоимость продления:	{$ProxyOrder.Cost|default:'$ProxyOrder.Cost'}
 
   * Адрес подключения:
       {$Host|default:'$Host'}:{$Port|default:'$Port'}
