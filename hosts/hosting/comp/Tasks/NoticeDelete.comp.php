@@ -67,17 +67,7 @@ foreach($Services as $Service){
 	#-------------------------------------------------------------------------------
 	foreach($Orders as $Order){
 		#-------------------------------------------------------------------------------
-		if(In_Array($Service['Code'],Array('Hosting','Domain','DNSmanager'))){
-			#-------------------------------------------------------------------------------
-			$ClassName = SPrintF('%sNoticeDeleteMsg',$Service['Code']);
-			#-------------------------------------------------------------------------------
-			$msg = new $ClassName($Order,(integer)$Order['UserID']);
-			#-------------------------------------------------------------------------------
-		}else{
-			#-------------------------------------------------------------------------------
-			$msg = new Message(SPrintF('%sNoticeDelete',$Service['Code']),(integer)$Order['UserID'],Array(SPrintF('%sOrder',$Service['Code'])=>$Order));
-			#-------------------------------------------------------------------------------
-		}
+		$msg = new Message(SPrintF('%sNoticeDelete',$Service['Code']),(integer)$Order['UserID'],Array(SPrintF('%sOrder',$Service['Code'])=>$Order));
 		#-------------------------------------------------------------------------------
 		$IsSend = NotificationManager::sendMsg($msg);
 		#-------------------------------------------------------------------------------
