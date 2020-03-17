@@ -52,7 +52,7 @@ foreach($Services as $Service){
 	$Columns = Array(
 				'*',
 				SPrintF('(SELECT `Balance` FROM `Contracts` WHERE `%sOrdersOwners`.`ContractID` = `ID`) AS `Balance`',$Service['Code']),
-				SPrintF('(SELECT `Name` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `SchemeName`,',$Service['Code'])
+				SPrintF('(SELECT `Name` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `SchemeName`',$Service['Code'],$Service['Code'])
 			);
 	#-------------------------------------------------------------------------------
 	$Where = "`DaysRemainded` IN (1,2,3,5,10,15) AND `StatusID` = 'Active'";
@@ -67,7 +67,7 @@ foreach($Services as $Service){
 	}else{
 		#-------------------------------------------------------------------------------
 		// добавляем выборку ценника за месяц
-		$Columns[] = SPrintF('(SELECT `CostMonth` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `Cost`,',$Service['Code']);
+		$Columns[] = SPrintF('(SELECT `CostMonth` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `Cost`',$Service['Code'],$Service['Code']);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
