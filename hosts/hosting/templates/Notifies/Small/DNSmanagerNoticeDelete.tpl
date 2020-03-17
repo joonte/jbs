@@ -1,9 +1,9 @@
 {*
  *  Joonte Billing System
- *  Copyright © 2012 Vitaly Velikodnyy
+ *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
-{assign var=ExpDate value=$StatusDate + $Config.Tasks.Types.DNSmanagerForDelete.DNSmanagerDeleteTimeout * 24 * 3600}
-{$ExpDate|date_format:"%d.%m.%Y"} будет удалён вторичный DNS {$Login|default:'$Login'}
+{assign var=ExpDate value=$DNSmanagerOrder.StatusDate + $Config.Tasks.Types.DNSmanagerForDelete.DNSmanagerDeleteTimeout * 24 * 3600}
+{$ExpDate|date_format:"%d.%m.%Y"} будет удалён вторичный DNS {$DNSmanagerOrder.Login|default:'$DNSmanagerOrder.Login'}
 
 {if !$MethodSettings.CutSign}
 --
