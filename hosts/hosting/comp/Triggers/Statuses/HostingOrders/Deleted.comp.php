@@ -27,7 +27,7 @@ default:
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('www/Administrator/API/OrderRestore',Array('OrderID'=>$Order['OrderID']));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #$ExecuteDate = Comp_Load('HostingOrders/SearchExecuteTime');
@@ -39,15 +39,29 @@ $ExecuteDate = Time();
 $IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$HostingOrder['UserID'],'TypeID'=>'HostingDelete','ExecuteDate'=>$ExecuteDate,'Params'=>Array($HostingOrderID)));
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsAdd)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return ERROR | @Trigger_Error(400);
-  case 'array':
-    return TRUE;
-  default:
-    return ERROR | @Trigger_Error(101);
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$HostingOrder['OrderID'],'Parked'=>Explode(',',$HostingOrder['Parked'])));
+switch(ValueOf($Comp)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $Comp;
+case 'array':
+	return TRUE;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>

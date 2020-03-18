@@ -9,7 +9,7 @@ $__args_list = Array('DomainOrder');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-#Debug(SPrintF('[comp/Triggers/Statuses/DomainOrders/Waiting]: DomainOrder = %s',print_r($DomainOrder,true)));
+Debug(SPrintF('[comp/Triggers/Statuses/DomainOrders/Waiting]: DomainOrder = %s',print_r($DomainOrder,true)));
 #-------------------------------------------------------------------------------
 $UserID = $GLOBALS['__USER']['ID'];
 #-------------------------------------------------------------------------------
@@ -47,7 +47,8 @@ $Params = Array(
 		'MinOrdersPeriod'	=> $Scheme['MinOrdersPeriod'],
 		'ServiceID'		=> $Service['ID'],
 		'ServiceName'		=> $Service['Name'],
-		'SchemeName'		=> SPrintF('%s.%s',$DomainOrder['DomainName'],$Scheme['Name'])
+		'SchemeName'		=> SPrintF('%s.%s',$DomainOrder['DomainName'],$Scheme['Name']),
+		'Parked'		=> SPrintF('%s.%s',$DomainOrder['DomainName'],$Scheme['Name'])
 		);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Services/Orders/OrdersHistory',$Params);

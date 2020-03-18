@@ -11,9 +11,21 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Comp = Comp_Load('www/Administrator/API/DomainOrderRestore',Array('DomainOrderID'=>$DomainOrder['ID']));
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-return TRUE;
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$DomainOrder['OrderID'],'Parked'=>SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['Name'])));
+switch(ValueOf($Comp)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $Comp;
+case 'array':
+	return TRUE;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>

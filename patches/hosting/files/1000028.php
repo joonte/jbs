@@ -6,9 +6,9 @@
 /******************************************************************************/
 
 // добавляем колонку для хранения информации о заказах
-#$IsQuery = DB_Query('ALTER TABLE `OrdersHistory` ADD `Parked` text AFTER `OrderID`');
-#if(Is_Error($IsQuery))
-#	return ERROR | @Trigger_Error(500);
+$IsQuery = DB_Query('ALTER TABLE `OrdersHistory` ADD `Parked` text AFTER `OrderID`');
+if(Is_Error($IsQuery))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // достаём список доменов для заказов на хостинг

@@ -23,10 +23,24 @@ case 'error':
 case 'exception':
 	return ERROR | @Trigger_Error(400);
 case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$HostingOrder['OrderID'],'Parked'=>Explode(',',$HostingOrder['Parked'])));
+switch(ValueOf($Comp)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $Comp;
+case 'array':
 	return TRUE;
 default:
 	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>

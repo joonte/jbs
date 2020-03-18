@@ -22,5 +22,27 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Parked = Array();
+#-------------------------------------------------------------------------------
+if($ProxyOrder['IP'])
+	$Parked[] = $ProxyOrder['IP'];
+#-------------------------------------------------------------------------------
+if($ProxyOrder['Host'])
+	$Parked[] = $ProxyOrder['Host'];
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$ProxyOrder['OrderID'],'Parked'=>$Parked));
+switch(ValueOf($Comp)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $Comp;
+case 'array':
+	return TRUE;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 
 ?>

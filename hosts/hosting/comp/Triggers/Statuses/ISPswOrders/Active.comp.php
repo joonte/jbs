@@ -88,50 +88,67 @@ switch(ValueOf($Order)){
 }
 #-------------------------------------------------------------------------------
 switch($ISPswOrder['StatusID']){
-  case 'SchemeChange':
-    #---------------------------------------------------------------------------
-    $ISPswScheme = DB_Select('ISPswSchemes','CostDay',Array('UNIQ','ID'=>$ISPswOrder['SchemeID']));
-    #---------------------------------------------------------------------------
-    switch(ValueOf($ISPswScheme)){
-      case 'error':
-        return ERROR | @Trigger_Error(500);
-      case 'exception':
-        return ERROR | @Trigger_Error(400);
-      case 'array':
-        #-----------------------------------------------------------------------
-        $Cost = $ISPswScheme['CostDay'];
-        #-----------------------------------------------------------------------
-        $IsQuery = DB_Query(SPrintF('UPDATE `OrdersConsider` SET `DaysRemainded` = `DaysRemainded`*(`Cost`/%f), `DaysConsidered` = `DaysConsidered`*(`Cost`/%f), `Cost` = %f WHERE `DaysRemainded` > 0 AND `OrderID` = %u AND `Cost` != %f',$Cost,$Cost,$Cost,$ISPswOrder['OrderID'],$Cost));
-        if(Is_Error($IsQuery))
-          return ERROR | @Trigger_Error(500);
-      break 2;
-      default:
-         return ERROR | @Trigger_Error(101);
-    }
-  case 'Suspended':
-    #---------------------------------------------------------------------------
-    $IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$ISPswOrder['UserID'],'TypeID'=>'ISPswActive','Params'=>Array($ISPswOrder['ID'])));
-    #---------------------------------------------------------------------------
-    switch(ValueOf($IsAdd)){
-      case 'error':
-        return ERROR | @Trigger_Error(500);
-      case 'exception':
-        return ERROR | @Trigger_Error(400);
-      case 'array':
-        # No more...
-      break 2;
-      default:
-        return ERROR | @Trigger_Error(101);
-    }
-  default:
-    # No more...
+case 'SchemeChange':
+	#-------------------------------------------------------------------------------
+	$ISPswScheme = DB_Select('ISPswSchemes','CostDay',Array('UNIQ','ID'=>$ISPswOrder['SchemeID']));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($ISPswScheme)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		#-------------------------------------------------------------------------------
+		$Cost = $ISPswScheme['CostDay'];
+		#-------------------------------------------------------------------------------
+		$IsQuery = DB_Query(SPrintF('UPDATE `OrdersConsider` SET `DaysRemainded` = `DaysRemainded`*(`Cost`/%f), `DaysConsidered` = `DaysConsidered`*(`Cost`/%f), `Cost` = %f WHERE `DaysRemainded` > 0 AND `OrderID` = %u AND `Cost` != %f',$Cost,$Cost,$Cost,$ISPswOrder['OrderID'],$Cost));
+		if(Is_Error($IsQuery))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		break 2;
+		#-------------------------------------------------------------------------------
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+case 'Suspended':
+	#-------------------------------------------------------------------------------
+	$IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$ISPswOrder['UserID'],'TypeID'=>'ISPswActive','Params'=>Array($ISPswOrder['ID'])));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($IsAdd)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		# No more...
+		break 2;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+default:
+	# No more...
 }
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IsUpdate = DB_Update('ISPswOrders',Array('ConsiderDay'=>0),Array('ID'=>$ISPswOrder['ID']));
 if(Is_Error($IsUpdate))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-return TRUE;
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$ISPswOrder['OrderID'],'Parked'=>$ISPswOrder['IP']));
+switch(ValueOf($Comp)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $Comp;
+case 'array':
+	return TRUE;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>

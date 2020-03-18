@@ -47,7 +47,8 @@ $Params = Array(
 		'MinOrdersPeriod'	=> $Scheme['MinOrdersPeriod'],
 		'ServiceID'		=> $Service['ID'],
 		'ServiceName'		=> $Service['Name'],
-		'SchemeName'		=> $Scheme['Name']
+		'SchemeName'		=> $Scheme['Name'],
+		'Parked'		=> $HostingOrder['Domain']
 		);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Services/Orders/OrdersHistory',$Params);
