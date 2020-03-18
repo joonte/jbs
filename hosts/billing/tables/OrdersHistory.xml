@@ -20,6 +20,7 @@
 			<ListElement>ServiceName</ListElement>
 			<ListElement>SchemeName</ListElement>
 			<ListElement>OrderID</ListElement>
+			<ListElement>Parked</ListElement>
 			<ListElement>CreateDate</ListElement>
 			<ListElement>StatusDate</ListElement>
 		</ColumnsIDs>
@@ -139,6 +140,16 @@
 			</Args>
 		</OrderID>
 		<!-- ********************************************************************** -->
+		<Domain>
+			<Head>Домен</Head>
+			<Comp>Formats/HostingOrder/Domain</Comp>
+			<Args>
+				<ListElement></ListElement>
+				<ListElement>%Parked%</ListElement>
+				<Length>15</Length>
+			</Args>
+		</Domain>
+		<!-- ********************************************************************** -->
 		<CreateDate>
 			<Head>Дата создания</Head>
 			<Comp>Formats/Date/SQL</Comp>
@@ -156,12 +167,15 @@
 		</StatusDate>
 		<!-- ********************************************************************** -->
 	</Columns>
+	<!-- ********************************************************************** -->
 	<Sequence>
+		<ListElement>SelectID</ListElement>
 		<ListElement>CreateDate</ListElement>
 		<ListElement>StatusDate</ListElement>
 		<ListElement>Email</ListElement>
 		<ListElement>ServiceName</ListElement>
 		<ListElement>SchemeName</ListElement>
+		<ListElement>Domain</ListElement>
 		<ListElement>OrderID</ListElement>
 	</Sequence>
 	<!-- *********************************************************************** -->

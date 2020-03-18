@@ -1,175 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Appearance>
- <Row>
-  <Comp>Colors/Bonuses</Comp>
-  <Args>
-   <ListElement>%ExpirationDate%</ListElement>
-   <ListElement>%DaysRemainded%</ListElement>
-  </Args>
- </Row>
-</Appearance>
-<!-- *********************************************************************** -->
-<Source>
- <TableID>Bonuses</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>CreateDate</ListElement>
-  <ListElement>UserID</ListElement>
-  <ListElement>ExpirationDate</ListElement>
-  <ListElement>ServiceID</ListElement>
-  <ListElement>SchemeID</ListElement>
-  <ListElement>SchemesGroupID</ListElement>
-  <ListElement>DaysReserved</ListElement>
-  <ListElement>DaysRemainded</ListElement>
-  <ListElement>Discont</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Message>Бонусов на услуги не обнаружено.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
-	<Before>
-		<PatternOut>
+	<!-- *********************************************************************** -->
+	<Appearance>
+		<Row>
+			<Comp>Colors/Bonuses</Comp>
 			<Args>
-				<Patterns>
-					<Active>
-						<Name>Активные</Name>
-						<Where>`ExpirationDate` &gt; UNIX_TIMESTAMP()  AND `DaysRemainded` > 0</Where>
-					</Active>
-				</Patterns>
-				<ActiveID>Active</ActiveID>
+				<ListElement>%ExpirationDate%</ListElement>
+				<ListElement>%DaysRemainded%</ListElement>
 			</Args>
-		</PatternOut>
-		<!-- *********************************************************************** -->
-  <Search>
-   <Args>
-    <ColumnsIDs>
-     <ListElement>UserID</ListElement>
-     <ListElement>SchemeID</ListElement>
-     <ListElement>ServiceID</ListElement>
-     <ListElement>DaysRemainded</ListElement>
-     <ListElement>Discont</ListElement>
-    </ColumnsIDs>
-   </Args>
-  </Search>
- </Before>
- <!-- ********************************************************************** -->
- <After>
-  <Delete>
-   <Args>
-    <Comment>Выбранные бонусы</Comment>
-    <Send>
-     <TableID>Bonuses</TableID>
-    </Send>
-   </Args>
-  </Delete>
- </After>
-</Comps>
-<!-- *********************************************************************** -->
-<Query>
- <SortOn>CreateDate</SortOn>
-</Query>
-<!-- *********************************************************************** -->
-<Columns>
- <SelectID>
-  <Args>
-   <TableID>Bonuses</TableID>
-  </Args>
- </SelectID>
- <!-- ********************************************************************** -->
- <Edit>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/Administrator/BonusEdit</ListElement>
-   <ListElement>
-    <BonusID>%ID%</BonusID>
-   </ListElement>
-   <ListElement>Редактировать бонус на услугу</ListElement>
-   <ListElement>Edit.gif</ListElement>
-  </Args>
- </Edit>
- <!-- ********************************************************************** -->
- <CreateDate>
-  <Head>Дата созд.</Head>
-  <Comp>Formats/Date/Extended</Comp>
-  <Args>
-   <ListElement>%CreateDate%</ListElement>
-  </Args>
- </CreateDate>
- <!-- ********************************************************************** -->
- <ExpirationDate>
-  <Head>Дата окончания</Head>
-  <Comp>Formats/Date/Standard</Comp>
-  <Args>
-   <ListElement>%ExpirationDate%</ListElement>
-  </Args>
- </ExpirationDate>
- <!-- ********************************************************************** -->
- <SchemeID>
-  <Head>Тариф/Группа</Head>
-  <Prompt>Сервис/тариф или группа тарифов на которые предоставляется скидка</Prompt>
-  <Comp>www/Administrator/API/SchemesGroupItemInfo</Comp>
-  <Args>
-   <ListElement>%ServiceID%</ListElement>
-   <ListElement>%SchemeID%</ListElement>
-   <Length>20</Length>
-   <ListElement>%SchemesGroupID%</ListElement>
-  </Args>
- </SchemeID>
- <!-- ********************************************************************** -->
- <DaysReserved>
-  <Head>Зарез.</Head>
-  <Prompt>Сколько предоставлено дней/лет/штук со скидкой</Prompt>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
- </DaysReserved>
- <!-- ********************************************************************** -->
- <DaysRemainded>
-  <Head>Ост.</Head>
-  <Prompt>Сколько дней/лет/штук неизрасходовано</Prompt>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
- </DaysRemainded>
- <!-- ********************************************************************** -->
- <Discont>
-  <Head>Скидка</Head>
-  <Comp>Formats/Percent</Comp>
-  <Args>
-   <ListElement>%Discont%</ListElement>
-  </Args>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
- </Discont>
- <!-- ********************************************************************** -->
- <Comment>
-  <Head>Комментарий</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Comment%</ListElement>
-   <Length>10</Length>
-  </Args>
-  <Alias>IF(LENGTH(`Comment`),`Comment`,'-')</Alias>
- </Comment>
-</Columns>
-<Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>Edit</ListElement>
- <ListElement>CreateDate</ListElement>
- <ListElement>Owner</ListElement>
- <ListElement>ExpirationDate</ListElement>
- <ListElement>SchemeID</ListElement>
- <ListElement>DaysReserved</ListElement>
- <ListElement>DaysRemainded</ListElement>
- <ListElement>Discont</ListElement>
- <ListElement>Comment</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+		</Row>
+	</Appearance>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>Bonuses</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>CreateDate</ListElement>
+			<ListElement>UserID</ListElement>
+			<ListElement>ExpirationDate</ListElement>
+			<ListElement>ServiceID</ListElement>
+			<ListElement>SchemeID</ListElement>
+			<ListElement>SchemesGroupID</ListElement>
+			<ListElement>DaysReserved</ListElement>
+			<ListElement>DaysRemainded</ListElement>
+			<ListElement>Discont</ListElement>
+		</ColumnsIDs>
+		<Conditions>
+			<Message>Бонусов на услуги не обнаружено.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<PatternOut>
+				<Args>
+					<Patterns>
+						<Active>
+							<Name>Активные</Name>
+							<Where>`ExpirationDate` &gt; UNIX_TIMESTAMP()  AND `DaysRemainded` &gt; 0</Where>
+						</Active>
+					</Patterns>
+					<ActiveID>Active</ActiveID>
+				</Args>
+			</PatternOut>
+			<!-- *********************************************************************** -->
+			<Search>
+				<Args>
+					<ColumnsIDs>
+						<ListElement>UserID</ListElement>
+						<ListElement>SchemeID</ListElement>
+						<ListElement>ServiceID</ListElement>
+						<ListElement>DaysRemainded</ListElement>
+						<ListElement>Discont</ListElement>
+					</ColumnsIDs>
+				</Args>
+			</Search>
+		</Before>
+		<!-- ********************************************************************** -->
+		<After>
+			<Delete>
+				<Args>
+					<Comment>Выбранные бонусы</Comment>
+					<Send>
+						<TableID>Bonuses</TableID>
+					</Send>
+				</Args>
+			</Delete>
+		</After>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Query>
+		<SortOn>CreateDate</SortOn>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<SelectID>
+			<Args>
+				<TableID>Bonuses</TableID>
+			</Args>
+		</SelectID>
+		<!-- ********************************************************************** -->
+		<Edit>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/Administrator/BonusEdit</ListElement>
+				<ListElement>
+					<BonusID>%ID%</BonusID>
+				</ListElement>
+				<ListElement>Редактировать бонус на услугу</ListElement>
+				<ListElement>Edit.gif</ListElement>
+			</Args>
+		</Edit>
+		<!-- ********************************************************************** -->
+		<CreateDate>
+			<Head>Дата созд.</Head>
+			<Comp>Formats/Date/Extended</Comp>
+			<Args>
+				<ListElement>%CreateDate%</ListElement>
+			</Args>
+		</CreateDate>
+		<!-- ********************************************************************** -->
+		<ExpirationDate>
+			<Head>Дата окончания</Head>
+			<Comp>Formats/Date/Standard</Comp>
+			<Args>
+				<ListElement>%ExpirationDate%</ListElement>
+			</Args>
+		</ExpirationDate>
+		<!-- ********************************************************************** -->
+		<SchemeID>
+			<Head>Тариф/Группа</Head>
+			<Prompt>Сервис/тариф или группа тарифов на которые предоставляется скидка</Prompt>
+			<Comp>www/Administrator/API/SchemesGroupItemInfo</Comp>
+			<Args>
+				<ListElement>%ServiceID%</ListElement>
+				<ListElement>%SchemeID%</ListElement>
+				<Length>20</Length>
+				<ListElement>%SchemesGroupID%</ListElement>
+			</Args>
+		</SchemeID>
+		<!-- ********************************************************************** -->
+		<DaysReserved>
+			<Head>Зарез.</Head>
+			<Prompt>Сколько предоставлено дней/лет/штук со скидкой</Prompt>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</DaysReserved>
+		<!-- ********************************************************************** -->
+		<DaysRemainded>
+			<Head>Ост.</Head>
+			<Prompt>Сколько дней/лет/штук неизрасходовано</Prompt>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</DaysRemainded>
+		<!-- ********************************************************************** -->
+		<Discont>
+			<Head>Скидка</Head>
+			<Comp>Formats/Percent</Comp>
+			<Args>
+				<ListElement>%Discont%</ListElement>
+			</Args>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</Discont>
+		<!-- ********************************************************************** -->
+		<Comment>
+			<Head>Комментарий</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Comment%</ListElement>
+				<Length>10</Length>
+			</Args>
+			<Alias>IF(LENGTH(`Comment`),`Comment`,'-')</Alias>
+		</Comment>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Edit</ListElement>
+		<ListElement>CreateDate</ListElement>
+		<ListElement>Owner</ListElement>
+		<ListElement>ExpirationDate</ListElement>
+		<ListElement>SchemeID</ListElement>
+		<ListElement>DaysReserved</ListElement>
+		<ListElement>DaysRemainded</ListElement>
+		<ListElement>Discont</ListElement>
+		<ListElement>Comment</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>
