@@ -1,83 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Cut>
- <Comps>
-  <Before>
-   <PatternOut />
-   <Search />
-  </Before>
-  <After>
-   <Delete />
-  </After>
- </Comps>
- <Sequence />
-</Cut>
-<!-- *********************************************************************** -->
-<Source>
-	<TableID>InvoicesOwners</TableID>
-	<ColumnsIDs>
+	<!-- *********************************************************************** -->
+	<Cut>
+		<Comps>
+			<Before>
+				<PatternOut/>
+				<Search/>
+			</Before>
+			<After>
+				<Delete/>
+			</After>
+		</Comps>
+		<Sequence/>
+	</Cut>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>InvoicesOwners</TableID>
+		<ColumnsIDs>
+			<ListElement>Year</ListElement>
+			<ListElement>Month</ListElement>
+		</ColumnsIDs>
+		<Conditions>
+			<Message>У Вас нет пользователей с оплаченными счетами.</Message>
+			<Where>
+				<UniqID>`StatusID`='Payed' AND `UserID` IN (SELECT `ID` FROM `Users` WHERE `OwnerID` = @local.__USER_ID)</UniqID>
+			</Where>
+			<Message>У Вас нет пользователей с оплаченными счетами.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Query>
+		<GroupBy>Year,Month</GroupBy>
+		<SortOn>Year</SortOn>
+	</Query>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Columns>
+		<Year>
+			<Head>Год</Head>
+			<Prompt>Год когда были платежи</Prompt>
+		</Year>
+		<!-- *********************************************************************** -->
+		<Month>
+			<Head>Месяц</Head>
+			<Prompt>Месяц когда были платежи</Prompt>
+		</Month>
+		<!-- *********************************************************************** -->
+		<Users>
+			<Head>Пользователей</Head>
+			<Prompt>Количество рефералов совершавших оплаты</Prompt>
+			<Alias>COUNT(DISTINCT(`UserID`))</Alias>
+		</Users>
+		<!-- *********************************************************************** -->
+		<Payments>
+			<Head>Платежей</Head>
+			<Prompt>Количество совершённых платежей</Prompt>
+			<Alias>COUNT(*)</Alias>
+		</Payments>
+		<!-- *********************************************************************** -->
+		<Summ>
+			<Head>Платежей</Head>
+			<Prompt>Сумма совершённых платежей</Prompt>
+			<Comp>Formats/Currency</Comp>
+			<Args>
+				<ListElement>%Summ%</ListElement>
+			</Args>
+			<Alias>ROUND(SUM(`Summ`),2)</Alias>
+		</Summ>
+		<!-- *********************************************************************** -->
+	</Columns>
+	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Sequence>
 		<ListElement>Year</ListElement>
 		<ListElement>Month</ListElement>
-	</ColumnsIDs>
-	<Conditions>
-		<Message>У Вас нет пользователей с оплаченными счетами.</Message>
-		<Where>
-			<UniqID>`StatusID`='Payed' AND `UserID` IN (SELECT `ID` FROM `Users` WHERE `OwnerID` = @local.__USER_ID)</UniqID>
-		</Where>
-		<Message>У Вас нет пользователей с оплаченными счетами.</Message>
-	</Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Query>
-	<GroupBy>Year,Month</GroupBy>
-	<SortOn>Year</SortOn>
-</Query>
-<!-- *********************************************************************** -->
-<!-- *********************************************************************** -->
-<Columns>
-	<Year>
-		<Head>Год</Head>
-		<Prompt>Год когда были платежи</Prompt>
-	</Year>
+		<ListElement>Users</ListElement>
+		<ListElement>Payments</ListElement>
+		<ListElement>Summ</ListElement>
+	</Sequence>
 	<!-- *********************************************************************** -->
-	<Month>
-		<Head>Месяц</Head>
-		<Prompt>Месяц когда были платежи</Prompt>
-	</Month>
-	<!-- *********************************************************************** -->
-	<Users>
-		<Head>Пользователей</Head>
-		<Prompt>Количество рефералов совершавших оплаты</Prompt>
-		<Alias>COUNT(DISTINCT(`UserID`))</Alias>
-	</Users>
-	<!-- *********************************************************************** -->
-	<Payments>
-		<Head>Платежей</Head>
-		<Prompt>Количество совершённых платежей</Prompt>
-		<Alias>COUNT(*)</Alias>
-	</Payments>
-	<!-- *********************************************************************** -->
-	<Summ>
-		<Head>Платежей</Head>
-		<Prompt>Сумма совершённых платежей</Prompt>
-		<Comp>Formats/Currency</Comp>
-		<Args>
-			<ListElement>%Summ%</ListElement>
-		</Args>
-		<Alias>ROUND(SUM(`Summ`),2)</Alias>
-	</Summ>
-	<!-- *********************************************************************** -->
-</Columns>
-<!-- *********************************************************************** -->
-<!-- *********************************************************************** -->
-<Sequence>
-	<ListElement>Year</ListElement>
-	<ListElement>Month</ListElement>
-	<ListElement>Users</ListElement>
-	<ListElement>Payments</ListElement>
-	<ListElement>Summ</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
 </XML>

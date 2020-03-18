@@ -842,6 +842,7 @@ CREATE TABLE IF NOT EXISTS `OrdersHistory` (
 	`SchemeID` int(11) NOT NULL,
 	`SchemeName` char(255) NOT NULL,	-- имя тарифа
 	`OrderID` int(11) NOT NULL,
+	`Parked` text,				-- прицепленные домены, IP адреса и прочие данные помогающие найти заказ
 	`CreateDate` int(11) NOT NULL,		-- дата создания
 	`StatusDate` int(11) NOT NULL,		-- дата установки последнего статуса
 	PRIMARY KEY (`ID`),

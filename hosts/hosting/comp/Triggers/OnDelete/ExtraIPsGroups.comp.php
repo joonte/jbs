@@ -1,30 +1,31 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('sGroup');
+$__args_list = Array('ExtraIPSchemesGroup');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$Count = DB_Count('ExtraIPSchemes',Array('Where'=>SPrintF('`sGroupID` = %u',$sGroup['ID'])));
+$Count = DB_Count('ExtraIPSchemes',Array('Where'=>SPrintF('`ExtraIPSchemesGroup` = %u',$ExtraIPSchemesGroup['ID'])));
 if(Is_Error($Count))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Count)
-  return new gException('DELETE_DENIED',SPrintF('Удаление группы IP адресов (%s) не возможно, %u тариф(ов) связаны с данной группой',$sGroup['Name'],$Count));
+	return new gException('DELETE_DENIED',SPrintF('Удаление группы IP адресов (%s) не возможно, %u тариф(ов) связаны с данной группой',$ExtraIPSchemesGroup['Name'],$Count));
 #-------------------------------------------------------------------------------
-$Count = DB_Count('ExtraIPs',Array('Where'=>SPrintF('`sGroupID` = %u',$sGroup['ID'])));
+$Count = DB_Count('ExtraIPs',Array('Where'=>SPrintF('`ExtraIPSchemesGroup` = %u',$ExtraIPSchemesGroup['ID'])));
 if(Is_Error($Count))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Count)
-  return new gException('DELETE_DENIED',SPrintF('Удаление группы IP адресов (%s) не возможно, %u сервер(ов) связаны с данной группой',$sGroup['Name'],$Count));
+	return new gException('DELETE_DENIED',SPrintF('Удаление группы IP адресов (%s) не возможно, %u сервер(ов) связаны с данной группой',$ExtraIPSchemesGroup['Name'],$Count));
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>

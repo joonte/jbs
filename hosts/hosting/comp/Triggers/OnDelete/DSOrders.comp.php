@@ -32,7 +32,14 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$DSOrder['OrderID']));
+$Parked = Array($DSOrder['IP']);
+#-------------------------------------------------------------------------------
+if($DSOrder['ExtraIP'])
+	foreach(Explode("\n",$DSOrder['ExtraIP']) as $IP)
+		if(!In_Array(Trim($IP),$Parked))
+			$Parked[] = Trim($IP);
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$DSOrder['OrderID'],'Parked'=>$Parked));
 switch(ValueOf($Comp)){
 case 'error':
 	return ERROR | @Trigger_Error(500);

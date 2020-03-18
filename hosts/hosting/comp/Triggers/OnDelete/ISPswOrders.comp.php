@@ -32,7 +32,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$ISPswOrder['OrderID']));
+$Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$ISPswOrder['OrderID'],'Parked'=>Array($ISPswOrder['IP'])));
 switch(ValueOf($Comp)){
 case 'error':
 	return ERROR | @Trigger_Error(500);

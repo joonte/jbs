@@ -30,7 +30,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$DNSmanagerOrder['OrderID']));
+$Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$DNSmanagerOrder['OrderID'],'Parked'=>Explode(',',$DNSmanagerOrder['Parked'])));
 switch(ValueOf($Comp)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
