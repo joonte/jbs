@@ -1,4 +1,4 @@
- }<?php
+<?php
 /**
  *
  *  Joonte Billing System
