@@ -85,6 +85,7 @@
 						<ListElement>ServiceName</ListElement>
 						<ListElement>SchemeName</ListElement>
 						<ListElement>OrderID</ListElement>
+						<ListElement>Parked</ListElement>
 					</ColumnsIDs>
 				</Args>
 			</Search>
@@ -142,11 +143,10 @@
 		<!-- ********************************************************************** -->
 		<Domain>
 			<Head>Домен</Head>
-			<Comp>Formats/HostingOrder/Domain</Comp>
+			<Comp>Formats/OrdersHistory/Parked</Comp>
 			<Args>
-				<ListElement></ListElement>
 				<ListElement>%Parked%</ListElement>
-				<Length>15</Length>
+				<Length>30</Length>
 			</Args>
 		</Domain>
 		<!-- ********************************************************************** -->

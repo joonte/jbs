@@ -24,13 +24,13 @@ default:
 #-------------------------------------------------------------------------------
 $Parked = Array($DSOrder['IP']);
 #-------------------------------------------------------------------------------
-$Array = ($Order['ExtraIP'])?Explode("\n",$Order['ExtraIP']):Array();
+$Array = ($DSOrder['ExtraIP'])?Explode("\n",$DSOrder['ExtraIP']):Array();
 #-------------------------------------------------------------------------------
 foreach($Array as $IP)
 	if(!In_Array(Trim($IP),$Parked))
 		$Parked[] = Trim($IP);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$DSOrder['OrderID'],'Parked'=>Implode(',',$Parked))));
+$Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$DSOrder['OrderID'],'Parked'=>Implode(',',$Parked)));
 switch(ValueOf($Comp)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
