@@ -1,15 +1,33 @@
-<?php
+ }<?php
 /**
  *
  *  Joonte Billing System
  *
- *  Copyright © 2012 Vitaly Velikodnyy
+ *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *
  */
- class VPSOrdersSuspendedMsg extends Message {
-     public function __construct(array $params, $toUser) {
-         parent::__construct('VPSOrdersSuspended', $toUser);
 
-         $this->setParams($params);
-     }
- }
+class VPSOrdersSuspendedMsg extends Message {
+	#-------------------------------------------------------------------------------
+	public function __construct(array $params,$toUser) {
+		#-------------------------------------------------------------------------------
+		parent::__construct('VPSOrdersSuspended',$toUser,$params);
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	public function getParams() {
+		#-------------------------------------------------------------------------------
+		$VPSScheme = DB_Select('VPSSchemes', Array('*'), Array('UNIQ', 'Where' => SPrintF('`ID` = %u',$this->params['SchemeID'])));
+		#-------------------------------------------------------------------------------
+		if(!Is_Array($VPSScheme))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$this->params['VPSScheme'] = $VPSScheme;
+		#-------------------------------------------------------------------------------
+		return $this->params;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+}
+

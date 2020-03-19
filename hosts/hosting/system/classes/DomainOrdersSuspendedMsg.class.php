@@ -3,13 +3,31 @@
  *
  *  Joonte Billing System
  *
- *  Copyright © 2012 Vitaly Velikodnyy
+ *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *
  */
- class DomainOrdersSuspendedMsg extends Message {
-     public function __construct(array $params, $toUser) {
-         parent::__construct('DomainOrdersSuspended', $toUser);
 
-         $this->setParams($params);
-     }
- }
+class DomainOrdersSuspendedMsg extends Message {
+	#-------------------------------------------------------------------------------
+	public function __construct(array $params, $toUser) {
+		#-------------------------------------------------------------------------------
+		parent::__construct('DomainOrdersSuspended', $toUser, $params);
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	public function getParams() {
+		#-------------------------------------------------------------------------------
+		$DomainScheme = DB_Select('DomainSchemes', Array('*'), Array('UNIQ', 'Where' => SPrintF('`ID` = %u',$this->params['SchemeID'])));
+		#-------------------------------------------------------------------------------
+		if(!Is_Array($DomainScheme))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$this->params['DomainScheme'] = $DomainScheme;
+		#-------------------------------------------------------------------------------
+		return $this->params;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+}
+

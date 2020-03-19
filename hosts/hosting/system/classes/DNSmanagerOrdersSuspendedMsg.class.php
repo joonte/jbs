@@ -3,13 +3,31 @@
  *
  *  Joonte Billing System
  *
- *  Copyright © 2012 Vitaly Velikodnyy
+ *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *
  */
- class DNSmanagerOrdersSuspendedMsg extends Message {
-     public function __construct(array $params, $toUser) {
-         parent::__construct('DNSmanagerOrdersSuspended', $toUser);
 
-         $this->setParams($params);
-     }
- }
+class DNSmanagerOrdersSuspendedMsg extends Message {
+	#-------------------------------------------------------------------------------
+	public function __construct(array $params, $toUser) {
+		#-------------------------------------------------------------------------------
+		parent::__construct('DNSmanagerOrdersSuspended', $toUser, $params);
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	public function getParams() {
+		#-------------------------------------------------------------------------------
+		$DNSmanagerScheme = DB_Select('DNSmanagerSchemes', Array('*'), Array('UNIQ', 'Where' => SPrintF('`ID` = %u',$this->params['SchemeID'])));
+		#-------------------------------------------------------------------------------
+		if(!Is_Array($DNSmanagerScheme))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$this->params['DNSmanagerScheme'] = $DNSmanagerScheme;
+		#-------------------------------------------------------------------------------
+		return $this->params;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+}
+

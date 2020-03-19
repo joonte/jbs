@@ -8,8 +8,8 @@
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ №{$OrderID|string_format:"%05u"} на хостинг, логин {$Login|default:'$Login'}, c паркованным доменом {$Domain|default:'$Domain'}, был заблокирован.
 
 --
-Тарифный план:		"{$HostingScheme.SchemeName|default:'$HostingScheme.SchemeName'}"
-Стоимость продления:	{$HostingScheme.Cost|default:'$HostingScheme.Cost'}
+Тарифный план:		"{$HostingScheme.Name|default:'$HostingScheme.Name'}"
+Стоимость продления:	{$HostingScheme.CostMonth|default:'$HostingScheme.CostMonth'}
 
 {if !$MethodSettings.CutSign}
 --

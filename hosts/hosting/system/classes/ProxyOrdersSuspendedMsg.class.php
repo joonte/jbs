@@ -3,13 +3,31 @@
  *
  *  Joonte Billing System
  *
- *  Copyright © 2020, Alex Keda for www.host-food.ru
+ *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *
  */
- class ProxyOrdersSuspendedMsg extends Message {
-     public function __construct(array $params, $toUser) {
-         parent::__construct('ProxyOrdersSuspended', $toUser);
 
-         $this->setParams($params);
-     }
- }
+class ProxyOrdersSuspendedMsg extends Message {
+	#-------------------------------------------------------------------------------
+	public function __construct(array $params, $toUser) {
+		#-------------------------------------------------------------------------------
+		parent::__construct('ProxyOrdersSuspended', $toUser, $params);
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	public function getParams() {
+		#-------------------------------------------------------------------------------
+		$ProxyScheme = DB_Select('ProxySchemes', Array('*'), Array('UNIQ', 'Where' => SPrintF('`ID` = %u',$this->params['SchemeID'])));
+		#-------------------------------------------------------------------------------
+		if(!Is_Array($ProxyScheme))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$this->params['ProxyScheme'] = $ProxyScheme;
+		#-------------------------------------------------------------------------------
+		return $this->params;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+}
+
