@@ -47,9 +47,27 @@ foreach($Services as $Service){
 	#if($Service['Code'] != 'Domain')
 	#	continue;
 	#-------------------------------------------------------------------------------
+	$Columns = Array(
+			'*',
+			SPrintF('(SELECT `Balance` FROM `Contracts` WHERE `%sOrdersOwners`.`ContractID` = `ID`) AS `Balance`',$Service['Code']),
+			SPrintF('(SELECT `Name` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `SchemeName`',$Service['Code'],$Service['Code'])
+			);
+	#-------------------------------------------------------------------------------
 	$Where = "`StatusID` = 'Suspended' AND ROUND((UNIX_TIMESTAMP() - `StatusDate`)/86400) IN (2,3,6,11,16,21,31,41,51,61,71,101)";
 	#-------------------------------------------------------------------------------
-	$Orders = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),Array('*'),Array('Where'=>$Where));
+	if($Service['Code'] == 'Domain'){
+		#-------------------------------------------------------------------------------
+		$Columns[] = '(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) AS `DomainZone`';
+		$Columns[] = '(SELECT `CostProlong` FROM `DomainSchemes` WHERE `DomainOrdersOwners`.`SchemeID` = `ID`) AS `Cost`';
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		// добавляем выборку ценника за месяц
+		$Columns[] = SPrintF('(SELECT `CostMonth` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `Cost`',$Service['Code'],$Service['Code']);
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	$Orders = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),$Columns,Array('Where'=>$Where));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Orders)){
 	case 'error':
@@ -66,6 +84,20 @@ foreach($Services as $Service){
 	$GLOBALS['TaskReturnInfo'][$Service['Code']] = Array(SizeOf($Orders));
 	#-------------------------------------------------------------------------------
 	foreach($Orders as $Order){
+		#-------------------------------------------------------------------------------
+		$Balance = Comp_Load('Formats/Currency',$Order['Balance']);
+		if(Is_Error($Balance))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Order['Balance'] = $Balance;
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$Cost = Comp_Load('Formats/Currency',$Order['Cost']);
+		if(Is_Error($Cost))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Order['Cost'] = $Cost;
+		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$msg = new Message(SPrintF('%sNoticeDelete',$Service['Code']),(integer)$Order['UserID'],Array(SPrintF('%sOrder',$Service['Code'])=>$Order));
 		#-------------------------------------------------------------------------------

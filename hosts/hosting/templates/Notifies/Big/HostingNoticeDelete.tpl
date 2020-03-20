@@ -7,7 +7,11 @@
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Уведомляем Вас о том, что оканчивается срок блокировки Вашего заказа №{$HostingOrder.OrderID|string_format:"%05u"} на хостинг, логин {$HostingOrder.Login|default:'$HostingOrder.Login'}, домен {$HostingOrder.Domain|default:'$HostingOrder.Domain'}.
-Дата удаления заказа {$ExpDate|date_format:"%d.%m.%Y"}
+Дата удаления заказа: {$ExpDate|date_format:"%d.%m.%Y"}
+Баланс договора:      {$HostingOrder.Balance|default:'$HostingOrder.Balance'}
+Тарифный план:        "{$HostingOrder.SchemeName|default:'$HostingOrder.SchemeName'}"
+Стоимость продления:  {$HostingOrder.Cost|default:'$HostingOrder.Cost'}
+
 
 {if !$MethodSettings.CutSign}
 --

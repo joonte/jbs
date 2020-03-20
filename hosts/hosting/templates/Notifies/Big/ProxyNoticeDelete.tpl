@@ -7,7 +7,11 @@
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Уведомляем Вас о том, что оканчивается срок блокировки Вашего заказа №{$OrderID|string_format:"%05u"} на прокси-сервер, {$Host|default:'$Host'}:{$Port|default:'$Port'}.
-Дата удаления заказа {$ExpDate|date_format:"%d.%m.%Y"}
+Дата удаления заказа: {$ExpDate|date_format:"%d.%m.%Y"}
+Баланс договора:      {$ProxyOrder.Balance|default:'$ProxyOrder.Balance'}
+Тарифный план:        "{$ProxyOrder.SchemeName|default:'$ProxyOrder.SchemeName'}"
+Стоимость продления:  {$ProxyOrder.Cost|default:'$ProxyOrder.Cost'}
+
 
 {if !$MethodSettings.CutSign}
 --
