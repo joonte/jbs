@@ -52,7 +52,6 @@
 			</Args>
 			<Attribs>
 				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
 			</Attribs>
 		</Info>
 		<!-- ********************************************************************** -->
@@ -69,7 +68,6 @@
 			</Args>
 			<Attribs>
 				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
 			</Attribs>
 		</Pay>
 		<!-- ********************************************************************** -->
@@ -86,7 +84,6 @@
 			</Args>
 			<Attribs>
 				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
 			</Attribs>
 		</SchemeChange>
 		<!-- ********************************************************************** -->
@@ -103,7 +100,6 @@
 			</Args>
 			<Attribs>
 				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
 			</Attribs>
 		</Manage>
 		<!-- ********************************************************************** -->
@@ -121,7 +117,6 @@
 			</Args>
 			<Attribs>
 				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
 			</Attribs>
 		</PasswordChange>
 		<!-- *********************************************************************** -->

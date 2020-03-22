@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Alex Keda, for www.host-food.ru -->
 <XML>
-<!-- *********************************************************************** -->
-<Items>
- <ListElement>
-  <Text>Заказы</Text>
-  <Prompt>Все заказы клиентов на DNSmanager</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/DNSmanagerOrders$</UniqID>
-  </Paths>
-  <Href>/Administrator/DNSmanagerOrders</Href>
- </ListElement>
- <ListElement>
-  <Text>Тарифы</Text>
-  <Prompt>Тарифные планы</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/DNSmanagerSchemes$</UniqID>
-  </Paths>
-  <Href>/Administrator/DNSmanagerSchemes</Href>
- </ListElement>
-</Items>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Items>
+		<ListElement>
+			<Text>Заказы</Text>
+			<Prompt>Все заказы клиентов на DNSmanager</Prompt>
+			<Paths>
+				<UniqID>^\/Administrator\/DNSmanagerOrders$</UniqID>
+			</Paths>
+			<Href>/Administrator/DNSmanagerOrders</Href>
+		</ListElement>
+		<ListElement>
+			<Text>Тарифы</Text>
+			<Prompt>Тарифные планы</Prompt>
+			<Paths>
+				<UniqID>^\/Administrator\/DNSmanagerSchemes$</UniqID>
+			</Paths>
+			<Href>/Administrator/DNSmanagerSchemes</Href>
+		</ListElement>
+	</Items>
+	<!-- *********************************************************************** -->
 </XML>

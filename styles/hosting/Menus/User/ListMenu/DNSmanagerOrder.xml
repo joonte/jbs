@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Items>
- <UniqID>
-  <Text>Дополнительная информация</Text>
-  <Href>javascript:ShowWindow("/DNSmanagerOrderInfo",{DNSmanagerOrderID:"%ServiceOrderID%"});</Href>
-  <Icon>Info.gif</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Оплатить заказ</Text>
-  <Href>javascript:ShowWindow("/DNSmanagerOrderPay",{DNSmanagerOrderID:%ServiceOrderID%});</Href>
-  <Icon>Pay.gif</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Учёт заказа</Text>
-  <Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
-  <Icon>OrderConsiderInfo.png</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Настройки автопродления</Text>
-  <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
-  <Icon>AutoProlong.png</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Сменить тарифный план</Text>
-  <Href>javascript:ShowWindow("/DNSmanagerOrderSchemeChange",{DNSmanagerOrderID:%ServiceOrderID%});</Href>
-  <Icon>SchemeChange.png</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Передать на другой аккаунт</Text>
-  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
-  <Icon>OrdersTransfer.png</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Управлять заказом DNS</Text>
-  <Href>javascript:OrderManage(%ServiceOrderID%,%ServiceID%);</Href>
-  <Icon>HostingManage.gif</Icon>
-  <JavaScript>OrderManage.js</JavaScript>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Сменить пароль от аккаунта</Text>
-  <Href>javascript:ShowWindow("/OrderPasswordChange",{ServiceOrderID:%ServiceOrderID%,ServiceID:"%ServiceID%"});</Href>
-  <Icon>Password.gif</Icon>
- </UniqID>
-</Items>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Items>
+		<UniqID>
+			<Text>Дополнительная информация</Text>
+			<Href>javascript:ShowWindow("/DNSmanagerOrderInfo",{DNSmanagerOrderID:"%ServiceOrderID%"});</Href>
+			<Icon>Info.gif</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Оплатить заказ</Text>
+			<Href>javascript:ShowWindow("/DNSmanagerOrderPay",{DNSmanagerOrderID:%ServiceOrderID%});</Href>
+			<Icon>Pay.gif</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Учёт заказа</Text>
+			<Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
+			<Icon>OrderConsiderInfo.png</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Настройки автопродления</Text>
+			<Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
+			<Icon>AutoProlong.png</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Сменить тарифный план</Text>
+			<Href>javascript:ShowWindow("/DNSmanagerOrderSchemeChange",{DNSmanagerOrderID:%ServiceOrderID%});</Href>
+			<Icon>SchemeChange.png</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Передать на другой аккаунт</Text>
+			<Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
+			<Icon>OrdersTransfer.png</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Управлять заказом DNS</Text>
+			<Href>javascript:OrderManage(%ServiceOrderID%,%ServiceID%);</Href>
+			<Icon>HostingManage.gif</Icon>
+			<JavaScript>OrderManage.js</JavaScript>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Сменить пароль от аккаунта</Text>
+			<Href>javascript:ShowWindow("/OrderPasswordChange",{ServiceOrderID:%ServiceOrderID%,ServiceID:"%ServiceID%"});</Href>
+			<Icon>Password.gif</Icon>
+		</UniqID>
+	</Items>
+	<!-- *********************************************************************** -->
 </XML>

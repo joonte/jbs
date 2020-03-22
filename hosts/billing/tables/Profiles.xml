@@ -1,202 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Appearance>
- <Row>
-  <Comp>Colors/Profiles</Comp>
-  <Args>
-   <ListElement>%StatusID%</ListElement>
-  </Args>
- </Row>
-</Appearance>
-<!-- *********************************************************************** -->
-<Source>
- <TableID>Profiles</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>UserID</ListElement>
-  <ListElement>CreateDate</ListElement>
-  <ListElement>Name</ListElement>
-  <ListElement>StatusID</ListElement>
-  <ListElement>StatusDate</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Message>Нет зарегистрированных профилей.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <PatternOut>
-   <Args>
-    <Patterns>
-     <Yesterday>
-      <Name>Профили за вчера</Name>
-      <Where>`CreateDate` &gt; BEGIN_DAY() - 86400</Where>
-     </Yesterday>
-     <!-- ****************************************************************** -->
-     <Today>
-      <Name>Профили за сегодня</Name>
-      <Where>`CreateDate` &gt; BEGIN_DAY()</Where>
-     </Today>
-     <!-- ****************************************************************** -->
-     <Week>
-      <Name>Профили за текущую неделю</Name>
-      <Where>`CreateDate` &gt; BEGIN_WEEK()</Where>
-     </Week>
-     <!-- ****************************************************************** -->
-     <Month>
-      <Name>Профили за текущий месяц</Name>
-      <Where>`CreateDate` &gt; BEGIN_MONTH()</Where>
-     </Month>
-     <!-- ****************************************************************** -->
-     <OnFilling>
-      <Name>На заполнении</Name>
-      <Where>`StatusID` = 'OnFilling'</Where>
-     </OnFilling>
-     <!-- ****************************************************************** -->
-     <Filled>
-      <Name>Для проверки</Name>
-      <Where>`StatusID` = 'Filled'</Where>
-     </Filled>
-     <!-- ****************************************************************** -->
-     <Natural>
-      <Name>Физические лица</Name>
-      <Where>`TemplateID` = 'Natural'</Where>
-     </Natural>
-     <!-- ****************************************************************** -->
-     <Juridical>
-      <Name>Юридические лица</Name>
-      <Where>`TemplateID` = 'Juridical'</Where>
-     </Juridical>
-     <!-- ****************************************************************** -->
-     <Individual>
-      <Name>Индивидуальные предприниматели</Name>
-      <Where>`TemplateID` = 'Individual'</Where>
-     </Individual>
-     <!-- ****************************************************************** -->
-     <Client>
-      <Name>Клиенты для размещения на сайте</Name>
-      <Where>`TemplateID` = 'Client'</Where>
-     </Client>
-     <!-- ****************************************************************** -->
-     <Partner>
-      <Name>Партнеры</Name>
-      <Where>`TemplateID` = 'Partner'</Where>
-     </Partner>
-    </Patterns>
-    <ActiveID>Week</ActiveID>
-   </Args>
-  </PatternOut>
-  <!-- ********************************************************************* -->
-  <Search>
-   <Args>
-    <ColumnsIDs>
-     <ListElement>ID</ListElement>
-     <ListElement>UserID</ListElement>
-     <ListElement>Name</ListElement>
-     <ListElement>TemplateID</ListElement>
-     <ListElement>Attribs</ListElement>
-    </ColumnsIDs>
-   </Args>
-  </Search>
- </Before>
- <!-- ********************************************************************** -->
- <After>
-  <Delete>
-   <Args>
-    <Comment>Выбранные профили</Comment>
-    <Send>
-     <TableID>Profiles</TableID>
-    </Send>
-   </Args>
-  </Delete>
-  <!-- ********************************************************************* -->
-  <StatusSet>
-   <Comp>Statuses/Set</Comp>
-   <Args>
-    <ListElement>Profiles</ListElement>
-   </Args>
-  </StatusSet>
- </After>
-</Comps>
-<!-- *********************************************************************** -->
-<Query>
- <SortOn>Number</SortOn>
-</Query>
-<!-- *********************************************************************** -->
-<Columns>
- <SelectID>
-  <Args>
-   <TableID>Profiles</TableID>
-  </Args>
- </SelectID>
- <!-- ********************************************************************** -->
- <ExtendedMenu>
-  <IsSorted>0</IsSorted>
-  <Comp>Menus/List</Comp>
-  <Args>
-   <ListElement>Administrator/ListMenu/Profiles.xml</ListElement>
-   <Replace>%ID%</Replace>
-  </Args>
- </ExtendedMenu>
- <!-- ********************************************************************** -->
- <Number>
-  <Head>Номер</Head>
-  <Comp>Formats/Profile/Number</Comp>
-  <Args>
-   <ListElement>%ID%</ListElement>
-  </Args>
-  <Alias>ID</Alias>
-  <Attribs>
-   <style>text-align:center;</style>
-  </Attribs>
- </Number>
- <!-- ********************************************************************** -->
- <CreateDate>
-  <Head>Дата созд.</Head>
-  <Comp>Formats/Date/Standard</Comp>
-  <Args>
-   <ListElement>%CreateDate%</ListElement>
-  </Args>
- </CreateDate>
- <!-- ********************************************************************** -->
- <Name>
-  <Head>Название</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Name%</ListElement>
-   <Length>15</Length>
-  </Args>
- </Name>
- <!-- ********************************************************************** -->
- <Template>
-  <Head>Шаблон</Head>
-  <Comp>Formats/Profile/Template/Name</Comp>
-  <Args>
-   <ListElement>%Template%</ListElement>
-   <Length>10</Length>
-  </Args>
-  <Alias>TemplateID</Alias>
- </Template>
- <!-- ********************************************************************** -->
- <Status>
-  <Args>
-   <ModeID>Profiles</ModeID>
-  </Args>
- </Status>
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>ExtendedMenu</ListElement>
- <ListElement>Number</ListElement>
- <ListElement>Owner</ListElement>
- <ListElement>Name</ListElement>
- <ListElement>Template</ListElement>
- <ListElement>Status</ListElement>
- <ListElement>StatusOver</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<RootID>Profiles</RootID>
+	<Cut>
+		<Comps>
+			<Before>
+				<PatternOut/>
+				<Search/>
+			</Before>
+			<After>
+				<StatusSet/>
+			</After>
+		</Comps>
+		<Sequence/>
+	</Cut>
+	<!-- *********************************************************************** -->
+	<Source>
+		<Conditions>
+			<Where>
+				<UniqID>`UserID` = @local.__USER_ID</UniqID>
+			</Where>
+		</Conditions>
+		<Message>У Вас нет зарегистрированных профилей.</Message>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<Info>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/ProfileInfo</ListElement>
+				<ListElement>
+					<ProfileID>%ID%</ProfileID>
+				</ListElement>
+				<ListElement>Дополнительная информация</ListElement>
+			</Args>
+		</Info>
+		<!-- ********************************************************************** -->
+		<Edit>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/ProfileEdit</ListElement>
+				<ListElement>
+					<ProfileID>%ID%</ProfileID>
+				</ListElement>
+				<ListElement>Редактировать</ListElement>
+				<ListElement>Edit.gif</ListElement>
+			</Args>
+		</Edit>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Info</ListElement>
+		<ListElement>Edit</ListElement>
+		<ListElement>Number</ListElement>
+		<ListElement>Name</ListElement>
+		<ListElement>Template</ListElement>
+		<ListElement>Status</ListElement>
+		<ListElement>StatusOver</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

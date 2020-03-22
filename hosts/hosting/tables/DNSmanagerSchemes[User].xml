@@ -39,8 +39,8 @@
 			</Args>
 			<Attribs>
 				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
 			</Attribs>
+			<LongName>Сделать заказ</LongName>
 		</DNSmanagerOrder>
 	</Columns>
 	<!-- *********************************************************************** -->

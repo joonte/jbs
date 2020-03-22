@@ -98,31 +98,31 @@ table {
 
 
 div.PostProfile {
-	display: none;
-	width: auto;
-	border-width: 0 0 1px 0;
-	padding-bottom: 5px;
-	margin: 0;
-	margin-bottom: 0px;
-	margin-bottom: 5px;
-	min-height: 40px;
-	overflow: hidden;
-	float: none;
+	display:	none;
+	width:		auto;
+	border-width:	0 0 1px 0;
+	padding-bottom:	5px;
+	margin:		0;
+	margin-bottom:	0px;
+	margin-bottom:	5px;
+	min-height:	40px;
+	overflow:	hidden;
+	float:		none;
 }
 
 div.EdeskMessageContent {
-	display: block;
-	width: auto;
-	float: none;
-	padding: 0;
-	padding-bottom: 5px;
-	min-height: 40px;
-	overflow: hidden;
+	display:	block;
+	width:		auto;
+	float:		none;
+	padding:	0;
+	padding-bottom:	5px;
+	min-height:	40px;
+	overflow:	hidden;
 }
 
 div.EdeskMessageInfo {
-	width: auto;
-	padding: 0;
+	width:		auto;
+	padding:	0;
 }
 
 /* уменьшаем пустое место по сторонам сообщения в тикетнице */

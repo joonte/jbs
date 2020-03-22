@@ -88,7 +88,6 @@
 			</Args>
 			<Attribs>
 				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
 			</Attribs>
 		</Info>
 		<!-- ********************************************************************** -->
@@ -105,7 +104,6 @@
 			</Args>
 			<Attribs>
 				<class>TableSuperStandard</class>
-				<style>width:22px;</style>
 			</Attribs>
 		</Edit>
 		<!-- ********************************************************************** -->
