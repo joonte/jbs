@@ -1,196 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Source>
- <TableID>WorksCompliteOwners</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>CreateDate</ListElement>
-  <ListElement>Month</ListElement>
-  <ListElement>UserID</ListElement>
-  <ListElement>Comment</ListElement>
-  <ListElement>Amount</ListElement>
-  <ListElement>Cost</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Message>Выполненных работ не обнаружено.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <PatternOut>
-   <Args>
-    <Patterns>
-     <Yesterday>
-      <Name>Работы за вчера</Name>
-      <Where>`CreateDate` &gt; BEGIN_DAY() - 86400</Where>
-     </Yesterday>
-     <!-- ****************************************************************** -->
-     <Today>
-      <Name>Работы за сегодня</Name>
-      <Where>`CreateDate` &gt; BEGIN_DAY()</Where>
-     </Today>
-     <!-- ****************************************************************** -->
-     <Week>
-      <Name>Работы за текущую неделю</Name>
-      <Where>`CreateDate` &gt; BEGIN_WEEK()</Where>
-     </Week>
-     <!-- ****************************************************************** -->
-     <Month>
-      <Name>Работы за текущий месяц</Name>
-      <Where>`CreateDate` &gt; BEGIN_MONTH()</Where>
-     </Month>
-    </Patterns>
-    <ActiveID>Week</ActiveID>
-   </Args>
-  </PatternOut>
-  <!-- ********************************************************************* -->
-  <Search>
-   <Args>
-    <ColumnsIDs>
-     <ListElement>ID</ListElement>
-     <ListElement>UserID</ListElement>
-     <ListElement>Comment</ListElement>
-     <ListElement>Amount</ListElement>
-     <ListElement>Cost</ListElement>
-    </ColumnsIDs>
-   </Args>
-  </Search>
- </Before>
- <!-- ********************************************************************** -->
- <After>
-  <Delete>
-   <Args>
-    <Comment>Выбранные работы</Comment>
-    <Send>
-     <TableID>WorksComplite</TableID>
-    </Send>
-   </Args>
-  </Delete>
- </After>
-</Comps>
-<!-- *********************************************************************** -->
-<Query>
- <SortOn>Month</SortOn>
-</Query>
-<!-- *********************************************************************** -->
-<Columns>
- <SelectID>
-  <Args>
-   <TableID>WorksComplite</TableID>
-  </Args>
- </SelectID>
- <!-- ********************************************************************** -->
- <Edit>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/Administrator/WorkCompliteEdit</ListElement>
-   <ListElement>
-    <WorkCompliteID>%ID%</WorkCompliteID>
-   </ListElement>
-   <ListElement>Редактировать выполненную работу</ListElement>
-   <ListElement>Edit.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Edit>
- <!-- ********************************************************************** -->
- <CreateDate>
-  <Head>Дата</Head>
-  <Comp>Formats/Date/Extended</Comp>
-  <Args>
-   <ListElement>%CreateDate%</ListElement>
-  </Args>
- </CreateDate>
- <!-- ********************************************************************** -->
- <Month>
-  <Head>Месяц</Head>
-  <Comp>Formats/Date/Month</Comp>
-  <Args>
-   <ListElement>%Month%</ListElement>
-  </Args>
- </Month>
- <!-- ********************************************************************** -->
- <Service>
-  <Head>Тип работы</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Service%</ListElement>
-   <Length>10</Length>
-  </Args>
-  <Alias>(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `ServiceID`)</Alias>
- </Service>
- <!-- ********************************************************************** -->
- <Comment>
-  <Head>Коммент.</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Comment%</ListElement>
-   <Length>10</Length>
-  </Args>
- </Comment>
- <!-- ********************************************************************** -->
- <Measure>
-  <Head>Ед. изм.</Head>
-  <Alias>(SELECT `Measure` FROM `Services` WHERE `Services`.`ID` = `ServiceID`)</Alias>
- </Measure>
- <!-- ********************************************************************** -->
- <Amount>
-  <Head>Кол-во</Head>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
- </Amount>
- <!-- ********************************************************************** -->
- <Cost>
-  <Head>Цена</Head>
-  <Comp>Formats/Currency</Comp>
-  <Args>
-   <ListElement>%Cost%</ListElement>
-  </Args>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
- </Cost>
- <!-- ********************************************************************** -->
- <Discont>
-  <Head>Скидка</Head>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
-  <Alias>CONCAT(Discont*100,' %')</Alias>
- </Discont>
- <!-- ********************************************************************** -->
- <Summ>
-  <Head>Сумма</Head>
-  <Comp>Formats/Currency</Comp>
-  <Args>
-   <ListElement>%Summ%</ListElement>
-  </Args>
-  <Alias>(`Amount`*`Cost`)*(1 - `Discont`)</Alias>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
- </Summ>
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>Edit</ListElement>
- <ListElement>CreateDate</ListElement>
- <ListElement>Month</ListElement>
- <ListElement>Service</ListElement>
- <ListElement>Comment</ListElement>
- <ListElement>Measure</ListElement>
- <ListElement>Amount</ListElement>
- <ListElement>Cost</ListElement>
- <ListElement>Discont</ListElement>
- <ListElement>Summ</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>WorksCompliteOwners</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>CreateDate</ListElement>
+			<ListElement>Month</ListElement>
+			<ListElement>UserID</ListElement>
+			<ListElement>Comment</ListElement>
+			<ListElement>Amount</ListElement>
+			<ListElement>Cost</ListElement>
+		</ColumnsIDs>
+		<Conditions>
+			<Message>Выполненных работ не обнаружено.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<PatternOut>
+				<Args>
+					<Patterns>
+						<Yesterday>
+							<Name>Работы за вчера</Name>
+							<Where>`CreateDate` &gt; BEGIN_DAY() - 86400</Where>
+						</Yesterday>
+						<!-- ****************************************************************** -->
+						<Today>
+							<Name>Работы за сегодня</Name>
+							<Where>`CreateDate` &gt; BEGIN_DAY()</Where>
+						</Today>
+						<!-- ****************************************************************** -->
+						<Week>
+							<Name>Работы за текущую неделю</Name>
+							<Where>`CreateDate` &gt; BEGIN_WEEK()</Where>
+						</Week>
+						<!-- ****************************************************************** -->
+						<Month>
+							<Name>Работы за текущий месяц</Name>
+							<Where>`CreateDate` &gt; BEGIN_MONTH()</Where>
+						</Month>
+					</Patterns>
+					<ActiveID>Week</ActiveID>
+				</Args>
+			</PatternOut>
+			<!-- ********************************************************************* -->
+			<Search>
+				<Args>
+					<ColumnsIDs>
+						<ListElement>ID</ListElement>
+						<ListElement>UserID</ListElement>
+						<ListElement>Comment</ListElement>
+						<ListElement>Amount</ListElement>
+						<ListElement>Cost</ListElement>
+					</ColumnsIDs>
+				</Args>
+			</Search>
+		</Before>
+		<!-- ********************************************************************** -->
+		<After>
+			<Delete>
+				<Args>
+					<Comment>Выбранные работы</Comment>
+					<Send>
+						<TableID>WorksComplite</TableID>
+					</Send>
+				</Args>
+			</Delete>
+		</After>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Query>
+		<SortOn>Month</SortOn>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<SelectID>
+			<Args>
+				<TableID>WorksComplite</TableID>
+			</Args>
+		</SelectID>
+		<!-- ********************************************************************** -->
+		<Edit>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/Administrator/WorkCompliteEdit</ListElement>
+				<ListElement>
+					<WorkCompliteID>%ID%</WorkCompliteID>
+				</ListElement>
+				<ListElement>Редактировать выполненную работу</ListElement>
+				<ListElement>Edit.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+			</Attribs>
+		</Edit>
+		<!-- ********************************************************************** -->
+		<CreateDate>
+			<Head>Дата</Head>
+			<Comp>Formats/Date/Extended</Comp>
+			<Args>
+				<ListElement>%CreateDate%</ListElement>
+			</Args>
+		</CreateDate>
+		<!-- ********************************************************************** -->
+		<Month>
+			<Head>Месяц</Head>
+			<Comp>Formats/Date/Month</Comp>
+			<Args>
+				<ListElement>%Month%</ListElement>
+			</Args>
+		</Month>
+		<!-- ********************************************************************** -->
+		<Service>
+			<Head>Тип работы</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Service%</ListElement>
+				<Length>10</Length>
+			</Args>
+			<Alias>(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `ServiceID`)</Alias>
+		</Service>
+		<!-- ********************************************************************** -->
+		<Comment>
+			<Head>Коммент.</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Comment%</ListElement>
+				<Length>10</Length>
+			</Args>
+		</Comment>
+		<!-- ********************************************************************** -->
+		<Measure>
+			<Head>Ед. изм.</Head>
+			<Alias>(SELECT `Measure` FROM `Services` WHERE `Services`.`ID` = `ServiceID`)</Alias>
+		</Measure>
+		<!-- ********************************************************************** -->
+		<Amount>
+			<Head>Кол-во</Head>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</Amount>
+		<!-- ********************************************************************** -->
+		<Cost>
+			<Head>Цена</Head>
+			<Comp>Formats/Currency</Comp>
+			<Args>
+				<ListElement>%Cost%</ListElement>
+			</Args>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</Cost>
+		<!-- ********************************************************************** -->
+		<Discont>
+			<Head>Скидка</Head>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+			<Alias>CONCAT(Discont*100,' %')</Alias>
+		</Discont>
+		<!-- ********************************************************************** -->
+		<Summ>
+			<Head>Сумма</Head>
+			<Comp>Formats/Currency</Comp>
+			<Args>
+				<ListElement>%Summ%</ListElement>
+			</Args>
+			<Alias>(`Amount`*`Cost`)*(1 - `Discont`)</Alias>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</Summ>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Edit</ListElement>
+		<ListElement>CreateDate</ListElement>
+		<ListElement>Month</ListElement>
+		<ListElement>Service</ListElement>
+		<ListElement>Comment</ListElement>
+		<ListElement>Measure</ListElement>
+		<ListElement>Amount</ListElement>
+		<ListElement>Cost</ListElement>
+		<ListElement>Discont</ListElement>
+		<ListElement>Summ</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

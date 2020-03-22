@@ -1,108 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<Cut>
- <Comps>
-  <After>
-   <Delete />
-  </After>
- </Comps>
- <Sequence />
-</Cut>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <Search>
-   <Args>
-    <ColumnsIDs>
-     <ListElement>ID</ListElement>
-     <ListElement>UserID</ListElement>
-    </ColumnsIDs>
-   </Args>
-  </Search>
- </Before>
-</Comps>
-<!-- *********************************************************************** -->
-<Source>
- <TableID>WorksCompliteReports</TableID>
- <ColumnsIDs>
-  <ListElement>ContractID</ListElement>
-  <ListElement>UserID</ListElement>
-  <ListElement>Month</ListElement>
-  <ListElement>WorksCount</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Where>
-   <UniqID>(SELECT `TypeID` FROM `Contracts` WHERE `Contracts`.`ID` = `ContractID`) != 'Default'</UniqID>
-  </Where>
-  <Message>Актов выполненных работ не обнаружено.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Query>
- <SortOn>Month</SortOn>
-</Query>
-<!-- *********************************************************************** -->
-<Columns>
- <Download>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Standard</Comp>
-  <Args>
-    <ListElement>
-     <onclick>AjaxCall('/WorksCompliteReportDownload',{ContractID:%ContractID%,Month:%Month%},'Формирование акта выполненных работ','document.location = $Answer.Location');</onclick>
-    </ListElement>
-    <ListElement>Загрузить акт выполненных работ</ListElement>
-    <ListElement>PDF.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Download>
- <!-- ********************************************************************** -->
- <Month>
-  <Head>Месяц</Head>
-  <Comp>Formats/Date/Month</Comp>
-  <Args>
-   <ListElement>%Month%</ListElement>
-  </Args>
- </Month>
- <!-- ********************************************************************** -->
- <Number>
-  <Head>Номер</Head>
-  <Comp>Formats/WorkComplite/Report/Number</Comp>
-  <Args>
-   <ListElement>%ContractID%</ListElement>
-   <ListElement>%Month%</ListElement>
-  </Args>
-  <Alias>ContractID</Alias>
- </Number>
- <!-- ********************************************************************** -->
- <Customer>
-  <Head>Заказчик</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Customer%</ListElement>
-   <Length>15</Length>
-  </Args>
-  <Alias>(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `WorksCompliteReports`.`ContractID`)</Alias>
- </Customer>
- <!-- ********************************************************************** -->
- <WorksCount>
-  <Head>Кол-во работ</Head>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
- </WorksCount>
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>Download</ListElement>
- <ListElement>Owner</ListElement>
- <ListElement>Month</ListElement>
- <ListElement>Number</ListElement>
- <ListElement>Customer</ListElement>
- <ListElement>WorksCount</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<Cut>
+		<Comps>
+			<After>
+				<Delete/>
+			</After>
+		</Comps>
+		<Sequence/>
+	</Cut>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<Search>
+				<Args>
+					<ColumnsIDs>
+						<ListElement>ID</ListElement>
+						<ListElement>UserID</ListElement>
+					</ColumnsIDs>
+				</Args>
+			</Search>
+		</Before>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>WorksCompliteReports</TableID>
+		<ColumnsIDs>
+			<ListElement>ContractID</ListElement>
+			<ListElement>UserID</ListElement>
+			<ListElement>Month</ListElement>
+			<ListElement>WorksCount</ListElement>
+		</ColumnsIDs>
+		<Conditions>
+			<Where>
+				<UniqID>(SELECT `TypeID` FROM `Contracts` WHERE `Contracts`.`ID` = `ContractID`) != 'Default'</UniqID>
+			</Where>
+			<Message>Актов выполненных работ не обнаружено.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Query>
+		<SortOn>Month</SortOn>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<Download>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Standard</Comp>
+			<Args>
+				<ListElement>
+					<onclick>AjaxCall('/WorksCompliteReportDownload',{ContractID:%ContractID%,Month:%Month%},'Формирование акта выполненных работ','document.location = $Answer.Location');</onclick>
+				</ListElement>
+				<ListElement>Загрузить акт выполненных работ</ListElement>
+				<ListElement>PDF.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+			</Attribs>
+		</Download>
+		<!-- ********************************************************************** -->
+		<Month>
+			<Head>Месяц</Head>
+			<Comp>Formats/Date/Month</Comp>
+			<Args>
+				<ListElement>%Month%</ListElement>
+			</Args>
+		</Month>
+		<!-- ********************************************************************** -->
+		<Number>
+			<Head>Номер</Head>
+			<Comp>Formats/WorkComplite/Report/Number</Comp>
+			<Args>
+				<ListElement>%ContractID%</ListElement>
+				<ListElement>%Month%</ListElement>
+			</Args>
+			<Alias>ContractID</Alias>
+		</Number>
+		<!-- ********************************************************************** -->
+		<Customer>
+			<Head>Заказчик</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Customer%</ListElement>
+				<Length>15</Length>
+			</Args>
+			<Alias>(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `WorksCompliteReports`.`ContractID`)</Alias>
+		</Customer>
+		<!-- ********************************************************************** -->
+		<WorksCount>
+			<Head>Кол-во работ</Head>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</WorksCount>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>Download</ListElement>
+		<ListElement>Owner</ListElement>
+		<ListElement>Month</ListElement>
+		<ListElement>Number</ListElement>
+		<ListElement>Customer</ListElement>
+		<ListElement>WorksCount</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

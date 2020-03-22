@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<RootID>WorksComplite</RootID>
-<Cut>
- <Comps>
-  <Before>
-   <PatternOut />
-   <Search />
-  </Before>
-  <After>
-   <StatusSet />
-   <Delete />
-  </After>
- </Comps>
- <Sequence />
-</Cut>
-<!-- *********************************************************************** -->
-<Source>
- <Conditions>
-  <Where>
-   <UniqID>`UserID` = @local.__USER_ID</UniqID>
-  </Where>
-  <Message>Для Вас не выполнялись работы.</Message>
- </Conditions>
- <Adding>
-  <Message>По данному договору работы не выполнялись.</Message>
- </Adding>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <UniqID>
-   <Comp>Contracts/SelectFilter</Comp>
-   <Args type="array" />
-  </UniqID>
- </Before>
-</Comps>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>CreateDate</ListElement>
- <ListElement>Month</ListElement>
- <ListElement>Service</ListElement>
- <ListElement>Comment</ListElement>
- <ListElement>Measure</ListElement>
- <ListElement>Amount</ListElement>
- <ListElement>Cost</ListElement>
- <ListElement>Discont</ListElement>
- <ListElement>Summ</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<RootID>WorksComplite</RootID>
+	<Cut>
+		<Comps>
+			<Before>
+				<PatternOut/>
+				<Search/>
+			</Before>
+			<After>
+				<StatusSet/>
+				<Delete/>
+			</After>
+		</Comps>
+		<Sequence/>
+	</Cut>
+	<!-- *********************************************************************** -->
+	<Source>
+		<Conditions>
+			<Where>
+				<UniqID>`UserID` = @local.__USER_ID</UniqID>
+			</Where>
+			<Message>Для Вас не выполнялись работы.</Message>
+		</Conditions>
+		<Adding>
+			<Message>По данному договору работы не выполнялись.</Message>
+		</Adding>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<UniqID>
+				<Comp>Contracts/SelectFilter</Comp>
+				<Args type="array"/>
+			</UniqID>
+		</Before>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>CreateDate</ListElement>
+		<ListElement>Month</ListElement>
+		<ListElement>Service</ListElement>
+		<ListElement>Comment</ListElement>
+		<ListElement>Measure</ListElement>
+		<ListElement>Amount</ListElement>
+		<ListElement>Cost</ListElement>
+		<ListElement>Discont</ListElement>
+		<ListElement>Summ</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

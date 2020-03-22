@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Items>
- <ListElement>
-  <Text>Выполненные работы</Text>
-  <Paths>
-   <UniqID>^\/Administrator\/WorksComplite$</UniqID>
-  </Paths>
-  <Href>/Administrator/WorksComplite</Href>
- </ListElement>
- <ListElement>
-  <Text>Акты выполненных работ</Text>
-  <Paths>
-   <UniqID>^\/Administrator\/WorksCompliteReports$</UniqID>
-  </Paths>
-  <Href>/Administrator/WorksCompliteReports</Href>
- </ListElement>
-</Items>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Items>
+		<ListElement>
+			<Text>Выполненные работы</Text>
+			<Paths>
+				<UniqID>^\/Administrator\/WorksComplite$</UniqID>
+			</Paths>
+			<Href>/Administrator/WorksComplite</Href>
+		</ListElement>
+		<ListElement>
+			<Text>Акты выполненных работ</Text>
+			<Paths>
+				<UniqID>^\/Administrator\/WorksCompliteReports$</UniqID>
+			</Paths>
+			<Href>/Administrator/WorksCompliteReports</Href>
+		</ListElement>
+	</Items>
+	<!-- *********************************************************************** -->
 </XML>
