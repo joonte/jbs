@@ -219,13 +219,19 @@ foreach($ServersGroups as $ServersGroup){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	if(SizeOf($Servers) > 1){
+	if(SizeOf($Servers) > 1 && $Balance > 0){
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load('Formats/Currency',$Balance);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		$Table[] = Array(new Tag('TD',Array('colspan'=>5,'class'=>'Standard'),SPrintF('Общий доход от серверов группы: %s',$Comp)));
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Formats/Currency',$Balance / SizeOf($Servers));
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Table[] = Array(new Tag('TD',Array('colspan'=>5,'class'=>'Standard'),SPrintF('Средний доход от сервера группы: %s',$Comp)));
 		#-------------------------------------------------------------------------------
 		$Table[] = Array(new Tag('TD',Array('colspan'=>5,'class'=>'Standard'),SPrintF('Число аккаунтов в группе: %s / %s',$Accounts,$NumPaid)));
 		#-------------------------------------------------------------------------------
