@@ -117,6 +117,11 @@ foreach($Files as $File){
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
+// перебираем хэши, если файла нет, то удаляем его из массива
+foreach(Array_Keys($Names) as $Key)
+	if(!File_Exists(SPrintF('%s/%s',$Uploads,$Key)))
+		UnSet($Names[$Key]);
+#-------------------------------------------------------------------------------
 $IsWrite = IO_Write($NamesPath,JSON_Encode($Names),TRUE);
 if(Is_Error($IsWrite))
 	return ERROR | @Trigger_Error(500);
