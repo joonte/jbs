@@ -115,8 +115,10 @@
 			</Search>
 			<!-- ********************************************************************* -->
 			<DSSearch>
-				<Comp>DSOrders/Search</Comp>
-				<Args type="array"/>
+				<Comp>HostingOrders/Search</Comp>
+				<Args>
+					<ListElement>DS</ListElement>
+				</Args>
 				<NoBlock/>
 			</DSSearch>
 		</Before>

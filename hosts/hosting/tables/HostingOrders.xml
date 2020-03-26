@@ -114,7 +114,9 @@
 			<!-- ********************************************************************* -->
 			<HostingSearch>
 				<Comp>HostingOrders/Search</Comp>
-				<Args type="array"/>
+				<Args>
+					<ListElement>Hosting</ListElement>
+				</Args>
 				<NoBlock/>
 			</HostingSearch>
 		</Before>

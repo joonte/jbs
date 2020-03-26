@@ -113,8 +113,10 @@
 			</Search>
 			<!-- ********************************************************************* -->
 			<ProxySearch>
-				<Comp>ProxyOrders/Search</Comp>
-				<Args type="array"/>
+				<Comp>HostingOrders/Search</Comp>
+				<Args>
+					<ListElement>Proxy</ListElement>
+				</Args>
 				<NoBlock/>
 			</ProxySearch>
 		</Before>

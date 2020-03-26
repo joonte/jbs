@@ -1,10 +1,10 @@
 <?php
 
 #-------------------------------------------------------------------------------
-/** @author Великодный В.В. (Joonte Ltd.) */
+/** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('LinkID');
+$__args_list = Array('LinkID','Code');
 /******************************************************************************/
 /******************************************************************************/
 /******************************************************************************/
@@ -18,9 +18,30 @@ $Template = &$Links[$LinkID];
 /******************************************************************************/
 $Tr = new Tag('TR');
 #-------------------------------------------------------------------------------
-$HostingSchemes = DB_Select('HostingSchemes',Array('ID','Name','CostMonth','(SELECT `Name` FROM `ServersGroups` WHERE `HostingSchemes`.`ServersGroupID` = `ServersGroups`.`ID`) as `ServersGroupName`'),Array('SortOn'=>'SortID'));
+$Columns = Array('ID','Name','CostMonth');
 #-------------------------------------------------------------------------------
-switch(ValueOf($HostingSchemes)){
+// у выделенных серверов нет групп. что конечно странно
+if($Code == 'DS'){
+	#-------------------------------------------------------------------------------
+	$Columns[] = SPrintF('(SELECT `Address` FROM `Servers` WHERE `%sSchemes`.`ServerID` = `Servers`.`ID`) as `ServersGroupName`',$Code);
+	#-------------------------------------------------------------------------------
+}elseif($Code == 'ExtraIP'){
+	#-------------------------------------------------------------------------------
+	$Columns[] = '`AddressType` AS `ServersGroupName`';
+	#-------------------------------------------------------------------------------
+}elseif($Code == 'ISPsw'){
+	#-------------------------------------------------------------------------------
+	$Columns[] = '"-" AS `ServersGroupName`';
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
+	$Columns[] = SPrintF('(SELECT `Name` FROM `ServersGroups` WHERE `%sSchemes`.`ServersGroupID` = `ServersGroups`.`ID`) as `ServersGroupName`',$Code);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+$Schemes = DB_Select(SPrintF('%sSchemes',$Code),$Columns,Array('SortOn'=>'SortID'));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Schemes)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
@@ -32,13 +53,13 @@ case 'array':
 	#-------------------------------------------------------------------------------
 	$Options['Default'] = 'Не указан';
 	#-------------------------------------------------------------------------------
-	foreach($HostingSchemes as $HostingScheme){
+	foreach($Schemes as $Scheme){
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Formats/Currency',$HostingScheme['CostMonth']);
+		$Comp = Comp_Load('Formats/Currency',$Scheme['CostMonth']);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$Options[$HostingScheme['ID']] = SPrintF('%s, %s, %s',$HostingScheme['Name'],$HostingScheme['ServersGroupName'],$Comp);
+		$Options[$Scheme['ID']] = SPrintF('%s, %s, %s',$Scheme['Name'],$Scheme['ServersGroupName'],$Comp);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -75,7 +96,8 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>'(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) = 10000','SortOn'=>'Address'));
+// у некоторых услуг всего один сервер
+$Servers = DB_Select('Servers',Array('ID','Address'),Array('Where'=>SPrintF('(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) = (SELECT `ID` FROM `Services` WHERE `Code` = "%s")',$Code),'SortOn'=>'Address'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Servers)){
 case 'error':
@@ -109,7 +131,7 @@ case 'array':
 	$AddingWhere = &$Template['Source']['Adding']['Where'];
 	#-------------------------------------------------------------------------------
 	if($ServerID != 'Default')
-		$AddingWhere[] = SPrintF('(SELECT `ServerID` FROM `OrdersOwners` WHERE `HostingOrdersOwners`.`OrderID` = `OrdersOwners`.`ID`) = %u',$ServerID);
+		$AddingWhere[] = SPrintF('(SELECT `ServerID` FROM `OrdersOwners` WHERE `%sOrdersOwners`.`OrderID` = `OrdersOwners`.`ID`) = %u',$Code,$ServerID);
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Form/Select',Array('name'=>'ServerID','onchange'=>'TableSuperReload();'),$Options,$ServerID);
 	if(Is_Error($Comp))

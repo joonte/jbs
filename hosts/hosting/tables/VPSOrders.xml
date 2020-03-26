@@ -110,8 +110,10 @@
 			</Search>
 			<!-- ********************************************************************* -->
 			<VPSSearch>
-				<Comp>VPSOrders/Search</Comp>
-				<Args type="array"/>
+				<Comp>HostingOrders/Search</Comp>
+				<Args>
+					<ListElement>VPS</ListElement>
+				</Args>
 				<NoBlock/>
 			</VPSSearch>
 		</Before>

@@ -109,8 +109,10 @@
 			</Search>
 			<!-- ********************************************************************* -->
 			<ExtraIPSearch>
-				<Comp>ExtraIPOrders/Search</Comp>
-				<Args type="array"/>
+				<Comp>HostingOrders/Search</Comp>
+				<Args>
+					<ListElement>ExtraIP</ListElement>
+				</Args>
 				<NoBlock/>
 			</ExtraIPSearch>
 		</Before>

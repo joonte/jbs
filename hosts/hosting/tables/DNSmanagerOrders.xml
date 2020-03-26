@@ -116,8 +116,10 @@
 			</Search>
 			<!-- ********************************************************************* -->
 			<DNSmanagerSearch>
-				<Comp>DNSmanagerOrders/Search</Comp>
-				<Args type="array"/>
+				<Comp>HostingOrders/Search</Comp>
+				<Args>
+					<ListElement>DNSmanager</ListElement>
+				</Args>
 				<NoBlock/>
 			</DNSmanagerSearch>
 		</Before>

@@ -117,8 +117,10 @@
 			</Search>
 			<!-- ********************************************************************* -->
 			<ISPswSearch>
-				<Comp>ISPswOrders/Search</Comp>
-				<Args type="array"/>
+				<Comp>HostingOrders/Search</Comp>
+				<Args>
+					<ListElement>ISPsw</ListElement>
+				</Args>
 				<NoBlock/>
 			</ISPswSearch>
 		</Before>
