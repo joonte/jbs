@@ -15,16 +15,19 @@ then
 	exit 1;
 fi
 
-#find php
+#------------------------------------------------
+# если задан путь к интерпретатору
 if test -x "$2" -a -f "$2"
 then
 	echo $2 > $TmpFile
 else
+	# если путь не зададан - ищем его перебором вариантов
 	for cli in /usr/bin/php /usr/local/bin/php /usr/bin/php-cgi /usr/local/bin/php-cgi
 	do
 		test -x $cli && echo $cli > $TmpFile
 	done
 fi
+
 #------------------------------------------------
 if ! test -s $TmpFile
 then
@@ -32,6 +35,8 @@ then
 	echo 1;
 fi
 #------------------------------------------------
+
+# если задан путь к php.ini
 if test -f "$1"
 then
 	export PHP_BIN="`cat $TmpFile` -c $1"
@@ -40,6 +45,7 @@ else
 fi
 
 rm -f $TmpFile
+
 #------------------------------------------------
 # топаем в директорию со скриптами
 ScriptsDir="`dirname $0`"
@@ -49,21 +55,25 @@ then
 	exit 1;
 fi
 ScriptsDir="`pwd`"
+
 #------------------------------------------------
+# если имя биллинга задано
 if test -n "$3"
 then
 	echo "$3" > $TmpFile
 else
-	# ищщем host.ini
+	# а если на задано - ищщем host.ini, перебором
 	for dir in ../../hosts/*
 	do
 		if test -f $dir/host.ini
 		then
+			# достаём и сразу делаем переменной с значением
 			eval `cat $dir/host.ini | grep 'HostsIDs=' | awk -F ',' '{print $1}' | tr -d '"' `
 			echo $HostsIDs > $TmpFile
 		fi
 	done
 fi
+
 #------------------------------------------------
 if ! test -s $TmpFile
 then
@@ -93,7 +103,6 @@ fi
 #------------------------------------------------
 #------------------------------------------------
 echo `basename $PHP_BIN` > $RootDir/hosts/$HostsID/tmp/CronBinaryName.txt
-
 
 #------------------------------------------------
 #------------------------------------------------
