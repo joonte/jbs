@@ -2967,9 +2967,16 @@ UNLOCK TABLES;
 
 
 DELETE FROM `Config` WHERE `Param` = 'Copyright';
+-- SEPARATOR
 INSERT INTO `Config` (`HostID`,`Param`,`Value`)
 VALUES ('billing','Copyright','ООО "Компания" 2000-2020 г.');
-UNLOCK TABLES;
+-- SEPARATOR
+DELETE FROM `Config` WHERE `Param` = 'EmailSign';
+-- SEPARATOR
+INSERT INTO `Config` (`HostID`,`Param`,`Value`)
+VALUES ('billing','EmailSign','С уважением, ООО "Компания".');
+
+
 
 -- SEPARATOR
 LOCK TABLES `ServicesGroups` WRITE;

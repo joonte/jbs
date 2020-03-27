@@ -9,7 +9,7 @@ CREATE TABLE `Config` (
   `ID` int(11) NOT NULL auto_increment,
   `HostID` char(50) NOT NULL,
   `Param` char(255) NOT NULL,
-  `Value` char(255) NOT NULL,
+  `Value` text CHARACTER SET utf8mb4,
   PRIMARY KEY  (`ID`),
   KEY (`Param`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

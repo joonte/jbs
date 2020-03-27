@@ -73,7 +73,7 @@ $Message = Preg_Replace('/\[quote\](.+)\[\/quote\]/sU',"<i>\\1</i>\n",$Message);
 #-------------------------------------------------------------------------------
 // добавляем подпись, если необходимо
 if(!$Config['Notifies']['Methods']['Telegram']['CutSign'])
-	$Message = SPrintF("%s\n\n--\n%s",Trim($Message),Trim($GLOBALS['__USER']['Params']['EmailSign'])?Trim($GLOBALS['__USER']['Params']['EmailSign']):Trim($GLOBALS['__USER']['Sign']));
+	$Message = SPrintF("%s\n\n--\n%s",Trim($Message),$GLOBALS['__USER']['Sign']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // параметры, нужны для базы отправленных сообщений

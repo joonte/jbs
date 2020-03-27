@@ -66,8 +66,15 @@ if(IsSet($Attribs['HTML']) && $Attribs['HTML']){
 }else{
 	#-------------------------------------------------------------------------------
 	// добавляем подпись, если необходимо
-	if(!$Config['Notifies']['Methods']['Email']['CutSign'])
-		$Message = SPrintF("%s\n\n--\n%s",Trim($Message),Trim($GLOBALS['__USER']['Params']['EmailSign'])?Trim($GLOBALS['__USER']['Params']['EmailSign']):Trim($GLOBALS['__USER']['Sign']));
+	if(!$Config['Notifies']['Methods']['Email']['CutSign']){
+		#-------------------------------------------------------------------------------
+		$EmailSign = DB_Select('Config','Value',Array('UNIQ','Where'=>"`Param` = 'EmailSign'"));
+		if(!Is_Array($EmailSign))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Message = SPrintF("%s\n\n--\n%s",Trim($Message),$EmailSign['Value']?$EmailSign['Value']:Trim($GLOBALS['__USER']['Sign']));
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 	// если нет HTML то используем текстовое сообщение
 	$Message = SPrintF("%s\r\nContent-Transfer-Encoding: 8bit\r\nContent-Type: text/plain; charset=UTF-8\r\n\r\n%s",$Boundary,$Message);

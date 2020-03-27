@@ -10,6 +10,7 @@ Eval(COMP_INIT);
 $Args = Args();
 #-------------------------------------------------------------------------------
 $Copyright = (string) @$Args['Copyright'];
+$EmailSign = (string) @$Args['EmailSign'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 	return ERROR | @Trigger_Error(500);
@@ -98,6 +99,12 @@ default:
 $IsUpdate = DB_Update('Config',Array('Value'=>$Copyright),Array('Where'=>"`Param` = 'Copyright'"));
 if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$IsUpdate = DB_Update('Config',Array('Value'=>Trim($EmailSign)),Array('Where'=>"`Param` = 'EmailSign'"));
+if(Is_Error($IsUpdate))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Upload = Upload_Get('Logo');
 #-------------------------------------------------------------------------------

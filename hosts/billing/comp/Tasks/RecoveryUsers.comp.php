@@ -77,8 +77,6 @@ foreach($Users as $User){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	// подпись
-	$Params['EmailSign'] = IsSet($User['Params']['EmailSign'])?$User['Params']['EmailSign']:'';
 	#-------------------------------------------------------------------------------
 	$IsUpdate = DB_Update('Users',Array('Email'=>StrToLower($User['Email']),'Params'=>$Params),Array('ID'=>$User['ID']));
 	if(Is_Error($IsUpdate))
