@@ -9,4 +9,5 @@ DELETE FROM `Config` WHERE `Param` = 'EmailSign';
 -- SEPARATOR
 
 INSERT INTO `Config` (`HostID`,`Param`,`Value`)
-VALUES ('billing','EmailSign','С уважением, ООО "Компания".');
+VALUES ('billing','EmailSign','');
+
