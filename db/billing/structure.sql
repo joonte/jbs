@@ -120,7 +120,7 @@ CREATE TABLE `Edesks` (
   `TargetGroupID` int(11) NOT NULL,
   `TargetUserID` int(11) NOT NULL,
   `PriorityID` char(30) default 'Low',
-  `Theme` text,
+  `Theme` text CHARACTER SET utf8mb4,
   `UpdateDate` int(11) default '0',
   `StatusID` char(30) default 'UnSeted',
   `StatusDate` int(11) default '0',

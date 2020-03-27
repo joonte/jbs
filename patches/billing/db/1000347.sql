@@ -6,3 +6,7 @@ ALTER TABLE `EdesksMessages` MODIFY `Content` text CHARACTER SET utf8mb4;
 
 ALTER TABLE `Tasks` MODIFY `Result` text CHARACTER SET utf8mb4;
 
+-- SEPARATOR
+
+ALTER TABLE `Edesks` MODIFY `Theme` text CHARACTER SET utf8mb4;
+
