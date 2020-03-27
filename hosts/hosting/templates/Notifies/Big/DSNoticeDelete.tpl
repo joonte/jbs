@@ -12,9 +12,3 @@
 Тарифный план:         "{$DSOrder.SchemeName|default:'$DSOrder.SchemeName'}"
 Стоимость продления:   {$DSOrder.Cost|default:'$DSOrder.Cost'}
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

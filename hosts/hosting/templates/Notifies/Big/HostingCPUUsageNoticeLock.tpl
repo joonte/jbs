@@ -19,9 +19,3 @@
 За более детальной информацией обращайтесь в систему тикетов, биллинговой системы:
 http://{$smarty.const.HOST_ID|default:'HOST_ID'}/Tickets
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

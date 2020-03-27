@@ -1,6 +1,6 @@
 {*
  *  Joonte Billing System
- *  Copyright © 2019 Alex Keda, for www.host-food.ru
+ *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {$Theme|default:'$Theme'}
 ---

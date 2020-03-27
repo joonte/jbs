@@ -5,9 +5,3 @@
 {assign var=ExpDate value=$DNSmanagerOrder.StatusDate + $Config.Tasks.Types.DNSmanagerForDelete.DNSmanagerDeleteTimeout * 24 * 3600}
 {$ExpDate|date_format:"%d.%m.%Y"} будет удалён вторичный DNS {$DNSmanagerOrder.Login|default:'$DNSmanagerOrder.Login'}
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

@@ -1,6 +1,6 @@
 {*
  *  Joonte Billing System
- *  Copyright © 2012 Vitaly Velikodnyy
+ *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Удалён заказ на выделенный сервер" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
@@ -15,13 +15,7 @@ IP адрес заказа:	{$DSScheme.IPaddr}
 {/if}
 С этого момента сервер больше не закреплен за Вами и будет восстановлен в исходное состояние. Вся информация при этом будет удалена.
 
+---
 Вы всегда можете заказать другой сервер:
 http://{$smarty.const.HOST_ID|default:'HOST_ID'}/DSSchemes
-
-
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
 

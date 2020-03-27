@@ -5,9 +5,3 @@
 
 Превышение процессорного времени. Аккунт {$HostingOrder.Login|default:'$HostingOrder.Login'} заблокирован.
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

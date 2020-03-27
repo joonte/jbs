@@ -12,11 +12,3 @@
 Тарифный план:        "{$HostingOrder.SchemeName|default:'$HostingOrder.SchemeName'}"
 Стоимость продления:  {$HostingOrder.Cost|default:'$HostingOrder.Cost'}
 
-
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-
-

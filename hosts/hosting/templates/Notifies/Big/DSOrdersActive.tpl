@@ -1,6 +1,6 @@
 {*
  *  Joonte Billing System
- *  Copyright © 2012 Vitaly Velikodnyy
+ *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Выделенный сервер подключен к сети" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
@@ -36,10 +36,4 @@ IP адрес сервера:		{$DSScheme.IPaddr}
 {/if}
 
 Дополнительная информация будет предоставлена в центре поддержки биллинговой панели.
-
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
 

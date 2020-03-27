@@ -1,6 +1,6 @@
 {*
  *  Joonte Billing System
- *  Copyright © 2019 Alex Keda, for www.host-food.ru
+ *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 Отчет за оказанные услуги
 
@@ -9,10 +9,4 @@
 http://{$smarty.const.HOST_ID|default:'HOST_ID'}/WorksCompliteReportDownload?Email={$User.Email|default:'$User.Email'}&Password={$User.UniqID|default:'$User.UniqID'}&ContractID={$ContractID|default:'$ContractID'}&Month={$Month|default:'$Month'}
 
 Оригиналы документов будут высланы Вам по почте или через электронный документооборот в самое ближайшее время.
-
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
 

@@ -1,6 +1,6 @@
 {*
  *  Joonte Billing System
- *  Copyright © 2012 Vitaly Velikodnyy
+ *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="{$Theme|default:'$Theme'}" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
@@ -10,10 +10,4 @@
 ---
 Если вы не хотите получать рассылки от администрации, вы можете их отключить в биллинговой системе:
 Мои настройки / Уведомления / Сообщения от администрации
----
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
 

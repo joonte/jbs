@@ -5,9 +5,3 @@
 {assign var=ExpDate value=$DomainOrder.StatusDate + 2678400}
 Дата удаления домена {$DomainOrder.DomainName|default:'$DomainOrder.DomainName'}.{$DomainOrder.Name|default:'$DomainOrder.Name'}: {$ExpDate|date_format:"%d.%m.%Y"}
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

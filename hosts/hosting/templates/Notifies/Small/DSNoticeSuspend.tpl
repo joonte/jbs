@@ -4,9 +4,3 @@
 
 Оканчивается срок аренды сервера, заказ #{$DSOrder.OrderID|string_format:"%05u"}; IP {$DSOrder.IP|default:'$DSOrder.IP'}. Осталось {$DSOrder.DaysRemainded|default:'$DSOrder.DaysRemainded'} дн.
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

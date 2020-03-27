@@ -12,10 +12,3 @@
 Тарифный план:        "{$ISPswOrder.SchemeName|default:'$ISPswOrder.SchemeName'}"
 Стоимость продления:  {$ISPswOrder.Cost|default:'$ISPswOrder.Cost'}
 
-
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

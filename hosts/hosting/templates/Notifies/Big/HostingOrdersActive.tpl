@@ -1,6 +1,6 @@
 {*
  *  Joonte Billing System
- *  Copyright © 2012 Vitaly Velikodnyy
+ *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Заказ хостинга [{$Login|default:'$Login'}] активирован" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
@@ -27,10 +27,4 @@
       {$Server.Params.Ns2Name|default:'$Server.Params.Ns2Name'}
 
 Сохраните эти данные в надежном месте, они потребуются для дальнейшей работы.
-
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
 

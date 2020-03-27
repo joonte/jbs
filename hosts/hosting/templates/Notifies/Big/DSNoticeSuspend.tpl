@@ -12,9 +12,3 @@
 Стоимость продления:	{$DSOrder.Cost|default:'$DSOrder.Cost'}
 IP адрес:		{$DSOrder.IP|default:'$DSOrder.IP'}
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

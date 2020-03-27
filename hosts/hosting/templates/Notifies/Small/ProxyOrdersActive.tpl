@@ -9,9 +9,3 @@ Proto:	{$ProtocolType|default:'$ProtocolType'}
 Login:	{$Login|default:'$Login'}
 Pass:	{$Password|default:'$Password'}
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

@@ -12,10 +12,3 @@
 Тарифный план:        "{$DNSmanagerOrder.SchemeName|default:'$DNSmanagerOrder.SchemeName'}"
 Стоимость продления:  {$DNSmanagerOrder.Cost|default:'$DNSmanagerOrder.Cost'}
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-
-

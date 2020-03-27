@@ -6,9 +6,3 @@
 логин: {$Login|default:'$Login'}
 пароль: {$Password|default:'$Password'}
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

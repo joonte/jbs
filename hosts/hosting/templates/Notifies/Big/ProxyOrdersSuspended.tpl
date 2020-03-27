@@ -6,14 +6,7 @@
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ №{$OrderID|string_format:"%05u"} на прокси-сервер {$Host|default:'$Host'}:{$Port|default:'$Port'}, был заблокирован.
---
+---
 Тарифный план:		"{$ProxyScheme.Name|default:'$ProxyScheme.Name'}"
 Стоимость продления:	{$ProxyScheme.CostMonth|default:'$ProxyScheme.CostMonth'}
-
-
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
 

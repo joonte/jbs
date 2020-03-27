@@ -5,9 +5,3 @@
 
 Домен {$DomainName|default:'$DomainName'}.{$Name|default:'$Name'} активирован {$StatusDate|date_format:"%d.%m.%Y"}
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

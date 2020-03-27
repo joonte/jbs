@@ -12,11 +12,3 @@
 Тарифный план:        "{$ProxyOrder.SchemeName|default:'$ProxyOrder.SchemeName'}"
 Стоимость продления:  {$ProxyOrder.Cost|default:'$ProxyOrder.Cost'}
 
-
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-
-

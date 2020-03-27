@@ -1,6 +1,6 @@
 {*
  *  Joonte Billing System
- *  Copyright © 2012 Vitaly Velikodnyy
+ *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Регистрационные данные" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
@@ -31,10 +31,4 @@
 В случае необходимости смените их в биллинговой системе.
 
 Идентификатор: {$User.ID}
-
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
 

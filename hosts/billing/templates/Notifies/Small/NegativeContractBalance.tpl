@@ -4,9 +4,3 @@
  *}
 У вас имеется задолженность в размере {$Balance|default:'$Balance'}
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

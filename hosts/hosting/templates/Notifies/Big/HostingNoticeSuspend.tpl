@@ -13,9 +13,3 @@
 Логин:			{$HostingOrder.Login|default:'$HostingOrder.Login'}
 Паркованный домен:	{$HostingOrder.Domain|default:'$HostingOrder.Domain'}.
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

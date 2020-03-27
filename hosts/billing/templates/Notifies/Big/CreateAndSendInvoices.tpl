@@ -1,6 +1,6 @@
 {*
  *  Joonte Billing System
- *  Copyright © 2014 Alex Keda, for www.host-food.ru
+ *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Выписаны счета на продление оканчивающихся услуг" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
@@ -12,10 +12,4 @@ http://{$smarty.const.HOST_ID|default:'HOST_ID'}/Invoices
 
 Отключить автоматическую выписку счетов, или, сменить метод оплаты для автоматически создаваемых счетов вы можете в биллинговой панели, раздел:
 "Мои настройки" -> "Мои настройки"
-
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
 

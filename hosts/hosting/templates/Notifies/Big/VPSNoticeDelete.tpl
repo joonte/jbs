@@ -14,9 +14,3 @@ IP адрес:             {$VPSOrder.IP|default:'$VPSOrder.IP'}
 Стоимость продления:  {$VPSOrder.Cost|default:'$VPSOrder.Cost'}
 Логин:                {$VPSOrder.Login|default:'$VPSOrder.Login'}
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

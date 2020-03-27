@@ -12,9 +12,3 @@
 Стоимость продления:	{$ExtraIPOrder.Cost|default:'$ExtraIPOrder.Cost'}
 IP адрес:		{$ExtraIPOrder.Login|default:'$ExtraIPOrder.Login'}
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

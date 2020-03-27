@@ -1,6 +1,6 @@
 {*
  *  Joonte Billing System
- *  Copyright © 2012 Vitaly Velikodnyy
+ *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Условно оплаченный счёт #{$ID|default:'$ID'}" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
@@ -10,10 +10,4 @@
 приостановить оказание услуг оплаченных данным счётом - заблокировать заказ
 хостинга, VPS, или снять домен с делегирования.
 Ваши счета на оплату: http://{$smarty.const.HOST_ID|default:'HOST_ID'}/Invoices
-
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
 

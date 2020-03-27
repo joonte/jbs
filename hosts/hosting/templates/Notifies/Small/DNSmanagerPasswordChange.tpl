@@ -4,9 +4,3 @@
  *}
 {$smarty.now|date_format:"%d.%m.%Y"} изменён заказ вторичного DNS; логин: {$Login|default:'$Login'} пароль: {$Password|default:'$Password'}
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

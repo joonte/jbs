@@ -12,9 +12,3 @@
 Стоимость продления:	{$DNSmanagerOrder.Cost|default:'$DNSmanagerOrder.Cost'}
 Логин:			{$DNSmanagerOrder.Login|default:'$DNSmanagerOrder.Login'}
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

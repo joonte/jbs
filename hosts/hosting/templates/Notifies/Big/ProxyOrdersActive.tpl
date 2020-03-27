@@ -20,9 +20,3 @@
 
 Сохраните эти данные в надежном месте, они потребуются для дальнейшей работы.
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

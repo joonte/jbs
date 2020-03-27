@@ -4,9 +4,3 @@
  *}
 У вас есть неоплаченный счёт с номером #{$InvoiceID|default:'$InvoiceID'}
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

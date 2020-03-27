@@ -1,6 +1,6 @@
 {*
  *  Joonte Billing System
- *  Copyright © 2012 Vitaly Velikodnyy
+ *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 
@@ -10,10 +10,4 @@
 
 Если вы не планируете его оплачивать - установите для него статус 'Отменён'.
 Ваши счета на оплату: http://{$smarty.const.HOST_ID|default:'HOST_ID'}/Invoices
-
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
 

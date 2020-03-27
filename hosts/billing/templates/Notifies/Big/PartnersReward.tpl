@@ -1,16 +1,8 @@
 {*
  *  Joonte Billing System
- *  Copyright © 2012 Vitaly Velikodnyy
+ *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
 ---
 {$Message|default:'$Message'}
-
----
-
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
 

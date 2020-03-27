@@ -1,6 +1,6 @@
 {*
  *  Joonte Billing System
- *  Copyright © 2012 Vitaly Velikodnyy
+ *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Заказ хостинга [{$Login|default:'$Login'}] удален" scope=global}
 Здравствуйте, {$User.Name|default:'$User.Name'}!
@@ -11,10 +11,4 @@
 
 Для нового заказа, воспользуйтесь этой ссылкой:
 http://{$smarty.const.HOST_ID|default:'HOST_ID'}/HostingSchemes
-
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
 

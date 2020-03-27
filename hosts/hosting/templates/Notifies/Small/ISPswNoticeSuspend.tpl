@@ -5,9 +5,3 @@
 
 Оканчивается заказ на ПО ISPsystem, IP адрес: {$ISPswOrder.IP|default:'$ISPswOrder.IP'}; осталось {$ISPswOrder.DaysRemainded|default:'$ISPswOrder.DaysRemainded'} дн.
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

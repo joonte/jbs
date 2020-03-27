@@ -13,13 +13,6 @@ IP адрес заказа:	{$IP}
 IP адрес заказа:	{$DSScheme.IPaddr}
 {/if}
 {/if}
---
 Тарифный план:		"{$DSScheme.Name|default:'$DSScheme.Name'}"
 Стоимость продления:	{$DSScheme.CostMonth|default:'$DSScheme.CostMonth'}
-
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
 

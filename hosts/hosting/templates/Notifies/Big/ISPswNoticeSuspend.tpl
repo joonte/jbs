@@ -12,9 +12,3 @@
 Стоимость продления:	{$ISPswOrder.Cost|default:'$ISPswOrder.Cost'}
 IP адрес заказа:	{$ISPswOrder.IP|default:'$ISPswOrder.IP'}.
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-

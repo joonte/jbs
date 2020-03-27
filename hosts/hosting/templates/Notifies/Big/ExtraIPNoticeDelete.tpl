@@ -12,9 +12,3 @@ IP адрес:            {$ExtraIPOrder.Login|default:'$ExtraIPOrder.Login'}
 Тарифный план:       "{$ExtraIPOrder.SchemeName|default:'$ExtraIPOrder.SchemeName'}"
 Стоимость продления: {$ExtraIPOrder.Cost|default:'$ExtraIPOrder.Cost'}
 
-{if !$MethodSettings.CutSign}
---
-{$From.Sign|default:'$From.Sign'}
-
-{/if}
-
