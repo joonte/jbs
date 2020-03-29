@@ -74,7 +74,7 @@ $Message = Preg_Replace('/\[quote\](.+)\[\/quote\]/sU',"\n--\\1--\n",$Message);
 #-------------------------------------------------------------------------------
 // добавляем привествие, если необходимо
 if($Config['Notifies']['Methods']['Viber']['Greeting'])
-	$Message = SPrintF("%s\n\n%s",SPrintF(Trim($Config['Notifies']['Methods']['Viber']['Greeting']),$Attribs['Name']),Trim($Message));
+	$Message = SPrintF("%s\n\n%s",SPrintF(Trim($Config['Notifies']['Methods']['Viber']['Greeting']),$Attribs['UserName']),Trim($Message));
 #-------------------------------------------------------------------------------
 // добавляем подпись, если необходимо
 if(!$Config['Notifies']['Methods']['Viber']['CutSign'])

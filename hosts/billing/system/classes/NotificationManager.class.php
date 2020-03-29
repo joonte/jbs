@@ -205,7 +205,7 @@ class NotificationManager {
 			$msg->setParam('TimeEnd',$Contact['TimeEnd']);		// время конца рассылки
 			$msg->setParam('ContactID',$Contact['ID']);		// идентификатор контакта
 			$msg->setParam('ExternalID',$Contact['ExternalID']);	// ChatID для телеги
-			$msg->setParam('Name',$User['Name']);		// Имя пользователя, для приветствия в задаче
+			$msg->setParam('UserName',$User['Name']);		// Имя пользователя, для приветствия в задаче
 			#-------------------------------------------------------------------------------
 			// JBS-1283, надо сохранить метод, понадобится
 			$msg->setParam('MethodID',$MethodID);

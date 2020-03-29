@@ -72,7 +72,7 @@ default:
 #-------------------------------------------------------------------------------
 // добавляем привествие, если необходимо
 if($Config['Notifies']['Methods']['SMS']['Greeting'])
-	$Message = SPrintF("%s\n\n%s",SPrintF(Trim($Config['Notifies']['Methods']['SMS']['Greeting']),$Attribs['Name']),Trim($Message));
+	$Message = SPrintF("%s\n\n%s",SPrintF(Trim($Config['Notifies']['Methods']['SMS']['Greeting']),$Attribs['UserName']),Trim($Message));
 #-------------------------------------------------------------------------------
 // добавляем подпись, если необходимо
 if(!$Config['Notifies']['Methods']['SMS']['CutSign'])

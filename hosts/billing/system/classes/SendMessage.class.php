@@ -148,7 +148,7 @@ class SendMessage implements Dispatcher{
 					'ContactID'	=> $msg->getParam('ContactID'),			// идентфикатор контакта
 					'MessageID'	=> $msg->getParam('MessageID'),			// идентфикатор сообщения, из тикетниы
 					'TicketID'	=> $msg->getParam('TicketID'),			// номер тикета
-					'Name'		=> $msg->getParam('Name'),			// имя пользователя, для приветствия в задаче
+					'UserName'	=> $msg->getParam('UserName'),			// имя пользователя, для приветствия в задаче
 					'HTML'		=> $msg->getParam('HTML')			// текст сообщения в HTML (используется в рассылках, только для Email)
 				);
 		#-------------------------------------------------------------------------------
