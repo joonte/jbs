@@ -73,7 +73,7 @@ $Message = Preg_Replace('/\[quote\](.+)\[\/quote\]/sU',"<i>\\1</i>\n",$Message);
 #-------------------------------------------------------------------------------
 // добавляем привествие, если необходимо
 if($Config['Notifies']['Methods']['Telegram']['Greeting'])
-	$Message = SPrintF("%s\n\n%s",Trim($Config['Notifies']['Methods']['Telegram']['Greeting']),Trim($Message));
+	$Message = SPrintF("%s\n\n%s",SPrintF(Trim($Config['Notifies']['Methods']['Telegram']['Greeting']),$Attribs['Name']),Trim($Message));
 #-------------------------------------------------------------------------------
 // добавляем подпись, если необходимо
 if(!$Config['Notifies']['Methods']['Telegram']['CutSign'])

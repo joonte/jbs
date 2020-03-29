@@ -1071,7 +1071,7 @@
 				<CutSign>0</CutSign>
 				<MessageTemplate>Big</MessageTemplate>
 				<Message/>
-				<Greeting>Здравствуйте, %s</Greeting>
+				<Greeting>Здравствуйте, %s!</Greeting>
 			</Email>
 			<!-- ********************************************************************* -->
 			<WhatsApp>

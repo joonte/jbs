@@ -67,7 +67,7 @@ if(IsSet($Attribs['HTML']) && $Attribs['HTML']){
 	#-------------------------------------------------------------------------------
 	// добавляем привествие, если необходимо
 	if($Config['Notifies']['Methods']['Email']['Greeting'])
-		$Message = SPrintF("%s\n\n%s",Trim($Config['Notifies']['Methods']['Email']['Greeting']),Trim($Message));
+		$Message = SPrintF("%s\n\n%s",SPrintF(Trim($Config['Notifies']['Methods']['Email']['Greeting']),$Attribs['Name']),Trim($Message));
 	#-------------------------------------------------------------------------------
 	// добавляем подпись, если необходимо
 	if(!$Config['Notifies']['Methods']['Email']['CutSign']){

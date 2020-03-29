@@ -73,7 +73,7 @@ default:
 #-------------------------------------------------------------------------------
 // добавляем привествие, если необходимо
 if($Config['Notifies']['Methods']['WhatsApp']['Greeting'])
-	$Message = SPrintF("%s\n\n%s",Trim($Config['Notifies']['Methods']['WhatsApp']['Greeting']),Trim($Message));
+	$Message = SPrintF("%s\n\n%s",SPrintF(Trim($Config['Notifies']['Methods']['WhatsApp']['Greeting']),$Attribs['Name']),Trim($Message));
 #-------------------------------------------------------------------------------
 // добавляем подпись, если необходимо
 if(!$Config['Notifies']['Methods']['WhatsApp']['CutSign'])
