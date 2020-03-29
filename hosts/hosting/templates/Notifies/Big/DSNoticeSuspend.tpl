@@ -3,7 +3,6 @@
  *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Оканчивается срок действия заказа выделенного сервера" scope=global}
-Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Уведомляем Вас о том, что оканчивается срок аренды выделенного сервера, заказ №{$DSOrder.OrderID|string_format:"%05u"}.
 До окончания заказа:	{$DSOrder.DaysRemainded|default:'$DSOrder.DaysRemainded'} дн.

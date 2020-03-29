@@ -3,7 +3,6 @@
  *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Отрицательный баланс договора" scope=global}
-Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Один из ваших договоров имеет отрицательный балланс ({$Balance|default:'$Balance'}). Обычно, такое 
 происходит в результате отмены условно оплаченных счетов. Точную причину, вы

@@ -3,7 +3,6 @@
  *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="{$Theme|default:'$Theme'}" scope=global}
-Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 ---
 {$Message|default:'$Message'}

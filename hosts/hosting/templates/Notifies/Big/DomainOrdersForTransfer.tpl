@@ -3,7 +3,6 @@
  *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Перенос домена {$DomainName|default:'$DomainName'}.{$Name|default:'$Name'}" scope=global}
-Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} от Вас поступила заявка на перенос домена №{$OrderID|string_format:"%05u"} ({$DomainName|default:'$DomainName'}.{$Name|default:'$Name'}) под наше управление.
 

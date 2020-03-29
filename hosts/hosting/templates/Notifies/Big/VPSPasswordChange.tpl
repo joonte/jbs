@@ -3,7 +3,6 @@
  *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Изменён пароль для заказа виртуального сервера #{$OrderID|string_format:"%05u"}/{$IP|default:'$IP'}" scope=global}
-Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Уведомляем Вас о том, что {$smarty.now|date_format:"%d.%m.%Y"} пароль на Ваш заказ виртуального выделенного сервера (VPS) №{$OrderID|string_format:"%05u"} был изменен.
 

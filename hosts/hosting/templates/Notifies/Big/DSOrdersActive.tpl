@@ -3,7 +3,6 @@
  *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Выделенный сервер подключен к сети" scope=global}
-Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш выделенный сервер был установлен.
 Номер заказа		№{$OrderID|string_format:"%05u"}

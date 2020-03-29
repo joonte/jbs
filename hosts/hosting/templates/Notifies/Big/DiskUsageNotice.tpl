@@ -3,7 +3,6 @@
  *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Заканчивается место на заказе хостинга" scope=global}
-Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Обращаем ваше внимание, что использование дискового пространства на заказ хостинга {$Order.Login|default:'$Order.Login'} составляет {$Order.Used|default:'$Order.Used'}Mb, при максимально доступном, по вашему тарифному плану: {$Order.Limit|default:'$Order.Limit'}Mb.
 

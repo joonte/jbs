@@ -3,7 +3,6 @@
  *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Восстановление ваших данных для входа" scope=global}
-Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 По Вашему запросу, был восстановлен Ваш пароль для входа в биллинговую систему.
 

@@ -4,7 +4,6 @@
  *}
 {assign var=Theme value="Оканчивается срок блокировки заказа на домен {$DomainOrder.DomainName|default:'$DomainOrder.DomainName'}.{$DomainOrder.Name|default:'$DomainOrder.Name'}" scope=global}
 {assign var=ExpDate value=$DomainOrder.StatusDate + 2678400}
-Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Уведомляем Вас о том, оканчивается срок блокировки Вашего заказа №{$DomainOrder.OrderID|string_format:"%05u"}, на регистрацию домена [{$DomainOrder.DomainName|default:'$DomainOrder.DomainName'}.{$DomainOrder.Name|default:'$DomainOrder.Name'}].
 Дата удаления заказа:   {$ExpDate|date_format:"%d.%m.%Y"}

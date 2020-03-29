@@ -3,7 +3,6 @@
  *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Отчет за услуги" scope=global}
-Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Разрешите произвести перед Вами отчет за оказанные услуги.
 

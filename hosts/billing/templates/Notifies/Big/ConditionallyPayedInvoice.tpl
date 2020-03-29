@@ -3,7 +3,6 @@
  *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Условно оплаченный счёт #{$ID|default:'$ID'}" scope=global}
-Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 У вас есть счёт, номер #{$ID|default:'$ID'}, в статусе "Условно оплачен".
 Рекомендуем в ближайшее время его оплатить, в противном случае будем вынуждены

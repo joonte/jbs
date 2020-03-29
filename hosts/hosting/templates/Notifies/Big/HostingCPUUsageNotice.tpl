@@ -3,7 +3,6 @@
  *  rewritten by Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Превышение использования CPU (процессорного времени)" scope=global}
-Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Уведомляем Вас о том, что ваш аккаунт {$HostingOrder.Login|default:'$HostingOrder.Login'}, паркованный домен {$HostingOrder.Domain|default:'$HostingOrder.Domain'}, превысил использование процессорного времени, определённое вашим тарифом "{$HostingOrder.Scheme|default:'$HostingOrder.Scheme'}".
 

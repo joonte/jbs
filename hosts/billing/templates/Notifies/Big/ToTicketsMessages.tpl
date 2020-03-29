@@ -4,7 +4,6 @@
  *}
 {assign var=ThemeOrig value="{$Theme|default:'$Theme'}" scope=global}
 {assign var=Theme value="Ответ на запрос №{$TicketID|string_format:"%08u"} с темой: {$Theme|default:'$Theme'}" scope=global}
-Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 В службу поддержки поступило новое сообщение по запросу №{$TicketID|string_format:"%08u"}, с темой:
 {$ThemeOrig|default:'$ThemeOrig'}.

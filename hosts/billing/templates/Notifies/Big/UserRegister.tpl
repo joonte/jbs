@@ -3,7 +3,6 @@
  *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
 {assign var=Theme value="Регистрационные данные" scope=global}
-Здравствуйте, {$User.Name|default:'$User.Name'}!
 
 Поздравляем, вы зарегистрировались на ресурсе {$smarty.const.HOST_ID|default:'$HOST_ID'}!
 
