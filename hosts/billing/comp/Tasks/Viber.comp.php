@@ -72,6 +72,10 @@ $Message = Preg_Replace('/\[color=([a-z]+)\](.+)\[\/color\]/sU','\\2',$Message);
 $Message = Preg_Replace('/\[quote\](.+)\[\/quote\]/sU',"\n--\\1--\n",$Message);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// добавляем привествие, если необходимо
+if($Config['Notifies']['Methods']['Viber']['Greeting'])
+	$Message = SPrintF("%s\n\n%s",Trim($Config['Notifies']['Methods']['Viber']['Greeting']),Trim($Message));
+#-------------------------------------------------------------------------------
 // добавляем подпись, если необходимо
 if(!$Config['Notifies']['Methods']['Viber']['CutSign'])
 	$Message = SPrintF("%s\n\n--\n%s",Trim($Message),$GLOBALS['__USER']['Sign']);

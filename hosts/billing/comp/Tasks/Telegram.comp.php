@@ -71,6 +71,10 @@ $Message = Preg_Replace('/\[color=([a-z]+)\](.+)\[\/color\]/sU','<i>\\2</i>',$Me
 $Message = Preg_Replace('/\[quote\](.+)\[\/quote\]/sU',"<i>\\1</i>\n",$Message);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// добавляем привествие, если необходимо
+if($Config['Notifies']['Methods']['Telegram']['Greeting'])
+	$Message = SPrintF("%s\n\n%s",Trim($Config['Notifies']['Methods']['Telegram']['Greeting']),Trim($Message));
+#-------------------------------------------------------------------------------
 // добавляем подпись, если необходимо
 if(!$Config['Notifies']['Methods']['Telegram']['CutSign'])
 	$Message = SPrintF("%s\n\n--\n%s",Trim($Message),$GLOBALS['__USER']['Sign']);

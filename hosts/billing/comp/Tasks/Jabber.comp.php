@@ -62,6 +62,10 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// добавляем привествие, если необходимо
+if($Config['Notifies']['Methods']['Jabber']['Greeting'])
+	$Message = SPrintF("%s\n\n%s",Trim($Config['Notifies']['Methods']['Jabber']['Greeting']),Trim($Message));
+#-------------------------------------------------------------------------------
 // добавляем подпись, если необходимо
 if(!$Config['Notifies']['Methods']['Jabber']['CutSign'])
 	$Message = SPrintF("%s\n\n--\n%s",Trim($Message),$GLOBALS['__USER']['Sign']);
