@@ -103,8 +103,6 @@ foreach($Servers as $Server){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Heads = Array(SPrintF('From: admin@%s',$Server['Address']),'MIME-Version: 1.0','Content-Transfer-Encoding: 8bit',SPrintF('Content-Type: multipart/mixed; boundary="----==--%s"',HOST_ID));
-	#-------------------------------------------------------------------------------
 	foreach($HostingOrders as $HostingOrder){
 		#-------------------------------------------------------------------------------
 		#Debug(SPrintF('[comp/Tasks/GC/EmailBoxesNotifies] HostingOrder.Login = %s',$HostingOrder['Login']));
@@ -145,7 +143,7 @@ foreach($Servers as $Server){
 				$Params[] = TemplateReplace('Tasks.GC.EmailBoxesNotifies',Array('Email'=>$Email,'Usage'=>$Usage),FALSE);
 				$Params[] = Array(
 						'Theme'		=> 'Квота почтового ящика',
-						'Heads'		=> Implode("\r\n", $Heads),
+						'From'		=> Array('Email'=>SPrintF('admin@%s',$Server['Address']),'Name'=>'Системный Администратор'),
 						'Attachments'	=> '',
 						'UserID'	=> $HostingOrder['UserID'],
 						'TimeBegin'	=> 0,

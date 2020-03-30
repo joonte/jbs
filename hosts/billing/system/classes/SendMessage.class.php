@@ -107,20 +107,7 @@ class SendMessage implements Dispatcher{
 		if(!$recipient['Email'])
 			throw new jException(SPrintF('E-mail address not found for user: %s',$recipient['ID']));
 		#-------------------------------------------------------------------------------
-		$sender = $msg->getParam('From');
-		#-------------------------------------------------------------------------------
-		#Debug(SPrintF('[system/classes/SendMessage] sender = %s',print_r($sender,true)));
-		#-------------------------------------------------------------------------------
-		$emailHeads = Array(
-					SPrintF('From: %s', $sender['Email']),
-					'MIME-Version: 1.0',
-					'Content-Transfer-Encoding: 8bit',
-					SPrintF('Content-Type: multipart/related; boundary="----==--%s"',HOST_ID)
-					);
-		#-------------------------------------------------------------------------------
-		// added by lissyara 2013-02-13 in 15:45 MSK, for JBS-609
-		if($msg->getParam('MessageID'))
-			$emailHeads[] = SPrintF('Message-ID: <%s@%s>',$msg->getParam('MessageID'),HOST_ID);
+		#Debug(SPrintF('[system/classes/SendMessage] sender = %s',print_r($msg->getParam('From'),true)));
 		#-------------------------------------------------------------------------------
 		// JBS-1315, возможны дополнительные заголовки
 		if($msg->getParam('Headers')){
@@ -130,6 +117,10 @@ class SendMessage implements Dispatcher{
 			foreach($Lines as $Line)
 				$emailHeads[] = Trim($Line);
 			#-------------------------------------------------------------------------------
+		}else{
+			#-------------------------------------------------------------------------------
+			$emailHeads = Array();
+			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
 		$Params = Array();
@@ -138,9 +129,10 @@ class SendMessage implements Dispatcher{
 		$Params[] = $message;
 		$Params[] = Array(
 					'Theme'		=> $theme,					// тема сообщения
-					'Heads'		=> Implode("\r\n", $emailHeads),		// почтовые заголовки
+					'Heads'		=> $emailHeads,					// почтовые заголовки
 					'Attachments'	=> $msg->getParam('Attachments'),		// массив с вложениями, TODO разобраться а чё иногда вдруг не массив?
 					'UserID'	=> $recipient['ID'],				// идентфикатор пользователя
+					'From'		=> $msg->getParam('From'),			// от кого письмо (данные пользователя)
 					'TimeBegin'	=> $msg->getParam('TimeBegin'),			// время начала рассылки
 					'TimeEnd'	=> $msg->getParam('TimeEnd'),			// время окончания рассылки
 					'ChargeFree'	=> ($msg->getParam('ChargeFree'))?TRUE:FALSE,	// платно или бесплатно отправлять

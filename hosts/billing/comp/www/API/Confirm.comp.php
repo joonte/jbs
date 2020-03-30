@@ -158,7 +158,7 @@ if(!$Confirm && !$Code){
 	#Debug(SPrintF('[comp/www/API/Confirm]: ConfirmShort = %s; ConfirmLong = %s;',$ConfirmShort,$ConfirmLong));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Executor = DB_Select('Users',Array('Sign','Email'),Array('UNIQ','ID'=>100));
+	$Executor = DB_Select('Users',Array('Sign','Email','Name'),Array('UNIQ','ID'=>100));
 	if(!Is_Array($Executor))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -166,18 +166,17 @@ if(!$Confirm && !$Code){
 	# сообщение для SMS и часть остальных вариантов оповещения
 	$MessageSmall = SPrintF('Ваш проверочный код: %s',$ConfirmShort);
 	#-------------------------------------------------------------------------------
-	$MessageBig = "%s\r\n\r\nДля подтверждения вашего контактного адреса, вы можете пройти по этой ссылке:\r\n%s\r\nЕсли ссылка не открывается, то скопируйте и вставьте её в адресную строку браузера\r\n\r\n--\r\n%s\r\n";
+	$MessageBig = "%s\r\n\r\nДля подтверждения вашего контактного адреса, вы можете пройти по этой ссылке:\r\n%s\r\nЕсли ссылка не открывается, то скопируйте и вставьте её в адресную строку браузера";
 	#-------------------------------------------------------------------------------
 	$Url = SPrintF('http://%s/API/Confirm?Method=%s&ContactID=%u&Value=%s&Code=%s/%s',HOST_ID,$Method,$ContactID,$Value,$ConfirmShort,$ConfirmLong);
 	#-------------------------------------------------------------------------------
-	$MessageBig = SPrintF($MessageBig,$MessageSmall,$Url,$Executor['Sign']);
+	$MessageBig = SPrintF($MessageBig,$MessageSmall,$Url);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Theme = SPrintF('Подтверждение %s адреса',$Config['Notifies']['Methods'][$Method]['Name']);
 	#-------------------------------------------------------------------------------
-	$Heads = Array(SPrintF('From: %s',$Executor['Email']),'MIME-Version: 1.0','Content-Transfer-Encoding: 8bit',SPrintF('Content-Type: multipart/mixed; boundary="----==--%s"',HOST_ID));
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load(SPrintF('Tasks/%s',$Method),NULL,$Value,($Config['Notifies']['Methods'][$Method]['MessageTemplate'] == 'Small')?$MessageSmall:$MessageBig,Array('Heads'=>Implode("\n",$Heads),'UserID'=>$__USER['ID'],'Theme'=>$Theme,'TimeBegin'=>0,'TimeEnd'=>0,'ChargeFree'=>TRUE));
+	$Comp = Comp_Load(SPrintF('Tasks/%s',$Method),NULL,$Value,($Config['Notifies']['Methods'][$Method]['MessageTemplate'] == 'Small')?$MessageSmall:$MessageBig,Array('From'=>$Executor,'UserID'=>$__USER['ID'],'Theme'=>$Theme,'TimeBegin'=>0,'TimeEnd'=>0,'ChargeFree'=>TRUE));
 	if(Is_Error($Comp))
 		return new gException('ERROR_MESSAGE_SEND','Не удалось отправить сообщение');
 	#-------------------------------------------------------------------------------
