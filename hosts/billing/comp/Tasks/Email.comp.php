@@ -37,7 +37,7 @@ if(Is_Error(System_Load('libs/Server.php','classes/SendMailSmtp.class.php')))
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/Tasks/Email]: отправка письма для (%s), тема (%s)',$Address,$Attribs['Theme']));
 #-------------------------------------------------------------------------------
-#Debug(SPrintF('[comp/Tasks/Email]: %s',print_r($Attribs,true)));
+Debug(SPrintF('[comp/Tasks/Email]: %s',print_r($Attribs,true)));
 #-------------------------------------------------------------------------------
 $Config		= Config();
 $Regulars	= Regulars();
@@ -99,7 +99,11 @@ if(IsSet($Attribs['HTML']) && $Attribs['HTML']){
 	// у нас две версии письма в одном - и текстовая и HTML
 	$Plain = Trim($Message);
 	#-------------------------------------------------------------------------------
-	$Params = Array('HOST_ID'=>HOST_ID,'PLAIN_TEXT'=>$Plain,'HTML_THEME'=>$Attribs['Theme'],'HTML_TEXT'=>nl2br($Message),'HTML_SIGN'=>'','HTML_GREETING'=>'');
+	$Html = Comp_Load('Edesks/Text',Array('String'=>$Message));
+	if(Is_Error($Html))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Params = Array('HOST_ID'=>HOST_ID,'PLAIN_TEXT'=>$Plain,'HTML_THEME'=>$Attribs['Theme'],'HTML_TEXT'=>$Html,'HTML_SIGN'=>'','HTML_GREETING'=>'');
 	#-------------------------------------------------------------------------------
 	// добавляем привествие, если необходимо
 	if($Config['Notifies']['Methods']['Email']['Greeting']){
@@ -123,8 +127,10 @@ if(IsSet($Attribs['HTML']) && $Attribs['HTML']){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	// если нет HTML то используем текстовое сообщение
-	#$Message = SPrintF("%s\r\nContent-Transfer-Encoding: 8bit\r\nContent-Type: text/plain; charset=UTF-8\r\n\r\n%s",$Boundary,$Message);
+	// готовим HTML часть сообщения
+	$Params['HTML_TEXT'] = Chunk_Split(Base64_Encode(TemplateReplace('Email.HTML',$Params,FALSE)));
+	#-------------------------------------------------------------------------------
+	// заменяем текст и хтмл в шаблоне
 	$Message = TemplateReplace('Email',$Params,FALSE);
 	#-------------------------------------------------------------------------------
 	
@@ -147,7 +153,7 @@ if(IsSet($Attribs['Attachments']) && Is_Array($Attribs['Attachments']) && SizeOf
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[comp/Tasks/Email]: обработка вложения (%s), размер (%s), тип (%s)',$Attachment['Name'],$Attachment['Size'],$Attachment['Mime']));
 			#-------------------------------------------------------------------------------
-			$Message = SPrintF("%s%s\r\nContent-Disposition: attachment;\r\n\tfilename=\"%s\"\r\nContent-Transfer-Encoding: base64\r\nContent-Type: %s;\r\n\tname=\"%s\"\r\n\r\n%s",$Message,$Boundary,Mb_Encode_MimeHeader($Attachment['Name']),$Attachment['Mime'],Mb_Encode_MimeHeader($Attachment['Name']),$Attachment['Data']);
+			$Message = SPrintF("%s%s\r\nContent-Disposition: attachment; size=%u;\r\n\tfilename=\"%s\";\r\nContent-Transfer-Encoding: base64\r\nContent-Type: %s;\r\n\tname=\"%s\"\r\n\r\n%s",$Message,$Boundary,$Attachment['Size'],Mb_Encode_MimeHeader($Attachment['Name']),$Attachment['Mime'],Mb_Encode_MimeHeader($Attachment['Name']),$Attachment['Data']);
 			#Debug(SPrintF('[comp/Tasks/Email]: %s',$Attachment['Data']));
 			#-------------------------------------------------------------------------------
 		}

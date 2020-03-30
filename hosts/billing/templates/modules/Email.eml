@@ -12,47 +12,9 @@ Content-Type: text/plain; charset=UTF-8; format=flowed
 
 ------==--%HOST_ID%--text
 Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: base64
 
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<style type="text/css">
-			#subject {font-family:Arial,Helvetica,sans-serif; font-size:15px; margin-top:6px; margin-left:10px; margin-right:10px; margin-bottom:5px;}
-			#content {margin: 8px 9px;}
-			#unsubscribe {color:#888; font-family:Arial,Helvetica,sans-serif; font-size:11px; margin-top:30px;}
-		</style>
-	</head>
-	<body bgcolor="#ffffff">
-		<div>
-		<table width="90%" align="center" cellpadding="0" cellspacing="0" border="0">
-		<!-- message theme -->
-		<tr>
-			<td bgcolor="#c3cce3" background="cid:gradient_top.gif" style="background-repeat: no-repeat; background-position: left center;">
-				<div id="subject"><b>%HTML_THEME%</b></div>
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				<div id="content">
-					%HTML_GREETING%
-					<p>
-						%HTML_TEXT%
-					</p>
-					<p>С уважением, команда %HOST_ID%</p>
-				</div>
-
-				<div id="unsubscribe">
-					<hr color="#9ea2a5" size="18" />
-					%HTML_SIGN%
-				</div>
-			</td>
-		</tr>
-		</table>
-		</div>
-	</body>
-</html>
+%HTML_TEXT%
 
 ------==--%HOST_ID%--text--
 

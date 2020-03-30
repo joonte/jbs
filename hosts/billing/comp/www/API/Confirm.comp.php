@@ -176,7 +176,7 @@ if(!$Confirm && !$Code){
 	$Theme = SPrintF('Подтверждение %s адреса',$Config['Notifies']['Methods'][$Method]['Name']);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load(SPrintF('Tasks/%s',$Method),NULL,$Value,($Config['Notifies']['Methods'][$Method]['MessageTemplate'] == 'Small')?$MessageSmall:$MessageBig,Array('From'=>$Executor,'UserID'=>$__USER['ID'],'Theme'=>$Theme,'TimeBegin'=>0,'TimeEnd'=>0,'ChargeFree'=>TRUE));
+	$Comp = Comp_Load(SPrintF('Tasks/%s',$Method),NULL,$Value,($Config['Notifies']['Methods'][$Method]['MessageTemplate'] == 'Small')?$MessageSmall:$MessageBig,Array('From'=>$Executor,'UserName'=>$__USER['Name'],'UserID'=>$__USER['ID'],'Theme'=>$Theme,'TimeBegin'=>0,'TimeEnd'=>0,'ChargeFree'=>TRUE));
 	if(Is_Error($Comp))
 		return new gException('ERROR_MESSAGE_SEND','Не удалось отправить сообщение');
 	#-------------------------------------------------------------------------------
