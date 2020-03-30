@@ -96,9 +96,19 @@ if(IsSet($Attribs['HTML']) && $Attribs['HTML']){
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
+	// у нас две версии письма в одном - и текстовая и HTML
+	$Plain = Trim($Message);
+	#-------------------------------------------------------------------------------
+	$Params = Array('HOST_ID'=>HOST_ID,'PLAIN_TEXT'=>$Plain,'HTML_THEME'=>$Attribs['Theme'],'HTML_TEXT'=>nl2br($Message),'HTML_SIGN'=>'','HTML_GREETING'=>'');
+	#-------------------------------------------------------------------------------
 	// добавляем привествие, если необходимо
-	if($Config['Notifies']['Methods']['Email']['Greeting'])
-		$Message = SPrintF("%s\n\n%s",SPrintF(Trim($Config['Notifies']['Methods']['Email']['Greeting']),$Attribs['UserName']),Trim($Message));
+	if($Config['Notifies']['Methods']['Email']['Greeting']){
+		#-------------------------------------------------------------------------------
+		$Plain = SPrintF("%s\n\n%s",SPrintF(Trim($Config['Notifies']['Methods']['Email']['Greeting']),$Attribs['UserName']),$Plain);
+		#-------------------------------------------------------------------------------
+		$Params['HTML_GREETING'] = SPrintF('<p>%s</p>',SPrintF(Trim($Config['Notifies']['Methods']['Email']['Greeting']),$Attribs['UserName']));
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 	// добавляем подпись, если необходимо
 	if(!$Config['Notifies']['Methods']['Email']['CutSign']){
@@ -107,13 +117,17 @@ if(IsSet($Attribs['HTML']) && $Attribs['HTML']){
 		if(!Is_Array($EmailSign))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$Message = SPrintF("%s\n\n--\n%s",Trim($Message),$EmailSign['Value']?$EmailSign['Value']:Trim($GLOBALS['__USER']['Sign']));
+		$Plain = SPrintF("%s\n\n--\n%s",Trim($Plain),Trim($GLOBALS['__USER']['Sign']));
+		#-------------------------------------------------------------------------------
+		$Params['HTML_SIGN'] = $EmailSign['Value']?$EmailSign['Value']:Trim($GLOBALS['__USER']['Sign']);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 	// если нет HTML то используем текстовое сообщение
-	$Message = SPrintF("%s\r\nContent-Transfer-Encoding: 8bit\r\nContent-Type: text/plain; charset=UTF-8\r\n\r\n%s",$Boundary,$Message);
+	#$Message = SPrintF("%s\r\nContent-Transfer-Encoding: 8bit\r\nContent-Type: text/plain; charset=UTF-8\r\n\r\n%s",$Boundary,$Message);
+	$Message = TemplateReplace('Email',$Params,FALSE);
 	#-------------------------------------------------------------------------------
+	
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
