@@ -1,44 +1,46 @@
 
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<style type="text/css">
+<HTML>
+	<HEAD>
+		<META http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<STYLE type="text/css">
 			a		{color: blue; TEXT-DECORATION: none}
 			a:hover		{color: darkblue; TEXT-DECORATION: underline}
 			a:active	{color: darkblue; TEXT-DECORATION: none}
 			#subject	{font-family:Arial,Helvetica,sans-serif; font-size:15px; margin-top:6px; margin-left:10px; margin-right:10px; margin-bottom:5px;}
 			#content	{margin: 8px 9px;}
 			#unsubscribe	{color:#888; font-family:Arial,Helvetica,sans-serif; font-size:11px; margin-top:30px;}
-		</style>
-	</head>
-	<body bgcolor="#ffffff">
-		<div>
-		<table width="90%" align="center" cellpadding="0" cellspacing="0" border="0">
-		<!-- message theme -->
-		<tr>
-			<td bgcolor="#c3cce3" background="cid:gradient_top.gif" style="background-repeat: no-repeat; background-position: left center;">
-				<div id="subject"><b>%HTML_THEME%</b></div>
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				<div id="content">
-					%HTML_GREETING%
-					<p>
-						%HTML_TEXT%
-					</p>
-					<p>С уважением, команда %HOST_ID%</p>
-				</div>
-
-				<div id="unsubscribe">
-					<hr color="#9ea2a5" size="18" />
-					%HTML_SIGN%
-				</div>
-			</td>
-		</tr>
-		</table>
-		</div>
-	</body>
-</html>
+			#gradient_top   {background: #c3cce3; background: linear-gradient(to right, #6f8db9, #c3cce3);}
+			#gradient_bottom{background: #9ea2a5; background: linear-gradient(to right, #9ea2a5, #f1f1f1); border: none;}
+		</STYLE>
+	</HEAD>
+	<BODY bgcolor="#ffffff">
+		<DIV>
+		<TABLE width="90%" align="center" cellpadding="0" cellspacing="0" border="0">
+			<!-- message theme -->
+			<TR>
+				<TD id="gradient_top">
+					<DIV id="subject"><b>%HTML_THEME%</b></DIV>
+				</TD>
+			</TR>
+			<!-- message body -->
+			<TR>
+				<TD>
+					<DIV id="content">
+						%HTML_GREETING%
+						<P>
+							%HTML_TEXT%
+						</P>
+						<P>С уважением, команда %HOST_ID%</P>
+					</DIV>
+					<!-- message bottom -->
+					<DIV id="unsubscribe">
+						<HR id="gradient_bottom" size="18" />
+						%HTML_SIGN%
+					</DIV>
+				</TD>
+			</TR>
+		</TABLE>
+		</DIV>
+	</BODY>
+</HTML>
 
