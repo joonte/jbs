@@ -9,8 +9,8 @@
 			#subject	{font-family:Arial,Helvetica,sans-serif; font-size:15px; margin-top:6px; margin-left:10px; margin-right:10px; margin-bottom:5px;}
 			#content	{margin: 8px 9px;}
 			#unsubscribe	{color:#888; font-family:Arial,Helvetica,sans-serif; font-size:11px; margin-top:30px;}
-			#gradient_top   {background: #c3cce3; background: linear-gradient(to right, #6f8db9, #c3cce3);}
-			#gradient_bottom{background: #9ea2a5; background: linear-gradient(to right, #9ea2a5, #f1f1f1); border: none;}
+			#gradient_top   {background: #c3cce3; background: linear-gradient(to right, #6f8db9, #c3cce3); border-radius: 10px;}
+			#gradient_bottom{background: #9ea2a5; background: linear-gradient(to right, #9ea2a5, #f1f1f1); border-radius: 9px; border: none; height:18px;}
 		</STYLE>
 	</HEAD>
 	<BODY bgcolor="#ffffff">
@@ -30,11 +30,14 @@
 						<P>
 							%HTML_TEXT%
 						</P>
-						<P>С уважением, команда %HOST_ID%</P>
+						<!-- как-то странно с названием компании это выглядит. надо подумать как лучше сделать
+						<HR size="1">
+						<P>С уважением, хостинговая компания <a href="%Executor.Attribs.SiteURL%" target="_blank">%Executor.Name%</a></P>
+						-->
 					</DIV>
 					<!-- message bottom -->
 					<DIV id="unsubscribe">
-						<HR id="gradient_bottom" size="18" />
+						<HR id="gradient_bottom" />
 						%HTML_SIGN%
 					</DIV>
 				</TD>

@@ -37,7 +37,7 @@ if(Is_Error(System_Load('libs/Server.php','classes/SendMailSmtp.class.php')))
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/Tasks/Email]: отправка письма для (%s), тема (%s)',$Address,$Attribs['Theme']));
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/Tasks/Email]: %s',print_r($Attribs,true)));
+#Debug(SPrintF('[comp/Tasks/Email]: %s',print_r($Attribs,true)));
 #-------------------------------------------------------------------------------
 $Config		= Config();
 $Regulars	= Regulars();
@@ -126,6 +126,24 @@ if(IsSet($Attribs['HTML']) && $Attribs['HTML']){
 		$Params['HTML_SIGN'] = $EmailSign['Value']?$EmailSign['Value']:Trim($GLOBALS['__USER']['Sign']);
 		#-------------------------------------------------------------------------------
 	}
+	#-------------------------------------------------------------------------------
+	// достаём профиль исполнителя - данные организации, сайт и т.п.
+	$Compile = Comp_Load('www/Administrator/API/ProfileCompile',Array('ProfileID'=>100));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Compile)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$Params['Executor'] = $Compile;
+	#Debug(SPrintF('[comp/Tasks/Email]: Params = %s',print_r($Params,true)));
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	// готовим HTML часть сообщения
 	$Params['HTML_TEXT'] = Chunk_Split(Base64_Encode(TemplateReplace('Email.HTML',$Params,FALSE)));
