@@ -31,8 +31,11 @@ switch(ValueOf($ServersGroups)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	Debug("[comp/Statistics/ServersIncome]: no groups found");
-	break;
+	#-------------------------------------------------------------------------------
+	Debug('[comp/Statistics/ServersIncome]: no groups found');
+	#-------------------------------------------------------------------------------
+	return $Result;
+	#-------------------------------------------------------------------------------
 case 'array':
 	# All OK, Servers Groups found
 	break;
