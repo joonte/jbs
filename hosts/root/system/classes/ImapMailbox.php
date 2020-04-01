@@ -485,7 +485,8 @@ class ImapMailbox {
 				}
 			}
 		}
-		if(!empty($params['charset'])) {
+		/* а файлы-то зачем мучать перекодировкой? */
+		if(!empty($params['charset']) && !isset($params['filename']) && !isset($params['name'])) {
 			$data = $this->convertStringEncoding($data, $params['charset'], $this->serverEncoding);
 		}
 
