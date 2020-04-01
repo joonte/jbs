@@ -411,6 +411,7 @@ class ImapMailbox {
 		$mail->subject = isset($head->subject) ? $this->decodeMimeStr($head->subject, $this->serverEncoding) : null;
 		$mail->fromName = isset($head->from[0]->personal) ? $this->decodeMimeStr($head->from[0]->personal, $this->serverEncoding) : null;
 		$mail->fromAddress = strtolower($head->from[0]->mailbox . '@' . $head->from[0]->host);
+		$mail->headers = imap_fetchheader($this->getImapStream(), $mailId, FT_UID);
 
 		if(isset($head->to)) {
 			$toStrings = array();
