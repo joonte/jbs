@@ -281,7 +281,7 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // достаём список заказов на прокси-сервера
-$Orders = DB_Select('ISPswOrders',Array('OrderID','IP','Host'),Array('Where'=>'`StatusID` != "Waiting"'));
+$Orders = DB_Select('ProxyOrders',Array('OrderID','IP','Host'),Array('Where'=>'`StatusID` != "Waiting"'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Orders)){
 case 'error':
