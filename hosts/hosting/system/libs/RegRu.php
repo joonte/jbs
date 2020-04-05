@@ -969,7 +969,7 @@ function RegRu_Build_Query($Query,$DomainZone,$Person,$PersonID){
 			#-------------------------------------------------------------------------------
 		case 'Juridical':
 			#-------------------------------------------------------------------------------
-			$CompanyEn = SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm']));
+			$CompanyEn =  Mb_SubStr(SPrintF('%s %s',Translit($Person['CompanyName']),Translit($Person['CompanyForm'])),0,64);
 			#-------------------------------------------------------------------------------
 			$Query['o_company'] = $CompanyEn;
 			$Query['a_company'] = $CompanyEn;
