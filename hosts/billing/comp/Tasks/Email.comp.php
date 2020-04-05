@@ -39,6 +39,11 @@ Debug(SPrintF('[comp/Tasks/Email]: отправка письма для (%s), т
 #-------------------------------------------------------------------------------
 #Debug(SPrintF('[comp/Tasks/Email]: %s',print_r($Attribs,true)));
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// получатель, с именем
+$Recipient = SPrintF('=?UTF-8?B?%s?= <%s>',Base64_Encode($Attribs['UserName']),$Address);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Config		= Config();
 $Regulars	= Regulars();
 #-------------------------------------------------------------------------------
@@ -208,13 +213,13 @@ if(Is_Array($Settings)){
 	#-------------------------------------------------------------------------------
 	$mailSMTP = new SendMailSmtpClass($Settings['Login'],$Settings['Password'], SPrintF('%s://%s',$Settings['Protocol'],$Settings['Address']), '', $Settings['Port']);   
 	#-------------------------------------------------------------------------------
-	$IsMail = $mailSMTP->send($Address, $Attribs['Theme'], $Message, $Heads);
+	$IsMail = $mailSMTP->send($Recipient,$Attribs['Theme'],$Message,$Heads);
 	if(!$IsMail)
 		return ERROR | @Trigger_Error('[comp/Tasks/Email]: ошибка отправки почты через SMTP ');
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$IsMail = @Mail($Address,Mb_Encode_MimeHeader($Attribs['Theme']),$Message,$Heads);
+	$IsMail = @Mail($Recipient,Mb_Encode_MimeHeader($Attribs['Theme']),$Message,$Heads);
 	if(!$IsMail)
 		return ERROR | @Trigger_Error('[comp/Tasks/Email]: ошибка отправки сообщения, проверьте работу функции mail в PHP');
 	#-------------------------------------------------------------------------------
