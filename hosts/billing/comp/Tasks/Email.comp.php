@@ -176,7 +176,7 @@ if(IsSet($Attribs['Attachments']) && Is_Array($Attribs['Attachments']) && SizeOf
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[comp/Tasks/Email]: обработка вложения (%s), размер (%s), тип (%s)',$Attachment['Name'],$Attachment['Size'],$Attachment['Mime']));
 			#-------------------------------------------------------------------------------
-			$Message = SPrintF("%s%s\r\nContent-Disposition: attachment; size=%u;\r\n\tfilename=\"%s\";\r\nContent-Transfer-Encoding: base64\r\nContent-Type: %s;\r\n\tname=\"%s\"\r\n\r\n%s",$Message,$Boundary,$Attachment['Size'],Mb_Encode_MimeHeader($Attachment['Name']),$Attachment['Mime'],Mb_Encode_MimeHeader($Attachment['Name']),$Attachment['Data']);
+			$Message = SPrintF("%s%s\r\nContent-Disposition: attachment;\r\n\tfilename=\"%s\";\r\nContent-Transfer-Encoding: base64\r\nContent-Type: %s;\r\n\tname=\"%s\"\r\n\r\n%s",$Message,$Boundary,Mb_Encode_MimeHeader($Attachment['Name']),$Attachment['Mime'],Mb_Encode_MimeHeader($Attachment['Name']),$Attachment['Data']);
 			#Debug(SPrintF('[comp/Tasks/Email]: %s',$Attachment['Data']));
 			#-------------------------------------------------------------------------------
 		}
