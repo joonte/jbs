@@ -119,7 +119,8 @@ foreach($Contacts as $Contact){
 	if(In_Array($Contact['MethodID'],Array('Telegram','Viber','VKontakte')) && $Contact['ExternalID'])
 		$Address = SPrintF('ChatID = %s',$Contact['ExternalID']);
 	#-------------------------------------------------------------------------------
-	$Table[] = Array($Config['Notifies']['Methods'][$Contact['MethodID']]['Name'],$Address);
+	$RowName = ($Contact['IsHidden'])?SPrintF('%s [удалён]',$Config['Notifies']['Methods'][$Contact['MethodID']]['Name']):$Config['Notifies']['Methods'][$Contact['MethodID']]['Name'];
+	$Table[] = Array($RowName,$Address);
 	#-------------------------------------------------------------------------------
 	if($Contact['Confirmed']){
 		#-------------------------------------------------------------------------------

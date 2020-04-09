@@ -44,7 +44,7 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // выбираем контакты пользователя, нет-нет да нужны
-$Contacts = DB_Select('Contacts','*',Array('Where'=>SPrintF('`UserID` = %u',$User['ID']),'SortOn'=>Array('MethodID','Address')));
+$Contacts = DB_Select('Contacts','*',Array('Where'=>Array(SPrintF('`UserID` = %u',$User['ID']),'`IsHidden` = "no"'),'SortOn'=>Array('MethodID','Address')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Contacts)){
 case 'error':

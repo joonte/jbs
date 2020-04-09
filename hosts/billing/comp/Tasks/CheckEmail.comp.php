@@ -454,7 +454,7 @@ foreach($Mails as $mailId){
 			Debug(SPrintF('[comp/Tasks/CheckEmail]: processing by Contacts table: %s',$Addr));
 			#-------------------------------------------------------------------------------
 			// если такой адрес есть - a их может быть много, выбираем с последней датой входа, наверное, и последний подтверждённый контакт
-			$Where = SPrintF('`ID` IN (SELECT `UserID` FROM `Contacts` WHERE `Address` = "%s" AND `MethodID` = "Email" ORDER BY `Confirmed` DESC)',$Addr);
+			$Where = SPrintF('`ID` IN (SELECT `UserID` FROM `Contacts` WHERE `Address` = "%s" AND `MethodID` = "Email" AND `IsHidden` = "no" ORDER BY `Confirmed` DESC)',$Addr);
 			#-------------------------------------------------------------------------------
 			$User = DB_Select('Users',Array('*'),Array('UNIQ','Where'=>$Where,'IsDesc'=>TRUE,'SortOn'=>'EnterDate','Limits'=>Array(0,1)));
 			#-------------------------------------------------------------------------------

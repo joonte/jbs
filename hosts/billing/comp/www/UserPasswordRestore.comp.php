@@ -91,7 +91,7 @@ if($Address){
 			'(SELECT `IsProtected` FROM `Users` WHERE `Users`.`ID` = `Contacts`.`UserID`) AS `IsProtected`',
 			);
 	#-------------------------------------------------------------------------------
-	$Where = SPrintF('`UserID` IN (SELECT `UserID` FROM `Contacts` WHERE `Address` = "%s")',$Address);
+	$Where = SPrintF('`UserID` IN (SELECT `UserID` FROM `Contacts` WHERE `Address` = "%s" AND `IsHidden` = "no")',$Address);
 	#-------------------------------------------------------------------------------
 	$Users = DB_Select('Contacts',$Columns,Array('Where'=>$Where,'SortOn'=>Array('UserID','MethodID','Address')));
 	#-------------------------------------------------------------------------------

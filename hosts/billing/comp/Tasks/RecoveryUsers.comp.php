@@ -93,7 +93,7 @@ foreach($Users as $User){
 	if(!$Count){
 		#-------------------------------------------------------------------------------
 		// чё-то не так. выбираем все почтовые адреса клиента, разбираемся
-		$Contacts = DB_Select('Contacts',Array('ID','MethodID','Address'),Array('Where'=>SPrintF('`UserID` = %u',$User['ID'])));
+		$Contacts = DB_Select('Contacts',Array('ID','MethodID','Address'),Array('Where'=>Array(SPrintF('`UserID` = %u',$User['ID']),'`IsHidden` = "no"')));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($Contacts)){
 		case 'error':
@@ -158,7 +158,7 @@ foreach($Users as $User){
 		if(Is_Error($IsUpdate))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$Contacts = DB_Select('Contacts',Array('ID','Address'),Array('Where'=>SPrintF('`UserID` = %u AND `MethodID` = "Email"',$User['ID'])));
+		$Contacts = DB_Select('Contacts',Array('ID','Address'),Array('Where'=>SPrintF('`UserID` = %u AND `MethodID` = "Email" AND `IsHidden` = "no"',$User['ID'])));
 		#-------------------------------------------------------------------------------
                 switch(ValueOf($Contacts)){
 		case 'error':

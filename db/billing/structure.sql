@@ -908,6 +908,7 @@ CREATE TABLE IF NOT EXISTS `Contacts` (
 	`TimeEnd` char(30) default '00',		-- время конца рассылок по этому контакту
 	`IsPrimary` enum('no','yes') DEFAULT 'no',	-- это первичный адрес, используется для входа в биллинг. пока, первичным может быть только почтовый адрес
 	`IsActive` enum('no','yes') DEFAULT 'no',	-- можно использовать для оповещений
+	`IsHidden` enum('no','yes') DEFAULT 'no',	-- адрес скрыт, т.е. не используется у пользователя. сделано вместо удаления
 	`UserNotice` text,				-- примечание пользователя о этом контакте
 	PRIMARY KEY (`ID`),
 	KEY `Confirmation` (`Confirmation`),
