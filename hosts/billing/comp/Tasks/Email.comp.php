@@ -181,7 +181,7 @@ if(IsSet($Attribs['HTML']) && $Attribs['HTML']){
 			if(In_Array($Mime[1],Array('tiff')))
 				continue;
 			#-------------------------------------------------------------------------------
-			$Params['ATTACHMENTS'] = SPrintF('%s <IMG style="max-width: 100%%;" src="cid:%s" alt="%s"><BR /><BR />',$Params['ATTACHMENTS'],$Key,$Attachments[$Key]['Name']);
+			$Params['ATTACHMENTS'] = SPrintF('%s <IMG src="cid:%s" alt="%s"><BR />',$Params['ATTACHMENTS'],$Key,$Attachments[$Key]['Name']);
 			#-------------------------------------------------------------------------------
 			$Attachments[$Key]['CID'] = SPrintF("Content-ID: <%s>",$Key);
 			#-------------------------------------------------------------------------------
