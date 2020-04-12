@@ -40,6 +40,20 @@ Debug(SPrintF('[comp/Tasks/Email]: отправка письма для (%s), т
 #Debug(SPrintF('[comp/Tasks/Email]: %s',print_r($Attribs,true)));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// достаём данные юзера которому идёт письмо
+$User = DB_Select('Users', Array('ID','Params'), Array('UNIQ', 'ID' => $Attribs['UserID']));
+if(!Is_Array($User))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+// добавляем идентфикаторы вложений
+$Attachments = Array();
+#-------------------------------------------------------------------------------
+if(IsSet($Attribs['Attachments']) && Is_Array($Attribs['Attachments']) && SizeOf($Attribs['Attachments']))
+	if($User['Params']['Settings']['SendEdeskFilesToEmail'] == "Yes")
+		foreach($Attribs['Attachments'] as $Attachment)
+			$Attachments[UniqId()] = $Attachment;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 // получатель, с именем
 $Recipient = SPrintF('=?UTF-8?B?%s?= <%s>',Base64_Encode($Attribs['UserName']),$Address);
 #-------------------------------------------------------------------------------
@@ -96,7 +110,7 @@ $Boundary = "\r\n\r\n------==--" . HOST_ID;
 #-------------------------------------------------------------------------------
 if(IsSet($Attribs['HTML']) && $Attribs['HTML']){
 	#-------------------------------------------------------------------------------
-	// JBS-1315 - если задан HTML то осталяем только его
+	// JBS-1315 - если задан HTML то оставляем только его
 	$Message = SPrintF("\r\n%s",$Attribs['HTML']);
 	#-------------------------------------------------------------------------------
 }else{
@@ -150,6 +164,32 @@ if(IsSet($Attribs['HTML']) && $Attribs['HTML']){
 	#Debug(SPrintF('[comp/Tasks/Email]: Params = %s',print_r($Params,true)));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	// строим HTML c картинками
+	$Params['ATTACHMENTS'] = '';
+	#-------------------------------------------------------------------------------
+	if(SizeOf($Attachments)){
+		#-------------------------------------------------------------------------------
+		foreach(Array_Keys($Attachments) as $Key){
+			#-------------------------------------------------------------------------------
+			$Mime = Explode('/',$Attachments[$Key]['Mime']);
+			#-------------------------------------------------------------------------------
+			// если это НЕ картинка - пропускаем
+			if($Mime[0] != 'image')
+				continue;
+			#-------------------------------------------------------------------------------
+			// если картинка в списке исключений (которые браузер не умеет показывать), пропускаем
+			if(In_Array($Mime[1],Array('tiff')))
+				continue;
+			#-------------------------------------------------------------------------------
+			$Params['ATTACHMENTS'] = SPrintF('%s <IMG style="max-width: 100%%;" src="cid:%s" alt="%s"><BR /><BR />',$Params['ATTACHMENTS'],$Key,$Attachments[$Key]['Name']);
+			#-------------------------------------------------------------------------------
+			$Attachments[$Key]['CID'] = SPrintF("Content-ID: <%s>",$Key);
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	// готовим HTML часть сообщения
 	$Params['HTML_TEXT'] = Chunk_Split(Base64_Encode(TemplateReplace('Email.HTML',$Params,FALSE)));
 	#-------------------------------------------------------------------------------
@@ -160,26 +200,25 @@ if(IsSet($Attribs['HTML']) && $Attribs['HTML']){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// шаблон заголовков вложения, заколебался ковыряться в одну строку
+$HeaderTpl = "Content-Disposition: attachment;\r\n\tfilename=\"%s\";\r\nContent-Transfer-Encoding: base64\r\nContent-Type: %s;\r\n\tname=\"%s\"";
+#-------------------------------------------------------------------------------
 # достаём вложения, если они есть, и прикладываем к сообщению
-if(IsSet($Attribs['Attachments']) && Is_Array($Attribs['Attachments']) && SizeOf($Attribs['Attachments'])){
+if(SizeOf($Attachments)){
 	#-------------------------------------------------------------------------------
-	# достаём данные юзера которому идёт письмо
-	$User = DB_Select('Users', Array('ID','Params'), Array('UNIQ', 'ID' => $Attribs['UserID']));
-	if(!Is_Array($User))
-		return ERROR | @Trigger_Error(500);
+	#Debug(SPrintF('[comp/Tasks/Email]: письмо содержит %u вложений',SizeOf($Attribs['Attachments'])));
 	#-------------------------------------------------------------------------------
-	if($User['Params']['Settings']['SendEdeskFilesToEmail'] == "Yes"){
+	foreach(Array_Keys($Attachments) as $Key){
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF('[comp/Tasks/Email]: письмо содержит %u вложений',SizeOf($Attribs['Attachments'])));
+		Debug(SPrintF('[comp/Tasks/Email]: обработка вложения (%s), размер (%s), тип (%s)',$Attachments[$Key]['Name'],$Attachments[$Key]['Size'],$Attachments[$Key]['Mime']));
 		#-------------------------------------------------------------------------------
-		foreach ($Attribs['Attachments'] as $Attachment){
-			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/Email]: обработка вложения (%s), размер (%s), тип (%s)',$Attachment['Name'],$Attachment['Size'],$Attachment['Mime']));
-			#-------------------------------------------------------------------------------
-			$Message = SPrintF("%s%s\r\nContent-Disposition: attachment;\r\n\tfilename=\"%s\";\r\nContent-Transfer-Encoding: base64\r\nContent-Type: %s;\r\n\tname=\"%s\"\r\n\r\n%s",$Message,$Boundary,Mb_Encode_MimeHeader($Attachment['Name']),$Attachment['Mime'],Mb_Encode_MimeHeader($Attachment['Name']),$Attachment['Data']);
-			#Debug(SPrintF('[comp/Tasks/Email]: %s',$Attachment['Data']));
-			#-------------------------------------------------------------------------------
-		}
+		$Header = SPrintF($HeaderTpl,Mb_Encode_MimeHeader($Attachments[$Key]['Name']),$Attachments[$Key]['Mime'],Mb_Encode_MimeHeader($Attachments[$Key]['Name']),$Key);
+		#-------------------------------------------------------------------------------
+		if(IsSet($Attachments[$Key]['CID']))
+			$Header = SPrintF("%s\r\n%s",$Header,$Attachments[$Key]['CID']);
+		#-------------------------------------------------------------------------------
+		$Message = SPrintF("%s%s\r\n%s\r\n\r\n%s",$Message,$Boundary,$Header,$Attachments[$Key]['Data']);
+		#Debug(SPrintF('[comp/Tasks/Email]: %s',$Attachment['Data']));
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
