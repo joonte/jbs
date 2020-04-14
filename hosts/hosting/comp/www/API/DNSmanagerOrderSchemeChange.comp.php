@@ -70,7 +70,14 @@ case 'array':
 			if(!$OldScheme['IsSchemeChange'])
 				return new gException('SCHEME_NOT_ALLOW_SCHEME_CHANGE','Тарифный план вторичный DNS не позволяет смену тарифа');
 			#-------------------------------------------------------------------------------
-			$NewScheme = DB_Select('DNSmanagerSchemes',Array('ID','ServersGroupID','IsSchemeChangeable','Name'),Array('UNIQ','ID'=>$NewSchemeID));
+			$UniqID = UniqID('DNSmanagerSchemes');
+			#-------------------------------------------------------------------------------
+			$Comp = Comp_Load('Services/Schemes','DNSmanagerSchemes',$DNSmanagerOrder['UserID'],Array('Name','ServersGroupID'),$UniqID);
+			if(Is_Error($Comp))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			$NewScheme = DB_Select($UniqID,Array('ID','ServersGroupID','IsSchemeChangeable','Name'),Array('UNIQ','ID'=>$NewSchemeID));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($NewScheme)){
 			case 'error':

@@ -58,7 +58,7 @@ if(!In_Array($HostingOrder['StatusID'],Array('Active','Suspended')))
 	return new gException('ORDER_NOT_ACTIVE','Тариф можно изменить только для активного или заблокированного заказа');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$OldScheme = DB_Select('HostingSchemes',Array('IsSchemeChange','QuotaDisk','Name','IsProlong','ID'),Array('UNIQ','ID'=>$HostingOrder['SchemeID']));
+$OldScheme = DB_Select('HostingSchemes',Array('IsSchemeChange','IsReselling','QuotaDisk','Name','IsProlong','ID'),Array('UNIQ','ID'=>$HostingOrder['SchemeID']));
 #-------------------------------------------------------------------------------
 switch(ValueOf($OldScheme)){
 case 'error':
@@ -75,7 +75,17 @@ default:
 if(!$OldScheme['IsSchemeChange'])
 	return new gException('SCHEME_NOT_ALLOW_SCHEME_CHANGE','Тарифный план заказа хостинга не позволяет смену тарифа');
 #-------------------------------------------------------------------------------
-$NewScheme = DB_Select('HostingSchemes',Array('ID','ServersGroupID','IsSchemeChangeable','QuotaDisk','Name'),Array('UNIQ','ID'=>$NewSchemeID));
+#-------------------------------------------------------------------------------
+$__USER = $GLOBALS['__USER'];
+#-------------------------------------------------------------------------------
+$UniqID = UniqID('HostingSchemes');
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Services/Schemes','HostingSchemes',$HostingOrder['UserID'],Array('Name','ServersGroupID'),$UniqID);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$NewScheme = DB_Select($UniqID,Array('ID','ServersGroupID','IsSchemeChangeable','QuotaDisk','Name'),Array('UNIQ','ID'=>$NewSchemeID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($NewScheme)){
 case 'error':

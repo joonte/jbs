@@ -53,7 +53,7 @@ if($VPSOrder['StatusID'] != 'Active')
 	return new gException('ORDER_NO_ACTIVE','Заказ виртуального сервера не активен');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$OldScheme = DB_Select('VPSSchemes',Array('ID','IsSchemeChange','disklimit','Name','CostDay'),Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
+$OldScheme = DB_Select('VPSSchemes',Array('ID','IsSchemeChange','IsReselling','disklimit','Name','CostDay'),Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
 #-------------------------------------------------------------------------------
 switch(ValueOf($OldScheme)){
 case 'error':
@@ -70,7 +70,15 @@ default:
 if(!$OldScheme['IsSchemeChange'])
 	return new gException('SCHEME_NOT_ALLOW_SCHEME_CHANGE','Тарифный план заказа виртуального сервера не позволяет смену тарифа');
 #-------------------------------------------------------------------------------
-$NewScheme = DB_Select('VPSSchemes',Array('ID','ServersGroupID','IsSchemeChangeable','disklimit','Name','CostDay'),Array('UNIQ','ID'=>$NewSchemeID));
+#-------------------------------------------------------------------------------
+$UniqID = UniqID('VPSSchemes');
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Services/Schemes','VPSSchemes',$VPSOrder['UserID'],Array('Name','ServersGroupID'),$UniqID);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$NewScheme = DB_Select($UniqID,Array('ID','ServersGroupID','IsSchemeChangeable','disklimit','Name','CostDay'),Array('UNIQ','ID'=>$NewSchemeID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($NewScheme)){
 case 'error':

@@ -93,7 +93,14 @@ if(!$OldScheme['IsSchemeChange'])
 	return new gException('SCHEME_NOT_ALLOW_SCHEME_CHANGE','Тарифный план заказа ПО не позволяет смену тарифа');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$NewScheme = DB_Select('ISPswSchemes',Array('ID','IsSchemeChangeable','Name'),Array('UNIQ','ID'=>$NewSchemeID));
+$UniqID = UniqID('ISPswSchemes');
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Services/Schemes','ISPswSchemes',$ISPswOrder['UserID'],Array('Name','SoftWareGroup'),$UniqID);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$NewScheme = DB_Select($UniqID,Array('ID','IsSchemeChangeable','Name'),Array('UNIQ','ID'=>$NewSchemeID));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 switch(ValueOf($NewScheme)){
