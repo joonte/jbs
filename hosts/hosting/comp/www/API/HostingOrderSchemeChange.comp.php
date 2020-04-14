@@ -76,8 +76,6 @@ if(!$OldScheme['IsSchemeChange'])
 	return new gException('SCHEME_NOT_ALLOW_SCHEME_CHANGE','Тарифный план заказа хостинга не позволяет смену тарифа');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$__USER = $GLOBALS['__USER'];
-#-------------------------------------------------------------------------------
 $UniqID = UniqID('HostingSchemes');
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Services/Schemes','HostingSchemes',$HostingOrder['UserID'],Array('Name','ServersGroupID'),$UniqID);
