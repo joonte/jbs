@@ -116,7 +116,9 @@ if(IsSet($Attribs['HTML']) && $Attribs['HTML']){
 }else{
 	#-------------------------------------------------------------------------------
 	// у нас две версии письма в одном - и текстовая и HTML
-	$Plain = Trim($Message);
+	$Plain = Comp_Load('Edesks/Text',Array('String'=>Trim($Message),'IsEmail'=>TRUE));
+	if(Is_Error($Plain))
+		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$Html = Comp_Load('Edesks/Text',Array('String'=>$Message));
 	if(Is_Error($Html))
