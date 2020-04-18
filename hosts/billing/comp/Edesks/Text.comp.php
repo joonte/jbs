@@ -53,7 +53,7 @@ if($GLOBALS['__USER']['Params']['Settings']['EdeskImagesPreview'] == "No" || IsS
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$String = preg_replace( "#(^|\s|>)((http|https|news|ftp)://\w+[^\s\[\]\<]+)#i", !IsSet($Params['IsEmail'])?"\\1<A href=\"\\2\" target=\"blank\">\\2</A>":'\\1\\2',$String);
+$String = Preg_Replace( "#(^|\s|>)((http|https|news|ftp|rdp)://\w+[^\s\[\]\<]+)#i", !IsSet($Params['IsEmail'])?"\\1<A href=\"\\2\" target=\"blank\">\\2</A>":'\\1\\2',$String);
 #-------------------------------------------------------------------------------
 $String = Preg_Replace('/\[link](.+)\[\/link\]/sU',!IsSet($Params['IsEmail'])?'<A href="\\1" target="blank">\\1</A>':'\\1',$String);
 #-------------------------------------------------------------------------------
