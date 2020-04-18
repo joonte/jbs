@@ -16,6 +16,12 @@
   * Имя пользователя: root
   * Пароль: {$Password|default:'$Password'}
  
+Если вы заказывали сервер с операционной системой Windows, то вы можете войти на него по RDP:
+  * IP адрес сервера: {$IP|default:'$IP'}
+  * Имя пользователя: Administrator
+  * Пароль: {$Password|default:'$Password'}
+  * rdp://full%20address=s:{$IP|default:'$IP'}:3389&username=s:Administrator
+
 При заказе сервера с панелью управления ISPmanager, Вы можете войти в неё используя следующие данные:
   * Адрес панели ISPmanager: https://{$IP|default:'$IP'}:1500/ispmgr
   * Логин в панель ISPmanager: root
