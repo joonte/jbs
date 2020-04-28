@@ -40,9 +40,7 @@ $Array = Array();
 #-------------------------------------------------------------------------------
 foreach($Servers as $Server){
 	#-------------------------------------------------------------------------------
-	#if($Server['Address'] != 'dns0.host-food.ru')
-	#	continue;
-	#if($Server['Code'] != 'Hosting')
+	#if($Server['Address'] != 'brainy.test-hf.su')
 	#	continue;
 	#-------------------------------------------------------------------------------
 	if(!$Server['IsActive'])

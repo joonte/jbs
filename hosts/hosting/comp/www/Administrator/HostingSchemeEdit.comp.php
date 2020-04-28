@@ -479,7 +479,7 @@ $Comp = Comp_Load(
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Кол-во псевдонимов домена'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'cPanel, Plesk, DirectAdmin')),$Comp);
+$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Кол-во псевдонимов домена'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'cPanel, Plesk, DirectAdmin, Brainy')),$Comp);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',
@@ -494,6 +494,25 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Кол-во поддоменов'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'cPanel, Plesk, DirectAdmin')),$Comp);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+  'Form/Input',
+  Array(
+    'type'  => 'text',
+    'name'  => 'QuotaWWWDomains',
+    'value' => $HostingScheme['QuotaWWWDomains']
+  )
+);
+if(Is_Error($Comp))
+  return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Кол-во WWW доменов'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'ISPmanager, Brainy')),$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+
+
+
+
 $Comp = Comp_Load(
   'Form/Input',
   Array(
@@ -559,6 +578,21 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Кол-во пересылок почты'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'Plesk, DirectAdmin')),$Comp);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load(
+	'Form/Input',
+	Array(
+		'type'	=> 'text',
+		'name'	=> 'mailrate',
+		'value'	=> $HostingScheme['mailrate']
+	)
+);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array(new Tag('NOBODY',new Tag('SPAN','Ограничение отправки почты [в час]'),new Tag('BR'),new Tag('SPAN',Array('class'=>'Comment'),'ISPmanager, Brainy')),$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',
   Array(
@@ -613,19 +647,6 @@ $Table[] = Array(new Tag('NOBODY',new Tag('LABEL',Array('for'=>'IsDnsControll'),
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = '-Ограничения для ISPmanager';
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-  'Form/Input',
-  Array(
-    'type'  => 'text',
-    'name'  => 'QuotaWWWDomains',
-    'value' => $HostingScheme['QuotaWWWDomains']
-  )
-);
-if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array('Кол-во WWW доменов',$Comp);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',
@@ -773,19 +794,6 @@ $Comp = Comp_Load(
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 $Table[] = Array('Одновременных соединений к MySQL',$Comp);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load(
-	'Form/Input',
-	Array(
-		'type'	=> 'text',
-		'name'	=> 'mailrate',
-		'value'	=> $HostingScheme['mailrate']
-	)
-);
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-$Table[] = Array('Ограничение отправки почты [в час]',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsSSIAccess','id'=>'IsSSIAccess','value'=>'yes'));

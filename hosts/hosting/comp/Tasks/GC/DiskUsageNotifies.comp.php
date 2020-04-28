@@ -45,7 +45,7 @@ foreach($Servers as $Server){
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: обработка аккаунтов на сервере %s',$Server['Address']));
 	#-------------------------------------------------------------------------------
-	#if($Server['Address'] != 's01.host-food.ru')
+	#if($Server['Address'] != 'brainy.test-hf.su')
 	#	continue;
 	#-------------------------------------------------------------------------------
 	if(!$Server['IsActive']){

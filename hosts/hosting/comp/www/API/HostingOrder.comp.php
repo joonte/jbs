@@ -33,8 +33,8 @@ if($DomainTypeID != 'None'){
 	#-------------------------------------------------------------------------------
 	$Domain = Mb_StrToLower($Domain,'UTF-8');
 	#-------------------------------------------------------------------------------
-	if(Preg_Match('/^www\.(.+)$/',$Domain,$Mathces))
-		$Domain = Next($Mathces);
+	if(Preg_Match('/^www\.(.+)$/',$Domain,$Matches))
+		$Domain = Next($Matches);
 	#-------------------------------------------------------------------------------
 	if(!Preg_Match($Regulars['Domain'],$Domain))
 		return new gException('WRONG_DOMAIN','Неверный домен');

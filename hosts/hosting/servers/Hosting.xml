@@ -63,6 +63,15 @@
 		</Settings>
 	</IspManager5>
 	<!-- ********************************************************************* -->
+	<Brainy>
+		<Settings>
+			<Port>8002</Port>
+			<Protocol>ssl</Protocol>
+			<Language>ru</Language>
+			<Url>https://s01.isp.su:8002/</Url>
+		</Settings>
+	</Brainy>
+	<!-- ********************************************************************* -->
 	<Plesk>
 		<Settings>
 			<Port>8443</Port>
@@ -92,6 +101,7 @@
 		<Comment>Система управления</Comment>
 		<Type>Select</Type>
 		<Options>
+			<Brainy>Brainy</Brainy>
 			<IspManager4>IspManager4</IspManager4>
 			<IspManager5>IspManager5</IspManager5>
 			<ISPConfig>ISPConfig</ISPConfig>
