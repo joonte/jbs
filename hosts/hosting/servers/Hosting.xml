@@ -65,10 +65,10 @@
 	<!-- ********************************************************************* -->
 	<Brainy>
 		<Settings>
-			<Port>8002</Port>
+			<Port>8000</Port>
 			<Protocol>ssl</Protocol>
 			<Language>ru</Language>
-			<Url>https://s01.isp.su:8002/</Url>
+			<Url>https://s01.isp.su:8000/</Url>
 		</Settings>
 	</Brainy>
 	<!-- ********************************************************************* -->
