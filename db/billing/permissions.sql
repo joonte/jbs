@@ -207,7 +207,11 @@ INSERT INTO `Permissions` (`Name`,`HostID`,`UserGroupID`,`UserID`,`OwnerGroupID`
 ('ContactRead','billing',1,1,4000000,1,1,'yes'),
 ('ContactRead','billing',3000000,100,1,1,2,'yes'),
 ('ContactsDelete','billing',1,1,4000000,1,1,'yes'),
-('ContactsDelete','billing',3000000,100,1,1,2,'yes')
+('ContactsDelete','billing',3000000,100,1,1,2,'yes'),
+
+/* added by lissyara, 2020-04-29 in 19:21 MSK  */
+('OrdersTransferDelete','billing',1,1,4000000,1,1,'no'),
+('OrdersTransferDelete','billing',3000000,100,1,1,2,'yes')
 
 ;
 

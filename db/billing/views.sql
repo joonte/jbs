@@ -367,5 +367,15 @@ SELECT
 FROM
    `Files`;
 
+#-------------------------------------------------------------------------------
+DROP VIEW IF EXISTS `OrdersTransferOwners`;
+DROP TABLE IF EXISTS `OrdersTransferOwners`;
+CREATE
+   VIEW `OrdersTransferOwners` AS
+SELECT
+   `OrdersTransfer`.*
+FROM
+   `OrdersTransfer`;
+
 
 

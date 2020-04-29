@@ -1,149 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Alex Keda, for www.host-food.ru -->
 <XML>
-<!-- *********************************************************************** -->
-<Appearance>
- <Row>
-  <Comp>Colors/OrdersTransfer</Comp>
-   <Args>
-    <ListElement>%StatusID%</ListElement>
-  </Args>
- </Row>
-</Appearance>
-<!-- *********************************************************************** -->
-<Source>
- <TableID>OrdersTransfer</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>CreateDate</ListElement>
-  <ListElement>(SELECT `NameShort` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) AS `ServiceName`</ListElement>
-  <ListElement>UserID</ListElement>
-  <ListElement>`ToUserID` AS `UserID1`</ListElement>
-  <ListElement>IsExecuted</ListElement>
-  <ListElement>(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) AS `Code`</ListElement>
-  <ListElement>ServiceID</ListElement>
-  <ListElement>ServiceOrderID</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Message>Нет заказов</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <DateSelect>
-   <Comp>Tables/Forms/DateSelect</Comp>
-   <Args>
-    <ListElement>CreateDate</ListElement>
-   </Args>
-   <NoBlock />
-  </DateSelect>
-  <!-- ********************************************************************* -->
-  <PatternOut>
-   <Args>
-    <Patterns>
-     <!-- ****************************************************************** -->
-     <Week>
-      <Name>Заказы за неделю</Name>
-      <Where>`CreateDate` &gt; BEGIN_DAY() - BEGIN_WEEK()</Where>
-     </Week>
-     <!-- ****************************************************************** -->
-     <Month>
-      <Name>Заказы за месяц</Name>
-      <Where>`CreateDate` &gt; BEGIN_DAY() - BEGIN_MONTH()</Where>
-     </Month>
-     <!-- ****************************************************************** -->
-     <Year>
-      <Name>Заказы за год</Name>
-      <Where>`CreateDate` &gt; BEGIN_DAY() - 365*24*3600</Where>
-     </Year>
-     <!-- ****************************************************************** -->
-    </Patterns>
-    <ActiveID>Month</ActiveID>
-   </Args>
-  </PatternOut>
-  <!-- ********************************************************************* -->
-  <Search>
-   <Args>
-    <ColumnsIDs>
-     <ListElement>UserID</ListElement>
-     <ListElement>ToUserID</ListElement>
-     <ListElement>ServiceOrderID</ListElement>
-    </ColumnsIDs>
-   </Args>
-  </Search>
-  <!-- ********************************************************************* -->
- </Before>
- <!-- ********************************************************************** -->
-</Comps>
-<!-- *********************************************************************** -->
-<Query>
- <SortOn>CreateDate</SortOn>
-</Query>
-<!-- *********************************************************************** -->
-<Columns>
- <SelectID>
-  <Args>
-   <TableID>OrdersTransfer</TableID>
-  </Args>
- </SelectID>
- <!-- ********************************************************************** -->
- <ServiceName>
-  <Head>Сервис</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%ServiceName%</ListElement>
-   <Length>25</Length>
-  </Args>
- </ServiceName>
- <!-- ********************************************************************** -->
- <OrderID>
-  <Head>Номер заказа</Head>
-  <Comp>Services/Orders/SearchOrderID</Comp>
-  <Args>
-   <ListElement>%ServiceOrderID%</ListElement>
-   <ListElement>%ServiceID%</ListElement>
-   <ListElement>%Code%</ListElement>
-   <ListElement>1</ListElement>
-  </Args>
- </OrderID>
- <!-- ********************************************************************** -->
- <CreateDate>
-  <Head>Дата создания</Head>
-  <Comp>Formats/Date/SQL</Comp>
-  <Args>
-   <ListElement>%CreateDate%</ListElement>
-  </Args>
- </CreateDate>
- <!-- ********************************************************************** -->
- <Route>
-  <Head>Напр.</Head>
-  <Prompt>Направление переноса</Prompt>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>>>></ListElement>
-   <ListElement>20</ListElement>
-  </Args>
- </Route>
- <!-- ********************************************************************** -->
- <IsExecuted>
-  <Head>Вып.</Head>
-  <Prompt>Операция переноса выполнена</Prompt>
-  <Comp>Formats/Logic</Comp>
-  <Args>
-   <ListElement>%IsExecuted%</ListElement>
-  </Args>
- </IsExecuted>
- <!-- ********************************************************************** -->
-</Columns>
-<Sequence>
- <ListElement>CreateDate</ListElement>
- <ListElement>ServiceName</ListElement>
- <ListElement>OrderID</ListElement>
- <ListElement>Owner</ListElement>
- <ListElement>Route</ListElement>
- <ListElement>Owner1</ListElement>
- <ListElement>IsExecuted</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Appearance>
+		<Row>
+			<Comp>Colors/OrdersTransfer</Comp>
+			<Args>
+				<ListElement>%IsExecuted%</ListElement>
+			</Args>
+		</Row>
+	</Appearance>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>OrdersTransfer</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>CreateDate</ListElement>
+			<ListElement>(SELECT `NameShort` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) AS `ServiceName`</ListElement>
+			<ListElement>UserID</ListElement>
+			<ListElement>`ToUserID` AS `UserID1`</ListElement>
+			<ListElement>IsExecuted</ListElement>
+			<ListElement>(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) AS `Code`</ListElement>
+			<ListElement>ServiceID</ListElement>
+			<ListElement>ServiceOrderID</ListElement>
+		</ColumnsIDs>
+		<Conditions>
+			<Message>Нет заказов на перенос</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<DateSelect>
+				<Comp>Tables/Forms/DateSelect</Comp>
+				<Args>
+					<ListElement>CreateDate</ListElement>
+				</Args>
+				<NoBlock/>
+			</DateSelect>
+			<!-- ********************************************************************* -->
+			<PatternOut>
+				<Args>
+					<Patterns>
+						<!-- ****************************************************************** -->
+						<Week>
+							<Name>Заказы за неделю</Name>
+							<Where>`CreateDate` &gt; BEGIN_DAY() - BEGIN_WEEK()</Where>
+						</Week>
+						<!-- ****************************************************************** -->
+						<Month>
+							<Name>Заказы за месяц</Name>
+							<Where>`CreateDate` &gt; BEGIN_DAY() - BEGIN_MONTH()</Where>
+						</Month>
+						<!-- ****************************************************************** -->
+						<Year>
+							<Name>Заказы за год</Name>
+							<Where>`CreateDate` &gt; BEGIN_DAY() - 365*24*3600</Where>
+						</Year>
+						<!-- ****************************************************************** -->
+					</Patterns>
+					<ActiveID>Month</ActiveID>
+				</Args>
+			</PatternOut>
+			<!-- ********************************************************************* -->
+			<Search>
+				<Args>
+					<ColumnsIDs>
+						<ListElement>UserID</ListElement>
+						<ListElement>ToUserID</ListElement>
+						<ListElement>ServiceOrderID</ListElement>
+					</ColumnsIDs>
+				</Args>
+			</Search>
+			<!-- ********************************************************************* -->
+		</Before>
+		<!-- ********************************************************************** -->
+		<After>
+			<Delete>
+				<Args>
+					<Send>
+						<TableID>OrdersTransfer</TableID>
+					</Send>
+				</Args>
+			</Delete>
+		</After>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Query>
+		<SortOn>CreateDate</SortOn>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<SelectID>
+			<Args>
+				<TableID>OrdersTransfer</TableID>
+			</Args>
+		</SelectID>
+		<!-- ********************************************************************** -->
+		<ServiceName>
+			<Head>Сервис</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%ServiceName%</ListElement>
+				<Length>25</Length>
+			</Args>
+		</ServiceName>
+		<!-- ********************************************************************** -->
+		<OrderID>
+			<Head>Номер заказа</Head>
+			<Comp>Services/Orders/SearchOrderID</Comp>
+			<Args>
+				<ListElement>%ServiceOrderID%</ListElement>
+				<ListElement>%ServiceID%</ListElement>
+				<ListElement>%Code%</ListElement>
+				<ListElement>1</ListElement>
+			</Args>
+		</OrderID>
+		<!-- ********************************************************************** -->
+		<CreateDate>
+			<Head>Дата создания</Head>
+			<Comp>Formats/Date/SQL</Comp>
+			<Args>
+				<ListElement>%CreateDate%</ListElement>
+			</Args>
+		</CreateDate>
+		<!-- ********************************************************************** -->
+		<Route>
+			<Head>Напр.</Head>
+			<Prompt>Направление переноса</Prompt>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>&gt;&gt;&gt;</ListElement>
+				<ListElement>20</ListElement>
+			</Args>
+		</Route>
+		<!-- ********************************************************************** -->
+		<IsExecuted>
+			<Head>Вып.</Head>
+			<Prompt>Операция переноса выполнена</Prompt>
+			<Comp>Formats/Logic</Comp>
+			<Args>
+				<ListElement>%IsExecuted%</ListElement>
+			</Args>
+		</IsExecuted>
+		<!-- ********************************************************************** -->
+	</Columns>
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>CreateDate</ListElement>
+		<ListElement>ServiceName</ListElement>
+		<ListElement>OrderID</ListElement>
+		<ListElement>Owner</ListElement>
+		<ListElement>Route</ListElement>
+		<ListElement>Owner1</ListElement>
+		<ListElement>IsExecuted</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>
