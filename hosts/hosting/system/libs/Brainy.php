@@ -494,7 +494,7 @@ function Brainy_Scheme_Change($Settings,$Login,$HostingScheme){
 	$Request['group']	= '';
 	$Request['shell_access']= ($HostingScheme['IsShellAccess']?'y':'n');	// они сами не знают как оно называется
 	$Request['shell']	= ($HostingScheme['IsShellAccess']?'y':'n');	// они сами не знают как оно называется
-	$Request['bandwidth']	= 100;
+	$Request['bandwidth']	= $HostingScheme['QuotaTraffic'];		// название от полосы, по факту оказался трафик...
 	$Request['disk']	= ($HostingScheme['QuotaDisk'])?$HostingScheme['QuotaDisk']:'1';
 	$Request['sites']	= $HostingScheme['QuotaWWWDomains'];
 	$Request['dns_zones']	= $HostingScheme['QuotaDomains'];
@@ -554,7 +554,7 @@ function Brainy_Password_Change($Settings,$Login,$Password,$Params){
 	#-------------------------------------------------------------------------------
 	// удаляем ненужное
 	UnSet($Request['passhash']);
-	// диск/полоса почему-то в байтах передаётся, а обратно надо в мегабайтах
+	// диск/полоса(которая на самом деле траффик) почему-то в байтах передаётся, а обратно надо в мегабайтах
 	$Request['disk']	= $Request['disk'] / (1024*1024);
 	$Request['bandwidth']	= $Request['bandwidth'] / (1024*1024);
 	// test
@@ -774,7 +774,7 @@ function Brainy_Add_Scheme($Settings,$HostingScheme){
 	$Request['module']	= 'hostacc';
 	$Request['subdo']	= $SubDo;
 	$Request['plan']	= $SchemeName;
-	$Request['bandwidth']	= 100;
+	$Request['bandwidth']	= $HostingScheme['QuotaTraffic'];	// название от полосы, по факту оказался трафик...
 	$Request['disk']	= ($HostingScheme['QuotaDisk'])?$HostingScheme['QuotaDisk']:'1';
 	$Request['sites']	= $HostingScheme['QuotaWWWDomains'];
 	$Request['dns_zones']	= $HostingScheme['QuotaDomains'];
