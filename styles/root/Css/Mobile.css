@@ -39,7 +39,8 @@ tr.TableSuperStandardMobile {
 }
 */
 /* богомерзкие огрызки */
-@media only screen and (max-width: 600px){
+@media only screen and (max-width: 767px){ /* было 600, но тогда в горизонтальном положении не переключается в полную версию 
+						вёрстка ломается на 760, так что как-то так надо оставить ... */
 	tr.TableSuperStandardMobile {
 		display:		-webkit-box;
 		display:		-ms-flexbox;
