@@ -61,7 +61,7 @@ $Table[] = Array('Доменное имя',$Comp);
 #-------------------------------------------------------------------------------
 $UniqID = UniqID('DomainSchemes');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Services/Schemes','DomainSchemes',$DomainOrder['UserID'],Array('Name','ServerID'),$UniqID,($IsShowAllZones)?Array():SPrintF('`IsActive` = "yes" OR `ID` = %u',$DomainOrder['SchemeID']));
+$Comp = Comp_Load('Services/Schemes','DomainSchemes',$DomainOrder['UserID'],Array('Name','ServerID'),$UniqID,($IsShowAllZones)?Array():SPrintF('`IsActive` = "yes" OR `ID` = %u OR `Name` = "%s"',$DomainOrder['SchemeID'],$DomainOrder['Name']));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
