@@ -6,7 +6,6 @@ RewriteEngine On
 # tmp, for debug
 #RedirectPermanent      /API/Events     https://www.ya.ru/
 
-
 <FilesMatch "\.(xml)$">
 	Order allow,deny
 	Deny from all
@@ -43,6 +42,16 @@ Options -Indexes
 	php_flag short_open_tag		Off
 	php_flag output_buffering	Off
 	# added by lissyara 2012-03-21 in 11:09 MSK
+	php_flag log_errors		On
+	php_flag display_errors		Off
+	php_flag display_startup_errors	Off
+</IfModule>
+
+# added by lissyara 2020-05-06 in 18:59 MSK
+<IfModule mod_php7.c>
+	php_flag magic_quotes_gpc	Off
+	php_flag short_open_tag		Off
+	php_flag output_buffering	Off
 	php_flag log_errors		On
 	php_flag display_errors		Off
 	php_flag display_startup_errors	Off
