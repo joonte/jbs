@@ -64,7 +64,7 @@ if(IsSet($GLOBALS['__USER'])){
 	#-------------------------------------------------------------------------------
 	$Table[] = Array('Пароль:',$Comp);
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsRemember','id'=>'IsRemember'));
+	$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsRemember','id'=>'IsRemember','checked'=>TRUE));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
