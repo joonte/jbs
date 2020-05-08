@@ -466,19 +466,19 @@ function Brainy_Scheme_Change($Settings,$Login,$HostingScheme){
 	#-------------------------------------------------------------------------------
 	$Doc = Json_Decode(Trim($Response['Body']),TRUE);
 	#-------------------------------------------------------------------------------
-	//Debug(print_r($Doc,true));
-	// сравниваем текущие значения, с теми что по тарифному плану
-	if($Doc['data']['r_ftp_accounts'] > $HostingScheme['QuotaFTP'])
+	#Debug(print_r($Doc,true));
+	// сравниваем текущие значения, с теми что по тарифному плану. Причём панель может не прислать текущие лимиты - пиздец какой-то
+	if(IsSet($Doc['data']['r_ftp_accounts']) && $Doc['data']['r_ftp_accounts'] > $HostingScheme['QuotaFTP'])
 		return new gException('TOO_MANY_FTP',SPrintF('Слишком много ftp аккаунтов'));
-	if($Doc['data']['r_disk'] > $HostingScheme['QuotaDisk'])
+	if(IsSet($Doc['data']['r_disk']) && $Doc['data']['r_disk'] > $HostingScheme['QuotaDisk'])
 		return new gException('TOO_MANY_DISK_USED',SPrintF('Используется слишком много места'));
-	if($Doc['data']['r_sites'] > $HostingScheme['QuotaWWWDomains'])
+	if(IsSet($Doc['data']['r_sites']) && $Doc['data']['r_sites'] > $HostingScheme['QuotaWWWDomains'])
 		return new gException('TOO_MANY_WWW',SPrintF('Слишком много сайтов'));
-	if($Doc['data']['r_dnszones'] > $HostingScheme['QuotaDomains'])
+	if(IsSet($Doc['data']['r_dnszones']) && $Doc['data']['r_dnszones'] > $HostingScheme['QuotaDomains'])
 		return new gException('TOO_MANY_DNS',SPrintF('Слишком много DNS доменов'));
-	if($Doc['data']['r_emailboxes'] > $HostingScheme['QuotaEmail'])
+	if(IsSet($Doc['data']['r_emailboxes']) && $Doc['data']['r_emailboxes'] > $HostingScheme['QuotaEmail'])
 		return new gException('TOO_MANY_MAILBOX',SPrintF('Слишком много почтовых ящиков'));
-	if($Doc['data']['r_databases'] > $HostingScheme['QuotaDBs'])
+	if(IsSet($Doc['data']['r_databases']) && $Doc['data']['r_databases'] > $HostingScheme['QuotaDBs'])
 		return new gException('TOO_MANY_DBs',SPrintF('Слишком много баз данных'));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
