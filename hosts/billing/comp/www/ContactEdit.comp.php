@@ -67,7 +67,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DOM->AddText('Title',SPrintF('Изменение контактного адреса'));
+$DOM->AddText('Title',SPrintF('%s контактного адреса',($ContactID)?'Изменение':'Добавление'));
 #---------------------------------------------------------------------------
 $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/ContactEdit.js}'));
 #-------------------------------------------------------------------------------
@@ -109,7 +109,7 @@ $Comp = Comp_Load('Form/Select',Array('name'=>'MethodID','style'=>'width: 100%')
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if($ContactID)
+if($ContactID || $MethodID)
 	$Comp->AddAttribs(Array('disabled'=>'true'));
 #-------------------------------------------------------------------------------
 $Table[] = Array('Тип адреса',$Comp);
