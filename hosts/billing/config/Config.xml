@@ -430,36 +430,6 @@
 				<Is54-FZ>1</Is54-FZ>
 			</QIWI>
 			<!-- ******************************************************************** -->
-			<ZPayment>
-				<Name>Z-PAYMENT</Name>
-				<SystemDescription>Электронная платёжная система, интегрирующая различные виды оплаты, такие как оплата по SMS, банковские переводы, оплата пластиковой картой и другие.</SystemDescription>
-				<Send>
-					<LMI_PAYEE_PURSE/>
-					<LMI_PAYMENT_NO>auto</LMI_PAYMENT_NO>
-					<LMI_PAYMENT_AMOUNT>auto</LMI_PAYMENT_AMOUNT>
-					<CLIENT_MAIL>auto</CLIENT_MAIL>
-					<LMI_PAYMENT_DESC>Payment for invoice #</LMI_PAYMENT_DESC>
-				</Send>
-				<Comp>ZPayment</Comp>
-				<Cpp>https://z-payment.ru/merchant.php</Cpp>
-				<Hash/>
-				<ContractsTypes>
-					<Default>1</Default>
-					<Natural>1</Natural>
-					<Juridical>1</Juridical>
-					<Individual>1</Individual>
-				</ContractsTypes>
-				<IsContinuePaying>1</IsContinuePaying>
-				<Course>1</Course>
-				<IsCourseUpdate>0</IsCourseUpdate>
-				<Measure>RUB</Measure>
-				<Valute>RUB</Valute>
-				<MinimumPayment>0.01</MinimumPayment>
-				<MaximumPayment>250000.00</MaximumPayment>
-				<IsActive>0</IsActive>
-				<Is54-FZ>1</Is54-FZ>
-			</ZPayment>
-			<!-- ********************************************************************* -->
 			<EasyPay>
 				<Name>EasyPay</Name>
 				<SystemDescription>Электронные деньги, которые предназначены для осуществления быстрых платежей, надежный и быстрый способ передачи денег в интернете и с помощью SMS-сообщений. EasyPay действуют на территории Республики Беларусь, "электронные деньги" используются в качестве платежного средства.</SystemDescription>
@@ -489,42 +459,6 @@
 				<IsActive>0</IsActive>
 				<Is54-FZ>1</Is54-FZ>
 			</EasyPay>
-			<!-- ********************************************************************* -->
-			<Egold>
-				<Name>E-Gold</Name>
-				<SystemDescription>платёжное средство для безналичных платежей через Интернет. Юридически e-gold является распиской о размещении указанного количества золота на хранение в компании «E-gold Ltd.». По своей сути e-gold являются электронными деньгами, эмиссию которых осуществляет частная компания.</SystemDescription>
-				<Send>
-					<PAYEE_ACCOUNT/>
-					<PAYEE_NAME>auto</PAYEE_NAME>
-					<PAYMENT_UNITS>1</PAYMENT_UNITS>
-					<PAYMENT_METAL_ID>1</PAYMENT_METAL_ID>
-					<PAYMENT_ID>auto</PAYMENT_ID>
-					<PAYMENT_AMOUNT>auto</PAYMENT_AMOUNT>
-					<SUGGESTED_MEMO>Payment for invoice # </SUGGESTED_MEMO>
-					<STATUS_URL>https://domain/Merchant/Egold</STATUS_URL>
-					<PAYMENT_URL>https://domain/Payment/Payed</PAYMENT_URL>
-					<NOPAYMENT_URL>https://domain/Payment/Error</NOPAYMENT_URL>
-					<BAGGAGE_FIELDS/>
-				</Send>
-				<Comp>Egold</Comp>
-				<Cpp>https://www.e-gold.com/sci_asp/payments.asp</Cpp>
-				<Hash/>
-				<ContractsTypes>
-					<Default>1</Default>
-					<Natural>1</Natural>
-					<Juridical>1</Juridical>
-					<Individual>1</Individual>
-				</ContractsTypes>
-				<IsContinuePaying>1</IsContinuePaying>
-				<Course>27.57</Course>
-				<IsCourseUpdate>0</IsCourseUpdate>
-				<Measure>USD</Measure>
-				<Valute>USD</Valute>
-				<MinimumPayment>0.01</MinimumPayment>
-				<MaximumPayment>250000.00</MaximumPayment>
-				<IsActive>0</IsActive>
-				<Is54-FZ>1</Is54-FZ>
-			</Egold>
 			<!-- ********************************************************************* -->
 			<RBKMoney>
 				<Name>RBK Money</Name>
@@ -593,7 +527,7 @@
 			<!-- ********************************************************************* -->
 			<InterKassa>
 				<Name>ИнтерКасса</Name>
-				<SystemDescription>Сервис, позволяющиц оплачивать услуги и товары большинством электронных валют (Webmoney, Яндекс.Деньги, RBKMoney, QIWI, PayPal, LiqPay, MoneyBookers, Единый кошелек, MoneyMail, LibertyReserve, PerfectMoney, Деньги@Mail.Ru и др.), а также другими популярными способами - платежи с баланса мобильного телефона, банковские карты Visa/Master Card, денежные переводы и платежные терминалы.</SystemDescription>
+				<SystemDescription>Сервис, позволяющиц оплачивать услуги и товары большинством электронных валют (Webmoney, Яндекс.Деньги, RBKMoney, QIWI, PayPal, LiqPay, Единый кошелек, MoneyMail, LibertyReserve, PerfectMoney, Деньги@Mail.Ru и др.), а также другими популярными способами - платежи с баланса мобильного телефона, банковские карты Visa/Master Card, денежные переводы и платежные терминалы.</SystemDescription>
 				<Send>
 					<ik_shop_id/>
 					<ik_payment_amount>auto</ik_payment_amount>
@@ -746,44 +680,6 @@
 				<Is54-FZ>1</Is54-FZ>
 			</SberBank>
 			<!-- ********************************************************************* -->
-			<Moneybookers>
-				<Name>Moneybookers</Name>
-				<SystemDescription>компания денежных переводов, которая позволяет посылать и получать деньги через электронную почту</SystemDescription>
-				<Send>
-					<pay_to_email/>
-					<recipient_description/>
-					<logo_url>https://domain/logo.jpg</logo_url>
-					<transaction_id>auto</transaction_id>
-					<return_url>auto</return_url>
-					<cancel_url>auto</cancel_url>
-					<status_url>auto</status_url>
-					<language>RU</language>
-					<hide_login>1</hide_login>
-					<amount>auto</amount>
-					<currency/>
-					<detail1_description>Payment for invoice #</detail1_description>
-					<detail1_text>auto</detail1_text>
-				</Send>
-				<Comp>Moneybookers</Comp>
-				<Cpp>https://www.Moneybookers.com/app/payment.pl</Cpp>
-				<Hash/>
-				<ContractsTypes>
-					<Default>1</Default>
-					<Natural>1</Natural>
-					<Juridical>1</Juridical>
-					<Individual>1</Individual>
-				</ContractsTypes>
-				<IsContinuePaying>1</IsContinuePaying>
-				<Course>34.52</Course>
-				<IsCourseUpdate>0</IsCourseUpdate>
-				<Measure>EUR</Measure>
-				<Valute>EUR</Valute>
-				<MinimumPayment>0.01</MinimumPayment>
-				<MaximumPayment>250000.00</MaximumPayment>
-				<IsActive>0</IsActive>
-				<Is54-FZ>0</Is54-FZ>
-			</Moneybookers>
-			<!-- ********************************************************************* -->
 			<Checkout>
 				<Name>2Checkout</Name>
 				<SystemDescription>Процессинговая платёжная система, позволяет оплачивать через пластиковые карточки, а также с помощью PayPal</SystemDescription>
@@ -847,36 +743,6 @@
 				<IsActive>0</IsActive>
 				<Is54-FZ>0</Is54-FZ>
 			</PayPal>
-			<!-- ********************************************************************* -->
-			<OKPAY>
-				<Name>OKPAY</Name>
-				<SystemDescription>электронная валюта с мгновенными денежными переводами и возможностью защиты интересов покупателя</SystemDescription>
-				<Send>
-					<ok_receiver/>
-					<ok_currency>RUB</ok_currency>
-					<ok_invoice>auto</ok_invoice>
-					<ok_fees>0</ok_fees>
-					<ok_item_1_name>Payment for invoice #</ok_item_1_name>
-					<ok_item_1_price>auto</ok_item_1_price>
-				</Send>
-				<Comp>OKPAY</Comp>
-				<Cpp>https://www.okpay.com/process.html</Cpp>
-				<ContractsTypes>
-					<Default>1</Default>
-					<Natural>1</Natural>
-					<Juridical>0</Juridical>
-					<Individual>0</Individual>
-				</ContractsTypes>
-				<IsContinuePaying>1</IsContinuePaying>
-				<Course>27.57</Course>
-				<IsCourseUpdate>0</IsCourseUpdate>
-				<Measure>USD</Measure>
-				<Valute>USD</Valute>
-				<MinimumPayment>0.01</MinimumPayment>
-				<MaximumPayment>250000.00</MaximumPayment>
-				<IsActive>0</IsActive>
-				<Is54-FZ>1</Is54-FZ>
-			</OKPAY>
 			<!-- ********************************************************************* -->
 			<OnPay>
 				<Name>OnPay.ru</Name>
