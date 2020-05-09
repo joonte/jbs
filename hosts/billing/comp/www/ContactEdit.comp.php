@@ -121,11 +121,12 @@ if($MethodID || $ContactID){	// метод или конткт задан, вт�
 	$Comp = Comp_Load(
 			'Form/Input',
 			Array(
-				'name'  => 'Address',
-				'type'  => 'text',
-				'prompt'=> $Messages['Prompts'][$Contact['MethodID']],
-				'value' => $Contact['Address'],
-				'style' => 'width: 100%'
+				'name'		=> 'Address',
+				'type'		=> 'text',
+				'prompt'	=> $Messages['Prompts'][$Contact['MethodID']],
+				'value'		=> $Contact['Address'],
+				'style'		=> 'width: 100%',
+				'disabled'	=> TRUE,
 				)
 			);
 	if(Is_Error($Comp))
