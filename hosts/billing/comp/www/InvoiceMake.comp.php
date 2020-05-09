@@ -212,6 +212,8 @@ case 1:
 			#-------------------------------------------------------------------------------
 			$PaymentSystem = $PaymentSystems[$PaymentSystemID];
 			#-------------------------------------------------------------------------------
+			#Debug(SPrintF('[comp/www/InvoiceMake]: PaymentSystemID = %s; PaymentSystem = %s',$PaymentSystemID,Print_R($PaymentSystem,true)));
+			#-------------------------------------------------------------------------------
 			if(!$PaymentSystem['IsActive'])
 				continue;
 			#-------------------------------------------------------------------------------
