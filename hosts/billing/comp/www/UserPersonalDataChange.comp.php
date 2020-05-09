@@ -167,7 +167,7 @@ foreach($__USER['Contacts'] as $Contact){
 			new Tag('TD',Array('class'=>'Head'),new Tag('IMG',Array('class'=>'Button','onclick'=>$IsActive,'onmouseover'=>"PromptShow(event,'Изменение настроек уведомлений',this);",'src'=>SPrintF('SRC:{Images/Icons/Notice%s.gif}',($Contact['Confirmed'])?'':'Off'),'width'=>16))),
 			#-------------------------------------------------------------------------------
 			// удаление
-			new Tag('TD',Array('class'=>'Head'),new Tag('IMG',Array('class'=>'Button','onclick'=>$IsPrimary,'onmouseover'=>"PromptShow(event,'Удалить контактный адрес',this);",'src'=>'SRC:{Images/Icons/Flush1.gif}')))
+			new Tag('TD',Array('class'=>'Head'),new Tag('IMG',Array('class'=>'Button','onclick'=>$IsPrimary,'onmouseover'=>"PromptShow(event,'Удалить контактный адрес',this);",'src'=>SPrintF('SRC:{Images/Icons/Flush%s.gif}',($Contact['IsPrimary'])?'Off':1))))
 			#-------------------------------------------------------------------------------
 			);
 	#-------------------------------------------------------------------------------
