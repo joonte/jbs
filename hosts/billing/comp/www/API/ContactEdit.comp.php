@@ -15,6 +15,7 @@ $Address	=  (string) @$Args['Address'];
 $TimeBegin	= (integer) @$Args['TimeBegin'];
 $TimeEnd	= (integer) @$Args['TimeEnd'];
 $IsActive	= (boolean) @$Args['IsActive'];
+$IsSendFiles	= (boolean) @$Args['IsSendFiles'];
 $IsPrimary	= (boolean) @$Args['IsPrimary'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
@@ -169,7 +170,8 @@ $IContact = Array(
 		'TimeBegin'	=> $TimeBegin,
 		'TimeEnd'	=> $TimeEnd,
 		'IsPrimary'	=> $IsPrimary,
-		'IsActive'	=> $IsActive
+		'IsActive'	=> $IsActive,
+		'IsSendFiles'	=> $IsSendFiles,
 		);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
