@@ -76,7 +76,7 @@ class NotificationManager {
 			// достаём контакты юзера (у новых юзеров почтовыый адрес не подтверждён, но он первичный)
 			$Where = Array(SPrintF('`UserID` = %u',$User['ID']),'`IsHidden` = "no"','`Confirmed` > 0 OR `IsPrimary` = "yes"');
 			#-------------------------------------------------------------------------------
-			$Contacts = DB_Select('Contacts',Array('ID','MethodID','Address','ExternalID','IsActive','TimeBegin','TimeEnd'),Array('Where'=>$Where));
+			$Contacts = DB_Select('Contacts',Array('ID','MethodID','Address','ExternalID','IsActive','TimeBegin','TimeEnd','IsSendFiles'),Array('Where'=>$Where));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($Contacts)){
 			case 'error':
@@ -209,6 +209,11 @@ class NotificationManager {
 			#-------------------------------------------------------------------------------
 			// JBS-1283, надо сохранить метод, понадобится
 			$msg->setParam('MethodID',$MethodID);
+			#-------------------------------------------------------------------------------
+			// JBS-1295, передаём необходимость отсылки файлов на контакт
+			// TODO надо пересмотреть всё это, и, может сразу массив $Contact в переменную сваливать - а то таскается куча всего
+			// и на каждый чих вынь и положь по строке...
+			$msg->setParam('Contact',$Contact);
 			#-------------------------------------------------------------------------------
 			// JBS-1315, передаём текст сообщения в HTML и заголовки далее
 			$msg->setParam('HTML',IsSet($Attribs['HTML'])?$Attribs['HTML']:'');

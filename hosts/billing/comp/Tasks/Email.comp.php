@@ -49,9 +49,8 @@ if(!Is_Array($User))
 $Attachments = Array();
 #-------------------------------------------------------------------------------
 if(IsSet($Attribs['Attachments']) && Is_Array($Attribs['Attachments']) && SizeOf($Attribs['Attachments']))
-	if($User['Params']['Settings']['SendEdeskFilesToEmail'] == "Yes")
-		foreach($Attribs['Attachments'] as $Attachment)
-			$Attachments[UniqId()] = $Attachment;
+	foreach($Attribs['Attachments'] as $Attachment)
+		$Attachments[UniqId()] = $Attachment;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // получатель, с именем

@@ -111,20 +111,16 @@ $Attribs['Attachments'] = Is_Array($Attribs['Attachments'])?$Attribs['Attachment
 if(SizeOf($Attribs['Attachments']) > 0){
 	#-------------------------------------------------------------------------------
 	// шлём файл, если он есть
-	if($User['Params']['Settings']['SendEdeskFilesToVKontakte'] == "Yes"){
+	if($VkMessageIDs = $VK->FileSend($Attribs['ExternalID'],$Attribs['Attachments'])){
 		#-------------------------------------------------------------------------------
-		if($VkMessageIDs = $VK->FileSend($Attribs['ExternalID'],$Attribs['Attachments'])){
-			#-------------------------------------------------------------------------------
-			// сохраняем сооветствие отправленнго файла и кому он ушёл
-			foreach($VkMessageIDs as $VkMessageID)
-				if(!$VK->SaveThreadID($Attribs['UserID'],$Attribs['TicketID'],$Attribs['MessageID'],$VkMessageID))
-					return ERROR | @Trigger_Error(500);
-			#-------------------------------------------------------------------------------
-		}else{
-			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/VKontakte]: не удалось отправить файл в VKontakte'));
-			#-------------------------------------------------------------------------------
-		}
+		// сохраняем сооветствие отправленнго файла и кому он ушёл
+		foreach($VkMessageIDs as $VkMessageID)
+			if(!$VK->SaveThreadID($Attribs['UserID'],$Attribs['TicketID'],$Attribs['MessageID'],$VkMessageID))
+				return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/Tasks/VKontakte]: не удалось отправить файл в VKontakte'));
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------

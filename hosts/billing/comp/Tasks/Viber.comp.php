@@ -105,9 +105,8 @@ $Attribs['Attachments'] = Is_Array($Attribs['Attachments'])?$Attribs['Attachment
 if(SizeOf($Attribs['Attachments']) > 0){
 	#-------------------------------------------------------------------------------
 	// шлём файл, если он есть
-	if($User['Params']['Settings']['SendEdeskFilesToViber'] == "Yes")
-		if($Viber->FileSend($Attribs['ExternalID'],$Attribs['Attachments']))
-			Debug(SPrintF('[comp/Tasks/Viber]: отправлен файл в Viber'));
+	if($Viber->FileSend($Attribs['ExternalID'],$Attribs['Attachments']))
+		Debug(SPrintF('[comp/Tasks/Viber]: отправлен файл в Viber'));
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------

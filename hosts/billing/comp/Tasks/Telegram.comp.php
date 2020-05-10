@@ -111,20 +111,16 @@ $Attribs['Attachments'] = Is_Array($Attribs['Attachments'])?$Attribs['Attachment
 if(SizeOf($Attribs['Attachments']) > 0){
 	#-------------------------------------------------------------------------------
 	// шлём файл, если он есть
-	if($User['Params']['Settings']['SendEdeskFilesToTelegram'] == "Yes"){
+	if($TgMessageIDs = $Telegram->FileSend($Attribs['ExternalID'],$Attribs['Attachments'],(IsSet($Attribs['MessageID'])?TRUE:FALSE))){
 		#-------------------------------------------------------------------------------
-		if($TgMessageIDs = $Telegram->FileSend($Attribs['ExternalID'],$Attribs['Attachments'],(IsSet($Attribs['MessageID'])?TRUE:FALSE))){
-			#-------------------------------------------------------------------------------
-			// сохраняем сооветствие отправленнго файла и кому он ушёл
-			foreach($TgMessageIDs as $TgMessageID)
-				if(!$Telegram->SaveThreadID($Attribs['UserID'],$Attribs['TicketID'],$Attribs['MessageID'],$TgMessageID))
-					return ERROR | @Trigger_Error(500);
-			#-------------------------------------------------------------------------------
-		}else{
-			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/Telegram]: не удалось отправить файл в Telegram'));
-			#-------------------------------------------------------------------------------
-		}
+		// сохраняем сооветствие отправленнго файла и кому он ушёл
+		foreach($TgMessageIDs as $TgMessageID)
+			if(!$Telegram->SaveThreadID($Attribs['UserID'],$Attribs['TicketID'],$Attribs['MessageID'],$TgMessageID))
+				return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/Tasks/Telegram]: не удалось отправить файл в Telegram'));
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
