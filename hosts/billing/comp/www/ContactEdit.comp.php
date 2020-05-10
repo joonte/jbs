@@ -36,6 +36,7 @@ if($ContactID){
 				'TimeEnd'	=> 00,
 				'IsPrimary'	=> FALSE,
 				'IsActive'	=> TRUE,
+				'IsSendFiles'	=> TRUE
 			);      
 	#-------------------------------------------------------------------------------
 }
