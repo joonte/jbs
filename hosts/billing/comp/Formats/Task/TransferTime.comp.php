@@ -4,7 +4,7 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('UserID','Address','MethodID','TimeBegin','TimeEnd');
+$__args_list = Array('Contact');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
@@ -12,28 +12,28 @@ Eval(COMP_INIT);
 $TransferTime = FALSE;
 #-------------------------------------------------------------------------------
 // время окончания, если оно 0:00 - это больше чем 23:00, например... надо 0->24
-$TimeEnd = (($TimeEnd == 0)?24:$TimeEnd);
+$Contact['TimeEnd'] = (($Contact['TimeEnd'] == 0)?24:$Contact['TimeEnd']);
 #-------------------------------------------------------------------------------
-if($TimeBegin != $TimeEnd){
+if($Contact['TimeBegin'] != $Contact['TimeEnd']){
 	#-------------------------------------------------------------------------------
 	# если обычный период, например 9:00-18:00
-	if($TimeBegin < $TimeEnd){
+	if($Contact['TimeBegin'] < $Contact['TimeEnd']){
 		#-------------------------------------------------------------------------------
-		if(Date('G') >= $TimeBegin && Date('G') < $TimeEnd){
+		if(Date('G') >= $Contact['TimeBegin'] && Date('G') < $Contact['TimeEnd']){
 			# OK
 		}else{
 			#-------------------------------------------------------------------------------
-			if(Date('G') < $TimeBegin){
+			if(Date('G') < $Contact['TimeBegin']){
 				#-------------------------------------------------------------------------------
 				# сегодня попзже
-				$TransferTime = MkTime($TimeBegin,0,0,Date('n'),Date('j'),Date('Y'));
-				Debug(SPrintF('[comp/Formats/Task/TransferTime]: Перенос отправки сообщения (%s) на %s',$Address,Date('Y-m-d/H:i:s',$TransferTime)));
+				$TransferTime = MkTime($Contact['TimeBegin'],0,0,Date('n'),Date('j'),Date('Y'));
+				Debug(SPrintF('[comp/Formats/Task/TransferTime]: Перенос отправки сообщения (%s) на %s',$Contact['Address'],Date('Y-m-d/H:i:s',$TransferTime)));
 				#-------------------------------------------------------------------------------
 			}else{
 				#-------------------------------------------------------------------------------
 				# завтра пораньше
-				$TransferTime = MkTime($TimeBegin,0,0,Date('n'),Date('j')+1,Date('Y'));
-				Debug(SPrintF('[comp/Formats/Task/TransferTime]: Перенос отправки сообщения (%s) на завтра, %s',$Address,Date('Y-m-d/H:i:s',$TransferTime)));
+				$TransferTime = MkTime($Contact['TimeBegin'],0,0,Date('n'),Date('j')+1,Date('Y'));
+				Debug(SPrintF('[comp/Formats/Task/TransferTime]: Перенос отправки сообщения (%s) на завтра, %s',$Contact['Address'],Date('Y-m-d/H:i:s',$TransferTime)));
 				#-------------------------------------------------------------------------------
 			}
 		}
@@ -41,11 +41,11 @@ if($TimeBegin != $TimeEnd){
 	}else{
 		#-------------------------------------------------------------------------------
 		# период типа 21:00-8:00
-		if(Date('G') < $TimeBegin && Date('G') >= $TimeEnd){
+		if(Date('G') < $Contact['TimeBegin'] && Date('G') >= $Contact['TimeEnd']){
 			#-------------------------------------------------------------------------------
-			# время типа 12:00 - требуется перенос на TimeBegin, сегодня
-			$TransferTime = MkTime($TimeBegin,0,0,Date('n'),Date('j'),Date('Y'));
-			Debug(SPrintF('[comp/Formats/Task/TransferTime]: Перенос отправки сообщения (%s) на %s', $Address,Date('Y-m-d/H:i:s',$TransferTime)));
+			# время типа 12:00 - требуется перенос на Contact['TimeBegin'], сегодня
+			$TransferTime = MkTime($Contact['TimeBegin'],0,0,Date('n'),Date('j'),Date('Y'));
+			Debug(SPrintF('[comp/Formats/Task/TransferTime]: Перенос отправки сообщения (%s) на %s', $Contact['Address'],Date('Y-m-d/H:i:s',$TransferTime)));
 			#-------------------------------------------------------------------------------
 		}else{
 			# OK
@@ -58,9 +58,9 @@ if($TimeBegin != $TimeEnd){
 #-------------------------------------------------------------------------------
 if($TransferTime){
 	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'] = SPrintF('%s/%s transfer send to %s',$MethodID,$Address,Date('Y-m-d/H:i:s',$TransferTime));
+	$GLOBALS['TaskReturnInfo'] = SPrintF('%s/%s transfer send to %s',$Contact['MethodID'],$Contact['Address'],Date('Y-m-d/H:i:s',$TransferTime));
 	#-------------------------------------------------------------------------------
-	$Event = Array('UserID'=>$UserID,'PriorityID'=>'Billing','Text'=>SPrintF('Отправка %s сообщения для адреса (%s) перенесена на (%s), согласно клиентским настройкам',$MethodID,$Address,Date('Y-m-d/H:i:s',$TransferTime)));
+	$Event = Array('UserID'=>$Contact['UserID'],'PriorityID'=>'Billing','Text'=>SPrintF('Отправка %s сообщения для адреса (%s) перенесена на (%s), согласно клиентским настройкам',$Contact['MethodID'],$Contact['Address'],Date('Y-m-d/H:i:s',$TransferTime)));
 	$Event = Comp_Load('Events/EventInsert', $Event);
 	if(!$Event)
 		return ERROR | @Trigger_Error(500);

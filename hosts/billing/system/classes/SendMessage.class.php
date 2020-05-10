@@ -41,8 +41,11 @@ class SendMessage implements Dispatcher{
 		$smarty->assign('Config',Config());
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
+		$Contact = $msg->getParam('Contact');
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 		// Get template file path.
-		$templatePath = SPrintF('Notifies/%s/%s.tpl',$msg->getParam('MethodID'),$msg->getTemplate());
+		$templatePath = SPrintF('Notifies/%s/%s.tpl',$Contact['MethodID'],$msg->getTemplate());
 		#-------------------------------------------------------------------------------
 		if(!$smarty->templateExists($templatePath)){
 			#-------------------------------------------------------------------------------
@@ -124,14 +127,12 @@ class SendMessage implements Dispatcher{
 		}
 		#-------------------------------------------------------------------------------
 		// обработка вложений, JBS-1295
-		$Contact = $msg->getParam('Contact');
-		#-------------------------------------------------------------------------------
 		$Attachments = ($Contact['IsSendFiles'])?$msg->getParam('Attachments'):Array();
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$Params = Array();
 		#-------------------------------------------------------------------------------
-		$Params[] = $msg->getParam('ToRecipient');
+		$Params[] = $Contact['Address'];
 		$Params[] = $message;
 		$Params[] = Array(
 					'Theme'		=> $theme,					// тема сообщения
@@ -139,20 +140,17 @@ class SendMessage implements Dispatcher{
 					'Attachments'	=> $Attachments,				// массив с вложениями, TODO разобраться а чё иногда вдруг не массив?
 					'UserID'	=> $recipient['ID'],				// идентфикатор пользователя
 					'From'		=> $msg->getParam('From'),			// от кого письмо (данные пользователя)
-					'TimeBegin'	=> $msg->getParam('TimeBegin'),			// время начала рассылки
-					'TimeEnd'	=> $msg->getParam('TimeEnd'),			// время окончания рассылки
 					'ChargeFree'	=> ($msg->getParam('ChargeFree'))?TRUE:FALSE,	// платно или бесплатно отправлять
-					'ExternalID'	=> $msg->getParam('ExternalID'),		// внешний идентфикатор, для телеги
-					'ContactID'	=> $msg->getParam('ContactID'),			// идентфикатор контакта
 					'MessageID'	=> $msg->getParam('MessageID'),			// идентфикатор сообщения, из тикетниы
 					'TicketID'	=> $msg->getParam('TicketID'),			// номер тикета
 					'UserName'	=> $msg->getParam('UserName'),			// имя пользователя, для приветствия в задаче
+					'Contact'	=> $Contact,					// массив, данные контакта, чтоб параметры по одному не передавать
 					'HTML'		=> $msg->getParam('HTML')			// текст сообщения в HTML (используется в рассылках, только для Email)
 				);
 		#-------------------------------------------------------------------------------
 		$taskParams = Array(
 					'UserID'	=> $recipient['ID'],				// идентифкатор юзера-получателя
-					'TypeID'	=> $msg->getParam('MethodID'),			// метод оповещения
+					'TypeID'	=> $Contact['MethodID'],			// метод оповещения
 					'Params'	=> $Params					// массив параметров
 					);
 		#-------------------------------------------------------------------------------

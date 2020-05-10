@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 if(!IsSet($Attribs['IsImmediately']) || !$Attribs['IsImmediately']){
 	#-------------------------------------------------------------------------------
 	// проверяем, можно ли отправлять в заданное время
-	$TransferTime = Comp_Load('Formats/Task/TransferTime',$Attribs['UserID'],$Address,'Viber',$Attribs['TimeBegin'],$Attribs['TimeEnd']);
+	$TransferTime = Comp_Load('Formats/Task/TransferTime',$Attribs['Contact']);
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($TransferTime)){
 	case 'error':
@@ -87,7 +87,7 @@ if(!Is_Array($User))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($Viber->MessageSend($Attribs['ExternalID'],$Message)){
+if($Viber->MessageSend($Attribs['Contact']['ExternalID'],$Message)){
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[comp/Tasks/Viber]: сообщение для %s отправлено',$User['Email']));
 	#-------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ $Attribs['Attachments'] = Is_Array($Attribs['Attachments'])?$Attribs['Attachment
 if(SizeOf($Attribs['Attachments']) > 0){
 	#-------------------------------------------------------------------------------
 	// шлём файл, если он есть
-	if($Viber->FileSend($Attribs['ExternalID'],$Attribs['Attachments']))
+	if($Viber->FileSend($Attribs['Contact']['ExternalID'],$Attribs['Attachments']))
 		Debug(SPrintF('[comp/Tasks/Viber]: отправлен файл в Viber'));
 	#-------------------------------------------------------------------------------
 }else{
@@ -124,7 +124,7 @@ if(!$Event)
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$GLOBALS['TaskReturnInfo'][$User['Email']]	= Array($Address,$Attribs['ExternalID']);
+$GLOBALS['TaskReturnInfo'][$User['Email']]	= Array($Address,$Attribs['Contact']['ExternalID']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;

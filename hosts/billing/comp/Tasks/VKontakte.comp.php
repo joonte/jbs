@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 if(!IsSet($Attribs['IsImmediately']) || !$Attribs['IsImmediately']){
 	#-------------------------------------------------------------------------------
 	// проверяем, можно ли отправлять в заданное время
-	$TransferTime = Comp_Load('Formats/Task/TransferTime',$Attribs['UserID'],$Address,'VKontakte',$Attribs['TimeBegin'],$Attribs['TimeEnd']);
+	$TransferTime = Comp_Load('Formats/Task/TransferTime',$Attribs['Contact']);
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($TransferTime)){
 	case 'error':
@@ -84,7 +84,7 @@ if(!$Config['Notifies']['Methods']['VKontakte']['CutSign'])
 $Attribs['MessageID']	= IsSet($Attribs['MessageID'])?$Attribs['MessageID']:0;
 $Attribs['TicketID']	= IsSet($Attribs['TicketID'])?$Attribs['TicketID']:0;
 #-------------------------------------------------------------------------------
-if($VkMessageIDs = $VK->MessageSend($Attribs['ExternalID'],$Message,($Attribs['MessageID'])?TRUE:FALSE)){
+if($VkMessageIDs = $VK->MessageSend($Attribs['Contact']['ExternalID'],$Message,($Attribs['MessageID'])?TRUE:FALSE)){
 	#-------------------------------------------------------------------------------
 	// сохраняем сооветствие отправленного сообщения и кому оно ушло
 	if(Is_Array($VkMessageIDs))
@@ -111,7 +111,7 @@ $Attribs['Attachments'] = Is_Array($Attribs['Attachments'])?$Attribs['Attachment
 if(SizeOf($Attribs['Attachments']) > 0){
 	#-------------------------------------------------------------------------------
 	// шлём файл, если он есть
-	if($VkMessageIDs = $VK->FileSend($Attribs['ExternalID'],$Attribs['Attachments'])){
+	if($VkMessageIDs = $VK->FileSend($Attribs['Contact']['ExternalID'],$Attribs['Attachments'])){
 		#-------------------------------------------------------------------------------
 		// сохраняем сооветствие отправленнго файла и кому он ушёл
 		foreach($VkMessageIDs as $VkMessageID)
@@ -140,7 +140,7 @@ if(!$Event)
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$GLOBALS['TaskReturnInfo'][$User['Email']]	= Array($Address,$Attribs['ExternalID']);
+$GLOBALS['TaskReturnInfo'][$User['Email']]	= Array($Address,$Attribs['Contact']['ExternalID']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;

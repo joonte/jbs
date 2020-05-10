@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 if(!IsSet($Attribs['IsImmediately']) || !$Attribs['IsImmediately']){
 	#-------------------------------------------------------------------------------
 	// проверяем, можно ли отправлять в заданное время
-	$TransferTime = Comp_Load('Formats/Task/TransferTime',$Attribs['UserID'],$Address,'WhatsApp',$Attribs['TimeBegin'],$Attribs['TimeEnd']);
+	$TransferTime = Comp_Load('Formats/Task/TransferTime',$Attribs['Contact']);
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($TransferTime)){
 	case 'error':

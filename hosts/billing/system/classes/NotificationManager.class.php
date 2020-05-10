@@ -76,7 +76,7 @@ class NotificationManager {
 			// достаём контакты юзера (у новых юзеров почтовыый адрес не подтверждён, но он первичный)
 			$Where = Array(SPrintF('`UserID` = %u',$User['ID']),'`IsHidden` = "no"','`Confirmed` > 0 OR `IsPrimary` = "yes"');
 			#-------------------------------------------------------------------------------
-			$Contacts = DB_Select('Contacts',Array('ID','MethodID','Address','ExternalID','IsActive','TimeBegin','TimeEnd','IsSendFiles'),Array('Where'=>$Where));
+			$Contacts = DB_Select('Contacts',Array('*'),Array('Where'=>$Where));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($Contacts)){
 			case 'error':
@@ -200,19 +200,10 @@ class NotificationManager {
 			$msg->setParam('MethodSettings',$Notifies['Methods'][$MethodID]);
 			#-------------------------------------------------------------------------------
 			// JBS-1125, save message recipient and params
-			$msg->setParam('ToRecipient',$Contact['Address']);	// контактный адрес 
-			$msg->setParam('TimeBegin',$Contact['TimeBegin']);	// время начала рассылки
-			$msg->setParam('TimeEnd',$Contact['TimeEnd']);		// время конца рассылки
-			$msg->setParam('ContactID',$Contact['ID']);		// идентификатор контакта
-			$msg->setParam('ExternalID',$Contact['ExternalID']);	// ChatID для телеги
 			$msg->setParam('UserName',$User['Name']);		// Имя пользователя, для приветствия в задаче
 			#-------------------------------------------------------------------------------
-			// JBS-1283, надо сохранить метод, понадобится
-			$msg->setParam('MethodID',$MethodID);
 			#-------------------------------------------------------------------------------
-			// JBS-1295, передаём необходимость отсылки файлов на контакт
-			// TODO надо пересмотреть всё это, и, может сразу массив $Contact в переменную сваливать - а то таскается куча всего
-			// и на каждый чих вынь и положь по строке...
+			// JBS-1421, передаём все параметры контакта далее
 			$msg->setParam('Contact',$Contact);
 			#-------------------------------------------------------------------------------
 			// JBS-1315, передаём текст сообщения в HTML и заголовки далее

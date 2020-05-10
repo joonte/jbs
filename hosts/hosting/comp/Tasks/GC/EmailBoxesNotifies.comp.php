@@ -144,13 +144,13 @@ foreach($Servers as $Server){
 				$Params[] = Array(
 						'Theme'		=> 'Квота почтового ящика',
 						'From'		=> Array('Email'=>SPrintF('admin@%s',$Server['Address']),'Name'=>'Системный Администратор'),
-						'Attachments'	=> '',
+						'Attachments'	=> Array(),
 						'UserID'	=> $HostingOrder['UserID'],
-						'TimeBegin'	=> 0,
-						'TimeEnd'	=> 0,
+						//'Contact'	=> Array('UserID'=>$HostingOrder['UserID'],'Address'=>,'MethodID'=>'Email','TimeBegin'=>0,'TimeEnd'=>0),
+						'IsImmediately'	=> TRUE,	// не проверять время отправки, чтобы не искал данные контакта
 						'ChargeFree'	=> FALSE,
-						'ExternalID'	=> '',
-						'ContactID'	=> 0,		// в отпрaвке почты не юзается
+						//'ExternalID'	=> '',
+						//'ContactID'	=> 0,		// в отпрaвке почты не юзается
 						'UserName'	=> 'владелец почтового ящика'
 						);
 				#-------------------------------------------------------------------------------
