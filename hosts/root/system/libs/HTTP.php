@@ -125,9 +125,18 @@ function HTTP_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[HTTP_Send]: соединяемся с (%s://%s:%u)',$Default['Protocol'],$Address,$Default['Port']));
 	#-------------------------------------------------------------------------------
+	$Options = Array();
+	#-------------------------------------------------------------------------------
+	if($Default['Protocol'] == 'ssl')
+		$Options['ssl'] = Array('peer_name'=>$Address,'verify_peer'=>FALSE,'verify_peer_name'=>FALSE,'allow_self_signed'=>TRUE);
+	#-------------------------------------------------------------------------------
+	$Context = Stream_Context_Create($Options);
+	#-------------------------------------------------------------------------------
+	$Socket = @Stream_Socket_Client(SPrintF('%s://%s:%s',$Protocol = $Default['Protocol'],$Address,$Port = $Default['Port']),$nError,$sError,$Config['Other']['Libs']['HTTP']['SocketTimeout'],STREAM_CLIENT_CONNECT,$Context);
+	#-------------------------------------------------------------------------------
 	# https://bugs.php.net/bug.php?id=52913
 	# пришлось заменить: $Address -> $Default['Host']
-	$Socket = @FsockOpen(SPrintF('%s://%s',$Protocol = $Default['Protocol'],$Default['Host'] /*$Address*/),$Port = $Default['Port'],$nError,$sError,$Config['Other']['Libs']['HTTP']['SocketTimeout']);
+	#$Socket = @FsockOpen(SPrintF('%s://%s',$Protocol = $Default['Protocol'],$Default['Host'] /*$Address*/),$Port = $Default['Port'],$nError,$sError,$Config['Other']['Libs']['HTTP']['SocketTimeout']);
 	if(!Is_Resource($Socket)){
 		#-------------------------------------------------------------------------------
 		$IsWrite = IO_Write(SPrintF('%s/logs/http-send.log',$Tmp),SPrintF("%s://%s:%u ошибка соединения\n\n",$Protocol,$Address,$Port));
