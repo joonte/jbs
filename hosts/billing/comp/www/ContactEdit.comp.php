@@ -127,12 +127,15 @@ if($MethodID || $ContactID){	// метод или конткт задан, вт�
 				'prompt'	=> $Messages['Prompts'][$Contact['MethodID']],
 				'value'		=> $Contact['Address'],
 				'style'		=> 'width: 100%',
-				'disabled'	=> TRUE,
 				)
 			);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
+	// запрещаем редактирование существующего контакта
+	if($ContactID)
+		$Comp->AddAttribs(Array('disabled'=>'true'));
+	// и первичного, но бессымсленно - выше уже запрещено
 	if($Contact['IsPrimary'])
 		$Comp->AddAttribs(Array('disabled'=>'true'));
 	#-------------------------------------------------------------------------------
