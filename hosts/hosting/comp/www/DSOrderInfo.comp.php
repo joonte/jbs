@@ -28,6 +28,10 @@ $Columns = Array(
 			'(SELECT `ILOaddr` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `ILOaddr`',
 			'(SELECT `ILOuser` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `ILOuser`',
 			'(SELECT `ILOpass` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `ILOpass`',
+			'(SELECT `CPU` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `CPU`',
+			'(SELECT `ram` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `ram`',
+			'(SELECT `raid` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `raid`',
+			'(SELECT `disks` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `disks`',
 			'(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` =  (SELECT `ServerID` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`))) as `ServersGroupName`',
 			'(SELECT `IsAutoProlong` FROM `Orders` WHERE `DSOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',
 			'(SELECT `UserNotice` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DSOrdersOwners`.`OrderID`) AS `UserNotice`',
@@ -128,7 +132,20 @@ if(Is_Error($Comp))
 $Table[] = Array('Автопродление',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Table[] = 'Прочее';
+$Table[] = 'Технические характеристики сервера';
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Table[] = Array('Процессор',$DSOrder['CPU']);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Table[] = Array('Объём оперативной памяти, Gb',$DSOrder['ram']);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Тип RAID контроллера',$DSOrder['raid']);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Характеристики жёстких дисков',$DSOrder['disks']);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Table[] = 'Данные для доступа';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($DSOrder['IPaddr'])
