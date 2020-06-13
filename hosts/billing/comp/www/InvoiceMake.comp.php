@@ -78,7 +78,7 @@ case 0:
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$Table[] = Array('Платежная система',$Comp);
+		$Table[] = Array('Платёжная система',$Comp);
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load('Form/Input',Array('name'=>'StepID','type'=>'hidden','value'=>2));
 		if(Is_Error($Comp))
@@ -237,7 +237,7 @@ case 1:
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		if(!$Settings['PaymentSystemsByType'])
-			$Table[] = Array('Платежная система',$Comp);
+			$Table[] = Array('Платёжная система',$Comp);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load('Form/TextArea',Array('name'=>'PaymentsDescription','style'=>'width:100%;','class'=>'Duty','prompt'=>'Описание выбранной платёжной системы','readonly'=>'readonly','rows'=>4));
@@ -375,7 +375,7 @@ case 1:
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		if(!$Settings['PaymentSystemsByType'])
-			$Table[] = Array('Платежная система',$Comp);
+			$Table[] = Array('Платёжная система',$Comp);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load('Form/TextArea',Array('name'=>'PaymentsDescription','style'=>'width:100%;','class'=>'Duty','prompt'=>'Описание выбранной платёжной системы','readonly'=>'readonly','rows'=>4));
@@ -481,14 +481,14 @@ case 1:
 case 2:
 	#-------------------------------------------------------------------------------
 	if(!$PaymentSystemID)
-		return new gException('PAYMENT_SYSTEM_NOT_SELECTED','Платежная система не указана');
+		return new gException('PAYMENT_SYSTEM_NOT_SELECTED','Платёжная система не указана');
 	#-------------------------------------------------------------------------------
 	$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/InvoiceMake.js}')));
 	#-------------------------------------------------------------------------------
 	$PaymentSystems = $Config['Invoices']['PaymentSystems'];
 	#-------------------------------------------------------------------------------
 	if(!IsSet($PaymentSystems[$PaymentSystemID]))
-		return new gException('PAYMENT_SYSTEM_NOT_FOUND','Платежная система не найдена');
+		return new gException('PAYMENT_SYSTEM_NOT_FOUND','Платёжная система не найдена');
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Form/Input',Array('name'=>'PaymentSystemID','type'=>'hidden','value'=>$PaymentSystemID));
 	if(Is_Error($Comp))
@@ -536,7 +536,7 @@ case 2:
 		#-------------------------------------------------------------------------------
 	case 'array':
 		#-------------------------------------------------------------------------------
-		$Table[] = Array('Платежная система',$PaymentSystem['Name']);
+		$Table[] = Array('Платёжная система',$PaymentSystem['Name']);
 		#-------------------------------------------------------------------------------
 		$Options = Array();
 		#-------------------------------------------------------------------------------

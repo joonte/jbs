@@ -53,7 +53,7 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$PaymentSystemID)
-	return new gException('PAYMENT_SYSTEM_NOT_SELECTED','Платежная система не указана');
+	return new gException('PAYMENT_SYSTEM_NOT_SELECTED','Платёжная система не указана');
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ $Messages = Messages();
 $PaymentSystems = $Config['Invoices']['PaymentSystems'];
 #-------------------------------------------------------------------------------
 if(!IsSet($PaymentSystems[$PaymentSystemID]))
-	return new gException('PAYMENT_SYSTEM_NOT_FOUND','Платежная система не найдена');
+	return new gException('PAYMENT_SYSTEM_NOT_FOUND','Платёжная система не найдена');
 #-------------------------------------------------------------------------------
 $PaymentSystem = $PaymentSystems[$PaymentSystemID];
 #-------------------------------------------------------------------------------
