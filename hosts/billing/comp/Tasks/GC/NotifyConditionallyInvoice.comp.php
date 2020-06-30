@@ -36,10 +36,10 @@ case 'array':
 		#-------------------------------------------------------------------------------
 		# added by lissyara 2012-09-30 in 20:20 MSK, for JBS-109
 		# перебираем всех юзеров с условными инвойсами, смотрим сколько от статуса
-		# если от статуса больше 31 дня:
+		# если от статуса больше чем в настройках то отменяем счета:
 		if($Invoice['StatusDate'] < Time() - $Settings['DaysBeforeRejectConditionallyInvoice']*24*3600){
 			#-------------------------------------------------------------------------------
-			# 1. откатываем инвойс в статус "Удалён"
+			// откатываем инвойс в статус "Удалён"
 			$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Invoices','StatusID'=>'Rejected','RowsIDs'=>$Invoice['ID'],'Comment'=>'Отмена условно оплаченного счёта'));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($Comp)){
@@ -59,34 +59,6 @@ case 'array':
 			default:
 				return ERROR | @Trigger_Error(101);
 			}
-			#-------------------------------------------------------------------------------
-			# 2. вычитаем сумму счёта из договора, на который счёт.
-			$Contract = Comp_Load('Contracts/Fetch',$Invoice['ContractID']);
-			if(Is_Error($Contract))
-				return ERROR | @Trigger_Error(500);
-			#-------------------------------------------------------------------------------
-			$After = $Contract['Balance'] - $Invoice['Summ'];
-			#-------------------------------------------------------------------------------
-			$IsUpdate = DB_Update('Contracts',Array('Balance'=>$After),Array('ID'=>$Invoice['ContractID']));
-			if(Is_Error($IsUpdate))
-				return ERROR | @Trigger_Error(500);
-			#-------------------------------------------------------------------------------
-			# заносим запись в историю операций с контрактами
-			$Comp = Comp_Load('Formats/Invoice/Number',$Invoice['ID']);
-			if(Is_Error($Comp))
-				return ERROR | @Trigger_Error(500);
-			#-------------------------------------------------------------------------------
-			$IPosting = Array(
-						'ContractID' => $Invoice['ContractID'],
-						'ServiceID'  => 2000,
-						'Comment'    => SPrintF('Возврат средств условно зачисленных по счёту #%u',$Comp),
-						'Before'     => $Contract['Balance'],
-						'After'      => $After
-					);
-			#-------------------------------------------------------------------------------
-			$PostingID = DB_Insert('Postings',$IPosting);
-			if(Is_Error($PostingID))
-				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------

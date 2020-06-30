@@ -16,12 +16,14 @@ $Count = DB_Count('InvoicesOwners',Array('Where'=>$Where));
 if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+// есть условно оплаченные счета, и проводит не сотрудник
 if($Count && !$GLOBALS['__USER']['IsAdmin'])
 	return new gException('DENY_SECOND_CONDITIONALLY_INVOICE','У пользователя уже есть условно проведённые счета. Нельзя провести более одного счёта условно.');
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
+// уже оплачен
 if($Invoice['IsPosted'])
 	return TRUE;
+#-------------------------------------------------------------------------------
 #----------------------------------TRANSACTION----------------------------------
 if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Triggers/Statuses/Invoices/Payed'))))
 	return ERROR | @Trigger_Error(500);
