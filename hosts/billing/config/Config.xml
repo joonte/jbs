@@ -1298,7 +1298,7 @@
 					<CreateAndSendInvoicesSendOnlyNatural>1</CreateAndSendInvoicesSendOnlyNatural>
 					<CreateAndSendInvoicesSendEmptyMail>0</CreateAndSendInvoicesSendEmptyMail>
 					<DayOfWeek>1</DayOfWeek>
-					<CreateAndSendInvoicesPeriod>12</CreateAndSendInvoicesPeriod>
+					<CreateAndSendInvoicesPeriod>13</CreateAndSendInvoicesPeriod>
 					<ForcePaymentSystem>0</ForcePaymentSystem>
 				</CreateAndSendInvoicesSettings>
 				<!-- ********************************************************************* -->
