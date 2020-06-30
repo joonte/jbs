@@ -1,7 +1,7 @@
 <?php
 
 #-------------------------------------------------------------------------------
-/** @author Великодный В.В. (Joonte Ltd.) */
+/** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
 $__args_list = Array('Args');
@@ -321,19 +321,69 @@ if($DaysPay){
 	if(!Count($Years))
 		return new gException('PERIODS_NOT_DEFINED','Периоды оплаты не определены');
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$IsPeriods = (boolean)Count($Periods);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// считаем вариант оплаты с балланса - заранее, чтобы выбрать его при возможности
+	$Table1 = Array();
+	#-------------------------------------------------------------------------------
+	if($HostingScheme['CostDay'] > 0){
+		#-------------------------------------------------------------------------------
+		$DaysFromBallance = Floor($HostingOrder['ContractBalance'] / $HostingScheme['CostDay']);
+		#-------------------------------------------------------------------------------
+		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',$DaysFromBallance,$HostingScheme,$HostingOrder,$UserID);
+		if(Is_Error($DaysFromBallance))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		if($MinDaysPay <= $DaysFromBallance){
+			#-------------------------------------------------------------------------------
+			if($IsPeriods){
+				#-------------------------------------------------------------------------------
+				$Comp = Comp_Load('Form/Input',Array('onclick'=>'form.Period.disabled = true;form.Year.disabled = true;form.Month.disabled = true;form.Day.disabled = true;','name'=>'Calendar','type'=>'radio','checked'=>'true'));
+				if(Is_Error($Comp))
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+			$ContractBalance = Comp_Load('Formats/Currency',$HostingOrder['ContractBalance']);
+			if(Is_Error($ContractBalance))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			$Table1[] = new Tag('TD',Array('class'=>'Separator','colspan'=>2),$Comp,new Tag('SPAN',SPrintF('Остаток денег на балансе (%s)',$ContractBalance)));
+			#-------------------------------------------------------------------------------
+			$Table1[] = Array('Остатка на счету хватит на',SPrintF('%s дней',$DaysFromBallance));
+			#-------------------------------------------------------------------------------
+			$Comp = Comp_Load('Form/Input',Array('name'=>'DaysPayFromBallance','value'=>$DaysFromBallance,'type'=>'hidden'));
+			if(Is_Error($Comp))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			$Form->AddChild($Comp);
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if($IsPeriods){
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Input',Array('onclick'=>'form.Period.disabled = false;form.Year.disabled = true;form.Month.disabled = true;form.Day.disabled = true;','name'=>'Calendar','type'=>'radio','checked'=>'true'));
+		$Comp = Comp_Load('Form/Input',Array('onclick'=>'form.Period.disabled = false;form.Year.disabled = true;form.Month.disabled = true;form.Day.disabled = true;','name'=>'Calendar','type'=>'radio'));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		if(!SizeOf($Table1))
+			$Comp->AddAttribs(Array('checked'=>'true'));
 		#-------------------------------------------------------------------------------
 		$Table[] = new Tag('TD',Array('class'=>'Separator','colspan'=>2),$Comp,new Tag('SPAN','Выбор периода оплаты'));
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load('Form/Select',Array('name'=>'Period','onchange'=>'PeriodUpdate("Hosting");'),$Periods,12);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		// если оплата по остатку балланса - дисаблим
+		if(SizeOf($Table1))
+			$Comp->AddAttribs(Array('disabled'=>'true'));
 		#-------------------------------------------------------------------------------
 		$Table[] = Array('Период оплаты',$Comp);
 		#-------------------------------------------------------------------------------
@@ -348,6 +398,7 @@ if($DaysPay){
 		$Comp = Comp_Load('Form/Input',Array('onclick'=>'form.Period.disabled = true;form.Year.disabled = false;form.Month.disabled = false;form.Day.disabled = false;','name'=>'Calendar','type'=>'radio'));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 	$Table[] = new Tag('TD',Array('class'=>'Separator','colspan'=>2),$Comp,new Tag('SPAN','Выбор даты окончания'));
@@ -387,42 +438,10 @@ if($DaysPay){
 	$Table[] = Array('Дата окончания',$Div);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	if($HostingScheme['CostDay'] > 0){
-		#-------------------------------------------------------------------------------
-		$DaysFromBallance = Floor($HostingOrder['ContractBalance'] / $HostingScheme['CostDay']);
-		#-------------------------------------------------------------------------------
-		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',$DaysFromBallance,$HostingScheme,$HostingOrder,$UserID);
-		if(Is_Error($DaysFromBallance))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		if($MinDaysPay <= $DaysFromBallance){
-			#-------------------------------------------------------------------------------
-			if($IsPeriods){
-				#-------------------------------------------------------------------------------
-				$Comp = Comp_Load('Form/Input',Array('onclick'=>'form.Period.disabled = true;form.Year.disabled = true;form.Month.disabled = true;form.Day.disabled = true;','name'=>'Calendar','type'=>'radio'));
-				if(Is_Error($Comp))
-					return ERROR | @Trigger_Error(500);
-				#-------------------------------------------------------------------------------
-			}
-			#-------------------------------------------------------------------------------
-			$ContractBalance = Comp_Load('Formats/Currency',$HostingOrder['ContractBalance']);
-			if(Is_Error($ContractBalance))
-				return ERROR | @Trigger_Error(500);
-			#-------------------------------------------------------------------------------
-			$Table[] = new Tag('TD',Array('class'=>'Separator','colspan'=>2),$Comp,new Tag('SPAN',SPrintF('Остаток денег на балансе (%s)',$ContractBalance)));
-			#-------------------------------------------------------------------------------
-			$Table[] = Array('Остатка на счету хватит на',SPrintF('%s дней',$DaysFromBallance));
-			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load('Form/Input',Array('name'=>'DaysPayFromBallance','value'=>$DaysFromBallance,'type'=>'hidden'));
-			if(Is_Error($Comp))
-				return ERROR | @Trigger_Error(500);
-			#-------------------------------------------------------------------------------
-			$Form->AddChild($Comp);
-			#-------------------------------------------------------------------------------
-		}
-		#-------------------------------------------------------------------------------
-	}
+	// достраиваем вариант оплаты с балланса
+	if(SizeOf($Table1))
+		foreach($Table1 as $Row)
+			$Table[] = $Row;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Form/Input',Array('name'=>'DaysPay','value'=>31,'type'=>'hidden'));
