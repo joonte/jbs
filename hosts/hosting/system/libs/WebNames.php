@@ -904,6 +904,7 @@ function WebNames_Build_Query($Query = Array(),$Params){
 			$Query['addr_city']	= $Params['Person']['pCity'];
 			$Query['addr_sp']	= $Params['Person']['pState'];
 			$Query['addr_pc']	= $Params['Person']['pIndex'];
+			$Query['legal_cc']	= $Params['Person']['pCountry'];
 			#-------------------------------------------------------------------------------
 			break;
 			#-------------------------------------------------------------------------------
@@ -918,6 +919,7 @@ function WebNames_Build_Query($Query = Array(),$Params){
 			$Query['addr_pc']	= $Params['Person']['pIndex'];
 			#-------------------------------------------------------------------------------
 			$Query['legal_lang']	= 'RU';
+			$Query['legal_cc']	= 'RU';
 			$Query['legal_street']	= SPrintF('%s %s',$Params['Person']['jType'],$Params['Person']['jAddress']);
 			$Query['legal_city']	= $Params['Person']['jCity'];
 			$Query['legal_sp']	= $Params['Person']['jState'];
