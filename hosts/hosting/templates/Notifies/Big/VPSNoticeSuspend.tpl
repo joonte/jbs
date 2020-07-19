@@ -8,6 +8,9 @@
 До окончания заказа:	{$VPSOrder.DaysRemainded|default:'$VPSOrder.DaysRemainded'} дн.
 Баланс договора:	{$VPSOrder.Balance|default:'$VPSOrder.Balance'}
 Тарифный план:		"{$VPSOrder.SchemeName|default:'$VPSOrder.SchemeName'}"
-Стоимость продления:	{$VPSOrder.Cost|default:'$VPSOrder.Cost'}
+Стоимость продления:	{$VPSOrder.Cost|default:'$VPSOrder.Cost'}*
 IP адрес:		{$VPSOrder.IP|default:'$VPSOrder.IP'}
+
+--
+* Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
 

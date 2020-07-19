@@ -6,5 +6,8 @@
 
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ №{$OrderID|string_format:"%05u"} на ПО ISPsystem, IP адрес {$IP|default:'$IP'}, был заблокирован.
 Тарифный план:		"{$ISPswScheme.Name|default:'$ISPswScheme.Name'}"
-Стоимость продления:	{$ISPswScheme.CostMonth|default:'$ISPswScheme.CostMonth'}
+Стоимость продления:	{$ISPswScheme.CostMonth|default:'$ISPswScheme.CostMonth'}*
+
+--
+* Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
 

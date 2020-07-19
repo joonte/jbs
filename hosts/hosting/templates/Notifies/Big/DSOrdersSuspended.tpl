@@ -13,5 +13,8 @@ IP адрес заказа:	{$DSScheme.IPaddr}
 {/if}
 {/if}
 Тарифный план:		"{$DSScheme.Name|default:'$DSScheme.Name'}"
-Стоимость продления:	{$DSScheme.CostMonth|default:'$DSScheme.CostMonth'}
+Стоимость продления:	{$DSScheme.CostMonth|default:'$DSScheme.CostMonth'}*
+
+--
+* Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
 

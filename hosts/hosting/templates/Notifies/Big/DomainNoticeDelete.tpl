@@ -8,7 +8,10 @@
 Уведомляем Вас о том, оканчивается срок блокировки Вашего заказа №{$DomainOrder.OrderID|string_format:"%05u"}, на регистрацию домена [{$DomainOrder.DomainName|default:'$DomainOrder.DomainName'}.{$DomainOrder.Name|default:'$DomainOrder.Name'}].
 Дата удаления заказа:   {$ExpDate|date_format:"%d.%m.%Y"}
 Баланс договора:        {$DomainOrder.Balance|default:'$DomainOrder.Balance'}
-Стоимость продления:    {$DomainOrder.Cost|default:'$DomainOrder.Cost'}
+Стоимость продления:    {$DomainOrder.Cost|default:'$DomainOrder.Cost'}*
+
+--
+* Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
 
 ---
 Обращаем Ваше внимание, что последнее время участились факты фишинговых рассылок с предложением продлить домен, иначе он будет удалён/продан/заблокирован - на что хватает фантазии у создателей рассыки.

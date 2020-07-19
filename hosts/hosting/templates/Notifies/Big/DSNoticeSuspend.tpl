@@ -8,6 +8,9 @@
 До окончания заказа:	{$DSOrder.DaysRemainded|default:'$DSOrder.DaysRemainded'} дн.
 Баланс договора:	{$DSOrder.Balance|default:'$DSOrder.Balance'}
 Тарифный план:		"{$DSOrder.SchemeName|default:'$DSOrder.SchemeName'}"
-Стоимость продления:	{$DSOrder.Cost|default:'$DSOrder.Cost'}
+Стоимость продления:	{$DSOrder.Cost|default:'$DSOrder.Cost'}*
 IP адрес:		{$DSOrder.IP|default:'$DSOrder.IP'}
+
+--
+* Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
 

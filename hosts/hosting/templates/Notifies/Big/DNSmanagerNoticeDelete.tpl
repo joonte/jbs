@@ -9,5 +9,8 @@
 Дата удаления заказа: {$ExpDate|date_format:"%d.%m.%Y"}
 Баланс договора:      {$DNSmanagerOrder.Balance|default:'$DNSmanagerOrder.Balance'}
 Тарифный план:        "{$DNSmanagerOrder.SchemeName|default:'$DNSmanagerOrder.SchemeName'}"
-Стоимость продления:  {$DNSmanagerOrder.Cost|default:'$DNSmanagerOrder.Cost'}
+Стоимость продления:  {$DNSmanagerOrder.Cost|default:'$DNSmanagerOrder.Cost'}*
+
+--
+* Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
 

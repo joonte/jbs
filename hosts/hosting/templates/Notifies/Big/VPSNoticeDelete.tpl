@@ -10,6 +10,9 @@ IP адрес:             {$VPSOrder.IP|default:'$VPSOrder.IP'}
 Дата удаления заказа: {$ExpDate|date_format:"%d.%m.%Y"}
 Баланс договора:      {$VPSOrder.Balance|default:'$VPSOrder.Balance'}
 Тарифный план:        "{$VPSOrder.SchemeName|default:'$VPSOrder.SchemeName'}"
-Стоимость продления:  {$VPSOrder.Cost|default:'$VPSOrder.Cost'}
+Стоимость продления:  {$VPSOrder.Cost|default:'$VPSOrder.Cost'}*
 Логин:                {$VPSOrder.Login|default:'$VPSOrder.Login'}
+
+--
+* Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
 

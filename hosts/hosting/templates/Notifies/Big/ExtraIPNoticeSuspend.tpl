@@ -8,6 +8,9 @@
 До окончания заказа:	{$ExtraIPOrder.DaysRemainded|default:'$ExtraIPOrder.DaysRemainded'} дн.
 Баланс договора:	{$ExtraIPOrder.Balance|default:'$ExtraIPOrder.Balance'}
 Тарифный план:		"{$ExtraIPOrder.SchemeName|default:'$ExtraIPOrder.SchemeName'}"
-Стоимость продления:	{$ExtraIPOrder.Cost|default:'$ExtraIPOrder.Cost'}
+Стоимость продления:	{$ExtraIPOrder.Cost|default:'$ExtraIPOrder.Cost'}*
 IP адрес:		{$ExtraIPOrder.Login|default:'$ExtraIPOrder.Login'}
+
+--
+* Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
 

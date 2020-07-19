@@ -8,7 +8,7 @@
 До окончания заказа:	{$ProxyOrder.DaysRemainded|default:'$ProxyOrder.DaysRemainded'} дн.
 Баланс договора:	{$ProxyOrder.Balance|default:'$ProxyOrder.Balance'}
 Тарифный план:		"{$ProxyOrder.SchemeName|default:'$ProxyOrder.SchemeName'}"
-Стоимость продления:	{$ProxyOrder.Cost|default:'$ProxyOrder.Cost'}
+Стоимость продления:	{$ProxyOrder.Cost|default:'$ProxyOrder.Cost'}*
 
   * Адрес подключения:
       {$Host|default:'$Host'}:{$Port|default:'$Port'}
@@ -16,4 +16,7 @@
       {$ProtocolType|default:'$ProtocolType'}
   * Логин:
       {$Login|default:'$Login'}
+
+--
+* Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
 

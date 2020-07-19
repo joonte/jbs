@@ -9,5 +9,8 @@
 Дата удаления заказа:  {$ExpDate|date_format:"%d.%m.%Y"}
 Баланс договора:       {$DSOrder.Balance|default:'$DSOrder.Balance'}
 Тарифный план:         "{$DSOrder.SchemeName|default:'$DSOrder.SchemeName'}"
-Стоимость продления:   {$DSOrder.Cost|default:'$DSOrder.Cost'}
+Стоимость продления:   {$DSOrder.Cost|default:'$DSOrder.Cost'}*
+
+--
+* Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
 

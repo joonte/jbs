@@ -7,5 +7,7 @@
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ №{$OrderID|string_format:"%05u"} на вторичный DNS, логин {$Login|default:'$Login'} был заблокирован.
 --
 Тарифный план:		"{$DNSmanagerScheme.Name|default:'$DNSmanagerScheme.Name'}"
-Стоимость продления:	{$DNSmanagerScheme.CostMonth|default:'$DNSmanagerScheme.CostMonth'}
+Стоимость продления:	{$DNSmanagerScheme.CostMonth|default:'$DNSmanagerScheme.CostMonth'}*
 
+--
+* Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.

@@ -9,5 +9,8 @@
 Дата удаления заказа: {$ExpDate|date_format:"%d.%m.%Y"}
 Баланс договора:      {$ProxyOrder.Balance|default:'$ProxyOrder.Balance'}
 Тарифный план:        "{$ProxyOrder.SchemeName|default:'$ProxyOrder.SchemeName'}"
-Стоимость продления:  {$ProxyOrder.Cost|default:'$ProxyOrder.Cost'}
+Стоимость продления:  {$ProxyOrder.Cost|default:'$ProxyOrder.Cost'}*
+
+--
+* Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
 

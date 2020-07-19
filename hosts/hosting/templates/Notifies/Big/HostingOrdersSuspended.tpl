@@ -8,5 +8,8 @@
 
 ---
 Тарифный план:		"{$HostingScheme.Name|default:'$HostingScheme.Name'}"
-Стоимость продления:	{$HostingScheme.CostMonth|default:'$HostingScheme.CostMonth'}
+Стоимость продления:	{$HostingScheme.CostMonth|default:'$HostingScheme.CostMonth'}*
+
+--
+* Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
 

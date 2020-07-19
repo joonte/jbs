@@ -9,5 +9,8 @@
 IP адрес:	{$IP|default:'$IP'}
 --
 Тарифный план:		"{$VPSScheme.Name|default:'$VPSScheme.Name'}"
-Стоимость продления:	{$VPSScheme.CostMonth|default:'$VPSScheme.CostMonth'}
+Стоимость продления:	{$VPSScheme.CostMonth|default:'$VPSScheme.CostMonth'}*
+
+--
+* Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
 

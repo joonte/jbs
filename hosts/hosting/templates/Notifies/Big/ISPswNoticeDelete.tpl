@@ -9,5 +9,8 @@
 Дата удаления заказа: {$ExpDate|date_format:"%d.%m.%Y"}
 Баланс договора:      {$ISPswOrder.Balance|default:'$ISPswOrder.Balance'}
 Тарифный план:        "{$ISPswOrder.SchemeName|default:'$ISPswOrder.SchemeName'}"
-Стоимость продления:  {$ISPswOrder.Cost|default:'$ISPswOrder.Cost'}
+Стоимость продления:  {$ISPswOrder.Cost|default:'$ISPswOrder.Cost'}*
+
+--
+* Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
 

@@ -8,6 +8,9 @@
 До окончания заказа:	{$ISPswOrder.DaysRemainded|default:'$ISPswOrder.DaysRemainded'} дн.
 Баланс договора:	{$ISPswOrder.Balance|default:'$ISPswOrder.Balance'}
 Тарифный план:		"{$ISPswOrder.SchemeName|default:'$ISPswOrder.SchemeName'}"
-Стоимость продления:	{$ISPswOrder.Cost|default:'$ISPswOrder.Cost'}
+Стоимость продления:	{$ISPswOrder.Cost|default:'$ISPswOrder.Cost'}*
 IP адрес заказа:	{$ISPswOrder.IP|default:'$ISPswOrder.IP'}.
+
+--
+* Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
 
