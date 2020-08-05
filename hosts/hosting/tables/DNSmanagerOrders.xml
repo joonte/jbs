@@ -189,10 +189,11 @@
 		<!-- ********************************************************************** -->
 		<Scheme>
 			<Head>Тариф</Head>
-			<Comp>Formats/String</Comp>
+			<Comp>Formats/SchemeName</Comp>
 			<Args>
 				<ListElement>%Scheme%</ListElement>
-				<Length>10</Length>
+				<ListElement>DNSmanager</ListElement>
+				<ListElement>%ID%</ListElement>
 			</Args>
 			<Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `DNSmanagerSchemes`.`ServersGroupID`),')') FROM `DNSmanagerSchemes` WHERE `DNSmanagerSchemes`.`ID` = `DNSmanagerOrdersOwners`.`SchemeID`)</Alias>
 		</Scheme>

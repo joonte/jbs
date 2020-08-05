@@ -184,10 +184,11 @@
 		<!-- ********************************************************************** -->
 		<Scheme>
 			<Head>Тариф</Head>
-			<Comp>Formats/String</Comp>
+			<Comp>Formats/SchemeName</Comp>
 			<Args>
 				<ListElement>%Scheme%</ListElement>
-				<Length>10</Length>
+				<ListElement>Hosting</ListElement>
+				<ListElement>%ID%</ListElement>
 			</Args>
 			<Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `HostingSchemes`.`ServersGroupID`),')') FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`)</Alias>
 		</Scheme>

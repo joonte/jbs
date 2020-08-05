@@ -189,9 +189,11 @@
 		<Scheme>
 			<Head>Тариф</Head>
 			<Comp>Formats/String</Comp>
+			<Comp>Formats/SchemeName</Comp>
 			<Args>
 				<ListElement>%Scheme%</ListElement>
-				<Length>15</Length>
+				<ListElement>ISPsw</ListElement>
+				<ListElement>%ID%</ListElement>
 			</Args>
 			<Alias>(SELECT `Name` FROM `ISPswSchemes` WHERE `ISPswSchemes`.`ID` = `ISPswOrdersOwners`.`SchemeID`)</Alias>
 		</Scheme>
