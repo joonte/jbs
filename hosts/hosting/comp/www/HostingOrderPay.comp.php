@@ -332,7 +332,8 @@ if($DaysPay){
 		#-------------------------------------------------------------------------------
 		$DaysFromBallance = Floor($HostingOrder['ContractBalance'] / $HostingScheme['CostDay']);
 		#-------------------------------------------------------------------------------
-		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',$DaysFromBallance,$HostingScheme,$HostingOrder,$UserID);
+		// если дней ноль - считаем что их один - так будут учитываться бонусы на 100% оплату
+		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',($DaysFromBallance)?$DaysFromBallance:1,$HostingScheme,$HostingOrder,$UserID);
 		if(Is_Error($DaysFromBallance))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------

@@ -342,7 +342,8 @@ if($DaysPay){
 	if($ExtraIPScheme['CostDay'] > 0){
 		$DaysFromBallance = Floor($ExtraIPOrder['ContractBalance'] / $ExtraIPScheme['CostDay']);
 		#-------------------------------------------------------------------------------
-		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',$DaysFromBallance,$ExtraIPScheme,$ExtraIPOrder,$UserID);
+		// если дней ноль - считаем что их один - так будут учитываться бонусы на 100% оплату
+		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',($DaysFromBallance)?$DaysFromBallance:1,$ExtraIPScheme,$ExtraIPOrder,$UserID);
 		if(Is_Error($DaysFromBallance))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------

@@ -346,7 +346,8 @@ if($DaysPay){
 		#-------------------------------------------------------------------------------
 		$DaysFromBallance = Floor($DSOrder['ContractBalance'] / $DSScheme['CostDay']);
 		#-------------------------------------------------------------------------------
-		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',$DaysFromBallance,$DSScheme,$DSOrder,$UserID);
+		// если дней ноль - считаем что их один - так будут учитываться бонусы на 100% оплату
+		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',($DaysFromBallance)?$DaysFromBallance:1,$DSScheme,$DSOrder,$UserID);
 		if(Is_Error($DaysFromBallance))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------

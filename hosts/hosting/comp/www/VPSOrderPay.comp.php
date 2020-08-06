@@ -332,7 +332,8 @@ if($DaysPay){
 		#-------------------------------------------------------------------------------
 		$DaysFromBallance = Floor($VPSOrder['ContractBalance'] / $VPSScheme['CostDay']);
 		#-------------------------------------------------------------------------------
-		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',$DaysFromBallance,$VPSScheme,$VPSOrder,$UserID);
+		// если дней ноль - считаем что их один - так будут учитываться бонусы на 100% оплату
+		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',($DaysFromBallance)?$DaysFromBallance:1,$VPSScheme,$VPSOrder,$UserID);
 		if(Is_Error($DaysFromBallance))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
