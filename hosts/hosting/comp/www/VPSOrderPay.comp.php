@@ -336,32 +336,36 @@ if($DaysPay){
 		if(Is_Error($DaysFromBallance))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
+	}else{
 		#-------------------------------------------------------------------------------
-		if($MinDaysPay <= $DaysFromBallance){
+		$DaysFromBallance = 365;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if($MinDaysPay <= $DaysFromBallance){
+		#-------------------------------------------------------------------------------
+		if($IsPeriods){
 			#-------------------------------------------------------------------------------
-			if($IsPeriods){
-				#-------------------------------------------------------------------------------
-				$Comp = Comp_Load('Form/Input',Array('onclick'=>'form.Period.disabled = true;form.Year.disabled = true;form.Month.disabled = true;form.Day.disabled = true;','name'=>'Calendar','type'=>'radio','checked'=>'true'));
-				if(Is_Error($Comp))
-					return ERROR | @Trigger_Error(500);
-				#-------------------------------------------------------------------------------
-			}
-			#-------------------------------------------------------------------------------
-			$ContractBalance = Comp_Load('Formats/Currency',$VPSOrder['ContractBalance']);
-			if(Is_Error($ContractBalance))
-				return ERROR | @Trigger_Error(500);
-			#-------------------------------------------------------------------------------
-			$Table1[] = new Tag('TD',Array('class'=>'Separator','colspan'=>2),$Comp,new Tag('SPAN',SPrintF('Остаток денег на балансе (%s)',$ContractBalance)));
-			#-------------------------------------------------------------------------------
-			$Table1[] = Array('Остатка на счету хватит на',SPrintF('%s дней',$DaysFromBallance));
-			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load('Form/Input',Array('name'=>'DaysPayFromBallance','value'=>$DaysFromBallance,'type'=>'hidden'));
+			$Comp = Comp_Load('Form/Input',Array('onclick'=>'form.Period.disabled = true;form.Year.disabled = true;form.Month.disabled = true;form.Day.disabled = true;','name'=>'Calendar','type'=>'radio','checked'=>'true'));
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$Form->AddChild($Comp);
-			#-------------------------------------------------------------------------------
 		}
+		#-------------------------------------------------------------------------------
+		$ContractBalance = Comp_Load('Formats/Currency',$VPSOrder['ContractBalance']);
+		if(Is_Error($ContractBalance))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Table1[] = new Tag('TD',Array('class'=>'Separator','colspan'=>2),$Comp,new Tag('SPAN',SPrintF('Остаток денег на балансе (%s)',$ContractBalance)));
+		#-------------------------------------------------------------------------------
+		$Table1[] = Array('Остатка на счету хватит на',SPrintF('%s дней',$DaysFromBallance));
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Form/Input',Array('name'=>'DaysPayFromBallance','value'=>$DaysFromBallance,'type'=>'hidden'));
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Form->AddChild($Comp);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
