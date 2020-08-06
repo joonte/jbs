@@ -20,7 +20,7 @@ if($Result)
 #-------------------------------------------------------------------------------
 if($OrderTypeCode == 'Default'){
 	#-------------------------------------------------------------------------------
-	$Order = DB_Select('OrdersOwners','(SELECT `Item` FROM `Services` WHERE `OrdersOwners`.`ServiceID`=`Services`.`ID`) AS `SchemeName`',Array('UNIQ','ID'=>$ID));
+	$Order = DB_Select('OrdersOwners',Array('ID','(SELECT `Item` FROM `Services` WHERE `OrdersOwners`.`ServiceID`=`Services`.`ID`) AS `SchemeName`'),Array('UNIQ','ID'=>$ID));
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
@@ -45,7 +45,12 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Formats/String',$Order['SchemeName'],10);
+// если тариф не меняется - просто выводим, без ссылки
+if(!In_Array($OrderTypeCode,Array('DNSmanager','VPS','ISPsw','Hosting')))
+	$OrderTypeCode = FALSE;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Formats/SchemeName',$Order['SchemeName'],$OrderTypeCode,$Order['ID']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
