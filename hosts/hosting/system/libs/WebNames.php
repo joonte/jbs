@@ -744,8 +744,10 @@ function WebNames_Domain_WhoIs($Settings,$DomainName,$DomainZone){
 	Debug(SPrintF('[system/libs/WebNames.php]: $Result = %s',print_r($Result,true)));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	if(IsSet($Result['error']))
-		return ERROR | @Trigger_Error(SPrintF('[WebNames_Domain_WhoIs]: Cервер %s вернул ошибку',$Settings['Address']));
+	// херня какая-то, стали вовзращать error если домен не найден {"error":"mnt-rp.site not found"}
+	if(IsSet($Result['error']) && Preg_Match('/\snot\sfound/',$Result['error']))
+		return TRUE;
+		#return ERROR | @Trigger_Error(SPrintF('[WebNames_Domain_WhoIs]: Cервер %s вернул ошибку',$Settings['Address']));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if(IsSet($Result['success']))
