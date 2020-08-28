@@ -348,7 +348,8 @@ foreach($Servers as $Registrator){
 					'ServerID'	=> $Registrator['ID'],
 					'MinOrderYears'	=> $Prices[$Key]['min.period'],
 					'MaxActionYears'=> $Prices[$Key]['max.period'],
-					'SortID'	=> 20000
+					'SortID'	=> 20000,
+					'Params'	=> $Prices[$Key]
 					);
 			#-------------------------------------------------------------------------------
 			$IsInsert = DB_Insert('DomainSchemes',$Scheme);
@@ -369,9 +370,10 @@ foreach($Servers as $Registrator){
 			}
 			#-------------------------------------------------------------------------------
 			# JBS-1228: прописываем в параметры тарифа цены полученные от регистратора
-			$IsUpdate = DB_Update('DomainSchemes',Array('Params'=>$Prices[$Key]),Array('ID'=>$IsInsert));
-			if(Is_Error($IsUpdate))
-				return ERROR | @Trigger_Error(500);
+			// вынес в IsInsert
+			#$IsUpdate = DB_Update('DomainSchemes',Array('Params'=>$Prices[$Key]),Array('ID'=>$IsInsert));
+			#if(Is_Error($IsUpdate))
+			#	return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
