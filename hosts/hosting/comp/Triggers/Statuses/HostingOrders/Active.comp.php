@@ -127,9 +127,14 @@ default:
 	# No more...
 }
 #-------------------------------------------------------------------------------
-$IsUpdate = DB_Update('HostingOrders',Array('ConsiderDay'=>0),Array('ID'=>$HostingOrder['ID']));
-if(Is_Error($IsUpdate))
-	return ERROR | @Trigger_Error(500);
+// если заказ активен, то обнуление дней учёта списывает один день при оплате
+if($HostingOrder['StatusID'] != 'Active'){
+	#-------------------------------------------------------------------------------
+	$IsUpdate = DB_Update('HostingOrders',Array('ConsiderDay'=>0),Array('ID'=>$HostingOrder['ID']));
+	if(Is_Error($IsUpdate))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$HostingOrder['OrderID'],'Parked'=>Explode(',',$HostingOrder['Parked'])));

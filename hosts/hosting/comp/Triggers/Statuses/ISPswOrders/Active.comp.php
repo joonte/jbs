@@ -132,9 +132,14 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsUpdate = DB_Update('ISPswOrders',Array('ConsiderDay'=>0),Array('ID'=>$ISPswOrder['ID']));
-if(Is_Error($IsUpdate))
-	return ERROR | @Trigger_Error(500);
+// если заказ активен, то обнуление дней учёта списывает один день при оплате
+if($ISPswOrder['StatusID'] != 'Active'){
+#-------------------------------------------------------------------------------
+	$IsUpdate = DB_Update('ISPswOrders',Array('ConsiderDay'=>0),Array('ID'=>$ISPswOrder['ID']));
+	if(Is_Error($IsUpdate))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$ISPswOrder['OrderID'],'Parked'=>$ISPswOrder['IP']));
