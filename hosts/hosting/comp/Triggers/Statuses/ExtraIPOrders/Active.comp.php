@@ -138,9 +138,14 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsUpdate = DB_Update('ExtraIPOrders',Array('ConsiderDay'=>0),Array('ID'=>$ExtraIPOrder['ID']));
-if(Is_Error($IsUpdate))
-	return ERROR | @Trigger_Error(500);
+// если заказ активен, то обнуление дней учёта списывает один день при оплате
+if($ExtraIPOrder['StatusID'] != 'Active'){
+	#-------------------------------------------------------------------------------
+	$IsUpdate = DB_Update('ExtraIPOrders',Array('ConsiderDay'=>0),Array('ID'=>$ExtraIPOrder['ID']));
+	if(Is_Error($IsUpdate))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$ExtraIPOrder['OrderID'],'Parked'=>$ExtraIPOrder['Login']));

@@ -138,9 +138,14 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsUpdate = DB_Update('VPSOrders',Array('ConsiderDay'=>0),Array('ID'=>$VPSOrder['ID']));
-if(Is_Error($IsUpdate))
-	return ERROR | @Trigger_Error(500);
+// если заказ активен, то обнуление дней учёта списывает один день при оплате
+if($VPSOrder['StatusID'] != 'Active'){
+	#-------------------------------------------------------------------------------
+	$IsUpdate = DB_Update('VPSOrders',Array('ConsiderDay'=>0),Array('ID'=>$VPSOrder['ID']));
+	if(Is_Error($IsUpdate))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$VPSOrder['OrderID'],'Parked'=>$VPSOrder['IP']));
