@@ -127,12 +127,12 @@
 				<ListElement>%ID%</ListElement>
 				<ListElement>Formats/String</ListElement>
 				<ListElement>%Name%</ListElement>
-				<ListElement>7</ListElement>
+				<ListElement>10</ListElement>
 				<ListElement>%AdminNotice%</ListElement>
 				<ListElement>%UserNotice%</ListElement>
 			</Args>
 			<Attribs>
-				<style>text-align:right;</style>
+				<style>text-align:left;</style>
 			</Attribs>
 		</Name>
 		<!-- ********************************************************************** -->
@@ -177,8 +177,8 @@
 		</Discount>
 		<!-- ********************************************************************** -->
 		<ServersGroup>
-			<Head>Гр. серв.</Head>
-			<Prompt>Датацентр</Prompt>
+			<Head>Гр.</Head>
+			<Prompt>Датацентр (Группа серверов)</Prompt>
 			<Comp>Formats/String</Comp>
 			<Args>
 				<ListElement>%ServersGroup%</ListElement>
