@@ -26,6 +26,13 @@ $Columns = Array(
 			'(SELECT COUNT(*) FROM `OrdersOwners` WHERE `OrdersOwners`.`UserID`=`Users`.`ID` AND `OrdersOwners`.`StatusID`="Active") AS `NumActiveOrders`',
 			'(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID`=`Users`.`ID`) AS `TotalPayments`',
 			'(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID`=`Users`.`ID` AND `InvoicesOwners`.`StatusID`="Payed") AS `SummPayments`',
+			/* оплаченные за последний год */
+			'(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID`=`Users`.`ID` AND `InvoicesOwners`.`StatusID`="Payed" AND `InvoicesOwners`.`StatusDate` > UNIX_TIMESTAMP() - 365*24*60*60)/12 AS `SummPayments12month`',
+			/* оплаченные за последние полгода */
+			'(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID`=`Users`.`ID` AND `InvoicesOwners`.`StatusID`="Payed" AND `InvoicesOwners`.`StatusDate` > UNIX_TIMESTAMP() - 183*24*60*60)/6 AS `SummPayments6month`',
+			/* оплаченные за последние 3 месяца */
+			'(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID`=`Users`.`ID` AND `InvoicesOwners`.`StatusID`="Payed" AND `InvoicesOwners`.`StatusDate` > UNIX_TIMESTAMP() - 92*24*60*60)/3 AS `SummPayments3month`',
+			/* балланс всех договоров */
 			'(SELECT SUM(`Balance`) FROM `ContractsOwners` WHERE `ContractsOwners`.`UserID`=`Users`.`ID`) AS `BalanceSumm`'
 		);
 #-------------------------------------------------------------------------------
@@ -193,16 +200,60 @@ $Table[] = 'Активность пользователя';
 #-------------------------------------------------------------------------------
 $Table[] = Array('Активных услуг',$User['NumActiveOrders']);
 #-------------------------------------------------------------------------------
+if($User['NumOrders'] != $User['NumActiveOrders'])
+	$Table[] = Array('НеАктивных услуг',(string)($User['NumOrders'] - $User['NumActiveOrders']));
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Formats/Currency',$User['SummPayments']);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array('Оплачено счетов на сумму',$Comp);
+$Table[] = Array('Всего оплачено счетов',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($User['NumOrders'] != $User['NumActiveOrders'])
-	$Table[] = Array('Всего заказано услуг',$User['NumOrders']);
+$Comp = Comp_Load('Formats/Currency',$User['SummPayments'] / ((Time() - $User['RegisterDate'])/(30*24*60*60)));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Среднемесячный платёж',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// если зарегистрирован более года назад
+if(Time() - $User['RegisterDate'] > 365*24*60*60){
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Formats/Currency',$User['SummPayments12month']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array('Среднемесячно, год',$Comp);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// зареган более полгода назад
+if(Time() - $User['RegisterDate'] > 183*24*60*60){
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Formats/Currency',$User['SummPayments6month']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array('Среднемесячно, полгода',$Comp);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// зареган более 3 месяцев назад
+if(Time() - $User['RegisterDate'] > 92*24*60*60){
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Formats/Currency',$User['SummPayments3month']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+
+	#-------------------------------------------------------------------------------
+	$Table[] = Array('Среднемесячно, 3 месяца',$Comp);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Formats/Currency',$User['TotalPayments']);
 if(Is_Error($Comp))
@@ -215,7 +266,8 @@ if($User['TotalPayments'] != $User['SummPayments']){
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Table[] = Array('Выписано счетов на сумму',$Comp);
+	// закомментил, нахрен не нужно по большему счёту
+	//$Table[] = Array('Выписано счетов на сумму',$Comp);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
