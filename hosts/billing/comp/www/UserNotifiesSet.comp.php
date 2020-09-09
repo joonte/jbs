@@ -199,7 +199,7 @@ foreach(Array_Keys($Config['Notifies']['Types']) as $TypeID){
 		break;
 		#-------------------------------------------------------------------------------
 	default:
-	return ERROR | @Trigger_Error(101);
+		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -244,7 +244,8 @@ foreach(Array_Keys($Config['Notifies']['Types']) as $TypeID){
 				'name'	=> SPrintF('%s[]',$Contact['MethodID']),
 				'type'	=> 'checkbox',
 				'value'	=> $TypeID,
-				'prompt'=> (IsSet($Type[$UseName]) && !$Type[$UseName])?'Данная настройка отключена администратором':SPrintF('Изменить настройки')
+				'prompt'=> (IsSet($Type[$UseName]) && !$Type[$UseName])?'Данная настройка отключена администратором':SPrintF('Изменить настройки'),
+				'id'	=> $TypeID
 				)
 			);
 	if(Is_Error($Comp))
@@ -255,12 +256,11 @@ foreach(Array_Keys($Config['Notifies']['Types']) as $TypeID){
 	if(IsSet($Type[$UseName]) && !$Type[$UseName])
 		$Comp->AddAttribs(Array('disabled'=>'true'));
 	#-------------------------------------------------------------------------------
-	//
 	if(!In_Array($TypeID,$uNotifies))
 		$Comp->AddAttribs(Array('checked'=>'true'));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Table[] = Array($Type['Name'],$Comp);
+	$Table[] = Array(new Tag('LABEL',Array('for'=>$TypeID),$Type['Name']),$Comp);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
