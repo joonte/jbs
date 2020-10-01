@@ -67,7 +67,7 @@ $String = Preg_Replace('/\[p](.+)\[\/p\]\n/sU',!IsSet($Params['IsEmail'])?'<P>\\
 #-------------------------------------------------------------------------------
 $String = Preg_Replace('/\[marker](.+)\[\/marker\]\n/sU',!IsSet($Params['IsEmail'])?'<TABLE  style="margin-left:15px;" cellspacing="2" cellpadding="2"><TR><TD valign="top" style="padding-top:5px;"><IMG alt="+" width="8px" height="8px" src="/styles/root/Images/Ul.png" /></TD><TD>\\1</TD></TR></TABLE>':'\\1',$String);
 #-------------------------------------------------------------------------------
-$String = Preg_Replace('/\\n(--|---)\n/sU',!IsSet($Params['IsEmail'])?'<HR align="left" size="1" />':"\n--\n",$String);
+$String = Preg_Replace('/\\n(--|---)\n/sU',!IsSet($Params['IsEmail'])?'<HR />':"\n--\n",$String);
 #-------------------------------------------------------------------------------
 $String = Preg_Replace('/\[bg=([a-z]+)\](.+)\[\/bg\]/sU',!IsSet($Params['IsEmail'])?'<DIV style="padding:5px;background-color:\\1;">\\2</DIV>':'\\2',$String);
 #-------------------------------------------------------------------------------
