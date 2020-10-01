@@ -48,11 +48,13 @@ if(IsSet($StrExpl[1])){
 #-------------------------------------------------------------------------------
 #Debug("[comp/Formats/Status/Name]: ModeID = $ModeID; StatusID = $StatusID; RowID = $RowID; Length = $Length");
 #-------------------------------------------------------------------------------
+$Url = SPrintF("JavaScript:ShowWindow('/StatusesHistory',{ModeID:'%s',RowID:%u});",$ModeID,$RowID);
+#-------------------------------------------------------------------------------
 $Name = $Config['Statuses'][$ModeID][$StatusID]['Name'];
 #-------------------------------------------------------------------------------
 if(!Is_Null($Length)){
 	#-------------------------------------------------------------------------------
-	$Name = Comp_Load('Formats/String',$Name,$Length);
+	$Name = Comp_Load('Formats/String',$Name,$Length,$Url);
 	if(Is_Error($Name))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -69,7 +71,7 @@ return new Tag(
                                'width'       => 16,
                                'height'      => 16,
                                'src'         => 'SRC:{Images/Icons/History.gif}',
-                               'onclick'     => SPrintF("javascript:ShowWindow('/StatusesHistory',{ModeID:'%s',RowID:%u});",$ModeID,$RowID)
+                               'onclick'     => $Url
                                )
                        ),
                        new Tag('SPAN',$Name)
