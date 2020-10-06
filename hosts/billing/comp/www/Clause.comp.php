@@ -14,11 +14,11 @@ $TemplateID = (string) @$Args['TemplateID'];
 $Preview    = (string) @$Args['Preview'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('classes/DOM.class.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Clauses/Load',$ClauseID,TRUE,$Preview);
 if(Is_Error($Comp))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM = new DOM();
 #-------------------------------------------------------------------------------
@@ -27,7 +27,7 @@ $Links = &Links();
 $Links['DOM'] = &$DOM;
 #-------------------------------------------------------------------------------
 if(Is_Error($DOM->Load(XML_HTTP_REQUEST?'Window':($TemplateID?$TemplateID:'Main'))))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DOM->AddText('Title',$Comp['Title']);
 #-------------------------------------------------------------------------------
@@ -36,9 +36,11 @@ $DOM->AddChild('Into',$Comp['DOM']);
 $Out = $DOM->Build(!XML_HTTP_REQUEST);
 #-------------------------------------------------------------------------------
 if(Is_Error($Out))
- return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return (XML_HTTP_REQUEST?Array('Status'=>'Ok','DOM'=>$DOM->Object):$Out);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>
