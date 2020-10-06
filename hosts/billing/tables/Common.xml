@@ -250,12 +250,6 @@
 				<RowID>%ID%</RowID>
 				<SortOn>%SortID%</SortOn>
 			</Args>
-			<!-- TODO надо поправить, чтобы хоть рука появлялась...
-			<Attribs>
-				<class>Button</class>
-				<style>text-align:right;</style>
-			</Attribs>
-			-->
 			<LongName>Порядок сортировки</LongName>
 		</SortID>
 		<!-- *********************************************************************** -->
