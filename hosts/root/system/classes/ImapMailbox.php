@@ -403,6 +403,15 @@ class ImapMailbox {
 	 * @return IncomingMail
 	 */
 	public function getMail($mailId) {
+
+		/* какая-то бага с идентфикаторами в яндекс-почте, в них какие-то кириллические символы появились */
+		#$hText = imap_fetchbody($this->getImapStream(), $mailId, '0', FT_UID);
+		#$headers = imap_rfc822_parse_headers($hText); 
+		#Debug(print_r($headers,true));
+		#$head = $headers;
+
+
+
 		$head = imap_rfc822_parse_headers(imap_fetchheader($this->getImapStream(), $mailId, FT_UID));
 
 		$mail = new IncomingMail();
