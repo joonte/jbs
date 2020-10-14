@@ -178,7 +178,7 @@ function Cpanel_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,$Em
     'maxftp'       => $HostingScheme['QuotaFTP'],
     'bwlimit'      => $HostingScheme['QuotaTraffic'],
     #---------------------------------------------------------------------------
-    'cpmod'        => $Settings['Theme'],
+    'cpmod'        => $Settings['Params']['Theme'],
     'customip'     => $IP,
   );
   #-----------------------------------------------------------------------------
