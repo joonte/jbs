@@ -24,6 +24,24 @@
 		<Value>Yes</Value>
 	</EdeskImagesPreview>
 	<!-- *********************************************************************** -->
+	<ShowContractsWithoutOrders>
+		<Title>Настройки интерфейса</Title>
+		<Comment>Отображать договора без услуг</Comment>
+		<Type>Select</Type>
+		<Options>
+			<Yes>Да</Yes>
+			<No>Нет</No>
+		</Options>
+		<Check>Char</Check>
+		<Attribs>
+			<size>1</size>
+			<style>width: 100%;</style>
+			<prompt>При включении настройки, в шапке биллинговой системы, будут отображаться договора без услуг</prompt>
+		</Attribs>
+		<IsDuty>1</IsDuty>
+		<Value>No</Value>
+	</ShowContractsWithoutOrders>
+	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
 	<EdeskButtons>
 		<Title>Настройки администраторов</Title>
