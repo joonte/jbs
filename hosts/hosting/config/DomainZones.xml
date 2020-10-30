@@ -1060,4 +1060,16 @@
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</codes>
+	<agency>
+		<Server>whois.nic.agency</Server>
+		<Name>agency</Name>
+		<Available>Domain\snot\sfound.</Available>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
+		<MinChars>2</MinChars>
+		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</agency>
 </XML>
