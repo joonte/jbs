@@ -123,8 +123,13 @@ function VmManager5_KVM_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 			'cputune'		=> Ceil($VPSScheme['cpu']),			# "вес" процессорных операций
 			'domain'		=> $VPSOrder['Domain'],				# для обратной зоны
 			'family'		=> 'ipv4',					# пока IPv6 всё ещё теория
-			'inbound'		=> SPrintF('%u',$VPSScheme['chrate'] * 1024),	# в тарифе в мегабитах
-			'outbound'		=> SPrintF('%u',$VPSScheme['chrate'] * 1024),	# в тарифе в мегабитах
+			# из общения с техподдержкой ISPsystem...
+			# > Ограничения в панели устанавливаются в кибибайтах в секунду (KiB/sec)
+			# > В частности для виртуальной машины v152558 установлено ограничение 8192KiB/sec,
+			# > что в пресчете в мегабиты составляет 8192KiB/sec x8bit / 1024 = 64 Mbit/sec 
+			# т.е. полоса была завышена в 8 раз =(
+			'inbound'		=> SPrintF('%u',$VPSScheme['chrate'] * 1024/8),	# в тарифе в мегабитах
+			'outbound'		=> SPrintF('%u',$VPSScheme['chrate'] * 1024/8),	# в тарифе в мегабитах
 			#'ip'			=> '1.2.3.4',
 			'iptype'		=> 'public',					# машина имеет доступ в инет
 			'mem'			=> Ceil($VPSScheme['mem']),			# рама
