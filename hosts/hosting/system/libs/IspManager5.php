@@ -815,7 +815,7 @@ function IspManager5_Password_Change($Settings,$Login,$Password,$Params){
 	$HTTP = IspManager5_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'usrparam','su'=>$Login,'sok'=>'ok','atype'=>'atany','passwd'=>$Password,'confirm'=>$Password,'email'=>$Params['Email'],'experience'=>'expert','setgeoip'=>'off','secureip'=>'off','vk_status'=>'off','fb_status'=>'off','gl_status'=>'off','disable_totp'=>'on');
+	$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'usrparam','su'=>$Login,'sok'=>'ok','atype'=>'atany','passwd'=>$Password,'confirm'=>$Password,'email'=>$Params['Email'],'experience'=>'expert','setgeoip'=>'off','secureip'=>'off','vk_status'=>'off','fb_status'=>'off','gl_status'=>'off','disable_totp'=>'on','clicked_button'=>'ok');
 	#-------------------------------------------------------------------------------
 	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
@@ -830,6 +830,25 @@ function IspManager5_Password_Change($Settings,$Login,$Password,$Params){
 	$XML = $XML->ToArray();
 	#-------------------------------------------------------------------------------
 	$Doc = $XML['doc'];
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// JBS-1453 меняем пасс для ftp юзера /
+	$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'ftp.user.edit','home'=>'/','su'=>$Login,'elid'=>$Login,'sok'=>'ok','passwd'=>$Password,'confirm'=>$Password);
+	#-------------------------------------------------------------------------------
+	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
+	if(Is_Error($Response))
+		return ERROR | @Trigger_Error('[IspManager5_Password_Change]: не удалось соедениться с сервером');
+	#-------------------------------------------------------------------------------
+#	$Response = Trim($Response['Body']);
+#	#-------------------------------------------------------------------------------
+#	$XML = String_XML_Parse($Response);
+#	if(Is_Exception($XML))
+#		return ERROR | @Trigger_Error('[IspManager5_Password_Change]: неверный ответ от сервера');
+#	#-------------------------------------------------------------------------------
+#	$XML = $XML->ToArray();
+#	#-------------------------------------------------------------------------------
+#	$Doc1 = $XML['doc'];
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if(IsSet($Doc['error']))
 		return new gException('PASSWORD_CHANGE_ERROR','Не удалось изменить пароль для заказа хостинга, возможно, он слишком простой');
