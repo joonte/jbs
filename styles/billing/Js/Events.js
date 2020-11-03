@@ -74,6 +74,7 @@ function CheckEvents(){
 				//------------------------------------------------------------------------------
 				with($Events.style){
 					//------------------------------------------------------------------------------
+					cursor    = 'pointer';
 					position  = 'absolute';
 					top       = 0;
 					left      = document.body.clientWidth - $eventsWidth - 2; // -2 added by lissyara, see jbs-17
