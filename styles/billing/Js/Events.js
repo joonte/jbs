@@ -74,16 +74,16 @@ function CheckEvents(){
 				//------------------------------------------------------------------------------
 				with($Events.style){
 					//------------------------------------------------------------------------------
-					cursor    = 'pointer';
-					position  = 'absolute';
-					top       = 0;
-					left      = document.body.clientWidth - $eventsWidth - 2; // -2 added by lissyara, see jbs-17
-					width     = $eventsWidth;
-					height    = 100;
-					overflow  = 'scroll';
-					overflowX = 'auto';
-					border    = '1px solid #DCDCDC';
-					backgroundColor = '#FFFFFF';
+					cursor		= 'pointer';
+					position	= 'absolute';
+					top		= 0;
+					left		= document.body.clientWidth - $eventsWidth - 2; // -2 added by lissyara, see jbs-17
+					width		= $eventsWidth;
+					maxHeight	= 100;
+					overflow	= 'scroll';
+					overflowX	= 'auto';
+					border		= '1px solid #DCDCDC';
+					backgroundColor	= '#FFFFFF';
 					//------------------------------------------------------------------------------
 				}
 				//------------------------------------------------------------------------------
