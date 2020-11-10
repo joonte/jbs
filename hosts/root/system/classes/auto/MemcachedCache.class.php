@@ -21,7 +21,7 @@ class MemcachedCache implements Cache {
 	// Constructor
 	private function __construct(){
 		#-------------------------------------------------------------------------------
-		Debug("Initializing memcahe system...");
+		Debug("Initializing memcached system...");
 		#-------------------------------------------------------------------------------
 		// Check library.
 		if(!Extension_Loaded(self::EXT_NAME))

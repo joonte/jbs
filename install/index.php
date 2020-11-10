@@ -402,7 +402,13 @@ if($__STEP_ID == 10){
 			#-------------------------------------------------------------------------------
 			Array_UnShift($HostsIDs,HOST_ID);
 			#-------------------------------------------------------------------------------
+			if(!File_Put_Contents($File,SPrintF("HostsIDs=%s\nmemcache.port=11211",Implode(',',$HostsIDs))))
+				Error(SPrintF('Ошибка записи файла (%s)',$File));
+			#-------------------------------------------------------------------------------
 			if(!File_Put_Contents($File,SPrintF("HostsIDs=%s\nmemcached.port=11211",Implode(',',$HostsIDs))))
+				Error(SPrintF('Ошибка записи файла (%s)',$File));
+			#-------------------------------------------------------------------------------
+			if(!File_Put_Contents($File,SPrintF("HostsIDs=%s\nredis.port=6379",Implode(',',$HostsIDs))))
 				Error(SPrintF('Ошибка записи файла (%s)',$File));
 			#-------------------------------------------------------------------------------
 		}
