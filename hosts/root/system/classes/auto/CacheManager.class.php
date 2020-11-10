@@ -19,29 +19,35 @@ class CacheManager {
 				#-------------------------------------------------------------------------------
 				Debug("[system/classes/auto/CacheManager.class.php]: Start initializing cache system.");
 				#-------------------------------------------------------------------------------
-				if(Extension_Loaded(MemcachedCache::EXT_NAME) && File_Exists(SPrintF('%s/.memcached',SYSTEM_PATH))){
+				if(Extension_Loaded(MemcachedCache::EXT_NAME)){
 					#-------------------------------------------------------------------------------
-					Debug('[system/classes/auto/CacheManager.class.php]: Force load MemcachedCache');
+					Debug('[system/classes/auto/CacheManager.class.php]: Load MemcachedCache');
 					#-------------------------------------------------------------------------------
 					self::$instance = MemcachedCache::getInstance();
 					#-------------------------------------------------------------------------------
-				}else if(Extension_Loaded(APCCache::EXT_NAME)){
-					#-------------------------------------------------------------------------------
-					Debug('[system/classes/auto/CacheManager.class.php]: Load APCCache');
-					#-------------------------------------------------------------------------------
-					self::$instance = APCCache::getInstance();
-					#-------------------------------------------------------------------------------
-				}else if(Extension_Loaded(APCuCache::EXT_NAME)){
+				}elseif(Extension_Loaded(APCuCache::EXT_NAME)){
 					#-------------------------------------------------------------------------------
 					Debug('[system/classes/auto/CacheManager.class.php]: Load APCuCache');
 					#-------------------------------------------------------------------------------
 					self::$instance = APCuCache::getInstance();
 					#-------------------------------------------------------------------------------
-				}else if(Extension_Loaded(MemcachedCache::EXT_NAME)){
+				}elseif(Extension_Loaded(MemcacheCache::EXT_NAME) && File_Exists(SPrintF('%s/.memcache',SYSTEM_PATH))){
 					#-------------------------------------------------------------------------------
-					Debug('[system/classes/auto/CacheManager.class.php]: Load MemcachedCache');
+					Debug('[system/classes/auto/CacheManager.class.php]: Force load MemcacheCache');
 					#-------------------------------------------------------------------------------
-					self::$instance = MemcachedCache::getInstance();
+					self::$instance = MemcacheCache::getInstance();
+					#-------------------------------------------------------------------------------
+				}elseif(Extension_Loaded(APCCache::EXT_NAME)){
+					#-------------------------------------------------------------------------------
+					Debug('[system/classes/auto/CacheManager.class.php]: Load APCCache');
+					#-------------------------------------------------------------------------------
+					self::$instance = APCCache::getInstance();
+					#-------------------------------------------------------------------------------
+				}elseif(Extension_Loaded(MemcacheCache::EXT_NAME)){
+					#-------------------------------------------------------------------------------
+					Debug('[system/classes/auto/CacheManager.class.php]: Load MemcacheCache');
+					#-------------------------------------------------------------------------------
+					self::$instance = MemcacheCache::getInstance();
 					#-------------------------------------------------------------------------------
 				}else{
 					#-------------------------------------------------------------------------------

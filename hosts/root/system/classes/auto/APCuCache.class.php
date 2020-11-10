@@ -73,7 +73,7 @@ class APCuCache implements Cache {
     }
 
     public function getStatistic() {
-        $result = Array('type'=>'APCu');
+        $result = Array('type'=>self::EXT_NAME);
 
         $cache_user = apcu_cache_info();
         $result['version'] = phpversion('apcu');

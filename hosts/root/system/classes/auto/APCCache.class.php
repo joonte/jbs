@@ -73,7 +73,7 @@ class APCCache implements Cache {
     }
 
     public function getStatistic() {
-	$result = Array('type'=>'APC');
+	$result = Array('type'=>self::EXT_NAME);
 
         $cache_user = apc_cache_info('user', 1);
 
