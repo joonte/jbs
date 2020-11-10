@@ -419,6 +419,7 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 			'limit_quota'			=> ($HostingScheme['QuotaDisk'])?$HostingScheme['QuotaDisk']:'1',
 			'limit_cgi'			=> ($HostingScheme['IsCGIAccess']?'on':'off'),
 			'limit_db'			=> $HostingScheme['QuotaDBs'],
+			'limit_dbsize'			=> ($HostingScheme['QuotaDisk'])?$HostingScheme['QuotaDisk']:'1',	// размер баз данных
 			'limit_db_users'		=> $HostingScheme['QuotaUsersDBs'],
 			'limit_domains'			=> $HostingScheme['QuotaDomains'],
 			'limit_emaildomains'		=> $HostingScheme['QuotaEmailDomains'],
