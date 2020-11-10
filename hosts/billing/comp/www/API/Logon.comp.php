@@ -55,10 +55,10 @@ if($Result){
 			#-------------------------------------------------------------------------------
 			CacheManager::add($CacheID,$Result + 1,IntVal($Settings['BruteForcePeriod']));
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/www/API/Logon]: перебор пароля для %s; с адреса %s; попыток %s',$Email,@$_SERVER['REMOTE_ADDR'],$Result));
+			Debug(SPrintF('[comp/www/API/Logon]: перебор пароля для %s; с адреса %s; попыток %s; таймаут %u',$Email,@$_SERVER['REMOTE_ADDR'],$Result,$Settings['BruteForcePeriod']));
 			#-------------------------------------------------------------------------------
 			if($Settings['IsActive'])
-				return new gException('BRUTE_PASSWORD_ATTEMPT','Попытка перебора пароля');
+				return new gException('BRUTE_PASSWORD_ATTEMPT',SPrintF('Попытка перебора пароля, подождите %u сек.',$Settings['BruteForcePeriod']));
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
