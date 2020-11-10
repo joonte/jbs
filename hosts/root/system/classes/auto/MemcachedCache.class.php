@@ -115,7 +115,9 @@ class MemcachedCache implements Cache {
 
         if($result === FALSE) {
             Debug('[MemcachedCache::getStatistic]: не удалось получить статистику кэшированной памяти');
-        }
+        }else{
+	    $result['type'] = 'memcache';
+	}
         
         return $result;
     }

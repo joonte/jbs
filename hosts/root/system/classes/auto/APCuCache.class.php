@@ -3,37 +3,37 @@
 require_once 'Cache.class.php';
 
 /**
- * APC cache implementation.
+ * APCu cache implementation.
  *
  * @author vvelikodny
  */
-class APCCache implements Cache {
+class APCuCache implements Cache {
     /**
      * PHP lib name.
      */
-    const EXT_NAME = 'apc';
+    const EXT_NAME = 'apcu';
 
-    /** APC cache singleton instance. */
+    /** APCu cache singleton instance. */
     protected static $instance = NULL;
 
     /** Constructor. */
     private function __construct() {
-        Debug("Initializing APC cache...");
+        Debug("Initializing APCu cache...");
 
         if (!extension_loaded(self::EXT_NAME)) {
             throw new Exception(SPrintF("PHP extension %s not installed or enabled in your system.", self::EXT_NAME));
         }
 
-        Debug("APC cache has been initialized.");
+        Debug("APCu cache has been initialized.");
     }
 
     /** */
     private function __clone() {}
 
     /**
-     * Gets APC instance if exists, otherwise creates a new instance.
+     * Gets APCu instance if exists, otherwise creates a new instance.
      *
-     * @return APC cache instance.
+     * @return APCu cache instance.
      */
     public static function getInstance() {
         if (self::$instance === NULL) {
@@ -44,18 +44,18 @@ class APCCache implements Cache {
     }
 
     public function add($key, $value, $ttl = 0) {
-        $result = apc_store($key, $value, $ttl);
+        $result = apcu_store($key, $value, $ttl);
 
         if (!$result) {
-            Debug(SPrintF('[APCCache::add]: не удалось закешировать объект [key=%s]', $key));
+            Debug(SPrintF('[APCuCache::add]: не удалось закешировать объект [key=%s]', $key));
         }
 
         return $result;
     }
 
     public function flush() {
-        Debug("Flush APC cache.");
-        return apc_clear_cache('user');
+        Debug("Flush APCu cache.");
+        return apcu_clear_cache();
     }
 
     public function get($key) {
@@ -63,25 +63,24 @@ class APCCache implements Cache {
         $__args_types = Array('string');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 
-        $result = apc_fetch($key);
+        $result = apcu_fetch($key);
 
         if (!$result) {
-            Debug(SPrintF('[APCCache::get]: не удалось извлечь объект [key=%s]', $key));
+            Debug(SPrintF('[APCuCache::get]: не удалось извлечь объект [key=%s]', $key));
         }
 
         return $result;
     }
 
     public function getStatistic() {
-	$result = Array('type'=>'APC');
+        $result = Array('type'=>'APCu');
 
-        $cache_user = apc_cache_info('user', 1);
-
-        $result['version'] = phpversion('apc');
+        $cache_user = apcu_cache_info();
+        $result['version'] = phpversion('apcu');
         $result['curr_items'] = $cache_user['num_entries'];
         $result['bytes'] = $cache_user['mem_size'];
 
-        $mem = apc_sma_info();
+        $mem = apcu_sma_info();
 
         $result['limit_maxbytes'] = $mem['avail_mem'];
 

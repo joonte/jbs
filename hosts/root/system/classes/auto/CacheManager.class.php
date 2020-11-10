@@ -31,6 +31,12 @@ class CacheManager {
 					#-------------------------------------------------------------------------------
 					self::$instance = APCCache::getInstance();
 					#-------------------------------------------------------------------------------
+				}else if(Extension_Loaded(APCuCache::EXT_NAME)){
+					#-------------------------------------------------------------------------------
+					Debug('[system/classes/auto/CacheManager.class.php]: Load APCuCache');
+					#-------------------------------------------------------------------------------
+					self::$instance = APCuCache::getInstance();
+					#-------------------------------------------------------------------------------
 				}else if(Extension_Loaded(MemcachedCache::EXT_NAME)){
 					#-------------------------------------------------------------------------------
 					Debug('[system/classes/auto/CacheManager.class.php]: Load MemcachedCache');
