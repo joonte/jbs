@@ -34,7 +34,7 @@ function IO_Read($Path,$IsUseLinks = TRUE){
 			#-------------------------------------------------------------------------------
 			$LinkPath = Trim(Mb_SubStr($Result,Mb_StrPos($Result,':') + 1));
 			#-------------------------------------------------------------------------------
-			switch($Result{0}){
+			switch($Result[0]){
 			case '#': # Абсолюная ссылка
 				# No more...
 				break;
