@@ -65,7 +65,7 @@ if(!Count($Td->Childs))
 $Out = new Tag('TABLE',Array('class'=>'Standard','style'=>'background-image:url(SRC:{Images/Grid.png});','width'=>$Width,'height'=>$Height),new Tag('TR',new Tag('TD',Array('height'=>'20px','style'=>'font-size:11px;color:#DCDCDC;'),'Рабочая область')),new Tag('TR',$Td));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-CacheManager::add($CacheID,$Out,($Interface == 'User')?300:30);
+CacheManager::add($CacheID,$Out,($Interface == 'User')?10:5);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $Out;
