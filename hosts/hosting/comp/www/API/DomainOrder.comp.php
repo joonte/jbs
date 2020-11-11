@@ -64,11 +64,11 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$AllZones = Comp_Load('Formats/DomainOrder/DomainZones',FALSE,'Name');
-if(Is_Error($AllZones))
+$DomainZone = Comp_Load('Formats/DomainOrder/DomainZones',$DomainScheme['Name'],FALSE);
+if(Is_Error($DomainZone))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if(!Preg_Match($AllZones[$DomainScheme['Name']]['Regular'],$DomainName))
+if(!Preg_Match($DomainZone['Regular'],$DomainName))
 	return new gException('WRONG_DOMAIN_NAME','Неверное имя домена');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

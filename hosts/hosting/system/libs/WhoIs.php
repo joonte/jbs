@@ -11,16 +11,14 @@ function WhoIs_Parse($Domain){
 	if(!Preg_Match($Regulars['Domain'],$Domain))
 		return new gException('WRONG_DOMAIN_NAME','Неверное доменное имя');
 	#-------------------------------------------------------------------------------
-	$DomainZones = Comp_Load('Formats/DomainOrder/DomainZones',FALSE,FALSE);
+	$DomainZones = Comp_Load('Formats/DomainOrder/DomainZones',FALSE,'List');
 	if(Is_Error($DomainZones))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	foreach($DomainZones as $DomainZone){
-		#-------------------------------------------------------------------------------
-		$Name = $DomainZone['Name'];
+	foreach($DomainZones as $Name){
 		#-------------------------------------------------------------------------------
 		if(Preg_Match(SPrintF('/^([0-9a-zабвгдеёжзийклмнопрстуфхцчшщьыъэюя\-]+)\.%s$/',Str_Replace('.','\.',$Name)),$Domain,$Matches))
-			return Array('DomainName'=>Next($Matches),'DomainZone'=>$DomainZone['Name']);
+			return Array('DomainName'=>Next($Matches),'DomainZone'=>$Name);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -41,31 +39,18 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 	#-------------------------------------------------------------------------------
 	if(!$Answer){
 		#-------------------------------------------------------------------------------
-		$DomainZones = Comp_Load('Formats/DomainOrder/DomainZones',FALSE,FALSE);
-		if(Is_Error($DomainZones))
+		$DomainZone = Comp_Load('Formats/DomainOrder/DomainZones',$ZoneName,FALSE);
+		if(Is_Error($DomainZone))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		# смотрим доменную зону, на предмет того использовать ли данные whois сервера, или юзать запросы к регистратору
-	        $IsSuppoted = FALSE;
 		#-------------------------------------------------------------------------------
-		foreach($DomainZones as $Zone){
+		Debug(SPrintF('[system/libs/WhoIs]: DomainZone = %s',print_r($DomainZone,true)));
+		if(!$DomainZone['IsSupported'] || $DomainZone['IsUseRegistratorWhoIs']){
 			#-------------------------------------------------------------------------------
-			if($Zone['Name'] == $ZoneName){
-				#-------------------------------------------------------------------------------
-				$IsSuppoted = TRUE;
-				#-------------------------------------------------------------------------------
-				break;
-				#-------------------------------------------------------------------------------
-			}
-			#-------------------------------------------------------------------------------
-		}
-		#-------------------------------------------------------------------------------
-		if(!$IsSuppoted || $Zone['IsUseRegistratorWhoIs']){
-			#-------------------------------------------------------------------------------
-			if(!$IsSuppoted)
+			if(!$DomainZone['IsSupported'])
 				Debug(SPrintF('[comp/www/API/WhoIs]: доменная зона не поддерживается'));
 			#-------------------------------------------------------------------------------
-			if($IsSuppoted && $Zone['IsUseRegistratorWhoIs'])
+			if($DomainZone['IsSupported'] && $DomainZone['IsUseRegistratorWhoIs'])
 				Debug(SPrintF('[comp/www/API/WhoIs]: принудительное использование WhoIs регистратора'));
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
@@ -225,25 +210,12 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 	if(!Preg_Match($Regulars['DomainName'],$DomainName))
 		return new gException('WRONG_DOMAIN_NAME','Неверное доменное имя');
 	#-------------------------------------------------------------------------------
-	$DomainZones = Comp_Load('Formats/DomainOrder/DomainZones',FALSE,FALSE);
-	if(Is_Error($DomainZones))
+	$DomainZone = Comp_Load('Formats/DomainOrder/DomainZones',$ZoneName,FALSE);
+	if(Is_Error($DomainZone))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$IsSuppoted = FALSE;
 	#-------------------------------------------------------------------------------
-	foreach($DomainZones as $DomainZone){
-		#-------------------------------------------------------------------------------
-		if($DomainZone['Name'] == $ZoneName){
-			#-------------------------------------------------------------------------------
-			$IsSuppoted = TRUE;
-			#-------------------------------------------------------------------------------
-			break;
-			#-------------------------------------------------------------------------------
-		}
-		#-------------------------------------------------------------------------------
-	}
-	#-------------------------------------------------------------------------------
-	if(!$IsSuppoted && !IsSet($DomainWhoIs))
+	if(!$DomainZone['IsSupported'] && !IsSet($DomainWhoIs))
 		return FALSE;
 	#-------------------------------------------------------------------------------
 	if(Mb_StrLen($DomainName) < ($MinChars = $DomainZone['MinChars']))
