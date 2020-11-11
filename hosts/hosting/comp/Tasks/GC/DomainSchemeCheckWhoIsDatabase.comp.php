@@ -15,9 +15,9 @@ if(!$Settings['IsActive'])
 	return TRUE;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$DomainZones = System_XML('config/DomainZones.xml');
+$DomainZones = Comp_Load('Formats/DomainOrder/DomainZones',FALSE,FALSE);
 if(Is_Error($DomainZones))
-	return ERROR | @Trigger_Error('[comp/www/API/WhoIs]: не удалось загрузить базу WhoIs серверов');
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 # перебираем зоны, строим массив с именами
 $WhoIsZones = Array();

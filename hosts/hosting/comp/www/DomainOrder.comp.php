@@ -91,14 +91,10 @@ if($StepID){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$DomainZones = System_XML('config/DomainZones.xml');
-	if(Is_Error($DomainZones))
+	$AllZones = Comp_Load('Formats/DomainOrder/DomainZones',FALSE,'Name');
+	if(Is_Error($AllZones))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$AllZones = Array();
-	#-------------------------------------------------------------------------------
-	foreach($DomainZones as $DomainZone)
-		$AllZones[$DomainZone['Name']] = $DomainZone;
 	#-------------------------------------------------------------------------------
 	if(!Preg_Match($AllZones[$DomainScheme['Name']]['Regular'],$DomainName))
 		return new gException('WRONG_DOMAIN_NAME','Неверное имя домена');

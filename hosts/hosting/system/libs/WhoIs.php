@@ -11,9 +11,9 @@ function WhoIs_Parse($Domain){
 	if(!Preg_Match($Regulars['Domain'],$Domain))
 		return new gException('WRONG_DOMAIN_NAME','Неверное доменное имя');
 	#-------------------------------------------------------------------------------
-	$DomainZones = System_XML('config/DomainZones.xml');
+	$DomainZones = Comp_Load('Formats/DomainOrder/DomainZones',FALSE,FALSE);
 	if(Is_Error($DomainZones))
-		return ERROR | @Trigger_Error('[WhoIs_Parse]: не удалось загрузить базу WhoIs серверов');
+		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	foreach($DomainZones as $DomainZone){
 		#-------------------------------------------------------------------------------
@@ -41,11 +41,11 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 	#-------------------------------------------------------------------------------
 	if(!$Answer){
 		#-------------------------------------------------------------------------------
-		# смотрим доменную зону, на предмет того использовать ли данные whois сервера, или юзать запросы к регистратору
-		$DomainZones = System_XML('config/DomainZones.xml');
+		$DomainZones = Comp_Load('Formats/DomainOrder/DomainZones',FALSE,FALSE);
 		if(Is_Error($DomainZones))
-			return ERROR | @Trigger_Error('[comp/www/API/WhoIs]: не удалось загрузить базу WhoIs серверов');
+			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
+		# смотрим доменную зону, на предмет того использовать ли данные whois сервера, или юзать запросы к регистратору
 	        $IsSuppoted = FALSE;
 		#-------------------------------------------------------------------------------
 		foreach($DomainZones as $Zone){
@@ -225,9 +225,9 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 	if(!Preg_Match($Regulars['DomainName'],$DomainName))
 		return new gException('WRONG_DOMAIN_NAME','Неверное доменное имя');
 	#-------------------------------------------------------------------------------
-	$DomainZones = System_XML('config/DomainZones.xml');
+	$DomainZones = Comp_Load('Formats/DomainOrder/DomainZones',FALSE,FALSE);
 	if(Is_Error($DomainZones))
-		return ERROR | @Trigger_Error('[WhoIs_Check]: не удалось загрузить базу WhoIs серверов');
+		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$IsSuppoted = FALSE;
 	#-------------------------------------------------------------------------------

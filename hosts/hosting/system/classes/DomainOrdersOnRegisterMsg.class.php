@@ -59,9 +59,9 @@ class DomainOrdersOnRegisterMsg extends Message {
 			}
 			#-------------------------------------------------------------------------------
 			// сообщение добавляемое к письму о регистрации домена. пока есть только у .pro доменов, из-за особенностей регистрации
-			$DomainZones = System_XML('config/DomainZones.xml');
+			$DomainZones = Comp_Load('Formats/DomainOrder/DomainZones',FALSE,FALSE);
 			if(Is_Error($DomainZones))
-				return ERROR | @Trigger_Error('[WhoIs_Parse]: не удалось загрузить базу WhoIs серверов');
+				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
 			if(IsSet($DomainZones[$DomainZone]['RegistrationMessage']))
 				$this->params['RegistrationMessage'] = $DomainZones[$DomainZone]['RegistrationMessage'];

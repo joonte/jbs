@@ -2,7 +2,7 @@
 
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.)
-    rewritten by Alex Keda, for www.host-food.ru */
+	rewritten by Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
 Eval(COMP_INIT);
@@ -23,14 +23,9 @@ $DomainName = Trim($DomainName);
 $Config = Config();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$DomainZones = System_XML('config/DomainZones.xml');
-if(Is_Error($DomainZones))
+$AllZones = Comp_Load('Formats/DomainOrder/DomainZones',FALSE,'Name');
+if(Is_Error($AllZones))
 	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$AllZones = Array();
-#-------------------------------------------------------------------------------
-foreach($DomainZones as $DomainZone)
-	$AllZones[$DomainZone['Name']] = $DomainZone;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($DomainName){
@@ -146,7 +141,7 @@ if($DomainName){
 	#-------------------------------------------------------------------------------
 	if(!$Settings['IsSchemesOnly'] || SizeOf($Zones) == 0){
 		#-------------------------------------------------------------------------------
-		$DomainZones = System_XML('config/DomainZones.xml');
+		$DomainZones = Comp_Load('Formats/DomainOrder/DomainZones',FALSE,FALSE);
 		if(Is_Error($DomainZones))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
