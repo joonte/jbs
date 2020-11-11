@@ -24,15 +24,18 @@ class CacheManager {
 				// перебираем системы кэширования, пробуем загрузить ту что указана принудительно
 				foreach($CacheSystems as $CacheSystem){
 					#-------------------------------------------------------------------------------
+					// кастыль для php 5.6
+					$className = SPrintF('%sCache',$CacheSystem);
+					#-------------------------------------------------------------------------------
 					// проверяем наличие файла по имени php-модуля
-					if(File_Exists(SPrintF('%s/.%s',SYSTEM_PATH,SPrintF('%sCache',$CacheSystem)::EXT_NAME))){
+					if(File_Exists(SPrintF('%s/.%s',SYSTEM_PATH,$className::EXT_NAME))){
 						#-------------------------------------------------------------------------------
 						// проверяем, загружено ли расширение php
-						if(Extension_Loaded(SPrintF('%sCache',$CacheSystem)::EXT_NAME)){
+						if(Extension_Loaded($className::EXT_NAME)){
 							#-------------------------------------------------------------------------------
 							Debug(SPrintF('[system/classes/auto/CacheManager.class.php]: Force load %sCache',$CacheSystem));
 							#-------------------------------------------------------------------------------
-							self::$instance = SPrintF('%sCache',$CacheSystem)::getInstance();
+							self::$instance = $className::getInstance();
 							#-------------------------------------------------------------------------------
 							break;
 							#-------------------------------------------------------------------------------
@@ -46,13 +49,16 @@ class CacheManager {
 				// если принудительно ничего не загрузилось, то перебираем все, и грузим первую найденную
 				if(self::$instance === NULL){
 					#-------------------------------------------------------------------------------
+					// кастыль для php 5.6
+					$className = SPrintF('%sCache',$CacheSystem);
+					#-------------------------------------------------------------------------------
 					foreach($CacheSystems as $CacheSystem){
 						#-------------------------------------------------------------------------------
-						if(Extension_Loaded(SPrintF('%sCache',$CacheSystem)::EXT_NAME)){
+						if(Extension_Loaded($className::EXT_NAME)){
 							#-------------------------------------------------------------------------------
 							Debug('[system/classes/auto/CacheManager.class.php]: Force load %sCache');
 							#-------------------------------------------------------------------------------
-							self::$instance = SPrintF('%sCache',$CacheSystem)::getInstance();
+							self::$instance = $className::getInstance();
 							#-------------------------------------------------------------------------------
 							break;
 							#-------------------------------------------------------------------------------
