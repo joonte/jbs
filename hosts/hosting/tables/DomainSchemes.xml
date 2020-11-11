@@ -126,6 +126,11 @@
 		<!-- ********************************************************************** -->
 		<Name>
 			<Head>Зона</Head>
+			<Comp>Formats/DomainOrder/DomainZones</Comp>
+			<Args>
+				<ListElement>%Name%</ListElement>
+				<ListElement>HTML</ListElement>
+			</Args>
 		</Name>
 		<!-- ********************************************************************** -->
 		<Group>
