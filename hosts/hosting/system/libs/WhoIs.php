@@ -44,7 +44,6 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[system/libs/WhoIs]: DomainZone = %s',print_r($DomainZone,true)));
 		if(!$DomainZone['IsSupported'] || $DomainZone['IsUseRegistratorWhoIs']){
 			#-------------------------------------------------------------------------------
 			if(!$DomainZone['IsSupported'])
