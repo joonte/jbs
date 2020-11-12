@@ -55,6 +55,10 @@
 							<Name>Индивидуальные тарифы</Name>
 							<Where>`UserID` != 1</Where>
 						</Individual>
+						<FirstLevelOnly>
+							<Name>Только первого уровня</Name>
+							<Where>`Name` NOT LIKE '%.%'</Where>
+						</FirstLevelOnly>
 					</Patterns>
 					<ActiveID>Active</ActiveID>
 				</Args>
