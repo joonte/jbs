@@ -97,7 +97,7 @@ if($DomainName){
 		#-------------------------------------------------------------------------------
 		$UniqID = UniqID('DomainSchemes');
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Services/Schemes','DomainSchemes',$__USER['ID'],Array('Name','ServerID'),$UniqID,"`IsActive` = 'yes'");
+		$Comp = Comp_Load('Services/Schemes','DomainSchemes',$__USER['ID'],Array('Name'),$UniqID,"`IsActive` = 'yes'");
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
@@ -147,7 +147,7 @@ if($DomainName){
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		$Columns = Array('ID','Name','ServerID','CostOrder');
+		$Columns = Array('ID','Name','CostOrder');
 		#-------------------------------------------------------------------------------
 		$DomainSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('SortID','CostOrder'),'Where'=>Array("`IsActive` = 'yes'")));
 		#-------------------------------------------------------------------------------
@@ -164,7 +164,7 @@ if($DomainName){
 		#-------------------------------------------------------------------------------
 		foreach($DomainSchemes as $DomainScheme)
 			if(IsSet($DomainScheme['ID']))
-				$Zones[$DomainScheme['ID']] = Array('Name'=>$DomainScheme['Name'],'CostOrder'=>$DomainScheme['CostOrder'],'ServerID'=>$DomainScheme['ServerID']);
+				$Zones[$DomainScheme['ID']] = Array('Name'=>$DomainScheme['Name'],'CostOrder'=>$DomainScheme['CostOrder']);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -212,8 +212,8 @@ if($DomainName){
 		#-------------------------------------------------------------------------------
 		$Row = Array();
 		#-------------------------------------------------------------------------------
-		// при одинаковых зонах у разных регистраторов будет совпадение идентификаторов
-		$ID = SPrintF('%s%s',$Zones[$Key]['ServerID'],Str_Replace('.','-',$Zones[$Key]['Name']));
+		// удаляем символы ломающие JS
+		$ID = Str_Replace('.','-',$Zones[$Key]['Name']);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		# имя домена
