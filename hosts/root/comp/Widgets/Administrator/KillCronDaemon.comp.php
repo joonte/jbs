@@ -106,7 +106,8 @@ $Comp = Comp_Load(
 		Array(
 			'type'		=> 'button',
 			'onclick'	=> "AjaxCall('/Administrator/API/KillCronDaemon',{IsKill:9},'Убиение планировщика','ShowTick(\"Планировщик убит\");');",
-			'value'		=> 'Убить планировщик задач'
+			'value'		=> 'Убить планировщик задач',
+			'prompt'	=> 'Жёсткий перезапуск, возможен только если планировщик "завис" как минимум на 10 минут'
 			)
 		);
 if(Is_Error($Comp))
@@ -120,7 +121,8 @@ $Comp = Comp_Load(
 		Array(
 			'type'		=> 'button',
 			'onclick'	=> "AjaxCall('/Administrator/API/KillCronDaemon',{IsKill:1},'Убиение планировщика','ShowTick(\"Создана задача перезапуска планировщика\");');",
-			'value'		=> 'Перезапустить планировщик задач'
+			'value'		=> 'Перезапустить планировщик задач',
+			'prompt'	=> 'Мягкий перезапуск, сработает только если не завис',
 			)
 		);
 if(Is_Error($Comp))
