@@ -832,7 +832,7 @@
 				</DomainCheckPriceListSettings>
 				<!-- ********************************************************************* -->
 				<DomainSchemeCheckWhoIsDatabaseSettings>
-					<IsActive>1</IsActive>
+					<IsActive>0</IsActive>
 					<IsEvent>1</IsEvent>
 				</DomainSchemeCheckWhoIsDatabaseSettings>
 				<!-- ********************************************************************* -->
