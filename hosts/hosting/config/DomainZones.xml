@@ -25,7 +25,7 @@
 		<MinChars>3</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
 		<ExpirationDate>Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
-		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<NsName>Name\sServer:\s+([a-zA-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</by>
@@ -90,7 +90,7 @@
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>2</MinChars>
 		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
-		<ExpirationDate>Registry\sExpiry\sDate:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Default</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -314,7 +314,7 @@
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>3</MinChars>
 		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
-		<ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Default</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -362,8 +362,8 @@
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>2</MinChars>
 		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
-		<ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
-		<NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Default</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</org>
@@ -386,8 +386,8 @@
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>2</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
-		<ExpirationDate>Domain\sExpiration\sDate:\s+([a-zA-Z]{3}\s[a-zA-Z]{3}\s[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}\sGMT\s[0-9]{4})</ExpirationDate>
-		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([a-zA-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Default</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</biz>
@@ -398,8 +398,8 @@
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>3</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
-		<ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
-		<NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([a-zA-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Default</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</info>
@@ -506,8 +506,8 @@
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>2</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
-		<ExpirationDate>Expiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
-		<NsName>Name\sServer:([A-Z0-9\.\-]{2,})</NsName>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Default</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</mobi>
@@ -530,7 +530,7 @@
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>2</MinChars>
 		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
-		<ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Default</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -710,8 +710,8 @@
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>2</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
-		<ExpirationDate>Domain\sExpiration\sDate:([0-9]{2}\-[a-zA-Z]{3}\-[0-9]{4})</ExpirationDate>
-		<NsName>Nameservers:([a-zA-Z0-9\.\-]{2,})</NsName>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Default</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</me>
@@ -728,7 +728,7 @@
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</ch>
 	<pw>
-		<Server>whois.centralnic.com</Server>
+		<Server>whois.nic.pw</Server>
 		<Name>pw</Name>
 		<Available>NOT\sFOUND</Available>
 		<NotAvailable>name\sis\sreserved</NotAvailable>
@@ -776,7 +776,7 @@
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</co.com>
 	<la>
-		<Server>whois.centralnic.com</Server>
+		<Server>whois.nic.la</Server>
 		<Name>la</Name>
 		<Available>NOT\sFOUND</Available>
 		<NotAvailable>name\sis\sreserved</NotAvailable>
@@ -806,8 +806,8 @@
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>3</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
-		<ExpirationDate>Registrar\sRegistration\sExpiration\sDate:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
-		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([a-zA-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</moscow>
@@ -866,7 +866,7 @@
 		<NotAvailable>Governmental\sReserved\sName</NotAvailable>
 		<MinChars>3</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
-		<ExpirationDate>Expiration\sDate:\s([0-9]{2}\-[a-z]{3}\-[0-9]{4})</ExpirationDate>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -891,8 +891,8 @@
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>3</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
-		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
-		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([a-zA-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</date>
@@ -942,8 +942,8 @@
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>2</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
-		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
-		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([a-zA-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</win>
@@ -974,14 +974,14 @@
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</construction>
 	<online>
-		<Server>whois.centralnic.com</Server>
+		<Server>whois.nic.online</Server>
 		<Name>online</Name>
 		<Available>DOMAIN\sNOT\sFOUND</Available>
 		<NotAvailable>name\sis\sreserved</NotAvailable>
 		<MinChars>2</MinChars>
 		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
 		<ExpirationDate>Registry\sExpiry\sDate:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
-		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Default</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</online>
@@ -998,13 +998,13 @@
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</xn--p1acf>
 	<space>
-		<Server>whois.centralnic.com</Server>
+		<Server>whois.nic.space</Server>
 		<Name>space</Name>
 		<Available>DOMAIN\sNOT\sFOUND</Available>
 		<NotAvailable>name\sis\sreserved</NotAvailable>
 		<MinChars>3</MinChars>
 		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
-		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
 		<Registrar>Default</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -1012,26 +1012,26 @@
 
 	</space>
 	<website>
-		<Server>whois.centralnic.com</Server>
+		<Server>whois.nic.website</Server>
 		<Name>website</Name>
 		<Available>DOMAIN\sNOT\sFOUND</Available>
 		<NotAvailable>name\sis\sreserved</NotAvailable>
 		<MinChars>2</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
-		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
 		<Registrar>Default</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</website>
 	<xyz>
-		<Server>whois.centralnic.com</Server>
+		<Server>whois.nic.xyz</Server>
 		<Name>xyz</Name>
 		<Available>DOMAIN\sNOT\sFOUND</Available>
 		<NotAvailable>name\sis\sreserved</NotAvailable>
 		<MinChars>2</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
-		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
-		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Default</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 		<RegistrationMessage>Обращаем ваше внимание, что при регистрации домена в доменной зоне .xyz на ваш почтовый адрес будет выслано письмо со ссылкой, для подтверждении регистрации. Если вы не пройдёте по этой ссылке, то через 2 недели домен перестанет работать, т.к. владелец доменной зоны снимет его с делегирования.</RegistrationMessage>
@@ -1043,7 +1043,7 @@
 		<NotAvailable>name\sis\sreserved</NotAvailable>
 		<MinChars>2</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
-		<ExpirationDate>Record\sexpires\son:\s([0-9]{2}\s[A-Za-z]{2,10}\s[0-9]{4})</ExpirationDate>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
 		<Registrar>Default</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
@@ -1056,8 +1056,8 @@
 		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
 		<MinChars>2</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
-		<ExpirationDate>Domain Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
-		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([a-zA-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</codes>
@@ -1069,7 +1069,7 @@
 		<MinChars>2</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
 		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
-		<NsName>Name\sServer:\s+([A-Z0-9\.\-]{2,})</NsName>
+		<NsName>Name\sServer:\s+([a-zA-Z0-9\.\-]{2,})</NsName>
 		<Registrar>Sponsoring Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</agency>
