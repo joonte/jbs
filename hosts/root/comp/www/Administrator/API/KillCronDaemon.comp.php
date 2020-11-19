@@ -32,6 +32,10 @@ if(!$IsKill)
 // мягкий рестарт
 if($IsKill != 9){
 	#-------------------------------------------------------------------------------
+	// а может маркер уже стоит?
+	if(File_Exists(SPrintF('%s/ExitCron.txt',$Tmp)))
+		return new gException('MARKER_FOR_CRON_RESTART_EXISTS',SPrintF('Файл перезапуска планировщика уже существует: %s',SPrintF('%s/ExitCron.txt',$Tmp)));
+	#-------------------------------------------------------------------------------
 	// маркер, что планировщик надо перезапустить
 	if(!@File_Put_Contents(SPrintF('%s/ExitCron.txt',$Tmp), Time()))
 		return new gException('CANNOT_CREATE_MARKER_FOR_CRON_RESTART',SPrintF('Не удалось создать маркер о необходимости перезапуска планировщика: %s',SPrintF('%s/ExitCron.txt',$Tmp)));
