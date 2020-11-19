@@ -26,8 +26,7 @@ case 'exception':
 	break;
 case 'array':
 	#---------------------------------------------------------------------------
-	#$GLOBALS['TaskReturnInfo'] = SPrintF('Handled %u orders',SizeOf($Orders));
-	$GLOBALS['TaskReturnInfo']['OrdersNoticeSuspend'] = SPrintF('Handled %u orders',SizeOf($Orders));
+	$GLOBALS['TaskReturnInfo'] = SPrintF('OrdersNoticeSuspend, Handled %u orders',SizeOf($Orders));
 	#---------------------------------------------------------------------------
 	foreach($Orders as $Order){
 		#-------------------------------------------------------------------------
