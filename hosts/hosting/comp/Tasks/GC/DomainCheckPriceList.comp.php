@@ -348,6 +348,7 @@ foreach($Servers as $Registrator){
 					'ServerID'	=> $Registrator['ID'],
 					'MinOrderYears'	=> $Prices[$Key]['min.period'],
 					'MaxActionYears'=> $Prices[$Key]['max.period'],
+					'DaysToProlong'	=> (In_Array($Key,Array('su','ru','рф')))?59:3250,	// менее 9 лет
 					'SortID'	=> 20000,
 					'Params'	=> $Prices[$Key]
 					);
