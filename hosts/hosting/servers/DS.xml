@@ -39,7 +39,7 @@
 		<Settings>
 			<Port>1500</Port>
 			<Protocol>ssl</Protocol>
-			<Theme>Orion</Theme>
+			<Theme>orion</Theme>
 			<Language>ru</Language>
 			<DiskTemplate>FreeBSD-10-amd64</DiskTemplate>
 			<Url>https://dci01.isp.su:1500/vmmgr</Url>

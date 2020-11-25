@@ -43,7 +43,7 @@
 		<Settings>
 			<Port>1500</Port>
 			<Protocol>ssl</Protocol>
-			<Theme>Orion</Theme>
+			<Theme>orion</Theme>
 			<Language>ru</Language>
 			<DiskTemplate>FreeBSD-12-amd64</DiskTemplate>
 			<NodeList>kvm01</NodeList>
@@ -56,7 +56,7 @@
 		<Settings>
 			<Port>1500</Port>
 			<Protocol>ssl</Protocol>
-			<Theme>Orion</Theme>
+			<Theme>orion</Theme>
 			<Language>ru</Language>
 			<DiskTemplate>centos-7-x86_64-minimal</DiskTemplate>
 			<NodeList>ovz01</NodeList>

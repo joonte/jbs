@@ -57,7 +57,7 @@
 		<Settings>
 			<Port>1500</Port>
 			<Protocol>ssl</Protocol>
-			<Theme>Orion</Theme>
+			<Theme>orion</Theme>
 			<Language>ru</Language>
 			<Url>https://s01.isp.su:1500/ispmgr</Url>
 		</Settings>
