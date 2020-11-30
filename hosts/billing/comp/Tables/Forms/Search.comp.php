@@ -81,13 +81,13 @@ $Session['Search'] = $Search;
 #-------------------------------------------------------------------------------
 $NoBody = new Tag('NOBODY');
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('name'=>'Search','size'=>15,'onkeydown'=>'if(IsEnter(event)){ TableSuperSearch(); }','type'=>'text','value'=>$Search));
+$Comp = Comp_Load('Form/Input',Array('name'=>'Search','id'=>'Search','OnKeyPress'=>'if(IsEnter(event)){TableSuperSearch();return false;};','type'=>'text','value'=>$Search));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $NoBody->AddChild($Comp);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('onclick'=>'TableSuperSearch();','type'=>'button','value'=>'Найти'));
+$Comp = Comp_Load('Form/Input',Array('onclick'=>'TableSuperSearch();','id'=>'SearchButton','type'=>'button','value'=>'Найти'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
