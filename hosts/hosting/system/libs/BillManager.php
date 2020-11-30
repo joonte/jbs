@@ -449,26 +449,47 @@ function BillManager_Get_List_Licenses($Settings){
 		if(!IsSet($License['expiredate']))
 			continue;
 		#-------------------------------------------------------------------------------
-		$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'soft.edit','elid'=>$License['id']);
 		#-------------------------------------------------------------------------------
-		$Response = HTTP_Send($Settings['Params']['PrefixAPI'],$HTTP,Array(),$Request);
-		if(Is_Error($Response))
-			return ERROR | @Trigger_Error('[BillManager_Get_List_Licenses]: не удалось соедениться с сервером');
+		$CacheID = Md5(SPrintF('BillManager_Get_List_Licenses-%s',$License['id']));
 		#-------------------------------------------------------------------------------
-		$Response = Trim($Response['Body']);
 		#-------------------------------------------------------------------------------
-		$XML = String_XML_Parse($Response);
-		if(Is_Exception($XML))
-			return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
+		$LicenseDetail = CacheManager::get($CacheID);
 		#-------------------------------------------------------------------------------
-		$XML = $XML->ToArray('elem');
-		#-------------------------------------------------------------------------------
-		$Doc = $XML['doc'];
-		if(IsSet($Doc['error']))
-			return new gException('BillManager_Get_List_Licenses','Не удалось получить список лицензий');
-		#-------------------------------------------------------------------------------
-		#Debug(SPrintF("[system/libs/BillManager.php]: Doc = %s",print_r($Doc, true)));
-		$Out[] = Array_Merge($License,$Doc);
+		if(!$LicenseDetail){
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF("[system/libs/BillManager.php]: LicenseDetail elid = %s НЕ найдено в кэше",$License['id']));
+			#-------------------------------------------------------------------------------
+			Sleep(5);
+			#-------------------------------------------------------------------------------
+			$Request = Array('authinfo'=>$authinfo,'out'=>'xml','func'=>'soft.edit','elid'=>$License['id']);
+			#-------------------------------------------------------------------------------
+			$Response = HTTP_Send($Settings['Params']['PrefixAPI'],$HTTP,Array(),$Request);
+			if(Is_Error($Response))
+				return ERROR | @Trigger_Error('[BillManager_Get_List_Licenses]: не удалось соедениться с сервером');
+			#-------------------------------------------------------------------------------
+			$Response = Trim($Response['Body']);
+			#-------------------------------------------------------------------------------
+			$XML = String_XML_Parse($Response);
+			if(Is_Exception($XML))
+				return new gException('WRONG_SERVER_ANSWER',$Response,$XML);
+			#-------------------------------------------------------------------------------
+			$XML = $XML->ToArray();
+			#-------------------------------------------------------------------------------
+			$LicenseDetail = $XML['doc'];
+			if(IsSet($LicenseDetail['error']))
+				return new gException('BillManager_Get_List_Licenses','Не удалось получить детальную информацию о лицензии');
+			#-------------------------------------------------------------------------------
+			#Debug(SPrintF("[system/libs/BillManager.php]: LicenseDetail = %s",print_r($LicenseDetail, true)));
+			#-------------------------------------------------------------------------------
+			CacheManager::add($CacheID,$LicenseDetail,3600);
+			#-------------------------------------------------------------------------------
+		}else{
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF("[system/libs/BillManager.php]: LicenseDetail elid = %s найдено в кэше",$License['id']));
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------	
+		$Out[] = Array_Merge($License,$LicenseDetail);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
