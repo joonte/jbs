@@ -39,7 +39,7 @@ if($Count){
 	if(Is_Error($Comp2))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Comp3 = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/DomainTransfer');"),'Перенос домена','Add.gif');
+	$Comp3 = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/DomainTransfer');"),'Перенос домена','DomainTransfer.png');
 	if(Is_Error($Comp3))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
