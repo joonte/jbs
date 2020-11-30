@@ -50,7 +50,7 @@ case 'array':
 	#-------------------------------------------------------------------------------
 	if($Count < 1){
 		#-------------------------------------------------------------------------------
-		Debug('[comp/Tasks/ServersAutoBalance]: no servers for autobalasing, go to next day');
+		Debug('[comp/Tasks/ServersAutoBalance]: вообще нет серверов для автобалансировки');
 		#------------------------------------------------------------------------------
 		$GLOBALS['TaskReturnInfo'] = 'No servers for AutoBalance';
 		#-------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ case 'array':
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: for AutoBalancing: %u servers',$Count));
+		Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: для автобалансировки: %u сервер(-ов)',$Count));
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ $GLOBALS['TaskReturnInfo'] = Array();
 #-------------------------------------------------------------------------------
 foreach($ServersGroups as $ServersGroup){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: processing group #%s, %s',$ServersGroup['ID'],$ServersGroup['Name']));
+	Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: обработка группы #%s, %s',$ServersGroup['ID'],$ServersGroup['Name']));
 	#-------------------------------------------------------------------------------
 	# выбираем все активные сервера этой группы
 	$Columns = Array(
@@ -110,7 +110,7 @@ foreach($ServersGroups as $ServersGroup){
 	case 'exception':
 		#-------------------------------------------------------------------------------
 		# в этой группе нет активных сервeров, ничего не делаем
-		Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: group #%u (%s) not have active servers',$ServersGroup['ID'],$ServersGroup['Name']));
+		Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: группа #%u (%s) не имеет активных серверов',$ServersGroup['ID'],$ServersGroup['Name']));
 		break;
 		#-------------------------------------------------------------------------------
 	case 'array':
@@ -124,7 +124,7 @@ foreach($ServersGroups as $ServersGroup){
 		#-------------------------------------------------------------------------------
 		if(SizeOf($Servers) < 1){
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: group #%u (%s) not have servers with enabled AutoBalance',$ServersGroup['ID'],$ServersGroup['Name']));
+			Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: группа #%u (%s) не имеет серверов с включённой автобалансировкой',$ServersGroup['ID'],$ServersGroup['Name']));
 			#-------------------------------------------------------------------------------
 			continue 2;
 			#-------------------------------------------------------------------------------
@@ -148,7 +148,7 @@ foreach($ServersGroups as $ServersGroup){
 		#-------------------------------------------------------------------------------
 		if(SizeOf($Servers) < 1){
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: group #%u (%s) not have servers with 100%% uptime',$ServersGroup['ID'],$ServersGroup['Name']));
+			Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: группа #%u (%s) не имеет сереров со 100%% аптайма',$ServersGroup['ID'],$ServersGroup['Name']));
 			#-------------------------------------------------------------------------------
 			continue 2;
 			#-------------------------------------------------------------------------------
@@ -174,12 +174,14 @@ foreach($ServersGroups as $ServersGroup){
 			}
 			#-------------------------------------------------------------------------------
 			$MaxLA    = Max($LA);
-			Debug("[comp/Tasks/ServersAutoBalance]: MaxLA = $MaxLA");
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: %s / MaxLA = %s',$ServersGroup['Name'],$MaxLA));
 			#-------------------------------------------------------------------------------
 			foreach ($LA as $key => $value)
 			{
 				#-------------------------------------------------------------------------------
 				Debug("[comp/Tasks/ServersAutoBalance]: $key => $value");
+				#-------------------------------------------------------------------------------
 		        	if($value <= $MaxLA){
 					#-------------------------------------------------------------------------------
 					$ServerID = $key;
@@ -245,14 +247,16 @@ foreach($ServersGroups as $ServersGroup){
 		}else{
 			#-------------------------------------------------------------------------------
 			# неизвестный алгоритм / отключено
-			Debug(SPrintF("[comp/Tasks/ServersAutoBalance]: group #%u (%s) have unused algoritm: %s",$ServersGroup['ID'],$ServersGroup['Name'],$ServersGroup['FunctionID']));
+			Debug(SPrintF("[comp/Tasks/ServersAutoBalance]: группа #%u (%s) имеет неиспользуемый алгоритм: %s",$ServersGroup['ID'],$ServersGroup['Name'],$ServersGroup['FunctionID']));
 			break;
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
 		# проверяем - сменился ли сервер
 		if(!IsSet($IsDefault) || $IsDefault != $SN[$ServerID]){
-			Debug(SPrintF("[comp/Tasks/ServersAutoBalance]: group #%u (%s) primary server is %s, using '%s' algoritm",$ServersGroup['ID'],$ServersGroup['Name'],$SN[$ServerID],$ServersGroup['FunctionID']));
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF("[comp/Tasks/ServersAutoBalance]: группа #%u (%s), первичный сервер %s, с использованием алгоритма '%s'",$ServersGroup['ID'],$ServersGroup['Name'],$SN[$ServerID],$ServersGroup['FunctionID']));
+			#-------------------------------------------------------------------------------
 			# обновляем таблицу серверов, выставляем первичный сервер
 			$IsUpdate = DB_Update('Servers',Array('IsDefault'=>FALSE),Array('Where'=>SPrintF('`ServersGroupID` = %u',$ServersGroup['ID'])));
 			if(Is_Error($IsUpdate))
@@ -286,6 +290,7 @@ foreach($ServersGroups as $ServersGroup){
 		foreach ($LA as $key => $value){
 			#-------------------------------------------------------------------------------
 			Debug("[comp/Tasks/ServersAutoBalance]: LA $key => $value");
+			#-------------------------------------------------------------------------------
 			$Server = DB_Select('Servers',Array('ID','Params'),Array('UNIQ','ID'=>$key));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($Server)){
