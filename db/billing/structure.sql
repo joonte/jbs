@@ -909,7 +909,7 @@ CREATE TABLE IF NOT EXISTS `Contacts` (
 	`IsPrimary` enum('no','yes') DEFAULT 'no',	-- это первичный адрес, используется для входа в биллинг. пока, первичным может быть только почтовый адрес
 	`IsActive` enum('no','yes') DEFAULT 'no',	-- можно использовать для оповещений
 	`IsSendFiles` enum('no','yes') default 'yes',	-- отсылка вложений и файлов на контакт
-	`IsImmediate` enum('no','yes') default 'yes',	-- отсылать немедленно если юзер находится в биллинге
+	`IsImmediately` enum('no','yes') default 'yes',	-- отсылать немедленно если юзер находится в биллинге
 	`IsHidden` enum('no','yes') DEFAULT 'no',	-- адрес скрыт, т.е. не используется у пользователя. сделано вместо удаления
 	`UserNotice` text,				-- примечание пользователя о этом контакте
 	PRIMARY KEY (`ID`),

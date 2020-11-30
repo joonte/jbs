@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 $TransferTime = FALSE;
 #-------------------------------------------------------------------------------
 // проверяем, не надо ли немедленно уведомлять
-if(IsSet($Contact['IsImmediate']) && $Contact['IsImmediate']){	// IsSet - на случай не выполненных тасков, они без этого параметра созданы
+if(IsSet($Contact['IsImmediately']) && $Contact['IsImmediately']){	// IsSet - на случай не выполненных тасков, они без этого параметра созданы
 	#-------------------------------------------------------------------------------
 	/* если юзер входил менее 15 секунд назад, уведомляем сразу же */
 	$Count = DB_Count('Users',Array('Where'=>Array(SPrintF('`ID` = %u',$Contact['UserID']),'`EnterDate` > UNIX_TIMESTAMP() - 15')));

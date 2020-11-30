@@ -16,7 +16,7 @@ $TimeBegin	= (integer) @$Args['TimeBegin'];
 $TimeEnd	= (integer) @$Args['TimeEnd'];
 $IsActive	= (boolean) @$Args['IsActive'];
 $IsSendFiles	= (boolean) @$Args['IsSendFiles'];
-$IsImmediate	= (boolean) @$Args['IsImmediate'];
+$IsImmediately	= (boolean) @$Args['IsImmediately'];
 $IsPrimary	= (boolean) @$Args['IsPrimary'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
@@ -173,7 +173,7 @@ $IContact = Array(
 		'IsPrimary'	=> $IsPrimary,
 		'IsActive'	=> $IsActive,
 		'IsSendFiles'	=> $IsSendFiles,
-		'IsImmediate'	=> $IsImmediate,
+		'IsImmediately'	=> $IsImmediately,
 		);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
