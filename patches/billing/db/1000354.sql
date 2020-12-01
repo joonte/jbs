@@ -1,5 +1,4 @@
 
-/* логгирование всех IP адресов юзера, для запросов из милиции */
 DROP TABLE IF EXISTS `UsersIPs`;
 
 -- SEPARATOR
@@ -43,4 +42,8 @@ ALTER TABLE `EdesksMessages` DROP `IP`;
 -- SEPARATOR
 
 ALTER TABLE `EdesksMessages` DROP `IP`;
+
+-- SEPARATOR
+
+DELETE FROM `UsersIPs` WHERE `IP` LIKE '127.%';
 

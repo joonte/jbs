@@ -242,6 +242,12 @@ if($IsUpdate){
 		Debug(SPrintF('[comp/Users/Init]: real UserID = %s; RootID = %s',$UserID,@$Session->Data['RootID']));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	// логгируем IP
+	$Comp = Comp_Load('Users/LogIP',$UserID,IsSet($GLOBALS['_SERVER']['REMOTE_ADDR'])?$GLOBALS['_SERVER']['REMOTE_ADDR']:'127.0.0.124',IsSet($GLOBALS['_SERVER']['HTTP_USER_AGENT'])?$GLOBALS['_SERVER']['HTTP_USER_AGENT']:'');
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$IsUpdated = DB_Update('Users',Array('EnterDate'=>Time(),'EnterIP'=>$_SERVER['REMOTE_ADDR']),Array('ID'=>$UserID));
 	if(Is_Error($IsUpdated))
 		return ERROR | @Trigger_Error(500);

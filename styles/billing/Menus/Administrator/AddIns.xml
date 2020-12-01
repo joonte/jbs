@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<!-- @author Alex Keda, for www.host-food.ru -->
 <XML>
-<!-- *********************************************************************** -->
-<Items>
- <ID100>
-  <Text>Рассылка</Text>
-  <Paths>
-   <UniqID>^\/Administrator\/(Dispatch|Dispatches)$</UniqID>
-  </Paths>
-  <Href>/Administrator/Dispatch</Href>
-  <Level>1</Level>
- </ID100>
- <ID200>
-  <Text>Статистика</Text>
-  <Prompt>Статистика по заказам услуг, платёжным системам, финансовая статистика</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/(Statistics|PaymentsSystemsStatistics|PersonalStatistics)$</UniqID>
-  </Paths>
-  <Href>/Administrator/PaymentsSystemsStatistics</Href>
-  <Level>1</Level>
- </ID200>
- <ID300>
-  <Text>Статьи (функции CMS)</Text>
-  <Prompt>Функции CMS</Prompt>
-  <Paths>
-   <UniqID>\/Administrator\/(Clauses|ClausesGroups|ClauseEdit)$</UniqID>
-  </Paths>
-  <Href>/Administrator/Clauses</Href>
-  <Level>1</Level>
- </ID300>
- <ID400>
-  <Text>Мастера настройки</Text>
-  <Paths>
-   <UniqID>^\/Administrator\/(Appearanse|BaseEdit|Config|Other|ServersGroups|Servers|PaymentSystemsCollation|GlobalNotifiesSet)$</UniqID>
-  </Paths>
-  <Href>/Administrator/Appearanse</Href>
-  <Level>1</Level>
- </ID400>
- <ID500>
-  <Text>Обслуживание системы</Text>
-  <Prompt>Поиск проблем, обновление системы, информация о лицензии</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/(SystemMaintenance|UsersLogs|OrdersHistory|OrdersTransfer|UpdateSystem|JBsLicense|BillingVersions)$</UniqID>
-  </Paths>
-  <Href>/Administrator/SystemMaintenance</Href>
-  <Level>1</Level>
- </ID500>
- </Items>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Items>
+		<ID100>
+			<Text>Рассылка</Text>
+			<Paths>
+				<UniqID>^\/Administrator\/(Dispatch|Dispatches)$</UniqID>
+			</Paths>
+			<Href>/Administrator/Dispatch</Href>
+			<Level>1</Level>
+		</ID100>
+		<ID200>
+			<Text>Статистика</Text>
+			<Prompt>Статистика по заказам услуг, платёжным системам, финансовая статистика</Prompt>
+			<Paths>
+				<UniqID>^\/Administrator\/(Statistics|PaymentsSystemsStatistics|PersonalStatistics)$</UniqID>
+			</Paths>
+			<Href>/Administrator/PaymentsSystemsStatistics</Href>
+			<Level>1</Level>
+		</ID200>
+		<ID300>
+			<Text>Статьи (функции CMS)</Text>
+			<Prompt>Функции CMS</Prompt>
+			<Paths>
+				<UniqID>\/Administrator\/(Clauses|ClausesGroups|ClauseEdit)$</UniqID>
+			</Paths>
+			<Href>/Administrator/Clauses</Href>
+			<Level>1</Level>
+		</ID300>
+		<ID400>
+			<Text>Мастера настройки</Text>
+			<Paths>
+				<UniqID>^\/Administrator\/(Appearanse|BaseEdit|Config|Other|ServersGroups|Servers|PaymentSystemsCollation|GlobalNotifiesSet)$</UniqID>
+			</Paths>
+			<Href>/Administrator/Appearanse</Href>
+			<Level>1</Level>
+		</ID400>
+		<ID500>
+			<Text>Обслуживание системы</Text>
+			<Prompt>Поиск проблем, обновление системы, информация о лицензии</Prompt>
+			<Paths>
+				<UniqID>^\/Administrator\/(SystemMaintenance|UsersLogs|UsersIPs|OrdersHistory|OrdersTransfer|UpdateSystem|JBsLicense|BillingVersions)$</UniqID>
+			</Paths>
+			<Href>/Administrator/SystemMaintenance</Href>
+			<Level>1</Level>
+		</ID500>
+	</Items>
+	<!-- *********************************************************************** -->
 </XML>

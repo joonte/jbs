@@ -1,61 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<!-- @author Alex Keda, for www.host-food.ru -->
 <XML>
-<!-- *********************************************************************** -->
-<Items>
- <ListElement>
-  <Text>Логи пользователей</Text>
-  <Prompt>Просмотр истории HTTP запросов к биллингу</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/UsersLogs</UniqID>
-  </Paths>
-  <Href>/Administrator/UsersLogs</Href>
- </ListElement>
- <!-- *********************************************************************** -->
- <ListElement>
-  <Text>История заказов</Text>
-  <Prompt>Список всех заказов сделанных клиентами</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/OrdersHistory</UniqID>
-  </Paths>
-  <Href>/Administrator/OrdersHistory</Href>
- </ListElement>
- <!-- *********************************************************************** -->
- <ListElement>
-  <Text>История перемещений</Text>
-  <Prompt>История переносов заказов услуг между аккаунтами клиентов биллинга</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/OrdersTransfer</UniqID>
-  </Paths>
-  <Href>/Administrator/OrdersTransfer</Href>
- </ListElement>
- <!-- *********************************************************************** -->
- <ListElement>
-  <Text>Обновление системы</Text>
-  <Prompt>Обновление версии биллинговой системы</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/UpdateSystem$</UniqID>
-  </Paths>
-  <Href>/Administrator/UpdateSystem</Href>
- </ListElement>
- <!-- *********************************************************************** -->
- <ListElement>
-  <Text>Версия биллинга</Text>
-  <Prompt>Инофрмация о версии и патчах биллинговой системы</Prompt>
-  <Paths>
-   <UniqID>^\/Administrator\/BillingVersions$</UniqID>
-  </Paths>
-  <Href>/Administrator/BillingVersions</Href>
- </ListElement>
 	<!-- *********************************************************************** -->
-	<ListElement>
-		<Text>phpinfo()</Text>
-		<Prompt>Инофрмация о версии интерпретатора php</Prompt>
-		<Paths>
-			<UniqID>^\/Administrator\/PhpInfo$</UniqID>
-		</Paths>
-		<Href>/Administrator/PhpInfo</Href>
-	</ListElement>
-</Items>
-<!-- *********************************************************************** -->
+	<Items>
+		<ListElement>
+			<Text>Логи пользователей</Text>
+			<Prompt>Просмотр истории HTTP запросов к биллингу</Prompt>
+			<Paths>
+				<UniqID>^\/Administrator\/UsersLogs</UniqID>
+			</Paths>
+			<Href>/Administrator/UsersLogs</Href>
+		</ListElement>
+		<!-- *********************************************************************** -->
+		<ListElement>
+			<Text>IP пользователей</Text>
+			<Prompt>Просмотр истории IP адресов пользователей</Prompt>
+			<Paths>
+				<UniqID>^\/Administrator\/UsersIPs</UniqID>
+			</Paths>
+			<Href>/Administrator/UsersIPs</Href>
+		</ListElement>
+		<!-- *********************************************************************** -->
+		<ListElement>
+			<Text>История заказов</Text>
+			<Prompt>Список всех заказов сделанных клиентами</Prompt>
+			<Paths>
+				<UniqID>^\/Administrator\/OrdersHistory</UniqID>
+			</Paths>
+			<Href>/Administrator/OrdersHistory</Href>
+		</ListElement>
+		<!-- *********************************************************************** -->
+		<ListElement>
+			<Text>История перемещений</Text>
+			<Prompt>История переносов заказов услуг между аккаунтами клиентов биллинга</Prompt>
+			<Paths>
+				<UniqID>^\/Administrator\/OrdersTransfer</UniqID>
+			</Paths>
+			<Href>/Administrator/OrdersTransfer</Href>
+		</ListElement>
+		<!-- *********************************************************************** -->
+		<ListElement>
+			<Text>Обновление системы</Text>
+			<Prompt>Обновление версии биллинговой системы</Prompt>
+			<Paths>
+				<UniqID>^\/Administrator\/UpdateSystem$</UniqID>
+			</Paths>
+			<Href>/Administrator/UpdateSystem</Href>
+		</ListElement>
+		<!-- *********************************************************************** -->
+		<ListElement>
+			<Text>Версия биллинга</Text>
+			<Prompt>Инофрмация о версии и патчах биллинговой системы</Prompt>
+			<Paths>
+				<UniqID>^\/Administrator\/BillingVersions$</UniqID>
+			</Paths>
+			<Href>/Administrator/BillingVersions</Href>
+		</ListElement>
+		<!-- *********************************************************************** -->
+		<ListElement>
+			<Text>phpinfo()</Text>
+			<Prompt>Инофрмация о версии интерпретатора php</Prompt>
+			<Paths>
+				<UniqID>^\/Administrator\/PhpInfo$</UniqID>
+			</Paths>
+			<Href>/Administrator/PhpInfo</Href>
+		</ListElement>
+	</Items>
+	<!-- *********************************************************************** -->
 </XML>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>UsersIPs</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>CreateDate</ListElement>
+			<ListElement>UserID</ListElement>
+			<ListElement>IP</ListElement>
+			<ListElement>UA</ListElement>
+		</ColumnsIDs>
+		<Conditions>
+			<Message>Пользовательских адресов не залоггировано (это ненормально, если вы видите это сообщение)</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<DateSelect>
+				<Comp>Tables/Forms/DateSelect</Comp>
+				<Args>
+					<ListElement>CreateDate</ListElement>
+				</Args>
+				<NoBlock/>
+			</DateSelect>
+			<!-- ********************************************************************* -->
+			<PatternOut>
+				<Args>
+					<Patterns>
+						<LastHour>
+							<Name>IP за последний час</Name>
+							<Where>`CreateDate` &gt; UNIX_TIMESTAMP() - 3600</Where>
+						</LastHour>
+						<!-- ****************************************************************** -->
+						<Today>
+							<Name>IP за сегодня</Name>
+							<Where>`CreateDate` &gt; BEGIN_DAY()</Where>
+						</Today>
+						<!-- ****************************************************************** -->
+						<Yesterday>
+							<Name>IP за вчера</Name>
+							<Where>`CreateDate` &gt; BEGIN_DAY() - 86400</Where>
+						</Yesterday>
+						<!-- ****************************************************************** -->
+					</Patterns>
+					<ActiveID>LastHour</ActiveID>
+				</Args>
+			</PatternOut>
+			<!-- ********************************************************************* -->
+			<Search>
+				<Args>
+					<ColumnsIDs>
+						<ListElement>EdesksMessageID</ListElement>
+						<ListElement>IP</ListElement>
+						<ListElement>UA</ListElement>
+						<ListElement>UserID</ListElement>
+					</ColumnsIDs>
+				</Args>
+			</Search>
+			<!-- ********************************************************************* -->
+		</Before>
+		<!-- ********************************************************************** -->
+		<After>
+			<Delete>
+				<Args>
+					<Comment>Выбранные записи</Comment>
+					<Send>
+						<TableID>UsersIPs</TableID>
+					</Send>
+				</Args>
+			</Delete>
+			<!-- ********************************************************************* -->
+		</After>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Query>
+		<SortOn>CreateDate</SortOn>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<SelectID>
+			<Args>
+				<TableID>UsersIPs</TableID>
+			</Args>
+		</SelectID>
+		<!-- ********************************************************************** -->
+		<IP>
+			<Head>IP</Head>
+			<Comp>Users/GeoIP</Comp>
+			<Args>
+				<ListElement>%IP%</ListElement>
+			</Args>
+		</IP>
+		<!-- ********************************************************************** -->
+		<UA>
+			<Head>User-Agent</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%UA%</ListElement>
+				<Length>60</Length>
+			</Args>
+		</UA>
+		<!-- ********************************************************************** -->
+		<CreateDate>
+			<Head>Дата</Head>
+			<Comp>Formats/Date/SQL</Comp>
+			<Args>
+				<ListElement>%CreateDate%</ListElement>
+			</Args>
+		</CreateDate>
+		<!-- ********************************************************************** -->
+		<EdesksMessageID>
+			<Head>Сообщ.</Head>
+			<Prompt>Номер сообщения в системе тикетов</Prompt>
+			<Alias>IF(`EdesksMessageID` > 0,`EdesksMessageID`,'-')</Alias>
+		</EdesksMessageID>
+		<!-- ********************************************************************** -->
+	</Columns>
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>CreateDate</ListElement>
+		<ListElement>Owner</ListElement>
+		<ListElement>EdesksMessageID</ListElement>
+		<ListElement>IP</ListElement>
+		<ListElement>UA</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
+</XML>

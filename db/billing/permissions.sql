@@ -211,7 +211,10 @@ INSERT INTO `Permissions` (`Name`,`HostID`,`UserGroupID`,`UserID`,`OwnerGroupID`
 
 /* added by lissyara, 2020-04-29 in 19:21 MSK  */
 ('OrdersTransferDelete','billing',1,1,4000000,1,1,'no'),
-('OrdersTransferDelete','billing',3000000,100,1,1,2,'yes')
+('OrdersTransferDelete','billing',3000000,100,1,1,2,'yes'),
+
+('UsersIPsDelete','billing',1,1,4000000,1,1,'no'),
+('UsersIPsDelete','billing',3000000,100,1,1,2,'yes')
 
 ;
 

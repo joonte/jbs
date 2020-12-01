@@ -1307,6 +1307,7 @@
 					<TableTasksStoryPeriod>60</TableTasksStoryPeriod>
 					<TableServersUpTimeStoryPeriod>3650</TableServersUpTimeStoryPeriod>
 					<TableRequestLogStoryPeriod>186</TableRequestLogStoryPeriod>
+					<TableUsersIPsStoryPeriod>365</TableUsersIPsStoryPeriod>
 				</CleanTablesSettings>
 				<!-- ********************************************************************* -->
 				<CloseEdesksSettings>

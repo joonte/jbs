@@ -103,6 +103,12 @@ case 'exception':
 	#-------------------------------------------------------------------------------
 case 'array':
 	#-------------------------------------------------------------------------------
+	// логгируем IP
+	$Comp = Comp_Load('Users/LogIP',$GLOBALS['__USER']['ID'],IsSet($GLOBALS['_SERVER']['REMOTE_ADDR'])?$GLOBALS['_SERVER']['REMOTE_ADDR']:'127.0.0.123',IsSet($GLOBALS['_SERVER']['HTTP_USER_AGENT'])?$GLOBALS['_SERVER']['HTTP_USER_AGENT']:'');
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$IsUpdated = DB_Update('Users',Array('EnterDate'=>Time(),'EnterIP'=>$_SERVER['REMOTE_ADDR']),Array('ID'=>$GLOBALS['__USER']['ID']));
 	if(Is_Error($IsUpdated))
 		return ERROR | @Trigger_Error(500);
