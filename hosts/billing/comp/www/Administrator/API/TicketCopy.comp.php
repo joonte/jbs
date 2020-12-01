@@ -126,13 +126,18 @@ $IMessage = Array(
 		'UserID'	=> $FromID,
 		'EdeskID'	=> $EdeskID,
 		'Content'	=> $Message['Content'],
-		'IP'		=> $Message['IP'],
-		'UA'		=> $Message['UA']
 		);
 #-------------------------------------------------------------------------------
-$IsInsert = DB_Insert('EdesksMessages',$IMessage);
+$MessageID = DB_Insert('EdesksMessages',$IMessage);
+if(Is_Error($MessageID))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// IP и UA в отдельной таблице
+$IsInsert = DB_Insert('UsersIPs',Array('CreateDate'=>$Message['CreateDate'],'UserID'=>$__USER['ID'],'EdesksMessageID'=>$MessageID,'IP'=>$Message['IP'],'UA'=>$Message['UA']));
 if(Is_Error($IsInsert))
 	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Edesks','IsNotNotify'=>TRUE,'IsNoTrigger'=>TRUE,'StatusID'=>'Opened','Comment'=>SPrintF('Скопирован из #%s',$TicketID),'RowsIDs'=>$EdeskID));
 #-------------------------------------------------------------------------------

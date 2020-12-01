@@ -231,6 +231,18 @@ CREATE DEFINER = CURRENT_USER TRIGGER `BonusesOnInsert` BEFORE INSERT ON `Bonuse
 |
 DELIMITER ;
 
+#-------------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS `UsersIPsOnInsert`;
+DELIMITER |
+CREATE DEFINER = CURRENT_USER TRIGGER `UsersIPsOnInsert` BEFORE INSERT ON `UsersIPs`
+  FOR EACH ROW BEGIN
+    IF NEW.`CreateDate` = 0
+      THEN
+        SET NEW.`CreateDate` = UNIX_TIMESTAMP();
+    END IF;
+  END;
+|
+DELIMITER ;
 
 
 

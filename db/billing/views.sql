@@ -377,5 +377,15 @@ SELECT
 FROM
    `OrdersTransfer`;
 
+#-------------------------------------------------------------------------------
+DROP VIEW IF EXISTS `UsersIPsOwners`;
+DROP TABLE IF EXISTS `UsersIPsOwners`;
+CREATE
+   VIEW `UsersIPsOwners` AS
+SELECT
+   `UsersIPs`.*
+FROM
+   `UsersIPs`;
+
 
 

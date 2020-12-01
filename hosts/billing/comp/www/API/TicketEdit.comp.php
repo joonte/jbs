@@ -208,8 +208,6 @@ $ITicketMessage = Array(
 			'UserID'	=> $__USER['ID'],
 			'EdeskID'	=> $TicketID,
 			'Content'	=> $Message,
-			'IP'		=> IsSet($GLOBALS['_SERVER']['REMOTE_ADDR'])?$GLOBALS['_SERVER']['REMOTE_ADDR']:'127.0.0.127',
-			'UA'		=> IsSet($GLOBALS['_SERVER']['HTTP_USER_AGENT'])?$GLOBALS['_SERVER']['HTTP_USER_AGENT']:'',
 			);
 #-------------------------------------------------------------------------------
 $MessageID = DB_Insert('EdesksMessages',$ITicketMessage);
@@ -217,10 +215,15 @@ if(Is_Error($MessageID))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// логгируем IP и UA пользователя
+$IsInsert = DB_Insert('UsersIPs',Array('UserID'=>$__USER['ID'],'EdesksMessageID'=>$MessageID,'IP'=>IsSet($GLOBALS['_SERVER']['REMOTE_ADDR'])?$GLOBALS['_SERVER']['REMOTE_ADDR']:'127.0.0.126','UA'=>IsSet($GLOBALS['_SERVER']['HTTP_USER_AGENT'])?$GLOBALS['_SERVER']['HTTP_USER_AGENT']:''));
+if(Is_Error($IsInsert))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 // достаём файлы, если они есть
 $Files = Upload_Get('TicketMessageFile',(IsSet($Args['TicketMessageFile'])?$Args['TicketMessageFile']:FALSE));
 #-------------------------------------------------------------------------------
-
 switch(ValueOf($Files)){
 case 'error':
 	return ERROR | @Trigger_Error(500);

@@ -156,8 +156,6 @@ CREATE TABLE `EdesksMessages` (
   `IsNotify` ENUM('no','yes') NOT NULL DEFAULT 'no',
   `IsVisible` ENUM('yes','no') NOT NULL DEFAULT 'yes', 
   `VoteBall` INT(2) NOT NULL DEFAULT '0',
-  `IP` CHAR(40) NOT NULL DEFAULT '127.0.0.127',
-  `UA` TEXT NOT NULL,
   PRIMARY KEY  (`ID`),
   KEY `EdesksMessagesCreateDate` (`CreateDate`),
   KEY `IsNotify` (`IsNotify`),
@@ -938,6 +936,24 @@ CREATE TABLE IF NOT EXISTS `Files` (
 	KEY `FilesUserID` (`UserID`),
 	CONSTRAINT `FilesUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE */
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/* логгирование всех IP адресов юзера, для запросов из милиции */
+DROP TABLE IF EXISTS `UsersIPs`;
+-- SEPARATOR
+CREATE TABLE IF NOT EXISTS `UsersIPs` (
+	`ID` int(11) NOT NULL AUTO_INCREMENT,		-- идентфикатор
+	`CreateDate` int(11) default '0',		-- дата создания записи
+	`UserID` int(11) NOT NULL,			-- идентификатор юзера
+	`EdesksMessageID` int(11) NOT NULL,		-- идентификатор сообщения в системе поддержки (если это IP из сообщения)
+	`IP` CHAR(40) NOT NULL DEFAULT '127.0.0.127',	-- IP адрес
+	`UA` TEXT NOT NULL,				-- юзер-агент браузера
+	PRIMARY KEY (`ID`),				-- первичный ключ
+	/* ключ и внешний ключ на таблицу юзеров */
+	KEY `UsersIPsUserID` (`UserID`),
+	CONSTRAINT `UsersIPsUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+	KEY `UsersIPsCreateDate` (`CreateDate`)		-- ключ на дату создания записи
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- включаем внешние ключи взад
 SET FOREIGN_KEY_CHECKS=1;
