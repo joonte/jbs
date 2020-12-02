@@ -172,7 +172,7 @@ div.MainMenu {
 	float:			left;
 	min-width:		calc(50% - 12px);
 	display:		inline-block;
-	min-height:		15px;
+	min-height:		20px;
 	text-align:		center;
 	vertical-align:		middle;
 }
@@ -182,6 +182,7 @@ div.MainMenu:hover{
 	/*background-color:	LightGrey;*/
 	background-color:	#ccbbff;
 	cursor:			pointer;
+	text-shadow:		0 0 .65px #333, 0 0 .65px #333;
 }
 
 
