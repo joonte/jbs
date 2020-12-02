@@ -940,15 +940,6 @@
 				<Greeting>Здравствуйте, %s!</Greeting>
 			</Email>
 			<!-- ********************************************************************* -->
-			<WhatsApp>
-				<Name>WhatsApp сообщения</Name>
-				<IsActive>0</IsActive>
-				<IsEvent>1</IsEvent>
-				<CutSign>1</CutSign>
-				<MessageTemplate>Middle</MessageTemplate>
-				<Message>Чтобы ссылки в сообщениях были активными, добавьте наш номер (%s) в список контактов</Message>
-			</WhatsApp>
-			<!-- ********************************************************************* -->
 			<SMS>
 				<Name>SMS сообщения</Name>
 				<IsActive>0</IsActive>
@@ -1088,16 +1079,6 @@
 				</Params>
 				<IsActive>1</IsActive>
 			</SMS>
-			<!-- ********************************************************************* -->
-			<WhatsApp>
-				<Name>WhatsApp сообщение</Name>
-				<Params>
-					<Mobile>Номер мобильного телефона</Mobile>
-					<Message>Сообщение</Message>
-					<Attribs type="array"/>
-				</Params>
-				<IsActive>1</IsActive>
-			</WhatsApp>
 			<!-- ********************************************************************* -->
 			<Dispatch>
 				<Name>Рассылка</Name>
@@ -1381,7 +1362,6 @@
 					<!-- курсы валют с сайта цекнтробанка -->
 					<CourseUpdate>Обновление курсов валют</CourseUpdate>
 					<!-- Операции со счетами -->
-					<QIWI>Опрос сервера QIWI по XML протоколу</QIWI>
 					<NotifyWaitingInvoice>Уведомление о неоплаченных счетах</NotifyWaitingInvoice>
 					<EraseDeletedInvoice>Удаление счетов в статусе Отменен</EraseDeletedInvoice>
 					<SetDeletedWaitingInvoice>Отмена неоплаченных счетов</SetDeletedWaitingInvoice>
@@ -1698,14 +1678,6 @@
 					<ConfirmInterval>300</ConfirmInterval>
 					<TimeoutRequestConfirm>60</TimeoutRequestConfirm>
 				</Email>
-				<!-- *********************************************************************** -->
-				<WhatsApp>
-					<SettingsReset>0</SettingsReset>
-					<Require>0</Require>
-					<ConfirmRequire>1</ConfirmRequire>
-					<ConfirmInterval>30</ConfirmInterval>
-					<TimeoutRequestConfirm>60</TimeoutRequestConfirm>
-				</WhatsApp>
 				<!-- *********************************************************************** -->
 				<ICQ>
 					<SettingsReset>0</SettingsReset>
