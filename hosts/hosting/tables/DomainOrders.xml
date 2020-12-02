@@ -207,9 +207,9 @@
 			<Comp>Formats/DomainOrder/Domain</Comp>
 			<Args>
 				<ListElement>%DomainName%</ListElement>
-				<Zone>%Scheme%</Zone>
 				<Length>15</Length>
 				<DomainZone>%DomainZone%</DomainZone>
+				<ListElement>%StatusID%</ListElement>
 			</Args>
 			<LongName>Имя домена</LongName>
 		</DomainName>
