@@ -210,6 +210,7 @@
 				<ListElement>%Domain%</ListElement>
 				<ListElement>%Parked%</ListElement>
 				<Length>15</Length>
+				<StatusID>%StatusID%</StatusID>
 			</Args>
 		</Domain>
 		<!-- ********************************************************************** -->
