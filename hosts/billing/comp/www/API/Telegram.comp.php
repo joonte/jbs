@@ -256,6 +256,7 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 		// постим от админа, т.к. пост может идти от другого юзера в ответ на...
 		$GLOBALS['__USER']['ID']	= 100;
 		$GLOBALS['__USER']['IsAdmin']	= TRUE;
+		$GLOBALS['__USER']['IsNoLogIP']	= 'Telegram';
 		#-------------------------------------------------------------------------------
 		$IsAdd = Comp_Load('www/API/TicketMessageEdit',$Params);
 		if(Is_Error($IsAdd))

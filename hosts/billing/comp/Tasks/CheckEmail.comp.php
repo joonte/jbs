@@ -619,6 +619,7 @@ foreach($Mails as $mailId){
 		# постим от админа, т.к. пост может идти от другого юзера в ответ на...
 		$GLOBALS['__USER']['ID']	= 100;
 		$GLOBALS['__USER']['IsAdmin']	= TRUE;
+		$GLOBALS['__USER']['IsNoLogIP']	= 'Email';
 		#-------------------------------------------------------------------------------
 		$Params = Array('Message'=>$Message,'TicketID'=>$Edesk['EdeskID'],'UserID'=>(($IsUser)?$User['ID']:10));
 		#-------------------------------------------------------------------------------
@@ -675,7 +676,8 @@ foreach($Mails as $mailId){
 			$Params['TicketMessageFile'] = $Hash;
 		#-------------------------------------------------------------------------------
 		# присваиваем себе нужный идентификатор юзера
-		$GLOBALS['__USER']['ID'] = $NewUserID;
+		$GLOBALS['__USER']['ID']	= $NewUserID;
+		$GLOBALS['__USER']['IsNoLogIP']	= 'Email';
 		#-------------------------------------------------------------------------------
 		# шлём сообщение на www/API/TicketEdit
 		$IsAdd = Comp_Load('www/API/TicketEdit',$Params);
