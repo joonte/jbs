@@ -70,6 +70,7 @@
 				<Args>
 					<ColumnsIDs>
 						<ListElement>ID</ListElement>
+						<ListElement>MessageID</ListElement>
 						<ListElement>UserID</ListElement>
 						<ListElement>TargetUserID</ListElement>
 						<ListElement>PriorityID</ListElement>
