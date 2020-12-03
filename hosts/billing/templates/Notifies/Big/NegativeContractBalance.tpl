@@ -4,14 +4,20 @@
  *}
 {assign var=Theme value="Отрицательный баланс договора" scope=global}
 
-Один из ваших договоров имеет отрицательный балланс ({$Balance|default:'$Balance'}). Обычно, такое 
+{if isset($PreTrial)}
+Ваш договор №{$ContractID|default:'$ContractID'} имеет задолженность в размере ({$Balance|default:'$Balance'}). В порядке
+досудебного урегулирования, просим пополнить его на сумму ({$Balance|default:'$Balance'})
+В противном случае, оставляем за собой право обратится в судебные органы для взыскания задолженности.
+{else}
+Ваш договор №{$ContractID|default:'$ContractID'} имеет отрицательный балланс ({$Balance|default:'$Balance'}). Обычно, такое 
 происходит в результате отмены условно оплаченных счетов. Точную причину, вы
-можете посмотреть в истории операций по вашим счетам:
-http://{$smarty.const.HOST_ID|default:'HOST_ID'}/Postings
+можете посмотреть в истории операций по договору.
 
 Рекомендуем пополнить счёт на недостающую сумму, в противном случае, мы будем
 вынуждены приостановить оказание вам услуг - заблокировать заказ хостинга, VPS,
 или снять домен с делегирования.
+{/if}
 
-Ваши счета на оплату: http://{$smarty.const.HOST_ID|default:'HOST_ID'}/Invoices
+История операций по договору: https://{$smarty.const.HOST_ID|default:'HOST_ID'}/Postings?ContractID={$ContractID|default:'$ContractID'}
+Ваши счета на оплату: https://{$smarty.const.HOST_ID|default:'HOST_ID'}/Invoices
 

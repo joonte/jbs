@@ -79,57 +79,59 @@ switch(ValueOf($Invoices)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return TRUE;
-case 'array':
 	break;
-default:
-	return ERROR | @Trigger_Error(101);
-}
-#-------------------------------------------------------------------------------
-foreach($Invoices as $Invoice){
+case 'array':
 	#-------------------------------------------------------------------------------
-	$Out = SPrintF("%sНеоплаченный счёт на сумму %s от пользователя %s\n",$Out,$Invoice['Summ'],$Invoice['UserEmail']);
-	#-------------------------------------------------------------------------------
-	Debug(SPrintF("[Tasks/GC/NotifyConditionallyInvoice]: Уведомление о условно оплаченном счёте #%d.",$Invoice['ID']));
-	#----------------------------------TRANSACTION----------------------------------
-	if(Is_Error(DB_Transaction($TransactionID = UniqID('Tasks/GC/NotifyConditionallyInvoice'))))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	$msg = new Message('ConditionallyPayedInvoice', $Invoice['UserID'], $Invoice);
-	$IsSend = NotificationManager::sendMsg($msg);
-	#-------------------------------------------------------------------------------
-	switch(ValueOf($IsSend)){
-	case 'true':
+	foreach($Invoices as $Invoice){
 		#-------------------------------------------------------------------------------
-		$Event = Array('UserID'=>$Invoice['UserID'],'PriorityID'=>'Billing','Text'=>SPrintF('Уведомление о условно оплаченном счёте #%d, неоплачен более %d дней',$Invoice['ID'],$Settings['DaysBeforeNotice']));
-		$Event = Comp_Load('Events/EventInsert',$Event);
-		if(!$Event)
+		$Out = SPrintF("%sНеоплаченный счёт на сумму %s от пользователя %s\n",$Out,$Invoice['Summ'],$Invoice['UserEmail']);
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF("[Tasks/GC/NotifyConditionallyInvoice]: Уведомление о условно оплаченном счёте #%d.",$Invoice['ID']));
+		#----------------------------------TRANSACTION----------------------------------
+		if(Is_Error(DB_Transaction($TransactionID = UniqID('Tasks/GC/NotifyConditionallyInvoice'))))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		break;
+		$Msg = new Message('ConditionallyPayedInvoice', $Invoice['UserID'], $Invoice);
+		$IsSend = NotificationManager::sendMsg($Msg);
 		#-------------------------------------------------------------------------------
-	case 'exception':
+		switch(ValueOf($IsSend)){
+		case 'true':
+			#-------------------------------------------------------------------------------
+			$Event = Array('UserID'=>$Invoice['UserID'],'PriorityID'=>'Billing','Text'=>SPrintF('Уведомление о условно оплаченном счёте #%d, неоплачен более %d дней',$Invoice['ID'],$Settings['DaysBeforeNotice']));
+			$Event = Comp_Load('Events/EventInsert',$Event);
+			if(!$Event)
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		case 'exception':
+			#-------------------------------------------------------------------------------
+			$Event = Array('UserID'=>$Invoice['UserID'],'PriorityID'=>'Billing','Text'=>SPrintF('Уведомление о условно оплаченном счёте #%d не доставлено. Не удалось оповестить пользователя ни одним из методов.',$Invoice['ID']));
+			$Event = Comp_Load('Events/EventInsert',$Event);
+			if(!$Event)
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		default:
+			return ERROR | @Trigger_Error(500);
+		}
 		#-------------------------------------------------------------------------------
-		$Event = Array('UserID'=>$Invoice['UserID'],'PriorityID'=>'Billing','Text'=>SPrintF('Уведомление о условно оплаченном счёте #%d не доставлено. Не удалось оповестить пользователя ни одним из методов.',$Invoice['ID']));
-		$Event = Comp_Load('Events/EventInsert',$Event);
-		if(!$Event)
+		#-------------------------------------------------------------------------------
+		if(Is_Error(DB_Commit($TransactionID)))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		break;
-		#-------------------------------------------------------------------------------
-	default:
-		return ERROR | @Trigger_Error(500);
 	}
 	#-------------------------------------------------------------------------------
+        break;
 	#-------------------------------------------------------------------------------
-	if(Is_Error(DB_Commit($TransactionID)))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
+default:
+        return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # 4. достаём все договора с отрицательным баллансом - добавляем в отчёт для бухов
-$Users = DB_Select('ContractsOwners',Array('DISTINCT(`UserID`) AS `UserID`','Balance','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `ContractsOwners`.`UserID`) AS `UserEmail`'),Array('GroupBy'=>'UserID', 'Where'=>'`Balance` < 0'));
+$Users = DB_Select('ContractsOwners',Array('DISTINCT(`UserID`) AS `UserID`','Balance','`ID` AS `ContractID`','(SELECT MAX(`CreateDate`) FROM `Postings` WHERE `ContractID` = `ContractsOwners`.`ID`) AS `LastOperation`','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `ContractsOwners`.`UserID`) AS `UserEmail`'),Array('GroupBy'=>'UserID', 'Where'=>'`Balance` < 0'));
 switch(ValueOf($Users)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
@@ -149,6 +151,11 @@ case 'array':
 			$Out = $Out . SPrintF("Отрицательный балланс (%s) у клиента %s\n",$User['Balance'],$User['UserEmail']);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
+		// если последние движения были более чем DaysBeforePreTrial - меняем сообщение (переменную в шаблон, и в шаблоне варианты)
+		if(Time() > $User['LastOperation'] + $Settings['DaysBeforePreTrial']*24*3600)
+			$User['PreTrial'] = TRUE;
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 		# шлём юзеру уведомление
 		$UserBalance = $User;
 		#-------------------------------------------------------------------------------
@@ -158,8 +165,8 @@ case 'array':
 		#-------------------------------------------------------------------------------
 		$UserBalance['Balance'] = $Summ;
 		#-------------------------------------------------------------------------------
-		$msg = new Message('NegativeContractBalance', $User['UserID'], $UserBalance = $User);
-		$IsSend = NotificationManager::sendMsg($msg);
+		$Msg = new Message('NegativeContractBalance', $User['UserID'], $UserBalance/* = $User*/);
+		$IsSend = NotificationManager::sendMsg($Msg);
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($IsSend)){
 		case 'error':
@@ -275,8 +282,8 @@ foreach($Employers as $Employer){
 	#-------------------------------------------------------------------------------
 	if($Employer['ID'] > 2000 || $Employer['ID'] == 100){
 		#-------------------------------------------------------------------------------
-		$msg = new DispatchMsg(Array('Theme'=>'Список условно оплаченных счетов','Message'=>$Out), (integer)$Employer['ID']);
-		$IsSend = NotificationManager::sendMsg($msg);
+		$Msg = new DispatchMsg(Array('Theme'=>'Список условно оплаченных счетов','Message'=>$Out), (integer)$Employer['ID']);
+		$IsSend = NotificationManager::sendMsg($Msg);
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($IsSend)){
 		case 'error':

@@ -1305,6 +1305,7 @@
 					<IsActive>1</IsActive>
 					<DaysBeforeNotice>7</DaysBeforeNotice>
 					<DaysBeforeRejectConditionallyInvoice>14</DaysBeforeRejectConditionallyInvoice>
+					<DaysBeforePreTrial>31</DaysBeforePreTrial>
 				</NotifyConditionallyInvoiceSettings>
 				<!-- ********************************************************************* -->
 				<SetDeletedWaitingOrdersSettings>
