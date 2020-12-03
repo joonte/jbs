@@ -5,3 +5,7 @@ DELETE FROM `Servers` WHERE `TemplateID` = 'WhatsApp';
 
 DELETE FROM `Tasks` WHERE `TypeID` = 'WhatsApp';
 
+-- SEPARATOR
+
+DELETE FROM `Contacts` WHERE `MethodID` = 'WhatsApp';
+
