@@ -61,6 +61,7 @@
 					<ColumnsIDs>
 						<ListElement>ID</ListElement>
 						<ListElement>UserID</ListElement>
+						<ListElement>ContractID</ListElement>
 						<ListElement>(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `ServiceID`)</ListElement>
 						<ListElement>Comment</ListElement>
 					</ColumnsIDs>
