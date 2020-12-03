@@ -232,6 +232,7 @@
 			<Args>
 				<ListElement>%ExpirationDate%</ListElement>
 				<ListElement>%Expiration%</ListElement>
+				<ListElement>ShowWindow("/DomainOrderInfo",{DomainOrderID:%ID%});</ListElement>
 			</Args>
 			<Alias>(SELECT SUM(`YearsRemainded`) FROM `DomainConsider` WHERE `DomainConsider`.`DomainOrderID` = `DomainOrdersOwners`.`ID` AND `DomainConsider`.`YearsRemainded` &gt; 0)</Alias>
 		</Expiration>

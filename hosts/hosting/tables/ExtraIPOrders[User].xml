@@ -77,6 +77,17 @@
 			</Args>
 		</ExtendedMenu>
 		<!-- ********************************************************************** -->
+		<Expiration>
+			<Head>Дата оконч.</Head>
+			<Prompt>Дата окончания заказа | остаток дней</Prompt>
+			<Comp>Formats/ExpirationDate</Comp>
+			<Args>
+				<ListElement>%DaysRemainded%</ListElement>
+				<ListElement>ShowWindow('/ExtraIPOrderPay',{ExtraIPOrderID:'%ID%'});</ListElement>
+			</Args>
+			<Alias>DaysRemainded</Alias>
+		</Expiration>
+		<!-- ********************************************************************** -->
 		<!-- ********************************************************************** -->
 	</Columns>
 	<!-- *********************************************************************** -->

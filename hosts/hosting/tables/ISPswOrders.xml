@@ -204,6 +204,7 @@
 			<Comp>Formats/ExpirationDate</Comp>
 			<Args>
 				<ListElement>%DaysRemainded%</ListElement>
+				<ListElement>ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%ID%",ServiceID:"51000"});</ListElement>
 			</Args>
 			<Alias>DaysRemainded</Alias>
 		</Expiration>
