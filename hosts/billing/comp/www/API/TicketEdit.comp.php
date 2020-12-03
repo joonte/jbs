@@ -216,8 +216,8 @@ if(Is_Error($MessageID))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // логгируем IP и UA пользователя
-$IsInsert = DB_Insert('UsersIPs',Array('UserID'=>$__USER['ID'],'EdesksMessageID'=>$MessageID,'IP'=>IsSet($GLOBALS['_SERVER']['REMOTE_ADDR'])?$GLOBALS['_SERVER']['REMOTE_ADDR']:'127.0.0.126','UA'=>IsSet($GLOBALS['_SERVER']['HTTP_USER_AGENT'])?$GLOBALS['_SERVER']['HTTP_USER_AGENT']:''));
-if(Is_Error($IsInsert))
+$Comp = Comp_Load('Users/LogIP',$__USER['ID'],IsSet($GLOBALS['_SERVER']['REMOTE_ADDR'])?$GLOBALS['_SERVER']['REMOTE_ADDR']:'127.0.0.1',IsSet($GLOBALS['_SERVER']['HTTP_USER_AGENT'])?$GLOBALS['_SERVER']['HTTP_USER_AGENT']:'',$MessageID);
+if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
