@@ -951,15 +951,6 @@
 				<Greeting/>
 			</SMS>
 			<!-- ********************************************************************* -->
-			<ICQ>
-				<Name>ICQ пейджинг</Name>
-				<IsActive>0</IsActive>
-				<IsEvent>1</IsEvent>
-				<CutSign>1</CutSign>
-				<MessageTemplate>Middle</MessageTemplate>
-				<Message>Добавьте наш номер (%s) в список контактов и авторизуйте его. Обратите внимание, что наш робот не умеет отгадывать загадки и решать логические задачи - поэтому он не сможет пройти тесты по защите от спама</Message>
-				<Greeting/>
-			</ICQ>
 			<!-- ********************************************************************* -->
 			<Jabber>
 				<Name>Jabber пейджинг</Name>
@@ -1020,15 +1011,6 @@
 				<IsActive>1</IsActive>
 			</Email>
 			<!-- ********************************************************************* -->
-			<ICQ>
-				<Name>Сообщение по ICQ</Name>
-				<Params>
-					<UIN>UIN</UIN>
-					<Message>Сообщение</Message>
-					<Attribs type="array"/>
-				</Params>
-				<IsActive>1</IsActive>
-			</ICQ>
 			<!-- ********************************************************************* -->
 			<Jabber>
 				<Name>Сообщение по Jabber</Name>
@@ -1679,13 +1661,6 @@
 					<TimeoutRequestConfirm>60</TimeoutRequestConfirm>
 				</Email>
 				<!-- *********************************************************************** -->
-				<ICQ>
-					<SettingsReset>0</SettingsReset>
-					<Require>0</Require>
-					<ConfirmRequire>1</ConfirmRequire>
-					<ConfirmInterval>30</ConfirmInterval>
-					<TimeoutRequestConfirm>60</TimeoutRequestConfirm>
-				</ICQ>
 				<!-- *********************************************************************** -->
 				<Jabber>
 					<SettingsReset>0</SettingsReset>
