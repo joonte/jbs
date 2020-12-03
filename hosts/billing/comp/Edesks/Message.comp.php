@@ -171,7 +171,15 @@ if(SizeOf($Files)){
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		$Params2 = Array('Delete'=>$Delete,'Name'=>$File['Name'],'FileSize'=>SPrintF('%01.2f',$File['Size']/1024),'ID'=>$File['ID']);
+		$Mime = StrToLower(SubStr($File['Name'],StrRiPos($File['Name'],'.')+1));
+		#-------------------------------------------------------------------------------
+		$Element = SPrintF('Images/Mime/%s.gif',$Mime);
+		#-------------------------------------------------------------------------------
+		if(Is_Error(Styles_Element($Element)))
+			$Element = 'Images/Mime/unknown.gif';
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$Params2 = Array('Delete'=>$Delete,'Name'=>$File['Name'],'FileSize'=>SPrintF('%01.2f',$File['Size']/1024),'ID'=>$File['ID'],'Element'=>$Element);
 		#-------------------------------------------------------------------------------
 		// добавляем файл к списку
 		$Attachments = SPrintF("%s\n%s",$Attachments,TemplateReplace('Edesks.Message.Uploaded',$Params2));
