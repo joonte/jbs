@@ -101,9 +101,9 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DOM->AddText('Title',SPrintF('Данные учёта заказа, услуга "%s"',$Service['Name']));
+$DOM->AddText('Title',SPrintF('Данные учёта "%s", "%s"',(!In_Array($ServiceID,Array(40000,51000)))?$Order['Login']:SprintF('#%u/%s',$Order['OrderID'],$Order['IP']),$Service['Name']));
 #-------------------------------------------------------------------------------
-$Table = Array(SPrintF('Способ учета, услуга "%s", заказ #%u',$Service['NameShort'],$Order['OrderID']));
+$Table = Array(SPrintF('Способ учета, "%s", %s',(!In_Array($ServiceID,Array(40000,51000)))?$Order['Login']:SprintF('#%u/%s',$Order['OrderID'],$Order['IP']),$Service['NameShort']));
 #-------------------------------------------------------------------------------
 $Row = Array();
 #-------------------------------------------------------------------------------
