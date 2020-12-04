@@ -65,6 +65,8 @@ function ShowWindow($Url,$Args){
 				display = 'none';
 				left    = -1000;
 				top     = -1000;
+				transition      = "opacity 0.3s";
+				opacity         = 1;
 				//------------------------------------------------------------------------------
 			}
 			//------------------------------------------------------------------------------
@@ -221,10 +223,10 @@ function ShowWindow($Url,$Args){
 						//------------------------------------------------------------------------------
 						with($Adding.style) {
 							//------------------------------------------------------------------------------
-							height    = '100%';
-							width     = '100%';
-							overflow  = 'scroll';
-							overflowX = 'auto';
+							height		= '100%';
+							width		= '100%';
+							overflow	= 'scroll';
+							overflowX	= 'auto';
 							//------------------------------------------------------------------------------
 							style.width = offsetWidth + 15;
 							//------------------------------------------------------------------------------
@@ -323,12 +325,16 @@ function WindowElementLoadedMSIE($Event){
 //------------------------------------------------------------------------------
 function HideWindow(){
 	//------------------------------------------------------------------------------
-	$Window = document.getElementById('Window');
+	$Window	= document.getElementById('Window');
+	//------------------------------------------------------------------------------
+	$Window.style.opacity = 0;
+	setTimeout("$Window.style.display='none';$Window.style.left=-1000;$Window.style.top=-1000;",300);
 	with($Window.style){
 		//------------------------------------------------------------------------------
-		display = 'none';
-		left    = -1000;
-		top     = -1000;
+		//display = 'none';
+		//left    = -1000;
+		//top     = -1000;
+		opacity = 0;
 		//------------------------------------------------------------------------------
 	}
 	//------------------------------------------------------------------------------
@@ -386,9 +392,10 @@ function HideWindowByEsc(){
 			with($Window.style){
 				//------------------------------------------------------------------------------
 				zIndex	= GetMaxZIndex() + 1;
-				display = 'block';
-				left = $Body.scrollLeft + ($Body.clientWidth  - $WindowBody.offsetWidth)/2;
-				top  = $Body.scrollTop + Math.max(($Body.clientHeight - $WindowBody.offsetHeight)/2-20,10);
+				display	= 'block';
+				left	= $Body.scrollLeft + ($Body.clientWidth  - $WindowBody.offsetWidth)/2;
+				top	= $Body.scrollTop + Math.max(($Body.clientHeight - $WindowBody.offsetHeight)/2-20,10);
+				opacity	= 1;
 				//------------------------------------------------------------------------------
 			}
 			//------------------------------------------------------------------------------
