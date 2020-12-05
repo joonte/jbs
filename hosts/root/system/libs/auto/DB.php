@@ -464,7 +464,7 @@ function DB_Count($TablesIDs,$Query = Array()){
 	if(!Is_Array($TablesIDs))
 		$TablesIDs = Array($TablesIDs);
 	#-------------------------------------------------------------------------------
-	$Sql = SPrintF('SELECT COUNT(*) FROM %s',Implode(',',$TablesIDs));
+	$Sql = SPrintF('SELECT COUNT(*) FROM `%s`',Implode(',',$TablesIDs));
 	#-------------------------------------------------------------------------------
 	if($Where = DB_Where($Query))
 		$Sql = SPrintF('%s WHERE %s',$Sql,$Where);
