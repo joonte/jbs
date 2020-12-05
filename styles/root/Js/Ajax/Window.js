@@ -65,7 +65,7 @@ function ShowWindow($Url,$Args){
 				display = 'none';
 				left    = -1000;
 				top     = -1000;
-				transition      = "opacity 0.3s";
+				transition      = "opacity 0.1s";
 				opacity         = 1;
 				//------------------------------------------------------------------------------
 			}
@@ -328,7 +328,7 @@ function HideWindow(){
 	$Window	= document.getElementById('Window');
 	//------------------------------------------------------------------------------
 	$Window.style.opacity = 0;
-	setTimeout("$Window.style.display='none';$Window.style.left=-1000;$Window.style.top=-1000;",300);
+	setTimeout("$Window.style.display='none';$Window.style.left=-1000;$Window.style.top=-1000;",100);
 	with($Window.style){
 		//------------------------------------------------------------------------------
 		//display = 'none';
