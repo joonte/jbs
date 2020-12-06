@@ -1,0 +1,7 @@
+
+ALTER TABLE `Events` ENGINE=InnoDB;
+-- SEPARATOR
+ALTER TABLE `OrdersHistory` ENGINE=InnoDB;
+-- SEPARATOR
+ALTER TABLE `StatusesHistory` ENGINE=InnoDB;
+

@@ -103,7 +103,7 @@ if(!@File_Put_Contents($MyCnf, SPrintF("[client]\nhost = %s\nport = %u\nuser = %
 #-------------------------------------------------------------------------------
 $File = SPrintF('%s/%s.sql',$Folder,Date('D'));
 #-------------------------------------------------------------------------------
-$Command = SPrintF('mysqldump --defaults-extra-file=%s --quote-names -r %s %s',$MyCnf,$File,$DBConnection['DbName']);
+$Command = SPrintF('mysqldump --defaults-extra-file=%s --set-gtid-purged=OFF --quote-names -r %s %s',$MyCnf,$File,$DBConnection['DbName']);
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/Tasks/BackUp]: команда консоли (%s)',$Command));
 #-------------------------------------------------------------------------------
