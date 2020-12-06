@@ -3008,7 +3008,7 @@ class Net_IDNA
     * @access public
     * @see    setParams()
     */
-    function Net_IDNA($options = false)
+    function __construct($options = false)
     {
     }
 
