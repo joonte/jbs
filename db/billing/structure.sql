@@ -566,7 +566,7 @@ CREATE TABLE `Events` (
   `IsReaded` enum('no','yes') default 'yes',
   PRIMARY KEY (`ID`),
   KEY (`IsReaded`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* added by serge 2011-09-13 in 14:35 MSK */
 ALTER TABLE `Events` ADD INDEX ( `CreateDate` );
@@ -639,7 +639,7 @@ CREATE TABLE `StatusesHistory` (
   `Initiator` varchar(255) default '',
   `Comment` varchar(255) default '',
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* added by lissyara 2011-06-22 in 15:25 MSK */
 ALTER TABLE `StatusesHistory` ADD INDEX ( `RowID` ) ;
@@ -849,7 +849,7 @@ CREATE TABLE IF NOT EXISTS `OrdersHistory` (
 	KEY `OrdersHistoryServiceID` (`ServiceID`),
 	KEY `OrdersHistorySchemeID` (`SchemeID`),
 	UNIQUE KEY `OrdersHistoryOrderID` (`OrderID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 /* сопоставления платёжных систем и способов оплаты */
