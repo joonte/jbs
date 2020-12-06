@@ -3,10 +3,9 @@
 /** @author Alex Keda, for www.host-food.ru */
 /* VDS functions written by lissyara, for www.host-food.ru */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/HTTP.php')))
+if(Is_Error(System_Load('libs/HTTP.php','classes/IDNA.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
 #-------------------------------------------------------------------------------
 function VmManager5_KVM_Logon($Settings,$Params){
 	/****************************************************************************/
@@ -26,7 +25,7 @@ function VmManager5_KVM_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 	#-------------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/******************************************************************************/
-	$IDNA = new Net_IDNA_php5();
+	$IDNA = new Net_IDNA();
 	#-------------------------------------------------------------------------------
 	$Domain = $IDNA->encode($VPSOrder['Domain']);
 	#-------------------------------------------------------------------------------

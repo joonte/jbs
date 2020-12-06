@@ -232,11 +232,11 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 	#-------------------------------------------------------------------------------
 	if(!$Answer){
 		#-------------------------------------------------------------------------------
-		$IDNAConverter = new IDNAConvert();
+		$IDNA = new Net_IDNA();
 		#-------------------------------------------------------------------------------
 		if($UseSystemApplication){
 			#-------------------------------------------------------------------------------
-			$IsExec = Exec(SPrintF('whois %s',$IDNAConverter->encode($Domain)),$Answer);
+			$IsExec = Exec(SPrintF('whois %s',$IDNA->encode($Domain)),$Answer);
 			#-------------------------------------------------------------------------------
 			$Answer = Implode("\n",$Answer);
 			#-------------------------------------------------------------------------------
@@ -247,7 +247,7 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 			if(!$Socket)
 				return ERROR | @Trigger_Error('[WhoIs_Check]: ошибка соединения с сервером WhoIs');
 			#-------------------------------------------------------------------------------
-			if(!@Fputs($Socket,SPrintF("%s\r\n",$IDNAConverter->encode($Domain))))
+			if(!@Fputs($Socket,SPrintF("%s\r\n",$IDNA->encode($Domain))))
 				return ERROR | @Trigger_Error('[WhoIs_Check]: ошибка работы с серверов WhoIs');
 			#-------------------------------------------------------------------------------
 			$Answer = '';

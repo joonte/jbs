@@ -2,10 +2,9 @@
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/HTTP.php')))
+if(Is_Error(System_Load('libs/HTTP.php','classes/IDNA.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
 #-------------------------------------------------------------------------------
 function IspManager4_Logon($Settings,$Params){
 	/******************************************************************************/
@@ -372,7 +371,7 @@ function IspManager4_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
     return TRUE;
   #-----------------------------------------------------------------------------
   #-----------------------------------------------------------------------------
-  $IDNA = new Net_IDNA_php5();
+  $IDNA = new Net_IDNA();
   $Domain = $IDNA->encode($Domain);
   #-----------------------------------------------------------------------------
   $Request = Array(

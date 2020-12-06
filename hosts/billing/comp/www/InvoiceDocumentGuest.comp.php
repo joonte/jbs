@@ -12,21 +12,21 @@ $Args = Args();
 $Domain		= (string) @$Args['domain'];
 $Hostname	= (string) @$Args['hostname'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/DOM.class.php','libs/Upload.php','classes/IDNAConvert.class.php')))
+if(Is_Error(System_Load('classes/DOM.class.php','libs/Upload.php','classes/IDNA.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IDNAConverter = new IDNAConvert();
+$IDNA = new Net_IDNA();
 #-------------------------------------------------------------------------------
-$IDNAConverter->decode($Domain);
+$IDNA->decode($Domain);
 #-------------------------------------------------------------------------------
 if($Domain)
-	if($Domain != $IDNAConverter->decode($Domain))
-		$Domain = $IDNAConverter->decode($Domain);
+	if($Domain != $IDNA->decode($Domain))
+		$Domain = $IDNA->decode($Domain);
 #-------------------------------------------------------------------------------
 if($Hostname)
-	if($Hostname != $IDNAConverter->decode($Hostname))
-		$Hostname = $IDNAConverter->decode($Hostname);
+	if($Hostname != $IDNA->decode($Hostname))
+		$Hostname = $IDNA->decode($Hostname);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Config = Config();

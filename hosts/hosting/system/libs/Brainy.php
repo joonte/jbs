@@ -2,10 +2,9 @@
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for crazych */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/HTTP.php','classes/IDNAConvert.class.php')))
+if(Is_Error(System_Load('libs/HTTP.php','classes/IDNA.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
 #-------------------------------------------------------------------------------
 function Brainy_Logon($Settings,$Params){
 	/******************************************************************************/
@@ -25,7 +24,7 @@ function Brainy_Get_Domains($Settings){
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/******************************************************************************/
 	// для PunyCode
-	$IDNAConverter = new IDNAConvert();
+	$IDNA = new Net_IDNA();
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$HTTP = Brainy_Build_HTTP($Settings);
@@ -123,8 +122,8 @@ function Brainy_Get_Domains($Settings){
 				#-------------------------------------------------------------------------------
 				// конвертим домен из PunyCode, панель какого-то хрена отдаёт без ковертации
 				// https://community.brainycp.com/viewtopic.php?f=7&t=3933
-				if($Domain['domain_decode'] != $IDNAConverter->decode($Domain['domain_decode']))
-					$Domain['domain_decode'] = $IDNAConverter->decode($Domain['domain_decode']);
+				if($Domain['domain_decode'] != $IDNA->decode($Domain['domain_decode']))
+					$Domain['domain_decode'] = $IDNA->decode($Domain['domain_decode']);
 				#-------------------------------------------------------------------------------
 				// выпиливаем www
 				if(Preg_Match('/^www\.(.+)$/',$Domain['domain_decode'],$Matches))
@@ -296,7 +295,7 @@ function Brainy_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,$Em
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	// добавляем домен на аккаунт
-	$IDNA = new Net_IDNA_php5();
+	$IDNA = new Net_IDNA();
 	#-------------------------------------------------------------------------------
 	$Domain = $IDNA->encode($Domain);
 	#-------------------------------------------------------------------------------

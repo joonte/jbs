@@ -58,8 +58,8 @@ function RuCenter_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1N
       $Query[] = 'template: domain_rf';
 
       // Convert the domain
-      $IDNAConverter = new IDNAConvert();
-      $Domain = $IDNAConverter->encode($Domain);
+      $IDNA = new Net_IDNA();
+      $Domain = $IDNA->encode($Domain);
     break;
     case 'msk.ru':
       $Query[] = 'service: domain_msk_ru';

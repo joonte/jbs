@@ -2,10 +2,9 @@
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/HTTP.php')))
+if(Is_Error(System_Load('libs/HTTP.php','classes/IDNA.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
 #-------------------------------------------------------------------------------
 
 # тут ничего нет.

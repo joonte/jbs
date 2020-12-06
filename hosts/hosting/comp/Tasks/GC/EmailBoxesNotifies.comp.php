@@ -121,9 +121,9 @@ foreach($Servers as $Server){
 			#-------------------------------------------------------------------------------
 			$Pieces = Explode('@',$Email);
 			#-------------------------------------------------------------------------------
-			$IDNAConverter = new IDNAConvert();
+			$IDNA = new Net_IDNA();
 			#-------------------------------------------------------------------------------
-			$Email = SPrintF('%s@%s',$Pieces[0],$IDNAConverter->encode($Pieces[1]));
+			$Email = SPrintF('%s@%s',$Pieces[0],$IDNA->encode($Pieces[1]));
 			#-------------------------------------------------------------------------------
 			if(!Preg_Match($Regulars['Email'],$Email))
 				continue;

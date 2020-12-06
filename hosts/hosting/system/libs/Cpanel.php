@@ -2,10 +2,9 @@
 #-------------------------------------------------------------------------------
 /** @author Великодный В.В. (Joonte Ltd.) */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/HTTP.php')))
+if(Is_Error(System_Load('libs/HTTP.php','classes/IDNA.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
 #-------------------------------------------------------------------------------
 function Cpanel_Logon($Settings,$Params){
   /****************************************************************************/
@@ -156,7 +155,7 @@ function Cpanel_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,$Em
     'IsLogging'=> $Settings['Params']['IsLogging']
   );
   #-----------------------------------------------------------------------------
-  $IDNA = new Net_IDNA_php5();
+  $IDNA = new Net_IDNA();
   $Domain = $IDNA->encode($Domain);
   #-----------------------------------------------------------------------------
   $Request = Array(

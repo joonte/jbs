@@ -3,11 +3,9 @@
 /** @author Alex Keda, for www.host-food.ru */
 /* VDS functions written by lissyara, for www.host-food.ru */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/HTTP.php')))
+if(Is_Error(System_Load('libs/HTTP.php','classes/IDNA.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
-
 #-------------------------------------------------------------------------------
 function VdsManager4_Logon($Settings,$Params){
 	/****************************************************************************/
@@ -41,7 +39,7 @@ function VdsManager4_Create($Settings,$VPSOrder,$IP,$VPSScheme){
   #-----------------------------------------------------------------------------
   $IsReselling = FALSE;
   #-----------------------------------------------------------------------------
-  $IDNA = new Net_IDNA_php5();
+  $IDNA = new Net_IDNA();
   $Domain = $IDNA->encode($VPSOrder['Domain']);
   #-----------------------------------------------------------------------------
   $Request = Array(

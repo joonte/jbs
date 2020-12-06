@@ -2,12 +2,9 @@
   /*-- ------------------------------------------------------*/
  /* @author Aleksey Babanin aleksey@alezhen.ru (AleZhen.RU) */
 /*--- -----------------------------------------------------*/
-if(Is_Error(System_Load('libs/HTTP.php')))
+if(Is_Error(System_Load('libs/HTTP.php','classes/IDNA.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-Require_Once(SPrintF('%s/others/hosting/IDNA.php',SYSTEM_PATH));
-#-------------------------------------------------------------------------------
-
 #-------------------------------------------------------------------------------
 # Функция входа в панель управления ISPConfig
 #-------------------------------------------------------------------------------
@@ -30,7 +27,7 @@ function ISPConfig_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,
   #-----------------------------------------------------------------------------
   $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
   /****************************************************************************/
-//  $IDNA = new Net_IDNA_php5();
+//  $IDNA = new Net_IDNA();
 //  $Domain = $IDNA->encode($Domain);
   #-----------------------------------------------------------------------------
   if (($HostingScheme['PackageID'] == '') or ($HostingScheme['PackageID'] == 'MB500')) $HostingScheme['PackageID'] = 0;
