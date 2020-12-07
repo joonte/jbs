@@ -12,7 +12,7 @@ $Args = Args();
 $Domain		= (string) @$Args['domain'];
 $Hostname	= (string) @$Args['hostname'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('classes/DOM.class.php','libs/Upload.php','classes/IDNA.class.php')))
+if(Is_Error(System_Load('classes/DOM.class.php','libs/Upload.php','classes/Net_IDNA.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
