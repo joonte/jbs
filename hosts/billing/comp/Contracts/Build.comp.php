@@ -101,7 +101,7 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Contract['Number'] = $Comp;
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Formats/Date/Standard',$Contract['CreateDate']);
+$Comp = Comp_Load('Formats/Date/Standard',Time() /*$Contract['CreateDate']*/);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
