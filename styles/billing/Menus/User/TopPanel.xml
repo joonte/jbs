@@ -46,8 +46,8 @@
 				<UniqID>\/Tickets$</UniqID>
 			</Paths>
 			<Href>/Tickets</Href>
-			<Comp>Tickets/Icons/User</Comp>
 			<Pick/>
+			<Comp>Tickets/Icons/User</Comp>
 		</ID600>
 	</Items>
 	<!-- *********************************************************************** -->
