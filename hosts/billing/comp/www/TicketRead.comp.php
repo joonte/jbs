@@ -332,8 +332,7 @@ $Array = Array(
 		'id'		=> 'Message',
 		'rows'		=> 5,
 		'AutoFocus'	=> 'yes',
-		//'OnChange'	=>'function() {  $(this).each(function() {    autoResize(this);   }); }',
-		'style'		=> SPrintF('resize:vertical; background:%s; width:%s;',$Color,$WindowWidth)
+		'style'		=> SPrintF('background:%s; width:%s;',$Color,$WindowWidth)
 		);
 #-------------------------------------------------------------------------------
 //'style'               => SPrintF('background:%s; width:%u;',$Color,Max(@$_COOKIE['wScreen']/1.5,630)),
