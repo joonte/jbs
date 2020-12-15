@@ -76,7 +76,9 @@ if($VPSSchemeID){
 				'extns'			=> 'dnsprovider',
 				'limitpvtdns'		=> 256,
 				'limitpubdns'		=> 256,
-				'backup'		=> 'bmonth'
+				'backup'		=> 'bmonth',
+				'fstype'		=> 'simfs',
+				'IsTun'			=> TRUE,
 			);
 	#-------------------------------------------------------------------------------
 }
