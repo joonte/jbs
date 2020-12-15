@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Items>
- <ID100>
-  <Text>Сайт</Text>
-  <Paths>
-   <UniqID>^\/(Clause|Index|Search|News|Documents|Logon|UserPasswordRestore|UserRegister|Clients|Partners|Contacts)$</UniqID>
-  </Paths>
-  <Href>/</Href>
- </ID100>
-</Items>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Items>
+		<ID100>
+			<Text>Сайт</Text>
+			<Paths>
+				<UniqID>^\/(Clause|Index|Search|News|Documents|Logon|UserPasswordRestore|UserRegister|Clients|Partners|Contacts)$</UniqID>
+			</Paths>
+			<Href>/Documents</Href>
+		</ID100>
+	</Items>
+	<!-- *********************************************************************** -->
 </XML>
