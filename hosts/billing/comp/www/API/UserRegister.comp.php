@@ -269,9 +269,13 @@ $Comp = Comp_Load('Users/LogIP',$UserID,IsSet($GLOBALS['_SERVER']['REMOTE_ADDR']
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IsUpdated = DB_Update('Users',Array('EnterDate'=>Time(),'EnterIP'=>$_SERVER['REMOTE_ADDR']),Array('ID'=>$UserID));
-if(Is_Error($IsUpdated))
-	return ERROR | @Trigger_Error(500);
+if(IsSet($GLOBALS['__USER']['IsEmulate']) && $GLOBALS['__USER']['IsEmulate']){
+	#-------------------------------------------------------------------------------
+	$IsUpdated = DB_Update('Users',Array('EnterDate'=>Time(),'EnterIP'=>$_SERVER['REMOTE_ADDR']),Array('ID'=>$UserID));
+	if(Is_Error($IsUpdated))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 Array_UnShift($Session->Data['UsersIDs'],$UserID);
