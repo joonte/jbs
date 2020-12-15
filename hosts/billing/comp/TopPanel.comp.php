@@ -267,7 +267,7 @@ if(!IsSet($GLOBALS['__USER'])){
 	#-------------------------------------------------------------------------------
 	$Adding = new Tag('TR');
 	#-------------------------------------------------------------------------------
-	$Adding->AddChild(new Tag('TD',new Tag('A',Array('class'=>'Button','title'=>'Мои настройки','href'=>"javascript:ShowWindow('/UserPersonalDataChange');"),'Мои настройки')));
+	$Adding->AddChild(new Tag('TD',new Tag('A',Array('class'=>'Button','title'=>'Настройки','href'=>"javascript:ShowWindow('/UserPersonalDataChange');"),'Настройки')));
 	#-------------------------------------------------------------------------------
 	$Adding->AddChild(new Tag('TD',Array('class'=>'TopPanelSeparator','align'=>'center','width'=>5,'style'=>'color:#848484;'),'|'));
 	#-------------------------------------------------------------------------------

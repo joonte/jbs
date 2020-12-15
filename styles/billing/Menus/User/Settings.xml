@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Items>
- <ListElement>
-  <Text>Мои данные</Text>
-  <Paths>
-   <UniqID>^\/UserPersonalDataChange$</UniqID>
-  </Paths>
-  <Href>javascript:ShowWindow('/UserPersonalDataChange');</Href>
- </ListElement>
- <!-- *********************************************************************** -->
- <ListElement>
-  <Text>Мои настройки</Text>
-  <Paths>
-   <UniqID>^\/UserPersonalSettings$</UniqID>
-  </Paths>
-  <Href>javascript:ShowWindow('/UserPersonalSettings');</Href>
- </ListElement>
- <!-- *********************************************************************** -->
- <ListElement>
-  <Text>Смена пароля</Text>
-  <Paths>
-   <UniqID>^\/UserPasswordChange$</UniqID>
-  </Paths>
-  <Href>javascript:ShowWindow('/UserPasswordChange');</Href>
- </ListElement>
-</Items>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Items>
+		<ListElement>
+			<Text>Мои данные</Text>
+			<Paths>
+				<UniqID>^\/UserPersonalDataChange$</UniqID>
+			</Paths>
+			<Href>javascript:ShowWindow('/UserPersonalDataChange');</Href>
+		</ListElement>
+		<!-- *********************************************************************** -->
+		<ListElement>
+			<Text>Мои настройки</Text>
+			<Paths>
+				<UniqID>^\/UserPersonalSettings$</UniqID>
+			</Paths>
+			<Href>javascript:ShowWindow('/UserPersonalSettings');</Href>
+		</ListElement>
+		<!-- *********************************************************************** -->
+		<ListElement>
+			<Text>Смена пароля</Text>
+			<Paths>
+				<UniqID>^\/UserPasswordChange$</UniqID>
+			</Paths>
+			<Href>javascript:ShowWindow('/UserPasswordChange');</Href>
+		</ListElement>
+	</Items>
+	<!-- *********************************************************************** -->
 </XML>

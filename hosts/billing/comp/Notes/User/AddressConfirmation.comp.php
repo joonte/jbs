@@ -47,7 +47,7 @@ foreach(Array_Keys($Config['Notifies']['Methods']) as $MethodID){
 			#-------------------------------------------------------------------------------
 			$NoBody = new Tag('NOBODY');
 			$NoBody->AddHTML(TemplateReplace('Notes.User.Confirmation', Array('Address'=>$Contact['Address'],'Method'=>$Config['Notifies']['Methods'][$MethodID])));
-			$NoBody->AddChild(new Tag('STRONG', new Tag('A', Array('href' => SPrintF("javascript:ShowWindow('/ContactEdit?ContactID=%u');",$Contact['ID'])), '[Мои настройки]')));
+			$NoBody->AddChild(new Tag('STRONG', new Tag('A', Array('href' => SPrintF("javascript:ShowWindow('/ContactEdit?ContactID=%u');",$Contact['ID'])), '[Настройки]')));
 			#-------------------------------------------------------------------------------
 			$Result[] = $NoBody;
 			#-------------------------------------------------------------------------------
@@ -93,7 +93,7 @@ foreach(Array_Keys($Config['Notifies']['Methods']) as $MethodID){
                 #-------------------------------------------------------------------------------
                 $NoBody = new Tag('NOBODY');
                 $NoBody->AddHTML(TemplateReplace('Notes.User.Confirmation.NoAddress', Array('Method'=>$Config['Notifies']['Methods'][$MethodID])));
-                $NoBody->AddChild(new Tag('STRONG', new Tag('A', Array('href' => SPrintF("javascript:ShowWindow('/ContactEdit?MethodID=%s');",$MethodID)), '[Мои настройки]')));
+                $NoBody->AddChild(new Tag('STRONG', new Tag('A', Array('href' => SPrintF("javascript:ShowWindow('/ContactEdit?MethodID=%s');",$MethodID)), '[Настройки]')));
                 #-------------------------------------------------------------------------------
                 $Result[] = $NoBody;
                 #-------------------------------------------------------------------------------
