@@ -870,7 +870,7 @@
 	<Notifies>
 		<Types>
 			<FromTicketsMessages>
-				<Title>Центр поддержки</Title>
+				<Title>Поддержка</Title>
 				<Name>Новое сообщение от службы поддержки</Name>
 				<GroupID>1</GroupID>
 				<IsActive>1</IsActive>
