@@ -493,6 +493,7 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 	if(IsSet($Doc['error']) || !IsSet($Doc['ok']))
 		return new gException('ACCOUNT_CREATE_ERROR','Не удалось создать заказ хостинга');
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	# TODO надо и для Business как-то рестартавать веб-сервер ноды
 	if(!$Settings['Params']['NoRestartCreate'] && $Version == 'Lite')
 		IspManager5_Service_Restart($Settings,'httpd');
@@ -838,16 +839,6 @@ function IspManager5_Password_Change($Settings,$Login,$Password,$Params){
 	$Response = HTTP_Send('/ispmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[IspManager5_Password_Change]: не удалось соедениться с сервером');
-	#-------------------------------------------------------------------------------
-#	$Response = Trim($Response['Body']);
-#	#-------------------------------------------------------------------------------
-#	$XML = String_XML_Parse($Response);
-#	if(Is_Exception($XML))
-#		return ERROR | @Trigger_Error('[IspManager5_Password_Change]: неверный ответ от сервера');
-#	#-------------------------------------------------------------------------------
-#	$XML = $XML->ToArray();
-#	#-------------------------------------------------------------------------------
-#	$Doc1 = $XML['doc'];
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if(IsSet($Doc['error']))
