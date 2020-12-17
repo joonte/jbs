@@ -330,7 +330,7 @@ Debug(SPrintF('[comp/www/TicketRead]: wScreen = %s; WindowWidth = %s',@$_COOKIE[
 $Array = Array(
 		'name'		=> 'Message',
 		'id'		=> 'Message',
-		'rows'		=> 5,
+		'rows'		=> 7,
 		'AutoFocus'	=> 'yes',
 		'style'		=> SPrintF('background:%s; width:%s;',$Color,$WindowWidth)
 		);
@@ -640,7 +640,7 @@ if($IsInternal){
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$Iframe = new Tag('IFRAME',Array('id'=>'TicketReadMessages','src'=>SPrintF('/TicketMessages?TicketID=%u&Iframe=1',$Ticket['ID']),'width'=>'100%','style'=>SPrintF('height:%u;',Max(@$_COOKIE['hScreen']/2.5,240))),'Загрузка...');
+	$Iframe = new Tag('IFRAME',Array('id'=>'TicketReadMessages','src'=>SPrintF('/TicketMessages?TicketID=%u&Iframe=1',$Ticket['ID']),'width'=>'100%','style'=>SPrintF('height:%u;',Max(@$_COOKIE['hScreen']/2,240))),'Загрузка...');
 	#-------------------------------------------------------------------------------
 	$Form->AddChild(new Tag('TABLE',new Tag('TR',new Tag('TD',$Iframe)),new Tag('TR',new Tag('TD',$Comp))));
 	#-------------------------------------------------------------------------------

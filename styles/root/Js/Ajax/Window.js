@@ -247,7 +247,7 @@ function ShowWindow($Url,$Args){
 				var $Body = document.body;
 				//------------------------------------------------------------------------------
 				style.left = $Body.scrollLeft + ($Body.clientWidth  - $WindowBody.offsetWidth)/2;
-				style.top  = $Body.scrollTop + Math.max(($Body.clientHeight - $WindowBody.offsetHeight)/2-20,10);
+				style.top  = $Body.scrollTop + Math.max(($Body.clientHeight - $WindowBody.offsetHeight)/3-20,10);
 			}
 			//------------------------------------------------------------------------------
 			if(!$WindowPostElementsLoaded){
