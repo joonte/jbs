@@ -36,7 +36,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IsUpdate = DB_Update($TableID,Array('UserNotice'=>$UserNotice),Array('ID'=>$RowID));
+$IsUpdate = DB_Update($TableID,Array('UserNotice'=>Mb_SubStr(Mb_Convert_Encoding(Trim($UserNotice),'UTF-8'),0,32000)),Array('ID'=>$RowID));
 #-------------------------------------------------------------------------------
 if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);

@@ -20,9 +20,10 @@ $UserID        = (integer) @$Args['UserID'];
 $Flags         =  (string) @$Args['Flags'];
 $NotifyEmail   =  (string) @$Args['NotifyEmail'];
 #-------------------------------------------------------------------------------
-# truncate $Theme & $Message
-$Theme		= Mb_SubStr($Theme, 0, 127);
-$Message	= Mb_SubStr($Message, 0, 62000);
+#-------------------------------------------------------------------------------
+// усекаем сообщение на 32k символов
+$Theme	= Mb_SubStr(Mb_Convert_Encoding($Theme,'UTF-8'), 0, 127);
+$Message= Mb_SubStr(Mb_Convert_Encoding($Message,'UTF-8'),0,32000);
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 	return ERROR | @Trigger_Error(500);
