@@ -30,10 +30,11 @@ if(!IsSet($Params['IsEmail']))
 #-------------------------------------------------------------------------------
 # $String = Preg_Replace('/(http:\/\/[\/a-zA-Z0-9\.\-\_]+)/su','<A href="\\1" target="blank">\\1</A>',$String);
 #-------------------------------------------------------------------------------
-$String = Preg_Replace('/\[hidden\](.+)\[\/hidden\]/sU',$IsLockText?'<DIV class="LockText"><B style="font-size:11px;">Скрытый текст:<BR /></B>\\1</DIV>':'',$String);
+// \s+? - убираем все пустые символы с повышенной жадностью - т.е. до упора.
+// также, учитываем что пробелов может и не быть
+$String = Preg_Replace('/\[hidden\](.+)\[\/hidden(\]\s+?|\])/sU',$IsLockText?'<DIV class="LockText"><B style="font-size:11px;">Скрытый текст:<BR /></B>\\1</DIV>':'',$String);
 #-------------------------------------------------------------------------------
-// \s+? - убираем все пустые символы с повышенной жадностью - т.е. до упора
-$String = Preg_Replace('/\[quote\](.+)\[\/quote\]\s+?/sU',!IsSet($Params['IsEmail'])?'<DIV class="QuoteText">\\1</DIV>':'\\1',$String);
+$String = Preg_Replace('/\[quote\](.+)\[\/quote(\]\s+?|\])/sU',!IsSet($Params['IsEmail'])?'<DIV class="QuoteText">\\1</DIV>':'\\1',$String);
 #-------------------------------------------------------------------------------
 $String = Preg_Replace('/\[color=([a-z]+)\](.+)\[\/color\]/sU',!IsSet($Params['IsEmail'])?'<SPAN style="color:\\1;">\\2</SPAN>':'\\2',$String);
 #-------------------------------------------------------------------------------
