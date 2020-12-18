@@ -1,19 +1,19 @@
 <?php
 
 #-------------------------------------------------------------------------------
-/** @author Великодный В.В. (Joonte Ltd.) */
+/** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('classes/HostingServer.class.php','classes/DNSmanagerServer.class.php')))
+if(Is_Error(System_Load('classes/HostingServer.class.php','classes/VPSServer.class.php','classes/DNSmanagerServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Where = Array(
 		'`Services`.`ID` = `ServersGroups`.`ServiceID`',
 		'(`ServersGroups`.`ID` = `Servers`.`ServersGroupID`)',
-		'(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 10000 OR (SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 52000',
+		'(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 10000 OR (SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 52000 OR (SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 30000',
 		);
 #-------------------------------------------------------------------------------
 $Columns = Array(
@@ -40,8 +40,8 @@ $Array = Array();
 #-------------------------------------------------------------------------------
 foreach($Servers as $Server){
 	#-------------------------------------------------------------------------------
-	#if($Server['Address'] != 'brainy.test-hf.su')
-	#	continue;
+	//if($Server['Address'] != 'kvm.host-food.ru')
+	//	continue;
 	#-------------------------------------------------------------------------------
 	if(!$Server['IsActive'])
 		continue;
@@ -119,6 +119,7 @@ case 'true':
 				# No more...
 				break;
 			case 'array':
+				Debug(print_r($Orders,true));
 				#-------------------------------------------------------------------------------
 				foreach($Orders as $Order){
 					#-------------------------------------------------------------------------------
@@ -126,7 +127,13 @@ case 'true':
 					#-------------------------------------------------------------------------------
 					ASort($Parked);
 					#-------------------------------------------------------------------------------
-					$IsUpdate = DB_Update(SPrintF('%sOrders',$Server['Code']),Array('Domain'=>(Count($Parked)?Current($Parked):'not-found'),'Parked'=>Implode(',',$Parked)),Array('ID'=>$Order['ID']));
+					$IOrders = Array('Domain'=>(Count($Parked)?Current($Parked):'not-found'));
+					#-------------------------------------------------------------------------------
+					// в таблице ВПС нет паркованных доменов
+					if($Server['Code'] != 'VPS')
+						$IOrders['Parked'] = Implode(',',$Parked);
+					#-------------------------------------------------------------------------------
+					$IsUpdate = DB_Update(SPrintF('%sOrders',$Server['Code']),$IOrders,Array('ID'=>$Order['ID']));
 					if(Is_Error($IsUpdate))
 						return ERROR | @Trigger_Error(500);
 					#-------------------------------------------------------------------------------

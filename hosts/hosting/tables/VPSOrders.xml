@@ -103,6 +103,7 @@
 						<ListElement>UserID</ListElement>
 						<ListElement>Login</ListElement>
 						<ListElement>IP</ListElement>
+						<ListElement>Domain</ListElement>
 						<ListElement>(SELECT `Name` FROM `VPSSchemes` WHERE `VPSSchemes`.`ID` = `VPSOrdersOwners`.`SchemeID`)</ListElement>
 						<ListElement>AdminNotice</ListElement>
 					</ColumnsIDs>

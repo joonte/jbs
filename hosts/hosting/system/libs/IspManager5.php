@@ -4,6 +4,7 @@
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('libs/HTTP.php','classes/Net_IDNA.class.php')))
 	return ERROR | @Trigger_Error(500);
+
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 function IspManager5_Logon($Settings,$Params){
@@ -15,6 +16,7 @@ function IspManager5_Logon($Settings,$Params){
 	return Array('Url'=>$Settings['Params']['Url'],'Args'=>Array('lang'=>$Settings['Params']['Language'],'theme'=>$Settings['Params']['Theme'],'checkcookie'=>'no','username'=>$Params['Login'],'password'=>$Params['Password'],'func'=>'auth'));
 	#-------------------------------------------------------------------------------
 }
+
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 function IspManager5_Get_Domains($Settings){
@@ -208,6 +210,7 @@ function IspManager5_Get_Domains($Settings){
 			#---------------------------------------------------------------------------
 			if(!In_Array($Domain['name'],$Users[$Owners[$Owner]]))
 				$Users[$Owners[$Owner]][] = $Domain['name'];
+			#---------------------------------------------------------------------------
 		}
 		#---------------------------------------------------------------------------
 	}
