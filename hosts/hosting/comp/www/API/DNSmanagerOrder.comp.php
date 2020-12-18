@@ -67,7 +67,7 @@ if($DNSmanagerScheme['Reseller'])
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
 if(!Preg_Match($Regulars['DnsDomain'],$ViewArea))
-	return new gException('WRONG_VIEW_NAME','Неверное имя области, укажиет домен третьего уровня');
+	return new gException('WRONG_VIEW_NAME','Неверное имя области, укажите домен третьего уровня');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Contract = Comp_Load('Contracts/Fetch',$ContractID);
