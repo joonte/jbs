@@ -134,6 +134,15 @@ if(!$Confirm && !$Code){
 		if(Is_Error($C2))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
+		// проверяем что в базе нет такого значения
+		$Count = DB_Count('Contacts',Array('Where'=>SPrintF("`Confirmation` = %u%u",$C1,$C2)));
+		if(Is_Error($Count))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		if($Count)
+			return new gException('CONFIRM_CODE_EXISTS','Что-то пошло не так, нажмите кнопку "Подтвердить" ещё раз ...');
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 		// пихаем значения в базу
 		$IsUpdate = DB_Update('Contacts',Array('Confirmation'=>SPrintF('%s%s',$C1,$C2)),Array('ID'=>$ContactID));
 		if(Is_Error($IsUpdate))
