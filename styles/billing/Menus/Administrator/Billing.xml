@@ -49,6 +49,15 @@
 		</ListElement>
 		<!-- *********************************************************************** -->
 		<ListElement>
+			<Text>Перезаданные компоненты</Text>
+			<Prompt>Компоненты биллинговой системы используемые вместо поставляемых с дистрибутивом</Prompt>
+			<Paths>
+				<UniqID>^\/Administrator\/ReAssignedComponents$</UniqID>
+			</Paths>
+			<Href>/Administrator/ReAssignedComponents</Href>
+		</ListElement>
+		<!-- *********************************************************************** -->
+		<ListElement>
 			<Text>Версия биллинга</Text>
 			<Prompt>Инофрмация о версии и патчах биллинговой системы</Prompt>
 			<Paths>

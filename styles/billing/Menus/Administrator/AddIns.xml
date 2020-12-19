@@ -41,7 +41,7 @@
 			<Text>Обслуживание системы</Text>
 			<Prompt>Поиск проблем, обновление системы, информация о лицензии</Prompt>
 			<Paths>
-				<UniqID>^\/Administrator\/(SystemMaintenance|UsersLogs|UsersIPs|OrdersHistory|OrdersTransfer|UpdateSystem|JBsLicense|BillingVersions)$</UniqID>
+				<UniqID>^\/Administrator\/(SystemMaintenance|UsersLogs|UsersIPs|OrdersHistory|OrdersTransfer|UpdateSystem|ReAssignedComponents|JBsLicense|BillingVersions)$</UniqID>
 			</Paths>
 			<Href>/Administrator/SystemMaintenance</Href>
 			<Level>1</Level>
