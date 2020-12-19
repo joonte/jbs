@@ -19,7 +19,7 @@ if(IsSet($GLOBALS['__USER'])){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
         if($Count)
-		return new Tag('NOBODY',new Tag('IMG',Array('alt'=>'Новые сообщения','width'=>13,'height'=>9,'src'=>'SRC:{Images/Icons/Message1.gif}')),$Adding);
+		return new Tag('NOBODY',new Tag('IMG',Array('alt'=>'Новые сообщения','width'=>13,'height'=>9,'src'=>'SRC:{Images/Icons/MessageGreen.png}')),$Adding);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------

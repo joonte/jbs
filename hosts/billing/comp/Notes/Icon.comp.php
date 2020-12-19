@@ -23,7 +23,7 @@ if(IsSet($GLOBALS['__USER'])){
 	#-------------------------------------------------------------------------------
 	$Text	= SPrintF("PromptShow(event,'%s',this);",$Text);
 	#-------------------------------------------------------------------------------
-	$A = new Tag('A',Array('href'=>'/Notes','class'=>'Image','onmouseover'=>$Text),new Tag('IMG',Array('width'=>'20px','src'=>SPrintF('SRC:{Images/Icons/Bell%s.png}',$Color))),$Adding);
+	$A = new Tag('A',Array('href'=>'/Notes','class'=>'Image','onmouseover'=>$Text),new Tag('IMG',Array('width'=>'13px','src'=>SPrintF('SRC:{Images/Icons/Message%s.png}',$Color))),$Adding);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return new Tag('NOBODY',$A,$Adding);

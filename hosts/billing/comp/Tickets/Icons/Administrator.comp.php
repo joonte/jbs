@@ -31,7 +31,7 @@ if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Count)
-	$NoBody->AddChild(new Tag('A',Array('href'=>'/Administrator/Tickets','class'=>'Image'),new Tag('IMG',Array('alt'=>'Новые сообщения','border'=>0,'width'=>13,'height'=>9,'src'=>'SRC:{Images/Icons/Message1.gif}'))));
+	$NoBody->AddChild(new Tag('A',Array('href'=>'/Administrator/Tickets','class'=>'Image'),new Tag('IMG',Array('alt'=>'Новые сообщения','border'=>0,'width'=>13,'height'=>9,'src'=>'SRC:{Images/Icons/MessageGreen.png}'))));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Count($NoBody->Childs)){
