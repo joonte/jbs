@@ -16,8 +16,11 @@ if(Is_Null($Args))
 #-------------------------------------------------------------------------------
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-$DomainOrderID = (integer) @$Args['DomainOrderID'];
+$DomainOrderID	= (integer) @$Args['DomainOrderID'];
+$OrderID	= (integer) @$Args['OrderID'];
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Where = ($DomainOrderID?SPrintF('`ID` = %u',$DomainOrderID):SPrintF('`OrderID` = %u',$OrderID));
 #-------------------------------------------------------------------------------
 $Columns = Array(
 		'ID','UserID','OrderID','OrderDate','ContractID','DomainName','ProfileID','PersonID','IsPrivateWhoIs','WhoIs',
@@ -30,7 +33,7 @@ $Columns = Array(
 		'(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `DomainOrdersOwners`.`ContractID`) AS `Customer`',
 		);
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
+$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
 case 'error':

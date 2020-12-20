@@ -12,6 +12,7 @@ Eval(COMP_INIT);
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 $ServiceOrderID	= (integer) @$Args['ServiceOrderID'];
+$OrderID	= (integer) @$Args['OrderID'];
 $ServiceID	= (integer) @$Args['ServiceID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -31,7 +32,10 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),Array('*'),Array('UNIQ','ID'=>$ServiceOrderID));
+// достаём данные заказа
+$Where = ($ServiceOrderID?SPrintF('`ID` = %u',$ServiceOrderID):SPrintF('`OrderID` = %u',$OrderID));
+#-------------------------------------------------------------------------------
+$Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),Array('*'),Array('UNIQ','Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Order)){
 case 'error':
