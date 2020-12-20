@@ -9,14 +9,6 @@ $__args_list = Array('OrderTypeCode','ID');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-#Debug("[comp/Services/Orders/SchemeWrapper]: OrderTypeCode = $OrderTypeCode, ID = $ID");
-#-------------------------------------------------------------------------------
-$CacheID = Md5($__FILE__ . $OrderTypeCode . $ID);
-#-------------------------------------------------------------------------------
-$Result = CacheManager::get($CacheID);
-if($Result)
-	return $Result;
-#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($OrderTypeCode == 'Default'){
 	#-------------------------------------------------------------------------------
@@ -24,10 +16,7 @@ if($OrderTypeCode == 'Default'){
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$Columns = Array(
-			'ID',
-			SPrintF('(SELECT `Name` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `%sSchemes`.`ID`) as `SchemeName`',$OrderTypeCode,$OrderTypeCode,$OrderTypeCode)
-			);
+	$Columns = Array('ID',SPrintF('(SELECT `Name` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `%sSchemes`.`ID`) as `SchemeName`',$OrderTypeCode,$OrderTypeCode,$OrderTypeCode));
 	#-------------------------------------------------------------------------------
 	$Order = DB_Select(SPrintF('%sOrdersOwners',$OrderTypeCode),$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$ID)));
 	#-------------------------------------------------------------------------------
@@ -54,9 +43,9 @@ $Comp = Comp_Load('Formats/SchemeName',$Order['SchemeName'],$OrderTypeCode,$Orde
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-CacheManager::add($CacheID, $Comp, 24 * 3600);
 #-------------------------------------------------------------------------------
 return $Comp;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>
