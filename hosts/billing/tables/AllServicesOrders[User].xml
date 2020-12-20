@@ -37,32 +37,77 @@
 		</Before>
 	</Comps>
 	<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
 	<Columns>
+		<!-- *********************************************************************** -->
+		<Info>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/OrderInfoWrapper</ListElement>
+				<ListElement>
+					<ServiceOrderID>%ID%</ServiceOrderID>
+					<ServiceOrderType>%Code%</ServiceOrderType>
+				</ListElement>
+				<ListElement>Дополнительная информация</ListElement>
+			</Args>
+		</Info>
+		<!-- ********************************************************************** -->
 		<Pay>
 			<IsSorted>0</IsSorted>
 			<Comp>Buttons/Window</Comp>
 			<Args>
-				<ListElement>/ServiceOrderPay</ListElement>
+				<ListElement>/OrderPayWrapper</ListElement>
 				<ListElement>
 					<ServiceOrderID>%ID%</ServiceOrderID>
+					<ServiceOrderType>%Code%</ServiceOrderType>
 				</ListElement>
 				<ListElement>Оплатить заказ</ListElement>
 				<ListElement>Pay.gif</ListElement>
-			</Args>
-		</Pay>
+                        </Args>
+                </Pay>
 		<!-- ********************************************************************** -->
-		<ExtendedMenu>
+		<SchemeChange>
 			<IsSorted>0</IsSorted>
-			<Comp>Menus/List</Comp>
+			<Comp>Buttons/Window</Comp>
 			<Args>
-				<ListElement>User/ListMenu/ServicesOrder.xml</ListElement>
-				<Replace>
+				<ListElement>/OrderSchemeChangeWrapper</ListElement>
+				<ListElement>
 					<ServiceOrderID>%ID%</ServiceOrderID>
-					<ServiceID>%ServiceID%</ServiceID>
-				</Replace>
+					<ServiceOrderType>%Code%</ServiceOrderType>
+				</ListElement>
+				<ListElement>Сменить тарифный план</ListElement>
+				<ListElement>SchemeChange.png</ListElement>
 			</Args>
-		</ExtendedMenu>
-		<!-- *********************************************************************** -->
+		</SchemeChange>
+		<!-- ********************************************************************** -->
+		<Manage>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Standard</Comp>
+			<Args>
+				<ListElement>
+					<onclick>OrderManage(0,%ID%,%ServiceID%);</onclick>
+				</ListElement>
+				<ListElement>Управлять заказом</ListElement>
+				<ListElement>HostingManage.gif</ListElement>
+                                <ListElement>OrderManage.js</ListElement>
+                        </Args>
+                </Manage>
+		<!-- ********************************************************************** -->
+		<PasswordChange>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/OrderPasswordChange</ListElement>
+				<ListElement>
+					<OrderID>%ID%</OrderID>
+					<ServiceID>%ServiceID%</ServiceID>
+				</ListElement>
+				<ListElement>Сменить пароль</ListElement>
+				<ListElement>Password.gif</ListElement>
+			</Args>
+		</PasswordChange>
+		<!-- ********************************************************************** -->
 	</Columns>
 	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
@@ -70,9 +115,13 @@
 		<ListElement>SelectID</ListElement>
 		<ListElement>Info</ListElement>
 		<ListElement>Pay</ListElement>
+                <ListElement>SchemeChange</ListElement>
+                <ListElement>Manage</ListElement>
+                <ListElement>PasswordChange</ListElement>
 		<ListElement>ExtendedMenu</ListElement>
 		<ListElement>Number</ListElement>
-		<ListElement>Keys</ListElement>
+                <ListElement>OrderType</ListElement>
+                <ListElement>Scheme</ListElement>
 		<ListElement>Expiration</ListElement>
 		<ListElement>Status</ListElement>
 		<ListElement>StatusOver</ListElement>

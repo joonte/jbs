@@ -10,6 +10,7 @@ Eval(COMP_INIT);
 $Args = Args();
 #-------------------------------------------------------------------------------
 $ServiceOrderID	= (integer) @$Args['ServiceOrderID'];
+$OrderID	= (integer) @$Args['OrderID'];
 $ServiceID	= (integer) @$Args['ServiceID'];
 $ServerID	= (integer) @$Args['ServerID'];
 #-------------------------------------------------------------------------------
@@ -35,8 +36,14 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// пароль менять можно не для всех услуг... по уму, надо аттрибут услуги
+if(!In_Array($Service['Code'],Array('Hosting','VPS','ISPsw','DNSmanager')))
+	return new gException('NO_INTERFACE_FOR_PASSWORD_CHANGE','У данной услуги нет интерфейса для смены пароля');
 #-------------------------------------------------------------------------------
-$Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),Array('ID','UserID','StatusID','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`) AS `Params`'),Array('UNIQ','ID'=>$ServiceOrderID));
+#-------------------------------------------------------------------------------
+$Where = ($ServiceOrderID?SPrintF('`ID` = %u',$ServiceOrderID):SPrintF('`OrderID` = %u',$OrderID));
+#-------------------------------------------------------------------------------
+$Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),Array('ID','OrderID','UserID','StatusID','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`) AS `Params`'),Array('UNIQ','Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Order)){
 case 'error':
@@ -146,7 +153,7 @@ $Comp1 = Comp_Load('Form/Input',Array('type'=>'button','prompt'=>'Сменить
 if(Is_Error($Comp1))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp2 = Comp_Load('Form/Input',Array('type'=>'button','id'=>'OrderManageButton','disabled'=>'yes','style'=>'cursor: not-allowed;','prompt'=>'Перейти в панель управления заказом','onclick'=>SPrintF('OrderManage(%u,%u);',$Order['ID'],$Service['ID']),'value'=>'Войти в панель управления'));
+$Comp2 = Comp_Load('Form/Input',Array('type'=>'button','id'=>'OrderManageButton','disabled'=>'yes','style'=>'cursor: not-allowed;','prompt'=>'Перейти в панель управления заказом','onclick'=>SPrintF('OrderManage(%u,%u,%u);',$Order['ID'],$Order['OrderID'],$Service['ID']),'value'=>'Войти в панель управления'));
 if(Is_Error($Comp2))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

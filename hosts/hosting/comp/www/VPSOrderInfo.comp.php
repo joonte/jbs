@@ -112,7 +112,7 @@ $Server = DB_Select('ServersOwners',Array('Address','Params'),Array('UNIQ','ID'=
 if(!Is_Array($Server))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>SPrintF('OrderManage(%u,%u);',$VPSOrder['ID'],$VPSOrder['ServiceID']),'value'=>'Вход'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>SPrintF('OrderManage(%u,%u,%u);',$VPSOrder['ID'],$VPSOrder['OrderID'],$VPSOrder['ServiceID']),'value'=>'Вход'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

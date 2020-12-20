@@ -157,6 +157,7 @@
 				<ListElement>Administrator/ListMenu/VPSOrder.xml</ListElement>
 				<Replace>
 					<ServiceOrderID>%ID%</ServiceOrderID>
+					<OrderID>%OrderID%</OrderID>
 					<ServiceID>%ServiceID%</ServiceID>
 				</Replace>
 			</Args>

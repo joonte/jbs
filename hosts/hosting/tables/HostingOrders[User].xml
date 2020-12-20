@@ -83,7 +83,7 @@
 			<Comp>Buttons/Standard</Comp>
 			<Args>
 				<ListElement>
-					<onclick>OrderManage(%ID%,%ServiceID%);</onclick>
+					<onclick>OrderManage(%ID%,%OrderID%,%ServiceID%);</onclick>
 				</ListElement>
 				<ListElement>Управлять заказом хостинга</ListElement>
 				<ListElement>HostingManage.gif</ListElement>
@@ -112,6 +112,7 @@
 				<ListElement>User/ListMenu/HostingOrder.xml</ListElement>
 				<Replace>
 					<ServiceOrderID>%ID%</ServiceOrderID>
+					<OrderID>%OrderID%</OrderID>
 					<ServiceID>%ServiceID%</ServiceID>
 				</Replace>
 			</Args>

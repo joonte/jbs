@@ -16,7 +16,7 @@
 		<!-- *********************************************************************** -->
 		<UniqID>
 			<Text>Панель управления</Text>
-			<Href>javascript:OrderManage(0,%ServiceID%,%ID%);</Href>
+			<Href>javascript:OrderManage(0,0,%ServiceID%,%ID%);</Href>
 			<Icon>HostingManage.gif</Icon>
 			<JavaScript>OrderManage.js</JavaScript>
 		</UniqID>

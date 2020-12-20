@@ -155,6 +155,7 @@
 				<ListElement>Administrator/ListMenu/ExtraIPOrder.xml</ListElement>
 				<Replace>
 					<ServiceOrderID>%ID%</ServiceOrderID>
+					<OrderID>%OrderID%</OrderID>
 					<ServiceID>%ServiceID%</ServiceID>
 				</Replace>
 			</Args>

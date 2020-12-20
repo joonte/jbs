@@ -9,9 +9,9 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
-$ServiceOrderID = (integer) @$Args['ServiceOrderID'];
-$ServiceID      = (integer) @$Args['ServiceID'];
-$Password       =  (string) @$Args['Password'];
+$ServiceOrderID	= (integer) @$Args['ServiceOrderID'];
+$OrderID	=  (string) @$Args['OrderID'];
+$ServiceID	= (integer) @$Args['ServiceID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
@@ -32,6 +32,11 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// управлять можно не всеми услугами... по уму, надо аттрибут услуги
+if(!In_Array($Service['Code'],Array('Hosting','VPS','ISPsw','DNSmanager')))
+	return new gException('NO_INTERFACE_FOR_MANAGE','У данной услуги нет автоматического перехода в панель управления');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if(Is_Error(System_Load(SPrintF('classes/%sServer.class.php',$Service['Code']))))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -48,7 +53,9 @@ if($Service['Code'] == 'ISPsw'){
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
-$Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),$Columns,Array('UNIQ','ID'=>$ServiceOrderID));
+$Where = ($ServiceOrderID?SPrintF('`ID` = %u',$ServiceOrderID):SPrintF('`OrderID` = %u',$OrderID));
+#-------------------------------------------------------------------------------
+$Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),$Columns,Array('UNIQ','Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Order)){
 case 'error':

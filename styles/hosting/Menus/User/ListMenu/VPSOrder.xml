@@ -47,7 +47,7 @@
  <!-- *********************************************************************** -->
  <UniqID>
   <Text>Управлять заказом VPS</Text>
-  <Href>javascript:OrderManage(%ServiceOrderID%,%ServiceID%);</Href>
+  <Href>javascript:OrderManage(%ServiceOrderID%,%OrderID%,%ServiceID%);</Href>
   <Icon>HostingManage.gif</Icon>
   <JavaScript>OrderManage.js</JavaScript>
  </UniqID>

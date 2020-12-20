@@ -93,12 +93,9 @@ if($ServiceID){
 		#-------------------------------------------------------------------------------
 	case 'array':
 		#-------------------------------------------------------------------------------
-		if($GLOBALS['__USER']['ID'] != 69024){
-
-		Header(SPrintF('Location: /%s',($Service['Code'] != 'Default'?SPrintF('%sOrders',$Service['Code']):SPrintF('ServicesOrders?ServiceID=%s',$Service['ID']))));
+		#Header(SPrintF('Location: /%s',($Service['Code'] != 'Default'?SPrintF('%sOrders',$Service['Code']):SPrintF('ServicesOrders?ServiceID=%s',$Service['ID']))));
 		#-------------------------------------------------------------------------------
-		return NULL;
-		}
+		#return NULL;
 		#-------------------------------------------------------------------------------
 		$DOM->AddText('Title','Услуги → Все услуги → Заказы',TRUE);
 		#-------------------------------------------------------------------------------

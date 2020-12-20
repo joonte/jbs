@@ -92,7 +92,7 @@
 			<Comp>Buttons/Standard</Comp>
 			<Args>
 				<ListElement>
-					<onclick>OrderManage(%ID%,%ServiceID%);</onclick>
+					<onclick>OrderManage(%ID%,%OrderID%,%ServiceID%);</onclick>
 				</ListElement>
 				<ListElement>Управлять заказом DNSmanager</ListElement>
 				<ListElement>HostingManage.gif</ListElement>
@@ -127,6 +127,7 @@
 				<ListElement>User/ListMenu/DNSmanagerOrder.xml</ListElement>
 				<Replace>
 					<ServiceOrderID>%ID%</ServiceOrderID>
+					<OrderID>%OrderID%</OrderID>
 					<ServiceID>%ServiceID%</ServiceID>
 				</Replace>
 			</Args>

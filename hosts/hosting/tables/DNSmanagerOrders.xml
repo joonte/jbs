@@ -164,6 +164,7 @@
 				<ListElement>Administrator/ListMenu/DNSmanagerOrder.xml</ListElement>
 				<Replace>
 					<ServiceOrderID>%ID%</ServiceOrderID>
+					<OrderID>%OrderID%</OrderID>
 					<ServiceID>%ServiceID%</ServiceID>
 				</Replace>
 			</Args>

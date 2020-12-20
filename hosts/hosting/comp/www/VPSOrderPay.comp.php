@@ -11,7 +11,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-$VPSOrderID = (integer) @$Args['VPSOrderID'];
+$VPSOrderID	= (integer) @$Args['VPSOrderID'];
 $OrderID        = (integer) @$Args['OrderID'];
 $DaysPay        = (integer) @$Args['DaysPay'];
 $IsChange       = (boolean) @$Args['IsChange'];

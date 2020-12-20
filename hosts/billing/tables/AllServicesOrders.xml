@@ -158,8 +158,6 @@
 			</Attribs>
 		</Number>
 		<!-- ********************************************************************** -->
-		<!-- ********************************************************************** -->
-		<!-- ********************************************************************** -->
 		<OrderDate>
 			<Head>Дата заказа</Head>
 			<Comp>Formats/Date/Standard</Comp>
@@ -187,6 +185,7 @@
 				<ListElement>%Code%</ListElement>
 				<Replace>
 					<ServiceOrderID>%ID%</ServiceOrderID>
+					<OrderID>%ID%</OrderID>
 					<ServiceID>%ServiceID%</ServiceID>
 				</Replace>
 			</Args>
@@ -212,6 +211,8 @@
 			</Args>
 		</Status>
 	</Columns>
+	<!-- ********************************************************************** -->
+	<!-- ********************************************************************** -->
 	<Sequence>
 		<ListElement>SelectID</ListElement>
 		<ListElement>ExtendedMenu</ListElement>

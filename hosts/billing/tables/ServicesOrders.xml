@@ -1,198 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Appearance>
- <Row>
-  <Comp>Colors/Orders</Comp>
-  <Args>
-   <ListElement>%StatusID%</ListElement>
-  </Args>
- </Row>
-</Appearance>
-<!-- *********************************************************************** -->
-<Source>
- <TableID>OrdersOwners</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>UserID</ListElement>
-  <ListElement>OrderDate</ListElement>
-  <ListElement>Keys</ListElement>
-  <ListElement>ExpirationDate</ListElement>
-  <ListElement>StatusID</ListElement>
-  <ListElement>StatusDate</ListElement>
-  <ListElement>ServiceID</ListElement>
-  <ListElement>AdminNotice</ListElement>
-  <ListElement>UserNotice</ListElement>
- </ColumnsIDs>
- <Conditions>
-   <Where>
-     <UniqID>(SELECT `IsProtected` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) != 'yes'</UniqID>
-   </Where>
-  <Message>Заказы на услуги не обнаружены.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <PatternOut>
-   <Args>
-    <Patterns>
-     <Yesterday>
-      <Name>Заказы за вчера</Name>
-      <Where>`OrderDate` &gt; BEGIN_DAY() - 86400</Where>
-     </Yesterday>
-     <!-- ****************************************************************** -->
-     <Today>
-      <Name>Заказы за сегодня</Name>
-      <Where>`OrderDate` &gt; BEGIN_DAY()</Where>
-     </Today>
-     <!-- ****************************************************************** -->
-     <Week>
-      <Name>Заказы за текущую неделю</Name>
-      <Where>`OrderDate` &gt; BEGIN_WEEK()</Where>
-     </Week>
-     <!-- ****************************************************************** -->
-     <Month>
-      <Name>Заказы за текущий месяц</Name>
-      <Where>`OrderDate` &gt; BEGIN_MONTH()</Where>
-     </Month>
-    </Patterns>
-    <ActiveID>Week</ActiveID>
-   </Args>
-  </PatternOut>
-  <!-- ********************************************************************* -->
-  <Search>
-   <Args>
-    <ColumnsIDs>
-     <ListElement>ID</ListElement>
-     <ListElement>UserID</ListElement>
-     <ListElement>Keys</ListElement>
-    </ColumnsIDs>
-   </Args>
-  </Search>
- </Before>
- <!-- ********************************************************************** -->
- <After>
-  <Delete>
-   <Args>
-    <Comment>Выбранные заказы</Comment>
-    <Send>
-     <TableID>Orders</TableID>
-    </Send>
-   </Args>
-  </Delete>
-  <!-- ********************************************************************* -->
-  <StatusSet>
-   <Comp>Statuses/Set</Comp>
-   <Args>
-    <ListElement>Orders</ListElement>
-   </Args>
-  </StatusSet>
- </After>
-</Comps>
-<!-- *********************************************************************** -->
-<Query>
- <SortOn>OrderDate</SortOn>
-</Query>
-<!-- *********************************************************************** -->
-<Columns>
-  <SelectID>
-  <Args>
-   <TableID>Orders</TableID>
-  </Args>
- </SelectID>
- <!-- ********************************************************************** -->
- <ExtendedMenu>
-  <IsSorted>0</IsSorted>
-  <Comp>Menus/List</Comp>
-  <Args>
-   <ListElement>Administrator/ListMenu/ServicesOrder.xml</ListElement>
-   <Replace>
-    <ServiceOrderID>%ID%</ServiceOrderID>
-    <ServiceID>%ServiceID%</ServiceID>
-   </Replace>
-  </Args>
- </ExtendedMenu>
- <!-- ********************************************************************** -->
- <Info>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/ServiceOrderInfo</ListElement>
-   <ListElement>
-    <ServiceOrderID>%ID%</ServiceOrderID>
-   </ListElement>
-   <ListElement>Дополнительная информация</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-  </Attribs>
- </Info>
- <!-- ********************************************************************** -->
- <Number>
-  <Head>Номер</Head>
-  <Comp>Formats/Order/Notice</Comp>
-  <Args>
-   <ListElement>Orders</ListElement>
-   <ListElement>%ID%</ListElement>
-   <ListElement>Formats/Order/Number</ListElement>
-   <ListElement>%ID%</ListElement>
-   <ListElement>10</ListElement>
-   <ListElement>%AdminNotice%</ListElement>
-   <ListElement>%UserNotice%</ListElement>
-  </Args>
-  <Alias>ID</Alias>
-  <Attribs>
-  <style>text-align:right;</style>
-  </Attribs>
- </Number>
- <!-- ********************************************************************** -->
- <OrderDate>
-  <Head>Дата заказа</Head>
-  <Comp>Formats/Date/Standard</Comp>
-  <Args>
-   <ListElement>%OrderDate%</ListElement>
-  </Args>
- </OrderDate>
- <!-- ********************************************************************** -->
- <Keys>
-  <Head>Ключевые поля</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Keys%</ListElement>
-   <Length>25</Length>
-   <Url>NULL</Url>
-   <IsHtmlEncode>1</IsHtmlEncode>
-  </Args>
- </Keys>
- <!-- ********************************************************************** -->
- <Expiration>
-  <IsSorted>0</IsSorted>
-  <Head>Дата оконч.</Head>
-  <Prompt>Дата окончания заказа | остаток дней</Prompt>
-  <Comp>Formats/Order/ExpirationDate</Comp>
-  <Args>
-   <ListElement>%ExpirationDate%</ListElement>
-   <ListElement>0</ListElement>
-  </Args>
- </Expiration>
- <!-- ********************************************************************** -->
- <Status>
-  <Args>
-   <ModeID>Orders</ModeID>
-  </Args>
- </Status>
-</Columns>
-<Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>ExtendedMenu</ListElement>
- <ListElement>Number</ListElement>
- <ListElement>Owner</ListElement>
- <ListElement>Keys</ListElement>
- <ListElement>Expiration</ListElement>
- <ListElement>Status</ListElement>
- <ListElement>StatusOver</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Appearance>
+		<Row>
+			<Comp>Colors/Orders</Comp>
+			<Args>
+				<ListElement>%StatusID%</ListElement>
+			</Args>
+		</Row>
+	</Appearance>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>OrdersOwners</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>UserID</ListElement>
+			<ListElement>OrderDate</ListElement>
+			<ListElement>Keys</ListElement>
+			<ListElement>ExpirationDate</ListElement>
+			<ListElement>StatusID</ListElement>
+			<ListElement>StatusDate</ListElement>
+			<ListElement>ServiceID</ListElement>
+			<ListElement>AdminNotice</ListElement>
+			<ListElement>UserNotice</ListElement>
+		</ColumnsIDs>
+		<Conditions>
+			<Where>
+				<UniqID>(SELECT `IsProtected` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) != 'yes'</UniqID>
+			</Where>
+			<Message>Заказы на услуги не обнаружены.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<PatternOut>
+				<Args>
+					<Patterns>
+						<Yesterday>
+							<Name>Заказы за вчера</Name>
+							<Where>`OrderDate` &gt; BEGIN_DAY() - 86400</Where>
+						</Yesterday>
+						<!-- ****************************************************************** -->
+						<Today>
+							<Name>Заказы за сегодня</Name>
+							<Where>`OrderDate` &gt; BEGIN_DAY()</Where>
+						</Today>
+						<!-- ****************************************************************** -->
+						<Week>
+							<Name>Заказы за текущую неделю</Name>
+							<Where>`OrderDate` &gt; BEGIN_WEEK()</Where>
+						</Week>
+						<!-- ****************************************************************** -->
+						<Month>
+							<Name>Заказы за текущий месяц</Name>
+							<Where>`OrderDate` &gt; BEGIN_MONTH()</Where>
+						</Month>
+					</Patterns>
+					<ActiveID>Week</ActiveID>
+				</Args>
+			</PatternOut>
+			<!-- ********************************************************************* -->
+			<Search>
+				<Args>
+					<ColumnsIDs>
+						<ListElement>ID</ListElement>
+						<ListElement>UserID</ListElement>
+						<ListElement>Keys</ListElement>
+					</ColumnsIDs>
+				</Args>
+			</Search>
+		</Before>
+		<!-- ********************************************************************** -->
+		<After>
+			<Delete>
+				<Args>
+					<Comment>Выбранные заказы</Comment>
+					<Send>
+						<TableID>Orders</TableID>
+					</Send>
+				</Args>
+			</Delete>
+			<!-- ********************************************************************* -->
+			<StatusSet>
+				<Comp>Statuses/Set</Comp>
+				<Args>
+					<ListElement>Orders</ListElement>
+				</Args>
+			</StatusSet>
+		</After>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Query>
+		<SortOn>OrderDate</SortOn>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<SelectID>
+			<Args>
+				<TableID>Orders</TableID>
+			</Args>
+		</SelectID>
+		<!-- ********************************************************************** -->
+		<ExtendedMenu>
+			<IsSorted>0</IsSorted>
+			<Comp>Menus/List</Comp>
+			<Args>
+				<ListElement>Administrator/ListMenu/ServicesOrder.xml</ListElement>
+				<Replace>
+					<ServiceOrderID>%ID%</ServiceOrderID>
+					<OrderID>%OrderID%</OrderID>
+					<ServiceID>%ServiceID%</ServiceID>
+				</Replace>
+			</Args>
+		</ExtendedMenu>
+		<!-- ********************************************************************** -->
+		<Info>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/ServiceOrderInfo</ListElement>
+				<ListElement>
+					<ServiceOrderID>%ID%</ServiceOrderID>
+				</ListElement>
+				<ListElement>Дополнительная информация</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+			</Attribs>
+		</Info>
+		<!-- ********************************************************************** -->
+		<Number>
+			<Head>Номер</Head>
+			<Comp>Formats/Order/Notice</Comp>
+			<Args>
+				<ListElement>Orders</ListElement>
+				<ListElement>%ID%</ListElement>
+				<ListElement>Formats/Order/Number</ListElement>
+				<ListElement>%ID%</ListElement>
+				<ListElement>10</ListElement>
+				<ListElement>%AdminNotice%</ListElement>
+				<ListElement>%UserNotice%</ListElement>
+			</Args>
+			<Alias>ID</Alias>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</Number>
+		<!-- ********************************************************************** -->
+		<OrderDate>
+			<Head>Дата заказа</Head>
+			<Comp>Formats/Date/Standard</Comp>
+			<Args>
+				<ListElement>%OrderDate%</ListElement>
+			</Args>
+		</OrderDate>
+		<!-- ********************************************************************** -->
+		<Keys>
+			<Head>Ключевые поля</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Keys%</ListElement>
+				<Length>25</Length>
+				<Url>NULL</Url>
+				<IsHtmlEncode>1</IsHtmlEncode>
+			</Args>
+		</Keys>
+		<!-- ********************************************************************** -->
+		<Expiration>
+			<IsSorted>0</IsSorted>
+			<Head>Дата оконч.</Head>
+			<Prompt>Дата окончания заказа | остаток дней</Prompt>
+			<Comp>Formats/Order/ExpirationDate</Comp>
+			<Args>
+				<ListElement>%ExpirationDate%</ListElement>
+				<ListElement>0</ListElement>
+			</Args>
+		</Expiration>
+		<!-- ********************************************************************** -->
+		<Status>
+			<Args>
+				<ModeID>Orders</ModeID>
+			</Args>
+		</Status>
+	</Columns>
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>ExtendedMenu</ListElement>
+		<ListElement>Number</ListElement>
+		<ListElement>Owner</ListElement>
+		<ListElement>Keys</ListElement>
+		<ListElement>Expiration</ListElement>
+		<ListElement>Status</ListElement>
+		<ListElement>StatusOver</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

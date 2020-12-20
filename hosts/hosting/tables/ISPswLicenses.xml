@@ -134,14 +134,6 @@
 			</Args>
 		</Edit>
 		<!-- ********************************************************************** -->
-		<ExtendedMenu>
-			<IsSorted>0</IsSorted>
-			<Comp>Menus/List</Comp>
-			<Args>
-				<ListElement>Administrator/ListMenu/ISPswOrder.xml</ListElement>
-				<Replace>%ID%</Replace>
-			</Args>
-		</ExtendedMenu>
 		<!-- ********************************************************************** -->
 		<elid>
 			<Head>elid</Head>
