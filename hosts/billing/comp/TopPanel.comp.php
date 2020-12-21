@@ -25,12 +25,12 @@ $Links['DOM']->AddChild('Head',new Tag('LINK',Array('href'=>'SRC:{Images/Icon.pn
 $Links['DOM']->AddChild('Head',new Tag('LINK',Array('href'=>'SRC:{Images/Icon.png}','rel'=>'apple-touch-icon','sizes'=>'96x96')));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/Mobile_Detect.php')))
-	return ERROR | @Trigger_Error(500);
+#if(Is_Error(System_Load('libs/Mobile_Detect.php')))
+#	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Detect = new Mobile_Detect();
+#$Detect = new Mobile_Detect();
 #-------------------------------------------------------------------------------
-$GLOBALS['IsMobile'] = $Detect->isMobile();
+#$GLOBALS['IsMobile'] = $Detect->isMobile();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // низЭнькое устройство. убираем логотип вверху
@@ -44,7 +44,7 @@ if(IsSet($_COOKIE['hScreen']) && $_COOKIE['hScreen'] < 550){
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
-Debug(SprintF('[comp/TopPanel]: проверка мобильного устройства, IP = %s; $IsMobile = %s; wScreen = %s; hScreen = %s',@$_SERVER['REMOTE_ADDR'],($GLOBALS['IsMobile'])?'TRUE':'FALSE',@$_COOKIE['wScreen'],@$_COOKIE['hScreen']));
+#Debug(SprintF('[comp/TopPanel]: проверка мобильного устройства, IP = %s; $IsMobile = %s; wScreen = %s; hScreen = %s',@$_SERVER['REMOTE_ADDR'],($GLOBALS['IsMobile'])?'TRUE':'FALSE',@$_COOKIE['wScreen'],@$_COOKIE['hScreen']));
 #-------------------------------------------------------------------------------
 if($GLOBALS['IsMobile'] || (IsSet($_COOKIE['wScreen']) && $_COOKIE['wScreen'] < 950)){
 /*
