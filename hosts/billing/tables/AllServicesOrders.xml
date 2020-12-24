@@ -196,6 +196,7 @@
 		<Scheme>
 			<Head>Тариф</Head>
 			<Prompt>Тарифный план заказанной услуги</Prompt>
+			<IsSorted>0</IsSorted>
 			<Comp>Services/Orders/SchemeWrapper</Comp>
 			<Args>
 				<ListElement>%Code%</ListElement>
