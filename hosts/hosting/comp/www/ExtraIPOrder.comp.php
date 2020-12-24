@@ -115,7 +115,7 @@ if(!$StepID){
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Select',Array('name'=>'HostingOrderID','style'=>'width: 240px;'),$Options);
+		$Comp = Comp_Load('Form/Select',Array('name'=>'HostingOrderID','style'=>'width: 240px;'),$Options,$HostingOrderID);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
@@ -152,7 +152,7 @@ if(!$StepID){
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Select',Array('name'=>'VPSOrderID','style'=>'width: 240px;'),$Options);
+		$Comp = Comp_Load('Form/Select',Array('name'=>'VPSOrderID','style'=>'width: 240px;'),$Options,$VPSOrderID);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
@@ -189,7 +189,7 @@ if(!$StepID){
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Select',Array('name'=>'DSOrderID','style'=>'width: 240px;'),$Options);
+		$Comp = Comp_Load('Form/Select',Array('name'=>'DSOrderID','style'=>'width: 240px;'),$Options,$DSOrderID);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
