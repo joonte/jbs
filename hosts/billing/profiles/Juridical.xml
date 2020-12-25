@@ -329,7 +329,7 @@
 		<!-- ********************************************************************** -->
 		<jCity>
 			<Check>City</Check>
-			<Comment>Город юридического адреса</Comment>
+			<Comment>Населённый пункт юр. адреса</Comment>
 			<Example>Москва</Example>
 			<Type>Input</Type>
 			<Attribs>
@@ -340,18 +340,6 @@
 			<Value/>
 		</jCity>
 		<!-- ********************************************************************** -->
-		<jDistrict>
-			<Check>District</Check>
-			<Comment>Район юридического адреса</Comment>
-			<Example>Ивановский</Example>
-			<Type>Input</Type>
-			<Attribs>
-				<type>text</type>
-				<onblur>value = FirstCapitalLetter(value);var Form = document.forms.ProfileEditForm;if(!Form.pDistrict.value) Form.pDistrict.value = value;</onblur>
-			</Attribs>
-			<IsDuty>0</IsDuty>
-			<Value/>
-		</jDistrict>
 		<!-- ********************************************************************** -->
 		<jIndex>
 			<Check>Index</Check>
@@ -474,7 +462,7 @@
 		<!-- ********************************************************************** -->
 		<pCity>
 			<Check>City</Check>
-			<Comment>Город почтового адреса</Comment>
+			<Comment>Населённый пункт почт. адреса</Comment>
 			<Example>Москва</Example>
 			<Type>Input</Type>
 			<Attribs>
@@ -485,18 +473,6 @@
 			<Value/>
 		</pCity>
 		<!-- ********************************************************************** -->
-		<pDistrict>
-			<Check>District</Check>
-			<Comment>Район почтового адреса</Comment>
-			<Example>Ивановский</Example>
-			<Type>Input</Type>
-			<Attribs>
-				<type>text</type>
-				<onblur>value = FirstCapitalLetter(value);</onblur>
-			</Attribs>
-			<IsDuty>0</IsDuty>
-			<Value/>
-		</pDistrict>
 		<!-- ********************************************************************** -->
 		<pIndex>
 			<Check>Index</Check>

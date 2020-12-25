@@ -57,7 +57,7 @@
 		<!-- ********************************************************************** -->
 		<City>
 			<Check>City</Check>
-			<Comment>Город / населенный пункт</Comment>
+			<Comment>Город / населённый пункт</Comment>
 			<Example>г. Иваново</Example>
 			<Type>Input</Type>
 			<Attribs>

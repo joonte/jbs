@@ -19,7 +19,7 @@
 		<!-- ********************************************************************** -->
 		<pCity>
 			<Check>City</Check>
-			<Comment>Город / населенный пункт</Comment>
+			<Comment>Город / населённый пункт</Comment>
 			<Example>Москва</Example>
 			<Type>Input</Type>
 			<Attribs>

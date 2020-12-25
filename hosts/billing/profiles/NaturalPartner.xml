@@ -147,7 +147,7 @@
 		<!-- ********************************************************************** -->
 		<pCity>
 			<Check>City</Check>
-			<Comment>Город почтового адреса</Comment>
+			<Comment>Населённый пункт почт. адреса</Comment>
 			<Example>Москва</Example>
 			<Type>Input</Type>
 			<Attribs>
@@ -158,18 +158,6 @@
 			<Value/>
 		</pCity>
 		<!-- ********************************************************************** -->
-		<pDistrict>
-			<Check>District</Check>
-			<Comment>Район почтового адреса</Comment>
-			<Example>Ивановский</Example>
-			<Type>Input</Type>
-			<Attribs>
-				<type>text</type>
-				<onblur>value = FirstCapitalLetter(value);</onblur>
-			</Attribs>
-			<IsDuty>0</IsDuty>
-			<Value/>
-		</pDistrict>
 		<!-- ********************************************************************** -->
 		<pIndex>
 			<Check>Index</Check>
