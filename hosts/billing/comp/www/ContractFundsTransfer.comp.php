@@ -23,12 +23,26 @@ $DOM->AddText('Title','Перевод средств между счетами')
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
+$Settings = $Config['Contracts']['Types'];
+#-------------------------------------------------------------------------------
+#Debug(SPrintF('[comp/www/ContractFundsTransfer]: $Settings = %s',print_r($Settings,true)));
+#-------------------------------------------------------------------------------
 $Form = new Tag('FORM',Array('name'=>'ContractFundsTransferForm','onsubmit'=>'return false;'));
 #-------------------------------------------------------------------------------
 $Table = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Where = SPrintF("`UserID` = %u AND (`TypeID` = 'Default' OR `TypeID` = 'Individual' OR `TypeID` = 'Natural' OR `TypeID` = 'NaturalPartner')",$GLOBALS['__USER']['ID']);
+// строим список типов договоров С которых можно переводить
+$Array = Array();
+#-------------------------------------------------------------------------------
+foreach(Array_Keys($Settings) as $Key)
+	if($Settings[$Key]['FundTransferFrom'])
+		$Array[] = SPrintF("'%s'",$Key);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+#Debug(SPrintF('[comp/www/ContractFundsTransfer]: From `TypeID` IN (%s)',Implode(',',$Array)));
+#-------------------------------------------------------------------------------
+$Where = SPrintF("`UserID` = %u AND `TypeID` IN (%s)",$GLOBALS['__USER']['ID'],Implode(',',$Array));
 #-------------------------------------------------------------------------------
 $ContractsFrom = DB_Select('Contracts',Array('ID','TypeID','Customer','Balance'),Array('Where'=>$Where));
 switch(ValueOf($ContractsFrom)){
@@ -43,14 +57,23 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Where = SPrintF("`UserID` = %u AND (`TypeID` = 'Default' OR `TypeID` = 'Individual' OR `TypeID` = 'Natural')",$GLOBALS['__USER']['ID']);
+// строим список типов договоров НА которые можно переводить
+$Array = Array();
+#-------------------------------------------------------------------------------
+foreach(Array_Keys($Settings) as $Key)
+	if($Settings[$Key]['FundTransferTo'])
+		$Array[] = SPrintF("'%s'",$Key);
+#-------------------------------------------------------------------------------
+#Debug(SPrintF('[comp/www/ContractFundsTransfer]: To `TypeID` IN (%s)',Implode(',',$Array)));
+#-------------------------------------------------------------------------------
+$Where = SPrintF("`UserID` = %u AND `TypeID` IN (%s)",$GLOBALS['__USER']['ID'],Implode(',',$Array));
 #-------------------------------------------------------------------------------
 $ContractsTo = DB_Select('Contracts',Array('ID','TypeID','Customer','Balance'),Array('Where'=>$Where));
 switch(ValueOf($ContractsTo)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return new gException('CONTRACT_FROM_NOT_FOUND','Нет подходящих договоров, на которые можно делать переводы.');
+	return new gException('CONTRACT_TO_NOT_FOUND','Нет подходящих договоров, на которые можно делать переводы.');
 case 'array':
         break;
 default:
@@ -120,6 +143,7 @@ foreach($ContractsTo as $Contract){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$Options[$Contract['ID']] = SPrintF('%s / %s [%s]',$Number,$Customer,$Balance);
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'ToContractID','style'=>'width: 100%;'),$Options);

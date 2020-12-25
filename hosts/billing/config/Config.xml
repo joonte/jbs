@@ -47,6 +47,8 @@
 			<Default>
 				<Name>По умолчанию</Name>
 				<IsActive>0</IsActive>
+				<FundTransferFrom>1</FundTransferFrom>
+				<FundTransferTo>1</FundTransferTo>
 				<IsUsedMotionDocuments>0</IsUsedMotionDocuments>
 				<IsUponConsider>0</IsUponConsider>
 				<DenyInvoicesWithOutServices>0</DenyInvoicesWithOutServices>
@@ -57,6 +59,8 @@
 			<Natural>
 				<Name>Физическое лицо</Name>
 				<IsActive>1</IsActive>
+				<FundTransferFrom>1</FundTransferFrom>
+				<FundTransferTo>1</FundTransferTo>
 				<IsUsedMotionDocuments>0</IsUsedMotionDocuments>
 				<IsUponConsider>0</IsUponConsider>
 				<ProfileTemplateID>Natural</ProfileTemplateID>
@@ -79,6 +83,8 @@
 			<Juridical>
 				<Name>Юридическое лицо</Name>
 				<IsActive>1</IsActive>
+				<FundTransferFrom>0</FundTransferFrom>
+				<FundTransferTo>0</FundTransferTo>
 				<IsUsedMotionDocuments>1</IsUsedMotionDocuments>
 				<IsUponConsider>0</IsUponConsider>
 				<ProfileTemplateID>Juridical</ProfileTemplateID>
@@ -98,6 +104,8 @@
 			<Individual>
 				<Name>Индивидуальный предприниматель</Name>
 				<IsActive>1</IsActive>
+				<FundTransferFrom>1</FundTransferFrom>
+				<FundTransferTo>1</FundTransferTo>
 				<IsUsedMotionDocuments>1</IsUsedMotionDocuments>
 				<IsUponConsider>0</IsUponConsider>
 				<ProfileTemplateID>Individual</ProfileTemplateID>
@@ -116,6 +124,8 @@
 			<NaturalPartner>
 				<Name>Партнёрская программа</Name>
 				<IsActive>1</IsActive>
+				<FundTransferFrom>1</FundTransferFrom>
+				<FundTransferTo>0</FundTransferTo>
 				<IsUsedMotionDocuments>0</IsUsedMotionDocuments>
 				<IsUponConsider>0</IsUponConsider>
 				<ProfileTemplateID>NaturalPartner</ProfileTemplateID>
