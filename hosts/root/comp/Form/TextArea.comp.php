@@ -33,8 +33,9 @@ if(IsSet($Attribs['prompt'])){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // для автоматического увеличения высоты формы
-if(!$GLOBALS['IsMobile'])
-	$Attribs['OnKeyUp'] = 'TextAreaHeight(this,document.body.clientHeight/2 - 150);';
+//if(!$GLOBALS['IsMobile'])
+//	$Attribs['OnKeyUp'] = 'TextAreaHeight(this,document.body.clientHeight/2 - 150);';
+	$Attribs['OnKeyUp'] = 'autosize(this)';
 #-------------------------------------------------------------------------------
 /*
 // задание в стилях не работает, поэтому тут
