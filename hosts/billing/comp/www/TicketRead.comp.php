@@ -332,7 +332,7 @@ $Array = Array(
 		'id'		=> 'Message',
 		'rows'		=> 7,
 		'AutoFocus'	=> 'yes',
-		'style'		=> SPrintF('background:%s; width:%s; height:%upx;',$Color,$WindowWidth,Max(@$_COOKIE['hScreen']/4,100))
+		'style'		=> SPrintF('background:%s; width:%s;',$Color,$WindowWidth)
 		);
 #-------------------------------------------------------------------------------
 //'style'               => SPrintF('background:%s; width:%u;',$Color,Max(@$_COOKIE['wScreen']/1.5,630)),
