@@ -349,7 +349,7 @@
 				</Send>
 				<Comp>Yandex</Comp>
 				<TestMode>1</TestMode>
-				<Cpp>https://money.yandex.ru/eshop.xml</Cpp>
+				<Cpp>https://yoomoney.ru/eshop.xml</Cpp>
 				<TestModeCpp>https://demomoney.yandex.ru/eshop.xml</TestModeCpp>
 				<Hash/>
 				<ContractsTypes>
