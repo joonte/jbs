@@ -458,7 +458,7 @@ if($PaymentSystem['IsContinuePaying']){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	# если тестовый режим - то другой URL
-	$Cpp = (IsSet($PaymentSystem['TestMode']) && $PaymentSystem['TestMode'])?$PaymentSystem['TestModeCpp']:$PaymentSystem['Cpp'];
+	$Cpp = (IsSet($PaymentSystem['TestMode']) && $PaymentSystem['TestMode'] && IsSet($PaymentSystem['TestModeCpp']))?$PaymentSystem['TestModeCpp']:$PaymentSystem['Cpp'];
 	#-------------------------------------------------------------------------------
 	$Form = new Tag('FORM',Array('action'=>$Cpp,'method'=>'POST'),new Tag('BR'),new Tag('DIV',$Comp));
 	#-------------------------------------------------------------------------------

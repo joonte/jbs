@@ -350,7 +350,6 @@
 				<Comp>Yandex</Comp>
 				<TestMode>1</TestMode>
 				<Cpp>https://yoomoney.ru/eshop.xml</Cpp>
-				<TestModeCpp>https://demomoney.yandex.ru/eshop.xml</TestModeCpp>
 				<Hash/>
 				<ContractsTypes>
 					<Default>1</Default>
