@@ -210,6 +210,7 @@ class NotificationManager {
 			$msg->setParam('HTML',IsSet($Attribs['HTML'])?$Attribs['HTML']:'');
 			$msg->setParam('Headers',IsSet($Attribs['Headers'])?$Attribs['Headers']:'');
 			#-------------------------------------------------------------------------------
+			$msg->setParam('TypeID',$TypeID);
 			#-------------------------------------------------------------------------------
 			#if(!class_exists($MethodID))
 			#	return new gException('DISPATCHER_NOT_FOUND', 'Dispatcher not found: '.$MethodID);

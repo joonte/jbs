@@ -145,7 +145,8 @@ class SendMessage implements Dispatcher{
 					'TicketID'	=> $msg->getParam('TicketID'),			// номер тикета
 					'UserName'	=> $msg->getParam('UserName'),			// имя пользователя, для приветствия в задаче
 					'Contact'	=> $Contact,					// массив, данные контакта, чтоб параметры по одному не передавать
-					'HTML'		=> $msg->getParam('HTML')			// текст сообщения в HTML (используется в рассылках, только для Email)
+					'HTML'		=> $msg->getParam('HTML'),			// текст сообщения в HTML (используется в рассылках, только для Email)
+					'TypeID'	=> $msg->getParam('TypeID'),			// тип оповещения, для ссылки на отписку
 				);
 		#-------------------------------------------------------------------------------
 		$taskParams = Array(

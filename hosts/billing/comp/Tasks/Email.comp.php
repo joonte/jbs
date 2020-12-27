@@ -36,12 +36,13 @@ if(Is_Error(System_Load('libs/Server.php','classes/SendMailSmtp.class.php')))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/Tasks/Email]: отправка письма для (%s), тема (%s)',$Address,$Attribs['Theme']));
+Debug(SPrintF('[comp/Tasks/Email]: тип сообщения: TypeID = %s',@$Attribs['TypeID']));
 #-------------------------------------------------------------------------------
 #Debug(SPrintF('[comp/Tasks/Email]: %s',print_r($Attribs,true)));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // достаём данные юзера которому идёт письмо
-$User = DB_Select('Users', Array('ID','Params'), Array('UNIQ', 'ID' => $Attribs['UserID']));
+$User = DB_Select('Users',Array('ID','Params'),Array('UNIQ','ID'=>$Attribs['UserID']));
 if(!Is_Array($User))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -123,7 +124,7 @@ if(IsSet($Attribs['HTML']) && $Attribs['HTML']){
 	if(Is_Error($Html))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Params = Array('HOST_ID'=>HOST_ID,'PLAIN_TEXT'=>$Plain,'HTML_THEME'=>$Attribs['Theme'],'HTML_TEXT'=>$Html,'HTML_SIGN'=>'','HTML_GREETING'=>'');
+	$Params = Array('HOST_ID'=>HOST_ID,'PLAIN_TEXT'=>$Plain,'HTML_THEME'=>$Attribs['Theme'],'HTML_TEXT'=>$Html,'HTML_SIGN'=>'','HTML_GREETING'=>'','UNSUBSCRIBE_LINK'=>@$Attribs['TypeID']);
 	#-------------------------------------------------------------------------------
 	// добавляем привествие, если необходимо
 	if($Config['Notifies']['Methods']['Email']['Greeting']){
@@ -197,6 +198,7 @@ if(IsSet($Attribs['HTML']) && $Attribs['HTML']){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	// рисуем ссылку на отписку от такого типа сообщений
 	// готовим HTML часть сообщения
 	$Params['HTML_TEXT'] = Chunk_Split(Base64_Encode(TemplateReplace('Email.HTML',$Params,FALSE)));
 	#-------------------------------------------------------------------------------
