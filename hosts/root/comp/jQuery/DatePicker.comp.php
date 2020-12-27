@@ -19,7 +19,7 @@ $DOM = &$Links['DOM'];
 if(!Comp_IsLoaded('jQuery/DatePicker')){
   #-----------------------------------------------------------------------------
   $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{others/jQuery/ui.core.js}')));
-  $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{others/jQuery/ui.datepicker.js}')));
+//  $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{others/jQuery/ui.datepicker.js}')));
   #$DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{others/jQuery/datepicker-ru.js}')));
   #-------------------------------------------------------------------------------
   #Debug(TemplateReplace('jQuery.DatePicker',Array(),FALSE));
