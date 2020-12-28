@@ -2223,7 +2223,7 @@ set @Text = '<NOBODY>
 </NOBODY>';
 
 INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/Yandex','Шаблон платежной системы Yandex',@Text);
+VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/YooMoney','Шаблон платежной системы ЮKassa',@Text);
 
 -- SEPARATOR
 set @Text = '<NOBODY>
@@ -3033,7 +3033,7 @@ INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',999,'WebMoneyE','WebMon
 -- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'no',999,'WebMoneyU','WebMoney WMU','WebMoney.png','Оплата при помощи электронных денег платёжной системы WebMoney, валюта платежа - Украинская гривна.','WebMoney WMU','картинка от обычных вебманей');
 -- SEPARATOR
-INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',30,'Yandex','Яндекс.Деньги','Yandex.png','Яндекс.Деньги — это платежная система, которая позволяет оплачивать различные товары и услуги; совершать безопасные платежи в интернете; надежно хранить всю информацию о ваших зачислениях и платежах.','Яндекс.Деньги','');
+INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',30,'YooMoney','ЮMoney','YooMoney.png','ЮMoney (ранее: Яндекс.Деньги), это платежная система, которая позволяет оплачивать различные товары и услуги; совершать безопасные платежи в интернете; надежно хранить всю информацию о ваших зачислениях и платежах.','ЮMoney','');
 -- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',40,'QIWI','QIWI','QIWI.png','Платёжная система использующая номер мобильного телефона в качестве номера кошелька. Большая сеть терминалов для оплаты.\n\nНапример: +7 926 123 45 67','QIWI','');
 -- SEPARATOR
