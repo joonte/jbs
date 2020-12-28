@@ -45,7 +45,8 @@ $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'S
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{others/jQuery/core.js}')));
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{others/jQuery/autosize.js}')));
 #-------------------------------------------------------------------------------
-$DOM->AddChild('Head',new Tag('LINK',Array('rel'=>'stylesheet','type'=>'text/css','href'=>'SRC:{others/jQuery/smoothness/jquery-ui-custom.css}')));
+//$DOM->AddChild('Head',new Tag('LINK',Array('rel'=>'stylesheet','type'=>'text/css','href'=>'SRC:{others/jQuery/smoothness/jquery-ui-custom.css}')));
+$DOM->AddChild('Head',new Tag('LINK',Array('rel'=>'stylesheet','type'=>'text/css','href'=>'SRC:{others/jQuery/jquery-ui.css}')));
 #-------------------------------------------------------------------------------
 // мобильный стиль. настрйоку про max-width:900px возможно стоит в конфиг вынести
 $DOM->AddChild('Head',new Tag('LINK',Array('rel'=>'stylesheet','href'=>'SRC:{Css/Mobile.css}','media'=>'only screen and (max-width:600px)')));
