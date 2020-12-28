@@ -335,11 +335,10 @@
 				<Is54-FZ>0</Is54-FZ>
 			</WebMoneyE>
 			<!-- ********************************************************************* -->
-			<Yandex>
-				<Name>Яндекс.Деньги</Name>
-				<SystemDescription>Яндекс.Деньги — это платежная система, которая позволяет оплачивать различные товары и услуги; совершать безопасные платежи в интернете; надежно хранить всю информацию о ваших зачислениях и платежах.</SystemDescription>
+			<YooMoney>
+				<Name>ЮMoney</Name>
+				<SystemDescription>ЮMoney (ранее: Яндекс.Деньги), это платежная система, которая позволяет оплачивать различные товары и услуги; совершать безопасные платежи в интернете; надежно хранить всю информацию о ваших зачислениях и платежах.</SystemDescription>
 				<Send>
-					<!--     <CurrencyID>643</CurrencyID> -->
 					<paymentType/>
 					<ShopId/>
 					<scid/>
@@ -347,7 +346,7 @@
 					<orderNumber>auto</orderNumber>
 					<customerNumber>auto</customerNumber>
 				</Send>
-				<Comp>Yandex</Comp>
+				<Comp>YooMoney</Comp>
 				<TestMode>1</TestMode>
 				<Cpp>https://yoomoney.ru/eshop.xml</Cpp>
 				<Hash/>
@@ -366,7 +365,7 @@
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
 				<Is54-FZ>1</Is54-FZ>
-			</Yandex>
+			</YooMoney>
 			<!-- ********************************************************************* -->
 			<Yandex.p2p>
 				<Name>Яндекс.Деньги, прямой платёж</Name>
