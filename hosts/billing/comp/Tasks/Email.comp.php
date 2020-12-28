@@ -35,16 +35,49 @@ if(Is_Error(System_Load('libs/Server.php','classes/SendMailSmtp.class.php')))
         return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/Tasks/Email]: отправка письма для (%s), тема (%s)',$Address,$Attribs['Theme']));
-Debug(SPrintF('[comp/Tasks/Email]: тип сообщения: TypeID = %s',@$Attribs['TypeID']));
+$Config		= Config();
+$Regulars	= Regulars();
+$Types		= $Config['Notifies']['Types'];
 #-------------------------------------------------------------------------------
-#Debug(SPrintF('[comp/Tasks/Email]: %s',print_r($Attribs,true)));
+#-------------------------------------------------------------------------------
+Debug(SPrintF('[comp/Tasks/Email]: отправка письма для (%s), тема (%s)',$Address,$Attribs['Theme']));
+#Debug(SPrintF('[comp/Tasks/Email]: тип сообщения: TypeID = %s',@$Attribs['TypeID']));
+#-------------------------------------------------------------------------------
+Debug(SPrintF('[comp/Tasks/Email]: %s',print_r($Attribs,true)));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // достаём данные юзера которому идёт письмо
-$User = DB_Select('Users',Array('ID','Params'),Array('UNIQ','ID'=>$Attribs['UserID']));
+$User = DB_Select('Users',Array('ID','Params','UniqID'),Array('UNIQ','ID'=>$Attribs['UserID']));
 if(!Is_Array($User))
 	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// строим ссылку на отписку
+$UnSubScribe = '';
+#-------------------------------------------------------------------------------
+if(IsSet($Attribs['TypeID']) && $Attribs['TypeID']){
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Types) as $Key){
+		#-------------------------------------------------------------------------------
+		if(IsSet($Types[$Key]['Title']))
+			$Title = $Types[$Key]['Title'];
+		#-------------------------------------------------------------------------------
+		$Name = $Types[$Key]['Name'];
+		#-------------------------------------------------------------------------------
+		if($Key == $Attribs['TypeID'])
+			break;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	$Code = Hash('sha256',SPrintF('%s%s%s',Hash('sha256',$Attribs['Contact']['ID']),Hash('sha256',$Attribs['TypeID']),Hash('sha256',$User['UniqID'])));
+	#-------------------------------------------------------------------------------
+	$Link = SPrintF('https://%s/API/UnSubScribe?ContactID=%u&TypeID=%s&Code=%s',HOST_ID,$Attribs['Contact']['ID'],$Attribs['TypeID'],$Code);
+	#-------------------------------------------------------------------------------
+	if(IsSet($Attribs['TypeID']) && $Attribs['TypeID'])
+		$UnSubScribe = SPrintF('<HR />Отписаться от: <A href="%s">%s / %s</A>',$Link,$Title,$Name);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // добавляем идентфикаторы вложений
 $Attachments = Array();
@@ -56,10 +89,6 @@ if(IsSet($Attribs['Attachments']) && Is_Array($Attribs['Attachments']) && SizeOf
 #-------------------------------------------------------------------------------
 // получатель, с именем
 $Recipient = SPrintF('=?UTF-8?B?%s?= <%s>',Base64_Encode($Attribs['UserName']),$Address);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Config		= Config();
-$Regulars	= Regulars();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $GLOBALS['TaskReturnInfo'] = $Address;
@@ -120,11 +149,16 @@ if(IsSet($Attribs['HTML']) && $Attribs['HTML']){
 	if(Is_Error($Plain))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
+	if($UnSubScribe)
+		$Plain = SPrintF("%s\n--\nОтписаться: %s",$Plain,$Link);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$Html = Comp_Load('Edesks/Text',Array('String'=>$Message));
 	if(Is_Error($Html))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Params = Array('HOST_ID'=>HOST_ID,'PLAIN_TEXT'=>$Plain,'HTML_THEME'=>$Attribs['Theme'],'HTML_TEXT'=>$Html,'HTML_SIGN'=>'','HTML_GREETING'=>'','UNSUBSCRIBE_LINK'=>@$Attribs['TypeID']);
+	#-------------------------------------------------------------------------------
+	$Params = Array('HOST_ID'=>HOST_ID,'PLAIN_TEXT'=>$Plain,'HTML_THEME'=>$Attribs['Theme'],'HTML_TEXT'=>$Html,'HTML_SIGN'=>'','HTML_GREETING'=>'','UNSUBSCRIBE_LINK'=>$UnSubScribe);
 	#-------------------------------------------------------------------------------
 	// добавляем привествие, если необходимо
 	if($Config['Notifies']['Methods']['Email']['Greeting']){
