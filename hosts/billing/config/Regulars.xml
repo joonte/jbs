@@ -16,6 +16,8 @@
 	<!-- ** Moved from ./hosts/billing/profiles/*.xml ************************** -->
 	<CompanyName>/^[a-zA-Z0-9а-яА-ЯёЁ\/\,\.\"\s\-\№\+\(\)]{1,255}$/u</CompanyName>
 	<Sourname>/^[А-ЯЁ]{1}[а-яё\-\w]{1,50}$/u</Sourname>
+	<!-- Должность директора -->
+	<dPost>/^.{3,64}$/u</dPost>
 	<Name>/^[А-ЯЁ]{1}[а-яё\-\s]{1,50}$/u</Name>
 	<Lastname>/^[А-ЯЁ]{1}[а-яё\-\s]{1,50}$/u</Lastname>
 	<BornDate>/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/u</BornDate>

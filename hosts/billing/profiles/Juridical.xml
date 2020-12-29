@@ -157,31 +157,15 @@
 		<!-- ********************************************************************** -->
 		<dPost>
 			<Title>Директор</Title>
-			<Check>/^[А-ЯёЁа-я\-]{2,25}$/u</Check>
+			<Check>dPost</Check>
 			<Comment>Должность</Comment>
 			<Example>Директор</Example>
-			<Type>Select</Type>
-			<Options>
-				<Director>Директор</Director>
-				<HeadMan>Глава</HeadMan>
-				<General>Генеральный директор</General>
-				<Executive>Исполнительный директор</Executive>
-				<Commerce>Коммерческий директор</Commerce>
-				<DeputyDirector>Заместитель директора</DeputyDirector>
-				<Chairperson>Председатель</Chairperson>
-				<ChairmanOfTheBoard>Председатель Правления</ChairmanOfTheBoard>
-				<CouncilChairman>Председатель совета</CouncilChairman>
-				<FirstSecretary>Первый секретарь</FirstSecretary>
-				<Chairman>Председатель</Chairman>
-				<Rector>Ректор</Rector>
-				<President>Президент</President>
-			</Options>
+			<Type>Input</Type>
 			<Attribs>
-				<size>1</size>
-				<style>width: 100%;</style>
+				<type>text</type>
 			</Attribs>
 			<IsDuty>1</IsDuty>
-			<Value>Director</Value>
+			<Value/>
 		</dPost>
 		<!-- ********************************************************************** -->
 		<dSourname>
