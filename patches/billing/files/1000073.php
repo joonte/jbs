@@ -38,9 +38,13 @@ if(IsSet($Config['Tasks']['Types']['WhatsApp']))
 	UnSet($Config['Tasks']['Types']['WhatsApp']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-foreach(Array_Keys($Config['Notifies']['Types']) as $Key)
-	if(IsSet($Config['Notifies']['Types'][$Key]['UseWhatsApp']))
-		UnSet($Config['Notifies']['Types'][$Key]['UseWhatsApp']);
+if(IsSet($Config['Notifies']['Types'])){
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Config['Notifies']['Types']) as $Key)
+		if(IsSet($Config['Notifies']['Types'][$Key]['UseWhatsApp']))
+			UnSet($Config['Notifies']['Types'][$Key]['UseWhatsApp']);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $File = IO_Write($ConfigPath,To_XML_String($Config),TRUE);
