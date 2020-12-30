@@ -69,7 +69,7 @@ if($Backup && !Preg_Match('/^Windows/',Php_UName('s'))){
 	#-------------------------------------------------------------------------------
 	$File = SPrintF('%s.sql',UniqID(SPrintF('%s_',$DbName)));
 	#-------------------------------------------------------------------------------
-	$Command = SPrintF('cd %s;mysqldump --defaults-extra-file=%s --set-gtid-purged=OFF --quote-names -r %s %s 2>&1;gzip %s',$Folder,$MyCnf,$File,$DbName,$File);
+	$Command = SPrintF('cd %s;mysqldump --defaults-extra-file=%s --set-gtid-purged=OFF --no-tablespaces --quote-names -r %s %s 2>&1;gzip %s',$Folder,$MyCnf,$File,$DbName,$File);
 	#-------------------------------------------------------------------------------
 	$Log = Array();
 	#-------------------------------------------------------------------------------
