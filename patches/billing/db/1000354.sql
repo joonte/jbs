@@ -19,20 +19,6 @@ CREATE TABLE IF NOT EXISTS `UsersIPs` (
 
 -- SEPARATOR
 
-DROP TRIGGER IF EXISTS `UsersIPsOnInsert`;
-DELIMITER |
-CREATE DEFINER = CURRENT_USER TRIGGER `UsersIPsOnInsert` BEFORE INSERT ON `UsersIPs`
-  FOR EACH ROW BEGIN
-    IF NEW.`CreateDate` = 0
-      THEN
-        SET NEW.`CreateDate` = UNIX_TIMESTAMP();
-    END IF;
-  END;
-|
-DELIMITER ;
-
--- SEPARATOR
-
 INSERT INTO `UsersIPs` (`CreateDate`,`UserID`,`EdesksMessageID`,`IP`,`UA`) SELECT `CreateDate`,`UserID`,`ID`,`IP`,`UA` FROM `EdesksMessages`;
 
 -- SEPARATOR
@@ -41,7 +27,7 @@ ALTER TABLE `EdesksMessages` DROP `IP`;
 
 -- SEPARATOR
 
-ALTER TABLE `EdesksMessages` DROP `IP`;
+ALTER TABLE `EdesksMessages` DROP `UA`;
 
 -- SEPARATOR
 
