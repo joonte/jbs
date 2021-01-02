@@ -12,6 +12,9 @@ $Args = Args();
 $ServiceOrderID		= (integer) @$Args['ServiceOrderID'];
 $ServiceOrderType	=  (string) @$Args['ServiceOrderType'];
 #-------------------------------------------------------------------------------
+if(Is_Error(System_Load('modules/Authorisation.mod')))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($ServiceOrderType == 'Default'){
 	#-------------------------------------------------------------------------------
