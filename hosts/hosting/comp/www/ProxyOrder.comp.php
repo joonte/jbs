@@ -266,7 +266,7 @@ if($StepID){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
-		return new gException('HOSTING_SCHEMES_NOT_FOUND','Тарифные планы на вторичный DNS не определены');
+		return new gException('HOSTING_SCHEMES_NOT_FOUND','Тарифные планы на Прокси-сервера не определены');
 	case 'array':
 		#-------------------------------------------------------------------------------
 		$NoBody = new Tag('NOBODY');
