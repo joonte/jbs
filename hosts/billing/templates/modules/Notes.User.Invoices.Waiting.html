@@ -6,5 +6,5 @@
 <ul class="Standard">
 %Items%
 </ul>
-Для оплаты счёта нажмите <strong><a href="javascript:ShowWindow('/InvoiceDocument',{InvoiceID:'%Invoice.ID%'});" onmouseover="PromptShow(event,'Просмотреть (оплатить) счёт',this);">[оплатить]</a></strong>
+Для оплаты счёта, нажмите <strong><a href="javascript:ShowWindow('/InvoiceDocument',{InvoiceID:'%Invoice.ID%'});" onmouseover="PromptShow(event,'Просмотреть (оплатить) счёт',this);">[оплатить]</a></strong>, если же вы не планируете его оплачивать, нажмите <strong><a href="javascript:AjaxCall('/API/InvoicesReject',{RowsIDs:'%Invoice.ID%'},'Отмена счёта',&quot;GetURL(document.location);&quot;);">[отменить]</a></strong>
 
