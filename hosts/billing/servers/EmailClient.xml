@@ -10,7 +10,7 @@
 	<Protocol>tcp</Protocol>
 	<Address>pop.yandex.ru</Address>
 	<Port>110</Port>
-	<Login>admin@company.com</Login>
+	<Login>admin@example.com</Login>
 	<Monitoring>POP3=110 POP3S=995 IMAP4=143 IMAP4S=993</Monitoring>
 	<AdminNotice>Используется та же учётная запись, от которой шлёт сообщения биллинг</AdminNotice>
 </Defaults>
