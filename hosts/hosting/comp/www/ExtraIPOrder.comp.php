@@ -87,7 +87,7 @@ if(!$StepID){
 	$Where = Array(
 			SPrintF('`UserID` = %u',$__USER['ID']),
 			SPrintF('`ServerID` IN (%s)',Implode(',',$ServerIDs)),
-			"`StatusID` = 'Active' OR `StatusID` = 'Waiting'"
+			"`StatusID` = 'Active' OR `StatusID` = 'Waiting' OR `StatusID` = 'Suspended'"
 			);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
