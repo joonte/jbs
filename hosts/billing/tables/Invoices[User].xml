@@ -1,126 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<RootID>Invoices</RootID>
-<Cut>
- <Comps>
-  <Before>
-   <PatternOut />
-   <Search />
-  </Before>
-  <After>
-   <Delete />
-   <StatusSet />
-  </After>
- </Comps>
- <Sequence />
-</Cut>
-<!-- *********************************************************************** -->
-<Source>
- <Conditions>
-  <Where>
-   <UniqID>`UserID` = @local.__USER_ID</UniqID>
-  </Where>
-  <Message>Вы не выписывали счета на оплату.</Message>
- </Conditions>
- <Adding>
-  <Message>По данному договору счета не выписывались.</Message>
- </Adding>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <UniqID>
-   <Comp>Contracts/SelectFilter</Comp>
-   <Args type="array" />
-  </UniqID>
- </Before>
- <After>
-  <UniqID>
-   <Comp>Invoices/Reject</Comp>
-   <Args type="array" />
-  </UniqID>
- </After>
-</Comps>
-<!-- *********************************************************************** -->
-<Columns>
- <Info>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/InvoiceInfo</ListElement>
-   <ListElement>
-    <InvoiceID>%ID%</InvoiceID>
-   </ListElement>
-   <ListElement>Дополнительная информация</ListElement>
-  </Args>
- </Info>
- <!-- ********************************************************************** -->
- <Edit>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/InvoiceEdit</ListElement>
-   <ListElement>
-    <InvoiceID>%ID%</InvoiceID>
-   </ListElement>
-   <ListElement>Изменить счёт</ListElement>
-   <ListElement>Edit.gif</ListElement>
-  </Args>
- </Edit>
- <!-- ********************************************************************** -->
- <InvoiceDownloadPDF>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Standard</Comp>
-  <Args>
-   <ListElement>
-    <onclick>document.location = '/InvoiceDownload?InvoiceID=%ID%&amp;IsStamp=yes';</onclick>
-   </ListElement>
-   <ListElement>Загрузить счёт в PDF</ListElement>
-   <ListElement>PDF.gif</ListElement>
-  </Args>
- </InvoiceDownloadPDF>
- <!-- ********************************************************************** -->
- <InvoiceDownloadTIFF>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Standard</Comp>
-  <Args>
-   <ListElement>
-    <onclick>document.location = '/InvoiceDownload?InvoiceID=%ID%&amp;IsTIFF=yes&amp;IsStamp=yes';</onclick>
-   </ListElement>
-   <ListElement>Загрузить счёт в TIFF</ListElement>
-   <ListElement>Image.gif</ListElement>
-  </Args>
- </InvoiceDownloadTIFF>
- <!-- ********************************************************************** -->
- <InvoiceDocument>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/InvoiceDocument</ListElement>
-   <ListElement>
-    <InvoiceID>%ID%</InvoiceID>
-   </ListElement>
-   <ListElement>Просмотреть (оплатить)</ListElement>
-   <ListElement>Dollar.gif</ListElement>
-  </Args>
- </InvoiceDocument>
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>Info</ListElement>
- <ListElement>Edit</ListElement>
- <ListElement>InvoiceDownloadPDF</ListElement>
- <ListElement>InvoiceDownloadTIFF</ListElement>
- <ListElement>InvoiceDocument</ListElement>
- <ListElement>Number</ListElement>
- <ListElement>CreateDate</ListElement>
- <ListElement>PaymentSystem</ListElement>
- <ListElement>Summ</ListElement>
- <ListElement>Status</ListElement>
- <ListElement>StatusOver</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<RootID>Invoices</RootID>
+	<Cut>
+		<Comps>
+			<Before>
+				<PatternOut/>
+				<Search/>
+			</Before>
+			<After>
+				<Delete/>
+				<StatusSet/>
+			</After>
+		</Comps>
+		<Sequence/>
+	</Cut>
+	<!-- *********************************************************************** -->
+	<Source>
+		<Conditions>
+			<Where>
+				<UniqID>`UserID` = @local.__USER_ID</UniqID>
+			</Where>
+			<Message>Вы не выписывали счета на оплату.</Message>
+		</Conditions>
+		<Adding>
+			<Message>По данному договору счета не выписывались.</Message>
+		</Adding>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<UniqID>
+				<Comp>Contracts/SelectFilter</Comp>
+				<Args type="array"/>
+			</UniqID>
+		</Before>
+		<After>
+			<UniqID>
+				<Comp>Invoices/Reject</Comp>
+				<Args type="array"/>
+			</UniqID>
+		</After>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<Info>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/InvoiceInfo</ListElement>
+				<ListElement>
+					<InvoiceID>%ID%</InvoiceID>
+				</ListElement>
+				<ListElement>Дополнительная информация</ListElement>
+			</Args>
+		</Info>
+		<!-- ********************************************************************** -->
+		<Edit>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/InvoiceEdit</ListElement>
+				<ListElement>
+					<InvoiceID>%ID%</InvoiceID>
+				</ListElement>
+				<ListElement>Изменить счёт</ListElement>
+				<ListElement>Edit.gif</ListElement>
+			</Args>
+		</Edit>
+		<!-- ********************************************************************** -->
+		<InvoiceDownloadPDF>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Standard</Comp>
+			<Args>
+				<ListElement>
+					<onclick>document.location = '/InvoiceDownload?InvoiceID=%ID%&amp;IsStamp=yes';</onclick>
+				</ListElement>
+				<ListElement>Загрузить счёт в PDF</ListElement>
+				<ListElement>PDF.gif</ListElement>
+			</Args>
+		</InvoiceDownloadPDF>
+		<!-- ********************************************************************** -->
+		<InvoiceDownloadTIFF>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Standard</Comp>
+			<Args>
+				<ListElement>
+					<onclick>document.location = '/InvoiceDownload?InvoiceID=%ID%&amp;IsTIFF=yes&amp;IsStamp=yes';</onclick>
+				</ListElement>
+				<ListElement>Загрузить счёт в TIFF</ListElement>
+				<ListElement>Image.gif</ListElement>
+			</Args>
+		</InvoiceDownloadTIFF>
+		<!-- ********************************************************************** -->
+		<InvoiceDocument>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/InvoiceDocument</ListElement>
+				<ListElement>
+					<InvoiceID>%ID%</InvoiceID>
+				</ListElement>
+				<ListElement>Просмотреть (оплатить)</ListElement>
+				<ListElement>Dollar.gif</ListElement>
+			</Args>
+		</InvoiceDocument>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Info</ListElement>
+		<ListElement>Edit</ListElement>
+		<ListElement>InvoiceDownloadPDF</ListElement>
+		<ListElement>InvoiceDownloadTIFF</ListElement>
+		<ListElement>InvoiceDocument</ListElement>
+		<ListElement>Number</ListElement>
+		<ListElement>CreateDate</ListElement>
+		<ListElement>PaymentSystem</ListElement>
+		<ListElement>Summ</ListElement>
+		<ListElement>Status</ListElement>
+		<ListElement>StatusOver</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>
