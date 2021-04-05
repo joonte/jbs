@@ -37,7 +37,7 @@ $IsDefined = ($DomainOrder['ProfileID'] || $DomainOrder['PersonID']);
 #-------------------------------------------------------------------------------
 if(!$IsDefined){
 	#-------------------------------------------------------------------------------
-	if(Time() - $Task['CreateDate'] > 86400){
+	if(Time() - $Task['CreateDate'] > 3600){
 		#-------------------------------------------------------------------------------
 		# add ticket to user, about it's exception
 		$Clause = DB_Select('Clauses','*',Array('UNIQ','Where'=>"`Partition`='CreateTicket/DOMAIN_OWNER_NOT_DEFINED'"));
@@ -67,7 +67,7 @@ if(!$IsDefined){
 		$Event = Array(
 				'UserID'	=> $DomainOrder['UserID'],
 				'PriorityID'	=> 'Warning',
-				'Text'		=> SPrintF('Владелец для заказа домена (%s.%s) не определён более 24 часов. Ожидание перед повтором проверки 31 сутки',$DomainOrder['DomainName'],$DomainOrder['DomainZone'])
+				'Text'		=> SPrintF('Владелец для заказа домена (%s.%s) не определён более 1 часа. Ожидание перед повтором проверки 31 сутки',$DomainOrder['DomainName'],$DomainOrder['DomainZone'])
 				);
 		$Event = Comp_Load('Events/EventInsert',$Event);
 		if(!$Event)
@@ -81,13 +81,13 @@ if(!$IsDefined){
 	$Event = Array(
 			'UserID'	=> $DomainOrder['UserID'],
 			'PriorityID'	=> 'Warning',
-			'Text'		=> SPrintF('Владелец для заказа домена (%s.%s) не определён. Ожидание перед повтором проверки 1 сутки',$DomainOrder['DomainName'],$DomainOrder['DomainZone'])
+			'Text'		=> SPrintF('Владелец для заказа домена (%s.%s) не определён. Ожидание перед повтором проверки: 1 час',$DomainOrder['DomainName'],$DomainOrder['DomainZone'])
 			);
 	$Event = Comp_Load('Events/EventInsert',$Event);
 	if(!$Event)
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	return 24 * 3600;
+	return 1 * 3600;
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
