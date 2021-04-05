@@ -86,6 +86,7 @@
 			<IsNoReferer>0</IsNoReferer>
 			<CSRFCheck>0</CSRFCheck>
 			<Hidden>Password,SessionID</Hidden>
+			<PayTimeout>1</PayTimeout>
 		</Security>
 	</Modules>
 	<!-- *********************************************************************** -->

@@ -66,7 +66,7 @@ class MemcachedCache implements Cache {
 	function add($key, $value, $time = 0) {
 		#-------------------------------------------------------------------------------
 		// Checks args.
-		$__args_types = Array('string', 'boolean,integer,string,array,object', 'integer');
+		$__args_types = Array('string', 'boolean,integer,double,string,array,object', 'integer');
 		$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 		#-------------------------------------------------------------------------------
 		$key = SPrintF('[%s]-[%s]-%s', HOST_ID, self::EXT_NAME, $key);
