@@ -108,7 +108,7 @@ if(!IsSet($GLOBALS['__USER'])){
 	#-------------------------------------------------------------------------------
 	if(!$__USER['IsAdmin']){
 		#-------------------------------------------------------------------------------
-		$Contracts = DB_Select('Contracts',Array('ID','TypeID','Customer','Balance','(SELECT COUNT(*) FROM `Orders` WHERE `Orders`.`ContractID` = `Contracts`.`ID`) AS `Orders`'),Array('Where'=>SPrintF('`UserID` = %u',$__USER['ID']),'SortOn'=>Array('Orders'),'IsDesc'=>TRUE));
+		$Contracts = DB_Select('Contracts',Array('ID','TypeID','Customer','Balance','(SELECT COUNT(*) FROM `Orders` WHERE `Orders`.`ContractID` = `Contracts`.`ID`) AS `Orders`'),Array('Where'=>Array(SPrintF('`UserID` = %u',$__USER['ID']),'`IsHidden` = "no"'),'SortOn'=>Array('Orders'),'IsDesc'=>TRUE));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($Contracts)){
 		case 'error':
@@ -117,82 +117,84 @@ if(!IsSet($GLOBALS['__USER'])){
 			# No more...
 			break;
 		case 'array':
-			break;
-		default:
-			return ERROR | @Trigger_Error(101);
-		}
-		#-------------------------------------------------------------------------------
-		$Table = new Tag('TABLE',Array('class'=>'Standard','style'=>'border: 1px solid #707680;','width'=>'100%'));
-		#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		// перебираем договора, если есть с отрицательным балансом - делаем развёрнутый список
-		foreach($Contracts as $Contract)
-			if($Contract['Balance'] < 0)
-				$IsNoRoll = TRUE;
-		#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		if(SizeOf($Contracts) > 3 && !IsSet($IsNoRoll)){
 			#-------------------------------------------------------------------------------
-			$UniqID = UniqID('ID'); $UniqID2 = UniqID('ID2');
+			$Table = new Tag('TABLE',Array('class'=>'Standard','style'=>'border: 1px solid #707680;','width'=>'100%'));
 			#-------------------------------------------------------------------------------
-			$Table->AddChild(
-					new Tag('TR',
-						new Tag('TD',
-							Array(
-								'colspan'	=> 5,
-								'style'		=> 'cursor:pointer;',
-								'onclick'	=> SPrintF("var Style = document.getElementById('%s').style; Style.display = (Style.display != 'none'?'none':''); document.getElementById('%s').innerHTML = (Style.display != 'none'?'Кликните чтобы свернуть список ваших договоров<hr size=1>':'Просмотр списка ваших договоров')",$UniqID,$UniqID2)
-								),
-								new Tag('DIV',Array('id'=>$UniqID2,'name'=>$UniqID2),'Просмотр списка ваших договоров')
+			#-------------------------------------------------------------------------------
+			// перебираем договора, если есть с отрицательным балансом - делаем развёрнутый список
+			foreach($Contracts as $Contract)
+				if($Contract['Balance'] < 0)
+					$IsNoRoll = TRUE;
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			if(SizeOf($Contracts) > 3 && !IsSet($IsNoRoll)){
+				#-------------------------------------------------------------------------------
+				$UniqID = UniqID('ID'); $UniqID2 = UniqID('ID2');
+				#-------------------------------------------------------------------------------
+				$Table->AddChild(
+						new Tag('TR',
+							new Tag('TD',
+								Array(
+									'colspan'	=> 5,
+									'style'		=> 'cursor:pointer;',
+									'onclick'	=> SPrintF("var Style = document.getElementById('%s').style; Style.display = (Style.display != 'none'?'none':''); document.getElementById('%s').innerHTML = (Style.display != 'none'?'Кликните чтобы свернуть список ваших договоров<hr size=1>':'Просмотр списка ваших договоров')",$UniqID,$UniqID2)
+									),
+									new Tag('DIV',Array('id'=>$UniqID2,'name'=>$UniqID2),'Просмотр списка ваших договоров')
+								)
 							)
-						)
-					);
-			#-------------------------------------------------------------------------------
-			$Table->AddChild(new Tag('TBODY',Array('id'=>$UniqID,'style'=>'display:none;')));
-			#-------------------------------------------------------------------------------
-		}
-		#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		foreach($Contracts as $Contract){
-			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/TopPanel]: Contract TypeID = %s',$Contract['TypeID']));
-			#-------------------------------------------------------------------------------
-			// если нет услуг и стоит настройка не отображать без услуг - не показываем
-			if($Contract['Orders'] < 1 && $GLOBALS['__USER']['Params']['Settings']['ShowContractsWithoutOrders'] == 'No')
-				continue;
-			#-------------------------------------------------------------------------------
-			$ContractID = Comp_Load('Formats/Contract/Number',$Contract['ID']);
-			#-------------------------------------------------------------------------------
-			if(Is_Error($ContractID))
-				return ERROR | @Trigger_Error(500);
-			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load('Formats/Currency',$Contract['Balance']);
-			if(Is_Error($Comp))
-				return ERROR | @Trigger_Error(500);
-			#-------------------------------------------------------------------------------
-			if($Contract['TypeID'] == 'NaturalPartner' || $Contract['TypeID'] == 'Juridical'){
+						);
 				#-------------------------------------------------------------------------------
-				$A = new Tag('SPAN','-');
-				#-------------------------------------------------------------------------------
-			}else{
-				#-------------------------------------------------------------------------------
-				$A = new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/InvoiceMake',{ContractID:%u,StepID:1});",$Contract['ID'])),'[пополнить]');
+				$Table->AddChild(new Tag('TBODY',Array('id'=>$UniqID,'style'=>'display:none;')));
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
-			$Table->AddChild(
-					new Tag('TR',
-					new Tag('TD',Array('style'=>'text-align:left;'),SPrintF('#%s',$ContractID)),
-	    				new Tag('TD',Array('style'=>'text-align:left;','width'=>'60%'),new Tag('DIV',Array('class'=>'CropTitle'),$Contract['Customer'])),
-					new Tag('TD',Array('style'=>'text-align:left;white-space:nowrap;'),SPrintF('бал: %s,',$Comp)),
-					new Tag('TD',Array('style'=>'text-align:left;white-space:nowrap;'),SPrintF('зак: %u',$Contract['Orders'])),
-					new Tag('TD',Array('style'=>'text-align:left'),$A)
-					));
 			#-------------------------------------------------------------------------------
+			foreach($Contracts as $Contract){
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/TopPanel]: Contract TypeID = %s',$Contract['TypeID']));
+				#-------------------------------------------------------------------------------
+				// если нет услуг и стоит настройка не отображать без услуг - не показываем
+				if($Contract['Orders'] < 1 && $GLOBALS['__USER']['Params']['Settings']['ShowContractsWithoutOrders'] == 'No')
+					continue;
+				#-------------------------------------------------------------------------------
+				$ContractID = Comp_Load('Formats/Contract/Number',$Contract['ID']);
+				#-------------------------------------------------------------------------------
+				if(Is_Error($ContractID))
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+				$Comp = Comp_Load('Formats/Currency',$Contract['Balance']);
+				if(Is_Error($Comp))
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+				if($Contract['TypeID'] == 'NaturalPartner' || $Contract['TypeID'] == 'Juridical'){
+					#-------------------------------------------------------------------------------
+					$A = new Tag('SPAN','-');
+					#-------------------------------------------------------------------------------
+				}else{
+					#-------------------------------------------------------------------------------
+					$A = new Tag('A',Array('href'=>SPrintF("javascript:ShowWindow('/InvoiceMake',{ContractID:%u,StepID:1});",$Contract['ID'])),'[пополнить]');
+					#-------------------------------------------------------------------------------
+				}
+				#-------------------------------------------------------------------------------
+				$Table->AddChild(
+						new Tag('TR',
+						new Tag('TD',Array('style'=>'text-align:left;'),SPrintF('#%s',$ContractID)),
+	    					new Tag('TD',Array('style'=>'text-align:left;','width'=>'60%'),new Tag('DIV',Array('class'=>'CropTitle'),$Contract['Customer'])),
+						new Tag('TD',Array('style'=>'text-align:left;white-space:nowrap;'),SPrintF('бал: %s,',$Comp)),
+						new Tag('TD',Array('style'=>'text-align:left;white-space:nowrap;'),SPrintF('зак: %u',$Contract['Orders'])),
+						new Tag('TD',Array('style'=>'text-align:left'),$A)
+						));
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+			if(Count($Table->Childs))
+				$Links['DOM']->AddChild('Context',$Table,TRUE);
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		default:
+			return ERROR | @Trigger_Error(101);
 		}
-		#-------------------------------------------------------------------------------
-		if(Count($Table->Childs))
-			$Links['DOM']->AddChild('Context',$Table,TRUE);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------

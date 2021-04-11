@@ -7,6 +7,7 @@
 			<Comp>Colors/Contracts</Comp>
 			<Args>
 				<ListElement>%StatusID%</ListElement>
+				<ListElement>%IsHidden%</ListElement>
 			</Args>
 		</Row>
 	</Appearance>
@@ -20,9 +21,11 @@
 			<ListElement>Customer</ListElement>
 			<ListElement>IsUponConsider</ListElement>
 			<ListElement>Balance</ListElement>
+			<ListElement>IsHidden</ListElement>
 			<ListElement>StatusID</ListElement>
 			<ListElement>StatusDate</ListElement>
 		</ColumnsIDs>
+		<!-- *********************************************************************** -->
 		<Conditions>
 			<Message>Договоров не обнаружено.</Message>
 		</Conditions>

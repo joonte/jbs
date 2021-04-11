@@ -74,13 +74,13 @@ $Table = Array();
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
-$Contracts = DB_Select('Contracts',Array('ID','Customer'),Array('Where'=>SPrintF("`UserID` = %u AND `TypeID` != 'NaturalPartner'",$__USER['ID'])));
+$Contracts = DB_Select('Contracts',Array('ID','Customer'),Array('Where'=>SPrintF("`UserID` = %u AND `TypeID` != 'NaturalPartner' AND `IsHidden` = 'no'",$__USER['ID'])));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Contracts)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return new gException('CONTRACTS_NOT_FOUND','Система не обнаружила у Вас ни одного договора. Пожалуйста, перейдите в раздел [Мой офис - Договора] и сформируйте хотя бы 1 договор.');
+	return new gException('CONTRACTS_NOT_FOUND','Система не обнаружила у Вас ни одного активного договора. Пожалуйста, перейдите в раздел [Мой офис - Договоры] и сформируйте/активируйте хотя бы один договор.');
 case 'array':
 	break;
 default:

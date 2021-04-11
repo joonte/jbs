@@ -1,90 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- @author Бреславский А.В. (Joonte Ltd.) -->
+<!-- @author Alex keda, for www.host-food.ru -->
 <XML>
-<!-- *********************************************************************** -->
-<RootID>Contracts</RootID>
-<Cut>
- <Comps>
-  <Before>
-   <PatternOut />
-   <Search />
-  </Before>
-  <After>
-   <Delete />
-   <StatusSet />
-  </After>
- </Comps>
- <Sequence />
-</Cut>
-<!-- *********************************************************************** -->
-<Source>
- <Conditions>
-  <Where>
-   <UniqID>`UserID` = @local.__USER_ID</UniqID>
-  </Where>
-  <Message>У Вас нет договоров.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Columns>
- <Info>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/ContractInfo</ListElement>
-   <ListElement>
-    <ContractID>%ID%</ContractID>
-   </ListElement>
-   <ListElement>Дополнительная информация</ListElement>
-  </Args>
- </Info>
- <!-- ********************************************************************** -->
- <ContractDownload>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Standard</Comp>
-  <Args>
-   <ListElement>
-    <onclick>AjaxCall('/ContractDownload',{ContractID:%ID%},'Формирование договора','document.location = $Answer.Location');</onclick>
-   </ListElement>
-   <ListElement>Загрузить договор</ListElement>
-   <ListElement>PDF.gif</ListElement>
-  </Args>
- </ContractDownload>
- <!-- ********************************************************************** -->
- <Edit>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/ContractEdit</ListElement>
-   <ListElement>
-    <ContractID>%ID%</ContractID>
-   </ListElement>
-   <ListElement>Изменить тип учёта</ListElement>
-   <ListElement>Edit.gif</ListElement>
-  </Args>
- </Edit>
- <!-- ********************************************************************** -->
- <Balance>
-  <Head>Баланс</Head>
-  <Comp>Contracts/Balance</Comp>
-  <Args>
-   <IsInvoiceMake>1</IsInvoiceMake>
-  </Args>
- </Balance>
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>Info</ListElement>
- <ListElement>ContractDownload</ListElement>
- <ListElement>Edit</ListElement>
- <ListElement>Number</ListElement>
- <ListElement>Customer</ListElement>
- <ListElement>Type</ListElement>
- <ListElement>IsUponConsider</ListElement>
- <ListElement>Balance</ListElement>
- <ListElement>Status</ListElement>
- <ListElement>Orders</ListElement>
- <ListElement>StatusOver</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<RootID>Contracts</RootID>
+	<Cut>
+		<Comps>
+			<Before>
+				<PatternOut/>
+				<Search/>
+			</Before>
+			<After>
+				<Delete/>
+				<StatusSet/>
+			</After>
+		</Comps>
+		<Sequence/>
+	</Cut>
+	<!-- *********************************************************************** -->
+	<Source>
+		<Conditions>
+			<Where>
+				<UniqID>`UserID` = @local.__USER_ID</UniqID>
+			</Where>
+			<Message>У Вас нет договоров.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<Info>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/ContractInfo</ListElement>
+				<ListElement>
+					<ContractID>%ID%</ContractID>
+				</ListElement>
+				<ListElement>Дополнительная информация</ListElement>
+			</Args>
+		</Info>
+		<!-- ********************************************************************** -->
+		<ContractDownload>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Standard</Comp>
+			<Args>
+				<ListElement>
+					<onclick>AjaxCall('/ContractDownload',{ContractID:%ID%},'Формирование договора','document.location = $Answer.Location');</onclick>
+				</ListElement>
+				<ListElement>Загрузить договор</ListElement>
+				<ListElement>PDF.gif</ListElement>
+			</Args>
+		</ContractDownload>
+		<!-- ********************************************************************** -->
+		<Edit>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/ContractEdit</ListElement>
+				<ListElement>
+					<ContractID>%ID%</ContractID>
+				</ListElement>
+				<ListElement>Изменить тип учёта</ListElement>
+				<ListElement>Edit.gif</ListElement>
+			</Args>
+		</Edit>
+		<!-- ********************************************************************** -->
+		<Balance>
+			<Head>Баланс</Head>
+			<Comp>Contracts/Balance</Comp>
+			<Args>
+				<IsInvoiceMake>1</IsInvoiceMake>
+			</Args>
+		</Balance>
+		<!-- *********************************************************************** -->
+		<IsHidden>
+			<Head>Скрыт</Head>
+			<Prompt>Договор скрыт, т.е. он не отображается в шапке и в списке договоров, при заказе услуги</Prompt>
+			<Comp>BooleanEdit</Comp>
+			<Args>
+				<ListElement>Contracts</ListElement>
+				<ListElement>IsHidden</ListElement>
+				<ListElement>%ID%</ListElement>
+				<ListElement>%IsHidden%</ListElement>
+			</Args>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</IsHidden>
+		<!-- *********************************************************************** -->
+	</Columns>
+	<Sequence>
+		<ListElement>Info</ListElement>
+		<ListElement>ContractDownload</ListElement>
+		<ListElement>Edit</ListElement>
+		<ListElement>Number</ListElement>
+		<ListElement>Customer</ListElement>
+		<ListElement>Type</ListElement>
+		<ListElement>IsUponConsider</ListElement>
+		<ListElement>Balance</ListElement>
+		<ListElement>IsHidden</ListElement>
+		<ListElement>Status</ListElement>
+		<ListElement>Orders</ListElement>
+		<ListElement>StatusOver</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>
