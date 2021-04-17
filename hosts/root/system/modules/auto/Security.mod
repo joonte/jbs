@@ -103,15 +103,16 @@ if(Count($Args) > 0){
 		#-------------------------------------------------------------------------------
 		$Mt = MicroTime(TRUE);
 		#-------------------------------------------------------------------------------
-		if($Result && $Result > $Mt - IntVal($Settings['PayTimeout'])){
+		if($Result && $Result['Time'] > $Mt - IntVal($Settings['PayTimeout'])){
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[Security module]: сработала защита от уязвимости "Race Condition", %s < %s',$Mt - $Result,$Settings['PayTimeout']));
+			Debug(SPrintF('[Security module]: сработала защита от уязвимости "Race Condition", %s < %s; IP: %s;URI: %s;',$Mt - $Result['Time'],$Settings['PayTimeout'],$Result['IP'],$Result['URI']));
 			#-------------------------------------------------------------------------------
-			return ERROR | @Trigger_Error(600);
+			if(!$IsNoAction)
+				return ERROR | @Trigger_Error(600);
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		CacheManager::add($CacheID,$Mt,$Settings['PayTimeout'] + 10);
+		CacheManager::add($CacheID,Array('Time'=>$Mt,'URI'=>$_SERVER["REQUEST_URI"],'IP'=>$_SERVER['REMOTE_ADDR']),$Settings['PayTimeout'] + 10);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
