@@ -85,7 +85,7 @@ $IDomainScheme = Array(
 			'MinOrdersPeriod'	=> $MinOrdersPeriod,
 			'DaysToProlong'		=> $DaysToProlong,
 			'DaysBeforeTransfer'	=> $DaysBeforeTransfer,
-			'DaysAfterTransfer'	=> $DaysAfterTransfer
+			'DaysAfterTransfer'	=> $DaysAfterTransfer,
 );
 
 #-------------------------------------------------------------------------------
@@ -96,6 +96,8 @@ if($DomainSchemeID){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 }else{
+	#-------------------------------------------------------------------------------
+	$IDomainScheme['Params'] = '';
 	#-------------------------------------------------------------------------------
 	$IsInsert = DB_Insert('DomainSchemes',$IDomainScheme);
 	if(Is_Error($IsInsert))
