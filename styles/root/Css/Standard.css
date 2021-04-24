@@ -533,4 +533,24 @@ label.Comment {
 /* скрываем кнопки с меню сайта - они тока на мобильной версии нужны */
 tr.HiddenMenuButtons		{ display: none; }
 
+/* анимация иконки для уведомлений*/
+a.AnimateIconImage img {
+	animation-name:			envelope-animation;
+	animation-duration:		22s;
+	animation-iteration-count:	infinite;
+	animation-timing-function:	ease;
+	transform-origin:		bottom;
+}
+@keyframes envelope-animation {
+	0%      { transform: scale(1,1) translateY(0); }
+	2%      { transform: scale(.9,1.1) translateY(-5px); }
+	4%      { transform: scale(1.05,.95) translateY(0); }
+	6%      { transform: scale(1,1) translateY(-2px); }
+	8%      { transform: scale(1,1) translateY(0); }
+	10%     { transform: scale(1,1) translateY(0); }
+	100%    { transform: scale(1,1) translateY(0); }
+}
+
+
+
 
