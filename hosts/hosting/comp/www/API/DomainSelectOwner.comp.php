@@ -20,10 +20,6 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(!$Agree)
-  return new gException('NOT_AGREE','Вы не дали согласия на передачу ваших персональных данных');
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainOrdersOwners',Array('ID','UserID','SchemeID','StatusID','DomainName','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`'),Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
@@ -80,6 +76,9 @@ switch(ValueOf($DomainOrder)){
                 $UDomainOrder['PersonID'] = $PersonID;
               break;
               case 'Profile':
+	        #---------------------------------------------------------------
+	        if(!$Agree)
+                  return new gException('NOT_AGREE','Вы не дали согласия на передачу ваших персональных данных');
                 #---------------------------------------------------------------
                 $Count = DB_Count('Profiles',Array('ID'=>$ProfileID));
                 if(Is_Error($Count))
