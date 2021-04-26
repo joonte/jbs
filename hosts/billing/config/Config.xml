@@ -156,13 +156,14 @@
 		<!-- *********************************************************************** -->
 		<Kassa_54-FZ>
 			<TaxationSystem>SIMPLIFIED_IN_OUT</TaxationSystem>
-			<Komtet>
-				<IsActive>0</IsActive>
-				<Hash/>
-				<Cpp>https://kassa.komtet.ru</Cpp>
-				<ShopId/>
-				<QueueId/>
-			</Komtet>
+			<TaxationKassa>Komtet</TaxationKassa>
+			<IsActive>0</IsActive>
+			<Hash/>
+			<Cpp>https://kassa.komtet.ru</Cpp>
+			<ShopId/>
+			<QueueId/>
+			<Login/>
+			<Password/>
 		</Kassa_54-FZ>
 		<!-- *********************************************************************** -->
 		<PaymentSystems>
