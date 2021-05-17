@@ -46,6 +46,7 @@ if(!$Settings['IsActive']){
 #-------------------------------------------------------------------------------
 # достаём все оплаченные счета, по которым не отправлен отчёт в налоговую
 $Invoices = DB_Select('InvoicesOwners',Array('*','(SELECT `Email` FROM `Users` WHERE `Users`.`ID` = `UserID`) AS `Email`'),Array('Where'=>Array('`IsCheckSent` = "no"')));
+#-------------------------------------------------------------------------------
 switch(ValueOf($Invoices)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
