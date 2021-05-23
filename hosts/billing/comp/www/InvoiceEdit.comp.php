@@ -20,7 +20,7 @@ $Config = Config();
 $Settings = $Config['Interface']['User']['InvoiceMake'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Invoice = DB_Select('InvoicesOwners',Array('ID','CreateDate','UserID','Summ','PaymentSystemID','IsPosted','StatusID','(SELECT `TypeID` FROM `Contracts` WHERE `Contracts`.`ID` = `InvoicesOwners`.`ContractID`) as `ContractTypeID`'),Array('UNIQ','ID'=>$InvoiceID));
+$Invoice = DB_Select('InvoicesOwners',Array('ID','CreateDate','UserID','Summ','PaymentSystemID','IsPosted','IsCheckSent','StatusID','(SELECT `TypeID` FROM `Contracts` WHERE `Contracts`.`ID` = `InvoicesOwners`.`ContractID`) as `ContractTypeID`'),Array('UNIQ','ID'=>$InvoiceID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Invoice)){
 case 'error':
@@ -280,6 +280,25 @@ if($__USER['IsAdmin']){
 	$Form->AddChild($Comp);
 	#-------------------------------------------------------------------------------
 
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($__USER['IsAdmin']){
+	#-------------------------------------------------------------------------------
+	// Фискализация
+	$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsCheckSent','id'=>'IsCheckSent','value'=>'yes'));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	if($Invoice['IsCheckSent'])
+		$Comp->AddAttribs(Array('checked'=>'yes'));
+	#-------------------------------------------------------------------------------
+	$Table[] = Array(new Tag('LABEL',Array('for'=>'IsCheckSent'),'Чек отослан'),$Comp);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// разделитель
+	$Table[] = Array('',new Tag('HR'));
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

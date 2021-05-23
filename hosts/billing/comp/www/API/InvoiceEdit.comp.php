@@ -17,6 +17,7 @@ $Comments	=   (array) @$Args['Comments'];
 $Amounts	=   (array) @$Args['Amounts'];
 $ItemSumms	=   (array) @$Args['ItemSumms'];
 $IsDeletes	=   (array) @$Args['IsDeletes'];
+$IsCheckSent	= (boolean) @$Args['IsCheckSent'];
 $Summ		=  (double) @$Args['Summ'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
@@ -108,8 +109,13 @@ if(!$PaymentSystem['ContractsTypes'][$Contract['TypeID']])
 #-------------------------------------------------------------------------------
 $IInvoice = Array('PaymentSystemID'=>$PaymentSystemID);
 #-------------------------------------------------------------------------------
-if($__USER['IsAdmin'])
+if($__USER['IsAdmin']){
+	#-------------------------------------------------------------------------------
 	$IInvoice['CreateDate'] = $CreateDate;
+	#-------------------------------------------------------------------------------
+	$IInvoice['IsCheckSent'] = $IsCheckSent;
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IsUpdate = DB_Update('Invoices',$IInvoice,Array('ID'=>$InvoiceID));
