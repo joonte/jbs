@@ -71,8 +71,19 @@ foreach($Invoices as $Invoice){
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[comp/Tasks/Taxation]: обработка счёта = %s; Summ = %s',$Number,$Invoice['Summ']));
 	#-------------------------------------------------------------------------------
-	# TODO: по уму, надо все позиции отображать:
-	$InvoicesItems = DB_Select('InvoicesItems',Array('*','(SELECT `NameShort` FROM `Services` WHERE `InvoicesItems`.`ServiceID` = `ID`) AS `Name`'),Array('Where'=>Array(SPrintF('`InvoiceID` = %u',$Invoice['ID']))));
+	# надо все позиции отображать:
+	$InvoicesItems = DB_Select('InvoicesItems',Array('*','(SELECT `NameShort` FROM `Services` WHERE `InvoicesItems`.`ServiceID` = `ID`) AS `Name`','(SELECT `Measure` FROM `Services` WHERE `InvoicesItems`.`ServiceID` = `ID`) AS `Measure`'),Array('Where'=>Array(SPrintF('`InvoiceID` = %u',$Invoice['ID']))));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($InvoicesItems)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		$InvoicesItems = Array();
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Receipt = Comp_Load(SPrintF('Invoices/%s',$Settings['TaxationKassa']),$Settings,$Invoice,$Number,$InvoicesItems);
