@@ -120,7 +120,9 @@ $check->addPayment($payment);
 // Добавление кассира (опционально)
 #$cashier = new Cashier('Иваров И.П.', '1234567890123');
 #$check->addCashier($cashier);
-	
+
+Debug(SPrintF('[comp/Invoices/Komtet]: check = %s',print_r($check,true)));
+
 #-------------------------------------------------------------------------------
 // Добавляем чек в очередь.
 try {
