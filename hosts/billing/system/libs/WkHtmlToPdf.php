@@ -96,7 +96,7 @@ function WkHtmlToPdf_CreatePDF($ModeID,$HTML,$Prefix = '/'){
 	if(Is_Error($File))
 		return ERROR | @Trigger_Error('[WkHtmlToPdf_CreatePDF]: не удалось создать временный файл');
 	#-------------------------------------------------------------------------------
-	$Command = SPrintF("wkhtmltopdf --allow %s --margin-left 10mm --margin-top 10mm --margin-right 10mm --margin-bottom 10mm --encoding utf-8 --custom-header 'meta' 'charset=utf-8' %s %s -",$Tmp,$Mode,$Path);
+	$Command = SPrintF("wkhtmltopdf --allow %s --margin-left 5mm --margin-top 5mm --margin-right 5mm --margin-bottom 5mm --encoding utf-8 --custom-header 'meta' 'charset=utf-8' %s %s -",$Tmp,$Mode,$Path);
 	#-------------------------------------------------------------------------------
 	//Debug($Command);
 	#-------------------------------------------------------------------------------
