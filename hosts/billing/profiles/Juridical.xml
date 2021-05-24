@@ -146,7 +146,7 @@
 		<SiteURL>
 			<Check>Url</Check>
 			<Comment>Адрес сайта</Comment>
-			<Example>http://www.super.com</Example>
+			<Example>http://www.example.com</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
@@ -184,7 +184,7 @@
 		<dName>
 			<Check>Name</Check>
 			<Comment>Имя директора</Comment>
-			<Example>Петр</Example>
+			<Example>Пётр</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
@@ -224,7 +224,7 @@
 		<aName>
 			<Check>Name</Check>
 			<Comment>Имя главного бухгалтера</Comment>
-			<Example>Петр</Example>
+			<Example>Пётр</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
