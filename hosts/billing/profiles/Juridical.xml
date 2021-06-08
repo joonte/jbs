@@ -7,7 +7,7 @@
 	<Attribs>
 		<CompanyForm>
 			<Title>Регистрационные данные</Title>
-			<Check>/^[а-яА-ЯёЁ0-9\s\-]+$/u</Check>
+			<Check>/^[а-яА-ЯёЁ0-9\s\-\(\)]+$/u</Check>
 			<Comment>Организационно-правовая форма</Comment>
 			<Example>ООО, АО, ЗАО, НПО</Example>
 			<Type>Input</Type>
@@ -20,7 +20,7 @@
 		</CompanyForm>
 		<!-- ********************************************************************** -->
 		<CompanyFormFull>
-			<Check>/^[а-яА-ЯёЁ0-9\s\-]+$/u</Check>
+			<Check>/^[а-яА-ЯёЁ0-9\s\-\(\)]+$/u</Check>
 			<Comment>Организационно-правовая форма</Comment>
 			<Example>Акционерное общество</Example>
 			<Type>Input</Type>
