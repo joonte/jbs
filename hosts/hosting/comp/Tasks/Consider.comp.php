@@ -119,7 +119,7 @@ foreach($Services as $Service){
 				#-------------------------------------------------------------------------------
 				Debug(SPrintF('[comp/Orders/Consider]: autoprolongation for %s',$ServiceOrder['OrderID']));
 				#-------------------------------------------------------------------------------
-				$ServiceScheme = DB_Select(SPrintF('%sSchemes',$Service['Code']),'MinDaysPay',Array('UNIQ','ID'=>$ServiceOrder['SchemeID']));
+				$ServiceScheme = DB_Select(SPrintF('%sSchemes',$Service['Code']),Array('MinDaysPay','MinDaysProlong'),Array('UNIQ','ID'=>$ServiceOrder['SchemeID']));
 				#-------------------------------------------------------------------------------
 				switch(ValueOf($ServiceScheme)){
 				case 'error':
@@ -128,25 +128,35 @@ foreach($Services as $Service){
 					return ERROR | @Trigger_Error(400);
 				case 'array':
 					#-------------------------------------------------------------------------------
-					$ServiceOrderPay = Comp_Load(SPrintF('www/API/%sOrderPay',$Service['Code']),Array(SPrintF('%sOrderID',$Service['Code'])=>$ServiceOrderID,'DaysPay'=>$ServiceScheme['MinDaysPay'],'IsNoBasket'=>TRUE,'PayMessage'=>'Автоматическое продление заказа, оплата с баланса договора'));
-					#-------------------------------------------------------------------------------
-					switch(ValueOf($ServiceOrderPay)){
-					case 'error':
-						return ERROR | @Trigger_Error(500);
-					case 'exception':
+					// JBS-1531 - пытаемся подлить на сколько получится
+					for($Days = $ServiceScheme['MinDaysPay']; $Days >= $ServiceScheme['MinDaysProlong']; $Days--){
 						#-------------------------------------------------------------------------------
-						$Event = Array('UserID'=>$ServiceOrder['UserID'],'Text'=>SPrintF('Не удалость автоматически оплатить заказ %s/#%s, причина (%s)',$Service['Code'],$OrderID,$ServiceOrderPay->String));
-						$Event = Comp_Load('Events/EventInsert',$Event);
-						if(!$Event)
-							return ERROR | @Trigger_Error(500);
+						$ServiceOrderPay = Comp_Load(SPrintF('www/API/%sOrderPay',$Service['Code']),Array(SPrintF('%sOrderID',$Service['Code'])=>$ServiceOrderID,'DaysPay'=>$Days,'IsNoBasket'=>TRUE,'PayMessage'=>'Автоматическое продление заказа, оплата с баланса договора'));
 						#-------------------------------------------------------------------------------
-						$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>SPrintF('%sOrders',$Service['Code']),'StatusID'=>$StatusID,'RowsIDs'=>$ServiceOrderID,'Comment'=>SPrintF('Срок действия заказа окончен/%s',$ServiceOrderPay->String)));
-						#-------------------------------------------------------------------------------
-						switch(ValueOf($Comp)){
+						switch(ValueOf($ServiceOrderPay)){
 						case 'error':
 							return ERROR | @Trigger_Error(500);
 						case 'exception':
-							return ERROR | @Trigger_Error(400);
+							#-------------------------------------------------------------------------------
+							$Event = Array('UserID'=>$ServiceOrder['UserID'],'Text'=>SPrintF('Не удалость автоматически оплатить заказ %s/#%s, причина (%s)',$Service['Code'],$OrderID,$ServiceOrderPay->String));
+							$Event = Comp_Load('Events/EventInsert',$Event);
+							if(!$Event)
+								return ERROR | @Trigger_Error(500);
+							#-------------------------------------------------------------------------------
+							$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>SPrintF('%sOrders',$Service['Code']),'StatusID'=>$StatusID,'RowsIDs'=>$ServiceOrderID,'Comment'=>SPrintF('Срок действия заказа окончен/%s',$ServiceOrderPay->String)));
+							#-------------------------------------------------------------------------------
+							switch(ValueOf($Comp)){
+							case 'error':
+								return ERROR | @Trigger_Error(500);
+							case 'exception':
+								return ERROR | @Trigger_Error(400);
+							case 'array':
+								# No more...
+								break 5;
+							default:
+								return ERROR | @Trigger_Error(101);
+							}
+							#-------------------------------------------------------------------------------
 						case 'array':
 							# No more...
 							break 4;
@@ -154,11 +164,6 @@ foreach($Services as $Service){
 							return ERROR | @Trigger_Error(101);
 						}
 						#-------------------------------------------------------------------------------
-					case 'array':
-						# No more...
-						break 3;
-					default:
-						return ERROR | @Trigger_Error(101);
 					}
 					#-------------------------------------------------------------------------------
 					break;
