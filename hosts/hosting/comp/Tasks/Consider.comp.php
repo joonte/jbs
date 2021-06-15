@@ -46,7 +46,7 @@ $CurrentDay = (integer)(Time()/86400);
 #-------------------------------------------------------------------------------
 foreach($Services as $Service){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Orders/Consider]: processing Service = %s',$Service['Code']));
+	#Debug(SPrintF('[comp/Orders/Consider]: processing Service = %s',$Service['Code']));
 	#if($Service['Code'] != 'DNSmanager')
 	#	continue;
 	#-------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ foreach($Services as $Service){
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/Orders/Consider]: no orders for consider, Service = %s',$Service['Code']));
+		#Debug(SPrintF('[comp/Orders/Consider]: no orders for consider, Service = %s',$Service['Code']));
 		#-------------------------------------------------------------------------------
 		continue 2;
 		#-------------------------------------------------------------------------------
@@ -117,7 +117,7 @@ foreach($Services as $Service){
 			# check AutoProlongation
 			if($ServiceOrder['IsAutoProlong']){
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/Orders/Consider]: autoprolongation for %s',$ServiceOrder['OrderID']));
+				#Debug(SPrintF('[comp/Orders/Consider]: autoprolongation for %s',$ServiceOrder['OrderID']));
 				#-------------------------------------------------------------------------------
 				$ServiceScheme = DB_Select(SPrintF('%sSchemes',$Service['Code']),Array('MinDaysPay','MinDaysProlong'),Array('UNIQ','ID'=>$ServiceOrder['SchemeID']));
 				#-------------------------------------------------------------------------------
@@ -137,35 +137,42 @@ foreach($Services as $Service){
 						case 'error':
 							return ERROR | @Trigger_Error(500);
 						case 'exception':
-							#-------------------------------------------------------------------------------
-							$Event = Array('UserID'=>$ServiceOrder['UserID'],'Text'=>SPrintF('Не удалость автоматически оплатить заказ %s/#%s, причина (%s)',$Service['Code'],$OrderID,$ServiceOrderPay->String));
-							$Event = Comp_Load('Events/EventInsert',$Event);
-							if(!$Event)
-								return ERROR | @Trigger_Error(500);
-							#-------------------------------------------------------------------------------
-							$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>SPrintF('%sOrders',$Service['Code']),'StatusID'=>$StatusID,'RowsIDs'=>$ServiceOrderID,'Comment'=>SPrintF('Срок действия заказа окончен/%s',$ServiceOrderPay->String)));
-							#-------------------------------------------------------------------------------
-							switch(ValueOf($Comp)){
-							case 'error':
-								return ERROR | @Trigger_Error(500);
-							case 'exception':
-								return ERROR | @Trigger_Error(400);
-							case 'array':
-								# No more...
-								break 5;
-							default:
-								return ERROR | @Trigger_Error(101);
-							}
-							#-------------------------------------------------------------------------------
+							break;
 						case 'array':
-							# No more...
+							#-------------------------------------------------------------------------------
+							Debug(SPrintF('[comp/Orders/Consider]: совершена оплата заказа %s/#%s на %s дней',$Service['Code'],$OrderID,$Days));
+							#-------------------------------------------------------------------------------
 							break 4;
+							#-------------------------------------------------------------------------------
 						default:
 							return ERROR | @Trigger_Error(101);
 						}
 						#-------------------------------------------------------------------------------
 					}
 					#-------------------------------------------------------------------------------
+					// сюда доходим только если оплаты не было
+					Debug(SPrintF('[comp/Orders/Consider]: не удалось оплатить заказ %s/#%s',$Service['Code'],$OrderID));
+					#-------------------------------------------------------------------------------
+					$Event = Array('UserID'=>$ServiceOrder['UserID'],'Text'=>SPrintF('Не удалость автоматически оплатить заказ %s/#%s, причина (%s)',$Service['Code'],$OrderID,$ServiceOrderPay->String));
+					$Event = Comp_Load('Events/EventInsert',$Event);
+					if(!$Event)
+						return ERROR | @Trigger_Error(500);
+					#-------------------------------------------------------------------------------
+					$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>SPrintF('%sOrders',$Service['Code']),'StatusID'=>$StatusID,'RowsIDs'=>$ServiceOrderID,'Comment'=>SPrintF('Срок действия заказа окончен/%s',$ServiceOrderPay->String)));
+					#-------------------------------------------------------------------------------
+					switch(ValueOf($Comp)){
+					case 'error':
+						return ERROR | @Trigger_Error(500);
+					case 'exception':
+						return ERROR | @Trigger_Error(400);
+					case 'array':
+						# No more...
+						break 3;
+					default:
+						return ERROR | @Trigger_Error(101);
+					}
+					#-------------------------------------------------------------------------------
+					// сюда, по идее, никогда не попадём
 					break;
 					#-------------------------------------------------------------------------------
 				default:
@@ -174,7 +181,7 @@ foreach($Services as $Service){
 				#-------------------------------------------------------------------------------
 			}else{	# autoprolongation -> no autoprolongation
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/Orders/Consider]: NO AutoProlongation for %s',$ServiceOrder['OrderID']));
+				#Debug(SPrintF('[comp/Orders/Consider]: NO AutoProlongation for %s',$ServiceOrder['OrderID']));
 				#-------------------------------------------------------------------------------
 				$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>SPrintF('%sOrders',$Service['Code']),'StatusID'=>$StatusID,'RowsIDs'=>$ServiceOrderID,'Comment'=>'Срок действия заказа окончен/Автопродление отключено'));
 				switch(ValueOf($Comp)){
@@ -249,7 +256,7 @@ foreach($Services as $Service){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Orders/Consider]: end orders processing for Service = %s',$Service['Code']));
+	#Debug(SPrintF('[comp/Orders/Consider]: end orders processing for Service = %s',$Service['Code']));
 	#-------------------------------------------------------------------------------
 	return IntVal($Settings['SleepTime']);
 	#-------------------------------------------------------------------------------
