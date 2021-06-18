@@ -12,7 +12,7 @@ function VmManager5_OVZ_Logon($Settings,$Params){
 	#-----------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/
-	return Array('Url'=>$Settings['Params']['Url'],'Args'=>Array('lang'=>$Settings['Params']['Language'],'theme'=>$Settings['Params']['Theme'],'checkcookie'=>'no','username'=>$Params['Login'],'password'=>$Params['Password'],'func'=>'auth'));
+	return Array('Url'=>$Settings['Params']['Url'],'Args'=>Array('lang'=>$Settings['Params']['Language'],'theme'=>($GLOBALS['IsMobile'])?'z-mobile':$Settings['Params']['Theme'],'checkcookie'=>'no','username'=>$Params['Login'],'password'=>$Params['Password'],'func'=>'auth'));
 	#-------------------------------------------------------------------------------
 }
 
