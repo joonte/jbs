@@ -47,7 +47,7 @@ $Epoches = 3;
 #-------------------------------------------------------------------------------
 $Incomes = Array();
 #-------------------------------------------------------------------------------
-$Orders = DB_Select(Array('ExtraIPOrders','Orders','Contracts'),Array('ContractID','Balance','OrderID','Customer','Login','Domain','(UNIX_TIMESTAMP() + `DaysRemainded`*86400) as `ExpirationDate`','(SELECT `MinDaysPay` FROM `ExtraIPSchemes` WHERE `ExtraIPSchemes`.`ID` = `ExtraIPOrders`.`SchemeID`) as `MinDaysPay`','(SELECT `CostDay` FROM `ExtraIPSchemes` WHERE `ExtraIPSchemes`.`ID` = `ExtraIPOrders`.`SchemeID`) as `CostDay`'),Array('Where'=>SPrintF('(UNIX_TIMESTAMP() + `DaysRemainded`*86400) < %u AND `Orders`.`ID` = `ExtraIPOrders`.`OrderID` AND `Contracts`.`ID` = `Orders`.`ContractID`',MkTime(0,0,1,(Date('n')+$Epoches))),'SortOn'=>'ExpirationDate'));
+$Orders = DB_Select(Array('ExtraIPOrders','Orders','Contracts'),Array('ContractID','Balance','OrderID','Customer','Login','Domain','(UNIX_TIMESTAMP() + `DaysRemainded`*86400) as `ExpirationDate`','(SELECT `MinDaysPay` FROM `ExtraIPSchemes` WHERE `ExtraIPSchemes`.`ID` = `ExtraIPOrders`.`SchemeID`) as `MinDaysPay`','(SELECT `CostDay` FROM `ExtraIPSchemes` WHERE `ExtraIPSchemes`.`ID` = `ExtraIPOrders`.`SchemeID`) as `CostDay`'),Array('Where'=>SPrintF('(UNIX_TIMESTAMP() + `DaysRemainded`*86400) < %u AND `Orders`.`ID` = `ExtraIPOrders`.`OrderID` AND `ExtraIPOrders`.`StatusID` = "Active" AND `Contracts`.`ID` = `Orders`.`ContractID`',MkTime(0,0,1,(Date('n')+$Epoches))),'SortOn'=>'ExpirationDate'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Orders)){
   case 'error':
