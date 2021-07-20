@@ -61,7 +61,7 @@ switch(ValueOf($Invoice)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return ERROR | @Trigger_Error(400);
+	return "Invoice not found\n";
 case 'array':
 	break;
 default:
