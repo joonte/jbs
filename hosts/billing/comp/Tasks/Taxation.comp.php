@@ -126,7 +126,7 @@ if(SizeOf($GLOBALS['TaskReturnInfo']['Invoices_ERROR'])){
 	#-------------------------------------------------------------------------------
 	if(!$Count){
 		#-------------------------------------------------------------------------------
-		$Event = Array('UserID'=>100,'PriorityID'=>'Warning','IsReaded'=>FALSE,'Text'=>SPrintF('Некоторые счета (%s), не прошли фискализацию',Implode(',',$GLOBALS['TaskReturnInfo']['Invoices_ERROR'])));
+		$Event = Array('UserID'=>100,'PriorityID'=>'Warning','IsReaded'=>FALSE,'Text'=>SPrintF('Счета (%s) не прошли фискализацию',Implode(', ',$GLOBALS['TaskReturnInfo']['Invoices_ERROR'])));
 		$Event = Comp_Load('Events/EventInsert',$Event);
 		if(!$Event)
 			return ERROR | @Trigger_Error(500);
