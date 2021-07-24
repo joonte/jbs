@@ -28,7 +28,7 @@ $Where = SPrintF('`OrderDate` >= %u AND `OrderDate` <= %u',$StartDate,$FinishDat
 #-------------------------------------------------------------------------------
 if(In_Array('ByDays',$Details)){
   #-----------------------------------------------------------------------------
-  $HostingOrders = DB_Select(Array('Orders','HostingOrders'),Array('COUNT(*) as `Count`','OrderID','OrderDate',' GET_DAY_FROM_TIMESTAMP(`OrderDate`) as `Day`'),Array('Where'=>'`HostingOrders`.`OrderID` = `Orders`.`ID` AND ' . $Where,'GroupBy'=>'Day','SortOn'=>'OrderDate'));
+  $HostingOrders = DB_Select(Array('Orders','HostingOrders'),Array('COUNT(*) as `Count`','OrderID','OrderDate',' GET_DAY_FROM_TIMESTAMP(`OrderDate`) as `Day`'),Array('Where'=>'`HostingOrders`.`OrderID` = `Orders`.`ID` AND `HostingOrders`.`StatusID` = "Active" AND ' . $Where,'GroupBy'=>'Day','SortOn'=>'OrderDate'));
   #-----------------------------------------------------------------------------
   switch(ValueOf($HostingOrders)){
     case 'error':
