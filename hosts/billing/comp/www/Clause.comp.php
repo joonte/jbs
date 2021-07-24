@@ -16,6 +16,10 @@ $Preview    = (string) @$Args['Preview'];
 if(Is_Error(System_Load('classes/DOM.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$ClauseID = HtmlSpecialChars($ClauseID);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load('Clauses/Load',$ClauseID,TRUE,$Preview);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
