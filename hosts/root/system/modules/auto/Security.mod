@@ -37,7 +37,7 @@ $Hidden = Explode(',',$Settings['Hidden']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # запрещённые значения переменых
-$DenyValues = Array('../','..\\','`','\'');
+$DenyValues = Array('../','..\\','`','\'','<script>');
 # исключения при проверке значений переменных
 $ExcludeVariables = Array('Text','Message','pAddress');
 # файл куда пишем события
@@ -139,8 +139,18 @@ if(Count($Args) > 0){
 		# реализация JBS-1210, проверка значений параметров
 		if(!Is_Array($Arg))
 			foreach($DenyValues as $DenyValue)
-				if(Substr_Count($Arg,$DenyValue))
-					Debug(SPrintF('[Security module]: DENY VALUE (%s) = (%s)',$ArgID,$Arg));
+				if(!In_Array($ArgID,$ExcludeVariables))
+					if(Substr_Count(Mb_StrToLower($Arg),$DenyValue)){
+						#-------------------------------------------------------------------------------
+						Debug(SPrintF('[Security module]: DENY VALUE (%s) = (%s)',$ArgID,$Arg));
+						#-------------------------------------------------------------------------------
+						List($micro, $seconds) = Explode(' ',MicroTime());
+						#-------------------------------------------------------------------------------
+						$Message = SPrintF('[%s.%02u][%s] %s',Date('Y-m-d H:i:s'), $micro * 100, IsSet($_SERVER["REMOTE_PORT"])?$_SERVER["REMOTE_PORT"]:"console", Is_Array($Message)?'Array':$Message);
+						#-------------------------------------------------------------------------------
+						@File_Put_Contents($SuspiciousValues,$Message,FILE_APPEND);
+						#-------------------------------------------------------------------------------
+					}
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		if($ArgID == 'CSRF')
