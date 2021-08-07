@@ -154,6 +154,15 @@
 		<AllowConditionally>0</AllowConditionally>
 		<EventOnNegativeBalance>0</EventOnNegativeBalance>
 		<!-- *********************************************************************** -->
+		<DBO>
+			<BankName>open.ru</BankName>
+			<AccountNumber></AccountNumber>
+			<IsActive>0</IsActive>
+			<Token></Token>
+			<IsNotify>1</IsNotify>
+			<NewStatus>Conditionally</NewStatus>
+		</DBO>
+		<!-- *********************************************************************** -->
 		<Kassa_54-FZ>
 			<TaxationSystem>SIMPLIFIED_IN_OUT</TaxationSystem>
 			<TaxationKassa>Komtet</TaxationKassa>
@@ -1245,6 +1254,13 @@
 				<Params type="array"/>
 				<IsActive>1</IsActive>
 			</MoveFiles>
+			<!-- ********************************************************************* -->
+			<DBO>
+				<Name>Клиент-банк</Name>
+				<Params type="array"/>
+				<ExecutePeriod>01:00</ExecutePeriod>
+				<IsActive>1</IsActive>
+			</DBO>
 			<!-- ********************************************************************* -->
 			<!-- ********************************************************************* -->
 			<GC>

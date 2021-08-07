@@ -42,7 +42,7 @@ UPDATE `Contacts` SET `CreateDate` = UNIX_TIMESTAMP(), `MethodID` = 'Email', `Is
 
 -- SEPARATOR
 
-DELETE FROM `Tasks` WHERE `ID` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
+DELETE FROM `Tasks` WHERE `ID` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17);
 LOCK TABLES `Tasks` WRITE;
 INSERT INTO `Tasks`
   (`ID`,`UserID`,`TypeID`,`Params`,`IsActive`)
@@ -61,7 +61,9 @@ VALUES
 (12,1,'RecoveryUsers','[]','yes'),
 (13,1,'CheckEmail','[]','yes'),
 (14,1,'OrdersForDelete','[]','yes'),
-(15,1,'Taxation','[]','yes')
+(15,1,'Taxation','[]','yes'),
+/* 16 задача внутренняя, для тех у кого старый биллинг был */
+(17,1,'DBO','[]','yes')
 ;
 UNLOCK TABLES;
 
