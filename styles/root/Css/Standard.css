@@ -440,6 +440,11 @@ span.NodeParam {
 	border:			1px solid #969696;
 	padding:		2px;
 	cursor:			pointer;
+        overflow:		hidden;
+        text-overflow:		ellipsis;
+	max-width:		450px;
+	vertical-align:		text-bottom;
+	display:		inline-block;
 }
 
 /* ------------------------- */
