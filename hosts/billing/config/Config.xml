@@ -159,8 +159,6 @@
 			<AccountNumber></AccountNumber>
 			<IsActive>0</IsActive>
 			<Token></Token>
-			<IsNotify>1</IsNotify>
-			<NewStatus>Conditionally</NewStatus>
 		</DBO>
 		<!-- *********************************************************************** -->
 		<Kassa_54-FZ>
