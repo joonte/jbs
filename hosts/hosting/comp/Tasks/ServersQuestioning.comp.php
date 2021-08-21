@@ -110,7 +110,7 @@ case 'true':
 			#-------------------------------------------------------------------------------
 			$Where = SPrintF('`ServerID` = %u AND `Login` IN (%s)',$Server['ID'],Implode(',',$Array));
 			#-------------------------------------------------------------------------------
-			$Orders = DB_Select(SPrintF('%sOrdersOwners',$Server['Code']),Array('ID','Login'),Array('Where'=>$Where));
+			$Orders = DB_Select(SPrintF('%sOrdersOwners',$Server['Code']),Array('ID','OrderID','Login'),Array('Where'=>$Where));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($Orders)){
 			case 'error':
@@ -129,13 +129,22 @@ case 'true':
 					#-------------------------------------------------------------------------------
 					$IOrders = Array('Domain'=>(Count($Parked)?Current($Parked):'not-found'));
 					#-------------------------------------------------------------------------------
-					// в таблице ВПС нет паркованных доменов
-					if($Server['Code'] != 'VPS')
+					// у ВПС обновляем дисковый шаблон
+					if($Server['Code'] == 'VPS'){
+						#-------------------------------------------------------------------------------
+						$IsUpdate = DB_Update('Orders',Array('Params'=>Array('DiskTemplate'=>Current($Parked))),Array('ID'=>$Order['OrderID']));
+						if(Is_Error($IsUpdate))
+							return ERROR | @Trigger_Error(500);
+						#-------------------------------------------------------------------------------
+					}else{
+						#-------------------------------------------------------------------------------
 						$IOrders['Parked'] = Implode(',',$Parked);
-					#-------------------------------------------------------------------------------
-					$IsUpdate = DB_Update(SPrintF('%sOrders',$Server['Code']),$IOrders,Array('ID'=>$Order['ID']));
-					if(Is_Error($IsUpdate))
-						return ERROR | @Trigger_Error(500);
+						#-------------------------------------------------------------------------------
+						$IsUpdate = DB_Update(SPrintF('%sOrders',$Server['Code']),$IOrders,Array('ID'=>$Order['ID']));
+						if(Is_Error($IsUpdate))
+							return ERROR | @Trigger_Error(500);
+						#-------------------------------------------------------------------------------
+					}
 					#-------------------------------------------------------------------------------
 				}
 				#-------------------------------------------------------------------------------
