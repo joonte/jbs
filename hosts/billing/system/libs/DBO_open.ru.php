@@ -78,20 +78,27 @@ function GetStatement($Settings){
 	// перебираем платежи, строим выходной массив
 	$Out = Array();
 	#-------------------------------------------------------------------------------
-	foreach($Answer['account']['getStatementSyncResponse']['paymentDocumentList'] as $Payment){
+	$Payments = $Answer['account']['getStatementSyncResponse']['paymentDocumentList'];
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Payments) as $Key){
 		#-------------------------------------------------------------------------------
 		// пропускаем то что оплатили мы кому-то
-		if($Payment['payerInfo']['accountNumber'] == $Settings['AccountNumber'])
+		if($Payments[$Key]['payerInfo']['accountNumber'] == $Settings['AccountNumber'])
 			continue;
 		#-------------------------------------------------------------------------------
 		$Out[] = Array(
-				'Summ'		=> $Payment['documentAmount']['amount'],
-				'Customer'	=> $Payment['payerInfo']['name'],
-				'Inn'		=> $Payment['payerInfo']['inn'],
-				'Purpose'	=> $Payment['paymentPurpose'],
+				'Key'		=> $Key,	// для дебага в задаче
+				'Summ'		=> $Payments[$Key]['documentAmount']['amount'],
+				'Customer'	=> $Payments[$Key]['payerInfo']['name'],
+				'Inn'		=> $Payments[$Key]['payerInfo']['inn'],
+				'Purpose'	=> $Payments[$Key]['paymentPurpose'],
 				);
 		#-------------------------------------------------------------------------------
+		Debug(SprintF('[system/libs/DBO_open.ru]: [%s]: ИНН: %s, сумма: %s; %s',$Key,$Payments[$Key]['payerInfo']['inn'],$Payments[$Key]['documentAmount']['amount'],$Payments[$Key]['paymentPurpose']));
+		#-------------------------------------------------------------------------------
 	}
+	#-------------------------------------------------------------------------------
+	Debug(SprintF('[system/libs/DBO_open.ru]:'));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return $Out;

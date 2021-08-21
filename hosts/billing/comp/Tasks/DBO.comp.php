@@ -46,26 +46,32 @@ if(Is_Error(System_Load('libs/HTTP.php')))
 if(Is_Error($BankInvoices = GetStatement($Settings)))
 	return 3600;
 #-------------------------------------------------------------------------------
-$GLOBALS['TaskReturnInfo'][] = SPrintF('Invoices: %u ',SizeOf($BankInvoices));
+$GLOBALS['TaskReturnInfo'][] = SPrintF('Invoices: %u',SizeOf($BankInvoices));
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// достаём минимальный и максимальный номер счёта существующий в биллинге
+$InvoicesNums = DB_Select('InvoicesOwners',Array('MAX(`ID`) AS `MAX`','MIN(`ID`) AS `MIN`'),Array('UNIQ'));
+switch(ValueOf($InvoicesNums)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// число которые нались в биллинге и стали оплачены
 $Paid = 0;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // перебираем счета
 foreach($BankInvoices as $BankInvoice){
 	#-------------------------------------------------------------------------------
-	// достаём минимальный и максимальный номер счёта существующий в биллинге
-	$InvoicesNums = DB_Select('InvoicesOwners',Array('MAX(`ID`) AS `MAX`','MIN(`ID`) AS `MIN`'),Array('UNIQ'));
-	switch(ValueOf($InvoicesNums)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		return ERROR | @Trigger_Error(400);
-	case 'array':
-		break;
-	default:
-		return ERROR | @Trigger_Error(101);
-	}
+	// что обрабатываем
+	Debug(SPrintF('[comp/Tasks/DBO]: [%s]: ищем счёт на сумму (%s)',$BankInvoice['Key'],$BankInvoice['Summ']));
 	#-------------------------------------------------------------------------------
 	// разбираем примечание
 	$Words = Explode(" ",Str_Replace("\n"," ",$BankInvoice['Purpose']));
@@ -85,7 +91,11 @@ foreach($BankInvoices as $BankInvoice){
 			case 'error':
 				return ERROR | @Trigger_Error(500);
 			case 'exception':
+				#-------------------------------------------------------------------------------
 				continue 2;
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/DBO]: НЕ найден счёт (%s)',$Number));
+				#-------------------------------------------------------------------------------
 			case 'array':
 				break;
 			default:
@@ -93,12 +103,22 @@ foreach($BankInvoices as $BankInvoice){
 			}
 			#-------------------------------------------------------------------------------
 			// есть такой счёт, проверяем статус
-			if(!In_Array($Invoice['StatusID'],Array('Waiting','Rejected')))
+			if(!In_Array($Invoice['StatusID'],Array('Waiting','Rejected'))){
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/DBO]: найден счёт (%s), статус (%s), пропускаем',$Number,$Invoice['StatusID']));
+				#-------------------------------------------------------------------------------
 				continue;
+				#-------------------------------------------------------------------------------
+			}
 			#-------------------------------------------------------------------------------
 			// проверяем сумму
-			if($Invoice['Summ'] != $BankInvoice['Summ'])
+			if($Invoice['Summ'] != $BankInvoice['Summ']){
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/DBO]: найден счёт (%s), сумма не совпадает: в счёте (%s), оплачено (%s), пропускаем',$Number,$Invoice['Summ'],$BankInvoice['Summ']));
+				#-------------------------------------------------------------------------------
 				continue;
+				#-------------------------------------------------------------------------------
+			}
 			#-------------------------------------------------------------------------------
 			// проверяем плательщика, достаём даныне профиля у этого договора
 			$Profile = DB_Select(Array('Contracts,Profiles'),Array('`Profiles`.`Attribs` AS `Attribs`'),Array('UNIQ','Where'=>Array(SPrintF('`Contracts`.`ID` = %u',$Invoice['ContractID']),'`Contracts`.`ProfileID` = `Profiles`.`ID`')));
@@ -118,9 +138,9 @@ foreach($BankInvoices as $BankInvoice){
 				return ERROR | @Trigger_Error(101);
 			}
 			#-------------------------------------------------------------------------------
-			if($BankInvoice['Inn'] != $Profile['Attribs']['Inn']){
+			if($BankInvoice['Inn'] != @$Profile['Attribs']['Inn']){
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/Tasks/DBO]: НЕ совпадает ИНН плательщика, счёт оплачен (%s), в биллинге (%s)',$BankInvoice['Inn'],$Profile['Attribs']['Inn']));
+				Debug(SPrintF('[comp/Tasks/DBO]: НЕ совпадает ИНН плательщика, счёт оплачен (%s), в биллинге (%s)',$BankInvoice['Inn'],@$Profile['Attribs']['Inn']));
 				#-------------------------------------------------------------------------------
 				continue;
 				#-------------------------------------------------------------------------------
