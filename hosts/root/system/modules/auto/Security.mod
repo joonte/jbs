@@ -39,7 +39,7 @@ $Hidden = Explode(',',$Settings['Hidden']);
 # запрещённые значения переменых
 $DenyValues = Array('../','..\\','`','\'','<script>');
 # исключения при проверке значений переменных
-$ExcludeVariables = Array('Text','Message','pAddress');
+$ExcludeVariables = Array('Text','Message','pAddress','Theme');
 # файл куда пишем события
 $SuspiciousValues = SPrintF('%s/suspicious.values.log',SYSTEM_PATH);
 
@@ -146,7 +146,7 @@ if(Count($Args) > 0){
 						#-------------------------------------------------------------------------------
 						List($micro, $seconds) = Explode(' ',MicroTime());
 						#-------------------------------------------------------------------------------
-						$Message = SPrintF('[%s.%02u][%s] %s',Date('Y-m-d H:i:s'), $micro * 100, IsSet($_SERVER["REMOTE_PORT"])?$_SERVER["REMOTE_PORT"]:"console", Is_Array($Message)?'Array':$Message);
+						$Message = SPrintF("[%s.%02u][%s] %s\n",Date('Y-m-d H:i:s'), $micro * 100, IsSet($_SERVER["REMOTE_PORT"])?$_SERVER["REMOTE_PORT"]:"console",SPrintF('(%s) = (%s)',$ArgID,$Value));
 						#-------------------------------------------------------------------------------
 						@File_Put_Contents($SuspiciousValues,$Message,FILE_APPEND);
 						#-------------------------------------------------------------------------------
