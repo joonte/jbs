@@ -43,7 +43,7 @@ $Types		= $Config['Notifies']['Types'];
 Debug(SPrintF('[comp/Tasks/Email]: отправка письма для (%s), тема (%s)',$Address,$Attribs['Theme']));
 #Debug(SPrintF('[comp/Tasks/Email]: тип сообщения: TypeID = %s',@$Attribs['TypeID']));
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/Tasks/Email]: %s',print_r($Attribs,true)));
+#Debug(SPrintF('[comp/Tasks/Email]: %s',print_r($Attribs,true)));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // достаём данные юзера которому идёт письмо
