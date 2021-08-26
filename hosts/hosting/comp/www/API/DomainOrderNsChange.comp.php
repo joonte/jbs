@@ -101,7 +101,7 @@ if(!Preg_Match($Regulars['DnsDomain'],$Ns1Name))
 #-------------------------------------------------------------------------------
 if(Mb_SubStr($Ns1Name,-Mb_StrLen($Domain)) == $Domain){
 	#-------------------------------------------------------------------------------
-	if(!Preg_Match($Regulars['IP'],$Ns1IP))
+	if(!Preg_Match($Regulars['IP'],$Ns1IP) || !Preg_Match($Regulars['IPv6'],$Ns1IP))
 		return new gException('WRONG_IP_NS1','Неверный IP адрес первого сервера имен');
 	#-------------------------------------------------------------------------------
 }else{
@@ -121,7 +121,7 @@ if(!Preg_Match($Regulars['DnsDomain'],$Ns1Name))
 #-------------------------------------------------------------------------------
 if(Mb_SubStr($Ns2Name,-Mb_StrLen($Domain)) == $Domain){
 	#-------------------------------------------------------------------------------
-	if(!Preg_Match($Regulars['IP'],$Ns2IP))
+	if(!Preg_Match($Regulars['IP'],$Ns2IP) || !Preg_Match($Regulars['IPv6'],$Ns2IP))
 		return new gException('WRONG_IP_NS2','Неверный IP адрес второго сервера имен');
 	#-------------------------------------------------------------------------------
 }else{
@@ -143,7 +143,7 @@ if($Ns3Name){
 	#-------------------------------------------------------------------------------
 	if(Mb_SubStr($Ns3Name,-Mb_StrLen($Domain)) == $Domain){
 		#-------------------------------------------------------------------------------
-		if(!Preg_Match($Regulars['IP'],$Ns3IP))
+		if(!Preg_Match($Regulars['IP'],$Ns3IP) || !Preg_Match($Regulars['IPv6'],$Ns3IP))
 			return new gException('WRONG_IP_NS3','Неверный IP адрес дополнительного сервера имен');
 		#-------------------------------------------------------------------------------
 	}else{
@@ -174,7 +174,7 @@ if($Ns4Name){
 	#-------------------------------------------------------------------------------
 	if(Mb_SubStr($Ns4Name,-Mb_StrLen($Domain)) == $Domain){
 		#-------------------------------------------------------------------------------
-		if(!Preg_Match($Regulars['IP'],$Ns4IP))
+		if(!Preg_Match($Regulars['IP'],$Ns4IP) || !Preg_Match($Regulars['IPv6'],$Ns4IP))
 			return new gException('WRONG_IP_NS4','Неверный IP адрес расширенного сервера имен');
 		#-------------------------------------------------------------------------------
 	}else{
