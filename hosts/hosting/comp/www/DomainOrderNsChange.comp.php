@@ -13,7 +13,7 @@ $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 $DomainOrderID = (integer) @$Args['DomainOrderID'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','classes/Net_IDNA.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainOrdersOwners',Array('ID','UserID','SchemeID','DomainName','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','StatusID','StatusDate'),Array('UNIQ','ID'=>$DomainOrderID));
@@ -73,6 +73,13 @@ if(!$__USER['IsAdmin'] && Time() - $DomainOrder['StatusDate'] < 600)
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Domain = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainScheme['Name']);
+#-------------------------------------------------------------------------------
+$IDNA = new Net_IDNA();
+#-------------------------------------------------------------------------------
+$IDNA_Domain = $IDNA->encode($Domain);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $DOM = new DOM();
 #-------------------------------------------------------------------------------
 $Links = &Links();
@@ -87,11 +94,11 @@ $DOM->AddText('Title','Смена именных серверов');
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/DomainOrderNsChange.js}')));
 #-------------------------------------------------------------------------------
-$DOM->AddAttribs('Body',Array('onload'=>'IsNewNs();'));
+$Script = SPrintF('IsNewNs(\'%s\',\'%s\');',$Domain,$IDNA_Domain);
+#-------------------------------------------------------------------------------
+$DOM->AddAttribs('Body',Array('onload'=>$Script));
 #-------------------------------------------------------------------------------
 $Table = Array();
-#-------------------------------------------------------------------------------
-$Domain = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainScheme['Name']);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Доменное имя',$Domain);
 #-------------------------------------------------------------------------------
@@ -101,7 +108,7 @@ $Messages = Messages();
 #-------------------------------------------------------------------------------
 $Table[] = 'Первичный сервер имен';
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('name'=>'Ns1Name','type'=>'text','prompt'=>$Messages['Prompts']['Domain']['NsName'],'onkeyup'=>'IsNewNs();','value'=>$DomainOrder['Ns1Name']));
+$Comp = Comp_Load('Form/Input',Array('name'=>'Ns1Name','type'=>'text','prompt'=>$Messages['Prompts']['Domain']['NsName'],'onkeyup'=>$Script,'value'=>$DomainOrder['Ns1Name']));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -119,7 +126,7 @@ $Table[] = Array('IP адрес',$Comp);
 $Table[] = 'Вторичный сервер имен';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('name'=>'Ns2Name','type'=>'text','prompt'=>$Messages['Prompts']['Domain']['NsName'],'onkeyup'=>'IsNewNs();','value'=>$DomainOrder['Ns2Name']));
+$Comp = Comp_Load('Form/Input',Array('name'=>'Ns2Name','type'=>'text','prompt'=>$Messages['Prompts']['Domain']['NsName'],'onkeyup'=>$Script,'value'=>$DomainOrder['Ns2Name']));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -137,7 +144,7 @@ $Table[] = Array('IP адрес',$Comp);
 $Table[] = 'Дополнительный сервер имен';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('name'=>'Ns3Name','type'=>'text','prompt'=>$Messages['Prompts']['Domain']['NsName'],'onkeyup'=>'IsNewNs();','value'=>$DomainOrder['Ns3Name']));
+$Comp = Comp_Load('Form/Input',Array('name'=>'Ns3Name','type'=>'text','prompt'=>$Messages['Prompts']['Domain']['NsName'],'onkeyup'=>$Script,'value'=>$DomainOrder['Ns3Name']));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -155,7 +162,7 @@ $Table[] = Array('IP адрес',$Comp);
 $Table[] = 'Расширенный сервер имен';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('name'=>'Ns4Name','type'=>'text','prompt'=>$Messages['Prompts']['Domain']['NsName'],'onkeyup'=>'IsNewNs();','value'=>$DomainOrder['Ns4Name']));
+$Comp = Comp_Load('Form/Input',Array('name'=>'Ns4Name','type'=>'text','prompt'=>$Messages['Prompts']['Domain']['NsName'],'onkeyup'=>$Script,'value'=>$DomainOrder['Ns4Name']));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
