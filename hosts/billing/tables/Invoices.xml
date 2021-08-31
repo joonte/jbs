@@ -70,7 +70,7 @@
 						<!-- ****************************************************************** -->
 						<Juridical>
 							<Name>Счета юридических лиц</Name>
-							<Where>`PaymentSystemID` = 'Juridical'</Where>
+							<Where>`PaymentSystemID` = 'Juridical' OR `PaymentSystemID` = 'Individual'</Where>
 						</Juridical>
 						<!-- ****************************************************************** -->
 						<Natural>
