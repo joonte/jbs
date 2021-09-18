@@ -89,12 +89,6 @@
 					</ColumnsIDs>
 				</Args>
 			</Search>
-			<!-- ********************************************************************* -->
-			<ISPswSearch>
-				<Comp>ISPswLicenses/Search</Comp>
-				<Args type="array"/>
-				<NoBlock/>
-			</ISPswSearch>
 		</Before>
 		<!-- ********************************************************************** -->
 		<After>
