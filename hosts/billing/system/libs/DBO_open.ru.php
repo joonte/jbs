@@ -63,7 +63,13 @@ function GetStatement($Settings){
 	$Answer = OpenRuAPI($Settings,SPrintF('/%s/statement/%s/print?print=true',$accountId,$statementId));
 	#-------------------------------------------------------------------------------
 	// проверяем платежи
-	if(!Is_Array($Answer['account']['getStatementSyncResponse']['paymentDocumentList'])){
+	if(Is_Array($Answer['account']['sendTransactionsToWARequest']['paymentDocumentList']) && SizeOf($Answer['account']['sendTransactionsToWARequest']['paymentDocumentList']))
+		$Payments = $Answer['account']['sendTransactionsToWARequest']['paymentDocumentList'];
+	#-------------------------------------------------------------------------------
+	if(Is_Array($Answer['account']['getStatementSyncResponse']['paymentDocumentList']) && SizeOf($Answer['account']['getStatementSyncResponse']['paymentDocumentList']))
+		$Payments = $Answer['account']['getStatementSyncResponse']['paymentDocumentList'];
+	#-------------------------------------------------------------------------------
+	if(!IsSet($Payments) || !SizeOf($Payments)){
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[system/libs/DBO_open.ru]: нет платежей, Answer = %s',print_r($Answer,true)));
 		#-------------------------------------------------------------------------------
@@ -77,8 +83,6 @@ function GetStatement($Settings){
 	#-------------------------------------------------------------------------------
 	// перебираем платежи, строим выходной массив
 	$Out = Array();
-	#-------------------------------------------------------------------------------
-	$Payments = $Answer['account']['getStatementSyncResponse']['paymentDocumentList'];
 	#-------------------------------------------------------------------------------
 	foreach(Array_Keys($Payments) as $Key){
 		#-------------------------------------------------------------------------------
@@ -123,8 +127,14 @@ function OpenRuAPI($Settings,$Url = '',$Post = Array()){
 			'Protocol'      => 'ssl',
 			);
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	// заголовки
-	$Headers = Array('Content-Type: application/json',SPrintF('Authorization: Bearer sso_1.0_%s',$Settings['Token']));
+	$Headers = Array(SPrintF('Authorization: Bearer sso_1.0_%s',$Settings['Token']));
+	#-------------------------------------------------------------------------------
+	// у POST заголовок сам добавляется
+	if(!SizeOf($Post))
+		$Headers[] = 'Content-Type: application/json';
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Result = HTTP_Send($Url,$HTTP,Array(),$Post,$Headers);
 	#-------------------------------------------------------------------------------
