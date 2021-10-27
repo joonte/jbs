@@ -464,6 +464,7 @@ function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 			'func'			=> 'user.edit',		# Целевая функция
 			'sok'			=> 'ok',
 			'allowcreatevm'		=> 'off',		# нет ограничений, нет смысла создавать неограниченных юзеров
+			'disable_totp'		=> 'on',		# гуглоавторизацию - отключаем
 			'snapshot_limit'	=> $VPSScheme['snapshot_limit'],
 			'isolimitsize'		=> $VPSScheme['isolimitsize'],
 			'isolimitnum'		=> $VPSScheme['isolimitnum'],
@@ -479,6 +480,30 @@ function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 	#-------------------------------------------------------------------------------
 	if(IsSet($Doc['error']))
 		return new gException('USER_CHANGE_ERROR','Не удалось изменить пользователя');
+	#-------------------------------------------------------------------------------
+	// ещё раз, ибо кривая панель - гуглоавторизацию не отклчюает
+	$Request = Array(
+			'func'		=> 'usrparam',
+	                'name'		=> $VPSOrder['Login'],
+			'passwd'	=> $VPSOrder['Password'],
+			'confirm'	=> $VPSOrder['Password'],
+			'atype'		=> 'atany',
+			'sok'		=> 'ok',
+			'su'		=> $VPSOrder['Login'],
+			'setgeoip'	=> 'off',
+			'secureip'	=> 'off',
+			'vk_status'	=> 'off',
+			'fb_status'	=> 'off',
+			'gl_status'	=> 'off',
+			'disable_totp'	=> 'on',
+	);
+	#-------------------------------------------------------------------------------
+	$XML = VmManager5_KVM_Request($Settings,$Request);
+	#-------------------------------------------------------------------------------
+	$Doc = $XML['doc'];
+	#-------------------------------------------------------------------------------
+	if(IsSet($Doc['error']))
+		return new gException('PASSWORD_CHANGE_ERROR','Не удалось изменить пароль для пользователя виртуального сервера');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$VMs = VmManager5_KVM_GetVm($Settings,$VPSOrder['Login']);
@@ -654,6 +679,7 @@ function VmManager5_KVM_Password_Change($Settings,$Login,$Password,$Params){
 			'vk_status'	=> 'off',
 			'fb_status'	=> 'off',
 			'gl_status'	=> 'off',
+			'disable_totp'	=> 'on',
 	);
 	#-------------------------------------------------------------------------------
 	$XML = VmManager5_KVM_Request($Settings,$Request);
