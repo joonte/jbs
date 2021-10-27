@@ -1,178 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Appearance>
- <Row>
-  <Comp>Colors/PromoCodes</Comp>
-  <Args>
-   <ListElement>%ExpirationDate%</ListElement>
-  </Args>
- </Row>
-</Appearance>
-<!-- *********************************************************************** -->
-<Source>
- <TableID>PromoCodes</TableID>
- <ColumnsIDs>
-  <ListElement>ID</ListElement>
-  <ListElement>CreateDate</ListElement>
-  <ListElement>ExpirationDate</ListElement>
-  <ListElement>Code</ListElement>
-  <ListElement>ServiceID</ListElement>
-  <ListElement>SchemeID</ListElement>
-  <ListElement>SchemesGroupID</ListElement>
-  <ListElement>Discont</ListElement>
- </ColumnsIDs>
- <Conditions>
-  <Message>ПромоКодов не обнаружено.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <Search>
-   <Args>
-    <ColumnsIDs>
-     <ListElement>SchemeID</ListElement>
-     <ListElement>ServiceID</ListElement>
-     <ListElement>Discont</ListElement>
-    </ColumnsIDs>
-   </Args>
-  </Search>
- </Before>
- <!-- ********************************************************************** -->
- <After>
-  <Delete>
-   <Args>
-    <Comment>Выбранные ПромоКоды</Comment>
-    <Send>
-     <TableID>PromoCodes</TableID>
-    </Send>
-   </Args>
-  </Delete>
- </After>
-</Comps>
-<!-- *********************************************************************** -->
-<Query>
- <SortOn>CreateDate</SortOn>
-</Query>
-<!-- *********************************************************************** -->
-<Columns>
- <SelectID>
-  <Args>
-   <TableID>PromoCodes</TableID>
-  </Args>
- </SelectID>
- <!-- ********************************************************************** -->
- <Edit>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/Administrator/PromoCodeEdit</ListElement>
-   <ListElement>
-    <PromoCodeID>%ID%</PromoCodeID>
-   </ListElement>
-   <ListElement>Редактировать ПромоКод</ListElement>
-   <ListElement>Edit.gif</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-   <style>width:22px;</style>
-  </Attribs>
- </Edit>
- <!-- ********************************************************************** -->
- <CreateDate>
-  <Head>Дата созд.</Head>
-  <Comp>Formats/Date/Extended</Comp>
-  <Args>
-   <ListElement>%CreateDate%</ListElement>
-  </Args>
- </CreateDate>
- <!-- ********************************************************************** -->
- <ExpirationDate>
-  <Head>Дата окончания</Head>
-  <Comp>Formats/Date/Standard</Comp>
-  <Args>
-   <ListElement>%ExpirationDate%</ListElement>
-  </Args>
- </ExpirationDate>
- <!-- ********************************************************************** -->
- <Code>
-  <Head>ПромоКод</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Code%</ListElement>
-   <Length>20</Length>
-  </Args>
- </Code>
- <!-- ********************************************************************** -->
- <MaxAmount>
-  <Head>Кол</Head>
-  <Prompt>Сколько раз можно вводить этот код</Prompt>
-  <Alias>`MaxAmount`</Alias>
- </MaxAmount>
- <!-- ********************************************************************** -->
- <Amount>
-  <Head>Ост.</Head>
-  <Prompt>Количество оставшихся вводов</Prompt>
-  <Alias>(`MaxAmount` - `CurrentAmount`)</Alias>
- </Amount>
- <!-- ********************************************************************** -->
- <!-- ********************************************************************** -->
- <ServiceID>
-  <Head>На что скидка</Head>
-  <Prompt>Сервис/тариф или группа тарифов на которые будет предоставлена скидка, в результате активации бонуса</Prompt>
-  <Comp>www/Administrator/API/SchemesGroupItemInfo</Comp>
-  <Args>
-   <ListElement>%ServiceID%</ListElement>
-   <ListElement>%SchemeID%</ListElement>
-   <Length>20</Length>
-   <ListElement>%SchemesGroupID%</ListElement>
-  </Args>
- </ServiceID>
- <!-- ********************************************************************** -->
-<PromoLink>
-	<Head>Ссылка</Head>
-	<Prompt>Ссылка на активацию промокода, для рассылок</Prompt>
-	<Comp>Formats/System/PromoLink</Comp>
-	<Args>
-		<Code>%Code%</Code>
-	</Args>
-</PromoLink>
-<!-- ********************************************************************** -->
- <Discont>
-  <Head>Скидка</Head>
-  <Comp>Formats/Percent</Comp>
-  <Args>
-   <ListElement>%Discont%</ListElement>
-  </Args>
-  <Attribs>
-   <style>text-align:right;</style>
-  </Attribs>
- </Discont>
- <!-- ********************************************************************** -->
- <Comment>
-  <Head>Комментарий</Head>
-  <Comp>Formats/String</Comp>
-  <Args>
-   <ListElement>%Comment%</ListElement>
-   <Length>10</Length>
-  </Args>
-  <Alias>IF(LENGTH(`Comment`),`Comment`,'-')</Alias>
- </Comment>
-</Columns>
-<Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>Edit</ListElement>
- <ListElement>CreateDate</ListElement>
- <ListElement>ExpirationDate</ListElement>
- <ListElement>Code</ListElement>
- <ListElement>ServiceID</ListElement>
- <ListElement>MaxAmount</ListElement>
- <ListElement>Amount</ListElement>
- <ListElement>Discont</ListElement>
- <ListElement>PromoLink</ListElement>
- <ListElement>Comment</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Appearance>
+		<Row>
+			<Comp>Colors/PromoCodes</Comp>
+			<Args>
+				<ListElement>%ExpirationDate%</ListElement>
+			</Args>
+		</Row>
+	</Appearance>
+	<!-- *********************************************************************** -->
+	<Source>
+		<TableID>PromoCodes</TableID>
+		<ColumnsIDs>
+			<ListElement>ID</ListElement>
+			<ListElement>CreateDate</ListElement>
+			<ListElement>ExpirationDate</ListElement>
+			<ListElement>Code</ListElement>
+			<ListElement>ServiceID</ListElement>
+			<ListElement>SchemeID</ListElement>
+			<ListElement>SchemesGroupID</ListElement>
+			<ListElement>Discont</ListElement>
+		</ColumnsIDs>
+		<Conditions>
+			<Message>ПромоКодов не обнаружено.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<Search>
+				<Args>
+					<ColumnsIDs>
+						<ListElement>SchemeID</ListElement>
+						<ListElement>ServiceID</ListElement>
+						<ListElement>Discont</ListElement>
+					</ColumnsIDs>
+				</Args>
+			</Search>
+		</Before>
+		<!-- ********************************************************************** -->
+		<After>
+			<Delete>
+				<Args>
+					<Comment>Выбранные ПромоКоды</Comment>
+					<Send>
+						<TableID>PromoCodes</TableID>
+					</Send>
+				</Args>
+			</Delete>
+		</After>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Query>
+		<SortOn>CreateDate</SortOn>
+	</Query>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<SelectID>
+			<Args>
+				<TableID>PromoCodes</TableID>
+			</Args>
+		</SelectID>
+		<!-- ********************************************************************** -->
+		<Edit>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/Administrator/PromoCodeEdit</ListElement>
+				<ListElement>
+					<PromoCodeID>%ID%</PromoCodeID>
+				</ListElement>
+				<ListElement>Редактировать ПромоКод</ListElement>
+				<ListElement>Edit.gif</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+				<style>width:22px;</style>
+			</Attribs>
+		</Edit>
+		<!-- ********************************************************************** -->
+		<CreateDate>
+			<Head>Дата созд.</Head>
+			<Comp>Formats/Date/Extended</Comp>
+			<Args>
+				<ListElement>%CreateDate%</ListElement>
+			</Args>
+		</CreateDate>
+		<!-- ********************************************************************** -->
+		<ExpirationDate>
+			<Head>Дата окончания</Head>
+			<Comp>Formats/Date/Standard</Comp>
+			<Args>
+				<ListElement>%ExpirationDate%</ListElement>
+			</Args>
+		</ExpirationDate>
+		<!-- ********************************************************************** -->
+		<Code>
+			<Head>ПромоКод</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Code%</ListElement>
+				<Length>20</Length>
+			</Args>
+		</Code>
+		<!-- ********************************************************************** -->
+		<MaxAmount>
+			<Head>Кол</Head>
+			<Prompt>Сколько раз можно вводить этот код</Prompt>
+			<Alias>`MaxAmount`</Alias>
+		</MaxAmount>
+		<!-- ********************************************************************** -->
+		<Amount>
+			<Head>Ост.</Head>
+			<Prompt>Количество оставшихся вводов</Prompt>
+			<Alias>(`MaxAmount` - `CurrentAmount`)</Alias>
+		</Amount>
+		<!-- ********************************************************************** -->
+		<!-- ********************************************************************** -->
+		<ServiceID>
+			<Head>На что скидка</Head>
+			<Prompt>Сервис/тариф или группа тарифов на которые будет предоставлена скидка, в результате активации бонуса</Prompt>
+			<Comp>www/Administrator/API/SchemesGroupItemInfo</Comp>
+			<Args>
+				<ListElement>%ServiceID%</ListElement>
+				<ListElement>%SchemeID%</ListElement>
+				<Length>20</Length>
+				<ListElement>%SchemesGroupID%</ListElement>
+			</Args>
+		</ServiceID>
+		<!-- ********************************************************************** -->
+		<PromoLink>
+			<Head>Ссылка</Head>
+			<Prompt>Ссылка на активацию промокода, для рассылок</Prompt>
+			<Comp>Formats/System/EvalLink</Comp>
+			<Args>
+				<ShowWindow>ShowWindow('/PromoCodesActivate',{Code:'%Code%'});</ShowWindow>
+			</Args>
+		</PromoLink>
+		<!-- ********************************************************************** -->
+		<Discont>
+			<Head>Скидка</Head>
+			<Comp>Formats/Percent</Comp>
+			<Args>
+				<ListElement>%Discont%</ListElement>
+			</Args>
+			<Attribs>
+				<style>text-align:right;</style>
+			</Attribs>
+		</Discont>
+		<!-- ********************************************************************** -->
+		<Comment>
+			<Head>Комментарий</Head>
+			<Comp>Formats/String</Comp>
+			<Args>
+				<ListElement>%Comment%</ListElement>
+				<Length>10</Length>
+			</Args>
+			<Alias>IF(LENGTH(`Comment`),`Comment`,'-')</Alias>
+		</Comment>
+	</Columns>
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Edit</ListElement>
+		<ListElement>CreateDate</ListElement>
+		<ListElement>ExpirationDate</ListElement>
+		<ListElement>Code</ListElement>
+		<ListElement>ServiceID</ListElement>
+		<ListElement>MaxAmount</ListElement>
+		<ListElement>Amount</ListElement>
+		<ListElement>Discont</ListElement>
+		<ListElement>PromoLink</ListElement>
+		<ListElement>Comment</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>
