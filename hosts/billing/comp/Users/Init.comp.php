@@ -23,7 +23,13 @@ if(Is_Error(System_Load('libs/Tree.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$User = DB_Select('Users',Array('ID','GroupID','RegisterDate','Name','Sign','Email','UniqID','IsActive','LockReason','LayPayMaxSumm','LayPayThreshold','EnterIP','EnterDate','Params'),Array('UNIQ','ID'=>$UserID));
+// достаём даныне пользователя
+$Columns = Array(
+		'ID','GroupID','RegisterDate','Name','Sign','Email','UniqID','IsActive','LockReason','LayPayMaxSumm','LayPayThreshold','EnterIP','EnterDate','Params',
+		'(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID` = `Users`.`ID` AND `InvoicesOwners`.`IsPosted` = "yes") AS `InvoicesAmount`',
+		);
+#-------------------------------------------------------------------------------
+$User = DB_Select('Users',$Columns,Array('UNIQ','ID'=>$UserID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($User)){
 case 'error':
