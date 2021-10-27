@@ -29,9 +29,9 @@ case 'array':
 	$GLOBALS['TaskReturnInfo'] = SPrintF('OrdersNoticeSuspend, Handled %u orders',SizeOf($Orders));
 	#---------------------------------------------------------------------------
 	foreach($Orders as $Order){
-		#-------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 		$IsSend = NotificationManager::sendMsg(new Message('OrdersSuspend',(integer)$Order['UserID'],Array('Order'=>$Order)));
-		#-------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 		switch(ValueOf($IsSend)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
