@@ -16,9 +16,7 @@ $Settings = $Config['Other']['Eval'];
 #-------------------------------------------------------------------------------
 $Eval = SPrintF("ShowWindow('/%sOrder',{%sSchemeID:%s});",$Code,$Code,$SchemeID);
 #-------------------------------------------------------------------------------
-$Protocol = (@$_SERVER['SERVER_PORT'] != 80?'https':'http');
-#-------------------------------------------------------------------------------
-$Link = SPrintF('%s://%s/UserRegister?Eval=%s',$Protocol,HOST_ID,Crypt_Encode($Eval,$Settings['EvalKey']));
+$Link = SPrintF('%s://%s/UserRegister?Eval=%s',Url_Scheme(),HOST_ID,Crypt_Encode($Eval,$Settings['EvalKey']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Name = Comp_Load('Formats/String','[link]',10,$Link);
