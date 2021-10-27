@@ -131,7 +131,7 @@ class umkaApiModel {
 	#-------------------------------------------------------------------------------
 	// а нету вызовов этой функции
 	private function cycleClose() {
-		return $this->API(SPrintF('/cycleclose.json?print=%u',$this->Print));
+		return @$this->API(SPrintF('/cycleclose.json?print=%u',$this->Print));
 	}
 
 	#-------------------------------------------------------------------------------

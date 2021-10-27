@@ -132,10 +132,10 @@ if(SizeOf($GLOBALS['TaskReturnInfo']['Invoices_ERROR'])){
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		// и закрываем смену, на всякий случай
-		$Close = Comp_Load(SPrintF('Invoices/%s',$Settings['TaxationKassa']),$Settings,0,0,Array());
-		if(Is_Error($Close))
-			return ERROR | @Trigger_Error(500);
+		// и закрываем смену, на всякий случай (убрал, падает, надо разбираться)
+		#$Close = Comp_Load(SPrintF('Invoices/%s',$Settings['TaxationKassa']),$Settings,0,0,Array());
+		#if(Is_Error($Close))
+		#	return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
