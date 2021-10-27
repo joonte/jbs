@@ -29,10 +29,8 @@ $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
 $Send['WMI_DESCRIPTION'] .= SPrintF('%s, %s (%s)',$Comp,Translit($__USER['Name']),$__USER['Email']);
 #-------------------------------------------------------------------------------
-$Protocol = (@$_SERVER['SERVER_PORT'] != 80?'https':'http');
-#-------------------------------------------------------------------------------
-$Send['WMI_SUCCESS_URL'] = SPrintF('%s://%s/Invoices',$Protocol,HOST_ID);
-$Send['WMI_FAIL_URL']    = SPrintF('%s://%s/Invoices?Error=yes',$Protocol,HOST_ID);
+$Send['WMI_SUCCESS_URL'] = SPrintF('%s://%s/Invoices',Url_Scheme(),HOST_ID);
+$Send['WMI_FAIL_URL']    = SPrintF('%s://%s/Invoices?Error=yes',Url_Scheme(),HOST_ID);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # а ещё в люобй форме есть CSRF

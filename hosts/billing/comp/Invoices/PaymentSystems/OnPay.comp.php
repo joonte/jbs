@@ -24,11 +24,9 @@ $PriceFinal = true;
 if($PriceFinal)
 	$Send['price_final'] = 'true';
 #-------------------------------------------------------------------------------
-$Protocol = (@$_SERVER['SERVER_PORT'] != 80?'https':'http');
+$Send['url_success']  = SPrintF('%s://%s/Invoices',Url_Scheme(),HOST_ID);
 #-------------------------------------------------------------------------------
-$Send['url_success']  = SPrintF('%s://%s/Invoices',$Protocol,HOST_ID);
-#-------------------------------------------------------------------------------
-$Send['url_fail']  = SPrintF('%s://%s/Invoices?Error=yes',$Protocol,HOST_ID);
+$Send['url_fail']  = SPrintF('%s://%s/Invoices?Error=yes',Url_Scheme(),HOST_ID);
 #-------------------------------------------------------------------------------
 $Send['price'] = Round($Summ/$Settings['Course'],2);
 #-------------------------------------------------------------------------------

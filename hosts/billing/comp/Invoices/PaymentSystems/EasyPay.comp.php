@@ -44,10 +44,8 @@ $Send['EP_Hash'] = md5(Implode('',$Hash));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # URL для возврата
-$Protocol = (@$_SERVER['SERVER_PORT'] != 80?'https':'http');
-#-------------------------------------------------------------------------------
-$Send['EP_Cancel_URL']	= SPrintF('%s://%s/Invoices?Error=yes',$Protocol,HOST_ID);
-$Send['EP_Success_URL']	= SPrintF('%s://%s/Invoices',$Protocol,HOST_ID);
+$Send['EP_Cancel_URL']	= SPrintF('%s://%s/Invoices?Error=yes',Url_Scheme(),HOST_ID);
+$Send['EP_Success_URL']	= SPrintF('%s://%s/Invoices',Url_Scheme(),HOST_ID);
 # кодировка
 $Send['EP_Encoding']	= 'utf-8';
 #-------------------------------------------------------------------------------

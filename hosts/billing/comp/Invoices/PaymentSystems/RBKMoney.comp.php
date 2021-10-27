@@ -27,10 +27,8 @@ $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
 $Send['serviceName'] .= SPrintF('%s, %s (%s)',$Comp,Translit($__USER['Name']),$__USER['Email']);
 #-------------------------------------------------------------------------------
-$Protocol = (@$_SERVER['SERVER_PORT'] != 80?'https':'http');
-#-------------------------------------------------------------------------------
-$Send['successUrl'] = SPrintF('%s://%s/Invoices',$Protocol,HOST_ID);
-$Send['failUrl']    = SPrintF('%s://%s/Invoices?Error=yes',$Protocol,HOST_ID);
+$Send['successUrl'] = SPrintF('%s://%s/Invoices',Url_Scheme(),HOST_ID);
+$Send['failUrl']    = SPrintF('%s://%s/Invoices?Error=yes',Url_Scheme(),HOST_ID);
 #-------------------------------------------------------------------------------
 return $Send;
 #-------------------------------------------------------------------------------
