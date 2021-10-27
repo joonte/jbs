@@ -60,7 +60,7 @@ case 'array':
 			#-------------------------------------------------------------------------------
 			$UniqID = UniqID('DNSmanagerSchemes');
 			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load('Services/Schemes','DNSmanagerSchemes',$DNSmanagerOrder['UserID'],Array('Name','ServersGroupID'),$UniqID);
+			$Comp = Comp_Load('Services/Schemes','DNSmanagerSchemes',$DNSmanagerOrder['UserID'],Array('Name','ServersGroupID','CostMonth'),$UniqID);
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
@@ -97,8 +97,15 @@ case 'array':
 				#-------------------------------------------------------------------------------
 				$Table = $Options = Array();
 				#-------------------------------------------------------------------------------
-				foreach($DNSmanagerSchemes as $DNSmanagerScheme)
-					$Options[$DNSmanagerScheme['ID']] = $DNSmanagerScheme['Name'];
+				foreach($DNSmanagerSchemes as $DNSmanagerScheme){
+					#-------------------------------------------------------------------------------
+					$Comp = Comp_Load('Formats/Currency',$DNSmanagerScheme['CostMonth']);
+					if(Is_Error($Comp))
+						return ERROR | @Trigger_Error(500);
+					#-------------------------------------------------------------------------------
+					$Options[$DNSmanagerScheme['ID']] = SPrintF('%s / %s',$DNSmanagerScheme['Name'],$Comp);
+					#-------------------------------------------------------------------------------
+				}
 				#-------------------------------------------------------------------------------
 				$Comp = Comp_Load('Form/Select',Array('name'=>'NewSchemeID'),$Options,NULL,$DNSmanagerOrder['SchemeID']);
 				if(Is_Error($Comp))

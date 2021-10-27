@@ -82,7 +82,7 @@ $Where = Array(
 if(!$__USER['IsAdmin'])
 	$Where[] = "`IsActive` = 'yes' AND `IsSchemeChangeable` = 'yes'";
 #-------------------------------------------------------------------------------
-$VPSSchemes = DB_Select($UniqID,Array('ID','Name','disklimit'),Array('SortOn'=>'SortID','Where'=>$Where));
+$VPSSchemes = DB_Select($UniqID,Array('ID','Name','disklimit','CostMonth'),Array('SortOn'=>'SortID','Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($VPSSchemes)){
 case 'error':
@@ -119,8 +119,15 @@ if($VPSOrder['Params']['SystemID'] == 'VmManager5_KVM'){
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
-foreach($VPSSchemes as $VPSScheme)
-	$Options[$VPSScheme['ID']] = SPrintF('%s / %s Gb',$VPSScheme['Name'],$VPSScheme['disklimit']/1024);
+foreach($VPSSchemes as $VPSScheme){
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Formats/Currency',$VPSScheme['CostMonth']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Options[$VPSScheme['ID']] = SPrintF('%s / %s Gb / %s',$VPSScheme['Name'],$VPSScheme['disklimit']/1024,$Comp);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'NewSchemeID'),$Options,NULL,$VPSOrder['SchemeID']);
 if(Is_Error($Comp))

@@ -76,7 +76,7 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Where = SPrintF("`SoftWareGroup` = %u /*AND `ID` != %u*/ AND `IsActive` = 'yes' AND `IsSchemeChangeable` = 'yes'",$ISPswOrder['SoftWareGroup'],$ISPswOrder['SchemeID']);
 #-------------------------------------------------------------------------------
-$ISPswSchemes = DB_Select($UniqID,Array('ID','Name'),Array('SortOn'=>'SortID','Where'=>$Where));
+$ISPswSchemes = DB_Select($UniqID,Array('ID','Name','CostMonth'),Array('SortOn'=>'SortID','Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($ISPswSchemes)){
 case 'error':
@@ -109,8 +109,15 @@ $DOM->AddText('Title','Смена тарифного плана');
 #-------------------------------------------------------------------------------
 $Table = $Options = Array();
 #-------------------------------------------------------------------------------
-foreach($ISPswSchemes as $ISPswScheme)
-	$Options[$ISPswScheme['ID']] = $ISPswScheme['Name'];
+foreach($ISPswSchemes as $ISPswScheme){
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Formats/Currency',$ISPswScheme['CostMonth']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Options[$ISPswScheme['ID']] = SPrintF('%s / %s',$ISPswScheme['Name'],$Comp);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'NewSchemeID'),$Options,NULL,$ISPswOrder['SchemeID']);
 if(Is_Error($Comp))
