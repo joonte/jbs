@@ -160,8 +160,19 @@ foreach($Servers as $Server){
 				if(!$Settings['IsNotify'])
 					continue;
 				#-------------------------------------------------------------------------------
-				$Array = Array('Login'=>$Order['Login'],'Used'=>$Accounts[$Order['Login']]['Used'],'Limit'=>$Accounts[$Order['Login']]['Limit']);
 				#-------------------------------------------------------------------------------
+				// ссылка на смену тарифа
+				$Ajax = SPrintF("ShowWindow('/HostingOrderSchemeChange',{HostingOrderID:'%s'});",$Order['ID']);
+				#-------------------------------------------------------------------------------
+				$SchemeChangeLink = Comp_Load('Formats/System/EvalLink',$Ajax);
+				if(Is_Error($SchemeChangeLink))
+					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+				#-------------------------------------------------------------------------------
+				// параметры для передачи в шаблон сообщения
+				$Array = Array('Login'=>$Order['Login'],'Used'=>$Accounts[$Order['Login']]['Used'],'Limit'=>$Accounts[$Order['Login']]['Limit'],'SchemeChangeLink'=>$SchemeChangeLink);
+				#-------------------------------------------------------------------------------
+				// отправляем сообщение
 				$IsSend = NotificationManager::sendMsg(new Message('DiskUsageNotice',(integer)$Order['UserID'],Array('Order'=>$Array)));
 				#-------------------------------------------------------------------------------
 				switch(ValueOf($IsSend)){
