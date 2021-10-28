@@ -16,10 +16,7 @@ $Settings = $Config['Other']['Eval'];
 #-------------------------------------------------------------------------------
 $Eval = SPrintF("ShowWindow('/%sOrder',{%sSchemeID:%s});",$Code,$Code,$SchemeID);
 #-------------------------------------------------------------------------------
-$Link = SPrintF('%s://%s/UserRegister?Eval=%s',Url_Scheme(),HOST_ID,Crypt_Encode($Eval,$Settings['EvalKey']));
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Name = Comp_Load('Formats/String','[link]',10,$Link);
+$Name = Comp_Load('Formats/System/EvalLink',SPrintF("ShowWindow('/%sOrder',{%sSchemeID:%s});",$Code,$Code,$SchemeID),'[ссылка]');
 if(Is_Error($Name))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
