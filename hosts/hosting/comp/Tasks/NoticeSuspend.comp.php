@@ -122,7 +122,7 @@ foreach($Services as $Service){
 		if(Is_Error($SchemeChangeLink))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$Order['ProlongLink'] = $SchemeChangeLink;
+		$Order['SchemeChangeLink'] = $SchemeChangeLink;
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$msg = new Message(SPrintF('%sNoticeSuspend',$Service['Code']),(integer)$Order['UserID'],Array(SPrintF('%sOrder',$Service['Code'])=>$Order));
