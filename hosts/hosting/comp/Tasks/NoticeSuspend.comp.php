@@ -53,7 +53,8 @@ foreach($Services as $Service){
 	$Columns = Array(
 				'*',
 				SPrintF('(SELECT `Balance` FROM `Contracts` WHERE `%sOrdersOwners`.`ContractID` = `ID`) AS `Balance`',$Service['Code']),
-				SPrintF('(SELECT `Name` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `SchemeName`',$Service['Code'],$Service['Code'])
+				SPrintF('(SELECT `Name` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `SchemeName`',$Service['Code'],$Service['Code']),
+				SPrintF('(SELECT `IsProlong` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `SchemeName`',$Service['Code'],$Service['Code']),
 			);
 	#-------------------------------------------------------------------------------
 	$Where = "`DaysRemainded` IN (1,2,3,5,10,15) AND `StatusID` = 'Active'";
@@ -106,13 +107,22 @@ foreach($Services as $Service){
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// ссылка на продление заказа
-		$Ajax = SPrintF("ShowWindow('/%sOrderPay',{HostingOrderID:'%s'});",$Service['Code'],$Order['ID']);
+		$Ajax = SPrintF("ShowWindow('/%sOrderPay',{%sOrderID:'%s'});",$Service['Code'],$Service['Code'],$Order['ID']);
 		#-------------------------------------------------------------------------------
 		$ProlongLink = Comp_Load('Formats/System/EvalLink',$Ajax);
-		if(Is_Error($Cost))
+		if(Is_Error($ProlongLink))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		$Order['ProlongLink'] = $ProlongLink;
+		#-------------------------------------------------------------------------------
+		// ссылка на смену тарифа
+		$Ajax = SPrintF("ShowWindow('/%sOrderSchemeChange',{%sOrderID:'%s'});",$Service['Code'],$Service['Code'],$Order['ID']);
+		#-------------------------------------------------------------------------------
+		$SchemeChangeLink = Comp_Load('Formats/System/EvalLink',$Ajax);
+		if(Is_Error($SchemeChangeLink))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Order['ProlongLink'] = $SchemeChangeLink;
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$msg = new Message(SPrintF('%sNoticeSuspend',$Service['Code']),(integer)$Order['UserID'],Array(SPrintF('%sOrder',$Service['Code'])=>$Order));

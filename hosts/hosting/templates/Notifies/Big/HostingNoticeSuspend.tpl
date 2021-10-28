@@ -11,9 +11,17 @@
 Стоимость продления:	{$HostingOrder.Cost|default:'$HostingOrder.Cost'}*
 Логин:			{$HostingOrder.Login|default:'$HostingOrder.Login'}
 Паркованный домен:	{$HostingOrder.Domain|default:'$HostingOrder.Domain'}.
+{if $HostingOrder.IsProlong}
 --
 Для продления заказа, воспользуйтесь этой ссылкой:
 {$HostingOrder.ProlongLink|default:'$HostingOrder.ProlongLink'}
+{else}
+--
+Для продления заказа, необходимо сменить тарифный план "{$HostingOrder.SchemeName|default:'$HostingOrder.SchemeName'}" на другой:
+{$HostingOrder.SchemeChangeLink|default:'$HostingOrder.SchemeChangeLink'}
+После чего заказ можно будет продлить:
+{$HostingOrder.ProlongLink|default:'$HostingOrder.ProlongLink'}
+{/if}
 --
 * Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
 

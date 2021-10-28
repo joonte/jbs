@@ -137,6 +137,8 @@
 			<Comp>Formats/System/EvalLink</Comp>
 			<Args>
 				<ShowWindow>ShowWindow('/PromoCodesActivate',{Code:'%Code%'});</ShowWindow>
+				<LinkText>[ссылка]</LinkText>
+				<Length>10</Length>
 			</Args>
 		</PromoLink>
 		<!-- ********************************************************************** -->
