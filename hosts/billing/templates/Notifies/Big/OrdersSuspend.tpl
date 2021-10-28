@@ -7,4 +7,7 @@
 Уведомляем Вас о том, что оканчивается срок действия Вашего заказа #{$Order.ID|string_format:"%05u"},
 на услугу "{$Order.Name|default:'$Order.Name'}".
 До окончания заказа {$Order.DaysRemainded|default:'$Order.DaysRemainded'} дн.
+--
+Для продления заказа, воспользуйтесь этой ссылкой:
+{$Order.ProlongLink|default:'$Order.ProlongLink'}
 

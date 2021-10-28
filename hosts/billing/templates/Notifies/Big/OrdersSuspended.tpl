@@ -5,4 +5,7 @@
 {assign var=Theme value="Закончился срок действия заказа на услугу ({$Service.Name|default:'$Service.Name'}), номер заказа #{$ID|string_format:"%05u"}" scope=global}
 
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ на услугу ({$Service.Name|default:'$Service.Name'}), номер заказа #{$ID|string_format:"%05u"}, был заблокирован.
+--
+Для продления заказа, воспользуйтесь этой ссылкой:
+{$ProlongLink|default:'$ProlongLink'}
 
