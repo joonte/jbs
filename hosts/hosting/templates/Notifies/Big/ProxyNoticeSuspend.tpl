@@ -9,13 +9,21 @@
 Баланс договора:	{$ProxyOrder.Balance|default:'$ProxyOrder.Balance'}
 Тарифный план:		"{$ProxyOrder.SchemeName|default:'$ProxyOrder.SchemeName'}"
 Стоимость продления:	{$ProxyOrder.Cost|default:'$ProxyOrder.Cost'}*
+{if $ProxyOrder.IsProlong}
+--
+Для продления заказа, воспользуйтесь этой ссылкой:
+{$ProxyOrder.ProlongLink|default:'$ProxyOrder.ProlongLink'}
+{else}
+--
+Для продления заказа, необходимо сменить тарифный план "{$ProxyOrder.SchemeName|default:'$ProxyOrder.SchemeName'}" на другой:
+{$ProxyOrder.SchemeChangeLink|default:'$ProxyOrder.SchemeChangeLink'}
+После чего заказ можно будет продлить:
+{$ProxyOrder.ProlongLink|default:'$ProxyOrder.ProlongLink'}
+{/if}
 
-  * Адрес подключения:
-      {$Host|default:'$Host'}:{$Port|default:'$Port'}
-  * Протокол подключения:
-      {$ProtocolType|default:'$ProtocolType'}
-  * Логин:
-      {$Login|default:'$Login'}
+Адрес подключения:	{$Host|default:'$Host'}:{$Port|default:'$Port'}
+Протокол подключения:	{$ProtocolType|default:'$ProtocolType'}
+Логин:			{$Login|default:'$Login'}
 
 --
 * Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.

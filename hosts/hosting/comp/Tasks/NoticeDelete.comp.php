@@ -50,7 +50,8 @@ foreach($Services as $Service){
 	$Columns = Array(
 			'*',
 			SPrintF('(SELECT `Balance` FROM `Contracts` WHERE `%sOrdersOwners`.`ContractID` = `ID`) AS `Balance`',$Service['Code']),
-			SPrintF('(SELECT `Name` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `SchemeName`',$Service['Code'],$Service['Code'])
+			SPrintF('(SELECT `Name` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `SchemeName`',$Service['Code'],$Service['Code']),
+			SPrintF('(SELECT `IsProlong` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `SchemeName`',$Service['Code'],$Service['Code']),
 			);
 	#-------------------------------------------------------------------------------
 	$Where = "`StatusID` = 'Suspended' AND ROUND((UNIX_TIMESTAMP() - `StatusDate`)/86400) IN (2,3,6,11,16,21,31,41,51,61,71,101)";
@@ -97,6 +98,25 @@ foreach($Services as $Service){
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		$Order['Cost'] = $Cost;
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		// ссылка на продление заказа
+		$Ajax = SPrintF("ShowWindow('/%sOrderPay',{%sOrderID:'%s'});",$Service['Code'],$Service['Code'],$Order['ID']);
+		#-------------------------------------------------------------------------------
+		$ProlongLink = Comp_Load('Formats/System/EvalLink',$Ajax);
+		if(Is_Error($ProlongLink))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Order['ProlongLink'] = $ProlongLink;
+		#-------------------------------------------------------------------------------
+		// ссылка на смену тарифа
+		$Ajax = SPrintF("ShowWindow('/%sOrderSchemeChange',{%sOrderID:'%s'});",$Service['Code'],$Service['Code'],$Order['ID']);
+		#-------------------------------------------------------------------------------
+		$SchemeChangeLink = Comp_Load('Formats/System/EvalLink',$Ajax);
+		if(Is_Error($SchemeChangeLink))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Order['SchemeChangeLink'] = $SchemeChangeLink;
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$msg = new Message(SPrintF('%sNoticeDelete',$Service['Code']),(integer)$Order['UserID'],Array(SPrintF('%sOrder',$Service['Code'])=>$Order));

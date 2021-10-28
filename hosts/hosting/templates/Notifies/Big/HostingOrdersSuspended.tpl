@@ -9,6 +9,17 @@
 ---
 Тарифный план:		"{$HostingScheme.Name|default:'$HostingScheme.Name'}"
 Стоимость продления:	{$HostingScheme.CostMonth|default:'$HostingScheme.CostMonth'}*
+{if $HostingScheme.IsProlong}
+--
+Для продления заказа, воспользуйтесь этой ссылкой:
+{$ProlongLink|default:'$ProlongLink'}
+{else}
+--
+Для продления заказа, необходимо сменить тарифный план "{$HostingScheme.Name|default:'$HostingScheme.Name'}" на другой:
+{$SchemeChangeLink|default:'$SchemeChangeLink'}
+После чего заказ можно будет продлить:
+{$ProlongLink|default:'$ProlongLink'}
+{/if}
 
 --
 * Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.

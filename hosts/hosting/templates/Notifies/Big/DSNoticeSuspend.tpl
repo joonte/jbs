@@ -10,6 +10,11 @@
 Тарифный план:		"{$DSOrder.SchemeName|default:'$DSOrder.SchemeName'}"
 Стоимость продления:	{$DSOrder.Cost|default:'$DSOrder.Cost'}*
 IP адрес:		{$DSOrder.IP|default:'$DSOrder.IP'}
+{if $DSOrder.IsProlong}
+--
+Для продления заказа, воспользуйтесь этой ссылкой:
+{$DSOrder.ProlongLink|default:'$DSOrder.ProlongLink'}
+{/if}
 
 --
 * Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.

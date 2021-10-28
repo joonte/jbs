@@ -9,6 +9,11 @@
 Дата окончания заказа:	{$DomainOrder.ExpirationDate|date_format:"%d.%m.%Y"}.
 Баланс договора:	{$DomainOrder.Balance|default:'$DomainOrder.Balance'}
 Стоимость продления:	{$DomainOrder.Cost|default:'$DomainOrder.Cost'}*
+{if $DomainOrder.IsProlong}
+--
+Для продления заказа, воспользуйтесь этой ссылкой:
+{$DomainOrder.ProlongLink|default:'$DomainOrder.ProlongLink'}
+{/if}
 
 --
 * Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.

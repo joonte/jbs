@@ -8,7 +8,17 @@
 ---
 Тарифный план:		"{$ProxyScheme.Name|default:'$ProxyScheme.Name'}"
 Стоимость продления:	{$ProxyScheme.CostMonth|default:'$ProxyScheme.CostMonth'}*
-
+{if $ProxyScheme.IsProlong}
+--
+Для продления заказа, воспользуйтесь этой ссылкой:
+{$ProlongLink|default:'$ProlongLink'}
+{else}
+--
+Для продления заказа, необходимо сменить тарифный план "{$ProxyScheme.Name|default:'$ProxyScheme.Name'}" на другой:
+{$SchemeChangeLink|default:'$SchemeChangeLink'}
+После чего заказ можно будет продлить:
+{$ProlongLink|default:'$ProlongLink'}
+{/if}
 --
 * Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
 

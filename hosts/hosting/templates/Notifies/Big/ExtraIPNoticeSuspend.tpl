@@ -10,6 +10,17 @@
 Тарифный план:		"{$ExtraIPOrder.SchemeName|default:'$ExtraIPOrder.SchemeName'}"
 Стоимость продления:	{$ExtraIPOrder.Cost|default:'$ExtraIPOrder.Cost'}*
 IP адрес:		{$ExtraIPOrder.Login|default:'$ExtraIPOrder.Login'}
+{if $ExtraIPOrder.IsProlong}
+--
+Для продления заказа, воспользуйтесь этой ссылкой:
+{$ExtraIPOrder.ProlongLink|default:'$ExtraIPOrder.ProlongLink'}
+{else}
+--
+Для продления заказа, необходимо сменить тарифный план "{$ExtraIPOrder.SchemeName|default:'$ExtraIPOrder.SchemeName'}" на другой:
+{$ExtraIPOrder.SchemeChangeLink|default:'$ExtraIPOrder.SchemeChangeLink'}
+После чего заказ можно будет продлить:
+{$ExtraIPOrder.ProlongLink|default:'$ExtraIPOrder.ProlongLink'}
+{/if}
 
 --
 * Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.

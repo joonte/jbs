@@ -10,6 +10,17 @@
 Баланс договора:      {$ISPswOrder.Balance|default:'$ISPswOrder.Balance'}
 Тарифный план:        "{$ISPswOrder.SchemeName|default:'$ISPswOrder.SchemeName'}"
 Стоимость продления:  {$ISPswOrder.Cost|default:'$ISPswOrder.Cost'}*
+{if $ISPswScheme.IsProlong}
+--
+Для продления заказа, воспользуйтесь этой ссылкой:
+{$ProlongLink|default:'$ProlongLink'}
+{else}
+--
+Для продления заказа, необходимо сменить тарифный план "{$ISPswScheme.Name|default:'$ISPswScheme.Name'}" на другой:
+{$SchemeChangeLink|default:'$SchemeChangeLink'}
+После чего заказ можно будет продлить:
+{$ProlongLink|default:'$ProlongLink'}
+{/if}
 
 --
 * Справочная информация, не является офертой. Стоимость может отличаться, в зависимости от ваших скидок.
