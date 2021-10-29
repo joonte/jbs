@@ -159,7 +159,7 @@ case 'array':
 		# шлём юзеру уведомление
 		$UserBalance = $User;
 		#-------------------------------------------------------------------------------
-		$Summ = Comp_Load('Formats/Currency',$User['Balance']);
+		$Summ = Comp_Load('Formats/Currency',Abs($User['Balance']));
 		if(Is_Error($Summ))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
