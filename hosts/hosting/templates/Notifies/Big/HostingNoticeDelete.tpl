@@ -10,16 +10,16 @@
 Баланс договора:      {$HostingOrder.Balance|default:'$HostingOrder.Balance'}
 Тарифный план:        "{$HostingOrder.SchemeName|default:'$HostingOrder.SchemeName'}"
 Стоимость продления:  {$HostingOrder.Cost|default:'$HostingOrder.Cost'}*
-{if $HostingScheme.IsProlong}
+{if $HostingOrder.IsProlong}
 --
 Для продления заказа, воспользуйтесь этой ссылкой:
-{$ProlongLink|default:'$ProlongLink'}
+{$HostingOrder.ProlongLink|default:'$HostingOrder.ProlongLink'}
 {else}
 --
-Для продления заказа, необходимо сменить тарифный план "{$HostingScheme.Name|default:'$HostingScheme.Name'}" на другой:
-{$SchemeChangeLink|default:'$SchemeChangeLink'}
+Для продления заказа, необходимо сменить тарифный план "{$HostingOrder.SchemeName|default:'$HostingOrder.SchemeName'}" на другой:
+{$HostingOrder.SchemeChangeLink|default:'$HostingOrder.SchemeChangeLink'}
 После чего заказ можно будет продлить:
-{$ProlongLink|default:'$ProlongLink'}
+{$HostingOrder.ProlongLink|default:'$HostingOrder.ProlongLink'}
 {/if}
 
 --

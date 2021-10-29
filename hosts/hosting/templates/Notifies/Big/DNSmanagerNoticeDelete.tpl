@@ -10,16 +10,16 @@
 Баланс договора:      {$DNSmanagerOrder.Balance|default:'$DNSmanagerOrder.Balance'}
 Тарифный план:        "{$DNSmanagerOrder.SchemeName|default:'$DNSmanagerOrder.SchemeName'}"
 Стоимость продления:  {$DNSmanagerOrder.Cost|default:'$DNSmanagerOrder.Cost'}*
-{if $DNSmanagerScheme.IsProlong}
+{if $DNSmanagerOrder.IsProlong}
 --
 Для продления заказа, воспользуйтесь этой ссылкой:
 {$ProlongLink|default:'$ProlongLink'}
 {else}
 --
-Для продления заказа, необходимо сменить тарифный план "{$DNSmanagerScheme.Name|default:'$DNSmanagerScheme.Name'}" на другой:
-{$SchemeChangeLink|default:'$SchemeChangeLink'}
+Для продления заказа, необходимо сменить тарифный план "{$DNSmanagerOrder.Name|default:'$DNSmanagerOrder.Name'}" на другой:
+{$DNSmanagerOrder.SchemeChangeLink|default:'$DNSmanagerOrder.SchemeChangeLink'}
 После чего заказ можно будет продлить:
-{$ProlongLink|default:'$ProlongLink'}
+{$DNSmanagerOrder.ProlongLink|default:'$DNSmanagerOrder.ProlongLink'}
 {/if}
 
 --

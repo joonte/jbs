@@ -10,10 +10,10 @@ IP адрес:            {$ExtraIPOrder.Login|default:'$ExtraIPOrder.Login'}
 Баланс договора:     {$ExtraIPOrder.Balance|default:'$ExtraIPOrder.Balance'}
 Тарифный план:       "{$ExtraIPOrder.SchemeName|default:'$ExtraIPOrder.SchemeName'}"
 Стоимость продления: {$ExtraIPOrder.Cost|default:'$ExtraIPOrder.Cost'}*
-{if $ExtraIPScheme.IsProlong}
+{if $ExtraIPOrder.IsProlong}
 --
 Для продления заказа, воспользуйтесь этой ссылкой:
-{$ProlongLink|default:'$ProlongLink'}
+{$ExtraIPOrder.ProlongLink|default:'$ExtraIPOrder.ProlongLink'}
 {/if}
 
 --

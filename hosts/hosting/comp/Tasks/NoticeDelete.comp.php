@@ -51,7 +51,7 @@ foreach($Services as $Service){
 			'*',
 			SPrintF('(SELECT `Balance` FROM `Contracts` WHERE `%sOrdersOwners`.`ContractID` = `ID`) AS `Balance`',$Service['Code']),
 			SPrintF('(SELECT `Name` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `SchemeName`',$Service['Code'],$Service['Code']),
-			SPrintF('(SELECT `IsProlong` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `SchemeName`',$Service['Code'],$Service['Code']),
+			SPrintF('(SELECT `IsProlong` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `IsProlong`',$Service['Code'],$Service['Code']),
 			);
 	#-------------------------------------------------------------------------------
 	$Where = "`StatusID` = 'Suspended' AND ROUND((UNIX_TIMESTAMP() - `StatusDate`)/86400) IN (2,3,6,11,16,21,31,41,51,61,71,101)";

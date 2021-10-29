@@ -12,16 +12,16 @@ IP адрес:             {$VPSOrder.IP|default:'$VPSOrder.IP'}
 Тарифный план:        "{$VPSOrder.SchemeName|default:'$VPSOrder.SchemeName'}"
 Стоимость продления:  {$VPSOrder.Cost|default:'$VPSOrder.Cost'}*
 Логин:                {$VPSOrder.Login|default:'$VPSOrder.Login'}
-{if $VPSScheme.IsProlong}
+{if $VPSOrder.IsProlong}
 --
 Для продления заказа, воспользуйтесь этой ссылкой:
-{$ProlongLink|default:'$ProlongLink'}
+{$VPSOrder.ProlongLink|default:'$VPSOrder.ProlongLink'}
 {else}
 --
-Для продления заказа, необходимо сменить тарифный план "{$VPSScheme.Name|default:'$VPSScheme.Name'}" на другой:
-{$SchemeChangeLink|default:'$SchemeChangeLink'}
+Для продления заказа, необходимо сменить тарифный план "{$VPSOrder.Name|default:'$VPSOrder.Name'}" на другой:
+{$VPSOrder.SchemeChangeLink|default:'$VPSOrder.SchemeChangeLink'}
 После чего заказ можно будет продлить:
-{$ProlongLink|default:'$ProlongLink'}
+{$VPSOrder.ProlongLink|default:'$VPSOrder.ProlongLink'}
 {/if}
 
 --

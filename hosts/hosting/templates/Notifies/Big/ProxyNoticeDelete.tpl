@@ -10,10 +10,10 @@
 Баланс договора:      {$ProxyOrder.Balance|default:'$ProxyOrder.Balance'}
 Тарифный план:        "{$ProxyOrder.SchemeName|default:'$ProxyOrder.SchemeName'}"
 Стоимость продления:  {$ProxyOrder.Cost|default:'$ProxyOrder.Cost'}*
-{if $ProxyScheme.IsProlong}
+{if $ProxyOrder.IsProlong}
 --
 Для продления заказа, воспользуйтесь этой ссылкой:
-{$ProlongLink|default:'$ProlongLink'}
+{$ProxyOrder.ProlongLink|default:'$ProxyOrder.ProlongLink'}
 {/if}
 
 --

@@ -10,10 +10,10 @@
 Баланс договора:       {$DSOrder.Balance|default:'$DSOrder.Balance'}
 Тарифный план:         "{$DSOrder.SchemeName|default:'$DSOrder.SchemeName'}"
 Стоимость продления:   {$DSOrder.Cost|default:'$DSOrder.Cost'}*
-{if $DSScheme.IsProlong}
+{if $DSOrder.IsProlong}
 --
 Для продления заказа, воспользуйтесь этой ссылкой:
-{$ProlongLink|default:'$ProlongLink'}
+{$DSOrder.ProlongLink|default:'$DSOrder.ProlongLink'}
 {/if}
 
 --
