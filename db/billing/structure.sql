@@ -880,13 +880,13 @@ CREATE TABLE IF NOT EXISTS `Statistics` (
 	`Year` int(4) NOT NULL,
 	`Month` int(2) NOT NULL,
 	`Day` int(2) NOT NULL,
-	`TableID` varchar(64),
-	`PackageID` varchar(64),
-	`Total` int(11) NOT NULL,
-	`Active` int(11) NOT NULL,
-	`New` int(11) NOT NULL,
-	`Waiting` int(11) NOT NULL,
-	`Suspended` int(11) NOT NULL,
+	`TableID` char(64) default NULL,
+	`PackageID` char(64) default NULL,
+	`Total` int(11) default '0',
+	`Active` int(11) default '0',
+	`New` int(11) default '0',
+	`Waiting` int(11) default '0',
+	`Suspended` int(11) default '0',
 	PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
