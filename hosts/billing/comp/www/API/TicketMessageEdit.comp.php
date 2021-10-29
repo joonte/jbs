@@ -216,7 +216,7 @@ if($Message){
 		// First message from support and ticket hasn't assigned to somebody yet.
 		if($Count == 1 && $Ticket['TargetUserID'] == 100){
 			#-------------------------------------------------------------------------------
-			$IsUpdate = DB_Update('Edesks',Array('UpdateDate' => Time(),'TargetUserID' => (integer)$__USER['ID']), Array('ID'=>$Ticket['ID']));
+			$IsUpdate = DB_Update('Edesks',Array('UpdateDate' => Time(),'TargetUserID'=>(integer)$__USER['ID']), Array('ID'=>$Ticket['ID']));
 			if(Is_Error($IsUpdate))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
@@ -247,7 +247,8 @@ if($Message){
 	if(!$Event)
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	if($__USER['IsAdmin'] && $Settings['AutoAssignToLastAnswerEmployee']){
+	// если это админ, настроено назначать на последнего ответившего, и это не системный юзер - то назначаем на ответившего
+	if($__USER['IsAdmin'] && $Settings['AutoAssignToLastAnswerEmployee'] && $__USER['ID'] != 100){
 		#-------------------------------------------------------------------------------
 		$IsUpdate = DB_Update('Edesks',Array('UpdateDate'=>Time(),'TargetUserID'=>(integer)$__USER['ID']),Array('ID'=>$Ticket['ID']));
 		if(Is_Error($IsUpdate))
