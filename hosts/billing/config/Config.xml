@@ -1282,7 +1282,6 @@
 				<CreateAndSendInvoicesSettings>
 					<IsActive>1</IsActive>
 					<CreateAndSendInvoicesSendOnlyNatural>1</CreateAndSendInvoicesSendOnlyNatural>
-					<CreateAndSendInvoicesSendEmptyMail>0</CreateAndSendInvoicesSendEmptyMail>
 					<DayOfWeek>1</DayOfWeek>
 					<CreateAndSendInvoicesPeriod>13</CreateAndSendInvoicesPeriod>
 					<ForcePaymentSystem>0</ForcePaymentSystem>
