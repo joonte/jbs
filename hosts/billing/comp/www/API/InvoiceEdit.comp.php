@@ -104,7 +104,7 @@ if(!IsSet($PaymentSystems[$PaymentSystemID]))
 $PaymentSystem = $PaymentSystems[$PaymentSystemID];
 #-------------------------------------------------------------------------------
 if(!$PaymentSystem['ContractsTypes'][$Contract['TypeID']])
-	return new gException('WRONG_CONTRACT_TYPE','Данный вид договора не может быть использован для выписывания счета данного типа');
+	return new gException('WRONG_CONTRACT_TYPE','Данный вид договора не может быть использован для выписки счета данного типа');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IInvoice = Array('PaymentSystemID'=>$PaymentSystemID);
