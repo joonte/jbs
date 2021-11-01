@@ -87,11 +87,18 @@ case 'array':
 		$Out = SPrintF("%sНеоплаченный счёт на сумму %s от пользователя %s\n",$Out,$Invoice['Summ'],$Invoice['UserEmail']);
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF("[Tasks/GC/NotifyConditionallyInvoice]: Уведомление о условно оплаченном счёте #%d.",$Invoice['ID']));
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+                // генерируем ссылку на оплату
+                $PaymentLink = SPrintF('%s://%s/Invoices/%u/',Url_Scheme(),HOST_ID,$Invoice['ID']);
+		#-------------------------------------------------------------------------------
+		$Invoice['PaymentLink'] = $PaymentLink;
+		#-------------------------------------------------------------------------------
 		#----------------------------------TRANSACTION----------------------------------
 		if(Is_Error(DB_Transaction($TransactionID = UniqID('Tasks/GC/NotifyConditionallyInvoice'))))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$Msg = new Message('ConditionallyPayedInvoice', $Invoice['UserID'], $Invoice);
+		$Msg = new Message('ConditionallyPayedInvoice',$Invoice['UserID'],$Invoice);
 		$IsSend = NotificationManager::sendMsg($Msg);
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($IsSend)){
