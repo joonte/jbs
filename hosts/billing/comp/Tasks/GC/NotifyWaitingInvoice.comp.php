@@ -66,11 +66,14 @@ case 'array':
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
+		// генерируем ссылку на оплату
+		$PaymentLink = SPrintF('%s://%s/Invoices/%u/',Url_Scheme(),HOST_ID,$Invoice['ID']);
+		#-------------------------------------------------------------------------------
 		#----------------------------------TRANSACTION----------------------------------
 		if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Tasks/GC/NotifyWaitingInvoice'))))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------
-		$IsSend = NotificationManager::sendMsg(new Message('NotPayedInvoice', (integer)$Invoice['UserID'], Array('Theme'=>SPrintF('Неоплаченный счёт #%d',$Invoice['ID']),'InvoiceID'=>$Invoice['ID'],'Items'=>Implode("\n",$Items))));
+		$IsSend = NotificationManager::sendMsg(new Message('NotPayedInvoice',(integer)$Invoice['UserID'],Array('Theme'=>SPrintF('Неоплаченный счёт #%d',$Invoice['ID']),'InvoiceID'=>$Invoice['ID'],'Items'=>Implode("\n",$Items),'PaymentLink'=>$PaymentLink)));
 		#-------------------------------------------------------------------------
 		switch(ValueOf($IsSend)){
 		case 'true':
