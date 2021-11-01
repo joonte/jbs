@@ -258,11 +258,7 @@ foreach($Orders as $Order){
 		return ERROR | @Trigger_Error(101);
 	}
 	#---------------------------------------------------------------------------
-	$Contracts = Array();
-	#---------------------------------------------------------------------------
-	$Attachments = Array();
-	#---------------------------------------------------------------------------
-	$PaymentLinks = '';
+	$Contracts = $Attachments = $PaymentLinks = Array();
 	#---------------------------------------------------------------------------
 	foreach($Baskets as $Basket){
 		#-------------------------------------------------------------------------------
@@ -380,13 +376,7 @@ foreach($Orders as $Order){
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// генерируем ссылку на оплату
-		$Ajax = SPrintF('javascript:ShowWindow("/InvoiceDocument",{InvoiceID:%u});',$Comp['InvoiceID']);
-		#-------------------------------------------------------------------------------
-		$PaymentLink = Comp_Load('Formats/System/EvalLink',$Ajax);
-		if(Is_Error($PaymentLink))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		$PaymentLinks = SPrintF("%s\n%s",$PaymentLinks,$PaymentLink);
+		$PaymentLinks[] = SPrintF('%s://%s/Invoices/%u/',Url_Scheme(),HOST_ID,$Comp['InvoiceID']);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -419,13 +409,13 @@ foreach($Orders as $Order){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# а вложений, в принципе, может и не быть ... и ссылок. и нехрена тогда слать вообще...
-	if(IsSet($PaymentLinks) || SizeOf($EmailAttachments) > 0){
+	if((IsSet($PaymentLinks) && SizeOf($PaymentLinks) > 0) || SizeOf($EmailAttachments) > 0){
 		#-------------------------------------------------------------------------------
 		$msgParams = Array('Attachments'=>$EmailAttachments);
 		#-------------------------------------------------------------------------------
 		// докидываем ссылки на оплату счетов
-		if(IsSet($PaymentLinks))
-			$msgParams['PaymentLinks'] = ($PaymentLinks)?$PaymentLinks:'ошибка генерации ссылок на оплату, просьба сообщить в техподдержку';
+		if(IsSet($PaymentLinks) && SizeOf($PaymentLinks) > 0)
+			$msgParams['PaymentLinks'] = Implode("\n",$PaymentLinks);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$msg = new Message('CreateAndSendInvoices', $Order['UserID'],$msgParams);
@@ -435,7 +425,9 @@ foreach($Orders as $Order){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
-			return ERROR | @Trigger_Error(400);
+			// могут быть отключены оповещения...
+			break;
+			//return ERROR | @Trigger_Error(400);
 		case 'true':
 			break;
 		default:
