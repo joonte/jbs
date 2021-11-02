@@ -11,14 +11,17 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-$ISPswOrderID = (integer) @$Args['ISPswOrderID'];
+$ISPswOrderID	= (integer) @$Args['ISPswOrderID'];
+$OrderID	= (integer) @$Args['OrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Tree.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','SchemeID','(SELECT `SoftWareGroup` FROM `ISPswSchemes` WHERE `ISPswSchemes`.`ID` = `SchemeID`) AS SoftWareGroup','StatusID');
 #-------------------------------------------------------------------------------
-$ISPswOrder = DB_Select('ISPswOrdersOwners',$Columns,Array('UNIQ','ID'=>$ISPswOrderID));
+$Where = ($ISPswOrderID?SPrintF('`ID` = %u',$ISPswOrderID):SPrintF('`OrderID` = %u',$OrderID));
+#-------------------------------------------------------------------------------
+$ISPswOrder = DB_Select('ISPswOrdersOwners',$Columns,Array('UNIQ','Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($ISPswOrder)){
 case 'error':

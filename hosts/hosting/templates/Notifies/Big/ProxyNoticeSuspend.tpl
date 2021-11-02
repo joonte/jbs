@@ -13,12 +13,6 @@
 --
 Для продления заказа, воспользуйтесь этой ссылкой:
 {$ProxyOrder.ProlongLink|default:'$ProxyOrder.ProlongLink'}
-{else}
---
-Для продления заказа, необходимо сменить тарифный план "{$ProxyOrder.SchemeName|default:'$ProxyOrder.SchemeName'}" на другой:
-{$ProxyOrder.SchemeChangeLink|default:'$ProxyOrder.SchemeChangeLink'}
-После чего заказ можно будет продлить:
-{$ProxyOrder.ProlongLink|default:'$ProxyOrder.ProlongLink'}
 {/if}
 
 Адрес подключения:	{$Host|default:'$Host'}:{$Port|default:'$Port'}

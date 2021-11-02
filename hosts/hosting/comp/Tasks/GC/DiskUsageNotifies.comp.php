@@ -108,7 +108,7 @@ foreach($Servers as $Server){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$HostingOrders = DB_Select('HostingOrdersOwners',Array('ID','UserID','Login'),Array('Where'=>SPrintF('`Login` IN (%s)',Implode(',',$Array))));
+	$HostingOrders = DB_Select('HostingOrdersOwners',Array('ID','OrderID','UserID','Login'),Array('Where'=>SPrintF('`Login` IN (%s)',Implode(',',$Array))));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($HostingOrders)){
 	case 'error':
@@ -162,11 +162,7 @@ foreach($Servers as $Server){
 				#-------------------------------------------------------------------------------
 				#-------------------------------------------------------------------------------
 				// ссылка на смену тарифа
-				$Ajax = SPrintF("ShowWindow('/HostingOrderSchemeChange',{HostingOrderID:'%s'});",$Order['ID']);
-				#-------------------------------------------------------------------------------
-				$SchemeChangeLink = Comp_Load('Formats/System/EvalLink',$Ajax);
-				if(Is_Error($SchemeChangeLink))
-					return ERROR | @Trigger_Error(500);
+				$SchemeChangeLink = SPrintF('%s://%s/HostingOrders/%u/SchemeChange/',Url_Scheme(),HOST_ID,$Order['OrderID']);
 				#-------------------------------------------------------------------------------
 				#-------------------------------------------------------------------------------
 				// параметры для передачи в шаблон сообщения

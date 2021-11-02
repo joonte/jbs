@@ -11,7 +11,8 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-$DNSmanagerOrderID = (integer) @$Args['DNSmanagerOrderID'];
+$DNSmanagerOrderID	= (integer) @$Args['DNSmanagerOrderID'];
+$OrderID		= (integer) @$Args['OrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Tree.php')))
 	return ERROR | @Trigger_Error(500);
@@ -19,7 +20,9 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','lib
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','SchemeID','ServerID','(SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`) AS `ServersGroupID`','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`) AS `Params`','StatusID');
 #-------------------------------------------------------------------------------
-$DNSmanagerOrder = DB_Select('DNSmanagerOrdersOwners',$Columns,Array('UNIQ','ID'=>$DNSmanagerOrderID));
+$Where = ($DNSmanagerOrderID?SPrintF('`ID` = %u',$DNSmanagerOrderID):SPrintF('`OrderID` = %u',$OrderID));
+#-------------------------------------------------------------------------------
+$DNSmanagerOrder = DB_Select('DNSmanagerOrdersOwners',$Columns,Array('UNIQ','Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DNSmanagerOrder)){
 case 'error':

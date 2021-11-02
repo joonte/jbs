@@ -110,13 +110,7 @@ foreach($Services as $Service){
 		$Order['ProlongLink'] = SPrintF('%s://%s/%sOrders/%u/',Url_Scheme(),HOST_ID,$Service['Code'],$Order['OrderID']);
 		#-------------------------------------------------------------------------------
 		// ссылка на смену тарифа
-		$Ajax = SPrintF("ShowWindow('/%sOrderSchemeChange',{%sOrderID:'%s'});",$Service['Code'],$Service['Code'],$Order['ID']);
-		#-------------------------------------------------------------------------------
-		$SchemeChangeLink = Comp_Load('Formats/System/EvalLink',$Ajax);
-		if(Is_Error($SchemeChangeLink))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		$Order['SchemeChangeLink'] = $SchemeChangeLink;
+		$Order['SchemeChangeLink'] = SPrintF('%s://%s/%sOrders/%u/SchemeChange/',Url_Scheme(),HOST_ID,$Service['Code'],$Order['OrderID']);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$msg = new Message(SPrintF('%sNoticeSuspend',$Service['Code']),(integer)$Order['UserID'],Array(SPrintF('%sOrder',$Service['Code'])=>$Order));

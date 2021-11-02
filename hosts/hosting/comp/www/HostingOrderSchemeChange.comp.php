@@ -11,7 +11,8 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-$HostingOrderID = (integer) @$Args['HostingOrderID'];
+$HostingOrderID	= (integer) @$Args['HostingOrderID'];
+$OrderID	= (integer) @$Args['OrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/Tree.php')))
 	return ERROR | @Trigger_Error(500);
@@ -19,7 +20,9 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','lib
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','SchemeID','(SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`)) AS `ServersGroupID`','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`)) AS `Params`','StatusID');
 #-------------------------------------------------------------------------------
-$HostingOrder = DB_Select('HostingOrdersOwners',$Columns,Array('UNIQ','ID'=>$HostingOrderID));
+$Where = ($HostingOrderID?SPrintF('`ID` = %u',$HostingOrderID):SPrintF('`OrderID` = %u',$OrderID));
+#-------------------------------------------------------------------------------
+$HostingOrder = DB_Select('HostingOrdersOwners',$Columns,Array('UNIQ','Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingOrder)){
 case 'error':

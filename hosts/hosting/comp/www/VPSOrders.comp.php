@@ -10,6 +10,7 @@ Eval(COMP_INIT);
 $Args = Args();
 #-------------------------------------------------------------------------------
 $OrderID	= (integer) @$Args['OrderID'];
+$SchemeChange	= (boolean) @$Args['SchemeChange'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
@@ -32,8 +33,11 @@ $NoBody = new Tag('NOBODY');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // передан номер заказа, надо открыть окно на оплату
-if($OrderID)
+if($OrderID && !$SchemeChange)
 	$DOM->AddAttribs('Body',Array('onload'=>SPrintF("ShowWindow('/VPSOrderPay',{OrderID:'%u'});",$OrderID)));
+#-------------------------------------------------------------------------------
+if($OrderID && $SchemeChange)
+	$DOM->AddAttribs('Body',Array('onload'=>SPrintF("ShowWindow('/VPSOrderSchemeChange',{OrderID:'%u'});",$OrderID)));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Services',Array('Where'=>"`ID` = 30000 AND `IsActive` = 'yes'"));

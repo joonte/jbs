@@ -31,13 +31,7 @@ class DNSmanagerOrdersSuspendedMsg extends Message {
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// ссылка на смену тарифа
-		$Ajax = SPrintF("ShowWindow('/DNSmanagerOrderSchemeChange',{DNSmanagerOrderID:'%s'});",$this->params['ID']);
-		#-------------------------------------------------------------------------------
-		$SchemeChangeLink = Comp_Load('Formats/System/EvalLink',$Ajax);
-		if(Is_Error($SchemeChangeLink))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		$this->params['SchemeChangeLink'] = $SchemeChangeLink;
+		$this->params['SchemeChangeLink'] = SPrintF('%s://%s/DNSmanagerOrders/%u/SchemeChange/',Url_Scheme(),HOST_ID,$this->params['OrderID']);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		return $this->params;
