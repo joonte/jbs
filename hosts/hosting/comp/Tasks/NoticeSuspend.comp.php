@@ -107,13 +107,7 @@ foreach($Services as $Service){
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// ссылка на продление заказа
-		$Ajax = SPrintF("ShowWindow('/%sOrderPay',{%sOrderID:'%s'});",$Service['Code'],$Service['Code'],$Order['ID']);
-		#-------------------------------------------------------------------------------
-		$ProlongLink = Comp_Load('Formats/System/EvalLink',$Ajax);
-		if(Is_Error($ProlongLink))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		$Order['ProlongLink'] = $ProlongLink;
+		$Order['ProlongLink'] = SPrintF('%s://%s/%sOrders/%u/',Url_Scheme(),HOST_ID,$Service['Code'],$Order['OrderID']);
 		#-------------------------------------------------------------------------------
 		// ссылка на смену тарифа
 		$Ajax = SPrintF("ShowWindow('/%sOrderSchemeChange',{%sOrderID:'%s'});",$Service['Code'],$Service['Code'],$Order['ID']);

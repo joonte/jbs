@@ -21,8 +21,10 @@ RewriteEngine On
 	Deny from all
 </FilesMatch>
 
-# редирект на оплату счёта
+# ссылки в почте, на оплату выписанных счетов, красивые
 RedirectMatch	/Invoices/([0-9]*)/$	/Invoices?InvoiceID=$1
+# ссылки в почте на оплату услуг, красивые
+RedirectMatch	/(Hosting|Domain|VPS|DS|ExtraIP|ISPsw|DNSmanager|Proxy)Orders/([0-9]*)/$	/$1Orders?OrderID=$2
 
 RewriteCond %{REQUEST_URI} (.*)
 RewriteRule (install|public|styles|index.php) - [L]

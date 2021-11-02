@@ -27,13 +27,7 @@ class DNSmanagerOrdersSuspendedMsg extends Message {
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// ссылка на продление заказа
-		$Ajax = SPrintF("ShowWindow('/DNSmanagerOrderPay',{DNSmanagerOrderID:'%s'});",$this->params['ID']);
-		#-------------------------------------------------------------------------------
-		$ProlongLink = Comp_Load('Formats/System/EvalLink',$Ajax);
-		if(Is_Error($ProlongLink))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		$this->params['ProlongLink'] = $ProlongLink;
+		$this->params['ProlongLink'] = SPrintF('%s://%s/DNSmanagerOrders/%u/',Url_Scheme(),HOST_ID,$this->params['OrderID']);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// ссылка на смену тарифа

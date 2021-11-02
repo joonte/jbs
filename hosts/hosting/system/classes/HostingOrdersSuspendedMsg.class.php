@@ -34,16 +34,11 @@ class HostingOrdersSuspendedMsg extends Message {
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		$this->params['ProlongLink'] = $ProlongLink;
+		$this->params['ProlongLink'] = SPrintF('%s://%s/HostingOrders/%u/',Url_Scheme(),HOST_ID,$this->params['OrderID']);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// ссылка на смену тарифа
-		$Ajax = SPrintF("ShowWindow('/HostingOrderSchemeChange',{HostingOrderID:'%s'});",$this->params['ID']);
-		#-------------------------------------------------------------------------------
-		$SchemeChangeLink = Comp_Load('Formats/System/EvalLink',$Ajax);
-		if(Is_Error($SchemeChangeLink))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		$this->params['SchemeChangeLink'] = $SchemeChangeLink;
+		$this->params['ProlongLink'] = SPrintF('%s://%s/HostingOrders/%u/',Url_Scheme(),HOST_ID,$this->params['OrderID']);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		return $this->params;
