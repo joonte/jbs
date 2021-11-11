@@ -44,9 +44,7 @@ foreach(Array_Keys($Graphs) as $Name){
 		data.addRows([%s]);
 
 		// Set options for pie chart.
-		var options = {title:'%s',
-		width:500,
-		height:300};
+		var options = {title:'%s','is3D':true/*,width:600,height:350*/};
 
 		// Instantiate and draw the chart
 		var chart = new google.visualization.PieChart(document.getElementById('div_%s'));
