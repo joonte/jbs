@@ -18,7 +18,7 @@ Debug(SprintF('[comp/Charts/Pie]: Graphs = %s',print_r($Graphs,true)));
 foreach(Array_Keys($Graphs) as $Name){
 	#-------------------------------------------------------------------------------
 	// имя функции для каллбака
-	$FnName = SubStr(UniqID(Md5($Name)),0,8);
+	$FnName = SubStr(Md5(MicroTime()),0,8);
 	#-------------------------------------------------------------------------------
 	$FnNames[] = $FnName;
 	#-------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ foreach(Array_Keys($Graphs) as $Name){
 		// Instantiate and draw the chart
 		var chart = new google.visualization.PieChart(document.getElementById('div_%s'));
 		chart.draw(data, options);
-	}",$JsFuncs,$FnName,Implode(',',$Data),$Name,$FnName);
+	}\n",$JsFuncs,$FnName,Implode(',',$Data),$Name,$FnName);
 	#-------------------------------------------------------------------------------
 	// обратные вызовы
 	$CallBacks = SPrintF("%s\n\tgoogle.charts.setOnLoadCallback(draw_%s)",$CallBacks,$FnName);

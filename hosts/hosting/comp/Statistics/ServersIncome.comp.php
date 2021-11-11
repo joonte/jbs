@@ -10,12 +10,12 @@ Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
 if(Is_Error(System_Load('libs/Artichow.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Result = Array('Title'=>'Распределение доходов по серверам');
 #-------------------------------------------------------------------------------
 if(!$IsCreate)
-  return $Result;
+	return $Result;
 #-------------------------------------------------------------------------------
 $NoBody = new Tag('NOBODY');
 #-------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ foreach($ServersGroups as $ServersGroup){
 	#-------------------------------------------------------------------------------
 	$Balance = $Accounts = $NumPaid = 0;
 	#-------------------------------------------------------------------------------
-	$Params = $Labels = Array();
+	$Params = $Labels = $SrvAccounts = Array();
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Table[] = SPrintF('Группа серверов: %s',$ServersGroup['Name']);
@@ -205,8 +205,9 @@ foreach($ServersGroups as $ServersGroup){
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		#Debug("[comp/Statistics/ServersIncome]: debug - 3");
-		$Params[] = $ServerIncome;
-		$Labels[] = $Server['Address'];
+		$Params[]	= $ServerIncome;
+		$SrvAccounts[]	= $NumAccounts;
+		$Labels[]	= $Server['Address'];
 		#-------------------------------------------------------------------------------
 		#Debug("[comp/Statistics/ServersIncome]: debug - 4");
 		#Debug(SPrintF('Balance = %s',print_r($Balance,true)));
@@ -251,19 +252,9 @@ foreach($ServersGroups as $ServersGroup){
 	$Table[] = Array(new Tag('TD',Array('colspan'=>5,'class'=>'Standard','style'=>'color:white;'),'конец группы серверов'));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Graphs[$ServersGroup['ID']] = Array('Name'=>$ServersGroup['Name'],'Balance'=>$Balance,'NumPaid'=>$NumPaid,'Accounts'=>$Accounts,'Params'=>$Params,'Labels'=>$Labels);
+	$Graphs[$ServersGroup['ID']] = Array('Name'=>$ServersGroup['Name'],'Balance'=>$Balance,'NumPaid'=>$NumPaid,'Accounts'=>$Accounts,'Params'=>$Params,'Labels'=>$Labels,'NumAccounts'=>$NumAccounts,'SrvAccounts'=>$SrvAccounts);
 	#----------------------------------------------------------------------------
 }
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-// рисуем таблицу
-$Comp = Comp_Load('Tables/Extended',$Table);
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$NoBody->AddChild($Comp);
-#-------------------------------------------------------------------------------
-$NoBody->AddChild(new Tag('BR'));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # строим графики, считаем суммы
@@ -301,8 +292,21 @@ $NoBody->AddChild(new Tag('BR'));
 $NoBody->AddChild(new Tag('BR'));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// рисуем таблицу
+$Comp = Comp_Load('Tables/Extended',$Table);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+//$NoBody->AddChild($Comp);
+$NoBody->AddChild(new Tag('DIV',Array('style'=>'float:left;'),$Comp));
+#-------------------------------------------------------------------------------
+$NoBody->AddChild(new Tag('BR'));
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 // для общей статистики, по группам
-$Params = $Labels = Array();
+$GraphByGroup = Array();
+// выходные графики
+$OutGraphs = Array('Доходы всех групп'=>Array());
 #-------------------------------------------------------------------------------
 foreach($ServersGroups as $ServersGroup){
 	#-------------------------------------------------------------------------------
@@ -310,15 +314,22 @@ foreach($ServersGroups as $ServersGroup){
 		#-------------------------------------------------------------------------------
 		$iParam = 0;
 		#-------------------------------------------------------------------------------
-		#Debug(print_r($Graphs[$ServersGroup['ID']],true));
+		Debug(print_r($Graphs[$ServersGroup['ID']],true));
 		#-------------------------------------------------------------------------------
 		if(Count($Graphs[$ServersGroup['ID']]['Params']) > 1){
 			#-------------------------------------------------------------------------------
-			$File = SPrintF('%s.jpg',UniqID(SPrintF('ServersIncome_%s_',$ServersGroup['ID'])));
+			$Name		= $Graphs[$ServersGroup['ID']]['Name'];
+			$NameSumm	= SPrintF('Доход по серверам, группа %s',$Name);
+			$NameCount	= SPrintF('Число аккаунтов, группа %s',$Name);
 			#-------------------------------------------------------------------------------
-			Artichow_Pie(SPrintF('Доходы группы %s',$Graphs[$ServersGroup['ID']]['Name']),SPrintF('%s/%s',$Folder,$File),$Graphs[$ServersGroup['ID']]['Params'],$Graphs[$ServersGroup['ID']]['Labels']);
+			$OutGraphs[$NameSumm] = $OutGraphs[$NameCount] = Array();
 			#-------------------------------------------------------------------------------
-			$NoBody->AddChild(new Tag('IMG',Array('src'=>$File)));
+			foreach(Array_Keys($Graphs[$ServersGroup['ID']]['Labels']) as $Key){
+				#-------------------------------------------------------------------------------
+				$OutGraphs[$NameSumm][]	= Array($Graphs[$ServersGroup['ID']]['Labels'][$Key],$Graphs[$ServersGroup['ID']]['Params'][$Key]);
+				$OutGraphs[$NameCount][]= Array($Graphs[$ServersGroup['ID']]['Labels'][$Key],$Graphs[$ServersGroup['ID']]['SrvAccounts'][$Key]);
+				#-------------------------------------------------------------------------------
+			}
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
@@ -326,24 +337,24 @@ foreach($ServersGroups as $ServersGroup){
 		foreach(Array_Keys($Graphs[$ServersGroup['ID']]['Params']) as $Key)
 			$iParam = $iParam + $Graphs[$ServersGroup['ID']]['Params'][$Key];
 		#-------------------------------------------------------------------------------
-		if($iParam > 0){
-			#-------------------------------------------------------------------------------
-			$Params[] = $iParam;
-			$Labels[] = $ServersGroup['Name'];
-			#-------------------------------------------------------------------------------
-		}
+		// для выхлопного графика по всем группам
+		if($iParam > 0)
+			$OutGraphs['Доходы всех групп'][] = Array($ServersGroup['Name'],$iParam);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-// генерим общую картинку по группам
-$File = SPrintF('%s.jpg',UniqID('ServersIncomeTotal_'));
+$Pie = Comp_Load('Charts/Pie',$OutGraphs);
+if(Is_Error($Pie))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-Artichow_Pie('Доходы всех групп',SPrintF('%s/%s',$Folder,$File),$Params,$Labels);
+// накидываем DIV'ы в тело страницы
+foreach($Pie['FnNames'] as $FnName)
+	$NoBody->AddChild(new Tag('DIV',Array('style'=>'float:left;width:30%;height:400px;','id'=>SPrintF('div_%s',$FnName)),$FnName));
 #-------------------------------------------------------------------------------
-$NoBody->AddChild(new Tag('IMG',Array('src'=>$File)));
+$Result['Script'] = $Pie['Script'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Result['DOM'] = $NoBody;
