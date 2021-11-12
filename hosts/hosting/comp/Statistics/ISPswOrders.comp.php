@@ -4,11 +4,21 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('IsCreate','Folder','StartDate','FinishDate','Details');
+$__args_list = Array('Args');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
+$Args = IsSet($Args)?$Args:Args();
+#-------------------------------------------------------------------------------
+$IsCreate       = (boolean) @$Args['IsCreate'];
+$StartDate      = (integer) @$Args['StartDate'];
+$FinishDate     = (integer) @$Args['FinishDate'];
+$Details        =   (array) @$Args['Details'];
+$ShowTables     = (boolean) @$Args['ShowTables'];
+$Folder		=  (string) @$Args['Folder'];
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if(Is_Error(System_Load('libs/Artichow.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -59,7 +69,8 @@ if(In_Array('ByDays',$Details)){
       if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
-      $NoBody->AddChild($Comp);
+      if($ShowTables)
+	      $NoBody->AddChild($Comp);
     break;
     default:
       return ERROR | @Trigger_Error(101);
@@ -119,7 +130,8 @@ if(In_Array('ByMonth',$Details)){
       if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
-      $NoBody->AddChild($Comp);
+      if($ShowTables)
+	      $NoBody->AddChild($Comp);
       #-------------------------------------------------------------------------
       if(Count($Line) > 1){
         #-----------------------------------------------------------------------
@@ -189,7 +201,8 @@ if(In_Array('ByQuarter',$Details)){
       if(Is_Error($Comp))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
-      $NoBody->AddChild($Comp);
+      if($ShowTables)
+	      $NoBody->AddChild($Comp);
       #-------------------------------------------------------------------------
       if(Count($Line) > 1){
         #-----------------------------------------------------------------------

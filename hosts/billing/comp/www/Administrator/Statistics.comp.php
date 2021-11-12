@@ -9,11 +9,12 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
-$IsCreate      = (boolean) @$Args['IsCreate'];
-$StartDate     = (integer) @$Args['StartDate'];
-$FinishDate    = (integer) @$Args['FinishDate'];
-$StatisticsIDs =   (array) @$Args['StatisticsIDs'];
-$Details       =   (array) @$Args['Details'];
+$IsCreate	= (boolean) @$Args['IsCreate'];
+$StartDate	= (integer) @$Args['StartDate'];
+$FinishDate	= (integer) @$Args['FinishDate'];
+$StatisticsIDs	=   (array) @$Args['StatisticsIDs'];
+$Details	=   (array) @$Args['Details'];
+$ShowTables	= (boolean) @$Args['ShowTables'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/WkHtmlToPdf.php')))
 	return ERROR | @Trigger_Error(500);
@@ -108,7 +109,7 @@ if($IsCreate){
 			if(!In_Array($StatisticID,$StatisticsIDs))
 				continue;
 			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load(SPrintF('Statistics/%s',$StatisticID),TRUE,$Folder,$StartDate,$FinishDate + 86400,$Details);
+			$Comp = Comp_Load(SPrintF('Statistics/%s',$StatisticID),Array('IsCreate'=>TRUE,'Folder'=>$Folder,'StartDate'=>$StartDate,'FinishDate'=>$FinishDate + 86400,'Details'=>$Details,'ShowTables'=>$ShowTables));
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
@@ -228,6 +229,13 @@ if(Is_Error($Input))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('LABEL',Array('for'=>'ByMonth'),'По месяцам'),$Input);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Input = Comp_Load('Form/Input',Array('type'=>'checkbox','checked'=>'true','name'=>'ShowTables','value'=>'1','id'=>'ShowTables'));
+if(Is_Error($Input))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array(new Tag('LABEL',Array('for'=>'ShowTables'),'Показывать таблицы с данными'),$Input);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Виды отчетов';

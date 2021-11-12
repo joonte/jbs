@@ -4,13 +4,19 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('IsCreate','Folder','StartDate','FinishDate','Details');
+$__args_list = Array('Args');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-if(Is_Error(System_Load('libs/Artichow.php')))
-	return ERROR | @Trigger_Error(500);
+$Args = IsSet($Args)?$Args:Args();
+#-------------------------------------------------------------------------------
+$IsCreate	= (boolean) @$Args['IsCreate'];
+$StartDate	= (integer) @$Args['StartDate'];
+$FinishDate	= (integer) @$Args['FinishDate'];
+$Details	=   (array) @$Args['Details'];
+$ShowTables	= (boolean) @$Args['ShowTables'];
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Result = Array('Title'=>'Распределение заказов на IP адреса по тарифам');
 #-------------------------------------------------------------------------------
@@ -57,7 +63,8 @@ $Comp = Comp_Load('Tables/Extended',$Table);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$NoBody->AddChild(new Tag('DIV',Array('style'=>'float:left;'),$Comp));
+if($ShowTables)
+	$NoBody->AddChild(new Tag('DIV',Array('style'=>'float:left;'),$Comp));
 #-------------------------------------------------------------------------------
 // графики
 if(Count($dGraphs) > 1){
@@ -70,7 +77,7 @@ if(Count($dGraphs) > 1){
 	#-------------------------------------------------------------------------------
 	// накидываем DIV'ы в тело страницы
 	foreach($Pie['FnNames'] as $FnName)
-		$NoBody->AddChild(new Tag('DIV',Array('style'=>'float:left;width:30%;height:400px;','id'=>SPrintF('div_%s',$FnName)),$FnName));
+		$NoBody->AddChild(new Tag('DIV',Array('style'=>SPrintF('float:left;width:%u%%;height:400px;',$ShowTables?30:50),'id'=>SPrintF('div_%s',$FnName)),$FnName));
 	#-------------------------------------------------------------------------------
 	$Result['Script'] = $Pie['Script'];
         #-------------------------------------------------------------------------------
