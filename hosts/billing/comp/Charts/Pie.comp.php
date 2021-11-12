@@ -13,7 +13,7 @@ $FnNames = Array();	// имена функций, нужны на выхлоп
 $JsFuncs = '';		// функции для графиков
 $CallBacks = '';	// обратные вызовы, для показа графиков
 #-------------------------------------------------------------------------------
-Debug(SprintF('[comp/Charts/Pie]: Graphs = %s',print_r($Graphs,true)));
+//Debug(SprintF('[comp/Charts/Pie]: Graphs = %s',print_r($Graphs,true)));
 #-------------------------------------------------------------------------------
 foreach(Array_Keys($Graphs) as $Name){
 	#-------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ foreach(Array_Keys($Graphs) as $Name){
 		#-------------------------------------------------------------------------------
 		$Data[] = SPrintF("['%s',%u]",$Graphs[$Name][$Key][0],$Graphs[$Name][$Key][1]);
 		#-------------------------------------------------------------------------------
-		Debug(SprintF('[comp/Charts/Pie]: Key = %s; Graphs[Name][Key] = %s',$Graphs[$Name][$Key][0],$Graphs[$Name][$Key][1]));
+		//Debug(SprintF('[comp/Charts/Pie]: Key = %s; Graphs[Name][Key] = %s',$Graphs[$Name][$Key][0],$Graphs[$Name][$Key][1]));
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ foreach(Array_Keys($Graphs) as $Name){
 		data.addRows([%s]);
 
 		// Set options for pie chart.
-		var options = {title:'%s','is3D':true/*,width:600,height:350*/};
+		var options = {title:'%s','is3D':true};
 
 		// Instantiate and draw the chart
 		var chart = new google.visualization.PieChart(document.getElementById('div_%s'));
