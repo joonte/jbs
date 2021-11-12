@@ -67,7 +67,7 @@ foreach($Graphs as $Graph){
 		// значения колонок таблицы
 		data.addRows([%s]);
 		// опции отображения графика (в т.ч. всякие заголовки)
-		var options = {curveType:'function',%s};
+		var options = {curveType:'function',animation:{duration:2000,easing:'out',startup:true},%s};
 		// Instantiate and draw the chart
 		var chart = new google.visualization.LineChart(document.getElementById('div_%s'));
 		chart.draw(data,options);
