@@ -174,7 +174,7 @@ foreach($__USER['Contacts'] as $Contact){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>'javascript:ShowWindow(\'/ContactEdit\');','value'=>'Добавить адрес'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>'javascript:ShowWindow(\'/ContactEdit\');','value'=>'Добавить контакт'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
