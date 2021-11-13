@@ -17,7 +17,7 @@ function selectStars(e, $ticketId, $starId) {
 function quote($message) {
 	//------------------------------------------------------------------------------
 	if(!document.getElementById('TicketReadMessages')){
-		$message.value += '[quote][/quote]';
+		$message.value += "[quote]\n[/quote]";
 		return;
 	}
 	//------------------------------------------------------------------------------
@@ -35,6 +35,8 @@ function quote($message) {
 	} else {
 		return;
 	}
+	if($selection == '')
+		$selection = "\n";
 	//------------------------------------------------------------------------------
 	if ($message.createTextRange && $message.caretPos) {
 		var $caretPos = $message.caretPos;
