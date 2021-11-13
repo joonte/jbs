@@ -237,6 +237,13 @@ if(Is_Error($Input))
 $Table[] = Array(new Tag('LABEL',Array('for'=>'ByMonth'),'По месяцам'),$Input);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Input = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'Details[]','value'=>'ByQuarter','id'=>'ByQuarter'));
+if(Is_Error($Input))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array(new Tag('LABEL',Array('for'=>'ByQuarter'),'По кварталам'),$Input);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Input = Comp_Load('Form/Input',Array('type'=>'checkbox','checked'=>'true','name'=>'ShowTables','value'=>'1','id'=>'ShowTables'));
 if(Is_Error($Input))
 	return ERROR | @Trigger_Error(500);
