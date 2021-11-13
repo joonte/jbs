@@ -242,8 +242,12 @@ foreach($Orders as $Order){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
+	$BasketColumns = Array(
+				'ID','ContractID','UserID',
+				'(SELECT `TypeID` FROM `Contracts` WHERE `Contracts`.`ID` = `ContractID`) as `TypeID`',
+				);
 	# выписываем счета для юзера
-	$Baskets = DB_Select('BasketOwners',Array('ID','ContractID','UserID','(SELECT `TypeID` FROM `Contracts` WHERE `Contracts`.`ID` = `ContractID`) as `TypeID`'),Array('Where'=>SPrintF('`UserID` = %u',$Order['UserID'])));
+	$Baskets = DB_Select('BasketOwners',$BasketColumns,Array('Where'=>SPrintF('`UserID` = %u',$Order['UserID'])));
 	switch(ValueOf($Baskets)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
@@ -258,13 +262,16 @@ foreach($Orders as $Order){
 		return ERROR | @Trigger_Error(101);
 	}
 	#---------------------------------------------------------------------------
-	$Contracts = $Attachments = $PaymentLinks = Array();
+	$Contracts = $Attachments = $PaymentLinks = $Items = Array();
 	#---------------------------------------------------------------------------
 	foreach($Baskets as $Basket){
 		#-------------------------------------------------------------------------------
+		// массив с договорами которые услуги на которых есть в корзине
+		// если договор есть в массиве, счёт на него был уже выписан в этом заходе
 		if(In_Array($Basket['ContractID'],$Contracts))
 			continue;
 		#-------------------------------------------------------------------------------
+		// услуга на партнёрском договоре?
 		if($Basket['TypeID'] == 'NaturalPartner')
 			continue;
 		#-------------------------------------------------------------------------------
@@ -378,6 +385,38 @@ foreach($Orders as $Order){
 		// генерируем ссылку на оплату
 		$PaymentLinks[] = SPrintF('%s://%s/Invoices/%u/',Url_Scheme(),HOST_ID,$Comp['InvoiceID']);
 		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		// достаём услуги на которые выписан счёт
+		$Columns = Array(
+				'*',
+				'(SELECT `NameShort` FROM `ServicesOwners` WHERE `ServicesOwners`.`ID` = `InvoicesItems`.`ServiceID`) AS `ServiceName`',
+				'(SELECT `Code` FROM `ServicesOwners` WHERE `ServicesOwners`.`ID` = `InvoicesItems`.`ServiceID`) AS `ServiceCode`',
+				);
+		$InvoicesItems = DB_Select('InvoicesItems',$Columns,Array('Where'=>SPrintF('`InvoiceID` = %u',$Comp['InvoiceID'])));
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($InvoicesItems)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+                case 'exception':
+			return ERROR | @Trigger_Error(400);
+		case 'array':
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
+		foreach($InvoicesItems as $InvoicesItem){
+			#-------------------------------------------------------------------------------
+			$Comment = ($InvoicesItem['Comment'])?SPrintF('%s / ',$InvoicesItem['Comment']):'';
+			#-------------------------------------------------------------------------------
+			$Summ = Comp_Load('Formats/Currency',$InvoicesItem['Summ']);
+			if(Is_Error($Summ))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			$Items[] = SPrintF("\t* %s / %s%s", $InvoicesItem['ServiceName'],$Comment,$Summ);
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 	#Debug(SPrintF('[comp/www/CreateAndSendInvoices]: Attachments = %s',print_r($Attachments,true)));
@@ -417,8 +456,10 @@ foreach($Orders as $Order){
 		if(IsSet($PaymentLinks) && SizeOf($PaymentLinks) > 0)
 			$msgParams['PaymentLinks'] = Implode("\n",$PaymentLinks);
 		#-------------------------------------------------------------------------------
+		// докидываем состав всех счетов юзера, скопом
+		$msgParams['Items'] = Implode("\n",$Items);
 		#-------------------------------------------------------------------------------
-		$msg = new Message('CreateAndSendInvoices', $Order['UserID'],$msgParams);
+		$msg = new Message('CreateAndSendInvoices',$Order['UserID'],$msgParams);
 		$IsSend = NotificationManager::sendMsg($msg);
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($IsSend)){
