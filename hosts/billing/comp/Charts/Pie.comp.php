@@ -43,8 +43,8 @@ foreach(Array_Keys($Graphs) as $Name){
 		data.addColumn('number', 'Количество');
 		data.addRows([%s]);
 
-		// Set options for pie chart.
-		var options = {title:'%s','is3D':true};
+		// опции графика. sliceVisibilityThreshold в 1/100 - если кусок графика менее 1/100 - уходит в Other
+		var options = {title:'%s','is3D':true,sliceVisibilityThreshold:1/100,chartArea:{left:10,top:5,width:'100%%',height:'100%%'}};
 
 		// Instantiate and draw the chart
 		var chart = new google.visualization.PieChart(document.getElementById('div_%s'));
