@@ -33,7 +33,7 @@ class CacheManager {
 						// проверяем, загружено ли расширение php
 						if(Extension_Loaded($className::EXT_NAME)){
 							#-------------------------------------------------------------------------------
-							Debug(SPrintF('[system/classes/auto/CacheManager.class.php]: Force load %sCache',$CacheSystem));
+							Debug(SPrintF('[system/classes/auto/CacheManager.class.php]: Force load %s',$className));
 							#-------------------------------------------------------------------------------
 							self::$instance = $className::getInstance();
 							#-------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ class CacheManager {
 						#-------------------------------------------------------------------------------
 						if(Extension_Loaded($className::EXT_NAME)){
 							#-------------------------------------------------------------------------------
-							Debug('[system/classes/auto/CacheManager.class.php]: Force load %sCache');
+							Debug(SPrintF('[system/classes/auto/CacheManager.class.php]: load %s',$className));
 							#-------------------------------------------------------------------------------
 							self::$instance = $className::getInstance();
 							#-------------------------------------------------------------------------------
