@@ -16,7 +16,7 @@ $StatisticsIDs	=   (array) @$Args['StatisticsIDs'];
 $Details	=   (array) @$Args['Details'];
 $ShowTables	= (boolean) @$Args['ShowTables'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php','libs/WkHtmlToPdf.php')))
+if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -115,7 +115,7 @@ if($IsCreate){
 			if(!In_Array($StatisticID,$StatisticsIDs))
 				continue;
 			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load(SPrintF('Statistics/%s',$StatisticID),Array('IsCreate'=>TRUE,'Folder'=>$Folder,'StartDate'=>$StartDate,'FinishDate'=>$FinishDate + 86400,'Details'=>$Details,'ShowTables'=>$ShowTables));
+			$Comp = Comp_Load(SPrintF('Statistics/%s',$StatisticID),Array('IsCreate'=>TRUE,'StartDate'=>$StartDate,'FinishDate'=>$FinishDate + 86400,'Details'=>$Details,'ShowTables'=>$ShowTables));
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
@@ -148,29 +148,7 @@ if($IsCreate){
 	#-------------------------------------------------------------------------------
 	echo '<P style="color:#6F9006;">Статистика сформирована</P>';
 	#-------------------------------------------------------------------------------
-	$PDF = WkHtmlToPdf_CreatePDF('Statistics',$DOM,$Folder);
-	#-------------------------------------------------------------------------------
-	switch(ValueOf($PDF)){
-	case 'error':
-		# No more...
-	case 'exception':
-		echo '<P style="color:#990000;">Ошибка формирования PDF</P>';
-		break;
-	case 'string':
-		#-------------------------------------------------------------------------------
-		$IsWrite = IO_Write(SPrintF('%s/Statistics.pdf',$Folder),$PDF,TRUE);
-		if(Is_Error($IsWrite))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		echo '<P style="color:#6F9006;">PDF документ сформирован</P>';
-		#-------------------------------------------------------------------------------
-		break;
-		#-------------------------------------------------------------------------------
-	default:
-		return ERROR | @Trigger_Error(101);
-	}
-	#-------------------------------------------------------------------------------
-	$Parse = '<P>Просмотр статистики в <A target="blank" href="/public/%s/index.html">HTML</A><B>|</B><A target="blank" href="/public/%s/Statistics.pdf">PDF</A></P><SCRIPT>window.scrollTo(0,1000);</SCRIPT></BODY></HTML>';
+	$Parse = '<P><A target="blank" href="/public/%s/index.html">Просмотр статистики в HTML</A></P><SCRIPT>window.scrollTo(0,1000);</SCRIPT></BODY></HTML>';
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return SPrintF($Parse,$UniqID,$UniqID);

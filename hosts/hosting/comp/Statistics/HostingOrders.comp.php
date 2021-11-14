@@ -16,7 +16,6 @@ $StartDate      = (integer) @$Args['StartDate'];
 $FinishDate     = (integer) @$Args['FinishDate'];
 $Details        =   (array) @$Args['Details'];
 $ShowTables     = (boolean) @$Args['ShowTables'];
-$Folder		=  (string) @$Args['Folder'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Result = Array('Title'=>'Распределение заказов на хостинг по времени');
