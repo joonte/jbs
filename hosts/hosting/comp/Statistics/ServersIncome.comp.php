@@ -358,7 +358,7 @@ if(Is_Error($Pie))
 #-------------------------------------------------------------------------------
 // накидываем DIV'ы в тело страницы
 foreach($Pie['FnNames'] as $FnName)
-	$NoBody->AddChild(new Tag('DIV',Array('style'=>SPrintF('float:left;width:%u%%;height:400px;',$ShowTables?30:50),'id'=>SPrintF('div_%s',$FnName)),$FnName));
+	$NoBody->AddChild(new Tag('DIV',Array('style'=>'float:left;width:50%;height:400px;','id'=>SPrintF('div_%s',$FnName)),$FnName));
 #-------------------------------------------------------------------------------
 $Result['Script'] = $Pie['Script'];
 #-------------------------------------------------------------------------------

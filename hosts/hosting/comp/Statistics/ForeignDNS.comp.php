@@ -65,29 +65,8 @@ $Graphs = Array('Домены по статусу'=>Array());
 #-------------------------------------------------------------------------------
 $Table = Array(Array(new Tag('TD',Array('class'=>'Head'),'Статус'),new Tag('TD',Array('class'=>'Head'),'Кол-во')));
 #-------------------------------------------------------------------------------
-foreach($DomainOrders as $DomainOrder){
-	#-------------------------------------------------------------------------------
-	$Table[] = Array(IsSet($Statuses[$DomainOrder['StatusID']])?$Statuses[$DomainOrder['StatusID']]['Name']:$DomainOrder['StatusID'],$DomainOrder['Count']);
-	#-------------------------------------------------------------------------------
+foreach($DomainOrders as $DomainOrder)
 	$Graphs['Домены по статусу'][] =  Array(IsSet($Statuses[$DomainOrder['StatusID']])?$Statuses[$DomainOrder['StatusID']]['Name']:$DomainOrder['StatusID'],$DomainOrder['Count']);
-	#-------------------------------------------------------------------------------
-	// общее число доменов
-	$Total += $DomainOrder['Count'];
-	#-------------------------------------------------------------------------------
-	// число активных, для подсчёта активных не с нашими ДНС серверами
-	if($DomainOrder['StatusID'] == 'Active')
-		$CountActive = $DomainOrder['Count'];
-	#-------------------------------------------------------------------------------
-}
-#-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('TD',Array('class'=>'Head'),'Всего'),new Tag('TD',Array('class'=>'Head'),$Total));
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load('Tables/Extended',$Table);
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-if($ShowTables)
-	$NoBody->AddChild(new Tag('DIV',Array('style'=>'float:left;'),$Comp));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // график для наших/не наших ДНС
@@ -169,7 +148,7 @@ if(Is_Error($Pie))
 #-------------------------------------------------------------------------------
 // накидываем DIV'ы в тело страницы
 foreach($Pie['FnNames'] as $FnName)
-	$NoBody->AddChild(new Tag('DIV',Array('style'=>SPrintF('float:left;width:%u%%;height:400px;',$ShowTables?30:50),'id'=>SPrintF('div_%s',$FnName)),$FnName));
+	$NoBody->AddChild(new Tag('DIV',Array('style'=>SPrintF('float:left;width:%u%%;height:400px;',$ShowTables?35:50),'id'=>SPrintF('div_%s',$FnName)),$FnName));
 #-------------------------------------------------------------------------------
 $Result['Script'] = $Pie['Script'];
 #-------------------------------------------------------------------------------
