@@ -15,6 +15,7 @@ $IsCreate	= (boolean) @$Args['IsCreate'];
 $StartDate	= (integer) @$Args['StartDate'];
 $FinishDate	= (integer) @$Args['FinishDate'];
 $Details	=   (array) @$Args['Details'];
+$Words		=   (array) @$Args['Words'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Config = Config();
@@ -34,15 +35,20 @@ if(!$IsCreate)
 	return $Result;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+//  группировка
+$GroupBy = Array(
+		'ByDays'	=> Array('Date'),
+		'ByMonth'	=> Array('Month','Year'),
+		'ByQuarter'	=> Array('Quarter','Year'),
+		'ByYear'	=> Array('Year')
+		);
+#-------------------------------------------------------------------------------
 // выхлоп с графиками
 $Graphs = Array(
 		#-------------------------------------------------------------------------------
 		// по дням
 		'ByDaysPay'	=> Array(
-					'Columns'	=> Array(
-									Array('string','Дата'),		// даты
-									Array('number','Платежи'),	// платежи
-								),
+					'Columns'	=> Array(Array('string','Дата'),Array('number','Платежи')),
 					'Title'		=> 'Суммы оплаченных счетов, по дням',
 					'hAxisTitle'	=> 'Даты',
 					'vAxisTitle'	=> 'Оплачено, руб.',
@@ -50,10 +56,7 @@ $Graphs = Array(
 					),
 		#-------------------------------------------------------------------------------
 		'ByDaysCount'	=> Array(
-					'Columns'	=> Array(
-									Array('string','Дата'),		// даты
-									Array('number','Платежей'),	// платежи
-								),
+					'Columns'	=> Array(Array('string','Дата'),Array('number','Платежей')),
 					'Title'		=> 'Количество оплаченных счетов, по дням',
 					'hAxisTitle'	=> 'Даты',
 					'vAxisTitle'	=> 'Оплачено счетов, шт.',
@@ -61,11 +64,32 @@ $Graphs = Array(
 					),
 		#-------------------------------------------------------------------------------
 		'ByDaysPayAvg'	=> Array(
-					'Columns'	=> Array(
-									Array('string','Дата'),		// даты
-									Array('number','Средний чек'),	// платежи
-								),
+					'Columns'	=> Array(Array('string','Дата'),Array('number','Средний чек')),
 					'Title'		=> 'Средний чек, по дням',
+					'hAxisTitle'	=> 'Даты',
+					'vAxisTitle'	=> 'Средний чек, руб.',
+					'Data'		=> Array()
+					),
+		#-------------------------------------------------------------------------------
+		'ByDaysPayPS'	=> Array(
+					'Columns'	=> Array(Array('string','Дата')),
+					'Title'		=> 'Суммы оплаченных счетов, по дням и платёжным системам',
+					'hAxisTitle'	=> 'Даты',
+					'vAxisTitle'	=> 'Оплачено, руб.',
+					'Data'		=> Array()
+					),
+		#-------------------------------------------------------------------------------
+		'ByDaysCountPS'	=> Array(
+					'Columns'	=> Array(Array('string','Дата')),
+					'Title'		=> 'Количество оплаченных счетов, по дням и платёжным системам',
+					'hAxisTitle'	=> 'Даты',
+					'vAxisTitle'	=> 'Оплачено счетов, шт.',
+					'Data'		=> Array()
+					),
+		#-------------------------------------------------------------------------------
+		'ByDaysAvgPS'	=> Array(
+					'Columns'	=> Array(Array('string','Дата')),
+					'Title'		=> 'Средний чек, по дням и платёжным системам',
 					'hAxisTitle'	=> 'Даты',
 					'vAxisTitle'	=> 'Средний чек, руб.',
 					'Data'		=> Array()
@@ -73,10 +97,7 @@ $Graphs = Array(
 		#-------------------------------------------------------------------------------
 		// по месяцам
 		'ByMonthPay'	=> Array(
-					'Columns'	=> Array(
-									Array('string','Год/месяц'),	// месяцы
-									Array('number','Платежи'),	// платежи
-								),
+					'Columns'	=> Array(Array('string','Год/месяц'),Array('number','Платежи')),
 					'Title'		=> 'Суммы оплаченных счетов, по месяцам',
 					'hAxisTitle'	=> 'Год/месяц',
 					'vAxisTitle'	=> 'Оплачено, руб.',
@@ -84,10 +105,7 @@ $Graphs = Array(
 					),
 		#-------------------------------------------------------------------------------
 		'ByMonthCount'	=> Array(
-					'Columns'	=> Array(
-									Array('string','Год/месяц'),	// месяцы
-									Array('number','Платежей'),	// платежи
-								),
+					'Columns'	=> Array(Array('string','Год/месяц'),Array('number','Платежей')),
 					'Title'		=> 'Количество оплаченных счетов, по месяцам',
 					'hAxisTitle'	=> 'Год/месяц',
 					'vAxisTitle'	=> 'Оплачено счетов, шт.',
@@ -95,10 +113,7 @@ $Graphs = Array(
 					),
 		#-------------------------------------------------------------------------------
 		'ByMonthPayAvg'	=> Array(
-					'Columns'	=> Array(
-									Array('string','Год/месяц'),	// месяцы
-									Array('number','Средний чек'),	// платежи
-								),
+					'Columns'	=> Array(Array('string','Год/месяц'),Array('number','Средний чек')),
 					'Title'		=> 'Средний чек, по месяцам',
 					'hAxisTitle'	=> 'Год/месяц',
 					'vAxisTitle'	=> 'Средний чек, руб.',
@@ -107,9 +122,7 @@ $Graphs = Array(
 		#-------------------------------------------------------------------------------
 		// по месяцам и платёжным системам
 		'ByMonthPayPS'	=> Array(
-					'Columns'	=> Array(
-									Array('string','Год/месяц'),	// месяцы
-								),
+					'Columns'	=> Array(Array('string','Год/месяц')),
 					'Title'		=> 'Суммы оплаченных счетов, по месяцам и платёжным системам',
 					'hAxisTitle'	=> 'Даты',
 					'vAxisTitle'	=> 'Оплачено, руб.',
@@ -117,9 +130,7 @@ $Graphs = Array(
 					),
 		#-------------------------------------------------------------------------------
 		'ByMonthCountPS'	=> Array(
-					'Columns'	=> Array(
-									Array('string','Год/месяц'),	// месяцы
-								),
+					'Columns'	=> Array(Array('string','Год/месяц')),
 					'Title'		=> 'Количество оплаченных счетов, по месяцам и платёжным системам',
 					'hAxisTitle'	=> 'Даты',
 					'vAxisTitle'	=> 'Оплачено счетов, шт.',
@@ -127,75 +138,108 @@ $Graphs = Array(
 					),
 		#-------------------------------------------------------------------------------
 		'ByMonthAvgPS'	=> Array(
-					'Columns'	=> Array(
-									Array('string','Год/месяц'),	// месяцы
-								),
+					'Columns'	=> Array(Array('string','Год/месяц')),
 					'Title'		=> 'Средний чек, по месяцам и платёжным системам',
 					'hAxisTitle'	=> 'Даты',
 					'vAxisTitle'	=> 'Средний чек, руб.',
 					'Data'		=> Array()
 					),
 		#-------------------------------------------------------------------------------
-		// по месяцам
-		'ByQuartPay'	=> Array(
-					'Columns'	=> Array(
-									Array('string','Год/квартал'),	// кварталы
-									Array('number','Платежи'),	// платежи
-								),
+		// по кварталам
+		'ByQuarterPay'	=> Array(
+					'Columns'	=> Array(Array('string','Год/квартал'),Array('number','Платежи')),
 					'Title'		=> 'Суммы оплаченных счетов, по кварталам',
 					'hAxisTitle'	=> 'Год/квартал',
 					'vAxisTitle'	=> 'Оплачено, руб.',
 					'Data'		=> Array()
 					),
 		#-------------------------------------------------------------------------------
-		'ByQuartCount'	=> Array(
-					'Columns'	=> Array(
-									Array('string','Год/квартал'),	// кварталы
-									Array('number','Платежей'),	// платежи
-								),
+		'ByQuarterCount'=> Array(
+					'Columns'	=> Array(Array('string','Год/квартал'),Array('number','Платежей')),
 					'Title'		=> 'Количество оплаченных счетов, по кварталам',
 					'hAxisTitle'	=> 'Год/квартал',
 					'vAxisTitle'	=> 'Оплачено счетов, шт.',
 					'Data'		=> Array()
 					),
 		#-------------------------------------------------------------------------------
-		'ByQuartPayAvg'	=> Array(
-					'Columns'	=> Array(
-									Array('string','Год/квартал'),	// кварталы
-									Array('number','Средний чек'),	// платежи
-								),
+		'ByQuarterPayAvg'=> Array(
+					'Columns'	=> Array(Array('string','Год/квартал'),Array('number','Средний чек')),
 					'Title'		=> 'Средний чек, по кварталам',
 					'hAxisTitle'	=> 'Год/квартал',
 					'vAxisTitle'	=> 'Средний чек, руб.',
 					'Data'		=> Array()
 					),
 		#-------------------------------------------------------------------------------
-		// по месяцам и платёжным системам
-		'ByQuartPayPS'	=> Array(
-					'Columns'	=> Array(
-									Array('string','Год/квартал'),	// кварталы
-								),
+		// по кварталам и платёжным системам
+		'ByQuarterPayPS'=> Array(
+					'Columns'	=> Array(Array('string','Год/квартал')),
 					'Title'		=> 'Суммы оплаченных счетов, по кварталам и платёжным системам',
 					'hAxisTitle'	=> 'Даты',
 					'vAxisTitle'	=> 'Оплачено, руб.',
 					'Data'		=> Array()
 					),
 		#-------------------------------------------------------------------------------
-		'ByQuartCountPS'	=> Array(
-					'Columns'	=> Array(
-									Array('string','Год/квартал'),	// кварталы
-								),
+		'ByQuarterCountPS'=> Array(
+					'Columns'	=> Array(Array('string','Год/квартал')),
 					'Title'		=> 'Количество оплаченных счетов, по кварталам и платёжным системам',
 					'hAxisTitle'	=> 'Даты',
 					'vAxisTitle'	=> 'Оплачено счетов, шт.',
 					'Data'		=> Array()
 					),
 		#-------------------------------------------------------------------------------
-		'ByQuartAvgPS'	=> Array(
-					'Columns'	=> Array(
-									Array('string','Год/квартал'),	// кварталы
-								),
+		'ByQuarterAvgPS'=> Array(
+					'Columns'	=> Array(Array('string','Год/квартал')),
 					'Title'		=> 'Средний чек, по кварталам и платёжным системам',
+					'hAxisTitle'	=> 'Даты',
+					'vAxisTitle'	=> 'Средний чек, руб.',
+					'Data'		=> Array()
+					),
+		#-------------------------------------------------------------------------------
+		// по годам
+		'ByYearPay'	=> Array(
+					'Columns'	=> Array(Array('string','Год'),Array('number','Платежи')),
+					'Title'		=> 'Суммы оплаченных счетов, по годам',
+					'hAxisTitle'	=> 'Год',
+					'vAxisTitle'	=> 'Оплачено, руб.',
+					'Data'		=> Array()
+					),
+		#-------------------------------------------------------------------------------
+		'ByYearCount'	=> Array(
+					'Columns'	=> Array(Array('string','Год'),Array('number','Платежей')),
+					'Title'		=> 'Количество оплаченных счетов, по годам',
+					'hAxisTitle'	=> 'Год',
+					'vAxisTitle'	=> 'Оплачено счетов, шт.',
+					'Data'		=> Array()
+					),
+		#-------------------------------------------------------------------------------
+		'ByYearPayAvg'	=> Array(
+					'Columns'	=> Array(Array('string','Год'),Array('number','Средний чек')),
+					'Title'		=> 'Средний чек, по годам',
+					'hAxisTitle'	=> 'Год',
+					'vAxisTitle'	=> 'Средний чек, руб.',
+					'Data'		=> Array()
+					),
+		#-------------------------------------------------------------------------------
+		// по кварталам и платёжным системам
+		'ByYearPayPS'	=> Array(
+					'Columns'	=> Array(Array('string','Год')),
+					'Title'		=> 'Суммы оплаченных счетов, по годам и платёжным системам',
+					'hAxisTitle'	=> 'Даты',
+					'vAxisTitle'	=> 'Оплачено, руб.',
+					'Data'		=> Array()
+					),
+		#-------------------------------------------------------------------------------
+		'ByYearCountPS'	=> Array(
+					'Columns'	=> Array(Array('string','Год')),
+					'Title'		=> 'Количество оплаченных счетов, по годам и платёжным системам',
+					'hAxisTitle'	=> 'Даты',
+					'vAxisTitle'	=> 'Оплачено счетов, шт.',
+					'Data'		=> Array()
+					),
+		#-------------------------------------------------------------------------------
+		'ByYearAvgPS'=> Array(
+					'Columns'	=> Array(Array('string','Год')),
+					'Title'		=> 'Средний чек, по годам и платёжным системам',
 					'hAxisTitle'	=> 'Даты',
 					'vAxisTitle'	=> 'Средний чек, руб.',
 					'Data'		=> Array()
@@ -204,55 +248,29 @@ $Graphs = Array(
 );
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// колонки для выбора из БД
+$Columns = Array(
+		'DATE_FORMAT(FROM_UNIXTIME(`StatusDate`),GET_FORMAT(DATE,"ISO")) AS `ISO_Date`',
+		"DATE_FORMAT(FROM_UNIXTIME(`StatusDate`),'%Y-%m') AS `YearMonth`",
+		'GET_DAY_FROM_TIMESTAMP(`StatusDate`) as `Date`',
+		'MONTH(FROM_UNIXTIME(`StatusDate`)) as `Month`',
+		'GET_QUARTER_FROM_TIMESTAMP(`StatusDate`) as `Quarter`',
+		'YEAR(FROM_UNIXTIME(`StatusDate`)) as Year',
+		'SUM(`Summ`) as `Summ`',
+		'COUNT(*) as `Count`'
+		);
+#-------------------------------------------------------------------------------
 $Where = Array(
 		SPrintF('`StatusDate` >= %u',$StartDate),
 		SPrintF('`StatusDate` <= %u',$FinishDate),
 		'`IsPosted` = "yes"'
 		);
 #-------------------------------------------------------------------------------
-if(In_Array('ByDays',$Details)){
-	#-------------------------------------------------------------------------------
-	$Invoices = DB_Select('Invoices',Array('DATE_FORMAT(FROM_UNIXTIME(`StatusDate`),GET_FORMAT(DATE,"ISO")) AS `ISO_Date`', 'GET_DAY_FROM_TIMESTAMP(`StatusDate`) as `Date`','SUM(`Summ`) as `Summ`','COUNT(*) as `Count`'),Array('GroupBy'=>'Date','Where'=>$Where,'SortOn'=>'StatusDate'));
-	#-------------------------------------------------------------------------------
-	switch(ValueOf($Invoices)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		# No more...
-		break;
-	case 'array':
-		#-------------------------------------------------------------------------------
-		$CurrentMonth = 0;
-		#-------------------------------------------------------------------------------
-		foreach($Invoices as $Invoice){
-			#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
-			// график по сумме платежей
-			$Graphs['ByDaysPay']['Data'][] = Array($Invoice['ISO_Date'],Ceil($Invoice['Summ']));
-			#-------------------------------------------------------------------------------
-			// график по числу платежей
-			$Graphs['ByDaysCount']['Data'][] = Array($Invoice['ISO_Date'],Ceil($Invoice['Count']));
-			#-------------------------------------------------------------------------------
-			// график среднего чека
-			$Graphs['ByDaysPayAvg']['Data'][] = Array($Invoice['ISO_Date'],Ceil($Invoice['Summ']/$Invoice['Count']));
-			#-------------------------------------------------------------------------------
-		}
-		#-------------------------------------------------------------------------------
-		break;
-		#-------------------------------------------------------------------------------
-	default:
-		return ERROR | @Trigger_Error(101);
-	}
-	#-------------------------------------------------------------------------------
-}
-
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-if(In_Array('ByMonth',$Details)){
+// перебираем детализацию, строим графики
+foreach($Details as $Detail){
 	#-------------------------------------------------------------------------------
-	$Columns = Array("DATE_FORMAT(FROM_UNIXTIME(`StatusDate`),'%Y-%m') AS `YearMonth`",'MONTH(FROM_UNIXTIME(`StatusDate`)) as `Month`','YEAR(FROM_UNIXTIME(`StatusDate`)) as Year','SUM(`Summ`) as `Summ`','COUNT(*) as `Count`');
-	#-------------------------------------------------------------------------------
-	$Invoices = DB_Select('Invoices',$Columns,Array('GroupBy'=>Array('Month','Year'),'Where'=>$Where,'SortOn'=>'StatusDate'));
+	$Invoices = DB_Select('Invoices',$Columns,Array('GroupBy'=>$GroupBy[$Detail],'Where'=>$Where,'SortOn'=>'StatusDate'));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Invoices)){
 	case 'error':
@@ -268,17 +286,37 @@ if(In_Array('ByMonth',$Details)){
 		foreach($Invoices as $Invoice){
 			#-------------------------------------------------------------------------------
 			// готовим массив с датами в качестве ключей, для графиков по платёжным системам
-			$Dates[$Invoice['YearMonth']] = Array();
+			if($Detail == 'ByMonth'){
+				#-------------------------------------------------------------------------------
+				$DateKey = $Invoice['YearMonth'];
+				#-------------------------------------------------------------------------------
+			}elseif($Detail == 'ByDays'){
+				#-------------------------------------------------------------------------------
+				$DateKey = $Invoice['ISO_Date'];
+				#-------------------------------------------------------------------------------
+			}elseif($Detail == 'ByQuarter'){
+				#-------------------------------------------------------------------------------
+				$DateKey = SPrintF('%u/%u',$Invoice['Year'],$Invoice['Quarter']);
+				#-------------------------------------------------------------------------------
+			}elseif($Detail == 'ByYear'){
+				#-------------------------------------------------------------------------------
+				$DateKey = $Invoice['Year'];
+				#-------------------------------------------------------------------------------
+			}
+                        #-------------------------------------------------------------------------------
+                        $Dates[$DateKey] = Array();
+			#-------------------------------------------------------------------------------
+			//Debug(SPrintF('[comp/Statistics/Invoices]: 1. DateKey = %s',$DateKey));
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			// график по сумме платежей
-			$Graphs['ByMonthPay']['Data'][] = Array(SPrintF('%s-%02d',$Invoice['Year'],$Invoice['Month']),Ceil($Invoice['Summ']));
+			$Graphs[SPrintF('%sPay',$Detail)]['Data'][] = Array($DateKey,Ceil($Invoice['Summ']));
 			#-------------------------------------------------------------------------------
 			// график по числу платежей
-			$Graphs['ByMonthCount']['Data'][] = Array(SPrintF('%s-%02d',$Invoice['Year'],$Invoice['Month']),Ceil($Invoice['Count']));
+			$Graphs[SPrintF('%sCount',$Detail)]['Data'][] = Array($DateKey,Ceil($Invoice['Count']));
 			#-------------------------------------------------------------------------------
 			// график среднего чека
-			$Graphs['ByMonthPayAvg']['Data'][] = Array(SPrintF('%s-%02d',$Invoice['Year'],$Invoice['Month']),Ceil($Invoice['Summ']/$Invoice['Count']));
+			$Graphs[SPrintF('%sPayAvg',$Detail)]['Data'][] = Array($DateKey,Ceil($Invoice['Summ']/$Invoice['Count']));
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
@@ -303,7 +341,7 @@ if(In_Array('ByMonth',$Details)){
 			$Where1 = $Where;
 			$Where1[] = SPrintF('`PaymentSystemID` = "%s"',$PS['PaymentSystem']);
 			#-------------------------------------------------------------------------------
-			$Invoices = DB_Select('Invoices',$Columns,Array('GroupBy'=>Array('Month','Year'),'Where'=>$Where1,'SortOn'=>'StatusDate'));
+			$Invoices = DB_Select('Invoices',$Columns,Array('GroupBy'=>$GroupBy[$Detail],'Where'=>$Where1,'SortOn'=>'StatusDate'));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($Invoices)){
 			case 'error':
@@ -312,13 +350,34 @@ if(In_Array('ByMonth',$Details)){
 				# No more...
 				break;
 			case 'array':
-				#-------------------------------------------------------------------------------
 				// перебираем полученный список платежей, вносим платежи в массив дат
-				foreach($Invoices as $Invoice){
+                                foreach($Invoices as $Invoice){
 					#-------------------------------------------------------------------------------
-					$Dates[$Invoice['YearMonth']][$PS['PaymentSystem']]['Summ'] = $Invoice['Summ'];
+					// готовим ключи
+					if($Detail == 'ByMonth'){
+						#-------------------------------------------------------------------------------
+						$DateKey = $Invoice['YearMonth'];
+						#-------------------------------------------------------------------------------
+					}elseif($Detail == 'ByDays'){
+						#-------------------------------------------------------------------------------
+						$DateKey = $Invoice['ISO_Date'];
+						#-------------------------------------------------------------------------------
+					}elseif($Detail == 'ByQuarter'){
+						#-------------------------------------------------------------------------------
+						$DateKey = SPrintF('%u/%u',$Invoice['Year'],$Invoice['Quarter']);
+						#-------------------------------------------------------------------------------
+					}elseif($Detail == 'ByYear'){
+						#-------------------------------------------------------------------------------
+						$DateKey = $Invoice['Year'];
+						#-------------------------------------------------------------------------------
+					}
 					#-------------------------------------------------------------------------------
-					$Dates[$Invoice['YearMonth']][$PS['PaymentSystem']]['Count'] = $Invoice['Count'];
+					//Debug(SPrintF('[comp/Statistics/Invoices]: 2. Detail = %s; DateKey = %s',$Detail,$DateKey));
+					#-------------------------------------------------------------------------------
+					#-------------------------------------------------------------------------------
+					$Dates[$DateKey][$PS['PaymentSystem']]['Summ'] = $Invoice['Summ'];
+					#-------------------------------------------------------------------------------
+					$Dates[$DateKey][$PS['PaymentSystem']]['Count'] = $Invoice['Count'];
 					#-------------------------------------------------------------------------------
 				}
 				#-------------------------------------------------------------------------------
@@ -332,9 +391,9 @@ if(In_Array('ByMonth',$Details)){
 			$PaymentSystemName = IsSet($PaymentSystems[$PS['PaymentSystem']]['Name'])?$PaymentSystems[$PS['PaymentSystem']]['Name']:$PS['PaymentSystem'];
 			#-------------------------------------------------------------------------------
 			// добавляем описание платёжной системы в описание колонок
-			$Graphs['ByMonthPayPS']['Columns'][] = Array('number',$PaymentSystemName);
-			$Graphs['ByMonthCountPS']['Columns'][] = Array('number',$PaymentSystemName);
-			$Graphs['ByMonthAvgPS']['Columns'][] = Array('number',$PaymentSystemName);
+			$Graphs[SPrintF('%sPayPS',$Detail)]['Columns'][] = Array('number',$PaymentSystemName);
+			$Graphs[SPrintF('%sCountPS',$Detail)]['Columns'][] = Array('number',$PaymentSystemName);
+			$Graphs[SPrintF('%sAvgPS',$Detail)]['Columns'][] = Array('number',$PaymentSystemName);
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
@@ -342,27 +401,27 @@ if(In_Array('ByMonth',$Details)){
 		foreach(Array_Keys($Dates) as $Key){
 			#-------------------------------------------------------------------------------
 			// строка таблицы графика
-			$ArrayByMonthPayPS = Array($Key);
-			$ArrayByMonthCountPS = Array($Key);
-			$ArrayByMonthAvgPS = Array($Key);
+			$ArrayPayPS = Array($Key);
+			$ArrayCountPS = Array($Key);
+			$ArrayAvgPS = Array($Key);
 			// перебираем платёжные системы, чтобы в том же порядке заполнить массивы
 			foreach($PSs as $PS){
 				#-------------------------------------------------------------------------------
 				// если в этот день платёжной системой платили, то вносим цифры платежей, иначе - нули
 				$Value = IsSet($Dates[$Key][$PS['PaymentSystem']])?1:0;
 				#-------------------------------------------------------------------------------
-				$ArrayByMonthPayPS[] = ($Value)?$Dates[$Key][$PS['PaymentSystem']]['Summ']:0;
+				$ArrayPayPS[] = ($Value)?$Dates[$Key][$PS['PaymentSystem']]['Summ']:0;
 				#-------------------------------------------------------------------------------
-				$ArrayByMonthCountPS[] = ($Value)?$Dates[$Key][$PS['PaymentSystem']]['Count']:0;
+				$ArrayCountPS[] = ($Value)?$Dates[$Key][$PS['PaymentSystem']]['Count']:0;
 				#-------------------------------------------------------------------------------
-				$ArrayByMonthAvgPS[] = ($Value)?Ceil($Dates[$Key][$PS['PaymentSystem']]['Summ']/$Dates[$Key][$PS['PaymentSystem']]['Count']):0;
+				$ArrayAvgPS[] = ($Value)?Ceil($Dates[$Key][$PS['PaymentSystem']]['Summ']/$Dates[$Key][$PS['PaymentSystem']]['Count']):0;
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
 			// вносим значение в массив для графика
-			$Graphs['ByMonthPayPS']['Data'][] = $ArrayByMonthPayPS;
-			$Graphs['ByMonthCountPS']['Data'][] = $ArrayByMonthCountPS;
-			$Graphs['ByMonthAvgPS']['Data'][] = $ArrayByMonthAvgPS;
+			$Graphs[SPrintF('%sPayPS',$Detail)]['Data'][] = $ArrayPayPS;
+			$Graphs[SPrintF('%sCountPS',$Detail)]['Data'][] = $ArrayCountPS;
+			$Graphs[SPrintF('%sAvgPS',$Detail)]['Data'][] = $ArrayAvgPS;
 			#-------------------------------------------------------------------------------
 		}
 		break;
@@ -374,140 +433,8 @@ if(In_Array('ByMonth',$Details)){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(In_Array('ByQuarter',$Details)){
-	#-------------------------------------------------------------------------------
-	$Columns = Array('GET_QUARTER_FROM_TIMESTAMP(`StatusDate`) as `Quarter`','YEAR(FROM_UNIXTIME(`StatusDate`)) as `Year`','SUM(`Summ`) as `Summ`','COUNT(*) as `Count`');
-	#-------------------------------------------------------------------------------
-	$Invoices = DB_Select('Invoices',$Columns,Array('GroupBy'=>Array('Quarter','Year'),'Where'=>$Where,'SortOn'=>'StatusDate'));
-	#-------------------------------------------------------------------------------
-	switch(ValueOf($Invoices)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		# No more...
-		break;
-	case 'array':
-		#-------------------------------------------------------------------------------
-		// массив для дат (ключей), по которым будут строиться графики по платёжным системам
-		$Dates = Array();
-		#-------------------------------------------------------------------------------
-		foreach($Invoices as $Invoice){
-			#-------------------------------------------------------------------------------
-			// квартал
-			$Quarter = SPrintF('%u/%u',$Invoice['Year'],$Invoice['Quarter']);
-			#-------------------------------------------------------------------------------
-			// готовим массив с кварталами в качестве ключей, для графиков по платёжным системам
-			$Dates[$Quarter] = Array();
-			#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
-			// график по сумме платежей
-			$Graphs['ByQuartPay']['Data'][] = Array($Quarter,Ceil($Invoice['Summ']));
-			#-------------------------------------------------------------------------------
-			// график по числу платежей
-			$Graphs['ByQuartCount']['Data'][] = Array($Quarter,Ceil($Invoice['Count']));
-			#-------------------------------------------------------------------------------
-			// график среднего чека
-			$Graphs['ByQuartPayAvg']['Data'][] = Array($Quarter,Ceil($Invoice['Summ']/$Invoice['Count']));
-			#-------------------------------------------------------------------------------
-		}
-		#-------------------------------------------------------------------------------
-		// выбираем платёжные системы использовавшиеся в этот же период
-		$PSs = DB_Select('Invoices',Array('DISTINCT(`PaymentSystemID`) AS `PaymentSystem`'),Array('Where'=>$Where));
-		#-------------------------------------------------------------------------------
-		switch(ValueOf($PSs)){
-		case 'error':
-			return ERROR | @Trigger_Error(500);
-		case 'exception':
-			return ERROR | @Trigger_Error(400);
-		case 'array':
-			break;
-		default:
-			return ERROR | @Trigger_Error(101);
-		}
-		#-------------------------------------------------------------------------------
-		// перебираем полученный список платёжных систем
-		foreach($PSs as $PS){
-			#-------------------------------------------------------------------------------
-			// делаем запрос к базе, достаём платежи по конкретной платёжной системе в указанный период
-			$Where1 = $Where;
-			$Where1[] = SPrintF('`PaymentSystemID` = "%s"',$PS['PaymentSystem']);
-			#-------------------------------------------------------------------------------
-			$Invoices = DB_Select('Invoices',$Columns,Array('GroupBy'=>Array('Quarter','Year'),'Where'=>$Where1,'SortOn'=>'StatusDate'));
-			#-------------------------------------------------------------------------------
-			switch(ValueOf($Invoices)){
-			case 'error':
-				return ERROR | @Trigger_Error(500);
-			case 'exception':
-				# No more...
-				break;
-			case 'array':
-				#-------------------------------------------------------------------------------
-				// перебираем полученный список платежей, вносим платежи в массив дат
-				foreach($Invoices as $Invoice){
-					#-------------------------------------------------------------------------------
-					// квартал
-					$Quarter = SPrintF('%u/%u',$Invoice['Year'],$Invoice['Quarter']);
-					#-------------------------------------------------------------------------------
-					$Dates[$Quarter][$PS['PaymentSystem']]['Summ'] = $Invoice['Summ'];
-					#-------------------------------------------------------------------------------
-					$Dates[$Quarter][$PS['PaymentSystem']]['Count'] = $Invoice['Count'];
-					#-------------------------------------------------------------------------------
-				}
-				#-------------------------------------------------------------------------------
-				break;
-				#-------------------------------------------------------------------------------
-			default:
-				return ERROR | @Trigger_Error(101);
-			}
-			#-------------------------------------------------------------------------------
-			// некоторые платёжные системы удалены, могут быть проблемы с именем
-			$PaymentSystemName = IsSet($PaymentSystems[$PS['PaymentSystem']]['Name'])?$PaymentSystems[$PS['PaymentSystem']]['Name']:$PS['PaymentSystem'];
-			#-------------------------------------------------------------------------------
-			// добавляем описание платёжной системы в описание колонок
-			$Graphs['ByQuartPayPS']['Columns'][] = Array('number',$PaymentSystemName);
-			$Graphs['ByQuartCountPS']['Columns'][] = Array('number',$PaymentSystemName);
-			$Graphs['ByQuartAvgPS']['Columns'][] = Array('number',$PaymentSystemName);
-			#-------------------------------------------------------------------------------
-		}
-		#-------------------------------------------------------------------------------
-		// перебираем полученный массив дат, заполняем массив для графиков
-		foreach(Array_Keys($Dates) as $Key){
-			#-------------------------------------------------------------------------------
-			// строка таблицы графика
-			$ArrayByQuartPayPS = Array($Key);
-			$ArrayByQuartCountPS = Array($Key);
-			$ArrayByQuartAvgPS = Array($Key);
-			// перебираем платёжные системы, чтобы в том же порядке заполнить массивы
-			foreach($PSs as $PS){
-				#-------------------------------------------------------------------------------
-				// если в этот день платёжной системой платили, то вносим цифры платежей, иначе - нули
-				$Value = IsSet($Dates[$Key][$PS['PaymentSystem']])?1:0;
-				#-------------------------------------------------------------------------------
-				$ArrayByQuartPayPS[] = ($Value)?$Dates[$Key][$PS['PaymentSystem']]['Summ']:0;
-				#-------------------------------------------------------------------------------
-				$ArrayByQuartCountPS[] = ($Value)?$Dates[$Key][$PS['PaymentSystem']]['Count']:0;
-				#-------------------------------------------------------------------------------
-				$ArrayByQuartAvgPS[] = ($Value)?Ceil($Dates[$Key][$PS['PaymentSystem']]['Summ']/$Dates[$Key][$PS['PaymentSystem']]['Count']):0;
-				#-------------------------------------------------------------------------------
-			}
-			#-------------------------------------------------------------------------------
-			// вносим значение в массив для графика
-			$Graphs['ByQuartPayPS']['Data'][] = $ArrayByQuartPayPS;
-			$Graphs['ByQuartCountPS']['Data'][] = $ArrayByQuartCountPS;
-			$Graphs['ByQuartAvgPS']['Data'][] = $ArrayByQuartAvgPS;
-			#-------------------------------------------------------------------------------
-		}
-		break;
-		#-------------------------------------------------------------------------------
-	default:
-		return ERROR | @Trigger_Error(101);
-	}
-	#-------------------------------------------------------------------------------
-}
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-if(Count($NoBody->Childs) < 2)
-	return $Result;
+#if(Count($NoBody->Childs) < 2)
+#	return $Result;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // добавляем графики в страницу

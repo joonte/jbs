@@ -25,6 +25,10 @@ if($IsCreate && !SizeOf($StatisticsIDs))
 	return 'Не выбран отчёт для статистики';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// уровни детализации
+$Words = Array('ByDays'=>'день','ByMonth'=>'месяц','ByQuarter'=>'квартал','ByYear'=>'год');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # Формирование отчетов
 #-------------------------------------------------------------------------------
 if($IsCreate){
@@ -115,7 +119,7 @@ if($IsCreate){
 			if(!In_Array($StatisticID,$StatisticsIDs))
 				continue;
 			#-------------------------------------------------------------------------------
-			$Comp = Comp_Load(SPrintF('Statistics/%s',$StatisticID),Array('IsCreate'=>TRUE,'StartDate'=>$StartDate,'FinishDate'=>$FinishDate + 86400,'Details'=>$Details,'ShowTables'=>$ShowTables));
+			$Comp = Comp_Load(SPrintF('Statistics/%s',$StatisticID),Array('IsCreate'=>TRUE,'StartDate'=>$StartDate,'FinishDate'=>$FinishDate + 86400,'Details'=>$Details,'ShowTables'=>$ShowTables,'Words'=>$Words));
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
@@ -207,25 +211,15 @@ $Table[] = Array('Конечная дата',$Comp);
 #-------------------------------------------------------------------------------
 $Table[] = 'Уровень детализации';
 #-------------------------------------------------------------------------------
-$Input = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'Details[]','value'=>'ByDays','id'=>'ByDays'));
-if(Is_Error($Input))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('LABEL',Array('for'=>'ByDays'),'По дням'),$Input);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Input = Comp_Load('Form/Input',Array('type'=>'checkbox','checked'=>'true','name'=>'Details[]','value'=>'ByMonth','id'=>'ByMonth'));
-if(Is_Error($Input))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('LABEL',Array('for'=>'ByMonth'),'По месяцам'),$Input);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Input = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'Details[]','value'=>'ByQuarter','id'=>'ByQuarter'));
-if(Is_Error($Input))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('LABEL',Array('for'=>'ByQuarter'),'По кварталам'),$Input);
+foreach(Array_Keys($Words) as $Key){
+	#-------------------------------------------------------------------------------
+	$Input = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'Details[]','value'=>$Key,'id'=>$Key));
+	if(Is_Error($Input))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array(new Tag('LABEL',Array('for'=>$Key),$Words[$Key]),$Input);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Input = Comp_Load('Form/Input',Array('type'=>'checkbox','checked'=>'true','name'=>'ShowTables','value'=>'1','id'=>'ShowTables'));
