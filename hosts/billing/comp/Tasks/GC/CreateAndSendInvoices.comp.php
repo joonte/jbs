@@ -387,12 +387,12 @@ foreach($Orders as $Order){
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// достаём услуги на которые выписан счёт
-		$Columns = Array(
+		$ItemsColumns = Array(
 				'*',
 				'(SELECT `NameShort` FROM `ServicesOwners` WHERE `ServicesOwners`.`ID` = `InvoicesItems`.`ServiceID`) AS `ServiceName`',
 				'(SELECT `Code` FROM `ServicesOwners` WHERE `ServicesOwners`.`ID` = `InvoicesItems`.`ServiceID`) AS `ServiceCode`',
 				);
-		$InvoicesItems = DB_Select('InvoicesItems',$Columns,Array('Where'=>SPrintF('`InvoiceID` = %u',$Comp['InvoiceID'])));
+		$InvoicesItems = DB_Select('InvoicesItems',$ItemsColumns,Array('Where'=>SPrintF('`InvoiceID` = %u',$Comp['InvoiceID'])));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($InvoicesItems)){
 		case 'error':
