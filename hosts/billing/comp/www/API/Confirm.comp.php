@@ -182,7 +182,7 @@ if(!$Confirm && !$Code){
 	#-------------------------------------------------------------------------------
 	$MessageBig = "%s\r\n\r\nДля подтверждения вашего контактного адреса, вы можете пройти по этой ссылке:\r\n%s\r\nЕсли ссылка не открывается, то скопируйте и вставьте её в адресную строку браузера";
 	#-------------------------------------------------------------------------------
-	$Url = SPrintF('http://%s/API/Confirm?Method=%s&ContactID=%u&Value=%s&Code=%s/%s',HOST_ID,$Method,$ContactID,$Value,$ConfirmShort,$ConfirmLong);
+	$Url = SPrintF('%s://%s/API/Confirm?Method=%s&ContactID=%u&Value=%s&Code=%s/%s',URL_SCHEME,HOST_ID,$Method,$ContactID,$Value,$ConfirmShort,$ConfirmLong);
 	#-------------------------------------------------------------------------------
 	$MessageBig = SPrintF($MessageBig,$MessageSmall,$Url);
 	#-------------------------------------------------------------------------------

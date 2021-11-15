@@ -16,5 +16,5 @@ IP адрес заказа:	{$DSScheme.IPaddr}
 
 ---
 Вы всегда можете заказать другой сервер:
-http://{$smarty.const.HOST_ID|default:'HOST_ID'}/DSSchemes
+{$smarty.const.URL_SCHEME|default:'URL_SCHEME'}://{$smarty.const.HOST_ID|default:'HOST_ID'}/DSSchemes
 

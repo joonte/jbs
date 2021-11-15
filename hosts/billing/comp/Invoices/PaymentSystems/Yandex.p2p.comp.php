@@ -21,7 +21,7 @@ $Send['sum'] = Round($Summ/$Settings['Course'],2);
 $Send['label'] = $InvoiceID;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Send['successURL'] = SPrintF('%s://%s/Invoices',Url_Scheme(),HOST_ID);
+$Send['successURL'] = SPrintF('%s://%s/Invoices',URL_SCHEME,HOST_ID);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Formats/Invoice/Number',$InvoiceID);

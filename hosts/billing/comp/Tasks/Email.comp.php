@@ -71,7 +71,7 @@ if(IsSet($Attribs['TypeID']) && $Attribs['TypeID']){
 	#-------------------------------------------------------------------------------
 	$Code = Hash('sha256',SPrintF('%s%s%s',Hash('sha256',$Attribs['Contact']['ID']),Hash('sha256',$Attribs['TypeID']),Hash('sha256',$User['UniqID'])));
 	#-------------------------------------------------------------------------------
-	$Link = SPrintF('https://%s/API/UnSubScribe?ContactID=%u&TypeID=%s&Code=%s',HOST_ID,$Attribs['Contact']['ID'],$Attribs['TypeID'],$Code);
+	$Link = SPrintF('%s://%s/API/UnSubScribe?ContactID=%u&TypeID=%s&Code=%s',URL_SCHEME,HOST_ID,$Attribs['Contact']['ID'],$Attribs['TypeID'],$Code);
 	#-------------------------------------------------------------------------------
 	if(IsSet($Attribs['TypeID']) && $Attribs['TypeID'])
 		$UnSubScribe = SPrintF('<HR />Отписаться от: <A href="%s">%s / %s</A>',$Link,$Title,$Name);

@@ -8,7 +8,7 @@
 
 Ваши данные для входа в биллинговую систему:
   * Адрес для входа:
-      http://{$smarty.const.HOST_ID|default:'HOST_ID'}/Logon
+      {$smarty.const.URL_SCHEME|default:'URL_SCHEME'}://{$smarty.const.HOST_ID|default:'HOST_ID'}/Logon
   * Ваш электронный адрес (используется для входа в биллинговую систему):
       {$User.Email|default:'$User.Email'}
   * Ваш новый пароль:

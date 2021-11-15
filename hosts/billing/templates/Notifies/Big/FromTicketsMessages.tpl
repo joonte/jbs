@@ -12,5 +12,5 @@
 {$Message|default:'$Message'}
 ---
 [size=10][color=gray]Для просмотра истории запроса или нового ответа, пройдите по ссылке:
-http://{$smarty.const.HOST_ID|default:'HOST_ID'}/Tickets?TicketID={$TicketID|default:'$TicketID'}
+{$smarty.const.URL_SCHEME|default:'URL_SCHEME'}://{$smarty.const.HOST_ID|default:'HOST_ID'}/Tickets?TicketID={$TicketID|default:'$TicketID'}
 [/color][/size]

@@ -20,11 +20,11 @@ $Send['amount'] = Round($Summ/$Settings['Course'],2);
 $Send['item_number'] = $InvoiceID;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Send['return'] = SPrintF('%s://%s/Invoices',Url_Scheme(),HOST_ID);
+$Send['return'] = SPrintF('%s://%s/Invoices',URL_SCHEME,HOST_ID);
 #-------------------------------------------------------------------------------
-$Send['cancel_return'] = SPrintF('%s://%s/Invoices?Error=yes',Url_Scheme(),HOST_ID);
+$Send['cancel_return'] = SPrintF('%s://%s/Invoices?Error=yes',URL_SCHEME,HOST_ID);
 #-------------------------------------------------------------------------------
-$Send['notify_url'] = SPrintF('%s://%s/Merchant/PayPal',Url_Scheme(),HOST_ID);
+$Send['notify_url'] = SPrintF('%s://%s/Merchant/PayPal',URL_SCHEME,HOST_ID);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Send['currency_code'] = $Settings['Valute'];

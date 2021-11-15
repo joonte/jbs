@@ -17,5 +17,5 @@ wget -O /usr/local/ispmgr/etc/ispmgr.lic "http://lic.ispsystem.com/ispmgr.lic?ip
 Обращаем ваше внимание, если вы заказали лицензию четвёртой версии, то установку программного обеспечения вам необходимо произвести самостоятельно.
 
 При заказе лицензии для виртуального сервера с шаблоном ISPmanager, вы можете сразу же пользоваться лицензией, пройдя по адресу:
-http://{$IP|default:'$IP'}:1500/ispmgr
+{$smarty.const.URL_SCHEME|default:'URL_SCHEME'}://{$IP|default:'$IP'}:1500/ispmgr
 

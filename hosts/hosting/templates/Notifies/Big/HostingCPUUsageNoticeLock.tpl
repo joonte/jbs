@@ -16,5 +16,5 @@
 {$HostingOrder.Url|default:'$HostingOrder.Url'}
 
 За более детальной информацией обращайтесь в систему тикетов, биллинговой системы:
-http://{$smarty.const.HOST_ID|default:'HOST_ID'}/Tickets
+{$smarty.const.URL_SCHEME|default:'URL_SCHEME'}://{$smarty.const.HOST_ID|default:'HOST_ID'}/Tickets
 

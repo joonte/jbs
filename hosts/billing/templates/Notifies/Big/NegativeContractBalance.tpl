@@ -18,6 +18,6 @@
 или снять домен с делегирования.
 {/if}
 
-История операций по договору: https://{$smarty.const.HOST_ID|default:'HOST_ID'}/Postings?ContractID={$ContractID|default:'$ContractID'}
-Ваши счета на оплату: https://{$smarty.const.HOST_ID|default:'HOST_ID'}/Invoices
+История операций по договору: {$smarty.const.URL_SCHEME|default:'URL_SCHEME'}://{$smarty.const.HOST_ID|default:'HOST_ID'}/Postings?ContractID={$ContractID|default:'$ContractID'}
+Ваши счета на оплату: {$smarty.const.URL_SCHEME|default:'URL_SCHEME'}://{$smarty.const.HOST_ID|default:'HOST_ID'}/Invoices
 

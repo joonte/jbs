@@ -78,7 +78,7 @@ if(SizeOf($Files)){
 			continue;
 		#-------------------------------------------------------------------------------
 		# добавляем к тексту превьюху
-		$Content = SPrintF("%s\n\n[image]%s://%s/FileDownload?FileID=%u[/image]",$Content,Url_Scheme(),HOST_ID,$File['ID']);
+		$Content = SPrintF("%s\n\n[image]%s://%s/FileDownload?FileID=%u[/image]",$Content,URL_SCHEME,HOST_ID,$File['ID']);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------

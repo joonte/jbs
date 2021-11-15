@@ -42,8 +42,8 @@ $Send['to'] = SPrintF('+%s',$Address);
 #-------------------------------------------------------------------------------
 $Send['currency'] = $Settings['Valute'];
 #-------------------------------------------------------------------------------
-$Send['successUrl'] = SPrintF('%s://%s/Invoices',Url_Scheme(),HOST_ID);
-$Send['failUrl']    = SPrintF('%s://%s/Invoices?Error=yes',Url_Scheme(),HOST_ID);
+$Send['successUrl'] = SPrintF('%s://%s/Invoices',URL_SCHEME,HOST_ID);
+$Send['failUrl']    = SPrintF('%s://%s/Invoices?Error=yes',URL_SCHEME,HOST_ID);
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/Invoices/PaymentSystems/QIWI]: to = %s',$Send['to']));
 #-------------------------------------------------------------------------------

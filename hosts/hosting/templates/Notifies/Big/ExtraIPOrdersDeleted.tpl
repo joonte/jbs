@@ -7,5 +7,5 @@
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ на выделенный IP [{$Login|default:'$Login'}], под номером {$Item.OrderID|string_format:"%05u"}, был удален.
 
 Для нового заказа, воспользуйтесь этой ссылкой:
-http://{$smarty.const.HOST_ID|default:'HOST_ID'}/ExtraIPSchemes
+{$smarty.const.URL_SCHEME|default:'URL_SCHEME'}://{$smarty.const.HOST_ID|default:'HOST_ID'}/ExtraIPSchemes
 

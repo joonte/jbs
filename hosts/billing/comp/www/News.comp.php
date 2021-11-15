@@ -53,7 +53,7 @@ $DOM->AddText('Title',SPrintF('Новости компании %s',$Profile['Nam
 #-------------------------------------------------------------------------------
 $Img = new Tag('IMG',Array('border'=>0,'height'=>32,'width'=>32,'src'=>'SRC:{Images/Icons/Rss.gif}'));
 #-------------------------------------------------------------------------------
-$A = new Tag('A',Array('class'=>'Image','href'=>SPrintF('http://%s/Rss/News',HOST_ID)),$Img);
+$A = new Tag('A',Array('class'=>'Image','href'=>SPrintF('%s://%s/Rss/News',URL_SCHEME,HOST_ID)),$Img);
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Into',new Tag('TABLE',new Tag('TR',new Tag('TD',$A),new Tag('TD','RSS 2.0'))));
 #-------------------------------------------------------------------------------

@@ -9,7 +9,7 @@
 Пароль: {$Password|default:'$Password'}
 
 Адрес для входа:
-http://{$smarty.const.HOST_ID|default:'HOST_ID'}/Logon
+{$smarty.const.URL_SCHEME|default:'URL_SCHEME'}://{$smarty.const.HOST_ID|default:'HOST_ID'}/Logon
 
 Сохраните эти данные в надежном месте, они потребуются для дальнейшей работы.
 

@@ -27,11 +27,11 @@ class DNSmanagerOrdersSuspendedMsg extends Message {
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// ссылка на продление заказа
-		$this->params['ProlongLink'] = SPrintF('%s://%s/DNSmanagerOrders/%u/',Url_Scheme(),HOST_ID,$this->params['OrderID']);
+		$this->params['ProlongLink'] = SPrintF('%s://%s/DNSmanagerOrders/%u/',URL_SCHEME,HOST_ID,$this->params['OrderID']);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// ссылка на смену тарифа
-		$this->params['SchemeChangeLink'] = SPrintF('%s://%s/DNSmanagerOrders/%u/SchemeChange/',Url_Scheme(),HOST_ID,$this->params['OrderID']);
+		$this->params['SchemeChangeLink'] = SPrintF('%s://%s/DNSmanagerOrders/%u/SchemeChange/',URL_SCHEME,HOST_ID,$this->params['OrderID']);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		return $this->params;

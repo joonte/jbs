@@ -98,7 +98,7 @@ class Viber
 					#-------------------------------------------------------------------------------
 					$Data['type']	= 'picture';
 					$Data['text']	= '';
-					$Data['media']	= SPrintF('https://%s/public/%s',HOST_ID,$Url);
+					$Data['media']	= SPrintF('%s://%s/public/%s',URL_SCHEME,HOST_ID,$Url);
 					#-------------------------------------------------------------------------------
 					// вибер ругается на эти поля у картинок
 					if(IsSet($Data['size']))
@@ -110,7 +110,7 @@ class Viber
 				}else{
 					#-------------------------------------------------------------------------------
 					$Data['type']		= 'file';
-					$Data['media']		= SPrintF('https://%s/public/%s',HOST_ID,$Url);
+					$Data['media']		= SPrintF('%s://%s/public/%s',URL_SCHEME,HOST_ID,$Url);
 					$Data['size']		= $Attachment['Size'];
 					$Data['file_name']	= $Attachment['Name'];
 					#-------------------------------------------------------------------------------
@@ -141,7 +141,7 @@ class Viber
 	public function SetWebHook()
 	{
 		#-------------------------------------------------------------------------------
-		$Data['url']   = SPrintF('https://%s/API/Viber',HOST_ID);
+		$Data['url']   = SPrintF('%s://%s/API/Viber',URL_SCHEME,HOST_ID);
 		#-------------------------------------------------------------------------------
 		return $this->API('set_webhook', $Data);
 		#-------------------------------------------------------------------------------

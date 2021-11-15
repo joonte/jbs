@@ -28,9 +28,9 @@ $__USER = $GLOBALS['__USER'];
 $Send['Comment'] .= SPrintF('%s, %s (%s)',$Comp,Translit($__USER['Name']),$__USER['Email']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Send['URL_RETURN']	= SPrintF('%s://%s/Invoices',Url_Scheme(),HOST_ID);
-$Send['URL_RETURN_OK']	= SPrintF('%s://%s/Invoices',Url_Scheme(),HOST_ID);
-$Send['URL_RETURN_NO']	= SPrintF('%s://%s/Invoices?Error=yes',Url_Scheme(),HOST_ID);
+$Send['URL_RETURN']	= SPrintF('%s://%s/Invoices',URL_SCHEME,HOST_ID);
+$Send['URL_RETURN_OK']	= SPrintF('%s://%s/Invoices',URL_SCHEME,HOST_ID);
+$Send['URL_RETURN_NO']	= SPrintF('%s://%s/Invoices?Error=yes',URL_SCHEME,HOST_ID);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # а ещё в люобй форме есть CSRF

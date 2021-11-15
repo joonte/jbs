@@ -11,5 +11,5 @@ IP адрес:	{$IP|default:'$IP'}
 Если этот заказ вам всё ещё необходим, обратитесь в техническую поддержку, мы восстановим заказ из бэкапа (по возможности).
 
 Для нового заказа, воспользуйтесь этой ссылкой:
-http://{$smarty.const.HOST_ID|default:'HOST_ID'}/VPSSchemes
+{$smarty.const.URL_SCHEME|default:'URL_SCHEME'}://{$smarty.const.HOST_ID|default:'HOST_ID'}/VPSSchemes
 

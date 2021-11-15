@@ -62,7 +62,7 @@ case 'array':
 		}
 		#-------------------------------------------------------------------------------
 		// генерируем ссылку на оплату
-		$PaymentLink = SPrintF('%s://%s/Invoices/%u/',Url_Scheme(),HOST_ID,$Invoice['ID']);
+		$PaymentLink = SPrintF('%s://%s/Invoices/%u/',URL_SCHEME,HOST_ID,$Invoice['ID']);
 		#-------------------------------------------------------------------------------
 		#----------------------------------TRANSACTION----------------------------------
 		if(Is_Error(DB_Transaction($TransactionID = UniqID('comp/Tasks/GC/NotifyWaitingInvoice'))))

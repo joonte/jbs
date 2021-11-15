@@ -31,7 +31,7 @@ $Rss = new Tag('rss',Array('version'=>'2.0'));
 #-------------------------------------------------------------------------------
 $Channel = new Tag('channel');
 $Channel->AddChild(new Tag('title',SPrintF('Новости компании %s',$Profile['Name'])));
-$Channel->AddChild(new Tag('link',SPrintF('http://%s',HOST_ID)));
+$Channel->AddChild(new Tag('link',SPrintF('%s://%s',URL_SCHEME,HOST_ID)));
 $Channel->AddChild(new Tag('description',SPrintF('Новости компании %s',$Profile['Name'])));
 $Channel->AddChild(new Tag('copyright',HOST_ID));
 $Channel->AddChild(new Tag('language','ru'));
@@ -53,7 +53,7 @@ default:
 #-------------------------------------------------------------------------------
 foreach($Versions as $Version){
 	#-------------------------------------------------------------------------------
-	$Link = SPrintF('http://%s/Rss/New?NewID=%u',HOST_ID,$Version['ID']);
+	$Link = SPrintF('%s://%s/Rss/New?NewID=%u',URL_SCHEME,HOST_ID,$Version['ID']);
 	#-------------------------------------------------------------------------------
 	$Text = Strip_Tags($Version['Text']);
 	#-------------------------------------------------------------------------------
