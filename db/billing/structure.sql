@@ -887,7 +887,9 @@ CREATE TABLE IF NOT EXISTS `Statistics` (
 	`New` int(11) default '0',
 	`Waiting` int(11) default '0',
 	`Suspended` int(11) default '0',
-	PRIMARY KEY (`ID`)
+	PRIMARY KEY (`ID`),
+	KEY `TableID` (`TableID`),
+	KEY `PackageID` (`PackageID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
