@@ -74,7 +74,9 @@ if(!IsSet($Params['ServiceID']) || !IsSet($Params['SchemeID'])){
 	$Where = Array(
 			SPrintF('`UserID` = %u',$UserID),
 			SPrintF('`ServiceID` = %u',$Params['ServiceID']),
-			SPrintF('`SchemeID` = %u',$Params['SchemeID'])
+			SPrintF('`SchemeID` = %u',$Params['SchemeID']),
+			// кастыль, ибо хрень какая-то, стало успевать увидеть заказ который прямо сейчас делается...
+//			SPrintF('`CreateDate` < %u',Time() - 10),
 			);
 	#-------------------------------------------------------------------------------
 	$OrdersHistory = DB_Select('OrdersHistory',Array('COUNT(*) AS `Counter`','MAX(`CreateDate`) AS `LastDate`'),Array('UNIQ','Where'=>$Where));
