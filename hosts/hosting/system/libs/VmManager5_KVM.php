@@ -555,7 +555,7 @@ function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 			if(!IsSet($SnapShot['id']))
 				continue;
 			#-------------------------------------------------------------------------------
-			$Request = Array('func'=>'vm.snapshot.delete','elid'=>$SnapShot['id'],'plid'=>$VPSOrder['Login'],'sok'=>'ok');
+			$Request = Array('func'=>'vm.snapshot.delete','elid'=>$SnapShot['id'],'plid'=>$VM['id'],'sok'=>'ok');
 			#-------------------------------------------------------------------------------
 			$XML = VmManager5_KVM_Request($Settings,$Request);
 			#-------------------------------------------------------------------------------
