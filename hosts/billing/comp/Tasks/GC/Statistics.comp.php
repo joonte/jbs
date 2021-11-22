@@ -33,10 +33,14 @@ $Statistics = Array(
 		);
 #-------------------------------------------------------------------------------
 $Wheres = Array(
+		// всего юзеров
 		'Total'		=> '1 = 1',
-		'Active'	=> '(SELECT COUNT(*) FROM `OrdersOwners` WHERE `UserID` = `Users`.`ID`) > 0',
+		// уникальных юзеров с заказами (активные клиенты)
+		'Active'	=> '(SELECT COUNT(DISTINCT(`UserID`)) FROM `OrdersOwners` WHERE `UserID` = `Users`.`ID`) > 0',
+		// зареганные за последнюю неделю (новые клиенты)
 		'New'		=> '`RegisterDate` > UNIX_TIMESTAMP() - 7*24*3600',
-		'Suspended'	=> Array('(SELECT COUNT(*) FROM `OrdersOwners` WHERE `UserID` = `Users`.`ID`) = 0 ','(SELECT COUNT(*) FROM `InvoicesOwners` WHERE `UserID` = `Users`.`ID`) > 0')
+		// с оплаченными счетами, но без услуг
+		'Suspended'	=> Array('(SELECT COUNT(DISTINCT(`UserID`)) FROM `OrdersOwners` WHERE `UserID` = `Users`.`ID`) = 0 ','(SELECT COUNT(DISTINCT(`UserID`)) FROM `InvoicesOwners` WHERE `UserID` = `Users`.`ID`) > 0')
 		);
 #-------------------------------------------------------------------------------
 foreach(Array_Keys($Wheres) as $Key){
@@ -65,11 +69,16 @@ $Statistics = Array(
 		);
 #-------------------------------------------------------------------------------
 $Wheres = Array(
+		// всего счетов
 		'Total'		=> '1 = 1',
-		'Active'	=> '`StatusID` = "Payed" AND `CreateDate` > UNIX_TIMESTAMP() - 7*24*3600',
+		// оплаченных счетов за неделю)
+		'Active'	=> '`StatusID` = "Payed" AND `StatusDate` > UNIX_TIMESTAMP() - 7*24*3600',
+		// новых, за неделю
 		'New'		=> '`CreateDate` > UNIX_TIMESTAMP() - 7*24*3600',
-		'Waiting'	=> '`StatusID` = "Waiting" AND `CreateDate` > UNIX_TIMESTAMP() - 7*24*3600',
-		'Suspended'	=> '`StatusID` = "Rejected" AND `CreateDate` > UNIX_TIMESTAMP() - 7*24*3600',
+		// ждущих оплаты, за неделю (т.е. авписано не оплачено за неделю)
+		'Waiting'	=> '`StatusID` = "Waiting" AND `StatusDate` > UNIX_TIMESTAMP() - 7*24*3600',
+		// отменено, за неделю
+		'Suspended'	=> '`StatusID` = "Rejected" AND `StatusDate` > UNIX_TIMESTAMP() - 7*24*3600',
 		);
 #-------------------------------------------------------------------------------
 foreach(Array_Keys($Wheres) as $Key){
@@ -95,14 +104,6 @@ $Statistics = Array(
 		'Day'		=> Date('d'),
 		'TableID'	=> 'Invoices',
 		'PackageID'	=> 'Summ',
-		);
-#-------------------------------------------------------------------------------
-$Wheres = Array(
-		'Total'		=> '1=1',
-		'Active'	=> '`StatusID` = "Payed" AND `StatusDate` > UNIX_TIMESTAMP() - 7*24*3600',
-		'New'		=> '`StatusDate` > UNIX_TIMESTAMP() - 7*24*3600',
-		'Waiting'	=> '`StatusID` = "Waiting" AND `StatusDate` > UNIX_TIMESTAMP() - 7*24*3600',
-		'Suspended'	=> '`StatusID` = "Rejected" AND `StatusDate` > UNIX_TIMESTAMP() - 7*24*3600',
 		);
 #-------------------------------------------------------------------------------
 foreach(Array_Keys($Wheres) as $Key){
@@ -157,10 +158,15 @@ foreach($Services as $Service){
 	$Statistics['TableID'] = $Service['Code'];
 	#-------------------------------------------------------------------------------
 	$Wheres = Array(
+			// всего заказов
 			'Total'		=> Array(),
+			// активных
 			'Active'	=> Array('`StatusID` = "Active"'),
+			// заказано за неделю
 			'New'		=> Array('`OrderDate` > UNIX_TIMESTAMP() - 7*24*3600'),
+			// неоплаченных никогда
 			'Waiting'	=> Array('`StatusID` = "Waiting"'),
+			// заблокированных
 			'Suspended'	=> Array('`StatusID` = "Suspended"')
 			);
 	#-------------------------------------------------------------------------------

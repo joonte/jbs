@@ -5,4 +5,3 @@ ALTER TABLE `Statistics` ADD KEY `TableID` (`TableID`);
 -- SEPARATOR
 ALTER TABLE `Statistics` ADD KEY `PackageID` (`PackageID`);
 
-
