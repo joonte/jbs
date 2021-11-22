@@ -27,7 +27,7 @@ function WhoIs_Parse($Domain){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# достаём список серверов на которых есть такой тариф
-	$Zones = DB_Select('DomainSchemes',Array('Name','ServerID'),Array('Where'=>SPrintF('`Name` = "%s"',$DomainZone)));
+	$Zones = DB_Select('DomainSchemes',Array('Name','ServerID'),Array('Where'=>Array('`IsActive` = "yes"',SPrintF('`Name` = "%s"',$DomainZone))));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Zones)){
 	case 'error':
