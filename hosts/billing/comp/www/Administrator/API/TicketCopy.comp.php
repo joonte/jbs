@@ -88,7 +88,12 @@ default:
 #-------------------------------------------------------------------------------
 # выбираем текст первого сообщения
 # select ID,UserID,EdeskID from EdesksMessages where EdeskID = 22953 ORDER BY ID ASC LIMIT 1;
-$Message = DB_Select('EdesksMessages',Array('*'),Array('UNIQ','Where'=>SPrintF('`EdeskID` = %u',$TicketID),'SortOn'=>'ID','Limits'=>Array(0,1)));
+$Columns = Array(
+		'*',
+		'(SELECT `IP` FROM `UsersIPs` WHERE `EdesksMessages`.`ID` = `UsersIPs`.`EdesksMessageID` LIMIT 1) as `IP`',
+		'(SELECT `UA` FROM `UsersIPs` WHERE `EdesksMessages`.`ID` = `UsersIPs`.`EdesksMessageID` LIMIT 1) as `UA`'
+		);
+$Message = DB_Select('EdesksMessages',$Columns,Array('UNIQ','Where'=>SPrintF('`EdeskID` = %u',$TicketID),'SortOn'=>'ID','Limits'=>Array(0,1)));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Message)){
 case 'error':
@@ -114,7 +119,8 @@ $IEdesk = Array(
 		'Theme'		=> $Edesks['Theme'],
 		'UpdateDate'	=> Time(),
 		'StatusID'	=> $Edesks['StatusID'],
-		'Flags'		=> $Flags
+		'Flags'		=> $Flags,
+		'NotifyEmail'	=> ''
 		);
 #-------------------------------------------------------------------------------
 $EdeskID = DB_Insert('Edesks',$IEdesk);
@@ -134,7 +140,7 @@ if(Is_Error($MessageID))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // IP и UA в отдельной таблице
-$IsInsert = DB_Insert('UsersIPs',Array('CreateDate'=>$Message['CreateDate'],'UserID'=>$__USER['ID'],'EdesksMessageID'=>$MessageID,'IP'=>$Message['IP'],'UA'=>$Message['UA']));
+$IsInsert = DB_Insert('UsersIPs',Array('CreateDate'=>$Message['CreateDate'],'UserID'=>$GLOBALS['__USER']['ID'],'EdesksMessageID'=>$MessageID,'IP'=>Is_Null($Message['IP'])?'':$Message['IP'],'UA'=>Is_Null($Message['UA'])?'':$Message['UA']));
 if(Is_Error($IsInsert))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
