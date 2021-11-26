@@ -36,12 +36,19 @@ if(!$IsCreate)
 #-------------------------------------------------------------------------------
 //  группировка
 $GroupBy = Array(
-		'ByDays'	=> Array('Day'),
+		'ByDays'	=> Array('ISO_Date'),
 		'ByMonth'	=> Array('Month','Year'),
 		'ByQuarter'	=> Array('Quarter','Year'),
 		'ByYear'	=> Array('Year')
 		);
 #-------------------------------------------------------------------------------
+// ключи для выбора дат
+$DateKeys = Array(
+		'ByDays'	=> 'ISO_Date',
+		'ByMonth'	=> 'YearMonth',
+		'ByQuarter'	=> 'Quarter',
+		'ByYear'	=> 'Year'
+		);
 // выхлоп с графиками
 $Graphs = Array();
 #-------------------------------------------------------------------------------
@@ -51,30 +58,39 @@ $Where = Array(
 		SPrintF('`Stamp` <= %u',$FinishDate),
 		);
 #-------------------------------------------------------------------------------
-/*
 // колонки для выбора из БД
 $Columns = Array(
 		'DATE_FORMAT(FROM_UNIXTIME(`Stamp`),GET_FORMAT(DATE,"ISO")) AS `ISO_Date`',
 		"DATE_FORMAT(FROM_UNIXTIME(`Stamp`),'%Y-%m') AS `YearMonth`",
-		'GET_DAY_FROM_TIMESTAMP(`Stamp`) as `Date`',
+/*		'GET_DAY_FROM_TIMESTAMP(`Stamp`) as `Date`',
 		'MONTH(FROM_UNIXTIME(`Stamp`)) as `Month`',
 		'GET_QUARTER_FROM_TIMESTAMP(`Stamp`) as `Quarter`',
-		'YEAR(FROM_UNIXTIME(`Stamp`)) as Year',
-		'SUM(`Summ`) as `Summ`',
-		'COUNT(*) as `Count`'
+		'YEAR(FROM_UNIXTIME(`Stamp`)) as Year',*/
+		'PackageID','Year',
+		'GET_QUARTER_FROM_TIMESTAMP(`Stamp`) as `Quarter`',
+		'CEIL(SUM(`Total`)/COUNT(`Total`)/7) AS `Total`',
+		'CEIL(SUM(`Active`)/COUNT(`Active`)/7) AS `Active`',
+		'CEIL(SUM(`New`)/COUNT(`New`)/7) AS `New`',
+		'CEIL(SUM(`Waiting`)/COUNT(`Waiting`)/7) AS `Waiting`',
+		'CEIL(SUM(`Suspended`)/COUNT(`Suspended`)/7) AS `Suspended`',
+/*		 'SUM(`Total`) AS `Total`',
+		 'SUM(`Active`) AS `Active`',
+		 'SUM(`New`) AS `New`',
+		 'SUM(`Waiting`) AS `Waiting`',
+		 'SUM(`Suspended`) AS `Suspended`'*/
 		);
-*/
+
 // перебираем запрошенные детализации
 foreach($Details as $Detail){
 	#-------------------------------------------------------------------------------
 	// выбираем список уникальных сервисов что есть в статситике
-	$Tables = DB_Select('Statistics',Array('DISTINCT(`TableID`) AS `TableID`','(SELECT `NameShort` FROM `Services` WHERE `Code` = `Statistics`.`TableID` LIMIT 1) AS `NameShort`','(SELECT `Name` FROM `Services` WHERE `Code` = `Statistics`.`TableID` LIMIT 1) AS `Name`'),Array('Where'=>$Where,'SortOn'=>Array(`NameShort`,`ID`)));
+	$Tables = DB_Select('Statistics',Array('DISTINCT(`TableID`) AS `TableID`','(SELECT `NameShort` FROM `Services` WHERE `Code` = `Statistics`.`TableID` LIMIT 1) AS `NameShort`','(SELECT `Name` FROM `Services` WHERE `Code` = `Statistics`.`TableID` LIMIT 1) AS `Name`'),Array('Where'=>$Where,'SortOn'=>Array('NameShort','ID')));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Tables)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
-		continue;
+		continue 2;
 	case 'array':
 		break;
 	default:
@@ -84,10 +100,10 @@ foreach($Details as $Detail){
 	foreach($Tables as $Table){
 		#-------------------------------------------------------------------------------
 		$Where1 = $Where;
-		$Where1[] = SPrintF('`TableID` = "%s"',$Table['TableID'];
+		$Where1[] = SPrintF('`TableID` = "%s"',$Table['TableID']);
 		#-------------------------------------------------------------------------------
 		// выбираем строки этой таблицы
-		$Statistics = DB_Select('Statistics',Array('*','GET_QUARTER_FROM_TIMESTAMP(`Stamp`) as `Quarter`'),Array('GroupBy'=>$GroupBy[$Detail],'Where'=>$Where1,'SortOn'=>'Stamp'));
+		$Statistics = DB_Select('Statistics',$Columns,Array('GroupBy'=>$GroupBy[$Detail],'Where'=>$Where1,'SortOn'=>'Stamp'));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($Statistics)){
 		case 'error':
@@ -108,7 +124,7 @@ foreach($Details as $Detail){
 			#-------------------------------------------------------------------------------
 		}elseif($Table['TableID'] == 'Users'){
 			#-------------------------------------------------------------------------------
-			$Title = 'Количество пользователей зарегистрирвоаных в биллинге';
+			$Title = 'Количество пользователей зарегистрированых в биллинге';
 			#-------------------------------------------------------------------------------
 		}elseif($Table['TableID'] == 'Invoices'){
 			#-------------------------------------------------------------------------------
@@ -116,9 +132,11 @@ foreach($Details as $Detail){
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
+		$Title = SPrintF('%s / %s',$Title,$Detail);
+		#-------------------------------------------------------------------------------
 		// строим параметры графика
-		$Out = Arraay(
-				'Columns'	=> Array(Array('string','Дата'),Array('number','Total'),Array('number','Active'),Array('number','New'),Array('number','Waiting'),Array('number','Suspended')),
+		$Out = Array(
+				'Columns'	=> Array(Array('string','Дата'),/*Array('number','Total'),*/Array('number','Active'),Array('number','New'),Array('number','Waiting'),Array('number','Suspended')),
 				'Title'		=> $Title,
 				'hAxisTitle'	=> 'Даты',
 				'vAxisTitle'	=> 'вертикальная надпись',
@@ -135,7 +153,7 @@ foreach($Details as $Detail){
 			#-------------------------------------------------------------------------------
 			if(Is_Null($Statistic['PackageID'])){
 				#-------------------------------------------------------------------------------
-				$Out['Data'][] = Array($DateKey,Ceil($Invoice['Summ']));
+				$Out['Data'][] = Array($Statistic[$DateKeys[$Detail]],/*$Statistic['Total'],*/$Statistic['Active'],$Statistic['New'],$Statistic['Waiting'],$Statistic['Suspended']);
 			}else{
 
 
@@ -145,7 +163,13 @@ foreach($Details as $Detail){
 
 		}
 		#-------------------------------------------------------------------------------
+		// вносим данные графиков
+		$Graphs[] = $Out;
 
+	}
+}
+
+/*
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -313,6 +337,7 @@ foreach($Details as $Detail){
 	}
 	#-------------------------------------------------------------------------------
 }
+*/
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #if(Count($NoBody->Childs) < 2)
