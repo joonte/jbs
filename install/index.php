@@ -145,7 +145,7 @@ echo <<<EOD
  </HEAD>
  <BODY>
   <TABLE class="Standard" cellspacing="5" cellpadding="0" style="max-width:600px;">
-   <CAPTION>Установка биллинговой системы Joonte Billing System 2007-2019</CAPTION>
+   <CAPTION>Установка биллинговой системы Joonte Billing System 2007-2022</CAPTION>
 EOD;
 #-------------------------------------------------------------------------------
 function __ShutDown_Function__(){

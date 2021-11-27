@@ -1,4 +1,4 @@
-echo "Joonte Software Company 2007-2010"
+echo "Joonte Software Company 2007-2022"
 echo "JBs database install programm"
 echo ""
 #-------------------------------------------------------------------------------

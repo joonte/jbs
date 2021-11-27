@@ -5,7 +5,7 @@
 Error_Reporting(E_ALL);
 #-------------------------------------------------------------------------------
 echo <<<EOD
-Joonte Software Company 2007-2010
+Joonte Software Company 2007-2022
 JBs database install programm
 
 EOD;
