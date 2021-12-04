@@ -125,6 +125,8 @@ $Array[] = 'X-Priority: 3';
 $Array[] = 'X-MSMail-Priority: Normal';
 $Array[] = 'X-Mailer: JBS';
 $Array[] = 'X-MimeOLE: JBS';
+$Array[] = 'Accept-Language: ru, en';
+$Array[] = 'Content-Language: ru-RU, en-US';
 $Array[] = SPrintF('X-JBS-Origin: %s',HOST_ID);
 #-------------------------------------------------------------------------------
 // идентфикатор сообщения
