@@ -70,7 +70,7 @@ $uCode = Hash('sha256',SPrintF('%s%s%s',Hash('sha256',$ContactID),Hash('sha256',
 #-------------------------------------------------------------------------------
 if($uCode != $Code){
 	#-------------------------------------------------------------------------------
-	$DOM->AddAttribs('Body',Array('onload'=>"ShowAlert('Неверные параметры','Warning');setTimeout(function(){location.href = '/Logon';},30000);"));
+	$DOM->AddAttribs('Body',Array('onload'=>"ShowAlert('Неверные параметры. Вероятно, ссылка уже устарела.','Warning');setTimeout(function(){location.href = '/Logon';},30000);"));
 	#-------------------------------------------------------------------------------
 	$DOM->AddChild('Into',$NoBody);
 	#-------------------------------------------------------------------------------
