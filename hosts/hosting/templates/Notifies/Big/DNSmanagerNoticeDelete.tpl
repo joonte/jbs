@@ -13,7 +13,7 @@
 {if $DNSmanagerOrder.IsProlong}
 --
 Для продления заказа, воспользуйтесь этой ссылкой:
-{$ProlongLink|default:'$ProlongLink'}
+{$DNSmanagerOrder.ProlongLink|default:'$DNSmanagerOrder.ProlongLink'}
 {else}
 --
 Для продления заказа, необходимо сменить тарифный план "{$DNSmanagerOrder.Name|default:'$DNSmanagerOrder.Name'}" на другой:
