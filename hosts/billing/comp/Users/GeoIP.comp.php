@@ -56,7 +56,8 @@ if(Extension_Loaded('geoip') && (geoip_db_avail(GEOIP_COUNTRY_EDITION))){
 #-------------------------------------------------------------------------------
 # города бывают не всегда латиницей. пример - Орёл
 if(IsSet($City))
-	$City = @Iconv('','UTF-8//IGNORE',@Iconv('','ISO-8859-1//IGNORE',$City));
+	$City = @Iconv('UTF-8','UTF-8//IGNORE',$City);
+//$City = @Iconv('','ISO-8859-1//IGNORE',$City);
 #-------------------------------------------------------------------------------
 #Debug(SPrintF("[comp/Users/GeoIP]: City = %s",@$City));
 #-------------------------------------------------------------------------------
