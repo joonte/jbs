@@ -14,6 +14,5 @@ ALTER TABLE `DomainOrders` CHANGE `Ns3IP` `Ns3IP` char(64) default '';
 ALTER TABLE `DomainOrders` CHANGE `Ns4Name` `Ns4Name` char(64) default '';
 -- SEPARATOR
 ALTER TABLE `DomainOrders` CHANGE `Ns4IP` `Ns4IP` char(64) default '';
--- SEPARATOR
 
 
