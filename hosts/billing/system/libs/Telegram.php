@@ -27,7 +27,7 @@ class Telegram
 		// вырезаем неразрешённые теги из сообщения
 		$Text = Strip_Tags($Text,'<b><i><a><code><pre>');
 		#-------------------------------------------------------------------------------
-		$Query = Array('chat_id'=>$ChatID,'text'=>Mb_SubStr($Text,0,4096),'disable_web_page_preview'=>'TRUE','parse_mode'=>'HTML');
+		$Query = Array('chat_id'=>$ChatID,'text'=>Mb_SubStr($Text,0,4096),'disable_web_page_preview'=>'TRUE','parse_mode'=>'Markdown');
 		#-------------------------------------------------------------------------------
 		// если надо показать меню что возможен ответ на сообщение
 		if($IsReply)
