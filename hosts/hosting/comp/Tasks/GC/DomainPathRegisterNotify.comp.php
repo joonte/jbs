@@ -32,7 +32,7 @@ case 'array':
 		#-------------------------------------------------------------------------------
 		$Params = (array)$Task['Params'];
 		#-------------------------------------------------------------------------------
-		$Columns = Array('ID','DomainName','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','UserID');
+		$Columns = Array('ID','DomainName','StatusID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','UserID');
 		#-------------------------------------------------------------------------------
 		$DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','ID'=>$Params['ID']));
 		switch(ValueOf($DomainOrder)){
@@ -44,6 +44,14 @@ case 'array':
 			return new gException('DOMAIN_ORDER_NOT_FOUND','Заказ домена не найден');
 			#-------------------------------------------------------------------------------
 		case 'array':
+			#-------------------------------------------------------------------------------
+			if($DomainOrder['StatusID'] == 'Deleted'){
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/GC/DomainPathRegisterNotify]: домен %s.%s уже удалён, пропускаем',$DomainOrder['DomainName'],$DomainOrder['DomainZone']));
+				#-------------------------------------------------------------------------------
+				return TRUE;
+				#-------------------------------------------------------------------------------
+			}
 			#-------------------------------------------------------------------------------
 			# ставим домену статус "удалён"
 			$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'Deleted','RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Владелец домена не определён более 30 дней'));
