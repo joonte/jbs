@@ -216,7 +216,6 @@ if($StepID){
 	#-------------------------------------------------------------------------------
 	if(!Preg_Match($Regulars['Domain'],$Domain))
 		return new gException('WRONG_DOMAIN','Неверный домен');
-
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Table = Array(Array('Тарифный план',$HostingScheme['Name']));
@@ -275,7 +274,17 @@ if($StepID){
 			return ERROR | @Trigger_Error(400);
 		case 'array':
 			#-------------------------------------------------------------------------------
-			$Rows[] = Array(new Tag('TD',Array('colspan'=>2,'class'=>'Standard','style'=>'border:1px solid #F07D00;'),SPrintF('Выбранное Вами доменное [%s] имя занято:',$Domain)));
+			// надо проверить, нет ли такого домена в заказах
+			$Count = DB_Count('DomainOrdersOwners',Array('Where'=>Array(SPrintF("CONCAT(`DomainName`,'.',(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`)) = '%s'",$Domain))));
+			#-------------------------------------------------------------------------------
+			if(Is_Error($Count))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			if($Count)
+				$DOM->AddAttribs('Body',Array('onload'=>"ShowWindow('/HostingOrder',FormGet(HostingOrderForm));"));
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			$Rows[] = Array(new Tag('TD',Array('colspan'=>2,'class'=>'Standard','style'=>'border:1px solid #F07D00;'),SPrintF('Выбранное Вами доменное имя [%s] занято:',$Domain)));
 			#-------------------------------------------------------------------------------
 			$Radio1 = Comp_Load('Form/Input',Array('name'=>'DomainTypeID','type'=>'radio','value'=>'Transfer'));
 			if(Is_Error($Radio1))
@@ -344,7 +353,7 @@ if($StepID){
 			#-------------------------------------------------------------------------------
 		case 'true':
 			#-------------------------------------------------------------------------------
-			$Rows[] = Array(new Tag('TD',Array('colspan'=>2,'class'=>'Standard','style'=>'border:1px solid #B9F00A;'),SPrintF('Выбранное Вами доменное [%s] имя свободно:',$Domain)));
+			$Rows[] = Array(new Tag('TD',Array('colspan'=>2,'class'=>'Standard','style'=>'border:1px solid #B9F00A;'),SPrintF('Выбранное Вами доменное имя [%s] свободно:',$Domain)));
 			#-------------------------------------------------------------------------------
 			$Radio1 = Comp_Load('Form/Input',Array('name'=>'DomainTypeID','type'=>'radio','value'=>'Order'));
 			if(Is_Error($Radio1))
