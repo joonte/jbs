@@ -10,6 +10,18 @@ Eval(COMP_INIT);
 //$Where = "`StatusID` = 'Suspended' AND `StatusDate` + 2592000 - UNIX_TIMESTAMP() <= 0";
 $Config = Config();
 #-------------------------------------------------------------------------------
+$Settings = $Config['Tasks']['Types']['VPSForDelete'];
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# достаём время выполнения
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecuteTime'=>$Settings['ExecuteTime'],'ExecuteDays'=>@$Settings['ExecuteDays'],'DefaultTime'=>MkTime(1,10,0,Date('n'),Date('j')+1,Date('Y'))));
+if(Is_Error($ExecuteTime))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if(!$Settings['IsActive'])
+	return $ExecuteTime;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $DeleteTimeout = $Config['Tasks']['Types']['VPSForDelete']['DeleteTimeout'] * 24 * 3600;
 #-------------------------------------------------------------------------------
 $Where = "`StatusID` = 'Suspended' AND `StatusDate` + $DeleteTimeout - UNIX_TIMESTAMP() <= 0";
@@ -51,11 +63,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$StartHour    = $Config['Tasks']['Types']['VPSForDelete']['StartHour'];
-$StartMinutes = $Config['Tasks']['Types']['VPSForDelete']['StartMinutes'];
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-return MkTime($StartHour,$StartMinutes,0,Date('n'),Date('j')+1,Date('Y'));
+return $ExecuteTime;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 

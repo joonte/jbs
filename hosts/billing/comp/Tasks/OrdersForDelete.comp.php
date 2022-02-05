@@ -9,6 +9,18 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Config = Config();
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Settings = $Config['Tasks']['Types']['OrdersForDelete'];
+#-------------------------------------------------------------------------------
+# достаём время выполнения
+$ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecuteTime'=>$Settings['ExecuteTime'],'ExecuteDays'=>@$Settings['ExecuteDays'],'DefaultTime'=>MkTime(1,10,0,Date('n'),Date('j')+1,Date('Y'))));
+if(Is_Error($ExecuteTime))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if(!$Settings['IsActive'])
+	return $ExecuteTime;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Columns = Array(
 		'ID', 'UserID',
 		'(SELECT `Item` FROM `Services` WHERE `Services`.`ID` = `OrdersOwners`.`ServiceID`) AS `Item`',
@@ -51,10 +63,8 @@ switch(ValueOf($Orders)){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$StartHour    = $Config['Tasks']['Types']['OrdersForDelete']['StartHour'];
-$StartMinutes = $Config['Tasks']['Types']['OrdersForDelete']['StartMinutes'];
+return $ExecuteTime;
 #-------------------------------------------------------------------------------
-return MkTime($StartHour,$StartMinutes,0,Date('n'),Date('j')+1,Date('Y'));
 #-------------------------------------------------------------------------------
 
 ?>

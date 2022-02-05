@@ -1211,8 +1211,7 @@
 				<Name>Заказы для удаления</Name>
 				<Params type="array"/>
 				<IsActive>1</IsActive>
-				<StartHour>5</StartHour>
-				<StartMinutes>10</StartMinutes>
+				<ExecuteTime>5:10</ExecuteTime>
 				<DeleteTimeout>30</DeleteTimeout>
 			</OrdersForDelete>
 			<!-- ********************************************************************* -->

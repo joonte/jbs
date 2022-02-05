@@ -18,7 +18,7 @@ if(Is_Error($ExecuteTime))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if(!$Settings['IsActive'])
-	return 3600;
+	return $ExecuteTime;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Where = SPrintF("`StatusID` = 'Suspended' AND `StatusDate` + %s - UNIX_TIMESTAMP() <= 0",$Settings['HostingDeleteTimeout'] * 24 * 3600);

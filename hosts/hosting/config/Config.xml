@@ -576,8 +576,7 @@
 				<Name>Заказы на VPS для удаления</Name>
 				<Params type="array"/>
 				<IsActive>1</IsActive>
-				<StartHour>1</StartHour>
-				<StartMinutes>15</StartMinutes>
+				<ExecuteTime>1:15</ExecuteTime>
 				<DeleteTimeout>20</DeleteTimeout>
 			</VPSForDelete>
 			<!-- ********************************************************************* -->
@@ -636,8 +635,7 @@
 				<Name>Заказы арендованных серверов для удаления</Name>
 				<Params type="array"/>
 				<IsActive>1</IsActive>
-				<StartHour>1</StartHour>
-				<StartMinutes>20</StartMinutes>
+				<ExecuteTime>1:20</ExecuteTime>
 				<DeleteTimeout>30</DeleteTimeout>
 			</DSForDelete>
 			<!-- ********************************************************************* -->
@@ -696,8 +694,7 @@
 				<Name>Заказы на IP адреса для удаления</Name>
 				<Params type="array"/>
 				<IsActive>1</IsActive>
-				<StartHour>1</StartHour>
-				<StartMinutes>15</StartMinutes>
+				<ExecuteTime>1:05</ExecuteTime>
 			</ExtraIPForDelete>
 			<!-- ********************************************************************* -->
 			<ExtraIPCreate>
@@ -723,8 +720,7 @@
 				<Name>Заказы на ПО ISPsystem для удаления</Name>
 				<Params type="array"/>
 				<IsActive>1</IsActive>
-				<StartHour>1</StartHour>
-				<StartMinutes>50</StartMinutes>
+				<ExecuteTime>1:50</ExecuteTime>
 				<DeleteTimeout>20</DeleteTimeout>
 			</ISPswForDelete>
 			<!-- ********************************************************************* -->
