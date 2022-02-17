@@ -55,6 +55,11 @@
 						<ListElement>UserID</ListElement>
 						<ListElement>GroupID</ListElement>
 						<ListElement>Name</ListElement>
+						<ListElement>CPU</ListElement>
+						<ListElement>disks</ListElement>
+						<ListElement>raid</ListElement>
+						<ListElement>OS</ListElement>
+						<ListElement>UserNotice</ListElement>
 					</ColumnsIDs>
 				</Args>
 			</Search>
