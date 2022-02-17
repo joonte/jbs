@@ -30,7 +30,7 @@
 	<City>/^[А-ЯёЁа-я0-9\.\-\s]{2,100}$/u</City>
 	<!-- район, выпилено т.к. не использует никто -->
 	<District>/^[А-ЯёЁа-я\-\s]{2,100}$/u</District>
-	<Index>/^[A-Za-z0-9\s]{3,10}$/u</Index>
+	<Index>/^[A-Za-z0-9\-\s]{3,10}$/u</Index>
 	<Type>/^[A-ZА-ЯёЁа-я\-\s]{1,100}$/u</Type>
 	<Address>/^[^\\]{1,150}$/u</Address>
 	<Recipient>/^[a-zA-Zа-яА-ЯёЁ\s]+$/u</Recipient>
