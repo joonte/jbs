@@ -20,7 +20,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Columns = Array(
-			'ID','ContractID','OrderID','UserID','DomainName','ExpirationDate','AuthInfo','StatusID','SchemeID',
+			'ID','ContractID','OrderID','UserID','DomainName','ExpirationDate','AuthInfo','StatusID','SchemeID','ProfileID',
 			'CONCAT(`Ns1Name`,",",`Ns2Name`,",",`Ns3Name`,",",`Ns4Name`) AS `DNSs`',	// DNS for JBS-1337
 			'(SELECT `GroupID` FROM `Users` WHERE `DomainOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`',
 			'(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DomainOrdersOwners`.`OrderID`) as `IsPayed`',
@@ -87,8 +87,17 @@ $StatusID = $DomainOrder['StatusID'];
 if(!In_Array($StatusID,Array('Waiting','Active','Suspended','ForTransfer')))
 	return new gException('ORDER_CAN_NOT_PAY','Заказ домена не может быть оплачен');
 #-------------------------------------------------------------------------------
-if($StatusID == 'ForTransfer' && !In_Array($DomainOrder['SchemeName'],Array('su')) && StrLen($DomainOrder['AuthInfo']) < 3)
-	return new gException('NEED_AUTHINFO','До оплаты домена, введите его код AuthInfo (иногда его называют пароль/код переноса)');
+// для не-советских доменов
+if(!In_Array($DomainOrder['SchemeName'],Array('su'))){
+	#-------------------------------------------------------------------------------
+	if($StatusID == 'ForTransfer' && StrLen($DomainOrder['AuthInfo']) < 3)
+		return new gException('NEED_AUTHINFO','До оплаты домена, введите его код AuthInfo (иногда его называют пароль/код переноса)');
+	#-------------------------------------------------------------------------------
+	if($StatusID == 'ForTransfer' && Is_Null($DomainOrder['ProfileID']))
+		return new gException('NEED_OWNER','До оплаты домена, определите владельца для него (кнопка с "человечком" в строке заказа)');
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
