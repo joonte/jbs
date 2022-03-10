@@ -13,7 +13,11 @@ if(Is_Error(System_Load('libs/WhoIs.php','classes/DomainServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Columns = Array('UserID','DomainName','AuthInfo','ProfileID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','ServerID','StatusID','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','IsPrivateWhoIs','PersonID','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `DomainOrdersOwners`.`ServerID`) AS `Params`');
+$Columns = Array(
+			'UserID','DomainName','AuthInfo','ProfileID','StatusDate','ServerID','StatusID','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','IsPrivateWhoIs','PersonID',
+			'(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`',
+			'(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `DomainOrdersOwners`.`ServerID`) AS `Params`'
+		);
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
@@ -135,6 +139,8 @@ case 'array':
 			$Params['Ns4IP']		= $DomainOrder['Ns4IP'];
 			$Params['ContractID']		= '';
 			$Params['IsPrivateWhoIs']	= $DomainOrder['IsPrivateWhoIs'];
+			// для письма, чтоб не пложить массивы
+			$Params['StatusDate']		= $DomainOrder['StatusDate'];
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			$IsDomainTransfer = $Server->DomainTransfer($DomainOrder['DomainName'],$DomainOrder['DomainZone'],$Params);
@@ -159,6 +165,25 @@ case 'array':
 				$Event = Comp_Load('Events/EventInsert',$Event);
 				if(!$Event)
 					return ERROR | @Trigger_Error(500);
+				#-------------------------------------------------------------------------------
+				#-------------------------------------------------------------------------------
+				// шлём письмо, что надо подтвердить перенос
+				$msg = new Message('DomainTransfer',$Params);
+				#-------------------------------------------------------------------------------
+				$IsSend = NotificationManager::sendMsg($msg);
+				#-------------------------------------------------------------------------------
+				switch(ValueOf($IsSend)){
+				case 'error':
+					return ERROR | @Trigger_Error(500);
+				case 'exception':
+					# No more...
+				case 'true':
+					# No more...
+					break;
+				default:
+					return ERROR | @Trigger_Error(101);
+				}
+				#-------------------------------------------------------------------------------
 				#-------------------------------------------------------------------------------
 				return TRUE;
 				#-------------------------------------------------------------------------------
