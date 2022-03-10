@@ -166,6 +166,7 @@ function VmManager5_KVM_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 			'cputune'		=> Ceil($VPSScheme['cpu']),			# "вес" процессорных операций
 			'domain'		=> $VPSOrder['Domain'],				# для обратной зоны
 			'family'		=> 'ipv4',					# пока IPv6 всё ещё теория
+			'cpu_mode'		=> 'host-passthrough',				// режим эмуляции, этот - самый быстрый
 			# из общения с техподдержкой ISPsystem...
 			# > Ограничения в панели устанавливаются в кибибайтах в секунду (KiB/sec)
 			# > В частности для виртуальной машины v152558 установлено ограничение 8192KiB/sec,
@@ -528,6 +529,7 @@ function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 				'mem'			=> Ceil($VPSScheme['mem']),
 				'name'			=> $VPSOrder['Login'],
 				'vcpu'			=> $VPSScheme['ncpu'],
+				'cpu_mode'		=> 'host-passthrough',	// режим эмуляции, этот - самый быстрый
 				'elid'			=> $VM['id'],
 				);
 		#-------------------------------------------------------------------------------
