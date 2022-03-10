@@ -148,7 +148,7 @@ case 'array':
 			# 
 			#Debug("[comp/Tasks/CaclulatePartnersReward]: message for #" . $Row['UserID'] . " is " . $MessageToUser);
 			# если общая сумма больше нуля - надо слать письмо
-			if($TotalSummToUser > 0){
+			if(IntVal($TotalSummToUser) > 0){
 				$MessageToUser .= "Итого, за прошедший месяц: " . SPrintF('%01.2f',$TotalSummToUser) . " рублей";
 				$IsSend = NotificationManager::sendMsg(new Message('PartnersReward',(integer)$Owner['DistinctOwnerID'],Array('Theme'=>$Theme,'Message'=>$MessageToUser,'Summ'=>SPrintF('%01.2f',$TotalSummToUser))));
 				#---------------------------------------------------------
