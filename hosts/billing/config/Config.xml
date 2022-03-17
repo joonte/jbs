@@ -696,6 +696,34 @@
 				<Is54-FZ>1</Is54-FZ>
 			</SberBank>
 			<!-- ********************************************************************* -->
+			<PayBox>
+				<Name>PayBox</Name>
+				<SystemDescription>приём платежей с использованием иностранных банковских карт</SystemDescription>
+				<Send>
+					<pg_amount>auto</pg_amount>
+					<description>Payment for invoice #</description>
+				</Send>
+				<Comp>PayBox</Comp>
+				<Cpp>https://api.paybox.money/payment.php</Cpp>
+				<Hash/>
+				<ShopId/>
+				<ContractsTypes>
+					<Default>1</Default>
+					<Natural>1</Natural>
+					<Juridical>1</Juridical>
+					<Individual>1</Individual>
+				</ContractsTypes>
+				<IsContinuePaying>1</IsContinuePaying>
+				<Course>1</Course>
+				<IsCourseUpdate>0</IsCourseUpdate>
+				<Measure>руб</Measure>
+				<Valute>RUB</Valute>
+				<MinimumPayment>1.00</MinimumPayment>
+				<MaximumPayment>250000.00</MaximumPayment>
+				<IsActive>0</IsActive>
+				<Is54-FZ>1</Is54-FZ>
+			</PayBox>
+			<!-- ********************************************************************* -->
 			<Checkout>
 				<Name>2Checkout</Name>
 				<SystemDescription>Процессинговая платёжная система, позволяет оплачивать через пластиковые карточки, а также с помощью PayPal</SystemDescription>
