@@ -9,7 +9,7 @@
 <ServiceID>53000</ServiceID>
 <!-- *********************************************************************** -->
 <Defaults>
-	<Address>proxy6.net</Address>
+	<Address>api.proxy6.net</Address>
 	<Login>admin@isp.su</Login>
 	<Monitoring>HTTP=80 HTTPS=443</Monitoring>
 	<SortID>53000</SortID>

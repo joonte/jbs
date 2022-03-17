@@ -14,7 +14,7 @@ function Proxy6_Get_Users($Settings){
 	/******************************************************************************/
 	$HTTP = Proxy6_Build_HTTP($Settings);
 	#-------------------------------------------------------------------------------
-	$Response = HTTP_Send(SPrintF('/api/%s/getproxy/',$Settings['Params']['Token']),$HTTP,Array());
+	$Response = HTTP_Send(SPrintF('/%s/getproxy/',$Settings['Params']['Token']),$HTTP,Array());
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -79,7 +79,7 @@ function Proxy6_Create($Settings,$ProxyScheme,$ProxyOrder,$DaysRemainded){
 	$Descr = SPrintF('Order%u',$ProxyOrder['OrderID']);
 	#-------------------------------------------------------------------------------
 	# проверяем, нету ли юзера с таким примечанием
-	$Response = HTTP_Send(SPrintF('/api/%s/getproxy/',$Settings['Params']['Token']),$HTTP,Array('state'=>'all','descr'=>$Descr));
+	$Response = HTTP_Send(SPrintF('/%s/getproxy/',$Settings['Params']['Token']),$HTTP,Array('state'=>'all','descr'=>$Descr));
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ function Proxy6_Create($Settings,$ProxyScheme,$ProxyOrder,$DaysRemainded){
 			'descr'		=> $Descr
 			);
 	#-------------------------------------------------------------------------------
-	$Response = HTTP_Send(SPrintF('/api/%s/buy/',$Settings['Params']['Token']),$HTTP,$Request);
+	$Response = HTTP_Send(SPrintF('/%s/buy/',$Settings['Params']['Token']),$HTTP,$Request);
 	if(Is_Error($Response))
 		return new gException('NOT_CONNECTED_TO_SERVER','Не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -146,7 +146,7 @@ function Proxy6_Active($Settings,$ProxyOrder,$DaysRemainded){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	// достаём идентфикатор прокси
-	$Response = HTTP_Send(SPrintF('/api/%s/getproxy/',$Settings['Params']['Token']),$HTTP,Array('nokey'=>1,'descr'=>$Descr));
+	$Response = HTTP_Send(SPrintF('/%s/getproxy/',$Settings['Params']['Token']),$HTTP,Array('nokey'=>1,'descr'=>$Descr));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[Proxy6_Active]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -169,7 +169,7 @@ function Proxy6_Active($Settings,$ProxyOrder,$DaysRemainded){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	// продлеваем на запроешенный период
-	$Response = HTTP_Send(SPrintF('/api/%s/prolong/',$Settings['Params']['Token']),$HTTP,Array('nokey'=>1,'ids'=>$ID,'period'=>$DaysRemainded));
+	$Response = HTTP_Send(SPrintF('/%s/prolong/',$Settings['Params']['Token']),$HTTP,Array('nokey'=>1,'ids'=>$ID,'period'=>$DaysRemainded));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[Proxy6_Active]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -235,7 +235,7 @@ function Proxy6_Delete($Settings,$OrderID){
 	$Descr = SPrintF('Order%u',$OrderID);
 	#-------------------------------------------------------------------------------
 	// достаём идентфикатор прокси
-	$Response = HTTP_Send(SPrintF('/api/%s/getproxy/',$Settings['Params']['Token']),$HTTP,Array('nokey'=>1,'descr'=>$Descr));
+	$Response = HTTP_Send(SPrintF('/%s/getproxy/',$Settings['Params']['Token']),$HTTP,Array('nokey'=>1,'descr'=>$Descr));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[Proxy6_Settings_Change]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -258,7 +258,7 @@ function Proxy6_Delete($Settings,$OrderID){
 		return TRUE;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Response = HTTP_Send(SPrintF('/api/%s/delete/',$Settings['Params']['Token']),$HTTP,Array('ids'=>$ID));
+	$Response = HTTP_Send(SPrintF('/%s/delete/',$Settings['Params']['Token']),$HTTP,Array('ids'=>$ID));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[Proxy6_Settings_Change]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -289,7 +289,7 @@ function Proxy6_Settings_Change($Settings,$OrderID,$ProtocolType){
 	$Descr = SPrintF('Order%u',$OrderID);
 	#-------------------------------------------------------------------------------
 	// достаём идентфикатор прокси
-	$Response = HTTP_Send(SPrintF('/api/%s/getproxy/',$Settings['Params']['Token']),$HTTP,Array('nokey'=>1,'descr'=>$Descr));
+	$Response = HTTP_Send(SPrintF('/%s/getproxy/',$Settings['Params']['Token']),$HTTP,Array('nokey'=>1,'descr'=>$Descr));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[Proxy6_Settings_Change]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -311,7 +311,7 @@ function Proxy6_Settings_Change($Settings,$OrderID,$ProtocolType){
 		return new gException('CANNOT_FIND_PROXY_ORDER_ID','Не удалось найти идентификатор прокси-сервера');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Response = HTTP_Send(SPrintF('/api/%s/settype/',$Settings['Params']['Token']),$HTTP,Array('ids'=>$ID,'type'=>$ProtocolType));
+	$Response = HTTP_Send(SPrintF('/%s/settype/',$Settings['Params']['Token']),$HTTP,Array('ids'=>$ID,'type'=>$ProtocolType));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[Proxy6_Settings_Change]: не удалось соедениться с сервером');
 	#-------------------------------------------------------------------------------
@@ -396,7 +396,7 @@ function Proxy6_Get_Balance($Settings){
         /****************************************************************************/
         $HTTP = Proxy6_Build_HTTP($Settings);
         #-----------------------------------------------------------------------------
-        $Response = HTTP_Send(SPrintF('/api/%s/getcountry/',$Settings['Params']['Token']),$HTTP,Array('version'=>4));
+        $Response = HTTP_Send(SPrintF('/%s/getcountry/',$Settings['Params']['Token']),$HTTP,Array('version'=>4));
         if(Is_Error($Response))
                 return ERROR | @Trigger_Error('[Proxy6_Get_Balance]: не удалось соедениться с сервером');
         #-----------------------------------------------------------------------------
