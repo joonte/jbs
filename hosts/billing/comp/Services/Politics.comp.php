@@ -76,6 +76,8 @@ $Where = Array(
 #-------------------------------------------------------------------------------
 $Columns = Array(
 		'DISTINCT(`UniqScheme`) AS UniqScheme',
+		'FromServiceID',
+		'FromSchemeID',
 		'ToServiceID',
 		'ToSchemeID',
 		'ToSchemesGroupID',
@@ -100,7 +102,30 @@ case 'array':
 		# сравниваем дату окончания политики с текущей
 		if($Politic['ExpirationDate'] > Time()){
 			#-------------------------------------------------------------------------------
-			$IsInsert = DB_Insert('Bonuses',Array('UserID'=>$UserID,'ServiceID'=>$Politic['ToServiceID'],'SchemeID'=>$Politic['ToSchemeID'],'SchemesGroupID'=>$Politic['ToSchemesGroupID'],'DaysReserved'=>($Politic['DaysDiscont']?$Politic['DaysDiscont']:$DaysPay),'Discont'=>$Politic['Discont'],'Comment'=>SPrintF('Добавлено политикой #%u, оплата %s',$Politic['ID'],$ServiceInfo)));
+			// JBS-1612: если у нас и from/to и service/scheme = NULL, то бонус на конкретную услугу и конкретный сервис надо привесить
+			if(Is_Null($Politic['ToServiceID']) && Is_Null($Politic['ToSchemeID']) && Is_Null($Politic['FromServiceID']) && Is_Null($Politic['FromSchemeID'])){
+				#-------------------------------------------------------------------------------
+				#Debug(SPrintF('[comp/Services/Politics]: ToServiceID,ToSchemeID,FromServiceID,FromSchemeID is NULL'));
+				#-------------------------------------------------------------------------------
+				$Politic['ToSchemesGroupID']	= NULL;
+				#-------------------------------------------------------------------------------
+				$Politic['ToServiceID']		= $ServiceID;
+				#-------------------------------------------------------------------------------
+				$Politic['ToSchemeID']		= $SchemeID;
+				#-------------------------------------------------------------------------------
+			}
+			#-----------------------------------------------------------------------
+			$Array = Array(
+					'UserID'	=> $UserID,
+					'ServiceID'	=> $Politic['ToServiceID'],
+					'SchemeID'	=> $Politic['ToSchemeID'],
+					'SchemesGroupID'=> $Politic['ToSchemesGroupID'],
+					'DaysReserved'	=>($Politic['DaysDiscont']?$Politic['DaysDiscont']:$DaysPay),
+					'Discont'	=> $Politic['Discont'],
+					'Comment'	=> SPrintF('Добавлено политикой #%u, оплата %s',$Politic['ID'],$ServiceInfo)
+					);
+			#-------------------------------------------------------------------------------
+			$IsInsert = DB_Insert('Bonuses',$Array);
 			if(Is_Error($IsInsert))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
@@ -116,5 +141,6 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;
-
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 ?>
