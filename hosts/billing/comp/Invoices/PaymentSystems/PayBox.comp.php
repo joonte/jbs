@@ -35,7 +35,7 @@ $__USER = $GLOBALS['__USER'];
 $Send['pg_description'] = SPrintF('%s%s, %s (%s)',$Send['description'],$Comp,Translit($__USER['Name']),$__USER['Email']);
 #-------------------------------------------------------------------------------
 // Случайная строка
-$Send['pg_salt'] = Md5(Time());
+$Send['pg_salt'] = Md5(MicroTime());
 #-------------------------------------------------------------------------------
 // Валюта, в которой указана сумма. 
 $Send['pg_currency'] = $Settings['Valute'];
