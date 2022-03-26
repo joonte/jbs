@@ -40,6 +40,22 @@
 							<Name>Активные</Name>
 							<Where>`ExpirationDate` &gt; UNIX_TIMESTAMP()  AND `DaysRemainded` &gt; 0</Where>
 						</Active>
+						<MoreThan03>
+							<Name>Скидка &gt;= 30%</Name>
+							<Where>`Discont` &gt;= 0.3</Where>
+						</MoreThan03>
+						<MoreThan05>
+							<Name>Скидка &gt;= 50%</Name>
+							<Where>`Discont` &gt;= 0.5</Where>
+						</MoreThan05>
+						<MoreThan09>
+							<Name>Скидка &gt;= 90%</Name>
+							<Where>`Discont` &gt;= 0.9</Where>
+						</MoreThan09>
+						<MoreThan99>
+							<Name>Скидка = 100%</Name>
+							<Where>`Discont` = 1</Where>
+						</MoreThan99>
 					</Patterns>
 					<ActiveID>Active</ActiveID>
 				</Args>
