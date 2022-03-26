@@ -102,14 +102,7 @@ switch(ValueOf($OrderConsiders)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	#-------------------------------------------------------------------------------
-	// ничё нету, значит надо собрать свой массив
-	// TODO непонятно зачем это, проще было сразу сделать return Array('Status'=>'Ok') же... пробуем.
-	//$OrderConsiders = Array(Array('ID'=>0,'DaysReserved'=>0,'DaysRemainded'=>0,'SummRemainded'=>0));
-	Array('Status'=>'Ok');
-	#-------------------------------------------------------------------------------
-	break;
-	#-------------------------------------------------------------------------------
+	return Array('Status'=>'Ok');
 case 'array':
 	break;
 default:
