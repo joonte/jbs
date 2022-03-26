@@ -32,7 +32,7 @@ $Hash = Array(
 );
 #-------------------------------------------------------------------------------
 if(MD5(Implode('',$Hash)) != $Args['notify_signature'])
-	return ERROR | @Trigger_Error('[comp/Merchant/EasyPay]: проверка подлинности завершилась не удачей');
+	return ERROR | @Trigger_Error('[comp/Merchant/EasyPay]: проверка подлинности завершилась неудачей');
 #-------------------------------------------------------------------------------
 $Invoice = DB_Select('Invoices',Array('ID','Summ'),Array('UNIQ','ID'=>$Args['order_mer_code']));
 #-------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ case 'exception':
 case 'array':
 	#---------------------------------------------------------------------------
 	if(Floor($Invoice['Summ']/$Settings['Course']) != $Args['sum'])
-		return ERROR | @Trigger_Error('[comp/Merchant/EasyPay]: проверка суммы платежа завершилась не удачей');
+		return ERROR | @Trigger_Error('[comp/Merchant/EasyPay]: проверка суммы платежа завершилась неудачей');
 	#---------------------------------------------------------------------------
 	$Comp = Comp_Load('Users/Init',100);
 	if(Is_Error($Comp))

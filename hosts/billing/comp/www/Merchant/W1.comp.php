@@ -32,7 +32,7 @@ foreach($Args as $Key => $Value)
                 $Values .= $Value;
 #-------------------------------------------------------------------------------
 if(Base64_Encode(Pack("H*", sha1($Values . $Settings['Hash']))) != $Args['WMI_SIGNATURE'])
-	return ERROR | @Trigger_Error('[comp/www/Merchant/W1]: проверка подлинности завершилась не удачей');
+	return ERROR | @Trigger_Error('[comp/www/Merchant/W1]: проверка подлинности завершилась неудачей');
 #-------------------------------------------------------------------------------
 $Invoice = DB_Select('Invoices',Array('ID','Summ'),Array('UNIQ','ID'=>$OrderID));
 #-------------------------------------------------------------------------------

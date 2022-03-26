@@ -42,7 +42,7 @@ $Hash = $LMI_PAYEE_PURSE.
 $Hash = StrToUpper(Hash('sha256', $Hash));
 #-------------------------------------------------------------------------------
 if($Hash != $Args['LMI_HASH'])
-	return ERROR | @Trigger_Error('[comp/Merchant/WebMoney]: проверка подлинности завершилась не удачей');
+	return ERROR | @Trigger_Error('[comp/Merchant/WebMoney]: проверка подлинности завершилась неудачей');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Invoice = DB_Select('Invoices',Array('ID','Summ'),Array('UNIQ','ID'=>$Args['LMI_PAYMENT_NO']));
@@ -59,7 +59,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 if(Round($Invoice['Summ']/$Settings['Course'],2) != $Args['LMI_PAYMENT_AMOUNT'])
-	return ERROR | @Trigger_Error('[comp/Merchant/WebMoney]: проверка суммы платежа завершилась не удачей');
+	return ERROR | @Trigger_Error('[comp/Merchant/WebMoney]: проверка суммы платежа завершилась неудачей');
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Users/Init',100);
 if(Is_Error($Comp))

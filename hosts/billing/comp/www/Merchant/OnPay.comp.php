@@ -42,7 +42,7 @@ if($Args['type'] == 'check')
 	return onPayAnswer($Args['type'], 0, $Args['pay_for'], $Args['order_amount'], $Args['order_currency'], 'OK', $Settings['MerchantPass']);
 #-------------------------------------------------------------------------------
 if(StrToUpper(MD5(Implode(';',$Hash))) != $Args['md5'])
-	return onPayAnswerpay($Args['type'], 7, $Args['pay_for'], $Args['order_amount'], $Args['order_currency'], 'OK', $Args['onpay_id']."\n".ERROR | @Trigger_Error('[comp/Merchant/OnPay]: проверка подлинности завершилась не удачей'), $Settings['MerchantPass']);
+	return onPayAnswerpay($Args['type'], 7, $Args['pay_for'], $Args['order_amount'], $Args['order_currency'], 'OK', $Args['onpay_id']."\n".ERROR | @Trigger_Error('[comp/Merchant/OnPay]: проверка подлинности завершилась неудачей'), $Settings['MerchantPass']);
 #-------------------------------------------------------------------------------
 $Invoice = DB_Select('Invoices',Array('ID','Summ'),Array('UNIQ','ID'=>$Args['pay_for']));
 #-------------------------------------------------------------------------------
@@ -54,7 +54,7 @@ case 'exception':
 case 'array':
 	#-------------------------------------------------------------------------------
 	if(Round($Invoice['Summ']/$Settings['Course'],2) != round($Args[$AmountField], 2))
-		return onPayAnswerpay($Args['type'], 3, $Args['pay_for'], $Args['order_amount'], $Args['order_currency'], 'OK', $Args['onpay_id']."\n".ERROR | @Trigger_Error('[comp/Merchant/OnPay]: проверка суммы платежа завершилась не удачей'), $Settings['MerchantPass']);
+		return onPayAnswerpay($Args['type'], 3, $Args['pay_for'], $Args['order_amount'], $Args['order_currency'], 'OK', $Args['onpay_id']."\n".ERROR | @Trigger_Error('[comp/Merchant/OnPay]: проверка суммы платежа завершилась неудачей'), $Settings['MerchantPass']);
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Users/Init',100);
 	if(Is_Error($Comp))

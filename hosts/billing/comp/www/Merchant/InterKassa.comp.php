@@ -36,7 +36,7 @@ $Hash = Array(
 );
 #-------------------------------------------------------------------------------
 if(StrToUpper(MD5(Implode(':',$Hash))) != $Args['ik_sign_hash'])
-  return ERROR | @Trigger_Error('[comp/Merchant/InterKassa]: проверка подлинности завершилась не удачей');
+  return ERROR | @Trigger_Error('[comp/Merchant/InterKassa]: проверка подлинности завершилась неудачей');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($Args['ik_payment_state'] != 'success')
@@ -53,7 +53,7 @@ switch(ValueOf($Invoice)){
   case 'array':
     #---------------------------------------------------------------------------
     if(Round($Invoice['Summ']/$Settings['Course'],2) != $Args['ik_payment_amount'])
-      return ERROR | @Trigger_Error('[comp/Merchant/InterKassa]: проверка суммы платежа завершилась не удачей');
+      return ERROR | @Trigger_Error('[comp/Merchant/InterKassa]: проверка суммы платежа завершилась неудачей');
     #---------------------------------------------------------------------------
     $Comp = Comp_Load('Users/Init',100);
     if(Is_Error($Comp))

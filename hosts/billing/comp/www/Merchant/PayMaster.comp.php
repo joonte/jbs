@@ -107,7 +107,7 @@ $Hash = base64_encode($Hash);
 Debug("[comp/Merchant/PayMaster]: Local hash = " . $Hash);
 #-------------------------------------------------------------------------------
 if($Hash != $Args['LMI_HASH'])
-  return ERROR | @Trigger_Error('[comp/Merchant/PayMaster]: проверка подлинности завершилась не удачей');
+  return ERROR | @Trigger_Error('[comp/Merchant/PayMaster]: проверка подлинности завершилась неудачей');
 #-------------------------------------------------------------------------------
 $Invoice = DB_Select('Invoices',Array('ID','Summ'),Array('UNIQ','ID'=>$Args['LMI_PAYMENT_NO']));
 #-------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ switch(ValueOf($Invoice)){
   case 'array':
     #---------------------------------------------------------------------------
     if(Round($Invoice['Summ']/$Settings['Course'],2) != $Args['LMI_PAYMENT_AMOUNT'])
-      return ERROR | @Trigger_Error('[comp/Merchant/PayMaster]: проверка суммы платежа завершилась не удачей');
+      return ERROR | @Trigger_Error('[comp/Merchant/PayMaster]: проверка суммы платежа завершилась неудачей');
     #---------------------------------------------------------------------------
     $Comp = Comp_Load('Users/Init',100);
     if(Is_Error($Comp))

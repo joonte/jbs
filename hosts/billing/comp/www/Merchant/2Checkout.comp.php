@@ -36,7 +36,7 @@ $Hash = $Args['sale_id'].
 $Hash = StrToUpper(Md5($Hash));
 #-------------------------------------------------------------------------------
 if($Hash != $Args['md5_hash'])
-  return ERROR | @Trigger_Error('[comp/Merchant/2Checkout]: проверка подлинности завершилась не удачей');
+  return ERROR | @Trigger_Error('[comp/Merchant/2Checkout]: проверка подлинности завершилась неудачей');
 #-------------------------------------------------------------------------------
 $Invoice = DB_Select('Invoices',Array('ID','Summ'),Array('UNIQ','ID'=>$Args['item_id_1']));
 #-------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ switch(ValueOf($Invoice)){
   case 'array':
     #---------------------------------------------------------------------------
     if(Round($Invoice['Summ']/$Settings['Course'],2) != $Args['invoice_list_amount'])
-      return ERROR | @Trigger_Error('[comp/Merchant/2Checkout]: проверка суммы платежа завершилась не удачей');
+      return ERROR | @Trigger_Error('[comp/Merchant/2Checkout]: проверка суммы платежа завершилась неудачей');
     #---------------------------------------------------------------------------
     $Comp = Comp_Load('Users/Init',100);
     if(Is_Error($Comp))

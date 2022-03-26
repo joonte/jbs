@@ -41,7 +41,7 @@ $Hash = Array(
 );
 #-------------------------------------------------------------------------------
 if(MD5(Implode('::',$Hash)) != $Args['hash'])
-  return ERROR | @Trigger_Error('[comp/Merchant/RBKMoney]: проверка подлинности завершилась не удачей');
+  return ERROR | @Trigger_Error('[comp/Merchant/RBKMoney]: проверка подлинности завершилась неудачей');
 #-------------------------------------------------------------------------------
 $Invoice = DB_Select('Invoices',Array('ID','Summ'),Array('UNIQ','ID'=>$Args['orderId']));
 #-------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ switch(ValueOf($Invoice)){
   case 'array':
     #---------------------------------------------------------------------------
     if(Round($Invoice['Summ']/$Settings['Course'],2) != $Args['recipientAmount'])
-      return ERROR | @Trigger_Error('[comp/Merchant/RBKMoney]: проверка суммы платежа завершилась не удачей');
+      return ERROR | @Trigger_Error('[comp/Merchant/RBKMoney]: проверка суммы платежа завершилась неудачей');
     #---------------------------------------------------------------------------
     $Comp = Comp_Load('Users/Init',100);
     if(Is_Error($Comp))

@@ -184,7 +184,7 @@ foreach($ArgsIDs as $ArgID)
 #Debug(SPrintF("[comp/www/Merchant/SberBank]: Values = %s",$Values));
 #-------------------------------------------------------------------------------
 if($Args['checksum'] != StrToUpper(Hash_Hmac('sha256',$Values,$Settings['Hash'])))
-	return ERROR | @Trigger_Error('[comp/www/Merchant/SberBank]: проверка подлинности завершилась не удачей');
+	return ERROR | @Trigger_Error('[comp/www/Merchant/SberBank]: проверка подлинности завершилась неудачей');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # если сумма не задана, или равна нулю

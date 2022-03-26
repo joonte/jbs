@@ -82,8 +82,13 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-if(Round($Invoice['Summ']/$Settings['Course'],2) != $Args['pg_ps_amount'])
-	return ERROR | @Trigger_Error('[comp/Merchant/PayBox]: проверка суммы платежа завершилась не удачей');
+if(Round($Invoice['Summ']/$Settings['Course'],2) != $Args['pg_amount']){
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[comp/www/Merchant/PayBox]: сумма/курс = %s, передано = %s',Round($Invoice['Summ']/$Settings['Course'],2),$Args['pg_amount']));
+	#-------------------------------------------------------------------------------
+	return ERROR | @Trigger_Error('[comp/Merchant/PayBox]: проверка суммы платежа завершилась неудачей');
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Users/Init',100);
 if(Is_Error($Comp))

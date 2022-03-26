@@ -24,7 +24,7 @@ $Config = Config();
 $Settings = $Config['Invoices']['PaymentSystems']['Uniteller'];
 #-------------------------------------------------------------------------------
 if($Args['Signature'] != StrToUpper(Md5($Args['Order_ID'] . $Args['Status'] . $Settings['Hash'])))
-	return ERROR | @Trigger_Error('[comp/www/Merchant/Uniteller]: проверка подлинности завершилась не удачей');
+	return ERROR | @Trigger_Error('[comp/www/Merchant/Uniteller]: проверка подлинности завершилась неудачей');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Invoice = DB_Select('InvoicesOwners',Array('ID','UserID','Summ','ContractID'),Array('UNIQ','ID'=>$OrderID));
