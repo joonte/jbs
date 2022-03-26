@@ -25,7 +25,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('www/Administrator/API/OrderRestore',Array('OrderID'=>$Order['OrderID']));
+$Comp = Comp_Load('www/API/OrderRestore',Array('OrderID'=>$Order['OrderID'],'IsNoDiscont'=>TRUE));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
