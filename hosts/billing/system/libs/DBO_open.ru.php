@@ -63,7 +63,7 @@ function GetStatement($Settings){
 	$Answer = OpenRuAPI($Settings,SPrintF('/%s/statement/%s/print?print=true',$accountId,$statementId));
 	#-------------------------------------------------------------------------------
 	// проверяем платежи
-	if(Is_Array($Answer['account']['sendTransactionsToWARequest']['paymentDocumentList']) && SizeOf($Answer['account']['sendTransactionsToWARequest']['paymentDocumentList']))
+	if(Is_Array(@$Answer['account']['sendTransactionsToWARequest']['paymentDocumentList']) && SizeOf(@$Answer['account']['sendTransactionsToWARequest']['paymentDocumentList']))
 		$Payments = $Answer['account']['sendTransactionsToWARequest']['paymentDocumentList'];
 	#-------------------------------------------------------------------------------
 	if(Is_Array($Answer['account']['getStatementSyncResponse']['paymentDocumentList']) && SizeOf($Answer['account']['getStatementSyncResponse']['paymentDocumentList']))
@@ -71,9 +71,13 @@ function GetStatement($Settings){
 	#-------------------------------------------------------------------------------
 	if(!IsSet($Payments) || !SizeOf($Payments)){
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[system/libs/DBO_open.ru]: нет платежей, Answer = %s',print_r($Answer,true)));
+		#Debug(SPrintF('[system/libs/DBO_open.ru]: нет платежей, Answer = %s',print_r($Answer,true)));
 		#-------------------------------------------------------------------------------
 		return Array();
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[system/libs/DBO_open.ru]: есть платежи'));
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -144,6 +148,8 @@ function OpenRuAPI($Settings,$Url = '',$Post = Array()){
 	$Result = Trim($Result['Body']);
 	#-------------------------------------------------------------------------------
 	$Result = Json_Decode($Result,TRUE);
+	#-------------------------------------------------------------------------------
+	#Debug(Print_r($Result,true));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return $Result;
