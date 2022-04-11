@@ -38,8 +38,12 @@
 					<Patterns>
 						<Active>
 							<Name>Активные</Name>
-							<Where>`ExpirationDate` &gt; UNIX_TIMESTAMP()  AND `DaysRemainded` &gt; 0</Where>
+							<Where>`ExpirationDate` &gt; UNIX_TIMESTAMP() AND `DaysRemainded` &gt; 0</Where>
 						</Active>
+						<InActive>
+							<Name>НеAктивные</Name>
+							<Where>`ExpirationDate` &lt; UNIX_TIMESTAMP() OR `DaysRemainded` = 0</Where>
+						</InActive>
 						<MoreThan03>
 							<Name>Скидка &gt;= 30%</Name>
 							<Where>`Discont` &gt;= 0.3</Where>
