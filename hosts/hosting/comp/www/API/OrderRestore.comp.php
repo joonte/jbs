@@ -42,7 +42,7 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // даныне заказа
-$Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),Array('ID','OrderID','UserID','ContractID'),Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$OrderID)));
+$Order = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),Array('ID','OrderID','UserID','ContractID','(SELECT `TypeID` FROM `Contracts` WHERE `Contracts`.`ID` = `ContractID`) AS `TypeID`'),Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$OrderID)));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Order)){
 case 'error':
@@ -85,6 +85,10 @@ case 'false':
 	#-------------------------------------------------------------------------------
 	// если это юзер, то вариант один: без скидки.
 	$IsNoDiscont = TRUE;
+	#-------------------------------------------------------------------------------
+	// если это юзер, и юрлицо - возврата нет
+	if(In_Array($Order['TypeID'],Array('Individual','Juridical')))
+		return new gException('USER_CANT_REFUND_JURIDICAL','Услуга находится на договоре юрлица, для возврата обратитесь в систему поддержки');
 	#-------------------------------------------------------------------------------
 	break;
 	#-------------------------------------------------------------------------------
