@@ -1,8 +1,7 @@
 <?php
 
-
 #-------------------------------------------------------------------------------
-/** @author Великодный В.В. (Joonte Ltd.) */
+/** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
 $__args_list = Array('DSOrder');
@@ -13,15 +12,25 @@ Eval(COMP_INIT);
 $IsAdd = Comp_Load('www/Administrator/API/TaskEdit',Array('UserID'=>$DSOrder['UserID'],'TypeID'=>'DSCreate','Params'=>Array($DSOrder['ID'])));
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsAdd)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return ERROR | @Trigger_Error(400);
-  case 'array':
-    return TRUE;
-  default:
-    return ERROR | @Trigger_Error(101);
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// и убираем тариф из активных
+$IsUpdate = DB_Update('DSSchemes',Array('IsActive'=>FALSE),Array('ID'=>$DSOrder['SchemeID']));
+if(Is_Error($IsUpdate))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+return TRUE;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>
