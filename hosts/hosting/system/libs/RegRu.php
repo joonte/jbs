@@ -158,10 +158,10 @@ function RegRu_Domain_Ns_Change($Settings,$DomainName,$DomainZone,$ContractID,$D
   $Query['ns1'] = $Ns2Name;
   #-----------------------------------------------------------------------------
   if($Ns3Name)
-    $Query['ns3'] = $Ns3Name;
+    $Query['ns2'] = $Ns3Name;
   #-----------------------------------------------------------------------------
   if($Ns4Name)
-    $Query['ns4'] = $Ns4Name;
+    $Query['ns3'] = $Ns4Name;
   #-----------------------------------------------------------------------------
   if($Ns1IP)
     $Query['ns0ip'] = $Ns1IP;
