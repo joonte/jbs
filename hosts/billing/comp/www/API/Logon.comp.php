@@ -166,7 +166,7 @@ if(!SetCookie('Email',$User['Email'],Time() + 31536000,'/'))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Event = Array('UserID'=>$User['ID'],'Text'=>SPrintF('Пользователь вошел в систему с IP-адреса (%s)',$_SERVER['REMOTE_ADDR']));
+$Event = Array('UserID'=>$User['ID'],'Text'=>SPrintF('Вход в систему с IP-адреса (%s)',$_SERVER['REMOTE_ADDR']));
 #-------------------------------------------------------------------------------
 $Event = Comp_Load('Events/EventInsert',$Event);
 if(!$Event)
