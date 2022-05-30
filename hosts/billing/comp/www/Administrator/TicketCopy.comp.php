@@ -76,7 +76,7 @@ $Positions = $Config['Edesks']['Flags'];
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
 		'Form/Select',
-		Array('name'=>'Flags','id'=>'Flags','style'=>'width:100%;'),
+		Array('name'=>'Flags','id'=>'Flags','style'=>'width:100%;','disabled'=>TRUE),
 		$Positions,
 		'CloseOnSee'
 		);
@@ -100,7 +100,7 @@ case 'array':
 	foreach($Users as $User)
 		$Options[$User['ID']] = SPrintF('%s (%s)',$User['Name'],$User['Email']);
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Select',Array('name'=>'FromID','id'=>'FromID','style'=>'width:100%;'),$Options,100);
+	$Comp = Comp_Load('Form/Select',Array('name'=>'FromID','id'=>'FromID','style'=>'width:100%;','disabled'=>TRUE),$Options,100);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -113,7 +113,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('name'=>'IsMove','id'=>'IsMove','type'=>'checkbox','value'=>'yes','onclick'=>"form.FromID.disabled = checked; form.Flags.disabled = checked;",'prompt'=>'Переместить всё обсуждение пользователю'));
+$Comp = Comp_Load('Form/Input',Array('name'=>'IsMove','id'=>'IsMove','type'=>'checkbox','value'=>'yes','onclick'=>"form.FromID.disabled = checked; form.Flags.disabled = checked;",'prompt'=>'Переместить всё обсуждение пользователю','checked' => TRUE));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
