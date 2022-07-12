@@ -118,7 +118,7 @@ if($MethodID == 'Email' && $Address != $GLOBALS['__USER']['Email'] && $IsPrimary
 	if($ContactID && $Contact['Confirmed']){
 		#-------------------------------------------------------------------------------
 		# проверяем что адрес не стоит первичным у кого-то
-		$Count = DB_Count('ContactsOwners',Array('Where'=>SPrintF('`Address` = "%s" AND `UserID` != %u',$Address,$GLOBALS['__USER']['ID'])));
+		$Count = DB_Count('ContactsOwners',Array('Where'=>SPrintF('`IsPrimary` = "yes" AND `Address` = "%s" AND `UserID` != %u',$Address,$GLOBALS['__USER']['ID'])));
 		if(Is_Error($Count))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
