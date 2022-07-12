@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Alex Keda, for www.host-food.ru -->
 <XML>
-<!-- *********************************************************************** -->
-<Items>
- <UniqID>
-  <Text>Дополнительная информация</Text>
-  <Href>javascript:ShowWindow("/ServiceOrderInfo",{ServiceOrderID:"%ServiceOrderID%"});</Href>
-  <Icon>Info.gif</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Редактировать заказ услуги</Text>
-  <Href>javascript:ShowWindow("/Administrator/ServiceOrderEdit",{ServiceOrderID:%ServiceOrderID%});</Href>
-  <Icon>Edit.gif</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Передать на другой аккаунт</Text>
-  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"FALSE"});</Href>
-  <Icon>OrdersTransfer.png</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Настройки автопродления</Text>
-  <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%ServiceOrderID%"});</Href>
-  <Icon>AutoProlong.png</Icon>
- </UniqID>
-<!-- *********************************************************************** -->
-</Items>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Items>
+		<UniqID>
+			<Text>Дополнительная информация</Text>
+			<Href>javascript:ShowWindow("/ServiceOrderInfo",{ServiceOrderID:"%ServiceOrderID%"});</Href>
+			<Icon>Info.gif</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Редактировать заказ услуги</Text>
+			<Href>javascript:ShowWindow("/Administrator/ServiceOrderEdit",{ServiceOrderID:%ServiceOrderID%});</Href>
+			<Icon>Edit.gif</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Передать на другой аккаунт</Text>
+			<Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"FALSE"});</Href>
+			<Icon>OrdersTransfer.png</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Настройки автопродления</Text>
+			<Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%ServiceOrderID%"});</Href>
+			<Icon>AutoProlong.png</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+	</Items>
+	<!-- *********************************************************************** -->
 </XML>

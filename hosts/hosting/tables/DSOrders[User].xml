@@ -84,6 +84,19 @@
 			</Attribs>
 		</PasswordChange>
 		<!-- *********************************************************************** -->
+		<Reboot>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/DSReboot</ListElement>
+				<ListElement>
+					<DSOrderID>%ID%</DSOrderID>
+				</ListElement>
+				<ListElement>Перезагрузить выделенный сервер</ListElement>
+				<ListElement>VPSReboot.png</ListElement>
+			</Args>
+		</Reboot>
+		<!-- *********************************************************************** -->
 		<ExtendedMenu>
 			<IsSorted>0</IsSorted>
 			<Comp>Menus/List</Comp>
@@ -114,6 +127,7 @@
 		<ListElement>SelectID</ListElement>
 		<ListElement>Info</ListElement>
 		<ListElement>Pay</ListElement>
+		<ListElement>Reboot</ListElement>
 		<ListElement>ExtendedMenu</ListElement>
 		<ListElement>Number</ListElement>
 		<ListElement>IP</ListElement>

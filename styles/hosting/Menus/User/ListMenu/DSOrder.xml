@@ -1,37 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Items>
- <UniqID>
-  <Text>Дополнительная информация</Text>
-  <Href>javascript:ShowWindow("/DSOrderInfo",{DSOrderID:"%ServiceOrderID%"});</Href>
-  <Icon>Info.gif</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Оплатить заказ</Text>
-  <Href>javascript:ShowWindow("/DSOrderPay",{DSOrderID:%ServiceOrderID%});</Href>
-  <Icon>Pay.gif</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Учёт заказа</Text>
-  <Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
-  <Icon>OrderConsiderInfo.png</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Настройки автопродления</Text>
-  <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
-  <Icon>AutoProlong.png</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Передать на другой аккаунт</Text>
-  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
-  <Icon>OrdersTransfer.png</Icon>
- </UniqID>
-</Items>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Items>
+		<UniqID>
+			<Text>Дополнительная информация</Text>
+			<Href>javascript:ShowWindow("/DSOrderInfo",{DSOrderID:"%ServiceOrderID%"});</Href>
+			<Icon>Info.gif</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Оплатить заказ</Text>
+			<Href>javascript:ShowWindow("/DSOrderPay",{DSOrderID:%ServiceOrderID%});</Href>
+			<Icon>Pay.gif</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Учёт заказа</Text>
+			<Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
+			<Icon>OrderConsiderInfo.png</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Настройки автопродления</Text>
+			<Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
+			<Icon>AutoProlong.png</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Передать на другой аккаунт</Text>
+			<Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
+			<Icon>OrdersTransfer.png</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Перезагрузить сервер</Text>
+			<Href>javascript:ShowWindow("/DSReboot",{DSOrderID:%ServiceOrderID%});</Href>
+			<Icon>VPSReboot.png</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+	</Items>
+	<!-- *********************************************************************** -->
 </XML>

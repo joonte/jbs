@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Alex Keda, for www.host-food.ru -->
 <XML>
-<!-- *********************************************************************** -->
-<Items>
- <UniqID>
-  <Text>Дополнительная информация</Text>
-  <Href>javascript:ShowWindow("/ExtraIPOrderInfo",{ExtraIPOrderID:"%ServiceOrderID%"});</Href>
-  <Icon>Info.gif</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Редактировать заказ IP адреса</Text>
-  <Href>javascript:ShowWindow("/Administrator/ExtraIPOrderEdit",{ExtraIPOrderID:"%ServiceOrderID%"});</Href>
-  <Icon>Info.gif</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Учёт заказа</Text>
-  <Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
-  <Icon>OrderConsiderInfo.png</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Настройки автопродления</Text>
-  <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
-  <Icon>AutoProlong.png</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Компенсировать время</Text>
-  <Href>javascript:ShowWindow("/Administrator/ExtraIPCompensation",{ExtraIPOrderID:%ServiceOrderID%});</Href>
-  <Icon>Add.gif</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Передать на другой аккаунт</Text>
-  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
-  <Icon>OrdersTransfer.png</Icon>
- </UniqID>
-</Items>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Items>
+		<UniqID>
+			<Text>Дополнительная информация</Text>
+			<Href>javascript:ShowWindow("/ExtraIPOrderInfo",{ExtraIPOrderID:"%ServiceOrderID%"});</Href>
+			<Icon>Info.gif</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Редактировать заказ IP адреса</Text>
+			<Href>javascript:ShowWindow("/Administrator/ExtraIPOrderEdit",{ExtraIPOrderID:"%ServiceOrderID%"});</Href>
+			<Icon>Info.gif</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Учёт заказа</Text>
+			<Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
+			<Icon>OrderConsiderInfo.png</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Настройки автопродления</Text>
+			<Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
+			<Icon>AutoProlong.png</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Компенсировать время</Text>
+			<Href>javascript:ShowWindow("/Administrator/ExtraIPCompensation",{ExtraIPOrderID:%ServiceOrderID%});</Href>
+			<Icon>Add.gif</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Передать на другой аккаунт</Text>
+			<Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
+			<Icon>OrdersTransfer.png</Icon>
+		</UniqID>
+	</Items>
+	<!-- *********************************************************************** -->
 </XML>

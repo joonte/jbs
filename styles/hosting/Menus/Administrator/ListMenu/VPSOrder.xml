@@ -1,68 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Items>
- <UniqID>
-  <Text>Дополнительная информация</Text>
-  <Href>javascript:ShowWindow("/VPSOrderInfo",{VPSOrderID:"%ServiceOrderID%"});</Href>
-  <Icon>Info.gif</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Сменить тарифный план</Text>
-  <Href>javascript:ShowWindow("/VPSOrderSchemeChange",{VPSOrderID:%ServiceOrderID%});</Href>
-  <Icon>SchemeChange.png</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Редактировать заказ VPS</Text>
-  <Href>javascript:ShowWindow("/Administrator/VPSOrderEdit",{VPSOrderID:"%ServiceOrderID%"});</Href>
-  <Icon>Edit.gif</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Учёт заказа</Text>
-  <Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
-  <Icon>OrderConsiderInfo.png</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Настройки автопродления</Text>
-  <Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
-  <Icon>AutoProlong.png</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Компенсировать время</Text>
-  <Href>javascript:ShowWindow("/Administrator/VPSCompensation",{VPSOrderID:%ServiceOrderID%});</Href>
-  <Icon>Add.gif</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Передать на другой аккаунт</Text>
-  <Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
-  <Icon>OrdersTransfer.png</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Перезагрузить VPS</Text>
-  <Href>javascript:ShowWindow("/VPSReboot",{VPSOrderID:%ServiceOrderID%});</Href>
-  <Icon>VPSReboot.png</Icon>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Управлять заказом VPS</Text>
-  <Href>javascript:OrderManage(%ServiceOrderID%,%OrderID%,%ServiceID%);</Href>
-  <Icon>HostingManage.gif</Icon>
-  <JavaScript>OrderManage.js</JavaScript>
- </UniqID>
- <!-- *********************************************************************** -->
- <UniqID>
-  <Text>Сменить пароль от аккаунта</Text>
-  <Href>javascript:ShowWindow("/OrderPasswordChange",{ServiceOrderID:%ServiceOrderID%,ServiceID:"%ServiceID%"});</Href>
-  <Icon>Password.gif</Icon>
- </UniqID>
-</Items>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<Items>
+		<UniqID>
+			<Text>Дополнительная информация</Text>
+			<Href>javascript:ShowWindow("/VPSOrderInfo",{VPSOrderID:"%ServiceOrderID%"});</Href>
+			<Icon>Info.gif</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Сменить тарифный план</Text>
+			<Href>javascript:ShowWindow("/VPSOrderSchemeChange",{VPSOrderID:%ServiceOrderID%});</Href>
+			<Icon>SchemeChange.png</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Редактировать заказ VPS</Text>
+			<Href>javascript:ShowWindow("/Administrator/VPSOrderEdit",{VPSOrderID:"%ServiceOrderID%"});</Href>
+			<Icon>Edit.gif</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Учёт заказа</Text>
+			<Href>javascript:ShowWindow("/OrderConsiderInfo",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
+			<Icon>OrderConsiderInfo.png</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Настройки автопродления</Text>
+			<Href>javascript:ShowWindow("/ServiceAutoProlong",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
+			<Icon>AutoProlong.png</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Компенсировать время</Text>
+			<Href>javascript:ShowWindow("/Administrator/VPSCompensation",{VPSOrderID:%ServiceOrderID%});</Href>
+			<Icon>Add.gif</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Передать на другой аккаунт</Text>
+			<Href>javascript:ShowWindow("/OrdersTransfer",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
+			<Icon>OrdersTransfer.png</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Перезагрузить VPS</Text>
+			<Href>javascript:ShowWindow("/VPSReboot",{VPSOrderID:%ServiceOrderID%});</Href>
+			<Icon>VPSReboot.png</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Управлять заказом VPS</Text>
+			<Href>javascript:OrderManage(%ServiceOrderID%,%OrderID%,%ServiceID%);</Href>
+			<Icon>HostingManage.gif</Icon>
+			<JavaScript>OrderManage.js</JavaScript>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Сменить пароль от аккаунта</Text>
+			<Href>javascript:ShowWindow("/OrderPasswordChange",{ServiceOrderID:%ServiceOrderID%,ServiceID:"%ServiceID%"});</Href>
+			<Icon>Password.gif</Icon>
+		</UniqID>
+	</Items>
+	<!-- *********************************************************************** -->
 </XML>

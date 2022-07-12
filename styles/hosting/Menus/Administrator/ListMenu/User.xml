@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<Items>
-	<UniqID>
-		<Text>История заказов</Text>
-		<Href>/Administrator/OrdersHistory?Search=%Email%&amp;PatternOutID=Default</Href>
-		<Icon>History.gif</Icon>
-	</UniqID>
 	<!-- *********************************************************************** -->
-	<UniqID>
-		<Text>Заказы на хостинг</Text>
-		<Href>/Administrator/HostingOrders?Search=%Email%&amp;PatternOutID=Default</Href>
-		<Icon>ListMenuItem.gif</Icon>
-	</UniqID>
+	<Items>
+		<UniqID>
+			<Text>История заказов</Text>
+			<Href>/Administrator/OrdersHistory?Search=%Email%&amp;PatternOutID=Default</Href>
+			<Icon>History.gif</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Заказы на хостинг</Text>
+			<Href>/Administrator/HostingOrders?Search=%Email%&amp;PatternOutID=Default</Href>
+			<Icon>ListMenuItem.gif</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Заказы на домены</Text>
+			<Href>/Administrator/DomainOrders?Search=%Email%&amp;PatternOutID=Default</Href>
+			<Icon>ListMenuItem.gif</Icon>
+		</UniqID>
+		<!-- *********************************************************************** -->
+		<UniqID>
+			<Text>Все услуги</Text>
+			<Href>/Administrator/ServicesOrders?Search=%Email%&amp;PatternOutID=Default</Href>
+			<Icon>AllServices.png</Icon>
+		</UniqID>
+	</Items>
 	<!-- *********************************************************************** -->
-	<UniqID>
-		<Text>Заказы на домены</Text>
-		<Href>/Administrator/DomainOrders?Search=%Email%&amp;PatternOutID=Default</Href>
-		<Icon>ListMenuItem.gif</Icon>
-	</UniqID>
-	<!-- *********************************************************************** -->
-	<UniqID>
-		<Text>Все услуги</Text>
-		<Href>/Administrator/ServicesOrders?Search=%Email%&amp;PatternOutID=Default</Href>
-		<Icon>AllServices.png</Icon>
-	</UniqID>
-</Items>
-<!-- *********************************************************************** -->
 </XML>
