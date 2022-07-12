@@ -9,7 +9,7 @@
 <ServiceID>51000</ServiceID>
 <!-- *********************************************************************** -->
 <Defaults>
-	<Address>api.ispsystem.com</Address>
+	<Address>api.ispmanager.com</Address>
 	<Login>vasiliy.alibabaevich</Login>
 	<Monitoring>HTTP=80 HTTPS=443</Monitoring>
 	<AdminNotice>Используется специально созданная учётная запись</AdminNotice>
