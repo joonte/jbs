@@ -52,7 +52,7 @@ function IPMI_Execute($Scheme,$Command){
 	#-------------------------------------------------------------------------------
 	$Line = SPrintF('ipmitool -c -I lanplus -H %s -U %s -P %s %s',$Address,$Scheme['ILOuser'],$Scheme['ILOpass'],$Command);
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[system/libs/IPMI.SuperMicro.php]: выполняем: %s',$Line));
+	//Debug(SPrintF('[system/libs/IPMI.SuperMicro.php]: выполняем: %s',$Line));
 	// выполянем команду
 	Exec(SPrintF("%s 2>&1",$Line),$Out,$ReturnValue);
 	#-------------------------------------------------------------------------------
