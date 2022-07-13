@@ -86,7 +86,7 @@
 			<Comp>Buttons/Standard</Comp>
 			<Args>
 				<ListElement>
-					<onclick>OrderManage(0,%ID%,%ServiceID%);</onclick>
+					<onclick>if(%ServiceID% != '40000'){OrderManage(0,%ID%,%ServiceID%);}else{ShowWindow("/DSReboot",{OrderID:%ID%});}</onclick>
 				</ListElement>
 				<ListElement>Управлять заказом</ListElement>
 				<ListElement>HostingManage.gif</ListElement>

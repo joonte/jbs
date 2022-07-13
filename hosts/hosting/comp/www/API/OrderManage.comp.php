@@ -43,7 +43,7 @@ if(Is_Error(System_Load(SPrintF('classes/%sServer.class.php',$Service['Code'])))
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','StatusID','ServerID','StatusID');
 #-------------------------------------------------------------------------------
-if($Service['Code'] == 'ISPsw'){
+if(In_Array($Service['Code'], Array('ISPsw','DS'))){
 	#-------------------------------------------------------------------------------
 	$Columns = Array_Merge($Columns,Array('IP'));
 	#-------------------------------------------------------------------------------
