@@ -48,7 +48,9 @@ function IPMI_Execute($Scheme,$Command){
 	#-------------------------------------------------------------------------------
 	// достаём имя сервера
 	$ParseUrl = Parse_Url($Scheme['ILOaddr']);
-	$Address = $ParseUrl['host'];
+	#-------------------------------------------------------------------------------
+	// может быть IP адрес или голый хостнейм без http
+	$Address = IsSet($ParseUrl['host'])?$ParseUrl['host']:$ParseUrl['path'];
 	#-------------------------------------------------------------------------------
 	$Line = SPrintF('ipmitool -c -I lanplus -H %s -U %s -P %s %s',$Address,$Scheme['ILOuser'],$Scheme['ILOpass'],$Command);
 	#-------------------------------------------------------------------------------

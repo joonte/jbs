@@ -164,7 +164,7 @@ if(In_Array($DSOrder['StatusID'],Array('OnCreate','Active','Suspended')) || $GLO
 	#-------------------------------------------------------------------------------
 	if($DSOrder['ILOaddr']){
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Formats/String',$DSOrder['ILOaddr'],35,$DSOrder['ILOaddr']);
+		$Comp = Comp_Load('Formats/String',$DSOrder['ILOaddr'],35,Preg_Match('/^http/ui',$DSOrder['ILOaddr'])?$DSOrder['ILOaddr']:NULL /*,$DSOrder['ILOaddr']*/);
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
