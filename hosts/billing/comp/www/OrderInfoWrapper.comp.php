@@ -12,7 +12,7 @@ $Args = Args();
 $ServiceOrderID		= (integer) @$Args['ServiceOrderID'];
 $ServiceOrderType	=  (string) @$Args['ServiceOrderType'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod')))
+if(Is_Error(System_Load('modules/Authorisation.mod','libs/IPMI.SuperMicro.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
