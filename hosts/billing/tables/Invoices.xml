@@ -151,7 +151,8 @@
 		</CreateDate>
 		<!-- ********************************************************************** -->
 		<PaymentSystem>
-			<Head>Платежная система</Head>
+			<Head>Плат. сист.</Head>
+			<Prompt>Платёжная система</Prompt>
 			<Alias>`PaymentSystemID`</Alias>
 			<Comp>Formats/Invoice/Type</Comp>
 			<Args>
