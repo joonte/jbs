@@ -173,11 +173,17 @@ if(!IsSet($GLOBALS['__USER'])){
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"if(PasswordCheck(this.form,'Password')) UserRegister();",'value'=>'Регистрация',));
-if(Is_Error($Comp))
+#-------------------------------------------------------------------------------
+$Button = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"if(PasswordCheck(this.form,'Password')) UserRegister();",'value'=>'Регистрация',));
+if(Is_Error($Button))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = $Comp;
+// DIV с кнопками внешней авторизации
+$Div = Comp_Load('OAuth/Buttons',"setTimeout(function(){window.addEventListener('focus',location.href = '/Home';);},2000)");
+if(Is_Error($Div))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = new Tag('TR',new Tag('TD',$Div),new Tag('TD',$Button));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Tables/Standard',$Table);
