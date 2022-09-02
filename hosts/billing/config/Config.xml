@@ -1799,8 +1799,35 @@
 					<IsActive>0</IsActive>
 					<ClientID/>
 					<ClientSecret/>
-					<OauthURL>https://oauth.yandex.ru/authorize?response_type=code&amp;client_id=%s</OauthURL>
+					<OauthURL>https://oauth.yandex.ru/authorize?response_type=code&amp;client_id=%s&amp;redirect_uri=%s</OauthURL>
+					<Prompt>Вход через Yandex авторизацию с использованием аккаунта Yandex</Prompt>
 				</Yandex>
+				<!-- *********************************************************************** -->
+				<Google>
+					<IsActive>0</IsActive>
+					<ClientID/>
+					<ClientSecret/>
+					<OauthURL>https://accounts.google.com/o/oauth2/auth?client_id=%s&amp;response_type=code&amp;scope=https://www.googleapis.com/auth/userinfo.email%%20https://www.googleapis.com/auth/userinfo.profile&amp;redirect_uri=%s</OauthURL>
+					<Prompt>Вход через Google+ авторизацию с использованием аккаунта Google</Prompt>
+				</Google>
+				<!-- *********************************************************************** -->
+				<VK>
+					<IsActive>0</IsActive>
+					<ClientID/>
+					<ClientSecret/>
+					<OauthURL>https://oauth.vk.com/authorize?client_id=%s&amp;redirect_uri=%s&amp;display=popup&amp;response_type=code&amp;scope=email</OauthURL>
+					<Prompt>Вход через авторизацию ВКонтакте</Prompt>
+				</VK>
+				<!-- *********************************************************************** -->
+				<MailRu>
+					<IsActive>0</IsActive>
+					<ClientID/>
+					<ClientSecret/>
+					<OauthURL>https://oauth.mail.ru/login?client_id=%s&amp;response_type=code&amp;scope=userinfo&amp;redirect_uri=%s&amp;state=some_state</OauthURL>
+					<Prompt>Вход через авторизацию Mail.Ru</Prompt>
+				</MailRu>
+				<!-- *********************************************************************** -->
+
 			</OAuth>
 			<!-- *********************************************************************** -->
 		</User>

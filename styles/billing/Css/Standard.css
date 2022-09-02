@@ -206,24 +206,41 @@ div.RightDiv {
  * стиль для кнопок входа через социальные сети
  * */
 .SocialLoginIcons {
-	display: flex;
-	justify-content: space-between;
+	display:		flex;
+	justify-content:	space-between;
 	/*margin-top: 1.5rem;*/
 }
 .SocialLoginIcons a {
-	color: inherit;
-	cursor: pointer;
-	display: block;
-	width: 2.5rem;
-	height: 2.5rem;
-	padding: .5rem;
-	border-radius: 50%;
-	background-color: rgba(50,50,50,.05);
+	color:			inherit;
+	cursor:			pointer;
+	display:		block;
+	width:			2.5rem;
+	height:			2.5rem;
+	padding:		.5rem;
+	border-radius:		50%;
+	background-color:	rgba(50,50,50,.05);
+	margin-right:		0.5rem
 }
 .Social_Yandex::before {
-	content: "\e925";
+	content:		"\e925";
+}
+.Social_Google::before {
+	content:		"\e924";
+}
+.Social_VK::before {
+	content:		"\e906";
+}
+.Social_OK::before {
+	content:		"\e900";
+}
+.Social_MailRu::before {
+	content:		"\e923";
 }
 .SocialYandex:hover{background-color:red}
+.SocialGoogle:hover{background-color:#005ff9}
+.SocialVK:hover{background-color:#48729e}
+.SocialOK:hover{background-color:#eb7222e}
+.SocialMailRu:hover{background-color:#005ff9}
 /*-------------------------------------------------------------------------------*/
 [class^="Social_"], [class*=" Social_"] {
 	font-family: icons !important;
