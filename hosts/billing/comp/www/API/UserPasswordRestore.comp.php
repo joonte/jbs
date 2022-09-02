@@ -53,7 +53,7 @@ foreach(Array_Keys($Result) as $Key){
 	#-----------------------------------------------------------------------------
 }
 #-----------------------------------------------------------------------------
-Debug(SPrintF('[comp/www/API/UserPasswordRestore]: Users = %s',print_r($Users,true)));
+//Debug(SPrintF('[comp/www/API/UserPasswordRestore]: Users = %s',print_r($Users,true)));
 #-----------------------------------------------------------------------------
 if(SizeOf($Users) > 1)
 	return new gException('WRONG_SELECT_TOO_MANY_SELECTED','Выбраны контакты относящиеся к нескольким пользователям. Необходимо выбрать контакты только одного пользователя');
@@ -65,7 +65,7 @@ foreach($ContactsIDs as $ContactsID)
 		return new gException('WRONG_SELECT_NOT_FOUND_USER','Выбран контакт не найденный при поиске');
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
-Debug(SPrintF('[comp/www/API/UserPasswordRestore]: Result = %s',print_r($Result,true)));
+//Debug(SPrintF('[comp/www/API/UserPasswordRestore]: Result = %s',print_r($Result,true)));
 // идентификатор пользователя у нас есть в массиве что из кэша достали.
 $User = DB_Select('Users',Array('ID','IsProtected','IsActive','LockReason'),Array('UNIQ','ID'=>$UserID));
 #-------------------------------------------------------------------------------
