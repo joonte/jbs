@@ -147,6 +147,7 @@ class SendMessage implements Dispatcher{
 					'Contact'	=> $Contact,					// массив, данные контакта, чтоб параметры по одному не передавать
 					'HTML'		=> $msg->getParam('HTML'),			// текст сообщения в HTML (используется в рассылках, только для Email)
 					'TypeID'	=> $msg->getParam('TypeID'),			// тип оповещения, для ссылки на отписку
+					'IsImmediately'	=> ($msg->getParam('IsImmediately'))?TRUE:FALSE,// немедленная доставка, без учёта разрешённого времени (для восстановления пароля, например)
 				);
 		#-------------------------------------------------------------------------------
 		$taskParams = Array(
@@ -155,8 +156,8 @@ class SendMessage implements Dispatcher{
 					'Params'	=> $Params					// массив параметров
 					);
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF('[system/classes/SendMessage] taskParams = %s',print_r($taskParams,true)));
-		#Debug(SPrintF('[system/classes/SendMessage] msg = %s',print_r($msg,true)));
+		//Debug(SPrintF('[system/classes/SendMessage] taskParams = %s',print_r($taskParams,true)));
+		//Debug(SPrintF('[system/classes/SendMessage] msg = %s',print_r($msg,true)));
 		#-------------------------------------------------------------------------------
 		$result = Comp_Load('www/Administrator/API/TaskEdit',$taskParams);
 		switch(ValueOf($result)) {

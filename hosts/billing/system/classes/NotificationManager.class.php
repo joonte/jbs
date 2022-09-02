@@ -219,6 +219,8 @@ class NotificationManager {
 			#$dispatcher = call_user_func($MethodID.'::get', true);
 			$dispatcher = Call_User_Func('SendMessage::get',true);
 			#-------------------------------------------------------------------------------
+			//Debug(SPrintF("[system/classes/NotificationManager]: before send msg = %s",print_r($msg,true)));
+			#-------------------------------------------------------------------------------
 			try {
 				#-------------------------------------------------------------------------------
 				$dispatcher->send($msg);
