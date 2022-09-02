@@ -174,11 +174,19 @@ foreach($__USER['Contacts'] as $Contact){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>'javascript:ShowWindow(\'/ContactEdit\');','value'=>'Добавить контакт'));
-if(Is_Error($Comp))
+// кнопка добавления контакта
+$Button = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>'javascript:ShowWindow(\'/ContactEdit\');','value'=>'Добавить контакт'));
+if(Is_Error($Button))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('TD',Array('colspan'=>7,'align'=>'right'),$Comp));
+#-------------------------------------------------------------------------------
+// DIV с кнопками внешней авторизации
+$Div = Comp_Load('OAuth/Buttons','HideWindow()');
+if(Is_Error($Div))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+// TODO подумать над тем как подвинуть кнопку вправо, когда нет внешних авторизаций
+$Table[] = Array(new Tag('TD',Array('colspan'=>7,'align'=>'right'),new Tag('DIV',Array('style'=>'overflow: hidden; white-space: nowrap;'),new Tag('DIV',Array('class'=>'LeftDiv'),$Div),new Tag('DIV',Array('class'=>'RightDiv'),$Button))));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('TD',Array('colspan'=>7,'class'=>'Separator'),'Данные для системы техподдержки'));
@@ -207,7 +215,7 @@ if(SizeOf($Files)){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>'UserPersonalDataChange();','value'=>'Сохранить'));
+$Comp = Comp_Load('Form/Input',Array('type'=>'button','onclick'=>"UserPersonalDataChange();",'value'=>'Сохранить'));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

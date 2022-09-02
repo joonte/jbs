@@ -78,6 +78,14 @@ if(IsSet($GLOBALS['__USER'])){
 	#-------------------------------------------------------------------------------
 	$Table[] = new Tag('TABLE',Array('cellspacing'=>0,'cellpadding'=>0,'align'=>'right'),$Tr);
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// DIV с кнопками внешней авторизации
+	$Div = Comp_Load('OAuth/Buttons',"setTimeout(function(){window.addEventListener('focus',location.reload());},2000)");
+	if(Is_Error($Div))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = new Tag('TR',Array('colspan'=>2),new Tag('TD',$Div));
+	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load('Tables/Standard',$Table);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);

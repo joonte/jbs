@@ -10,6 +10,10 @@ $__args_list = Array('Args');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
+// используется в отключении проверки каптчи
+$IsInternal = IsSet($Args);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 $Email		=  (string) @$Args['Email'];
@@ -17,7 +21,8 @@ $Password	=  (string) @$Args['Password'];
 $Name		=  (string) @$Args['Name'];
 $Protect	= (integer) @$Args['Protect'];
 $Message	=  (string) @$Args['Message'];
-$IsInternal	= (boolean) @$Args['IsInternal'];
+#$IsInternal	= (boolean) @$Args['IsInternal'];
+$ExternalID	=  (string) @$Args['ExternalID'];
 $Eval		=  (string) @$Args['Eval'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('classes/Session.class.php')))
@@ -58,7 +63,7 @@ if(Is_Exception($IsCheck))
 	return $IsCheck;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if((!IsSet($GLOBALS['__USER']) && $_SERVER['REMOTE_ADDR'] != $_SERVER['SERVER_ADDR']) && $Settings['Captcha']['IsActive']){
+if((!IsSet($GLOBALS['__USER']) && $_SERVER['REMOTE_ADDR'] != $_SERVER['SERVER_ADDR']) && $Settings['Captcha']['IsActive'] && !$IsInternal){
 	#-------------------------------------------------------------------------------
 	$Array = Explode(',',$Settings['Captcha']['ExcludeIPs']);
 	#-------------------------------------------------------------------------------
@@ -131,7 +136,8 @@ $IContact = Array(
 		'MethodID'	=> 'Email',
 		'Address'	=> $Email,
 		'IsPrimary'	=> TRUE,
-		'IsActive'	=> TRUE
+		'IsActive'	=> TRUE,
+		'ExternalID'	=> $ExternalID
 		);
 #-------------------------------------------------------------------------------
 $ContactID = DB_Insert('Contacts',$IContact);

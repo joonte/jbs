@@ -1764,6 +1764,7 @@
 				<Profiles>
 					<ProfileOnFilling>1</ProfileOnFilling>
 				</Profiles>
+				<!-- *********************************************************************** -->
 			</Notes>
 			<!-- *********************************************************************** -->
 			<InvoiceMake>
@@ -1792,6 +1793,15 @@
 					<AllowDelete>0</AllowDelete>
 				</Profiles>
 			</Files>
+			<!-- *********************************************************************** -->
+			<OAuth>
+				<Yandex>
+					<IsActive>0</IsActive>
+					<ClientID/>
+					<ClientSecret/>
+					<OauthURL>https://oauth.yandex.ru/authorize?response_type=code&amp;client_id=%s</OauthURL>
+				</Yandex>
+			</OAuth>
 			<!-- *********************************************************************** -->
 		</User>
 		<!-- *********************************************************************** -->

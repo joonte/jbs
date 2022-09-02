@@ -185,4 +185,84 @@ div.MainMenu:hover{
 	text-shadow:		0 0 .65px #333, 0 0 .65px #333;
 }
 
+/*-------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------*/
+/* see http://forum.lissyara.su/viewtopic.php?f=17&t=37569 */
+div.LeftDiv {
+	float:			left;
+	white-space:		normal;
+}
+
+/*-------------------------------------------------------------------------------*/
+div.RightDiv {
+	float:			right;
+	overflow:		hidden;
+	white-space:		normal;
+}
+
+/*-------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------*/
+/* добавлено 2022-09-01 в 11:13 MSK, Alex Keda
+ * стиль для кнопок входа через социальные сети
+ * */
+.SocialLoginIcons {
+	display: flex;
+	justify-content: space-between;
+	/*margin-top: 1.5rem;*/
+}
+.SocialLoginIcons a {
+	color: inherit;
+	cursor: pointer;
+	display: block;
+	width: 2.5rem;
+	height: 2.5rem;
+	padding: .5rem;
+	border-radius: 50%;
+	background-color: rgba(50,50,50,.05);
+}
+.Social_Yandex::before {
+	content: "\e925";
+}
+.SocialYandex:hover{background-color:red}
+/*-------------------------------------------------------------------------------*/
+[class^="Social_"], [class*=" Social_"] {
+	font-family: icons !important;
+	speak: never;
+	font-style: normal;
+	font-weight: 400;
+	font-variant: normal;
+	text-transform: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+[class^="Social_"]::before, [class*=" Social_"]::before {
+	line-height: 1.5rem;
+	font-size: 1.5rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	display: inline-block;
+	vertical-align: top;
+}
+/*-------------------------------------------------------------------------------*/
+*, ::before, ::after {
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+/*-------------------------------------------------------------------------------*/
+@font-face{
+	font-family:icons;
+	font-weight:400;
+	font-style:normal;
+	font-display:block;
+	src:url(/styles/billing/Fonts/Icon.woff2?1) format('woff2'),url(styles/billing/Fonts/Icon.woff2?1) format('woff')
+}
+/*-------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------*/
+
+
+
+
+
+
+
 
