@@ -119,7 +119,8 @@ table {
 #BasketItemComment	{ display: none; }
 #BasketServiceName	{ display: none; }
 #BasketServiceCode	{ display: inline-block !important; }
-
+/* скрываем ссылку входа в верхней панели - поля ввода скрыты, нажатие кнопки бессмысленно */
+#TopPanelLogonButton	{ display: none; }
 
 div.PostProfile {
 	display:	none;

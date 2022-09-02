@@ -97,7 +97,7 @@ if(!IsSet($GLOBALS['__USER'])){
 	#-------------------------------------------------------------------------------
 	$Tr->AddHTML($Parse);
 	#-------------------------------------------------------------------------------
-	$Script = new Tag('SCRIPT',Array('type'=>'text/javascript'),"function TopPanelLogon(){ Logon(document.getElementById('TopPanelEmail').value,document.getElementById('TopPanelPassword').value,document.getElementById('TopPanelIsRemember').checked); }");
+	$Script = new Tag('SCRIPT',Array('type'=>'text/javascript'),"function TopPanelLogon(){ if(document.getElementById('TopPanelPassword').value){Logon(document.getElementById('TopPanelEmail').value,document.getElementById('TopPanelPassword').value,document.getElementById('TopPanelIsRemember').checked);}else{document.location = '/Logon';}}");
 	#-------------------------------------------------------------------------------
 	$Links['DOM']->AddChild('Head',$Script);
 	#-------------------------------------------------------------------------------

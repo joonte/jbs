@@ -53,7 +53,7 @@
         <IMG src="SRC:{Images/TopPanelButtonLeft.png}" style="display:block;" width="15" height="25" />
        </TD>
        <TD style="background-image:url(SRC:{Images/TopPanelButtonCenter.png});">
-        <A class="TopPanel" href="javascript:TopPanelLogon();">Вход</A>
+        <A class="TopPanel" id="TopPanelLogonButton" href="javascript:TopPanelLogon();">Вход</A>
         </TD>
        <TD width="10">
         <IMG src="SRC:{Images/TopPanelButtonRight.png}" style="display:block;" width="15" height="25" />
