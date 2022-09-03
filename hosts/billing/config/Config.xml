@@ -1827,6 +1827,15 @@
 					<Prompt>Вход через авторизацию Mail.Ru</Prompt>
 				</MailRu>
 				<!-- *********************************************************************** -->
+				<OK>
+					<IsActive>0</IsActive>
+					<ClientID/>
+					<ClientSecret/>
+					<PublicKey/>
+					<OauthURL>https://connect.ok.ru/oauth/authorize?client_id=%s&amp;scope=VALUABLE_ACCESS;GET_EMAIL;LONG_ACCESS_TOKEN&amp;response_type=code&amp;redirect_uri=%s</OauthURL>
+					<Prompt>Вход через авторизацию Одноклассники</Prompt>
+				</OK>
+				<!-- *********************************************************************** -->
 
 			</OAuth>
 			<!-- *********************************************************************** -->
