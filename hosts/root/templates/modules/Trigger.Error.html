@@ -49,7 +49,7 @@
 			/* ------------------------------------------------------------------------------- */
 		</STYLE>
 	</HEAD>
-	<BODY>
+	<BODY OnLoad='document.getElementById("year").innerHTML = new Date().getFullYear();'>
 		<H1>%s</H1>
 		<P>
 			<SPAN>Приносим свои извинения.</SPAN>
@@ -62,8 +62,10 @@
 			<BR />
 			<A href="/Home">Вернуться на главную</A>
 		</P>
+		<BR />
+		<BR />
 		<DIV style="font-size:10px; margin:10px;">
-			<SPAN>Joonte Software 2007-%u</SPAN>
+			<SPAN>Joonte Software 2007-<SPAN id="year"></SPAN></SPAN>
 			<A href="http://www.joonte.com/">http://www.joonte.com</A>
 		</DIV>
 	</BODY>

@@ -357,7 +357,7 @@ function __Error_Handler__($Number,$Error,$File,$Line){
 				if(IsSet($_SERVER['SERVER_PROTOCOL']))
 					Header(SprintF('%s 500 Internal Server Error',$_SERVER['SERVER_PROTOCOL']),TRUE,500);
 				#-------------------------------------------------------------------------------
-				Exit(SPrintF($Result,$String,$String,$JBsErrorID,Date('Y',Time())));
+				Exit(SPrintF($Result,$String,$String,$JBsErrorID));
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
