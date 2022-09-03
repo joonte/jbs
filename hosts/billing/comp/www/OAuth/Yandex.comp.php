@@ -16,8 +16,11 @@ if(Is_Error(System_Load('libs/HTTP.php')))
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Messages = Messages();
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if(!IsSet($Args['code']))
-	return "No code given...";
+	return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['NoCode']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Config = Config();
@@ -25,10 +28,10 @@ $Config = Config();
 $Settings = $Config['Interface']['User']['OAuth']['Yandex'];
 #-------------------------------------------------------------------------------
 if(!$Settings['IsActive'])
-	return "Yandex OAuth disabled via config...";
+	return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['Disabled']));
 #-------------------------------------------------------------------------------
 if(!$Settings['ClientSecret'] || !$Settings['ClientID'])
-	return "No settings for ClientSecret or ClientID...";
+	return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['NoSettings']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // код для получения токена, меняем на токен
@@ -71,7 +74,7 @@ if(Is_Error($Result))
 $Result = Json_Decode(Trim($Result['Body']),TRUE);
 #-------------------------------------------------------------------------------
 if(!$Result['default_email'])
-	return "default_email not found...";
+	return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['NoEmail']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # TODO портрет юзера
@@ -90,6 +93,7 @@ switch(ValueOf($IsUser)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
+	return TemplateReplace('OAuth.Error',Array('TEXT'=>$IsUser->String));
         return $IsUser->String;
 case 'array':
 	break;
@@ -105,7 +109,7 @@ if(Is_Error($User))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // закрываем окно
-return '<HTML><BODY OnLoad="window.close();"/></HTML>';
+return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['NoEmail'],'CLOSE'=>1));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
