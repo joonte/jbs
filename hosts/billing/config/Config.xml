@@ -1797,10 +1797,9 @@
 			<!-- *********************************************************************** -->
 			<OAuth>
 				<!-- *********************************************************************** -->
-				<OAuthAllowForAdmin>0</OAuthAllowForAdmin>
-				<!-- *********************************************************************** -->
 				<Yandex>
 					<IsActive>0</IsActive>
+					<AllowForAdmin>0</AllowForAdmin>
 					<ClientID/>
 					<ClientSecret/>
 					<OauthURL>https://oauth.yandex.ru/authorize?response_type=code&amp;client_id=%s&amp;redirect_uri=%s</OauthURL>
@@ -1809,6 +1808,7 @@
 				<!-- *********************************************************************** -->
 				<Google>
 					<IsActive>0</IsActive>
+					<AllowForAdmin>0</AllowForAdmin>
 					<ClientID/>
 					<ClientSecret/>
 					<OauthURL>https://accounts.google.com/o/oauth2/auth?client_id=%s&amp;response_type=code&amp;scope=https://www.googleapis.com/auth/userinfo.email%%20https://www.googleapis.com/auth/userinfo.profile&amp;redirect_uri=%s</OauthURL>
@@ -1817,6 +1817,7 @@
 				<!-- *********************************************************************** -->
 				<VK>
 					<IsActive>0</IsActive>
+					<AllowForAdmin>0</AllowForAdmin>
 					<ClientID/>
 					<ClientSecret/>
 					<OauthURL>https://oauth.vk.com/authorize?client_id=%s&amp;redirect_uri=%s&amp;display=popup&amp;response_type=code&amp;scope=email</OauthURL>
@@ -1825,6 +1826,7 @@
 				<!-- *********************************************************************** -->
 				<MailRu>
 					<IsActive>0</IsActive>
+					<AllowForAdmin>0</AllowForAdmin>
 					<ClientID/>
 					<ClientSecret/>
 					<OauthURL>https://oauth.mail.ru/login?client_id=%s&amp;response_type=code&amp;scope=userinfo&amp;redirect_uri=%s&amp;state=some_state</OauthURL>
@@ -1833,6 +1835,7 @@
 				<!-- *********************************************************************** -->
 				<OK>
 					<IsActive>0</IsActive>
+					<AllowForAdmin>0</AllowForAdmin>
 					<ClientID/>
 					<ClientSecret/>
 					<PublicKey/>
@@ -1840,7 +1843,6 @@
 					<Prompt>Вход через авторизацию Одноклассники</Prompt>
 				</OK>
 				<!-- *********************************************************************** -->
-
 			</OAuth>
 			<!-- *********************************************************************** -->
 		</User>

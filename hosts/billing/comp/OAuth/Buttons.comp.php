@@ -20,15 +20,16 @@ $OAuth = $Config['Interface']['User']['OAuth'];
 #-------------------------------------------------------------------------------
 foreach(Array_Keys($OAuth) as $Key){
 	#-------------------------------------------------------------------------------
-	// настройки - это не массив, пропускаем
-	if(!Is_Array($OAuth[$Key]))
+	if(!$OAuth[$Key]['IsActive'])
 		continue;
 	#-------------------------------------------------------------------------------
-	if(!$OAuth[$Key]['IsActive'])
+	// могут жеж включить и настроек не внести
+	if(!$OAuth[$Key]['ClientID'] || !$OAuth[$Key]['ClientSecret'])
 		continue;
 	#-------------------------------------------------------------------------------
 	// URL возврата
 	$RedirectURI = SPrintF('%s://%s/OAuth/%s',URL_SCHEME,HOST_ID,$Key);
+	#-------------------------------------------------------------------------------
 	// ссылка/кнопка
 	$A = new Tag('A',Array('onmouseover'=>SPrintF("PromptShow(event,'%s',this);",$OAuth[$Key]['Prompt']),'class'=>SPrintF('Social%s',$Key),'OnClick'=>SPrintF("JavaScript:window.open('%s','OAuth_window').focus();%s;",SPrintF($OAuth[$Key]['OauthURL'],$OAuth[$Key]['ClientID'],$RedirectURI),$JS),'target'=>'_blank'),new Tag('I',Array('class'=>SPrintF('Social_%s',$Key)),' '));
 	#-------------------------------------------------------------------------------
