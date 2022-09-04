@@ -20,7 +20,7 @@ $Messages = Messages();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!IsSet($Args['code']))
-	return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['NoCode']));
+	return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['NoCode']),FALSE);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Config = Config();
@@ -28,10 +28,10 @@ $Config = Config();
 $Settings = $Config['Interface']['User']['OAuth']['VK'];
 #-------------------------------------------------------------------------------
 if(!$Settings['IsActive'])
-	return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['Disabled']));
+	return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['Disabled']),FALSE);
 #-------------------------------------------------------------------------------
 if(!$Settings['ClientSecret'] || !$Settings['ClientID'])
-	return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['NoSettings']));
+	return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['NoSettings']),FALSE);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // код для получения токена меняем на токен, при этом ВК отдаёт сразу и данные юзера
@@ -56,8 +56,8 @@ if(Is_Error($Result))
 $Result = Json_Decode(Trim($Result['Body']),TRUE);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(!$Result['email'])
-	return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['NoEmail']));
+if(!IsSet($Result['email']))
+	return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['NoEmail']),FALSE);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # TODO портрет юзера
@@ -76,7 +76,7 @@ switch(ValueOf($IsUser)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return TemplateReplace('OAuth.Error',Array('TEXT'=>$IsUser->String));
+	return TemplateReplace('OAuth.Error',Array('TEXT'=>$IsUser->String),FALSE);
 case 'array':
 	break;
 default:
@@ -90,8 +90,21 @@ if(Is_Error($User))
         return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// если это админ, сразу и отлогиниваемся, если нет настройки разрешающей админам вход через внешнюю авторизацию
+if($GLOBALS['__USER']['IsAdmin'] && !$Config['Interface']['User']['OAuth']['OAuthAllowForAdmin']){
+	#-------------------------------------------------------------------------------
+	$User = Comp_Load('www/API/Logout');
+	if(Is_Error($User))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	// выводим сообщение
+	return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['OAuthAllowForAdmin']),FALSE);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 // закрываем окно
-return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['Completed'],'CLOSE'=>1));
+return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['Completed'],'CLOSE'=>1),FALSE);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
