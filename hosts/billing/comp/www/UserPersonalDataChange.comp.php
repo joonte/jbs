@@ -186,7 +186,7 @@ if(Is_Error($Div))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 // TODO подумать над тем как подвинуть кнопку вправо, когда нет внешних авторизаций
-$Table[] = Array(new Tag('TD',Array('colspan'=>7,'align'=>'right'),new Tag('DIV',Array('style'=>'overflow: hidden; white-space: nowrap;'),new Tag('DIV',Array('class'=>'LeftDiv'),$Div),new Tag('DIV',Array('class'=>'RightDiv'),$Button))));
+$Table[] = Array(new Tag('TD',Array('colspan'=>7,'align'=>'right'),new Tag('DIV',Array('style'=>'overflow: hidden; white-space: nowrap;'),new Tag('DIV',Array('class'=>'LeftDiv'),$Div),new Tag('DIV',Array('class'=>'RightDiv','style'=>'transform: translateY(50%);'),$Button))));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = Array(new Tag('TD',Array('colspan'=>7,'class'=>'Separator'),'Данные для системы техподдержки'));
