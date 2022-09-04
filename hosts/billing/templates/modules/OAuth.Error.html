@@ -1,10 +1,9 @@
 <!--
 /** @author Alex Keda, for www.host-food.ru  */
 -->
-
 <HTML>
 	<HEAD>
-		<TITLE>Ошибка авторизации OAuth</TITLE>
+		<TITLE id="title">Ошибка авторизации OAuth</TITLE>
 		<META http-equiv="Content-Type" content="text/html" charset="utf-8" />
 		<STYLE>
 			/* ------------------------------------------------------------------------------- */
@@ -47,10 +46,23 @@
 				text-decoration:	underline;
 				}
 			/* ------------------------------------------------------------------------------- */
+			@media screen and (max-width: 650px){
+				/* ------------------------------------------------------------------------------- */
+				 h1,p {
+					/* ------------------------------------------------------------------------------- */
+					margin:		10px;
+					padding:	9px;
+					font-weight:	bold;
+					font-size:	150%;
+					/* ------------------------------------------------------------------------------- */
+				}
+				/* ------------------------------------------------------------------------------- */
+			}
+			/* ------------------------------------------------------------------------------- */
 		</STYLE>
 	</HEAD>
-	<BODY OnLoad='document.getElementById("year").innerHTML = new Date().getFullYear();if("%CLOSE%" == 1){window.close();};'>
-		<H1>Произошла ошибка OAuth</H1>
+	<BODY OnLoad='document.getElementById("year").innerHTML = new Date().getFullYear();if("%CLOSE%" == 1){document.getElementById("title").innerHTML = "Вход выполнен успешно"; document.getElementById("h1").innerHTML = "Вход выполнен успешно"; window.close();};'>
+		<H1 id="h1">Произошла ошибка OAuth</H1>
 		<P>
 			<SPAN>%TEXT%</SPAN>
 			<BR />
