@@ -51,6 +51,17 @@
 							<Name>Операции за текущий месяц</Name>
 							<Where>`CreateDate` &gt; BEGIN_MONTH()</Where>
 						</Month>
+						<!-- ****************************************************************** -->
+						<Incoming>
+							<Name>Приход</Name>
+							<Where>(SELECT `OperationSign` FROM `Services` WHERE `Services`.`ID` = `PostingsOwners`.`ServiceID`) = '+'</Where>
+						</Incoming>
+						<!-- ****************************************************************** -->
+						<Expense>
+							<Name>Расход</Name>
+							<Where>(SELECT `OperationSign` FROM `Services` WHERE `Services`.`ID` = `PostingsOwners`.`ServiceID`) = '-'</Where>
+						</Expense>
+						<!-- ****************************************************************** -->
 					</Patterns>
 					<ActiveID>Week</ActiveID>
 				</Args>
