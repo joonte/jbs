@@ -181,7 +181,8 @@ if(Is_Error($Button))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // DIV с кнопками внешней авторизации
-$Div = Comp_Load('OAuth/Buttons','HideWindow()');
+//$Div = Comp_Load('OAuth/Buttons',"cnt = 0; setTimeout(function(){window.addEventListener('mousemove',function(event){if(cnt = 5){HideWindow();window.removeEventListener('mousemove')}});},2000)");
+$Div = Comp_Load('OAuth/Buttons',"setTimeout(function(){window.addEventListener('focus',HideWindow());},2000)");
 if(Is_Error($Div))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
