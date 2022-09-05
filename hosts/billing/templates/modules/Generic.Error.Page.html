@@ -1,0 +1,85 @@
+<!--
+/** @author Alex Keda, for www.host-food.ru  */
+-->
+<HTML>
+	<HEAD>
+		<TITLE id="title">%TITLE%</TITLE>
+		<META http-equiv="Content-Type" content="text/html" charset="utf-8" />
+		<STYLE>
+			/* ------------------------------------------------------------------------------- */
+			body {
+				background-color:	#F9F9F9;
+				font-family:		Verdana;
+				font-size:		12px;
+			}
+			/* ------------------------------------------------------------------------------- */
+			h1 {
+				color:			#A65300;
+				font-size:		25px;
+				font-weight:		normal;
+				margin:			15px;
+				text-align:		left;
+			}
+			/* ------------------------------------------------------------------------------- */
+			p {
+				border:			1px solid #B7B7FF;
+				background-color:	#FFFFD7;
+				margin:			10px;
+				padding:		5px;
+			}
+			/* ------------------------------------------------------------------------------- */
+			a:link {
+				background-color:	transparent;
+				color:			blue;
+				text-decoration:	underline;
+			}
+			/* ------------------------------------------------------------------------------- */
+			a:visited {
+				background-color:	transparent;
+				color:			blue;
+				text-decoration:	underline;
+				}
+			/* ------------------------------------------------------------------------------- */
+			a:hover {
+				background-color:	transparent;
+				color:			blue;
+				text-decoration:	underline;
+				}
+			/* ------------------------------------------------------------------------------- */
+			@media screen and (max-width: 650px){
+				/* ------------------------------------------------------------------------------- */
+				 h1,p {
+					/* ------------------------------------------------------------------------------- */
+					margin:		10px;
+					padding:	9px;
+					font-weight:	bold;
+					font-size:	150%;
+					/* ------------------------------------------------------------------------------- */
+				}
+				/* ------------------------------------------------------------------------------- */
+			}
+			/* ------------------------------------------------------------------------------- */
+		</STYLE>
+	</HEAD>
+	<!--
+		Ну так, кривенько конечно. Если в тексте нет символа процента, то надо его подставить,
+		если есть - значит подстановки не было и отображаем дефолтовый текст
+	-->
+	<BODY OnLoad='document.getElementById("year").innerHTML = new Date().getFullYear();if("%TITLE%".includes("%")){document.getElementById("title").innerHTML = "Произошла ошибка";}if("%H1%".includes("%")){document.getElementById("h1").innerHTML = "Произошла ошибка";}'>
+		<H1 id="h1">%H1%</H1>
+		<P>
+			<SPAN>%TEXT%</SPAN>
+			<BR />
+			<BR />
+			<A href="/Home">Вернуться на главную</A> | <A href="JavaScript:window.close()">Закрыть окно</A>
+		</P>
+		<BR />
+		<BR />
+		<BR />
+		<DIV style="font-size:10px; margin:10px;">
+			<SPAN>Joonte Software 2007-<SPAN id="year"></SPAN></SPAN>
+			<A href="http://www.joonte.com/" target="_blank">http://www.joonte.com</A>
+		</DIV>
+	</BODY>
+</HTML>
+
