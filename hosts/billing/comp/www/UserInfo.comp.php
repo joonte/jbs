@@ -122,11 +122,8 @@ foreach($Contacts as $Contact){
 	#-------------------------------------------------------------------------------
 	$Address = ($Contact['IsPrimary'])?SPrintF('%s [*]',$Contact['Address']):$Contact['Address'];
 	#-------------------------------------------------------------------------------
-	// для телеграмма кастыль
-	if(In_Array($Contact['MethodID'],Array('Telegram','Viber','VKontakte')) && $Contact['ExternalID'])
-		$Address = SPrintF('ChatID = %s',$Contact['ExternalID']);
-	#-------------------------------------------------------------------------------
 	$RowName = ($Contact['IsHidden'])?SPrintF('%s [удалён]',$Config['Notifies']['Methods'][$Contact['MethodID']]['Name']):$Config['Notifies']['Methods'][$Contact['MethodID']]['Name'];
+	#-------------------------------------------------------------------------------
 	$Table[] = Array($RowName,$Address);
 	#-------------------------------------------------------------------------------
 	if($Contact['Confirmed']){
@@ -138,6 +135,9 @@ foreach($Contacts as $Contact){
 		$Table[] = Array(SPrintF('%s подтверждён',$Config['Notifies']['Methods'][$Contact['MethodID']]['Name']),$Comp);
 		#-------------------------------------------------------------------------------
 	}
+	#-------------------------------------------------------------------------------
+	if($Contact['ExternalID'])
+		$Table[] = Array(SPrintF('%s External ID',$Config['Notifies']['Methods'][$Contact['MethodID']]['Name']),$Contact['ExternalID']);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
