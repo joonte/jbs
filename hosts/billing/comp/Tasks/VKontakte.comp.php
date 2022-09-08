@@ -71,6 +71,8 @@ $Message = Preg_Replace('/\[size=([0-9]+)\](.+)\[\/size\]/sU','\\2',$Message);
 $Message = Preg_Replace('/\[color=([a-z]+)\](.+)\[\/color\]/sU','\\2',$Message);
 // цитата, моноширинным
 $Message = Preg_Replace('/\[quote\](.+)\[\/quote\]/sU',"\n--\n\\1\n--\n",$Message);
+// код, моноширинный
+$Message = Preg_Replace('/\[code\](.+)\[\/code\]/sU',"```\n\\1```\n",$Message);
 // жирный
 $Message = Preg_Replace('/\[b\](.+)\[\/b\]/sU',"\\1",$Message);
 // наклонный

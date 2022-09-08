@@ -81,6 +81,7 @@ table {
 #ButtonTextSize		{ display: none; }
 #ButtonTextColor	{ display: none; }
 #ButtonTextLock		{ display: none; }
+#ButtonTextCode		{ display: none; }
 
 /* прячем панель поиска */
 #TableSuperFormSearch	{ display: none; }
