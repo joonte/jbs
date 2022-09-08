@@ -36,6 +36,8 @@ $String = Preg_Replace('/\[hidden\](.+)\[\/hidden(\]\s+?|\])/sU',$IsLockText?'<D
 #-------------------------------------------------------------------------------
 $String = Preg_Replace('/\[quote\](.+)\[\/quote(\]\s+?|\])/sU',!IsSet($Params['IsEmail'])?'<DIV class="QuoteText">\\1</DIV>':'\\1',$String);
 #-------------------------------------------------------------------------------
+$String = Preg_Replace('/\[code\](.+)\[\/code(\]\s+?|\])/sU',!IsSet($Params['IsEmail'])?'<DIV class="CodeBox"><PRE>\\1</PRE></DIV>':'\\1',$String);
+#-------------------------------------------------------------------------------
 $String = Preg_Replace('/\[color=([a-z]+)\](.+)\[\/color\]/sU',!IsSet($Params['IsEmail'])?'<FONT style="color:\\1;">\\2</FONT>':'\\2',$String);
 #-------------------------------------------------------------------------------
 $String = Preg_Replace('/\[size=([0-9]+)\](.+)\[\/size\]/sU',!IsSet($Params['IsEmail'])?'<SPAN style="font-size:\\1px;">\\2</SPAN>':'\\2',$String);
