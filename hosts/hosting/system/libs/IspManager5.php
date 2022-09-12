@@ -231,6 +231,7 @@ function IspManager5_Get_Users($Settings){
 	/******************************************************************************/
 	$Version = IspManager5_Check_Version($Settings);
 	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[IspManager5_Get_Get_Users]: ISPmanager = %s',print_r($Version,true)));
 	Debug(SPrintF('[IspManager5_Get_Get_Users]: ISPmanager = %s',$Version));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------

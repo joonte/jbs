@@ -38,7 +38,9 @@ $SW = Array(
 						3934	=> 'DCImanager 5 Progressive',
 						3936	=> 'DCImanager 5 Enterprise',
 						17	=> 'DNSmanager 4',
-						3136	=> 'DNSmanager 5'
+						3136	=> 'DNSmanager 5',
+						55233	=> 'ISPmanager 6 Host',
+						55235	=> 'ISPmanager 6 Trial',
 					),
 		#-------------------------------------------------------------------------------
 		# Периоды заказа ПО
