@@ -80,49 +80,22 @@ $Result = Json_Decode(Trim($Result['Body']),TRUE);
 // это поделие требует чтобы на api-support@ok.ru накатали письмо с ID приложения и 
 // аргуметацией - а зачем вам почтовый адрес пользоватетеля... дурдом, надо отдельную ошибку по 
 // этому поводу выводить чтобы на этапе тестирвоания понимали что делать
-if(!IsSet($Result['default_email']))
+if(!IsSet($Result['email']))
 	return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['NoEmail']),FALSE);
-return "STOP";
-
-/*
-{
-	"uid":"587997562569",
-	"birthday":"1979-04-19",
-	"birthdaySet":true,
-	"age":43,
-	"first_name":"Alex",
-	"last_name":"Keda",
-	"name":"Alex Keda",
-	"locale":"ru",
-	"gender":"male",
-	"has_email":true,
-	"location":{
-		"city":"",
-		"country":"RUSSIAN_FEDERATION",
-		"countryCode":"RU",
-		"countryName":"Россия"
-	},
-	"online":"web",
-	"pic_1":"https://api.ok.ru/img/stub/user/male/50.png",
-	"pic_2":"https://api.ok.ru/img/stub/user/male/128.png",
-	"pic_3":"https://api.ok.ru/img/stub/user/male/190.png"
-}
- * */
-
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # TODO портрет юзера
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // данные для аккаунта
-$Address= $Result['default_email'];
-$UserID	= $Result['id'];
-$Name	= $Result['display_name'];
+$Address= $Result['email'];
+$UserID	= $Result['uid'];
+$Name	= IsSet($Result['name'])?$Result['name']:FALSE;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IsUser = Comp_Load('OAuth/ManageAccount','OK',$Address,$UserID,$Name);
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/www/OAuth/OK]: IsUser = %s',print_r($IsUser,true)));
+//Debug(SPrintF('[comp/www/OAuth/OK]: IsUser = %s',print_r($IsUser,true)));
 switch(ValueOf($IsUser)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
@@ -132,25 +105,6 @@ case 'array':
 	break;
 default:
 	return ERROR | @Trigger_Error(101);
-}
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-// делаем Logon юзера
-$User = Comp_Load('www/API/Logon',Array('Email'=>$Address));
-if(Is_Error($User))
-        return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-// если это админ, сразу и отлогиниваемся, если нет настройки разрешающей админам вход через внешнюю авторизацию
-if($GLOBALS['__USER']['IsAdmin'] && !$Settings['AllowForAdmin']){
-	#-------------------------------------------------------------------------------
-	$User = Comp_Load('www/API/Logout');
-	if(Is_Error($User))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	// выводим сообщение
-	return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['OAuthAllowForAdmin']),FALSE);
-	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
