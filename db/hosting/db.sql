@@ -18,6 +18,7 @@ VALUES
 (70,1,'VPSForDelete','[]','yes'),
 (74,1,'DSForDelete','[]','yes'),
 (75,1,'DSCalculateNumServers','[]','yes'),
+(76,1,'DSServersIPMI','[]','yes'),
 (78,1,'ExtraIPForDelete','[]','yes'),
 (84,1,'ISPswForDelete','[]','yes'),
 (86,1,'ServersAutoBalance','[]','yes'),

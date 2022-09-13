@@ -685,12 +685,18 @@
 			<!-- ********************************************************************* -->
 			<DSCalculateNumServers>
 				<Name>Пересчёт числа свободных/занятых выделенных серверов</Name>
-				<Params>
-					<Params type="array"/>
-				</Params>
+				<Params type="array"/>
 				<ExecutePeriod>00:10</ExecutePeriod>
 				<IsActive>1</IsActive>
 			</DSCalculateNumServers>
+			<!-- ********************************************************************* -->
+			<DSServersIPMI>
+				<Name>Опрос IPMI выделенных серверов</Name>
+				<Params type="array"/>
+				<IsAdminNotify>1</IsAdminNotify>
+				<IsUserNotify>1</IsUserNotify>
+				<IsActive>1</IsActive>
+			</DSServersIPMI>
 			<!-- ********************************************************************* -->
 			<!-- ********************************************************************* -->
 			<ExtraIPActive>
