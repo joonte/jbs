@@ -36,7 +36,7 @@ switch(ValueOf($DSServers)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return $ExecuteTime;
+	return 24*3600;	// нету серверов, сдвигаем задачу на сутки
 case 'array':
 	break;
 default:
