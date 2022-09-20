@@ -194,7 +194,7 @@ foreach($Data as $Row){
 		if(IsSet($Column['Hidden']))
 			continue;
 		#-------------------------------------------------------------------------------
-		$Td = new Tag('TD',Array('data-label'=>IsSet($Column['LongName'])?$Column['LongName']:$ColumnID));
+		$Td = new Tag('TD',Array('data-label'=>IsSet($Column['LongName'])?$Column['LongName']:$ColumnID,'data-IsNoMobile'=>IsSet($Column['IsNoMobile'])?$Column['IsNoMobile']:0));
 		#-------------------------------------------------------------------------------
 		$Value = (IsSet($Row[$ColumnID])?$Row[$ColumnID]:'');
 		#-------------------------------------------------------------------------------

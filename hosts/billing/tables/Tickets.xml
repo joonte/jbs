@@ -118,6 +118,7 @@
 			<Args>
 				<TableID>Edesks</TableID>
 			</Args>
+			<IsNoMobile>1</IsNoMobile>
 		</SelectID>
 		<!-- ********************************************************************** -->
 		<ExtendedMenu>
@@ -127,6 +128,7 @@
 				<ListElement>Administrator/ListMenu/Tickets.xml</ListElement>
 				<Replace>%ID%</Replace>
 			</Args>
+			<IsNoMobile>1</IsNoMobile>
 		</ExtendedMenu>
 		<!-- ********************************************************************** -->
 		<Priority>
@@ -136,6 +138,7 @@
 				<ListElement>%PriorityID%</ListElement>
 			</Args>
 			<Alias>PriorityID</Alias>
+			<IsNoMobile>1</IsNoMobile>
 		</Priority>
 		<!-- ********************************************************************** -->
 		<Number>
@@ -145,6 +148,7 @@
 				<ListElement>%ID%</ListElement>
 			</Args>
 			<Alias>ID</Alias>
+			<IsNoMobile>1</IsNoMobile>
 		</Number>
 		<!-- ********************************************************************** -->
 		<TargetGroup>
@@ -157,6 +161,7 @@
 			</Args>
 			<Alias>(SELECT `Name` FROM `Groups` WHERE `Groups`.`ID` = `TargetGroupID`)</Alias>
 			<LongName>Отдел</LongName>
+			<IsNoMobile>1</IsNoMobile>
 		</TargetGroup>
 		<!-- ********************************************************************** -->
 		<Theme>
@@ -181,12 +186,14 @@
 				<style>text-align:right;</style>
 			</Attribs>
 			<LongName>Число сообщений</LongName>
+			<IsNoMobile>1</IsNoMobile>
 		</Messages>
 		<!-- ********************************************************************** -->
 		<Status>
 			<Args>
 				<ModeID>Edesks</ModeID>
 			</Args>
+			<IsNoMobile>1</IsNoMobile>
 		</Status>
 		<!-- ********************************************************************** -->
 		<TargetUser>
@@ -199,6 +206,7 @@
 			</Args>
 			<Alias>(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `EdesksOwners`.`TargetUserID`)</Alias>
 			<LongName>Сотрудник</LongName>
+			<IsNoMobile>1</IsNoMobile>
 		</TargetUser>
 		<!-- ********************************************************************** -->
 		<UpdateDate>
@@ -211,7 +219,13 @@
 			<Attribs>
 				<style>text-align:right;</style>
 			</Attribs>
+			<IsNoMobile>1</IsNoMobile>
 		</UpdateDate>
+		<!-- ********************************************************************** -->
+		<Owner>
+			<IsNoMobile>1</IsNoMobile>
+		</Owner>
+		<!-- ********************************************************************** -->
 	</Columns>
 	<!-- *********************************************************************** -->
 	<Sequence>

@@ -1,105 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Бреславский А.В. (Joonte Ltd.) -->
 <XML>
-<!-- *********************************************************************** -->
-<RootID>Tickets</RootID>
-<Cut>
- <Comps>
-  <After>
-   <Delete />
-   <StatusSet />
-  </After>
-  <Before>
-   <TicketsFilter />
-  </Before>
- </Comps>
- <Sequence />
-</Cut>
-<!-- *********************************************************************** -->
-<Source>
- <Conditions>
-  <Where>
-   <UniqID>`UserID` = @local.__USER_ID</UniqID>
-  </Where>
-  <Message>У Вас нет запросов в центр поддержки.</Message>
- </Conditions>
-</Source>
-<!-- *********************************************************************** -->
-<Comps>
- <Before>
-  <PatternOut>
-   <Args>
-    <Patterns>
-     <!-- ****************************************************************** -->
-     <Opened>
-      <Name>Открытые запросы</Name>
-      <Where>`StatusID` != 'Closed'</Where>
-     </Opened>
-     <!-- ****************************************************************** -->
-     <Urgent>
-      <Name>Актуальные запросы</Name>
-      <Where>UNIX_TIMESTAMP() - `UpdateDate` &lt;= 604800</Where>
-     </Urgent>
-     <!-- ****************************************************************** -->
-     <Archive>
-      <Name>Архивные запросы</Name>
-      <Where>UNIX_TIMESTAMP() - `UpdateDate` &gt; 604800</Where>
-     </Archive>
-    </Patterns>
-    <ActiveID>Default</ActiveID>
-   </Args>
-  </PatternOut>
- </Before>
- <!-- ********************************************************************** -->
- <After>
-  <UniqID>
-   <Comp>Tickets/Close</Comp>
-   <Args type="array" />
-  </UniqID>
- </After>
-</Comps>
-<!-- *********************************************************************** -->
-<Columns>
- <Info>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/TicketInfo</ListElement>
-   <ListElement>
-    <TicketID>%ID%</TicketID>
-   </ListElement>
-   <ListElement>Дополнительная информация</ListElement>
-  </Args>
-  <Attribs>
-   <class>TableSuperStandard</class>
-  </Attribs>
- </Info>
- <!-- ********************************************************************** -->
- <Read>
-  <IsSorted>0</IsSorted>
-  <Comp>Buttons/Window</Comp>
-  <Args>
-   <ListElement>/TicketRead</ListElement>
-   <ListElement>
-    <TicketID>%ID%</TicketID>
-   </ListElement>
-   <ListElement>Просмотреть запрос</ListElement>
-   <ListElement>TicketRead.gif</ListElement>
-  </Args>
-  <LongName>Просмотреть</LongName>
- </Read>
-</Columns>
-<!-- *********************************************************************** -->
-<Sequence>
- <ListElement>SelectID</ListElement>
- <ListElement>Info</ListElement>
- <ListElement>Read</ListElement>
- <ListElement>Priority</ListElement>
- <ListElement>Number</ListElement>
- <ListElement>Theme</ListElement>
- <ListElement>Messages</ListElement>
- <ListElement>Status</ListElement>
- <ListElement>UpdateDate</ListElement>
-</Sequence>
-<!-- *********************************************************************** -->
+	<!-- *********************************************************************** -->
+	<RootID>Tickets</RootID>
+	<Cut>
+		<Comps>
+			<After>
+				<Delete/>
+				<StatusSet/>
+			</After>
+			<Before>
+				<TicketsFilter/>
+			</Before>
+		</Comps>
+		<Sequence/>
+	</Cut>
+	<!-- *********************************************************************** -->
+	<Source>
+		<Conditions>
+			<Where>
+				<UniqID>`UserID` = @local.__USER_ID</UniqID>
+			</Where>
+			<Message>У Вас нет запросов в центр поддержки.</Message>
+		</Conditions>
+	</Source>
+	<!-- *********************************************************************** -->
+	<Comps>
+		<Before>
+			<PatternOut>
+				<Args>
+					<Patterns>
+						<!-- ****************************************************************** -->
+						<Opened>
+							<Name>Открытые запросы</Name>
+							<Where>`StatusID` != 'Closed'</Where>
+						</Opened>
+						<!-- ****************************************************************** -->
+						<Urgent>
+							<Name>Актуальные запросы</Name>
+							<Where>UNIX_TIMESTAMP() - `UpdateDate` &lt;= 604800</Where>
+						</Urgent>
+						<!-- ****************************************************************** -->
+						<Archive>
+							<Name>Архивные запросы</Name>
+							<Where>UNIX_TIMESTAMP() - `UpdateDate` &gt; 604800</Where>
+						</Archive>
+					</Patterns>
+					<ActiveID>Default</ActiveID>
+				</Args>
+			</PatternOut>
+		</Before>
+		<!-- ********************************************************************** -->
+		<After>
+			<UniqID>
+				<Comp>Tickets/Close</Comp>
+				<Args type="array"/>
+			</UniqID>
+		</After>
+	</Comps>
+	<!-- *********************************************************************** -->
+	<Columns>
+		<Info>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/TicketInfo</ListElement>
+				<ListElement>
+					<TicketID>%ID%</TicketID>
+				</ListElement>
+				<ListElement>Дополнительная информация</ListElement>
+			</Args>
+			<Attribs>
+				<class>TableSuperStandard</class>
+			</Attribs>
+			<IsNoMobile>1</IsNoMobile>
+		</Info>
+		<!-- ********************************************************************** -->
+		<Read>
+			<IsSorted>0</IsSorted>
+			<Comp>Buttons/Window</Comp>
+			<Args>
+				<ListElement>/TicketRead</ListElement>
+				<ListElement>
+					<TicketID>%ID%</TicketID>
+				</ListElement>
+				<ListElement>Просмотреть запрос</ListElement>
+				<ListElement>TicketRead.gif</ListElement>
+			</Args>
+			<LongName>Просмотреть</LongName>
+			<IsNoMobile>1</IsNoMobile>
+		</Read>
+		<!-- ********************************************************************** -->
+		<Number>
+			<IsNoMobile>1</IsNoMobile>
+		</Number>
+	</Columns>
+	<!-- *********************************************************************** -->
+	<Sequence>
+		<ListElement>SelectID</ListElement>
+		<ListElement>Info</ListElement>
+		<ListElement>Read</ListElement>
+		<ListElement>Priority</ListElement>
+		<ListElement>Number</ListElement>
+		<ListElement>Theme</ListElement>
+		<ListElement>Messages</ListElement>
+		<ListElement>Status</ListElement>
+		<ListElement>UpdateDate</ListElement>
+	</Sequence>
+	<!-- *********************************************************************** -->
 </XML>

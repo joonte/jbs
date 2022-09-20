@@ -123,6 +123,11 @@ table {
 /* скрываем ссылку входа в верхней панели - поля ввода скрыты, нажатие кнопки бессмысленно */
 #TopPanelLogonButton	{ display: none; }
 
+/* скрываем ненужные в мобильной версии строки таблиц */
+td[data-isnomobile='1']{
+	display: none;
+}
+
 div.PostProfile {
 	display:	none;
 	width:		auto;
@@ -147,7 +152,7 @@ div.EdeskMessageContent {
 }
 
 div.EdeskMessageInfo {
-	width:		auto;
+	width:		100vw;	/* Viewport Width 80% */
 	padding:	0;
 }
 
@@ -156,6 +161,10 @@ div.EdeskMessage {
 	margin:         1px 1px 1px 1px;
 }
 
+/* код */
+div.CodeBox{
+	max-width:	100vw;   /* Viewport Width, % */
+}
 
 /* прячем главное меню сайта на малых разрешениях 
  * и боковое меню тоже убираем
