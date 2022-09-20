@@ -464,6 +464,7 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 			'limit_mysql_maxuserconn'	=> ($HostingScheme['mysqluserconnectlimit'])?$HostingScheme['mysqluserconnectlimit']:'',# Одновременных соединений к MySQL
 //			'limit_php_cgi_enable'		=> ($HostingScheme['IsPHPCGIAccess']?'on':'off'),
 //			'limit_php_cgi_version'		=> 'isp-php56',
+			'limit_nodejs'			=> 'on',
 
 			);
 	#-------------------------------------------------------------------------------
@@ -767,6 +768,7 @@ function IspManager5_Scheme_Change($Settings,$Login,$HostingScheme){
 			'limit_mysql_update'		=> ($HostingScheme['mysqlupdateslimit'])?$HostingScheme['mysqlupdateslimit']:'',	# Обновлений MySQL
 			'limit_mysql_maxconn'		=> ($HostingScheme['mysqlconnectlimit'])?$HostingScheme['mysqlconnectlimit']:'',	# Соединений к MySQL
 			'limit_mysql_maxuserconn'	=> ($HostingScheme['mysqluserconnectlimit'])?$HostingScheme['mysqluserconnectlimit']:'',# Одновременных соединений к MySQL
+			'limit_nodejs'			=> 'on',
 
 
 			);
