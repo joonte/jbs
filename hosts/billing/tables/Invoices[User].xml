@@ -55,6 +55,7 @@
 				</ListElement>
 				<ListElement>Дополнительная информация</ListElement>
 			</Args>
+			<IsNoMobile>1</IsNoMobile>
 		</Info>
 		<!-- ********************************************************************** -->
 		<Edit>
@@ -68,6 +69,7 @@
 				<ListElement>Изменить счёт</ListElement>
 				<ListElement>Edit.gif</ListElement>
 			</Args>
+			<IsNoMobile>1</IsNoMobile>
 		</Edit>
 		<!-- ********************************************************************** -->
 		<InvoiceDownloadPDF>
@@ -80,6 +82,7 @@
 				<ListElement>Загрузить счёт в PDF</ListElement>
 				<ListElement>PDF.gif</ListElement>
 			</Args>
+			<IsNoMobile>1</IsNoMobile>
 		</InvoiceDownloadPDF>
 		<!-- ********************************************************************** -->
 		<InvoiceDownloadTIFF>
@@ -92,6 +95,7 @@
 				<ListElement>Загрузить счёт в TIFF</ListElement>
 				<ListElement>Image.gif</ListElement>
 			</Args>
+			<IsNoMobile>1</IsNoMobile>
 		</InvoiceDownloadTIFF>
 		<!-- ********************************************************************** -->
 		<InvoiceDocument>

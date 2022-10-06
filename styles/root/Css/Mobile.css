@@ -55,6 +55,7 @@ tr.TableSuperStandardMobile {
 		-webkit-box-align:	start;
 		-ms-flex-align:		start;
 		align-items:		flex-start;
+		border:			1px solid;
 	}
 	td.TableSuperStandard {
 		width:			calc(100% - 25px);
@@ -125,6 +126,9 @@ table {
 
 /* скрываем ненужные в мобильной версии строки таблиц */
 td[data-isnomobile='1']{
+	display: none;
+}
+tr[data-isnomobile='1']{
 	display: none;
 }
 

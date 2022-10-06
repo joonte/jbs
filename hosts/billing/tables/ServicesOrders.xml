@@ -183,7 +183,13 @@
 			<Args>
 				<ModeID>Orders</ModeID>
 			</Args>
+			<IsNoMobile>1</IsNoMobile>
 		</Status>
+		<!-- ********************************************************************** -->
+		<StatusOver>
+			<IsNoMobile>1</IsNoMobile>
+		</StatusOver>
+		<!-- ********************************************************************** -->
 	</Columns>
 	<Sequence>
 		<ListElement>SelectID</ListElement>

@@ -122,6 +122,7 @@
 			<Args>
 				<TableID>Invoices</TableID>
 			</Args>
+			<IsNoMobile>1</IsNoMobile>
 		</SelectID>
 		<!-- ********************************************************************** -->
 		<ExtendedMenu>
@@ -131,6 +132,7 @@
 				<ListElement>Administrator/ListMenu/Invoices.xml</ListElement>
 				<Replace>%ID%</Replace>
 			</Args>
+			<IsNoMobile>1</IsNoMobile>
 		</ExtendedMenu>
 		<!-- ********************************************************************** -->
 		<Number>
@@ -148,6 +150,7 @@
 			<Args>
 				<ListElement>%CreateDate%</ListElement>
 			</Args>
+			<IsNoMobile>1</IsNoMobile>
 		</CreateDate>
 		<!-- ********************************************************************** -->
 		<PaymentSystem>
@@ -176,7 +179,12 @@
 			<Args>
 				<ModeID>Invoices</ModeID>
 			</Args>
+			<IsNoMobile>1</IsNoMobile>
 		</Status>
+		<!-- ********************************************************************** -->
+		<StatusOver>
+			<IsNoMobile>1</IsNoMobile>
+		</StatusOver>
 	</Columns>
 	<!-- *********************************************************************** -->
 	<Sequence>
