@@ -2411,7 +2411,7 @@ set @Text = '<NOBODY>
    </TD>
   </TR>
  </TABLE>
- <P>Плательщик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%<BR />Заказчик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%</P>
+ <P>Плательщик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn%<BR />Заказчик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn%</P>
  <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <P>
