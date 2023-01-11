@@ -137,10 +137,10 @@ function IPMI_SelList($Scheme){
 						$Array[] = SPrintF('%-22s : %s',Trim($Line[0]),Trim($Line[1]));
 					#-------------------------------------------------------------------------------
 					// некоторые собыия пропускаем
-					if(Trim($Line[0]) == 'Description' || Trim($Line[0]) == 'Sensor Type'){
+					if(Trim($Line[0]) == 'Description' || Trim($Line[0]) == 'Sensor Type' || Trim($Line[0]) == 'Event Direction'){
 						#-------------------------------------------------------------------------------
 						// открытый корпус
-						if(Preg_Match('/General.Chassis.intrusion/i',$Line[1]))
+						if(Preg_Match('/General.Chassis.intrusion/i',$Line[1]) || Preg_Match('/Assertion.Event/i',$Line[1]))
 							continue 2;
 						#-------------------------------------------------------------------------------
 						// неверный пароль на вход в веб-интерфейс

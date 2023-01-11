@@ -4,7 +4,7 @@
  *}
 {assign var=Theme value="Обнаружены проблемы в IPMI сервера {$DSServer.Name|default:'$DSServer.Name'}" scope=global}
 
-Уведомляем Вас о том, что в журнале IPMI Вашего выделенного сервера {$DSServer.Name|default:'$DSServer.Name'} были обнаружены следующие события:
+Уведомляем Вас о том, что в журнале IPMI выделенного сервера {$DSServer.Name|default:'$DSServer.Name'} были обнаружены следующие события:
 {$Message|default:'$Message'}
 
 
