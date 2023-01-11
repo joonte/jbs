@@ -300,7 +300,7 @@ if(Is_Error($Comp))
 $Table[] = $Comp;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/TextArea',Array('id'=>'HTML','name'=>'HTML','style'=>'width:100%; display: none;','rows'=>10,'prompt'=>SPrintF('Тело сообщения, в формате HTML. Обратите внимание, что заголовок boundary="----==--%s" уже есть, закрывающий тег - тоже',HOST_ID)));
+$Comp = Comp_Load('Form/TextArea',Array('id'=>'HTML','name'=>'HTML','style'=>'width:100%; display: none;','rows'=>10,'prompt'=>SPrintF('Тело сообщения, в формате HTML. Обратите внимание, что заголовок boundary="_%s_" уже есть, закрывающий тег - тоже',HOST_ID)));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

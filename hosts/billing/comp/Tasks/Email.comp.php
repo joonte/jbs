@@ -120,7 +120,7 @@ if(Is_Array($Attribs['From'])){
 #-------------------------------------------------------------------------------
 $Array[] = 'MIME-Version: 1.0';
 $Array[] = 'Content-Transfer-Encoding: 8bit';
-$Array[] = SPrintF('Content-Type: multipart/related; boundary="----==--%s"',HOST_ID);
+$Array[] = SPrintF('Content-Type: multipart/related; boundary="_%s_"',HOST_ID);
 $Array[] = 'X-Priority: 3';
 $Array[] = 'X-MSMail-Priority: Normal';
 $Array[] = 'X-Mailer: JBS';
@@ -137,7 +137,7 @@ if(IsSet($Attribs['MessageID']) && $Attribs['MessageID'])
 $Heads = Implode("\n",$Array);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Boundary = "\r\n\r\n------==--" . HOST_ID;
+$Boundary = SPrintF("\r\n\r\n--_%s_",HOST_ID);
 #-------------------------------------------------------------------------------
 if(IsSet($Attribs['HTML']) && $Attribs['HTML']){
 	#-------------------------------------------------------------------------------

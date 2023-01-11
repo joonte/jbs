@@ -1,20 +1,20 @@
 This is a multi-part message in MIME format.
-------==--%HOST_ID%
+--_%HOST_ID%_
 Content-Type: multipart/alternative;
-	boundary="----==--%HOST_ID%--text"
+	boundary="_%HOST_ID%_--text"
 
 
-------==--%HOST_ID%--text
+--_%HOST_ID%_--text
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=UTF-8; format=flowed
 
 %PLAIN_TEXT%
 
-------==--%HOST_ID%--text
+--_%HOST_ID%_--text
 Content-Type: text/html; charset=UTF-8
 Content-Transfer-Encoding: base64
 
 %HTML_TEXT%
 
-------==--%HOST_ID%--text--
+--_%HOST_ID%_--text--
 
