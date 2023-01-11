@@ -66,7 +66,7 @@ function GetStatement($Settings){
 	if(Is_Array(@$Answer['account']['sendTransactionsToWARequest']['paymentDocumentList']) && SizeOf(@$Answer['account']['sendTransactionsToWARequest']['paymentDocumentList']))
 		$Payments = $Answer['account']['sendTransactionsToWARequest']['paymentDocumentList'];
 	#-------------------------------------------------------------------------------
-	if(Is_Array($Answer['account']['getStatementSyncResponse']['paymentDocumentList']) && SizeOf($Answer['account']['getStatementSyncResponse']['paymentDocumentList']))
+	if(Is_Array(@$Answer['account']['getStatementSyncResponse']['paymentDocumentList']) && SizeOf($Answer['account']['getStatementSyncResponse']['paymentDocumentList']))
 		$Payments = $Answer['account']['getStatementSyncResponse']['paymentDocumentList'];
 	#-------------------------------------------------------------------------------
 	if(!IsSet($Payments) || !SizeOf($Payments)){
