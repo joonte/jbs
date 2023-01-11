@@ -55,7 +55,7 @@ while($DaysRemainded){
 			SPrintF('`UserID` = %u',$UserID),
 			/* задан сервис + (задан/не задан тариф) + не задана группа || не задан сервис + не задан тариф + задана группа */
 			SPrintF('(`ServiceID` = %u AND (`SchemeID` = %u OR ISNULL(`SchemeID`)) AND NOT EXISTS(SELECT * FROM `SchemesGroupsItems` WHERE `Bonuses`.`SchemesGroupID` = `SchemesGroupID` AND `ServiceID` = %u AND `SchemeID` = %u)) OR (ISNULL(`ServiceID`) AND ISNULL(`SchemeID`) AND EXISTS(SELECT * FROM `SchemesGroupsItems` WHERE `Bonuses`.`SchemesGroupID` = `SchemesGroupID` AND `ServiceID` = %u AND `SchemeID` = %u)) OR (ISNULL(`ServiceID`) AND ISNULL(`SchemeID`) AND EXISTS(SELECT * FROM `SchemesGroupsItems` WHERE `Bonuses`.`SchemesGroupID` = `SchemesGroupID` AND `ServiceID` = %u AND ISNULL(`SchemeID`)))',$ServiceID,$SchemeID,$ServiceID,$SchemeID,$ServiceID,$SchemeID,$ServiceID),
-			'`DaysRemainded` > 0',
+			'`DaysRemainded` > 0','`ExpirationDate` > UNIX_TIMESTAMP()'
 			);
 	#-------------------------------------------------------------------------------
 	# если цена за период = 0 или установлена персональная скидка, то добавляем нереальное условие
