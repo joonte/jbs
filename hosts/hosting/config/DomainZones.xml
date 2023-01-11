@@ -1085,4 +1085,16 @@
 		<Registrar>Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</app>
+	<dev>
+		<Server>whois.nic.google</Server>
+		<Name>dev</Name>
+		<Available>Domain\snot\sfound.</Available>
+		<NotAvailable>Domain\scan\snot\sbe\sregistered.</NotAvailable>
+		<MinChars>3</MinChars>
+		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([a-zA-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Registrar:\s+([\w\-]{2,})</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</dev>
 </XML>
