@@ -137,7 +137,7 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # кладём деньгу на другой договор
-$Comment = SPrintF('Перевод с договор #%s, запрошено с IP адреса %s',$NumberFrom,$GLOBALS['_SERVER']['REMOTE_ADDR']);
+$Comment = SPrintF('Перевод с договора #%s, запрошено с IP адреса %s',$NumberFrom,$GLOBALS['_SERVER']['REMOTE_ADDR']);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$ToContract['ID'],'ServiceID'=>'1000','Comment'=>$Comment,'Summ'=>$Summ));
 if(Is_Error($Comp))
