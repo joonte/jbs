@@ -121,6 +121,9 @@ if($StepID){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
+	//Debug(SPrintF('[comp/www/VPSOrder]: Array = %s',print_r($Array,true)));
+	//Debug(SPrintF('[comp/www/VPSOrder]: ASort Array = %s',print_r(ASort($Array),true)));
+	ASort($Array);
 	$Comp = Comp_Load('Form/Select',Array('name'=>'DiskTemplate','style'=>'width: 100%;'),$Array,$DiskTemplate);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);

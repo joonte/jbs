@@ -118,7 +118,7 @@ if(!$NewScheme['IsSchemeChangeable'])
 #-------------------------------------------------------------------------------
 if($OldScheme['disklimit'] > $NewScheme['disklimit']){
 	#-------------------------------------------------------------------------------
-	if($VPSOrder['Params']['SystemID'] == 'VmManager5_KVM')
+	if(In_Array($VPSOrder['Params']['SystemID'],Array('VmManager5_KVM','VmManager6_Hosting')))
 		return new gException('CANNOT_RESIZE_DISK','Система виртуализации KVM не предусматривает уменьшения размера диска. Изменить тариф в меньшую сторону невозможно.');
 	#-------------------------------------------------------------------------------
 	if(!$__USER['IsAdmin'])

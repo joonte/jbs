@@ -52,7 +52,7 @@ function OrderManage($ServiceOrderID,$OrderID,$ServiceID,$ServerID){
 				//------------------------------------------------------------------------------
 			//}
 			//------------------------------------------------------------------------------
-			$HTML = '<HTML><HEAD><LINK href="/styles/root/Css/Standard.css" rel="stylesheet" type="text/css" /><TITLE>Управление заказом</TITLE></HEAD>';
+			$HTML = '<HTML><HEAD><LINK href="/styles/root/Css/Standard.css" rel="stylesheet" type="text/css" /><SCRIPT type="text/javascript" src="/styles/root/Js/Standard.js"></SCRIPT><TITLE>Управление заказом</TITLE></HEAD>';
 			//------------------------------------------------------------------------------
 			$HTML += '<BODY><P style="font-size:12px;">Осуществляется вход. Пожалуйста, подождите...</P>';
 			//------------------------------------------------------------------------------
@@ -75,6 +75,7 @@ function OrderManage($ServiceOrderID,$OrderID,$ServiceID,$ServerID){
 			$HTML += '</FORM>';
 			$HTML += '<SCRIPT>document.getElementById("OrderManage").submit();</SCRIPT></BODY></HTML>';
 			//------------------------------------------------------------------------------
+			//alert($HTML);
 			$Window.document.write($HTML);
 			//------------------------------------------------------------------------------
 			$Window.focus();

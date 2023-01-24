@@ -76,19 +76,20 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // достаём информацию о виртуалке
-$VMsInfo = $VPSServer->GetVm();
+$VmInfo = $VPSServer->GetVm($VPSOrder['Login']);
 #-------------------------------------------------------------------------------
-switch(ValueOf($VMsInfo)){
+switch(ValueOf($VmInfo)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return $VMsInfo;
+	return $VmInfo;
 case 'array':
 	#-------------------------------------------------------------------------------
+	$VmInfo = $VmInfo[Key($VmInfo)];
 	// достаём информацию о конкретной машине - т.к. в $VmInfo сейчас инфа о всех машинах
-	foreach($VMsInfo as $VmInfo)
-		if($VmInfo['name'] == $VPSOrder['Login'])
-			break;
+//	foreach($VMsInfo as $VmInfo)
+//		if($VmInfo['name'] == $VPSOrder['Login'])
+//			break;
 	#-------------------------------------------------------------------------------
 	break;
 	#-------------------------------------------------------------------------------
@@ -129,7 +130,7 @@ case 'exception':
 	return $NodeList;
 case 'array':
 	#-------------------------------------------------------------------------------
-	#Debug(SPrintF('NodeList = %s',print_r($NodeList,true)));
+	Debug(SPrintF('N[comp/Tasks/VPSSchemeChange]: NodeList = %s',print_r($NodeList,true)));
 	$Nodes = Array();
 	#-------------------------------------------------------------------------------
 	// status=1 - запрещено созданеи вируталок, 0 - разрешено
@@ -141,6 +142,7 @@ case 'array':
 				$Nodes[] = $Node['name'];
 	#-------------------------------------------------------------------------------
 	break;
+	#-------------------------------------------------------------------------------
 default:
 	return ERROR | @Trigger_Error(101);
 }
@@ -156,9 +158,10 @@ if(!$VPSScheme['Node'])
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // проверяем, входит ли текущий узел размещения в узлы нового тариф
-if(!In_Array($VmInfo['hostnode'],Explode(',',$VPSNewScheme['Node']))){
+Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: VmInfo = %s',print_r($VmInfo,true)));
+if(!In_Array($VmInfo['node']['name'],Explode(',',$VPSNewScheme['Node']))){
 	#-------------------------------------------------------------------------------
-	#Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: VmInfo[hostnode] = %s',$VmInfo['hostnode']));
+	#Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: VmInfo[node]['name'] = %s',$VmInfo['node']['name']));
 	#Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: $VPSNewScheme[Node] = %s',$VPSNewScheme['Node']));
 	#-------------------------------------------------------------------------------
 	// несовпадаение узлов, выбираем первый узел из массива $Nodes (он с наименьшей загрузкой) совпадающий с узлами куда можно мигрировать
@@ -174,7 +177,7 @@ if(!In_Array($VmInfo['hostnode'],Explode(',',$VPSNewScheme['Node']))){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: необходима миграция между нодами %s->%s',$VmInfo['hostnode'],$Node['name']));
+	Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: необходима миграция между нодами %s->%s',$VmInfo['node']['name'],$Node['name']));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
@@ -195,7 +198,7 @@ if(IsSet($Migrate)){
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: запущена миграция между нодами %s->%s',$VmInfo['hostnode'],$Node['name']));
+	Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: запущена миграция между нодами %s->%s',$VmInfo['node']['name'],$Node['name']));
 	#-------------------------------------------------------------------------------
 	// создаём событие
 	$Event = Array(
@@ -207,7 +210,7 @@ if(IsSet($Migrate)){
 	if(!$Event)
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'] = Array(($VPSServer->Settings['Address'])=>Array($VmInfo['hostnode'],$Node['name']));
+	$GLOBALS['TaskReturnInfo'] = Array(($VPSServer->Settings['Address'])=>Array($VmInfo['node']['name'],$Node['name']));
 	#-------------------------------------------------------------------------------
 	return 100;
 	#-------------------------------------------------------------------------------
