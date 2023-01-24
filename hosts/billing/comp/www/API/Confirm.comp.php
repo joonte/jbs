@@ -176,7 +176,7 @@ if(!$Confirm && !$Code){
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		// Выводим юзеру инструкцию
-		return new gException('SHOW_TELEGRAMM_INSTRUCTIONS',SPrintF($Server['Params']['ConfirmInstructions'],SPrintF('%s-%s',$C1,$C2),$Server['Params']['BotName']));
+		return new gException('SHOW_TELEGRAMM_INSTRUCTIONS',SPrintF($Server['Params']['ConfirmInstructions'],SPrintF('%s-%s',$C1,$C2),$Server['Params']['BotName'],$Server['Params']['BotName']));
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
