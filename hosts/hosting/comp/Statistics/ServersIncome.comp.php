@@ -174,7 +174,7 @@ foreach($ServersGroups as $ServersGroup){
 				}
 				#-------------------------------------------------------------------------------
 				// если платных аккаунтов нет - пропускаем
-				#Debug(SPrintF('[comp/Statistics/ServersIncome]: ServerIncome = %s; PaidAccounts = %s',$ServerIncome,$PaidAccounts));
+				Debug(SPrintF('[comp/Statistics/ServersIncome]: ServerIncome = %s; PaidAccounts = %s',$ServerIncome,$PaidAccounts));
 				if($PaidAccounts == 0)
 					continue 2;
 				#-------------------------------------------------------------------------------
@@ -257,6 +257,12 @@ foreach($ServersGroups as $ServersGroup){
 	#-------------------------------------------------------------------------------
 	$Table[] = Array(new Tag('TD',Array('colspan'=>5,'class'=>'Standard','style'=>'color:white;'),'конец группы серверов'));
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	//Debug("[comp/Statistics/ServersIncome]: before Graphs");
+	// сознательно задаём незаданную переменную NumAccounts - если на сервер нет платных аккаунтов.
+	// либо переписывать код выше, либо будет деление на ноль... проще не учитывать
+	if(!IsSet($NumAccounts))
+		$NumAccounts = 0;
 	#-------------------------------------------------------------------------------
 	$Graphs[$ServersGroup['ID']] = Array('Name'=>$ServersGroup['Name'],'Balance'=>$Balance,'NumPaid'=>$NumPaid,'Accounts'=>$Accounts,'Params'=>$Params,'Labels'=>$Labels,'NumAccounts'=>$NumAccounts,'SrvAccounts'=>$SrvAccounts);
 	#----------------------------------------------------------------------------
