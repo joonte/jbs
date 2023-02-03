@@ -26,6 +26,27 @@ function VmManager6_Hosting_Logon($Settings,$Params){
 			'email'		=> SPrintF('%s@%s',$Params['Login'],$Settings['Params']['Domain']),
 			'password'	=> $Params['Password']
 			);
+
+/*
+	$Users = VmManager6_Hosting_Get_Users($Settings);
+	//Debug(print_r($Users,true));
+	$SettingsOrig = $Settings;
+	foreach($Users as $Login){
+		if($Login != 'admin'){
+			#-------------------------------------------------------------------------------
+			$Settings = $SettingsOrig;
+			$User = VmManager6_Hosting_Get_Users($Settings,$Login);
+			Debug(SPrintF('[DELETE USER]: %s',$User['email']));
+			# грохаем самого юзера
+			$Settings['function']   = 'user';
+			$Settings['AddOn']      = $User['id'];
+			$Settings['Method']     = 'DELETE';
+			#-------------------------------------------------------------------------------
+			$Doc = VmManager6_Hosting_Request($Settings);
+			//sleep(1);
+		}
+	}
+
 /*	$i = 0;
 	while ($i <= 256){
 		$ip = SPrintF('91.227.19.%s',$i);
@@ -87,7 +108,7 @@ function VmManager6_Hosting_Get_Domains($Settings){
 	// достаём список виртуалок
 	$Settings['function']	= 'host';
 	#-------------------------------------------------------------------------------
-	$Doc = VmManager6_Hosting_Request($Settings,$Request = Array());
+	$Doc = VmManager6_Hosting_Request($Settings);
 	#-------------------------------------------------------------------------------
 	if(IsSet($Doc['error']))
 		return new gException('VmManager6_Hosting_Get_Domains','Не удалось получить список VM');
@@ -175,7 +196,7 @@ function VmManager6_Hosting_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 	# достаём список шаблонов VM, нам нужен числовой идентфиикатор указанного шаблона
 	$Settings['function']	= 'preset';
 	#-------------------------------------------------------------------------------
-	$Doc = VmManager6_Hosting_Request($Settings,$Request = Array());
+	$Doc = VmManager6_Hosting_Request($Settings);
 	#-------------------------------------------------------------------------------
 	foreach($Doc['list'] as $Preset){
 		#------------------------------------------------------------------------------
@@ -401,7 +422,7 @@ function VmManager6_Hosting_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 	#-------------------------------------------------------------------------------
 	$Settings['AddOn']	= SPrintF('%s/iface',$VmID);
 	#-------------------------------------------------------------------------------
-	$Doc = VmManager6_Hosting_Request($Settings,Array());
+	$Doc = VmManager6_Hosting_Request($Settings);
 	#-------------------------------------------------------------------------------
         if(!IsSet($Doc['list'][0]['ip'][0]))
 		return new gException('VM_IP_MISSING','Отсутствует IP созданной виртуальной машины');
@@ -434,7 +455,7 @@ function VmManager6_Hosting_Active($Settings,$Login){
 		$Settings['AddOn']	= SPrintF('%s/start',$VM['id']);
 		$Settings['Method']	= 'POST';
 		#-------------------------------------------------------------------------------
-		$Doc = VmManager6_Hosting_Request($Settings,Array());
+		$Doc = VmManager6_Hosting_Request($Settings);
 		#-------------------------------------------------------------------------------
 		if(!IsSet($Doc['id']))
 			return new gException('VM_START_ERROR','Не удалось включить виртуальный сервер');
@@ -452,7 +473,7 @@ function VmManager6_Hosting_Active($Settings,$Login){
 	$Settings['AddOn']	= SPrintF('%s/resume',$User['id']);
 	$Settings['Method']	= 'POST';
 	#-------------------------------------------------------------------------------
-	$Doc = VmManager6_Hosting_Request($Settings,Array());
+	$Doc = VmManager6_Hosting_Request($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return TRUE;
@@ -480,7 +501,7 @@ function VmManager6_Hosting_Suspend($Settings,$Login,$VPSScheme){
 		$Settings['AddOn']	= SPrintF('%s/stop',$VM['id']);
 		$Settings['Method']	= 'POST';
 		#-------------------------------------------------------------------------------
-		$Doc = VmManager6_Hosting_Request($Settings,Array());
+		$Doc = VmManager6_Hosting_Request($Settings);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -494,7 +515,7 @@ function VmManager6_Hosting_Suspend($Settings,$Login,$VPSScheme){
 	$Settings['AddOn']	= SPrintF('%s/suspend',$User['id']);
 	$Settings['Method']	= 'POST';
 	#-------------------------------------------------------------------------------
-	$Doc = VmManager6_Hosting_Request($Settings,Array());
+	$Doc = VmManager6_Hosting_Request($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return TRUE;
@@ -537,7 +558,7 @@ function VmManager6_Hosting_Delete($Settings,$Login){
 		$Settings['AddOn']	= $VM['id'];
 		$Settings['Method']	= 'DELETE';
 		#-------------------------------------------------------------------------------
-		$Doc = VmManager6_Hosting_Request($Settings,Array());
+		$Doc = VmManager6_Hosting_Request($Settings);
 		#-------------------------------------------------------------------------------
 		// реально диск удалить не успевает и последующее удаление юзера падает в ошибку
 		Sleep(10);
@@ -550,7 +571,7 @@ function VmManager6_Hosting_Delete($Settings,$Login){
 	$Settings['AddOn']	= $VmUserID;
 	$Settings['Method']	= 'DELETE';
 	#-------------------------------------------------------------------------------
-	$Doc = VmManager6_Hosting_Request($Settings,Array());
+	$Doc = VmManager6_Hosting_Request($Settings);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return TRUE;
@@ -721,21 +742,32 @@ function VmManager6_Hosting_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType)
 		#-------------------------------------------------------------------------------
 		$Doc = VmManager6_Hosting_Request($Settings,Array('ipv4_number'=>1));
 		#-------------------------------------------------------------------------------
-		// ждём и проверяем задачу
+		// ждём и проверяем
 		sleep(10);
 		#-------------------------------------------------------------------------------
-		$Settings['function']	= 'task';
-		$Settings['AddOn']	= $Doc['id'][0];	// это массив, но вданном случае одно задание
+		// проверяем кривенько, через историю
+		$Settings['function']	= 'host';
+		$Settings['AddOn']	= SPrintF('%s/history',$VM['id']);
 		#-------------------------------------------------------------------------------
-		$Doc = VmManager6_Hosting_Request($Settings,Array());
+		$Doc = VmManager6_Hosting_Request($Settings);
+		#-------------------------------------------------------------------------------
+		foreach($Doc['list'] as $History)
+			if(IsSet($History['name']) && $History['name'] == 'ip_allocate')
+				$NewIP = $History;
+		#-------------------------------------------------------------------------------
+		if(!IsSet($NewIP))
+			return new gException('VmManager6_Hosting_AddIP','Ошибка добавления IP адреса, нет записи в истории');
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[VmManager6_Hosting_AddIP]: to VPS added IP = %s',$Doc['task']['message_params']['ip_addr']));
+		if(!IsSet($NewIP['params']['ip'][0]))
+			return new gException('VmManager6_Hosting_AddIP','Ошибка добавления IP адреса, адрес не найден');
+		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[VmManager6_Hosting_AddIP]: to VPS added IP = %s',$NewIP['params']['ip'][0]));
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	return Array('ID'=>$ID,'IP'=>$Doc['task']['message_params']['ip_addr']);
+	return Array('ID'=>$ID,'IP'=>$NewIP['params']['ip'][0]);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 }
@@ -752,7 +784,7 @@ function VmManager6_Hosting_DeleteIP($Settings,$ExtraIP){
 	# достаём список IP адресов
 	$Settings['function']	= 'ip';
 	#-------------------------------------------------------------------------------
-	$Doc = VmManager6_Hosting_Request($Settings,Array());
+	$Doc = VmManager6_Hosting_Request($Settings);
 	#-------------------------------------------------------------------------------
 	foreach($Doc['list'] as $IP){
 		#-------------------------------------------------------------------------------
@@ -769,7 +801,7 @@ function VmManager6_Hosting_DeleteIP($Settings,$ExtraIP){
 			$Settings['AddOn']	= $IP['id'];
 			$Settings['Method']	= 'DELETE';
 			#-------------------------------------------------------------------------------
-			$Doc = VmManager6_Hosting_Request($Settings,Array());
+			$Doc = VmManager6_Hosting_Request($Settings);
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[system/libs/VmManager6_Hosting]: IP адрес (%s) удалён с виртуальной машины (%s)',$ExtraIP,$IP['host']['name']));
 			#-------------------------------------------------------------------------------
@@ -893,7 +925,7 @@ function VmManager6_Hosting_Reboot($Settings,$Login){
 		$Settings['AddOn']	= SPrintF('%s/restart',$VM['id']);
 		$Settings['Method']	= 'POST';
 		#-------------------------------------------------------------------------------
-		$Doc = VmManager6_Hosting_Request($Settings,Array());
+		$Doc = VmManager6_Hosting_Request($Settings);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -976,7 +1008,7 @@ function VmManager6_Hosting_Get_DiskTemplates($Settings,$Template = FALSE){
 	/****************************************************************************/
 	$Settings['function']	= 'os';
 	#-------------------------------------------------------------------------------
-	$Doc = VmManager6_Hosting_Request($Settings,Array());
+	$Doc = VmManager6_Hosting_Request($Settings);
 	#-----------------------------------------------------------------------------
 	$Templates = $Doc['list'];
 	#-----------------------------------------------------------------------------
@@ -1033,7 +1065,7 @@ function VmManager6_Hosting_Get_NodeList($Settings){
 	// массив параметров
 	$Settings['function']	= 'node';
 	#-------------------------------------------------------------------------------
-	$Doc = VmManager6_Hosting_Request($Settings,Array());
+	$Doc = VmManager6_Hosting_Request($Settings);
 	#-----------------------------------------------------------------------------
 	$Result = Array();
 	#-----------------------------------------------------------------------------
@@ -1104,7 +1136,7 @@ function VmManager6_Hosting_GetVm($Settings,$Login = FALSE){
 	// массив параметров
 	$Settings['function']	= 'host';
 	#-------------------------------------------------------------------------------
-	$Doc = VmManager6_Hosting_Request($Settings,$Request = Array());
+	$Doc = VmManager6_Hosting_Request($Settings);
 	#-------------------------------------------------------------------------------
 	// выхлопной массив
 	$Out = Array();
