@@ -26,6 +26,14 @@ function VmManager6_Hosting_Logon($Settings,$Params){
 			'email'		=> SPrintF('%s@%s',$Params['Login'],$Settings['Params']['Domain']),
 			'password'	=> $Params['Password']
 			);
+/*	$i = 0;
+	while ($i <= 256){
+		$ip = SPrintF('91.227.19.%s',$i);
+		Debug(SPrintF('[DELETE]: %s',$i));
+		VmManager6_Hosting_DeleteIP($Settings,$ip);
+		$i++;
+	}
+*/
 	#-------------------------------------------------------------------------------
 	$Response = HTTP_Send('/auth/v3/auth',$HTTP,Array(),Json_Encode($Auth));
 	if(Is_Error($Response))
