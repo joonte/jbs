@@ -159,7 +159,7 @@ if(!$VPSScheme['Node'])
 #-------------------------------------------------------------------------------
 // проверяем, входит ли текущий узел размещения в узлы нового тариф
 Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: VmInfo = %s',print_r($VmInfo,true)));
-if(!In_Array($VmInfo['node']['name'],Explode(',',$VPSNewScheme['Node']))){
+if(IsSet($VmInfo['node']) && !In_Array($VmInfo['node']['name'],Explode(',',$VPSNewScheme['Node']))){
 	#-------------------------------------------------------------------------------
 	#Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: VmInfo[node]['name'] = %s',$VmInfo['node']['name']));
 	#Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: $VPSNewScheme[Node] = %s',$VPSNewScheme['Node']));

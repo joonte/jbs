@@ -56,7 +56,8 @@ function OrderManage($ServiceOrderID,$OrderID,$ServiceID,$ServerID){
 			//------------------------------------------------------------------------------
 			$HTML += '<BODY><P style="font-size:12px;">Осуществляется вход. Пожалуйста, подождите...</P>';
 			//------------------------------------------------------------------------------
-			$HTML += SPrintF('<FORM id="OrderManage" method="POST" action="%s">',$Answer.Url);
+			$HTML += SPrintF('<FORM id="OrderManage" method="%s" action="%s">',($Answer.Method)?$Answer.Method:'POST',$Answer.Url);
+			//alert($Answer.Method);
 			//------------------------------------------------------------------------------
 			var $Args = $Answer.Args;
 			//------------------------------------------------------------------------------
