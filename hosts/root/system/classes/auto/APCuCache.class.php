@@ -65,7 +65,7 @@ class APCuCache implements Cache {
 
         $result = apcu_fetch($key);
 
-        if (!$result) {
+        if (!$result && !Is_Array($result)) {
             Debug(SPrintF('[APCuCache::get]: не удалось извлечь объект [key=%s]', $key));
         }
 
