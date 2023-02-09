@@ -356,15 +356,16 @@ function VmManager6_Hosting_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 			*/
 			"cpu_weight"		=> Ceil($VPSScheme['cpu']),
 			"io_weight"		=> IntVal((Ceil($VPSScheme['cpu']) > 1000)?1000:$VPSScheme['cpu']),
-			"io_read_mbitps"	=> IntVal($VPSScheme['chrate']),	// скорость чтения с диска приравниваем к скорости сети
-			"io_write_mbitps"	=> IntVal($VPSScheme['chrate']),	// скорость записи на диск приравниваем к скорости сети
-			"io_read_iops"		=> Ceil($VPSScheme['blkiotune']),	// дисковые IOPSы приравниваем к весу использования дискового ввода/вывода /* def: -1*/
-			"io_write_iops"		=> Ceil($VPSScheme['blkiotune']),	// дисковые IOPSы приравниваем к весу использования дискового ввода/вывода
-			"net_in_mbitps"		=> IntVal($VPSScheme['chrate']),
-			"net_out_mbitps"	=> IntVal($VPSScheme['chrate']),
+//			"io_read_mbitps"	=> IntVal($VPSScheme['chrate']),	// скорость чтения с диска приравниваем к скорости сети
+//			"io_write_mbitps"	=> IntVal($VPSScheme['chrate']),	// скорость записи на диск приравниваем к скорости сети
+//			"io_read_iops"		=> Ceil($VPSScheme['blkiotune']),	// дисковые IOPSы приравниваем к весу использования дискового ввода/вывода /* def: -1*/
+//			"io_write_iops"		=> Ceil($VPSScheme['blkiotune']),	// дисковые IOPSы приравниваем к весу использования дискового ввода/вывода
+			"net_in_mbitps"		=> $VPSScheme['chrate'],
+			"net_out_mbitps"	=> $VPSScheme['chrate'],
 			/*
-			"net_weight": 0,
-			"anti_spoofing": true,
+			"net_weight": 0, */
+			"anti_spoofing"		=> TRUE,
+			/*
 			"tcp_connections_in": 0,
 			"tcp_connections_out": 0,
 			"process_number": -1,
@@ -387,8 +388,8 @@ function VmManager6_Hosting_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 				"ipnet": 0
 				}
 				],
-			"spice_enabled": true
 			*/
+//			"spice_enabled"		=> TRUE,
 			);
 
 /*
@@ -628,12 +629,14 @@ function VmManager6_Hosting_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 				"cpu_mode"		=> 'host-passthrough',
 				"cpu_weight"		=> Ceil($VPSScheme['cpu']),
 				"io_weight"		=> IntVal((Ceil($VPSScheme['cpu']) > 1000)?1000:$VPSScheme['cpu']),
-				"io_read_mbitps"	=> IntVal($VPSScheme['chrate']),
-				"io_write_mbitps"	=> IntVal($VPSScheme['chrate']),
-				"io_read_iops"		=> Ceil($VPSScheme['blkiotune']), /* def: -1*/
-				"io_write_iops"		=> Ceil($VPSScheme['blkiotune']),
+//				"io_read_mbitps"	=> IntVal(($VPSScheme['chrate'] < 30)?30:$VPSScheme['chrate']),
+//				"io_write_mbitps"	=> IntVal(($VPSScheme['chrate'] < 30)?30:$VPSScheme['chrate']),
+//				"io_read_iops"		=> Ceil($VPSScheme['blkiotune']), /* def: -1*/
+//				"io_write_iops"		=> Ceil($VPSScheme['blkiotune']),
 				"net_in_mbitps"		=> IntVal($VPSScheme['chrate']),
 				"net_out_mbitps"	=> IntVal($VPSScheme['chrate']),
+				"anti_spoofing"		=> TRUE,
+				//"spice_enabled"		=> TRUE,
 				);
 		#-------------------------------------------------------------------------------
 		// /host/{host_id}/resource 
