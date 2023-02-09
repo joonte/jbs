@@ -10,11 +10,12 @@ Eval(COMP_INIT);
 $Result = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$CacheID = Md5('CheckVersion');
+$CacheID = 'CheckVersion';
 #-------------------------------------------------------------------------------
 $Out = CacheManager::get($CacheID);
 #-------------------------------------------------------------------------------
-if($Out)
+//Debug(SPrintF('[comp/Notes/Administrator/CheckVersion]: Out = %s',print_r($Out,true)));
+if($Out || Is_Array($Out))
 	return $Out;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -32,7 +33,7 @@ $currentVersion = VERSION;
 $opts = array('http'=>array('timeout'=>2,'header'=>Array(SPrintF("Referer: %s\r\n",HOST_ID))));
 $context  = stream_context_create($opts);
 $versionInfoJson = @file_get_contents("http://joonte.com/public/version",false,$context);
-#Debug(SprintF('[comp/Notes/Administrator/CheckVersion]: versionInfoJson = %s',$versionInfoJson));
+//Debug(SprintF('[comp/Notes/Administrator/CheckVersion]: versionInfoJson = %s',$versionInfoJson));
 #-------------------------------------------------------------------------------
 $versionInfo = @json_decode($versionInfoJson, true);
 #-------------------------------------------------------------------------------
@@ -52,6 +53,8 @@ if($versionInfoJson && $versionInfo){
 	}
 	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
+//Debug(SPrintF('[comp/Notes/Administrator/CheckVersion]: Result = %s',print_r($Result,true)));
 #-------------------------------------------------------------------------------
 CacheManager::add($CacheID,$Result,600);
 #-------------------------------------------------------------------------------

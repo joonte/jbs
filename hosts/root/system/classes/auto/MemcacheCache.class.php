@@ -92,7 +92,7 @@ class MemcacheCache implements Cache {
 
         $result = self::$memcache->get($key);
 
-        if (!$result) {
+        if (!$result && !Is_Array($result)) {
             Debug(SPrintF('[MemcacheCache::get]: не удалось извлечь объект [key=%s]', $key));
         }
 
