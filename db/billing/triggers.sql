@@ -244,5 +244,30 @@ CREATE DEFINER = CURRENT_USER TRIGGER `UsersIPsOnInsert` BEFORE INSERT ON `Users
 |
 DELIMITER ;
 
+#-------------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS `ContactsOnInsert`;
+DELIMITER |
+CREATE DEFINER = CURRENT_USER TRIGGER `ContactsOnInsert` BEFORE INSERT ON `Contacts`
+  FOR EACH ROW BEGIN
+    IF NEW.`ExternalID` != ''
+      THEN
+        SET NEW.`Confirmed` = UNIX_TIMESTAMP();
+    END IF;
+  END;
+|
+DELIMITER ;
+
+#-------------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS `ContactsOnUpdated`;
+DELIMITER |
+CREATE DEFINER = CURRENT_USER TRIGGER `ContactsOnUpdated` BEFORE UPDATE ON `Contacts`
+  FOR EACH ROW BEGIN
+    IF NEW.`ExternalID` != ''
+      THEN
+        SET NEW.`Confirmed` = UNIX_TIMESTAMP();
+    END IF;
+  END;
+|
+DELIMITER ;
 
 
