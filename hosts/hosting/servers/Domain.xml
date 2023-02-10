@@ -27,9 +27,6 @@
 			<PrefixAPI />
 			<PrefixNic />
 			<JurName />
-			<UseContractRegister>0</UseContractRegister>
-			<IsSupportContracts>0</IsSupportContracts>
-			<PersonID />
 		</Settings>
 	</NullRegistrator>
 	<!-- ********************************************************************* -->
@@ -42,57 +39,9 @@
 			<PrefixAPI />
 			<PrefixNic>REGTIME</PrefixNic>
 			<JurName>ООО "Регтайм"</JurName>
-			<UseContractRegister>0</UseContractRegister>
-			<IsSupportContracts>0</IsSupportContracts>
-			<PersonID />
 			<RatelimitAPI>2</RatelimitAPI>
 		</Settings>
 	</WebNames>
-	<!-- ********************************************************************* -->
-	<NauNet>
-		<Settings>
-			<Name>NauNet</Name>
-			<Address>ssbase.naunet.ru</Address>
-			<Port>443</Port>
-			<Protocol>ssl</Protocol>
-			<PrefixAPI />
-			<PrefixNic>NAUNET</PrefixNic>
-			<JurName>ООО "Наунет СП"</JurName>
-			<UseContractRegister>0</UseContractRegister>
-			<IsSupportContracts>1</IsSupportContracts>
-			<PersonID>Contact login</PersonID>
-		</Settings>
-	</NauNet>
-	<!-- ********************************************************************* -->
-	<RuCenter>
-		<Settings>
-			<Name>RuCenter</Name>
-			<Address>www.nic.ru</Address>
-			<Port>443</Port>
-			<Protocol>ssl</Protocol>
-			<PrefixAPI />
-			<PrefixNic>RU-CENTER</PrefixNic>
-			<JurName>ЗАО "Региональный Сетевой Информационный Центр"</JurName>
-			<UseContractRegister>1</UseContractRegister>
-			<IsSupportContracts>1</IsSupportContracts>
-			<PersonID>000000/NIC-D</PersonID>
-		</Settings>
-	</RuCenter>
-	<!-- ********************************************************************* -->
-	<MasterName>
-		<Settings>
-			<Name>MasterName</Name>
-			<Address>cp.mastername.ru</Address>
-			<Port>443</Port>
-			<Protocol>ssl</Protocol>
-			<PrefixAPI />
-			<PrefixNic>REGISTRATOR</PrefixNic>
-			<JurName>ООО "Регистратор Доменов"</JurName>
-			<UseContractRegister>1</UseContractRegister>
-			<IsSupportContracts>1</IsSupportContracts>
-			<PersonID />
-		</Settings>
-	</MasterName>
 	<!-- ********************************************************************* -->
 	<RegRu>
 		<Settings>
@@ -103,72 +52,11 @@
 			<PrefixAPI>/api/regru2</PrefixAPI>
 			<PrefixNic>REGRU</PrefixNic>
 			<JurName>ООО "Регистратор доменных имён РЕГ.РУ"</JurName>
-			<UseContractRegister>0</UseContractRegister>
-			<IsSupportContracts>0</IsSupportContracts>
 			<PersonID />
 			<RatelimitAPI>20</RatelimitAPI>
 		</Settings>
 	</RegRu>
 	<!-- ********************************************************************* -->
-	<LogicBoxes>
-		<Settings>
-			<Name>LogicBoxes (beta)</Name>
-			<Address>www.isp.su</Address>
-			<Port>443</Port>
-			<Protocol>ssl</Protocol>
-			<PrefixAPI />
-			<PrefixNic />
-			<JurName />
-			<UseContractRegister>1</UseContractRegister>
-			<IsSupportContracts>1</IsSupportContracts>
-			<PersonID />
-		</Settings>
-	</LogicBoxes>
-	<!-- ********************************************************************* -->
-	<Started>
-		<Settings>
-			<Name>Started (beta)</Name>
-			<Address>api.started.ru</Address>
-			<Port>443</Port>
-			<Protocol>ssl</Protocol>
-			<PrefixAPI />
-			<PrefixNic />
-			<JurName />
-			<UseContractRegister>1</UseContractRegister>
-			<IsSupportContracts>1</IsSupportContracts>
-			<PersonID />
-		</Settings>
-	</Started>
-	<!-- ********************************************************************* -->
-	<R01>
-		<Settings>
-			<Name>R01 (beta)</Name>
-			<Address>partner.r01.ru</Address>
-			<Port>1443</Port>
-			<Protocol>ssl</Protocol>
-			<PrefixAPI>partner_api.khtml</PrefixAPI>
-			<PrefixNic>R01</PrefixNic>
-			<JurName>ООО "Гарант-Парк-Телеком"</JurName>
-			<UseContractRegister>1</UseContractRegister>
-			<IsSupportContracts>1</IsSupportContracts>
-			<PersonID />
-		</Settings>
-	</R01>
-	<!-- ********************************************************************* -->
-	<InternetBS>
-		<Settings>
-			<Name>InternetBS (beta)</Name>
-			<Address>api.internet.bs</Address>
-			<Port>443</Port>
-			<Protocol>ssl</Protocol>
-			<PrefixAPI />
-			<PrefixNic />
-			<JurName />
-			<UseContractRegister>0</UseContractRegister>
-			<IsSupportContracts>0</IsSupportContracts>
-			<PersonID />
-		</Settings>
-	</InternetBS>
 </SystemID>
 <!-- ********************************************************************* -->
 <!-- ********************************************************************* -->
@@ -196,13 +84,6 @@
 			<NullRegistrator>Ручная регистрация</NullRegistrator>
 			<WebNames>WebNames</WebNames>
 			<RegRu>RegRu</RegRu>
-			<NauNet>NauNet</NauNet>
-			<RuCenter>RuCenter</RuCenter>
-			<MasterName>MasterName</MasterName>
-			<LogicBoxes>LogicBoxes (beta)</LogicBoxes>
-			<Started>Started (beta)</Started>
-			<R01>R01 (beta)</R01>
-			<InternetBS>InternetBS (beta)</InternetBS>
 		</Options>
 		<Attribs>
 			<size>1</size>
@@ -454,30 +335,6 @@
 		<IsDuty>0</IsDuty>
 		<Value>yes</Value>
 	</IsLogging>
-	<!-- *********************************************************************** -->
-	<UseContractRegister>
-		<Comment>Регистратор требует договора</Comment>
-		<Check>Char</Check>
-		<Type>Hidden</Type>
-		<IsDuty>0</IsDuty>
-		<Value>0</Value>
-	</UseContractRegister>
-	<!-- *********************************************************************** -->
-	<IsSupportContracts>
-		<Comment>Регистратор поддерживает договора</Comment>
-		<Check>Char</Check>
-		<Type>Hidden</Type>
-		<IsDuty>0</IsDuty>
-		<Value>0</Value>
-	</IsSupportContracts>
-	<!-- *********************************************************************** -->
-	<PersonID>
-		<Comment>Идентификатор клиента</Comment>
-		<Check>Char</Check>
-		<Type>Hidden</Type>
-		<IsDuty>0</IsDuty>
-		<Value />
-	</PersonID>
 	<!-- *********************************************************************** -->
 </Attribs>
 <!-- *********************************************************************** -->

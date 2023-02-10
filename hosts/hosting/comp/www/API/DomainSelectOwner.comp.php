@@ -61,20 +61,7 @@ switch(ValueOf($DomainOrder)){
             $UDomainOrder = Array('PersonID'=>'','ProfileID'=>NULL);
             #-------------------------------------------------------------------
             switch($OwnerTypeID){
-              case 'Person':
-                #---------------------------------------------------------------
-                if(!$PersonID)
-                  return new gException('PERSON_ID_EMPTY','Укажите договор регистратора');
-                #---------------------------------------------------------------
-                $Config = Config();
-                #---------------------------------------------------------------
-                $IsSupportContracts = $DomainScheme['Params']['IsSupportContracts'];
-                #---------------------------------------------------------------
-                if(!$IsSupportContracts)
-                  return new gException('REGISTRATOR_NOT_SUPPORT_CONTRACTS','Регистратор не поддерживает договоры');
-                #---------------------------------------------------------------
-                $UDomainOrder['PersonID'] = $PersonID;
-              break;
+              //case 'Person':
               case 'Profile':
 	        #---------------------------------------------------------------
 	        if(!$Agree)

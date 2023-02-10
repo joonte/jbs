@@ -108,7 +108,7 @@ default:
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-$StatusID = ($Server['Params']['IsSupportContracts'] && $Server['Params']['UseContractRegister'] && $DomainOrder['ProfileID']?'ForContractRegister':'ForRegister');
+$StatusID = 'ForRegister';
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>$StatusID,'RowsIDs'=>$DomainOrder['ID'],'Comment'=>'Алгоритм регистрации доменного имени выбран'));
 #-------------------------------------------------------------------------------
