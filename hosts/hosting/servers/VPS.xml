@@ -26,18 +26,6 @@
 		</Settings>
 	</NullSystem>
 	<!-- ********************************************************************* -->
-	<VdsManager4>
-		<Name>VdsManager4</Name>
-		<Settings>
-			<Port>1500</Port>
-			<Protocol>ssl</Protocol>
-			<Theme>sirius</Theme>
-			<Language>ru</Language>
-			<DiskTemplate>FreeBSD-9-ISPmanager</DiskTemplate>
-			<Url>http://vds01.isp.su:1500/vdsmgr</Url>
-		</Settings>
-	</VdsManager4>
-	<!-- ********************************************************************* -->
 	<VmManager5_KVM>
 		<Name>VmManager5_KVM</Name>
 		<Settings>
@@ -88,7 +76,6 @@
 		<Type>Select</Type>
 		<Options>
 			<NullSystem>Ручное управление</NullSystem>
-			<VdsManager4>VdsManager4</VdsManager4>
 			<VmManager5_KVM>VmManager5_KVM</VmManager5_KVM>
 			<VmManager5_OVZ>VmManager5_OVZ</VmManager5_OVZ>
 			<VmManager6_Hosting>VmManager6_Hosting</VmManager6_Hosting>
