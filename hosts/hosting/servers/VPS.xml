@@ -39,20 +39,6 @@
 		</Settings>
 	</VmManager5_KVM>
 	<!-- *********************************************************************** -->
-	<VmManager5_OVZ>
-		<Name>VmManager5_OVZ</Name>
-		<Settings>
-			<Port>1500</Port>
-			<Protocol>ssl</Protocol>
-			<Theme>orion</Theme>
-			<Language>ru</Language>
-			<DiskTemplate>centos-7-x86_64-minimal</DiskTemplate>
-			<NodeList>ovz01</NodeList>
-			<Url>https://ovz.isp.su:1500/vemgr</Url>
-			<Prefix>o</Prefix>
-		</Settings>
-	</VmManager5_OVZ>
-	<!-- *********************************************************************** -->
 	<VmManager6_Hosting>
 		<Name>VmManager6_Hosting</Name>
 		<Settings>
@@ -77,7 +63,6 @@
 		<Options>
 			<NullSystem>Ручное управление</NullSystem>
 			<VmManager5_KVM>VmManager5_KVM</VmManager5_KVM>
-			<VmManager5_OVZ>VmManager5_OVZ</VmManager5_OVZ>
 			<VmManager6_Hosting>VmManager6_Hosting</VmManager6_Hosting>
 		</Options>
 		<Check>/^[A-Za-zА-Яа-я0-9\-]{2,25}$/u</Check>

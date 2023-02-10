@@ -38,28 +38,17 @@ $MinOrdersPeriod	= (integer) @$Args['MinOrdersPeriod'];
 $SortID			= (integer) @$Args['SortID'];
 $vdslimit		= (integer) @$Args['vdslimit'];
 $disklimit		= (integer) @$Args['disklimit'];
-$maxdesc		= (integer) @$Args['maxdesc'];
 $preset			=  (string) @$Args['preset'];
 $blkiotune		= (integer) @$Args['blkiotune'];
 $isolimitsize		= (integer) @$Args['isolimitsize'];
 $isolimitnum		= (integer) @$Args['isolimitnum'];
 $snapshot_limit		= (integer) @$Args['snapshot_limit'];
-$maxswap		= (integer) @$Args['maxswap'];
-$traf			= (integer) @$Args['traf'];
 $chrate			= (integer) @$Args['chrate'];
 $QuotaUsers		= (integer) @$Args['QuotaUsers'];
 $cpu			= (integer) @$Args['cpu'];
 $ncpu			= (integer) @$Args['ncpu'];
 $mem			= (integer) @$Args['mem'];
-$bmem			= (integer) @$Args['bmem'];
-$proc			= (integer) @$Args['proc'];
 $ipalias		= (integer) @$Args['ipalias'];
-$extns			=  (string) @$Args['extns'];
-$limitpvtdns		= (integer) @$Args['limitpvtdns'];
-$limitpubdns		= (integer) @$Args['limitpubdns'];
-$backup			=  (string) @$Args['backup'];
-$fstype			=  (string) @$Args['fstype'];
-$IsTun			= (boolean) @$Args['IsTun'];
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Groups',Array('ID'=>$GroupID));
 if(Is_Error($Count))
@@ -147,28 +136,17 @@ $IVPSScheme = Array(
   'SortID'              => $SortID,
   'vdslimit'            => $vdslimit,
   'disklimit'           => $disklimit,
-  'maxdesc'             => $maxdesc,
   'preset'		=> $preset,
   'blkiotune'		=> $blkiotune,
   'isolimitsize'	=> $isolimitsize,
   'isolimitnum'		=> $isolimitnum,
   'snapshot_limit'	=> $snapshot_limit,
-  'maxswap'             => $maxswap,
-  'traf'                => $traf,
   'chrate'              => $chrate,
   'QuotaUsers'          => $QuotaUsers,
   'cpu'                 => $cpu,
   'ncpu'                => $ncpu,
   'mem'                 => $mem,
-  'bmem'		=> $bmem,
-  'proc'                => $proc,
   'ipalias'             => $ipalias,
-  'extns'		=> $extns,
-  'limitpvtdns'		=> $limitpvtdns,
-  'limitpubdns'		=> $limitpubdns,
-  'backup'		=> $backup,
-  'fstype'		=> $fstype,
-  'IsTun'		=> $IsTun
 );
 #-------------------------------------------------------------------------------
 if($VPSSchemeID){

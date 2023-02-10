@@ -22,7 +22,6 @@
 			<ListElement>cpu</ListElement>
 			<ListElement>ncpu</ListElement>
 			<ListElement>mem</ListElement>
-			<ListElement>proc</ListElement>
 			<ListElement>IsActive</ListElement>
 			<ListElement>SortID</ListElement>
 		</ColumnsIDs>
@@ -229,11 +228,6 @@
 			<Prompt>Ограничение на использование оперативной памяти, Mb</Prompt>
 			<LongName>Оперативная память</LongName>
 		</mem>
-		<!-- ********************************************************************** -->
-		<proc>
-			<Head>Процессов</Head>
-			<Prompt>Максимальное число запускаемых процессов</Prompt>
-		</proc>
 		<!-- ********************************************************************** -->
 		<IsActive>
 			<Head>Актив.</Head>

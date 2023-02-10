@@ -57,28 +57,17 @@ if($VPSSchemeID){
 				'SortID'		=> 10,
 				'vdslimit'		=> 1,
 				'disklimit'		=> 999,
-				'maxdesc'		=> 1000,
 				'preset'		=> 'iSCSI',
 				'blkiotune'		=> 500,
 				'isolimitsize'		=> 1024,
 				'isolimitnum'		=> 2,
 				'snapshot_limit'	=> 0,
-				'maxswap'		=> 10,
-				'traf'			=> 1000000,
 				'chrate'		=> 8,
 				'QuotaUsers'		=> 20,
 				'cpu'	        	=> 100,
 				'ncpu'	        	=> 1,
 				'mem'			=> 128,
-				'bmem'			=> 128,
-				'proc'			=> 64,
 				'ipalias'		=> 0,
-				'extns'			=> 'dnsprovider',
-				'limitpvtdns'		=> 256,
-				'limitpubdns'		=> 256,
-				'backup'		=> 'bmonth',
-				'fstype'		=> 'simfs',
-				'IsTun'			=> TRUE,
 			);
 	#-------------------------------------------------------------------------------
 }
@@ -503,21 +492,6 @@ if(Is_Error($Comp))
 $Table[] = Array('Количество снимков VM',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'fstype','style'=>'width: 100%;','prompt'=>'только для OVZ'),Array('simfs'=>'simfs','ploop'=>'ploop'),$VPSScheme['fstype']);
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-$Table[] = Array('Тип файловой системы',$Comp);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Input',Array('type'=>'checkbox','name'=>'IsTun','id'=>'IsTun','value'=>'yes','prompt'=>'только для OVZ'));
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-if($VPSScheme['IsTun'])
-	$Comp->AddAttribs(Array('checked'=>'yes'));
-#-------------------------------------------------------------------------------
-$Table[] = Array(new Tag('LABEL',Array('for'=>'IsTun'),'Разрешено использовать TUN'),$Comp);
-
 
 
 

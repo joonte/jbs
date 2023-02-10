@@ -1,0 +1,23 @@
+
+ALTER TABLE `VPSSchemes` DROP `bmem`;
+-- SEPARATOR
+ALTER TABLE `VPSSchemes` DROP `maxdesc`;
+-- SEPARATOR
+ALTER TABLE `VPSSchemes` DROP `maxswap`;
+-- SEPARATOR
+ALTER TABLE `VPSSchemes` DROP `traf`;
+-- SEPARATOR
+ALTER TABLE `VPSSchemes` DROP `proc`;
+-- SEPARATOR
+ALTER TABLE `VPSSchemes` DROP `extns`;
+-- SEPARATOR
+ALTER TABLE `VPSSchemes` DROP `limitpvtdns`;
+-- SEPARATOR
+ALTER TABLE `VPSSchemes` DROP `limitpubdns`;
+-- SEPARATOR
+ALTER TABLE `VPSSchemes` DROP `backup`;
+-- SEPARATOR
+ALTER TABLE `VPSSchemes` DROP `fstype`;
+-- SEPARATOR
+ALTER TABLE `VPSSchemes` DROP `IsTun`
+
