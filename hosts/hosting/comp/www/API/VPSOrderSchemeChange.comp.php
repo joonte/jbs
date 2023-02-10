@@ -53,7 +53,7 @@ if($VPSOrder['StatusID'] != 'Active')
 	return new gException('ORDER_NO_ACTIVE','Заказ виртуального сервера не активен');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$OldScheme = DB_Select('VPSSchemes',Array('ID','IsSchemeChange','IsReselling','disklimit','Name','CostDay'),Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
+$OldScheme = DB_Select('VPSSchemes',Array('ID','IsSchemeChange','disklimit','Name','CostDay'),Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
 #-------------------------------------------------------------------------------
 switch(ValueOf($OldScheme)){
 case 'error':

@@ -19,5 +19,13 @@ ALTER TABLE `VPSSchemes` DROP `backup`;
 -- SEPARATOR
 ALTER TABLE `VPSSchemes` DROP `fstype`;
 -- SEPARATOR
-ALTER TABLE `VPSSchemes` DROP `IsTun`
+ALTER TABLE `VPSSchemes` DROP `IsTun`;
+-- SEPARATOR
+ALTER TABLE `VPSSchemes` DROP `ipalias`;
+-- SEPARATOR
+ALTER TABLE `VPSSchemes` DROP `QuotaUsers`;
+-- SEPARATOR
+ALTER TABLE `VPSSchemes` DROP `IsReselling`;
+-- SEPARATOR
+ALTER TABLE `VPSSchemes` DROP `vdslimit`;
 

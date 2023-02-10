@@ -111,7 +111,6 @@
 				<ListElement>%Name%</ListElement>
 				<Length>10</Length>
 			</Args>
-			<Alias>CONCAT(IF(`IsReselling` = 'yes','*',''),`Name`)</Alias>
 		</Name>
 		<!-- ********************************************************************** -->
 		<Group>
