@@ -268,7 +268,7 @@ function VmManager6_Hosting_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 			*/
 			"password"	=> $VPSOrder['Password'],
 			"ram_mib"	=> Ceil($VPSScheme['mem']),
-			"hdd_mib"	=> IntVal($VPSScheme['disklimit']),
+			"hdd_mib"	=> Ceil($VPSScheme['disklimit']),
 			/*
 			"disks": [
 				{
@@ -283,8 +283,8 @@ function VmManager6_Hosting_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 				}
 				],
 			*/
-			"cpu_number"	=> IntVal($VPSScheme['ncpu']),
-			"net_bandwidth_mbitps"	=> IntVal($VPSScheme['chrate']),
+			"cpu_number"	=> Ceil($VPSScheme['ncpu']),
+			"net_bandwidth_mbitps"	=> Ceil($VPSScheme['chrate']),
 			/*
 			"ip_addr": {
 					"name": "string",
@@ -355,13 +355,13 @@ function VmManager6_Hosting_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 			"cpu_custom_model": "string",
 			*/
 			"cpu_weight"		=> Ceil($VPSScheme['cpu']),
-			"io_weight"		=> IntVal((Ceil($VPSScheme['cpu']) > 1000)?1000:$VPSScheme['cpu']),
-//			"io_read_mbitps"	=> IntVal($VPSScheme['chrate']),	// скорость чтения с диска приравниваем к скорости сети
-//			"io_write_mbitps"	=> IntVal($VPSScheme['chrate']),	// скорость записи на диск приравниваем к скорости сети
+			"io_weight"		=> Ceil((Ceil($VPSScheme['cpu']) > 1000)?1000:$VPSScheme['cpu']),
+//			"io_read_mbitps"	=> Ceil($VPSScheme['chrate']),		// скорость чтения с диска приравниваем к скорости сети
+//			"io_write_mbitps"	=> Ceil($VPSScheme['chrate']),		// скорость записи на диск приравниваем к скорости сети
 //			"io_read_iops"		=> Ceil($VPSScheme['blkiotune']),	// дисковые IOPSы приравниваем к весу использования дискового ввода/вывода /* def: -1*/
 //			"io_write_iops"		=> Ceil($VPSScheme['blkiotune']),	// дисковые IOPSы приравниваем к весу использования дискового ввода/вывода
-			"net_in_mbitps"		=> $VPSScheme['chrate'],
-			"net_out_mbitps"	=> $VPSScheme['chrate'],
+			"net_in_mbitps"		=> Ceil($VPSScheme['chrate']),
+			"net_out_mbitps"	=> Ceil($VPSScheme['chrate']),
 			/*
 			"net_weight": 0, */
 			"anti_spoofing"		=> TRUE,
@@ -623,18 +623,18 @@ function VmManager6_Hosting_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 		#-------------------------------------------------------------------------------
 		// меняем параметры виртуалки
 		$Request = Array(
-				"cpu_number"		=> IntVal($VPSScheme['ncpu']),
+				"cpu_number"		=> Ceil($VPSScheme['ncpu']),
 				"ram_mib"		=> Ceil($VPSScheme['mem']),
-				"net_bandwidth_mbitps"	=> IntVal($VPSScheme['chrate']),
+				"net_bandwidth_mbitps"	=> Ceil($VPSScheme['chrate']),
 				"cpu_mode"		=> 'host-passthrough',
 				"cpu_weight"		=> Ceil($VPSScheme['cpu']),
-				"io_weight"		=> IntVal((Ceil($VPSScheme['cpu']) > 1000)?1000:$VPSScheme['cpu']),
-//				"io_read_mbitps"	=> IntVal(($VPSScheme['chrate'] < 30)?30:$VPSScheme['chrate']),
-//				"io_write_mbitps"	=> IntVal(($VPSScheme['chrate'] < 30)?30:$VPSScheme['chrate']),
+				"io_weight"		=> Ceil(($VPSScheme['cpu'] > 1000)?1000:$VPSScheme['cpu']),
+//				"io_read_mbitps"	=> Ceil(($VPSScheme['chrate'] < 30)?30:$VPSScheme['chrate']),
+//				"io_write_mbitps"	=> Ceil(($VPSScheme['chrate'] < 30)?30:$VPSScheme['chrate']),
 //				"io_read_iops"		=> Ceil($VPSScheme['blkiotune']), /* def: -1*/
 //				"io_write_iops"		=> Ceil($VPSScheme['blkiotune']),
-				"net_in_mbitps"		=> IntVal($VPSScheme['chrate']),
-				"net_out_mbitps"	=> IntVal($VPSScheme['chrate']),
+				"net_in_mbitps"		=> Ceil($VPSScheme['chrate']),
+				"net_out_mbitps"	=> Ceil($VPSScheme['chrate']),
 				"anti_spoofing"		=> TRUE,
 				//"spice_enabled"		=> TRUE,
 				);
@@ -671,7 +671,7 @@ function VmManager6_Hosting_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 		$Settings['function']	= 'disk';
 		$Settings['AddOn']	= $VM['disk']['id'];
 		#-------------------------------------------------------------------------------
-		$Doc = VmManager6_Hosting_Request($Settings,Array('size_mib'=>IntVal($VPSScheme['disklimit'])));
+		$Doc = VmManager6_Hosting_Request($Settings,Array('size_mib'=>Ceil($VPSScheme['disklimit'])));
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
