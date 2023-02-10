@@ -23,26 +23,6 @@
 		</Settings>
 	</NullSystem>
 	<!-- ********************************************************************* -->
-	<Cpanel>
-		<Settings>
-			<Port>2087</Port>
-			<Protocol>ssl</Protocol>
-			<Theme>x3</Theme>
-			<Language>default</Language>
-			<Url>https://isp.su:2083/login/</Url>
-		</Settings>
-	</Cpanel>
-	<!-- ********************************************************************* -->
-	<ISPConfig>
-		<Settings>
-			<Port>8080</Port>
-			<Protocol>ssl</Protocol>
-			<Theme>default</Theme>
-			<Language>ru</Language>
-			<Url>https://isp.su:8080/</Url>
-		</Settings>
-	</ISPConfig>
-	<!-- ********************************************************************* -->
 	<IspManager4>
 		<Settings>
 			<Port>1500</Port>
@@ -72,26 +52,6 @@
 		</Settings>
 	</Brainy>
 	<!-- ********************************************************************* -->
-	<Plesk>
-		<Settings>
-			<Port>8443</Port>
-			<Protocol>ssl</Protocol>
-			<Theme>default</Theme>
-			<Language>default</Language>
-			<Url>https://isp.su:8443/login_up.php3</Url>
-		</Settings>
-	</Plesk>	
-	<!-- ********************************************************************* -->
-	<DirectAdmin>
-		<Settings>
-			<Port>2222</Port>
-			<Protocol>tcp</Protocol>
-			<Theme>default</Theme>
-			<Language>default</Language>
-			<Url>http://isp.su:2222/CMD_LOGIN</Url>
-		</Settings>
-	</DirectAdmin>
-	<!-- *********************************************************************** -->
 </SystemID>
 <!-- *********************************************************************** -->
 <!-- *********************************************************************** -->
@@ -104,10 +64,6 @@
 			<Brainy>Brainy</Brainy>
 			<IspManager4>IspManager4</IspManager4>
 			<IspManager5>IspManager5</IspManager5>
-			<ISPConfig>ISPConfig</ISPConfig>
-			<DirectAdmin>DirectAdmin</DirectAdmin>
-			<Plesk>Plesk</Plesk>
-			<Cpanel>Cpanel</Cpanel>
 			<NullSystem>Ручное управление</NullSystem>
 		</Options>
 		<Check>/^[A-Za-zА-Яа-я0-9\-]{2,25}$/u</Check>
