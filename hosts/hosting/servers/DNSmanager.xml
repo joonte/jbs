@@ -25,16 +25,6 @@
 		</Settings>
 	</NullSystem>
 	<!-- ********************************************************************* -->
-	<DNSmanager4>
-		<Settings>
-			<Port>443</Port>
-			<Protocol>ssl</Protocol>
-			<Theme>sirius</Theme>
-			<Language>ru</Language>
-			<Url>https://dns0.isp.su/manager/dnsmgr</Url>
-		</Settings>
-	</DNSmanager4>
-	<!-- ********************************************************************* -->
 	<DNSmanager5>
 		<Settings>
 			<Port>1500</Port>
@@ -54,7 +44,6 @@
 		<Comment>Система управления</Comment>
 		<Type>Select</Type>
 		<Options>
-			<DNSmanager4>DNSmanager4</DNSmanager4>
 			<DNSmanager5>DNSmanager5</DNSmanager5>
 			<NullSystem>Ручное управление</NullSystem>
 		</Options>
