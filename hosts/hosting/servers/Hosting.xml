@@ -62,8 +62,8 @@
 		<Type>Select</Type>
 		<Options>
 			<Brainy>Brainy</Brainy>
-			<IspManager4>IspManager4</IspManager4>
-			<IspManager5>IspManager5</IspManager5>
+			<IspManager4>IspManager 4</IspManager4>
+			<IspManager5>IspManager 5/6</IspManager5>
 			<NullSystem>Ручное управление</NullSystem>
 		</Options>
 		<Check>/^[A-Za-zА-Яа-я0-9\-]{2,25}$/u</Check>
