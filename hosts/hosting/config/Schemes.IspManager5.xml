@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<!-- https://docs.ispmanager.ru/ispmanager6-business/ispmanager-api -->
+<XML>
+<!-- *********************************************************************** -->
+<preset>
+	<Name>Шаблон (preset)</Name>
+	<Description>Предустановки тарифного плана (шаблон). #custom - не использовать</Description>
+	<Value>#custom</Value>
+	<InternalName>Preset</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+</preset>
+<!-- *********************************************************************** -->
+<limit_quota>
+	<Name>Место на диске</Name>
+	<Description>Максимальный размер дискового пространства, которое могут занимать файлы, принадлежащие пользователю</Description>
+	<Value>100</Value>
+	<InternalName>HDD</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>1000000</Max>
+</limit_quota>
+<!-- *********************************************************************** -->
+<limit_ftp_users>
+	<Name>FTP аккаунты</Name>
+	<Description>Количество дополнительных FTP аккаунтов</Description>
+	<Value>2</Value>
+	<InternalName>FTP</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</limit_ftp_users>
+<!-- *********************************************************************** -->
+<limit_emails>
+	<Name>Почтовые ящики</Name>
+	<Description>Количество почтовых ящиков</Description>
+	<Value>5</Value>
+	<InternalName>EMAIL</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</limit_emails>
+<!-- *********************************************************************** -->
+<limit_webdomains>
+	<Name>WWW-доменов (сайтов)</Name>
+	<Description>Сколько WWW доменов (сайтов) можно создать</Description>
+	<Value>1</Value>
+	<InternalName>WWW</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</limit_webdomains>
+<!-- *********************************************************************** -->
+<limit_domains>
+	<Name>DNS доменов</Name>
+	<Description>Сколько DNS доменов (доменных имён) можно создать</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</limit_domains>
+<!-- *********************************************************************** -->
+<limit_emaildomains>
+	<Name>Почтовых доменов</Name>
+	<Description>Сколько WWW доменов (сайтов) можно создать</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</limit_emaildomains>
+<!-- *********************************************************************** -->
+<limit_db>
+	<Name>Баз данных</Name>
+	<Description>Число баз данных</Description>
+	<Value>1</Value>
+	<InternalName>DB</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</limit_db>
+<!-- *********************************************************************** -->
+<limit_dbsize>
+	<Name>Размер баз данных</Name>
+	<Description>Максимальный размер дискового пространства, который могут занимать базы данных данного пользователя</Description>
+	<Value>1</Value>
+	<InternalName>DBsize</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+	<Unit>Mb</Unit>
+</limit_dbsize>
+<!-- *********************************************************************** -->
+<limit_db_users>
+	<Name>Пользователей БД</Name>
+	<Description>Количество пользователей баз данных</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</limit_db_users>
+<!-- *********************************************************************** -->
+<limit_cpu>
+	<Name>Ограничение на CPU</Name>
+	<Description>Время выполнения скриптов</Description>
+	<Value>120</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000</Max>
+	<Unit>секунд</Unit>
+</limit_cpu>
+<!-- *********************************************************************** -->
+<limit_memory>
+	<Name>Оперативная память</Name>
+	<Description>Сколько оперативной памяти смогут использовать сайты</Description>
+	<Value>512</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000</Max>
+	<Unit>Mb</Unit>
+</limit_memory>
+<!-- *********************************************************************** -->
+<limit_process>
+	<Name>Число процессов</Name>
+	<Description>Сколько процессов может запустить пользователь</Description>
+	<Value>10</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000</Max>
+</limit_process>
+<!-- *********************************************************************** -->
+<limit_email_quota>
+	<Name>Макс. размер почтового ящика</Name>
+	<Description>Позволяет указать максимальный размер, который может иметь каждый почтовый ящик пользователя</Description>
+	<Value>10</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000</Max>
+</limit_email_quota>
+<!-- *********************************************************************** -->
+<limit_scheduler>
+	<Name>Заданий планировщика</Name>
+	<Description>Указывает максимальное количество доступных для создания заданий планировщика</Description>
+	<Value>10</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>1000</Max>
+</limit_scheduler>
+<!-- *********************************************************************** -->
+<limit_traff>
+	<Name>Трафик</Name>
+	<Description>Максимальный размер трафика, используемого WWW-доменами, а также FTP-пользователями в за календарный месяц (в период с первого по последнее число месяца)</Description>
+	<Value>100000000</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>100000000</Max>
+	<Unit>Mb</Unit>
+</limit_traff>
+<!-- *********************************************************************** -->
+<limit_mailrate>
+	<Name>Писем в час</Name>
+	<Description>Сколько писем в час может отправить клиент через mail() или SMTP (толи на пользователя, толи на ящик...)</Description>
+	<Value>100000000</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000000</Max>
+</limit_mailrate>
+<!-- *********************************************************************** -->
+<limit_maxclientsvhost>
+	<Name>Воркеров apache MPM-ITK</Name>
+	<Description>Одновременно работающих процессов apache в режиме MPM-ITK</Description>
+	<Value>8</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000</Max>
+</limit_maxclientsvhost>
+<!-- *********************************************************************** -->
+<limit_nginxlimitconn>
+	<Name>Соединений на сессию</Name>
+	<Description>Указывает максимальное количество одновременных соединений с конкретного IP-адреса, которое будет обрабатываться web-сервером</Description>
+	<Value>20</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000</Max>
+</limit_nginxlimitconn>
+<!-- *********************************************************************** -->
+<limit_mysql_maxuserconn>
+	<Name>Одновременных соединений к MySQL</Name>
+	<Description>Указывает, какое количество одновременных соединений с MySQL может установить каждый MySQL-пользователь</Description>
+	<Value>1000</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>10000</Max>
+</limit_mysql_maxuserconn>
+<!-- *********************************************************************** -->
+<limit_mysql_maxconn>
+	<Name>Соединений к MySQL</Name>
+	<Description>Указывает, какое количество новых соединений с MySQL может установить каждый MySQL-пользователь за один час</Description>
+	<Value>100000000</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000000</Max>
+</limit_mysql_maxconn>
+<!-- *********************************************************************** -->
+<limit_mysql_query>
+	<Name>Запросов к MySQL</Name>
+	<Description>Указывает максимальное количество команд, которое может выполнять каждый MySQL-пользователь за один час</Description>
+	<Value>100000000</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000000</Max>
+</limit_mysql_query>
+<!-- *********************************************************************** -->
+<limit_mysql_update>
+	<Name>Обновлений MySQL</Name>
+	<Description>Указывает максимальное количество команд, изменяющих данные, которое может выполнять каждый MySQL-пользователь за один час</Description>
+	<Value>100000000</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000000</Max>
+</limit_mysql_update>
+<!-- *********************************************************************** -->
+<limit_users>
+	<Name>Пользователей у реселлера</Name>
+	<Description>Максимальное количество пользователей, которое может создать реселлер</Description>
+	<Value>100</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>1000</Max>
+</limit_users>
+<!-- *********************************************************************** -->
+<limit_php_mode>
+	<Name>Режим PHP</Name>
+	<Description>Тип обработчика PHP. Устанавливает тип обработчика PHP по умолчанию (и включен ли он)</Description>
+	<Value>php_mode_mod</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Options>
+		<php_mode_none>php_mode_none</php_mode_none>
+		<php_mode_cgi>php_mode_cgi</php_mode_cgi>
+		<php_mode_mod>php_mode_mod</php_mode_mod>
+	</Options>
+	<Type>Select</Type>
+</limit_php_mode>
+<!-- *********************************************************************** -->
+<php_enable>
+	<Name>PHP включён</Name>
+	<Description>Возможность использовать PHP</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</php_enable>
+<!-- *********************************************************************** -->
+<limit_webdomains_enabled>
+	<Name>WWW домены</Name>
+	<Description>Возможность использовать WWW домены (сайты)</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</limit_webdomains_enabled>
+<!-- *********************************************************************** -->
+<limit_emaildomains_enabled>
+	<Name>Почтовые домены</Name>
+	<Description>Возможность использовать почтовые домены</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</limit_emaildomains_enabled>
+<!-- *********************************************************************** -->
+<limit_cgi>
+	<Name>PHP как CGI</Name>
+	<Description>Возможность использовать PHP в режиме CGI</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</limit_cgi>
+<!-- *********************************************************************** -->
+<limit_php_mode_mod>
+	<Name>PHP как модуль</Name>
+	<Description>Возможность использовать PHP в режиме модуля Apache</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</limit_php_mode_mod>
+<!-- *********************************************************************** -->
+<limit_php_mode_cgi>
+	<Name>PHP как CGI</Name>
+	<Description>Возможность использовать PHP в режиме CGI</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</limit_php_mode_cgi>
+<!-- *********************************************************************** -->
+<limit_php_mode_fcgi_apache>
+	<Name>PHP как FastCGI Apache</Name>
+	<Description>Возможность использовать PHP в режиме FastCGI Apache</Description>
+	<Value>0</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</limit_php_mode_fcgi_apache>
+<!-- *********************************************************************** -->
+<limit_php_mode_lsapi>
+	<Name>PHP как LSAPI Apache</Name>
+	<Description>Пользователю будет доступно создание WWW-доменов c поддержкой PHP скриптов. Скрипты будут выполняться с правами пользователя с использованием технологии "LiteSpeed Technologies API for PHP" для web-сервера Apache</Description>
+	<Value>0</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</limit_php_mode_lsapi>
+<!-- *********************************************************************** -->
+<limit_php_mode_fcgi_nginxfpm>
+	<Name>PHP как FastCGI Nginx</Name>
+	<Description>Возможность использовать PHP в режиме FastCGI Nginx</Description>
+	<Value>0</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</limit_php_mode_fcgi_nginxfpm>
+<!-- *********************************************************************** -->
+<limit_shell>
+	<Name>Доступ к shell (SSH)</Name>
+	<Description>Возможность подключения к серверу по ssh</Description>
+	<Value>0</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</limit_shell>
+<!-- *********************************************************************** -->
+<limit_ssl>
+	<Name>Secure Sockets Layer (SSL)</Name>
+	<Description>Возможность использовать SSL сертификаты на сайтах</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</limit_ssl>
+<!-- *********************************************************************** -->
+<limit_nodejs>
+	<Name>Node JS</Name>
+	<Description>Возможность использовать Node JS на сайтах</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</limit_nodejs>
+<!-- *********************************************************************** -->
+<backup>
+	<Name>Создавать бэкапы</Name>
+	<Description>Отметьте, чтобы создавать регулярные резервные копии данных пользователя</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</backup>
+<!-- *********************************************************************** -->
+</XML>
