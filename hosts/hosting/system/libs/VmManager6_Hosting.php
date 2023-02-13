@@ -231,7 +231,7 @@ function VmManager6_Hosting_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 		if(IsSet($Field['Min']))
 			$Request[$Key] = IntVal($Value);
 		#-------------------------------------------------------------------------------
-		if(IsSet($Field['DataType']) && $Field['DataType'] == 'bool')
+		if(IsSet($Field['Type']) && $Field['Type'] == 'CheckBox')
 			$Request[$Key] = ($Request[$Key])?TRUE:FALSE;
 		#-------------------------------------------------------------------------------
 	}
@@ -470,7 +470,7 @@ function VmManager6_Hosting_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 			if(IsSet($Field['Min']))
 				$Request[$Key] = IntVal($Value);
 			#-------------------------------------------------------------------------------
-			if(IsSet($Field['DataType']) && $Field['DataType'] == 'bool')
+			if(IsSet($Field['Type']) && $Field['Type'] == 'CheckBox')
 				$Request[$Key] = ($Request[$Key])?TRUE:FALSE;
 			#-------------------------------------------------------------------------------
 		}
