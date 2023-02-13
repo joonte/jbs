@@ -165,7 +165,7 @@ if(!IsSet($GLOBALS['__USER'])){
 				Debug(SPrintF('[comp/TopPanel]: Contract TypeID = %s',$Contract['TypeID']));
 				#-------------------------------------------------------------------------------
 				// если нет услуг и стоит настройка не отображать без услуг - не показываем
-				if($Contract['Orders'] < 1 && $GLOBALS['__USER']['Params']['Settings']['ShowContractsWithoutOrders'] == 'No')
+				if($Contract['Orders'] < 1 && $GLOBALS['__USER']['Params']['Settings']['ShowContractsWithoutOrders'] == 'No' && $Contract['Balance'] == 0)
 					continue;
 				#-------------------------------------------------------------------------------
 				$ContractID = Comp_Load('Formats/Contract/Number',$Contract['ID']);
