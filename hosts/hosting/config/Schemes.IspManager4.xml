@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<preset>
+	<Name>Шаблон (preset)</Name>
+	<Description>Предустановки тарифного плана</Description>
+	<Value></Value>
+	<InternalName>Preset</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+</preset>
+<!-- *********************************************************************** -->
+<disklimit>
+	<Name>Место на диске</Name>
+	<Description>Выделенное на диске место</Description>
+	<Value>1</Value>
+	<InternalName>HDD</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+</disklimit>
+<!-- *********************************************************************** -->
+<ftplimit>
+	<Name>FTP аккаунты</Name>
+	<Description>Количество дополнительных FTP аккаунтов</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</ftplimit>
+<!-- *********************************************************************** -->
+<maillimit>
+	<Name>Почтовые ящики</Name>
+	<Description>Количество почтовых ящиков</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</maillimit>
+<!-- *********************************************************************** -->
+<domainlimit>
+	<Name>DNS доменов</Name>
+	<Description>Сколько DNS доменов (доменных имён) можно создать</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</domainlimit>
+<!-- *********************************************************************** -->
+<webdomainlimit>
+	<Name>WWW-доменов (сайтов)</Name>
+	<Description>Сколько WWW доменов (сайтов) можно создать</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</webdomainlimit>
+<!-- *********************************************************************** -->
+<maildomainlimit>
+	<Name>Почтовых доменов</Name>
+	<Description>Сколько WWW доменов (сайтов) можно создать</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</maildomainlimit>
+<!-- *********************************************************************** -->
+<baselimit>
+	<Name>Баз данных</Name>
+	<Description>Число баз данных</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</baselimit>
+<!-- *********************************************************************** -->
+<baseuserlimit>
+	<Name>Пользователей БД</Name>
+	<Description>Количество пользователей баз данных</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</baseuserlimit>
+<!-- *********************************************************************** -->
+<bandwidthlimit>
+	<Name>Трафик</Name>
+	<Description>Ограничение на трафик сайтов/ftp</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>100000000</Max>
+	<Unit>Mb</Unit>
+</bandwidthlimit>
+<!-- *********************************************************************** -->
+<shell>
+	<Name>Доступ к shell</Name>
+	<Description>Возможность подключения к серверу по ssh</Description>
+	<Value>0</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</shell>
+<!-- *********************************************************************** -->
+<ssl>
+	<Name>SSL</Name>
+	<Description>Возможность использовать SSL сертификаты на сайтах</Description>
+	<Value>0</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</ssl>
+<!-- *********************************************************************** -->
+<cgi>
+	<Name>CGI</Name>
+	<Description>Возможность запуска на сайте CGI скриптов на shell/perl/python и т.п.</Description>
+	<Value>0</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</cgi>
+<!-- *********************************************************************** -->
+<ssi>
+	<Name>SSI</Name>
+	<Description>Возможность использовать сайтом SSI</Description>
+	<Value>0</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</ssi>
+<!-- *********************************************************************** -->
+
+
+
+
+
+    'phpmod'          => ($HostingScheme['IsPHPModAccess']?'on':'off'), # PHP как модуль Apache
+    'phpcgi'          => ($HostingScheme['IsPHPCGIAccess']?'on':'off'), # PHP как CGI
+    'phpfcgi'         => ($HostingScheme['IsPHPFastCGIAccess']?'on':'off'), # PHP как FastCGI
+    'safemode'        => ($HostingScheme['IsPHPSafeMode']?'on':'off'), # Безопасный режим
+    'cpulimit'        => $HostingScheme['MaxExecutionTime'], # Ограничение на CPU
+    'memlimit'        => Ceil($HostingScheme['QuotaMEM']), # Ограничение на память
+    'proclimit'       => $HostingScheme['QuotaPROC'], # Кол-во процессов
+    'maxclientsvhost' => $HostingScheme['QuotaMPMworkers'], # mpm-itk
+    'mysqlquerieslimit'     => $HostingScheme['mysqlquerieslimit'],      # Запросов к MySQL
+    'mysqlupdateslimit'     => $HostingScheme['mysqlupdateslimit'],      # Обновлений MySQL
+    'mysqlconnectlimit'     => $HostingScheme['mysqlconnectlimit'],      # Соединений к MySQL
+    'mysqluserconnectlimit' => $HostingScheme['mysqluserconnectlimit'],   # Одновременных соединений к MySQL
+    'mailrate'              => $HostingScheme['mailrate']       # ограничение на письма, в час
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<cluster>
+	<Name>Кластер</Name>
+	<Description>В каком кластере создаётся виртуальная машина. Если указанынй кластер не найден, то используется первый найденный</Description>
+	<Value>Наш ДатаЦентр</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>0</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+</cluster>
+<!-- *********************************************************************** -->
+<storage>
+	<Name>Хранилище</Name>
+	<Description>В каком хранилище создавать виртуальную машину. Если не найдено, используется автоматическое размещение</Description>
+	<Value>ZFS</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>0</IsSchemeChange>
+	<IsRequired>0</IsRequired>
+</storage>
+<!-- *********************************************************************** -->
+<preset>
+	<Name>Шаблон (preset)</Name>
+	<Description>Предустановки виртуальной машины (заранее созданный шаблон на сервере)</Description>
+	<Value></Value>
+	<InternalName>Preset</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>0</IsSchemeChange>
+	<IsRequired>0</IsRequired>
+</preset>
+<!-- *********************************************************************** -->
+<os>
+	<Name>Операционная система</Name>
+	<Description>Операционная система создаваемой виртуальной машины. Используется значение выбранное клиентом, если его нет - то это значение</Description>
+	<Value>NoOS</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>0</IsSchemeChange>
+	<IsRequired>0</IsRequired>
+</os>
+<!-- *********************************************************************** -->
+<!--
+  "image": 0,
+  "expand_part": "string",
+  "recipe_list": [
+    {
+      "recipe": 0,
+      "recipe_params": [
+        {
+          "name": "string",
+          "value": "string"
+        }
+      ]
+    }
+  ],
+  "recipe": 0,
+  "recipe_params": [
+    {
+      "name": "string",
+      "value": "string"
+    }
+  ],
+  "ignore_recipe_filters": false,
+-->
+<!-- *********************************************************************** -->
+<ram_mib>
+	<Name>Объём оперативной памяти</Name>
+	<Description>Сколько RAM выделено виртуальной машине</Description>
+	<Value>512</Value>
+	<InternalName>RAM</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Unit>Mb</Unit>
+	<Min>128</Min>
+	<Max>4194304</Max>
+</ram_mib>
+<!-- *********************************************************************** -->
+<hdd_mib>
+	<Name>Размер диска</Name>
+	<Description>Сколько места на диске выделено виртуальной машине</Description>
+	<Value>4096</Value>
+	<InternalName>HDD</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>0</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Unit>Mb</Unit>
+	<Min>64</Min>
+	<Max>1048576</Max>
+</hdd_mib>
+<!-- *********************************************************************** -->
+<!--
+  "disks": [
+    {
+      "name": "string",
+      "size_mib": 0,
+      "boot_order": 1,
+      "expand_part": "string",
+      "storage": 0,
+      "tags": [
+        0
+      ]
+    }
+  ],
+-->
+<!-- *********************************************************************** -->
+<cpu_number>
+	<Name>Число процессоров</Name>
+	<Description>Количество процессоров в виртуальной машине</Description>
+	<Value>1</Value>
+	<InternalName>CPU</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Min>1</Min>
+	<Max>240</Max>
+</cpu_number>
+<!-- *********************************************************************** -->
+<net_bandwidth_mbitps>
+	<Name>Скорость сети</Name>
+	<Description>УТОЧНИТЬ в ISPsystem</Description>
+	<Value>10</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Unit>MBit/s</Unit>
+	<Min>1</Min>
+	<Max>1000</Max>
+</net_bandwidth_mbitps>
+<!-- *********************************************************************** -->
+<!--
+  "ip_addr": {
+    "name": "string",
+    "ip_pool": 0,
+    "ip_network": 0,
+    "without_allocation": true
+  },
+  "ipv6_enabled": true,
+  "ipv6_pool": [
+    0
+  ],
+  "ipv6_prefix": 125,
+  "ipv4_pool": [
+    0
+  ],
+-->
+<!-- *********************************************************************** -->
+<ipv4_number>
+	<Name>Количество IPv4</Name>
+	<Description>Сколько адресов IPv4 будет выделено виртуальной машине</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>0</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Min>0</Min>
+	<Max>256</Max>
+	<DataType>int</DataType>
+</ipv4_number>
+<!-- *********************************************************************** -->
+<!--
+  "comment": "string",
+  "interfaces": [
+    {
+      "cluster_interface": 1,
+      "ipv4_number": 0,
+      "ipv4_pool": [
+        0
+      ],
+      "ip_name": "string",
+      "without_allocation": false
+    },
+    {
+      "cluster_interface": 1,
+      "ipv4_number": 0,
+      "ipv4_pool": [
+        0
+      ],
+      "ip_name": "string",
+      "without_allocation": false
+    }
+  ],
+  "custom_interfaces": [
+    {
+      "name": "string",
+      "mac": "string",
+      "bridge": "string",
+      "ip_count": 0,
+      "ippool": 0,
+      "ip_network": 0,
+      "ip_name": "string",
+      "without_allocation": false
+    },
+    {
+      "name": "string",
+      "mac": "string",
+      "bridge": "string",
+      "ip_count": 0,
+      "ippool": 0,
+      "ip_network": 0,
+      "ip_name": "string",
+      "without_allocation": false
+    }
+  ],
+-->
+<!-- *********************************************************************** -->
+<cpu_mode>
+	<Name>Режим эмуляции</Name>
+	<Description>Используемый режим эмуляции процессора, самый быстрый: host-passthrough</Description>
+	<Value>host-passthrough</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Options>
+		<default>default</default>
+		<host-model>host-model</host-model>
+		<host-passthrough>host-passthrough</host-passthrough>
+	</Options>
+	<Type>Select</Type>
+</cpu_mode>
+<!-- *********************************************************************** -->
+<nesting>
+	<Name>Вложенная витуализация</Name>
+	<Description>Разрешает запускать виртуальные машины внутри виртуальной машины</Description>
+	<Value>0</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Type>CheckBox</Type>
+	<DataType>bool</DataType>
+</nesting>
+<!-- *********************************************************************** -->
+<!--
+  "cpu_custom_model": "string",
+-->
+<!-- *********************************************************************** -->
+<cpu_weight>
+	<Name>Вес CPU</Name>
+	<Description>Приоритет в использовании процессора. Например, ВМ с весом CPU, равным 2048, будет получать доступ к процессору вдвое чаще, чем ВМ с весом 1024</Description>
+	<Value>500</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Min>128</Min>
+	<Max>10000</Max>
+</cpu_weight>
+<!-- *********************************************************************** -->
+<io_weight>
+	<Name>Вес I/O</Name>
+	<Description>Приоритет на операции ввода-вывода. Например, ВМ с весом использования I/O, равным 200, будет выполнять операции чтения и записи на диск в два раза чаще, чем ВМ с весом 100</Description>
+	<Value>500</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Min>100</Min>
+	<Max>1000</Max>
+</io_weight>
+<!-- *********************************************************************** -->
+<io_read_mbitps>
+	<Name>Скорость чтения с диска</Name>
+	<Description>Максимальная скорость чтения с диска</Description>
+	<Value>100</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Min>10</Min>
+	<Max>10000</Max>
+	<Unit>MBit/s</Unit>
+</io_read_mbitps>
+<!-- *********************************************************************** -->
+<io_write_mbitps>
+	<Name>Скорость записи на диск</Name>
+	<Description>Максимальная скорость записи на диск</Description>
+	<Value>100</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Min>10</Min>
+	<Max>10000</Max>
+	<Unit>MBit/s</Unit>
+</io_write_mbitps>
+<!-- *********************************************************************** -->
+<io_read_iops>
+	<Name>Скорость чтения</Name>
+	<Description>Максимальная скорость чтения с диска, операций ввода/вывода в секунду (IOPS)</Description>
+	<Value>1000</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Min>100</Min>
+	<Max>100000</Max>
+	<Unit>IOPS</Unit>
+</io_read_iops>
+<!-- *********************************************************************** -->
+<io_write_iops>
+	<Name>Скорость записи</Name>
+	<Description>Максимальная скорость записи на диск, операций ввода/вывода в секунду (IOPS)</Description>
+	<Value>1000</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Min>100</Min>
+	<Max>100000</Max>
+	<Unit>IOPS</Unit>
+</io_write_iops>
+<!-- *********************************************************************** -->
+<net_in_mbitps>
+	<Name>Скорость канала, входящая</Name>
+	<Description>Максимальная скорость входящего трафика</Description>
+	<Value>10</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Min>1</Min>
+	<Max>1000</Max>
+	<Unit>MBit/s</Unit>
+</net_in_mbitps>
+<!-- *********************************************************************** -->
+<net_out_mbitps>
+	<Name>Скорость канала, исходящая</Name>
+	<Description>Максимальная скорость исходящего трафика</Description>
+	<Value>10</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Min>1</Min>
+	<Max>1000</Max>
+	<Unit>MBit/s</Unit>
+</net_out_mbitps>
+<!-- *********************************************************************** -->
+<!-- LXD
+  "net_weight": 0, -->
+<!-- *********************************************************************** -->
+<anti_spoofing>
+	<Name>АнтиСпуфинг</Name>
+	<Description>Запретить трафик от IP адресов не назначенных машине. Актуально, если к ВМ имеет доступ неконтролируемые люди (продажа ВПС, например - клиенты запрсото могут "выделить" себе IP адрес который уже кем-то занят)</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Type>CheckBox</Type>
+	<DataType>bool</DataType>
+</anti_spoofing>
+<!-- *********************************************************************** -->
+<tcp_connections_in>
+	<Name>TCP соединений, входящих</Name>
+	<Description>Количество входящих TCP соединений для вирутальной машины</Description>
+	<Value>1000</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Min>1</Min>
+	<Max>1000000</Max>
+</tcp_connections_in>
+<!-- *********************************************************************** -->
+<tcp_connections_out>
+	<Name>TCP соединений, исходящих</Name>
+	<Description>Количество исходящих TCP соединений для вирутальной машины</Description>
+	<Value>1000</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<IsRequired>1</IsRequired>
+	<Min>1</Min>
+	<Max>1000000</Max>
+</tcp_connections_out>
+<!-- *********************************************************************** -->
+<!--
+  "process_number": -1,
+  "firewall_rules": [
+    {
+      "action": "drop",
+      "direction": "in",
+      "protocols": [
+        "tcp"
+      ],
+      "portstart": 65535,
+      "portend": 65535
+    }
+  ],
+  "send_email_mode": "default",
+  "vxlan": [
+    {
+      "id": 0,
+      "ipv4_number": 0,
+      "ipnet": 0
+    }
+  ],
+  "spice_enabled": true
+-->
+<!-- *********************************************************************** -->
+</XML>
