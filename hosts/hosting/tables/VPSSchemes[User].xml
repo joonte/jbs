@@ -50,10 +50,9 @@
 		<ListElement>ServersGroup</ListElement>
 		<ListElement>CostMonth</ListElement>
 		<ListElement>CostInstall</ListElement>
-		<ListElement>disklimit</ListElement>
-		<ListElement>ncpu</ListElement>
-		<ListElement>cpu</ListElement>
-		<ListElement>mem</ListElement>
+		<ListElement>HDD</ListElement>
+		<ListElement>CPU</ListElement>
+		<ListElement>RAM</ListElement>
 	</Sequence>
 	<!-- *********************************************************************** -->
 </XML>

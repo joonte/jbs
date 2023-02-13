@@ -37,6 +37,9 @@
 <NoRestartDelete>Logic</NoRestartDelete>
 <NoRestartSchemeChange>Logic</NoRestartSchemeChange>
 <!-- *********************************************************************** -->
+<!-- параметры тарифного плана -->
+<SchemeParams>JSON</SchemeParams>
+<!-- *********************************************************************** -->
 <!-- HostingServers -->
 <!-- переделано на цифровые значения, см. JBS-887
 <IsOK>Logic</IsOK>
@@ -58,5 +61,6 @@
 <!-- added by lissyara, 2018-11-28 in 12:50 for JBS-JBS-1264 -->
 <DSpass>Crypt</DSpass>
 <ILOpass>Crypt</ILOpass>
+
 
 </XML>

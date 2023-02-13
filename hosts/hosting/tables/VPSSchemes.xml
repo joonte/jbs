@@ -17,11 +17,7 @@
 			<ListElement>ID</ListElement>
 			<ListElement>CostMonth</ListElement>
 			<ListElement>CostInstall</ListElement>
-			<ListElement>preset</ListElement>
-			<ListElement>disklimit</ListElement>
-			<ListElement>cpu</ListElement>
-			<ListElement>ncpu</ListElement>
-			<ListElement>mem</ListElement>
+			<ListElement>SchemeParams</ListElement>
 			<ListElement>IsActive</ListElement>
 			<ListElement>SortID</ListElement>
 		</ColumnsIDs>
@@ -111,6 +107,7 @@
 				<ListElement>%Name%</ListElement>
 				<Length>10</Length>
 			</Args>
+			<Alias>`Name`</Alias>
 		</Name>
 		<!-- ********************************************************************** -->
 		<Group>
@@ -162,15 +159,16 @@
 			<Alias>(IF(`Discount` > -1, CONCAT(`Discount`,IF(`Discount` > -1,'%','')),'нет'))</Alias>
 		</Discount>
 		<!-- ********************************************************************** -->
-                <preset>
+		<Preset>
 			<Head>шабл.</Head>
 			<Prompt>Шаблон используемый при создании виртуальной машины</Prompt>
-			<Comp>Formats/String</Comp>
+			<Comp>Formats/System/Param</Comp>
 			<Args>
-				<ListElement>%preset%</ListElement>
-				<Length>5</Length>
+				<Params>%Preset%</Params>
+				<Key>InternalName/Preset</Key>
 			</Args>
-		</preset>
+			<Alias>`SchemeParams`</Alias>
+		</Preset>
 		<!-- ********************************************************************** -->
 		<ServersGroup>
 			<Head>Гр. серв.</Head>
@@ -194,11 +192,17 @@
 			<Alias>(IF(`Node` != '',`Node`,'-'))</Alias>
 		</Node>
 		<!-- ********************************************************************** -->
-		<disklimit>
+		<HDD>
 			<Head>Место</Head>
 			<Prompt>Объем выделяемого пространства в мегабайтах</Prompt>
 			<LongName>Выделенное место</LongName>
-		</disklimit>
+			<Comp>Formats/System/Param</Comp>
+			<Args>
+				<Params>%HDD%</Params>
+				<Key>InternalName/HDD</Key>
+			</Args>
+			<Alias>`SchemeParams`</Alias>
+		</HDD>
 		<!-- ********************************************************************** -->
 		<OrderLink>
 			<Head>Ссылка</Head>
@@ -210,23 +214,29 @@
 			</Args>
 		</OrderLink>
 		<!-- ********************************************************************** -->
-		<ncpu>
+		<CPU>
 			<Head># CPU</Head>
 			<Prompt>Количество процессоров</Prompt>
 			<LongName>Число процессоров</LongName>
-		</ncpu>
+			<Comp>Formats/System/Param</Comp>
+			<Args>
+				<Params>%CPU%</Params>
+				<Key>InternalName/CPU</Key>
+			</Args>
+			<Alias>`SchemeParams`</Alias>
+		</CPU>
 		<!-- ********************************************************************** -->
-		<cpu>
-			<Head>CPU</Head>
-			<Prompt>Ограничение процессора, MHz. Для виртуализации KVM, это приоритет процессора - чем больше, там больше процессорных ресурсов будет отдано виртуальной машине</Prompt>
-			<LongName>Приоритет процессора</LongName>
-		</cpu>
-		<!-- ********************************************************************** -->
-		<mem>
+		<RAM>
 			<Head>RAM</Head>
 			<Prompt>Ограничение на использование оперативной памяти, Mb</Prompt>
 			<LongName>Оперативная память</LongName>
-		</mem>
+			<Comp>Formats/System/Param</Comp>
+			<Args>
+				<Params>%RAM%</Params>
+				<Key>InternalName/RAM</Key>
+			</Args>
+			<Alias>`SchemeParams`</Alias>
+		</RAM>
 		<!-- ********************************************************************** -->
 		<IsActive>
 			<Head>Актив.</Head>
@@ -267,10 +277,10 @@
 		<ListElement>Node</ListElement>
 		<ListElement>CostMonth</ListElement>
 		<ListElement>Discount</ListElement>
-		<ListElement>preset</ListElement>
-		<ListElement>disklimit</ListElement>
-		<ListElement>cpu</ListElement>
-		<ListElement>mem</ListElement>
+		<ListElement>Preset</ListElement>
+		<ListElement>HDD</ListElement>
+		<ListElement>CPU</ListElement>
+		<ListElement>RAM</ListElement>
 		<ListElement>IsActive</ListElement>
 		<ListElement>OrderLink</ListElement>
 		<ListElement>Orders</ListElement>

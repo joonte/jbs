@@ -33,7 +33,7 @@ $DOM->AddText('Title','Заказ виртуального сервера');
 $Script = new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/Order.js}'));
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',$Script);
-#-------------------------------------------------------------тариф-------------
+#-------------------------------------------------------------------------------
 $Form = new Tag('FORM',Array('name'=>'VPSOrderForm','onsubmit'=>'return false;'));
 #-------------------------------------------------------------------------------
 $Config = Config();
@@ -209,7 +209,7 @@ if($StepID){
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Columns = Array('ID','Name','ServersGroupID','Comment','CostMonth','CostInstall','disklimit','ncpu','cpu','mem','(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupName`','(SELECT `Comment` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupComment`','(SELECT `SortID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupSortID`');
+	$Columns = Array('ID','Name','ServersGroupID','Comment','CostMonth','CostInstall','SchemeParams','(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupName`','(SELECT `Comment` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupComment`','(SELECT `SortID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupSortID`');
 	#-------------------------------------------------------------------------------
 	$VPSSchemes = DB_Select($UniqID,$Columns,Array('SortOn'=>Array('ServersGroupSortID','SortID'),'Where'=>"`IsActive` = 'yes'"));
 	#-------------------------------------------------------------------------------
@@ -254,15 +254,6 @@ if($StepID){
 	#-------------------------------------------------------------------------------
 	$Tr->AddChild($Td);
 	#-------------------------------------------------------------------------------
-	$Td = new Tag('TD',Array('class'=>'Head','align'=>'center'),new Tag('SPAN','MHz'),new Tag('SPAN',Array('style'=>'font-weight:bold;font-size:14px;'),'?'));
-	#-------------------------------------------------------------------------------
-	$Links[$LinkID] = &$Td;
-	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Prompt',$LinkID,'Частота каждого процессора. В случае виртуализации KVM - это проритет процессора. Чем он больше - тем больше процессорных ресурсов будет отдано виртуальной машине');
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	$Tr->AddChild($Td);
 	#-------------------------------------------------------------------------------
 	$Td = new Tag('TD',Array('class'=>'Head','align'=>'center'),new Tag('SPAN','RAM'),new Tag('SPAN',Array('style'=>'font-weight:bold;font-size:14px;'),'?'));
 	#-------------------------------------------------------------------------------
@@ -327,10 +318,9 @@ if($StepID){
 					new Tag('TD',Array('class'=>'Comment'),$VPSScheme['Name']),
 					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth),
 					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostInstall),
-					new Tag('TD',Array('class'=>'Standard','align'=>'right'),SPrintF('%u Мб.',$VPSScheme['disklimit'])),
-					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$VPSScheme['ncpu']),
-					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$VPSScheme['cpu']),
-					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$VPSScheme['mem'])
+					new Tag('TD',Array('class'=>'Standard','align'=>'right'),SPrintF('%u Мб.',$VPSScheme['SchemeParams']['InternalName']['HDD'])),
+					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$VPSScheme['SchemeParams']['InternalName']['CPU']),
+					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$VPSScheme['SchemeParams']['InternalName']['RAM'])
 				);
 		#-------------------------------------------------------------------------------
 	}

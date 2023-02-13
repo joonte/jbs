@@ -23,6 +23,7 @@ $CostMonth		=   (float) @$Args['CostMonth'];
 $CostInstall		=   (float) @$Args['CostInstall'];
 $Discount		=  (double) @$Args['Discount'];
 $ServersGroupID		= (integer) @$Args['ServersGroupID'];
+$SystemID		=  (string) @$Args['SystemID'];
 $Node			=   (array) @$Args['Node'];
 $Comment		=  (string) @$Args['Comment'];
 $IsActive		= (boolean) @$Args['IsActive'];
@@ -35,17 +36,6 @@ $MaxDaysPay		= (integer) @$Args['MaxDaysPay'];
 $MaxOrders		= (integer) @$Args['MaxOrders'];
 $MinOrdersPeriod	= (integer) @$Args['MinOrdersPeriod'];
 $SortID			= (integer) @$Args['SortID'];
-$disklimit		= (integer) @$Args['disklimit'];
-$preset			=  (string) @$Args['preset'];
-$blkiotune		= (integer) @$Args['blkiotune'];
-$isolimitsize		= (integer) @$Args['isolimitsize'];
-$isolimitnum		= (integer) @$Args['isolimitnum'];
-$snapshot_limit		= (integer) @$Args['snapshot_limit'];
-$chrate			= (integer) @$Args['chrate'];
-$cpu			= (integer) @$Args['cpu'];
-$ncpu			= (integer) @$Args['ncpu'];
-$mem			= (integer) @$Args['mem'];
-$ipalias		= (integer) @$Args['ipalias'];
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Groups',Array('ID'=>$GroupID));
 if(Is_Error($Count))
@@ -76,11 +66,11 @@ if(!$Count)
 // убираем пустые значения
 $Nodes = Array();
 #-------------------------------------------------------------------------------
-Debug(print_r($Node,true));
+//Debug(print_r($Node,true));
 foreach($Node as $Value)
 	if($Value)
 		$Nodes[] = $Value;
-Debug(print_r($Nodes,true));
+//Debug(print_r($Nodes,true));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$MinDaysPay)
@@ -107,55 +97,90 @@ if($Discount < 0){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IVPSScheme = Array(
-  #-----------------------------------------------------------------------------
-  'GroupID'             => $GroupID,
-  'UserID'              => $UserID,
-  'Name'                => $Name,
-  'PackageID'           => $PackageID,
-  'CostDay'             => $CostDay,
-  'CostMonth'           => $CostMonth,
-  'CostInstall'		=> $CostInstall,
-  'Discount'            => $Discount,
-  'ServersGroupID'      => $ServersGroupID,
-  'Node'		=> (SizeOf($Nodes) > 0)?Implode(',',$Node):'',
-  'Comment'             => $Comment,
-  'IsActive'            => $IsActive,
-  'IsProlong'           => $IsProlong,
-  'IsSchemeChangeable'  => $IsSchemeChangeable,
-  'IsSchemeChange'      => $IsSchemeChange,
-  'MinDaysPay'          => $MinDaysPay,
-  'MinDaysProlong'      => $MinDaysProlong,
-  'MaxDaysPay'          => $MaxDaysPay,
-  'MaxOrders'		=> $MaxOrders,
-  'MinOrdersPeriod'	=> $MinOrdersPeriod,
-  'SortID'              => $SortID,
-  'disklimit'           => $disklimit,
-  'preset'		=> $preset,
-  'blkiotune'		=> $blkiotune,
-  'isolimitsize'	=> $isolimitsize,
-  'isolimitnum'		=> $isolimitnum,
-  'snapshot_limit'	=> $snapshot_limit,
-  'chrate'              => $chrate,
-  'cpu'                 => $cpu,
-  'ncpu'                => $ncpu,
-  'mem'                 => $mem,
-  'ipalias'             => $ipalias,
-);
+// загружаем XML
+$Fields = System_XML(SPrintF('config/Schemes.%s.xml',$SystemID));
+if(Is_Error($Fields))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if($VPSSchemeID){
-  #-----------------------------------------------------------------------------
-  $IsUpdate = DB_Update('VPSSchemes',$IVPSScheme,Array('ID'=>$VPSSchemeID));
-  if(Is_Error($IsUpdate))
-    return ERROR | @Trigger_Error(500);
-}else{
-  #-----------------------------------------------------------------------------
-  $IsInsert = DB_Insert('VPSSchemes',$IVPSScheme);
-  if(Is_Error($IsInsert))
-    return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$SchemeParams = $Internal = Array();
+#-------------------------------------------------------------------------------
+foreach(Array_Keys($Fields) as $Key){
+	#-------------------------------------------------------------------------------
+	$Field = $Fields[$Key];
+	#-------------------------------------------------------------------------------
+	if(IsSet($Args[$Key])){
+		#-------------------------------------------------------------------------------
+		// сравнения
+		if(IsSet($Field['Min']))
+			if($Args[$Key] < $Field['Min'])
+				return new gException('WRONG_MIN_VALUE',SPrintF('Некорректное значение "%s": %s<%s',$Field['Name'],$Args[$Key],$Field['Min']));
+		#-------------------------------------------------------------------------------
+		if(IsSet($Field['Max']))
+			if($Args[$Key] > $Field['Max'])
+				return new gException('WRONG_MAX_VALUE',SPrintF('Некорректное значение "%s": %s>%s',$Field['Name'],$Args[$Key],$Field['Max']));
+		#-------------------------------------------------------------------------------
+		$SchemeParams[$Key] = $Args[$Key];
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		// значение не прилетело, записываем пустой параметр
+		$SchemeParams[$Key] = '';
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	if(IsSet($Field['InternalName']))
+		$Internal[$Field['InternalName']] = $SchemeParams[$Key];
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
+// для минимализации поиска по базе при отображении тарифа
+$SchemeParams['SystemID']	= $SystemID;
+$SchemeParams['InternalName']	= $Internal;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$IVPSScheme = Array(
+			'GroupID'		=> $GroupID,
+			'UserID'		=> $UserID,
+			'Name'			=> $Name,
+			'PackageID'		=> $PackageID,
+			'CostDay'		=> $CostDay,
+			'CostMonth'		=> $CostMonth,
+			'CostInstall'		=> $CostInstall,
+			'Discount'		=> $Discount,
+			'ServersGroupID'	=> $ServersGroupID,
+			'Node'			=> (SizeOf($Nodes) > 0)?Implode(',',$Node):'',
+			'Comment'		=> $Comment,
+			'IsActive'		=> $IsActive,
+			'IsProlong'		=> $IsProlong,
+			'IsSchemeChangeable'	=> $IsSchemeChangeable,
+			'IsSchemeChange'	=> $IsSchemeChange,
+			'MinDaysPay'		=> $MinDaysPay,
+			'MinDaysProlong'	=> $MinDaysProlong,
+			'MaxDaysPay'		=> $MaxDaysPay,
+			'MaxOrders'		=> $MaxOrders,
+			'MinOrdersPeriod'	=> $MinOrdersPeriod,
+			'SortID'		=> $SortID,
+			'SchemeParams'		=> $SchemeParams,
+		);
+#-------------------------------------------------------------------------------
+if($VPSSchemeID){
+	#-------------------------------------------------------------------------------
+	$IsUpdate = DB_Update('VPSSchemes',$IVPSScheme,Array('ID'=>$VPSSchemeID));
+	if(Is_Error($IsUpdate))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+}else{
+	#-------------------------------------------------------------------------------
+	$IsInsert = DB_Insert('VPSSchemes',$IVPSScheme);
+	if(Is_Error($IsInsert))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 return Array('Status'=>'Ok');
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
 ?>

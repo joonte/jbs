@@ -84,7 +84,7 @@ $Where = Array(
 if(!$__USER['IsAdmin'])
 	$Where[] = "`IsActive` = 'yes' AND `IsSchemeChangeable` = 'yes'";
 #-------------------------------------------------------------------------------
-$VPSSchemes = DB_Select($UniqID,Array('ID','Name','disklimit','CostMonth'),Array('SortOn'=>'SortID','Where'=>$Where));
+$VPSSchemes = DB_Select($UniqID,Array('ID','Name','SchemeParams','CostMonth'),Array('SortOn'=>'SortID','Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($VPSSchemes)){
 case 'error':
@@ -127,7 +127,7 @@ foreach($VPSSchemes as $VPSScheme){
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Options[$VPSScheme['ID']] = SPrintF('%s / %s Gb / %s',$VPSScheme['Name'],$VPSScheme['disklimit']/1024,$Comp);
+	$Options[$VPSScheme['ID']] = SPrintF('%s / %s Gb / %s',$VPSScheme['Name'],$VPSScheme['SchemeParams']['hdd_mib']/1024,$Comp);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------

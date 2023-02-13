@@ -82,35 +82,6 @@ function VmManager6_Hosting_Logon($Settings,$Params){
 	return Array('Url'=>SPrintF('%s/auth/key/%s',$Settings['Params']['Url'],$JSON['key']),'Args'=>Array(),'Method'=>'GET');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-/*
-	$Users = VmManager6_Hosting_Get_Users($Settings);
-	//Debug(print_r($Users,true));
-	$SettingsOrig = $Settings;
-	foreach($Users as $Login){
-		if($Login != 'admin'){
-			#-------------------------------------------------------------------------------
-			$Settings = $SettingsOrig;
-			$User = VmManager6_Hosting_Get_Users($Settings,$Login);
-			Debug(SPrintF('[DELETE USER]: %s',$User['email']));
-			# грохаем самого юзера
-			$Settings['function']   = 'user';
-			$Settings['AddOn']      = $User['id'];
-			$Settings['Method']     = 'DELETE';
-			#-------------------------------------------------------------------------------
-			$Doc = VmManager6_Hosting_Request($Settings);
-			//sleep(1);
-		}
-	}
-
-/*	$i = 0;
-	while ($i <= 256){
-		$ip = SPrintF('91.227.19.%s',$i);
-		Debug(SPrintF('[DELETE]: %s',$i));
-		VmManager6_Hosting_DeleteIP($Settings,$ip);
-		$i++;
-	}
-*/
-	#-------------------------------------------------------------------------------
 }
 
 #-------------------------------------------------------------------------------
@@ -219,212 +190,72 @@ function VmManager6_Hosting_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 		if(!IsSet($Preset['id']))
 			continue;
 		#------------------------------------------------------------------------------
-		if($Preset['name'] == $VPSScheme['preset'])
+		if($Preset['name'] == $VPSScheme['SchemeParams']['preset'])
 			$VmPresetID = $Preset['id'];
 		#------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if(!IsSet($VmPresetID))
-		Debug(SPrintF('[VmManager6_Hosting_Create]: шаблон "%s" не найден в шаблонах на KVMmgr, виртуалка будет создана без шаблона',$VPSScheme['preset']));
+		Debug(SPrintF('[VmManager6_Hosting_Create]: шаблон "%s" не найден в шаблонах на KVMmgr, виртуалка будет создана без шаблона',$VPSScheme['SchemeParams']['preset']));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	// достаём необходимый кластер
+	$ClusterID = VmManager6_Hosting_Get_Clusters($Settings,$VPSScheme['SchemeParams']['cluster']);
+	#-------------------------------------------------------------------------------
+	// достаём ноду
+	$NodeID = VmManager6_Hosting_Get_Node($Settings,$VPSScheme['Node']);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// шаблон
 	$DiskTemplate = VmManager6_Hosting_Get_DiskTemplates($Settings,Trim($VPSOrder['DiskTemplate']));
-	# создаём виртуалку
-	$Request = Array(
-			"name"		=> $VPSOrder['Login'],
-			"cluster"	=> 1,	// надо в настройки
-			/*
-			"node": 0,
-			"storage": 0,
-			*/
-			"account"	=> $VmUserID,
-			"domain"	=> $VPSOrder['Domain'],
-			"os"		=> $DiskTemplate,
-			/*
-			"image": 0,
-			"expand_part": "string",
-			"recipe_list": [
-					{
-						"recipe": 0,
-						"recipe_params": [
-						{
-							"name": "string",
-							"value": "string"
-						}
-						]
-					}
-					],
-			*/
-			//"recipe"	=> 0,
-			/*
-			"recipe_params": [
-					{
-						"name": "string",
-						"value": "string"
-					}
-					],
-			"ignore_recipe_filters": false,
-			*/
-			"password"	=> $VPSOrder['Password'],
-			"ram_mib"	=> Ceil($VPSScheme['mem']),
-			"hdd_mib"	=> Ceil($VPSScheme['disklimit']),
-			/*
-			"disks": [
-				{
-					"name": "string",
-					"size_mib": 0,
-					"boot_order": 1,
-					"expand_part": "string",
-					"storage": 0,
-					"tags": [
-							0
-						]
-				}
-				],
-			*/
-			"cpu_number"	=> Ceil($VPSScheme['ncpu']),
-			"net_bandwidth_mbitps"	=> Ceil($VPSScheme['chrate']),
-			/*
-			"ip_addr": {
-					"name": "string",
-					"ip_pool": 0,
-					"ip_network": 0,
-					"without_allocation": true
-					},
-			"ipv6_enabled": true,
-			"ipv6_pool": [
-					0
-					],
-			"ipv6_prefix": 125,
-			"ipv4_pool": [
-					0
-					],
-			*/
-			"ipv4_number"	=> 1,
-/*
-"comment": "string",
-			*/
-			/*
-			"interfaces": [
-					{
-					"cluster_interface": 1,
-					"ipv4_number": 0,
-					"ipv4_pool": [
-							0
-							],
-					"ip_name": "string",
-					"without_allocation": false
-					},
-					{
-					"cluster_interface": 1,
-					"ipv4_number": 0,
-					"ipv4_pool": [
-							0
-					],
-					"ip_name": "string",
-					"without_allocation": false
-					}
-					],
-			"custom_interfaces": [
-						{
-						"name": "string",
-						"mac": "string",
-						"bridge": "string",
-						"ip_count": 0,
-						"ippool": 0,
-						"ip_network": 0,
-						"ip_name": "string",
-						"without_allocation": false
-						},
-						{
-						"name": "string",
-						"mac": "string",
-						"bridge": "string",
-						"ip_count": 0,
-						"ippool": 0,
-						"ip_network": 0,
-						"ip_name": "string",
-						"without_allocation": false
-						}
-						],
-			*/
-			"cpu_mode"		=> 'host-passthrough',
-			/*
-			"nesting": true,
-			"cpu_custom_model": "string",
-			*/
-			"cpu_weight"		=> Ceil($VPSScheme['cpu']),
-			"io_weight"		=> Ceil((Ceil($VPSScheme['cpu']) > 1000)?1000:$VPSScheme['cpu']),
-//			"io_read_mbitps"	=> Ceil($VPSScheme['chrate']),		// скорость чтения с диска приравниваем к скорости сети
-//			"io_write_mbitps"	=> Ceil($VPSScheme['chrate']),		// скорость записи на диск приравниваем к скорости сети
-//			"io_read_iops"		=> Ceil($VPSScheme['blkiotune']),	// дисковые IOPSы приравниваем к весу использования дискового ввода/вывода /* def: -1*/
-//			"io_write_iops"		=> Ceil($VPSScheme['blkiotune']),	// дисковые IOPSы приравниваем к весу использования дискового ввода/вывода
-			"net_in_mbitps"		=> Ceil($VPSScheme['chrate']),
-			"net_out_mbitps"	=> Ceil($VPSScheme['chrate']),
-			/*
-			"net_weight": 0, */
-			"anti_spoofing"		=> TRUE,
-			/*
-			"tcp_connections_in": 0,
-			"tcp_connections_out": 0,
-			"process_number": -1,
-			"firewall_rules": [
-					{
-					"action": "drop",
-					"direction": "in",
-					"protocols": [
-							"tcp"
-					],
-					"portstart": 65535,
-					"portend": 65535
-					}
-					],
-			"send_email_mode": "default",
-			"vxlan": [
-				{
-				"id": 0,
-				"ipv4_number": 0,
-				"ipnet": 0
-				}
-				],
-			*/
-//			"spice_enabled"		=> TRUE,
-			);
-
-/*
-	$Request = Array(
-			'func'			=> 'vm.edit',					# Целевая функция
-			'sok'			=> 'ok',
-			'hostnode'		=> $VPSScheme['Node'],				// нода кластера
-			'blkiotune'		=> Ceil($VPSScheme['blkiotune']),		# "вес" дисковых операций
-			'password'		=> $VPSOrder['Password'],
-			'confirm'		=> $VPSOrder['Password'],
-			'cputune'		=> Ceil($VPSScheme['cpu']),			# "вес" процессорных операций
-			'domain'		=> $VPSOrder['Domain'],				# для обратной зоны
-			'family'		=> 'ipv4',					# пока IPv6 всё ещё теория
-			'cpu_mode'		=> 'host-passthrough',				// режим эмуляции, этот - самый быстрый
-			# из общения с техподдержкой ISPsystem...
-			# > Ограничения в панели устанавливаются в кибибайтах в секунду (KiB/sec)
-			# > В частности для виртуальной машины v152558 установлено ограничение 8192KiB/sec,
-			# > что в пресчете в мегабиты составляет 8192KiB/sec x8bit / 1024 = 64 Mbit/sec 
-			# т.е. полоса была завышена в 8 раз =(
-			'inbound'		=> SPrintF('%u',$VPSScheme['chrate'] * 1024/8),	# в тарифе в мегабитах
-			'outbound'		=> SPrintF('%u',$VPSScheme['chrate'] * 1024/8),	# в тарифе в мегабитах
-			#'ip'			=> '1.2.3.4',
-			'iptype'		=> 'public',					# машина имеет доступ в инет
-			'mem'			=> Ceil($VPSScheme['mem']),			# рама
-			'name'			=> $VPSOrder['Login'],
-			'user'			=> $VmUserID,
-			'vcpu'			=> $VPSScheme['ncpu'],				# число процессоров
-			'vmi'			=> SPrintF('ISPsystem__%s',Trim($VPSOrder['DiskTemplate'])),
-			'vsize'			=> $VPSScheme['disklimit'],
-			);
-*/
 	#-------------------------------------------------------------------------------
-	if(IsSet($VmPresetID))
+	#-------------------------------------------------------------------------------
+	$Storage = VmManager6_Hosting_Get_Storage($Settings,$VPSScheme['SchemeParams']['storage']);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Request = Array();
+	#-------------------------------------------------------------------------------
+	// считываем XML и составляем запрос
+	$Fields = System_XML(SPrintF('config/Schemes.%s.xml',$VPSScheme['SchemeParams']['SystemID']));
+	if(Is_Error($Fields))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Fields) as $Key){
+		#-------------------------------------------------------------------------------
+		$Field = $Fields[$Key];
+		#-------------------------------------------------------------------------------
+		$Value = IsSet($VPSScheme['SchemeParams'][$Key])?$VPSScheme['SchemeParams'][$Key]:$Field['Value'];
+		#-------------------------------------------------------------------------------
+		$Request[$Key] = $Value;
+		if(IsSet($Field['Min']))
+			$Request[$Key] = IntVal($Value);
+		#-------------------------------------------------------------------------------
+		if(IsSet($Field['DataType']) && $Field['DataType'] == 'bool')
+			$Request[$Key] = ($Request[$Key])?TRUE:FALSE;
+		#-------------------------------------------------------------------------------
+	}
+	$Request['name']	= $VPSOrder['Login'];
+	$Request['account']	= $VmUserID;
+	$Request['domain']	= $VPSOrder['Domain'];
+	$Request['os']		= $DiskTemplate;
+	$Request['password']	= $VPSOrder['Password'];
+	$Request['cluster']	= $ClusterID;
+	$Request['node']	= $NodeID;
+	$Request['storage']	= $Storage;
+	#-------------------------------------------------------------------------------
+	// шаблон
+	if(IsSet($VmPresetID)){
+		#-------------------------------------------------------------------------------
 		$Request['preset'] = $VmPresetID;
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		UnSet($Request['preset']);
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
+	# создаём виртуалку
 	$Settings['function']	= 'host';
 	#-------------------------------------------------------------------------------
 	$Doc = VmManager6_Hosting_Request($Settings,$Request);
@@ -621,23 +452,29 @@ function VmManager6_Hosting_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 		#-------------------------------------------------------------------------------
 		//Debug(SPrintF('[system/libs/VmManager6_Hosting]: VM = %s',print_r($VM,true)));
 		#-------------------------------------------------------------------------------
-		// меняем параметры виртуалки
-		$Request = Array(
-				"cpu_number"		=> Ceil($VPSScheme['ncpu']),
-				"ram_mib"		=> Ceil($VPSScheme['mem']),
-				"net_bandwidth_mbitps"	=> Ceil($VPSScheme['chrate']),
-				"cpu_mode"		=> 'host-passthrough',
-				"cpu_weight"		=> Ceil($VPSScheme['cpu']),
-				"io_weight"		=> Ceil(($VPSScheme['cpu'] > 1000)?1000:$VPSScheme['cpu']),
-//				"io_read_mbitps"	=> Ceil(($VPSScheme['chrate'] < 30)?30:$VPSScheme['chrate']),
-//				"io_write_mbitps"	=> Ceil(($VPSScheme['chrate'] < 30)?30:$VPSScheme['chrate']),
-//				"io_read_iops"		=> Ceil($VPSScheme['blkiotune']), /* def: -1*/
-//				"io_write_iops"		=> Ceil($VPSScheme['blkiotune']),
-				"net_in_mbitps"		=> Ceil($VPSScheme['chrate']),
-				"net_out_mbitps"	=> Ceil($VPSScheme['chrate']),
-				"anti_spoofing"		=> TRUE,
-				//"spice_enabled"		=> TRUE,
-				);
+		$Fields = System_XML(SPrintF('config/Schemes.%s.xml',$VPSScheme['SchemeParams']['SystemID']));
+		if(Is_Error($Fields))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		foreach(Array_Keys($Fields) as $Key){
+			#-------------------------------------------------------------------------------
+			$Field = $Fields[$Key];
+			#-------------------------------------------------------------------------------
+			if(!$Field['IsSchemeChange'])
+				continue;
+			#-------------------------------------------------------------------------------
+			$Value = IsSet($VPSScheme['SchemeParams'][$Key])?$VPSScheme['SchemeParams'][$Key]:$Field['Value'];
+			#-------------------------------------------------------------------------------
+			$Request[$Key] = $Value;
+			#-------------------------------------------------------------------------------
+			if(IsSet($Field['Min']))
+				$Request[$Key] = IntVal($Value);
+			#-------------------------------------------------------------------------------
+			if(IsSet($Field['DataType']) && $Field['DataType'] == 'bool')
+				$Request[$Key] = ($Request[$Key])?TRUE:FALSE;
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// /host/{host_id}/resource 
 		$Settings['function']	= 'host';
@@ -645,6 +482,9 @@ function VmManager6_Hosting_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 		#-------------------------------------------------------------------------------
 		$Doc = VmManager6_Hosting_Request($Settings,$Request);
 		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		// на всякий случай....
+		Sleep(30);
 		#-------------------------------------------------------------------------------
 		// запоминаем статус машины (чтобы не запустить остановленную по каким-то причинам, например, админ прям с сервера залочил)
 		$Power = ($VM['state'] == 'active')?TRUE:FALSE;
@@ -655,14 +495,14 @@ function VmManager6_Hosting_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 			continue;
 		#-------------------------------------------------------------------------------
 		// проверяем размер дисков. если они одинаковые - перезагружать и трогать их не надо
-		if($VM['disk']['disk_mib'] == $VPSScheme['disklimit'])
+		if($VM['disk']['disk_mib'] == $VPSScheme['SchemeParams']['hdd_mib'])
 			continue;
 		#-------------------------------------------------------------------------------
 		// ещё вариант - диск оказался больше чем необходимо. с этим тоже ничего не сделаешь.
 		// KVM не позволяет уменьшать диск - либо пропустить, либо в ошибку падать. лучше пропустить, наверное...
-		if($VM['disk']['disk_mib'] > $VPSScheme['disklimit']){
+		if($VM['disk']['disk_mib'] > $VPSScheme['SchemeParams']['hdd_mib']){
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[VmManager6_Hosting_Scheme_Change]: Невозможно изменить размер диска в меньшую сторону (%s->%s) пропускаем',$VPSScheme['disklimit'],$VM['disk']['disk_mib']));
+			Debug(SPrintF('[VmManager6_Hosting_Scheme_Change]: Невозможно изменить размер диска в меньшую сторону (%s->%s) пропускаем',$VPSScheme['SchemeParams']['hdd_mib'],$VM['disk']['disk_mib']));
 			#-------------------------------------------------------------------------------
 			continue;
 			#-------------------------------------------------------------------------------
@@ -671,7 +511,7 @@ function VmManager6_Hosting_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 		$Settings['function']	= 'disk';
 		$Settings['AddOn']	= $VM['disk']['id'];
 		#-------------------------------------------------------------------------------
-		$Doc = VmManager6_Hosting_Request($Settings,Array('size_mib'=>Ceil($VPSScheme['disklimit'])));
+		$Doc = VmManager6_Hosting_Request($Settings,Array('size_mib'=>Ceil($VPSScheme['SchemeParams']['hdd_mib'])));
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -1067,6 +907,135 @@ function VmManager6_Hosting_Get_DiskTemplates($Settings,$Template = FALSE){
 	// если не нашлось имени темплейта, отадём последний из списка
 	if($Template)
 		return $iTemplate['id'];
+	#-----------------------------------------------------------------------------
+	#-----------------------------------------------------------------------------
+	return $Result;
+	#-----------------------------------------------------------------------------
+	#-----------------------------------------------------------------------------
+}
+
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+function VmManager6_Hosting_Get_Clusters($Settings,$ClusterName = FALSE){
+	/****************************************************************************/
+	$__args_types = Array('array','boolean,string');
+	#-----------------------------------------------------------------------------
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/****************************************************************************/
+	$Settings['function']	= 'cluster';
+	#-------------------------------------------------------------------------------
+	$Doc = VmManager6_Hosting_Request($Settings);
+	#-----------------------------------------------------------------------------
+	$Clusters = $Doc['list'];
+	#-----------------------------------------------------------------------------
+	$Result = Array();
+	#-----------------------------------------------------------------------------
+	foreach($Clusters as $Cluster){
+		#-----------------------------------------------------------------------------
+		//Debug(SPrintF('[VmManager6_Hosting_Get_Clusters]: Cluster = %s',print_r($Cluster,true)));
+		if(!IsSet($Cluster['id']))
+			continue;
+		#-----------------------------------------------------------------------------
+		if(!IsSet($Cluster['name']))
+			continue;
+		#-----------------------------------------------------------------------------
+		#-----------------------------------------------------------------------------
+		// если передано имя кластера то надо вернуть идентфикатор
+		if($ClusterName && $Cluster['name'] == $ClusterName)
+			return $Cluster['id'];
+		#-----------------------------------------------------------------------------
+	}
+	#-----------------------------------------------------------------------------
+	// если не нашлось имени кластера, отадём последний из списка
+	if($ClusterName)
+		return $Cluster['id'];
+	#-----------------------------------------------------------------------------
+	#-----------------------------------------------------------------------------
+	return $Result;
+	#-----------------------------------------------------------------------------
+	#-----------------------------------------------------------------------------
+}
+
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+function VmManager6_Hosting_Get_Node($Settings,$NodeName = FALSE){
+	/****************************************************************************/
+	$__args_types = Array('array','boolean,string');
+	#-----------------------------------------------------------------------------
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/****************************************************************************/
+	$Settings['function']	= 'node';
+	#-------------------------------------------------------------------------------
+	$Doc = VmManager6_Hosting_Request($Settings);
+	#-----------------------------------------------------------------------------
+	$Nodes = $Doc['list'];
+	#-----------------------------------------------------------------------------
+	$Result = Array();
+	#-----------------------------------------------------------------------------
+	foreach($Nodes as $Node){
+		#-----------------------------------------------------------------------------
+		//Debug(SPrintF('[VmManager6_Hosting_Get_Node]: Node = %s',print_r($Node,true)));
+		if(!IsSet($Node['id']))
+			continue;
+		#-----------------------------------------------------------------------------
+		if(!IsSet($Node['name']))
+			continue;
+		#-----------------------------------------------------------------------------
+		#-----------------------------------------------------------------------------
+		// если передано имя ноды то надо вернуть идентфикатор
+		if($NodeName && $Node['name'] == $NodeName)
+			return $Node['id'];
+		#-----------------------------------------------------------------------------
+	}
+	#-----------------------------------------------------------------------------
+	// если не нашлось имени кластера, отадём последний из списка
+	if($NodeName)
+		return $Node['id'];
+	#-----------------------------------------------------------------------------
+	#-----------------------------------------------------------------------------
+	return $Result;
+	#-----------------------------------------------------------------------------
+	#-----------------------------------------------------------------------------
+}
+
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+function VmManager6_Hosting_Get_Storage($Settings,$Name = FALSE){
+	/****************************************************************************/
+	$__args_types = Array('array','boolean,string');
+	#-----------------------------------------------------------------------------
+	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
+	/****************************************************************************/
+	$Settings['function']	= 'storage';
+	#-------------------------------------------------------------------------------
+	$Doc = VmManager6_Hosting_Request($Settings);
+	#-----------------------------------------------------------------------------
+	$Storages = $Doc['list'];
+	#-----------------------------------------------------------------------------
+	$Result = Array();
+	#-----------------------------------------------------------------------------
+	foreach($Storages as $Storage){
+		#-----------------------------------------------------------------------------
+		//Debug(SPrintF('[VmManager6_Hosting_Get_Storage]: Storage = %s',print_r($Storage,true)));
+		if(!IsSet($Storage['id']))
+			continue;
+		#-----------------------------------------------------------------------------
+		if(!IsSet($Storage['name']))
+			continue;
+		#-----------------------------------------------------------------------------
+		if($Storage['state'] != 'active')
+			continue;
+		#-----------------------------------------------------------------------------
+		#-----------------------------------------------------------------------------
+		// если передано имя стораджа то надо вернуть идентфикатор
+		if($Name && $Storage['name'] == $Name)
+			return $Storage['id'];
+		#-----------------------------------------------------------------------------
+	}
+	#-----------------------------------------------------------------------------
+	// если не нашлось имени стораджа, отадём последний из списка
+	if($Name)
+		return $Storage['id'];
 	#-----------------------------------------------------------------------------
 	#-----------------------------------------------------------------------------
 	return $Result;
