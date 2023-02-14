@@ -527,7 +527,7 @@ if($StepID){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$Columns = Array(
-			'ID','Name','ServersGroupID','Comment','CostMonth','QuotaDisk','QuotaEmail','QuotaDomains','QuotaDBs',
+			'ID','Name','ServersGroupID','Comment','CostMonth','SchemeParams',
 			'(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupName`',
 			'(SELECT `Comment` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupComment`',
 			'(SELECT `SortID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupSortID`'
@@ -663,10 +663,10 @@ if($StepID){
 						new Tag('TD',Array('width'=>20),$Comp),
 						new Tag('TD',Array('class'=>'Comment'),$HostingScheme['Name']),
 						new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth),
-						new Tag('TD',Array('class'=>'Standard','align'=>'right'),SPrintF('%u Мб.',$HostingScheme['QuotaDisk'])),
-						new Tag('TD',Array('class'=>'Standard','align'=>'right'),$HostingScheme['QuotaEmail']),
-						new Tag('TD',Array('class'=>'Standard','align'=>'right'),$HostingScheme['QuotaDomains']),
-						new Tag('TD',Array('class'=>'Standard','align'=>'right'),$HostingScheme['QuotaDBs'])
+						new Tag('TD',Array('class'=>'Standard','align'=>'right'),SPrintF('%u Мб.',$HostingScheme['SchemeParams']['InternalName']['HDD'])),
+						new Tag('TD',Array('class'=>'Standard','align'=>'right'),$HostingScheme['SchemeParams']['InternalName']['EMAIL']),
+						new Tag('TD',Array('class'=>'Standard','align'=>'right'),$HostingScheme['SchemeParams']['InternalName']['Domains']),
+						new Tag('TD',Array('class'=>'Standard','align'=>'right'),$HostingScheme['SchemeParams']['InternalName']['DB'])
 					);
 			#-------------------------------------------------------------------------------
 		}
