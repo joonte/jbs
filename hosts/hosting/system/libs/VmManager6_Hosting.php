@@ -235,6 +235,7 @@ function VmManager6_Hosting_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 			$Request[$Key] = ($Request[$Key])?TRUE:FALSE;
 		#-------------------------------------------------------------------------------
 	}
+	#-------------------------------------------------------------------------------
 	$Request['name']	= $VPSOrder['Login'];
 	$Request['account']	= $VmUserID;
 	$Request['domain']	= $VPSOrder['Domain'];

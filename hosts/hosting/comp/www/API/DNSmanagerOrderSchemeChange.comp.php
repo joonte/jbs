@@ -92,13 +92,6 @@ case 'array':
 				if(!$NewScheme['IsSchemeChangeable'])
 					return new gException('SCHEME_NOT_CHANGEABLE','Выбранный тариф не позволяет переход');
 				#-------------------------------------------------------------------------------
-#				if($OldScheme['QuotaDisk'] > $NewScheme['QuotaDisk']){
-#					#-------------------------------------------------------------------------------
-#					if($OldScheme['IsProlong'])
-#						if(!$__USER['IsAdmin'])
-#							return new gException('QUOTA_DISK_ERROR','Дисковое пространство на новом тарифном плане, меньше чем на текущем. Для смены тарифа обратитесь в Центр Поддержки.');
-					#-------------------------------------------------------------------------------
-#				}
 				#-------------------------------------------------------------------------------
 				if($DNSmanagerOrder['ServersGroupID'] != $NewScheme['ServersGroupID'])
 					return new gException('NEW_SCHEME_ANOTHER_SERVERS_GROUP','Выбранный тарифный план относиться к другой группе серверов');
