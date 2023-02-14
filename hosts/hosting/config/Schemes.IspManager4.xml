@@ -20,7 +20,7 @@
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
 	<Min>1</Min>
-	<Max>1000000</Max>
+	<Max>10000000</Max>
 	<Unit>Mb</Unit>
 </disklimit>
 <!-- *********************************************************************** -->
@@ -234,7 +234,7 @@
 	<InternalName>MaxMPM</InternalName>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>1</Min>
+	<Min>0</Min>
 	<Max>100000</Max>
 </maxclientsvhost>
 <!-- *********************************************************************** -->
@@ -244,7 +244,7 @@
 	<Value>100000000</Value>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>1</Min>
+	<Min>0</Min>
 	<Max>100000000</Max>
 </mysqlquerieslimit>
 <!-- *********************************************************************** -->
@@ -254,7 +254,7 @@
 	<Value>100000000</Value>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>1</Min>
+	<Min>0</Min>
 	<Max>100000000</Max>
 </mysqlupdateslimit>
 <!-- *********************************************************************** -->
@@ -264,7 +264,7 @@
 	<Value>100000000</Value>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>1</Min>
+	<Min>0</Min>
 	<Max>100000000</Max>
 </mysqlconnectlimit>
 <!-- *********************************************************************** -->
@@ -274,7 +274,7 @@
 	<Value>100000000</Value>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>1</Min>
+	<Min>0</Min>
 	<Max>100000000</Max>
 </mysqluserconnectlimit>
 <!-- *********************************************************************** -->
@@ -285,7 +285,7 @@
 	<InternalName>MailRate</InternalName>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>1</Min>
+	<Min>0</Min>
 	<Max>100000000</Max>
 </mailrate>
 <!-- *********************************************************************** -->

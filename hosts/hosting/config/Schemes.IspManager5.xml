@@ -152,7 +152,7 @@
 	<Value>200</Value>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>1</Min>
+	<Min>0</Min>
 	<Max>100000</Max>
 	<Unit>Mb</Unit>
 </limit_email_quota>
@@ -163,7 +163,7 @@
 	<Value>10</Value>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>1</Min>
+	<Min>0</Min>
 	<Max>1000</Max>
 </limit_scheduler>
 <!-- *********************************************************************** -->
@@ -185,7 +185,7 @@
 	<InternalName>MailRate</InternalName>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>1</Min>
+	<Min>0</Min>
 	<Max>100000000</Max>
 </limit_mailrate>
 <!-- *********************************************************************** -->
@@ -196,7 +196,7 @@
 	<InternalName>MaxMPM</InternalName>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>1</Min>
+	<Min>0</Min>
 	<Max>100000</Max>
 </limit_maxclientsvhost>
 <!-- *********************************************************************** -->
@@ -206,7 +206,7 @@
 	<Value>30</Value>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>1</Min>
+	<Min>0</Min>
 	<Max>100000</Max>
 </limit_nginxlimitconn>
 <!-- *********************************************************************** -->
@@ -216,7 +216,7 @@
 	<Value>1000</Value>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>1</Min>
+	<Min>0</Min>
 	<Max>10000</Max>
 </limit_mysql_maxuserconn>
 <!-- *********************************************************************** -->
@@ -226,7 +226,7 @@
 	<Value>100000000</Value>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>1</Min>
+	<Min>0</Min>
 	<Max>100000000</Max>
 </limit_mysql_maxconn>
 <!-- *********************************************************************** -->
@@ -236,7 +236,7 @@
 	<Value>100000000</Value>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>1</Min>
+	<Min>0</Min>
 	<Max>100000000</Max>
 </limit_mysql_query>
 <!-- *********************************************************************** -->
@@ -246,7 +246,7 @@
 	<Value>100000000</Value>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>1</Min>
+	<Min>0</Min>
 	<Max>100000000</Max>
 </limit_mysql_update>
 <!-- *********************************************************************** -->
@@ -256,7 +256,7 @@
 	<Value>100</Value>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>1</Min>
+	<Min>0</Min>
 	<Max>1000</Max>
 </limit_users>
 <!-- *********************************************************************** -->

@@ -5,7 +5,10 @@
 /******************************************************************************/
 /******************************************************************************/
 
-//return TRUE;
+//Debug(SPrintF('[files/1000030.php]: HOST_ID = %s',HOST_ID));
+
+if(HOST_ID == 'manager.host-food.ru')
+	return TRUE;
 
 /*
 // добавляем колонку для информации о тарифе
@@ -16,7 +19,7 @@ if(Is_Error($IsQuery))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // достаём список тарифных планов
-$HostingSchemes = DB_Select('HostingSchemes',Array('*','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ServersGroupID` = `HostingSchemes`.`ServersGroupID` LIMIT 1) AS `Params`'));
+$HostingSchemes = DB_Select('HostingSchemes',Array('*','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ServersGroupID` = `HostingSchemes`.`ServersGroupID` LIMIT 1) AS `Params`','(SELECT `Address` FROM `Servers` WHERE `Servers`.`ServersGroupID` = `HostingSchemes`.`ServersGroupID` LIMIT 1) AS `Address`'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingSchemes)){
 case 'error':
@@ -98,6 +101,7 @@ case 'array':
 	#-------------------------------------------------------------------------------
 	foreach($HostingSchemes as $HostingScheme){
 		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[files/1000030.php]: Name = %s; Address = %s; SystemID = %s',$HostingScheme['Name'],$HostingScheme['Address'],$HostingScheme['Params']['SystemID']));
 		// считываем шаблон XML
 		$Fields = System_XML(SPrintF('config/Schemes.%s.xml',$HostingScheme['Params']['SystemID']));
 		if(Is_Error($Fields))
@@ -112,7 +116,7 @@ case 'array':
 			#-------------------------------------------------------------------------------
 			$Field = $Fields[$Key];
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[files/1000030.php]: Key = %s; Field = %s',$Key,print_r($Field,true)));
+			//Debug(SPrintF('[files/1000030.php]: Key = %s; Field = %s',$Key,print_r($Field,true)));
 			#-------------------------------------------------------------------------------
 			// задаём дефолт - то что в XML
 			$SchemeParams[$Key] = $Field['Value'];

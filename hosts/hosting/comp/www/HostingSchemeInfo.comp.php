@@ -89,7 +89,7 @@ if($HostingScheme['MaxOrders'] > 0)
 	$Table[] = Array('Максимальное число заказов',$HostingScheme['MaxOrders']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Table[] = 'Общие ограничения';
+$Table[] = SPrintF('Общие ограничения / %s',$HostingScheme['SchemeParams']['SystemID']);
 #-------------------------------------------------------------------------------
 // загружаем XML
 $Fields = System_XML(SPrintF('config/Schemes.%s.xml',$HostingScheme['SchemeParams']['SystemID']));
