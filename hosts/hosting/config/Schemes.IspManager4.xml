@@ -21,6 +21,7 @@
 	<IsSchemeChange>1</IsSchemeChange>
 	<Min>1</Min>
 	<Max>1000000</Max>
+	<Unit>Mb</Unit>
 </disklimit>
 <!-- *********************************************************************** -->
 <ftplimit>
@@ -49,6 +50,7 @@
 	<Name>DNS доменов</Name>
 	<Description>Сколько DNS доменов (доменных имён) можно создать</Description>
 	<Value>1</Value>
+	<InternalName>Domains</InternalName>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
 	<Min>0</Min>
@@ -112,6 +114,7 @@
 	<Name>Доступ к shell (SSH)</Name>
 	<Description>Возможность подключения к серверу по ssh</Description>
 	<Value>0</Value>
+	<InternalName>SSH</InternalName>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
 	<Type>CheckBox</Type>
@@ -193,6 +196,7 @@
 	<Name>Ограничение на CPU</Name>
 	<Description>Время выполнения скриптов</Description>
 	<Value>120</Value>
+	<InternalName>MaxExecuteTime</InternalName>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
 	<Min>1</Min>
@@ -204,6 +208,7 @@
 	<Name>Ограничение на память</Name>
 	<Description>Сколько оперативной памяти смогут использовать сайты</Description>
 	<Value>512</Value>
+	<InternalName>MEM</InternalName>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
 	<Min>1</Min>
@@ -215,6 +220,7 @@
 	<Name>Число процессов</Name>
 	<Description>Сколько процессов может запустить пользователь</Description>
 	<Value>10</Value>
+	<InternalName>MaxProc</InternalName>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
 	<Min>1</Min>
@@ -225,6 +231,7 @@
 	<Name>Воркеров apache MPM-ITK</Name>
 	<Description>Одновременно работающих процессов apache в режиме MPM-ITK</Description>
 	<Value>8</Value>
+	<InternalName>MaxMPM</InternalName>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
 	<Min>1</Min>
@@ -274,7 +281,8 @@
 <mailrate>
 	<Name>Писем в час</Name>
 	<Description>Сколько писем в час может отпарвить клиент через mail() или SMTP</Description>
-	<Value>100000000</Value>
+	<Value>100</Value>
+	<InternalName>MailRate</InternalName>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
 	<Min>1</Min>

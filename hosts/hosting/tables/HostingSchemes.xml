@@ -179,35 +179,71 @@
 		<QuotaDisk>
 			<Head>Место</Head>
 			<Prompt>Объем выделяемого пространства в мегабайтах</Prompt>
+			<Comp>Formats/System/Param</Comp>
+			<Args>
+				<Params>%QuotaDisk%</Params>
+				<Key>InternalName/HDD</Key>
+			</Args>
+			<Alias>`SchemeParams`</Alias>
 		</QuotaDisk>
 		<!-- ********************************************************************** -->
 		<QuotaDomains>
 			<Head>Дом.</Head>
-			<Prompt>Кол-во дополнительных доменов</Prompt>
+			<Prompt>Кол-во доменов которео возможно разместить на заказе</Prompt>
+			<Comp>Formats/System/Param</Comp>
+			<Args>
+				<Params>%QuotaDomains%</Params>
+				<Key>InternalName/Domains</Key>
+			</Args>
+			<Alias>`SchemeParams`</Alias>
 		</QuotaDomains>
 		<!-- ********************************************************************** -->
 		<QuotaEmail>
 			<Head>Почт.</Head>
 			<Prompt>Кол-во почтовых ящиков</Prompt>
 			<LongName>Число почтовых ящиков</LongName>
+			<Comp>Formats/System/Param</Comp>
+			<Args>
+				<Params>%QuotaEmail%</Params>
+				<Key>InternalName/EMAIL</Key>
+			</Args>
+			<Alias>`SchemeParams`</Alias>
 		</QuotaEmail>
 		<!-- ********************************************************************** -->
 		<QuotaDBs>
 			<Head>Баз</Head>
 			<Prompt>Кол-во баз данных</Prompt>
 			<LongName>Число баз данных</LongName>
+			<Comp>Formats/System/Param</Comp>
+			<Args>
+				<Params>%QuotaDBs%</Params>
+				<Key>InternalName/DB</Key>
+			</Args>
+			<Alias>`SchemeParams`</Alias>
 		</QuotaDBs>
 		<!-- ********************************************************************** -->
 		<QuotaFTP>
 			<Head>FTP</Head>
 			<Prompt>Кол-во ftp-аккаунтов</Prompt>
 			<LongName>Число FTP аккаунтов</LongName>
+			<Comp>Formats/System/Param</Comp>
+			<Args>
+				<Params>%QuotaFTP%</Params>
+				<Key>InternalName/FTP</Key>
+			</Args>
+			<Alias>`SchemeParams`</Alias>
 		</QuotaFTP>
 		<!-- ********************************************************************** -->
 		<mailrate>
 			<Head>Email</Head>
 			<Prompt>Максимальное количество отправляемых писем, в час</Prompt>
 			<LongName>Максимально писем, в час</LongName>
+			<Comp>Formats/System/Param</Comp>
+			<Args>
+				<Params>%mailrate%</Params>
+				<Key>InternalName/MailRate</Key>
+			</Args>
+			<Alias>`SchemeParams`</Alias>
 		</mailrate>
 		<!-- ********************************************************************** -->
 		<IsActive>
