@@ -1,35 +1,35 @@
 {*
- *  Joonte Billing System
- *  Copyright © 2012 Vitaly Velikodnyy
+ *Joonte Billing System
+ *Copyright © 2012 Vitaly Velikodnyy
  *}
 {assign var=Theme value="Активирован заказ виртуального сервера #{$OrderID|string_format:"%05u"}, логин ({$Login|default:'$Login'})" scope=global}
 
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ №{$OrderID|string_format:"%05u"} на виртуальный выделенный сервер (VPS) был активирован.
 
 Данные для доступа к панели управления VPS сервером:
-  * Адрес панели управления: {$Server.Params.Url|default:'$Server.Params.Url'}
-  * Логин в панель управления: {$Login|default:'$Login'}
-  * Пароль панели управления: {$Password|default:'$Password'}
+ Адрес панели управления: {$Server.Params.Url|default:'$Server.Params.Url'}
+ Логин в панель управления: {$Login|default:'$Login'}
+ Пароль панели управления: {$Password|default:'$Password'}
 
 Если вы заказывали сервер с UNIX-like операционной системой (FreeBSD/Linux), то вы можете войти на него по SSH:
-  * IP адрес сервера: {$IP|default:'$IP'}
-  * Имя пользователя: root
-  * Пароль: {$Password|default:'$Password'}
+ IP адрес сервера: {$IP|default:'$IP'}
+ Имя пользователя: root
+ Пароль: {$Password|default:'$Password'}
  
 Если вы заказывали сервер с операционной системой Windows, то вы можете войти на него по RDP:
-  * IP адрес сервера: {$IP|default:'$IP'}
-  * Имя пользователя: Administrator
-  * Пароль: {$Password|default:'$Password'}
-  * rdp://full%20address=s:{$IP|default:'$IP'}:3389&username=s:Administrator
+ IP адрес сервера: {$IP|default:'$IP'}
+ Имя пользователя: Administrator
+ Пароль: {$Password|default:'$Password'}
+ rdp://full%20address=s:{$IP|default:'$IP'}:3389&username=s:Administrator
 
 При заказе сервера с панелью управления ISPmanager, Вы можете войти в неё используя следующие данные:
-  * Адрес панели ISPmanager: https://{$IP|default:'$IP'}:1500/ispmgr
-  * Логин в панель ISPmanager: root
-  * Пароль панели ISPmanger: {$Password|default:'$Password'}
+ Адрес панели ISPmanager: https://{$IP|default:'$IP'}:1500/ispmgr
+ Логин в панель ISPmanager: root
+ Пароль панели ISPmanger: {$Password|default:'$Password'}
 
 Сервера имён:
-  * Первичный сервер имён: {$Server.Params.Ns1Name|default:'$Server.Params.Ns1Name'}
-  * Вторичный сервер имён: {$Server.Params.Ns2Name|default:'$Server.Params.Ns2Name'}
+ Первичный сервер имён: {$Server.Params.Ns1Name|default:'$Server.Params.Ns1Name'}
+ Вторичный сервер имён: {$Server.Params.Ns2Name|default:'$Server.Params.Ns2Name'}
 
 
 Сохраните эти данные в надежном месте, они потребуются для дальнейшей работы.
