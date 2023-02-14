@@ -91,7 +91,7 @@ if(IsSet($VPSOrder['Params']['DiskTemplate'])){
 // проверяем что лимиты достаточны для установки винды, если шаблон винды
 if(IsSet($DiskTemplate) && Preg_Match('/Windows/',$DiskTemplate)){
 	#-------------------------------------------------------------------------------
-	if($VPSScheme['SchemeParams']['HDD'] < 20000 || $VPSScheme['SchemeParams']['RAM'] < 1024){
+	if($VPSScheme['SchemeParams']['InternalName']['HDD'] < 20000 || $VPSScheme['SchemeParams']['InternalName']['RAM'] < 1024){
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[comp/Tasks/VPSCreate]: Выбран шаблон Windows, но он не пролезает под минимальные требования'));
 		#-------------------------------------------------------------------------------
