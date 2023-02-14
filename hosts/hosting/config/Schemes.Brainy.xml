@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<!-- https://docs.brainycp.com/index.php/API:_%D1%85%D0%BE%D1%81%D1%82-%D0%B0%D0%BA%D0%BA%D0%B0%D1%83%D0%BD%D1%82%D1%8B -->
+<XML>
+<!-- *********************************************************************** -->
+<bandwidth>
+	<Name>Трафик? Полоса?</Name>
+	<Description>Максимальный размер трафика, используемого WWW-доменами, а также FTP-пользователями в за календарный месяц (в период с первого по последнее число месяца)</Description>
+	<Value>100000000</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>100000000</Max>
+	<Unit>Mb</Unit>
+</bandwidth>
+<!-- *********************************************************************** -->
+<disk>
+	<Name>Место на диске</Name>
+	<Description>Максимальный размер дискового пространства, которое могут занимать файлы, принадлежащие пользователю</Description>
+	<Value>100</Value>
+	<InternalName>HDD</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>1000000</Max>
+	<Unit>Mb</Unit>
+</disk>
+<!-- *********************************************************************** -->
+<sites>
+	<Name>WWW-доменов (сайтов)</Name>
+	<Description>Сколько WWW доменов (сайтов) можно создать</Description>
+	<Value>1</Value>
+	<InternalName>WWW</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</sites>
+<!-- *********************************************************************** -->
+<dns_zones>
+	<Name>DNS доменов</Name>
+	<Description>Сколько DNS доменов (доменных имён) можно создать</Description>
+	<Value>1</Value>
+	<InternalName>Domains</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</dns_zones>
+<!-- *********************************************************************** -->
+<subdomains>
+	<Name>Поддоменов</Name>
+	<Description>Сколько поддоменов можно создать</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</subdomains>
+<!-- *********************************************************************** -->
+<databases>
+	<Name>Баз данных</Name>
+	<Description>Число баз данных</Description>
+	<Value>1</Value>
+	<InternalName>DB</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</databases>
+<!-- *********************************************************************** -->
+<emailboxes>
+	<Name>Почтовые ящики</Name>
+	<Description>Количество почтовых ящиков</Description>
+	<Value>5</Value>
+	<InternalName>EMAIL</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</emailboxes>
+<!-- *********************************************************************** -->
+<mailperhour>
+	<Name>Писем в час</Name>
+	<Description>Сколько писем в час может отправить клиент через mail() или SMTP (толи на пользователя, толи на ящик...)</Description>
+	<Value>100</Value>
+	<InternalName>MailRate</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000000</Max>
+</mailperhour>
+<!-- *********************************************************************** -->
+<ftp_accounts>
+	<Name>FTP аккаунты</Name>
+	<Description>Количество дополнительных FTP аккаунтов</Description>
+	<Value>2</Value>
+	<InternalName>FTP</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</ftp_accounts>
+<!-- *********************************************************************** -->
+<shell>
+	<Name>Доступ к shell (SSH)</Name>
+	<Description>Возможность подключения к серверу по ssh</Description>
+	<Value>0</Value>
+	<InternalName>SSH</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</shell>
+<!-- *********************************************************************** -->
+<databases_max_user_connections>
+	<Name>Одновременных соединений к MySQL</Name>
+	<Description>Указывает, какое количество одновременных соединений с MySQL может установить каждый MySQL-пользователь</Description>
+	<Value>1000</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>10000</Max>
+</databases_max_user_connections>
+<!-- *********************************************************************** -->
+<databases_max_connections>
+	<Name>Соединений к MySQL</Name>
+	<Description>Указывает, какое количество новых соединений с MySQL может установить каждый MySQL-пользователь за один час</Description>
+	<Value>100000000</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000000</Max>
+</databases_max_connections>
+<!-- *********************************************************************** -->
+<databases_max_queries>
+	<Name>Запросов к MySQL</Name>
+	<Description>Указывает максимальное количество команд, которое может выполнять каждый MySQL-пользователь за один час</Description>
+	<Value>100000000</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000000</Max>
+</databases_max_queries>
+<!-- *********************************************************************** -->
+<databases_max_updates>
+	<Name>Обновлений MySQL</Name>
+	<Description>Указывает максимальное количество команд, изменяющих данные, которое может выполнять каждый MySQL-пользователь за один час</Description>
+	<Value>100000000</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000000</Max>
+</databases_max_updates>
+<!-- *********************************************************************** -->
+<ctl_max_user_task>
+	<Name>Число процессов</Name>
+	<Description>Сколько процессов может запустить пользователь</Description>
+	<Value>10</Value>
+	<InternalName>MaxProc</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000</Max>
+</ctl_max_user_task>
+<!-- *********************************************************************** -->
+<ctl_max_user_memory>
+	<Name>Оперативная память</Name>
+	<Description>Сколько оперативной памяти смогут использовать сайты</Description>
+	<Value>512</Value>
+	<InternalName>MEM</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000</Max>
+	<Unit>Mb</Unit>
+</ctl_max_user_memory>
+<!-- *********************************************************************** -->
+<ctl_max_user_cpu>
+	<Name>Ограничение CPU</Name>
+	<Description>Максимальная нагрузка CPU в %</Description>
+	<Value>5</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000</Max>
+	<Unit>%</Unit>
+</ctl_max_user_cpu>
+<!-- *********************************************************************** -->
+<ctl_max_user_ior>
+	<Name>Чтение</Name>
+	<Description>Скорость чтения с диска</Description>
+	<Value>1000</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000</Max>
+	<Unit>IOPS</Unit>
+</ctl_max_user_ior>
+<!-- *********************************************************************** -->
+<ctl_max_user_iow>
+	<Name>Запись</Name>
+	<Description>Скорость записи на диск</Description>
+	<Value>1000</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000</Max>
+	<Unit>IOPS</Unit>
+</ctl_max_user_iow>
+<!-- *********************************************************************** -->
+</XML>
