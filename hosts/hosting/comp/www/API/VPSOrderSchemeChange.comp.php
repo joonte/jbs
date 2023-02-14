@@ -53,7 +53,7 @@ if($VPSOrder['StatusID'] != 'Active')
 	return new gException('ORDER_NO_ACTIVE','Заказ виртуального сервера не активен');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$OldScheme = DB_Select('VPSSchemes',Array('ID','IsSchemeChange','disklimit','Name','CostDay'),Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
+$OldScheme = DB_Select('VPSSchemes',Array('ID','IsSchemeChange','SchemeParams','Name','CostDay'),Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
 #-------------------------------------------------------------------------------
 switch(ValueOf($OldScheme)){
 case 'error':
@@ -78,7 +78,7 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$NewScheme = DB_Select($UniqID,Array('ID','ServersGroupID','IsSchemeChangeable','disklimit','Name','CostDay'),Array('UNIQ','ID'=>$NewSchemeID));
+$NewScheme = DB_Select($UniqID,Array('ID','ServersGroupID','IsSchemeChangeable','SchemeParams','Name','CostDay'),Array('UNIQ','ID'=>$NewSchemeID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($NewScheme)){
 case 'error':
@@ -116,7 +116,7 @@ if($VPSOrder['SchemeID'] == $NewScheme['ID'])
 if(!$NewScheme['IsSchemeChangeable'])
 	return new gException('SCHEME_NOT_CHANGEABLE','Выбранный тариф не позволяет переход');
 #-------------------------------------------------------------------------------
-if($OldScheme['disklimit'] > $NewScheme['disklimit']){
+if($OldScheme['SchemeParams']['InternalName']['HDD'] > $NewScheme['SchemeParams']['InternalName']['HDD']){
 	#-------------------------------------------------------------------------------
 	if(In_Array($VPSOrder['Params']['SystemID'],Array('VmManager5_KVM','VmManager6_Hosting')))
 		return new gException('CANNOT_RESIZE_DISK','Система виртуализации KVM не предусматривает уменьшения размера диска. Изменить тариф в меньшую сторону невозможно.');
