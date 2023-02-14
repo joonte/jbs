@@ -16,12 +16,6 @@
 		<ColumnsIDs>
 			<ListElement>ID</ListElement>
 			<ListElement>CostMonth</ListElement>
-			<ListElement>QuotaDisk</ListElement>
-			<ListElement>QuotaEmail</ListElement>
-			<ListElement>QuotaDomains</ListElement>
-			<ListElement>QuotaDBs</ListElement>
-			<ListElement>QuotaFTP</ListElement>
-			<ListElement>mailrate</ListElement>
 			<ListElement>IsActive</ListElement>
 			<ListElement>SortID</ListElement>
 		</ColumnsIDs>
@@ -176,75 +170,75 @@
 			</Args>
 		</OrderLink>
 		<!-- ********************************************************************** -->
-		<QuotaDisk>
+		<HDD>
 			<Head>Место</Head>
 			<Prompt>Объем выделяемого пространства в мегабайтах</Prompt>
 			<Comp>Formats/System/Param</Comp>
 			<Args>
-				<Params>%QuotaDisk%</Params>
+				<Params>%HDD%</Params>
 				<Key>InternalName/HDD</Key>
 			</Args>
 			<Alias>`SchemeParams`</Alias>
-		</QuotaDisk>
+		</HDD>
 		<!-- ********************************************************************** -->
-		<QuotaDomains>
+		<Domains>
 			<Head>Дом.</Head>
-			<Prompt>Кол-во доменов которео возможно разместить на заказе</Prompt>
+			<Prompt>Кол-во доменов которое возможно разместить на заказе</Prompt>
 			<Comp>Formats/System/Param</Comp>
 			<Args>
-				<Params>%QuotaDomains%</Params>
+				<Params>%Domains%</Params>
 				<Key>InternalName/Domains</Key>
 			</Args>
 			<Alias>`SchemeParams`</Alias>
-		</QuotaDomains>
+		</Domains>
 		<!-- ********************************************************************** -->
-		<QuotaEmail>
+		<EMAIL>
 			<Head>Почт.</Head>
 			<Prompt>Кол-во почтовых ящиков</Prompt>
 			<LongName>Число почтовых ящиков</LongName>
 			<Comp>Formats/System/Param</Comp>
 			<Args>
-				<Params>%QuotaEmail%</Params>
+				<Params>%EMAIL%</Params>
 				<Key>InternalName/EMAIL</Key>
 			</Args>
 			<Alias>`SchemeParams`</Alias>
-		</QuotaEmail>
+		</EMAIL>
 		<!-- ********************************************************************** -->
-		<QuotaDBs>
+		<DB>
 			<Head>Баз</Head>
 			<Prompt>Кол-во баз данных</Prompt>
 			<LongName>Число баз данных</LongName>
 			<Comp>Formats/System/Param</Comp>
 			<Args>
-				<Params>%QuotaDBs%</Params>
+				<Params>%DB%</Params>
 				<Key>InternalName/DB</Key>
 			</Args>
 			<Alias>`SchemeParams`</Alias>
-		</QuotaDBs>
+		</DB>
 		<!-- ********************************************************************** -->
-		<QuotaFTP>
+		<FTP>
 			<Head>FTP</Head>
 			<Prompt>Кол-во ftp-аккаунтов</Prompt>
 			<LongName>Число FTP аккаунтов</LongName>
 			<Comp>Formats/System/Param</Comp>
 			<Args>
-				<Params>%QuotaFTP%</Params>
+				<Params>%FTP%</Params>
 				<Key>InternalName/FTP</Key>
 			</Args>
 			<Alias>`SchemeParams`</Alias>
-		</QuotaFTP>
+		</FTP>
 		<!-- ********************************************************************** -->
-		<mailrate>
+		<MailRate>
 			<Head>Email</Head>
 			<Prompt>Максимальное количество отправляемых писем, в час</Prompt>
 			<LongName>Максимально писем, в час</LongName>
 			<Comp>Formats/System/Param</Comp>
 			<Args>
-				<Params>%mailrate%</Params>
+				<Params>%MailRate%</Params>
 				<Key>InternalName/MailRate</Key>
 			</Args>
 			<Alias>`SchemeParams`</Alias>
-		</mailrate>
+		</MailRate>
 		<!-- ********************************************************************** -->
 		<IsActive>
 			<Head>Актив.</Head>
@@ -284,7 +278,7 @@
 		<ListElement>ServersGroup</ListElement>
 		<ListElement>CostMonth</ListElement>
 		<ListElement>Discount</ListElement>
-		<ListElement>QuotaDisk</ListElement>
+		<ListElement>HDD</ListElement>
 		<ListElement>IsActive</ListElement>
 		<ListElement>OrderLink</ListElement>
 		<ListElement>Orders</ListElement>

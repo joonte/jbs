@@ -49,12 +49,12 @@
 		<ListElement>Name</ListElement>
 		<ListElement>ServersGroup</ListElement>
 		<ListElement>CostMonth</ListElement>
-		<ListElement>QuotaDisk</ListElement>
-		<ListElement>QuotaDBs</ListElement>
-		<ListElement>QuotaFTP</ListElement>
-		<ListElement>QuotaEmail</ListElement>
-		<ListElement>mailrate</ListElement>
-		<ListElement>QuotaDomains</ListElement>
+		<ListElement>HDD</ListElement>
+		<ListElement>DB</ListElement>
+		<ListElement>FTP</ListElement>
+		<ListElement>EMAIL</ListElement>
+		<ListElement>MailRate</ListElement>
+		<ListElement>Domains</ListElement>
 	</Sequence>
 	<!-- *********************************************************************** -->
 </XML>

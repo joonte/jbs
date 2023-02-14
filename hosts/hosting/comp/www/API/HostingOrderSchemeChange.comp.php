@@ -60,7 +60,7 @@ if(!In_Array($HostingOrder['StatusID'],Array('Active','Suspended')))
 	return new gException('ORDER_NOT_ACTIVE','Тариф можно изменить только для активного или заблокированного заказа');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$OldScheme = DB_Select('HostingSchemes',Array('IsSchemeChange','IsReselling','QuotaDisk','Name','IsProlong','ID'),Array('UNIQ','ID'=>$HostingOrder['SchemeID']));
+$OldScheme = DB_Select('HostingSchemes',Array('IsSchemeChange','IsReselling','SchemeParams','Name','IsProlong','ID'),Array('UNIQ','ID'=>$HostingOrder['SchemeID']));
 #-------------------------------------------------------------------------------
 switch(ValueOf($OldScheme)){
 case 'error':
@@ -85,7 +85,7 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$NewScheme = DB_Select($UniqID,Array('ID','ServersGroupID','IsSchemeChangeable','QuotaDisk','Name'),Array('UNIQ','ID'=>$NewSchemeID));
+$NewScheme = DB_Select($UniqID,Array('ID','ServersGroupID','IsSchemeChangeable','SchemeParams','Name'),Array('UNIQ','ID'=>$NewSchemeID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($NewScheme)){
 case 'error':
@@ -104,7 +104,7 @@ if(!$__USER['IsAdmin']){
 	$LastChange = Time() - $HostingOrder['StatusDate'];
 	#-------------------------------------------------------------------------------
 	# если снижение тарифа, то заодно проверяем прошло ли разрешённое время
-	if($OldScheme['QuotaDisk'] > $NewScheme['QuotaDisk'] && $LastChange < IntVal($Settings['SchemeChangePeriod'])*3600){
+	if($OldScheme['SchemeParams']['InternalName']['HDD'] > $NewScheme['SchemeParams']['InternalName']['HDD'] && $LastChange < IntVal($Settings['SchemeChangePeriod'])*3600){
 		#-------------------------------------------------------------------------------
 		$Comp = Comp_Load('Formats/Date/Remainder',(IntVal($Settings['SchemeChangePeriod'])*3600 - $LastChange));
 		if(Is_Error($Comp))
@@ -123,7 +123,7 @@ if($HostingOrder['SchemeID'] == $NewScheme['ID'])
 if(!$NewScheme['IsSchemeChangeable'])
 	return new gException('SCHEME_NOT_CHANGEABLE','Выбранный тариф не позволяет переход');
 #-------------------------------------------------------------------------------
-if($OldScheme['QuotaDisk'] > $NewScheme['QuotaDisk']){
+if($OldScheme['SchemeParams']['InternalName']['HDD'] > $NewScheme['SchemeParams']['InternalName']['HDD']){
 	#-------------------------------------------------------------------------------
 	if($OldScheme['IsProlong'])
 		if(!$__USER['IsAdmin'] && !$Settings['IsAllowSchemeDecrease'])

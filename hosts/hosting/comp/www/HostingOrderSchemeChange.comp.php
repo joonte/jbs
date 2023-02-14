@@ -90,7 +90,7 @@ $Where = Array(
 if(!$__USER['IsAdmin'])
 	$Where[] = "`IsActive` = 'yes' AND `IsSchemeChangeable` = 'yes'";
 #-------------------------------------------------------------------------------
-$HostingSchemes = DB_Select($UniqID,Array('ID','Name','QuotaDisk','CostMonth'),Array('SortOn'=>'SortID','Where'=>$Where));
+$HostingSchemes = DB_Select($UniqID,Array('ID','Name','SchemeParams','CostMonth'),Array('SortOn'=>'SortID','Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingSchemes)){
 case 'error':
@@ -126,7 +126,7 @@ foreach($HostingSchemes as $HostingScheme){
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Options[$HostingScheme['ID']] = SPrintF('%s / %s Mb / %s',$HostingScheme['Name'],$HostingScheme['QuotaDisk'],$Comp);
+	$Options[$HostingScheme['ID']] = SPrintF('%s / %s Mb / %s',$HostingScheme['Name'],$HostingScheme['SchemeParams']['InternalName']['HDD'],$Comp);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------

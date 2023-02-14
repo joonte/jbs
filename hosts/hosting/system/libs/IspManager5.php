@@ -417,63 +417,38 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 			'passwd'			=> $Password,	# Пароль
 			'confirm'			=> $Password,	# Подтверждение
 			'ip'				=> $IP,		# IP-адрес
-			'email'				=> $Email,
-			#-------------------------------------------------------------------------------
-			'limit_quota'			=> ($HostingScheme['QuotaDisk'])?$HostingScheme['QuotaDisk']:'1',
-			'limit_cgi'			=> ($HostingScheme['IsCGIAccess']?'on':'off'),
-			'limit_db'			=> $HostingScheme['QuotaDBs'],
-			'limit_dbsize'			=> ($HostingScheme['QuotaDisk'])?$HostingScheme['QuotaDisk']:'1',	// размер баз данных
-			'limit_db_users'		=> $HostingScheme['QuotaUsersDBs'],
-			'limit_domains'			=> $HostingScheme['QuotaDomains'],
-			'limit_emaildomains'		=> $HostingScheme['QuotaEmailDomains'],
-			'limit_emaildomains_enabled'	=> ($HostingScheme['QuotaEmailDomains']?'on':'off'),
-			'limit_emails'			=> $HostingScheme['QuotaEmail'],
-			'limit_ftp_users'		=> $HostingScheme['QuotaFTP'],
-			'limit_php_mode'		=> ($HostingScheme['IsPHPModAccess']?'php_mode_mod':'php_mode_none'),
-//			'limit_php_mode'		=> ($HostingScheme['IsPHPModAccess']?'php_mode_cgi':'php_mode_none'),
-			'limit_php_mode_cgi'		=> ($HostingScheme['IsPHPCGIAccess']?'on':'off'),
-			'limit_php_mode_mod'		=> ($HostingScheme['IsPHPModAccess']?'on':'off'),
-			'limit_shell'			=> ($HostingScheme['IsShellAccess']?'on':'off'),
-			'limit_ssl'			=> ($HostingScheme['IsSSLAccess']?'on':'off'),
-			'limit_webdomains'		=> $HostingScheme['QuotaWWWDomains'],
-			'limit_webdomains_enabled'	=> ($HostingScheme['QuotaWWWDomains']?'on':'off'),
-			'php_enable'			=> (($HostingScheme['IsPHPModAccess'] || $HostingScheme['IsPHPCGIAccess'] || $HostingScheme['IsPHPFastCGIAccess'])?'on':'off'),
-			'preset'			=> '#custom',
-			'mailrate'			=> $HostingScheme['mailrate'],	# TODO: отследить когда реализуют
-
-			# настроил авторизацию системных пользователей в proftpd - и это нахрен не надо больше
-			'ftp_user'			=> 'off',
-			#'ftp_user_name'		=> $Login,
-
-			'emaildomain_name'		=> $Domain,
-			'webdomain_name'		=> $Domain,
-			'domain'			=> $Domain,
-
-			'limit_dirindex'		=> '',
-			#'bandwidthlimit'  => $HostingScheme['QuotaTraffic'], # Трафик
-			#'ssi'                   => ($HostingScheme['IsSSIAccess']?'on':'off'), # SSI
-			#'phpfcgi'               => ($HostingScheme['IsPHPFastCGIAccess']?'on':'off'), # PHP как FastCGI
-			#'safemode'              => ($HostingScheme['IsPHPSafeMode']?'on':'off'), # Безопасный режим
-			'limit_cpu'			=> $HostingScheme['MaxExecutionTime'],		# Ограничение на CPU
-			'limit_memory'			=> Ceil($HostingScheme['QuotaMEM']),		# Ограничение на память
-			'limit_process'			=> $HostingScheme['QuotaPROC'],			# Кол-во процессов
-			'limit_maxclientsvhost'		=> $HostingScheme['QuotaMPMworkers'],		# mpm-itk
-			'limit_mysql_query'		=> ($HostingScheme['mysqlquerieslimit'])?$HostingScheme['mysqlquerieslimit']:'',	# Запросов к MySQL
-			'limit_mysql_update'		=> ($HostingScheme['mysqlupdateslimit'])?$HostingScheme['mysqlupdateslimit']:'',	# Обновлений MySQL
-			'limit_mysql_maxconn'		=> ($HostingScheme['mysqlconnectlimit'])?$HostingScheme['mysqlconnectlimit']:'',	# Соединений к MySQL
-			'limit_mysql_maxuserconn'	=> ($HostingScheme['mysqluserconnectlimit'])?$HostingScheme['mysqluserconnectlimit']:'',# Одновременных соединений к MySQL
-//			'limit_php_cgi_enable'		=> ($HostingScheme['IsPHPCGIAccess']?'on':'off'),
-//			'limit_php_cgi_version'		=> 'isp-php56',
-			'limit_nodejs'			=> 'on',
-
+			'email'				=> $Email
 			);
 	#-------------------------------------------------------------------------------
-	if($HostingScheme['QuotaWWWDomains'])
+	// считываем XML и составляем запрос
+	$Fields = System_XML(SPrintF('config/Schemes.%s.xml',$HostingScheme['SchemeParams']['SystemID']));
+	if(Is_Error($Fields))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Fields) as $Key){
+		#-------------------------------------------------------------------------------
+		$Field = $Fields[$Key];
+		#-------------------------------------------------------------------------------
+		$Value = IsSet($HostingScheme['SchemeParams'][$Key])?$HostingScheme['SchemeParams'][$Key]:$Field['Value'];
+		#-------------------------------------------------------------------------------
+		$Request[$Key] = $Value;
+		#-------------------------------------------------------------------------------
+		if(IsSet($Field['Min']))
+			$Request[$Key] = IntVal($Value);
+		#-------------------------------------------------------------------------------
+		if(IsSet($Field['Type']) && $Field['Type'] == 'CheckBox')
+			$Request[$Key] = ($Request[$Key])?'on':'off';
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	if($HostingScheme['SchemeParams']['limit_webdomains'])
 		$Request['domain'] = $Domain; # Домен
 	#-------------------------------------------------------------------------------
+	// персональный чопик
+	$Request['mailrate']			= $HostingScheme['SchemeParams']['limit_mailrate'];
 	if($IsReselling){
 		#-------------------------------------------------------------------------------
-		$Request['limit_users']		= $HostingScheme['QuotaUsers']; # Пользователи
+		$Request['limit_users']		= $HostingScheme['SchemeParams']['limit_users']; # Пользователи
 		# TODO сделать нормальное лимитирование через интерфейс. наверное, не раньше перевода тарифов на xml
 		$Request['limit_ipv4addrs']	= 0;				# адреса, v4
 		$Request['limit_ipv6addrs']	= 0;				# адреса, v6
@@ -738,44 +713,39 @@ function IspManager5_Scheme_Change($Settings,$Login,$HostingScheme){
 			'sok'				=> 'ok', # Значение параметра должно быть равно "yes"
 			'name'				=> $Login, # Имя пользователя (реселлера)
 			'ip'				=> $Settings['Params']['IP'], # IP-адрес
-			#-------------------------------------------------------------------------------
-			'limit_quota'			=> ($HostingScheme['QuotaDisk'])?$HostingScheme['QuotaDisk']:'1',
-			'limit_cgi'			=> ($HostingScheme['IsCGIAccess']?'on':'off'),
-			'limit_db'			=> $HostingScheme['QuotaDBs'],
-			'limit_db_users'		=> $HostingScheme['QuotaUsersDBs'],
-			'limit_domains'			=> $HostingScheme['QuotaDomains'],
-			'limit_emaildomains'		=> $HostingScheme['QuotaEmailDomains'],
-			'limit_emaildomains_enabled'	=> ($HostingScheme['QuotaEmailDomains']?'on':'off'),
-			'limit_emails'			=> $HostingScheme['QuotaEmail'],
-			'limit_ftp_users'		=> $HostingScheme['QuotaFTP'],
-			'limit_php_mode'		=> (($HostingScheme['IsPHPModAccess'])?'php_mode_mod':'php_mode_none'),
-			'limit_php_mode_cgi'		=> ($HostingScheme['IsPHPCGIAccess']?'on':'off'),
-			'limit_php_mode_mod'		=> ($HostingScheme['IsPHPModAccess']?'on':'off'),
-			'limit_shell'			=> ($HostingScheme['IsShellAccess']?'on':'off'),
-			'limit_ssl'			=> ($HostingScheme['IsSSLAccess']?'on':'off'),
-			'limit_webdomains'		=> $HostingScheme['QuotaWWWDomains'],
-			'limit_webdomains_enabled'	=> ($HostingScheme['QuotaWWWDomains']?'on':'off'),
-			'php_enable'			=> (($HostingScheme['IsPHPModAccess'] || $HostingScheme['IsPHPCGIAccess'] || $HostingScheme['IsPHPFastCGIAccess'])?'on':'off'),
-			'preset'			=> '#custom',
-			'limit_dirindex'		=> '',
-			'mailrate'			=> $HostingScheme['mailrate'],	# TODO: отследить когда реализуют
-
-			'limit_cpu'			=> $HostingScheme['MaxExecutionTime'],		# Ограничение на CPU
-			'limit_memory'			=> Ceil($HostingScheme['QuotaMEM']),		# Ограничение на память
-			'limit_process'			=> $HostingScheme['QuotaPROC'],			# Кол-во процессов
-			'limit_maxclientsvhost'		=> $HostingScheme['QuotaMPMworkers'],		# mpm-itk
-			'limit_mysql_query'		=> ($HostingScheme['mysqlquerieslimit'])?$HostingScheme['mysqlquerieslimit']:'',	# Запросов к MySQL
-			'limit_mysql_update'		=> ($HostingScheme['mysqlupdateslimit'])?$HostingScheme['mysqlupdateslimit']:'',	# Обновлений MySQL
-			'limit_mysql_maxconn'		=> ($HostingScheme['mysqlconnectlimit'])?$HostingScheme['mysqlconnectlimit']:'',	# Соединений к MySQL
-			'limit_mysql_maxuserconn'	=> ($HostingScheme['mysqluserconnectlimit'])?$HostingScheme['mysqluserconnectlimit']:'',# Одновременных соединений к MySQL
-			'limit_nodejs'			=> 'on',
-
-
 			);
+	#-------------------------------------------------------------------------------
+	$Fields = System_XML(SPrintF('config/Schemes.%s.xml',$HostingScheme['SchemeParams']['SystemID']));
+	if(Is_Error($Fields))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Fields) as $Key){
+		#-------------------------------------------------------------------------------
+		$Field = $Fields[$Key];
+		#-------------------------------------------------------------------------------
+		if(!$Field['IsSchemeChange'])
+			continue;
+		#-------------------------------------------------------------------------------
+		$Value = IsSet($HostingScheme['SchemeParams'][$Key])?$HostingScheme['SchemeParams'][$Key]:$Field['Value'];
+		#-------------------------------------------------------------------------------
+		$Request[$Key] = $Value;
+		#-------------------------------------------------------------------------------
+		if(IsSet($Field['Min']))
+			$Request[$Key] = IntVal($Value);
+		#-------------------------------------------------------------------------------
+		if(IsSet($Field['Type']) && $Field['Type'] == 'CheckBox')
+			$Request[$Key] = ($Request[$Key])?'on':'off';
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	$Request['limit_webdomains_enabled']	= ($HostingScheme['SchemeParams']['limit_webdomains']?'on':'off');
+	#-------------------------------------------------------------------------------
+	// персональный чопик
+	$Request['mailrate']			= $HostingScheme['SchemeParams']['limit_mailrate'];
 	#-------------------------------------------------------------------------------
 	if($IsReselling){
 		#-------------------------------------------------------------------------------
-		$Request['limit_users']		= $HostingScheme['QuotaUsers'];
+		$Request['limit_users']		= $HostingScheme['SchemeParams']['limit_users'];
 		$Request['limit_ipv4addrs']	= 0;
 		$Request['limit_ipv6addrs']	= 0;
 		#-------------------------------------------------------------------------------

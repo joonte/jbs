@@ -216,8 +216,8 @@
 	<Value>1000</Value>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>0</Min>
-	<Max>10000</Max>
+	<Min>1</Min>
+	<Max>999999999</Max>
 </limit_mysql_maxuserconn>
 <!-- *********************************************************************** -->
 <limit_mysql_maxconn>
@@ -226,7 +226,7 @@
 	<Value>100000000</Value>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>0</Min>
+	<Min>1</Min>
 	<Max>100000000</Max>
 </limit_mysql_maxconn>
 <!-- *********************************************************************** -->
@@ -236,7 +236,7 @@
 	<Value>100000000</Value>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>0</Min>
+	<Min>1</Min>
 	<Max>100000000</Max>
 </limit_mysql_query>
 <!-- *********************************************************************** -->
@@ -246,7 +246,7 @@
 	<Value>100000000</Value>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
-	<Min>0</Min>
+	<Min>1</Min>
 	<Max>100000000</Max>
 </limit_mysql_update>
 <!-- *********************************************************************** -->

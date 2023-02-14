@@ -6,15 +6,7 @@
 <IsReselling>Logic</IsReselling>
 <IsSchemeChangeable>Logic</IsSchemeChangeable>
 <IsSchemeChange>Logic</IsSchemeChange>
-<IsShellAccess>Logic</IsShellAccess>
-<IsSSLAccess>Logic</IsSSLAccess>
-<IsCGIAccess>Logic</IsCGIAccess>
-<IsSSIAccess>Logic</IsSSIAccess>
 <IsCreateDomain>Logic</IsCreateDomain>
-<IsPHPModAccess>Logic</IsPHPModAccess>
-<IsPHPCGIAccess>Logic</IsPHPCGIAccess>
-<IsPHPFastCGIAccess>Logic</IsPHPFastCGIAccess>
-<IsPHPSafeMode>Logic</IsPHPSafeMode>
 <!-- *********************************************************************** -->
 <!-- HostingSchemes, DomainSchemes -->
 <IsActive>Logic</IsActive>
