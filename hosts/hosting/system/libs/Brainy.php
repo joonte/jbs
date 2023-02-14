@@ -279,6 +279,8 @@ function Brainy_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,$Em
 	$Request['lg']		= $Login;
 	$Request['ps']		= $Password;
 	$Request['plan']	= Brainy_SchemeName($HostingScheme);
+	$Request['ip']		= $IP;
+	$Request['group']	= 'auto_JBS';
 	#-------------------------------------------------------------------------------
 	$Response = HTTP_Send('/api/api.php',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
@@ -290,7 +292,9 @@ function Brainy_Create($Settings,$Login,$Password,$Domain,$IP,$HostingScheme,$Em
 	if(IsSet($Doc['err']))
 		$Doc['error'] = $Doc['err'];
 	#-------------------------------------------------------------------------------
-	if(!IsSet($Doc['error']) || $Doc['error'] > 0 )
+	// 16:Хост аккаунт успешно добавлен. Значение ip, в поле тарифа пустое. Проверьте корректность данного параметра
+	// х.з. что за ошибка...
+	if(!IsSet($Doc['error']) || ($Doc['error'] > 0 && $Doc['error'] != 16 ))
 		return new gException('ACCOUNT_CREATE_ERROR',SPrintF('Не удалось создать заказ хостинга: %s:%s',$Doc['error'],$Doc['mess']));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -466,19 +470,25 @@ function Brainy_Scheme_Change($Settings,$Login,$HostingScheme){
 	$Doc = Json_Decode(Trim($Response['Body']),TRUE);
 	#-------------------------------------------------------------------------------
 	#Debug(print_r($Doc,true));
-	// сравниваем текущие значения, с теми что по тарифному плану. Причём панель может не прислать текущие лимиты - пиздец какой-то
-	if(IsSet($Doc['data']['r_ftp_accounts']) && $Doc['data']['r_ftp_accounts'] > $HostingScheme['QuotaFTP'])
-		return new gException('TOO_MANY_FTP',SPrintF('Слишком много ftp аккаунтов'));
-	if(IsSet($Doc['data']['r_disk']) && $Doc['data']['r_disk'] > $HostingScheme['QuotaDisk'])
-		return new gException('TOO_MANY_DISK_USED',SPrintF('Используется слишком много места'));
-	if(IsSet($Doc['data']['r_sites']) && $Doc['data']['r_sites'] > $HostingScheme['QuotaWWWDomains'])
-		return new gException('TOO_MANY_WWW',SPrintF('Слишком много сайтов'));
-	if(IsSet($Doc['data']['r_dnszones']) && $Doc['data']['r_dnszones'] > $HostingScheme['QuotaDomains'])
-		return new gException('TOO_MANY_DNS',SPrintF('Слишком много DNS доменов'));
-	if(IsSet($Doc['data']['r_emailboxes']) && $Doc['data']['r_emailboxes'] > $HostingScheme['QuotaEmail'])
-		return new gException('TOO_MANY_MAILBOX',SPrintF('Слишком много почтовых ящиков'));
-	if(IsSet($Doc['data']['r_databases']) && $Doc['data']['r_databases'] > $HostingScheme['QuotaDBs'])
-		return new gException('TOO_MANY_DBs',SPrintF('Слишком много баз данных'));
+	$Fields = System_XML(SPrintF('config/Schemes.%s.xml',$HostingScheme['SchemeParams']['SystemID']));
+	if(Is_Error($Fields))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Fields) as $Key){
+		#-------------------------------------------------------------------------------
+		$Field = $Fields[$Key];
+		#-------------------------------------------------------------------------------
+		$r_Value = IsSet($HostingScheme['SchemeParams'][$Key])?$HostingScheme['SchemeParams'][$Key]:$Field['Value'];
+		#-------------------------------------------------------------------------------
+		$r_Key = SPrintF('r_%s',$Key);
+		#-------------------------------------------------------------------------------
+		// сравниваем цифровые значения
+		if(IsSet($Field['Min']))
+			if(IsSet($Doc['data'][$r_Key]))
+				if($Doc['data'][$r_Key] > $HostingScheme['SchemeParams'][$Key])
+					return new gException('TOO_MANY_VALUE',SPrintF('Превышен лимит %s: %s',$Key,$Field['Name']));
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	// общая часть запроса
@@ -491,17 +501,31 @@ function Brainy_Scheme_Change($Settings,$Login,$HostingScheme){
 	$Request['lg']		= $Login;	// они сами не знают как оно называется
 	$Request['plan']	= Brainy_SchemeName($HostingScheme);
 	$Request['group']	= '';
-	$Request['shell_access']= ($HostingScheme['IsShellAccess']?'y':'n');	// они сами не знают как оно называется
-	$Request['shell']	= ($HostingScheme['IsShellAccess']?'y':'n');	// они сами не знают как оно называется
-	$Request['bandwidth']	= $HostingScheme['QuotaTraffic'];		// название от полосы, по факту оказался трафик...
-	$Request['disk']	= ($HostingScheme['QuotaDisk'])?$HostingScheme['QuotaDisk']:'1';
-	$Request['sites']	= $HostingScheme['QuotaWWWDomains'];
-	$Request['dns_zones']	= $HostingScheme['QuotaDomains'];
-	$Request['subdomains']	= $HostingScheme['QuotaParkDomains'];
-	$Request['databases']	= $HostingScheme['QuotaDBs'];
-	$Request['emailboxes']	= $HostingScheme['QuotaEmail'];
-	$Request['mailperhour']	= $HostingScheme['mailrate'];
-	$Request['ftp_accounts']= $HostingScheme['QuotaFTP'];
+	#-------------------------------------------------------------------------------
+	$Fields = System_XML(SPrintF('config/Schemes.%s.xml',$HostingScheme['SchemeParams']['SystemID']));
+	if(Is_Error($Fields))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Fields) as $Key){
+		#-------------------------------------------------------------------------------
+		$Field = $Fields[$Key];
+		#-------------------------------------------------------------------------------
+		//if(!$Field['IsSchemeChange'])
+		//	continue;
+		#-------------------------------------------------------------------------------
+		$Value = IsSet($HostingScheme['SchemeParams'][$Key])?$HostingScheme['SchemeParams'][$Key]:$Field['Value'];
+		#-------------------------------------------------------------------------------
+		$Request[$Key] = $Value;
+		#-------------------------------------------------------------------------------
+		if(IsSet($Field['Min']))
+			$Request[$Key] = IntVal($Value);
+		#-------------------------------------------------------------------------------
+		if(IsSet($Field['Type']) && $Field['Type'] == 'CheckBox')
+			$Request[$Key] = ($Request[$Key])?'y':'n';
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	$Request['shell_access']= $Request['shell'];
 	$Request['lang']	= 'ru';
 	#-------------------------------------------------------------------------------
 	$Response = HTTP_Send('/api/api.php',$HTTP,Array(),$Request);
@@ -773,19 +797,30 @@ function Brainy_Add_Scheme($Settings,$HostingScheme){
 	// определяем что дальше делаем - редактируем или добавляем новый
 	$SubDo = ($Doc['error'] == 0)?'editplanacc':'addplanacc';
 	#-------------------------------------------------------------------------------
+	// считываем XML и составляем запрос
+	$Fields = System_XML(SPrintF('config/Schemes.%s.xml',$HostingScheme['SchemeParams']['SystemID']));
+	if(Is_Error($Fields))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Fields) as $Key){
+		#-------------------------------------------------------------------------------
+		$Field = $Fields[$Key];
+		#-------------------------------------------------------------------------------
+		$Value = IsSet($HostingScheme['SchemeParams'][$Key])?$HostingScheme['SchemeParams'][$Key]:$Field['Value'];
+		#-------------------------------------------------------------------------------
+		$Request[$Key] = $Value;
+		#-------------------------------------------------------------------------------
+		if(IsSet($Field['Min']))
+			$Request[$Key] = IntVal($Value);
+		#-------------------------------------------------------------------------------
+		if(IsSet($Field['Type']) && $Field['Type'] == 'CheckBox')
+			$Request[$Key] = ($Request[$Key])?'y':'n';
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
 	$Request['module']	= 'hostacc';
 	$Request['subdo']	= $SubDo;
 	$Request['plan']	= $SchemeName;
-	$Request['bandwidth']	= $HostingScheme['QuotaTraffic'];	// название от полосы, по факту оказался трафик...
-	$Request['disk']	= ($HostingScheme['QuotaDisk'])?$HostingScheme['QuotaDisk']:'1';
-	$Request['sites']	= $HostingScheme['QuotaWWWDomains'];
-	$Request['dns_zones']	= $HostingScheme['QuotaDomains'];
-	$Request['subdomains']	= $HostingScheme['QuotaParkDomains'];
-	$Request['databases']	= $HostingScheme['QuotaDBs'];
-	$Request['emailboxes']	= $HostingScheme['QuotaEmail'];
-	$Request['mailperhour']	= $HostingScheme['mailrate'];
-	$Request['ftp_accounts']= $HostingScheme['QuotaFTP'];
-	$Request['shell']	= ($HostingScheme['IsShellAccess']?'y':'n');
 	$Request['lang']	= 'ru';
 	#-------------------------------------------------------------------------------
 	$Response = HTTP_Send('/api/api.php',$HTTP,Array(),$Request);
