@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- @author Alex Keda, for www.host-food.ru -->
+<!-- https://docs.ispsystem.ru/vmmanager-admin/razrabotchiku/api/vmmanager-api -->
 <XML>
 <!-- *********************************************************************** -->
 <cluster>
@@ -207,15 +208,6 @@
 	<Type>Select</Type>
 </cpu_mode>
 <!-- *********************************************************************** -->
-<nesting>
-	<Name>Вложенная витуализация</Name>
-	<Description>Разрешает запускать виртуальные машины внутри виртуальной машины</Description>
-	<Value>0</Value>
-	<IsCreate>1</IsCreate>
-	<IsSchemeChange>1</IsSchemeChange>
-	<Type>CheckBox</Type>
-</nesting>
-<!-- *********************************************************************** -->
 <!--
   "cpu_custom_model": "string",
 -->
@@ -309,15 +301,6 @@
 <!-- LXD
   "net_weight": 0, -->
 <!-- *********************************************************************** -->
-<anti_spoofing>
-	<Name>АнтиСпуфинг</Name>
-	<Description>Запретить трафик от IP адресов не назначенных машине. Актуально, если к ВМ имеет доступ неконтролируемые люди (продажа ВПС, например - клиенты запрсото могут "выделить" себе IP адрес который уже кем-то занят)</Description>
-	<Value>1</Value>
-	<IsCreate>1</IsCreate>
-	<IsSchemeChange>1</IsSchemeChange>
-	<Type>CheckBox</Type>
-</anti_spoofing>
-<!-- *********************************************************************** -->
 <tcp_connections_in>
 	<Name>TCP соединений, входящих</Name>
 	<Description>Количество входящих TCP соединений для вирутальной машины</Description>
@@ -337,6 +320,24 @@
 	<Min>1</Min>
 	<Max>1000000</Max>
 </tcp_connections_out>
+<!-- *********************************************************************** -->
+<nesting>
+	<Name>Вложенная витуализация</Name>
+	<Description>Разрешает запускать виртуальные машины внутри виртуальной машины</Description>
+	<Value>0</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</nesting>
+<!-- *********************************************************************** -->
+<anti_spoofing>
+	<Name>АнтиСпуфинг</Name>
+	<Description>Запретить трафик от IP адресов не назначенных машине. Актуально, если к ВМ имеет доступ неконтролируемые люди (продажа ВПС, например - клиенты запрсото могут "выделить" себе IP адрес который уже кем-то занят)</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</anti_spoofing>
 <!-- *********************************************************************** -->
 <!--
   "process_number": -1,
