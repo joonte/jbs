@@ -13,7 +13,6 @@ $ServerID	= (integer) @$Args['ServerID'];
 $TemplateID	=  (string) @$Args['TemplateID'];
 $Window		=  (string) @$Args['Window'];
 $ServersGroupID	= (integer) @$Args['ServersGroupID'];
-
 $IsActive	= (boolean) @$Args['IsActive'];
 $IsDefault	= (boolean) @$Args['IsDefault'];
 $Protocol	=  (string) @$Args['Protocol'];
@@ -165,6 +164,33 @@ if(Count($Errors)){
 }
 #-------------------------------------------------------------------------------
 $Replace = Array_ToLine($Attribs,'%');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// проверяем что все сервера в группе имеют одну систему управления
+if($ServersGroupID){
+	#-------------------------------------------------------------------------------
+	// группа серверов задана
+	$Servers = DB_Select('Servers',Array('*'),Array('Where'=>SPrintF('`ServersGroupID` = %u',$ServersGroupID),'SortOn'=>'SortID'));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Servers)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		# проверки не требуется
+		break;
+	case 'array':
+		#-------------------------------------------------------------------------------
+		foreach($Servers as $Server)
+			if($Attribs['SystemID'] != $Server['Params']['SystemID'])
+				return new gException('DIFFERENT_CONTROL_PANEL',SPrintF('В группе уже используются сервера с другой панелью управления %s: %s',$Server['Address'],$Server['Params']['SystemID']));
+		#-------------------------------------------------------------------------------
+		break;
+		#-------------------------------------------------------------------------------
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-----------------------------TRANSACTION---------------------------------------
 if(Is_Error(DB_Transaction($TransactionID = UniqID('ServerEdit'))))
