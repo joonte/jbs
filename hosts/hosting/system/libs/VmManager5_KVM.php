@@ -107,14 +107,34 @@ function VmManager5_KVM_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 		$Request = Array(
 				'func'			=> 'user.edit',		# Целевая функция
 				'sok'			=> 'ok',
-				'allowcreatevm'		=> 'off',		# нет ограничений, нет смысла создавать неограниченных юзеров
-				'snapshot_limit'	=> $VPSScheme['snapshot_limit'],
-				'isolimitsize'		=> $VPSScheme['isolimitsize'],
-				'isolimitnum'		=> $VPSScheme['isolimitnum'],
 				'name'			=> $VPSOrder['Login'],
 				'passwd'		=> $VPSOrder['Password'],
 				'confirm'		=> $VPSOrder['Password'],
 				);
+		#-------------------------------------------------------------------------------
+		// считываем XML и составляем запрос
+		$Fields = System_XML(SPrintF('config/Schemes.%s.xml',$VPSScheme['SchemeParams']['SystemID']));
+		if(Is_Error($Fields))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		foreach(Array_Keys($Fields) as $Key){
+			#-------------------------------------------------------------------------------
+			$Field = $Fields[$Key];
+			#-------------------------------------------------------------------------------
+			if(!IsSet($Field['IsUser']))
+				continue;
+			#-------------------------------------------------------------------------------
+			$Value = IsSet($VPSScheme['SchemeParams'][$Key])?$VPSScheme['SchemeParams'][$Key]:$Field['Value'];
+			#-------------------------------------------------------------------------------
+			$Request[$Key] = $Value;
+			#-------------------------------------------------------------------------------
+			if(IsSet($Field['Min']))
+				$Request[$Key] = IntVal($Value);
+			#-------------------------------------------------------------------------------
+			if(IsSet($Field['Type']) && $Field['Type'] == 'CheckBox')
+				$Request[$Key] = ($Request[$Key])?'on':'off';
+			#-------------------------------------------------------------------------------
+		}
 		#-------------------------------------------------------------------------------
 		$XML = VmManager5_KVM_Request($Settings,$Request);
 		#-------------------------------------------------------------------------------
@@ -145,7 +165,7 @@ function VmManager5_KVM_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 		if(!IsSet($Preset['id']))
 			continue;
 		#------------------------------------------------------------------------------
-		if($Preset['name'] == $VPSScheme['preset'])
+		if($Preset['name'] == $VPSScheme['SchemeParams']['preset'])
 			$VmPresetID = $Preset['id'];
 		#------------------------------------------------------------------------------
 	}
@@ -160,29 +180,35 @@ function VmManager5_KVM_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 			'func'			=> 'vm.edit',					# Целевая функция
 			'sok'			=> 'ok',
 			'hostnode'		=> $VPSScheme['Node'],				// нода кластера
-			'blkiotune'		=> Ceil($VPSScheme['blkiotune']),		# "вес" дисковых операций
 			'password'		=> $VPSOrder['Password'],
 			'confirm'		=> $VPSOrder['Password'],
-			'cputune'		=> Ceil($VPSScheme['cpu']),			# "вес" процессорных операций
 			'domain'		=> $VPSOrder['Domain'],				# для обратной зоны
 			'family'		=> 'ipv4',					# пока IPv6 всё ещё теория
-			'cpu_mode'		=> 'host-passthrough',				// режим эмуляции, этот - самый быстрый
-			# из общения с техподдержкой ISPsystem...
-			# > Ограничения в панели устанавливаются в кибибайтах в секунду (KiB/sec)
-			# > В частности для виртуальной машины v152558 установлено ограничение 8192KiB/sec,
-			# > что в пресчете в мегабиты составляет 8192KiB/sec x8bit / 1024 = 64 Mbit/sec 
-			# т.е. полоса была завышена в 8 раз =(
-			'inbound'		=> SPrintF('%u',$VPSScheme['chrate'] * 1024/8),	# в тарифе в мегабитах
-			'outbound'		=> SPrintF('%u',$VPSScheme['chrate'] * 1024/8),	# в тарифе в мегабитах
-			#'ip'			=> '1.2.3.4',
-			'iptype'		=> 'public',					# машина имеет доступ в инет
-			'mem'			=> Ceil($VPSScheme['mem']),			# рама
 			'name'			=> $VPSOrder['Login'],
 			'user'			=> $VmUserID,
-			'vcpu'			=> $VPSScheme['ncpu'],				# число процессоров
 			'vmi'			=> SPrintF('ISPsystem__%s',Trim($VPSOrder['DiskTemplate'])),
-			'vsize'			=> $VPSScheme['disklimit'],
 			);
+	#-------------------------------------------------------------------------------
+	// считываем XML и составляем запрос
+	$Fields = System_XML(SPrintF('config/Schemes.%s.xml',$VPSScheme['SchemeParams']['SystemID']));
+	if(Is_Error($Fields))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Fields) as $Key){
+		#-------------------------------------------------------------------------------
+		$Field = $Fields[$Key];
+		#-------------------------------------------------------------------------------
+		$Value = IsSet($VPSScheme['SchemeParams'][$Key])?$VPSScheme['SchemeParams'][$Key]:$Field['Value'];
+		#-------------------------------------------------------------------------------
+		$Request[$Key] = $Value;
+		#-------------------------------------------------------------------------------
+		if(IsSet($Field['Min']))
+			$Request[$Key] = IntVal($Value);
+		#-------------------------------------------------------------------------------
+		if(IsSet($Field['Type']) && $Field['Type'] == 'CheckBox')
+			$Request[$Key] = ($Request[$Key])?'on':'off';
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 	if(IsSet($VmPresetID))
 		$Request['preset'] = $VmPresetID;
@@ -464,16 +490,36 @@ function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 	$Request = Array(
 			'func'			=> 'user.edit',		# Целевая функция
 			'sok'			=> 'ok',
-			'allowcreatevm'		=> 'off',		# нет ограничений, нет смысла создавать неограниченных юзеров
 			'disable_totp'		=> 'on',		# гуглоавторизацию - отключаем
-			'snapshot_limit'	=> $VPSScheme['snapshot_limit'],
-			'isolimitsize'		=> $VPSScheme['isolimitsize'],
-			'isolimitnum'		=> $VPSScheme['isolimitnum'],
 			'name'			=> $VPSOrder['Login'],
 			'passwd'		=> $VPSOrder['Password'],
 			'confirm'		=> $VPSOrder['Password'],
 			'elid'			=> $UserID
 			);
+	#-------------------------------------------------------------------------------
+	// считываем XML и составляем запрос
+	$Fields = System_XML(SPrintF('config/Schemes.%s.xml',$VPSScheme['SchemeParams']['SystemID']));
+	if(Is_Error($Fields))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Fields) as $Key){
+		#-------------------------------------------------------------------------------
+		$Field = $Fields[$Key];
+		#-------------------------------------------------------------------------------
+		if(!IsSet($Field['IsUser']))
+			continue;
+		#-------------------------------------------------------------------------------
+		$Value = IsSet($VPSScheme['SchemeParams'][$Key])?$VPSScheme['SchemeParams'][$Key]:$Field['Value'];
+		#-------------------------------------------------------------------------------
+		$Request[$Key] = $Value;
+		#-------------------------------------------------------------------------------
+		if(IsSet($Field['Min']))
+			$Request[$Key] = IntVal($Value);
+		#-------------------------------------------------------------------------------
+		if(IsSet($Field['Type']) && $Field['Type'] == 'CheckBox')
+			$Request[$Key] = ($Request[$Key])?'on':'off';
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 	$XML = VmManager5_KVM_Request($Settings,$Request);
 	#-------------------------------------------------------------------------------
@@ -522,16 +568,30 @@ function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 		$Request = Array(
 				'func'			=> 'vm.edit',		# Целевая функция
 				'sok'			=> 'ok',
-				'blkiotune'		=> $VPSScheme['blkiotune'],
-				'cputune'		=> Ceil($VPSScheme['cpu']),
-				'inbound'		=> SPrintF('%u',$VPSScheme['chrate'] * 1024/8),
-				'outbound'		=> SPrintF('%u',$VPSScheme['chrate'] * 1024/8),
-				'mem'			=> Ceil($VPSScheme['mem']),
 				'name'			=> $VPSOrder['Login'],
-				'vcpu'			=> $VPSScheme['ncpu'],
-				'cpu_mode'		=> 'host-passthrough',	// режим эмуляции, этот - самый быстрый
 				'elid'			=> $VM['id'],
 				);
+		#-------------------------------------------------------------------------------
+		// считываем XML и составляем запрос
+		$Fields = System_XML(SPrintF('config/Schemes.%s.xml',$VPSScheme['SchemeParams']['SystemID']));
+		if(Is_Error($Fields))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		foreach(Array_Keys($Fields) as $Key){
+			#-------------------------------------------------------------------------------
+			$Field = $Fields[$Key];
+			#-------------------------------------------------------------------------------
+			$Value = IsSet($VPSScheme['SchemeParams'][$Key])?$VPSScheme['SchemeParams'][$Key]:$Field['Value'];
+			#-------------------------------------------------------------------------------
+			$Request[$Key] = $Value;
+			#-------------------------------------------------------------------------------
+			if(IsSet($Field['Min']))
+				$Request[$Key] = IntVal($Value);
+			#-------------------------------------------------------------------------------
+			if(IsSet($Field['Type']) && $Field['Type'] == 'CheckBox')
+				$Request[$Key] = ($Request[$Key])?'on':'off';
+			#-------------------------------------------------------------------------------
+		}
 		#-------------------------------------------------------------------------------
 		$XML = VmManager5_KVM_Request($Settings,$Request);
 		#-------------------------------------------------------------------------------
@@ -588,14 +648,14 @@ function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			// проверяем размер дисков. если они одинаковые - перезагружать и трогать их не надо
-			if($Volume['size'] == $VPSScheme['disklimit'])
+			if($Volume['size'] == $VPSScheme['SchemeParams']['vsize'])
 				continue;
 			#-------------------------------------------------------------------------------
 			// ещё вариант - диск оказался больше чем необходимо. с этим тоже ничего не сделаешь.
 			// KVM не позволяет уменьшать диск - либо пропустить, либо в ошибку падать. лучше пропустить, наверное...
-			if($Volume['size'] > $VPSScheme['disklimit']){
+			if($Volume['size'] > $VPSScheme['SchemeParams']['vsize']){
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[VmManager5_KVM_Scheme_Change]: Невозможно изменить размер диска в меньшую сторону (%s->%s) пропускаем',$VPSScheme['disklimit'],$Volume['size']));
+				Debug(SPrintF('[VmManager5_KVM_Scheme_Change]: Невозможно изменить размер диска в меньшую сторону (%s->%s) пропускаем',$VPSScheme['SchemeParams']['vsize'],$Volume['size']));
 				#-------------------------------------------------------------------------------
 				continue;
 				#-------------------------------------------------------------------------------
@@ -620,7 +680,7 @@ function VmManager5_KVM_Scheme_Change($Settings,$VPSOrder,$VPSScheme){
 			}
 			#-------------------------------------------------------------------------------
 			# меняем размер диска
-			$Request = Array('func'=>'vm.volume.edit','size'=>$VPSScheme['disklimit'],'elid'=>$Volume['id'],'plid'=>$VM['id'],'sok'=>'ok');
+			$Request = Array('func'=>'vm.volume.edit','size'=>$VPSScheme['SchemeParams']['vsize'],'elid'=>$Volume['id'],'plid'=>$VM['id'],'sok'=>'ok');
 			#-------------------------------------------------------------------------------
 			$XML = VmManager5_KVM_Request($Settings,$Request);
 			#-------------------------------------------------------------------------------

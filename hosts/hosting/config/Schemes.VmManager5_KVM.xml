@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<!-- https://docs.ispsystem.ru/vmmanager-kvm/razrabotchiku/vmmanager-kvm-api -->
+<XML>
+<!-- *********************************************************************** -->
+<preset>
+	<Name>Шаблон (preset)</Name>
+	<Description>Предустановки виртуальной машины (заранее созданный шаблон на сервере)</Description>
+	<Value></Value>
+	<InternalName>Preset</InternalName>
+</preset>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<vm_limit>
+	<Name>Количество VM</Name>
+	<Description>Количество виртуальных машин, которые может создавать пользователь</Description>
+	<Value>0</Value>
+	<IsUser>1</IsUser>
+	<Min>0</Min>
+	<Max>255</Max>
+</vm_limit>
+<!-- *********************************************************************** -->
+<isolimitsize>
+	<Name>Объем ISO</Name>
+	<Description>Ограничение по суммарному объему ISO-образов</Description>
+	<Value>4096</Value>
+	<IsUser>1</IsUser>
+	<Unit>Mb</Unit>
+	<Min>0</Min>
+	<Max>16384</Max>
+</isolimitsize>
+<!-- *********************************************************************** -->
+<isolimitnum>
+	<Name>Количество ISO</Name>
+	<Description>Ограничение по количеству ISO-образов, доступных для закачивания пользователем</Description>
+	<Value>1</Value>
+	<IsUser>1</IsUser>
+	<Min>0</Min>
+	<Max>16</Max>
+</isolimitnum>
+<!-- *********************************************************************** -->
+<snapshot_limit>
+	<Name>Количество снимков VM</Name>
+	<Description>Максимально возможное количество снимков (snapshot) виртуальной машины</Description>
+	<Value>1</Value>
+	<IsUser>1</IsUser>
+	<Min>0</Min>
+	<Max>16</Max>
+</snapshot_limit>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<vsize>
+	<Name>Размер диска</Name>
+	<Description>Сколько места на диске выделено виртуальной машине</Description>
+	<Value>4096</Value>
+	<InternalName>HDD</InternalName>
+	<Unit>Mb</Unit>
+	<Min>64</Min>
+	<Max>1048576</Max>
+</vsize>
+<!-- *********************************************************************** -->
+<mem>
+	<Name>Объём оперативной памяти</Name>
+	<Description>Сколько RAM выделено виртуальной машине</Description>
+	<Value>512</Value>
+	<InternalName>RAM</InternalName>
+	<Unit>Mb</Unit>
+	<Min>128</Min>
+	<Max>4194304</Max>
+</mem>
+<!-- *********************************************************************** -->
+<vcpu>
+	<Name>Число процессоров</Name>
+	<Description>Количество процессоров в виртуальной машине</Description>
+	<Value>1</Value>
+	<InternalName>CPU</InternalName>
+	<Min>1</Min>
+	<Max>240</Max>
+</vcpu>
+<!-- *********************************************************************** -->
+<cpu_mode>
+	<Name>Режим эмуляции</Name>
+	<Description>Используемый режим эмуляции процессора, самый быстрый: host-passthrough</Description>
+	<Value>host-passthrough</Value>
+	<Options>
+		<default>default</default>
+		<host-model>host-model</host-model>
+		<host-passthrough>host-passthrough</host-passthrough>
+	</Options>
+	<Type>Select</Type>
+</cpu_mode>
+<!-- *********************************************************************** -->
+<iptype>
+	<Name>Тип IP-адреса</Name>
+	<Description>Публичный — с доступом из сети Internet, приватный — без, NAT — для использования с сетями NAT</Description>
+	<Value>public</Value>
+	<Options>
+		<public>public</public>
+		<private>private</private>
+		<nat>nat</nat>
+	</Options>
+	<Type>Select</Type>
+</iptype>
+<!-- *********************************************************************** -->
+<amount_ipv4>
+	<Name>Количество IPv4</Name>
+	<Description>Требуемое количество адресов IPv4</Description>
+	<Value>1</Value>
+	<Min>1</Min>
+	<Max>64</Max>
+</amount_ipv4>
+<!-- *********************************************************************** -->
+<cputune>
+	<Name>Вес CPU</Name>
+	<Description>Приоритет cgroups в использовании процессора. Например, ВМ с весом CPU, равным 104, будет получать доступ к процессору вдвое чаще, чем ВМ с весом 512</Description>
+	<Value>500</Value>
+	<Min>128</Min>
+	<Max>1024</Max>
+</cputune>
+<!-- *********************************************************************** -->
+<blkiotune>
+	<Name>Вес I/O</Name>
+	<Description>Приоритет cgroups на операции ввода-вывода. Например, ВМ с весом использования I/O, равным 200, будет выполнять операции чтения и записи на диск в два раза чаще, чем ВМ с весом 100</Description>
+	<Value>500</Value>
+	<Min>100</Min>
+	<Max>1000</Max>
+</blkiotune>
+<!-- *********************************************************************** -->
+<inbound>
+	<Name>Скорость канала, входящая</Name>
+	<Description>Максимальная скорость входящего трафика, кибибайтах в секунду (в мегабитах, это в 8 раз меньше)</Description>
+	<Value>10</Value>
+	<Min>1</Min>
+	<Max>8000</Max>
+	<Unit>KiB/s</Unit>
+</inbound>
+<!-- *********************************************************************** -->
+<outbound>
+	<Name>Скорость канала, исходящая</Name>
+	<Description>Максимальная скорость исходящего трафика, в кибибайтах в секунду (в мегабитах, это в 8 раз меньше)</Description>
+	<Value>10</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>8000</Max>
+	<Unit>KiB/sec</Unit>
+</outbound>
+<!-- *********************************************************************** -->
+<allowcreatevm>
+	<Name>Может создавать VM</Name>
+	<Description>Пользователю разрешено самостоятельно создаать и удалять виртуальные машины. При этом никаких ограничений ни по памяти, ни по месту занимаемому машинами нет!</Description>
+	<Value>0</Value>
+	<IsUser>1</IsUser>
+	<Type>CheckBox</Type>
+</allowcreatevm>
+<!-- *********************************************************************** -->
+<allowspoof>
+	<Name>Разрешить спуфинг</Name>
+	<Description>Разрешить трафик от IP адресов не назначенных машине. Обычно не требуется. (Если это продажа ВПС, например, - клиенты запросто могут "выделить" себе IP адрес который уже кем-то занят)</Description>
+	<Value>0</Value>
+	<Type>CheckBox</Type>
+</allowspoof>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+</XML>

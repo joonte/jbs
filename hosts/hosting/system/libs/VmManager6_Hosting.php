@@ -228,6 +228,7 @@ function VmManager6_Hosting_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 		$Value = IsSet($VPSScheme['SchemeParams'][$Key])?$VPSScheme['SchemeParams'][$Key]:$Field['Value'];
 		#-------------------------------------------------------------------------------
 		$Request[$Key] = $Value;
+		#-------------------------------------------------------------------------------
 		if(IsSet($Field['Min']))
 			$Request[$Key] = IntVal($Value);
 		#-------------------------------------------------------------------------------
