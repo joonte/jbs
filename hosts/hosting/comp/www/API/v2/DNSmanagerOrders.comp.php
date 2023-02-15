@@ -10,42 +10,37 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
+//$ContractID     = (integer) @$Args['ContractID'];
+//$IsUponConsider = (boolean) @$Args['IsUponConsider'];
+$OrderID	= (integer) @$Args[3];
+
+//Debug(print_r($Args,true));
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Where = Array(
-		'(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH))',
-		'`IsActive` = "yes"',
-		);
+$Where = Array(SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']));
 #-------------------------------------------------------------------------------
-$DNSmanagerSchemes = DB_Select('DNSmanagerSchemesOwners','*',Array('Where'=>$Where,'SortOn'=>Array('SortID','PackageID')));
-if(Is_Error($DNSmanagerSchemes))
+if($OrderID > 0)
+	$Where[] = SPrintF('`OrderID` = %u',$OrderID);
+#-------------------------------------------------------------------------------
+$Columns = Array('*','(SELECT `Params` FROM `Servers` WHERE `DNSmanagerOrdersOwners`.`ServerID` = `Servers`.`ID`) AS `Params`');
+#-------------------------------------------------------------------------------
+$DNSmanagerOrders = DB_Select('DNSmanagerOrdersOwners',$Columns,Array('Where'=>$Where));
+if(Is_Error($DNSmanagerOrders))
 	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Out = Array();
 #-------------------------------------------------------------------------------
-foreach($DNSmanagerSchemes as $DNSmanagerScheme){
+foreach($DNSmanagerOrders as $DNSmanagerOrder){
 	#-------------------------------------------------------------------------------
-	// загружаем XML
-	$Fields = System_XML(SPrintF('config/Schemes.%s.xml',$DNSmanagerScheme['SchemeParams']['SystemID']));
-	if(Is_Error($Fields))
-		return ERROR | @Trigger_Error(500);
+	if($DNSmanagerOrder['Params']['SystemID'] == 'VmManager6_Hosting')
+		$DNSmanagerOrder['Login'] = SPrintF('%s@%s',$DNSmanagerOrder['Login'],$DNSmanagerOrder['Params']['Domain']);
 	#-------------------------------------------------------------------------------
+	UnSet($DNSmanagerOrder['Params']);
 	#-------------------------------------------------------------------------------
-	foreach(Array_Keys($Fields) as $Key){
-		#-------------------------------------------------------------------------------
-		//$Field = $Fields[$Key];
-		#-------------------------------------------------------------------------------
-		$Fields[$Key]['Value'] = $DNSmanagerScheme['SchemeParams'][$Key];
-		#-------------------------------------------------------------------------------
-	}
-	#-------------------------------------------------------------------------------
-	$DNSmanagerScheme['SchemeParams'] = $Fields;
-	#-------------------------------------------------------------------------------
-	$Out[] = $DNSmanagerScheme;
+	$Out[] = $DNSmanagerOrder;
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
