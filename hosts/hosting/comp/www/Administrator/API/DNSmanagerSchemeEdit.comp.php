@@ -21,6 +21,7 @@ $PackageID		=  (string) @$Args['PackageID'];
 $CostDay		=   (float) @$Args['CostDay'];
 $CostMonth		=   (float) @$Args['CostMonth'];
 $ServersGroupID		= (integer) @$Args['ServersGroupID'];
+$SystemID		=  (string) @$Args['SystemID'];
 $HardServerID		= (integer) @$Args['HardServerID'];
 $Comment		=  (string) @$Args['Comment'];
 $IsReselling		= (boolean) @$Args['IsReselling'];
@@ -34,8 +35,6 @@ $MaxDaysPay		= (integer) @$Args['MaxDaysPay'];
 $MaxOrders		= (integer) @$Args['MaxOrders'];
 $MinOrdersPeriod	= (integer) @$Args['MinOrdersPeriod'];
 $Reseller		=  (string) @$Args['Reseller'];
-$ViewArea		=  (string) @$Args['ViewArea'];
-$DomainLimit		= (integer) @$Args['DomainLimit'];
 $SortID			= (integer) @$Args['SortID'];
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Groups',Array('ID'=>$GroupID));
@@ -104,6 +103,50 @@ if($MinDaysPay > $MaxDaysPay)
 	return new gException('WRONG_MIN_DAYS_PAY','Минимальное кол-во дней оплаты не можеть быть больше максимального');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// загружаем XML
+$Fields = System_XML(SPrintF('config/Schemes.%s.xml',$SystemID));
+if(Is_Error($Fields))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$SchemeParams = $Internal = Array();
+#-------------------------------------------------------------------------------
+foreach(Array_Keys($Fields) as $Key){
+	#-------------------------------------------------------------------------------
+	$Field = $Fields[$Key];
+	#-------------------------------------------------------------------------------
+	if(IsSet($Args[$Key])){
+		#-------------------------------------------------------------------------------
+		// сравнения
+		if(IsSet($Field['Min']))
+			if($Args[$Key] < $Field['Min'])
+				return new gException('WRONG_MIN_VALUE',SPrintF('Некорректное значение "%s": %s<%s',$Field['Name'],$Args[$Key],$Field['Min']));
+		#-------------------------------------------------------------------------------
+		if(IsSet($Field['Max']))
+			if($Args[$Key] > $Field['Max'])
+				return new gException('WRONG_MAX_VALUE',SPrintF('Некорректное значение "%s": %s>%s',$Field['Name'],$Args[$Key],$Field['Max']));
+		#-------------------------------------------------------------------------------
+		$SchemeParams[$Key] = $Args[$Key];
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		// значение не прилетело, записываем пустой параметр
+		$SchemeParams[$Key] = '';
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	if(IsSet($Field['InternalName']))
+		$Internal[$Field['InternalName']] = $SchemeParams[$Key];
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+// для минимализации поиска по базе при отображении тарифа
+$SchemeParams['SystemID']       = $SystemID;
+$SchemeParams['InternalName']   = $Internal;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $IDNSmanagerScheme = Array(
 				'GroupID'		=> $GroupID,
 				'UserID'		=> $UserID,
@@ -126,8 +169,7 @@ $IDNSmanagerScheme = Array(
 				'MinOrdersPeriod'	=> $MinOrdersPeriod,
 				'SortID'		=> $SortID,
 				'Reseller'		=> $Reseller,
-				'ViewArea'		=> $ViewArea,
-				'DomainLimit'		=> $DomainLimit
+				'SchemeParams'		=> $SchemeParams
 			);
 #-------------------------------------------------------------------------------
 if($DNSmanagerSchemeID){

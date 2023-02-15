@@ -14,7 +14,7 @@ $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 $ContractID		= (integer) @$Args['ContractID'];
 $DNSmanagerSchemeID	= (integer) @$Args['DNSmanagerSchemeID'];
-$ViewArea		=  (string) @$Args['ViewArea'];
+$View		=  (string) @$Args['View'];
 $Comment		=  (string) @$Args['Comment'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
@@ -54,19 +54,19 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-if($Server['Params']['DefaultView'] != $DNSmanagerScheme['ViewArea'])
-	if(!$ViewArea)
+if($Server['Params']['DefaultView'] != $DNSmanagerScheme['SchemeParams']['InternalName']['View'])
+	if(!$View)
 		return new gException('VIEW_NOT_SET','При выборе тарифа с собственным ДНС сервером, вы должны указать имя области');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # проверяем, задан ли реселлер. если задан - используем дефолтовую вьюху
 if($DNSmanagerScheme['Reseller'])
-	$ViewArea = $DNSmanagerScheme['ViewArea'];
+	$View = $DNSmanagerScheme['SchemeParams']['InternalName']['View'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
-if(!Preg_Match($Regulars['DnsDomain'],$ViewArea))
+if(!Preg_Match($Regulars['DnsDomain'],$View))
 	return new gException('WRONG_VIEW_NAME','Неверное имя области, укажите домен третьего уровня');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -124,7 +124,7 @@ if($Count < 1){
 	}
 }
 #-------------------------------------------------------------------------------
-$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>$Server['ServiceID'],'ServerID'=>$Server['ID'],'Params'=>Array('ViewArea'=>$ViewArea)));
+$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>$Server['ServiceID'],'ServerID'=>$Server['ID'],'Params'=>Array('View'=>$View)));
 if(Is_Error($OrderID))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

@@ -263,12 +263,24 @@ function DNSmanager5_Create($Settings,$Login,$Password,$DNSmanagerScheme){
 			'name'		=> $Login, # Имя пользователя (реселлера)
 			'passwd'	=> $Password, # Пароль
 			'confirm'	=> $Password, # Подтверждение
-			'domainlimit'	=> $DNSmanagerScheme['DomainLimit'],
-			'namespace'	=> $DNSmanagerScheme['ViewArea']
 			);
 	#-------------------------------------------------------------------------------
 	if($DNSmanagerScheme['Reseller'])
 		$Request['su'] = $DNSmanagerScheme['Reseller'];
+	#-------------------------------------------------------------------------------
+	$Fields = System_XML(SPrintF('config/Schemes.%s.xml',$DNSmanagerScheme['SchemeParams']['SystemID']));
+	if(Is_Error($Fields))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Fields) as $Key){
+		#-------------------------------------------------------------------------------
+		$Field = $Fields[$Key];
+		#-------------------------------------------------------------------------------
+		$Value = IsSet($DNSmanagerScheme['SchemeParams'][$Key])?$DNSmanagerScheme['SchemeParams'][$Key]:$Field['Value'];
+		#-------------------------------------------------------------------------------
+		$Request[$Key] = $Value;
+		#-------------------------------------------------------------------------------
+	}  
 	#-------------------------------------------------------------------------------
 	$Response = HTTP_Send('/dnsmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))
@@ -491,9 +503,21 @@ function DNSmanager5_Scheme_Change($Settings,$Login,$DNSmanagerScheme){
 			'elid'		=> $Login, # Уникальный идентификатор
 			'sok'		=> 'yes', # Значение параметра должно быть равно "yes"
 			'name'		=> $Login, # Имя пользователя (реселлера)
-			'domainlimit'	=> $DNSmanagerScheme['DomainLimit'],
-			'namespace'	=> $DNSmanagerScheme['ViewArea']
 			  );
+	#-------------------------------------------------------------------------------
+	$Fields = System_XML(SPrintF('config/Schemes.%s.xml',$DNSmanagerScheme['SchemeParams']['SystemID']));
+	if(Is_Error($Fields))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($Fields) as $Key){
+		#-------------------------------------------------------------------------------
+		$Field = $Fields[$Key];
+		#-------------------------------------------------------------------------------
+		$Value = IsSet($DNSmanagerScheme['SchemeParams'][$Key])?$DNSmanagerScheme['SchemeParams'][$Key]:$Field['Value'];
+		#-------------------------------------------------------------------------------
+		$Request[$Key] = $Value;
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 	$Response = HTTP_Send('/dnsmgr',$HTTP,Array(),$Request);
 	if(Is_Error($Response))

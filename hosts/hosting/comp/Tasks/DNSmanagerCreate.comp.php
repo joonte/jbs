@@ -57,7 +57,7 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # надо поправить в массиве имя используемой view
-$DNSmanagerScheme['ViewArea'] = $DNSmanagerOrder['Params']['ViewArea'];
+$DNSmanagerSchemep['SchemeParams']['InternalName']['View'] = $DNSmanagerOrder['Params']['View'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Args = Array($DNSmanagerOrder['Login'],$DNSmanagerOrder['Password'],$DNSmanagerScheme);

@@ -16,10 +16,8 @@
 		<ColumnsIDs>
 			<ListElement>ID</ListElement>
 			<ListElement>CostMonth</ListElement>
-			<ListElement>DomainLimit</ListElement>
 			<ListElement>IsActive</ListElement>
 			<ListElement>Reseller</ListElement>
-			<ListElement>ViewArea</ListElement>
 			<ListElement>SortID</ListElement>
 		</ColumnsIDs>
 		<Conditions>
@@ -176,14 +174,26 @@
 			<Prompt>Реселлер, от которого будут создаваться аккаунты</Prompt>
 		</Reseller>
 		<!-- ********************************************************************** -->
-		<ViewArea>
+		<View>
 			<Head>Область</Head>
 			<Prompt>Область DNS (view)</Prompt>
-		</ViewArea>
+			<Comp>Formats/System/Param</Comp>
+			<Args>
+				<Params>%View%</Params>
+				<Key>InternalName/View</Key>
+			</Args>
+                        <Alias>`SchemeParams`</Alias>
+		</View>
 		<!-- ********************************************************************** -->
 		<DomainLimit>
 			<Head>Дом.</Head>
 			<Prompt>Ограничение на число доменов, создаваемых на вторичном сервере DNS</Prompt>
+			<Comp>Formats/System/Param</Comp>
+			<Args>
+				<Params>%DomainLimit%</Params>
+				<Key>InternalName/Domains</Key>
+			</Args>
+                        <Alias>`SchemeParams`</Alias>
 		</DomainLimit>
 		<!-- ********************************************************************** -->
 		<IsActive>
@@ -226,7 +236,7 @@
 		<ListElement>IsActive</ListElement>
 		<ListElement>OrderLink</ListElement>
 		<ListElement>Reseller</ListElement>
-		<ListElement>ViewArea</ListElement>
+		<ListElement>View</ListElement>
 		<ListElement>DomainLimit</ListElement>
 		<ListElement>Orders</ListElement>
 		<ListElement>SortID</ListElement>

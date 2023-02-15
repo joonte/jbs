@@ -95,13 +95,13 @@ if($StepID){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	if($DNSmanagerScheme['Reseller'] || $Server['Params']['DefaultView'] == $DNSmanagerScheme['ViewArea']){
+	if($DNSmanagerScheme['Reseller'] || $Server['Params']['DefaultView'] == $DNSmanagerScheme['SchemeParams']['InternalName']['View']){
 		#-------------------------------------------------------------------------------
 		$DOM->AddAttribs('Body',Array('onload'=>"Order('DNSmanager');"));
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Form/Input',Array('type'=>'text','style'=>'width: 100%;','name'=>'ViewArea','value'=>'','prompt'=>'Введите область, в которой будут размещаться ваши домены. Обычно, она именуется по имени DNS сервера. Например: dns0.example.ru'));
+		$Comp = Comp_Load('Form/Input',Array('type'=>'text','style'=>'width: 100%;','name'=>'View','value'=>'','prompt'=>'Введите область, в которой будут размещаться ваши домены. Обычно, она именуется по имени DNS сервера. Например: dns0.example.ru'));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
@@ -269,7 +269,7 @@ if($StepID){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$Columns = Array(
-			'ID','Name','ServersGroupID','Comment','CostMonth','DomainLimit',
+			'ID','Name','ServersGroupID','Comment','CostMonth','SchemeParams',
 			'(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupName`',
 			'(SELECT `Comment` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupComment`',
 			'(SELECT `SortID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `ServersGroupID`) as `ServersGroupSortID`'
@@ -351,7 +351,7 @@ if($StepID){
 			if(Is_Error($CostMonth))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$Rows[] = new Tag('TR',Array('OnClick'=>SPrintF('document.forms[\'DNSmanagerOrderForm\'].DNSmanagerSchemeID.value=%s',$DNSmanagerScheme['ID'])),new Tag('TD',Array('width'=>20),$Comp),new Tag('TD',Array('class'=>'Comment',),$DNSmanagerScheme['Name']),new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth),new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DNSmanagerScheme['DomainLimit']));
+			$Rows[] = new Tag('TR',Array('OnClick'=>SPrintF('document.forms[\'DNSmanagerOrderForm\'].DNSmanagerSchemeID.value=%s',$DNSmanagerScheme['ID'])),new Tag('TD',Array('width'=>20),$Comp),new Tag('TD',Array('class'=>'Comment',),$DNSmanagerScheme['Name']),new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth),new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DNSmanagerScheme['SchemeParams']['InternalName']['Domains']));
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------

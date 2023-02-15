@@ -21,7 +21,7 @@ $Where = Array(
 		);
 #-------------------------------------------------------------------------------
 $Columns = Array(
-		'ID','Name','PackageID','CostDay','CostMonth','Discount','IsProlong','MinDaysPay','MinDaysProlong','MaxDaysPay','DomainLimit'
+		'ID','Name','PackageID','CostDay','CostMonth','Discount','IsProlong','MinDaysPay','MinDaysProlong','MaxDaysPay','SchemeParams'
 		);
 #-------------------------------------------------------------------------------
 $DNSmanagerSchemes = DB_Select('DNSmanagerSchemesOwners',$Columns,Array('Where'=>$Where,'SortOn'=>Array('SortID','PackageID')));

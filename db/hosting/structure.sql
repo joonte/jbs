@@ -179,7 +179,6 @@ CREATE TABLE `HostingSchemes` (
   `MinOrdersPeriod` INT(6) DEFAULT '0',
   `SortID` int(11) default '10',
   `SchemeParams` VARCHAR(16384) NOT NULL,
-
   PRIMARY KEY  (`ID`),
   KEY `HostingSchemesGroupID` (`GroupID`),
   CONSTRAINT `HostingSchemesGroupID` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -247,14 +246,9 @@ CREATE TABLE `DNSmanagerSchemes` (
 	`MaxOrders` int(6) DEFAULT '0',				/* максимальное число заказов по этому тарифу, на одного пользователя */
 	`MinOrdersPeriod` INT(6) DEFAULT '0',
 	`SortID` int(11) default '10',
-	--
-	-- Common
-	--
+	`SchemeParams` VARCHAR(16384) NOT NULL,
 	`IsReselling` enum('no','yes') default 'no',		/* тариф предполагает создание реселлера */
 	`Reseller` char(255) default '',			/* реселлер от которого будут создаваться юзеры */
-	`ViewArea` char(255) default '',			/* view используемая в DNS */
-	`DomainLimit` int(11) default '0',			/* ограничение на число доменов */
-
 	PRIMARY KEY  (`ID`),
 	KEY `DNSmanagerSchemesGroupID` (`GroupID`),
 	CONSTRAINT `DNSmanagerSchemesGroupID` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
