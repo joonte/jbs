@@ -66,15 +66,19 @@ $Telegram = new Telegram($Settings['Params']['Token'],$Settings['Params']['Secre
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // вырезаем некоторые теги, очень уж мешаются при просмотре сообщений
-$Message = Preg_Replace('/\[size=([0-9]+)\](.+)\[\/size\]/sU','_\\2_',$Message);
-// 
-$Message = Preg_Replace('/\[color=([a-z]+)\](.+)\[\/color\]/sU','```\\2 ```',$Message);
+#$Message = Preg_Replace('/\[size=([0-9]+)\](.+)\[\/size\]/sU','_\\2_',$Message);
+$Message = Preg_Replace('/\[size=([0-9]+)\](.+)\[\/size\]/sU','\\2',$Message);
+#$Message = Preg_Replace('/\[color=([a-z]+)\](.+)\[\/color\]/sU','```\\2 ```',$Message);
+$Message = Preg_Replace('/\[color=([a-z]+)\](.+)\[\/color\]/sU','\\2',$Message);
 // цитата, моноширинным
-$Message = Preg_Replace('/\[quote\](.+)\[\/quote\]/sU',"```\\1 ```\n",$Message);
+#$Message = Preg_Replace('/\[quote\](.+)\[\/quote\]/sU',"```\\1 ```\n",$Message);
+$Message = Preg_Replace('/\[quote\](.+)\[\/quote\]/sU',"\\1\n",$Message);
 // жирный
-$Message = Preg_Replace('/\[b\](.+)\[\/b\]/sU',"*\\1*",$Message);
+#$Message = Preg_Replace('/\[b\](.+)\[\/b\]/sU',"*\\1*",$Message);
+$Message = Preg_Replace('/\[b\](.+)\[\/b\]/sU',"\\1",$Message);
 // наклонный
-$Message = Preg_Replace('/\[i\](.+)\[\/i\]/sU',"_\\1_",$Message);
+#$Message = Preg_Replace('/\[i\](.+)\[\/i\]/sU',"_\\1_",$Message);
+$Message = Preg_Replace('/\[i\](.+)\[\/i\]/sU',"\\1",$Message);
 // ссылка с текстом
 $Message = Preg_Replace("(\[link\=[\"']?((http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-\|]*[\w@?^=%&amp;\/~+#-\|])?)[\"']?\](.+?)\[/link\])","[$5]($1)",$Message);
 #-------------------------------------------------------------------------------
