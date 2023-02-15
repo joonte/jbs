@@ -2,7 +2,7 @@
  *  Joonte Billing System
  *  Copyright © 2020 Alex Keda, for www.host-food.ru
  *}
-{assign var=Theme value="Удалён заказ виртуального сервера #{$OrderID|string_format:"%05u"} логин ({$Login|default:'$Login'})" scope=global}
+{assign var=Theme value="Удалён заказ виртуального сервера #{$OrderID|string_format:"%05u"} IP ({$IP|default:'$IP'})" scope=global}
 
 Уведомляем Вас о том, что {$StatusDate|date_format:"%d.%m.%Y"} Ваш заказ на виртуальный выделенный сервер (VPS) №{$OrderID|string_format:"%05u"} был удален.
 Логин:		{$Login|default:'$Login'}
