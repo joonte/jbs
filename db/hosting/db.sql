@@ -10,7 +10,6 @@ VALUES
 (52,1,'Consider','[]','yes'),
 (53,1,'NoticeDelete','[]','yes'),
 (54,1,'HostingForDelete','[]','yes'),
-(56,1,'HostingCPUUsage','[]','yes'),
 (58,1,'DomainForDelete','[]','yes'),
 (59,1,'DomainOrdersWhoIsUpdate','[]','yes'),
 (60,1,'ServersQuestioning','[]','yes'),
