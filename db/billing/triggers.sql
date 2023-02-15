@@ -269,5 +269,23 @@ CREATE DEFINER = CURRENT_USER TRIGGER `ContactsOnUpdated` BEFORE UPDATE ON `Cont
   END;
 |
 DELIMITER ;
+#-------------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS `NotifiesOnInsert`;
+DELIMITER |
+CREATE DEFINER = CURRENT_USER TRIGGER `NotifiesOnInsert` BEFORE INSERT ON `Notifies`
+  FOR EACH ROW BEGIN
+    SET NEW.`UpdateDate` = UNIX_TIMESTAMP();
+  END;
+|
+DELIMITER ;
+#-------------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS `NotifiesOnUpdated`;
+DELIMITER |
+CREATE DEFINER = CURRENT_USER TRIGGER `NotifiesOnUpdated` BEFORE UPDATE ON `Notifies`
+  FOR EACH ROW BEGIN
+    SET NEW.`UpdateDate` = UNIX_TIMESTAMP();
+  END;
+|
+DELIMITER ;
 
 

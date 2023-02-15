@@ -547,6 +547,7 @@ CREATE TABLE `Notifies` (
   `ID` int(11) NOT NULL auto_increment,
   `ContactID` INT(11) NOT NULL,
   `TypeID` char(255) default '',
+  `UpdateDate` int(11) default '0',
   PRIMARY KEY  (`ID`),
   KEY `NotifiesContactID` (`ContactID`),
   CONSTRAINT `NotifiesContactID` FOREIGN KEY (`ContactID`) REFERENCES `Contacts` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
