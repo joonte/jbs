@@ -287,5 +287,23 @@ CREATE DEFINER = CURRENT_USER TRIGGER `NotifiesOnUpdated` BEFORE UPDATE ON `Noti
   END;
 |
 DELIMITER ;
+#-------------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS `TmpDataOnInsert`;
+DELIMITER |
+CREATE DEFINER = CURRENT_USER TRIGGER `TmpDataOnInsert` BEFORE INSERT ON `TmpData`
+  FOR EACH ROW BEGIN
+    SET NEW.`CreateDate` = UNIX_TIMESTAMP();
+  END;
+|
+DELIMITER ;
+#-------------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS `TmpDataOnUpdated`;
+DELIMITER |
+CREATE DEFINER = CURRENT_USER TRIGGER `TmpDataOnUpdated` BEFORE UPDATE ON `TmpData`
+  FOR EACH ROW BEGIN
+    SET NEW.`UpdateDate` = UNIX_TIMESTAMP();
+  END;
+|
+DELIMITER ;
 
 
