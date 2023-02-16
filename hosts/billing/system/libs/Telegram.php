@@ -281,12 +281,15 @@ class Telegram
 	// сохраняем MessageID, просто в файлик, нефига ради такого колонку в базе держать. пока, по крайней мере
 	public function SaveThreadID($UserID,$TicketID,$MessageID,$TgMessageID){
 		#-------------------------------------------------------------------------------
+		// если нет номера тикета - сохранять не надо
+		if($TicketID == 0)
+			return TRUE;
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 		// сохраняем переданные данные
 		$IsInsert = DB_Insert('TmpData',Array('UserID'=>$UserID,'AppID'=>'Telegram','Col1'=>$TicketID,'Col2'=>$MessageID,'Col3'=>$TgMessageID));
 		if(Is_Error($IsInsert))
 			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		$FileDB = $this->CreateThreadDB();
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		return TRUE;
@@ -300,7 +303,7 @@ class Telegram
 	public function FindThreadID($TgMessageID){
 		#-------------------------------------------------------------------------------
                 #-------------------------------------------------------------------------------
-		$Thread = DB_Select('TmpData','Col1',Array('UNIQ','Where'=>Array('`AppID` = "Telegram"',SPrintF('`Col3` = "%s"',$TgMessageID)),'SortOn'=>'CreateDate','Limits'=>Array(0,1)));
+		$Thread = DB_Select('TmpData','*',Array('UNIQ','Where'=>Array('`AppID` = "Telegram"',SPrintF('`Col3` = "%s"',$TgMessageID)),'SortOn'=>'CreateDate','Limits'=>Array(0,1)));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($Thread)){
 		case 'error':
