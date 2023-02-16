@@ -110,7 +110,7 @@ if(IsSet($Template['Attribs'])){
 					#-------------------------------------------------------------------------------
 					$Errors[] = $AttribID;
 					#-------------------------------------------------------------------------------
-					Debug(SPrintF('[comp/www/Administrator/API/ServerEdit]: Check = %s; Value = %s',$Check,$Value));
+					//Debug(SPrintF('[comp/www/Administrator/API/ServerEdit]: Check = %s; Value = %s',$Check,$Value));
 					#-------------------------------------------------------------------------------
 				}
 				#-------------------------------------------------------------------------------
@@ -185,6 +185,8 @@ if($ServersGroupID){
 			if($Attribs['SystemID'] != $Server['Params']['SystemID'])
 				return new gException('DIFFERENT_CONTROL_PANEL',SPrintF('В группе уже используются сервера с другой панелью управления %s: %s',$Server['Address'],$Server['Params']['SystemID']));
 		#-------------------------------------------------------------------------------
+		break;
+		#-------------------------------------------------------------------------------
 	default:
 		return ERROR | @Trigger_Error(101);
 	}
@@ -206,6 +208,8 @@ if($ServerID){
 		#-------------------------------------------------------------------------------
 		if($Attribs['SystemID'] != $Server['Params']['SystemID'])
 			return new gException('CHANGE_CONTROL_PANEL',SPrintF('Нельзя менять панель управления (было:%s), улетят все настройки тарифных планов. При необходимости, сделайте это чреез базу, сохранив бэкап',$Server['Params']['SystemID']));
+		#-------------------------------------------------------------------------------
+		break;
 		#-------------------------------------------------------------------------------
 	default:
 		return ERROR | @Trigger_Error(101);

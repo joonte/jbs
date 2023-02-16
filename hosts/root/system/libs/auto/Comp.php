@@ -45,7 +45,7 @@ function Comp_Load($Element){
     #---------------------------------------------------------------------------
     $Comp = Call_User_Func_Array('LoadComp',$Args);
     if(Is_Error($Comp))
-      return ERROR | @Trigger_Error('[Comp_Load]: не возможно загрузить компонент');
+      return ERROR | @Trigger_Error(SPrintF('[Comp_Load]: не возможно загрузить компонент: %s',$Path));
     #---------------------------------------------------------------------------
     if($IsCascade)
       $Result[] = $Comp;

@@ -51,33 +51,8 @@ if($StepID){
 	if(!$VPSSchemeID)
 		return new gException('VPS_SCHEME_NOT_DEFINED','Тарифный план не выбран');
 	#-------------------------------------------------------------------------------
-	$VPSScheme = DB_Select('VPSSchemes',Array('ID','Name','IsActive'),Array('UNIQ','ID'=>$VPSSchemeID));
+	$VPSScheme = DB_Select('VPSSchemes',Array('ID','Name','IsActive','ServersGroupID','SchemeParams'),Array('UNIQ','ID'=>$VPSSchemeID));
 	#-----------------------------------------------------------------------------
-	switch(ValueOf($VPSScheme)){
-	case 'error':
-		return ERROR | @Trigger_Error(500);
-	case 'exception':
-		return ERROR | @Trigger_Error(400);
-	case 'array':
-		break;
-	default:
-		return ERROR | @Trigger_Error(101);
-	}
-	#-------------------------------------------------------------------------------
-	if(!$VPSScheme['IsActive'])
-		return new gException('SCHEME_NOT_ACTIVE','Выбранный тарифный план заказа VPS не активен');
-	#-------------------------------------------------------------------------------
-	$Table = Array(Array('Тарифный план',$VPSScheme['Name']));
-	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Input',Array('name'=>'VPSSchemeID','type'=>'hidden','value'=>$VPSScheme['ID']));
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	$Form->AddChild($Comp);
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	$VPSScheme = DB_Select('VPSSchemes',Array('ID','Name','ServersGroupID','IsActive'),Array('UNIQ','ID'=>$VPSSchemeID));
-	#-------------------------------------------------------------------------------
 	switch(ValueOf($VPSScheme)){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
@@ -88,6 +63,18 @@ if($StepID){
 	default:
 		return ERROR | @Trigger_Error(101);
 	}
+	#-------------------------------------------------------------------------------
+	if(!$VPSScheme['IsActive'])
+		return new gException('SCHEME_NOT_ACTIVE','Выбранный тарифный план заказа VPS не активен');
+	#-------------------------------------------------------------------------------
+	$Table = Array(Array('Тарифный план',SPrintF('%s / %s Gb HDD / %s Mb RAM',$VPSScheme['Name'],$VPSScheme['SchemeParams']['InternalName']['HDD']/1024,$VPSScheme['SchemeParams']['InternalName']['RAM'])));
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Input',Array('name'=>'VPSSchemeID','type'=>'hidden','value'=>$VPSScheme['ID']));
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Form->AddChild($Comp);
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Server = DB_Select('Servers',Array('ID','Params'),Array('UNIQ','Where'=>SPrintF("`ServersGroupID` = %u AND `IsDefault` = 'yes'",$VPSScheme['ServersGroupID'])));
 	#-------------------------------------------------------------------------------
@@ -115,16 +102,32 @@ if($StepID){
 	foreach(Explode("\n",$Server['Params']['DiskTemplate']) as $Line){
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[comp/www/VPSOrder]: Line = %s',$Line));
-		$Template = Explode('=',$Line);
+		// распиливаем по = на образ:размер и цивильное имя
+		$Line1 = Explode('=',$Line);
+		// распиливаем по : на образ и размер
+		$Template = Explode(':',$Line1[0]);
 		#-------------------------------------------------------------------------------
-		$Array[$Template[0]] = IsSet($Template[1])?$Template[1]:$Template[0];
+		// если задан размер, сравниваем его с тарифным местом и или продолжаем или пропускаем
+		if(IsSet($Template[1])){
+			#-------------------------------------------------------------------------------
+			// если размер меньше чем выдеелно по тарфиу - обавляем в список
+			if($Template[1] < $VPSScheme['SchemeParams']['InternalName']['HDD'])
+				// ключ - чистое имя образа, без размера
+				$Array[$Template[0]] = IsSet($Line1[1])?$Line1[1]:$Template[0];
+			#-------------------------------------------------------------------------------
+		}else{
+			#-------------------------------------------------------------------------------
+			// размер у образа не задан, добавляем к списку...
+			$Array[$Template[0]] = IsSet($Line1[1])?$Line1[1]:$Template[0];
+			#-------------------------------------------------------------------------------
+		}
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 	//Debug(SPrintF('[comp/www/VPSOrder]: Array = %s',print_r($Array,true)));
 	//Debug(SPrintF('[comp/www/VPSOrder]: ASort Array = %s',print_r(ASort($Array),true)));
 	ASort($Array);
-	$Comp = Comp_Load('Form/Select',Array('name'=>'DiskTemplate','style'=>'width: 100%;'),$Array,$DiskTemplate);
+	$Comp = Comp_Load('Form/Select',Array('name'=>'DiskTemplate','style'=>'width: 100%;','prompt'=>'Список доступных образов зависит от выбранного тарифа, т.к. может нехватить места для установки'),$Array,$DiskTemplate);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
