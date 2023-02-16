@@ -8,7 +8,11 @@
 
 Ваши новые данные для доступа к аккаунту на сервере:
   * Адрес панели управления: {$Server.Params.Url|default:'$Server.Params.Url'}
-  * Логин в панель управления: {$Login|default:'$Login'}
+{if {$Server.Params.SystemID} == "VmManager6_Hosting"}
+  * Логин в панель управления: {$Login|default:'$Login'}@{$Server.Params.Domain|default:'$Server.Params.Domain'}
+{else}
+  * Логин в панель управления: {$Login|default:'$Login'} ({$Login|default:'$Login'}@{$Server.Params.Domain|default:'$Server.Params.Domain'})
+{/if}
   * Пароль панели управления: {$Password|default:'$Password'}
 
 Если вы заказывали сервер с UNIX-like операционной системой (FreeBSD/Linux), то вы можете войти на него по SSH:
