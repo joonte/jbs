@@ -123,8 +123,8 @@ if(IsSet($Args['redirect'])){
 	if(IsSet($Result['formUrl'])){
 		#-------------------------------------------------------------------------------
 		# сохраняем переданный URL
-		$ClauseID = DB_Insert('TmpData',Array('AppID'=>'SberBank','Col1'=>$InvoiceID,'Col4'=>$Result['formUrl']));
-		if(Is_Error($ClauseID))
+		$IsInsert = DB_Insert('TmpData',Array('AppID'=>'SberBank','Col1'=>$InvoiceID,'Col4'=>$Result['formUrl']));
+		if(Is_Error($IsInsert))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		Header(SPrintF('Location: %s',$Result['formUrl']));
