@@ -20,13 +20,13 @@
 <!-- *********************************************************************** -->
 <SystemID>
 	<!-- *********************************************************************** -->
-	<NullSystem>
+	<ProxyNullSystem>
 		<Name>Ручное управление</Name>
 		<Settings>
 			<Port>1000</Port>
 			<Protocol>tcp</Protocol>
 		</Settings>
-	</NullSystem>
+	</ProxyNullSystem>
 	<!-- ********************************************************************* -->
 	<Proxy6>
 		<Name>Proxy6.net</Name>
@@ -74,7 +74,7 @@
 		<Comment>Система управления</Comment>
 		<Type>Select</Type>
 		<Options>
-			<NullSystem>Ручное управление</NullSystem>
+			<ProxyNullSystem>Ручное управление</ProxyNullSystem>
 			<Proxy6>Proxy6</Proxy6>
 		</Options>
 		<Check>/^[A-Za-zА-Яа-я0-9\-]{2,25}$/u</Check>
