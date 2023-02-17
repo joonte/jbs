@@ -4,10 +4,10 @@
 <!-- *********************************************************************** -->
 <Update>
 	<Server>
-		<Address>joonte.com</Address>
-		<Port>80</Port>
-		<Host>joonte.com</Host>
-		<Protocol>tcp</Protocol>
+		<Address>www.joonte.com</Address>
+		<Port>443</Port>
+		<Host>www.joonte.com</Host>
+		<Protocol>ssl</Protocol>
 		<IsLogging>0</IsLogging>
 	</Server>
 </Update>
