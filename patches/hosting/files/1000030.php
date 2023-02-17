@@ -8,6 +8,12 @@
 if(HOST_ID == 'manager.host-food.ru')
 	return TRUE;
 #-------------------------------------------------------------------------------
+// чистим кэш
+$IsFlush = CacheManager::flush();
+if(!$IsFlush)
+	@Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 // добавляем колонку для информации о тарифе
 $IsQuery = DB_Query('ALTER TABLE `HostingSchemes` ADD `SchemeParams` VARCHAR(16384) NOT NULL AFTER `SortID`;');
 if(Is_Error($IsQuery))
