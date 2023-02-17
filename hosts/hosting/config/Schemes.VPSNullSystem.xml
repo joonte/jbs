@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<XML>
+<!-- *********************************************************************** -->
+<Preset>
+	<Name>Шаблон (preset)</Name>
+	<Description>Предустановки виртуальной машины (заранее созданный шаблон на сервере)</Description>
+	<Value></Value>
+	<InternalName>Preset</InternalName>
+</Preset>
+<!-- *********************************************************************** -->
+<HDD>
+	<Name>Размер диска</Name>
+	<Description>Сколько места на диске выделено</Description>
+	<Value>4096</Value>
+	<InternalName>HDD</InternalName>
+	<Unit>Mb</Unit>
+	<Min>64</Min>
+	<Max>1048576</Max>
+</HDD>
+<!-- *********************************************************************** -->
+<RAM>
+	<Name>Объём оперативной памяти</Name>
+	<Description>Сколько RAM выделено виртуальной машине</Description>
+	<Value>512</Value>
+	<InternalName>RAM</InternalName>
+	<Unit>Mb</Unit>
+	<Min>128</Min>
+	<Max>4194304</Max>
+</RAM>
+<!-- *********************************************************************** -->
+<CPU>
+	<Name>Число процессоров</Name>
+	<Description>Количество процессоров в виртуальной машине</Description>
+	<Value>1</Value>
+	<InternalName>CPU</InternalName>
+	<Min>1</Min>
+	<Max>240</Max>
+</CPU>
+<!-- *********************************************************************** -->
+</XML>
+

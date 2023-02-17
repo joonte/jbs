@@ -18,13 +18,13 @@
 <!-- *********************************************************************** -->
 <SystemID>
 	<!-- *********************************************************************** -->
-	<NullSystem>
+	<VPSNullSystem>
 		<Name>Ручное управление</Name>
 		<Settings>
 			<Port>1000</Port>
 			<Protocol>tcp</Protocol>
 		</Settings>
-	</NullSystem>
+	</VPSNullSystem>
 	<!-- ********************************************************************* -->
 	<VmManager5_KVM>
 		<Name>VmManager5_KVM</Name>
@@ -61,7 +61,7 @@
 		<Comment>Система управления</Comment>
 		<Type>Select</Type>
 		<Options>
-			<NullSystem>Ручное управление</NullSystem>
+			<VPSNullSystem>Ручное управление</VPSNullSystem>
 			<VmManager5_KVM>VmManager5_KVM</VmManager5_KVM>
 			<VmManager6_Hosting>VmManager6_Hosting</VmManager6_Hosting>
 		</Options>
