@@ -7,37 +7,37 @@
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-$OnLine5 = DB_Select('RequestLog',Array('COUNT(DISTINCT(`UserID`)) AS `Count`'),Array('UNIQ','Where'=>'`CreateDate` > UNIX_TIMESTAMP() - 300'));
+$OnLine5 = DB_Select('RequestLog',Array('COUNT(DISTINCT(`UserID`)) AS `Count`'),Array('UNIQ','Where'=>Array('UserID NOT IN (SELECT `ID` FROM `Users` WHERE `GroupID` != 2000000)','`CreateDate` > UNIX_TIMESTAMP() - 300')));
 #-------------------------------------------------------------------------------
 if(Is_Error($OnLine5))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$OnLine15 = DB_Select('RequestLog',Array('COUNT(DISTINCT(`UserID`)) AS `Count`'),Array('UNIQ','Where'=>'`CreateDate` > UNIX_TIMESTAMP() - 900'));
+$OnLine15 = DB_Select('RequestLog',Array('COUNT(DISTINCT(`UserID`)) AS `Count`'),Array('UNIQ','Where'=>Array('UserID NOT IN (SELECT `ID` FROM `Users` WHERE `GroupID` != 2000000)','`CreateDate` > UNIX_TIMESTAMP() - 900')));
 #-------------------------------------------------------------------------------
 if(Is_Error($OnLine15))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$OnLine1h = DB_Select('RequestLog',Array('COUNT(DISTINCT(`UserID`)) AS `Count`'),Array('UNIQ','Where'=>'`CreateDate` > UNIX_TIMESTAMP() - 3600'));
+$OnLine1h = DB_Select('RequestLog',Array('COUNT(DISTINCT(`UserID`)) AS `Count`'),Array('UNIQ','Where'=>Array('UserID NOT IN (SELECT `ID` FROM `Users` WHERE `GroupID` != 2000000)','`CreateDate` > UNIX_TIMESTAMP() - 3600')));
 #-------------------------------------------------------------------------------
 if(Is_Error($OnLine1h))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$OnLine1d = DB_Select('RequestLog',Array('COUNT(DISTINCT(`UserID`)) AS `Count`'),Array('UNIQ','Where'=>'`CreateDate` > UNIX_TIMESTAMP() - 86400'));
+$OnLine1d = DB_Select('RequestLog',Array('COUNT(DISTINCT(`UserID`)) AS `Count`'),Array('UNIQ','Where'=>Array('UserID NOT IN (SELECT `ID` FROM `Users` WHERE `GroupID` != 2000000)','`CreateDate` > UNIX_TIMESTAMP() - 86400')));
 #-------------------------------------------------------------------------------
 if(Is_Error($OnLine1d))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Table	= Array('Сейчас в биллинге');
+$Table	= Array('Сейчас в биллинге, клиентов');
 #-------------------------------------------------------------------------------
 $Table[]= Array('5 минут',(integer)$OnLine5['Count']);
 #-------------------------------------------------------------------------------
 $Table[]= Array('15 минут',(integer)$OnLine15['Count']);
 #-------------------------------------------------------------------------------
-$Table[]= Array('1 час',(integer)$OnLine1h['Count']);
+$Table[]= Array('час',(integer)$OnLine1h['Count']);
 #-------------------------------------------------------------------------------
 $Table[]= Array('сутки',(integer)$OnLine1d['Count']);
 #-------------------------------------------------------------------------------
