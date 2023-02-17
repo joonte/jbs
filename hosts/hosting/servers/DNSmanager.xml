@@ -17,13 +17,13 @@
 <!-- *********************************************************************** -->
 <SystemID>
 	<!-- *********************************************************************** -->
-	<NullSystem>
+	<DNSmanagerNullSystem>
 		<Settings>
 			<Port>1000</Port>
 			<Protocol>tcp</Protocol>
 			<Url>http://dns0.isp.su/manage</Url>
 		</Settings>
-	</NullSystem>
+	</DNSmanagerNullSystem>
 	<!-- ********************************************************************* -->
 	<DNSmanager5>
 		<Settings>
@@ -45,7 +45,7 @@
 		<Type>Select</Type>
 		<Options>
 			<DNSmanager5>DNSmanager5</DNSmanager5>
-			<NullSystem>Ручное управление</NullSystem>
+			<DNSmanagerNullSystem>Ручное управление</DNSmanagerNullSystem>
 		</Options>
 		<Check>/^[A-Za-zА-Яа-я0-9\-]{2,25}$/u</Check>
 		<Attribs>
