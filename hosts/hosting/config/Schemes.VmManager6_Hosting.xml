@@ -112,7 +112,7 @@
 <!-- *********************************************************************** -->
 <net_bandwidth_mbitps>
 	<Name>Скорость сети</Name>
-	<Description>УТОЧНИТЬ в ISPsystem</Description>
+	<Description>Скорость сети. Значения net_in_mbitps и net_out_mbitps имеют больший приоритет над этим значением</Description>
 	<Value>10</Value>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
