@@ -18,13 +18,13 @@
 <!-- *********************************************************************** -->
 <SystemID>
 	<!-- *********************************************************************** -->
-	<NullSystem>
+	<DSNullSystem>
 		<Name>Без системы управления</Name>
 		<Settings>
 			<Port>1000</Port>
 			<Protocol>tcp</Protocol>
 		</Settings>
-	</NullSystem>
+	</DSNullSystem>
 	<!-- ********************************************************************* -->
 	<DSScripting>
 		<Name>Ручное управление</Name>
@@ -55,7 +55,7 @@
 		<Comment>Система управления</Comment>
 		<Type>Select</Type>
 		<Options>
-			<NullSystem>Без системы управления</NullSystem>
+			<DSNullSystem>Без системы управления</DSNullSystem>
 			<DSScripting>Ручное управление (скрипты)</DSScripting>
 			<DCImanager5>DCImanager 5</DCImanager5>
 		</Options>
