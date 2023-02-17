@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @author Alex Keda, for www.host-food.ru -->
+<!-- https://docs.ispmanager.ru/ispmanager6-business/ispmanager-api -->
+<XML>
+<!-- *********************************************************************** -->
+<Preset>
+	<Name>Шаблон (preset)</Name>
+	<Description>Предустановки тарифного плана (шаблон). #custom - не использовать</Description>
+	<Value>#custom</Value>
+	<InternalName>Preset</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+</Preset>
+<!-- *********************************************************************** -->
+<HDD>
+	<Name>Место на диске</Name>
+	<Description>Максимальный размер дискового пространства, которое могут занимать файлы, принадлежащие пользователю</Description>
+	<Value>100</Value>
+	<InternalName>HDD</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>1000000</Max>
+	<Unit>Mb</Unit>
+</HDD>
+<!-- *********************************************************************** -->
+<FTP>
+	<Name>FTP аккаунты</Name>
+	<Description>Количество дополнительных FTP аккаунтов</Description>
+	<Value>2</Value>
+	<InternalName>FTP</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</FTP>
+<!-- *********************************************************************** -->
+<EMAIL>
+	<Name>Почтовые ящики</Name>
+	<Description>Количество почтовых ящиков</Description>
+	<Value>5</Value>
+	<InternalName>EMAIL</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</EMAIL>
+<!-- *********************************************************************** -->
+<WWW>
+	<Name>WWW-доменов (сайтов)</Name>
+	<Description>Сколько WWW доменов (сайтов) можно создать</Description>
+	<Value>1</Value>
+	<InternalName>WWW</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</WWW>
+<!-- *********************************************************************** -->
+<Domains>
+	<Name>DNS доменов</Name>
+	<Description>Сколько DNS доменов (доменных имён) можно создать</Description>
+	<Value>1</Value>
+	<InternalName>Domains</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</Domains>
+<!-- *********************************************************************** -->
+<DB>
+	<Name>Баз данных</Name>
+	<Description>Число баз данных</Description>
+	<Value>1</Value>
+	<InternalName>DB</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+</DB>
+<!-- *********************************************************************** -->
+<DBsize>
+	<Name>Размер баз данных</Name>
+	<Description>Максимальный размер дискового пространства, который могут занимать базы данных данного пользователя</Description>
+	<Value>100</Value>
+	<InternalName>DBsize</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>10000</Max>
+	<Unit>Mb</Unit>
+</DBsize>
+<!-- *********************************************************************** -->
+<MaxExecuteTime>
+	<Name>Ограничение на CPU</Name>
+	<Description>Время выполнения скриптов</Description>
+	<Value>120</Value>
+	<InternalName>MaxExecuteTime</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000</Max>
+	<Unit>секунд</Unit>
+</MaxExecuteTime>
+<!-- *********************************************************************** -->
+<MEM>
+	<Name>Оперативная память</Name>
+	<Description>Сколько оперативной памяти смогут использовать сайты</Description>
+	<Value>512</Value>
+	<InternalName>MEM</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000</Max>
+	<Unit>Mb</Unit>
+</MEM>
+<!-- *********************************************************************** -->
+<MaxProc>
+	<Name>Число процессов</Name>
+	<Description>Сколько процессов может запустить пользователь</Description>
+	<Value>10</Value>
+	<InternalName>MaxProc</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>1</Min>
+	<Max>100000</Max>
+</MaxProc>
+<!-- *********************************************************************** -->
+<MailRate>
+	<Name>Писем в час</Name>
+	<Description>Сколько писем в час может отправить клиент через mail() или SMTP (толи на пользователя, толи на ящик...)</Description>
+	<Value>100</Value>
+	<InternalName>MailRate</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>100000000</Max>
+</MailRate>
+<!-- *********************************************************************** -->
+<MaxMPM>
+	<Name>Воркеров apache MPM-ITK</Name>
+	<Description>Одновременно работающих процессов apache в режиме MPM-ITK</Description>
+	<Value>8</Value>
+	<InternalName>MaxMPM</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Min>0</Min>
+	<Max>100000</Max>
+</MaxMPM>
+<!-- *********************************************************************** -->
+<SSH>
+	<Name>Доступ к shell (SSH)</Name>
+	<Description>Возможность подключения к серверу по ssh</Description>
+	<Value>0</Value>
+	<InternalName>SSH</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</SSH>
+<!-- *********************************************************************** -->
+<SSL>
+	<Name>Secure Sockets Layer (SSL)</Name>
+	<Description>Возможность использовать SSL сертификаты на сайтах</Description>
+	<Value>1</Value>
+	<InternalName>SSL</InternalName>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</SSL>
+<!-- *********************************************************************** -->
+</XML>
