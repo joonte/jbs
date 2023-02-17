@@ -39,6 +39,7 @@ foreach($VPSOrders as $VPSOrder){
 		$VPSOrder['Login'] = SPrintF('%s@%s',$VPSOrder['Login'],$VPSOrder['Params']['Domain']);
 	#-------------------------------------------------------------------------------
 	UnSet($VPSOrder['Params']);
+	UnSet($VPSOrder['AdminNotice']);
 	#-------------------------------------------------------------------------------
 	$Out[] = $VPSOrder;
 	#-------------------------------------------------------------------------------

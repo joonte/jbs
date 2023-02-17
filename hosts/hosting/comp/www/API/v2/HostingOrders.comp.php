@@ -25,7 +25,7 @@ $Where = Array(SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']));
 if($OrderID > 0)
 	$Where[] = SPrintF('`OrderID` = %u',$OrderID);
 #-------------------------------------------------------------------------------
-$HostingOrders = DB_Select('HostingOrdersOwners','*',Array('Where'=>$Where));
+$HostingOrders = DB_Select('HostingOrdersOwners',Array('ID','OrderID','SchemeID','OldSchemeID','Domain','Parked','Login','Password','StatusID','StatusDate','ServiceID','DaysRemainded','ServerID','OrderDate','UserID','ContractID','UserNotice'),Array('Where'=>$Where));
 if(Is_Error($HostingOrders))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
