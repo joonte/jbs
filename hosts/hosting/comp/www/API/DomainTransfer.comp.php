@@ -14,7 +14,6 @@ $Args = IsSet($Args)?$Args:Args();
 $ContractID     = (integer) @$Args['ContractID'];
 $DomainName     =  (string) @$Args['DomainName'];
 $DomainSchemeID = (integer) @$Args['DomainSchemeID'];
-$PersonID       =  (string) @$Args['PersonID'];
 $AuthInfo	=  (string) @$Args['AuthInfo'];
 $IsNoBasket     = (boolean) @$Args['IsNoBasket'];
 #-------------------------------------------------------------------------------
@@ -119,7 +118,6 @@ $IDomainOrder = Array(
 			'OrderID'	=> $OrderID,
 			'DomainName'	=> Mb_StrToLower($DomainName,'UTF-8'),
 			'SchemeID'	=> $DomainScheme['ID'],
-			'PersonID'	=> $PersonID,
 			'WhoIs'		=> $WhoIs['Info'],
 			'AuthInfo'	=> ($AuthInfo)?$AuthInfo:NULL,
 			'UpdateDate'	=> Time()
