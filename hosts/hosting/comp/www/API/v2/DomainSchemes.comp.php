@@ -23,6 +23,7 @@ $Where = Array(
 $Columns = Array(
 		'ID','Name','PackageID','CostOrder','CostProlong','CostTransfer','IsProlong','IsTransfer','DaysToProlong','DaysBeforeTransfer','DaysAfterTransfer'
 		);
+#-------------------------------------------------------------------------------
 $DomainSchemes = DB_Select('DomainSchemesOwners',$Columns,Array('Where'=>$Where,'SortOn'=>Array('SortID','PackageID')));
 if(Is_Error($DomainSchemes))
 	return ERROR | @Trigger_Error(500);
