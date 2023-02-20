@@ -103,17 +103,17 @@
 	<Unit>секунд</Unit>
 </MaxExecuteTime>
 <!-- *********************************************************************** -->
-<MEM>
+<RAM>
 	<Name>Оперативная память</Name>
 	<Description>Сколько оперативной памяти смогут использовать сайты</Description>
 	<Value>512</Value>
-	<InternalName>MEM</InternalName>
+	<InternalName>RAM</InternalName>
 	<IsCreate>1</IsCreate>
 	<IsSchemeChange>1</IsSchemeChange>
 	<Min>1</Min>
 	<Max>100000</Max>
 	<Unit>Mb</Unit>
-</MEM>
+</RAM>
 <!-- *********************************************************************** -->
 <MaxProc>
 	<Name>Число процессов</Name>
