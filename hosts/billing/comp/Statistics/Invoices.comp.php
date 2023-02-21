@@ -263,7 +263,8 @@ $Columns = Array(
 $Where = Array(
 		SPrintF('`StatusDate` >= %u',$StartDate),
 		SPrintF('`StatusDate` <= %u',$FinishDate),
-		'`IsPosted` = "yes"'
+		'`IsPosted` = "yes"',
+		'`StatusID` = "Payed"'
 		);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
