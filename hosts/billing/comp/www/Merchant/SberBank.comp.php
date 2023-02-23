@@ -60,7 +60,7 @@ $InvoiceID = $Invoice['ID'];
 if(IsSet($Args['redirect'])){
 	#-------------------------------------------------------------------------------
 	# возможный вариант - повторная попытка оплаты. достаём данные по этому счёту
-	$Link = DB_Select('TmpData','Col4',Array('UNIQ','Where'=>Array('`AppID` = "SberBank"',SPrintF('`Col4` = %u',$InvoiceID)),'SortOn'=>'CreateDate','Limits'=>Array(0,1)));
+	$Link = DB_Select('TmpData','Col4',Array('UNIQ','Where'=>Array('`AppID` = "SberBank"',SPrintF('`Col1` = %u',$InvoiceID)),'SortOn'=>'CreateDate','Limits'=>Array(0,1)));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Link)){
 	case 'error':
