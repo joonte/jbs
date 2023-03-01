@@ -355,6 +355,15 @@
 	<Type>CheckBox</Type>
 </limit_php_mode_fcgi_nginxfpm>
 <!-- *********************************************************************** -->
+<limit_phpcomposer>
+	<Name>PHP Composer</Name>
+	<Description>Пользователю будет доступна установка пакетов PHP при помощи PHP Composer</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</limit_phpcomposer>
+<!-- *********************************************************************** -->
 <limit_shell>
 	<Name>Доступ к shell (SSH)</Name>
 	<Description>Возможность подключения к серверу по ssh</Description>
