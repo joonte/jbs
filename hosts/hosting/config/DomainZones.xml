@@ -1097,4 +1097,16 @@
 		<Registrar>Registrar:\s+([\w\-]{2,})</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</dev>
+	<fun>
+		<Server>whois.reg.com</Server>
+		<Name>fun</Name>
+		<Available>DOMAIN\sNOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>([A-Z0-9\.\-]{2,}\.[A-Z]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</fun>
 </XML>
