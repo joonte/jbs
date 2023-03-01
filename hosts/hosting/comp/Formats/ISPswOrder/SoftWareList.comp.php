@@ -40,6 +40,7 @@ $SW = Array(
 						17	=> 'DNSmanager 4',
 						3136	=> 'DNSmanager 5',
 						55233	=> 'ISPmanager 6 Host',
+						55234	=> 'ISPmanager 6 Businnes',
 						55235	=> 'ISPmanager 6 Trial',
 					),
 		#-------------------------------------------------------------------------------

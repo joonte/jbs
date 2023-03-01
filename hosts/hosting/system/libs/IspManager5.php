@@ -446,6 +446,7 @@ function IspManager5_Create($Settings,$Login,$Password,$Domain,$IP,$HostingSchem
 	#-------------------------------------------------------------------------------
 	// персональный чопик
 	$Request['mailrate']			= $HostingScheme['SchemeParams']['limit_mailrate'];
+	#-------------------------------------------------------------------------------
 	if($IsReselling){
 		#-------------------------------------------------------------------------------
 		$Request['limit_users']		= $HostingScheme['SchemeParams']['limit_users']; # Пользователи
