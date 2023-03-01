@@ -80,7 +80,7 @@ switch(ValueOf($Contracts)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return new gException('CONTRACTS_NOT_FOUND','Система не обнаружила у Вас ни одного активного договора. Пожалуйста, перейдите в раздел [Мой офис - Договоры] и сформируйте/активируйте хотя бы один договор.');
+	return new gException('CONTRACTS_NOT_FOUND','Система не обнаружила у Вас ни одного активного договора. Пожалуйста, перейдите в раздел [Мой офис - Договора] и сформируйте/активируйте хотя бы один договор.');
 case 'array':
 	break;
 default:
