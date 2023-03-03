@@ -26,16 +26,26 @@ $Config = Config();
 $Exclude = Array_Keys($Config['APIv2ExcludeColumns']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Out = Array();
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Where = Array(SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']));
 #-------------------------------------------------------------------------------
 if($OrderID > 0)
 	$Where[] = SPrintF('`OrderID` = %u',$OrderID);
 #-------------------------------------------------------------------------------
 $HostingOrders = DB_Select('HostingOrdersOwners',Array('*'),Array('Where'=>$Where));
-if(Is_Error($HostingOrders))
-	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Out = Array();
+switch(ValueOf($HostingOrders)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $Out;
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
 #-------------------------------------------------------------------------------
 foreach($HostingOrders as $HostingOrder){
 	#-------------------------------------------------------------------------------

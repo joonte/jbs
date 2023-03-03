@@ -20,6 +20,8 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Out = Array();
+#-------------------------------------------------------------------------------
 $Where = Array(SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']));
 #-------------------------------------------------------------------------------
 if($OrderID > 0)
@@ -28,10 +30,17 @@ if($OrderID > 0)
 $Columns = Array('*','(SELECT `Params` FROM `Servers` WHERE `VPSOrdersOwners`.`ServerID` = `Servers`.`ID`) AS `Params`');
 #-------------------------------------------------------------------------------
 $VPSOrders = DB_Select('VPSOrdersOwners',$Columns,Array('Where'=>$Where));
-if(Is_Error($VPSOrders))
-	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Out = Array();
+switch(ValueOf($VPSOrders)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $Out;
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
 #-------------------------------------------------------------------------------
 foreach($VPSOrders as $VPSOrder){
 	#-------------------------------------------------------------------------------
