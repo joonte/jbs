@@ -15,14 +15,26 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Out = Array();
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Where = Array(
 		'(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH))',
 		'`IsActive` = "yes"',
 		);
 #-------------------------------------------------------------------------------
 $ExtraIPSchemes = DB_Select('ExtraIPSchemesOwners','*',Array('Where'=>$Where,'SortOn'=>Array('SortID','PackageID')));
-if(Is_Error($ExtraIPSchemes))
+#-------------------------------------------------------------------------------
+switch(ValueOf($ExtraIPSchemes)){
+case 'error':
 	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $Out;
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $ExtraIPSchemes;

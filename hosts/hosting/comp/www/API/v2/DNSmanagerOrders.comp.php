@@ -26,6 +26,9 @@ $Config = Config();
 $Exclude = Array_Keys($Config['APIv2ExcludeColumns']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Out = Array();
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Where = Array(SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']));
 #-------------------------------------------------------------------------------
 if($OrderID > 0)
@@ -34,10 +37,17 @@ if($OrderID > 0)
 $Columns = Array('*','(SELECT `Params` FROM `Servers` WHERE `DNSmanagerOrdersOwners`.`ServerID` = `Servers`.`ID`) AS `Params`');
 #-------------------------------------------------------------------------------
 $DNSmanagerOrders = DB_Select('DNSmanagerOrdersOwners',$Columns,Array('Where'=>$Where));
-if(Is_Error($DNSmanagerOrders))
-	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Out = Array();
+switch(ValueOf($DNSmanagerOrders)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $Out;
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
 #-------------------------------------------------------------------------------
 foreach($DNSmanagerOrders as $DNSmanagerOrder){
 	#-------------------------------------------------------------------------------

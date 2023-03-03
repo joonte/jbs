@@ -15,10 +15,22 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Out = Array();
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 // все колонки кроме AdminNotice
 $Orders = DB_Select('OrdersOwners',Array('ID','OrderDate','ContractID','ServiceID','ServerID','IsAutoProlong','ExpirationDate','Keys','IsPayed','DaysRemainded','StatusID','StatusDate','Params','UserNotice','UserID'),Array('Where'=>SPrintF("`UserID` = %u",$GLOBALS['__USER']['ID']),'SortOn'=>Array('ServiceID','ID')));
-if(Is_Error($Orders))
+#-------------------------------------------------------------------------------
+switch(ValueOf($Orders)){
+case 'error':
 	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $Out;
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $Orders;

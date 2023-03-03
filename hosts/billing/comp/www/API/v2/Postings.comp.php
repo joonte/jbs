@@ -15,9 +15,21 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Out = Array();
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Postings = DB_Select('PostingsOwners',Array('*'),Array('Where'=>SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']),'SortOn'=>'CreateDate'));
-if(Is_Error($Postings))
+#-------------------------------------------------------------------------------
+switch(ValueOf($Postings)){
+case 'error':
 	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $Out;
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $Postings;

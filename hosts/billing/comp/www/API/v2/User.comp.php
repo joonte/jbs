@@ -15,9 +15,21 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Out = Array();
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $User = DB_Select('Users',Array('ID','RegisterDate','Name','Email','Sign','EnterIP','EnterDate','IsActive','IsNotifies','Params','IsConfirmed'),Array('ID'=>$GLOBALS['__USER']['ID']));
-if(Is_Error($User))
+#-------------------------------------------------------------------------------
+switch(ValueOf($User)){
+case 'error':
 	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $Out;
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $User;

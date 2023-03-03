@@ -15,17 +15,26 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Out = Array();
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Where = Array(
 		'(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH))',
 		'`IsActive` = "yes"',
 		);
 #-------------------------------------------------------------------------------
 $VPSSchemes = DB_Select('VPSSchemesOwners',Array('*','(SELECT `Params` FROM `Servers` WHERE `ServersGroupID` = `VPSSchemesOwners`.`ServersGroupID` LIMIT 1) AS `Params`'),Array('Where'=>$Where,'SortOn'=>Array('SortID','PackageID')));
-if(Is_Error($VPSSchemes))
+#-------------------------------------------------------------------------------
+switch(ValueOf($VPSSchemes)){
+case 'error':
 	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Out = Array();
+case 'exception':
+	return $Out;
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
 #-------------------------------------------------------------------------------
 foreach($VPSSchemes as $VPSScheme){
 	#-------------------------------------------------------------------------------

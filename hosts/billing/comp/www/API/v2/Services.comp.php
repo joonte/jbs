@@ -15,9 +15,21 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Out = Array();
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Services = DB_Select('Services',Array('ID','Name','NameShort','Code','Item','Measure','ConsiderTypeID'),Array('Where'=>"`IsActive` = 'yes' AND `IsHidden` = 'no'",'SortOn'=>'SortID'));
-if(Is_Error($Services))
+#-------------------------------------------------------------------------------
+switch(ValueOf($Services)){
+case 'error':
 	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return $Out;
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $Services;
