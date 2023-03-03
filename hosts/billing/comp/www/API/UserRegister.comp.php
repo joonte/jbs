@@ -192,8 +192,8 @@ if($OwnerID){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Users/Init',$UserID);
-if(Is_Error($Comp))
+$Init = Comp_Load('Users/Init',$UserID);
+if(Is_Error($Init))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('www/API/ContractMake',Array('TypeID'=>'Default'));
@@ -300,7 +300,7 @@ if(Is_Error($Session->Save()))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return Array('Status'=>'Ok','SessionID'=>$SessionID,'Home'=>($Eval?SPrintF('/Home?Eval=%s',$Eval):'/Home'),'ContractID'=>$ContractID,'UserID'=>$UserID,'ID'=>$UserID);
+return Array('Status'=>'Ok','SessionID'=>$SessionID,'User'=>$Init,'Home'=>SPrintF('/%s/Home',$Init['InterfaceID']),'ContractID'=>$ContractID,'UserID'=>$UserID,'ID'=>$UserID,'Home'=>($Eval?SPrintF('/Home?Eval=%s',$Eval):'/Home'));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
