@@ -30,7 +30,7 @@ if(!$Settings['MakeCheckVersion'])
 #-------------------------------------------------------------------------------
 $currentVersion = VERSION;
 #-------------------------------------------------------------------------------
-$opts = array('http'=>array('timeout'=>2,'header'=>Array(SPrintF("Referer: %s\r\n",HOST_ID))));
+$opts = array('http'=>array('timeout'=>2,'header'=>Array(SPrintF("Referer: %s/%s\r\n",HOST_ID,VERSION))));
 $context  = stream_context_create($opts);
 $versionInfoJson = @file_get_contents("http://joonte.com/public/version",false,$context);
 //Debug(SprintF('[comp/Notes/Administrator/CheckVersion]: versionInfoJson = %s',$versionInfoJson));
