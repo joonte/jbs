@@ -578,7 +578,7 @@ public function Build($IsToXML = TRUE){
     if(Is_Error($Result))
       return ERROR | Trigger_Error('[DOM->Build]: не удалось преобразовать DOM в строку');
     #---------------------------------------------------------------------------
-    return SPrintF("<!-- Joonte Billing System http://www.joonte.com -->\n%s",$Result);
+    return SPrintF("<!-- Joonte Billing System https://www.joonte.com -->\n%s",$Result);
   }
   #-----------------------------------------------------------------------------
   return TRUE;

@@ -34,7 +34,7 @@
 		<SiteURL>
 			<Check>Url</Check>
 			<Comment>Адрес Вашего сайта</Comment>
-			<Example>http://www.triton-studio.ru</Example>
+			<Example>https://www.nopreset.net</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
@@ -46,7 +46,7 @@
 		<LogoURL>
 			<Check>Url</Check>
 			<Comment>Адрес Вашей иконки (200x150)</Comment>
-			<Example>http://www.joonte.com/Logo.png</Example>
+			<Example>https://www.joonte.com/Logo.png</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>

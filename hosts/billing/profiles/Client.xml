@@ -20,7 +20,7 @@
 		<SiteURL>
 			<Check>Url</Check>
 			<Comment>Адрес Вашего сайта</Comment>
-			<Example>http://www.joonte.com</Example>
+			<Example>https://www.joonte.com</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
@@ -32,7 +32,7 @@
 		<IconURL>
 			<Check>Url</Check>
 			<Comment>Адрес Вашей иконки (200x150)</Comment>
-			<Example>http://www.joonte.com/Icon.png</Example>
+			<Example>https://www.joonte.com/Icon.png</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>

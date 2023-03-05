@@ -152,7 +152,7 @@ if($__USER['IsAdmin']){ # is support
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
 		#-------------------------------------------------------------------------------
-		$A = new Tag('A',Array('title'=>'как добавить шаблоны быстрых ответов','href'=>'http://wiki.joonte.com/index.php?title=TiketAnswerTemplate'),'шаблоны ответов');
+		$A = new Tag('A',Array('title'=>'как добавить шаблоны быстрых ответов','href'=>'https://wiki.joonte.com/index.php?title=TiketAnswerTemplate'),'шаблоны ответов');
 		#-------------------------------------------------------------------------------
 		$Tr->AddChild(new Tag('TD',$A));
 		#-------------------------------------------------------------------------------

@@ -189,7 +189,7 @@ $Parse = <<<EOD
 <TABLE class="Standard" cellspacing="5" cellpadding="5" width="100%" height="100%">
   <TR>
    <TD colspan="2">
-    <IMG src="http://www.joonte.com/styles/joonte/Images/TopLogo.png" />
+    <IMG src="https://www.joonte.com/styles/joonte/Images/TopLogo.png" />
    </TD>
   </TR>
   <TR>
