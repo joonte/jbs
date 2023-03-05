@@ -18,9 +18,9 @@ if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 $Out = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Users = DB_Select('Users',Array('ID','RegisterDate','Name','Email','Sign','EnterIP','EnterDate','IsActive','IsNotifies','Params','IsConfirmed'),Array('ID'=>$GLOBALS['__USER']['ID']));
+$Profiles = DB_Select('ProfilesOwners',Array('*'),Array('Where'=>SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID'])));
 #-------------------------------------------------------------------------------
-switch(ValueOf($Users)){
+switch(ValueOf($Profiles)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
@@ -31,20 +31,19 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-foreach($Users as $User){
+foreach($Profiles as $Profile){
 	#-------------------------------------------------------------------------------
-	$Out[$User['ID']] = $User;
+	$Out[$Profile['ID']] = $Profile;
 	#-------------------------------------------------------------------------------
 	// докУменты
-	$Files = GetUploadedFilesInfo('Users',$User['ID']);
+	$Files = GetUploadedFilesInfo('Profiles',$Profile['ID']);
 	#-------------------------------------------------------------------------------
 	if(SizeOf($Files)){
 		#-------------------------------------------------------------------------------
-		$Out[$User['ID']]['Files'] = Array();
+		$Out[$Profile['ID']]['Files'] = Array();
 		#-------------------------------------------------------------------------------
 		foreach($Files as $File)
-			$Out[$User['ID']]['Files'][$File['ID']] = $File;
+			$Out[$Profile['ID']]['Files'][$File['ID']] = $File;
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
