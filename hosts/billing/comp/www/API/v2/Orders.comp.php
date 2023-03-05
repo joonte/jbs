@@ -15,11 +15,17 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// список колонок которые юзеру не показываем
+$Config = Config();
+#-------------------------------------------------------------------------------
+$Exclude = Array_Keys($Config['APIv2ExcludeColumns']);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Out = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // все колонки кроме AdminNotice
-$Orders = DB_Select('OrdersOwners',Array('ID','OrderDate','ContractID','ServiceID','ServerID','IsAutoProlong','ExpirationDate','Keys','IsPayed','DaysRemainded','StatusID','StatusDate','Params','UserNotice','UserID'),Array('Where'=>SPrintF("`UserID` = %u",$GLOBALS['__USER']['ID']),'SortOn'=>Array('ServiceID','ID')));
+$Orders = DB_Select('OrdersOwners',Array('*'),Array('Where'=>SPrintF("`UserID` = %u",$GLOBALS['__USER']['ID']),'SortOn'=>Array('ServiceID','ID')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Orders)){
 case 'error':
@@ -32,8 +38,33 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-foreach($Orders as $Order)
+foreach($Orders as $Order){
+	#-------------------------------------------------------------------------------
+	// выпиливаем колонки
+	foreach(Array_Keys($Order) as $Column)
+		if(In_Array($Column,$Exclude))
+			UnSet($Order[$Column]);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// достаём поля кастомных услуг
+	$OrdersFields = DB_Select('OrdersFieldsOwners',Array('*'),Array('Where'=>Array(SPrintF("`UserID` = %u",$GLOBALS['__USER']['ID']),SPrintF('`OrderID` = %u',$Order['ID'])),'SortOn'=>Array('ID')));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($OrdersFields)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		$OrdersFields = Array();
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$Order['OrdersFields'] = $OrdersFields;
+	#-------------------------------------------------------------------------------
 	$Out[$Order['ID']] = $Order;
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $Out;

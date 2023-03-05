@@ -18,7 +18,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 $Out = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Services = DB_Select('Services',Array('ID','Name','NameShort','Code','Item','Measure','ConsiderTypeID'),Array('Where'=>"`IsActive` = 'yes' AND `IsHidden` = 'no'",'SortOn'=>'SortID'));
+$Services = DB_Select('Services',Array('ID','Name','NameShort','Code','Item','Measure','ConsiderTypeID','IsActive'),Array('Where'=>"`IsHidden` = 'no'",'SortOn'=>'SortID'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Services)){
 case 'error':
@@ -33,6 +33,22 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 foreach($Services as $Service){
+	#-------------------------------------------------------------------------------
+	// поля сервиса
+	$ServicesFields = DB_Select('ServicesFieldsOwners',Array('*'),Array('Where'=>SPrintF('`ServiceID` = %u',$Service['ID']),'SortOn'=>'SortID'));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($ServicesFields)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		$ServicesFields = Array();
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$Service['ServicesFields'] = $ServicesFields;
 	#-------------------------------------------------------------------------------
 	$Out[$Service['ID']] = $Service;
 	#-------------------------------------------------------------------------------
