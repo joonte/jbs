@@ -61,7 +61,7 @@ foreach($DNSmanagerOrders as $DNSmanagerOrder){
 		if(In_Array($Column,$Exclude))
 			UnSet($DNSmanagerOrder[$Column]);
 	#-------------------------------------------------------------------------------
-	$Out[] = $DNSmanagerOrder;
+	$Out[$DNSmanagerOrder['ID']] = $DNSmanagerOrder;
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
