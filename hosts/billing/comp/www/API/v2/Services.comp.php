@@ -18,7 +18,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 $Out = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Services = DB_Select('Services',Array('ID','Name','NameShort','Code','Item','Measure','ConsiderTypeID','IsActive'),Array('Where'=>"`IsHidden` = 'no'",'SortOn'=>'SortID'));
+$Services = DB_Select('Services',Array('*'),Array('SortOn'=>'SortID'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Services)){
 case 'error':
