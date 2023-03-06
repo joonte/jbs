@@ -10,6 +10,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
+$UserID	=  (integer) @$Args['UserID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 	return ERROR | @Trigger_Error(500);
@@ -18,7 +19,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 $Out = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Users = DB_Select('Users',Array('ID','RegisterDate','Name','Email','Sign','EnterIP','EnterDate','IsActive','IsNotifies','Params','IsConfirmed'),Array('ID'=>$GLOBALS['__USER']['ID']));
+$Users = DB_Select('Users',Array('ID','RegisterDate','Name','Email','Sign','EnterIP','EnterDate','IsActive','IsNotifies','Params','IsConfirmed'),Array('ID'=>($UserID > 0)?$UserID:$GLOBALS['__USER']['ID']));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Users)){
 case 'error':
@@ -33,6 +34,29 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 foreach($Users as $User){
+	#-------------------------------------------------------------------------------
+	// если это запрос чужих данных, то пока тока один вариат - были тикеты с участием этого человека. проверяем
+	if($UserID > 0 && $UserID != $GLOBALS['__USER']['ID']){
+		#-------------------------------------------------------------------------------
+		// есть ли тикеты владелец которых авторизованный юзер и в нём участвует запрошенный в UserID пользователь
+		$Count = DB_Count('EdesksMessagesOwners',Array('Where'=>Array(SPrintF('`EdeskID` IN (SELECT `ID` FROM `EdesksOwners` WHERE `UserID` = %u)',$GLOBALS['__USER']['ID']),SPrintF('`UserID` = %u',$UserID))));
+		if(Is_Error($Count))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		if(!$Count)
+			continue;
+		#-------------------------------------------------------------------------------
+		// выпиливаем лишнее
+		UnSet($User['RegisterDate']);
+		UnSet($User['Email']);
+		UnSet($User['EnterIP']);
+		UnSet($User['EnterDate']);
+		UnSet($User['IsActive']);
+		UnSet($User['IsNotifies']);
+		UnSet($User['Params']);
+		UnSet($User['IsConfirmed']);
+		#-------------------------------------------------------------------------------
+	}
 	#-------------------------------------------------------------------------------
 	$Out[$User['ID']] = $User;
 	#-------------------------------------------------------------------------------
