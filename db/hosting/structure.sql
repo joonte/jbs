@@ -629,6 +629,7 @@ CREATE TABLE IF NOT EXISTS `ISPswLicenses` (
 	`CreateDate` int(11) NOT NULL,
 	`ip_change_date` int(11) NOT NULL,
 	`lickey_change_date` int(11) NOT NULL,
+	`update_expiredate` int(11) DEFAULT NULL,
 	`StatusDate` int(11) NOT NULL,
 	`ExpireDate` int(11) NOT NULL,
 	`Flag` char(32) NOT NULL,
