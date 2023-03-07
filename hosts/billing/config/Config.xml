@@ -154,6 +154,12 @@
 		<AllowConditionally>0</AllowConditionally>
 		<EventOnNegativeBalance>0</EventOnNegativeBalance>
 		<!-- *********************************************************************** -->
+		<YandexMetrika>
+			<Token/>
+			<IsActive>0</IsActive>
+			<YandexCounterId/>
+		</YandexMetrika>
+		<!-- *********************************************************************** -->
 		<DBO>
 			<BankName>open.ru</BankName>
 			<AccountNumber></AccountNumber>
