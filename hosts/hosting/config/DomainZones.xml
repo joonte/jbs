@@ -358,7 +358,7 @@
 	<org>
 		<Server>whois.pir.org</Server>
 		<Name>org</Name>
-		<Available>NOT\sFOUND</Available>
+		<Available>NOT\sFOUND|Domain\snot\sfound</Available>
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>2</MinChars>
 		<Regular>/^[0-9а-яa-z]([0-9а-яa-z\-]*[0-9а-яa-z])*$/ui</Regular>
@@ -394,7 +394,7 @@
 	<info>
 		<Server>whois.afilias.net</Server>
 		<Name>info</Name>
-		<Available>NOT\sFOUND</Available>
+		<Available>NOT\sFOUND|Domain\snot\sfound</Available>
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>3</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
@@ -502,7 +502,7 @@
 	<mobi>
 		<Server>whois.dotmobiregistry.net</Server>
 		<Name>mobi</Name>
-		<Available>NOT\sFOUND</Available>
+		<Available>NOT\sFOUND|Domain\snot\sfound</Available>
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>2</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
@@ -862,7 +862,7 @@
 	<pro>
 		<Server>pro.whois-servers.net</Server>
 		<Name>pro</Name>
-		<Available>NOT\sFOUND</Available>
+		<Available>NOT\sFOUND|Domain\snot\sfound</Available>
 		<NotAvailable>Governmental\sReserved\sName</NotAvailable>
 		<MinChars>3</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
@@ -1098,7 +1098,7 @@
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</dev>
 	<fun>
-		<Server>whois.reg.com</Server>
+		<Server>whois.nic.fun</Server>
 		<Name>fun</Name>
 		<Available>DOMAIN\sNOT\sFOUND</Available>
 		<NotAvailable>name\sis\sreserved</NotAvailable>
