@@ -81,6 +81,9 @@ class YandexMetrika
 	// отправка клиентов
 	public function SendClients($Contacts = Array()){
 		#-------------------------------------------------------------------------------
+		if(!SizeOf($Contacts))
+			return TRUE;
+		#-------------------------------------------------------------------------------
 		$Result = $this->API('Contacts','UPDATE',Array('contacts'=>$Contacts));
 		#-------------------------------------------------------------------------------
 		if(Is_Error($Result))
@@ -144,7 +147,7 @@ class YandexMetrika
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
-			return TRUE;
+			return Array('Contacts'=>Array(),'Deleted'=>Array());
 		case 'array':
 			break;
 		default:
@@ -189,6 +192,8 @@ class YandexMetrika
 	// выбираем заказы для загрузки
 	public function SelectOrders(){
                 #-------------------------------------------------------------------------------
+		$Orders = Array('PAID'=>Array(),'IN_PROGRESS'=>Array(),'CANCELLED'=>Array());
+		#-------------------------------------------------------------------------------
 		$Columns = Array(
 				'*','(SELECT `Name` FROM `Users` WHERE `Users`.`ID` = `UserID`) AS `Name`',
 				'(SELECT FROM_UNIXTIME(`RegisterDate`) FROM `Users` WHERE `Users`.`ID` = `UserID`) AS `RegisterDate`',
@@ -202,7 +207,7 @@ class YandexMetrika
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
-			return TRUE;
+			return Array('Orders'=>$Orders,'Deleted'=>Array());
 		case 'array':
 			break;
 		default:
@@ -211,8 +216,6 @@ class YandexMetrika
 		#-------------------------------------------------------------------------------
 		// перебираем юзеров, строим массив с контактами и массив на удаление записей
 		$Deleted = Array();
-		#-------------------------------------------------------------------------------
-		$Orders = Array('PAID'=>Array(),'IN_PROGRESS'=>Array(),'CANCELLED'=>Array());
 		#-------------------------------------------------------------------------------
 		foreach($Lines as $Line){
 			#-------------------------------------------------------------------------------
@@ -247,6 +250,10 @@ class YandexMetrika
 	#-------------------------------------------------------------------------------
 	// удаление загруженных записей из таблицы временных данных
 	public function DeleteRecords($Deleted = Array()){
+		#-------------------------------------------------------------------------------
+		if(!SizeOf($Deleted))
+			return TRUE;
+		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		$IsDelete = DB_Delete('TmpData',Array('Where'=>SPrintF('`ID` IN (%s)',Implode(',',$Deleted))));
 		if(Is_Error($IsDelete))
