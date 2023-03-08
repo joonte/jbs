@@ -95,7 +95,7 @@ case 'array':
 	if(Is_Error($Delete = $YandexMetrika->DeleteRecords($Select['Deleted'])))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo']['Invoices'][] = SizeOf($Select['Orders']['IN_PROGRESS']) + SizeOf($Select['Orders']['PAID'] + SizeOf($Select['Orders']['CANCELLED']);
+	$GLOBALS['TaskReturnInfo']['Invoices'][] = SizeOf($Select['Orders']['IN_PROGRESS']) + SizeOf($Select['Orders']['PAID']) + SizeOf($Select['Orders']['CANCELLED']);
 	#-------------------------------------------------------------------------------
 	break;
 	#-------------------------------------------------------------------------------
