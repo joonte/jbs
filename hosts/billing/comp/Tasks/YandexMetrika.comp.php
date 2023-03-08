@@ -87,7 +87,7 @@ case 'boolean':
 case 'array':
 	#-------------------------------------------------------------------------------
 	// чё-то выбралось. отправляем.
-	if(SizeOf($Select['Orders']['IN_PROGRESS']) > 0 || SizeOf($Select['Orders']['PAID']) > 0)
+	if(SizeOf($Select['Orders']['IN_PROGRESS']) > 0 || SizeOf($Select['Orders']['PAID']) > 0 || SizeOf($Select['Orders']['CANCELLED']) > 0)
 		if(Is_Error($Send = $YandexMetrika->SendOrders($Select['Orders'])))
 			return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -95,7 +95,7 @@ case 'array':
 	if(Is_Error($Delete = $YandexMetrika->DeleteRecords($Select['Deleted'])))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo']['Invoices'][] = SizeOf($Select['Orders']['IN_PROGRESS']) + SizeOf($Select['Orders']['PAID']);
+	$GLOBALS['TaskReturnInfo']['Invoices'][] = SizeOf($Select['Orders']['IN_PROGRESS']) + SizeOf($Select['Orders']['PAID'] + SizeOf($Select['Orders']['CANCELLED']);
 	#-------------------------------------------------------------------------------
 	break;
 	#-------------------------------------------------------------------------------

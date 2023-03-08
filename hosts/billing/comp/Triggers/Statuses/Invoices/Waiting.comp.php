@@ -29,7 +29,8 @@ $Query = Array(
 		'client_type'		=> 'CONTACT',
 		'create_date_time'	=> SPrintF('%s %s',Date('Y-m-d',$Invoice['CreateDate']),Date('G:i:s',$Invoice['CreateDate'])),
 		'order_status'		=> 'IN_PROGRESS',
-		'revenue'		=> $Invoice['Summ']
+		'revenue'		=> $Invoice['Summ'],
+		'cost'			=> 0,
 		);
 #-------------------------------------------------------------------------------
 $IsInsert = DB_Insert('TmpData',Array('UserID'=>$Invoice['UserID'],'AppID'=>'YandexMetrika','Col1'=>'Orders','Params'=>$Query));

@@ -48,7 +48,9 @@ if($Settings['IsActive'] && $Settings['YandexCounterId'] && $Settings['Token']){
 			'client_type'		=> 'CONTACT',
 			'create_date_time'	=> SPrintF('%s %s',Date('Y-m-d',$Invoice['CreateDate']),Date('G:i:s',$Invoice['CreateDate'])),
 			'order_status'		=> 'PAID',
-			'revenue'		=> $Invoice['Summ']
+			'revenue'		=> $Invoice['Summ'],
+			'cost'			=> 0,
+			'finish_date_time'	=> SPrintF('%s %s',Date('Y-m-d',Time()),Date('G:i:s',Time())),
 			);
 	#-------------------------------------------------------------------------------
 	$IsInsert = DB_Insert('TmpData',Array('UserID'=>$Invoice['UserID'],'AppID'=>'YandexMetrika','Col1'=>'Orders','Params'=>$Query));
