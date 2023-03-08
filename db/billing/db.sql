@@ -63,7 +63,8 @@ VALUES
 (14,1,'OrdersForDelete','[]','yes'),
 (15,1,'Taxation','[]','yes'),
 /* 16 задача внутренняя, для тех у кого старый биллинг был */
-(17,1,'DBO','[]','yes')
+(17,1,'DBO','[]','yes'),
+(18,1,'YandexMetrika','[]','yes')
 ;
 UNLOCK TABLES;
 

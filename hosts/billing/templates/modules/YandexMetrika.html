@@ -1,0 +1,26 @@
+
+// метрика яндекса
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+// Счетчик сайта для анализа информации о клиентах биллинга
+ym(%YandexCounterId%, "init", {
+			clickmap:		true,
+			trackLinks:		true,
+			accurateTrackBounce:	true,
+			webvisor:		true,
+			ecommerce:		"dataLayer",
+		});
+
+// сохраняем иденфтикатор метрики юзера, чтобы соотенсти его с посетителями сайта
+ym(%YandexCounterId%, 'getClientID', function(clientID) {
+	//alert(clientID);
+	//console.log("[others/Another.js]: clientID = " + clientID );
+
+	const http = new XMLHttpRequest()
+	http.open("GET", "/API/YandexMetrika?clientID=" + clientID)
+	http.send()
+	http.onload = () => console.log(http.responseText)
+});
+

@@ -25,6 +25,10 @@ $Links['DOM']->AddChild('Head',new Tag('LINK',Array('href'=>'SRC:{Images/Icon.pn
 $Links['DOM']->AddChild('Head',new Tag('LINK',Array('href'=>'SRC:{Images/Icon.png}','rel'=>'apple-touch-icon','sizes'=>'96x96')));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// Яндекс.Метрика, если это гость или не админ
+if(!IsSet($GLOBALS['__USER']['ID']) || (IsSet($GLOBALS['__USER']['ID']) && !$GLOBALS['__USER']['IsAdmin']))
+	$Links['DOM']->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'/API/YandexMetrika')));
+#-------------------------------------------------------------------------------
 // логгирование действий пользователя, для внешних скриптов
 if(IsSet($GLOBALS['__USER']['ID'])){
 	#-------------------------------------------------------------------------------

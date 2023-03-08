@@ -154,12 +154,6 @@
 		<AllowConditionally>0</AllowConditionally>
 		<EventOnNegativeBalance>0</EventOnNegativeBalance>
 		<!-- *********************************************************************** -->
-		<YandexMetrika>
-			<Token/>
-			<IsActive>0</IsActive>
-			<YandexCounterId/>
-		</YandexMetrika>
-		<!-- *********************************************************************** -->
 		<DBO>
 			<BankName>open.ru</BankName>
 			<AccountNumber></AccountNumber>
@@ -1280,6 +1274,13 @@
 				<IsActive>1</IsActive>
 			</Taxation>
 			<!-- ********************************************************************* -->
+			<YandexMetrika>
+				<Name>Яндекс.Метрика</Name>
+				<Params type="array"/>
+				<ExecutePeriod>01:00</ExecutePeriod>
+				<IsActive>1</IsActive>
+			</YandexMetrika>
+			<!-- ********************************************************************* -->
 			<MoveFiles>
 				<Name>Перемещение файлов из старой структуры</Name>
 				<Params type="array"/>
@@ -1850,6 +1851,12 @@
 				</OK>
 				<!-- *********************************************************************** -->
 			</OAuth>
+			<!-- *********************************************************************** -->
+			<YandexMetrika>
+				<Token/>
+				<IsActive>0</IsActive>
+				<YandexCounterId/>
+			</YandexMetrika>
 			<!-- *********************************************************************** -->
 		</User>
 		<!-- *********************************************************************** -->

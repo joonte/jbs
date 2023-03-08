@@ -37,48 +37,23 @@ if($Config['Invoices']['PaymentSystems'][$Invoice['PaymentSystemID']]['Is54-FZ']
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // данные в метрику
-$YandexMetrika = $Config['Invoices']['YandexMetrika'];
+$Settings = $Config['Interface']['User']['YandexMetrika'];
 #-------------------------------------------------------------------------------
-if($YandexMetrika['IsActive'] && $YandexMetrika['YandexCounterId'] && $YandexMetrika['Token']){
+// если метрика НЕ включена, то всё
+if($Settings['IsActive'] && $Settings['YandexCounterId'] && $Settings['Token']){
 	#-------------------------------------------------------------------------------
-	// библиотека для работы с ХТТП
-	if(Is_Error(System_Load('libs/HTTP.php')))
+	$Query = Array(
+			'id'			=> $Invoice['ID'],
+			'client_uniq_id'	=> $Invoice['UserID'],
+			'client_type'		=> 'CONTACT',
+			'create_date_time'	=> SPrintF('%s %s',Date('Y-m-d',$Invoice['CreateDate']),Date('G:i:s',$Invoice['CreateDate'])),
+			'order_status'		=> 'PAID',
+			'revenue'		=> $Invoice['Summ']
+			);
+	#-------------------------------------------------------------------------------
+	$IsInsert = DB_Insert('TmpData',Array('UserID'=>$Invoice['UserID'],'AppID'=>'YandexMetrika','Col1'=>'Orders','Params'=>$Query));
+	if(Is_Error($IsInsert))
 		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	$HTTP = Array(
-		'Address'	=> 'api-metrika.yandex.net',
-		'Port'		=> 443,
-		'Host'		=> 'api-metrika.yandex.net',
-		'Protocol'	=> 'ssl',
-		'Charset'	=> 'UTF-8',
-		'IsLogging'	=> FALSE
-		);
-	#-------------------------------------------------------------------------------
-	$Query = Array('orders' => Array());
-	#-------------------------------------------------------------------------------
-	$Query['orders'][] = Array(
-				'id'			=> $Invoice['ID'],
-				'client_uniq_id'	=> $Invoice['UserID'],
-				'client_type'		=> 'CONTACT',
-				'create_date_time'	=> SPrintF('%s %s',Date('Y-m-d',$Invoice['CreateDate']),Date('G:i:s',$Invoice['CreateDate'])),
-				'order_status'		=> 'PAID',
-				'revenue'		=> $Invoice['Summ']
-				);
-	#-------------------------------------------------------------------------------
-	$URL = SPrintF('/cdp/api/v1/counter/%s/data/orders?merge_mode=UPDATE',$YandexMetrika['YandexCounterId']);
-	#-------------------------------------------------------------------------------
-	// заголовки
-	$Headers = Array(SPrintF('Authorization: OAuth %s',$YandexMetrika['Token']),'Content-Type: application/json');
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	// на результат пофигу
-	$Result = @HTTP_Send($URL,$HTTP,Array(),Json_Encode($Query),$Headers);
-	#-------------------------------------------------------------------------------
-	$Result = Trim($Result['Body']);
-	#-------------------------------------------------------------------------------
-	$Result = Json_Decode($Result,TRUE);
-	#-------------------------------------------------------------------------------
-	Debug('[Triggers/Statuses/Invoices/Payed]: Result = %s',print_r($Result,true));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
