@@ -23,11 +23,16 @@ if(!$Settings['IsActive'] || !$Settings['YandexCounterId'] || !$Settings['Token'
 	return TRUE;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// если это из крона вызвано - то слать не надо, это автовыписка счетов
+if(IsSet($GLOBALS['IsCron']))
+	return TRUE;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Query = Array(
 		'id'			=> $Invoice['ID'],
 		'client_uniq_id'	=> $Invoice['UserID'],
 		'client_type'		=> 'CONTACT',
-		'create_date_time'	=> SPrintF('%s %s',Date('Y-m-d',$Invoice['CreateDate']),Date('G:i:s',$Invoice['CreateDate'])),
+		'create_date_time'	=> SPrintF('%s %s',Date('Y-m-d',$Invoice['CreateDate']),Date('H:i:s',$Invoice['CreateDate'])),
 		'order_status'		=> 'IN_PROGRESS',
 		'revenue'		=> $Invoice['Summ'],
 		'cost'			=> 0,
