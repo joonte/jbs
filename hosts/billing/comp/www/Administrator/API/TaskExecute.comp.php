@@ -209,7 +209,7 @@ case 'integer':
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/www/Administrator/API/TaskExecute]: Task.TypeID = %s; UTask.ExecuteDate = %s',$Task['TypeID'],date('Y-m-d G:i:s',$UTask['ExecuteDate'])));
+	Debug(SPrintF('[comp/www/Administrator/API/TaskExecute]: Task.TypeID = %s; UTask.ExecuteDate = %s',$Task['TypeID'],date('Y-m-d H:i:s',$UTask['ExecuteDate'])));
 	#-------------------------------------------------------------------------------
 	if(Is_Error(DB_Commit($TransactionID)))
 		return ERROR | @Trigger_Error(500);

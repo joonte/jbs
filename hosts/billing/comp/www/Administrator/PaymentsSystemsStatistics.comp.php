@@ -91,7 +91,7 @@ if(IntVal($Dates['DateLast']) < 1){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # считаем за этот месяц
-$Table = Array(SPrintF('Статистика по дням, за последнюю неделю [%s]',Date('Y-m-d G:i:s',Time())));
+$Table = Array(SPrintF('Статистика по дням, за последнюю неделю [%s]',Date('Y-m-d H:i:s',Time())));
 #-------------------------------------------------------------------------------
 $LastDayOfMonth = Date('d', MkTime(0, 0, 0, Date('m',Time()) + 1, 0, Date('Y',Time())));
 #-------------------------------------------------------------------------------
@@ -165,7 +165,7 @@ for ($Year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $Yea
 		#-------------------------------------------------------------------------------
 		$TimeBegin = MkTime(0, 0, 0, 1, 1, $Year);
 		$TimeEnd   = MkTime(23, 59, 59, 12, 31, $Year);
-		Debug("[comp/www/Administrator/PaymentsSystemsStatistics]: period is " . date('Y-m-d G:i:s' , $TimeBegin) . " -> " . date('Y-m-d G:i:s' , $TimeEnd));
+		Debug("[comp/www/Administrator/PaymentsSystemsStatistics]: period is " . date('Y-m-d H:i:s' , $TimeBegin) . " -> " . date('Y-m-d H:i:s' , $TimeEnd));
 		#-------------------------------------------------------------------------------
 		# выбираем типы платёжных систем по которым были платежи в указанный период времени
 		$Columns = Array('DISTINCT(`PaymentSystemID`) AS `PaymentSystemID`','SUM(`Summ`) AS `Summ`');
