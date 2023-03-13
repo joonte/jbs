@@ -58,6 +58,29 @@ if(Is_Error($IsInsert))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+# Users OnLine
+$Statistics = Array(
+		'Stamp'		=> Time(),
+		'Year'		=> Date('Y'),
+		'Month'		=> Date('m'),
+		'Day'		=> Date('d'),
+		'TableID'	=> 'OnLine',
+		'PackageID'	=> NULL,
+		);
+#-------------------------------------------------------------------------------
+$OnLine1d = DB_Select('RequestLog',Array('COUNT(DISTINCT(`UserID`)) AS `Count`'),Array('UNIQ','Where'=>Array('UserID NOT IN (SELECT `ID` FROM `Users` WHERE `GroupID` != 2000000)','`CreateDate` > UNIX_TIMESTAMP() - 7*24*3600')));
+#-------------------------------------------------------------------------------
+if(Is_Error($OnLine1d))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Statistics['Active'] = $OnLine1d['Count'];
+#-------------------------------------------------------------------------------
+$IsInsert = DB_Insert('Statistics',$Statistics);
+if(Is_Error($IsInsert))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+
 # счета на оплату, число самих счетов
 $Statistics = Array(
 		'Stamp'		=> Time(),
