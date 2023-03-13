@@ -97,7 +97,7 @@ function VmManager6_Hosting_Get_Domains($Settings){
 	#-------------------------------------------------------------------------------
 	$Doc = VmManager6_Hosting_Request($Settings);
 	#-------------------------------------------------------------------------------
-	if(IsSet($Doc['error']))
+	if(!Is_Exception($Doc) && IsSet($Doc['error']))
 		return new gException('VmManager6_Hosting_Get_Domains','Не удалось получить список VM');
 	#-------------------------------------------------------------------------------
 	$Users = Array();
