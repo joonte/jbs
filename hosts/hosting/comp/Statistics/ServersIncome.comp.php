@@ -12,9 +12,6 @@ Eval(COMP_INIT);
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 $IsCreate       = (boolean) @$Args['IsCreate'];
-$StartDate      = (integer) @$Args['StartDate'];
-$FinishDate     = (integer) @$Args['FinishDate'];
-$Details        =   (array) @$Args['Details'];
 $ShowTables     = (boolean) @$Args['ShowTables'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -33,6 +30,7 @@ $Graphs = Array();	# для построения графиков на выхл�
 #-------------------------------------------------------------------------------
 # перебираем группы серверов
 $ServersGroups = DB_Select('ServersGroups',Array('*'),Array('SortOn'=>'SortID'));
+#-------------------------------------------------------------------------------
 switch(ValueOf($ServersGroups)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
@@ -51,7 +49,7 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // таблица для данных, одна на всё
-$Table = Array();
+$Table = $TmpData = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 foreach($ServersGroups as $ServersGroup){
@@ -197,8 +195,8 @@ foreach($ServersGroups as $ServersGroup){
 		#Debug("[comp/Statistics/ServersIncome]: before calculate");
 		$NumAccounts = SizeOf($Array);
 		#-------------------------------------------------------------------------------
-		$AccountIncome = Comp_Load('Formats/Currency',$AccountIncome);
-		if(Is_Error($AccountIncome))
+		$AccountIncomeCurrency = Comp_Load('Formats/Currency',$AccountIncome);
+		if(Is_Error($AccountIncomeCurrency))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 		#Debug("[comp/Statistics/ServersIncome]: debug - 1");
@@ -206,8 +204,9 @@ foreach($ServersGroups as $ServersGroup){
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
+		$TmpData[$Server['Address']] = Array('NumAccounts'=>$NumAccounts,'PaidAccounts'=>$PaidAccounts,'ServerIncome'=>$ServerIncome,'AccountIncome'=>$AccountIncome);
 		#Debug("[comp/Statistics/ServersIncome]: debug - 2");
-		$Table[] = Array($Server['Address'],SPrintF('%s / %s',$NumAccounts,$PaidAccounts),$Comp,$AccountIncome/*,$Usage['tdisk'],$Usage['tmem']*/);
+		$Table[] = Array($Server['Address'],SPrintF('%s / %s',$NumAccounts,$PaidAccounts),$Comp,$AccountIncomeCurrency);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		#Debug("[comp/Statistics/ServersIncome]: debug - 3");
@@ -370,6 +369,27 @@ $Result['Script'] = $Pie['Script'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Result['DOM'] = $NoBody;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// проверяем временную таблицу, если там даныне - надо удалить
+$Count = DB_Count('TmpData',Array('Where'=>'`AppID` = "Statistics/ServersIncome"'));
+if(Is_Error($Count))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if($Count){
+	#-------------------------------------------------------------------------------
+	$IsDelete = DB_Delete('TmpData',Array('Where'=>'`AppID` = "Statistics/ServersIncome"'));
+	if(Is_Error($IsDelete))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+// сохраяем данные во временную таблицу, потом достанем при сохранении общей статистики
+$IsInsert = DB_Insert('TmpData',Array('AppID'=>'Statistics/ServersIncome','Params'=>$TmpData));
+if(Is_Error($IsInsert))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+//Debug(SPrintF('[comp/Statistics/ServersIncome]: TmpData = %s',print_r($TmpData,true)));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $Result;

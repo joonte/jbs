@@ -80,7 +80,55 @@ if(Is_Error($IsInsert))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// доходность серверов
+$Comp = Comp_Load('Statistics/ServersIncome',Array('IsCreate'=>TRUE));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Servers = DB_Select('TmpData',Array('ID','Params'),Array('UNIQ','Where'=>Array('`AppID` = "Statistics/ServersIncome"','SortOn'=>'CreateDate','Limits'=>Array(0,1))));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Servers)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	// что-то есть, вносим в БД
+	$Statistics = Array(
+			'Stamp'		=> Time(),
+			'Year'		=> Date('Y'),
+			'Month'		=> Date('m'),
+			'Day'		=> Date('d'),
+			'TableID'	=> 'Servers',
+			);
+	#-------------------------------------------------------------------------------
+	foreach(Array_Keys($TmpData['Params']) as $Key){
+		#-------------------------------------------------------------------------------
+		$Server = $TmpData['Params'][$Key];
+		#-------------------------------------------------------------------------------
+		$Statistics['PackageID']	= $Key;
+		$Statistics['PackageID']	= $Key;				// имя сервера
+		$Statistics['Total']		= $Server['NumAccounts'];	// общее число аккаунтов
+		$Statistics['Active']		= $Server['PaidAccounts'];	// оплаченных аккаунтов
+		$Statistics['New']		= Round($Server['ServerIncome']);// прибыль сервера
+		$Statistics['Waiting']		= Round($Server['AccountIncome']);// приблыь 1-го аккаунта
+		#-------------------------------------------------------------------------------
+		// вносим в таблицу
+		$IsInsert = DB_Insert('Statistics',$Statistics);
+		if(Is_Error($IsInsert))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
 
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # счета на оплату, число самих счетов
 $Statistics = Array(
 		'Stamp'		=> Time(),
