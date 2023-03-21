@@ -372,17 +372,9 @@ $Result['DOM'] = $NoBody;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // проверяем временную таблицу, если там даныне - надо удалить
-$Count = DB_Count('TmpData',Array('Where'=>'`AppID` = "Statistics/ServersIncome"'));
-if(Is_Error($Count))
+$IsDelete = DB_Delete('TmpData',Array('Where'=>'`AppID` = "Statistics/ServersIncome"'));
+if(Is_Error($IsDelete))
 	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-if($Count){
-	#-------------------------------------------------------------------------------
-	$IsDelete = DB_Delete('TmpData',Array('Where'=>'`AppID` = "Statistics/ServersIncome"'));
-	if(Is_Error($IsDelete))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-}
 #-------------------------------------------------------------------------------
 // сохраяем данные во временную таблицу, потом достанем при сохранении общей статистики
 $IsInsert = DB_Insert('TmpData',Array('AppID'=>'Statistics/ServersIncome','Params'=>$TmpData));
