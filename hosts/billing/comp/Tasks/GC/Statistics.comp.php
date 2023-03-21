@@ -85,7 +85,7 @@ $Comp = Comp_Load('Statistics/ServersIncome',Array('IsCreate'=>TRUE));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Servers = DB_Select('TmpData',Array('ID','Params'),Array('UNIQ','Where'=>Array('`AppID` = "Statistics/ServersIncome"','SortOn'=>'CreateDate','Limits'=>Array(0,1))));
+$Servers = DB_Select('TmpData',Array('ID','Params'),Array('UNIQ','Where'=>'`AppID` = "Statistics/ServersIncome"','SortOn'=>'CreateDate','Limits'=>Array(0,1)));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Servers)){
 case 'error':
@@ -103,11 +103,10 @@ case 'array':
 			'TableID'	=> 'Servers',
 			);
 	#-------------------------------------------------------------------------------
-	foreach(Array_Keys($TmpData['Params']) as $Key){
+	foreach(Array_Keys($Servers['Params']) as $Key){
 		#-------------------------------------------------------------------------------
-		$Server = $TmpData['Params'][$Key];
+		$Server = $Servers['Params'][$Key];
 		#-------------------------------------------------------------------------------
-		$Statistics['PackageID']	= $Key;
 		$Statistics['PackageID']	= $Key;				// имя сервера
 		$Statistics['Total']		= $Server['NumAccounts'];	// общее число аккаунтов
 		$Statistics['Active']		= $Server['PaidAccounts'];	// оплаченных аккаунтов
