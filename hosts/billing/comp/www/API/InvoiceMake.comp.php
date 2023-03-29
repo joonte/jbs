@@ -96,6 +96,28 @@ case 'exception':
 	if(!$Summ)
 		return new gException('SUMM_NOT_FILL','Сумма для зачисления не указана');
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// проверка минимально разрешённой суммы
+	if($Summ < $PaymentSystem['MinimumPayment']){
+		#-------------------------------------------------------------------------------
+		if(Is_Error(DB_Roll($TransactionID)))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		return new gException('SummTooSmall',SPrintF($Messages['Warnings']['Invoices']['SummTooSmall'],$PaymentSystem['MinimumPayment']));
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	// проверка максимально разрешённой суммы
+	if($Summ > $PaymentSystem['MaximumPayment']){
+		#-------------------------------------------------------------------------------
+		if(Is_Error(DB_Roll($TransactionID)))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		return new gException('SummTooLarge',SPrintF($Messages['Warnings']['Invoices']['SummTooLarge'],$PaymentSystem['MaximumPayment']));
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$IItem = Array('InvoiceID'=>$InvoiceID,'ServiceID'=>1000,'Amount'=>1,'Summ'=>$Summ);
 	#-------------------------------------------------------------------------------
 	$IsInsert = DB_Insert('InvoicesItems',$IItem);
@@ -114,6 +136,28 @@ case 'array':
 		#-------------------------------------------------------------------------------
 		$IItem = Array('InvoiceID'=>$InvoiceID,'ServiceID'=>$Item['ServiceID'],'Comment'=>$Item['Comment'],'OrderID'=>$Item['OrderID'],'Amount'=>$Item['Amount'],'Summ'=>$Item['Summ']);
 		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		// проверка минимально разрешённой суммы
+		if($Summ < $PaymentSystem['MinimumPayment']){
+			#-------------------------------------------------------------------------------
+			if(Is_Error(DB_Roll($TransactionID)))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			return new gException('SummTooSmall',SPrintF($Messages['Warnings']['Invoices']['SummTooSmall'],$PaymentSystem['MinimumPayment']));
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		// проверка максимально разрешённой суммы
+		if($Summ > $PaymentSystem['MaximumPayment']){
+			#-------------------------------------------------------------------------------
+			if(Is_Error(DB_Roll($TransactionID)))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			return new gException('SummTooLarge',SPrintF($Messages['Warnings']['Invoices']['SummTooLarge'],$PaymentSystem['MaximumPayment']));
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 		$IsInsert = DB_Insert('InvoicesItems',$IItem);
 		if(Is_Error($IsInsert))
 			return ERROR | @Trigger_Error(500);
@@ -131,23 +175,23 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-# check minimal summ
+// проверка минимально разрешённой суммы
 if($Summ < $PaymentSystem['MinimumPayment']){
 	#-------------------------------------------------------------------------------
 	if(Is_Error(DB_Roll($TransactionID)))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	return new gException('PAYMENT_SYSTEM_MinimumPayment',SPrintF($Messages['Warnings']['Invoices']['SummTooSmall'],$PaymentSystem['MinimumPayment']));
+	return new gException('SummTooSmall',SPrintF($Messages['Warnings']['Invoices']['SummTooSmall'],$PaymentSystem['MinimumPayment']));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
-# check maximal summ
+// проверка максимально разрешённой суммы
 if($Summ > $PaymentSystem['MaximumPayment']){
 	#-------------------------------------------------------------------------------
 	if(Is_Error(DB_Roll($TransactionID)))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	return new gException('PAYMENT_SYSTEM_MaximumPayment','Сумма платежа больше, чем разрешено платёжной системой');
+	return new gException('SummTooLarge',SPrintF($Messages['Warnings']['Invoices']['SummTooLarge'],$PaymentSystem['MaximumPayment']));
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
