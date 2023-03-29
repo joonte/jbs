@@ -52,7 +52,7 @@ case 'array':
 		#-----------------------------------------------------------------------------
 		$TableID = $Table['Name'];
 		#-----------------------------------------------------------------------------
-		$GLOBALS['TaskReturnInfo'] = Array(SPrintF('Table: %s',$TableID));
+		$GLOBALS['TaskReturnInfo'] = Array(SPrintF('Repair table: %s',$TableID));
 		#-----------------------------------------------------------------------------
 		if(!$Table['Engine']){
 			#-----------------------------------------------------------------------------
@@ -152,7 +152,7 @@ if(!@File_Put_Contents($MyCnf, SPrintF("[client]\nhost = %s\nport = %u\nuser = %
 #-------------------------------------------------------------------------------
 $File = SPrintF('%s/%s.sql',$Folder,Date('D'));
 #-------------------------------------------------------------------------------
-$Command = SPrintF('mysqldump --defaults-extra-file=%s --set-gtid-purged=OFF --quote-names -r %s %s',$MyCnf,$File,$DBConnection['DbName']);
+$Command = SPrintF('mysqldump --defaults-extra-file=%s --set-gtid-purged=OFF --quote-names -R --single-transaction --skip-lock-tables --quick -r %s %s',$MyCnf,$File,$DBConnection['DbName']);
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/Tasks/BackUp]: команда консоли (%s)',$Command));
 #-------------------------------------------------------------------------------
