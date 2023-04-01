@@ -137,16 +137,6 @@ case 'array':
 		$IItem = Array('InvoiceID'=>$InvoiceID,'ServiceID'=>$Item['ServiceID'],'Comment'=>$Item['Comment'],'OrderID'=>$Item['OrderID'],'Amount'=>$Item['Amount'],'Summ'=>$Item['Summ']);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		// проверка минимально разрешённой суммы
-		if($Summ < $PaymentSystem['MinimumPayment']){
-			#-------------------------------------------------------------------------------
-			if(Is_Error(DB_Roll($TransactionID)))
-				return ERROR | @Trigger_Error(500);
-			#-------------------------------------------------------------------------------
-			return new gException('SummTooSmall',SPrintF($Messages['Warnings']['Invoices']['SummTooSmall'],$PaymentSystem['MinimumPayment']));
-			#-------------------------------------------------------------------------------
-		}
-		#-------------------------------------------------------------------------------
 		// проверка максимально разрешённой суммы
 		if($Summ > $PaymentSystem['MaximumPayment']){
 			#-------------------------------------------------------------------------------
