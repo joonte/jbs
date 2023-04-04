@@ -40,8 +40,9 @@ foreach(Array_Keys($Items) as $ItemID){
 	#-------------------------------------------------------------------------------
 	$Text = $Item['Text'];
 	#-------------------------------------------------------------------------------
+	//Debug(SPrintF('[comp/Menus/Left]: %s',print_r($Item,true)));
 	$A = new Tag('A',Array('class'=>'MenuLeft','href'=>$Item['Href']),$Text);
-	Debug(SPrintF('[comp/Menus/Left]: Text = %s; href = %s',$Text,$Item['Href']));
+	//Debug(SPrintF('[comp/Menus/Left]: Text = %s; href = %s',$Text,$Item['Href']));
 	#-------------------------------------------------------------------------------
 	if(IsSet($Item['Prompt'])){
 		#-------------------------------------------------------------------------------
