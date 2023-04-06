@@ -54,7 +54,39 @@ foreach(Array_Keys($Config['Invoices']['PaymentSystems']) as $Key){
 	//if(!$PaymentSystem['IsActive'])
 	//	continue;
 	#-------------------------------------------------------------------------------
-	$Out['PaymentSystems'][$Key] = Array('Name'=>$PaymentSystem['Name'],'SystemDescription'=>$PaymentSystem['SystemDescription'],'ContractsTypes'=>$PaymentSystem['ContractsTypes'],'IsContinuePaying'=>$PaymentSystem['IsContinuePaying'],'Course'=>$PaymentSystem['Course'],'Measure'=>$PaymentSystem['Course'],'Valute'=>$PaymentSystem['Valute'],'MinimumPayment'=>$PaymentSystem['MinimumPayment'],'MaximumPayment'=>$PaymentSystem['MaximumPayment'],'IsActive'=>$PaymentSystem['IsActive']);
+	#-------------------------------------------------------------------------------
+	$Collations = Array();
+	#-------------------------------------------------------------------------------
+	// достаём сопоставление
+	$iCollations = DB_Select('PaymentSystemsCollation',Array('*'),Array('Where'=>Array('`IsActive` = "yes"',SPrintF('`Source` = "%s"',$Key)),'SortOn'=>'SortID'));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($iCollations)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		break;
+	case 'array':
+		#-------------------------------------------------------------------------------
+		foreach($iCollations as $Collation){
+			#-------------------------------------------------------------------------------
+			$SRC = SPrintF('Images/PaymentSystems/%s',($Collation['Image'])?$Collation['Image']:'Blank.png');
+			#-------------------------------------------------------------------------------
+			$Collation['Image'] = Styles_Url($SRC);
+			#-------------------------------------------------------------------------------
+			UnSet($Collation['AdminNotice']);
+			#-------------------------------------------------------------------------------
+			$Collations[] = $Collation;
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		break;
+		#-------------------------------------------------------------------------------
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	$Out['PaymentSystems'][$Key] = Array('Name'=>$PaymentSystem['Name'],'SystemDescription'=>$PaymentSystem['SystemDescription'],'ContractsTypes'=>$PaymentSystem['ContractsTypes'],'IsContinuePaying'=>$PaymentSystem['IsContinuePaying'],'Course'=>$PaymentSystem['Course'],'Measure'=>$PaymentSystem['Course'],'Valute'=>$PaymentSystem['Valute'],'MinimumPayment'=>$PaymentSystem['MinimumPayment'],'MaximumPayment'=>$PaymentSystem['MaximumPayment'],'IsActive'=>$PaymentSystem['IsActive'],'Collations'=>$Collations);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
