@@ -212,67 +212,6 @@
 			<Value/>
 		</pAddress>
 		<!-- ********************************************************************** -->
-		<WebmoneyNumber>
-			<Title>Номер R кошелька WebMoney</Title>
-			<Check>/^R[0-9]{12}$/u</Check>
-			<Comment>Номер кошелька</Comment>
-			<Example>R824672857673</Example>
-			<Type>Input</Type>
-			<Attribs>
-				<type>text</type>
-			</Attribs>
-			<IsDuty>0</IsDuty>
-			<Value/>
-		</WebmoneyNumber>
-		<!-- ********************************************************************** -->
-		<BankName>
-			<Title>Банковские реквизиты</Title>
-			<Check>BankName</Check>
-			<Comment>Наименование банка</Comment>
-			<Example>ООО "КБ Легион"</Example>
-			<Type>Input</Type>
-			<Attribs>
-				<type>text</type>
-			</Attribs>
-			<IsDuty>0</IsDuty>
-			<Value/>
-		</BankName>
-		<!-- ********************************************************************** -->
-		<Bik>
-			<Check>Bik</Check>
-			<Comment>БИК</Comment>
-			<Example>544959119</Example>
-			<Type>Input</Type>
-			<Attribs>
-				<type>text</type>
-			</Attribs>
-			<IsDuty>0</IsDuty>
-			<Value/>
-		</Bik>
-		<!-- ********************************************************************** -->
-		<BankAccount>
-			<Check>BankAccount</Check>
-			<Comment>Номер расчётного счёта</Comment>
-			<Example>40701256800030000589</Example>
-			<Type>Input</Type>
-			<Attribs>
-				<type>text</type>
-			</Attribs>
-			<IsDuty>0</IsDuty>
-			<Value/>
-		</BankAccount>
-		<!-- ********************************************************************** -->
-		<Kor>
-			<Check>Kor</Check>
-			<Comment>Корреспондентский счёт</Comment>
-			<Example>30101810500000000444</Example>
-			<Type>Input</Type>
-			<Attribs>
-				<type>text</type>
-			</Attribs>
-			<IsDuty>0</IsDuty>
-			<Value/>
-		</Kor>
 	</Attribs>
 	<!-- *********************************************************************** -->
 </XML>
