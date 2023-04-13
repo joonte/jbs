@@ -13,7 +13,7 @@ $Config = Config();
 #-------------------------------------------------------------------------------
 $Settings = $Config['Tasks']['Types']['YandexMetrika'];
 #-------------------------------------------------------------------------------
-#Debug(SPrintF('[comp/Tasks/Taxation]: Settings = %s',print_r($Settings,true)));
+#Debug(SPrintF('[comp/Tasks/YandexMetrika]: Settings = %s',print_r($Settings,true)));
 #-------------------------------------------------------------------------------
 $ExecuteTime = Comp_Load('Formats/Task/ExecuteTime',Array('ExecutePeriod'=>$Settings['ExecutePeriod']));
 if(Is_Error($ExecuteTime))
