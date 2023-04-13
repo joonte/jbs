@@ -14,7 +14,7 @@ if(!$IsFlush)
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // добавляем колонку для информации о зависимом заказе
-$IsQuery = DB_Query('ALTER TABLE `Orders` ADD `DependOrderID` int(11) default '0' AFTER `Params`;');
+$IsQuery = DB_Query("ALTER TABLE `Orders` ADD `DependOrderID` int(11) default '0' AFTER `Params`;");
 if(Is_Error($IsQuery))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
