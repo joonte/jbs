@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('classes/ExtraIPServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$ExtraIPOrder = DB_Select('ExtraIPOrdersOwners',Array('ID','OrderID','UserID','DependOrderID','SchemeID','ServerID','(SELECT `AddressType` FROM `ExtraIPSchemes` WHERE `ExtraIPSchemes`.`ID` = `ExtraIPOrdersOwners`.`SchemeID`) AS `AddressType`'),Array('UNIQ','ID'=>$ExtraIPOrderID));
+$ExtraIPOrder = DB_Select('ExtraIPOrdersOwners',Array('ID','OrderID','UserID','(SELECT `DependOrderID` FROM `OrdersOwners` WHERE `ID` = `ExtraIPOrdersOwners`.`OrderID`) AS `DependOrderID`','SchemeID','ServerID','(SELECT `AddressType` FROM `ExtraIPSchemes` WHERE `ExtraIPSchemes`.`ID` = `ExtraIPOrdersOwners`.`SchemeID`) AS `AddressType`'),Array('UNIQ','ID'=>$ExtraIPOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($ExtraIPOrder)){
 case 'error':
@@ -83,7 +83,6 @@ if($DependOrder['StatusID'] == 'Deleted'){
 $ExtraIPServer = new ExtraIPServer();
 #-------------------------------------------------------------------------------
 $IsSelected = $ExtraIPServer->FindSystem((integer)$ExtraIPOrderID,(string)$DependService['Code'],(integer)$DependOrder['ID']);
-//$IsSelected = $ExtraIPServer->FindSystem((integer)$ExtraIPOrder['OrderID'],(string)$DependService['Code'],(integer)$DependOrder['ID']);
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsSelected)){
 case 'error':

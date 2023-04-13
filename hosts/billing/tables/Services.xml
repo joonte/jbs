@@ -186,6 +186,7 @@
 	<Sequence>
 		<ListElement>SelectID</ListElement>
 		<ListElement>Edit</ListElement>
+		<ListElement>ID</ListElement>
 		<ListElement>Group</ListElement>
 		<ListElement>User</ListElement>
 		<ListElement>Name</ListElement>

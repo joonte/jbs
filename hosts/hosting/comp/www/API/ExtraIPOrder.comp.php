@@ -14,7 +14,6 @@ $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 $ContractID	= (integer) @$Args['ContractID'];
 $ExtraIPSchemeID= (integer) @$Args['ExtraIPSchemeID'];
-$OrderType	=  (string) @$Args['OrderType'];	# тип заказа к которому цепляем IP
 $DependOrderID	= (integer) @$Args['DependOrderID'];	# номер заказа к которому цепляем IP
 $Comment	=  (string) @$Args['Comment'];
 #-------------------------------------------------------------------------------
@@ -48,29 +47,46 @@ if(!$DependOrderID)
 	return new gException('DEPEND_ORDER_NOT_FOUND','Выбранный заказ услуги, для добавления IP адреса, не найден');
 #-------------------------------------------------------------------------------
 # выбираем ServerID заказа
-$Order = DB_Select('OrdersOwners',Array('ID','ServerID'),Array('UNIQ','ID'=>$DependOrderID));
+$DependOrder = DB_Select('OrdersOwners',Array('ID','ServerID','UserID','(SELECT `Code` FROM `Services` WHERE `ID` = `OrdersOwners`.`ServiceID`) AS `Code`'),Array('UNIQ','ID'=>$DependOrderID));
 #-------------------------------------------------------------------------------
-switch(ValueOf($Order)){
+switch(ValueOf($DependOrder)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return new gException('ORDER_NOT_FOUND',SPrintF('Заказ (%s/%u) не найден. Обратитесь в службу поддержки пользователей.',$OrderType,$DependOrderID));
+	return new gException('ORDER_NOT_FOUND',SPrintF('Заказ (#%u) не найден. Обратитесь в службу поддержки пользователей.',$DependOrderID));
 case 'array':
 	break;
 default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-if(!In_Array($Order['ServerID'],$ExtraIPScheme['Params']['Servers']))
+if(!In_Array($DependOrder['ServerID'],$ExtraIPScheme['Params']['Servers']))
 	return new gException('SCHEME_DOES_NOT_MATCH_WITH_ORDER','Выбранный тарифный план не подходит для ранее выбранной услуги');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// проверяем владельца, мало ли...
+$__USER = $GLOBALS['__USER'];
+#-------------------------------------------------------------------------------
+$IsPermission = Permission_Check(SPrintF('%sManage',$DependOrder['Code']),(integer)$__USER['ID'],(integer)$DependOrder['UserID']);
+#-------------------------------------------------------------------------------
+switch(ValueOf($IsPermission)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'false':
+	return ERROR | @Trigger_Error(700);
+case 'true':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Contract = Comp_Load('Contracts/Fetch',$ContractID);
 if(Is_Error($Contract))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
 $IsPermission = Permission_Check('ContractsRead',(integer)$__USER['ID'],(integer)$Contract['UserID']);
 #-------------------------------------------------------------------------------
@@ -116,12 +132,12 @@ if($Count < 1){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>50000,'ServerID'=>$Order['ServerID'],'Params'=>''));
+$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>50000,'ServerID'=>$DependOrder['ServerID'],'Params'=>'','DependOrderID'=>$DependOrderID));
 if(Is_Error($OrderID))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$IExtraIPOrder = Array('OrderID'=>$OrderID,'SchemeID'=>$ExtraIPScheme['ID'],'DependOrderID'=>$DependOrderID);
+$IExtraIPOrder = Array('OrderID'=>$OrderID,'SchemeID'=>$ExtraIPScheme['ID']);
 #-------------------------------------------------------------------------------
 $ExtraIPOrderID = DB_Insert('ExtraIPOrders',$IExtraIPOrder);
 if(Is_Error($ExtraIPOrderID))

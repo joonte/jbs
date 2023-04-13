@@ -20,6 +20,7 @@ $ExtraIPOrderID = (integer) @$Args['ExtraIPOrderID'];
 #-------------------------------------------------------------------------------
 $Columns = Array(
 			'*',
+			'(SELECT `DependOrderID` FROM `OrdersOwners` WHERE `ID` = `ExtraIPOrdersOwners`.`OrderID`) AS `DependOrderID`',
 			'(SELECT `Name` FROM `ExtraIPSchemes` WHERE `ExtraIPSchemes`.`ID` = `ExtraIPOrdersOwners`.`SchemeID`) as `Scheme`',
 			'(SELECT `IsAutoProlong` FROM `Orders` WHERE `ExtraIPOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',
 			'(SELECT `UserNotice` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `ExtraIPOrdersOwners`.`OrderID`) AS `UserNotice`',

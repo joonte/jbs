@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('classes/ExtraIPServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$ExtraIPOrder = DB_Select('ExtraIPOrdersOwners',Array('ID','UserID','Login','DependOrderID','SchemeID','ServerID','(SELECT `Name` FROM `ExtraIPSchemes` WHERE `ExtraIPSchemes`.`ID` = `ExtraIPOrdersOwners`.`SchemeID`) as `SchemeName`'),Array('UNIQ','ID'=>$ExtraIPOrderID));
+$ExtraIPOrder = DB_Select('ExtraIPOrdersOwners',Array('ID','UserID','Login','(SELECT `DependOrderID` FROM `OrdersOwners` WHERE `ID` = `ExtraIPOrdersOwners`.`OrderID`) AS `DependOrderID`','SchemeID','ServerID','(SELECT `Name` FROM `ExtraIPSchemes` WHERE `ExtraIPSchemes`.`ID` = `ExtraIPOrdersOwners`.`SchemeID`) as `SchemeName`'),Array('UNIQ','ID'=>$ExtraIPOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($ExtraIPOrder)){
 case 'error':

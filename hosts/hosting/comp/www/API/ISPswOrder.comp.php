@@ -15,6 +15,7 @@ $ContractID	= (integer) @$Args['ContractID'];
 $ISPswSchemeID	= (integer) @$Args['ISPswSchemeID'];
 $IP		=  (string) @$Args['IP'];
 $Comment	=  (string) @$Args['Comment'];
+$DependOrderID	= (integer) @$Args['DependOrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/BillManager.php','libs/Server.php')))
 	return ERROR | @Trigger_Error(500);
@@ -161,7 +162,7 @@ if($Count < 1){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>51000,'ServerID'=>$ServerSettings['ID'],'Params'=>''));
+$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>51000,'ServerID'=>$ServerSettings['ID'],'Params'=>'','DependOrderID'=>$DependOrderID));
 if(Is_Error($OrderID))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

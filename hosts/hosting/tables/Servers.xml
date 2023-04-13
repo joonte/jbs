@@ -216,6 +216,7 @@
 		<ListElement>SelectID</ListElement>
 		<ListElement>Edit</ListElement>
 		<ListElement>ExtendedMenu</ListElement>
+		<ListElement>ID</ListElement>
 		<ListElement>ServersGroup</ListElement>
 		<ListElement>TemplateID</ListElement>
 		<ListElement>Protocol</ListElement>
