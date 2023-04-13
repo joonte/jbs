@@ -429,6 +429,7 @@ CREATE TABLE `Orders` (
   `StatusID` char(30) default 'UnSeted',
   `StatusDate` int(11) default '0',
   `Params` LONGTEXT,
+  `DependOrderID` int(11) default '0',
   `UserNotice` TEXT,
   `AdminNotice` TEXT,
   PRIMARY KEY  (`ID`),
