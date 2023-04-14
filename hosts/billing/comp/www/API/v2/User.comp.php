@@ -19,7 +19,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 $Out = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Users = DB_Select('Users',Array('ID','RegisterDate','Name','Email','Sign','EnterIP','EnterDate','IsActive','IsNotifies','Params','IsConfirmed'),Array('ID'=>($UserID > 0)?$UserID:$GLOBALS['__USER']['ID']));
+$Users = DB_Select('Users',Array('ID','GroupID','RegisterDate','Name','Email','Sign','EnterIP','EnterDate','IsActive','IsNotifies','Params','IsConfirmed'),Array('ID'=>($UserID > 0)?$UserID:$GLOBALS['__USER']['ID']));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Users)){
 case 'error':
