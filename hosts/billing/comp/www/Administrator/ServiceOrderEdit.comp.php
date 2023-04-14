@@ -19,7 +19,7 @@ if(!$ServiceOrderID)
 	return new gException('ServiceOrderID_NOT_FOUND','Не указан идентификатор заказа на услугу');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Order = DB_Select('OrdersOwners',Array('*','(SELECT `NameShort` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `NameShort`'),Array('UNIQ','ID'=>$ServiceOrderID));
+$Order = DB_Select('OrdersOwners',Array('*','(SELECT `NameShort` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `NameShort`','(SELECT `Params` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `Params`'),Array('UNIQ','ID'=>$ServiceOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Order)){
 case 'error':
@@ -79,6 +79,24 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Параметры заказа';
+#-------------------------------------------------------------------------------
+// скармливаем Tags, проверяем выхлоп
+$Tags = IsSet($Order['Params']['Tags'])?$Order['Params']['Tags']:Array();
+#-------------------------------------------------------------------------------
+$Options = Comp_Load('Services/Orders/TagsExplain',$Tags,$Order['UserID']);
+if(Is_Error($Options))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+if(SizeOf($Options['Orders']) > 0){
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Select',Array('prompt'=>'Выберите заказ к которому относится услуга','name'=>'DependOrderID','style'=>'width: 100%;'),$Options['Options'],$Order['DependOrderID']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array('Заказ',$Comp);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $ServersGroup = DB_Select('ServersGroups',Array('*'),Array('UNIQ','Where'=>SPrintF('`ServiceID` = %u',$Order['ServiceID']),'Limits'=>Array(0,1),'SortOn'=>'SortID'));
 #-------------------------------------------------------------------------------

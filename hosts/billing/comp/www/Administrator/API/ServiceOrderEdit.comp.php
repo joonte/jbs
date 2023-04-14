@@ -15,6 +15,7 @@ $Args = IsSet($Args)?$Args:Args();
 $ServiceOrderID	= (integer) @$Args['ServiceOrderID'];
 $ContractID	= (integer) @$Args['ContractID'];
 $ServerID	= (integer) @$Args['ServerID'];
+$DependOrderID	= (integer) @$Args['DependOrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 	return ERROR | @Trigger_Error(500);
@@ -218,7 +219,7 @@ foreach($ServiceOrderFields as $ServiceOrderField){
 if(!Count($Keys))
 $Keys[] = '-';
 #-------------------------------------------------------------------------------
-$IsUpdate = DB_Update('Orders',Array('Keys'=>Implode(', ',$Keys),'ServerID'=>$ServerID),Array('ID'=>$ServiceOrderID));
+$IsUpdate = DB_Update('Orders',Array('Keys'=>Implode(', ',$Keys),'ServerID'=>$ServerID,'DependOrderID'=>$DependOrderID),Array('ID'=>$ServiceOrderID));
 if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

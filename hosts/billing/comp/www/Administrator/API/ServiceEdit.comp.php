@@ -28,6 +28,7 @@ $IsActive		= (boolean) @$Args['IsActive'];
 $IsProlong		= (boolean) @$Args['IsProlong'];
 $IsConditionally	= (boolean) @$Args['IsConditionally'];
 $Statuses		=   (array) @$Args['Statuses'];
+$Tags			=  (string) @$Args['Tags'];
 $IsAutoInvoicing	= (boolean) @$Args['IsAutoInvoicing'];
 $Priority		= (integer) @$Args['Priority'];
 $SortID			= (integer) @$Args['SortID'];
@@ -72,7 +73,21 @@ if($Count)
 	return new gException('DUPLICATE_SERVICE_ITEM',SPrintF('Услуга с именем "%s" для раздела меню уже есть. Выберите другое имя услуги для меню',$Item));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// статусы
 #Debug(SPrintF('[comp/www/Administrator/API/ServiceEdit]: Statuses = %s',print_r($Statuses,true)));
+$Params = Array('Statuses'=>$Statuses);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// теги
+foreach(Explode("\n",$Tags) as $Line){
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[comp/www/Administrator/API/ServiceEdit]: Line = %s',$Line));
+	$Line = Explode(':',Trim($Line));
+	#-------------------------------------------------------------------------------
+	$Params['Tags'][Current($Line)] = Explode(',',Next($Line));
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IService = Array(
 		#-------------------------------------------------------------------------------
@@ -91,7 +106,7 @@ $IService = Array(
 		'IsProlong'		=> $IsProlong,
 		'IsConditionally'	=> $IsConditionally,
 		'IsAutoInvoicing'	=> $IsAutoInvoicing,
-		'Params'		=> Array('Statuses'=>$Statuses),
+		'Params'		=> $Params,
 		'Priority'		=> $Priority,
 		'SortID'		=> $SortID
 		#-------------------------------------------------------------------------------

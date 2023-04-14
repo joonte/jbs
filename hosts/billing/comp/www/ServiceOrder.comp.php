@@ -15,7 +15,7 @@ $ContractID = (integer) @$Args['ContractID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Service = DB_Select('Services',Array('ID','Name','IsActive','Cost','CostOn'),Array('UNIQ','ID'=>$ServiceID));
+$Service = DB_Select('Services',Array('ID','Name','IsActive','Cost','CostOn','Params'),Array('UNIQ','ID'=>$ServiceID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Service)){
 case 'error':
@@ -116,6 +116,25 @@ $Table = Array(Array('Базовый договор',$NoBody));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Параметры услуги';
+#-------------------------------------------------------------------------------
+// скармливаем Tags, проверяем выхлоп
+$Tags = IsSet($Service['Params']['Tags'])?$Service['Params']['Tags']:Array();
+#-------------------------------------------------------------------------------
+$Options = Comp_Load('Services/Orders/TagsExplain',$Tags);
+if(Is_Error($Options))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+//Debug(SPrintF('[comp/www/ServiceOrder]: Comp = %s',print_r($Options,true)));
+if(SizeOf($Options['Orders']) > 0){
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Select',Array('prompt'=>'Выберите заказ к которому относится услуга','name'=>'DependOrderID','style'=>'width: 100%;'),$Options['Options']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+        $Table[] = Array('Заказ',$Comp);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if($Service['Cost'] > 0){
 	#-------------------------------------------------------------------------------

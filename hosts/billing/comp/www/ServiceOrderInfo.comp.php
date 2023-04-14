@@ -14,7 +14,7 @@ $ServiceOrderID = (integer) @$Args['ServiceOrderID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','UserID','OrderDate','ContractID','ExpirationDate','StatusID','StatusDate','(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `ServiceName`','(SELECT `Address` FROM `Servers` WHERE `OrdersOwners`.`ServerID` = `Servers`.`ID`) AS `Address`','IsAutoProlong','UserNotice','AdminNotice','(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `OrdersOwners`.`ContractID`) AS `Customer`');
+$Columns = Array('ID','UserID','OrderDate','ContractID','ExpirationDate','StatusID','StatusDate','DependOrderID','(SELECT `Name` FROM `Services` WHERE `Services`.`ID` = `ServiceID`) as `ServiceName`','(SELECT `Address` FROM `Servers` WHERE `OrdersOwners`.`ServerID` = `Servers`.`ID`) AS `Address`','IsAutoProlong','UserNotice','AdminNotice','(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `OrdersOwners`.`ContractID`) AS `Customer`');
 #-------------------------------------------------------------------------------
 $ServiceOrder = DB_Select('OrdersOwners',$Columns,Array('UNIQ','ID'=>$ServiceOrderID));
 #-------------------------------------------------------------------------------
@@ -98,6 +98,10 @@ if($ExpirationDate){
 	$Table[] = Array('Дата окончания',$Comp);
 	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if($ServiceOrder['DependOrderID'])
+	$Table[] = Array('Относится к услуге',$ServiceOrder['DependOrderID']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $ServiceOrderFields = DB_Select('OrdersFields',Array('ID','ServiceFieldID','Value','FileName'),Array('Where'=>SPrintF('`OrderID` = %u',$ServiceOrderID)));
