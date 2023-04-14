@@ -72,6 +72,7 @@
 		<ListElement>Pay</ListElement>
 		<ListElement>ExtendedMenu</ListElement>
 		<ListElement>Number</ListElement>
+		<ListElement>DependOrder</ListElement>
 		<ListElement>Keys</ListElement>
 		<ListElement>Expiration</ListElement>
 		<ListElement>Status</ListElement>

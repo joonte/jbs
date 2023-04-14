@@ -18,6 +18,7 @@
 			<ListElement>UserID</ListElement>
 			<ListElement>OrderDate</ListElement>
 			<ListElement>Keys</ListElement>
+			<ListElement>DependOrderID</ListElement>
 			<ListElement>ExpirationDate</ListElement>
 			<ListElement>StatusID</ListElement>
 			<ListElement>StatusDate</ListElement>
@@ -168,6 +169,16 @@
 			</Args>
 		</Keys>
 		<!-- ********************************************************************** -->
+		<DependOrder>
+			<Head>Заказ</Head>
+			<Prompt>Номер заказа к которому относится эта услуга</Prompt>
+			<Comp>Formats/Order/Number</Comp>
+			<Args>
+				<ListElement>%DependOrderID%</ListElement>
+			</Args>
+			<Alias>DependOrderID</Alias>
+		</DependOrder>
+		<!-- ********************************************************************** -->
 		<Expiration>
 			<IsSorted>0</IsSorted>
 			<Head>Дата оконч.</Head>
@@ -196,6 +207,7 @@
 		<ListElement>ExtendedMenu</ListElement>
 		<ListElement>Number</ListElement>
 		<ListElement>Owner</ListElement>
+		<ListElement>DependOrder</ListElement>
 		<ListElement>Keys</ListElement>
 		<ListElement>Expiration</ListElement>
 		<ListElement>Status</ListElement>
