@@ -15,6 +15,7 @@ $Args = IsSet($Args)?$Args:Args();
 $ContractID	= (integer) @$Args['ContractID'];
 $ProxySchemeID	= (integer) @$Args['ProxySchemeID'];
 $Comment	=  (string) @$Args['Comment'];
+$DependOrderID	= (integer) @$Args['DependOrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
@@ -103,7 +104,7 @@ if($Count < 1){
 	}
 }
 #-------------------------------------------------------------------------------
-$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>$Server['ServiceID'],'ServerID'=>$Server['ID'],'Params'=>''));
+$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>$Server['ServiceID'],'ServerID'=>$Server['ID'],'Params'=>'','DependOrderID'=>$DependOrderID));
 if(Is_Error($OrderID))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

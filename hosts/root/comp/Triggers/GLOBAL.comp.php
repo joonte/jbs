@@ -361,7 +361,7 @@ for($i = 1; $i <= $ServersGroup['Params']['Count']; $i++){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Array = Array('ContractID'=>$Order['Row']['ContractID'],SPrintF('%sSchemeID',$Service['Code'])=>$SchemeID,'Comment'=>SPrintF('Автоматическое создание услуги, группа серверов #%u, "%s"',$ServersGroup['ID'],$ServersGroup['Name']));
+	$Array = Array('ContractID'=>$Order['Row']['ContractID'],SPrintF('%sSchemeID',$Service['Code'])=>$SchemeID,'Comment'=>SPrintF('Автоматическое создание услуги, группа серверов #%u, "%s"',$ServersGroup['ID'],$ServersGroup['Name']),'DependOrderID'=>$Order['Row']['ID']);
 	#-------------------------------------------------------------------------------
 	# реализация JBS-937
 	if(Is_Array($AdditionalParams))

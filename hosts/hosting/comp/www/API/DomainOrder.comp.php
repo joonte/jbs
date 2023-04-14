@@ -26,6 +26,7 @@ $Ns3Name        =  (string) @$Args['Ns3Name'];
 $Ns3IP          =  (string) @$Args['Ns3IP'];
 $Ns4Name        =  (string) @$Args['Ns4Name'];
 $Ns4IP          =  (string) @$Args['Ns4IP'];
+$DependOrderID	= (integer) @$Args['DependOrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/WhoIs.php')))
   return ERROR | @Trigger_Error(500);
@@ -281,7 +282,7 @@ if($Count < 1){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>20000,'ServerID'=>$DomainScheme['ServerID'],'Params'=>''));
+$OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>20000,'ServerID'=>$DomainScheme['ServerID'],'Params'=>'','DependOrderID'=>$DependOrderID));
 if(Is_Error($OrderID))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

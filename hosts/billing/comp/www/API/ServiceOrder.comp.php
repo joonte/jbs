@@ -9,8 +9,9 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
-$ServiceID  = (integer) @$Args['ServiceID'];
-$ContractID = (integer) @$Args['ContractID'];
+$ServiceID	= (integer) @$Args['ServiceID'];
+$ContractID	= (integer) @$Args['ContractID'];
+$DependOrderID	= (integer) @$Args['DependOrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php','libs/Server.php')))
 	return ERROR | @Trigger_Error(500);
@@ -59,7 +60,7 @@ switch(ValueOf($Service)){
             if(Is_Error(DB_Transaction($TransactionID = UniqID('ServiceOrder'))))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------
-            $ServiceOrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>$ServiceID,'ServerID'=>$ServerSettings['ID'],'Params'=>''));
+            $ServiceOrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServiceID'=>$ServiceID,'ServerID'=>$ServerSettings['ID'],'Params'=>'','DependOrderID'=>$DependOrderID));
             if(Is_Error($ServiceOrderID))
               return ERROR | @Trigger_Error(500);
             #-------------------------------------------------------------------

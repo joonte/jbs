@@ -17,6 +17,7 @@ $VPSSchemeID	= (integer) @$Args['VPSSchemeID'];
 $DiskTemplate   =  (string) @$Args['DiskTemplate'];
 $ServerID	= (integer) @$Args['ServerID'];
 $Comment	=  (string) @$Args['Comment'];
+$DependOrderID	= (integer) @$Args['DependOrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
   return ERROR | @Trigger_Error(500);
@@ -103,7 +104,7 @@ switch(ValueOf($VPSScheme)){
                   }
                 }
                 #---------------------------------------------------------------
-                $OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServerID'=>$Server['ID'],'Params'=>Array('DiskTemplate'=>$DiskTemplate),'ServiceID'=>30000));
+                $OrderID = DB_Insert('Orders',Array('ContractID'=>$Contract['ID'],'ServerID'=>$Server['ID'],'Params'=>Array('DiskTemplate'=>$DiskTemplate),'ServiceID'=>30000,'DependOrderID'=>$DependOrderID));
                 if(Is_Error($OrderID))
                   return ERROR | @Trigger_Error(500);
                 #---------------------------------------------------------------
