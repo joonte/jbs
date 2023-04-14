@@ -294,7 +294,7 @@ if($DaysPay){
 		$DaysFromBallance = Floor($ProxyOrder['ContractBalance'] / $ProxyScheme['CostDay']);
 		#-------------------------------------------------------------------------------
 		// если дней ноль - считаем что их один - так будут учитываться бонусы на 100% оплату
-		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',($DaysFromBallance)?$DaysFromBallance:1,$ProxyScheme,$ProxyOrder,$UserID);
+		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',($DaysFromBallance)?$DaysFromBallance:1,$ProxyScheme,$ProxyOrder);
 		if(Is_Error($DaysFromBallance))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------

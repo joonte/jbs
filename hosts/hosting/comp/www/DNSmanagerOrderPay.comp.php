@@ -294,7 +294,7 @@ if($DaysPay){
 		$DaysFromBallance = Floor($DNSmanagerOrder['ContractBalance'] / $DNSmanagerScheme['CostDay']);
 		#-------------------------------------------------------------------------------
 		// если дней ноль - считаем что их один - так будут учитываться бонусы на 100% оплату
-		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',($DaysFromBallance)?$DaysFromBallance:1,$DNSmanagerScheme,$DNSmanagerOrder,$UserID);
+		$DaysFromBallance = Comp_Load('Bonuses/DaysCalculate',($DaysFromBallance)?$DaysFromBallance:1,$DNSmanagerScheme,$DNSmanagerOrder);
 		if(Is_Error($DaysFromBallance))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------

@@ -4,7 +4,11 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('DaysFromBallance','Scheme','Order','UserID');
+$__args_list = Array(
+			'DaysFromBallance',	// стартовое число дней с балланса. чтоб не с нуля начинать
+			'Scheme',		// тариф. используется ID и CostDay
+			'Order'			// заказ. используется ContractBalance, UserID, GroupID, ServiceID
+			);
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
@@ -49,7 +53,7 @@ while($CostPay <= $Order['ContractBalance']){
 	#-------------------------------------------------------------------------------
 	$CostPay = 0.00;
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Services/Bonuses',$DaysPay,$Order['ServiceID'],$Scheme['ID'],$UserID,$CostPay,$Scheme['CostDay'],FALSE);
+	$Comp = Comp_Load('Services/Bonuses',$DaysPay,$Order['ServiceID'],$Scheme['ID'],$Order['UserID'],$CostPay,$Scheme['CostDay'],FALSE);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
