@@ -24,8 +24,8 @@ $Exclude = Array_Keys($Config['APIv2ExcludeColumns']);
 $Out = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-// все колонки кроме AdminNotice
-$Orders = DB_Select('OrdersOwners',Array('*'),Array('Where'=>SPrintF("`UserID` = %u",$GLOBALS['__USER']['ID']),'SortOn'=>Array('ServiceID','ID')));
+// все колонки + Services.Params под именем AjaxCall
+$Orders = DB_Select('OrdersOwners',Array('*','(SELECT `Params` FROM `Services` WHERE `ID` = `OrdersOwners`.`ServiceID`) AS `AjaxCall`'),Array('Where'=>SPrintF("`UserID` = %u",$GLOBALS['__USER']['ID']),'SortOn'=>Array('ServiceID','ID')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Orders)){
 case 'error':
@@ -61,6 +61,20 @@ foreach($Orders as $Order){
 	}
 	#-------------------------------------------------------------------------------
 	$Order['OrdersFields'] = $OrdersFields;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// скармливаем Tags, проверяем выхлоп
+	$Tags = IsSet($Order['AjaxCall']['Tags'])?$Order['AjaxCall']['Tags']:Array();
+	#-------------------------------------------------------------------------------
+	$Options = Comp_Load('Services/Orders/TagsExplain',$Tags);
+	if(Is_Error($Options))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Order['DependOrders'] = $Options['Orders'];
+	#-------------------------------------------------------------------------------
+	// убираем поле
+	UnSet($Order['AjaxCall']);
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Out[$Order['ID']] = $Order;
 	#-------------------------------------------------------------------------------
