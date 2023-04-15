@@ -39,7 +39,8 @@ switch(ValueOf($ServiceFields)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return new gException('FIELDS_NOT_DEFINED','Поля услуги не определены');
+	$ServiceFields = Array();
+//	return new gException('FIELDS_NOT_DEFINED','Поля услуги не определены');
 case 'array':
 	break;
 default:

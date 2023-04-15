@@ -41,7 +41,8 @@ switch(ValueOf($Service)){
       case 'error':
         return ERROR | @Trigger_Error(500);
       case 'exception':
-        return ERROR | @Trigger_Error(400);
+        //return ERROR | @Trigger_Error(400);
+	$ServiceFields = Array();
       case 'array':
         #-----------------------------------------------------------------------
         $Contract = DB_Select('Contracts','ID',Array('UNIQ','ID'=>$ContractID));
