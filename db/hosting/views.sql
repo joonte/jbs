@@ -31,6 +31,7 @@ SELECT
   `OrdersOwners`.`OrderDate`,
   `OrdersOwners`.`UserID`,
   `OrdersOwners`.`ContractID`,
+  `OrdersOwners`.`DependOrderID`,
   `OrdersOwners`.`UserNotice`,
   `OrdersOwners`.`AdminNotice`
 FROM
@@ -55,6 +56,7 @@ SELECT
   `OrdersOwners`.`OrderDate`,
   `OrdersOwners`.`UserID`,
   `OrdersOwners`.`ContractID`,
+  `OrdersOwners`.`DependOrderID`,
   `OrdersOwners`.`UserNotice`,
   `OrdersOwners`.`AdminNotice`
 FROM
@@ -129,6 +131,7 @@ CREATE VIEW `VPSOrdersOwners` AS select
 	`OrdersOwners`.`OrderDate` AS `OrderDate`,
 	`OrdersOwners`.`UserID` AS `UserID`,
 	`OrdersOwners`.`ContractID` AS `ContractID`,
+	`OrdersOwners`.`DependOrderID`,
 	`OrdersOwners`.`UserNotice`,
 	`OrdersOwners`.`AdminNotice`
 	FROM (`VPSOrders` LEFT JOIN `OrdersOwners` ON((`VPSOrders`.`OrderID` = `OrdersOwners`.`ID`)));
@@ -177,6 +180,7 @@ CREATE VIEW `DSOrdersOwners` AS select
 	`OrdersOwners`.`OrderDate` AS `OrderDate`,
 	`OrdersOwners`.`UserID` AS `UserID`,
 	`OrdersOwners`.`ContractID` AS `ContractID`,
+	`OrdersOwners`.`DependOrderID`,
 	`OrdersOwners`.`UserNotice`,
 	`OrdersOwners`.`AdminNotice`
 	FROM (`DSOrders` LEFT JOIN `OrdersOwners` ON((`DSOrders`.`OrderID` = `OrdersOwners`.`ID`)));
@@ -224,6 +228,7 @@ CREATE VIEW `ExtraIPOrdersOwners` AS select
 	`OrdersOwners`.`OrderDate` AS `OrderDate`,
 	`OrdersOwners`.`UserID` AS `UserID`,
 	`OrdersOwners`.`ContractID` AS `ContractID`,
+	`OrdersOwners`.`DependOrderID`,
 	`OrdersOwners`.`UserNotice`,
 	`OrdersOwners`.`AdminNotice`
 	FROM (`ExtraIPOrders` LEFT JOIN `OrdersOwners` ON((`ExtraIPOrders`.`OrderID` = `OrdersOwners`.`ID`)));
@@ -292,6 +297,7 @@ CREATE VIEW `ISPswOrdersOwners` AS select
 	`OrdersOwners`.`UserID` AS `UserID`,
 	`OrdersOwners`.`ContractID` AS `ContractID`,
 	`OrdersOwners`.`ServerID` AS `ServerID`,
+	`OrdersOwners`.`DependOrderID`,
 	`OrdersOwners`.`UserNotice`,
 	`OrdersOwners`.`AdminNotice`
 	FROM (`ISPswOrders` LEFT JOIN `OrdersOwners` ON((`ISPswOrders`.`OrderID` = `OrdersOwners`.`ID`)));
@@ -345,6 +351,7 @@ SELECT
 	`OrdersOwners`.`OrderDate`,
 	`OrdersOwners`.`UserID`,
 	`OrdersOwners`.`ContractID`,
+	`OrdersOwners`.`DependOrderID`,
 	`OrdersOwners`.`UserNotice`,
 	`OrdersOwners`.`AdminNotice`
 FROM
@@ -375,6 +382,7 @@ SELECT
 	`OrdersOwners`.`OrderDate`,
 	`OrdersOwners`.`UserID`,
 	`OrdersOwners`.`ContractID`,
+	`OrdersOwners`.`DependOrderID`,
 	`OrdersOwners`.`UserNotice`,
 	`OrdersOwners`.`AdminNotice`
 FROM
