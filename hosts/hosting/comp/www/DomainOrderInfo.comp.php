@@ -24,7 +24,7 @@ $Where = ($DomainOrderID?SPrintF('`ID` = %u',$DomainOrderID):SPrintF('`OrderID` 
 #-------------------------------------------------------------------------------
 $Columns = Array(
 		'ID','UserID','OrderID','OrderDate','ContractID','DomainName','ProfileID','PersonID','IsPrivateWhoIs','WhoIs',
-		'UpdateDate','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','StatusID','StatusDate',
+		'UpdateDate','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','StatusID','StatusDate','DependOrderID',
 		'(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`',
 		'(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`)) as `Params`',
 		'(SELECT `IsAutoProlong` FROM `Orders` WHERE `DomainOrdersOwners`.`OrderID` = `Orders`.`ID`) AS `IsAutoProlong`',
@@ -106,6 +106,9 @@ $Table[] = Array('Договор',new Tag('TD',Array('class'=>'Standard'),$Comp)
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = Array('Доменное имя',SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']));
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Table[] = Array('Относится к заказу', $DomainOrder['DependOrderID']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $DomainConsider = DB_Select('DomainConsider','*',Array('Where'=>SPrintF('`DomainOrderID` = %u',$DomainOrder['ID'])));

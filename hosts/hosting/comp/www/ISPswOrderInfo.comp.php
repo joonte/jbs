@@ -20,7 +20,7 @@ $ISPswOrderID = (integer) @$Args['ISPswOrderID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Columns = Array(
-			'ID','OrderID','UserID','OrderDate','ContractID','LicenseID','StatusID','StatusDate','IP',
+			'ID','OrderID','UserID','OrderDate','ContractID','LicenseID','StatusID','StatusDate','IP','DependOrderID',
 			'(SELECT `Name` FROM `ISPswSchemes` WHERE `ISPswSchemes`.`ID` = `ISPswOrdersOwners`.`SchemeID`) as `Scheme`',
 			'(SELECT `elid` FROM `ISPswLicenses` WHERE `ISPswOrdersOwners`.`LicenseID`=`ISPswLicenses`.`ID`) AS `elid`',
 			'(SELECT `IP` FROM `ISPswLicenses` WHERE `ISPswOrdersOwners`.`LicenseID`=`ISPswLicenses`.`ID`) AS `LicenseIP`',
@@ -106,6 +106,9 @@ $Table[] = Array('Договор',new Tag('TD',Array('class'=>'Standard'),$Comp)
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = Array('Тарифный план',$ISPswOrder['Scheme']);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Table[] = Array('Относится к заказу', $ISPswOrder['DependOrderID']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Параметры лицензии';
