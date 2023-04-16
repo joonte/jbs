@@ -71,14 +71,14 @@ switch(ValueOf($HostingOrder)){
             }
 	    #-------------------------------------------------------------------
             # проверяем, это первая оплата или нет? если не первая, то минимальное число дней MinDaysProlong
-            Debug(SPrintF('[comp/www/HostingOrderPay]: ранее оплачено за заказ %s',$HostingOrder['PayedSumm']));
+            Debug(SPrintF('[comp/www/API/HostingOrderPay]: ранее оплачено за заказ: %s',$HostingOrder['PayedSumm']));
             if($HostingOrder['PayedSumm'] > 0){
               $MinDaysPay = $HostingScheme['MinDaysProlong'];
             }else{
               $MinDaysPay = $HostingScheme['MinDaysPay'];
             }
             #-------------------------------------------------------------------
-            Debug(SPrintF('[comp/www/HostingOrderPay]: минимальное число дней %s',$MinDaysPay));
+            Debug(SPrintF('[comp/www/API/HostingOrderPay]: минимальное число дней: %s',$MinDaysPay));
             #-------------------------------------------------------------------
             if($DaysPay < $MinDaysPay || $DaysPay > $HostingScheme['MaxDaysPay'])
               return new gException('WRONG_DAYS_PAY','Неверное кол-во дней оплаты');
