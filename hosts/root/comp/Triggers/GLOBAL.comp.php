@@ -12,12 +12,16 @@ Eval(COMP_INIT);
 Debug(SPrintF('[comp/Triggers/GLOBAL]: ModeID = %s; StatusID = %s; Order = %s',$Order['ModeID'],$Order['StatusID'],print_r($Order['Row'],true)));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/Triggers/GLOBAL]: Order = %s',print_r($Order,true)));
+//Debug(SPrintF('[comp/Triggers/GLOBAL]: Order = %s',print_r($Order,true)));
+#-------------------------------------------------------------------------------
+// докидываем номер заказа, далее используется не в одном месте, для обычных услуг OrderID, для кастомных - ID
+if(IsSet($Order['Row']['DependOrderID']))
+	$Order['OrderID'] = ($Order['Row']['OrderID'])?$Order['Row']['OrderID']:$Order['Row']['ID'];
+#-------------------------------------------------------------------------------
 // JBS-1684, отключение автопродления зависиымх услуг, при удалении основной услуги
 if($Order['StatusID'] == 'Deleted' && IsSet($Order['Row']['DependOrderID'])){
 	#-------------------------------------------------------------------------------
-	// для обычных услуг OrderID, для кастомных - ID
-	$Where = SPrintF('`DependOrderID` = %u',($Order['Row']['OrderID'])?$Order['Row']['OrderID']:$Order['Row']['ID']);
+	$Where = SPrintF('`DependOrderID` = %u',$Order['OrderID']);
 	#-------------------------------------------------------------------------------
 	$IsUpdate = DB_Update('Orders',Array('IsAutoProlong'=>FALSE),Array('Where'=>$Where));
 	if(Is_Error($IsUpdate))
@@ -317,7 +321,12 @@ for($i = 1; $i <= $ServersGroup['Params']['Count']; $i++){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# проверяем наличие такой услуги у юзера
-	$Where = Array(SprintF('`UserID` = %u',$Order['Row']['UserID']),SPrintF('`SchemeID` = %u',$SchemeID),'`StatusID` = "Active" OR `StatusID` = "Waiting"');
+	$Where = Array(
+			SprintF('`UserID` = %u',$Order['Row']['UserID']),
+			SPrintF('`SchemeID` = %u',$SchemeID),
+			SPrintF('`DependOrderID` = %u',$Order['OrderID']),	// зависимая от этой услуга
+			'`StatusID` IN ("Active","Waiting","Suspended")'
+			);
 	#-------------------------------------------------------------------------------
 	# добавляем к условию дополнительные параметры
 	if(Is_Array($AdditionalParams) && SizeOf($AdditionalParams) > 0)
@@ -376,7 +385,12 @@ for($i = 1; $i <= $ServersGroup['Params']['Count']; $i++){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Array = Array('ContractID'=>$Order['Row']['ContractID'],SPrintF('%sSchemeID',$Service['Code'])=>$SchemeID,'Comment'=>SPrintF('Автоматическое создание услуги, группа серверов #%u, "%s"',$ServersGroup['ID'],$ServersGroup['Name']),'DependOrderID'=>$Order['Row']['OrderID']);
+	$Array = Array(
+			'ContractID'				=> $Order['Row']['ContractID'],
+			SPrintF('%sSchemeID',$Service['Code'])	=> $SchemeID,
+			'Comment'				=> SPrintF('Автоматическое создание услуги, группа серверов #%u, "%s"',$ServersGroup['ID'],$ServersGroup['Name']),
+			'DependOrderID'				=> $Order['Row']['OrderID']
+			);
 	#-------------------------------------------------------------------------------
 	# реализация JBS-937
 	if(Is_Array($AdditionalParams))
@@ -385,7 +399,7 @@ for($i = 1; $i <= $ServersGroup['Params']['Count']; $i++){
 	#-------------------------------------------------------------------------------
 	$OrderID = SPrintF('%sOrderID',$Service['Code']);
 	#-------------------------------------------------------------------------------
-	# заказываем услугу
+	# заказываем/продлеваем услугу
 	if(!IsSet($ExistsOrderID)){
 		#-------------------------------------------------------------------------------
 		$Path = SPrintF('www/API/%sOrder',$Service['Code']);
@@ -437,7 +451,12 @@ for($i = 1; $i <= $ServersGroup['Params']['Count']; $i++){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	# оплачиваем услугу на минимальное число дней (или юзать параметры? или юзать срок оплаты основной услуги?)
-	$Array = Array($OrderID=>$ExistsOrderID,'DaysPay'=>$Scheme['MinDaysPay'],'IsNoBasket'=>TRUE,'PayMessage'=>SPrintF('Автоматическая оплата зависимой услуги, группа серверов #%u, "%s"',$ServersGroup['ID'],$ServersGroup['Name']));
+	$Array = Array(
+			$OrderID	=> $ExistsOrderID,
+			'DaysPay'	=> $Scheme['MinDaysPay'],
+			'IsNoBasket'	=> TRUE,
+			'PayMessage'	=> SPrintF('Автоматическая оплата зависимой услуги, группа серверов #%u, "%s"',$ServersGroup['ID'],$ServersGroup['Name'])
+			);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Path = SPrintF('www/API/%sOrderPay',$Service['Code']);
