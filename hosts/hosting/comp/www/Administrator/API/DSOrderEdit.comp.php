@@ -19,6 +19,7 @@ $DaysReserved   = (integer) @$Args['DaysReserved'];
 $IsCreate       = (boolean) @$Args['IsCreate'];
 $IP		=  (string) @$Args['IP'];
 $ExtraIP	=  (string) @$Args['ExtraIP'];
+$DependOrderID	= (integer) @$Args['DependOrderID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $DSScheme = DB_Select('DSSchemes',Array('ID','ServerID','CostDay'),Array('UNIQ','ID'=>$SchemeID));
@@ -86,7 +87,7 @@ if($DSOrderID){
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
-	$IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$DSScheme['ServerID']),Array('ID'=>$DSOrder['OrderID']));
+	$IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$DSScheme['ServerID'],'DependOrderID'=>$DependOrderID),Array('ID'=>$DSOrder['OrderID']));
 	if(Is_Error($IsUpdate))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -96,7 +97,7 @@ if($DSOrderID){
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServiceID'=>40000,'IsPayed'=>TRUE,'ServerID'=>$DSScheme['ServerID'],'Params'=>''));
+	$OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServiceID'=>40000,'IsPayed'=>TRUE,'ServerID'=>$DSScheme['ServerID'],'Params'=>'','DependOrderID'=>$DependOrderID));
 	if(Is_Error($OrderID))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

@@ -26,6 +26,7 @@ $Ns3Name        =  (string) @$Args['Ns3Name'];
 $Ns3IP          =  (string) @$Args['Ns3IP'];
 $Ns4Name        =  (string) @$Args['Ns4Name'];
 $Ns4IP          =  (string) @$Args['Ns4IP'];
+$DependOrderID	= (integer) @$Args['DependOrderID'];
 #-------------------------------------------------------------------------------
 if(!$ContractID)
 	return new gException('CONTRACT_NOT_FILLED','Договор клиента не указан');
@@ -152,7 +153,7 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-$IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$DomainScheme['ServerID']),Array('ID'=>$DomainOrder['OrderID']));
+$IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$DomainScheme['ServerID'],'DependOrderID'=>$DependOrderID),Array('ID'=>$DomainOrder['OrderID']));
 if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

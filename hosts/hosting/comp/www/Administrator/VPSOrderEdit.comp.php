@@ -17,7 +17,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 if($VPSOrderID){
 	#-------------------------------------------------------------------------------
 	$Columns = Array(
-			'UserID','ContractID','Domain','Login','IP','Password','SchemeID',
+			'UserID','ContractID','Domain','Login','IP','Password','SchemeID','DependOrderID','OrderID',
 			'(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`',
 			'(SELECT `Params` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `Params`',
 			);
@@ -52,6 +52,7 @@ if($VPSOrderID){
 				'Password'	=> $Password,
 				'SchemeID'	=> 1,
 				'Params'	=> Array(),
+				'DependOrderID'	=> 0,
 			);
 	#-------------------------------------------------------------------------------
 }
@@ -195,6 +196,14 @@ if($VPSOrderID){
 	$Table[] = Array('Шаблон диска',$Comp);
 	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// выбираем все услуги юзера
+$Comp = Comp_Load('Services/Orders/SelectDependOrder',$VPSOrder['UserID'],$VPSOrder['OrderID'],$VPSOrder['DependOrderID']);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Заказ',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$VPSOrderID){

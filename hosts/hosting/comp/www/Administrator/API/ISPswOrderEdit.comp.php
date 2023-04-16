@@ -20,6 +20,7 @@ $LicenseID	= (integer) @$Args['LicenseID'];
 $SchemeID       = (integer) @$Args['SchemeID'];
 $DaysReserved   = (integer) @$Args['DaysReserved'];
 $IsCreate       = (boolean) @$Args['IsCreate'];
+$DependOrderID	= (integer) @$Args['DependOrderID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Server = DB_Select('Servers',Array('ID','(SELECT `ServiceID` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = `Servers`.`ServersGroupID`) AS `ServiceID`'),Array('UNIQ','ID'=>$ServerID));
@@ -116,7 +117,7 @@ if($ISPswOrderID){
     break;
     case 'array':
       #-------------------------------------------------------------------------
-      $IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID']),Array('ID'=>$ISPswOrder['OrderID']));
+      $IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID'],'DependOrderID'=>$DependOrderID),Array('ID'=>$ISPswOrder['OrderID']));
       if(Is_Error($IsUpdate))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
@@ -130,7 +131,7 @@ if($ISPswOrderID){
   }
 }else{
   #-----------------------------------------------------------------------------
-  $OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID'],'ServiceID'=>$Server['ServiceID'],'IsPayed'=>TRUE,'Params'=>''));
+  $OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID'],'ServiceID'=>$Server['ServiceID'],'IsPayed'=>TRUE,'Params'=>'','DependOrderID'=>$DependOrderID));
   if(Is_Error($OrderID))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------

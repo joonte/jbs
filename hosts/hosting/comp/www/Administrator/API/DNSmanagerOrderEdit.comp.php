@@ -20,6 +20,7 @@ $Password		=  (string) @$Args['Password'];
 $SchemeID		= (integer) @$Args['SchemeID'];
 $DaysReserved		= (integer) @$Args['DaysReserved'];
 $IsCreate		= (boolean) @$Args['IsCreate'];
+$DependOrderID		= (integer) @$Args['DependOrderID'];
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Servers',Array('ID'=>$ServerID));
 if(Is_Error($Count))
@@ -122,7 +123,7 @@ if($DNSmanagerOrderID){
 		return new gException('HOSTING_ORDER_NOT_FOUND','Заказ на DNSmanager не найден');
 	case 'array':
 		#-------------------------------------------------------------------------------
-		$IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID']),Array('ID'=>$DNSmanagerOrder['OrderID']));
+		$IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID'],'DependOrderID'=>$DependOrderID),Array('ID'=>$DNSmanagerOrder['OrderID']));
 		if(Is_Error($IsUpdate))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
@@ -138,7 +139,7 @@ if($DNSmanagerOrderID){
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServiceID'=>$Server['ServiceID'],'IsPayed'=>TRUE,'ServerID'=>$Server['ID'],'Params'=>''));
+	$OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServiceID'=>$Server['ServiceID'],'IsPayed'=>TRUE,'ServerID'=>$Server['ID'],'Params'=>'','DependOrderID'=>$DependOrderID));
 	if(Is_Error($OrderID))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

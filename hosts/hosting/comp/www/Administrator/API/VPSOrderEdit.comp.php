@@ -23,6 +23,7 @@ $Password       =  (string) @$Args['Password'];
 $SchemeID       = (integer) @$Args['SchemeID'];
 $DaysReserved   = (integer) @$Args['DaysReserved'];
 $IsCreate       = (boolean) @$Args['IsCreate'];
+$DependOrderID	= (integer) @$Args['DependOrderID'];
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Servers',Array('ID'=>$ServerID));
 if(Is_Error($Count))
@@ -133,7 +134,7 @@ if($VPSOrderID){
 		break;
 	case 'array':
 		#-------------------------------------------------------------------------------
-		$IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID'],'Params'=>Array('DiskTemplate'=>$DiskTemplate)),Array('ID'=>$VPSOrder['OrderID']));
+		$IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID'],'Params'=>Array('DiskTemplate'=>$DiskTemplate),'DependOrderID'=>$DependOrderID),Array('ID'=>$VPSOrder['OrderID']));
 		if(Is_Error($IsUpdate))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
@@ -149,7 +150,7 @@ if($VPSOrderID){
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID'],'ServiceID'=>30000,'IsPayed'=>TRUE,'Params'=>Array('DiskTemplate'=>$DiskTemplate)));
+	$OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID'],'ServiceID'=>30000,'IsPayed'=>TRUE,'Params'=>Array('DiskTemplate'=>$DiskTemplate),'DependOrderID'=>$DependOrderID));
 	if(Is_Error($OrderID))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

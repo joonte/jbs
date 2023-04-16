@@ -17,7 +17,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 #-------------------------------------------------------------------------------
 if($DSOrderID){
 	#-------------------------------------------------------------------------------
-	$DSOrder = DB_Select('DSOrdersOwners',Array('UserID','ContractID','IP','ExtraIP','SchemeID'),Array('UNIQ','ID'=>$DSOrderID));
+	$DSOrder = DB_Select('DSOrdersOwners',Array('UserID','ContractID','IP','ExtraIP','SchemeID','DependOrderID','OrderID'),Array('UNIQ','ID'=>$DSOrderID));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($DSOrder)){
 	case 'error':
@@ -40,7 +40,8 @@ if($DSOrderID){
 			'Domain'	=> 'ussr.su',
 			'IP'		=> '123.123.123.123',
 			'ExtraIP'	=> '',
-			'SchemeID'	=> 1
+			'SchemeID'	=> 1,
+			'DependOrderID'	=> 0,
 			);
 	#-------------------------------------------------------------------------------
 }
@@ -121,6 +122,14 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Дополнительные IP адреса',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// выбираем все услуги юзера
+$Comp = Comp_Load('Services/Orders/SelectDependOrder',$DSOrder['UserID'],$DSOrder['OrderID'],$DSOrder['DependOrderID']);
+if(Is_Error($Comp))
+        return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Заказ',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$DSOrderID){

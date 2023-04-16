@@ -16,7 +16,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 #-------------------------------------------------------------------------------
 if($DNSmanagerOrderID){
 	#-------------------------------------------------------------------------------
-	$DNSmanagerOrder = DB_Select('DNSmanagerOrdersOwners',Array('UserID','ContractID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) AS `ServerID`','Login','Password','SchemeID'),Array('UNIQ','ID'=>$DNSmanagerOrderID));
+	$DNSmanagerOrder = DB_Select('DNSmanagerOrdersOwners',Array('UserID','ContractID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) AS `ServerID`','Login','Password','SchemeID','DependOrderID','OrderID'),Array('UNIQ','ID'=>$DNSmanagerOrderID));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($DNSmanagerOrder)){
 	case 'error':
@@ -42,7 +42,8 @@ if($DNSmanagerOrderID){
 				'ServerID'	=> 1,
 				'Login'		=> 'login',
 				'Password'	=> $Password,
-				'SchemeID'	=> 1
+				'SchemeID'	=> 1,
+				'DependOrderID'	=> $DependOrderID,
 			);
 	#-------------------------------------------------------------------------------
 }
@@ -133,6 +134,13 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array('Сервер размещения',$Comp);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// выбираем все услуги юзера
+$Comp = Comp_Load('Services/Orders/SelectDependOrder',$DNSmanagerOrder['UserID'],$DNSmanagerOrder['OrderID'],$DNSmanagerOrder['DependOrderID']);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Заказ',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$DNSmanagerOrderID){

@@ -21,6 +21,7 @@ $Password       =  (string) @$Args['Password'];
 $SchemeID       = (integer) @$Args['SchemeID'];
 $DaysReserved   = (integer) @$Args['DaysReserved'];
 $IsCreate       = (boolean) @$Args['IsCreate'];
+$DependOrderID	= (integer) @$Args['DependOrderID'];
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Servers',Array('ID'=>$ServerID));
 if(Is_Error($Count))
@@ -120,7 +121,7 @@ if($HostingOrderID){
 		return new gException('HOSTING_ORDER_NOT_FOUND','Заказ на хостинг не найден');
 	case 'array':
 		#-------------------------------------------------------------------------------
-		$IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID']),Array('ID'=>$HostingOrder['OrderID']));
+		$IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$Server['ID'],'DependOrderID'=>$DependOrderID),Array('ID'=>$HostingOrder['OrderID']));
 		if(Is_Error($IsUpdate))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
@@ -136,7 +137,7 @@ if($HostingOrderID){
 	#-------------------------------------------------------------------------------
 }else{
   #-----------------------------------------------------------------------------
-  $OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServiceID'=>10000,'IsPayed'=>TRUE,'ServerID'=>$Server['ID'],'Params'=>''));
+  $OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServiceID'=>10000,'IsPayed'=>TRUE,'ServerID'=>$Server['ID'],'Params'=>'','DependOrderID'=>$DependOrderID));
   if(Is_Error($OrderID))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------

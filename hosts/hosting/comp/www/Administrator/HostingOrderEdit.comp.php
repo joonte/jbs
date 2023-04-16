@@ -16,7 +16,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 #-------------------------------------------------------------------------------
 if($HostingOrderID){
 	#-------------------------------------------------------------------------------
-	$HostingOrder = DB_Select('HostingOrdersOwners',Array('UserID','ContractID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`) AS `ServerID`','Domain','Login','Password','SchemeID'),Array('UNIQ','ID'=>$HostingOrderID));
+	$HostingOrder = DB_Select('HostingOrdersOwners',Array('UserID','ContractID','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`) AS `ServerID`','Domain','Login','Password','SchemeID','DependOrderID','OrderID'),Array('UNIQ','ID'=>$HostingOrderID));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($HostingOrder)){
 	case 'error':
@@ -43,7 +43,8 @@ if($HostingOrderID){
 				'Domain'	=> 'example.su',
 				'Login'		=> 'login',
 				'Password'	=> $Password,
-				'SchemeID'	=> 1
+				'SchemeID'	=> 1,
+				'DependOrderID'	=> 0,
 			);
 	#-------------------------------------------------------------------------------
 }
@@ -134,18 +135,29 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 $Table[] = Array('Сервер размещения',$Comp);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load(
   'Form/Input',
   Array(
     'type'  => 'text',
     'name'  => 'Domain',
-    'value' => $HostingOrder['Domain']
+    'value' => $HostingOrder['Domain'],
+    'style'=>'width: 100%;'
   )
 );
 if(Is_Error($Comp))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Доменное имя',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// выбираем все услуги юзера
+$Comp = Comp_Load('Services/Orders/SelectDependOrder',$HostingOrder['UserID'],$HostingOrder['OrderID'],$HostingOrder['DependOrderID']);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Заказ',$Comp);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$HostingOrderID){
   #-----------------------------------------------------------------------------

@@ -19,7 +19,7 @@ $Login          =  (string) @$Args['Login'];
 $SchemeID       = (integer) @$Args['SchemeID'];
 $DaysReserved   = (integer) @$Args['DaysReserved'];
 $IsCreate       = (boolean) @$Args['IsCreate'];
-$DependOrder	=  (string) @$Args['DependOrder'];
+$DependOrderID	= (integer) @$Args['DependOrderID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
@@ -82,7 +82,6 @@ if($ExtraIPOrderID){
 $IExtraIPOrder = Array(
 	'Login'		=> $Login,
 	'SchemeID'	=> $ExtraIPScheme['ID'],
-	'DependOrderID'	=> Preg_Replace('/[^0-9]/','',$DependOrder)		# наглый и кривой хак... см. предыдущее TODO
 );
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -101,7 +100,7 @@ if($ExtraIPOrderID){
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
-	$IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$ServerID),Array('ID'=>$ExtraIPOrder['OrderID']));
+	$IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$ServerID,'DependOrderID'=>$DependOrderID),Array('ID'=>$ExtraIPOrder['OrderID']));
 	if(Is_Error($IsUpdate))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -112,7 +111,7 @@ if($ExtraIPOrderID){
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$ServerID,'ServiceID'=>50000,'IsPayed'=>TRUE,'Params'=>''));
+	$OrderID = DB_Insert('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$ServerID,'ServiceID'=>50000,'IsPayed'=>TRUE,'Params'=>'','DependOrderID'=>$DependOrderID));
 	if(Is_Error($OrderID))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
