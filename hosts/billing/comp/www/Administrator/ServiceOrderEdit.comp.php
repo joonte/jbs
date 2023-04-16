@@ -70,7 +70,8 @@ switch(ValueOf($ServiceOrderFields)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return new gException('FIELDS_NOT_DEFINED','Поля услуги не определены');
+	//return new gException('FIELDS_NOT_DEFINED','Поля услуги не определены');
+	$ServiceOrderFields = Array();
 case 'array':
 	break;
 default:
@@ -81,9 +82,7 @@ default:
 $Table[] = 'Параметры заказа';
 #-------------------------------------------------------------------------------
 // скармливаем Tags, проверяем выхлоп
-$Tags = IsSet($Order['Params']['Tags'])?$Order['Params']['Tags']:Array();
-#-------------------------------------------------------------------------------
-$Options = Comp_Load('Services/Orders/TagsExplain',$Tags,$Order['UserID']);
+$Options = Comp_Load('Services/Orders/TagsExplain',$Order['Params']['Tags'],$Order['UserID']);
 if(Is_Error($Options))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

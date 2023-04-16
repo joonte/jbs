@@ -65,9 +65,7 @@ foreach($Orders as $Order){
 	#-------------------------------------------------------------------------------
 	/* смысла наверное в этом нет....
 	// скармливаем Tags, проверяем выхлоп
-	$Tags = IsSet($Order['AjaxCall']['Tags'])?$Order['AjaxCall']['Tags']:Array();
-	#-------------------------------------------------------------------------------
-	$Options = Comp_Load('Services/Orders/TagsExplain',$Tags);
+	$Options = Comp_Load('Services/Orders/TagsExplain',$Order['AjaxCall']['Tags']);
 	if(Is_Error($Options))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

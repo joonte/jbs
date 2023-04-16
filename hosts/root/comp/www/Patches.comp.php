@@ -414,6 +414,15 @@ if(Is_Error($IsInsert))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$IsDelete = DB_Delete('Tasks',Array('ID'=>19));
+if(Is_Error($IsDelete))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$IsInsert = DB_Insert('Tasks',Array('ID'=>19,'UserID'=>1,'TypeID'=>'RecoveryServices','Params'=>Array(),'IsActive'=>TRUE));
+if(Is_Error($IsInsert))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $IsDelete = DB_Delete('Tasks',Array('ID'=>12));
 if(Is_Error($IsDelete))
 	return ERROR | @Trigger_Error(500);

@@ -1144,6 +1144,12 @@
 				<IsActive>1</IsActive>
 			</RecoveryServers>
 			<!-- ********************************************************************* -->
+			<RecoveryServices>
+				<Name>Восстановление сервисов</Name>
+				<Params type="array"/>
+				<IsActive>1</IsActive>
+			</RecoveryServices>
+			<!-- ********************************************************************* -->
 			<RecoveryUsers>
 				<Name>Восстановление пользователей</Name>
 				<Params type="array"/>

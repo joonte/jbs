@@ -119,9 +119,7 @@ $Table = Array(Array('Базовый договор',$NoBody));
 $Table[] = 'Параметры услуги';
 #-------------------------------------------------------------------------------
 // скармливаем Tags, проверяем выхлоп
-$Tags = IsSet($Service['Params']['Tags'])?$Service['Params']['Tags']:Array();
-#-------------------------------------------------------------------------------
-$Options = Comp_Load('Services/Orders/TagsExplain',$Tags);
+$Options = Comp_Load('Services/Orders/TagsExplain',$Service['Params']['Tags']);
 if(Is_Error($Options))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
