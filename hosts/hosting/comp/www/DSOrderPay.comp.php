@@ -322,8 +322,8 @@ if($DaysPay){
 	}
 	#-------------------------------------------------------------------------------
 	// при оплате с балалнса может быть больше дней чем разрешено по тарифу
-	if($DaysFromBallance > $DSOrder['MaxDaysPay'])
-		$DaysFromBallance = $DSOrder['MaxDaysPay'];
+	if($DaysFromBallance > $DSScheme['MaxDaysPay'])
+		$DaysFromBallance = $DSScheme['MaxDaysPay'];
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if($MinDaysPay <= $DaysFromBallance){
