@@ -16,7 +16,7 @@ Debug(SPrintF('[comp/Triggers/GLOBAL]: ModeID = %s; StatusID = %s; Order = %s',$
 #-------------------------------------------------------------------------------
 // докидываем номер заказа, далее используется не в одном месте, для обычных услуг OrderID, для кастомных - ID
 if(IsSet($Order['Row']['DependOrderID']))
-	$Order['OrderID'] = ($Order['Row']['OrderID'])?$Order['Row']['OrderID']:$Order['Row']['ID'];
+	$Order['OrderID'] = IsSet($Order['Row']['OrderID'])?$Order['Row']['OrderID']:$Order['Row']['ID'];
 #-------------------------------------------------------------------------------
 // JBS-1684, отключение автопродления зависиымх услуг, при удалении основной услуги
 if($Order['StatusID'] == 'Deleted' && IsSet($Order['Row']['DependOrderID'])){
