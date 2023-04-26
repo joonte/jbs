@@ -100,8 +100,15 @@ if($ExpirationDate){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($ServiceOrder['DependOrderID'])
-	$Table[] = Array('Относится к услуге',$ServiceOrder['DependOrderID']);
+if($ServiceOrder['DependOrderID']){
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Services/Orders/SelectDependOrder',$ServiceOrder['UserID'],$ServiceOrder['ID'],$ServiceOrder['DependOrderID'],TRUE);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array('Относится к заказу', $Comp);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $ServiceOrderFields = DB_Select('OrdersFields',Array('ID','ServiceFieldID','Value','FileName'),Array('Where'=>SPrintF('`OrderID` = %u',$ServiceOrderID)));

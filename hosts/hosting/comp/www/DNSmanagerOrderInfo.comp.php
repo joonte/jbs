@@ -100,7 +100,15 @@ $Table[] = Array('Договор',new Tag('TD',Array('class'=>'Standard'),$Comp)
 #-------------------------------------------------------------------------------
 $Table[] = Array('Тарифный план',SPrintF('%s (%s)',$DNSmanagerOrder['Scheme'],$DNSmanagerOrder['ServersGroupName']));
 #-------------------------------------------------------------------------------
-$Table[] = Array('Относится к заказу', $DNSmanagerOrder['DependOrderID']);
+if($DNSmanagerOrder['DependOrderID']){
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Services/Orders/SelectDependOrder',$DNSmanagerOrder['UserID'],$DNSmanagerOrder['OrderID'],$DNSmanagerOrder['DependOrderID'],TRUE);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array('Относится к заказу', $Comp);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Table[] = 'Параметры доступа';

@@ -108,7 +108,15 @@ $Table[] = Array('Договор',new Tag('TD',Array('class'=>'Standard'),$Comp)
 $Table[] = Array('Доменное имя',SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Table[] = Array('Относится к заказу', $DomainOrder['DependOrderID']);
+if($DomainOrder['DependOrderID']){
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Services/Orders/SelectDependOrder',$DomainOrder['UserID'],$DomainOrder['OrderID'],$DomainOrder['DependOrderID'],TRUE);
+	if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Table[] = Array('Относится к заказу', $Comp);
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $DomainConsider = DB_Select('DomainConsider','*',Array('Where'=>SPrintF('`DomainOrderID` = %u',$DomainOrder['ID'])));
