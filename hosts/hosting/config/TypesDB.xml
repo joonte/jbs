@@ -9,8 +9,6 @@
 <IsCreateDomain>Logic</IsCreateDomain>
 <!-- *********************************************************************** -->
 <!-- HostingSchemes, DomainSchemes -->
-<IsActive>Logic</IsActive>
-<IsProlong>Logic</IsProlong>
 <IsTransfer>Logic</IsTransfer>
 <IsAutoBalanced>Logic</IsAutoBalanced>
 <!-- *********************************************************************** -->
@@ -22,7 +20,6 @@
 <IsPrivateWhoIs>Logic</IsPrivateWhoIs>
 <!-- *********************************************************************** -->
 <!-- HostingServers -->
-<IsDefault>Logic</IsDefault>
 <NoRestartCreate>Logic</NoRestartCreate>
 <NoRestartActive>Logic</NoRestartActive>
 <NoRestartSuspend>Logic</NoRestartSuspend>
