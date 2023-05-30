@@ -12,8 +12,8 @@ $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 $Partition	= (string) @$Args['Partition'];
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('modules/Authorisation.mod')))
-	return ERROR | @Trigger_Error(500);
+//if(Is_Error(System_Load('modules/Authorisation.mod')))
+//	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Out = Array();
