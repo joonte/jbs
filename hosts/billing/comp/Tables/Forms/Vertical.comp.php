@@ -47,7 +47,7 @@ if($IsHead = $Appearance['IsHead']){
 			#-------------------------------------------------------------------------------
 			Array_UnShift($Args,$Head['Comp']);
 			#-------------------------------------------------------------------------------
-			$Comp = Call_User_Func_Array('Comp_Load',$Args);
+			$Comp = Call_User_Func_Array('Comp_Load',Array_Values($Args));
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
@@ -178,7 +178,7 @@ foreach($Data as $Row){
 		#-------------------------------------------------------------------------------
 		Array_UnShift($Args,$Comp);
 		#-------------------------------------------------------------------------------
-		$Comp = Call_User_Func_Array('Comp_Load',$Args);
+		$Comp = Call_User_Func_Array('Comp_Load',Array_Values($Args));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
@@ -204,7 +204,7 @@ foreach($Data as $Row){
 			#-------------------------------------------------------------------------------
 			Array_UnShift($Args,$Comp);
 			#-------------------------------------------------------------------------------
-			$Value = Call_User_Func_Array('Comp_Load',$Args);
+			$Value = Call_User_Func_Array('Comp_Load',Array_Values($Args));
 			if(Is_Error($Value))
 				return ERROR | @Trigger_Error('[comp/Tables/Super]: не удалось отформатировать значение');
 			#-------------------------------------------------------------------------------

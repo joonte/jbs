@@ -175,7 +175,7 @@ if(Count($Before)){
     if(Count($Before['Args']))
       $Params = Array_Merge($Params,$Before['Args']);
     #---------------------------------------------------------------------------
-    $Comp = Call_User_Func_Array('Comp_Load',$Params);
+    $Comp = Call_User_Func_Array('Comp_Load',Array_Values($Params));
     if(Is_Error($Comp))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
@@ -223,7 +223,7 @@ if(Count($After)){
     if(Count($After['Args']))
       $Params = Array_Merge($Params,$After['Args']);
     #---------------------------------------------------------------------------
-    $Comp = Call_User_Func_Array('Comp_Load',$Params);
+    $Comp = Call_User_Func_Array('Comp_Load',Array_Values($Params));
     if(Is_Error($Comp))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------

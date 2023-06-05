@@ -293,7 +293,7 @@ function __Error_Handler__($Number,$Error,$File,$Line){
 	#-------------------------------------------------------------------------------
 	//Error_Reporting(E_ALL);
 	#-------------------------------------------------------------------------------
-	Debug('Error_Reporting = ' . print_r(Error_Reporting(),true));
+	//Debug('Error_Reporting = ' . print_r(Error_Reporting(),true));
 	/* https://php.watch/versions/8.0/fatal-error-suppression
 	 * PHP < 8.0:
 	 * Normal error reporting value: 32767
