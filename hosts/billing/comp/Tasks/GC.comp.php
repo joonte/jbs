@@ -65,7 +65,7 @@ if($NowTask){
 		Array_UnShift($Params,$Settings);
 		Array_UnShift($Params,$Path = SPrintF('Tasks/GC/%s',$NowTask));
 		#-------------------------------------------------------------------------------
-		$Result = Call_User_Func_Array('Comp_Load',$Params);
+		$Result = Call_User_Func_Array('Comp_Load',Array_Values($Params));
 		#-------------------------------------------------------------------------------
 		$Log = Implode("\n",Array_Slice($__SYSLOG,$Index));
 		#-------------------------------------------------------------------------------
