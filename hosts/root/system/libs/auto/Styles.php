@@ -27,7 +27,8 @@ function Styles_HostsIDs($Element){
   }
   #-----------------------------------------------------------------------------
   if(Count($Result) < 1)
-    return ERROR | @Trigger_Error(SPrintF('[Styles_HostsIDs]: не удалось найти хосты для элемента (%s)',$Element));
+    Debug(SprintF('[system/libs/auto/Styles]: не удалось найти хосты для элемента (%s)',$Element));
+    //return ERROR | @Trigger_Error(SPrintF('[Styles_HostsIDs]: не удалось найти хосты для элемента (%s)',$Element));
   #-----------------------------------------------------------------------------
   return $Result;
 

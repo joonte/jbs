@@ -52,7 +52,7 @@ if(IsSet($GLOBALS['__USER'])){
 	#-------------------------------------------------------------------------------
 	$Table = Array();
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Form/Input',Array('name'=>'Email','onclick'=>'','type'=>'text','class'=>'InputField','prompt'=>$Messages['Prompts']['Email'],'value'=>@$_COOKIE['Email']));
+	$Comp = Comp_Load('Form/Input',Array('name'=>'Email','onclick'=>'','type'=>'text','class'=>'InputField','prompt'=>$Messages['Prompts']['Email'],'value'=>IsSet($_COOKIE['Email'])?$_COOKIE['Email']:''));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

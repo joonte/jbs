@@ -7,6 +7,7 @@ require_once 'Cache.class.php';
  * 
  * @author vvelikodny
  */
+#[\AllowDynamicProperties]
 class MemcacheCache implements Cache {
     /**
      * PHP lib name.

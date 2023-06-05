@@ -51,7 +51,7 @@ if(Is_Error($Template))
 #-------------------------------------------------------------------------------
 foreach($Users as $User){
 	#-------------------------------------------------------------------------------
-	$Attribs = @$User['Params']['Settings'];
+	$Attribs = IsSet($User['Params']['Settings'])?$User['Params']['Settings']:Array();
 	#-------------------------------------------------------------------------------
 	foreach(Array_Keys($Template['Settings']) as $AttribID)
 		if(!IsSet($Attribs[$AttribID]))
