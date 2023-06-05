@@ -486,7 +486,6 @@ CREATE TABLE IF NOT EXISTS `ExtraIPOrders` (
   `OrderID` int(11) NOT NULL,
   `SchemeID` int(11) NOT NULL,
   `OldSchemeID` int(11) DEFAULT NULL,
-  `DependOrderID` int(11) NOT NULL,
   `Domain` char(255) DEFAULT '',
   `Parked` text,
   `Login` char(32) DEFAULT 'noassign',

@@ -975,9 +975,9 @@ CREATE TABLE `TmpData` (
 	PRIMARY KEY (`ID`),
 	KEY `TmpDataUserID` (`UserID`),
 	CONSTRAINT `TmpDataUserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-	KEY `AppID` (`AppID`)
-	KEY `Col1` (`AppID`)
-	KEY `Col2` (`AppID`)
+	KEY `AppID` (`AppID`),
+	KEY `Col1` (`AppID`),
+	KEY `Col2` (`AppID`),
 	KEY `Col3` (`AppID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
