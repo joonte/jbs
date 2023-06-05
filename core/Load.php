@@ -43,9 +43,9 @@ Header('Content-Type: text/html; charset=utf-8');
 #-------------------------------------------------------------------------------
 # added by lissyara, 2016-08-18 in 12:58 MSK
 # какие-то странности с Error_Reporting - уровень перехвата ставится, но со второго раза =)
-Error_Reporting(E_ALL & ~E_DEPRECATED);
+Error_Reporting(E_ALL);
 #-------------------------------------------------------------------------------
-if(!Error_Reporting(E_ALL & ~E_DEPRECATED)) # Уровень перехвата ошибок полный
+if(!Error_Reporting(E_ALL)) # Уровень перехвата ошибок полный
 	Exit('[JBs core]: не удалось установить уровень перехвата ошибок');
 #-------------------------------------------------------------------------------
 Ignore_User_Abort(TRUE); # Если пользователь закрыл соединение выполнение продолжиться
@@ -290,11 +290,19 @@ function __Error_Handler__($Number,$Error,$File,$Line){
 	#-------------------------------------------------------------------------------
 
 
-
 	#-------------------------------------------------------------------------------
 	//Error_Reporting(E_ALL);
 	#-------------------------------------------------------------------------------
-	if(Error_Reporting()){
+	Debug('Error_Reporting = ' . print_r(Error_Reporting(),true));
+	/* https://php.watch/versions/8.0/fatal-error-suppression
+	 * PHP < 8.0:
+	 * Normal error reporting value: 32767
+	 * Suppressed error reporting value: 0
+	 * PHP >= 8.0
+	 * Normal error reporting value: 32767
+	 * Suppressed error reporting value: 4437
+	*/
+	if(Error_Reporting() &&  Error_Reporting() != 4437){
 		#-------------------------------------------------------------------------------
 		$JBsErrorID = SPrintF('%s[%s]',HOST_ID,Md5(Implode(':',Array($Number,$Error,$Line,$File))));
 		#-------------------------------------------------------------------------------
