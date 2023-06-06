@@ -202,7 +202,7 @@
 			<Comp>Formats/String</Comp>
 			<Args>
 				<ListElement>%Scheme%</ListElement>
-				<Length>10</Length>
+				<Length>12</Length>
 			</Args>
 			<Alias>(SELECT CONCAT(`Name`,' (',(SELECT `Name` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `DSOrdersOwners`.`ServerID`)),')') FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`)</Alias>
 		</Scheme>

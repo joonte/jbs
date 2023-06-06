@@ -132,7 +132,7 @@
 				<ListElement>%ID%</ListElement>
 				<ListElement>Formats/String</ListElement>
 				<ListElement>%Name%</ListElement>
-				<ListElement>10</ListElement>
+				<ListElement>12</ListElement>
 				<ListElement>%AdminNotice%</ListElement>
 				<ListElement>%UserNotice%</ListElement>
 			</Args>
