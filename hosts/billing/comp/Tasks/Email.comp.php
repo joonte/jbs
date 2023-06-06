@@ -134,7 +134,7 @@ $Array[] = SPrintF('X-JBS-Origin: %s',HOST_ID);
 if(IsSet($Attribs['MessageID']) && $Attribs['MessageID'])
 	$Array[] = SPrintF('Message-ID: <%s@%s>',$Attribs['MessageID'],HOST_ID);
 #-------------------------------------------------------------------------------
-$Heads = Implode("\n",$Array);
+$Heads = Implode("\r\n",$Array);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Boundary = SPrintF("\r\n\r\n--_%s_",HOST_ID);
