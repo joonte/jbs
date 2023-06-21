@@ -41,10 +41,6 @@
 					<IsActive>1</IsActive>
 				</DNSmanagerRules>
 				<!-- ******************************************************************** -->
-				<ProxyRules>
-					<Name>Регламент на услугу Прокси-сервер</Name>
-					<IsActive>1</IsActive>
-				</ProxyRules>
 			</Types>
 		</Enclosures>
 	</Contracts>
@@ -349,40 +345,6 @@
 				<GroupID>1</GroupID>
 				<IsActive>1</IsActive>
 			</DNSmanagerPasswordChange>
-			<!-- ********************************************************************* -->
-			<!-- added by lissyara 2020-02-18 in 11:01 MSK -->
-			<!-- ********************************************************************* -->
-			<ProxyOrdersActive>
-				<Name>Активация заказа</Name>
-				<Title>Заказы на Прокси-сервер</Title>
-				<Code>Proxy</Code>
-				<GroupID>1</GroupID>
-				<IsActive>1</IsActive>
-			</ProxyOrdersActive>
-			<!-- ********************************************************************* -->
-			<ProxyNoticeSuspend>
-				<Name>Уведомление о блокировке заказа</Name>
-				<GroupID>1</GroupID>
-				<IsActive>1</IsActive>
-			</ProxyNoticeSuspend>
-			<!-- ********************************************************************* -->
-			<ProxyOrdersSuspended>
-				<Name>Блокировка заказа</Name>
-				<GroupID>1</GroupID>
-				<IsActive>1</IsActive>
-			</ProxyOrdersSuspended>
-			<!-- ********************************************************************* -->
-			<ProxyNoticeDelete>
-				<Name>Уведомление о удалении заказа</Name>
-				<GroupID>1</GroupID>
-				<IsActive>1</IsActive>
-			</ProxyNoticeDelete>
-			<!-- ********************************************************************* -->
-			<ProxyOrdersDeleted>
-				<Name>Удаление заказа</Name>
-				<GroupID>1</GroupID>
-				<IsActive>1</IsActive>
-			</ProxyOrdersDeleted>
 			<!-- ********************************************************************* -->
 		</Types>
 	</Notifies>
@@ -899,47 +861,6 @@
 			</DNSmanagerDelete>
 			<!-- *********************************************************************** -->
 			<!-- *********************************************************************** -->
-			<ProxyForDelete>
-				<Name>Заказы на Прокси-сервер для удаления</Name>
-				<Params type="array"/>
-				<ExecuteTime>1:10</ExecuteTime>
-				<IsActive>1</IsActive>
-				<ProxyDeleteTimeout>1</ProxyDeleteTimeout>
-			</ProxyForDelete>
-			<!-- ********************************************************************* -->
-			<ProxyCreate>
-				<Name>Создание аккаунта на Прокси-сервер</Name>
-				<Params>
-					<ID>Идентификатор заказа</ID>
-				</Params>
-				<IsActive>1</IsActive>
-			</ProxyCreate>
-			<!-- ********************************************************************* -->
-			<ProxyActive>
-				<Name>Активация заказа на Прокси-сервер</Name>
-				<Params>
-					<ID>Идентификатор заказа</ID>
-				</Params>
-				<IsActive>1</IsActive>
-			</ProxyActive>
-			<!-- ********************************************************************* -->
-			<ProxySuspend>
-				<Name>Блокировка заказа вторичного DNS</Name>
-				<Params>
-					<ID>Идентификатор заказа</ID>
-				</Params>
-				<IsActive>1</IsActive>
-			</ProxySuspend>
-			<!-- ********************************************************************* -->
-			<ProxyDelete>
-				<Name>Удаление заказа на Прокси-сервер</Name>
-				<Params>
-					<ID>Идентификатор заказа</ID>
-				</Params>
-				<IsActive>1</IsActive>
-			</ProxyDelete>
-			<!-- *********************************************************************** -->
-			<!-- *********************************************************************** -->
 			<ServersAutoBalance>
 				<Name>Автобалансировка серверов</Name>
 				<Params type="array"/>
@@ -1168,23 +1089,6 @@
 			</Deleted>
 		</DNSmanagerOrders>
 		<!-- *********************************************************************** -->
-		<ProxyOrders>
-			<Waiting>
-				<Name>Ожидание оплаты</Name>
-			</Waiting>
-			<OnCreate>
-				<Name>На создании</Name>
-			</OnCreate>
-			<Active>
-				<Name>Активен</Name>
-			</Active>
-			<Suspended>
-				<Name>Заблокирован</Name>
-			</Suspended>
-			<Deleted>
-				<Name>Удален</Name>
-			</Deleted>
-		</ProxyOrders>
 	</Statuses>
 	<!-- *********************************************************************** -->
 	<Interface>
@@ -1243,10 +1147,6 @@
 					<MobileConfirmRequire>0</MobileConfirmRequire>
 				</DNSmanager>
 				<!-- *********************************************************************** -->
-				<Proxy>
-					<EmailConfirmRequire>0</EmailConfirmRequire>
-					<MobileConfirmRequire>0</MobileConfirmRequire>
-				</Proxy>
 			</Orders>
 			<!-- *********************************************************************** -->
 			<Notes>

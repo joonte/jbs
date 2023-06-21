@@ -99,35 +99,6 @@ VALUES
 ('DNSmanagerDomainPoliticsDelete','hosting',1,1,4000000,1,1,'no'),
 ('DNSmanagerDomainPoliticsDelete','hosting',3000000,100,1,1,2,'yes'),
 
-
-/* values for Proxy added by lissyara 2020-02-22 in 11:40 MSK */
-('ProxyOrdersRead','hosting',1,1,4000000,1,1,'yes'),
-('ProxyOrdersRead','hosting',3000000,100,1,1,2,'yes'),
-
-('ProxyOrdersPay','hosting',1,1,4000000,1,1,'yes'),
-('ProxyOrdersPay','hosting',3000000,100,1,1,2,'yes'),
-
-('ProxyOrdersSettingsChange','hosting',1,1,4000000,1,1,'yes'),
-('ProxyOrdersSettingsChange','hosting',3000000,100,1,1,2,'yes'),
-
-('ProxyManage','hosting',1,1,4000000,1,1,'yes'),
-('ProxyManage','hosting',3000000,100,1,1,2,'yes'),
-
-('ProxyOrdersConsider','hosting',1,1,4000000,1,1,'no'),
-('ProxyOrdersConsider','hosting',3000000,100,1,1,2,'yes'),
-
-('ProxyOrdersStatusSet','hosting',1,1,4000000,1,1,'no'),
-('ProxyOrdersStatusSet','hosting',3000000,100,1,1,2,'yes'),
-
-('ProxyOrdersDelete','hosting',1,1,4000000,1,1,'yes'),
-('ProxyOrdersDelete','hosting',3000000,100,1,1,2,'yes'),
-
-('ProxySchemesDelete','hosting',1,1,4000000,1,1,'no'),
-('ProxySchemesDelete','hosting',3000000,100,1,1,2,'yes'),
-
-('ProxyDomainPoliticsDelete','hosting',1,1,4000000,1,1,'no'),
-('ProxyDomainPoliticsDelete','hosting',3000000,100,1,1,2,'yes'),
-
 /* values for VPS added by lissyara 2011-06-14 in 21:42 MSK */
 ('VPSOrdersRead', 'hosting', 1, 1, 4000000, 1, 1, 'yes'),
 ('VPSOrdersRead', 'hosting', 3000000, 100, 1, 1, 2, 'yes'),

@@ -368,25 +368,4 @@ SELECT
 FROM
 	`DNSmanagerSchemes`;
 
-/* added by lissyara, JBS-1349, 2020-02-19 in 09:56 MSK */
--- SEPARATOR
-DROP VIEW IF EXISTS `ProxyOrdersOwners`;
-DROP TABLE IF EXISTS `ProxyOrdersOwners`;
-CREATE
-	VIEW `ProxyOrdersOwners` AS
-SELECT
-	`ProxyOrders`.*,
-	`OrdersOwners`.`ServiceID`,
-	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `ProxyOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
-	`OrdersOwners`.`ServerID`,
-	`OrdersOwners`.`OrderDate`,
-	`OrdersOwners`.`UserID`,
-	`OrdersOwners`.`ContractID`,
-	`OrdersOwners`.`DependOrderID`,
-	`OrdersOwners`.`UserNotice`,
-	`OrdersOwners`.`AdminNotice`
-FROM
-	`ProxyOrders` LEFT JOIN `OrdersOwners` ON (`ProxyOrders`.`OrderID` = `OrdersOwners`.`ID`);
-
-
 
