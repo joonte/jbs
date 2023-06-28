@@ -1572,81 +1572,103 @@
 		<Contracts>
 			<OnForming>
 				<Name>На формировании</Name>
+				<Color>F9E47D</Color>
 			</OnForming>
 			<Public>
 				<Name>Публично заключен</Name>
+				<Color>F1FCCE</Color>
 			</Public>
 			<Complite>
 				<Name>Заключен</Name>
+				<Color>D5F66C</Color>
 			</Complite>
 			<Breaked>
 				<Name>Расторгнут</Name>
+				<Color>999999</Color>
 			</Breaked>
 		</Contracts>
 		<!-- *********************************************************************** -->
 		<ContractsEnclosures>
 			<OnForming>
 				<Name>На формировании</Name>
+				<Color>999999</Color>
 			</OnForming>
 			<Waiting>
 				<Name>Ожидается</Name>
+				<Color>F9E47D</Color>
 			</Waiting>
 			<Complite>
 				<Name>Заключено</Name>
+				<Color>D5F66C</Color>
 			</Complite>
 			<Breaked>
 				<Name>Расторгнуто</Name>
+				<Color>DCDCDC</Color>
 			</Breaked>
 		</ContractsEnclosures>
 		<!-- *********************************************************************** -->
 		<Edesks>
 			<Newest>
 				<Name>Новый</Name>
+				<Color>BCF0FF</Color>
 			</Newest>
 			<Opened>
 				<Name>Ожидает ответа</Name>
+				<Color>EAFAD3</Color>
 			</Opened>
 			<Working>
 				<Name>В работе</Name>
+				<Color>E8FAFF</Color>
 			</Working>
 			<Closed>
 				<Name>Закрыт</Name>
+				<Color>EAEAEA</Color>
 			</Closed>
 		</Edesks>
 		<!-- *********************************************************************** -->
 		<Invoices>
 			<Rejected>
 				<Name>Отменен</Name>
+				<Color>EAEAEA</Color>
 			</Rejected>
 			<Waiting>
 				<Name>Ожидание оплаты</Name>
+				<Color>F9E47D</Color>
 			</Waiting>
 			<Conditionally>
 				<Name>Условно оплачен</Name>
+				<Color>BCF0FF</Color>
 			</Conditionally>
 			<Payed>
 				<Name>Оплачен</Name>
+				<Color>D5F66C</Color>
 			</Payed>
 		</Invoices>
 		<!-- *********************************************************************** -->
 		<MotionDocuments>
 			<UnSet>
 				<Name>Не определён</Name>
+				<Color>EAEAEA</Color>
 			</UnSet>
 			<Waiting>
 				<Name>Ожидает обработки</Name>
+				<Color>FFE322</Color>
 			</Waiting>
 			<OnPrint>
 				<Name>На печати документов</Name>
+				<Color>EAEAEA</Color>
 			</OnPrint>
 			<OnSign>
 				<Name>На подписи</Name>
+				<Color>EAEAEA</Color>
 			</OnSign>
 			<Sended>
 				<Name>Отправлено заказчику</Name>
+				<Color>D5F66C</Color>
 			</Sended>
 			<Received>
 				<Name>Получен исполнителем</Name>
+				<Color>EAEAEA</Color>
 			</Received>
 		</MotionDocuments>
 		<!-- *********************************************************************** -->
@@ -1654,36 +1676,46 @@
 			<Waiting>
 				<Name>Ожидание оплаты</Name>
 				<IsNoAction>1</IsNoAction>
+				<Color>F9E47D</Color>
 			</Waiting>
 			<OnCreate>
 				<Name>На создании</Name>
+				<Color>ADC1F0</Color>
 			</OnCreate>
 			<Active>
 				<Name>Активен</Name>
+				<Color>D5F66C</Color>
 			</Active>
 			<OnProlong>
 				<Name>На продлении</Name>
+				<Color>FFFF2F</Color>
 			</OnProlong>
 			<Suspended>
 				<Name>Заблокирован</Name>
+				<Color>FF6666</Color>
 			</Suspended>
 			<Deleted>
 				<Name>Удален</Name>
+				<Color>DCDCDC</Color>
 			</Deleted>
 		</Orders>
 		<!-- *********************************************************************** -->
 		<Profiles>
 			<OnFilling>
 				<Name>На заполнении</Name>
+				<Color>E3EAFA</Color>
 			</OnFilling>
 			<Filled>
 				<Name>Заполнен</Name>
+				<Color>FDF6D3</Color>
 			</Filled>
 			<Rejected>
 				<Name>Отклонен</Name>
+				<Color>FF6666</Color>
 			</Rejected>
 			<Checked>
 				<Name>Проверен</Name>
+				<Color>D5F66C</Color>
 			</Checked>
 		</Profiles>
 	</Statuses>

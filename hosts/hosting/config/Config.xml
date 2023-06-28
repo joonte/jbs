@@ -901,147 +901,191 @@
 		<HostingOrders>
 			<Waiting>
 				<Name>Ожидание оплаты</Name>
+				<Color>F9E47D</Color>
 			</Waiting>
 			<OnCreate>
 				<Name>На создании</Name>
+				<Color>ADC1F0</Color>
 			</OnCreate>
 			<Active>
 				<Name>Активен</Name>
+				<Color>D5F66C</Color>
 			</Active>
 			<SchemeChange>
 				<Name>На смене тарифа</Name>
+				<Color>ADC1F0</Color>
 			</SchemeChange>
 			<Suspended>
 				<Name>Заблокирован</Name>
+				<Color>FF6666</Color>
 			</Suspended>
 			<Deleted>
 				<Name>Удален</Name>
+				<Color>DCDCDC</Color>
 			</Deleted>
 		</HostingOrders>
 		<VPSOrders>
 			<Waiting>
 				<Name>Ожидание оплаты</Name>
+				<Color>F9E47D</Color>
 			</Waiting>
 			<OnCreate>
 				<Name>На создании</Name>
+				<Color>ADC1F0</Color>
 			</OnCreate>
 			<Active>
 				<Name>Активен</Name>
+				<Color>D5F66C</Color>
 			</Active>
 			<SchemeChange>
 				<Name>На смене тарифа</Name>
+				<Color>ADC1F0</Color>
 			</SchemeChange>
 			<Suspended>
 				<Name>Заблокирован</Name>
+				<Color>FF6666</Color>
 			</Suspended>
 			<Deleted>
 				<Name>Удален</Name>
+				<Color>DCDCDC</Color>
 			</Deleted>
 		</VPSOrders>
 		<DSOrders>
 			<Waiting>
 				<Name>Ожидание оплаты</Name>
+				<Color>F9E47D</Color>
 			</Waiting>
 			<OnCreate>
 				<Name>Установка сервера</Name>
+				<Color>ADC1F0</Color>
 			</OnCreate>
 			<Active>
 				<Name>Активен</Name>
+				<Color>D5F66C</Color>
 			</Active>
 			<Suspended>
 				<Name>Сервер выключен</Name>
+				<Color>FF6666</Color>
 			</Suspended>
 			<OnService>
 				<Name>Сервер на обслуживании</Name>
+				<Color>FF00FF</Color>
 			</OnService>
 			<Deleted>
 				<Name>Сервер удалён</Name>
+				<Color>DCDCDC</Color>
 			</Deleted>
 		</DSOrders>
 		<DomainOrders>
 			<Waiting>
 				<Name>Ожидание оплаты</Name>
+				<Color>F9E47D</Color>
 			</Waiting>
 			<ClaimForRegister>
 				<Name>Заявка на регистрацию</Name>
+				<Color>BCF0FF</Color>
 			</ClaimForRegister>
 			<ForContractRegister>
 				<Name>Для регистрации договора</Name>
+				<Color>ADC1F0</Color>
 			</ForContractRegister>
 			<OnContractRegister>
 				<Name>На регистрации договора</Name>
+				<Color>ADC1F0</Color>
 			</OnContractRegister>
 			<ForRegister>
 				<Name>Для регистрации</Name>
+				<Color>ADC1F0</Color>
 			</ForRegister>
 			<OnRegister>
 				<Name>На регистрации</Name>
+				<Color>BCF0FF</Color>
 			</OnRegister>
 			<OnDelegating>
 				<Name>На делегировании</Name>
+				<Color>F1FCCE</Color>
 			</OnDelegating>
 			<Active>
 				<Name>Активен</Name>
+				<Color>D5F66C</Color>
 			</Active>
 			<ForProlong>
 				<Name>Для продления</Name>
+				<Color>ADC1F0</Color>
 			</ForProlong>
 			<OnProlong>
 				<Name>На продлении</Name>
+				<Color>ADC1F0</Color>
 			</OnProlong>
 			<ForNsChange>
 				<Name>Для изменения именных серверов</Name>
+				<Color>ADC1F0</Color>
 			</ForNsChange>
 			<OnNsChange>
 				<Name>На изменении именных серверов</Name>
+				<Color>ADC1F0</Color>
 			</OnNsChange>
 			<Suspended>
 				<Name>Заблокирован</Name>
+				<Color>FF6666</Color>
 			</Suspended>
 			<ForTransfer>
 				<Name>Для переноса</Name>
+				<Color>ADD8E6</Color>
 			</ForTransfer>
 			<OnTransfer>
 				<Name>На переносе</Name>
+				<Color>E8FAFF</Color>
 			</OnTransfer>
 			<Deleted>
 				<Name>Удален</Name>
+				<Color>DCDCDC</Color>
 			</Deleted>
 		</DomainOrders>
 		<!-- IP addresses -->
 		<ExtraIPOrders>
 			<Waiting>
 				<Name>Ожидание оплаты</Name>
+				<Color>F9E47D</Color>
 			</Waiting>
 			<OnCreate>
 				<Name>На создании</Name>
+				<Color>ADC1F0</Color>
 			</OnCreate>
 			<Active>
 				<Name>Активен</Name>
+				<Color>D5F66C</Color>
 			</Active>
 			<Deleted>
 				<Name>Удален</Name>
+				<Color>DCDCDC</Color>
 			</Deleted>
 		</ExtraIPOrders>
 		<!-- ISPsystem software -->
 		<ISPswOrders>
 			<Waiting>
 				<Name>Ожидание оплаты</Name>
+				<Color>F9E47D</Color>
 			</Waiting>
 			<OnCreate>
 				<Name>На создании</Name>
+				<Color>ADC1F0</Color>
 			</OnCreate>
 			<Active>
 				<Name>Активен</Name>
+				<Color>D5F66C</Color>
 			</Active>
 			<SchemeChange>
 				<Name>На смене тарифа</Name>
+				<Color>ADC1F0</Color>
 			</SchemeChange>
 			<Suspended>
 				<Name>Заблокирован</Name>
+				<Color>FF6666</Color>
 			</Suspended>
 			<Deleted>
 				<Name>Удален</Name>
+				<Color>DCDCDC</Color>
 			</Deleted>
 		</ISPswOrders>
 		<!-- лицензии в биллинге ISPsystems -->
@@ -1049,43 +1093,54 @@
 			<Waiting>
 				<Name>Ожидание оплаты</Name>
 				<status>1</status>
+				<Color>F9E47D</Color>
 			</Waiting>
 			<OnCreate>
 				<Name>На создании</Name>
 				<status>4</status>
+				<Color>ADC1F0</Color>
 			</OnCreate>
 			<Active>
 				<Name>Активна</Name>
 				<status>2</status>
+				<Color>D5F66C</Color>
 			</Active>
 			<Suspended>
 				<Name>Заблокирована</Name>
 				<status>3</status>
+				<Color>FF6666</Color>
 			</Suspended>
 			<Deleted>
 				<Name>Удалена</Name>
 				<status>4</status>
+				<Color>DCDCDC</Color>
 			</Deleted>
 		</ISPswLicenses>
 		<!-- *********************************************************************** -->
 		<DNSmanagerOrders>
 			<Waiting>
 				<Name>Ожидание оплаты</Name>
+				<Color>F9E47D</Color>
 			</Waiting>
 			<OnCreate>
 				<Name>На создании</Name>
+				<Color>ADC1F0</Color>
 			</OnCreate>
 			<Active>
 				<Name>Активен</Name>
+				<Color>D5F66C</Color>
 			</Active>
 			<SchemeChange>
 				<Name>На смене тарифа</Name>
+				<Color>ADC1F0</Color>
 			</SchemeChange>
 			<Suspended>
 				<Name>Заблокирован</Name>
+				<Color>FF6666</Color>
 			</Suspended>
 			<Deleted>
 				<Name>Удален</Name>
+				<Color>DCDCDC</Color>
 			</Deleted>
 		</DNSmanagerOrders>
 		<!-- *********************************************************************** -->
