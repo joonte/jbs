@@ -77,7 +77,7 @@ $Settings = $Config['Interface']['User']['Orders']['Domain']['Prolong'];
 $StatusID = $DomainOrder['StatusID'];
 #-------------------------------------------------------------------------------
 if(!In_Array($StatusID,Array('Waiting','Active','Suspended','ForTransfer')))
-	return new gException('ORDER_CAN_NOT_PAY','Заказ домена не может быть оплачен');
+	return new gException('ORDER_CAN_NOT_PAY','Статус домена не позволяет его оплатить');
 #-------------------------------------------------------------------------------
 $DomainScheme = DB_Select('DomainSchemes','*',Array('UNIQ','ID'=>$DomainOrder['SchemeID']));
 #-------------------------------------------------------------------------------
