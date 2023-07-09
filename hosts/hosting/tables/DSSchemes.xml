@@ -59,6 +59,8 @@
 						<ListElement>disks</ListElement>
 						<ListElement>raid</ListElement>
 						<ListElement>OS</ListElement>
+						<ListElement>IPaddr</ListElement>
+						<ListElement>ILOaddr</ListElement>
 						<ListElement>UserNotice</ListElement>
 					</ColumnsIDs>
 				</Args>
