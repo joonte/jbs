@@ -159,7 +159,7 @@ if($StepID){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$Columns = Array(
-			'ID','Name','ServerID','UserNotice','CostMonth','CostInstall','CPU', 'ram', 'raid', 'disks',
+			'ID','Name','ServerID','UserNotice','CostMonth','CostInstall','CPU', 'ram', 'raid', 'disks','OS',
 			SPrintF('(SELECT `Name` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupName`',$UniqID),
 			SPrintF('(SELECT `Comment` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupComment`',$UniqID),
 			SPrintF('(SELECT `SortID` FROM `ServersGroups` WHERE `ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = `%s`.`ServerID`)) as `ServersGroupSortID`',$UniqID),
@@ -233,6 +233,17 @@ if($StepID){
 	$Tr->AddChild($Td);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	$Td = new Tag('TD',Array('class'=>'Head','align'=>'center'),new Tag('SPAN','ОС'),new Tag('SPAN',Array('style'=>'font-weight:bold;font-size:14px;'),'?'));
+        #-------------------------------------------------------------------------------
+        $Links[$LinkID] = &$Td;
+	#-------------------------------------------------------------------------------
+	$Comp = Comp_Load('Form/Prompt',$LinkID,'Операционная система установленная на сервере');
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Tr->AddChild($Td);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	UnSet($Links[$LinkID]);
 	#-------------------------------------------------------------------------------
 	$Rows = Array($Tr);
@@ -249,7 +260,7 @@ if($StepID){
 			if(Is_Error($Comp))
 				return ERROR | @Trigger_Error(500);
 			#-------------------------------------------------------------------------------
-			$Rows[] = new Tag('TR',new Tag('TD',Array('colspan'=>11,'class'=>'Separator'),new Tag('SPAN',Array('style'=>'font-size:16px;'),SPrintF('%s |',$ServersGroupName)),new Tag('SPAN',Array('style'=>'font-size:11px;'),$Comp)));
+			$Rows[] = new Tag('TR',new Tag('TD',Array('colspan'=>12,'class'=>'Separator'),new Tag('SPAN',Array('style'=>'font-size:16px;'),SPrintF('%s |',$ServersGroupName)),new Tag('SPAN',Array('style'=>'font-size:11px;'),$Comp)));
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
@@ -268,7 +279,7 @@ if($StepID){
 		$Comment = $DSScheme['UserNotice'];
 		#-------------------------------------------------------------------------------
 		if($Comment)
-			$Rows[] = new Tag('TR',new Tag('TD',Array('colspan'=>2)),new Tag('TD',Array('colspan'=>9,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),$Comment));
+			$Rows[] = new Tag('TR',new Tag('TD',Array('colspan'=>2)),new Tag('TD',Array('colspan'=>10,'class'=>'Standard','style'=>'background-color:#FDF6D3;'),$Comment));
 		#-------------------------------------------------------------------------------
 		$CostMonth = Comp_Load('Formats/Currency',$DSScheme['CostMonth']);
 		if(Is_Error($CostMonth))
@@ -278,15 +289,27 @@ if($StepID){
 		if(Is_Error($raid))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
+		// длинну строки захардкодим
+		$CPU = Comp_Load('Formats/String',$DSScheme['CPU'],30);
+		if(Is_Error($CPU))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		// длинну строки захардкодим
+		$HDD = Comp_Load('Formats/String',$DSScheme['disks'],25);
+		if(Is_Error($HDD))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+
 		$Rows[] = new Tag('TR',
 					Array('OnClick'=>SPrintF('document.forms[\'DSOrderForm\'].DSSchemeID.value=%s',$DSScheme['ID'])),
 					new Tag('TD',Array('width'=>20),$Comp),
 					new Tag('TD',Array('class'=>'Comment'),$DSScheme['Name']),
 					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$CostMonth),
-					new Tag('TD',Array('class'=>'Standard','align'=>'left'),$DSScheme['CPU']),
+					new Tag('TD',Array('class'=>'Standard','align'=>'left'),$CPU),
 					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DSScheme['ram']),
 					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$raid),
-					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DSScheme['disks'])
+					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$HDD),
+					new Tag('TD',Array('class'=>'Standard','align'=>'right'),$DSScheme['OS'])
 					);
 		#-------------------------------------------------------------------------------
 	}
