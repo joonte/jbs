@@ -4,7 +4,7 @@
 # $2 - /path/to/php
 # $3 - billing.hostname.su
 
-PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 TMPDIR="${TMPDIR:="/tmp"}"
 TmpFile="$TMPDIR/jbs.$$.txt"
 
