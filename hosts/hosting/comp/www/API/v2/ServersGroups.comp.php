@@ -18,6 +18,7 @@ $Out = Array('Servers'=>Array(),'ServersGroups'=>Array());
 // достаём все сервера и все группы
 $Columns = Array(
 		'ID','TemplateID','ServersGroupID','IsActive','IsDefault','Address',
+		'(SELECT `SortID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ID`) AS `SortID`',
 		'(SELECT `Name` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ID`) AS `ServersGroupsName`',
 		'(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ID`) AS `ServiceID`',
 		'(SELECT `Comment` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ID`) AS `ServersGroupComment`'
