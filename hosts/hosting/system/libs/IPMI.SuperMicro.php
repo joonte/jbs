@@ -239,7 +239,7 @@ function IPMI_Execute($Scheme,$Command){
 	// может быть IP адрес или голый хостнейм без http
 	$Address = IsSet($ParseUrl['host'])?$ParseUrl['host']:$ParseUrl['path'];
 	#-------------------------------------------------------------------------------
-	$Line = SPrintF('ipmitool -I lanplus -H %s -U %s -P %s %s',$Address,$Scheme['ILOuser'],$Scheme['ILOpass'],$Command);
+	$Line = SPrintF('ipmitool -I lanplus -N 1 -R 1 -H %s -U %s -P %s %s',$Address,$Scheme['ILOuser'],$Scheme['ILOpass'],$Command);
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[system/libs/IPMI.SuperMicro.php]: выполняем: %s',Preg_Replace(SPrintF('/%s/',$Scheme['ILOpass']),'***HIDDEN***',$Line)));
 	// выполянем команду
