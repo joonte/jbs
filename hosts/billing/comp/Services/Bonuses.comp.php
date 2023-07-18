@@ -12,7 +12,8 @@ $__args_list = Array(
 			'CostPay',	// стартовая сумма оплаты. если есть оплата за подключение услуги?
 			'CostDay',	// исходная стоимость дня, без скидок
 			'OrderID',	// номер заказа
-			'ConsiderTypeID'// тип учёта
+			'ConsiderTypeID',// тип учёта
+			'IsAPI'		// запрос для API
 			);
 /******************************************************************************/
 Eval(COMP_INIT);
@@ -20,7 +21,11 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $ConsiderTypeID = IsSet($ConsiderTypeID)?$ConsiderTypeID:'Daily';
 #-------------------------------------------------------------------------------
-Debug("[comp/Services/Bonuses]: DaysRemainded = $DaysRemainded; ServiceID = $ServiceID, SchemeID = $SchemeID, UserID = $UserID, CostPay = $CostPay, CostDay = $CostDay; OrderID = $OrderID, ConsiderTypeID = $ConsiderTypeID");
+// для АПИ запроса
+$Out = Array();
+#-------------------------------------------------------------------------------
+Debug(SPrintF('[comp/Services/Bonuses]: DaysRemainded = %s; ServiceID = %s; SchemeID = %s; UserID = %s; CostPay = %s; CostDay = %s; OrderID = %s; ConsiderTypeID = %s; IsAPI = %s;',$DaysRemainded,$ServiceID,$SchemeID,$UserID,$CostPay,$CostDay,$OrderID,$ConsiderTypeID,IsSet($IsAPI)?'TRUE':'FALSE'));
+//Debug("[comp/Services/Bonuses]: DaysRemainded = $DaysRemainded; ServiceID = $ServiceID, SchemeID = $SchemeID, UserID = $UserID, CostPay = $CostPay, CostDay = $CostDay; OrderID = $OrderID, ConsiderTypeID = $ConsiderTypeID; IsAPI = " . ($IsAPI)?'TRUE':'FALSE');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Bonuses = Array();
@@ -91,6 +96,8 @@ while($DaysRemainded){
 			#-------------------------------------------------------------------------------
 			$Bonuses[] = $Tr;
 			#-------------------------------------------------------------------------------
+			$Out[] = Array($DaysRemainded,SPrintF('%s %%',$Scheme['Discount']));
+			#-------------------------------------------------------------------------------
 		}else{
 			#-------------------------------------------------------------------------------
 			$CostPay += $CostDay*$DaysRemainded;
@@ -135,6 +142,9 @@ while($DaysRemainded){
 				$Tr->AddChild(new Tag('TD',Array('class'=>'Standard','align'=>'right'),$Text));
 			#---------------------------------------------------------
 			$Bonuses[] = $Tr;
+			#-------------------------------------------------------------------------------
+			$Out[] = Array($Bonus['DaysRemainded'],$Comp);
+			#-------------------------------------------------------------------------------
 		}else{
 			#---------------------------------------------------------
 			$CostPay += $CostDay*$DaysRemainded*$Discont;
@@ -154,8 +164,11 @@ while($DaysRemainded){
 				$Tr->AddChild(new Tag('TD',Array('class'=>'Standard','align'=>'right'),$Text));
 			#---------------------------------------------------------
 			$Bonuses[] = $Tr;
-			#---------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			$Out[] = Array($DaysRemainded,$Comp);
+			#-------------------------------------------------------------------------------
 			$DaysRemainded = 0;
+			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
 		$IsUpdate = DB_Update('Bonuses',$UBonus,Array('ID'=>$Bonus['ID']));
@@ -183,7 +196,7 @@ while($DaysRemainded){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return Array('CostPay'=>$CostPay,'Bonuses'=>$Bonuses);
+return Array('CostPay'=>$CostPay,'Bonuses'=>IsSet($IsAPI)?$Out:$Bonuses);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
