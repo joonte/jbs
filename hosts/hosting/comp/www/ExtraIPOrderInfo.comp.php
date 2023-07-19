@@ -168,9 +168,9 @@ $Table[] = Array('Сервер',$ExtraIPDepend['Address']);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Аккаунт',$ExtraIPDepend['Login']);
 #-------------------------------------------------------------------------------
-if($ExtraIPDepend['DependOrderID']){
+if($ExtraIPOrder['DependOrderID']){
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('Services/Orders/SelectDependOrder',$ExtraIPDepend['UserID'],$ExtraIPDepend['OrderID'],$ExtraIPDepend['DependOrderID'],TRUE);
+	$Comp = Comp_Load('Services/Orders/SelectDependOrder',$ExtraIPOrder['UserID'],$ExtraIPOrder['OrderID'],$ExtraIPOrder['DependOrderID'],TRUE);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
