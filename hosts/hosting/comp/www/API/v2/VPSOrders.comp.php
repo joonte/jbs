@@ -27,7 +27,7 @@ $Where = Array(SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']));
 if($OrderID > 0)
 	$Where[] = SPrintF('`OrderID` = %u',$OrderID);
 #-------------------------------------------------------------------------------
-$Columns = Array('*','(SELECT `Params` FROM `Servers` WHERE `VPSOrdersOwners`.`ServerID` = `Servers`.`ID`) AS `Params`');
+$Columns = Array('*','(SELECT `Params` FROM `Servers` WHERE `VPSOrdersOwners`.`ServerID` = `Servers`.`ID`) AS `Params`','(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `VPSOrdersOwners`.`ContractID`) AS `Customer`',);
 #-------------------------------------------------------------------------------
 $VPSOrders = DB_Select('VPSOrdersOwners',$Columns,Array('Where'=>$Where));
 #-------------------------------------------------------------------------------

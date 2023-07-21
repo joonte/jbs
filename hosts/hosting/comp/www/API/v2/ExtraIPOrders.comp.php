@@ -26,7 +26,7 @@ $Out = Array();
 #-------------------------------------------------------------------------------
 $Where = Array(SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']));
 #-------------------------------------------------------------------------------
-$Columns = Array('*');
+$Columns = Array('*','(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `ExtraIPOrdersOwners`.`ContractID`) AS `Customer`',);
 #-------------------------------------------------------------------------------
 $ExtraIPOrders = DB_Select('ExtraIPOrdersOwners',$Columns,Array('Where'=>$Where));
 #-------------------------------------------------------------------------------

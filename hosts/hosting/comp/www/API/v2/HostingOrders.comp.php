@@ -34,7 +34,7 @@ $Where = Array(SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']));
 if($OrderID > 0)
 	$Where[] = SPrintF('`OrderID` = %u',$OrderID);
 #-------------------------------------------------------------------------------
-$HostingOrders = DB_Select('HostingOrdersOwners',Array('*'),Array('Where'=>$Where));
+$HostingOrders = DB_Select('HostingOrdersOwners',Array('*','(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `HostingOrdersOwners`.`ContractID`) AS `Customer`'),Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingOrders)){
 case 'error':
