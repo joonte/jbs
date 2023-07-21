@@ -17,6 +17,10 @@ if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php','libs/Serv
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+if(!$ContractID)
+	return new gException('CONTRACT_NOT_DEFINED','Не выбран договор');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $ServerSettings = SelectServerSettingsByService($ServiceID);
 #-------------------------------------------------------------------------------
 if(!Is_Array($ServerSettings))

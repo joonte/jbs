@@ -25,7 +25,12 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------
 if(!$VPSSchemeID)
-  return new gException('VPS_SCHEME_NOT_DEFINED','Тарифный план не выбран');
+	return new gException('VPS_SCHEME_NOT_DEFINED','Тарифный план не выбран');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(!$ContractID)
+	return new gException('CONTRACT_NOT_DEFINED','Не выбран договор');
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $VPSScheme = DB_Select('VPSSchemes',Array('ID','Name','ServersGroupID','IsActive'),Array('UNIQ','ID'=>$VPSSchemeID));
 #-------------------------------------------------------------------------------

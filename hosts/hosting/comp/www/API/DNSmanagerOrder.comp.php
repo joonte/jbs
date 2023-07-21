@@ -25,6 +25,11 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 if(!$DNSmanagerSchemeID)
 	return new gException('DNS_SCHEME_NOT_DEFINED','Тарифный план не выбран');
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(!$ContractID)
+	return new gException('CONTRACT_NOT_DEFINED','Не выбран договор');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $DNSmanagerScheme = DB_Select('DNSmanagerSchemes',Array('*'),Array('UNIQ','ID'=>$DNSmanagerSchemeID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DNSmanagerScheme)){

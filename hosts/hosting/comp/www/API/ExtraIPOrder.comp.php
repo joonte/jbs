@@ -26,6 +26,11 @@ $Regulars = Regulars();
 if(!$ExtraIPSchemeID)
 	return new gException('ExtraIP_SCHEME_NOT_DEFINED','Тарифный план не выбран');
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(!$ContractID)
+	return new gException('CONTRACT_NOT_DEFINED','Не выбран договор');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $ExtraIPScheme = DB_Select('ExtraIPSchemes',Array('ID','Name','IsActive','Params'),Array('UNIQ','ID'=>$ExtraIPSchemeID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($ExtraIPScheme)){
