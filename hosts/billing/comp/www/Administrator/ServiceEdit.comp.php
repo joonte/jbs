@@ -382,7 +382,7 @@ if(IsSet($Service['Params']['Tags']))
 	foreach(Array_Keys($Service['Params']['Tags']) as $Key)
 		$Tags = SPrintF("\n%s\n%s:%s",$Tags,$Key,Implode(',',$Service['Params']['Tags'][$Key]));
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/TextArea',Array('name'=>'Tags','style'=>'width:100%;','rows'=>3,'prompt'=>"У каких услуг отображать эту услугу на странице дополнительных услуг. Возможно указать сервис, сервер или группу серверов:\nServices:10000,20000\nServers:3,1\nServersGroups:22,5\n\nМожно указать только однин сервер, например, не указывая сервис/группу:\nServers:3,5\n\nИли точно также один сервис/группу"),Trim($Tags));
+$Comp = Comp_Load('Form/TextArea',Array('name'=>'Tags','style'=>'width:100%;','rows'=>3,'prompt'=>"У каких услуг отображать эту услугу на странице дополнительных услуг. Возможно указать сервис, сервер или группу серверов:\nServices:10000,20000\nServers:3,1\nServersGroups:22,5\n\nМожно указать только один сервер, например, не указывая сервис/группу:\nServers:3,5\n\nИли точно также один сервис/группу"),Trim($Tags));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
