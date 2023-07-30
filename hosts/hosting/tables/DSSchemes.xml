@@ -41,6 +41,18 @@
 				<Args>
 					<Patterns>
 						<ListElement>
+							<Name>Сломанные</Name>
+							<Where>`IsBroken` = 'yes'</Where>
+						</ListElement>
+						<ListElement>
+							<Name>Активные</Name>
+							<Where>`IsActive` = 'yes' AND `IsBroken` = 'no'</Where>
+						</ListElement>
+						<ListElement>
+							<Name>Используемые</Name>
+							<Where>`IsActive` = 'no' AND `IsBroken` = 'no'</Where>
+						</ListElement>
+						<ListElement>
 							<Name>Индивидуальные тарифы</Name>
 							<Where>`UserID` != 1</Where>
 						</ListElement>
