@@ -1941,6 +1941,17 @@
 			<MaxMessages>100</MaxMessages>
 		</Edesks>
 		<!-- *********************************************************************** -->
+		<Colors>
+			<font-main>#081131</font-main>
+			<font-second>#57699B</font-second>
+			<btn>#459FD1</btn>
+			<btn-hover>#2992CD</btn-hover>
+			<hover>#ED8A4F</hover>
+			<background>#F7F9FF</background>
+			<border-dark>#C7D1ED</border-dark>
+			<disabled>#efefef</disabled>
+		</Colors>
+		<!-- *********************************************************************** -->
 	</Interface>
 	<!-- *********************************************************************** -->
 	<!-- *********************************************************************** -->
