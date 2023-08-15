@@ -113,7 +113,6 @@ if($Address){
 	$Columns = Array(
 			'*','(SELECT `RegisterDate` FROM `Users` WHERE `Users`.`ID` = `Contacts`.`UserID`) AS `RegisterDate`',
 			'(SELECT `EnterDate` FROM `Users` WHERE `Users`.`ID` = `Contacts`.`UserID`) AS `EnterDate`',
-			'(SELECT `IsHidden` FROM `Users` WHERE `Users`.`ID` = `Contacts`.`UserID`) AS `IsHidden`',
 			'(SELECT `IsProtected` FROM `Users` WHERE `Users`.`ID` = `Contacts`.`UserID`) AS `IsProtected`',
 			);
 	#-------------------------------------------------------------------------------
@@ -136,7 +135,18 @@ if($Address){
 	// перебираем найденных юзеров, достаём их контакты и строим таблицу
 	foreach($Users as $User){
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/www/UserPasswordRestore]: построение строки таблицы для %u/%s/%s',$User['ID'],$User['MethodID'],$User['Address']));
+		// это скрытый (удалённый) контакт
+		if($User['IsHidden']){
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/www/UserPasswordRestore]: пропускаем скрытый контакт %u/%s/%s',$User['ID'],$User['MethodID'],$User['Address']));
+			#-------------------------------------------------------------------------------
+			continue;
+			#-------------------------------------------------------------------------------
+		}else{
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/www/UserPasswordRestore]: построение строки таблицы для %u/%s/%s',$User['ID'],$User['MethodID'],$User['Address']));
+			#-------------------------------------------------------------------------------
+		}
 		#-------------------------------------------------------------------------------
 		// собираем колонки строки, т.к. последним строится чекбокс, а надо его первым сделать
 		$Array = Array();
