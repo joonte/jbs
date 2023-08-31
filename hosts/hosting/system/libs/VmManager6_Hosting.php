@@ -901,6 +901,10 @@ function VmManager6_Hosting_Get_DiskTemplates($Settings,$Template = FALSE){
 		if($iTemplate['is_lxd_image'])
 			continue;
 		#-----------------------------------------------------------------------------
+		// вариант что не назначно в кластер
+		if(!SizeOf($iTemplate['clusters']))
+			continue;
+		#-----------------------------------------------------------------------------
 		$Result[] = SPrintF('%s:%s',$iTemplate['name'],$iTemplate['hdd_mib_required']);
 		#-----------------------------------------------------------------------------
 		// если передано имя темплейта то надо вернуть идентфикатор
