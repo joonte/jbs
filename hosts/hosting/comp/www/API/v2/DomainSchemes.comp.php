@@ -20,7 +20,7 @@ $Out = Array();
 #-------------------------------------------------------------------------------
 $Where = Array(
 		'(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH))',
-		'`IsActive` = "yes"',
+		'(`IsActive` = "yes" OR `IsTransfer` = "yes")',
 		);
 #-------------------------------------------------------------------------------
 $Columns = Array(
