@@ -28,6 +28,10 @@ $DomainName = Mb_StrToLower($DomainName,'UTF-8');
 if(!Preg_Match($Regulars['DomainName'],$DomainName))
 	return new gException('WRONG_DOMAIN_NAME','Неверное имя домена');
 #-------------------------------------------------------------------------------
+if(!$ContractID)
+	return new gException('CONTRACT_NOT_DEFINED','Не выбран договор');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Contract = Comp_Load('Contracts/Fetch',$ContractID);
 if(Is_Error($Contract))
 	return ERROR | @Trigger_Error(500);
