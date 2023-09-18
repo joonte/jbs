@@ -27,7 +27,7 @@ $Where = Array(SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']));
 if($OrderID > 0)
 	$Where[] = SPrintF('`OrderID` = %u',$OrderID);
 #-------------------------------------------------------------------------------
-$Columns = Array('*','(SELECT `Params` FROM `Servers` WHERE `VPSOrdersOwners`.`ServerID` = `Servers`.`ID`) AS `Params`','(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `VPSOrdersOwners`.`ContractID`) AS `Customer`',);
+$Columns = Array('*','(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `VPSOrdersOwners`.`ContractID`) AS `Customer`','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`');
 #-------------------------------------------------------------------------------
 $VPSOrders = DB_Select('VPSOrdersOwners',$Columns,Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
@@ -42,12 +42,41 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Servers = Array();
+#-------------------------------------------------------------------------------
 foreach($VPSOrders as $VPSOrder){
 	#-------------------------------------------------------------------------------
-	if($VPSOrder['Params']['SystemID'] == 'VmManager6_Hosting')
-		$VPSOrder['Login'] = SPrintF('%s@%s',$VPSOrder['Login'],$VPSOrder['Params']['Domain']);
+	$ServerID = $VPSOrder['ServerID'];
 	#-------------------------------------------------------------------------------
-	UnSet($VPSOrder['Params']);
+	// чтоб не делать запрросы на каждый тариф, храним сервера в массиве
+	if(!IsSet($Servers[$ServerID])){
+		#-------------------------------------------------------------------------------
+		$Server = DB_Select('ServersOwners',Array('Address','Params'),Array('UNIQ','ID'=>$ServerID));
+		#-------------------------------------------------------------------------------
+		if(!Is_Array($Server))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Servers[$ServerID] = $Server;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// добавляем сервер
+	$VPSOrder['Address'] = $Servers[$ServerID]['Address'];
+	#-------------------------------------------------------------------------------
+	// добавляем ДНС
+	for($i = 1; $i <= 4; $i++){
+		#-------------------------------------------------------------------------------
+		$NsName = SPrintF('Ns%sName',$i);
+		#-------------------------------------------------------------------------------
+		$VPSOrder[$NsName] = $Servers[$ServerID]['Params'][$NsName];
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	if($Servers[$ServerID]['Params']['SystemID'] == 'VmManager6_VPS')
+		$VPSOrder['Login'] = SPrintF('%s@%s',$VPSOrder['Login'],$Servers[$ServerID]['Params']['Domain']);
+	#-------------------------------------------------------------------------------
 	UnSet($VPSOrder['AdminNotice']);
 	#-------------------------------------------------------------------------------
 	$Out[$VPSOrder['ID']] = $VPSOrder;

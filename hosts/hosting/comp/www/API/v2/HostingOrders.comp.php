@@ -34,7 +34,7 @@ $Where = Array(SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']));
 if($OrderID > 0)
 	$Where[] = SPrintF('`OrderID` = %u',$OrderID);
 #-------------------------------------------------------------------------------
-$HostingOrders = DB_Select('HostingOrdersOwners',Array('*','(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `HostingOrdersOwners`.`ContractID`) AS `Customer`'),Array('Where'=>$Where));
+$HostingOrders = DB_Select('HostingOrdersOwners',Array('*','(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `HostingOrdersOwners`.`ContractID`) AS `Customer`','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`) AS `ServerID`',),Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingOrders)){
 case 'error':
@@ -47,7 +47,37 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
+$Servers = Array();
+#-------------------------------------------------------------------------------
 foreach($HostingOrders as $HostingOrder){
+	#-------------------------------------------------------------------------------
+	$ServerID = $HostingOrder['ServerID'];
+	#-------------------------------------------------------------------------------
+	// чтоб не делать запрросы на каждый тариф, храним сервера в массиве
+	if(!IsSet($Servers[$ServerID])){
+		#-------------------------------------------------------------------------------
+		$Server = DB_Select('ServersOwners',Array('Address','Params'),Array('UNIQ','ID'=>$ServerID));
+		#-------------------------------------------------------------------------------
+		if(!Is_Array($Server))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Servers[$ServerID] = $Server;
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// добавляем сервер
+	$HostingOrder['Address'] = $Servers[$ServerID]['Address'];
+	#-------------------------------------------------------------------------------
+	// добавляем ДНС
+	for($i = 1; $i <= 4; $i++){
+		#-------------------------------------------------------------------------------
+		$NsName = SPrintF('Ns%sName',$i);
+		#-------------------------------------------------------------------------------
+		$HostingOrder[$NsName] = $Servers[$ServerID]['Params'][$NsName];
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	// выпиливаем колонки
 	foreach(Array_Keys($HostingOrder) as $Column)
