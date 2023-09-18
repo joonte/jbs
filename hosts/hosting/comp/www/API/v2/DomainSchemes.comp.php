@@ -24,7 +24,8 @@ $Where = Array(
 		);
 #-------------------------------------------------------------------------------
 $Columns = Array(
-		'ID','Name','PackageID','CostOrder','CostProlong','CostTransfer','IsProlong','IsTransfer','DaysToProlong','DaysBeforeTransfer','DaysAfterTransfer'
+		'ID','Name','PackageID','CostOrder','CostProlong','CostTransfer','IsProlong','IsTransfer','DaysToProlong','DaysBeforeTransfer','DaysAfterTransfer',
+		'(SELECT `Params` FROM `Servers` WHERE `DomainSchemesOwners`.`ServerID` = `Servers`.`ID`) AS `Params`'
 		);
 #-------------------------------------------------------------------------------
 $DomainSchemes = DB_Select('DomainSchemesOwners',$Columns,Array('Where'=>$Where,'SortOn'=>Array('SortID','PackageID')));
@@ -40,8 +41,25 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-foreach($DomainSchemes as $DomainScheme)
+foreach($DomainSchemes as $DomainScheme){
+	#-------------------------------------------------------------------------------
+	// добавляем ДНС
+	for($i = 1; $i <= 4; $i++){
+		#-------------------------------------------------------------------------------
+		$NsName = SPrintF('Ns%sName',$i);
+		#-------------------------------------------------------------------------------
+		$DomainScheme[$NsName] = $DomainScheme['Params'][$NsName];
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	UnSet($DomainScheme['Params']);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$Out[$DomainScheme['ID']] = $DomainScheme;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $Out;
