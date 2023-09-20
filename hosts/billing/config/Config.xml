@@ -1572,15 +1572,15 @@
 		<Contracts>
 			<OnForming>
 				<Name>На формировании</Name>
-				<Color>F9E47D</Color>
+				<Color>FFC700</Color>
 			</OnForming>
 			<Public>
 				<Name>Публично заключен</Name>
-				<Color>F1FCCE</Color>
+				<Color>8FD658</Color>
 			</Public>
 			<Complite>
 				<Name>Заключен</Name>
-				<Color>D5F66C</Color>
+				<Color>8FD658</Color>
 			</Complite>
 			<Breaked>
 				<Name>Расторгнут</Name>
@@ -1595,80 +1595,80 @@
 			</OnForming>
 			<Waiting>
 				<Name>Ожидается</Name>
-				<Color>F9E47D</Color>
+				<Color>FFC700</Color>
 			</Waiting>
 			<Complite>
 				<Name>Заключено</Name>
-				<Color>D5F66C</Color>
+				<Color>8FD658</Color>
 			</Complite>
 			<Breaked>
 				<Name>Расторгнуто</Name>
-				<Color>DCDCDC</Color>
+				<Color>999999</Color>
 			</Breaked>
 		</ContractsEnclosures>
 		<!-- *********************************************************************** -->
 		<Edesks>
 			<Newest>
 				<Name>Новый</Name>
-				<Color>BCF0FF</Color>
+				<Color>4FA5E2</Color>
 			</Newest>
 			<Opened>
 				<Name>Ожидает ответа</Name>
-				<Color>EAFAD3</Color>
+				<Color>8FD658</Color>
 			</Opened>
 			<Working>
 				<Name>В работе</Name>
-				<Color>E8FAFF</Color>
+				<Color>4FA5E2</Color>
 			</Working>
 			<Closed>
 				<Name>Закрыт</Name>
-				<Color>EAEAEA</Color>
+				<Color>999999</Color>
 			</Closed>
 		</Edesks>
 		<!-- *********************************************************************** -->
 		<Invoices>
 			<Rejected>
 				<Name>Отменен</Name>
-				<Color>EAEAEA</Color>
+				<Color>999999</Color>
 			</Rejected>
 			<Waiting>
 				<Name>Ожидание оплаты</Name>
-				<Color>F9E47D</Color>
+				<Color>FFC700</Color>
 			</Waiting>
 			<Conditionally>
 				<Name>Условно оплачен</Name>
-				<Color>BCF0FF</Color>
+				<Color>4FA5E2</Color>
 			</Conditionally>
 			<Payed>
 				<Name>Оплачен</Name>
-				<Color>D5F66C</Color>
+				<Color>8FD658</Color>
 			</Payed>
 		</Invoices>
 		<!-- *********************************************************************** -->
 		<MotionDocuments>
 			<UnSet>
 				<Name>Не определён</Name>
-				<Color>EAEAEA</Color>
+				<Color>999999</Color>
 			</UnSet>
 			<Waiting>
 				<Name>Ожидает обработки</Name>
-				<Color>FFE322</Color>
+				<Color>FFC700</Color>
 			</Waiting>
 			<OnPrint>
 				<Name>На печати документов</Name>
-				<Color>EAEAEA</Color>
+				<Color>999999</Color>
 			</OnPrint>
 			<OnSign>
 				<Name>На подписи</Name>
-				<Color>EAEAEA</Color>
+				<Color>999999</Color>
 			</OnSign>
 			<Sended>
 				<Name>Отправлено заказчику</Name>
-				<Color>D5F66C</Color>
+				<Color>8FD658</Color>
 			</Sended>
 			<Received>
 				<Name>Получен исполнителем</Name>
-				<Color>EAEAEA</Color>
+				<Color>999999</Color>
 			</Received>
 		</MotionDocuments>
 		<!-- *********************************************************************** -->
@@ -1676,46 +1676,46 @@
 			<Waiting>
 				<Name>Ожидание оплаты</Name>
 				<IsNoAction>1</IsNoAction>
-				<Color>F9E47D</Color>
+				<Color>FFC700</Color>
 			</Waiting>
 			<OnCreate>
 				<Name>На создании</Name>
-				<Color>ADC1F0</Color>
+				<Color>4FA5E2</Color>
 			</OnCreate>
 			<Active>
 				<Name>Активен</Name>
-				<Color>D5F66C</Color>
+				<Color>8FD658</Color>
 			</Active>
 			<OnProlong>
 				<Name>На продлении</Name>
-				<Color>FFFF2F</Color>
+				<Color>FFC700</Color>
 			</OnProlong>
 			<Suspended>
 				<Name>Заблокирован</Name>
-				<Color>FF6666</Color>
+				<Color>DF5747</Color>
 			</Suspended>
 			<Deleted>
 				<Name>Удален</Name>
-				<Color>DCDCDC</Color>
+				<Color>999999</Color>
 			</Deleted>
 		</Orders>
 		<!-- *********************************************************************** -->
 		<Profiles>
 			<OnFilling>
 				<Name>На заполнении</Name>
-				<Color>E3EAFA</Color>
+				<Color>4FA5E2</Color>
 			</OnFilling>
 			<Filled>
 				<Name>Заполнен</Name>
-				<Color>FDF6D3</Color>
+				<Color>FFC700</Color>
 			</Filled>
 			<Rejected>
 				<Name>Отклонен</Name>
-				<Color>FF6666</Color>
+				<Color>DF5747</Color>
 			</Rejected>
 			<Checked>
 				<Name>Проверен</Name>
-				<Color>D5F66C</Color>
+				<Color>8FD658</Color>
 			</Checked>
 		</Profiles>
 	</Statuses>
