@@ -24,7 +24,7 @@ $Where = Array(
 		);
 #-------------------------------------------------------------------------------
 $Columns = Array(
-		'ID','Name','PackageID','CostOrder','CostProlong','CostTransfer','IsProlong','IsTransfer','DaysToProlong','DaysBeforeTransfer','DaysAfterTransfer',
+		'ID','Name','PackageID','CostOrder','CostProlong','CostTransfer','IsActive','IsProlong','IsTransfer','DaysToProlong','DaysBeforeTransfer','DaysAfterTransfer',
 		'(SELECT `Params` FROM `Servers` WHERE `DomainSchemesOwners`.`ServerID` = `Servers`.`ID`) AS `Params`'
 		);
 #-------------------------------------------------------------------------------
