@@ -67,13 +67,30 @@ switch(ValueOf($DomainOrder)){
 	        if(!$Agree)
                   return new gException('NOT_AGREE','Вы не дали согласия на передачу ваших персональных данных');
                 #---------------------------------------------------------------
-                $Count = DB_Count('Profiles',Array('ID'=>$ProfileID));
+/*                $Count = DB_Count('Profiles',Array('ID'=>$ProfileID));
                 if(Is_Error($Count))
                   return ERROR | @Trigger_Error(500);
+*/
+		#-------------------------------------------------------------------------------
+		$Profile = DB_Select('ProfilesOwners',Array('*'),Array('ID'=>$ProfileID));
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($DomainScheme)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			return new gException('PROFILE_NOT_FOUND','Профиль не найден');
+		case 'array':
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
+		#-------------------------------------------------------------------------------
                 #---------------------------------------------------------------
-                if(!$Count)
+                if(!SizeOf($Profile))
                   return new gException('PROFILE_NOT_FOUND','Указанный профиль не найден');
                 #---------------------------------------------------------------
+		// првоеряем что это полноценный профиль, а не обрубок какой
+
                 $UDomainOrder['ProfileID'] = $ProfileID;
               break;
               default:

@@ -32,13 +32,14 @@ if(Is_Error($Comp))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Columns = Array(
-		'ID','ContractID','OrderID','ServiceID','UserID','DomainName','ExpirationDate','AuthInfo','StatusID','SchemeID',
+		'ID','ContractID','OrderID','ServiceID','UserID','DomainName','ExpirationDate','AuthInfo','StatusID','SchemeID','ProfileID',
 		'CONCAT(`Ns1Name`,",",`Ns2Name`,",",`Ns3Name`,",",`Ns4Name`) AS `DNSs`',	// DNS for JBS-1337
 		'(SELECT `GroupID` FROM `Users` WHERE `DomainOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`',
 		'(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DomainOrdersOwners`.`OrderID`) as `IsPayed`',
 		'(SELECT `Balance` FROM `Contracts` WHERE `DomainOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`',
 		'(SELECT `TypeID` FROM `Contracts` WHERE `DomainOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractTypeID`',
-		'(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `DomainOrdersOwners`.`ServerID`) AS `Params`'
+		'(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `DomainOrdersOwners`.`ServerID`) AS `Params`',
+		'(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`) as `SchemeName`',
 		);
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
@@ -94,6 +95,18 @@ case 'array':
 	break;
 default:
 	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// для не-советских доменов
+if(!In_Array($DomainOrder['SchemeName'],Array('su'))){
+	#-------------------------------------------------------------------------------
+	if($StatusID == 'ForTransfer' && StrLen($DomainOrder['AuthInfo']) < 4)
+		return new gException('NEED_AUTHINFO','До оплаты домена, введите его код AuthInfo (иногда его называют пароль/код переноса)');
+	#-------------------------------------------------------------------------------
+	if($StatusID == 'ForTransfer' && Is_Null($DomainOrder['ProfileID']))
+		return new gException('NEED_OWNER','До оплаты домена, определите владельца для него (кнопка с "человечком" в строке заказа)');
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
