@@ -55,7 +55,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$DomainScheme = DB_Select('DomainSchemes',Array('ID','Name','ServerID'),Array('UNIQ','ID'=>$DomainSchemeID));
+$DomainScheme = DB_Select('DomainSchemes',Array('ID','Name','ServerID','DaysBeforeTransfer','IsTransfer'),Array('UNIQ','ID'=>$DomainSchemeID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainScheme)){
 case 'error':
@@ -74,6 +74,10 @@ if(!In_Array($DomainScheme['Name'],Array('su')))
 		if(StrLen($AuthInfo) < 3 || StrLen($AuthInfo) > 40)
 			$AuthInfo = 'IsNotSetByUser';
 #			return new gException('INCORRECT_AUTHINFO','Указан неверный код переноса домена');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(!$DomainScheme['IsTransfer'])
+	return new gException('SCHEME_NOT_ALLOW_TRANSFER','Выбранный тарифный план заказа домена не позволяет перенос');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Count = DB_Count('DomainOrdersOwners',Array('Where'=>SPrintF("`DomainName` = '%s' AND (SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) = '%s' AND `UserID` = %u AND `StatusID` != 'Deleted'",$DomainName,$DomainScheme['Name'],$GLOBALS['__USER']['ID'])));
@@ -108,6 +112,10 @@ case 'array':
 default:
 	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(($WhoIs['ExpirationDate'] - Time()) / 86400 < $DomainScheme['DaysBeforeTransfer'])
+	return new gException('DOMAIN_NEED_PROLONG',SPrintF('Перенос домена невозможен менее чем за %s дней до даты его продления. Для переноса, необходимо его продлить у текущего регистратора',$DomainScheme['DaysBeforeTransfer']));
 #-------------------------------------------------------------------------------
 #-------------------------TRANSACTION-------------------------------------------
 if(Is_Error(DB_Transaction($TransactionID = UniqID('DomainTransfer'))))
