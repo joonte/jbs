@@ -20,6 +20,8 @@ $Config = Config();
 #-------------------------------------------------------------------------------
 $Exclude = Array_Keys($Config['APIv2ExcludeColumns']);
 #-------------------------------------------------------------------------------
+$Settings = $Config['Interface']['User']['Orders']['Domain']['Prolong'];
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Out = Array();
 #-------------------------------------------------------------------------------
@@ -29,11 +31,13 @@ $Where = Array(SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']));
 $Columns = Array(
 		'*',
 		'(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`',
+		'CONCAT(`Ns1Name`,",",`Ns2Name`,",",`Ns3Name`,",",`Ns4Name`) AS `DNSs`',        // DNS for JBS-1337
 		'(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`)) as `Params`',
 		'(SELECT `IsAutoProlong` FROM `Orders` WHERE `DomainOrdersOwners`.`OrderID` = `Orders`.`ID`) AS `IsAutoProlong`',
 		'(SELECT `UserNotice` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DomainOrdersOwners`.`OrderID`) AS `UserNotice`',
 		'(SELECT `AdminNotice` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DomainOrdersOwners`.`OrderID`) AS `AdminNotice`',
 		'(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `DomainOrdersOwners`.`ContractID`) AS `Customer`',
+		'(SELECT `TypeID` FROM `Contracts` WHERE `DomainOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractTypeID`',
 		);
 #-------------------------------------------------------------------------------
 $DomainOrders = DB_Select('DomainOrdersOwners',$Columns,Array('Where'=>$Where));
@@ -51,6 +55,50 @@ default:
 #-------------------------------------------------------------------------------
 foreach($DomainOrders as $DomainOrder){
 	#-------------------------------------------------------------------------------
+	$AdditionalCost = 0;
+	#-------------------------------------------------------------------------------
+	if($Settings['ExternalDnsMarkUp'] > 0 && (!$Settings['JuridicalOnly'] || In_Array($DomainOrder['ContractTypeID'],Array('Juridical','Individual')))){
+		#-------------------------------------------------------------------------------
+		// составляем список ДНС серверов, заданных в общих настройках
+		$ExternalDnsList = Explode(',',$Settings['ExternalDnsList']);
+		#-------------------------------------------------------------------------------
+		if($DomainOrder['Params']['Ns1Name'])
+			$ExternalDnsList[] = StrToLower($DomainOrder['Params']['Ns1Name']);
+		#-------------------------------------------------------------------------------        
+		if($DomainOrder['Params']['Ns2Name'])
+			$ExternalDnsList[] = StrToLower($DomainOrder['Params']['Ns2Name']);
+		#-------------------------------------------------------------------------------
+		if($DomainOrder['Params']['Ns3Name'])
+			$ExternalDnsList[] = StrToLower($DomainOrder['Params']['Ns3Name']);
+		#-------------------------------------------------------------------------------
+		if($DomainOrder['Params']['Ns4Name'])
+			$ExternalDnsList[] = StrToLower($DomainOrder['Params']['Ns4Name']);
+		#-------------------------------------------------------------------------------
+		// перебираем ДНС сервера установленные для этого домена
+		foreach(Explode(',',StrToLower($DomainOrder['DNSs'])) as $DNS){
+			#-------------------------------------------------------------------------------
+			if(!$DNS)
+				continue;
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/www/API/v2/DomainOrders]: проверка DNS: %s',$DNS));
+			#-------------------------------------------------------------------------------
+			if(!In_Array($DNS,$ExternalDnsList)){
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/www/API/v2/DomainOrders]: DNS (%s) not in list (%s)',$DNS,Implode(',',$ExternalDnsList)));
+				#-------------------------------------------------------------------------------
+				$AdditionalCost = (double) $Settings['ExternalDnsMarkUp'];
+				#-------------------------------------------------------------------------------
+				$Message = SPrintF($Settings['ExternalDnsMessage'],$Settings['ExternalDnsMarkUp']);
+				#-------------------------------------------------------------------------------
+				break;
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	UnSet($DomainOrder['Params']);
 	#-------------------------------------------------------------------------------
 	// выпиливаем колонки
@@ -60,6 +108,10 @@ foreach($DomainOrders as $DomainOrder){
 	#-------------------------------------------------------------------------------
 	// полное имя домена
 	$DomainOrder['Domain'] = SPrintF('%s.%s',$DomainOrder['DomainName'],$DomainOrder['DomainZone']);
+	#-------------------------------------------------------------------------------
+	// дополнительная стоимость для не-наших ДНС
+	if($AdditionalCost)
+		$DomainOrder['AdditionalCost'] = Array('Summ'=>$AdditionalCost,'Message'=>$Message);
 	#-------------------------------------------------------------------------------
 	$Out[$DomainOrder['ID']] = $DomainOrder;
 	#-------------------------------------------------------------------------------
