@@ -73,8 +73,10 @@ if($ExtraIPOrderID){
 				'Login'		=> '0.0.0.0',
 				'OrderType'	=> 'VPS',
 				'DependOrder'	=> 'v1234',
+				'DependOrderID'	=> 0,
 				'SchemeID'	=> 1,
-				'ServerID'	=> 1
+				'ServerID'	=> 1,
+				'OrderID'	=> 0
 				);
 	#-------------------------------------------------------------------------------
 }

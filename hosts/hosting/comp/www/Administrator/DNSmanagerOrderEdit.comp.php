@@ -43,7 +43,8 @@ if($DNSmanagerOrderID){
 				'Login'		=> 'login',
 				'Password'	=> $Password,
 				'SchemeID'	=> 1,
-				'DependOrderID'	=> $DependOrderID,
+				'DependOrderID'	=> 0,
+				'OrderID'	=> 0
 			);
 	#-------------------------------------------------------------------------------
 }

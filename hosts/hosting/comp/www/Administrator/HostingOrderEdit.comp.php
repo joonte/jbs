@@ -45,6 +45,7 @@ if($HostingOrderID){
 				'Password'	=> $Password,
 				'SchemeID'	=> 1,
 				'DependOrderID'	=> 0,
+				'OrderID'	=> 0
 			);
 	#-------------------------------------------------------------------------------
 }
