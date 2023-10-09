@@ -118,7 +118,7 @@ if(!Is_Null($UniqID)){
 	#-------------------------------------------------------------------------------
 	foreach($Result as $Scheme){
 		#-------------------------------------------------------------------------------
-		#Debug(SPrintF('[billing/comp/Services/Schemes]: Scheme = %s',print_r($Scheme,true)));
+		//Debug(SPrintF('[billing/comp/Services/Schemes]: Scheme = %s',print_r($Scheme,true)));
 		$IsInsert = DB_Insert($UniqID,$Scheme);
 		if(Is_Error($IsInsert))
 			return ERROR | @Trigger_Error(500);
