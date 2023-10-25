@@ -59,7 +59,7 @@ foreach($Users as $User){
 	}else{
 		#-------------------------------------------------------------------------------
 		// это запрос своих даных. надо докинуть контакты
-		$iContacts = DB_Select('Contacts',Array('*'),Array('Where'=>SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID'])));
+		$iContacts = DB_Select('Contacts',Array('ID','CreateDate','MethodID','Address','Confirmed','TimeBegin','TimeEnd','IsPrimary','IsActive','IsSendFiles','IsImmediately','UserNotice'),Array('Where'=>Array(SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']),'`IsHidden` = "no"')));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($iContacts)){
 		case 'error':
