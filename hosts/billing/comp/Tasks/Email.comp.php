@@ -129,6 +129,10 @@ $Array[] = 'Accept-Language: ru, en';
 $Array[] = 'Content-Language: ru-RU, en-US';
 $Array[] = SPrintF('X-JBS-Origin: %s',HOST_ID);
 #-------------------------------------------------------------------------------
+// ссылка на отписку в заголовке. надо думать. пидоры из mail.ru в спам заносят сразу отправителя и все последующие письма
+//if($UnSubScribe)
+//	$Array[] = SPrintF('List-Unsubscribe: <%s>',$Link);
+#-------------------------------------------------------------------------------
 // идентфикатор сообщения
 // added by lissyara 2013-02-13 in 15:45 MSK, for JBS-609
 if(IsSet($Attribs['MessageID']) && $Attribs['MessageID'])
