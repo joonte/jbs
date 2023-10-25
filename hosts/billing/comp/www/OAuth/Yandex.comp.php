@@ -76,7 +76,7 @@ if(Is_Error($Result))
 #-------------------------------------------------------------------------------
 $Result = Json_Decode(Trim($Result['Body']),TRUE);
 #-------------------------------------------------------------------------------
-if(!IsSet($Result['default_email']))
+if(!IsSet($Result['default_email']) || !$Result['default_email'])
 	return TemplateReplace('OAuth.Error',Array('TEXT'=>$Messages['Errors']['OAuth']['NoEmail']),FALSE);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
