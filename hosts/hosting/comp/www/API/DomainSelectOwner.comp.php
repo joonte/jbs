@@ -17,7 +17,11 @@ $Agree         = (boolean) @$Args['Agree'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(!$DomainOrderID)
+	return new gException('DOMAIN_ORDER_NOT_SET','Домен не задан');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainOrdersOwners',Array('ID','UserID','SchemeID','StatusID','DomainName','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`'),Array('UNIQ','ID'=>$DomainOrderID));
