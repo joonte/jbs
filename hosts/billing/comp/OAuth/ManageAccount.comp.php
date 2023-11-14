@@ -4,7 +4,7 @@
 /** @author Alex Keda, for www.host-food.ru */
 /******************************************************************************/
 /******************************************************************************/
-$__args_list = Array('OAuthName','Address','UserID','Name');
+$__args_list = Array('OAuthName','Address','ExtUserID','Name');
 /******************************************************************************/
 Eval(COMP_INIT);
 /******************************************************************************/
@@ -116,7 +116,7 @@ if(IsSet($GLOBALS['__USER']['ID'])){
 	}
 	#-------------------------------------------------------------------------------
 	// добавляем исправляем поля
-	$Contact['ExternalID']	= SPrintF('%sID:%s',$OAuthName,$UserID);
+	$Contact['ExternalID']	= SPrintF('%sID:%s',$OAuthName,$ExtUserID);
 	$Contact['Confirmed']	= Time();
 	$Contact['IsPrimary']	= TRUE;
 	$Contact['IsActive']	= TRUE;
@@ -153,7 +153,7 @@ if(IsSet($GLOBALS['__USER']['ID'])){
 }else{
 	#-------------------------------------------------------------------------------
 	// это регистрация, на вход просто ничего тут не делаем
-	$Where = Array(SPrintF('`Address` = "%s"',$Address),'`MethodID` = "Email"','`IsPrimary` = "yes"','`IsHidden` = "no"'/*,SPrintF('`ExternalID` = "%sID:%s"',$OAuthName,$UserID)*/);
+	$Where = Array(SPrintF('`Address` = "%s"',$Address),'`MethodID` = "Email"','`IsPrimary` = "yes"','`IsHidden` = "no"'/*,SPrintF('`ExternalID` = "%sID:%s"',$OAuthName,$ExtUserID)*/);
 	#-------------------------------------------------------------------------------
 	$Contact = DB_Select('ContactsOwners','*',Array('UNIQ','Where'=>$Where));
 	switch(ValueOf($Contact)){
@@ -166,7 +166,7 @@ if(IsSet($GLOBALS['__USER']['ID'])){
 		if(Is_Error($Password))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$User = Comp_Load('www/API/UserRegister',Array('Name'=>($Name)?$Name:SPrintF('%s %s',$OAuthName,$UserID),'Password'=>$Password,'Email'=>$Address,'Message'=>SPrintF('Регистрация через OAuth %s',$OAuthName),'IsInternal'=>TRUE,'ExternalID'=>SPrintF('%sID:%s',$OAuthName,$UserID)));
+		$User = Comp_Load('www/API/UserRegister',Array('Name'=>($Name)?$Name:SPrintF('%s %s',$OAuthName,$ExtUserID),'Password'=>$Password,'Email'=>$Address,'Message'=>SPrintF('Регистрация через OAuth %s',$OAuthName),'IsInternal'=>TRUE,'ExternalID'=>SPrintF('%sID:%s',$OAuthName,$ExtUserID)));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($User)){
 		case 'error':
@@ -216,7 +216,7 @@ if($GLOBALS['__USER']['IsAdmin'] && !$Settings['AllowForAdmin']){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // всё хорошо, ничего не возвращаем
-return Array();
+return Array('UserID'=>$GLOBALS['__USER']['ID']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
