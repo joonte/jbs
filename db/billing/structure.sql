@@ -376,6 +376,7 @@ CREATE TABLE `Users` (
   `IsHidden` enum('no','yes') default 'no',
   `IsProtected` enum('no','yes') default 'no',
   `Params` LONGTEXT,
+  `ConfirmedWas` LONGTEXT,
   `AdminNotice` text,
   `IsConfirmed` enum('no','yes') DEFAULT 'yes',
   PRIMARY KEY  (`ID`),
