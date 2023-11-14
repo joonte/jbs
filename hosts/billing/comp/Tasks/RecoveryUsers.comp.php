@@ -52,7 +52,7 @@ if(Is_Error($Template))
 foreach($Users as $User){
 	#-------------------------------------------------------------------------------
 	// проверяем контакты на предмет подтверждённых SMS адресов
-	$Contacts = DB_Select('Contacts',Array('ID','MethodID','Address','Confirmed'),Array('Where'=>Array(SPrintF('`UserID` = %u',$User['ID']),'`Confirmed` > 0')));
+	$Contacts = DB_Select('Contacts',Array('ID','MethodID','Address','Confirmed'),Array('Where'=>Array(SPrintF('`UserID` = %u',$User['ID']),'`Confirmed` > 0','`MethodID` = "SMS"','`IsHidden` = "no"')));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Contacts)){
 	case 'error':
@@ -69,7 +69,7 @@ foreach($Users as $User){
 				continue;
 			#-------------------------------------------------------------------------------
 			// а вот если не найдено, надо добавить
-			$User['ConfirmedWas'][$Contact['Confirmed']] = SPrintF('%s: %s',$MethodID,$Address);
+			$User['ConfirmedWas'][$Contact['Confirmed']] = SPrintF('%s: %s',$Contact['MethodID'],$Contact['Address']);
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------

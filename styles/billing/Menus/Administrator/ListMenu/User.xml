@@ -20,6 +20,11 @@
 			<Icon>Contacts.png</Icon>
 		</UniqID>
 		<UniqID>
+			<Text>Подтвердить</Text>
+			<Href>javascript:ShowWindow("/Administrator/UserConfirm?UserID=%ID%");</Href>
+			<Icon>ListMenuItem.gif</Icon>
+		</UniqID>
+		<UniqID>
 			<Text>Добавить запрос</Text>
 			<Href>javascript:ShowWindow("/TicketEdit?UserID=%ID%");</Href>
 			<Icon>Add.gif</Icon>
