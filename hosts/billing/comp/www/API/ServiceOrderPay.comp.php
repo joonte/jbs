@@ -246,7 +246,7 @@ switch(ValueOf($ServiceOrder)){
                     case 'error':
                       return ERROR | @Trigger_Error(500);
                     case 'exception':
-                      return ERROR | @Trigger_Error(400);
+                      return new gException($Comp->CodeID,$Comp->String);
                     case 'array':
                       #---------------------------------------------------------
                       if(Is_Error(DB_Commit($TransactionID)))

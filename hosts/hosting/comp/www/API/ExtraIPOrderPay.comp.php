@@ -189,7 +189,7 @@ switch(ValueOf($ExtraIPOrder)){
                         case 'error':
                           return ERROR | @Trigger_Error(500);
                         case 'exception':
-                          return ERROR | @Trigger_Error(400);
+			  return ERROR | @Trigger_Error(400);
                         case 'array':
                           # No more...
                         break 2;

@@ -354,6 +354,11 @@ if(!$Confirm && !$Code){
 		if(Is_Error($IsUpdate))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
+		// активируем задачу проводки счетов
+		$IsUpdate = DB_Update('Tasks',Array('IsActive'=>TRUE,'IsExecuted'=>FALSE,'ExecuteDate'=>Time()),Array('Where'=>'`TypeID` = "NotConfirmedInvoices"'));
+		if(Is_Error($IsUpdate))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------

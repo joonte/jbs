@@ -65,7 +65,8 @@ VALUES
 /* 16 задача внутренняя, для тех у кого старый биллинг был */
 (17,1,'DBO','[]','yes'),
 (18,1,'YandexMetrika','[]','yes'),
-(19,1,'RecoveryServices','[]','yes')
+(19,1,'RecoveryServices','[]','yes'),
+(20,1,'NotConfirmedInvoices','[]','yes')
 ;
 UNLOCK TABLES;
 

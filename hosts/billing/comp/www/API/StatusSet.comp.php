@@ -43,7 +43,7 @@ $Config = Config();
 $NeedConfirmed = $Config['Interface']['User']['InvoiceMake']['NeedConfirmed'];
 #-------------------------------------------------------------------------------
 // требуется подтверждённый адрес, и юзер не подтверждён
-if($NeedConfirmed != "NONE" && !@SizeOf($__USER['ConfirmedWas'])){
+if($NeedConfirmed != "NONE" && !@SizeOf($GLOBALS['__USER']['ConfirmedWas'])){
 	#-------------------------------------------------------------------------------
 	// меняем статус счёта
 	if($ModeID == 'Invoices' && $StatusID == 'Payed'){
@@ -55,7 +55,7 @@ if($NeedConfirmed != "NONE" && !@SizeOf($__USER['ConfirmedWas'])){
 	}
 	#-------------------------------------------------------------------------------
 	// если это услуга и идёт её активация/Заявка на регистрацию... а надо ли, у нас домены бесплатно не регистрируются...
-	if(Preg_Match('/Orders/',$ModeID) && In_Array($Status['StatusID'],Array('Active','ClaimForRegister'))){
+	if(Preg_Match('/Orders/',$ModeID) && In_Array($StatusID,Array('OnCreate','Active','ClaimForRegister'))){
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[comp/www/API/StatusSet]: юзер не подтверждён, активация невозможна"'));
 		#-------------------------------------------------------------------------------
