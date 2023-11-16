@@ -1643,6 +1643,10 @@
 				<Name>Оплачен</Name>
 				<Color>8FD658</Color>
 			</Payed>
+			<NotConfirmed>
+				<Name>Не подтверждён</Name>
+				<Color>DF5747</Color>
+			</NotConfirmed>
 		</Invoices>
 		<!-- *********************************************************************** -->
 		<MotionDocuments>
@@ -1821,6 +1825,7 @@
 				<WindowWidth>530</WindowWidth>
 				<ImageWidth>135</ImageWidth>
 				<ImageHeight>70</ImageHeight>
+				<NeedConfirmed>NONE</NeedConfirmed>
 			</InvoiceMake>
 			<!-- *********************************************************************** -->
 			<InvoiceDocumentGuest>

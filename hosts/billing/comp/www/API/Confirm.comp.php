@@ -343,10 +343,12 @@ if(!$Confirm && !$Code){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	// если подтверждён телефон через SMS, подтверждаем и юзера сразу
-	if($Method == 'SMS'){
+	// если подтверждён адрес, подтверждаем и юзера сразу
+	$NeedConfirmed = $Config['Interface']['User']['InvoiceMake']['NeedConfirmed'];
+	#-------------------------------------------------------------------------------
+	if($NeedConfirmed != "NONE" && $Method == $NeedConfirmed){
 		#-------------------------------------------------------------------------------
-		$__USER['ConfirmedWas'][Time()] = SPrintF('SMS: %s; IP: %s',$Contact['Address'],@$_SERVER['REMOTE_ADDR']);
+		$__USER['ConfirmedWas'][Time()] = SPrintF('%s: %s; IP: %s',$NeedConfirmed,$Contact['Address'],@$_SERVER['REMOTE_ADDR']);
 		#-------------------------------------------------------------------------------
 		$IsUpdate = DB_Update('Users',Array('ConfirmedWas'=>$__USER['ConfirmedWas']),Array('ID'=>$__USER['ID']));
 		if(Is_Error($IsUpdate))
