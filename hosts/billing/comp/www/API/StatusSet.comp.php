@@ -33,7 +33,7 @@ $Comment     =   (string) @$Args['Comment'];
 $IsNoTrigger	= IsSet($Args['IsNoTrigger'])?((boolean)$Args['IsNoTrigger']):FALSE;
 $IsNotNotify	= IsSet($Args['IsNotNotify'])?((boolean)$Args['IsNotNotify']):FALSE;
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/www/API/StatusSet]: ModeID = %s; StatusID = %s; RowsIDs = %s; Comment = %s; IsNoTrigger = %s; IsNotNotify = %s',$ModeID,$StatusID,Is_Array($RowsIDs)?'Array':$RowsIDs,$Comment,$IsNoTrigger,$IsNotNotify));
+Debug(SPrintF('[comp/www/API/StatusSet]: ModeID = %s; StatusID = %s; RowsIDs = %s; Comment = %s; IsNoTrigger = %s; IsNotNotify = %s',$ModeID,$StatusID,Is_Array($RowsIDs)?'Array':$RowsIDs,$Comment,($IsNoTrigger)?'TRUE':'FALSE',($IsNotNotify)?'TRUE':'FALSE'));
 #-------------------------------------------------------------------------------
 if($GLOBALS['__USER']['ID'] == 2248){
 #-------------------------------------------------------------------------------
@@ -54,8 +54,9 @@ if($NeedConfirmed != "NONE" && !@SizeOf($GLOBALS['__USER']['ConfirmedWas'])){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	// если это услуга и идёт её активация/Заявка на регистрацию... а надо ли, у нас домены бесплатно не регистрируются...
-	if(Preg_Match('/Orders/',$ModeID) && In_Array($StatusID,Array('OnCreate','Active','ClaimForRegister'))){
+	// если это услуга и идёт её создание...
+	// домены пропускаем, бесплатно они не регистрируются, значит на уровне счетов срубится...
+	if(In_Array($ModeID,Array('HostingOrders','VPSOrders','DSOrders','DNSmanagerOrders')) && In_Array($StatusID,Array('OnCreate'))){
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[comp/www/API/StatusSet]: юзер не подтверждён, активация невозможна"'));
 		#-------------------------------------------------------------------------------

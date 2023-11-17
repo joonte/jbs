@@ -34,6 +34,9 @@ VALUES
 UNLOCK TABLES;
 
 -- SEPARATOR
+UPDATE `Users` SET `ConfirmedWas` = '{"1672520401":"System User"}' WHERE `ID` < 2000;
+
+-- SEPARATOR
 INSERT INTO `Contacts` (`UserID`,`Address`)
 	SELECT `Users`.`ID`,`Users`.`Email` FROM `Users` ORDER BY `ID`;
 -- SEPARATOR
