@@ -13,7 +13,7 @@ $ContractID     = (integer) @$Args['ContractID'];
 $IsUponConsider = (boolean) @$Args['IsUponConsider'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Contract = DB_Select('Contracts',Array('UserID','IsUponConsider','StatusID'),Array('UNIQ','ID'=>$ContractID));
@@ -68,7 +68,7 @@ default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-return Array('Status'=>'Ok');
+return Array('Status'=>'Ok','ContractID'=>$ContractID);
 #-------------------------------------------------------------------------------
 
 ?>
