@@ -236,7 +236,7 @@ case 'error':
 case 'exception':
 	return ERROR | @Trigger_Error(400);
 case 'array':
-	return Array('Status'=>'Ok','DomainOrderID'=>$DomainOrderID);
+	return Array('Status'=>'Ok','DomainOrderID'=>$DomainOrderID,'OrderID'=>$DomainOrder['OrderID']);
 default:
 	return ERROR | @Trigger_Error(101);
 }
