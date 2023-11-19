@@ -259,6 +259,7 @@ DELIMITER ;
 
 #-------------------------------------------------------------------------------
 DROP TRIGGER IF EXISTS `ContactsOnUpdated`;
+/* убрал, так как проблемы если контакт уже подтверждён а надо ещё раз подтвердить его (для минцифры)
 DELIMITER |
 CREATE DEFINER = CURRENT_USER TRIGGER `ContactsOnUpdated` BEFORE UPDATE ON `Contacts`
   FOR EACH ROW BEGIN
@@ -269,6 +270,7 @@ CREATE DEFINER = CURRENT_USER TRIGGER `ContactsOnUpdated` BEFORE UPDATE ON `Cont
   END;
 |
 DELIMITER ;
+*/
 #-------------------------------------------------------------------------------
 DROP TRIGGER IF EXISTS `NotifiesOnInsert`;
 DELIMITER |

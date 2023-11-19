@@ -19,7 +19,7 @@ if(!$Settings['UnPaidInvoicesReminders'])
 	return $Result;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Where = Array("`UserID` = @local.__USER_ID","`StatusID` = 'Waiting' OR `StatusID` = 'Conditionally'");
+$Where = Array("`UserID` = @local.__USER_ID","`StatusID` IN ('Waiting','Conditionally','NotConfirmed'");
 #-------------------------------------------------------------------------------
 $Invoices = DB_Select('InvoicesOwners','*',Array('Where'=>$Where));
 switch(ValueOf($Invoices)){
