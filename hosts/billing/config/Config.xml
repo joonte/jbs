@@ -951,6 +951,12 @@
 				<IsActive>1</IsActive>
 			</ConditionallyPayedInvoice>
 			<!-- ********************************************************************* -->
+			<NotConfirmedInvoices>
+				<Name>Неподтверждённые счета</Name>
+				<GroupID>1</GroupID>
+				<IsActive>1</IsActive>
+			</NotConfirmedInvoices>
+			<!-- ********************************************************************* -->
 			<CreateAndSendInvoices>
 				<Name>Автоматически выписанные счета</Name>
 				<GroupID>1</GroupID>
