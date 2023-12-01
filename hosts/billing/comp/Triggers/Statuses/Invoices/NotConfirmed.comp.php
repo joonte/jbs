@@ -13,7 +13,7 @@ $Number = Comp_Load('Formats/Invoice/Number',$Invoice['ID']);
 if(Is_Error($Number))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Event = Array('UserID'=>$Invoice['UserID'],'PriorityID'=>'Error','Text'=>SPrintF('Счёт №%s не может быть проведён, требуется подтверждённый телефон пользователя',$Number));
+$Event = Array('UserID'=>$Invoice['UserID'],'PriorityID'=>'Error','Text'=>SPrintF('Счёт №%s не может быть проведён, требуется подтверждённый телефон (SMS) пользователя',$Number));
 $Event = Comp_Load('Events/EventInsert',$Event);
 if(!$Event)
 	return ERROR | @Trigger_Error(500);

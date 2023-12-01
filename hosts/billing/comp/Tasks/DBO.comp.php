@@ -50,7 +50,7 @@ $GLOBALS['TaskReturnInfo'][] = SPrintF('Invoices: %u',SizeOf($BankInvoices));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // достаём минимальный и максимальный номер счёта существующий в биллинге и не оплаченный
-$InvoicesNums = DB_Select('InvoicesOwners',Array('MAX(`ID`) AS `MAX`','MIN(`ID`) AS `MIN`'),Array('UNIQ','Where'=>"`StatusID` IN ('Conditionally','Rejected','Waiting')"));
+$InvoicesNums = DB_Select('InvoicesOwners',Array('MAX(`ID`) AS `MAX`','MIN(`ID`) AS `MIN`'),Array('UNIQ','Where'=>"`StatusID` IN ('Conditionally','Rejected','Waiting','NotConfirmed')"));
 switch(ValueOf($InvoicesNums)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
@@ -103,7 +103,7 @@ foreach($BankInvoices as $BankInvoice){
 			}
 			#-------------------------------------------------------------------------------
 			// есть такой счёт, проверяем статус
-			if($Invoice['StatusID'] == 'Payed'){
+			if(In_Array($Invoice['StatusID'],Array('Payed','NotConfirmed'))){
 				#-------------------------------------------------------------------------------
 				Debug(SPrintF('[comp/Tasks/DBO]: найден счёт (%s), статус (%s), пропускаем',$Number,$Invoice['StatusID']));
 				#-------------------------------------------------------------------------------

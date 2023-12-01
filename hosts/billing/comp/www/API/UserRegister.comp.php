@@ -103,6 +103,7 @@ $IUser = Array(
 		'LayPayMaxSumm'		=> $Settings['LayPayMaxSumm'],
 		'LayPayThreshold'	=> $Settings['LayPayThreshold'],
 		'Params'		=> $Params,
+		'ConfirmedWas'		=> Array(),
 		);
 #-------------------------------------------------------------------------------
 $Group = DB_Select('Groups','ID',Array('UNIQ','Where'=>"`IsDefault` = 'yes'"));
