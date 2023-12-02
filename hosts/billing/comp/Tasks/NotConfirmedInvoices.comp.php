@@ -48,14 +48,14 @@ case 'array':
 			if(Date('G') != 3)
 				continue;
 			#-------------------------------------------------------------------------------
-			$CacheID = SPrintF('NotConfirmedInvoice_%s',$Number);
+			$CacheID = SPrintF('NotConfirmedInvoices_%s',$Number);
 			#-------------------------------------------------------------------------------
 			$Result = CacheManager::get($CacheID);
 			#-------------------------------------------------------------------------------
 			if($Result)
 				continue;
 			#-------------------------------------------------------------------------------
-			$IsSend = NotificationManager::sendMsg(new Message('NotConfirmedInvoice',(integer)$Invoice['UserID'],Array('Theme'=>SPrintF('Неподтверждённый счёт #%d',$Invoice['ID']),'InvoiceID'=>$Invoice['ID'])));
+			$IsSend = NotificationManager::sendMsg(new Message('NotConfirmedInvoices',(integer)$Invoice['UserID'],Array('Theme'=>SPrintF('Неподтверждённый счёт #%d',$Invoice['ID']),'InvoiceID'=>$Invoice['ID'])));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($IsSend)){
 			case 'true':

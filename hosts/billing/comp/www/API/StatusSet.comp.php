@@ -104,7 +104,7 @@ if($NeedConfirmed != "NONE"){
 			$StatusID = 'NotConfirmed';
 			#-------------------------------------------------------------------------------
 			// шлём сразу сообщение юзеру, результат не интересен
-			$IsSend = NotificationManager::sendMsg(new Message('NotConfirmedInvoice',(integer)$User['ID'],Array('Theme'=>SPrintF('Необходимо подтвердить аккаунт'),'InvoiceID'=>$Rows[0]['ID'])));
+			$IsSend = NotificationManager::sendMsg(new Message('NotConfirmedInvoices',(integer)$User['ID'],Array('Theme'=>SPrintF('Необходимо подтвердить аккаунт'),'InvoiceID'=>$Rows[0]['ID'])));
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
