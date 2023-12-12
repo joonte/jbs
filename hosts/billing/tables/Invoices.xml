@@ -58,6 +58,11 @@
 							<Where>`StatusID` = 'Payed' OR `StatusID` = 'NotConfirmed'</Where>
 						</Payed>
 						<!-- ****************************************************************** -->
+						<NotConfirmed>
+							<Name>Все неподтверждённые счета</Name>
+							<Where>`StatusID` = 'NotConfirmed'</Where>
+						</NotConfirmed>
+						<!-- ****************************************************************** -->
 						<Waiting>
 							<Name>Счета ожидающие оплаты</Name>
 							<Where>`StatusID` = 'Waiting'</Where>

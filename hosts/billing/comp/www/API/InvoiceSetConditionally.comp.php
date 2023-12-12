@@ -39,17 +39,20 @@ if(!SizeOf($GLOBALS['__USER']['ConfirmedWas']))
 $Invoice = DB_Select('InvoicesOwners',Array('ID','UserID','StatusID','IsPosted','Summ'),Array('UNIQ','ID'=>$InvoicesIDs[0]));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Invoice)){
-  case 'error':
-    return ERROR | @Trigger_Error(500);
-  case 'exception':
-    return ERROR | @Trigger_Error(400);
-  case 'array':
-    break;
-  default:
-    return ERROR | @Trigger_Error(101);
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// неподтверждённые нельзя условно прводоить
+if($Invoice['StatusID'] == 'NotConfirmed')
+	return new gException('DENY_PAYED_MOT_COMPLETED_INVOICE','Этот счёт уже был ранее оплачен, вам необходимо добавить и подтвердить телефон для его проведения');
 // если счёт был ранее оплачен ил условно проведён - не даём ему ставить статус
 if($Invoice['IsPosted'])
 	return new gException('DENY_PAYED_CONDITIONALLY_INVOICE','Этот счёт уже был ранее оплачен или условно оплачен, нельзя условно оплатить вторично');
