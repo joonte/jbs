@@ -337,6 +337,12 @@ $Params['Queries'][] = Array(
 				'Patterns'	=> Array()
 				);
 #--------------------------------------------------------------------------------
+// удаляем коды подтверждения у аккаунтов которые добавлены более ... ну года например
+$Params['Queries'][] = Array(                            
+				'Query'		=> 'UPDATE `Contacts` SET `Confirmation` = "" WHERE `CreateDate` <  UNIX_TIMESTAMP() - 365*24*60*60;',
+				'Patterns'	=> Array()
+				);
+#--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 $IsInsert = DB_Insert('TmpData',Array('AppID'=>'GC.CleanTables','Params'=>$Params));
 if(Is_Error($IsInsert))
