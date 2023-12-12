@@ -119,6 +119,10 @@ if($Ns4Name && !Preg_Match($Regulars['Domain'],$Ns4Name))
 if($Ns4IP && !Preg_Match($Regulars['IP'],$Ns4IP))
 	return new gException('WRONG_IP_NS3','Неверный IP адрес расширенного сервера имен');
 #-------------------------------------------------------------------------------
+#-----------------------------TRANSACTION---------------------------------------
+if(Is_Error(DB_Transaction($TransactionID = UniqID('DomainOrderEdit'))))
+        return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $UDomainOrder = Array(
 			'DomainName'     => $DomainName,
@@ -156,6 +160,10 @@ default:
 $IsUpdate = DB_Update('Orders',Array('ContractID'=>$ContractID,'ServerID'=>$DomainScheme['ServerID'],'DependOrderID'=>$DependOrderID),Array('ID'=>$DomainOrder['OrderID']));
 if(Is_Error($IsUpdate))
 	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(Is_Error(DB_Commit($TransactionID)))
+        return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return Array('Status'=>'Ok');
