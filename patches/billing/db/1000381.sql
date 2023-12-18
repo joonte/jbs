@@ -1,3 +1,3 @@
 
-INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',17,'SberBank','SberPay','SberPay.png','Оплата через СберБанк: картами СберБанка, приложением, бонусами "Спасибо" и т.п.','SberPay/SberBank/Спасибо','');
+INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',17,'SberBank','SberPay','SberPay.png','Для владельцев карт Сбербанка и мобильного приложения Сбербанк Онлайн','SberPay/SberBank/Спасибо','');
 
