@@ -74,7 +74,7 @@ foreach($BankInvoices as $BankInvoice){
 	Debug(SPrintF('[comp/Tasks/DBO]: [%s]: ищем счёт на сумму (%s)',$BankInvoice['Key'],$BankInvoice['Summ']));
 	#-------------------------------------------------------------------------------
 	// разбираем примечание
-	$Words = Explode(" ",Str_Replace("\n"," ",$BankInvoice['Purpose']));
+	$Words = Explode(" ",Str_Replace(Array("\n",';','.')," ",$BankInvoice['Purpose']));
 	#-------------------------------------------------------------------------------
 	// перебираем по словам
 	foreach($Words as $Word){
