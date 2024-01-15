@@ -24,6 +24,10 @@ if(!$DomainOrderID)
 	return new gException('DOMAIN_ORDER_NOT_SET','Домен не задан');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+if(!$ProfileID)
+	return new gException('PROFILE_NOT_SET','Профиль не задан');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainOrdersOwners',Array('ID','UserID','SchemeID','StatusID','DomainName','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`'),Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
