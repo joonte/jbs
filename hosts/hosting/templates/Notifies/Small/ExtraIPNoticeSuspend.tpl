@@ -3,5 +3,5 @@
  *  Copyright © 2015 Alex Keda, for www.host-food.ru
  *}
 
-Оканчивается заказ выделенного IP адреса {$ExtraIPOrder.Login|default:'$ExtraIPOrder.Login'}; до окончания заказа {$ExtraIPOrder.DaysRemainded|default:'$ExtraIPOrder.DaysRemainded'} дн.
+Оканчивается выделенный IP адрес {$ExtraIPOrder.Login|default:'$ExtraIPOrder.Login'}; осталось {$ExtraIPOrder.DaysRemainded|default:'$ExtraIPOrder.DaysRemainded'} дн.
 
