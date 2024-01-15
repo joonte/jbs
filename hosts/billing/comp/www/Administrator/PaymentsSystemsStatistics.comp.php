@@ -53,7 +53,7 @@ $DOM->AddChild('Into',$Comp);
 # выбираем максимальную и минимальную даты из таблицы платежей
 # это будет начало и конец периода по которому будем отображать статистику
 $Columns = Array('MIN(`StatusDate`) AS `DateFirst`','MAX(`StatusDate`) AS `DateLast`');
-$Where = Array("`StatusID` = 'Payed'");
+$Where = Array("`StatusID` IN ('Payed','NotConfirmed')");
 #-------------------------------------------------------------------------------
 if(!$Details)
 	$Where[] = SPrintF('`StatusDate` > %u', MkTime (0,0,0,1,1,Date("Y")));
@@ -109,7 +109,7 @@ for ($day = Date('d',time()) - 7; $day <= Date('d',time()); $day++){
 	# SQL
 	$Columns = Array('SUM(`Summ`) AS `Summ`');
 	#-------------------------------------------------------------------------------
-	$Where = Array("`StatusID` = 'Payed'",SprintF('`StatusDate` BETWEEN %s AND %s',$TimeBegin,$TimeEnd));
+	$Where = Array("`StatusID` IN ('Payed','NotConfirmed')",SprintF('`StatusDate` BETWEEN %s AND %s',$TimeBegin,$TimeEnd));
 	#$Where = "`StatusID` = 'Payed' AND `StatusDate` BETWEEN $TimeBegin AND $TimeEnd";
 	#-------------------------------------------------------------------------------
 	$Total = DB_Select('Invoices',$Columns,Array('UNIQ', 'Where'=>$Where));
@@ -170,7 +170,7 @@ for ($Year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $Yea
 		# выбираем типы платёжных систем по которым были платежи в указанный период времени
 		$Columns = Array('DISTINCT(`PaymentSystemID`) AS `PaymentSystemID`','SUM(`Summ`) AS `Summ`');
 		#-------------------------------------------------------------------------------
-		$Where = "`StatusID` = 'Payed' AND `StatusDate` BETWEEN $TimeBegin AND $TimeEnd";
+		$Where = "`StatusID` IN ('Payed','NotConfirmed') AND `StatusDate` BETWEEN $TimeBegin AND $TimeEnd";
 		#-------------------------------------------------------------------------------
 		$PaymentSystems = DB_Select('Invoices',$Columns,Array('Where'=>$Where,'SortOn'=>'Summ','IsDesc'=>TRUE,'GroupBy'=>'PaymentSystemID'));
 		#-------------------------------------------------------------------------------
@@ -243,13 +243,18 @@ for ($Year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $Yea
 			$CacheID1 = Md5( $__FILE__ . $Year . $Month);
 			#-------------------------------------------------------------------------------
 			$Result = CacheManager::get($CacheID1);
+			#-------------------------------------------------------------------------------
 			if($Result && $Year != Date('Y', Time()) && $Month != Date('m', Time())){
+				#-------------------------------------------------------------------------------
 				$Table[] = $Result;
+				#-------------------------------------------------------------------------------
 			}else{
+				#-------------------------------------------------------------------------------
 				Debug("[comp/www/Administrator/PaymentsSystemsStatistics]: period is $Year $Month");
-				$TimeBegin = MkTime(0, 0, 0, $Month, 1, $Year);
+				#-------------------------------------------------------------------------------
+				$TimeBegin	= MkTime(0, 0, 0, $Month, 1, $Year);
 				$LastDayOfMonth = date('d', mktime(0, 0, 0, $Month + 1, 0, $Year));
-				$TimeEnd   = MkTime(23, 59, 59, $Month, $LastDayOfMonth, $Year);
+				$TimeEnd	= MkTime(23, 59, 59, $Month, $LastDayOfMonth, $Year);
 				#-------------------------------------------------------------------------------
 				$Tr = new Tag('TR');
 				#-------------------------------------------------------------------------------
@@ -258,7 +263,7 @@ for ($Year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $Yea
 				#-------------------------------------------------------------------------------
 				# ячейка с общей суммой за месяц
 				$Columns = Array('SUM(`Summ`) AS `Summ`');
-				$Where = "`StatusID` = 'Payed' AND `StatusDate` BETWEEN $TimeBegin AND $TimeEnd";
+				$Where = "`StatusID` IN ('Payed','NotConfirmed') AND `StatusDate` BETWEEN $TimeBegin AND $TimeEnd";
 			        $Total = DB_Select('Invoices',$Columns,Array('UNIQ', 'Where'=>$Where));
 				switch(ValueOf($Total)){
 				case 'error':
@@ -277,10 +282,15 @@ for ($Year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $Yea
 				# ячейка со средним за месяц
 				# если это текущий год и текущий месяц - то расчёт будет иным
 				if(Date('Y', Time()) == $Year && Date('m', Time()) == $Month){
+					#-------------------------------------------------------------------------------
 					$AvgVal = Round((FloatVal($Total['Summ']) / Date('d', Time())),2);
+					#-------------------------------------------------------------------------------
 				}else{
+					#-------------------------------------------------------------------------------
 					$AvgVal = Round((FloatVal($Total['Summ']) / $LastDayOfMonth),2);
+					#-------------------------------------------------------------------------------
 				}
+				#-------------------------------------------------------------------------------
 				$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard','style'=>'background-color:#B9CCDF;'),Number_Format($AvgVal,2,'.',' ')));
 				#-------------------------------------------------------------------------------
 				# перебираем все платёжные системы, считаем для них суммы
@@ -288,7 +298,7 @@ for ($Year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $Yea
 					#-------------------------------------------------------------------------------
 					$Columns = Array('SUM(`Summ`) AS `Summ`');
 					#-------------------------------------------------------------------------------
-					$Where = "`StatusID` = 'Payed' AND `PaymentSystemID` = '" . $PaymentSystem['PaymentSystemID'] . "' AND `StatusDate` BETWEEN $TimeBegin AND $TimeEnd";
+					$Where = "`StatusID` IN ('Payed','NotConfirmed') AND `PaymentSystemID` = '" . $PaymentSystem['PaymentSystemID'] . "' AND `StatusDate` BETWEEN $TimeBegin AND $TimeEnd";
 					#-------------------------------------------------------------------------------
 					$Summ = DB_Select('Invoices',$Columns,Array('UNIQ', 'Where'=>$Where));
 					#-------------------------------------------------------------------------------
@@ -305,18 +315,23 @@ for ($Year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $Yea
 					}
 					#-------------------------------------------------------------------------------
 					$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard'),Number_Format($Summ['Summ'],2,'.',' ')));
+					#-------------------------------------------------------------------------------
 				}
 				#-------------------------------------------------------------------------------
 				# если общая сумма больше нуля - добавляем строку - иначе - смысла нет
 				if(IntVal($Total['Summ']) > 0){
+					#-------------------------------------------------------------------------------
 					#$Table[] = $TableLine;
 					$Table[] = $Tr;
+					#-------------------------------------------------------------------------------
 					CacheManager::add($CacheID1, $Tr, 24 * 3600);
+					#-------------------------------------------------------------------------------
 				}
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
 		}
+		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		# полная статистика за год
 		$Tr = new Tag('TR');
@@ -329,7 +344,8 @@ for ($Year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $Yea
 		#-------------------------------------------------------------------------------
 		# ячейка с общей суммой за месяц
 		$Columns = Array('SUM(`Summ`) AS `Summ`');
-		$Where = "`StatusID` = 'Payed' AND `StatusDate` BETWEEN $TimeBegin AND $TimeEnd";
+		#-------------------------------------------------------------------------------
+		$Where = "`StatusID` IN ('Payed','NotConfirmed') AND `StatusDate` BETWEEN $TimeBegin AND $TimeEnd";
 		$Total = DB_Select('Invoices',$Columns,Array('UNIQ', 'Where'=>$Where));
 		switch(ValueOf($Total)){
 		case 'error':
@@ -342,22 +358,36 @@ for ($Year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $Yea
 		default:
 			return ERROR | @Trigger_Error(101);
 		}
+		#-------------------------------------------------------------------------------
 		$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard','style'=>'background-color:#FDF6D3;'),new Tag('NOBR',Number_Format($Total['Summ'],2,'.',' '))));
 		#-------------------------------------------------------------------------------
 		# ячейка со средним за год
 		# если это текущий год - то расчёт будет иным
 		if(Date('Y', Time()) == $Year){
+			#-------------------------------------------------------------------------------
 			$AvgVal = Round((FloatVal($Total['Summ']) / (Date('z', Time()) + 1)),2);
+			#-------------------------------------------------------------------------------
 		}else{
+			#-------------------------------------------------------------------------------
 			$AvgVal = Round((FloatVal($Total['Summ']) / (Date('z', $TimeEnd) + 1)),2);
+			#-------------------------------------------------------------------------------
 		}
+		#-------------------------------------------------------------------------------
 		$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard','style'=>'background-color:#B9CCDF;'),new Tag('NOBR',Number_Format($AvgVal,2,'.',' '))));
 		#-------------------------------------------------------------------------------
 		# перебираем все платёжные системы, считаем для них суммы
 		foreach($PaymentSystems as $PaymentSystem){
+			#-------------------------------------------------------------------------------
 			$Columns = Array('SUM(`Summ`) AS `Summ`');
-			$Where = "`StatusID` = 'Payed' AND `PaymentSystemID` = '" . $PaymentSystem['PaymentSystemID'] . "' AND `StatusDate` BETWEEN $TimeBegin AND $TimeEnd";
+			#-------------------------------------------------------------------------------
+			$Where = Array(
+					"`StatusID` IN ('Payed','NotConfirmed')",
+					SPrintF("`PaymentSystemID` = '%s'",$PaymentSystem['PaymentSystemID']),
+					SPrintF('`StatusDate` BETWEEN %u AND %u',$TimeBegin,$TimeEnd)
+					);
+			#-------------------------------------------------------------------------------
 			$Summ = DB_Select('Invoices',$Columns,Array('UNIQ', 'Where'=>$Where));
+			#-------------------------------------------------------------------------------
 			switch(ValueOf($Total)){
 			case 'error':
 				return ERROR | @Trigger_Error(500);
@@ -371,6 +401,7 @@ for ($Year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $Yea
 			}
 			#-------------------------------------------------------------------------------
 			$Tr->AddChild(new Tag('TD',Array('align'=>'right','class'=>'Standard'),new Tag('NOBR',Number_Format($Summ['Summ'],2,'.',' '))));
+			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
 		# добавляем строку в таблицу
@@ -384,6 +415,7 @@ for ($Year = date('Y',$Dates['DateLast']); date('Y',$Dates['DateFirst']) <= $Yea
 		CacheManager::add($CacheID, $Comp, 24 * 3600);       # cache it to 1 day
 		#-------------------------------------------------------------------------------
 		$DOM->AddChild('Into',$Comp);
+		#-------------------------------------------------------------------------------
 	}
 }
 #-------------------------------------------------------------------------------

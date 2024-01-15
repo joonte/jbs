@@ -11,7 +11,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Where = Array(
 		"`StatusID` = 'Waiting'",
-		SPrintF('`StatusDate` BETWEEN (UNIX_TIMESTAMP() - (%d+1)*86400) AND (UNIX_TIMESTAMP() - %d*86400)',$Params['Invoices']['DaysBeforeNotice'],$Params['Invoices']['DaysBeforeNotice'])
+		'ROUND((UNIX_TIMESTAMP() - `StatusDate`)/86400) IN (1,2,3,6,11,16,21,31,41,51,61,71,101,150,200,250,300,350,362,363,364,365,366)'	/* уведомляем в начале часто и в конце */
 		);
 #-------------------------------------------------------------------------------
 $Invoices = DB_Select('InvoicesOwners',Array('*'),Array('SortOn'=>'CreateDate','IsDesc'=>TRUE,'Where'=>$Where));
