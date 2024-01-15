@@ -860,9 +860,9 @@
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</club>
 	<pro>
-		<Server>pro.whois-servers.net</Server>
+		<Server>whois.nic.pro</Server>
 		<Name>pro</Name>
-		<Available>NOT\sFOUND|Domain\snot\sfound</Available>
+		<Available>NOT\sFOUND|Domain\snot\sfound|DOMAIN\sNOT\sFOUND</Available>
 		<NotAvailable>Governmental\sReserved\sName</NotAvailable>
 		<MinChars>3</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
