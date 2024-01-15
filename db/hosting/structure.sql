@@ -58,7 +58,7 @@ DROP TABLE IF EXISTS `DomainOrders`;
 CREATE TABLE `DomainOrders` (
   `ID` int(11) NOT NULL auto_increment,
   `OrderID` int(11) NOT NULL,
-  `DomainName` char(50) default '',
+  `DomainName` char(50) COLLATE utf8_bin default '',	-- чтобы различало е/ё
   `SchemeID` int(11) NOT NULL,
   `ProfileID` int(11) default NULL,
   `PersonID` char(50) default '',
