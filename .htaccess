@@ -29,7 +29,7 @@ RedirectMatch	/([a-zA-Z]*)Orders/([0-9]*)/$			/$1Orders?OrderID=$2
 RedirectMatch	/([a-zA-Z]*)Orders/([0-9]*)/(SchemeChange)/$	/$1Orders?OrderID=$2&SchemeChange=1
 
 RewriteCond %{REQUEST_URI} (.*)
-RewriteRule (install|public|styles|index.php) - [L]
+RewriteRule ^(install|public|styles|v2|index.php) - [L]
 #RewriteCond %{HTTPS} !=on
 #RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
 RewriteRule (.*) /index.php
