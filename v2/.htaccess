@@ -1,0 +1,8 @@
+#
+RewriteEngine On
+RewriteBase /v2
+RewriteRule ^v2/index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /v2/index.html [L]
+
