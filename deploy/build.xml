@@ -30,6 +30,8 @@
         <include name="HostsIDs.txt" />
 	<include name=".htaccess" />
         <include name="hosts/.htaccess" />
+	<include name="v2/**" />
+	<include name="v2/.htaccess" />
         <include name="index.php" />
     </patternset>
 
