@@ -1,1 +1,0 @@
-import{a1 as n,a2 as r,a3 as l}from"./index-1c309346.js";const i=n("files",()=>{async function o(s){const e=new FormData;e.append("Upload",s);let t=null;return await r.post(""+l.uploadFile,e,{headers:{"Content-Type":"multipart/form-data"}}).then(a=>{t=a.data}).catch(a=>{console.log(a)}),t}return{sendFile:o}});export{i as u};
