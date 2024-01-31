@@ -11,15 +11,19 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-$DomainOrderID = (integer) @$Args['DomainOrderID'];
-$ProfileID     = (integer) @$Args['ProfileID'];
-$StepID        = (integer) @$Args['StepID'];
-$OwnerTypeID   =  (string) @$Args['OwnerTypeID'];
+$DomainOrderID	= (integer) @$Args['DomainOrderID'];
+$OrderID	= (integer) @$Args['OrderID'];
+$ProfileID	= (integer) @$Args['ProfileID'];
+$StepID		= (integer) @$Args['StepID'];
+$OwnerTypeID	=  (string) @$Args['OwnerTypeID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$DomainOrder = DB_Select('DomainOrdersOwners',Array('ID','UserID','SchemeID','StatusID'),Array('UNIQ','ID'=>$DomainOrderID));
+#-------------------------------------------------------------------------------
+$Where = ($DomainOrderID?SPrintF('`ID` = %u',$DomainOrderID):SPrintF('`OrderID` = %u',$OrderID));
+#-------------------------------------------------------------------------------
+$DomainOrder = DB_Select('DomainOrdersOwners',Array('ID','UserID','SchemeID','StatusID'),Array('UNIQ','Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrder)){
 case 'error':
