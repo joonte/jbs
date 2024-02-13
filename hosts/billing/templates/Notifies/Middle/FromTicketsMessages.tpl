@@ -9,5 +9,5 @@
 
 Для просмотра истории запроса или нового ответа, пройдите по ссылке:
 
-{$smarty.const.URL_SCHEME|default:'URL_SCHEME'}://{$smarty.const.HOST_ID|default:'HOST_ID'}/Tickets?TicketID={$TicketID|default:'$TicketID'}
+{$smarty.const.URL_SCHEME|default:'URL_SCHEME'}://{$smarty.const.HOST_ID|default:'HOST_ID'}/v2/Ticket/{$TicketID|default:'$TicketID'}
 
