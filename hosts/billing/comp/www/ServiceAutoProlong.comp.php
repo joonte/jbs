@@ -138,12 +138,12 @@ if(Is_Error($Comp))
 $Form = new Tag('FORM',Array('method'=>'POST','name'=>'OrderConsiderInfoForm'),$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Params = Array('type'=>'hidden','name'=>'IsAutoProlong','value'=>$Order['IsAutoProlong']?'0':'1');
-$Comp = Comp_Load('Form/Input',$Params);
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
+#$Params = Array('type'=>'hidden','name'=>'IsAutoProlong','value'=>$Order['IsAutoProlong']?'0':'1');
+#$Comp = Comp_Load('Form/Input',$Params);
+#if(Is_Error($Comp))
+#	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Form->AddChild($Comp);
+#$Form->AddChild($Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load(
