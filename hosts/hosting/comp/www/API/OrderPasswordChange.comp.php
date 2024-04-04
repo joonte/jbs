@@ -108,9 +108,11 @@ default:
 #-------------------------------------------------------------------------------
 $PasswordChange = $ClassServer->PasswordChange($Order['Login'],$Password,Array('Email'=>$Order['Email']));
 #-------------------------------------------------------------------------------
+//Debug('PasswordChange = ' . print_r($PasswordChange,true));
+//Debug('PasswordChange->String = ' . $PasswordChange->String);
 switch(ValueOf($PasswordChange)){
 case 'error':
-	return new gException('SERVER_QUERY_ERROR','Ошибка запроса на сервер');
+	return new gException('SERVER_QUERY_ERROR','Ошибка запроса на сервер',$PasswordChange);
 case 'exception':
 	return new gException('PASSWORD_CHANGE_ERROR','Ошибка смены пароля',$PasswordChange);
 case 'true':

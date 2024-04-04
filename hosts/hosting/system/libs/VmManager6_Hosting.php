@@ -570,10 +570,26 @@ function VmManager6_Hosting_Password_Change($Settings,$Login,$Password,$Params){
 		#-------------------------------------------------------------------------------
 		$Doc = VmManager6_Hosting_Request($Settings,Array('password'=>$Password));
 		#-------------------------------------------------------------------------------
+		//Debug('after pass change Doc = ' . print_r($Doc,true));
+		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	return TRUE;
+	#{"id":300,"task":12109}
+	# {"error":{"code":5992,"msg":"Qemu guest agent is not available on host"}}
+	//Debug('VmManager6_Hosting_Password_Change, Doc = ' . print_r($Doc,true));
+	switch(ValueOf($Doc)){
+	case 'error':
+		return new gException('PASSWORD_CHANGE_ERROR',$Doc->String);
+	case 'exception':
+		return new gException('PASSWORD_CHANGE_EXCEPTIONS',$Doc->String);
+	case 'true':
+		return TRUE;
+	case 'array':
+		return TRUE;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 }
@@ -1297,8 +1313,10 @@ function VmManager6_Hosting_Request($Settings,$Request = Array(),$Name = FALSE){
 		return new gException('WRONG_SERVER_ANSWER',$Response,$Doc);
 	#-------------------------------------------------------------------------------
 	// если ошибка - падаем. может потом отключить придётся, посмотрим
+	//Debug(var_export($Settings, true));
+	//Debug('BEFORE ERROR_IN_SERVER_ANSWER');
 	if(IsSet($Doc['error']))
-		return new gException('ERROR_IN_SERVER_ANSWER',$Response,$Doc);
+		return new gException('ERROR_IN_SERVER_ANSWER',$Doc['error']['msg']);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return $Doc;
