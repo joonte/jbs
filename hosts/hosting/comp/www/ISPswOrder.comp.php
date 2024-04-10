@@ -16,7 +16,7 @@ $DependOrderID	= (integer) @$Args['DependOrderID'];	# номер заказа к
 $IP		=  (string) @$Args['IP'];		# IP адрес на который заказывается внешняя лицензия
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $__USER = $GLOBALS['__USER'];
