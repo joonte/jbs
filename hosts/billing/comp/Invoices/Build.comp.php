@@ -177,7 +177,9 @@ case 'array':
 			$QRText = SPrintF('%s|%s',$QRText,($Key)?SPrintF('%s=%s',$Key,$QR[$Key]):$QR[$Key]);
 		#-------------------------------------------------------------------------------
 		// делаем ссылку
-		$QRLink = SPrintF('https://chart.googleapis.com/chart?cht=qr&chs=250x250&chld=M|0&chl=%s',UrlEncode($QRText));
+		//$QRLink = SPrintF('https://chart.googleapis.com/chart?cht=qr&chs=250x250&chld=M|0&chl=%s',UrlEncode($QRText));
+		//$QRLink = SPrintF('https://quickchart.io/qr?size=250x250&ecLevel=H&text=%s&centerImageUrl=%s',UrlEncode($QRText),UrlEncode(SPrintF('https://%s/styles/%s/Images/Icon.png',HOST_ID,HOST_ID)));
+		$QRLink = SPrintF('https://quickchart.io/qr?size=250x250&ecLevel=L&text=%s',UrlEncode($QRText));
 		//Debug(SPrintF('[comp/Invoices/Build]: QR: %s',$QRLink));
 		#-------------------------------------------------------------------------------
 	}
