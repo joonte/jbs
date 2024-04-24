@@ -12,7 +12,8 @@ $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 $Partition	= (string) @$Args['Partition'];
 #-------------------------------------------------------------------------------
-if($Partition != '/Contacts')
+// договора без авторизации показываем
+if($Partition != '/Contacts' || $Partition != '/Content')
 	if(Is_Error(System_Load('modules/Authorisation.mod')))
 		return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -42,7 +43,7 @@ foreach($Clauses as $Clause){
 	if($Partition){
 		#-------------------------------------------------------------------------------
 		// задана конкретная статья
-		if($Clause['Partition'] == Trim($Partition))
+		if($Clause['Partition'] == Trim($Partition) || SubStr_Count($Clause['Partition'],Trim($Partition)))
 			$Out[$Clause['ID']] = $Clause;
 		#-------------------------------------------------------------------------------
 	}else{
