@@ -21,6 +21,17 @@ $Config = Config();
 $Exclude = Array_Keys($Config['APIv2ExcludeColumns']);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Names = Array(
+		'CPU'		=> 'Процессор',
+		'ram'		=> 'Память',
+		'raid'		=> 'RAID',
+		'disks'		=> 'Диски',
+		'chrate'	=> 'Полоса',
+		'OS'		=> 'Операционная система',
+		'trafflimit'	=> 'Трафик',
+		);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Out = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -40,6 +51,8 @@ $Columns = Array(
 		'(SELECT `ram` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `ram`',
 		'(SELECT `raid` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `raid`',
 		'(SELECT `disks` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `disks`',
+		'(SELECT `chrate` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `chrate`',
+		'(SELECT `trafflimit` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `trafflimit`',
 		'(SELECT `Name` FROM `ServersGroups` WHERE `ServersGroups`.`ID` = (SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` =  (SELECT `ServerID` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`))) as `ServersGroupName`',
 		'(SELECT `IsAutoProlong` FROM `Orders` WHERE `DSOrdersOwners`.`OrderID`=`Orders`.`ID`) AS `IsAutoProlong`',
 		'(SELECT `UserNotice` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DSOrdersOwners`.`OrderID`) AS `UserNotice`',
@@ -47,8 +60,6 @@ $Columns = Array(
 		'(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `DSOrdersOwners`.`ContractID`) AS `Customer`',
 		'(SELECT (SELECT `Code` FROM `Services` WHERE `Orders`.`ServiceID` = `Services`.`ID`) FROM `Orders` WHERE `DSOrdersOwners`.`OrderID` = `Orders`.`ID`) AS `Code`'
 		);
-
-
 #-------------------------------------------------------------------------------
 $DSOrders = DB_Select('DSOrdersOwners',$Columns,Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
@@ -84,6 +95,8 @@ foreach($DSOrders as $DSOrder){
 	}
 	#-------------------------------------------------------------------------------
 	$DSOrder['ExtraIP'] = ($DSOrder['ExtraIP'])?Explode("\n",$DSOrder['ExtraIP']):Array();
+	#-------------------------------------------------------------------------------
+	$DSOrder['Names'] = $Names;
 	#-------------------------------------------------------------------------------
 	$Out[$DSOrder['ID']] = $DSOrder;
 	#-------------------------------------------------------------------------------
