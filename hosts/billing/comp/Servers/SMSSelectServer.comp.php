@@ -73,6 +73,8 @@ if(SizeOf($ServersSettings) > 1 && $MobileCountry == 'PriceRu'){
 }
 #-------------------------------------------------------------------------------
 // находим максимальный ценник
+$Price = 0;
+#-------------------------------------------------------------------------------
 foreach($ServersSettings as $ServerKey => $Key){
 	#-------------------------------------------------------------------------------
 	if($ServersSettings[$ServerKey]['Params'][$MobileCountry] >= $Price){
@@ -115,7 +117,7 @@ foreach($ServersSettings as $ServerKey => $Key){
 #-------------------------------------------------------------------------------
 $ServerSettings = $ServersSettings[$Server];
 #-------------------------------------------------------------------------------
-CacheManager::add($CacheID,$ServerSettings['Address'],3600);
+CacheManager::add($CacheID,$ServerSettings['Address'],12*60*60);	/* на 12 часов запоминаем */
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/Servers/SMSSelectServer]: для (%s) выбран сервер (%s) для страны (%s), цена (%s)',$Mobile,$ServerSettings['Address'],$MobileCountry,$ServerSettings['Params'][$MobileCountry]));
 #-------------------------------------------------------------------------------
