@@ -43,8 +43,8 @@ $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
 $Send['description'] .= SPrintF('%s, %s (%s)',$Comp,Translit($__USER['Name']),$__USER['Email']);
 #-------------------------------------------------------------------------------
-$Send['returnUrl']	= SPrintF('%s://%s/Invoices',URL_SCHEME,HOST_ID);
-$Send['failUrl']	= SPrintF('%s://%s/Invoices?Error=yes',URL_SCHEME,HOST_ID);
+$Send['returnUrl']	= SPrintF('%s://%s/v2/Invoices',URL_SCHEME,HOST_ID);
+$Send['failUrl']	= SPrintF('%s://%s/v2/Invoices?Error=yes',URL_SCHEME,HOST_ID);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # а ещё в люобй форме есть CSRF

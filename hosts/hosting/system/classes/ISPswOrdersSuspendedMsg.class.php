@@ -27,11 +27,11 @@ class ISPswOrdersSuspendedMsg extends Message {
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// ссылка на продление заказа
-		$this->params['ProlongLink'] = SPrintF('%s://%s/ISPswOrders/%u/',URL_SCHEME,HOST_ID,$this->params['OrderID']);
+		$this->params['ProlongLink'] = SPrintF('%s://%s/v2/ISPswOrderPay/%u/',URL_SCHEME,HOST_ID,$this->params['OrderID']);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// ссылка на смену тарифа
-		$this->params['SchemeChangeLink'] = SPrintF('%s://%s/ISPswOrders/%u/SchemeChange/',URL_SCHEME,HOST_ID,$this->params['OrderID']);
+		$this->params['SchemeChangeLink'] = SPrintF('%s://%s/v2/ISPswOrders/%u/SchemeChange/',URL_SCHEME,HOST_ID,$this->params['OrderID']);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		return $this->params;

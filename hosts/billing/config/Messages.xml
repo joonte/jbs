@@ -39,5 +39,8 @@
 			<Completed>Учётная запись успешно авторизована/добавлена/обновлена</Completed>
 			<OAuthAllowForAdmin>Этот вид авторизации запрещён для администраторов</OAuthAllowForAdmin>
 		</OAuth>
+		<Invoices>
+			<Payment>В ходе оплаты счёта произошла ошибка</Payment>
+		</Invoices>
 	</Errors>
 </XML>

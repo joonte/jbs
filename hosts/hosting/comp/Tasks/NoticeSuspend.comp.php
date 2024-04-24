@@ -107,13 +107,15 @@ foreach($Services as $Service){
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// ссылка на продление заказа
-		$Order['ProlongLink'] = SPrintF('%s://%s/%sOrders/%u/',URL_SCHEME,HOST_ID,$Service['Code'],$Order['OrderID']);
+		$Order['ProlongLink'] = SPrintF('%s://%s/v2/%sOrderPay/%u/',URL_SCHEME,HOST_ID,$Service['Code'],$Order['OrderID']);
 		#-------------------------------------------------------------------------------
 		// ссылка на смену тарифа
-		$Order['SchemeChangeLink'] = SPrintF('%s://%s/%sOrders/%u/SchemeChange/',URL_SCHEME,HOST_ID,$Service['Code'],$Order['OrderID']);
+		$Order['SchemeChangeLink'] = SPrintF('%s://%s/v2/%sOrders/%u/SchemeChange/',URL_SCHEME,HOST_ID,$Service['Code'],$Order['OrderID']);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		$msg = new Message(SPrintF('%sNoticeSuspend',$Service['Code']),(integer)$Order['UserID'],Array(SPrintF('%sOrder',$Service['Code'])=>$Order));
+		// TODO по уму, надо доставать список статусов услуги. если нет Suspend - то слать Delete.
+		// но, у нас пока одна такая услуга, без блокировки. так что хардкодим
+		$msg = new Message(SPrintF('%s%s',$Service['Code'],($Service['Code'] != 'ExtraIP')?'NoticeSuspend':'NoticeDelete'),(integer)$Order['UserID'],Array(SPrintF('%sOrder',$Service['Code'])=>$Order));
 		#-------------------------------------------------------------------------------
 		$IsSend = NotificationManager::sendMsg($msg);
 		#-------------------------------------------------------------------------------

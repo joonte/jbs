@@ -10,7 +10,7 @@
 {$Items|default:'$Items'}
 
 Если вас не устраивают способы оплаты выписанных счетов, то их можно изменить кликнув на иконку "Изменить счёт", в разделе счетов на оплату биллинговой панели:
-{$smarty.const.URL_SCHEME|default:'URL_SCHEME'}://{$smarty.const.HOST_ID|default:'HOST_ID'}/Invoices
+{$smarty.const.URL_SCHEME|default:'URL_SCHEME'}://{$smarty.const.HOST_ID|default:'HOST_ID'}/v2/Invoices
 
 Отключить автоматическую выписку счетов, или, сменить метод оплаты для автоматически создаваемых счетов вы можете в биллинговой панели, раздел:
 "Настройки" -> "Мои настройки"

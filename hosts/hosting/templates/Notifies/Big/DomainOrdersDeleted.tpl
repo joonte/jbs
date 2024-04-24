@@ -9,7 +9,7 @@
 
 Если этот заказ вам всё ещё необходим, рекомендуем немедленно зарегистрировать домен заново - возможно его ещё не заняли.
 Для регистрации домена, воспользуйтесь этой ссылкой:
-{$smarty.const.URL_SCHEME|default:'URL_SCHEME'}://{$smarty.const.HOST_ID|default:'HOST_ID'}/DomainWhoIs?DomainName={$DomainName|default:'$DomainName'}.{$Name|default:'$Name'}
+{$smarty.const.URL_SCHEME|default:'URL_SCHEME'}://{$smarty.const.HOST_ID|default:'HOST_ID'}/v2/DomainSchemes?DomainName={$DomainName|default:'$DomainName'}.{$Name|default:'$Name'}
 
 ---
 Обращаем Ваше внимание, что последнее время участились факты фишинговых рассылок с предложением продлить домен, иначе он будет удалён/продан/заблокирован - на что хватает фантазии у создателей рассыки.
