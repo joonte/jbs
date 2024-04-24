@@ -63,7 +63,7 @@
 		<Available>No\sentries\sfound</Available>
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>2</MinChars>
-		<Regular>/^[0-9а-я]([0-9а-я\-]*[0-9а-я])*$/ui</Regular>
+		<Regular>/^[0-9а-яё]([0-9а-яё\-]*[0-9а-яё])*$/ui</Regular>
 		<ExpirationDate>paid-till:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
 		<NsName>nserver:\s+([a-z0-9\.\-]{2,})</NsName>
 		<Registrar>registrar:\s+([\w\-]{2,})</Registrar>
