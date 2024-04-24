@@ -173,7 +173,17 @@ if(Is_Error($Comp2))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('Buttons/Panel',Array('Comp'=>$Comp1,'Name'=>'Скачать счёт в формате PDF'),Array('Comp'=>$Comp2,'Name'=>'Скачать счёт в формате TIFF'));
+$PDF = Array(
+		'Comp'	=> $Comp1,
+		'Name'	=> new Tag('A',Array('onclick'=>SPrintF("document.location = '/InvoiceDownload?InvoiceID=%u&IsStamp=yes';return FALSE;",$Invoice['ID'])),'Скачать счёт в формате PDF'),
+		);
+#-------------------------------------------------------------------------------
+$TIFF = Array(
+		'Comp'	=> $Comp2,
+		'Name'	=> new Tag('A',Array('onclick'=>SPrintF("document.location = '/InvoiceDownload?InvoiceID=%u&IsTIFF=yes&IsStamp=yes';return FALSE;",$Invoice['ID'])),'Скачать счёт в формате TIFF'),
+		);
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Buttons/Panel',$PDF,$TIFF);
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
