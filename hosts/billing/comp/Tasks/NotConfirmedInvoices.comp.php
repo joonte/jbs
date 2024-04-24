@@ -28,7 +28,7 @@ case 'exception':
 	return $ExecuteTime;
 case 'array':
 	#-------------------------------------------------------------------------------
-	$GLOBALS['TaskReturnInfo'] = Array('Confirmed'=>Array(),'NotConfirmed'=>Array(0=>0));
+	$GLOBALS['TaskReturnInfo'] = Array('Confirmed'=>Array(0=>0),'NotConfirmed'=>Array(0=>0));
 	#-------------------------------------------------------------------------------
 	foreach($Invoices as $Invoice){
 		#-----------------------------------------------------------------------------
