@@ -15,6 +15,11 @@ $NewSchemeID		= (integer) @$Args['NewSchemeID'];
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(!$NewSchemeID)
+	return new gException('NO_NEW_SCHEME','Не указан новый тариф');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Columns = Array('ID','UserID','SchemeID','StatusDate','(SELECT `ServersGroupID` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`)) AS `ServersGroupID`','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`)) AS `Params`','StatusID');
 #-------------------------------------------------------------------------------
 $DNSmanagerOrder = DB_Select('DNSmanagerOrdersOwners',$Columns,Array('UNIQ','ID'=>$DNSmanagerOrderID));

@@ -161,8 +161,8 @@ if(!$VPSScheme['Node'])
 Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: VmInfo = %s',print_r($VmInfo,true)));
 if(IsSet($VmInfo['node']) && !In_Array($VmInfo['node']['name'],Explode(',',$VPSNewScheme['Node']))){
 	#-------------------------------------------------------------------------------
-	#Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: VmInfo[node]['name'] = %s',$VmInfo['node']['name']));
-	#Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: $VPSNewScheme[Node] = %s',$VPSNewScheme['Node']));
+	Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: VmInfo[node][name] = %s',$VmInfo['node']['name']));
+	Debug(SPrintF('[comp/Tasks/VPSSchemeChange]: $VPSNewScheme[Node] = %s',$VPSNewScheme['Node']));
 	#-------------------------------------------------------------------------------
 	// несовпадаение узлов, выбираем первый узел из массива $Nodes (он с наименьшей загрузкой) совпадающий с узлами куда можно мигрировать
 	foreach($NodeList as $Node){

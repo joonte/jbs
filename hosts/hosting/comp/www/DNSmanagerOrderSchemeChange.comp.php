@@ -47,7 +47,7 @@ case 'array':
 		if(!In_Array($DNSmanagerOrder['StatusID'],Array('Active','Suspended')))
 			return new gException('ORDER_NOT_ACTIVE','Тариф можно изменить только для активного или заблокированного заказа');
 		#-------------------------------------------------------------------------------
-		$OldScheme = DB_Select('DNSmanagerSchemes',Array('IsSchemeChange','IsReselling'),Array('UNIQ','ID'=>$DNSmanagerOrder['SchemeID']));
+		$OldScheme = DB_Select('DNSmanagerSchemes',Array('IsSchemeChange','IsReselling','HardServerID'),Array('UNIQ','ID'=>$DNSmanagerOrder['SchemeID']));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($OldScheme)){
 		case 'error':
@@ -69,13 +69,16 @@ case 'array':
 			#-------------------------------------------------------------------------------
 			$Where = Array(
 					SPrintF("`ServersGroupID` = %u",$DNSmanagerOrder['ServersGroupID']),
-					SPrintF("`IsReselling` = '%s'",$OldScheme['IsReselling']?'yes':'no')
+					SPrintF("`IsReselling` = '%s'",$OldScheme['IsReselling']?'yes':'no'),
 					);
+			#-------------------------------------------------------------------------------
+			if($OldScheme['HardServerID'])
+				$Where[] = SPrintF("`HardServerID` = %u",$DNSmanagerOrder['ServerID']);
 			#-------------------------------------------------------------------------------
 			if(!$__USER['IsAdmin'])
 				$Where[] = "`IsActive` = 'yes' AND `IsSchemeChangeable` = 'yes'";
 			#-------------------------------------------------------------------------------
-			$DNSmanagerSchemes = DB_Select($UniqID,Array('ID','Name'),Array('SortOn'=>'SortID','Where'=>$Where));
+			$DNSmanagerSchemes = DB_Select($UniqID,Array('ID','Name','CostMonth'),Array('SortOn'=>'SortID','Where'=>$Where));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($DNSmanagerSchemes)){
 			case 'error':
