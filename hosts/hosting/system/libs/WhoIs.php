@@ -76,17 +76,17 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 		if(!$DomainZone['IsSupported'] || $DomainZone['IsUseRegistratorWhoIs']){
 			#-------------------------------------------------------------------------------
 			if(!$DomainZone['IsSupported'])
-				Debug(SPrintF('[comp/www/API/WhoIs]: доменная зона не поддерживается'));
+				Debug(SPrintF('[system/libs/WhoIs]: доменная зона не поддерживается'));
 			#-------------------------------------------------------------------------------
 			if($DomainZone['IsSupported'] && $DomainZone['IsUseRegistratorWhoIs'])
-				Debug(SPrintF('[comp/www/API/WhoIs]: принудительное использование WhoIs регистратора'));
+				Debug(SPrintF('[system/libs/WhoIs]: принудительное использование WhoIs регистратора'));
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			# чекаем доменную зону
 			$Regulars = Regulars();
 			#-------------------------------------------------------------------------------
 			if(!Preg_Match($Regulars['DomainZone'],$ZoneName))
-				return ERROR | @Trigger_Error(SPrintF('[comp/www/API/WhoIs]: неверная доменная зона (%s)',$ZoneName));
+				return ERROR | @Trigger_Error(SPrintF('[system/libs/WhoIs]: неверная доменная зона (%s)',$ZoneName));
 			#-------------------------------------------------------------------------------
 			# достаём список серверов на которых есть такой тариф
 			$Servers = DB_Select('DomainSchemes',Array('ServerID'),Array('Where'=>SPrintF('`Name` = "%s"',$ZoneName)));
@@ -141,7 +141,7 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 				# если из кэша что-то досталось и оно больше разрешённой частоты запросов - пропускаем цикл
 				if($Ratelimit && $Ratelimit >= $iServer['Params']['RatelimitAPI']){
 					#-------------------------------------------------------------------------------
-					Debug(SPrintF('[comp/www/API/WhoIs]: превышена частота запросов к серверу %s (разрешено %u, использовано %u)',$iServer['Address'],$iServer['Params']['RatelimitAPI'],$Ratelimit));
+					Debug(SPrintF('[system/libs/WhoIs]: превышена частота запросов к серверу %s (разрешено %u, использовано %u)',$iServer['Address'],$iServer['Params']['RatelimitAPI'],$Ratelimit));
 					#-------------------------------------------------------------------------------
 					continue;
 					#-------------------------------------------------------------------------------

@@ -500,7 +500,7 @@
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</ind.in>
 	<mobi>
-		<Server>whois.dotmobiregistry.net</Server>
+		<Server>whois.nic.mobi</Server>
 		<Name>mobi</Name>
 		<Available>NOT\sFOUND|Domain\snot\sfound</Available>
 		<NotAvailable>Default</NotAvailable>
