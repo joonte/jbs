@@ -84,7 +84,7 @@ $Links['DOM'] = &$DOM;
 if(Is_Error($DOM->Load('Window')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$IsPayed = ($Invoice['IsPosted'] && $Invoice['StatusID'] != 'Conditionally');
+$IsPayed = ($Invoice['IsPosted'] && $Invoice['StatusID'] != 'Conditionally') || (!$Invoice['IsPosted'] && $Invoice['StatusID'] == 'NotConfirmed');
 #-------------------------------------------------------------------------------
 // это киви, не оплачен, телефон не введён
 if($PaymentSystemID == 'QIWI' && !$IsPayed && !$Mobile){
