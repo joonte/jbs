@@ -34,7 +34,7 @@ $Result = CacheManager::get($CacheID);
 #-------------------------------------------------------------------------------
 if($Result)
 	if($Result + 2*60 > Time() && !$__USER['IsAdmin'])
-		return new gException('IPMI_RATE_TOO_HIGH','Управляющие команды нельзя подавать чаще чем раз в 2 минуты');
+		return new gException('IPMI_RATE_TOO_HIGH',SprintF('Управляющие команды нельзя подавать слишком часто, попробуйте через %s секунд',$Result + 2*60 - Time()));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $DSOrder = DB_Select('DSOrdersOwners',Array('ID','UserID','StatusID','SchemeID'),Array('UNIQ','ID'=>$DSOrderID));
