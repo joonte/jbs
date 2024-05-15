@@ -179,7 +179,7 @@ if(Is_Error($Button))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 // DIV с кнопками внешней авторизации
-$Div = Comp_Load('OAuth/Buttons',"setTimeout(function(){window.addEventListener('focus',location.href = '/Home');},2000)");
+$Div = Comp_Load('OAuth/Buttons',"setTimeout(function(){window.addEventListener('focus',location.href = '/v2/Home');},2000)");
 if(Is_Error($Div))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

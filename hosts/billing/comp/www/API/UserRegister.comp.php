@@ -301,7 +301,7 @@ if(Is_Error($Session->Save()))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return Array('Status'=>'Ok','SessionID'=>$SessionID,'User'=>$Init,'Home'=>SPrintF('/%s/Home',$Init['InterfaceID']),'ContractID'=>$ContractID,'UserID'=>$UserID,'ID'=>$UserID,'Home'=>($Eval?SPrintF('/Home?Eval=%s',$Eval):'/Home'));
+return Array('Status'=>'Ok','SessionID'=>$SessionID,'User'=>$Init,'Home'=>SPrintF('/%s/Home',$Init['InterfaceID']),'ContractID'=>$ContractID,'UserID'=>$UserID,'ID'=>$UserID,'Home'=>($Eval?SPrintF('/Home?Eval=%s',$Eval):'/v2/Home'));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 

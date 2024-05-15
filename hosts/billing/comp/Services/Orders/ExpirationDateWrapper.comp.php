@@ -58,13 +58,13 @@ default:
 #-------------------------------------------------------------------------------
 if($Code == 'Domain'){
 	#-------------------------------------------------------------------------------
-	$OnClick = ($GLOBALS['__USER']['InterfaceID'] == 'User')?SPrintF('ShowWindow("/DomainOrderPay",{OrderID:"%u"});',$ID):SPrintF('ShowWindow("/DomainOrderInfo",{OrderID:%u});',$ID);
+	$OnClick = ($GLOBALS['__USER']['InterfaceID'] != 'Administrator')?SPrintF('ShowWindow("/DomainOrderPay",{OrderID:"%u"});',$ID):SPrintF('ShowWindow("/DomainOrderInfo",{OrderID:%u});',$ID);
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load($CompName,$Order[$ColumnName],0,$OnClick);
 	#-------------------------------------------------------------------------------
 }else{
 	#-------------------------------------------------------------------------------
-	$OnClick = ($GLOBALS['__USER']['InterfaceID'] == 'User')?SPrintF('ShowWindow("/%sOrderPay",{OrderID:%u});',$Code,$ID):SPrintF('ShowWindow("/OrderConsiderInfo",{OrderID:"%u",ServiceID:"%u"});',$ID,$ServiceID);
+	$OnClick = ($GLOBALS['__USER']['InterfaceID'] != 'Administrator')?SPrintF('ShowWindow("/%sOrderPay",{OrderID:%u});',$Code,$ID):SPrintF('ShowWindow("/OrderConsiderInfo",{OrderID:"%u",ServiceID:"%u"});',$ID,$ServiceID);
 	#-------------------------------------------------------------------------------
 	$Comp = Comp_Load($CompName,$Order[$ColumnName],$OnClick);
 	#-------------------------------------------------------------------------------
