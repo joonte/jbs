@@ -24,17 +24,65 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
  *   return ERROR | @Trigger_Error(500);
  *
  * */
-
-
-$Out = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Out = $SchemesIDs = Array();
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// необходимо выбрать активные тарифы, и к ним добавить те, которые уже заказаны у юзера
+// т.е. тарифы которые неактивны но используются клиентом исторически
+$HostingOrders = DB_Select('HostingOrdersOwners',Array('SchemeID'),Array('Where'=>SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID'])));
+#-------------------------------------------------------------------------------
+switch(ValueOf($HostingOrders)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	foreach($HostingOrders as $HostingOrder)
+		if(!In_Array($HostingOrder['SchemeID'],$SchemesIDs))
+			$SchemesIDs[] = $HostingOrder['SchemeID'];
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// достаём активные для юзера тарифы
 $Where = Array(
 		'(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH))',
 		'`IsActive` = "yes"',
 		);
 #-------------------------------------------------------------------------------
-$HostingSchemes = DB_Select('HostingSchemesOwners','*',Array('Where'=>$Where,'SortOn'=>Array('SortID','PackageID')));
+$HostingSchemes = DB_Select('HostingSchemesOwners',Array('ID'),Array('Where'=>$Where));
+#-------------------------------------------------------------------------------
+switch(ValueOf($HostingSchemes)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	foreach($HostingSchemes as $HostingScheme)
+		if(!In_Array($HostingScheme['ID'],$SchemesIDs))
+			$SchemesIDs[] = $HostingScheme['ID'];
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// а нету тарифных планов....
+if(!SizeOf($SchemesIDs))
+	return $Out;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$HostingSchemes = DB_Select('HostingSchemesOwners',Array('*'),Array('Where'=>SPrintF('`ID` IN (%s)',Implode(',',$SchemesIDs)),'SortOn'=>Array('SortID','PackageID')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingSchemes)){
 case 'error':

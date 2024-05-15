@@ -15,20 +15,68 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Out = Array();
+$Out = $SchemesIDs = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// необходимо выбрать активные тарифы, и к ним добавить те, которые уже заказаны у юзера
+// т.е. тарифы которые неактивны но используются клиентом исторически
+$DSOrders = DB_Select('DSOrdersOwners',Array('SchemeID'),Array('Where'=>SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID'])));
+#-------------------------------------------------------------------------------
+switch(ValueOf($DSOrders)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	foreach($DSOrders as $DSOrder)
+		if(!In_Array($DSOrder['SchemeID'],$SchemesIDs))
+			$SchemesIDs[] = $DSOrder['SchemeID'];
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// достаём активные для юзера тарифы
 $Where = Array(
 		'(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH))',
 		'`IsActive` = "yes"',
 		);
+#-------------------------------------------------------------------------------
+$DSSchemes = DB_Select('DSSchemesOwners',Array('ID'),Array('Where'=>$Where));
+#-------------------------------------------------------------------------------
+switch(ValueOf($DSSchemes)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	foreach($DSSchemes as $DSScheme)
+		if(!In_Array($DSScheme['ID'],$SchemesIDs))
+			$SchemesIDs[] = $DSScheme['ID'];
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// а нету тарифных планов....
+if(!SizeOf($SchemesIDs))
+	return $Out;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Columns = Array(
 		'ID','Name','PackageID','CostDay','CostMonth','CostInstall','Discount','ServerID','IsProlong','MinDaysPay','MinDaysProlong',
 		'MaxDaysPay','CPU','ram','raid','disks','chrate','trafflimit','OS','UserNotice'
 		);
 #-------------------------------------------------------------------------------
-$DSSchemes = DB_Select('DSSchemesOwners',$Columns,Array('Where'=>$Where,'SortOn'=>Array('SortID','PackageID')));
+$DSSchemes = DB_Select('DSSchemesOwners',$Columns,Array('Where'=>SPrintF('`ID` IN (%s)',Implode(',',$SchemesIDs)),'SortOn'=>Array('SortID','PackageID')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DSSchemes)){
 case 'error':

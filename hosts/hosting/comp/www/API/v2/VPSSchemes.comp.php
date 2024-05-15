@@ -15,15 +15,63 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Out = Array();
+$Out = $SchemesIDs = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// необходимо выбрать активные тарифы, и к ним добавить те, которые уже заказаны у юзера
+// т.е. тарифы которые неактивны но используются клиентом исторически
+$VPSOrders = DB_Select('VPSOrdersOwners',Array('SchemeID'),Array('Where'=>SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID'])));
+#-------------------------------------------------------------------------------
+switch(ValueOf($VPSOrders)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	foreach($VPSOrders as $VPSOrder)
+		if(!In_Array($VPSOrder['SchemeID'],$SchemesIDs))
+			$SchemesIDs[] = $VPSOrder['SchemeID'];
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// достаём активные для юзера тарифы
 $Where = Array(
 		'(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH))',
 		'`IsActive` = "yes"',
 		);
 #-------------------------------------------------------------------------------
-$VPSSchemes = DB_Select('VPSSchemesOwners',Array('*','(SELECT `Params` FROM `Servers` WHERE `ServersGroupID` = `VPSSchemesOwners`.`ServersGroupID` LIMIT 1) AS `Params`'),Array('Where'=>$Where,'SortOn'=>Array('SortID','PackageID')));
+$VPSSchemes = DB_Select('VPSSchemesOwners',Array('ID'),Array('Where'=>$Where));
+#-------------------------------------------------------------------------------
+switch(ValueOf($VPSSchemes)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	foreach($VPSSchemes as $VPSScheme)
+		if(!In_Array($VPSScheme['ID'],$SchemesIDs))
+			$SchemesIDs[] = $VPSScheme['ID'];
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// а нету тарифных планов....
+if(!SizeOf($SchemesIDs))
+	return $Out;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$VPSSchemes = DB_Select('VPSSchemesOwners',Array('*','(SELECT `Params` FROM `Servers` WHERE `ServersGroupID` = `VPSSchemesOwners`.`ServersGroupID` LIMIT 1) AS `Params`'),Array('Where'=>SPrintF('`ID` IN (%s)',Implode(',',$SchemesIDs)),'SortOn'=>Array('SortID','PackageID')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($VPSSchemes)){
 case 'error':
