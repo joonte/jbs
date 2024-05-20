@@ -15,20 +15,68 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Out = Array();
+$Out = $SchemesIDs = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// необходимо выбрать активные тарифы, и к ним добавить те, которые уже заказаны у юзера
+// т.е. тарифы которые неактивны но используются клиентом исторически
+$DomainOrders = DB_Select('DomainOrdersOwners',Array('SchemeID'),Array('Where'=>SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID'])));
+#-------------------------------------------------------------------------------
+switch(ValueOf($DomainOrders)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	foreach($DomainOrders as $DomainOrder)
+		if(!In_Array($DomainOrder['SchemeID'],$SchemesIDs))
+			$SchemesIDs[] = $DomainOrder['SchemeID'];
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// достаём активные для юзера тарифы
 $Where = Array(
 		'(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH))',
 		'(`IsActive` = "yes" OR `IsTransfer` = "yes")',
 		);
+#-------------------------------------------------------------------------------
+$DomainSchemes = DB_Select('DomainSchemesOwners',Array('ID'),Array('Where'=>$Where));
+#-------------------------------------------------------------------------------
+switch(ValueOf($DomainSchemes)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	foreach($DomainSchemes as $DomainScheme)
+		if(!In_Array($DomainScheme['ID'],$SchemesIDs))
+			$SchemesIDs[] = $DomainScheme['ID'];
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// а нету тарифных планов....
+if(!SizeOf($SchemesIDs))
+	return $Out;
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Columns = Array(
 		'ID','Name','PackageID','CostOrder','CostProlong','CostTransfer','IsActive','IsProlong','IsTransfer','DaysToProlong','DaysBeforeTransfer','DaysAfterTransfer',
 		'(SELECT `Params` FROM `Servers` WHERE `DomainSchemesOwners`.`ServerID` = `Servers`.`ID`) AS `Params`'
 		);
 #-------------------------------------------------------------------------------
-$DomainSchemes = DB_Select('DomainSchemesOwners',$Columns,Array('Where'=>$Where,'SortOn'=>Array('SortID','PackageID')));
+$DomainSchemes = DB_Select('DomainSchemesOwners',$Columns,Array('Where'=>SPrintF('`ID` IN (%s)',Implode(',',$SchemesIDs)),'SortOn'=>Array('SortID','PackageID')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainSchemes)){
 case 'error':
