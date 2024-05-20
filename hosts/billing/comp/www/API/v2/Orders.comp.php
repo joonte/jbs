@@ -25,7 +25,12 @@ $Out = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // все колонки + Services.Params под именем AjaxCall
-$Orders = DB_Select('OrdersOwners',Array('*','(SELECT `Params` FROM `Services` WHERE `ID` = `OrdersOwners`.`ServiceID`) AS `AjaxCall`'),Array('Where'=>SPrintF("`UserID` = %u",$GLOBALS['__USER']['ID']),'SortOn'=>Array('ServiceID','ID')));
+$Columns = Array(
+		'*',
+		'(SELECT `Params` FROM `Services` WHERE `ID` = `OrdersOwners`.`ServiceID`) AS `AjaxCall`',
+		'(SELECT `Code` FROM `Services` WHERE `ID` = `OrdersOwners`.`ServiceID`) AS `Code`',
+		);
+$Orders = DB_Select('OrdersOwners',$Columns,Array('Where'=>SPrintF("`UserID` = %u",$GLOBALS['__USER']['ID']),'SortOn'=>Array('ServiceID','ID')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Orders)){
 case 'error':
@@ -61,6 +66,14 @@ foreach($Orders as $Order){
 	}
 	#-------------------------------------------------------------------------------
 	$Order['OrdersFields'] = $OrdersFields;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// достаём тариф
+	$Comp = Comp_Load('Services/Orders/SchemeWrapper',$Order['Code'],$Order['ID'],TRUE);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$Order['SchemeName'] = $Comp;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	/* смысла наверное в этом нет....
