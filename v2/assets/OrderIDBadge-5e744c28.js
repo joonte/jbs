@@ -1,0 +1,1 @@
+import{o as t,c as o,t as _,_ as r}from"./index-15714261.js";const s={class:"order-id"};function n(a,d,e,p,i,l){return t(),o("div",s,"# "+_(e.orderID),1)}const c={props:{orderID:{type:[String,Number],default:""}}},m=r(c,[["render",n],["__scopeId","data-v-e62b95b0"]]);export{m as _};
