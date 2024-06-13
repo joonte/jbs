@@ -3,7 +3,7 @@
 /** @author Великодный В.В. (Joonte Ltd.) 
  * rewritten by Alex Keda, for www.host-food.ru */
 #-------------------------------------------------------------------------------
-if(Is_Error(System_Load('libs/HTTP.php')))
+if(Is_Error(System_Load('libs/HTTP.php','classes/Net_IDNA.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name,$Ns1IP,$Ns2Name,$Ns2IP,$Ns3Name,$Ns3IP,$Ns4Name,$Ns4IP,$ContractID = '',$IsPrivateWhoIs,$PersonID = 'Default',$Person = Array()){
@@ -613,7 +613,14 @@ function RegRu_Get_Contact_Detail($Settings,$Domain){
 	$Result = Json_Decode($Result,TRUE);
 	#Debug("[RegRu_Answer::Get_Contact_Detail]: " . print_r($Result,TRUE));
 	#-------------------------------------------------------------------------------
-	if($Result['result'] == 'success' && $Result['answer']['services'][0]['dname'] == $Domain){
+	// если клиент ввёл домен закодированный PunyCode, reg.ru вернёт его декодированным
+	$IDNA = new Net_IDNA();
+	#-------------------------------------------------------------------------------
+	$IDNA_Domain = $IDNA->encode($Result['answer']['services'][0]['dname']);
+	Debug(SPrintF('Domain = %s; Result = %s; IDNA = %s',$Domain,$Result['answer']['services'][0]['dname'],$IDNA_Domain));
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if($Result['result'] == 'success' && ($Result['answer']['services'][0]['dname'] == $Domain || $IDNA_Domain == $Domain)){
 		#-------------------------------------------------------------------------------
 		$ContactInfo = Array();
 		#-------------------------------------------------------------------------------
