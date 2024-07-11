@@ -155,7 +155,7 @@
 		<EventOnNegativeBalance>0</EventOnNegativeBalance>
 		<!-- *********************************************************************** -->
 		<DBO>
-			<BankName>open.ru</BankName>
+			<BankName>tinkoff.ru</BankName>
 			<AccountNumber></AccountNumber>
 			<IsActive>0</IsActive>
 			<Token></Token>
