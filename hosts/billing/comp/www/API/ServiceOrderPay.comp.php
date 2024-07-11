@@ -111,6 +111,7 @@ case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
 	# No more...
+	$ServiceOrderFields = Array();
 	break;
 case 'array':
 	break;
