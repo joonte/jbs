@@ -16,7 +16,7 @@ ym(%YandexCounterId%, "init", {
 // сохраняем иденфтикатор метрики юзера, чтобы соотенсти его с посетителями сайта
 ym(%YandexCounterId%, 'getClientID', function(clientID) {
 	//alert(clientID);
-	//console.log("[others/Another.js]: clientID = " + clientID );
+	console.log("[others/Another.js]: clientID = " + clientID );
 
 	const http = new XMLHttpRequest()
 	http.open("GET", "/API/YandexMetrika?clientID=" + clientID)
