@@ -37,7 +37,8 @@ function WhoIs_Parse($Domain){
 	case 'array':
 		#-------------------------------------------------------------------------------
 		foreach($Zones as $Zone)
-			if(Preg_Match(SPrintF('/^([0-9a-zабвгдеёжзийклмнопрстуфхцчшщьыъэюя\-]+)\.%s$/',Str_Replace('.','\.',$Zone['Name'])),$Domain,$Matches))
+			#if(Preg_Match(SPrintF('/^([0-9a-zабвгдеёжзийклмнопрстуфхцчшщьыъэюя\-]+)\.%s$/',Str_Replace('.','\.',$Zone['Name'])),$Domain,$Matches))
+			if(Preg_Match(SPrintF('/^([0-9\p{Cyrillic}\p{Latin}\p{Han}\-]+)\.%s$/u',Str_Replace('.','\.',$Zone['Name'])),$Domain,$Matches))
 				return Array('DomainName'=>Next($Matches),'DomainZone'=>$DomainZone);
 		#-------------------------------------------------------------------------------
 		// не нашлось. странно, но вернём FALSE
