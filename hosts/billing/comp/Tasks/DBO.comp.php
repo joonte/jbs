@@ -71,7 +71,7 @@ $Paid = 0;
 foreach($BankInvoices as $BankInvoice){
 	#-------------------------------------------------------------------------------
 	// что обрабатываем
-	Debug(SPrintF('[comp/Tasks/DBO]: [%s]: ищем счёт на сумму (%s)',$BankInvoice['Key'],$BankInvoice['Summ']));
+	Debug(SPrintF('[comp/Tasks/DBO]: [%s]: ищем счёт на сумму (%s)',IsSet($BankInvoice['Key'])?$BankInvoice['Key']:'UnDefined',$BankInvoice['Summ']));
 	#-------------------------------------------------------------------------------
 	// разбираем примечание
 	$Words = Explode(" ",Str_Replace(Array("\n",';','.')," ",$BankInvoice['Purpose']));

@@ -10,64 +10,17 @@
 // всё остальное - внутренние функции
 function GetStatement($Settings){
 	#-------------------------------------------------------------------------------
-	// Информация о счетах
-	$Answer = TinkoffRuAPI($Settings,'bank-accounts');
-	#-------------------------------------------------------------------------------
-	if(!IsSet($Answer['data']['content']) || !Is_Array($Answer['data']['content']))
-		return ERROR | @Trigger_Error('[TinkoffRu/GetStatement]: не удалось получить список счетов');
-	#-------------------------------------------------------------------------------
-	// ищем идентфикатор аккаунта по номер р/с
-	foreach($Answer['data']['content'] as $Account)
-		if($Account['accountNumber'] == $Settings['AccountNumber'])
-			$accountId = $Account['accountId'];
-	#-------------------------------------------------------------------------------
-	if(!IsSet($accountId))
-		return ERROR | @Trigger_Error(SPrintF('[TinkoffRu/GetStatement]: не удалось найти расчётный счёт %s',$Account['accountNumber']));
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
 	// запрашиваем выписку, даты - сегодня и вчера, т.к. могут быть новые сутки
-	$Answer = TinkoffRuAPI($Settings,SPrintF('/%s/statement?format=JSON&from=%s&to=%s',$accountId,Date('Y-m-d',Time()-24*60*60),Date('Y-m-d')),Array('format'=>'JSON'));
+	$Answer = TinkoffRuAPI($Settings,SPrintF('from=%sT00:00:00Z',Date('Y-m-d',Time()-24*60*60)),Array('format'=>'JSON'));
 	#-------------------------------------------------------------------------------
-	if(!IsSet($Answer['data']['statementId']))
+	if(!IsSet($Answer['operations']))
 		return ERROR | @Trigger_Error('[TinkoffRu/GetStatement]: не удалось запросить выписку');
 	#-------------------------------------------------------------------------------
-	$statementId = $Answer['data']['statementId'];
-	#-------------------------------------------------------------------------------
-	// ждём, пока сгенерируется
-	Sleep(3);
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	// проверяем статус выписки, три попытки, с таймаутами между ними
-	for ($i = 1; $i <= 5; $i++){
-		#-------------------------------------------------------------------------------
-		$Answer = TinkoffRuAPI($Settings,SPrintF('/%s/statement/%s',$accountId,$statementId));
-		#-------------------------------------------------------------------------------
-		if($Answer['data']['status'] != 'SUCCESS'){
-			#-------------------------------------------------------------------------------
-			Sleep(30);
-			#-------------------------------------------------------------------------------
-		}else{
-			#-------------------------------------------------------------------------------
-			break;
-			#-------------------------------------------------------------------------------
-		}
-		#-------------------------------------------------------------------------------
-	}
-	#-------------------------------------------------------------------------------
-	// проверим итоги
-	if($Answer['data']['status'] != 'SUCCESS')
-		return ERROR | @Trigger_Error('[TinkoffRu/GetStatement]: превышен таймаут ожидания выписки');
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	// Получаем саму выписку
-	$Answer = TinkoffRuAPI($Settings,SPrintF('/%s/statement/%s/print?print=true',$accountId,$statementId));
 	#-------------------------------------------------------------------------------
 	// проверяем платежи
-	if(Is_Array(@$Answer['account']['sendTransactionsToWARequest']['paymentDocumentList']) && SizeOf(@$Answer['account']['sendTransactionsToWARequest']['paymentDocumentList']))
-		$Payments = $Answer['account']['sendTransactionsToWARequest']['paymentDocumentList'];
+	if(Is_Array(@$Answer['operations']) && SizeOf(@$Answer['operations']))
+		$Payments = $Answer['operations'];
 	#-------------------------------------------------------------------------------
-	if(Is_Array(@$Answer['account']['getStatementSyncResponse']['paymentDocumentList']) && SizeOf($Answer['account']['getStatementSyncResponse']['paymentDocumentList']))
-		$Payments = $Answer['account']['getStatementSyncResponse']['paymentDocumentList'];
 	#-------------------------------------------------------------------------------
 	if(!IsSet($Payments) || !SizeOf($Payments)){
 		#-------------------------------------------------------------------------------
@@ -88,21 +41,24 @@ function GetStatement($Settings){
 	// перебираем платежи, строим выходной массив
 	$Out = Array();
 	#-------------------------------------------------------------------------------
-	foreach(Array_Keys($Payments) as $Key){
+	foreach($Payments as $Payment){
+		#-------------------------------------------------------------------------------
+		// какие-то оплаты за СБП
+		if(!IsSet($Payment['payer']))
+			continue;
 		#-------------------------------------------------------------------------------
 		// пропускаем то что оплатили мы кому-то
-		if($Payments[$Key]['payerInfo']['accountNumber'] == $Settings['AccountNumber'])
+		if($Payment['payer']['acct'] == $Settings['AccountNumber'])
 			continue;
 		#-------------------------------------------------------------------------------
 		$Out[] = Array(
-				'Key'		=> $Key,	// для дебага в задаче
-				'Summ'		=> $Payments[$Key]['documentAmount']['amount'],
-				'Customer'	=> $Payments[$Key]['payerInfo']['name'],
-				'Inn'		=> $Payments[$Key]['payerInfo']['inn'],
-				'Purpose'	=> $Payments[$Key]['paymentPurpose'],
+				'Summ'		=> $Payment['operationAmount'],
+				'Customer'	=> $Payment['payer']['name'],
+				'Inn'		=> $Payment['payer']['inn'],
+				'Purpose'	=> $Payment['payPurpose'],
 				);
 		#-------------------------------------------------------------------------------
-		Debug(SprintF('[system/libs/DBO_tinkoff.ru]: [%s]: ИНН: %s, сумма: %s; %s',$Key,$Payments[$Key]['payerInfo']['inn'],$Payments[$Key]['documentAmount']['amount'],$Payments[$Key]['paymentPurpose']));
+		Debug(SprintF('[system/libs/DBO_tinkoff.ru]: ИНН: %s, сумма: %s; %s',$Payment['payer']['inn'],$Payment['operationAmount'],$Payment['payPurpose']));
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -118,10 +74,10 @@ function GetStatement($Settings){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // работа с АПИ
-function TinkoffRuAPI($Settings,$Url = '',$Post = Array()){
+function TinkoffRuAPI($Settings,$Url = ''){
 	#-------------------------------------------------------------------------------
 	// строим полный адрес который вызываем
-	$Url = SPrintF('/openapi/api/v1/%s',$Url);
+	$Url = SPrintF('/openapi/api/v1/statement?accountNumber=%s&%s',$Settings['AccountNumber'],$Url);
 	#-------------------------------------------------------------------------------
 	// параметры вызова
 	$HTTP = Array(
@@ -140,7 +96,7 @@ function TinkoffRuAPI($Settings,$Url = '',$Post = Array()){
 	#	$Headers[] = 'Content-Type: application/json';
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Result = HTTP_Send($Url,$HTTP,Array(),$Post,$Headers);
+	$Result = HTTP_Send($Url,$HTTP,Array(),Array(),$Headers);
 	#-------------------------------------------------------------------------------
 	if(Is_Error($Result))
 		return ERROR | @Trigger_Error('[TinkoffRu/API]: не удалось выполнить запрос к серверу');

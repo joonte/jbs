@@ -696,6 +696,35 @@
 				<Is54-FZ>1</Is54-FZ>
 			</SberBank>
 			<!-- ********************************************************************* -->
+			<Tinkoff>
+				<Name>Tinkoff</Name>
+				<SystemDescription>экваринг, интернет эквайринг, эквайринг в самообслуживании, услуги эквайринга банковских карт</SystemDescription>
+				<Send>
+					<amount>auto</amount>
+					<description>Payment for invoice #</description>
+				</Send>
+				<Comp>Tinkoff</Comp>
+				<Cpp>/Merchant/Tinkoff?redirect=1</Cpp>
+				<Password/>
+				<TerminalKey/>
+				<TestMode>1</TestMode>
+				<ContractsTypes>
+					<Default>1</Default>
+					<Natural>1</Natural>
+					<Juridical>1</Juridical>
+					<Individual>1</Individual>
+				</ContractsTypes>
+				<IsContinuePaying>1</IsContinuePaying>
+				<Course>1</Course>
+				<IsCourseUpdate>0</IsCourseUpdate>
+				<Measure>руб</Measure>
+				<Valute>RUB</Valute>
+				<MinimumPayment>1.00</MinimumPayment>
+				<MaximumPayment>250000.00</MaximumPayment>
+				<IsActive>0</IsActive>
+				<Is54-FZ>1</Is54-FZ>
+			</Tinkoff>
+			<!-- ********************************************************************* -->
 			<PayBox>
 				<Name>PayBox</Name>
 				<SystemDescription>приём платежей с использованием иностранных банковских карт</SystemDescription>
