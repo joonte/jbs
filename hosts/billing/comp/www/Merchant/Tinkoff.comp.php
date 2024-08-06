@@ -103,7 +103,7 @@ if(IsSet($Args['redirect'])){
 	#-------------------------------------------------------------------------------
 	$Query = Array(
 			'TerminalKey'	=> $Settings['TerminalKey'],
-			'Amount'	=> $Invoice['Summ'] * 100,
+			'Amount'	=> IntVal($Invoice['Summ'] * 100),	// в копейках, целых, не дробных
 			'OrderId'	=> $InvoiceID,
 			'SuccessURL'	=> $Args['SuccessURL'],
 			'FailURL'	=> $Args['FailURL'],
@@ -295,7 +295,7 @@ case 'REFUNDED':
 	#-------------------------------------------------------------------------------
 default:
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Invoices/PaymentSystems/Tinkoff]: статус "%s", счёт #%u проигнорирован',$Args['Status'],$InvoiceID));
+	Debug(SPrintF('[comp/www/Merchant/Tinkoff]: статус "%s", счёт #%u проигнорирован',$Args['Status'],$InvoiceID));
 	return "OK";
 	#-------------------------------------------------------------------------------
 }
@@ -330,7 +330,7 @@ return "OK";
 // внутренняя функция
 function TinkoffToken($Params,$Settings){
 	#-------------------------------------------------------------------------------
-	Debug(print_r($Params,true));
+	Debug(SPrintF('[comp/www/Merchant/Tinkoff]: func=TinkoffToken, Params = %s',print_r($Params,true)));
 	#-------------------------------------------------------------------------------
 	// считаем токен
 	$Token = '';
@@ -344,7 +344,7 @@ function TinkoffToken($Params,$Settings){
 		if(!Is_Array($Params[$Key]) && $Key != 'Token')
 			$Token .= $Params[$Key];
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Invoices/PaymentSystems/Tinkoff]: Token = "%s"',$Token));
+	Debug(SPrintF('[comp/www/Merchant/Tinkoff]: func=TinkoffToken, Token = "%s"',$Token));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return Hash('sha256',$Token);
