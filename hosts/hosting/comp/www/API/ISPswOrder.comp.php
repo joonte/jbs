@@ -25,7 +25,43 @@ if(!$ContractID)
 	return new gException('CONTRACT_NOT_DEFINED','Не выбран договор');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if((!$DependOrderID || Is_Null($DependOrderID)) && !$IP)
+// новый интерфейс не присывлает IP, только номер зависимого заказа.
+// и это правильно, надо по нему определять IP
+if($DependOrderID && !Is_Null($DependOrderID)){
+	#-------------------------------------------------------------------------------
+	// находим тип услуги
+	$DependService = DB_Select('OrdersOwners','(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = `OrdersOwners`.`ServiceID`) AS `Code`',Array('UNIQ','Where'=>SPrintF('`ID` = %u',$DependOrderID)));
+	switch(ValueOf($DependService)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return new gException('SERVICE_NOT_FOUND',SPrintF('Не удалось найти сервис для зависимого зaказа #%u',$DependOrderID));
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	// достаём IP услуги
+	$Order = DB_Select(SPrintF('%sOrdersOwners',$DependService['Code']),'IP',Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$DependOrderID)));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Order)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return new gException('ORDER_NOT_FOUND',SPrintF('Не удалось найти IP для зависимого зaказа #%u',$DependOrderID));
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$IP = $Order['IP'];
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(!$IP)
 	return new gException('NO_IP_OR_ORDER','Не выбран заказ или не задан IP адрес');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

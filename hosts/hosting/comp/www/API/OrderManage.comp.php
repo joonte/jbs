@@ -80,6 +80,8 @@ if($Order['StatusID'] != 'Active' && !$__USER['IsAdmin'])
 #-------------------------------------------------------------------------------
 if($Service['Code'] == 'ISPsw'){
 	#-------------------------------------------------------------------------------
+	if(!$Order['DependOrderID'])
+		return new gException('NO_DEPEND_ORDER_ID','Не указан заказ для которого заказана эта лицензия');
 	// проверяем у юзера права на этот заказ, может не его вообще
 	$IsPermission = Permission_Check(SPrintF('%sManage',$Order['DependOrderCode']),(integer)$__USER['ID'],(integer)$Order['DependOrderUserID']);
 	#-------------------------------------------------------------------------------
