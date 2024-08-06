@@ -1259,7 +1259,8 @@ function VmManager6_Hosting_Request($Settings,$Request = Array(),$Name = FALSE){
 			'password'	=> $Settings['Password']
 			);
 	#-------------------------------------------------------------------------------
-	$Response = HTTP_Send('/auth/v3/auth',$HTTP,Array(),Json_Encode($Auth));
+	//$Response = HTTP_Send('/auth/v3/auth',$HTTP,Array(),Json_Encode($Auth));
+	$Response = HTTP_Send('/api/auth/v4/public/token',$HTTP,Array(),Json_Encode($Auth));
 	if(Is_Error($Response))
 		return ERROR | @Trigger_Error('[VmManager6_Hosting_Request]: не удалось соедениться с сервером, #1');
 	#-------------------------------------------------------------------------------
@@ -1273,7 +1274,8 @@ function VmManager6_Hosting_Request($Settings,$Request = Array(),$Name = FALSE){
 		#-------------------------------------------------------------------------------
 		Sleep(10);
 		#-------------------------------------------------------------------------------
-		$Response = HTTP_Send('/auth/v3/auth',$HTTP,Array(),Json_Encode($Auth));
+		//$Response = HTTP_Send('/auth/v3/auth',$HTTP,Array(),Json_Encode($Auth));
+		$Response = HTTP_Send('/api/auth/v4/public/token',$HTTP,Array(),Json_Encode($Auth));
 		if(Is_Error($Response))
 			return ERROR | @Trigger_Error('[VmManager6_Hosting_Request]: не удалось соедениться с сервером, #2');
 		#-------------------------------------------------------------------------------
