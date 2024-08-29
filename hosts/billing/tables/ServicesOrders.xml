@@ -59,7 +59,7 @@
 							<Where>`OrderDate` &gt; BEGIN_MONTH()</Where>
 						</Month>
 					</Patterns>
-					<ActiveID>Week</ActiveID>
+					<ActiveID>Month</ActiveID>
 				</Args>
 			</PatternOut>
 			<!-- ********************************************************************* -->

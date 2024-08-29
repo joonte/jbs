@@ -18,7 +18,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 $Out = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Profiles = DB_Select('ProfilesOwners',Array('*'),Array('Where'=>SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID'])));
+$Profiles = DB_Select('ProfilesOwners',Array('*','(SELECT `ID` FROM `Contracts` WHERE `Contracts`.`ProfileID` = `ProfilesOwners`.`ID` LIMIT 1) AS `ContractID`'),Array('Where'=>SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID'])));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Profiles)){
 case 'error':
@@ -32,6 +32,10 @@ default:
 }
 #-------------------------------------------------------------------------------
 foreach($Profiles as $Profile){
+	#-------------------------------------------------------------------------------
+	// есть ли договор
+	$Profile['ContractID'] = IntVal($Profile['ContractID']);
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Out[$Profile['ID']] = $Profile;
 	#-------------------------------------------------------------------------------

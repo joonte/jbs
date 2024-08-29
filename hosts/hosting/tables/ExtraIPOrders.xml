@@ -92,7 +92,7 @@
 							<Where>`StatusID` = 'Deleted'</Where>
 						</Deleted>
 					</Patterns>
-					<ActiveID>Week</ActiveID>
+					<ActiveID>Month</ActiveID>
 				</Args>
 			</PatternOut>
 			<!-- ********************************************************************* -->

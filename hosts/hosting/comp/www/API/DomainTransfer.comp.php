@@ -31,6 +31,9 @@ if(!Preg_Match($Regulars['DomainName'],$DomainName))
 if(!$ContractID)
 	return new gException('CONTRACT_NOT_DEFINED','Не выбран договор');
 #-------------------------------------------------------------------------------
+if(!$DomainSchemeID)
+	return new gException('SCHEME_NOT_DEFINED','Не выбран тарифный план');
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Contract = Comp_Load('Contracts/Fetch',$ContractID);
 if(Is_Error($Contract))
