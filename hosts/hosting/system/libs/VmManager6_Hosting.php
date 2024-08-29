@@ -840,8 +840,8 @@ function VmManager6_Hosting_Get_Users($Settings,$Login = FALSE){
 		if(!IsSet($iUser['email']))
 			continue;
 		#---------------------------------------------------------------------------
-		// самого себя пропускаем
-		if($iUser['email'] == $Settings['Login'])
+		// самого себя пропускаем, + ISPsystem завели внутренних юзеров internal и support
+		if(In_Array($iUser['email'],Array($Settings['Login'],'support@example.com','internal@example.com')))
 			continue;
 		#---------------------------------------------------------------------------
 		#---------------------------------------------------------------------------
