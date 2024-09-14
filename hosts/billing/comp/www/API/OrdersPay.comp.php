@@ -12,6 +12,7 @@ Eval(COMP_INIT);
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 $RowsIDs	= (array)  @$Args['RowsIDs'];
+$OrdersIDs	= (array)  @$Args['OrdersIDs'];
 $ServiceID	= (string) @$Args['ServiceID'];
 $UseBalance	= (boolean)@$Args['UseBalance'];
 $ItemsPay	= (integer)@$Args['ItemsPay'];
@@ -25,13 +26,32 @@ if(!$ServiceID)
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Orders = Array();
+$WhereColumn = 'ID';	// по какой колонке выбираем заказы
 #-------------------------------------------------------------------------------
 foreach($RowsIDs as $RowsID)
 	if(!In_Array(IntVal($RowsID),$Orders))
 		$Orders[] = IntVal($RowsID);
 #-------------------------------------------------------------------------------
-if(SizeOf($Orders) < 1)
-	return new gException('NO_SELECTED_ORDERS','Необходимо выбрать оплачиваемые заказы');
+// может OrdersIDs прислали?
+if(SizeOf($Orders) < 1){
+	#-------------------------------------------------------------------------------
+	foreach($OrdersIDs as $RowsID)
+		if(!In_Array(IntVal($RowsID),$Orders))
+			$Orders[] = IntVal($RowsID);
+	#-------------------------------------------------------------------------------
+	if(SizeOf($Orders) < 1){
+		#-------------------------------------------------------------------------------
+		return new gException('NO_SELECTED_ORDERS','Необходимо выбрать оплачиваемые заказы');
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		$WhereColumn = 'OrderID';
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+Debug(SPrintF('[comp/www/API/OrdersPay]: используем колонку: %s',$WhereColumn));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Service = DB_Select('Services',Array('ID','Code','Item','ConsiderTypeID'),Array('UNIQ','ID'=>$ServiceID));
@@ -47,7 +67,12 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Orders = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),Array('*'),Array('Where'=>Array('`UserID` = @local.__USER_ID',SPrintF('`ID` IN (%s)',Implode(",",$Orders)))));
+$Where = Array(
+		'`UserID` = @local.__USER_ID',
+		SPrintF('`%s` IN (%s)',$WhereColumn,Implode(",",$Orders))
+		);
+#-------------------------------------------------------------------------------
+$Orders = DB_Select(SPrintF('%sOrdersOwners',($Service['Code'] == 'Default')?'':$Service['Code']),Array('*'),Array('Where'=>$Where));
 switch(ValueOf($Orders)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
@@ -60,7 +85,7 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Path = SPrintF('www/API/%sOrderPay',$Service['Code']);
+$Path = SPrintF('www/API/%sOrderPay',($Service['Code'] == 'Default')?'Service':$Service['Code']);
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Element(SPrintF('comp/%s.comp.php',$Path)))){
 	#-------------------------------------------------------------------------------
@@ -73,7 +98,7 @@ if(Is_Error(System_Element(SPrintF('comp/%s.comp.php',$Path)))){
 $Count = 0;
 foreach($Orders as $Order){
 	#-------------------------------------------------------------------------------
-	$OrderPay = Comp_Load($Path,Array(SprintF('%sOrderID',$Service['Code'])=>$Order['ID'],'DaysPay'=>$ItemsPay,'IsUseBasket'=>(!$UseBalance),'IsNoBasket'=>$UseBalance));
+	$OrderPay = Comp_Load($Path,Array(SprintF('%sOrderID',($Service['Code'] == 'Default')?'Service':$Service['Code'])=>$Order['ID'],'DaysPay'=>$ItemsPay,'IsUseBasket'=>(!$UseBalance),'IsNoBasket'=>$UseBalance));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($OrderPay)){
 	case 'error':

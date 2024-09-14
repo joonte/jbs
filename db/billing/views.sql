@@ -193,7 +193,7 @@ DROP TABLE IF EXISTS `OrdersOwners`;
 CREATE
   VIEW `OrdersOwners` AS
 SELECT
-  `Orders`.*,
+  `Orders`.*,`Orders`.`ID` `OrderID`,
   `Contracts`.`UserID`
 FROM
   `Orders`
