@@ -146,7 +146,7 @@ if(Count($Args) > 0){
 						#-------------------------------------------------------------------------------
 						List($micro, $seconds) = Explode(' ',MicroTime());
 						#-------------------------------------------------------------------------------
-						$Message = SPrintF("[%s.%02u][%s] %s\n",Date('Y-m-d H:i:s'), $micro * 100, IsSet($_SERVER["REMOTE_PORT"])?$_SERVER["REMOTE_PORT"]:"console",SPrintF('(%s) = (%s)',$ArgID,$Value));
+						$Message = SPrintF("[%s.%02u][%s] %s %s\n",Date('Y-m-d H:i:s'), $micro * 100, IsSet($_SERVER["REMOTE_PORT"])?$_SERVER["REMOTE_PORT"]:"console",@$_SERVER['REMOTE_ADDR'],SPrintF('(%s) = (%s)',$ArgID,$Value));
 						#-------------------------------------------------------------------------------
 						@File_Put_Contents($SuspiciousValues,$Message,FILE_APPEND);
 						#-------------------------------------------------------------------------------
