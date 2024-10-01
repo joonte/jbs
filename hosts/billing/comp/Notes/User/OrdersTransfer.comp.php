@@ -26,7 +26,7 @@ case 'array':
 	foreach($IOrdersTransfer as $OrdersTransfer){
 		#-------------------------------------------------------------------------------
 		# проверяем, не прошло ли время передачи аккаунта?
-		if($OrdersTransfer['CreateDate'] + 24*3600 < Time()){
+		if($OrdersTransfer['CreateDate'] + 7*24*60*60 < Time()){
 			# помечаем как выполненную
 			$IsUpdate = DB_Update('OrdersTransfer',Array('IsExecuted'=>TRUE),Array('ID'=>$OrdersTransfer['ID']));
 			if(Is_Error($IsUpdate))
