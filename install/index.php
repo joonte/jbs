@@ -581,7 +581,7 @@ if($__STEP_ID == 0){
  </TR>
  <TR>
   <TD>
-   <IFRAME width="700" src="http://joonte.com/JBsRules?TemplateID=Standard" height="300">Ваш броузер не поддерживает iframe</IFRAME>
+   <IFRAME width="700" src="https://joonte.com/JBsRules?TemplateID=Standard" height="300">Ваш броузер не поддерживает iframe</IFRAME>
   </TD>
  </TR>
  <TR>
