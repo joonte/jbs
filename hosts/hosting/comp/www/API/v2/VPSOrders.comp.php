@@ -77,7 +77,8 @@ foreach($VPSOrders as $VPSOrder){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	if($Servers[$ServerID]['Params']['SystemID'] == 'VmManager6_VPS')
+        #-------------------------------------------------------------------------------
+	if($Servers[$ServerID]['Params']['SystemID'] == 'VmManager6_Hosting')
 		$VPSOrder['Login'] = SPrintF('%s@%s',$VPSOrder['Login'],$Servers[$ServerID]['Params']['Domain']);
 	#-------------------------------------------------------------------------------
 	UnSet($VPSOrder['AdminNotice']);
