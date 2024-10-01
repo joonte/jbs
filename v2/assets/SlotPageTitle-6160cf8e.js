@@ -1,0 +1,1 @@
+import{_ as o,o as _,c as a,a as t,m as s}from"./index-4466e2da.js";const c={},n={class:"page-title"},l={class:"page-title__title"},i={class:"page-title__buttons"};function d(e,r){return _(),a("div",n,[t("div",l,[s(e.$slots,"title",{},void 0,!0)]),t("div",i,[s(e.$slots,"buttons",{},void 0,!0)])])}const u=o(c,[["render",d],["__scopeId","data-v-b876c21b"]]);export{u as S};
