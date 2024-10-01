@@ -98,6 +98,11 @@ if(Is_Error(System_Element(SPrintF('comp/%s.comp.php',$Path)))){
 $Count = 0;
 foreach($Orders as $Order){
 	#-------------------------------------------------------------------------------
+	if($Order['StatusID'] == 'Deleted')
+		#return new gException('DELETED_ORDERS_CANNOT_BE_PAY','Удалённый заказ нельзя оплатить без восстановления. Обратитесь в техническую поддержку, для восстановления заказа.');
+		continue;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$OrderPay = Comp_Load($Path,Array(SprintF('%sOrderID',($Service['Code'] == 'Default')?'Service':$Service['Code'])=>$Order['ID'],'DaysPay'=>$ItemsPay,'IsUseBasket'=>(!$UseBalance),'IsNoBasket'=>$UseBalance));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($OrderPay)){
