@@ -80,7 +80,7 @@ switch(ValueOf($DomainOrder)){
                   return ERROR | @Trigger_Error(500);
 */
 		#-------------------------------------------------------------------------------
-		$Profile = DB_Select('ProfilesOwners',Array('*'),Array('ID'=>$ProfileID));
+		$Profile = DB_Select('ProfilesOwners',Array('*'),Array('ID'=>$ProfileID,'UNIQ'));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($DomainScheme)){
 		case 'error':
@@ -97,8 +97,15 @@ switch(ValueOf($DomainOrder)){
                 if(!SizeOf($Profile))
                   return new gException('PROFILE_NOT_FOUND','Указанный профиль не найден');
                 #---------------------------------------------------------------
+		// определить можно только физиком и юриком
+		Debug(print_r($Profile,true));
+		if(!In_Array($Profile['TemplateID'],Array('Natural','Juridical')))
+			return new gException('INCORRECT_OWNER_TYPE','Некоректный профиль для владельца. Владельцем может быть только физическое лицо или юридическое (ООО и т.п.)');
+			#-------------------------------------------------------------------------------
 		// првоеряем что это полноценный профиль, а не обрубок какой
-
+		if($Profile['StatusID'] != 'Filled')
+			return new gException('INCORRECT_OWNER_PROFILE','Выбранный профиль не заполнен полностью. Необходимо заполнить все обязательные поля');
+		#-------------------------------------------------------------------------------
                 $UDomainOrder['ProfileID'] = $ProfileID;
               break;
               default:
