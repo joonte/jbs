@@ -177,6 +177,7 @@ CREATE VIEW `DSOrdersOwners` AS select
 	`OrdersOwners`.`ServiceID`,
 	`OrdersOwners`.`ServerID`,
 	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `DSOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
+	(SELECT `DSpass` FROM `DSSchemes` WHERE `DSOrders`.`SchemeID` = `DSSchemes`.`ID`) AS `Password`,
 	`OrdersOwners`.`OrderDate` AS `OrderDate`,
 	`OrdersOwners`.`UserID` AS `UserID`,
 	`OrdersOwners`.`ContractID` AS `ContractID`,
