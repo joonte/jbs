@@ -44,7 +44,7 @@ default:
 #-------------------------------------------------------------------------------
 foreach($Services as $Service){
 	#-------------------------------------------------------------------------------
-	//Debug(SPrintF('[www/API/v2/DependServices]: processing ServiceID = %u',$Service['ID']));
+	Debug(SPrintF('[www/API/v2/DependServices]: processing ServiceID = %u',$Service['ID']));
 	// пропускаем, если тегов нет
 	if(!IsSet($Service['Params']['Tags']) || !SizeOf($Service['Params']['Tags']))
 		continue;
