@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 # проверяем, не является ли адрес из этого контакта первичным
 $Count = DB_Count('Contacts',Array('Where'=>SPrintF("`ID` = %u AND `IsPrimary` = 'yes'",$Contact['ID'])));
 if($Count)
-	return new gException('CONTACT_IS_PRIMARY',SPrintF('Контактный адрес %s/%s является первичным, и не может быть удалён',$Contact['ID'],$Contact['Address']));
+	return new gException('CONTACT_IS_PRIMARY',SPrintF('Контактный адрес %s/%s является логином, и не может быть удалён',$Contact['ID'],$Contact['Address']));
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Contacts',Array('Where'=>SPrintF("`UserID` = %u",$Contact['UserID'])));
 if($Count < 2)

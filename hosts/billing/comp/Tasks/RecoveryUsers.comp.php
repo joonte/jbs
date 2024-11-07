@@ -215,7 +215,7 @@ foreach($Users as $User){
 		case 'exception':
 			#-------------------------------------------------------------------------------
 			// адрес не найден в таблице контактов. снова к админу
-			$Event = Array('UserID'=>100,'PriorityID'=>'Billing','IsReaded'=>FALSE,'Text'=>SPrintF('Обнаружен пользователь (%s/%s) без контактных почтовых адресов, но более чем с одним первичным адресом',$User['ID'],$User['Email']));
+			$Event = Array('UserID'=>100,'PriorityID'=>'Billing','IsReaded'=>FALSE,'Text'=>SPrintF('Обнаружен пользователь (%s/%s) без контактных почтовых адресов, но более чем с одним логином',$User['ID'],$User['Email']));
 			$Event = Comp_Load('Events/EventInsert',$Event);
 			if(!$Event)
 				return ERROR | @Trigger_Error(500);
@@ -239,7 +239,7 @@ foreach($Users as $User){
 			}else{
 				#-------------------------------------------------------------------------------
 				// адрес не найден в таблице контактов. снова к админу
-				$Event = Array('UserID'=>100,'PriorityID'=>'Billing','IsReaded'=>FALSE,'Text'=>SPrintF('Обнаружен пользователь (%s/%s) без контактного почтового адреса, но более чем с одним первичным адресом',$User['ID'],$User['Email']));
+				$Event = Array('UserID'=>100,'PriorityID'=>'Billing','IsReaded'=>FALSE,'Text'=>SPrintF('Обнаружен пользователь (%s/%s) без контактного почтового адреса, но более чем с одним логином',$User['ID'],$User['Email']));
 				$Event = Comp_Load('Events/EventInsert',$Event);
 				if(!$Event)
 					return ERROR | @Trigger_Error(500);
