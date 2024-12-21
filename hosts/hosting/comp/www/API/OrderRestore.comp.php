@@ -140,9 +140,12 @@ foreach($OrderConsiders as $OrderConsider){
 		// реальная сумма оплаты за эту строку учёта
 		$PaymentSumm = $OrderConsider['DaysReserved']*$OrderConsider['Cost']*(1 - $OrderConsider['Discont']);
 		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[comp/www/API/OrderRestore]: NoDiscontPayment = %s; PaymentSumm = %s',$NoDiscontPayment,$PaymentSumm));
+		#-------------------------------------------------------------------------------
 		// если оплата за использованные дни больше реальнооплаченной суммы - возврат нулевой
+		// (приравниваем израсходованную сумму к платежу, чтобы ноль получился при расчёте суммы возврата)
 		if($NoDiscontPayment >= $PaymentSumm)
-			$NoDiscontPayment = 0;
+			$NoDiscontPayment = $PaymentSumm;
 		#-------------------------------------------------------------------------------
 		// сумма возврата без учёта скидок
 		$Refund = $PaymentSumm - $NoDiscontPayment;
