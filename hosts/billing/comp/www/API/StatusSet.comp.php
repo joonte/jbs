@@ -71,9 +71,10 @@ default:
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-$NeedConfirmed = $Config['Interface']['User']['InvoiceMake']['NeedConfirmed'];
+// если не задана $GLOBALS['TmpAllowNotConfirmed'] - слушаемся конфига
+$NeedConfirmed = (IsSet($GLOBALS['TmpAllowNotConfirmed']) && $GLOBALS['TmpAllowNotConfirmed'])?'NONE':$Config['Interface']['User']['InvoiceMake']['NeedConfirmed'];
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/www/API/StatusSet]: $NeedConfirmed = %s; SizeOf[ConfirmedWas] = %s; ConfirmedWas = %s',$NeedConfirmed,SizeOf($GLOBALS['__USER']['ConfirmedWas']),print_r($GLOBALS['__USER']['ConfirmedWas'],true)));
+Debug(SPrintF('[comp/www/API/StatusSet]: $NeedConfirmed = %s; GLOBALS[TmpAllowNotConfirmed] = %s; SizeOf[ConfirmedWas] = %s; ConfirmedWas = %s;',$NeedConfirmed,(@$GLOBALS['TmpAllowNotConfirmed'])?'TRUE':'FALSE',SizeOf($GLOBALS['__USER']['ConfirmedWas']),print_r($GLOBALS['__USER']['ConfirmedWas'],true)));
 // требуется подтверждённый адрес, и юзер не подтверждён
 if($NeedConfirmed != "NONE"){
 	#-------------------------------------------------------------------------------
