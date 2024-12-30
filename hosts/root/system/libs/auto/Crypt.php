@@ -2,6 +2,16 @@
 #-------------------------------------------------------------------------------
 /** @author Alex Keda, for www.host-food.ru */
 #-------------------------------------------------------------------------------
+// https://github.com/openssl/openssl/blob/master/README-PROVIDERS.md
+// /etc/ssl/openssl.cnf
+// [provider_sect]
+// default = default_sect
+// legacy = legacy_sect
+// [default_sect]
+// activate = 1
+// [legacy_sect]
+// activate = 1
+
 if(!Extension_Loaded('openssl'))
 	$GLOBALS['__MESSAGES'][] = 'Модуль openssl не установлен. Функции шифрования могут работать не правильно. Пожалуйста, исправьте ошибку.';
 
@@ -13,13 +23,17 @@ function Crypt_Encode($String, $Key = HOST_ID){
 	#-------------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/******************************************************************************/
+	//Debug(SPrintF('[system/libs/auto/Crypt]: String = %s; Key = %s',$String,$Key));
 	if(Extension_Loaded('openssl')){
 		#-------------------------------------------------------------------------------
 		if(StrLen($String) % 8)
 			$String = Str_Pad($String,StrLen($String) + 8 - StrLen($String) % 8,"\0");
 		#-------------------------------------------------------------------------------
-		if(!$String = @OpenSSL_Encrypt($String,'des-ecb', $Key, OPENSSL_RAW_DATA | OPENSSL_NO_PADDING))
-			return ERROR | @Trigger_Error('[Crypt_Encode]: не удалось зашифровать данные');
+		//Debug(SPrintF('[system/libs/auto/Crypt]: String = %s; Key = %s',$String,$Key));
+		#-------------------------------------------------------------------------------
+		$Cipher = 'des-ecb';
+		if(!$String = @OpenSSL_Encrypt($String,$Cipher,$Key, OPENSSL_RAW_DATA | OPENSSL_NO_PADDING))
+			return ERROR | @Trigger_Error(SPrintF('[Crypt_Encode]: не удалось зашифровать данные'));
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -29,6 +43,7 @@ function Crypt_Encode($String, $Key = HOST_ID){
 	#-------------------------------------------------------------------------------
 }
 
+# des-ecb
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 function Crypt_Decode($String,$Key = HOST_ID){
@@ -45,8 +60,8 @@ function Crypt_Decode($String,$Key = HOST_ID){
 	#-------------------------------------------------------------------------------
 	if(Extension_Loaded('openssl')){
 		#-------------------------------------------------------------------------------
-		if(!$String = @OpenSSL_Decrypt($String,'des-ecb',$Key,OPENSSL_RAW_DATA | OPENSSL_NO_PADDING)){
-			Debug(print_r($String));
+		$Cipher = 'des-ecb';
+		if(!$String = @OpenSSL_Decrypt($String,$Cipher,$Key,OPENSSL_RAW_DATA | OPENSSL_NO_PADDING)){
 			return ERROR | @Trigger_Error('[Crypt_Decode]: не удалось дешифровать данные');
 			}
 		#-------------------------------------------------------------------------------
