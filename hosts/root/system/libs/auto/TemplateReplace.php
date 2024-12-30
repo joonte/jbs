@@ -49,7 +49,8 @@ function TemplateReplace($Text,$Params = Array(),$NoBody = TRUE){
 	$Replace = Array_ToLine($Params,'%');
 	#-------------------------------------------------------------------------------
 	foreach(Array_Keys($Replace) as $Key)
-		$Text = Str_Replace($Key,$Replace[$Key],$Text);
+		if(!Is_Null($Replace[$Key]))
+			$Text = Str_Replace($Key,$Replace[$Key],$Text);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return $Text;

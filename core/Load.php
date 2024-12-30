@@ -54,7 +54,7 @@ Ignore_User_Abort(TRUE); # Если пользователь закрыл сое
 /**
  * Defines system constants.
  */
-if(!Define('VERSION', '##VERSION##'))
+if(!Define('VERSION', 'v2.6.19'))
 	Exit('[JBs core]: не удалось определить константу (VERSION)');
 #-------------------------------------------------------------------------------
 /**
@@ -233,7 +233,7 @@ function Report($Theme,$ReportID = ''){
 		if($Emails)
 			foreach(Explode("\n",$Emails) as $Email)
 				if($Email)
-					@Mail(Trim($Email),$ReportID,Implode("\n",$GLOBALS['__SYSLOG']),"MIME-Version: 1.0\r\nContent-type: text/plain; charset=UTF-8\r\n");
+					@Mail(Trim($Email),$ReportID,Implode("\n",$GLOBALS['__SYSLOG'])/*,"MIME-Version: 1.0\r\nContent-type: text/plain; charset=UTF-8\r\n"*/);
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
@@ -256,7 +256,7 @@ if(Function_Exists('posix_getpwuid')){
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[JBs core]: осуществлен запрос с адреса (%s)',@$_SERVER['REMOTE_ADDR']));
 Debug(SPrintF('[JBs core]: REQUEST_URI=(%s)',@$_SERVER['REQUEST_URI']));
-Debug(SPrintF('[JBs core]: HTTP_REFERER=(%s)',@$_SERVER['HTTP_REFERER']));
+Debug(SPrintF('[JBs core]: HTTP_REFERER=(%s)',IsSet($GLOBALS['_SERVER']['HTTP_REFERER'])?$GLOBALS['_SERVER']['HTTP_REFERER']:''));
 
 #******************************************************************************#
 # ПОДСИСТЕМА ОТЛАДКИ

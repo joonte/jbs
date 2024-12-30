@@ -2474,7 +2474,7 @@ class Net_IDNA
                         $t = ($k <= $bias) ? $this->_tmin :
                                 (($k >= $bias + $this->_tmax) ? $this->_tmax : $k - $bias);
                         if ($q < $t) break;
-                        $encoded .= $this->_encode_digit(ceil($t + (($q - $t) % ($this->_base - $t))));
+                        $encoded .= $this->_encode_digit(ceil($t + (Round($q - $t) % ($this->_base - $t))));
                         $q = ($q - $t) / ($this->_base - $t);
                     }
                     $encoded .= $this->_encode_digit($q);
@@ -2512,7 +2512,7 @@ class Net_IDNA
     */
     function _encode_digit($d)
     {
-        return chr($d + 22 + 75 * ($d < 26));
+        return chr(Round($d + 22 + 75 * ($d < 26)));
     }
 
     /**

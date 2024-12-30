@@ -6,7 +6,7 @@
 if(Is_Error(System_Load('libs/HTTP.php','classes/Net_IDNA.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name,$Ns1IP,$Ns2Name,$Ns2IP,$Ns3Name,$Ns3IP,$Ns4Name,$Ns4IP,$ContractID = '',$IsPrivateWhoIs,$PersonID = 'Default',$Person = Array()){
+function RegRu_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name,$Ns1IP,$Ns2Name,$Ns2IP,$Ns3Name,$Ns3IP,$Ns4Name,$Ns4IP,$ContractID,$IsPrivateWhoIs,$PersonID = 'Default',$Person = Array()){
 	/******************************************************************************/
 	$__args_types = Array('array','string','string','integer','string','string','string','string','string','string','string','string','boolean','string','string','array');
 	#-------------------------------------------------------------------------------

@@ -5,7 +5,7 @@
 if(Is_Error(System_Load('libs/HTTP.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-function WebNames_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name,$Ns1IP,$Ns2Name,$Ns2IP,$Ns3Name,$Ns3IP,$Ns4Name,$Ns4IP,$ContractID = '',$IsPrivateWhoIs,$PersonID = 'Default',$Person = Array()){
+function WebNames_Domain_Register($Settings,$DomainName,$DomainZone,$Years,$Ns1Name,$Ns1IP,$Ns2Name,$Ns2IP,$Ns3Name,$Ns3IP,$Ns4Name,$Ns4IP,$ContractID,$IsPrivateWhoIs,$PersonID = 'Default',$Person = Array()){
 	/****************************************************************************/
 	$__args_types = Array('array','string','string','integer','string','string','string','string','string','string','string','string','boolean','string','string','array');
 	#-----------------------------------------------------------------------------
@@ -835,7 +835,10 @@ function WebNames_Domain_Check($Settings,$DomainName,$DomainZone){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # общие внутрение функции
-function WebNames_Build_Query($Query = Array(),$Params){
+function WebNames_Build_Query($Query,$Params){
+	#-------------------------------------------------------------------------------
+	if(!$Query)
+		$Query = Array();
 	#-------------------------------------------------------------------------------
 	if(In_Array($Params['DomainZone'],Array('ru','su','рф'))){
 		#-------------------------------------------------------------------------------

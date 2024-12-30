@@ -47,6 +47,7 @@ switch(ValueOf($Services)){
       $Result[UniqID('ID')] = $Item;
     }
     #---------------------------------------------------------------------------
+    //Debug(print_r($Result),true);
     return $Result;
   default:
     return ERROR | @Trigger_Error(101);

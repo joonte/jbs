@@ -131,6 +131,7 @@
 			</Args>
 		</ServiceID>
 		<!-- ********************************************************************** -->
+<!--
 		<PromoLink>
 			<Head>Ссылка</Head>
 			<Prompt>Ссылка на активацию промокода, для рассылок</Prompt>
@@ -139,6 +140,17 @@
 				<ShowWindow>ShowWindow('/PromoCodesActivate',{Code:'%Code%'});</ShowWindow>
 				<LinkText>[ссылка]</LinkText>
 				<Length>10</Length>
+			</Args>
+		</PromoLink>
+-->
+		<PromoLink>
+			<Head>Ссылка</Head>
+			<Prompt>Ссылка на активацию промокода, для рассылок</Prompt>
+			<Comp>Formats/String</Comp>     
+			<Args>                          
+				<Value>[ссылка]</Value>
+				<Length>15</Length>
+				<ListElement>/v2/Bonuses?section=promos&amp;PromoCode=%Code%</ListElement>
 			</Args>
 		</PromoLink>
 		<!-- ********************************************************************** -->
