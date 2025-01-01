@@ -41,6 +41,10 @@ Header('Cache-Control: no-cache, must-revalidate');
 Header('Content-Type: text/html; charset=utf-8');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// задаём незаданное, php 8.2 плохо к NULL относится в регулярках
+$GLOBALS['_SERVER']['HTTP_USER_AGENT'] = IsSet($GLOBALS['_SERVER']['HTTP_USER_AGENT'])?$GLOBALS['_SERVER']['HTTP_USER_AGENT']:'';
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # added by lissyara, 2016-08-18 in 12:58 MSK
 # какие-то странности с Error_Reporting - уровень перехвата ставится, но со второго раза =)
 Error_Reporting(E_ALL & ~E_DEPRECATED);
@@ -86,7 +90,7 @@ if (!Defined('SMARTY_PLUGINS_DIR'))
 $BrowsersIDs = Array('MSIE','Konqueror','Firefox','Opera','Chrome','UnKnown');
 #-------------------------------------------------------------------------------
 foreach($BrowsersIDs as $BrowserID)
-	if(Preg_Match(SPrintF('/%s/is',$BrowserID),@$_SERVER['HTTP_USER_AGENT']))
+	if(Preg_Match(SPrintF('/%s/is',$BrowserID),$_SERVER['HTTP_USER_AGENT']))
 		break;
 #-------------------------------------------------------------------------------
 if(!Define('BROWSER_ID',$BrowserID))
@@ -623,7 +627,7 @@ function __ShutDown_Function__(){
 			'REMOTE_ADDR'		=> IsSet($GLOBALS['_SERVER']['REMOTE_ADDR'])	?$GLOBALS['_SERVER']['REMOTE_ADDR']:'',
 			'REQUEST_URI'		=> IsSet($GLOBALS['_SERVER']['REQUEST_URI'])	?$GLOBALS['_SERVER']['REQUEST_URI']:'',
 			'HTTP_REFERER'		=> IsSet($GLOBALS['_SERVER']['HTTP_REFERER'])	?$GLOBALS['_SERVER']['HTTP_REFERER']:'',
-			'HTTP_USER_AGENT'	=> IsSet($GLOBALS['_SERVER']['HTTP_USER_AGENT'])?$GLOBALS['_SERVER']['HTTP_USER_AGENT']:'',
+			'HTTP_USER_AGENT'	=> $GLOBALS['_SERVER']['HTTP_USER_AGENT'],
 			'WORK_TIME'		=> $WorkTimeTmp,
 			'TIME_MYSQL'		=> $GLOBALS['__TIME_MYSQL'],
 			'COUNTER_MYSQL'		=> $GLOBALS['__COUNTER_MYSQL'],

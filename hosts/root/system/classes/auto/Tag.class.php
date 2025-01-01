@@ -221,7 +221,7 @@ function ToArray(){
 		if(IsSet($this->Attribs['type']))
 			$Type = $this->Attribs['type'];
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[system/classes/auto/Tag]: Type = %s',$Type));
+		//Debug(SPrintF('[system/classes/auto/Tag]: Type = %s',$Type));
 		#-------------------------------------------------------------------------------
 		// c php 8 падает если тип несуществующий. ISPsystem/ISPmanager таким балуются
 		// у них есть тип "ok" например...
