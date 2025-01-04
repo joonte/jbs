@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 #Debug(SPrintF('[comp/Formats/String]: Value = %s; Length = %s; Url = %s',$Value,$Length,$Url));
 #-------------------------------------------------------------------------------
 if($IsHtmlEncode)
-	$Value = HtmlSpecialChars($Value);
+	$Value = HtmlSpecialChars($Value,ENT_COMPAT);
 #-------------------------------------------------------------------------------
 // ломается меню левое, в услугах
 #if(Is_Null($Url))

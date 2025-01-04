@@ -256,7 +256,7 @@ function ToXMLString($Level = 0,$IsFormat = TRUE){
   $Attribs = $this->Attribs;
   #-----------------------------------------------------------------------------
   foreach(Array_Keys($Attribs) as $AttribID)
-    $Result .= SPrintF(' %s="%s"',$AttribID,HtmlSpecialChars((string)$Attribs[$AttribID]));
+    $Result .= SPrintF(' %s="%s"',$AttribID,HtmlSpecialChars((string)$Attribs[$AttribID],ENT_COMPAT));
   #-----------------------------------------------------------------------------
   $Childs = $this->Childs;
   #-----------------------------------------------------------------------------
@@ -279,12 +279,12 @@ function ToXMLString($Level = 0,$IsFormat = TRUE){
     $Nodes = '';
     #---------------------------------------------------------------------------
     foreach($Childs as $Child)
-      $Nodes .= (In_Array($Child->Name,Array('CDATA'))?HtmlSpecialChars($Child->Text):$Child->ToXMLString($Level + 1,$IsNoCData));
+      $Nodes .= (In_Array($Child->Name,Array('CDATA'))?HtmlSpecialChars($Child->Text,ENT_COMPAT):$Child->ToXMLString($Level + 1,$IsNoCData));
     #---------------------------------------------------------------------------
     $Result .= ($IsNoCData?SPrintF("\n%s%s",$Nodes,$Level?Str_Pad(' ',$Level):''):$Nodes);
   }else{
     #---------------------------------------------------------------------------
-    $Text = (IsSet($Attribs['force-escape'])?$this->Text:HtmlSpecialChars($this->Text));
+    $Text = (IsSet($Attribs['force-escape'])?$this->Text:HtmlSpecialChars($this->Text,ENT_COMPAT));
     #---------------------------------------------------------------------------
     $IsShort = ((!Mb_StrLen($Text)) && !In_Array($Name,Array('TEXTAREA','BUTTON','TITLE','SCRIPT','TABLE','TD','TR')));
     #---------------------------------------------------------------------------
