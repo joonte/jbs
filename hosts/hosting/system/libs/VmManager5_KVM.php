@@ -1171,7 +1171,8 @@ function VmManager5_KVM_Get_NodeList($Settings){
 		#-----------------------------------------------------------------------------
 		function CMP($a, $b){
 			#-----------------------------------------------------------------------------
-        		return ($a['DiskMemUsage'] > $b['DiskMemUsage']);
+			//return ($a['DiskMemUsage'] > $b['DiskMemUsage']);
+			return ($a['DiskMemUsage'] > $b['DiskMemUsage'])?$b['DiskMemUsage']:$a['DiskMemUsage'];
 			#-----------------------------------------------------------------------------
 		}
 		#-----------------------------------------------------------------------------

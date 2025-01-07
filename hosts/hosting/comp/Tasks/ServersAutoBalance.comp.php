@@ -144,7 +144,7 @@ foreach($ServersGroups as $ServersGroup){
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: Servers = %s',print_r($Servers,true)));
+		//Debug(SPrintF('[comp/Tasks/ServersAutoBalance]: Servers = %s',print_r($Servers,true)));
 		#-------------------------------------------------------------------------------
 		if(SizeOf($Servers) < 1){
 			#-------------------------------------------------------------------------------

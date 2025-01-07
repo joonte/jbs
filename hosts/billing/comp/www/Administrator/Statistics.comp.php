@@ -146,7 +146,9 @@ if($IsCreate){
 	if(!Count($DOM->Links['Into']->Childs))
 		return '<P style="color:#990000;">Статистика не сформирована</P>';
 	#-------------------------------------------------------------------------------
-	$IsWrite = IO_Write(SPrintF('%s/index.html',$Folder),$DOM->Build(),TRUE);
+	// хрень какая-то, стало одиночную кавычку как &#039; записывать ... 
+	$IsWrite = IO_Write(SPrintF('%s/index.html',$Folder),Str_Replace("&#039;","'",$DOM->Build()),TRUE);
+	//$IsWrite = IO_Write(SPrintF('%s/index.html',$Folder),$DOM->Build(),TRUE);
 	if(Is_Error($IsWrite))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
