@@ -29,6 +29,7 @@ $Columns = Array(
 		'*',
 		'(SELECT `Params` FROM `Services` WHERE `ID` = `OrdersOwners`.`ServiceID`) AS `AjaxCall`',
 		'(SELECT `Code` FROM `Services` WHERE `ID` = `OrdersOwners`.`ServiceID`) AS `Code`',
+		'(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`OrdersOwners`.`ID`) AS PayedSumm',
 		);
 $Orders = DB_Select('OrdersOwners',$Columns,Array('Where'=>SPrintF("`UserID` = %u",$GLOBALS['__USER']['ID']),'SortOn'=>Array('ServiceID','ID')));
 #-------------------------------------------------------------------------------
