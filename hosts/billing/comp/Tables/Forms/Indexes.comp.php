@@ -21,8 +21,8 @@ $CacheID = 'TableSuper[Indexes]';
 if(!$NoBody = Cache_Get($CacheID)){
 	#-------------------------------------------------------------------------------
 	$Count = $Template['Source']['Count'];
-	#Debug(SPrintF('[comp/Tables/Forms/Indexes]: $Count = %s',print_r($Count,true)));
-	#Debug(SPrintF('[comp/Tables/Forms/Indexes]: $Template = %s',print_r($Template,true)));
+//	Debug(SPrintF('[comp/Tables/Forms/Indexes]: $Count = %s',print_r($Count,true)));
+//	Debug(SPrintF('[comp/Tables/Forms/Indexes]: $Template = %s',print_r($Template,true)));
 	#-------------------------------------------------------------------------------
 	if($Count < 1)
 		return FALSE;
@@ -69,12 +69,14 @@ if(!$NoBody = Cache_Get($CacheID)){
 	if($Right > ($Pages = Ceil($Count/$InPage)))
 		$Left -= $Right - $Pages;
 	#-------------------------------------------------------------------------------
+	// стрелка в лево, костыль на первую страницу
 	if($Left > 0)
-		$Div->AddChild(new Tag('IMG',Array('class'=>'Button','alt'=>'Прокрутить назад','width'=>12,'height'=>10,'onclick'=>SPrintF('TableSuperSetIndex(%s);',$Index-6),'src'=>'SRC:{Images/ArrowLeft.gif}')));
+		$Div->AddChild(new Tag('IMG',Array('class'=>'Button','alt'=>'Прокрутить назад','width'=>12,'height'=>10,'onclick'=>SPrintF('TableSuperSetIndex(%s);',0/*$Index-6*/),'src'=>'SRC:{Images/ArrowLeft.gif}')));
 	#-------------------------------------------------------------------------------
 	$Left  = Max(0,$Left);
 	$Right = Min($Pages,$Right);
 	#-------------------------------------------------------------------------------
+	// кнопки с номерами страниц
 	for($i=$Left;$i<$Right;$i++){
 		#-------------------------------------------------------------------------------
 		$Button = new Tag('BUTTON',Array('class'=>'TableSuperIndexes','onclick'=>SPrintF('TableSuperSetIndex(%s);',$i)),$i+1);
@@ -86,8 +88,9 @@ if(!$NoBody = Cache_Get($CacheID)){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
+	// стрелка вправо, костыль на последнюю страницу
 	if($Right < $Pages)
-		$Div->AddChild(new Tag('IMG',Array('class'=>'Button','alt'=>'Прокрутить вперед','width'=>12,'height'=>10,'onclick'=>SPrintF('TableSuperSetIndex(%s);',$Index+6),'src'=>'SRC:{Images/ArrowRight.gif}')));
+		$Div->AddChild(new Tag('IMG',Array('class'=>'Button','alt'=>'Прокрутить вперед','width'=>12,'height'=>10,'onclick'=>SPrintF('TableSuperSetIndex(%s);',$Pages-1/*$Index+6*/),'src'=>'SRC:{Images/ArrowRight.gif}')));
 	#-------------------------------------------------------------------------------
 	$NoBody = new Tag('NOBODY',$Div);
 	#-------------------------------------------------------------------------------
