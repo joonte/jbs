@@ -135,12 +135,20 @@ if(!$Confirm && !$Code){
 		return new gException('INFORMATION_NOT_SAVED', 'Для подтверждения, вначале сохраните настройки с введёнными данными');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	$Array = Explode(',',$Config['Other']['Modules']['Security']['ExcludeIPs']);
+	#-------------------------------------------------------------------------------
+	// с сайта и т.п. делаем минимальный интерфал, чисто от залипания
+	foreach($Array as $IP)
+		if(Trim($IP) == @$_SERVER['REMOTE_ADDR'])
+			$Settings['ConfirmInterval'] = 5;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	// Защита от агрессивно настроенных, любителей долбить кнопку раз за разом
 	$Result = CacheManager::get($Cache);
 	#-------------------------------------------------------------------------------
 	if($Result){
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('Formats/Date/Remainder',$Settings['ConfirmInterval']);
+		$Comp = Comp_Load('Formats/Date/Remainder',$Settings['ConfirmInterval'] + $Result - Time());
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
@@ -217,7 +225,7 @@ if(!$Confirm && !$Code){
 	$Theme = SPrintF('Подтверждение %s адреса',$Config['Notifies']['Methods'][$Method]['Name']);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load(SPrintF('Tasks/%s',$Method),NULL,$Value,($Config['Notifies']['Methods'][$Method]['MessageTemplate'] == 'Small')?$MessageSmall:$MessageBig,Array('From'=>$Executor,'UserName'=>$__USER['Name'],'UserID'=>$__USER['ID'],'Theme'=>$Theme,'Contact'=>$Contact,'ChargeFree'=>TRUE));
+	$Comp = Comp_Load(SPrintF('Tasks/%s',$Method),NULL,$Value,($Config['Notifies']['Methods'][$Method]['MessageTemplate'] == 'Small')?$MessageSmall:$MessageBig,Array('From'=>$Executor,'UserName'=>$__USER['Name'],'UserID'=>$__USER['ID'],'Theme'=>$Theme,'Contact'=>$Contact,'ChargeFree'=>TRUE,'IsImmediately'=>TRUE));
 	if(Is_Error($Comp))
 		return new gException('ERROR_MESSAGE_SEND','Не удалось отправить сообщение');
 	#-------------------------------------------------------------------------------
