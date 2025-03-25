@@ -36,7 +36,6 @@ if($OrderID > 0)
 #-------------------------------------------------------------------------------
 $Columns = Array(	'*',
 			'(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `HostingOrdersOwners`.`ContractID`) AS `Customer`','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`) AS `ServerID`',
-			'(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`HostingOrdersOwners`.`OrderID`) AS PayedSumm',
 			);
 $HostingOrders = DB_Select('HostingOrdersOwners',$Columns,Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
