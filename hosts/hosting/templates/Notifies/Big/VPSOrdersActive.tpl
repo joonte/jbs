@@ -22,7 +22,7 @@
  
 Если вы заказывали сервер с операционной системой Windows, то вы можете войти на него по RDP:
   * IP адрес сервера: {$IP|default:'$IP'}
-  * Имя пользователя: Administrator
+  * Имя пользователя: Administrator (или Admin)
   * Пароль: {$Password|default:'$Password'}
   * rdp://full%20address=s:{$IP|default:'$IP'}:3389&username=s:Administrator
 
