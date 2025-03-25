@@ -22,8 +22,12 @@ $Flags         =  (string) @$Args['Flags'];
 $NotifyEmail   =  (string) @$Args['NotifyEmail'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-// усекаем сообщение на 32k символов
+//обработка темы
 $Theme	= Mb_SubStr(Mb_Convert_Encoding($Theme,'UTF-8'), 0, 127);
+// удаляем спецсимволы, кроме букв/цифр/пунктуации: https://www.php.net/manual/ru/regexp.reference.unicode.php
+$Theme	= Preg_Replace('#[^\\pL\pP\pPo\d]+#u', ' ', $Theme);
+#-------------------------------------------------------------------------------
+// усекаем сообщение на 32k символов
 $Message= Mb_SubStr(Mb_Convert_Encoding(Trim($Message),'UTF-8'),0,32000);
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
