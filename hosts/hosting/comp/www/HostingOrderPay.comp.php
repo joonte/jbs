@@ -101,7 +101,7 @@ default:
 # проверяем, это первая оплата или нет? если не первая, то минимальное число дней MinDaysProlong
 Debug(SPrintF('[comp/www/HostingOrderPay]: ранее оплачено за заказ %s',$HostingOrder['PayedSumm']));
 #-------------------------------------------------------------------------------
-$MinDaysPay = ($HostingOrder['PayedSumm'] > 0)?$HostingScheme['MinDaysProlong']:$HostingScheme['MinDaysPay'];
+$MinDaysPay = ($HostingOrder['IsPayed'])?$HostingScheme['MinDaysProlong']:$HostingScheme['MinDaysPay'];
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/www/HostingOrderPay]: минимальное число дней %s',$MinDaysPay));
 #-------------------------------------------------------------------------------

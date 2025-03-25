@@ -98,7 +98,7 @@ default:
 # проверяем, это первая оплата или нет? если не первая, то минимальное число дней MinDaysProlong
 Debug(SPrintF('[comp/www/DSOrderPay]: ранее оплачено за заказ %s',$DSOrder['PayedSumm']));
 #-------------------------------------------------------------------------------
-$MinDaysPay = ($DSOrder['PayedSumm'] > 0)?$DSScheme['MinDaysProlong']:$DSScheme['MinDaysPay'];
+$MinDaysPay = ($DSOrder['IsPayed'])?$DSScheme['MinDaysProlong']:$DSScheme['MinDaysPay'];
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/www/DSOrderPay]: минимальное число дней %s',$MinDaysPay));
 #-------------------------------------------------------------------------------

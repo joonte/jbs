@@ -101,7 +101,7 @@ default:
 # проверяем, это первая оплата или нет? если не первая, то минимальное число дней MinDaysProlong
 Debug(SPrintF('[comp/www/VPSOrderPay]: ранее оплачено за заказ %s',$VPSOrder['PayedSumm']));
 #-------------------------------------------------------------------------------
-$MinDaysPay = ($VPSOrder['PayedSumm'] > 0)?$VPSScheme['MinDaysProlong']:$VPSScheme['MinDaysPay'];
+$MinDaysPay = ($VPSOrder['IsPayed'])?$VPSScheme['MinDaysProlong']:$VPSScheme['MinDaysPay'];
 #-------------------------------------------------------------------------------
 Debug(SPrintF('[comp/www/VPSOrderPay]: минимальное число дней %s',$MinDaysPay));
 #-------------------------------------------------------------------------------
