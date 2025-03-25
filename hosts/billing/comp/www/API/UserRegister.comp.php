@@ -43,6 +43,9 @@ $Email = StrToLower(Trim($Email));
 if(!Preg_Match($Regulars['Email'],$Email))
 	return new gException('WRONG_EMAIL','Неверно указан электронный адрес');
 #-------------------------------------------------------------------------------
+// причёсываем имя - лезут абдурахманы всякие со спецсимволами
+$Name  = Preg_Replace('#[^\\pL\pP\pPo\d]+#u', ' ', $Name);
+#-------------------------------------------------------------------------------
 if(!Preg_Match($Regulars['UserName'],$Name))
 	return new gException('WRONG_USER_NAME','Вы ввели неверное имя');
 #-------------------------------------------------------------------------------
@@ -301,7 +304,7 @@ if(Is_Error($Session->Save()))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return Array('Status'=>'Ok','SessionID'=>$SessionID,'User'=>$Init,'Home'=>SPrintF('/%s/Home',$Init['InterfaceID']),'ContractID'=>$ContractID,'UserID'=>$UserID,'ID'=>$UserID,'Home'=>($Eval?SPrintF('/Home?Eval=%s',$Eval):'/v2/Home'));
+return Array('Status'=>'Ok','SessionID'=>$SessionID,'User'=>$Init,'Home'=>SPrintF('/%s/Home',$Init['InterfaceID']),'ContractID'=>$ContractID,'UserID'=>$UserID,'ID'=>$UserID,'Home'=>($Eval?SPrintF('/v2/Home?Eval=%s',$Eval):'/v2/Home'));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
