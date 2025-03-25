@@ -369,7 +369,7 @@
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>руб</Measure>
 				<Valute>RUB</Valute>
-				<MinimumPayment>1.00</MinimumPayment>
+				<MinimumPayment>0.99</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
 				<Is54-FZ>1</Is54-FZ>
