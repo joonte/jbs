@@ -290,7 +290,7 @@ $Params['Tables'][] = Array(
 // UsersIPs
 $Params['Tables'][] = Array(
 				'Table'	=> 'UsersIPs',
-				'Wheres'=> Array('`CreateDate` < UNIX_TIMESTAMP() - 366*24*3600')
+				'Wheres'=> Array('`CreateDate` < UNIX_TIMESTAMP() - 2*366*24*3600')
 				);
 #--------------------------------------------------------------------------------
 // Events
