@@ -122,6 +122,38 @@
 </net_bandwidth_mbitps>
 <!-- *********************************************************************** -->
 <!--
+https://www.ispsystem.ru/docs/vmmanager-admin/razrabotchiku/api/vmmanager-api#/host/edit_host
+-->
+<snapshots_allowed>
+	<Name>Снимки разрешены</Name>
+	<Description>Владелец виртуальной машины может делать снимки</Description>
+	<Value>0</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</snapshots_allowed>
+<!-- *********************************************************************** -->
+<snapshot_ram>
+	<Name>Снимки памяти</Name>
+	<Description>Владелец виртуальной машины может делать снимки с состоянием оперативной памяти. Бесполезная в практическом смысле хрень, лучше и не включать</Description>
+	<Value>0</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</snapshot_ram>
+<!-- *********************************************************************** -->
+<snapshot_limit>
+	<Name>Число снимков</Name>
+	<Description>Максимальнео число снимков состояния машины, доступное пользователю.</Description>
+	<Value>0</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Unit>шт.</Unit>
+	<Min>0</Min>
+	<Max>99</Max>
+</snapshot_limit>
+<!-- *********************************************************************** -->
+<!--
   "ip_addr": {
     "name": "string",
     "ip_pool": 0,
