@@ -18,6 +18,7 @@ $IsActive	= (boolean) @$Args['IsActive'];
 $IsSendFiles	= (boolean) @$Args['IsSendFiles'];
 $IsImmediately	= (boolean) @$Args['IsImmediately'];
 $IsPrimary	= (boolean) @$Args['IsPrimary'];
+$IsAPI		= (boolean) @$Args['IsAPI'];	// запрос внешнего АПИ, для сайта
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 	return ERROR | @Trigger_Error(500);
@@ -104,10 +105,19 @@ if($AddressCountHidden){
 #-------------------------------------------------------------------------------
 # проверяем что адрес уже не добавлен у этого же юзера
 if($ContactID && $Contact['Address'] != $Address && $AddressCount)	// редактирование существующего контакта, смена адреса, но адрес уже есть
-	return new gException('ADDRESS_ALREDY_ESISTS',SPrintF('У вас уже есть адрес %s',$Address));
+	return new gException('ADDRESS_ALREDY_EXISTS',SPrintF('У вас уже есть адрес %s',$Address));
 #-------------------------------------------------------------------------------
-if(!$ContactID && $AddressCount)	// добавление нового, но адрес уже есть
-	return new gException('ADDRESS_ALREDY_ESISTS',SPrintF('У вас уже добавлен адрес %s',$Address));
+if(!$ContactID && $AddressCount){	// добавление нового, но адрес уже есть
+	#-------------------------------------------------------------------------------
+	if(!$IsAPI)
+		return new gException('ADDRESS_ALREDY_EXISTS',SPrintF('У вас уже добавлен адрес %s',$Address));
+	#-------------------------------------------------------------------------------
+	// надо достать данные контакта
+	foreach($GLOBALS['__USER']['Contacts'] as $iContact)
+		if($iContact['Address'] == $Address && $iContact['MethodID'] == $MethodID)
+			return Array('Status'=>'Error','ContactID'=>$iContact['ID'],'Confirmed'=>$iContact['Confirmed'],'Message'=>SPrintF('У вас уже добавлен адрес %s',$Address));
+	#-------------------------------------------------------------------------------
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # проверяем IsPrimary
