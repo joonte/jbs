@@ -99,8 +99,10 @@ if(!Define('BROWSER_ID',$BrowserID))
 UnSet($BrowsersIDs,$BrowserID);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(!Define('XML_HTTP_REQUEST',IsSet($_GET['XMLHttpRequest']) || IsSet($_POST['XMLHttpRequest'])))
-	return ERROR | @Trigger_Error(500);
+# moved to Args.php
+#if(!Defined('XML_HTTP_REQUEST'))
+#	if(!Define('XML_HTTP_REQUEST',IsSet($_GET['XMLHttpRequest']) || IsSet($_POST['XMLHttpRequest'])))
+#		return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $HostID = StrToLower(@$_SERVER['HTTP_HOST']);
@@ -375,7 +377,7 @@ function __Error_Handler__($Number,$Error,$File,$Line){
 			#-------------------------------------------------------------------------------
 			@Header(SPrintF('JBs-ErrorID: %s',$JBsErrorID));
 			#-------------------------------------------------------------------------------
-			if(IsSet($_POST['XMLHttpRequest'])){
+			if(IsSet($_POST['XMLHttpRequest']) || IsSet($_GET['XMLHttpRequest'])){
 				#-------------------------------------------------------------------------------
 				$Answer = Array('Error'=>Array('CodeID'=>$__ERR_CODE,'String'=>$String),'Status'=>'Error');
 				#-------------------------------------------------------------------------------
