@@ -1,0 +1,1 @@
+import{o as e,c as a,a as s,t as o,_ as c}from"./index-c781268b.js";const _={class:"empty-state-block"},n={class:"empty-state-block__text"};function l(r,d,t,i,m,y){return e(),a("div",_,[s("div",n,o(t.label),1)])}const p={props:{label:{type:[String,Number],default:""}}},u=c(p,[["render",l],["__scopeId","data-v-fa29325a"]]);export{u as E};
