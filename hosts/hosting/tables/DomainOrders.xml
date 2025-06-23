@@ -29,6 +29,7 @@
 			<ListElement>AdminNotice</ListElement>
 			<ListElement>(SELECT `Name` FROM `DomainSchemes` WHERE `DomainOrdersOwners`.`SchemeID`=`DomainSchemes`.`ID`) AS `DomainZone`</ListElement>
 			<ListElement>(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `DomainOrdersOwners`.`ServerID`) AS `DomainServer`</ListElement>
+			<ListElement>(SELECT `TypeID` FROM `Contracts` WHERE `Contracts`.`ID` = `DomainOrdersOwners`.`ContractID`) AS `ContractTypeID`</ListElement>
 		</ColumnsIDs>
 		<Conditions>
 			<Message>Заказов на домены не обнаружено.</Message>
@@ -70,26 +71,6 @@
 							<Where>`StatusID` = 'Waiting'</Where>
 						</Waiting>
 						<!-- ****************************************************************** -->
-						<ClaimForRegister>
-							<Name>Заказы на регистрацию</Name>
-							<Where>`StatusID` = 'ClaimForRegister'</Where>
-						</ClaimForRegister>
-						<!-- ****************************************************************** -->
-						<ForRegister>
-							<Name>Заказы для регистрации</Name>
-							<Where>`StatusID` = 'ForRegister'</Where>
-						</ForRegister>
-						<!-- ****************************************************************** -->
-						<OnRegister>
-							<Name>Заказы на регистрации</Name>
-							<Where>`StatusID` = 'OnRegister'</Where>
-						</OnRegister>
-						<!-- ****************************************************************** -->
-						<OnProlong>
-							<Name>Заказы для продления</Name>
-							<Where>`StatusID` = 'OnProlong'</Where>
-						</OnProlong>
-						<!-- ****************************************************************** -->
 						<Active>
 							<Name>Активные заказы</Name>
 							<Where>`StatusID` = 'Active'</Where>
@@ -115,10 +96,10 @@
 							<Where>`StatusID` = 'Deleted'</Where>
 						</Deleted>
 						<!-- ****************************************************************** -->
-						<NsChange>
-							<Name>На смене серверов DNS</Name>
-							<Where>`StatusID` = 'ForNsChange'</Where>
-						</NsChange>
+						<Juridical>
+							<Name>Заказы юридических лиц</Name>
+							<Where>(SELECT `TypeID` FROM `Contracts` WHERE `Contracts`.`ID` = `DomainOrdersOwners`.`ContractID`) = 'Juridical'</Where>
+						</Juridical>
 						<!-- ****************************************************************** -->
 						<OnProcessing>
 							<Name>В переходном статусе</Name>
