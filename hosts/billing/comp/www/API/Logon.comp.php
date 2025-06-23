@@ -77,7 +77,7 @@ if($Result){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Users = DB_Select('Users',Array('ID','Name','Email','Watchword','UniqID','IsActive','LockReason','EnterIP','EnterDate'),Array('SortOn'=>'ID','Where'=>SPrintF("Email = '%s'",StrToLower($Email))));
+$Users = DB_Select('Users',Array('ID','Name','Email','Watchword','UniqID','IsActive','LockReason','EnterIP','EnterDate','ConfirmedWas'),Array('SortOn'=>'ID','Where'=>SPrintF("Email = '%s'",StrToLower($Email))));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Users)){
 case 'error':
@@ -188,8 +188,8 @@ if(!$Event)
 CacheManager::add($CacheID,0,IntVal($Settings['BruteForcePeriod']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-Debug(print_r(Array('Status'=>'Ok','SessionID'=>$SessionID,'User'=>$Init,'Home'=>SPrintF('/%s/Home',$Init['InterfaceID']),'ContractID'=>$ContractID,'UserID'=>$UserID,'ID'=>$UserID),true));
-return Array('Status'=>'Ok','SessionID'=>$SessionID,'User'=>$Init,'Home'=>SPrintF('/%s/Home',$Init['InterfaceID']),'ContractID'=>$ContractID,'UserID'=>$UserID,'ID'=>$UserID);
+$Out = Array('Status'=>'Ok','SessionID'=>$SessionID,'User'=>$Init,'Home'=>SPrintF('/%s/Home',$Init['InterfaceID']),'ContractID'=>$ContractID,'UserID'=>$UserID,'ID'=>$UserID, 'Confirmed'=>SizeOf($User['ConfirmedWas']));
+return $Out;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
