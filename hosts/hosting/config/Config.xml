@@ -890,6 +890,7 @@
 				<Name>Уведомления об окончании заказов штатных услуг</Name>
 				<Params type="array"/>
 				<ExecuteTime>04:20</ExecuteTime>
+				<NotifyZeroPrice>0</NotifyZeroPrice>
 				<IsActive>1</IsActive>
 			</NoticeSuspend>
 			<!-- *********************************************************************** -->
