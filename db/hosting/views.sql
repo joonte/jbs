@@ -174,6 +174,8 @@ DROP VIEW IF EXISTS `DSOrdersOwners`;
 DROP TABLE IF EXISTS `DSOrdersOwners`;
 CREATE VIEW `DSOrdersOwners` AS select
 	`DSOrders`.*,
+	`IP` AS `Login`,
+	`IP` AS `Domain`,
 	`OrdersOwners`.`ServiceID`,
 	`OrdersOwners`.`ServerID`,
 	(SELECT `DaysRemainded` FROM `OrdersOwners` WHERE `DSOrders`.`OrderID` = `OrdersOwners`.`ID`) AS `DaysRemainded`,
