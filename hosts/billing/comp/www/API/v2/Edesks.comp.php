@@ -18,7 +18,7 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 $Out = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Edesks = DB_Select('EdesksOwners',Array('ID','CreateDate','UserID','PriorityID','Theme','UpdateDate','StatusID','StatusDate','SeenByUser','Flags','Content','MessageID'),Array('Where'=>'`UserID` = @local.__USER_ID'));
+$Edesks = DB_Select('EdesksOwners',Array('ID','CreateDate','UserID','PriorityID','Theme','UpdateDate','StatusID','StatusDate','SeenByUser','Flags','Content','MessageID'),Array('Where'=>'`UserID` = @local.__USER_ID','SortOn'=>'UpdateDate'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Edesks)){
 case 'error':
