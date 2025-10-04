@@ -16,7 +16,7 @@
 {$ISPswOrder.ProlongLink|default:'$ISPswOrder.ProlongLink'}
 {else}
 --
-Для продления заказа, необходимо сменить тарифный план "{$ISPswOrder.Name|default:'$ISPswOrder.Name'}" на другой:
+Для продления заказа, необходимо сменить тарифный план "{$ISPswOrder.SchemeName|default:'$ISPswOrder.SchemeName'}" на другой:
 {$ISPswOrder.SchemeChangeLink|default:'$ISPswOrder.SchemeChangeLink'}
 После чего заказ можно будет продлить:
 {$ISPswOrder.ProlongLink|default:'$ISPswOrder.ProlongLink'}
