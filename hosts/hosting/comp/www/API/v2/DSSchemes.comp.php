@@ -72,7 +72,7 @@ if(!SizeOf($SchemesIDs))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Columns = Array(
-		'ID','Name','PackageID','CostDay','CostMonth','CostInstall','Discount','ServerID','IsProlong','MinDaysPay','MinDaysProlong',
+		'ID','Name','PackageID','CostDay','CostMonth','CostInstall','Discount','ServerID','IsActive','IsProlong','MinDaysPay','MinDaysProlong',
 		'MaxDaysPay','CPU','ram','raid','disks','chrate','trafflimit','OS','UserNotice'
 		);
 #-------------------------------------------------------------------------------
