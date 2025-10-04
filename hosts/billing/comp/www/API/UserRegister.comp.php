@@ -275,10 +275,10 @@ if(!$IsLoad){
 	#-------------------------------------------------------------------------------
 	$Session->Data['UsersIDs'] = Array();
 	#-------------------------------------------------------------------------------
-	if(!SetCookie('SessionID',$SessionID,Time() + 2678400,'/'))
+	if(!SetCookie('SessionID',$SessionID,Time() + 2678400,'/',SPrintF('.%s',HOST_ID)))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	if(!SetCookie('Email',$Email,Time() + 2678400,'/'))
+	if(!SetCookie('Email',$Email,Time() + 2678400,'/',SPrintF('.%s',HOST_ID)))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 }

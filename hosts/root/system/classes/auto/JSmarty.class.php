@@ -47,7 +47,7 @@ class JSmarty extends Smarty {
             $this->currentLang = self::DFLT_LANG;
         }
 
-        setcookie('lang', $this->currentLang);
+        setcookie('lang', $this->currentLang,0,'/',SPrintF('.%s',HOST_ID));
 
         $langPath = System_Element('templates/lang/'.$this->currentLang.'.php');
         $langMsgs = include_once($langPath);

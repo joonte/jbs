@@ -16,7 +16,7 @@ $Session = new Session((string)@$_COOKIE['SessionID']);
 if(Is_Error($Session->Delete()))
 	return ERROR | @Trigger_Error(400);
 #-------------------------------------------------------------------------------
-if(!SetCookie('SessionID','closed',Time(),'/'))
+if(!SetCookie('SessionID','closed',Time(),'/',SPrintF('.%s',HOST_ID)))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

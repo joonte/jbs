@@ -162,7 +162,7 @@ $Session->Data['RootID'] = $UserID;
 if(Is_Error($Session->Save()))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if(!SetCookie('SessionID',$SessionID,Time() + ($IsRemember?2678400:86400),'/'))
+if(!SetCookie('SessionID',$SessionID,Time() + ($IsRemember?2678400:86400),'/',SPrintF('.%s',HOST_ID)))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $_COOKIE['SessionID'] = $SessionID;
@@ -173,7 +173,7 @@ if(Is_Error($Init))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if(!SetCookie('Email',$Init['Email'],Time() + 31536000,'/'))
+if(!SetCookie('Email',$Init['Email'],Time() + 31536000,'/',SPrintF('.%s',HOST_ID)))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

@@ -7,7 +7,7 @@ if(IsSet($Args['SessionID'])){
 	#-------------------------------------------------------------------------------
 	$SessionID = $Args['SessionID'];
 	#-------------------------------------------------------------------------------
-	if(!SetCookie('SessionID',$SessionID,0,'/'))
+	if(!SetCookie('SessionID',$SessionID,0,'/',SPrintF('.%s',HOST_ID)))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	$_COOKIE['SessionID'] = $SessionID;

@@ -10,27 +10,28 @@ if(IsSet($Args['OwnerID'])){
   if(Is_Error($Owner))
     return ERROR | @Trigger_Error(500);
   #-----------------------------------------------------------------------------
-  if($Owner > 0){    #---------------------------------------------------------------------------
-    if(!SetCookie('OwnerID',$OwnerID))
+  if($Owner > 0){
+     #---------------------------------------------------------------------------
+    if(!SetCookie('OwnerID',$OwnerID,0,'/',SPrintF('.%s',HOST_ID)))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
     $_COOKIE['OwnerID'] = $OwnerID;
     #---------------------------------------------------------------------------
     if(IsSet($Args['IsManaged'])){
       #-------------------------------------------------------------------------
-      if(!SetCookie('IsManaged','yes'))
+      if(!SetCookie('IsManaged','yes',0,'/',SPrintF('.%s',HOST_ID)))
         return ERROR | @Trigger_Error(500);
       #-------------------------------------------------------------------------
       $_COOKIE['IsManaged'] = TRUE;
     }
   }else{
     #---------------------------------------------------------------------------
-    if(!SetCookie('OwnerID',$OwnerID,Time() - 3600))
+    if(!SetCookie('OwnerID',$OwnerID,Time() - 3600,'/',SPrintF('.%s',HOST_ID)))
       return ERROR | @Trigger_Error(500);
     #---------------------------------------------------------------------------
     if(IsSet($_COOKIE['IsManaged'])){
       #-------------------------------------------------------------------------
-      if(!SetCookie('IsManaged','',Time() - 3600))
+      if(!SetCookie('IsManaged','',Time() - 3600,'/',SPrintF('.%s',HOST_ID)))
         return ERROR | @Trigger_Error(500);
     }
   }

@@ -77,7 +77,7 @@ if($UserID){
   $UsersIDs = Array($UserID);
 }
 #-------------------------------------------------------------------------------
-if(!SetCookie(Md5($__USER['ID']),@$_SERVER['HTTP_REFERER'],Time() + 86400,'/'))
+if(!SetCookie(Md5($__USER['ID']),@$_SERVER['HTTP_REFERER'],Time() + 86400,'/',SPrintF('.%s',HOST_ID)))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $User = Comp_Load('Users/Init',$UserID);
