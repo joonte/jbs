@@ -107,7 +107,7 @@ foreach(Array_Keys($PaymentSystems) as $PaymentSystemID){
 }
 #-------------------------------------------------------------------------------
 if(!Count($Options))
-	return new gException('PAYMENT_SYSTEMS_NOT_DEFINED','Платежные системы не определены');
+	return new gException('PAYMENT_SYSTEMS_NOT_DEFINED','Платёжные системы не определены');
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/Select',Array('name'=>'PaymentSystemID','size'=>SizeOf($Options),'style'=>'width: 100%;'),$Options);
 if(Is_Error($Comp))
