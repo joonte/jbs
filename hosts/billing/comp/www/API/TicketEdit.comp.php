@@ -47,7 +47,8 @@ if(Mb_StrLen(Count_Chars($Theme,3)) < $Config['Interface']['Edesks']['ThemeMinim
 $Priorities = $Config['Edesks']['Priorities'];
 #-------------------------------------------------------------------------------
 if(!In_Array($PriorityID,Array_Keys($Priorities)))
-	return new gException('WRONG_PRIORITY','Неверный приоритет запроса');
+	$PriorityID = 'Low';
+	//return new gException('WRONG_PRIORITY','Неверный приоритет запроса');
 #-------------------------------------------------------------------------------
 // разрешаем пустые сообщения если это изнутри - могут быть только вложения в письмах, без текста
 if(!$Message && IsSet($_SERVER["REMOTE_PORT"]))

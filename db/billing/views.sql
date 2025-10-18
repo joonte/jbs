@@ -114,6 +114,7 @@ FROM
 LEFT JOIN `Contracts`
 ON (`Postings`.`ContractID` = `Contracts`.`ID`);
 #-------------------------------------------------------------------------------
+/* дубликат
 DROP VIEW IF EXISTS `EdesksOwners`;
 DROP TABLE IF EXISTS `EdesksOwners`;
 CREATE
@@ -122,6 +123,7 @@ SELECT
   `Edesks`.*
 FROM
   `Edesks`;
+*/
 #-------------------------------------------------------------------------------
 DROP VIEW IF EXISTS `EdesksMessagesOwners`;
 DROP TABLE IF EXISTS `EdesksMessagesOwners`;

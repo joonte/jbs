@@ -30,7 +30,8 @@ if(!$Theme)
 $Config = Config();
 #-------------------------------------------------------------------------------
 if(!IsSet($Config['Edesks']['Priorities'][$PriorityID]))
-	return new gException('WRONG_PRIORITY_ID','Неверный приоритет');
+	$PriorityID = 'Low';
+	//return new gException('WRONG_PRIORITY_ID','Неверный приоритет');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Groups',Array('ID'=>$TargetGroupID));

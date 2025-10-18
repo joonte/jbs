@@ -18,7 +18,12 @@ if(Is_Error(System_Load('modules/Authorisation.mod')))
 $Out = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Edesks = DB_Select('EdesksOwners',Array('ID','CreateDate','UserID','PriorityID','Theme','UpdateDate','StatusID','StatusDate','SeenByUser','Flags','Content','MessageID'),Array('Where'=>'`UserID` = @local.__USER_ID','SortOn'=>'UpdateDate'));
+$Columns = Array(
+			'ID','CreateDate','UserID','PriorityID','Theme','UpdateDate','StatusID','StatusDate','SeenByUser','Flags','Content','MessageID',
+			'(SELECT COUNT(*) FROM `EdesksMessagesOwners` WHERE `EdesksMessagesOwners`.`EdeskID` = `EdesksOwners`.`ID`) AS `Messages`'
+		);
+#-------------------------------------------------------------------------------
+$Edesks = DB_Select('EdesksOwners',$Columns,Array('Where'=>'`UserID` = @local.__USER_ID','SortOn'=>'UpdateDate'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Edesks)){
 case 'error':
