@@ -1,1 +1,1 @@
--- ALTER TABLE `Edesks` DROP `PriorityID`;
+ALTER TABLE `Edesks` DROP `PriorityID`;
