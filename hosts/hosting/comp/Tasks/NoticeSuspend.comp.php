@@ -55,6 +55,7 @@ foreach($Services as $Service){
 				SPrintF('(SELECT `Balance` FROM `Contracts` WHERE `%sOrdersOwners`.`ContractID` = `ID`) AS `Balance`',$Service['Code']),
 				SPrintF('(SELECT `Name` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `SchemeName`',$Service['Code'],$Service['Code']),
 				SPrintF('(SELECT `IsProlong` FROM `%sSchemes` WHERE `%sOrdersOwners`.`SchemeID` = `ID`) AS `IsProlong`',$Service['Code'],$Service['Code']),
+				SPrintF('(SELECT `IsAutoProlong` FROM `OrdersOwners` WHERE `%sOrdersOwners`.`OrderID` = `ID`) AS `IsAutoProlong`',$Service['Code']),
 			);
 	#-------------------------------------------------------------------------------
 	$Where = "`DaysRemainded` IN (1,2,3,5,10,15) AND `StatusID` = 'Active'";
@@ -92,10 +93,10 @@ foreach($Services as $Service){
 	// перебираем заказы
 	foreach($Orders as $Order){
 		#-------------------------------------------------------------------------------
-		// если цена продления нулевая - пропускаем
-		if(!$Settings['NotifyZeroPrice'] && $Order['Cost'] < 0.01){
+		// если цена продления нулевая и включено автопродление- пропускаем
+		if(!$Settings['NotifyZeroPrice'] && $Order['Cost'] < 0.01 && $Order['IsAutoProlong']){
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/NoticeSuspend]: заказ %s/%s пропущен, стоимость продления %s',$Service['Code'],$Order['OrderID'],$Order['Cost']));
+			Debug(SPrintF('[comp/Tasks/NoticeSuspend]: заказ %s/%s пропущен, стоимость продления %s, автопродление включено',$Service['Code'],$Order['OrderID'],$Order['Cost']));
 			#-------------------------------------------------------------------------------
 			continue;
 			#-------------------------------------------------------------------------------
