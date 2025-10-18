@@ -42,7 +42,7 @@ if(Is_Error(System_Load(SPrintF('classes/%sServer.class.php',$Service['Code'])))
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Columns = Array(
-		'ID','UserID','StatusID','ServerID','StatusID','DependOrderID',
+		'ID','UserID','ContractID','StatusID','ServerID','StatusID','DependOrderID',
 		SPrintF('(SELECT `UserID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `%sOrdersOwners`.`DependOrderID`) AS `DependOrderUserID`',$Service['Code']),
 		SPrintF('(SELECT `Code` FROM `Services` WHERE `Services`.`ID` = (SELECT `ServiceID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `%sOrdersOwners`.`DependOrderID`)) AS `DependOrderCode`',$Service['Code'])
 		);
@@ -160,6 +160,15 @@ case 'true':
 default:
 	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$GLOBALS['__USER']['service_aaa']['ActionTypeId']	= 'OrderManage';
+$GLOBALS['__USER']['service_aaa']['CustomerId']		= $Order['ContractID'];
+$GLOBALS['__USER']['service_aaa']['ServiceId']		= $ServiceID;
+$GLOBALS['__USER']['service_aaa']['Login']		= $Order['Login'];
+#-------------------------------------------------------------------------------
+if(!SORM_add('service_aaa',$GLOBALS['__USER']['service_aaa']))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Params = Array('Login'=>$Order['Login'],'Password'=>$Order['Password']);

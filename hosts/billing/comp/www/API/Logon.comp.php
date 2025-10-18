@@ -15,9 +15,10 @@ $IsExternal = !IsSet($Args);
 #-------------------------------------------------------------------------------
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-$Email      =  (string) @$Args['Email'];
-$Password   =  (string) @$Args['Password'];
-$IsRemember = (boolean) @$Args['IsRemember'];
+$Email		=  (string) @$Args['Email'];
+$Password	=  (string) @$Args['Password'];
+$IsRemember	= (boolean) @$Args['IsRemember'];
+$RemoteIP	=  (string) @$Args['RemoteIP'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('classes/Session.class.php')))
@@ -177,7 +178,11 @@ if(!SetCookie('Email',$Init['Email'],Time() + 31536000,'/',SPrintF('.%s',HOST_ID
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Event = Array('UserID'=>$Init['ID'],'Text'=>SPrintF('Вход в систему с IP-адреса (%s)',$_SERVER['REMOTE_ADDR']));
+// вход через IP где без каптчи - вероятно сайт, может быть передан реальный IP
+$IP = (In_Array(@$_SERVER['REMOTE_ADDR'],Explode(',',$Settings['ExcludeIPs'])) && $RemoteIP)?$RemoteIP:@$_SERVER['REMOTE_ADDR'];
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Event = Array('UserID'=>$Init['ID'],'Text'=>SPrintF('Вход в систему с IP-адреса (%s)',$IP));
 #-------------------------------------------------------------------------------
 $Event = Comp_Load('Events/EventInsert',$Event);
 if(!$Event)
@@ -188,7 +193,15 @@ if(!$Event)
 CacheManager::add($CacheID,0,IntVal($Settings['BruteForcePeriod']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$GLOBALS['__USER']['service_aaa']['ActionTypeId'] = 'UserLogIn';
+$GLOBALS['__USER']['service_aaa']['NpiIpAddress'] = $IP;
+#-------------------------------------------------------------------------------
+if(!SORM_add('service_aaa',$GLOBALS['__USER']['service_aaa']))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Out = Array('Status'=>'Ok','SessionID'=>$SessionID,'User'=>$Init,'Home'=>SPrintF('/%s/Home',$Init['InterfaceID']),'ContractID'=>$ContractID,'UserID'=>$UserID,'ID'=>$UserID, 'Confirmed'=>SizeOf($User['ConfirmedWas']));
+#-------------------------------------------------------------------------------
 return $Out;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

@@ -228,6 +228,15 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$GLOBALS['__USER']['service_aaa']['CustomerId']		= $DomainOrder['ContractID'];
+$GLOBALS['__USER']['service_aaa']['ServiceId']		= 20000;
+$GLOBALS['__USER']['service_aaa']['ActionTypeId']	= 'ForNsChange';
+$GLOBALS['__USER']['service_aaa']['Login']		= $Domain;
+#-------------------------------------------------------------------------------
+if(!SORM_add('service_aaa',$GLOBALS['__USER']['service_aaa']))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'DomainOrders','StatusID'=>'ForNsChange','RowsIDs'=>$DomainOrderID,'Comment'=>'Поступила заявка на изменение именных серверов'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Comp)){

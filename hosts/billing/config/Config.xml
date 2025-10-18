@@ -1342,6 +1342,24 @@
 				<IsActive>1</IsActive>
 			</NotConfirmedInvoices>
 			<!-- ********************************************************************* -->
+			<SormExportFirst>
+				<Name>Первая выгрузка данных в SORM</Name>
+				<Params type="array"/>
+				<ExecutePeriod>00:01</ExecutePeriod>
+				<IsActive>1</IsActive>
+			</SormExportFirst>
+			<!-- ********************************************************************* -->
+			<SormExportAdd>
+				<Name>Выгрузка данных в SORM</Name>
+				<Params type="array"/>
+				<ExecutePeriod>00:01</ExecutePeriod>
+				<IsActive>1</IsActive>
+				<FtpHost/>
+				<FtpUser/>
+				<FtpPass/>
+				<KeepFiles>0</KeepFiles>
+			</SormExportAdd>
+			<!-- ********************************************************************* -->
 			<!-- ********************************************************************* -->
 			<GC>
 				<!-- ********************************************************************* -->

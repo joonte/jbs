@@ -121,4 +121,25 @@ function SelectServerSettingsByTemplate($TemplateID,$Uniq = TRUE){
 	#-------------------------------------------------------------------------------
 }
 
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+function SelectServerSettingsByAddress($Address){
+	#-------------------------------------------------------------------------------
+	$Where = Array(SPrintF('`Address` = "%s"',$Address),'`IsActive` = "yes"','`IsDefault` = "yes"');
+	#-------------------------------------------------------------------------------
+	$Settings = DB_Select('Servers','*',Array('UNIQ','Where'=>$Where));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Settings)){
+	case 'error':
+		return ERROR | @Trigger_Error('[Server->SelectServerSettingsByAddress]: не удалось выбрать сервер');
+	case 'exception':
+		return new gException('SERVER_NOT_FOUND',SPrintF('Сервер с адресом (%s) не найден',$Address));
+	case 'array':
+		return $Settings;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+}
+
 

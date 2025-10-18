@@ -16,7 +16,10 @@ $Detect = new Mobile_Detect();
 #-------------------------------------------------------------------------------
 $GLOBALS['IsMobile'] = $Detect->isMobile();
 #-------------------------------------------------------------------------------
-Debug(SprintF('[Users/Init]: проверка мобильного устройства, IP = %s; $IsMobile = %s; wScreen = %s; hScreen = %s',@$_SERVER['REMOTE_ADDR'],($GLOBALS['IsMobile'])?'TRUE':'FALSE',@$_COOKIE['wScreen'],@$_COOKIE['hScreen']));
+$IP = IsSet($GLOBALS['_SERVER']['REMOTE_ADDR'])?$GLOBALS['_SERVER']['REMOTE_ADDR']:'127.0.0.124';
+$UA = IsSet($GLOBALS['_SERVER']['HTTP_USER_AGENT'])?$GLOBALS['_SERVER']['HTTP_USER_AGENT']:'';
+#-------------------------------------------------------------------------------
+Debug(SprintF('[Users/Init]: проверка мобильного устройства, IP = %s; $IsMobile = %s; wScreen = %s; hScreen = %s',$IP,($GLOBALS['IsMobile'])?'TRUE':'FALSE',@$_COOKIE['wScreen'],@$_COOKIE['hScreen']));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('libs/Tree.php')))
@@ -264,12 +267,12 @@ if($IsUpdate){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	// логгируем IP
-	$Comp = Comp_Load('Users/LogIP',$UserID,IsSet($GLOBALS['_SERVER']['REMOTE_ADDR'])?$GLOBALS['_SERVER']['REMOTE_ADDR']:'127.0.0.124',IsSet($GLOBALS['_SERVER']['HTTP_USER_AGENT'])?$GLOBALS['_SERVER']['HTTP_USER_AGENT']:'');
+	$Comp = Comp_Load('Users/LogIP',$UserID,$IP,$UA);
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$IsUpdated = DB_Update('Users',Array('EnterDate'=>Time(),'EnterIP'=>$_SERVER['REMOTE_ADDR']),Array('ID'=>$UserID));
+	$IsUpdated = DB_Update('Users',Array('EnterDate'=>Time(),'EnterIP'=>$IP),Array('ID'=>$UserID));
 	if(Is_Error($IsUpdated))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -277,6 +280,19 @@ if($IsUpdate){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $GLOBALS['__USER'] = $User;
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$GLOBALS['__USER']['service_aaa'] = Array(
+						'UserId'	=> $GLOBALS['__USER']['ID'],
+						'ServiceId'	=> 1,
+						'ActionTypeId'	=> 'UserLogOut',
+						'NpiIpAddress'	=> $IP,
+						'Login'		=> $GLOBALS['__USER']['Email'],
+						'Email'		=> $GLOBALS['__USER']['Email'],
+						'IsActive'	=> $GLOBALS['__USER']['IsActive'],
+						'Program'	=> $UA,
+						'Timestamp'	=> Date("Y-m-d\TH:i:s"),
+					);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $IsAdmin = Permission_Check('/Administrator/',(integer)$User['ID']);

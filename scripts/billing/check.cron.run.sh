@@ -114,7 +114,7 @@ then
 	then
 		now=`date --date='1 hour ago' +%Y%m%d%H%M%S`
 	else
-		now=`date -v-1H +%Y%m%d%H%M%S`
+		now=`date -v-5H +%Y%m%d%H%M%S`
 	fi
 
 	if [ $now -ge `cat $marker` ]

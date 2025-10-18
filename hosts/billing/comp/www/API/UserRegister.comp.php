@@ -21,6 +21,7 @@ $Password	=  (string) @$Args['Password'];
 $Name		=  (string) @$Args['Name'];
 $Protect	= (integer) @$Args['Protect'];
 $Message	=  (string) @$Args['Message'];
+$RemoteIP	=  (string) @$Args['RemoteIP'];
 #$IsInternal	= (boolean) @$Args['IsInternal'];
 $ExternalID	=  (string) @$Args['ExternalID'];
 $Eval		=  (string) @$Args['Eval'];
@@ -284,18 +285,27 @@ if(!$IsLoad){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// вход через IP где без каптчи - вероятно сайт, может быть передан реальный IP
+$IP = (In_Array(@$_SERVER['REMOTE_ADDR'],Explode(',',$Settings['Captcha']['ExcludeIPs'])) && $RemoteIP)?$RemoteIP:@$_SERVER['REMOTE_ADDR'];
+#-------------------------------------------------------------------------------
 // логгируем IP
-$Comp = Comp_Load('Users/LogIP',$UserID,IsSet($GLOBALS['_SERVER']['REMOTE_ADDR'])?$GLOBALS['_SERVER']['REMOTE_ADDR']:'127.0.0.122',IsSet($GLOBALS['_SERVER']['HTTP_USER_AGENT'])?$GLOBALS['_SERVER']['HTTP_USER_AGENT']:'');
+$Comp = Comp_Load('Users/LogIP',$UserID,$IP,IsSet($GLOBALS['_SERVER']['HTTP_USER_AGENT'])?$GLOBALS['_SERVER']['HTTP_USER_AGENT']:'');
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if(IsSet($GLOBALS['__USER']['IsEmulate']) && $GLOBALS['__USER']['IsEmulate']){
 	#-------------------------------------------------------------------------------
-	$IsUpdated = DB_Update('Users',Array('EnterDate'=>Time(),'EnterIP'=>$_SERVER['REMOTE_ADDR']),Array('ID'=>$UserID));
+	$IsUpdated = DB_Update('Users',Array('EnterDate'=>Time(),'EnterIP'=>$IP),Array('ID'=>$UserID));
 	if(Is_Error($IsUpdated))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$GLOBALS['__USER']['service_aaa']['NpiIpAddress'] = $IP;
+#-------------------------------------------------------------------------------
+if(!SORM_add('user',$GLOBALS['__USER']['service_aaa'],Array('ContractID'=>$ContractID,'ActionTypeId'=>'UserRegister','UserId'=>$UserID)))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 Array_UnShift($Session->Data['UsersIDs'],$UserID);

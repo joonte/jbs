@@ -317,6 +317,7 @@ $Params['Tables'][] = Array(
 						'`AppID` = "VK" AND `CreateDate` < UNIX_TIMESTAMP() - 365*24*60*60',
 						'`AppID` = "Taxation" AND `CreateDate` < UNIX_TIMESTAMP() - 5*365*24*60*60',
 						'`AppID` = "YandexMetrika" AND `CreateDate` < UNIX_TIMESTAMP() - 365*24*60*60',
+						'`AppID` = "Tasks.SORM" AND `CreateDate` < UNIX_TIMESTAMP() - 31*24*60*60',
 						)
 				);
 
@@ -341,6 +342,12 @@ $Params['Queries'][] = Array(
 // удаляем коды подтверждения у аккаунтов которые добавлены более ... ну года например
 $Params['Queries'][] = Array(                            
 				'Query'		=> 'UPDATE `Contacts` SET `Confirmation` = "" WHERE `CreateDate` <  UNIX_TIMESTAMP() - 365*24*60*60;',
+				'Patterns'	=> Array()
+				);
+#--------------------------------------------------------------------------------
+// Удаляем запросы у которых нет сообщений
+$Params['Queries'][] = Array(                            
+				'Query'		=> 'DELETE FROM `Edesks` WHERE (SELECT COUNT(*) FROM `EdesksMessages` WHERE `EdeskID` = `Edesks`.`ID`) < 1;',
 				'Patterns'	=> Array()
 				);
 #--------------------------------------------------------------------------------
