@@ -222,6 +222,16 @@ if(!IO_Write(SPrintF('%s/hosts/.htaccess',SYSTEM_PATH),"#\nDeny from all\n\n",TR
 	return SPrintF("---\n%s\n---\n",Implode("\n",Array_Slice($__SYSLOG,Count($__SYSLOG)-20)));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// меняем имя в конфиге фронта
+// v2/config.js
+// window.WEBSITE_URL = 'https://manager.host-food.ru'
+// window.COOKIE_DOMAIN = 'manager.host-food.ru'
+$Data = SPrintF("window.WEBSITE_URL = 'https://%s'\nwindow.COOKIE_DOMAIN = '%s'\n",HOST_ID,HOST_ID);
+#-------------------------------------------------------------------------------
+if(!IO_Write(SPrintF('%s/v2/config.js',SYSTEM_PATH),$Data,TRUE))
+	return SPrintF("---\n%s\n---\n",Implode("\n",Array_Slice($__SYSLOG,Count($__SYSLOG)-20)));
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 return '[OK]';
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
