@@ -7,7 +7,6 @@
 			<Comp>Colors/Edesks</Comp>
 			<Args>
 				<ListElement>%StatusID%</ListElement>
-				<ListElement>%PriorityID%</ListElement>
 			</Args>
 		</Row>
 	</Appearance>
@@ -20,7 +19,6 @@
 			<ListElement>UserID</ListElement>
 			<ListElement>Theme</ListElement>
 			<ListElement>UpdateDate</ListElement>
-			<ListElement>PriorityID</ListElement>
 			<ListElement>TargetGroupID</ListElement>
 			<ListElement>TargetUserID</ListElement>
 			<ListElement>StatusID</ListElement>
@@ -73,7 +71,6 @@
 						<ListElement>MessageID</ListElement>
 						<ListElement>UserID</ListElement>
 						<ListElement>TargetUserID</ListElement>
-						<ListElement>PriorityID</ListElement>
 						<ListElement>Theme</ListElement>
 						<ListElement>Content</ListElement>
 					</ColumnsIDs>
@@ -131,15 +128,6 @@
 			<IsNoMobile>1</IsNoMobile>
 		</ExtendedMenu>
 		<!-- ********************************************************************** -->
-		<Priority>
-			<IsSorted>0</IsSorted>
-			<Comp>Tickets/Priority</Comp>
-			<Args>
-				<ListElement>%PriorityID%</ListElement>
-			</Args>
-			<Alias>PriorityID</Alias>
-			<IsNoMobile>1</IsNoMobile>
-		</Priority>
 		<!-- ********************************************************************** -->
 		<Number>
 			<Head>Номер</Head>

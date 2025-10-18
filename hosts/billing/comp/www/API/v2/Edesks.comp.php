@@ -19,7 +19,7 @@ $Out = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Columns = Array(
-			'ID','CreateDate','UserID','PriorityID','Theme','UpdateDate','StatusID','StatusDate','SeenByUser','Flags','Content','MessageID',
+			'ID','CreateDate','UserID','Theme','UpdateDate','StatusID','StatusDate','SeenByUser','Flags','Content','MessageID',
 			'(SELECT COUNT(*) FROM `EdesksMessagesOwners` WHERE `EdesksMessagesOwners`.`EdeskID` = `EdesksOwners`.`ID`) AS `Messages`'
 		);
 #-------------------------------------------------------------------------------

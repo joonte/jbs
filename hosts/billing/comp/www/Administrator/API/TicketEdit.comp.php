@@ -11,7 +11,6 @@ $Args = Args();
 #-------------------------------------------------------------------------------
 $TicketID	= (integer) @$Args['TicketID'];
 $Theme		=  (string) @$Args['Theme'];
-$PriorityID	=  (string) @$Args['PriorityID'];
 $TargetGroupID	= (integer) @$Args['TargetGroupID'];
 $TargetUserID	= (integer) @$Args['TargetUserID'];
 $Flags		=  (string) @$Args['Flags'];
@@ -28,10 +27,6 @@ if(!$Theme)
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Config = Config();
-#-------------------------------------------------------------------------------
-if(!IsSet($Config['Edesks']['Priorities'][$PriorityID]))
-	$PriorityID = 'Low';
-	//return new gException('WRONG_PRIORITY_ID','Неверный приоритет');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Count = DB_Count('Groups',Array('ID'=>$TargetGroupID));
@@ -77,7 +72,6 @@ if($NotifyEmail){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $UTicket = Array(
-		'PriorityID'	=> $PriorityID,
 		'TargetGroupID'	=> $TargetGroupID,
 		'TargetUserID'	=> $TargetUserID,
 		'Theme'		=> $Theme,

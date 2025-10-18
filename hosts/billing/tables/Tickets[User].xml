@@ -100,7 +100,6 @@
 		<ListElement>SelectID</ListElement>
 		<ListElement>Info</ListElement>
 		<ListElement>Read</ListElement>
-		<ListElement>Priority</ListElement>
 		<ListElement>Number</ListElement>
 		<ListElement>Theme</ListElement>
 		<ListElement>Messages</ListElement>

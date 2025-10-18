@@ -648,7 +648,7 @@ foreach($Mails as $mailId){
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
-		$Params = Array('Theme'=>($Subject)?$Subject:'[no message theme, v2]','PriorityID'=>'Low','Flags'=>'No','TargetGroupID'=>3100000);
+		$Params = Array('Theme'=>($Subject)?$Subject:'[no message theme, v2]','Flags'=>'No','TargetGroupID'=>3100000);
 		#-------------------------------------------------------------------------------
 		# разное поведение, в зависимости от того - юзер это или нет
 		if(!$IsUser){

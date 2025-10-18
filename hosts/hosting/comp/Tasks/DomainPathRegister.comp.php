@@ -49,7 +49,6 @@ if(!$IsDefined){
 						'Theme'		=> SPrintF('%s %s.%s',$Clause['Title'],$DomainOrder['DomainName'],$DomainOrder['DomainZone']),
 						'TargetGroupID'	=> 3100000,
 						'TargetUserID'	=> 100,
-						'PriorityID'	=> 'Low',
 						'Message'	=> Trim(Strip_Tags($Clause['Text'])),
 						'UserID'	=> $DomainOrder['UserID'],
 						'Flags'		=> 'CloseOnSee'

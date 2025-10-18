@@ -14,7 +14,7 @@ $TicketID = (integer) @$Args['TicketID'];
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/DOM.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Ticket = DB_Select('Edesks',Array('ID','TargetGroupID','TargetUserID','PriorityID','Flags','StatusID','NotifyEmail','Theme'),Array('UNIQ','ID'=>$TicketID));
+$Ticket = DB_Select('Edesks',Array('ID','TargetGroupID','TargetUserID','Flags','StatusID','NotifyEmail','Theme'),Array('UNIQ','ID'=>$TicketID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Ticket)){
 case 'error':
@@ -78,12 +78,6 @@ default:
 }
 #-------------------------------------------------------------------------------
 $Config = Config();
-#-------------------------------------------------------------------------------
-$Comp = Comp_Load('Form/Select',Array('name'=>'PriorityID','style'=>'width:100%;'),$Config['Edesks']['Priorities'],$Ticket['PriorityID']);
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-$Table[] = Array('Приоритет',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Users = DB_Select('Users',Array('ID','Name'),Array('Where'=>SPrintF("(SELECT `IsDepartment` FROM `Groups` WHERE `Groups`.`ID` = `Users`.`GroupID`) = 'yes' OR `ID` = 100")));

@@ -15,7 +15,6 @@ $Args = IsSet($Args)?$Args:Args();
 $Theme         =  (string) @$Args['Theme'];
 $TargetGroupID = (integer) @$Args['TargetGroupID'];
 $TargetUserID  = (integer) @$Args['TargetUserID'];
-$PriorityID    =  (string) @$Args['PriorityID'];
 $Message       =  (string) @$Args['Message'];
 $UserID        = (integer) @$Args['UserID'];
 $Flags         =  (string) @$Args['Flags'];
@@ -43,12 +42,6 @@ if(!$Theme)
 if(Mb_StrLen(Count_Chars($Theme,3)) < $Config['Interface']['Edesks']['ThemeMinimumLength'] && IsSet($_SERVER["REMOTE_PORT"]))
 	return new gException('THEME_IS_TOO_SHORT','Некорректная тема запроса');
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Priorities = $Config['Edesks']['Priorities'];
-#-------------------------------------------------------------------------------
-if(!In_Array($PriorityID,Array_Keys($Priorities)))
-	$PriorityID = 'Low';
-	//return new gException('WRONG_PRIORITY','Неверный приоритет запроса');
 #-------------------------------------------------------------------------------
 // разрешаем пустые сообщения если это изнутри - могут быть только вложения в письмах, без текста
 if(!$Message && IsSet($_SERVER["REMOTE_PORT"]))
@@ -102,7 +95,6 @@ if(($Settings['IsActive'] && IsSet($_SERVER["REMOTE_PORT"])) || ($Settings['IsEm
 #-------------------------------------------------------------------------------
 $ITicket = Array(
 		'TargetGroupID'	=> $TargetGroupID,
-		'PriorityID'	=> $PriorityID,
 		'Theme'		=> $Theme,
 		'UpdateDate'	=> Time(),
 		'Flags'		=> $Flags,

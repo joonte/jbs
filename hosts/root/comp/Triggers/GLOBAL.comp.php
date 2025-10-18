@@ -141,7 +141,6 @@ if(IsSet($Order['Row']['ServiceID'])){
 						'Theme'		=> SPrintF('[OrderID/%u] %s',$OrderID,$Clause['Title']),
 						'TargetGroupID' => 3100000,
 						'TargetUserID'  => 100,
-						'PriorityID'    => 'Low',
 						'Message'       => Trim(Strip_Tags($Clause['Text'])),
 						'UserID'        => $Order['Row']['UserID'],
 						'Flags'         => @$Params['Flag']
