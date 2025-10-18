@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as t,o as r,t as s}from"./index-DxPA2ffO.js";const n={props:{orderID:{type:[String,Number],default:""}}},_={class:"order-id"};function c(a,p,o,d,i,m){return r(),t("div",_,"# "+s(o.orderID),1)}const u=e(n,[["render",c],["__scopeId","data-v-61719ae3"]]);export{u as _};

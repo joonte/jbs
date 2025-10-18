@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as s,o,a,t as c}from"./index-DxPA2ffO.js";const _={props:{label:{type:[String,Number],default:""}}},n={class:"empty-state-block"},r={class:"empty-state-block__text"};function p(l,i,t,d,m,b){return o(),s("div",n,[a("div",r,c(t.label),1)])}const k=e(_,[["render",p],["__scopeId","data-v-23747b9b"]]);export{k as _};
