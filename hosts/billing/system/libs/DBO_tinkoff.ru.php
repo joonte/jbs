@@ -11,7 +11,7 @@
 function GetStatement($Settings){
 	#-------------------------------------------------------------------------------
 	// запрашиваем выписку, даты - сегодня и вчера, т.к. могут быть новые сутки
-	$Answer = TinkoffRuAPI($Settings,SPrintF('from=%sT00:00:00Z',Date('Y-m-d',Time()-24*60*60)),Array('format'=>'JSON'));
+	$Answer = TinkoffRuAPI($Settings,SPrintF('from=%sT00:00:00Z',Date('Y-m-d',Time()-1*24*60*60)),Array('format'=>'JSON'));
 	#-------------------------------------------------------------------------------
 	if(!IsSet($Answer['operations']))
 		return ERROR | @Trigger_Error('[TinkoffRu/GetStatement]: не удалось запросить выписку');
