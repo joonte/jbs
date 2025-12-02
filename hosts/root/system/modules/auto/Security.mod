@@ -203,7 +203,7 @@ if(Count($Args) > 0){
 }
 
 # затычка для manager-dev
-if(Preg_Match(SPrintF('#^(http|https)://%s.*#','dev.manager.host-food.ru'),$_SERVER["HTTP_REFERER"])){
+if(Preg_Match(SPrintF('#^(http|https)://%s.*#','dev.manager.host-food.ru'),@$_SERVER["HTTP_REFERER"])){
         # и ничего
 }else{
 
