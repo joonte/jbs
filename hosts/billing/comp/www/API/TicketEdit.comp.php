@@ -192,7 +192,9 @@ $TicketID = DB_Insert('Edesks',$ITicket);
 if(Is_Error($TicketID))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Edesks','IsNotNotify'=>TRUE,'IsNoTrigger'=>TRUE,'StatusID'=>($UserID?'Opened':'Newest'),'RowsIDs'=>$TicketID));
+$StatusID = $UserID?'Opened':'Newest';
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('www/API/StatusSet',Array('ModeID'=>'Edesks','IsNotNotify'=>TRUE,'IsNoTrigger'=>TRUE,'StatusID'=>$StatusID,'RowsIDs'=>$TicketID));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Comp)){
 case 'error':
@@ -257,8 +259,10 @@ if(!$UserID){
 		return ERROR | @Trigger_Error(500);
 }
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 if(Is_Error(DB_Commit($TransactionID)))
 	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # JBS-641: generate messages
 if($Config['Tasks']['Types']['TicketsMessages']['IsImmediately']){
@@ -268,6 +272,11 @@ if($Config['Tasks']['Types']['TicketsMessages']['IsImmediately']){
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(IsSet($MessageID))
+	if(!SORM_add('service_interaction',$GLOBALS['__USER']['service_aaa'],Array('MessageID'=>$MessageID,'StatusID'=>$StatusID,'EdeskID'=>$TicketID)))
+		return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return Array('Status'=>'Ok','TicketID'=>$TicketID);
