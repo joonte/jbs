@@ -98,7 +98,7 @@ while(TRUE){
 		#-------------------------------------------------------------------------------
 		$Where = SPrintF("`IsActive` = 'yes' AND `IsExecuted` = 'no' AND `ExecuteDate` < UNIX_TIMESTAMP() AND `Errors` < %u",$Config['Tasks']['MaxErrors']);
 		#-------------------------------------------------------------------------------
-		$Task = DB_Select('Tasks', Array('ID','TypeID'), Array('SortOn'=>'CreateDate', 'IsDesc'=>TRUE, 'Where'=>$Where, 'Limits'=>Array('Start'=>0,'Length'=>1)));
+		$Task = DB_Select('Tasks', Array('ID','TypeID'), Array('SortOn'=>Array('CreateDate'), 'IsDesc'=>TRUE, 'Where'=>$Where, 'Limits'=>Array('Start'=>0,'Length'=>1)));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($Task)){
 		case 'error':
