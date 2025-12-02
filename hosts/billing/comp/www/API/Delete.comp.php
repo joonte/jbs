@@ -111,19 +111,43 @@ foreach($Rows as $Row){
 		#-------------------------------------------------------------------------------
 	}elseif($TableID == 'Contacts'){
 		#-------------------------------------------------------------------------------
-		if(!SORM_add('user',$GLOBALS['__USER']['service_aaa'],Array('ActionTypeId'=>'Edit','UserId'=>$Row['UserID'])))
+		if(!SORM_add('user',$GLOBALS['__USER']['service_aaa'],Array('ActionTypeId'=>'Deleted','UserId'=>$Row['UserID'])))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-/*	}elseif($TableID == 'Profiles'){
 	}elseif($TableID == 'Contracts'){
 		#-------------------------------------------------------------------------------
-		if(!SORM_add('user',$GLOBALS['__USER']['service_aaa'],Array('ActionTypeId'=>'Deleted','UserId'=>$Row['UserID'],'ContractID'=>$Row['ID'])))
+		if(!SORM_add('contract',$GLOBALS['__USER']['service_aaa'],Array('ContractID'=>$Row['ID'],'ActionTypeId'=>'Deleted','UserId'=>$Row['UserID'])))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		*/
+	}elseif(Preg_Match('/Orders$/',$TableID)){
+		#-------------------------------------------------------------------------------
+		$Login = IsSet($Row['Login'])?$Row['Login']:'';
+		#-------------------------------------------------------------------------------
+		if(!SORM_add('service_user',$GLOBALS['__USER']['service_aaa'],Array('Timestamp'=>Date("Y-m-d\TH:i:s"),'UserId'=>$Row['UserID'],'CustomerId'=>$Row['ContractID'],'ServiceId'=>$Row['ServiceID'],'ActionTypeId'=>'Deleted','Login'=>$Login)))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		if(!SORM_add('service_order_resource',$GLOBALS['__USER']['service_aaa'],Array('Timestamp'=>Date("Y-m-d\TH:i:s"),'OrderID'=>$Row['OrderID'],'ActionTypeId'=>'Deleted','Login'=>$Login)))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+	}elseif($TableID == 'Edesks'){
+		#-------------------------------------------------------------------------------
+		// удаление тикета
+		if(!SORM_add('service_interaction',$GLOBALS['__USER']['service_aaa'],Array('StatusID'=>'Deleted','EdeskID'=>$Row['ID'])))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+	}elseif($TableID == 'EdesksMessages'){
+		#-------------------------------------------------------------------------------
+		// удаление сообщения в тикете
+		if(!SORM_add('service_interaction',$GLOBALS['__USER']['service_aaa'],Array('StatusID'=>'Deleted','MessageID'=>$Row['ID'])))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+	}elseif(In_Array($TableID,Array('Profiles','Basket','Invoices'))){
+		#-------------------------------------------------------------------------------
+		// ничего не делаем
+		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
-		if(!SORM_add($TableID,$GLOBALS['__USER']['service_aaa'],Array('ActionTypeId'=>'Deleted','UserId'=>$Row['UserID'])))
+		if(!SORM_add($TableID,$GLOBALS['__USER']['service_aaa'],Array('RowID'=>$Row['ID'],'ActionTypeId'=>'Deleted','UserId'=>$Row['UserID'])))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 	}
