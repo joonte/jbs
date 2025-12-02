@@ -9,7 +9,9 @@ $__args_list = Array('Order');
 Eval(COMP_INIT);
 /******************************************************************************/
 /******************************************************************************/
-Debug(SPrintF('[comp/Triggers/GLOBAL]: ModeID = %s; StatusID = %s; Order = %s',$Order['ModeID'],$Order['StatusID'],print_r($Order['Row'],true)));
+$ModeID = $Order['ModeID'];
+#-------------------------------------------------------------------------------
+Debug(SPrintF('[comp/Triggers/GLOBAL]: ModeID = %s; StatusID = %s; Order = %s',$ModeID,$Order['StatusID'],print_r($Order['Row'],true)));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 //Debug(SPrintF('[comp/Triggers/GLOBAL]: Order = %s',print_r($Order,true)));
@@ -30,9 +32,37 @@ if($Order['StatusID'] == 'Deleted' && IsSet($Order['Row']['DependOrderID'])){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// счета
+if($ModeID == 'Invoices')
+	if(!SORM_add('payment',$GLOBALS['__USER']['service_aaa'],Array('InvoiceID'=>$Order['Row']['ID'],'ActionTypeId'=>$Order['StatusID'],'Timestamp'=>Date("Y-m-d\TH:i:s"))))
+		return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// учётки на серверах
+if(Preg_Match('/Orders$/',$ModeID) && IsSet($Order['Row']['Login']))
+	if(!SORM_add('service_user',$GLOBALS['__USER']['service_aaa'],Array('Timestamp'=>Date("Y-m-d\TH:i:s"),'UserId'=>$Order['Row']['UserID'],'CustomerId'=>$Order['Row']['ContractID'],'ServiceId'=>$Order['Row']['ServiceID'],'ActionTypeId'=>$Order['StatusID'],'Login'=>$Order['Row']['Login'])))
+		return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// заказы на услуги
+if(Preg_Match('/Orders$/',$ModeID)){
+	#-------------------------------------------------------------------------------
+	$Login = IsSet($Order['Row']['Login'])?$Order['Row']['Login']:'';
+	#-------------------------------------------------------------------------------
+	if(!SORM_add('service_order_resource',$GLOBALS['__USER']['service_aaa'],Array('Timestamp'=>Date("Y-m-d\TH:i:s"),'OrderID'=>$Order['Row']['OrderID'],'ActionTypeId'=>$Order['StatusID'],'Login'=>$Login)))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+
+
+
+
+
 if(!IsSet($Order['Row']['ServerID'])){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s->%s) не задан сервер',$Order['ModeID'],$Order['StatusID']));
+	Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s->%s) не задан сервер',$ModeID,$Order['StatusID']));
 	#-------------------------------------------------------------------------------
 	return TRUE;
 	#-------------------------------------------------------------------------------
@@ -41,7 +71,7 @@ if(!IsSet($Order['Row']['ServerID'])){
 #-------------------------------------------------------------------------------
 if(Is_Null($Order['Row']['ServerID'])){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s->%s) сервер = NULL',$Order['ModeID'],$Order['StatusID']));
+	Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s->%s) сервер = NULL',$ModeID,$Order['StatusID']));
 	#-------------------------------------------------------------------------------
 	return TRUE;
 	#-------------------------------------------------------------------------------
@@ -50,7 +80,7 @@ if(Is_Null($Order['Row']['ServerID'])){
 #-------------------------------------------------------------------------------
 if($Order['Row']['ServerID'] < 1){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s->%s) ServerID = 0',$Order['ModeID'],$Order['StatusID']));
+	Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s->%s) ServerID = 0',$ModeID,$Order['StatusID']));
 	#-------------------------------------------------------------------------------
 	return TRUE;
 	#-------------------------------------------------------------------------------
@@ -60,9 +90,9 @@ if($Order['Row']['ServerID'] < 1){
 # JBS-1092: исключения
 $Array = Array('ExtraIPOrders');
 #-------------------------------------------------------------------------------
-if(In_Array($Order['ModeID'],$Array)){
+if(In_Array($ModeID,$Array)){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s->%s) найдено исключение, глобальный триггер не обрабатывается',$Order['ModeID'],$Order['StatusID']));
+	Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s->%s) найдено исключение, глобальный триггер не обрабатывается',$ModeID,$Order['StatusID']));
 	#-------------------------------------------------------------------------------
 	return TRUE;
 	#-------------------------------------------------------------------------------
@@ -74,7 +104,7 @@ if(In_Array($Order['ModeID'],$Array)){
 # достаём данные сервиса
 if(IsSet($Order['Row']['ServiceID'])){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s->%s) необходима обработка создания тикета',$Order['ModeID'],$Order['StatusID']));
+	Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s->%s) необходима обработка создания тикета',$ModeID,$Order['StatusID']));
 	#-------------------------------------------------------------------------------
 	$Service = DB_Select('Services','*',Array('UNIQ','ID'=>$Order['Row']['ServiceID']));
 	#-------------------------------------------------------------------------------
@@ -96,7 +126,7 @@ if(IsSet($Order['Row']['ServiceID'])){
 	#-------------------------------------------------------------------------------
 	if(IsSet($Params['ClauseID']) && $Params['ClauseID']){
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s->%s) задан идентфикатор статьи ClauseID = %u',$Order['ModeID'],$Order['StatusID'],$Params['ClauseID']));
+		Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s->%s) задан идентфикатор статьи ClauseID = %u',$ModeID,$Order['StatusID'],$Params['ClauseID']));
 		#-------------------------------------------------------------------------------
 		# если стоит что тикет не дублируется, проверяем наличие такого тикета
 		$NeedCreate = TRUE;
@@ -184,14 +214,14 @@ default:
 #-------------------------------------------------------------------------------
 if(!$ServersGroup['Params']['Count']){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s->%s) не задано дополнительных сервисов, Count = 0 или не задан',$Order['ModeID'],$Order['StatusID']));
+	Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s->%s) не задано дополнительных сервисов, Count = 0 или не задан',$ModeID,$Order['StatusID']));
 	#-------------------------------------------------------------------------------
 	return TRUE;
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s->%s) необходимо активировать дополнительных услуг: %u',$Order['ModeID'],$Order['StatusID'],$ServersGroup['Params']['Count']));
+Debug(SPrintF('[comp/Triggers/GLOBAL]: Для (%s->%s) необходимо активировать дополнительных услуг: %u',$ModeID,$Order['StatusID'],$ServersGroup['Params']['Count']));
 #-------------------------------------------------------------------------------
 for($i = 1; $i <= $ServersGroup['Params']['Count']; $i++){
 	#-------------------------------------------------------------------------------
