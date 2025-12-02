@@ -18,7 +18,12 @@ $IsUseBasket	= (boolean) @$Args['IsUseBasket'];
 $PayMessage	=  (string) @$Args['PayMessage'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
-  return ERROR | @Trigger_Error(500);
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(!$DNSmanagerOrderID)
+	return new gException('DNS_ORDER_NOT_SET','Не выбран заказ вторичного ДНС');
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Columns = Array('ID','OrderID','ServiceID','ContractID','StatusID','UserID','Login','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `DNSmanagerOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `DNSmanagerOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) as `IsPayed`', '(SELECT `Name` FROM `DNSmanagerSchemes` WHERE `DNSmanagerOrdersOwners`.`SchemeID` = `DNSmanagerSchemes`.`ID`) as `SchemeName`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`DNSmanagerOrdersOwners`.`OrderID`) AS PayedSumm');
 #-------------------------------------------------------------------------------

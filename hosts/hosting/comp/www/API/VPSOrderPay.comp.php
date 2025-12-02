@@ -20,6 +20,11 @@ $PayMessage     =  (string) @$Args['PayMessage'];
 if(Is_Error(System_Load('modules/Authorisation.mod','libs/Tree.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+if(!$VPSOrderID)
+	return new gException('VPS_ORDER_NOT_SET','Не выбран заказ виртуального сервера');
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Columns = Array('ID','OrderID','ServiceID','ContractID','StatusID','UserID','Login','Domain','DaysRemainded','SchemeID','(SELECT `GroupID` FROM `Users` WHERE `VPSOrdersOwners`.`UserID` = `Users`.`ID`) as `GroupID`','(SELECT `Balance` FROM `Contracts` WHERE `VPSOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractBalance`','(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `VPSOrdersOwners`.`OrderID`) as `IsPayed`','(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`VPSOrdersOwners`.`OrderID`) AS PayedSumm');
 #-------------------------------------------------------------------------------
 $VPSOrder = DB_Select('VPSOrdersOwners',$Columns,Array('UNIQ','ID'=>$VPSOrderID));

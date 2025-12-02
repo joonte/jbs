@@ -1,1 +1,0 @@
-import{aj as s,ak as r,al as l}from"./index-DxPA2ffO.js";const i=s("files",()=>{async function o(n){const e=new FormData;e.append("Upload",n);let t=null;return await r.post(l.uploadFile,e,{headers:{"Content-Type":"multipart/form-data"}}).then(a=>{t=a.data}).catch(a=>{console.log(a)}),t}return{sendFile:o}});export{i as u};
