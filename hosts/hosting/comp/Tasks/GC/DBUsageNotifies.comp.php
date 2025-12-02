@@ -15,7 +15,7 @@ if(Is_Error(System_Load('classes/HostingServer.class.php')))
 #-------------------------------------------------------------------------------
 $Config = Config();
 #-------------------------------------------------------------------------------
-$Settings = $Config['Tasks']['Types']['GC']['DiskUsageNotifiesSettings'];
+$Settings = $Config['Tasks']['Types']['GC']['DBUsageNotifiesSettings'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 if(!$Settings['IsActive'])
@@ -29,7 +29,7 @@ case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: не найдено серверов хостинга'));
+	Debug(SPrintF('[comp/Tasks/GC/DBUsageNotifies]: не найдено серверов хостинга'));
 	#-------------------------------------------------------------------------------
 	# No more...
 	return TRUE;
@@ -43,14 +43,14 @@ default:
 #-------------------------------------------------------------------------------
 foreach($Servers as $Server){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: обработка аккаунтов на сервере %s',$Server['Address']));
+	Debug(SPrintF('[comp/Tasks/GC/DBUsageNotifies]: обработка аккаунтов/баз на сервере %s',$Server['Address']));
 	#-------------------------------------------------------------------------------
 	#if($Server['Address'] != 'brainy.test-hf.su')
 	#	continue;
 	#-------------------------------------------------------------------------------
 	if(!$Server['IsActive']){
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: сервер %s не активен, пропускаем',$Server['Address']));
+		Debug(SPrintF('[comp/Tasks/GC/DBUsageNotifies]: сервер %s не активен, пропускаем',$Server['Address']));
 		#-------------------------------------------------------------------------------
 		continue;
 		#-------------------------------------------------------------------------------
@@ -71,14 +71,14 @@ foreach($Servers as $Server){
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
-	$Accounts = $ClassHostingServer->GetDiskUsage();
+	$Accounts = $ClassHostingServer->GetDBUsage();
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Accounts)){
 	case 'error':
 		# No more...
 	case 'exception':
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: не удалось получить данные о использовании диска с сервера %s',$Server['Address']));
+		Debug(SPrintF('[comp/Tasks/GC/DBUsageNotifies]: не удалось получить данные о использовании места БД с сервера %s',$Server['Address']));
 		#-------------------------------------------------------------------------------
 		# No more...
 		continue 2;
@@ -89,19 +89,18 @@ foreach($Servers as $Server){
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: Accounts = %s',print_r($Accounts,true)));
+	Debug(SPrintF('[comp/Tasks/GC/DBUsageNotifies]: Accounts = %s',print_r($Accounts,true)));
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Array = Array();
 	#-------------------------------------------------------------------------------
-	foreach(Array_Keys($Accounts) as $UserID)
-		if(!$Accounts[$UserID]['Disabled'])
-			$Array[] = SPrintF("'%s'",$UserID);
+	foreach(Array_Keys($Accounts) as $Login)
+		$Array[] = SPrintF("'%s'",$Login);
 	#-------------------------------------------------------------------------------
 	# нет аккаутов - ничё не делаем
 	if(SizeOf($Array) == 0){
 		#-------------------------------------------------------------------------------
-		Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: на сервере %s не найдено аккаунтов',$Server['Address']));
+		Debug(SPrintF('[comp/Tasks/GC/DBUsageNotifies]: на сервере %s не найдено аккаунтов',$Server['Address']));
 		#-------------------------------------------------------------------------------
 		continue;
 		#-------------------------------------------------------------------------------
@@ -126,21 +125,21 @@ foreach($Servers as $Server){
 	foreach($HostingOrders as $Order){
 		#-------------------------------------------------------------------------------
 		# выбираем тех кто лимит имеет, и лимит этот не микроскопический
-		if($Accounts[$Order['Login']]['Limit'] > 4){
+		if($Accounts[$Order['Login']]['Limit'] > 1){
 			#-------------------------------------------------------------------------------
-			#Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: account %s/%s used %s/%s',$Order['Login'],$Server['Address'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
+			#Debug(SPrintF('[comp/Tasks/GC/DBUsageNotifies]: account %s/%s used %s/%s',$Order['Login'],$Server['Address'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
 			#-------------------------------------------------------------------------------
 			# лимит есть, но используется больше чем ограничение
 			if($Accounts[$Order['Login']]['Limit'] < $Accounts[$Order['Login']]['Used']){
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: избыточное использование диска аккаунтом %s/%s, используется %s/%s',$Order['Login'],$Server['Address'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
+				Debug(SPrintF('[comp/Tasks/GC/DBUsageNotifies]: избыточное использование диска аккаунтом %s/%s, используется %s/%s',$Order['Login'],$Server['Address'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
 				#-------------------------------------------------------------------------------
 				if($Settings['IsEventForOverLimits']){
 					#-------------------------------------------------------------------------------
 					$Event = Array(
 							'UserID'        => $Order['UserID'],
 							'PriorityID'    => 'Warning',
-							'Text'          => SPrintF('Обнаружен заказ хостинга (%s/%s) с превышением (%s/%s) использования дискового пространства',$Order['Login'],$Server['Address'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']),
+							'Text'          => SPrintF('Обнаружен заказ хостинга (%s/%s) с превышением (%s/%s) использования дискового пространства БД',$Order['Login'],$Server['Address'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']),
 							'IsReaded'      => FALSE
 							);
 					$Event = Comp_Load('Events/EventInsert',$Event);
@@ -155,7 +154,7 @@ foreach($Servers as $Server){
 			# шлём оповещения, если процент использования больше чем в настройках
 			if(Ceil(($Accounts[$Order['Login']]['Used']/$Accounts[$Order['Login']]['Limit'])*100) > IntVal($Settings['DiskUsageNotifiesPercent'])){
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: аккаунт %s/%s, использование %s/%s',$Order['Login'],$Server['Address'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
+				Debug(SPrintF('[comp/Tasks/GC/DBUsageNotifies]: аккаунт %s/%s, использование %s/%s',$Order['Login'],$Server['Address'],$Accounts[$Order['Login']]['Used'],$Accounts[$Order['Login']]['Limit']));
 				#-------------------------------------------------------------------------------
 				if(!$Settings['IsNotify'])
 					continue;
@@ -169,7 +168,7 @@ foreach($Servers as $Server){
 				$Array = Array('Login'=>$Order['Login'],'Used'=>$Accounts[$Order['Login']]['Used'],'Limit'=>$Accounts[$Order['Login']]['Limit'],'SchemeChangeLink'=>$SchemeChangeLink);
 				#-------------------------------------------------------------------------------
 				// отправляем сообщение
-				$IsSend = NotificationManager::sendMsg(new Message('DiskUsageNotice',(integer)$Order['UserID'],Array('Order'=>$Array)));
+				$IsSend = NotificationManager::sendMsg(new Message('DBUsageNotice',(integer)$Order['UserID'],Array('Order'=>$Array)));
 				#-------------------------------------------------------------------------------
 				switch(ValueOf($IsSend)){
 				case 'error':
@@ -188,10 +187,11 @@ foreach($Servers as $Server){
 		}
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
+		/*
 		# аккаунты без ограничений на место
 		if($Accounts[$Order['Login']]['Limit'] < 1 ){
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/GC/DiskUsageNotifies]: аккаунт %s/%s не имеет ограничения на использование диска',$Order['Login'],$Server['Address']));
+			Debug(SPrintF('[comp/Tasks/GC/DBUsageNotifies]: аккаунт %s/%s не имеет ограничения на использование диска',$Order['Login'],$Server['Address']));
 			#-------------------------------------------------------------------------------
 			if($Settings['IsEventForNoLimits']){
 				#-------------------------------------------------------------------------------
@@ -208,6 +208,7 @@ foreach($Servers as $Server){
 			}
 			#-------------------------------------------------------------------------------
 		}
+		*/
 	#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------

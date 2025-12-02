@@ -117,6 +117,12 @@
 				<IsActive>1</IsActive>
 			</DiskUsageNotice>
 			<!-- ********************************************************************* -->
+			<DBUsageNotice>
+				<Name>Превышение использования диска БД</Name>
+				<GroupID>1</GroupID>
+				<IsActive>1</IsActive>
+			</DBUsageNotice>
+			<!-- ********************************************************************* -->
 			<!-- ********************************************************************* -->
 			<DomainOrdersOnRegister>
 				<Title>Заказы доменов</Title>
@@ -744,14 +750,22 @@
 				<DiskUsageNotifiesSettings>
 					<IsActive>1</IsActive>
 					<IsNotify>1</IsNotify>
-					<DiskUsageNotifiesPercent>90</DiskUsageNotifiesPercent>
+					<DiskUsageNotifiesPercent>95</DiskUsageNotifiesPercent>
 					<IsEventForNoLimits>1</IsEventForNoLimits>
 					<IsEventForOverLimits>1</IsEventForOverLimits>
 				</DiskUsageNotifiesSettings>
 				<!-- ********************************************************************* -->
+				<DBUsageNotifiesSettings>
+					<IsActive>1</IsActive>
+					<IsNotify>1</IsNotify>
+					<DiskUsageNotifiesPercent>95</DiskUsageNotifiesPercent>
+					<IsEventForNoLimits>1</IsEventForNoLimits>
+					<IsEventForOverLimits>1</IsEventForOverLimits>
+				</DBUsageNotifiesSettings>
+				<!-- ********************************************************************* -->
 				<EmailBoxesNotifiesSettings>
 					<IsActive>1</IsActive>
-					<EmailBoxesNotifiesPercent>80</EmailBoxesNotifiesPercent>
+					<EmailBoxesNotifiesPercent>90</EmailBoxesNotifiesPercent>
 				</EmailBoxesNotifiesSettings>
 				<!-- ********************************************************************* -->
 				<ISPswCheckLicensesSettings>
@@ -796,6 +810,7 @@
 					<UpdateDiskTemplates>Обновление шаблонов дисков на VPS</UpdateDiskTemplates>
 					<UpdateNodeList>Обновление списка узлов кластера VPS</UpdateNodeList>
 					<DiskUsageNotifies>Уведомление о заканчивающемся месте на хостинге</DiskUsageNotifies>
+					<DBUsageNotifies>Уведомление о заканчивающемся месте в БД на хостинге</DBUsageNotifies>
 					<EmailBoxesNotifies>Уведомление o заканчивающейся квоте почтовых ящиков</EmailBoxesNotifies>
 					<DomainAutoProlongation>Автопродление истекающих доменов</DomainAutoProlongation>
 					<SetSuspendExpiredDomain>Блокировка просроченных доменов</SetSuspendExpiredDomain>

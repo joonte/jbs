@@ -111,7 +111,7 @@ case 'true':
 			#-------------------------------------------------------------------------------
 			$Where = SPrintF('`ServerID` = %u AND `Login` IN (%s)',$Server['ID'],Implode(',',$Array));
 			#-------------------------------------------------------------------------------
-			$Orders = DB_Select(SPrintF('%sOrdersOwners',$Server['Code']),Array('ID','OrderID','Login'),Array('Where'=>$Where));
+			$Orders = DB_Select(SPrintF('%sOrdersOwners',$Server['Code']),Array('ID','OrderID','Login','StatusID'),Array('Where'=>$Where));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($Orders)){
 			case 'error':
@@ -139,12 +139,43 @@ case 'true':
 						#-------------------------------------------------------------------------------
 					}else{
 						#-------------------------------------------------------------------------------
+						// список новых доменов
 						$IOrders['Parked'] = Implode(',',$Parked);
 						#-------------------------------------------------------------------------------
-						$IsUpdate = DB_Update(SPrintF('%sOrders',$Server['Code']),$IOrders,Array('ID'=>$Order['ID']));
-						if(Is_Error($IsUpdate))
-							return ERROR | @Trigger_Error(500);
+						// достаём текущий список доменов, сравниваем, если есть разичия - надо отсылать в СОРМ
+						$OldParked = DB_Select(SPrintF('%sOrdersOwners',$Server['Code']),Array('Parked'),Array('UNIQ','ID'=>$Order['ID']));
 						#-------------------------------------------------------------------------------
+						switch(ValueOf($OldParked)){
+						case 'error':
+							return ERROR | @Trigger_Error(500);
+						case 'exception':
+							return ERROR | @Trigger_Error(400);
+						case 'array':
+							break;
+						default:
+							return ERROR | @Trigger_Error(101);
+						}
+						#-------------------------------------------------------------------------------
+						$OldParked = $OldParked['Parked'];
+						#-------------------------------------------------------------------------------
+						if($OldParked != $IOrders['Parked']){
+							#-------------------------------------------------------------------------------
+							Debug(SPrintF('[comp/Tasks/ServersQuestioning]: есть необходимость обновлять спиисок доменов для %s/%s',$Server['Code'],$Order['OrderID']));
+							#-------------------------------------------------------------------------------
+							// разные списки доменов
+							if(!SORM_add('service_order_resource',$GLOBALS['__USER']['service_aaa'],Array('Timestamp'=>Date("Y-m-d\TH:i:s"),'OrderID'=>$Order['OrderID'],'ActionTypeId'=>$Order['StatusID'],'OldParked'=>$OldParked,'NewParked'=>$IOrders['Parked'])))
+								return ERROR | @Trigger_Error(500);
+							#-------------------------------------------------------------------------------
+							// проставляем новый список
+							$IsUpdate = DB_Update(SPrintF('%sOrders',$Server['Code']),$IOrders,Array('ID'=>$Order['ID']));
+							if(Is_Error($IsUpdate))
+								return ERROR | @Trigger_Error(500);
+							#-------------------------------------------------------------------------------
+						}else{
+							#-------------------------------------------------------------------------------
+							//Debug(SPrintF('[comp/Tasks/ServersQuestioning]: нет необходимости обновлять спиисок доменов для %s/%s',$Server['Code'],$Order['OrderID']));
+							#-------------------------------------------------------------------------------
+						}
 					}
 					#-------------------------------------------------------------------------------
 				}
