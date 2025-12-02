@@ -147,4 +147,14 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$GLOBALS['__USER']['service_aaa']['ActionTypeId']	= 'OrderPasswordChange';
+$GLOBALS['__USER']['service_aaa']['CustomerId']		= $Order['ContractID'];
+$GLOBALS['__USER']['service_aaa']['ServiceId']		= $ServiceID;
+$GLOBALS['__USER']['service_aaa']['Login']		= $Order['Login'];
+#-------------------------------------------------------------------------------
+if(!SORM_add('service_aaa',$GLOBALS['__USER']['service_aaa']))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+
 ?>
