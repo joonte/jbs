@@ -217,7 +217,7 @@ function Debug($message){
 		$Path = SPrintF('%s/debug.log', SYSTEM_PATH);
 		#-------------------------------------------------------------------------------
 		if(File_Exists($Path))
-			if(FileSize($Path) > 8*1024*1024*1024)
+			if(FileSize($Path) > 32*1024*1024*1024)
 				UnLink($Path);
 		#-------------------------------------------------------------------------------
 		@File_Put_Contents($Path, SPrintF("%s\n", $message), FILE_APPEND);
