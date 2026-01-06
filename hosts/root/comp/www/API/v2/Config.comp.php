@@ -121,7 +121,19 @@ foreach(Array_Keys($Config['Invoices']['PaymentSystems']) as $Key){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$Out['PaymentSystems'][$Key] = Array('Name'=>$PaymentSystem['Name'],'SystemDescription'=>$PaymentSystem['SystemDescription'],'ContractsTypes'=>$PaymentSystem['ContractsTypes'],'IsContinuePaying'=>$PaymentSystem['IsContinuePaying'],'Course'=>$PaymentSystem['Course'],'Measure'=>$PaymentSystem['Course'],'Valute'=>$PaymentSystem['Valute'],'MinimumPayment'=>$PaymentSystem['MinimumPayment'],'MaximumPayment'=>$PaymentSystem['MaximumPayment'],'IsActive'=>$PaymentSystem['IsActive'],'Collations'=>$Collations);
+	$Out['PaymentSystems'][$Key] = Array(
+						'Name'			=> $PaymentSystem['Name'],
+						'SystemDescription'	=> $PaymentSystem['SystemDescription'],
+						'ContractsTypes'	=> $PaymentSystem['ContractsTypes'],
+						'IsContinuePaying'	=> $PaymentSystem['IsContinuePaying'],
+						'Course'		=> $PaymentSystem['Course'],
+						'Measure'		=> $PaymentSystem['Course'],
+						'Valute'		=> $PaymentSystem['Valute'],
+						'MinimumPayment'	=> $PaymentSystem['MinimumPayment'],
+						'MaximumPayment'	=> $PaymentSystem['MaximumPayment'],
+						'IsActive'		=> $PaymentSystem['IsActive'],
+						'Collations'		=> $Collations
+						);
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------

@@ -19,7 +19,7 @@
 			<Paths>
 				<UniqID>\/(Profiles|Contracts|ContractsEnclosures|Invoices|Bonuses|WorksComplite|WorksCompliteReports|MotionDocuments|Postings|Tasks|DependUsers|DependUsersStatistic)$</UniqID>
 			</Paths>
-			<Href>/Invoices</Href>
+			<Href>/Contracts</Href>
 		</ID300>
 		<ID400>
 			<Text>Услуги</Text>

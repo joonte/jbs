@@ -10,6 +10,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
+$OrderID	= (integer) @$Args['OrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
@@ -26,7 +27,14 @@ $Out = Array();
 #-------------------------------------------------------------------------------
 $Where = Array(SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']));
 #-------------------------------------------------------------------------------
-$Columns = Array('*','(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `ExtraIPOrdersOwners`.`ContractID`) AS `Customer`',);
+if($OrderID > 0)
+	$Where[] = SPrintF('`OrderID` = %s',$OrderID);
+#-------------------------------------------------------------------------------
+$Columns = Array(
+			'*',
+			'(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `ExtraIPOrdersOwners`.`ContractID`) AS `Customer`',
+			'(SELECT `IsPayed` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `ExtraIPOrdersOwners`.`OrderID`) AS `IsPayed`',
+			);
 #-------------------------------------------------------------------------------
 $ExtraIPOrders = DB_Select('ExtraIPOrdersOwners',$Columns,Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
@@ -55,7 +63,7 @@ foreach($ExtraIPOrders as $ExtraIPOrder){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return $Out;
+return ($OrderID > 0)?Current($Out):$Out;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 

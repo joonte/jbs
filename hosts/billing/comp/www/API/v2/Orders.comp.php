@@ -10,6 +10,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
+$ID	= (integer) @$Args['ID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
@@ -31,7 +32,13 @@ $Columns = Array(
 		'(SELECT `Code` FROM `Services` WHERE `ID` = `OrdersOwners`.`ServiceID`) AS `Code`',
 		'(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`OrdersOwners`.`ID`) AS PayedSumm',
 		);
-$Orders = DB_Select('OrdersOwners',$Columns,Array('Where'=>SPrintF("`UserID` = %u",$GLOBALS['__USER']['ID']),'SortOn'=>Array('ServiceID','ID')));
+#-------------------------------------------------------------------------------
+$Where = Array(SPrintF("`UserID` = %u",$GLOBALS['__USER']['ID']));
+#-------------------------------------------------------------------------------
+if($ID > 0)
+	$Where[] = SPrintF('`ID` = %s',$ID);
+#-------------------------------------------------------------------------------
+$Orders = DB_Select('OrdersOwners',$Columns,Array('Where'=>$Where,'SortOn'=>Array('ServiceID','ID')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Orders)){
 case 'error':
@@ -135,7 +142,7 @@ foreach($Orders as $Order){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return $Out;
+return ($ID > 0)?Current($Out):$Out;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
