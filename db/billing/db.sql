@@ -41,6 +41,9 @@ INSERT INTO `Contacts` (`UserID`,`Address`)
 	SELECT `Users`.`ID`,`Users`.`Email` FROM `Users` ORDER BY `ID`;
 -- SEPARATOR
 UPDATE `Contacts` SET `CreateDate` = UNIX_TIMESTAMP(), `MethodID` = 'Email', `IsPrimary` = 'yes', `IsActive` = 'yes';
+-- SEPARATOR
+INSERT INTO `Contracts` (`UserID`,`TypeID`,`Customer`,`StatusID`) VALUES (300,'Default','Наш сайт','Complite');
+
 
 
 -- SEPARATOR
@@ -2041,30 +2044,7 @@ VALUES (6,100,100,'yes','yes','yes','Invoices/Services','Шаблон табли
 
 -- SEPARATOR
 set @Text = '<NOBODY>
- <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
- <DIV id="Services">[список услуг]</DIV>
- <H2>Платежное поручение</H2>
- <TABLE border="1" cellpadding="5" cellspacing="0">
-  <TR bgcolor="#DCDCDC">
-   <TD align="center">Назначение</TD>
-   <TD align="center">Кошелек №</TD>
-   <TD align="center">Сумма</TD>
-  </TR>
-  <TR>
-   <TD>За web-услуги по счету №%Invoice.Number%</TD>
-   <TD align="right">%PaymentSystem.Send.PAYEE_ACCOUNT%</TD>
-   <TD align="right">%Invoice.Foreign% %PaymentSystem.Measure%</TD>
-  </TR>
- </TABLE>
-</NOBODY>';
-
-INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
-VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/Egold','Шаблон платежной системы Egold',@Text);
-
-
--- SEPARATOR
-set @Text = '<NOBODY>
- <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
+ <H1>СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <H2>Платежное поручение</H2>
  <TABLE border="1" cellpadding="5" cellspacing="0">
@@ -2084,7 +2064,7 @@ VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/InOffice','Шабл
 
 -- SEPARATOR
 set @Text = '<NOBODY>
- <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
+ <H1>СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <H2>Платежное поручение</H2>
  <TABLE border="1" cellpadding="5" cellspacing="0">
@@ -2106,7 +2086,7 @@ VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/Moneybookers','Ша
 
 -- SEPARATOR
 set @Text = '<NOBODY>
- <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
+ <H1>СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
 <H2>Платежное поручение</H2>
  <TABLE border="1" cellpadding="5" cellspacing="0">
@@ -2128,7 +2108,7 @@ VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/RBKMoney','Шабл
 
 -- SEPARATOR
 set @Text = '<NOBODY>
- <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
+ <H1>СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <H2>Платежное поручение</H2>
  <TABLE border="1" cellpadding="5" cellspacing="0">
@@ -2151,7 +2131,7 @@ VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/ROBOKASSA','Шаб�
 
 -- SEPARATOR
 set @Text = '<NOBODY>
- <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
+ <H1>СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <H2>Платежное поручение</H2>
  <TABLE border="1" cellpadding="5" cellspacing="0">
@@ -2176,7 +2156,7 @@ VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/PayMaster','Шаб�
 
 -- SEPARATOR
 set @Text = '<NOBODY>
- <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
+ <H1>СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <H2>Платежное поручение</H2>
  <TABLE border="1" cellpadding="5" cellspacing="0">
@@ -2222,7 +2202,7 @@ VALUES (100,100,6,'yes','yes','Invoices/PaymentSystems/WebMoneyP','Шаблон 
 
 -- SEPARATOR
 set @Text = '<NOBODY>
- <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
+ <H1>СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <H2>Платежное поручение</H2>
  <TABLE border="1" cellpadding="5" cellspacing="0">
@@ -2244,7 +2224,7 @@ VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/YooMoney','Шабл
 
 -- SEPARATOR
 set @Text = '<NOBODY>
- <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
+ <H1>СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <H2>Платежное поручение</H2>
  <TABLE border="1" cellpadding="5" cellspacing="0">
@@ -2266,7 +2246,7 @@ VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/Yandex.p2p','Шаб
 
 -- SEPARATOR
 set @Text = '<NOBODY>
- <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
+ <H1>СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <H2>Платежное поручение</H2>
  <TABLE border="1" cellpadding="5" cellspacing="0">
@@ -2332,7 +2312,7 @@ set @Text = '<NOBODY>
   </TR>
  </TABLE>
  <P>Плательщик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%<BR />Заказчик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%</P>
- <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
+ <H1>СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <P>
   <SPAN>Всего к оплате: </SPAN>
@@ -2418,7 +2398,7 @@ set @Text = '<NOBODY>
   </TR>
  </TABLE>
  <P>Плательщик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn%<BR />Заказчик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn%</P>
- <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
+ <H1>СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <P>
   <SPAN>Всего к оплате: </SPAN>
@@ -2493,7 +2473,7 @@ set @Text = '<NOBODY>
   </TR>
  </TABLE>
  <P>Плательщик: %Customer.CompanyForm% "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%<BR />Заказчик: %Customer.CompanyForm% "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%</P>
- <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
+ <H1>СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <P>
   <SPAN>Всего к оплате: </SPAN>
@@ -2584,7 +2564,7 @@ set @Text = '<NOBODY>
   </TR>
  </TABLE>
  <P>Плательщик: %Customer.CompanyForm% "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%<BR />Заказчик: %Customer.CompanyForm% "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%</P>
- <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
+ <H1>СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <P>
   <SPAN>Всего к оплате: </SPAN>
@@ -2715,7 +2695,7 @@ set @Text = '<NOBODY>
   </TR>
  </TABLE>
  <BR />
- <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
+ <H1>СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <P>
   <SPAN>Всего к оплате: </SPAN>
@@ -2836,7 +2816,7 @@ set @Text = '<NOBODY>
   </TR>
  </TABLE>
  <BR />
- <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
+ <H1>СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <P>
   <SPAN>Всего к оплате: </SPAN>
@@ -2849,7 +2829,7 @@ VALUES (6,100,100,'yes','yes','yes','Invoices/PaymentSystems/Natural/Juridical',
 
 -- SEPARATOR
 set @Text = '<NOBODY>
- <H1>СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
+ <H1>СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <H2>Платежное поручение</H2>
  <TABLE border="1" cellpadding="5" cellspacing="0">
@@ -2882,15 +2862,15 @@ VALUES (9,100,100,'yes','yes','yes','Header:/DependUsers','Информация 
 -- SEPARATOR
 /* added by lissyara 2011-06-22 in 15:22 MSK */
  INSERT INTO `Clauses` (`GroupID`,`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
-(6,100,100,'Invoices/PaymentSystems/W1', 'Шаблон платежной системы Wallet One', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер кошелька\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.WMI_MERCHANT_ID%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
+(6,100,100,'Invoices/PaymentSystems/W1', 'Шаблон платежной системы Wallet One', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер кошелька\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.WMI_MERCHANT_ID%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
 
 -- SEPARATOR
 INSERT INTO `Clauses` (`GroupID`,`AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
-(6, 100, 100, 'Invoices/PaymentSystems/MailRu', 'Шаблон платежной системы MailRu', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер магазина\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.shop_id%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
+(6, 100, 100, 'Invoices/PaymentSystems/MailRu', 'Шаблон платежной системы MailRu', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер магазина\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.shop_id%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
 
 -- SEPARATOR
 INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
-(6, 100, 100, 'Invoices/PaymentSystems/QIWI', 'Шаблон платежной системы QIWI', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер магазина\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.from%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
+(6, 100, 100, 'Invoices/PaymentSystems/QIWI', 'Шаблон платежной системы QIWI', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер магазина\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.from%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
 
 -- SEPARATOR
 INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
@@ -2925,7 +2905,7 @@ INSERT INTO `Clauses` (`GroupID`,`AuthorID`, `EditorID`, `Partition`, `Title`, `
 INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`)
 VALUES (6,100,100,'Invoices/PaymentSystems/InterKassa', 'Шаблон платежной системы ИнтерКасса', 'yes', 'yes', 'yes', '<NOBODY>
  <H1>
-  СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%
+  СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%
  </H1>
  <DIV id="Services">
   [список услуг]
@@ -2986,7 +2966,7 @@ VALUES
 -- SEPARATOR
 /* added by lissyara 2012-03-03 in 20:10 MSK, JBS-359 */
 INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
-(6, 100, 100, 'Invoices/PaymentSystems/EasyPay', 'Шаблон платежной системы EasyPay', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер Поставщика\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.EP_MerNo%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
+(6, 100, 100, 'Invoices/PaymentSystems/EasyPay', 'Шаблон платежной системы EasyPay', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер Поставщика\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.EP_MerNo%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
 
 -- SEPARATOR
 /* added by lissyara, 2012-09-25 in 14:37 MSK */
@@ -3002,21 +2982,25 @@ INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, 
 -- SEPARATOR
 -- added by lissyara 2015-05-15 in 16:54 MSK, for JBS-1051
 INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
-(6, 100, 100, 'Invoices/PaymentSystems/Uniteller', 'Шаблон платежной системы Uniteller', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер магазина\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.Shop_IDP%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
+(6, 100, 100, 'Invoices/PaymentSystems/Uniteller', 'Шаблон платежной системы Uniteller', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Номер магазина\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %PaymentSystem.Send.Shop_IDP%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
 
 -- SEPARATOR
 -- added by lissyara 2017-11-10 in 09:11 MSK, for JBS-1230
 INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
-(6, 100, 100, 'Invoices/PaymentSystems/SberBank', 'Шаблон платежной системы SberBank', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
+(6, 100, 100, 'Invoices/PaymentSystems/SberBank', 'Шаблон платежной системы SberBank', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
 
 -- SEPARATOR
 -- added by lissyara 2017-11-10 in 09:11 MSK, for JBS-1230
 INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
-(6, 100, 100, 'Invoices/PaymentSystems/PayBox', 'Шаблон платежной системы PayBox', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
+(6, 100, 100, 'Invoices/PaymentSystems/PayBox', 'Шаблон платежной системы PayBox', 'yes', 'yes', 'yes', '<NOBODY>\r\n <H1>\r\n СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%\r\n</H1>\r\n <DIV id="Services">\r\n [список услуг]\r\n</DIV>\r\n <H2>\r\n Платежное поручение\r\n</H2>\r\n <TABLE border="1" cellpadding="5" cellspacing="0">\r\n  <TBODY>\r\n   <TR bgcolor="#DCDCDC">\r\n    <TD align="center">\r\n    Назначение\r\n   </TD>\r\n    <TD align="center">\r\n    Сумма\r\n   </TD>\r\n   </TR>\r\n   <TR>\r\n    <TD>\r\n    За web-услуги по счету №%Invoice.Number%\r\n   </TD>\r\n    <TD align="right">\r\n    %Invoice.Foreign% %PaymentSystem.Measure%\r\n   </TD>\r\n   </TR>\r\n  </TBODY>\r\n </TABLE>\r\n</NOBODY>\r\n', 'yes');
 -- SEPARATOR
 -- added by lissyara 2023-03-07 in 12:06 MSK
 INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
 (6, 100, 100, 'Header:/Administrator/Clauses', 'Предупреждение по статьям', 'yes', 'yes', 'yes', '<NOBODY><DIV>Обратите внимание что опубликованные статьи доступны по АПИ, не надо в них хранить пароли, заметки и т.п.</DIV></NOBODY>', 'yes');
+-- SEPARATOR
+
+INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `Text`, `IsPublish`) VALUES
+(6,100,100,'Invoices/PaymentSystems/Tinkoff','Шаблон платежной системы Tinkoff','yes','yes','yes','<NOBODY>\n <DIV id=\"SBP\" style=\"margin-left: auto; margin-right: 0;\" />\n <H1>\n СЧЕТ №%Invoice.Number% от %Invoice.CreateDate%\n</H1>\n <DIV id=\"Services\">\n [список услуг]\n</DIV>\n <H2>\n Платежное поручение\n</H2>\n <TABLE border=\"1\" cellpadding=\"5\" cellspacing=\"0\">\n  <TBODY>\n   <TR bgcolor=\"#DCDCDC\">\n    <TD align=\"center\">\n    Назначение\n   </TD>\n    <TD align=\"center\">\n    Сумма\n   </TD>\n   </TR>\n   <TR>\n    <TD>\n    За web-услуги по счету №%Invoice.Number%\n   </TD>\n    <TD align=\"right\">\n    %Invoice.Foreign% %PaymentSystem.Measure%\n   </TD>\n   </TR>\n  </TBODY>\n </TABLE>\n</NOBODY>\n','yes');
 -- SEPARATOR
 
 UNLOCK TABLES;
@@ -3094,8 +3078,6 @@ INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',999,'ZPayment','Z-Payme
 -- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',999,'EasyPay','EasyPay','EasyPay.png','Оплата при помощи электронных денег платёжной системы EasyPay.','EasyPay','');
 -- SEPARATOR
-INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'no',9999,'Egold','E-Gold','','Оплата при помощи электронных денег платёжной системы E-Gold.','E-Gold','нет картинки.\nда и самой такой платёжной системы больше нет.');
--- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',50,'RBKMoney','RBK Money','RBKMoney.png','(в прошлом — RUpay) — первая электронная платёжная система в России бесплатная для пользователей. Комиссия на оплату услуг и товаров в интернете — 0%','RBK Money','');
 -- SEPARATOR
 INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',60,'ROBOKASSA','ROBOKASSA','ROBOKASSA.png','Оплата любыми способами - все виды электронных денег, VISA, MasterCard, Maestro, оплата через SMS, терминалы, электронный банкинг и много других способов','ROBOKASSA','');
@@ -3130,6 +3112,11 @@ INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',15,'SberBank','VISA','V
 -- SEPARATOR
 -- added by lissyara, 2019-09-14 in 20:58 MSK, for new webmoney rouble
 INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',999,'WebMoneyP','WebMoney Рубль','WMRM.gif','Оплата при помощи электронных денег платёжной системы WebMoney, валюта платежа - Российский рубль.','WebMoney P','');
+-- SEPARATOR
+-- added by lissyara, 2025-12-16 in 20:48 MSK
+INSERT INTO `PaymentSystemsCollation` VALUES (NULL,'yes',15,'Tinkoff','СБП','SBP.png','Система быстрых платежей','СБП','');
+
+
 
 -- SEPARATOR
 UNLOCK TABLES;
