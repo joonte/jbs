@@ -136,7 +136,8 @@ default:
 // тариф
 $Columns = Array(
 		'`SchemeID` AS `ID`',
-		SPrintF('(SELECT `CostDay` FROM `%sSchemes` WHERE `ID` = `%sOrdersOwners`.`SchemeID`) AS `CostDay`',$Order['Code'],$Order['Code'])
+		SPrintF('(SELECT `CostDay` FROM `%sSchemes` WHERE `ID` = `%sOrdersOwners`.`SchemeID`) AS `CostDay`',$Order['Code'],$Order['Code']),
+		SPrintF('(SELECT `MaxDaysPay` FROM `%sSchemes` WHERE `ID` = `%sOrdersOwners`.`SchemeID`) AS `MaxDaysPay`',$Order['Code'],$Order['Code']),
 		);
 #-------------------------------------------------------------------------------
 $Scheme = DB_Select(SPrintF('%sOrdersOwners',$Order['Code']),$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$OrderID)));
@@ -175,6 +176,6 @@ if(IsSet($TransactionID))
 		return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return Array('DaysFromBallance'=>$DaysFromBallance);
+return Array('DaysFromBallance'=>($DaysFromBallance > $Scheme['MaxDaysPay'])?$Scheme['MaxDaysPay']:$DaysFromBallance);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
