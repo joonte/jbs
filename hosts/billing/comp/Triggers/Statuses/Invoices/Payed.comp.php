@@ -92,11 +92,16 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+$Summ = Comp_Load('Formats/Currency',$Invoice['Summ']);
+if(Is_Error($Summ))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
 $Event = Array(
 		'UserID'	=> $Invoice['UserID'],
 		'PriorityID'	=> 'Billing',
-		'Text'		=> SPrintF('Оплачен счёт №%s, на сумму %s, платежная система (%s)',$Number,$Invoice['Summ'],$PaymentSystemName)
+		'Text'		=> SPrintF('Оплачен счёт №%s, на сумму (%s), платежная система (%s)',$Number,$Summ,$PaymentSystemName)
 		);
+#-------------------------------------------------------------------------------
 $Event = Comp_Load('Events/EventInsert',$Event);
 if(!$Event)
 	return ERROR | @Trigger_Error(500);

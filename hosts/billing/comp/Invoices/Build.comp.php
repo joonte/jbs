@@ -215,7 +215,30 @@ default:
 
 #-------------------------------------------------------------------------------
 if(IsSet($QRLink))
-	$DOM->AddChild('QRCode',new Tag('IMG',Array('src'=>$QRLink,'style'=>'float:right;')));
+	$DOM->AddChild('QRCode',new Tag('IMG',Array('src'=>$QRLink,'style'=>'float:right;min-width:250px')));
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// СБП
+$TmpData = DB_Select('TmpData',Array('ID','Params'),Array('UNIQ','Where'=>Array(SPrintF('`AppID` = "%s"',$Invoice['PaymentSystemID']),SPrintF('`Col1` = %u',$InvoiceID)),'SortOn'=>'CreateDate','Limits'=>Array(0,1)));
+#-------------------------------------------------------------------------------
+switch(ValueOf($TmpData)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	break;
+case 'array':
+	#-------------------------------------------------------------------------------
+	if(!IsSet($TmpData['Params']['Data']))
+		break;
+	#-------------------------------------------------------------------------------
+	//Debug(print_r($TmpData,true));
+	$DOM->AddChild('SBP',new Tag('A',Array('href'=>$TmpData['Params']['Link']),new Tag('IMG',Array('src'=>SPrintF('data:image/svg+xml;base64,%s',Base64_Encode($TmpData['Params']['Data'])),'style'=>'float:right;','width'=>250))));
+	#-------------------------------------------------------------------------------
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Clauses/Load','Invoices/Services');

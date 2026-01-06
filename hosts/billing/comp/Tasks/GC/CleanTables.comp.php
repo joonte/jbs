@@ -313,6 +313,7 @@ $Params['Tables'][] = Array(
 				'Table'	=> 'TmpData',
 				'Wheres'=> Array(
 						'`AppID` = "SberBank" AND `CreateDate` < UNIX_TIMESTAMP() - 120*24*60*60',
+						'`AppID` = "Tinkoff" AND `CreateDate` < UNIX_TIMESTAMP() - 120*24*60*60',
 						'`AppID` = "Telegram" AND `CreateDate` < UNIX_TIMESTAMP() - 365*24*60*60',
 						'`AppID` = "VK" AND `CreateDate` < UNIX_TIMESTAMP() - 365*24*60*60',
 						'`AppID` = "Taxation" AND `CreateDate` < UNIX_TIMESTAMP() - 5*365*24*60*60',

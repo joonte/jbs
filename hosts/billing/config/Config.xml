@@ -719,6 +719,7 @@
 				<IsCourseUpdate>0</IsCourseUpdate>
 				<Measure>руб</Measure>
 				<Valute>RUB</Valute>
+				<ShowSBP>1</ShowSBP>
 				<MinimumPayment>1.00</MinimumPayment>
 				<MaximumPayment>250000.00</MaximumPayment>
 				<IsActive>0</IsActive>
@@ -1353,7 +1354,7 @@
 				<Name>Выгрузка данных в SORM</Name>
 				<Params type="array"/>
 				<ExecutePeriod>00:01</ExecutePeriod>
-				<IsActive>1</IsActive>
+				<IsActive>0</IsActive>
 				<FtpHost/>
 				<FtpUser/>
 				<FtpPass/>
@@ -1754,7 +1755,7 @@
 				<Color>DF5747</Color>
 			</Suspended>
 			<Deleted>
-				<Name>Удален</Name>
+				<Name>Удалён</Name>
 				<Color>999999</Color>
 			</Deleted>
 		</Orders>

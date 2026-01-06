@@ -60,7 +60,7 @@ switch(ValueOf($Profile)){
       $Result[$AttribID] = ($IsFull?Array('Comment'=>$Attrib['Comment'],'Value'=>$Value):$Value);
     }
     #---------------------------------------------------------------------------
-    return Array('Name'=>$Profile['Name'],'TemplateID'=>$Profile['TemplateID'],'StatusID'=>$Profile['StatusID'],'Attribs'=>$Result);
+    return Array('ID'=>$ProfileID,'Name'=>$Profile['Name'],'TemplateID'=>$Profile['TemplateID'],'StatusID'=>$Profile['StatusID'],'Attribs'=>$Result);
   default:
     return ERROR | @Trigger_Error(101);
 }
