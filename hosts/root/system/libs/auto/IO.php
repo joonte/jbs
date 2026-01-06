@@ -6,7 +6,7 @@
 
 function IO_Read($Path,$IsUseLinks = TRUE){
 	/******************************************************************************/
-	$__args_types = Array('string','boolean');
+	$__args_types = Array('integer,string','boolean');
 	#-------------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/******************************************************************************/
@@ -73,7 +73,7 @@ function IO_Read($Path,$IsUseLinks = TRUE){
 #-------------------------------------------------------------------------------
 function IO_Write($Path,$Data,$IsRewrite = FALSE,$Wait = 3){
 	/******************************************************************************/
-	$__args_types = Array('string','string','boolean','integer');
+	$__args_types = Array('integer,string','integer,string','boolean','integer');
 	#-------------------------------------------------------------------------------
 	$__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/******************************************************************************/

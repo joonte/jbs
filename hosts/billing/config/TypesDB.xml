@@ -104,6 +104,85 @@
 <!-- *********************************************************************** -->
 <!-- подтверждения пользователя -->
 <ConfirmedWas>JSON</ConfirmedWas>
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<!-- типы для нового интерфейса -->
+<!-- тарифы -->
+<SortID>Integer</SortID>
+<MinOrdersPeriod>Integer</MinOrdersPeriod>
+<MaxOrders>Integer</MaxOrders>
+<MaxDaysPay>Integer</MaxDaysPay>
+<MinDaysProlong>Integer</MinDaysProlong>
+<MinDaysPay>Integer</MinDaysPay>
+<ServersGroupID>Integer</ServersGroupID>
+<UserID>Integer</UserID>
+<GroupID>Integer</GroupID>
+<CreateDate>Integer</CreateDate>
+<!-- <ID>Integer</ID> -->
+<Discount>Integer</Discount>
+
+<!-- User -->
+<RegisterDate>Integer</RegisterDate>
+<EnterDate>Integer</EnterDate>
+<Confirmed>Integer</Confirmed>
+<TimeBegin>Integer</TimeBegin>
+<TimeEnd>Integer</TimeEnd>
+<!-- Services -->
+<ServicesGroupID>Integer</ServicesGroupID>
+<PartnersRewardPercent>Integer</PartnersRewardPercent>
+<Priority>Integer</Priority>
+
+<!-- *Orders -->
+<!-- <OrderID>Integer</OrderID> -->
+<ConsiderDay>Integer</ConsiderDay>
+<StatusDate>Integer</StatusDate>
+<ServiceID>Integer</ServiceID>
+<DaysRemainded>Integer</DaysRemainded>
+<ServerID>Integer</ServerID>
+<OrderDate>Integer</OrderDate>
+<ContractID>Integer</ContractID>
+
+
+<DependOrderID>Integer</DependOrderID>
+<SchemeID>Integer</SchemeID>
+<OldSchemeID>Integer</OldSchemeID>
+<CostOrder>Float</CostOrder>
+<CostProlong>Float</CostProlong>
+<CostTransfer>Float</CostTransfer>
+<DaysToProlong>Integer</DaysToProlong>
+<DaysBeforeTransfer>Integer</DaysBeforeTransfer>
+<DaysAfterTransfer>Integer</DaysAfterTransfer>
+
+<!-- DependUsers -->
+<aInvoices>Float</aInvoices>
+<pInvoices>Float</pInvoices>
+<cInvoices>Float</cInvoices>
+<!-- *Schemes -->
+<CostDay>Float</CostDay>
+<CostMonth>Float</CostMonth>
+<!-- Invoices -->
+<Summ>Float</Summ>
+<InvoiceID>Integer</InvoiceID>
+<Amount>Float</Amount>
+<!-- Bonuses -->
+<ExpirationDate>Integer</ExpirationDate>
+<DaysReserved>Integer</DaysReserved>
+<Discont>Float</Discont>
+<SchemesGroupID>Integer</SchemesGroupID>
+<!-- Clauses -->
+<PublicDate>Integer</PublicDate>
+<ChangedDate>Integer</ChangedDate>
+<!-- Contracts -->
+<ProfileID>Integer</ProfileID>
+<Balance>Float</Balance>
+<!-- Edesks -->
+<UpdateDate>Integer</UpdateDate>
+<MessageID>Integer</MessageID>
+<Messages>Integer</Messages>
+<EdeskID>Integer</EdeskID>
+<VoteBall>Integer</VoteBall>
+<OwnerID>Integer</OwnerID>
+
 
 </XML>
 
