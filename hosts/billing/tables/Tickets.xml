@@ -40,6 +40,12 @@
 			<PatternOut>
 				<Args>
 					<Patterns>
+						<!-- ****************************************************************** -->
+						<Last>
+							<Name>Недавние</Name>
+							<Where>`UpdateDate` &gt; UNIX_TIMESTAMP() - 100000</Where>
+						</Last>
+						<!-- ****************************************************************** -->
 						<Newest>
 							<Name>Новые запросы</Name>
 							<Where>`StatusID` = 'Newest'</Where>
