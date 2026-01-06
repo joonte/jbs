@@ -13,7 +13,7 @@ if(Is_Error(System_Load('classes/HostingServer.class.php','classes/VPSServer.cla
 $Where = Array(
 		'`Services`.`ID` = `ServersGroups`.`ServiceID`',
 		'(`ServersGroups`.`ID` = `Servers`.`ServersGroupID`)',
-		'(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 10000 OR (SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 52000 OR (SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) = 30000',
+		'(SELECT `ServiceID` FROM `ServersGroups` WHERE `Servers`.`ServersGroupID` = `ServersGroups`.`ID`) IN(10000,30000,52000)',
 		);
 #-------------------------------------------------------------------------------
 $Columns = Array(
@@ -28,7 +28,7 @@ switch(ValueOf($Servers)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return Time() + 1800;
+	return Time() + 1200;
 case 'array':
 	break;
 default:
@@ -47,7 +47,7 @@ foreach($Servers as $Server){
 		continue;
 	#-------------------------------------------------------------------------------
 	# если время последнего опроса задано, и с тех пор прошло меньше 15 минут - пропускаем
-	if(IsSet($Server['Params']['LastQuestioning']) && $Server['Params']['LastQuestioning'] > Time() - 1800)
+	if(IsSet($Server['Params']['LastQuestioning']) && $Server['Params']['LastQuestioning'] > Time() - 1200)
 		continue;
 	#-------------------------------------------------------------------------------
 	$Array[] = $Server;
@@ -58,7 +58,7 @@ if(SizeOf($Array) < 1){
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[comp/Tasks/ServersQuestioning]: все сервера опрошены'));
 	#-------------------------------------------------------------------------------
-	return Time() + 1800;
+	return Time() + 1200;
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
@@ -90,109 +90,123 @@ case 'error':
 case 'exception':
 	return ERROR | @Trigger_Error(400);
 case 'true':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+$Users = $ClassServer->GetDomains();
+#-------------------------------------------------------------------------------
+#if($Server['Code'] == 'VPS')
+#	Debug(SPrintF('[comp/Tasks/ServersQuestioning]: Code = %s; Users = %s;',$Server['Code'],print_r($Users,TRUE)));
+#-------------------------------------------------------------------------------
+switch(ValueOf($Users)){
+case 'error':
+	# No more...
+	break;
+case 'exception':
+	# No more...
+	break;
+case 'array':
 	#-------------------------------------------------------------------------------
-	$Users = $ClassServer->GetDomains();
-	#-------------------------------------------------------------------------------
-	switch(ValueOf($Users)){
-	case 'error':
-		# No more...
-		break 2;
-	case 'exception':
-		# No more...
-		break 2;
-	case 'array':
+	if(Count($Users)){
 		#-------------------------------------------------------------------------------
-		if(Count($Users)){
+		$Array = Array();
+		#-------------------------------------------------------------------------------
+		foreach(Array_Keys($Users) as $UserID)
+			$Array[] = SPrintF("'%s'",$UserID);
+		#-------------------------------------------------------------------------------
+		$Where = SPrintF('`ServerID` = %u AND `Login` IN (%s)',$Server['ID'],Implode(',',$Array));
+		#-------------------------------------------------------------------------------
+		$Orders = DB_Select(SPrintF('%sOrdersOwners',$Server['Code']),Array('ID','OrderID','Login','StatusID'),Array('Where'=>$Where));
+		#-------------------------------------------------------------------------------
+		switch(ValueOf($Orders)){
+		case 'error':
+			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			# No more...
+			break;
+		case 'array':
+			//Debug(print_r($Orders,true));
 			#-------------------------------------------------------------------------------
-			$Array = Array();
-			#-------------------------------------------------------------------------------
-			foreach(Array_Keys($Users) as $UserID)
-				$Array[] = SPrintF("'%s'",$UserID);
-			#-------------------------------------------------------------------------------
-			$Where = SPrintF('`ServerID` = %u AND `Login` IN (%s)',$Server['ID'],Implode(',',$Array));
-			#-------------------------------------------------------------------------------
-			$Orders = DB_Select(SPrintF('%sOrdersOwners',$Server['Code']),Array('ID','OrderID','Login','StatusID'),Array('Where'=>$Where));
-			#-------------------------------------------------------------------------------
-			switch(ValueOf($Orders)){
-			case 'error':
-				return ERROR | @Trigger_Error(500);
-			case 'exception':
-				# No more...
-				break;
-			case 'array':
-				//Debug(print_r($Orders,true));
+			foreach($Orders as $Order){
 				#-------------------------------------------------------------------------------
-				foreach($Orders as $Order){
-					#-------------------------------------------------------------------------------
-					$Parked = $Users[$Order['Login']];
-					#-------------------------------------------------------------------------------
+				$Parked = $Users[$Order['Login']];
+				#-------------------------------------------------------------------------------
+				// для ВПС передаются пзиционными параметрами - первый шаблон, второй домен. сортировать не надо.
+				if($Server['Code'] != 'VPS')
 					ASort($Parked);
+				#-------------------------------------------------------------------------------
+				$IOrders = Array('Domain'=>(Count($Parked)?Current($Parked):'not-found'));
+				#-------------------------------------------------------------------------------
+				//Debug(SPrintF('[comp/Tasks/ServersQuestioning]: Code = %s; SizeOf(Parked) = %s;',$Server['Code'],SizeOf($Parked)));
+				#-------------------------------------------------------------------------------
+				// у ВПС обновляем дисковый шаблон и домен
+				if($Server['Code'] == 'VPS'){
 					#-------------------------------------------------------------------------------
-					$IOrders = Array('Domain'=>(Count($Parked)?Current($Parked):'not-found'));
+					//Debug(SPrintF('[comp/Tasks/ServersQuestioning]: account %s, Template = %s; Domain = %s',$Order['Login'],Reset($Parked),End($Parked)));
 					#-------------------------------------------------------------------------------
-					// у ВПС обновляем дисковый шаблон
-					if($Server['Code'] == 'VPS'){
+					$IsUpdate = DB_Update('Orders',Array('Params'=>Array('DiskTemplate'=>Reset($Parked))),Array('ID'=>$Order['OrderID']));
+					if(Is_Error($IsUpdate))
+						return ERROR | @Trigger_Error(500);
+					#-------------------------------------------------------------------------------
+					$IsUpdate = DB_Update('VPSOrders',Array('Domain'=>End($Parked)),Array('Where'=>SPrintF('`OrderID` = %u',$Order['OrderID'])));
+					if(Is_Error($IsUpdate))
+						return ERROR | @Trigger_Error(500);
+					#-------------------------------------------------------------------------------
+				}else{
+					#-------------------------------------------------------------------------------
+					// список новых доменов
+					$IOrders['Parked'] = Implode(',',$Parked);
+					#-------------------------------------------------------------------------------
+					// достаём текущий список доменов, сравниваем, если есть разичия - надо отсылать в СОРМ
+					$OldParked = DB_Select(SPrintF('%sOrdersOwners',$Server['Code']),Array('Parked'),Array('UNIQ','ID'=>$Order['ID']));
+					#-------------------------------------------------------------------------------
+					switch(ValueOf($OldParked)){
+					case 'error':
+						return ERROR | @Trigger_Error(500);
+					case 'exception':
+						return ERROR | @Trigger_Error(400);
+					case 'array':
+						break;
+					default:
+						return ERROR | @Trigger_Error(101);
+					}
+					#-------------------------------------------------------------------------------
+					$OldParked = $OldParked['Parked'];
+					#-------------------------------------------------------------------------------
+					if($OldParked != $IOrders['Parked']){
 						#-------------------------------------------------------------------------------
-						$IsUpdate = DB_Update('Orders',Array('Params'=>Array('DiskTemplate'=>Current($Parked))),Array('ID'=>$Order['OrderID']));
+						Debug(SPrintF('[comp/Tasks/ServersQuestioning]: есть необходимость обновлять спиисок доменов для %s/%s',$Server['Code'],$Order['OrderID']));
+						#-------------------------------------------------------------------------------
+						// разные списки доменов
+						if(!SORM_add('service_order_resource',$GLOBALS['__USER']['service_aaa'],Array('Timestamp'=>Date("Y-m-d\TH:i:s"),'OrderID'=>$Order['OrderID'],'ActionTypeId'=>$Order['StatusID'],'OldParked'=>$OldParked,'NewParked'=>$IOrders['Parked'])))
+							return ERROR | @Trigger_Error(500);
+						#-------------------------------------------------------------------------------
+						// проставляем новый список
+						$IsUpdate = DB_Update(SPrintF('%sOrders',$Server['Code']),$IOrders,Array('ID'=>$Order['ID']));
 						if(Is_Error($IsUpdate))
 							return ERROR | @Trigger_Error(500);
 						#-------------------------------------------------------------------------------
 					}else{
 						#-------------------------------------------------------------------------------
-						// список новых доменов
-						$IOrders['Parked'] = Implode(',',$Parked);
+						//Debug(SPrintF('[comp/Tasks/ServersQuestioning]: нет необходимости обновлять спиисок доменов для %s/%s',$Server['Code'],$Order['OrderID']));
 						#-------------------------------------------------------------------------------
-						// достаём текущий список доменов, сравниваем, если есть разичия - надо отсылать в СОРМ
-						$OldParked = DB_Select(SPrintF('%sOrdersOwners',$Server['Code']),Array('Parked'),Array('UNIQ','ID'=>$Order['ID']));
-						#-------------------------------------------------------------------------------
-						switch(ValueOf($OldParked)){
-						case 'error':
-							return ERROR | @Trigger_Error(500);
-						case 'exception':
-							return ERROR | @Trigger_Error(400);
-						case 'array':
-							break;
-						default:
-							return ERROR | @Trigger_Error(101);
-						}
-						#-------------------------------------------------------------------------------
-						$OldParked = $OldParked['Parked'];
-						#-------------------------------------------------------------------------------
-						if($OldParked != $IOrders['Parked']){
-							#-------------------------------------------------------------------------------
-							Debug(SPrintF('[comp/Tasks/ServersQuestioning]: есть необходимость обновлять спиисок доменов для %s/%s',$Server['Code'],$Order['OrderID']));
-							#-------------------------------------------------------------------------------
-							// разные списки доменов
-							if(!SORM_add('service_order_resource',$GLOBALS['__USER']['service_aaa'],Array('Timestamp'=>Date("Y-m-d\TH:i:s"),'OrderID'=>$Order['OrderID'],'ActionTypeId'=>$Order['StatusID'],'OldParked'=>$OldParked,'NewParked'=>$IOrders['Parked'])))
-								return ERROR | @Trigger_Error(500);
-							#-------------------------------------------------------------------------------
-							// проставляем новый список
-							$IsUpdate = DB_Update(SPrintF('%sOrders',$Server['Code']),$IOrders,Array('ID'=>$Order['ID']));
-							if(Is_Error($IsUpdate))
-								return ERROR | @Trigger_Error(500);
-							#-------------------------------------------------------------------------------
-						}else{
-							#-------------------------------------------------------------------------------
-							//Debug(SPrintF('[comp/Tasks/ServersQuestioning]: нет необходимости обновлять спиисок доменов для %s/%s',$Server['Code'],$Order['OrderID']));
-							#-------------------------------------------------------------------------------
-						}
 					}
 					#-------------------------------------------------------------------------------
 				}
 				#-------------------------------------------------------------------------------
-				break;
-				#-------------------------------------------------------------------------------
-			default:
-				return ERROR | @Trigger_Error(101);
 			}
 			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
+		default:
+			return ERROR | @Trigger_Error(101);
 		}
 		#-------------------------------------------------------------------------------
-		break 2;
-		#-------------------------------------------------------------------------------
-	default:
-		return ERROR | @Trigger_Error(101);
 	}
+	#-------------------------------------------------------------------------------
+	break;
 	#-------------------------------------------------------------------------------
 default:
 	return ERROR | @Trigger_Error(101);
